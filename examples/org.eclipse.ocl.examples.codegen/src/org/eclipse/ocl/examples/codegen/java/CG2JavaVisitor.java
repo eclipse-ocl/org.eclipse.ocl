@@ -1060,7 +1060,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
-		System.out.println("cg " + NameUtil.debugSimpleName(cgCatchExp) + " in " + NameUtil.debugSimpleName(currentNameManager) + " : " + currentNameManager);		// XXX
+	// XXX	System.out.println("cg " + NameUtil.debugSimpleName(cgCatchExp) + " in " + NameUtil.debugSimpleName(currentNameManager) + " : " + currentNameManager);		// XXX
 		CGValuedElement cgSource = getExpression(cgCatchExp.getSource());
 		final String thrownName = getVariantResolvedName(cgCatchExp, context.getTHROWN_NameVariant());
 		if (cgSource.isNonInvalid()) {
@@ -2097,6 +2097,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
+		System.out.println("visitCGOperation " + NameUtil.debugSimpleName(cgOperation) + " : " + cgOperation.getAst());
 		pushNameManager(cgOperation);
 		try {
 			OperationCallingConvention callingConvention = cgOperation.getCallingConvention();

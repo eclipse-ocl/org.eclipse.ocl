@@ -66,6 +66,21 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		this.requiredReturn = requiredReturn;
 	}
 
+	/**
+	 * Ensure that the body is accumulatable.
+	 * <br>
+	 * QVTi's MappingLoop overrides for concurrent dispatching.
+	 */
+	protected @NonNull ReturnState doIterationCallBody(@NonNull CGIterationCallExp cgIterationCallExp) {
+		Iteration asIteration = cgIterationCallExp.getAsIteration();
+		FieldingAnalysisVisitor bodyAnalysisVisitor = getNestedVisitor(CGUtil.getReferredIteration(cgIterationCallExp));
+		CGValuedElement cgBody = CGUtil.getBody(cgIterationCallExp);
+		boolean isValid = cgBody.isNonInvalid();
+		ReturnState returnState = bodyAnalysisVisitor.visit(cgBody);
+		assert isValid || returnState.isSuitableFor(asIteration.isIsValidating() ? ReturnState.IS_CAUGHT : ReturnState.IS_THROWN);
+		return returnState;
+	}
+
 	protected @NonNull FieldingAnalysisVisitor getMayBeThrownVisitor() {
 		return context.mayBeThrown;
 	}
@@ -78,7 +93,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		return context.mustBeThrown;
 	}
 
-	protected @NonNull FieldingAnalysisVisitor getNestedVisitor(@NonNull CGOperation cgOperation) {
+	private @NonNull FieldingAnalysisVisitor getNestedVisitor(@NonNull CGOperation cgOperation) {
 		ReturnState returnState = cgOperation.getCallingConvention().getRequiredReturn(cgOperation);
 		switch (returnState) {
 			case IS_CAUGHT: return context.mustBeCaught;
@@ -90,7 +105,8 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	protected void insertCatch(@NonNull CGValuedElement cgChild) {
 		assert !(cgChild instanceof CGCatchExp) : "double catch is redundant";
 		assert !(cgChild instanceof CGVariableExp) : "must catch variable not its access";
-		if (!cgChild.isNonInvalid()) {
+		boolean mayBeInvalid = !cgChild.isNonInvalid();
+		if (mayBeInvalid) {
 			CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
 			cgCatchExp.setCaught(true);
 			CGUtil.wrap(cgCatchExp, cgChild);
@@ -100,7 +116,8 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	protected void insertThrow(@NonNull CGValuedElement cgChild) {
 		assert !(cgChild instanceof CGThrowExp) : "double throw is redundant";
 	//	assert cgChild.isCaught() : "cannot throw if not caught";
-		if (!cgChild.isNonInvalid()) {
+		boolean mayBeInvalid = !cgChild.isNonInvalid();
+		if (mayBeInvalid) {
 			CGThrowExp cgThrowExp = CGModelFactory.eINSTANCE.createCGThrowExp();
 			cgThrowExp.setCaught(false);
 			CGUtil.wrap(cgThrowExp, cgChild);
@@ -131,7 +148,8 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		ReturnState returnState = cgElement.accept(this);
 		if ((cgElement instanceof CGValuedElement) && (cgElement.eContainer() == oldEContainer)) {	// skip if already wrapped
 			CGValuedElement cgValuedElement = (CGValuedElement)cgElement;
-			if (!cgValuedElement.isNonInvalid()) {
+			boolean mayBeInvalid = !cgValuedElement.isNonInvalid();
+			if (mayBeInvalid) {
 				if (requiredReturn == ReturnState.IS_CAUGHT) {
 					if (!returnState.isSuitableFor(ReturnState.IS_CAUGHT)) {
 						insertCatch(cgValuedElement);
@@ -160,7 +178,8 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		boolean aChildMayBeThrown = false;
 		for (@NonNull CGElement cgElement : cgElements) {
 			ReturnState returnState = visit(cgElement);
-			if (!(cgElement instanceof CGValuedElement) || !((CGValuedElement)cgElement).isNonInvalid()) {
+			boolean mayBeInvalid = !(cgElement instanceof CGValuedElement) || !((CGValuedElement)cgElement).isNonInvalid();
+			if (mayBeInvalid) {
 				switch (returnState) {
 					case IS_CAUGHT: aChildMayBeCaught = true; break;
 					case IS_THROWN: aChildMayBeThrown = true; break;
@@ -202,7 +221,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		CGValuedElement cgSource = CGUtil.getSource(cgIsInvalidExp);
 		context.mustBeCaught.visit(cgSource);
 		cgIsInvalidExp.setCaught(false);
-		return ReturnState.IS_VALID;
+		return ReturnState.IS_VALID;			// XXX IS_THROWN and thrown
 	}
 
 	/**
@@ -218,7 +237,6 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull ReturnState visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
-		Iteration asIteration = cgIterationCallExp.getAsIteration();
 		context.mustBeThrown.visit(CGUtil.getSource(cgIterationCallExp));
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
 			context.mustBeThrown.visit(cgIterator);
@@ -226,11 +244,10 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		for (CGIterator cgCoIterator : CGUtil.getCoIterators(cgIterationCallExp)) {
 			context.mustBeThrown.visit(cgCoIterator);
 		}
-		FieldingAnalysisVisitor bodyAnalysisVisitor = getNestedVisitor(CGUtil.getReferredIteration(cgIterationCallExp));
-		ReturnState returnState = bodyAnalysisVisitor.visit(CGUtil.getBody(cgIterationCallExp));
-		// Although individual body evaluations may be caught and accumulated, the accumularedc result is thrown.
+		doIterationCallBody(cgIterationCallExp);
+		// Although individual body evaluations may be caught and accumulated, the accumulated result is thrown.
 		cgIterationCallExp.setCaught(false);
-		return returnState == ReturnState.IS_VALID ? ReturnState.IS_VALID : ReturnState.IS_THROWN;
+		return /*returnState == ReturnState.IS_VALID ? ReturnState.IS_VALID :*/ ReturnState.IS_THROWN;
 	}
 
 	@Override
@@ -280,6 +297,9 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull ReturnState visitCGOperationCallExp(@NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
+		if (asOperation.getName().contains("and")) {
+			getClass();			// XXX
+		}
 		FieldingAnalysisVisitor childVisitor = getNestedVisitor(cgOperation);// asOperation.isIsValidating() ? context.mustBeCaught : context.mustBeThrown;
 		ReturnState requiredChildReturn = childVisitor.requiredReturn();
 		for (CGValuedElement cgArgument : CGUtil.getArguments(cgOperationCallExp)) {
@@ -287,18 +307,18 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 			assert returnState.isSuitableFor(requiredChildReturn) || cgArgument.isNonInvalid();
 			// ?? required / guarded - rewriteAsThrown
 		}
-		ReturnState returnState;
-		if (asOperation.isIsInvalidating()) {			// Explicitly may-be-invalid result
-			returnState = ReturnState.IS_THROWN;
-		}
-		else if (asOperation.isIsValidating()) {		// Explicitly must be caught input
-			returnState = requiredReturn;
-		}
-		else {											// Default could be accidentally bad Java
-			returnState = ReturnState.IS_THROWN;
-		}
-		cgOperationCallExp.setCaught(returnState.isCaught());
-		return returnState;								// ??? simplify like IterateExp
+	//	ReturnState returnState;
+	//	if (asOperation.isIsInvalidating()) {			// Explicitly may-be-invalid result
+	//		returnState = ReturnState.IS_THROWN;
+	//	}
+	//	else if (asOperation.isIsValidating()) {		// Explicitly must be caught input
+	//		returnState = requiredReturn;
+	//	}
+	//	else {											// Default could be accidentally bad Java
+	//		returnState = ReturnState.IS_THROWN;
+	//	}
+		cgOperationCallExp.setCaught(false);		//returnState.isCaught());
+		return /*asOperation.isIsInvalidating() ?*/ ReturnState.IS_THROWN /*: ReturnState.IS_VALID*/;								// ??? simplify like IterateExp
 	}
 
 	@Override
@@ -326,7 +346,8 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull ReturnState visitCGVariableExp(@NonNull CGVariableExp cgVariableExp) {
 		CGVariable cgVariable = CGUtil.getReferredVariable(cgVariableExp);
-		if (!cgVariable.isNonInvalid()) {			// If the CGVariable could be invalid
+		boolean mayBeInvalid = !cgVariable.isNonInvalid();
+		if (mayBeInvalid) {			// If the CGVariable could be invalid
 			if (!cgVariable.isCaught()) {
 				CGValuedElement cgInit = cgVariable.getInit();
 				if (cgInit != null) {

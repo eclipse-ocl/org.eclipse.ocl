@@ -1441,7 +1441,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 			}
 			@Override public @Nullable String generateIsNonInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "for (" + cgModelSpec.delegate + " cgPart : getParts()) {\n" +
-						"			if (!cgPart.isNonInvalid()) {\n" +
+						"			boolean mayBeInvalid = !cgPart.isNonInvalid();\n" +
+						"			if (mayBeInvalid) {\n" +
 						"				return false;\n" +
 						"			}\n" +
 						"		}\n" +

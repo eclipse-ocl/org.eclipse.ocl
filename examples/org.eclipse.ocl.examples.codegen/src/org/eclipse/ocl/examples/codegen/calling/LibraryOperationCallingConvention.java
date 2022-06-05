@@ -204,7 +204,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 					return false;
 				}
 				else {
-					if (!cgArgument.isNonNull()) {
+					boolean mayBeNull = !cgArgument.isNonNull();
+					if (mayBeNull) {
 						js.append("if (");
 						js.appendValueName(cgArgument);
 						js.append(" == null) {\n");
@@ -215,7 +216,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 						js.popIndentation();
 						js.append("}\n");
 					}
-					if (!cgArgument.isNonInvalid() && cgArgument.isCaught()) {
+					boolean mayBeInvalid = !cgArgument.isNonInvalid();
+					if (mayBeInvalid && cgArgument.isCaught()) {
 						js.append("if (");
 						js.appendValueName(cgArgument);
 						js.append(" instanceof ");

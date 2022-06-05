@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("INSTANCE_Visitable__lookupClass")) {
+				if (string.contains("OrderedCollectionIndexOfOperation")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

@@ -441,8 +441,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 			NestedNameManager classNameManager = pushNameManager(cgClass);
 			try {
+				if (asOperation.getName().contains("_unqualified_env_Class")) {
+					getClass();		// XXX
+				}
 				OperationCallingConvention callingConvention = context.getCallingConvention(asOperation, requireFinal);
 				cgOperation = callingConvention.createCGOperation(this, asSourceType, asOperation);
+				System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " : " + asOperation);
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
 //				classNameManager.declarePreferredName(cgOperation);
@@ -986,17 +990,31 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGOperation visitOperation(@NonNull Operation asOperation) {
-		if (asOperation.toString().contains("allOwnedElements")) {
+		if (asOperation.toString().contains("_unqualified_env_Class")) {
 			getClass();		// XXX
 		}
-		CGOperation cgOperation = generateOperationDeclaration(null, asOperation, false);
-		pushNameManager(cgOperation);
 		LanguageExpression specification = asOperation.getBodyExpression();
+		CGOperation cgFinalOperation = generateOperationDeclaration(null, asOperation, true);
+		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
+		pushNameManager(cgFinalOperation);
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
-			cgOperation.setBody(doVisit(CGValuedElement.class, ((ExpressionInOCL)specification).getOwnedBody()));
+			CGValuedElement cgBody = doVisit(CGValuedElement.class, ((ExpressionInOCL)specification).getOwnedBody());
+			cgFinalOperation.setBody(cgBody);
+			System.out.println("setBody " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + cgBody);
 		}
 		popNameManager();
-		return cgOperation;
+		CGOperation cgVirtualOperation = generateOperationDeclaration(null, asOperation, true);
+		if (cgVirtualOperation != cgFinalOperation) {
+			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
+			pushNameManager(cgVirtualOperation);
+			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
+				CGValuedElement cgBody = doVisit(CGValuedElement.class, ((ExpressionInOCL)specification).getOwnedBody());
+				cgVirtualOperation.setBody(cgBody);
+				System.out.println("setBody " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + cgBody);
+			}
+			popNameManager();
+		}
+		return cgFinalOperation;
 	}
 
 	@Override

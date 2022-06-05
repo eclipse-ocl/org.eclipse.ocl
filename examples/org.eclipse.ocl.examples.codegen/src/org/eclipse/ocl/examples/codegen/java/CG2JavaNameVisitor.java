@@ -35,7 +35,6 @@ import org.eclipse.ocl.examples.codegen.generator.IterationHelper;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * A CG2JavaNameVisitor prepares for Java code generation by priming the allocation of unqiue names by the
@@ -77,7 +76,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 	@Override
 	public @Nullable Object visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		NestedNameManager nameManager = getNameManager();
-		System.out.println("Add " + NameUtil.debugSimpleName(cgCatchExp) + " in " + NameUtil.debugSimpleName(nameManager) + " : " + nameManager);		// XXX
+	// XXX	System.out.println("Add " + NameUtil.debugSimpleName(cgCatchExp) + " in " + NameUtil.debugSimpleName(nameManager) + " : " + nameManager);		// XXX
 		nameManager.addNameVariant(cgCatchExp, context.getTHROWN_NameVariant());
 		return super.visitCGCatchExp(cgCatchExp);
 	}

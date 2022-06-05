@@ -74,6 +74,7 @@ import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 
@@ -216,6 +217,11 @@ public class CodeGenAnalyzer
 		oldCGOperation = asVirtualOperation2cgOperation.put(asOperation, cgOperation);
 		assert oldCGOperation == null;
 	//	addCGOperation(cgOperation);
+		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
+		if (callingConvention.needsGeneration()) {
+			assert cgRootClass != null;
+			cgRootClass.getOperations().add(cgOperation);
+		}
 	}
 
 	public void analyze(@NonNull CGElement cgRoot) {
@@ -697,6 +703,7 @@ public class CodeGenAnalyzer
 	public @NonNull CGOperation installOperation(@NonNull Operation asOperation, @NonNull CGOperation cgOperation, @NonNull OperationCallingConvention callingConvention) {
 		assert cgOperation.getAst() == null;
 		assert cgOperation.getCallingConvention() == null;
+		System.out.println("installOperation " + callingConvention.getClass().getSimpleName() + " " + NameUtil.debugSimpleName(cgOperation) + " " + NameUtil.debugSimpleName(asOperation) + " : " + asOperation);
 		cgOperation.setAst(asOperation);
 		cgOperation.setTypeId(getCGTypeId(asOperation.getTypeId()));
 		cgOperation.setRequired(asOperation.isIsRequired());

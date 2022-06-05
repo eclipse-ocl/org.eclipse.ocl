@@ -267,12 +267,4 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		return false;
 	}
 
-	@Override
-	public void setCaught(boolean isCaught) {
-		if (isCaught) {
-			getClass();		// XXX
-		}
-		super.setCaught(isCaught);
-	}
-
 } //CGCachedOperationCallExpImpl
