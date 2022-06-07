@@ -17,6 +17,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsInvalidExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVis
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /*
  * An earlier version of this analysis determined variables accessed outside the prevailing containment tree
@@ -64,21 +66,6 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	public FieldingAnalysisVisitor(@NonNull FieldingAnalyzer context, @NonNull ReturnState requiredReturn) {
 		super(context);
 		this.requiredReturn = requiredReturn;
-	}
-
-	/**
-	 * Ensure that the body is accumulatable.
-	 * <br>
-	 * QVTi's MappingLoop overrides for concurrent dispatching.
-	 */
-	protected @NonNull ReturnState doIterationCallBody(@NonNull CGIterationCallExp cgIterationCallExp) {
-		Iteration asIteration = cgIterationCallExp.getAsIteration();
-		FieldingAnalysisVisitor bodyAnalysisVisitor = getNestedVisitor(CGUtil.getReferredIteration(cgIterationCallExp));
-		CGValuedElement cgBody = CGUtil.getBody(cgIterationCallExp);
-		boolean isValid = cgBody.isNonInvalid();
-		ReturnState returnState = bodyAnalysisVisitor.visit(cgBody);
-		assert isValid || returnState.isSuitableFor(asIteration.isIsValidating() ? ReturnState.IS_CAUGHT : ReturnState.IS_THROWN);
-		return returnState;
 	}
 
 	protected @NonNull FieldingAnalysisVisitor getMayBeThrownVisitor() {
@@ -213,6 +200,16 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		return returnState;
 	}
 
+	@Override
+	public @NonNull ReturnState visitCGIsEqualExp(@NonNull CGIsEqualExp object) {
+		String s = String.valueOf(object.getAst());
+		System.out.println(s);
+		if (s.contains("indexOf")) {
+			getClass();		// XXX
+		}
+		return super.visitCGIsEqualExp(object);
+	}
+
 	/**
 	 * All children of a validating operation must be caught.
 	 */
@@ -237,6 +234,11 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull ReturnState visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
+		String s = String.valueOf(cgIterationCallExp.getAst());
+		System.out.println("\t" + s);
+		if (s.contains("select(")) {
+			getClass();		// XXX
+		}
 		context.mustBeThrown.visit(CGUtil.getSource(cgIterationCallExp));
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
 			context.mustBeThrown.visit(cgIterator);
@@ -248,6 +250,20 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		// Although individual body evaluations may be caught and accumulated, the accumulated result is thrown.
 		cgIterationCallExp.setCaught(false);
 		return /*returnState == ReturnState.IS_VALID ? ReturnState.IS_VALID :*/ ReturnState.IS_THROWN;
+	}
+	/**
+	 * Ensure that the body is accumulatable.
+	 * <br>
+	 * QVTi's MappingLoop overrides for concurrent dispatching.
+	 */
+	private @NonNull ReturnState doIterationCallBody(@NonNull CGIterationCallExp cgIterationCallExp) {
+		Iteration asIteration = cgIterationCallExp.getAsIteration();
+		FieldingAnalysisVisitor bodyAnalysisVisitor = getNestedVisitor(CGUtil.getReferredIteration(cgIterationCallExp));
+		CGValuedElement cgBody = CGUtil.getBody(cgIterationCallExp);
+		boolean isValid = cgBody.isNonInvalid();
+		ReturnState returnState = bodyAnalysisVisitor.visit(cgBody);
+		assert isValid || returnState.isSuitableFor(asIteration.isIsValidating() ? ReturnState.IS_CAUGHT : ReturnState.IS_THROWN);
+		return returnState;
 	}
 
 	@Override
@@ -276,12 +292,18 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull ReturnState visitCGOperation(@NonNull CGOperation cgOperation) {
+		System.out.println(NameUtil.debugSimpleName(cgOperation));
 		for (CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {		// XXX use callingConvention
 			visit(cgParameter);
 		}
 		CGValuedElement cgBody = cgOperation.getBody();
 		if (cgBody == null) {
 			return requiredReturn;
+		}
+		String s = String.valueOf(cgBody.getAst());
+		System.out.println("    " + s);
+		if (s.contains("forAll")) {
+			getClass();		// XXX
 		}
 		ReturnState returnState = visit(cgBody);
 	//XXX	assert returnState.isSuitableFor(requiredReturn) || !cgBody.isNonInvalid();
