@@ -35,7 +35,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -78,15 +77,6 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	protected @NonNull FieldingAnalysisVisitor getMustBeThrownVisitor() {
 		return context.mustBeThrown;
-	}
-
-	private @NonNull FieldingAnalysisVisitor getNestedVisitor(@NonNull CGOperation cgOperation) {
-		ReturnState returnState = cgOperation.getCallingConvention().getRequiredReturn(cgOperation);
-		switch (returnState) {
-			case IS_CAUGHT: return context.mustBeCaught;
-			case IS_THROWN: return context.mustBeThrown;
-			default: return context.mayBeThrown;
-		}
 	}
 
 	protected void insertCatch(@NonNull CGValuedElement cgChild) {
@@ -234,36 +224,29 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull ReturnState visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
+		CGOperation cgIteration = CGUtil.getIteration(cgIterationCallExp);
+		Operation asIteration = CGUtil.getAST(cgIteration);
 		String s = String.valueOf(cgIterationCallExp.getAst());
 		System.out.println("\t" + s);
 		if (s.contains("select(")) {
 			getClass();		// XXX
 		}
-		context.mustBeThrown.visit(CGUtil.getSource(cgIterationCallExp));
+		FieldingAnalysisVisitor mustBeThrownVisitor = context.mustBeThrown;
+		mustBeThrownVisitor.visit(CGUtil.getSource(cgIterationCallExp));
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
-			context.mustBeThrown.visit(cgIterator);
+			mustBeThrownVisitor.visit(cgIterator);
 		}
 		for (CGIterator cgCoIterator : CGUtil.getCoIterators(cgIterationCallExp)) {
-			context.mustBeThrown.visit(cgCoIterator);
+			mustBeThrownVisitor.visit(cgCoIterator);
 		}
-		doIterationCallBody(cgIterationCallExp);
-		// Although individual body evaluations may be caught and accumulated, the accumulated result is thrown.
-		cgIterationCallExp.setCaught(false);
-		return /*returnState == ReturnState.IS_VALID ? ReturnState.IS_VALID :*/ ReturnState.IS_THROWN;
-	}
-	/**
-	 * Ensure that the body is accumulatable.
-	 * <br>
-	 * QVTi's MappingLoop overrides for concurrent dispatching.
-	 */
-	private @NonNull ReturnState doIterationCallBody(@NonNull CGIterationCallExp cgIterationCallExp) {
-		Iteration asIteration = cgIterationCallExp.getAsIteration();
-		FieldingAnalysisVisitor bodyAnalysisVisitor = getNestedVisitor(CGUtil.getReferredIteration(cgIterationCallExp));
+		FieldingAnalysisVisitor bodyAnalysisVisitor = asIteration.isIsValidating() ? context.mustBeCaught : mustBeThrownVisitor;
 		CGValuedElement cgBody = CGUtil.getBody(cgIterationCallExp);
 		boolean isValid = cgBody.isNonInvalid();
 		ReturnState returnState = bodyAnalysisVisitor.visit(cgBody);
 		assert isValid || returnState.isSuitableFor(asIteration.isIsValidating() ? ReturnState.IS_CAUGHT : ReturnState.IS_THROWN);
-		return returnState;
+		// Although individual body evaluations may be caught and accumulated, the accumulated result is thrown.
+		cgIterationCallExp.setCaught(false);
+		return ReturnState.IS_THROWN;
 	}
 
 	@Override
@@ -322,25 +305,15 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (asOperation.getName().contains("and")) {
 			getClass();			// XXX
 		}
-		FieldingAnalysisVisitor childVisitor = getNestedVisitor(cgOperation);// asOperation.isIsValidating() ? context.mustBeCaught : context.mustBeThrown;
+		FieldingAnalysisVisitor childVisitor = asOperation.isIsValidating() ? context.mustBeCaught : context.mustBeThrown;
 		ReturnState requiredChildReturn = childVisitor.requiredReturn();
 		for (CGValuedElement cgArgument : CGUtil.getArguments(cgOperationCallExp)) {
 			ReturnState returnState = childVisitor.visit(cgArgument);
 			assert returnState.isSuitableFor(requiredChildReturn) || cgArgument.isNonInvalid();
 			// ?? required / guarded - rewriteAsThrown
 		}
-	//	ReturnState returnState;
-	//	if (asOperation.isIsInvalidating()) {			// Explicitly may-be-invalid result
-	//		returnState = ReturnState.IS_THROWN;
-	//	}
-	//	else if (asOperation.isIsValidating()) {		// Explicitly must be caught input
-	//		returnState = requiredReturn;
-	//	}
-	//	else {											// Default could be accidentally bad Java
-	//		returnState = ReturnState.IS_THROWN;
-	//	}
-		cgOperationCallExp.setCaught(false);		//returnState.isCaught());
-		return /*asOperation.isIsInvalidating() ?*/ ReturnState.IS_THROWN /*: ReturnState.IS_VALID*/;								// ??? simplify like IterateExp
+		cgOperationCallExp.setCaught(false);
+		return ReturnState.IS_THROWN;
 	}
 
 	@Override

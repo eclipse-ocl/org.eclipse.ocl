@@ -404,6 +404,10 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgVariable.getInit());
 	}
 
+	public static @NonNull CGOperation getIteration(@NonNull CGIterationCallExp cgIterationCallExp) {
+		return ClassUtil.nonNullState(cgIterationCallExp.getReferredIteration());
+	}
+
 	public static @NonNull CGIterator getIterator(@NonNull CGIterationCallExp cgIterationCallExp, int i) {
 		return ClassUtil.nonNullState(cgIterationCallExp.getIterators().get(i));
 	}
