@@ -130,14 +130,14 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 				if (requiredReturn == ReturnState.IS_CAUGHT) {
 					if (!returnState.isSuitableFor(ReturnState.IS_CAUGHT)) {
 						insertCatch(cgValuedElement);
-						cgValuedElement.setCaught(true);
+					//	cgValuedElement.setCaught(true);
 						return ReturnState.IS_CAUGHT;
 					}
 				}
 				else if (requiredReturn == ReturnState.IS_THROWN) {
 					if (!returnState.isSuitableFor(ReturnState.IS_THROWN)) {
 						insertThrow(cgValuedElement);
-						cgValuedElement.setCaught(false);
+					//	cgValuedElement.setCaught(false);
 						return ReturnState.IS_THROWN;
 					}
 				}

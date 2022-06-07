@@ -28,6 +28,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -337,4 +338,14 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	 * @ordered
 	 */
 	protected Operation asOperation = AS_OPERATION_EDEFAULT;
+
+	@Override
+	public void setCaught(boolean isCaught) {
+		if (isCaught) {
+			if ((ast != null) && ((NamedElement)ast).getName().equals("first")) {
+				getClass();		// XXX
+			}
+		}
+		super.setCaught(isCaught);
+	}
 } //CGOperationCallExpImpl

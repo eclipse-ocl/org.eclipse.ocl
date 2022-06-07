@@ -265,7 +265,10 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("OrderedCollectionIndexOfOperation")) {
+				if (string.contains("THROWN_CAUGHT__lookupProperty")) {
+					getClass();		// XXX
+				}
+				if (string.contains("IF_CAUGHT_isEmpty")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
@@ -1015,9 +1018,8 @@ public class JavaStream
 		}
 		else {
 			TypeDescriptor actualTypeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
-			if (!cgValue.isNull()) {
-				boolean isCaught = cgValue.getNamedValue().isCaught();
-				if (isCaught || !requiredTypeDescriptor.isAssignableFrom(actualTypeDescriptor)) {
+			if (!cgValue.isNull() && !cgValue.getNamedValue().isCaught()) {
+				if (!requiredTypeDescriptor.isAssignableFrom(actualTypeDescriptor)) {
 					Boolean isRequired = null;
 					SubStream castBody = new SubStream() {
 						@Override
@@ -1025,7 +1027,7 @@ public class JavaStream
 							appendValueName(cgValue);
 						}
 					};
-					requiredTypeDescriptor.appendCast(this, isRequired, isCaught ? null : actualTypeDescriptor.getJavaClass(), castBody);
+					requiredTypeDescriptor.appendCast(this, isRequired, /*isCaught ?*/ null /*: actualTypeDescriptor.getJavaClass()*/, castBody);
 					return;
 				}
 				else if (requiredTypeDescriptor.isPrimitive()) { // && cgValue.isConstant() && (cgValue.getTypeId() == TypeId.BOOLEAN)) {
