@@ -43,7 +43,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 	}
 
 	@Override
-	public @NonNull Boolean visitCGClass(@NonNull CGClass cgClass) {
+	public @NonNull Boolean visitCGClass(@NonNull CGClass cgClass) {		// XXX override redundant ??
 		if (!isEmpty(cgClass)) {
 			String className = CGUtil.getName(cgClass);
 			CGPackage cgContainingPackage = cgClass.getContainingPackage();

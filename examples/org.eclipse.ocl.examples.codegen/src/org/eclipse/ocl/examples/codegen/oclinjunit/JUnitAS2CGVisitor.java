@@ -13,8 +13,11 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -26,6 +29,35 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 {
 	public JUnitAS2CGVisitor(@NonNull JUnitCodeGenerator codeGenerator) {
 		super(codeGenerator);
+	}
+
+	@Override
+	public @NonNull CGClass visitClass(@NonNull Class asClass) {
+		CGClass cgClass = analyzer.basicGetCGClass(asClass);
+		if (cgClass == null) {
+			cgClass = CGModelFactory.eINSTANCE.createCGClass();
+			cgClass.setAst(asClass);
+			cgClass.setName(asClass.getName());
+			analyzer.addCGClass(cgClass);
+		}
+		else {
+			assert cgClass.getAst() == asClass;
+		}
+		pushNameManager(cgClass);
+	/*	for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
+			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
+			cgClass.getInvariants().add(cgConstraint);
+		}
+		for (@NonNull Operation asOperation : ClassUtil.nullFree(asClass.getOwnedOperations())) {
+			CGOperation cgOperation = doVisit(CGOperation.class, asOperation);
+			cgClass.getOperations().add(cgOperation);
+		}
+		for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
+			CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
+			cgClass.getProperties().add(cgProperty);
+		} */
+		popNameManager();
+		return cgClass;
 	}
 
 	@Override

@@ -428,6 +428,10 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgOperationCallExp.getReferredOperation());
 	}
 
+	public static @NonNull List<@NonNull CGOperation> getOperationsList(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getOperations());
+	}
+
 	public static @NonNull Parameter getParameter(@NonNull CGParameter cgParameter) {
 		Element ast1 = cgParameter.getAst();
 		Element ast2 = ast1 instanceof ParameterVariable ? ((ParameterVariable)ast1).getRepresentedParameter() : ast1;
@@ -486,6 +490,10 @@ public class CGUtil
 
 	public static Iterable<@NonNull CGTuplePart> getParts(@NonNull CGTupleExp cgTupleExp) {
 		return ClassUtil.nullFree(cgTupleExp.getParts());
+	}
+
+	public static @NonNull List<@NonNull CGProperty> getPropertiesList(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getProperties());
 	}
 
 	public static @NonNull CGProperty getProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
