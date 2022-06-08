@@ -317,7 +317,7 @@ public abstract class NameManager
 		}
 
 		private boolean debugAllocatedName(@NonNull String name) {
-			if (name.startsWith("objectsOfKind")) {
+			if (name.contains("getCommonType")) {
 				getClass();			// XXX
 			}
 			return true;

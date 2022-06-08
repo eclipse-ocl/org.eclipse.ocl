@@ -152,7 +152,7 @@ public class NameResolution
 	}
 
 	protected boolean debugNameHint() {
-		if (nameHint.contains("manyDates")) {
+		if (nameHint.contains("getCommonType")) {
 			getClass();		// XXX
 		}
 		if ("IMPPROPid_d3atlExpression".equals(nameHint)) {
@@ -223,6 +223,9 @@ public class NameResolution
 	 */
 	public void resolveIn(@NonNull Context context, @NonNull CGValuedElement cgElement) {
 		assert !isUnresolved();
+		if (cgElement.eClass().getName().equals("CGFunction")) {
+			getClass();		// XXX
+		}
 		if (resolvedName == null) {
 		//	CGPackage cgPackage = CGUtil.basicGetContainingPackage(cgElement);
 		//	assert (cgPackage != null) || cgElement.isGlobal() || (cgElement instanceof CGLibraryOperation) || (cgElement instanceof CGNativeOperation);

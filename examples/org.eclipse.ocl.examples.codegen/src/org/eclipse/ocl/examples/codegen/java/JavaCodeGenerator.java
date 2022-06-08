@@ -47,7 +47,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -838,7 +837,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			}
 		}
 		if (cgElement instanceof CGValuedElement) {
-			if (cgElement instanceof CGNativeOperationCallExp) {
+			if (cgElement.eClass().getName().equals("CGFunction")) {
 				getClass();		// XXX
 			}
 			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;

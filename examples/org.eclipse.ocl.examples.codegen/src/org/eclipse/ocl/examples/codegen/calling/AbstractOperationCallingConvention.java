@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  *  AbstractOperationCallingConvention defines the default support for an operation declaration or call.
@@ -205,6 +206,13 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			isFirst = false;
 		}
 		js.append(")");
+	}
+
+	@Override
+	public void createCGBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull OCLExpression asExpression) {
+		CGValuedElement cgBody = as2cgVisitor.doVisit(CGValuedElement.class, asExpression);
+		cgOperation.setBody(cgBody);
+		System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
 	}
 
 	@Override

@@ -11,6 +11,8 @@
 package org.eclipse.ocl.examples.codegen.java;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -607,7 +609,9 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			if (needsBlankLine) {
 				js.append("\n");
 			}
-			for (CGProperty cgProperty : cgClass.getProperties()) {
+			List<CGProperty> cgProperties = new ArrayList<>(cgClass.getProperties());
+			Collections.sort(cgProperties, NameUtil.NAMEABLE_COMPARATOR);
+			for (CGProperty cgProperty : cgProperties) {
 				cgProperty.accept(this);
 			}
 			needsBlankLine = true;
@@ -616,7 +620,9 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	}
 
 	protected boolean doClassMethods(@NonNull CGClass cgClass, boolean needsBlankLine) {
-		for (CGOperation cgOperation : cgClass.getOperations()) {
+		List<CGOperation> cgOperations = new ArrayList<>(cgClass.getOperations());
+		Collections.sort(cgOperations, NameUtil.NAMEABLE_COMPARATOR);
+		for (CGOperation cgOperation : cgOperations) {
 			if (needsBlankLine) {
 				js.append("\n");
 			}
@@ -631,7 +637,9 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	}
 
 	protected boolean doNestedClasses(@NonNull CGClass cgClass, boolean needsBlankLine) {
-		for (CGClass cgNestedClass : cgClass.getClasses()) {
+		List<CGClass> cgClasses = new ArrayList<>(cgClass.getClasses());
+		Collections.sort(cgClasses, NameUtil.NAMEABLE_COMPARATOR);
+		for (CGClass cgNestedClass : cgClasses) {
 			if (needsBlankLine) {
 				js.append("\n");
 			}

@@ -170,8 +170,12 @@ public class CodeGenAnalyzer
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		CGClass old = asClass2cgClass.put(asClass, cgClass);
 		assert old == null;
-		assert cgRootClass != null;
-		cgRootClass.getClasses().add(cgClass);
+		if (cgRootClass == null) {
+			cgRootClass = cgClass;
+		}
+		else {
+			cgRootClass.getClasses().add(cgClass);
+		}
 	}
 
 	public void addCGOperation(@NonNull CGOperation cgOperation) {

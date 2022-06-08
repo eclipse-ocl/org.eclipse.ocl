@@ -998,9 +998,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
 		pushNameManager(cgFinalOperation);
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
-			CGValuedElement cgBody = doVisit(CGValuedElement.class, ((ExpressionInOCL)specification).getOwnedBody());
-			cgFinalOperation.setBody(cgBody);
-			System.out.println("setBody " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + cgBody);
+			cgFinalOperation.getCallingConvention().createCGBody(this, cgFinalOperation, PivotUtil.getOwnedBody((ExpressionInOCL)specification));
 		}
 		popNameManager();
 		CGOperation cgVirtualOperation = generateOperationDeclaration(null, asOperation, true);
@@ -1008,9 +1006,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
 			pushNameManager(cgVirtualOperation);
 			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
-				CGValuedElement cgBody = doVisit(CGValuedElement.class, ((ExpressionInOCL)specification).getOwnedBody());
-				cgVirtualOperation.setBody(cgBody);
-				System.out.println("setBody " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + cgBody);
+				cgVirtualOperation.getCallingConvention().createCGBody(this, cgVirtualOperation, PivotUtil.getOwnedBody((ExpressionInOCL)specification));
 			}
 			popNameManager();
 		}

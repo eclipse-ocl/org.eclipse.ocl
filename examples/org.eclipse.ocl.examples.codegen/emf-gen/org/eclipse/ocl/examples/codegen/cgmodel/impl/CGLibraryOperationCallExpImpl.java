@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -251,6 +252,12 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public @NonNull CGValuedElement getSecondArgument() {
 		return ClassUtil.nonNullState(getArguments().get(1));
+	}
+
+	@Override
+	public void setReferredOperation(CGOperation newReferredOperation) {
+	//	assert (newReferredOperation == null) || !newReferredOperation.eClass().getName().equals("CGFunction");		// XXX
+		super.setReferredOperation(newReferredOperation);
 	}
 
 } //CGLibraryOperationCallExpImpl
