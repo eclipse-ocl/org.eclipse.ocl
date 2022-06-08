@@ -33,9 +33,15 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 public interface OperationCallingConvention extends CallingConvention
 {
 	/**
-	 * Create the body fpr an CGOperation.
+	 * Create the body for an CGOperation.
 	 */
+	@Deprecated
 	void createCGBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull OCLExpression asExpression);
+
+	/**
+	 * Create the body for an CGOperation.
+	 */
+	void createCGBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation);
 
 	/**
 	 * Create the appropriate CGOperation less parameters and body.

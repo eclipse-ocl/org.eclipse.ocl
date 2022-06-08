@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  AbstractOperationCallingConvention defines the default support for an operation declaration or call.
@@ -209,7 +210,21 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
+	public void createCGBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		ExpressionInOCL asSpecification = (ExpressionInOCL)asOperation.getBodyExpression();
+		OCLExpression asExpression = PivotUtil.getOwnedBody(asSpecification);
+		CGValuedElement cgBody = as2cgVisitor.doVisit(CGValuedElement.class, asExpression);
+		cgOperation.setBody(cgBody);
+		System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
+	}
+
+
+	@Override @Deprecated
 	public void createCGBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull OCLExpression asExpression) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		ExpressionInOCL asSpecification = (ExpressionInOCL)asOperation.getBodyExpression();
+		assert asExpression == asSpecification.getOwnedBody();
 		CGValuedElement cgBody = as2cgVisitor.doVisit(CGValuedElement.class, asExpression);
 		cgOperation.setBody(cgBody);
 		System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
@@ -285,6 +300,13 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 	}
 
+@Override
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor,
+			@NonNull JavaStream js,
+			@NonNull CGOperationCallExp cgOperationCallExp) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 //	@Override
 //	public @NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
 //		return createCGOperation(as2cgVisitor, asSourceType, asOperation);
