@@ -785,11 +785,15 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	}
 
 	protected boolean isEmpty(@NonNull CGClass cgClass) {
-		if (cgClass.getOperations().size() > 0) {
-			return false;
+		for (CGOperation cgOperation : cgClass.getOperations()) {
+			if (cgOperation.getCallingConvention().needsGeneration()) {
+				return false;
+			}
 		}
-		if (cgClass.getProperties().size() > 0) {
-			return false;
+		for (CGProperty cgProperty : cgClass.getProperties()) {
+			if (cgProperty.getCallingConvention().needsGeneration()) {
+				return false;
+			}
 		}
 		List<@NonNull CGClass> cgClasses = CGUtil.getClassesList(cgClass);
 		if (cgClasses.size() > 0) {

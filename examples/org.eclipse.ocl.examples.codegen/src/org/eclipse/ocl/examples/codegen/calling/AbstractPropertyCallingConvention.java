@@ -73,7 +73,16 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
-		js.append("generateJavaDeclaration " + this);
+		Property asProperty = CGUtil.getAST(cgProperty);
+		js.append("«");
+		js.append(getClass().getSimpleName());
+		js.append(".generateJavaDeclaration ");
+		js.append(asProperty.getOwningClass().getOwningPackage().getName());
+		js.append("::");
+		js.append(asProperty.getOwningClass().getName());
+		js.append("::");
+		js.append(asProperty.getName());
+		js.append("»\n");
 		return true;
 	//	throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".generateJavaDeclaration");	// A number of Property Calling Conventions are call-only
 	}
