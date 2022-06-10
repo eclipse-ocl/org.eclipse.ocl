@@ -70,7 +70,8 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 		Method method = ((JavaLanguageSupport.JavaNativeOperation)asOperation.getImplementation()).getMethod();
 		CGNativeOperationCallExp cgNativeOperationCallExp = as2cgVisitor.getAnalyzer().createCGNativeOperationCallExp(method, this);
 	//	cgNativeOperationCallExp.setThisIsSelf(true);
-		init(as2cgVisitor, cgNativeOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+		initCallExp(as2cgVisitor, cgNativeOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+		initCallArguments(as2cgVisitor, cgNativeOperationCallExp);
 		if ((cgSource != null) && !Modifier.isStatic(method.getModifiers())) {
 			cgNativeOperationCallExp.setCgThis(cgSource);
 		}

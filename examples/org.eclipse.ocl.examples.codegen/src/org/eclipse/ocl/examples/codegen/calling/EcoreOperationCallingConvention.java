@@ -116,15 +116,16 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		try {
 			genModelHelper.getOperationAccessor(asOperation);
-			CGEcoreOperationCallExp cgEcoreOperationCallExp = CGModelFactory.eINSTANCE.createCGEcoreOperationCallExp();
-			cgEcoreOperationCallExp.setEOperation(eOperation);
 			Boolean ecoreIsRequired = codeGenerator.isNonNull(asOperationCallExp);
 			if (ecoreIsRequired != null) {
 				isRequired = ecoreIsRequired;
 			}
+			CGEcoreOperationCallExp cgEcoreOperationCallExp = CGModelFactory.eINSTANCE.createCGEcoreOperationCallExp();
+			cgEcoreOperationCallExp.setEOperation(eOperation);
+			initCallExp(as2cgVisitor, cgEcoreOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		//	cgEcoreOperationCallExp.setCgThis(cgSource);
 			cgEcoreOperationCallExp.getArguments().add(cgSource);
-			init(as2cgVisitor, cgEcoreOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+			initCallArguments(as2cgVisitor, cgEcoreOperationCallExp);
 			return cgEcoreOperationCallExp;
 		} catch (GenModelException e) {
 			throw new IllegalStateException(e);

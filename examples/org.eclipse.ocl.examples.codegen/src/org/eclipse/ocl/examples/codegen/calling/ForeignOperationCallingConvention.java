@@ -123,11 +123,12 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
+		initCallExp(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
 		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
 		addExpressionInOCLParameters(as2cgVisitor, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
-		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+		initCallArguments(as2cgVisitor, cgForeignOperationCallExp);
 		return cgForeignOperationCallExp;
 	}
 

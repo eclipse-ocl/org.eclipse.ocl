@@ -737,7 +737,8 @@ public class PivotUtil
 		return pivotProperty;
 	}
 
-	public static @NonNull PropertyCallExp createPropertyCallExp(@NonNull OCLExpression asSource, @NonNull Property asProperty) {
+	public static @NonNull PropertyCallExp createPropertyCallExp(@Nullable OCLExpression asSource, @NonNull Property asProperty) {
+		assert (asSource == null) == asProperty.isIsStatic();
 		PropertyCallExp asChild = PivotFactory.eINSTANCE.createPropertyCallExp();
 		asChild.setOwnedSource(asSource);
 		asChild.setReferredProperty(asProperty);

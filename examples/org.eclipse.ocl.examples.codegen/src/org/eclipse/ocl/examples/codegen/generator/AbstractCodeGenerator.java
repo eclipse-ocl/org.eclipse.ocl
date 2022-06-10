@@ -48,7 +48,6 @@ import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConventio
 import org.eclipse.ocl.examples.codegen.calling.VolatileOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
-import org.eclipse.ocl.examples.codegen.library.NativeProperty;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
@@ -76,6 +75,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.Envir
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.NativeOperation;
+import org.eclipse.ocl.pivot.library.NativeProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionElementTypeProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionLowerProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty;

@@ -25,11 +25,11 @@ import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
-import org.eclipse.ocl.examples.codegen.library.NativeProperty;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.library.NativeProperty;
 
 /**
  *  NativePropertyCallingConvention defines the support for the call of a property realized by native code.
@@ -70,24 +70,34 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
-		CGValuedElement source = cg2javaVisitor.getExpression(cgPropertyCallExp.getSource());
-		//
-		if (!js.appendLocalStatements(source)) {
-			return false;
+		CGValuedElement cgSource = cgPropertyCallExp.getSource();
+		Property asProperty = cgPropertyCallExp.getAsProperty();
+		if (cgSource == null) {
+			assert asProperty.isIsStatic();
+			js.appendClassReference(null, asProperty.getImplementationClass());
+			js.append(".");
+			js.append(asProperty.getName());
 		}
-		//
-		js.appendDeclaration(cgPropertyCallExp);
-		js.append(" = ");
-		SubStream castBody = new SubStream() {
-			@Override
-			public void append() {
-				js.appendValueName(source);
-				js.append(".");
-				js.append(cgPropertyCallExp.getAsProperty().getName());
+		else {
+			assert !asProperty.isIsStatic();
+			CGValuedElement source  = cg2javaVisitor.getExpression(cgSource);
+			if (!js.appendLocalStatements(source)) {
+				return false;
 			}
-		};
-		js.appendClassCast(cgPropertyCallExp, castBody);
-		js.append(";\n");
+			//
+			js.appendDeclaration(cgPropertyCallExp);
+			js.append(" = ");
+			SubStream castBody = new SubStream() {
+				@Override
+				public void append() {
+					js.appendValueName(source);
+					js.append(".");
+					js.append(asProperty.getName());
+				}
+			};
+			js.appendClassCast(cgPropertyCallExp, castBody);
+			js.append(";\n");
+		}
 		return true;
 	}
 

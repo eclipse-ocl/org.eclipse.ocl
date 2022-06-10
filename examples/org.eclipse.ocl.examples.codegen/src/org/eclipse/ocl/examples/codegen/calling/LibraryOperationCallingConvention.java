@@ -29,7 +29,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.operation.LibraryOperationHandler;
@@ -83,35 +82,14 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+	//	CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 	//	System.out.println("createCGOperationCallExp: to " + asOperation);
 		assert (cgSource == null) == asOperation.isIsStatic();
-		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-	//	assert (cgSource == null) == Modifier.isStatic(jMethod.getModifiers());
-		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
-		cgOperationCallExp.setLibraryOperation(libraryOperation);
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
-		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
-			if (jParameterType == Executor.class) {
-				CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
-				cgArguments.add(analyzer.createCGVariableExp(executorVariable));
-			}
-			else if (jParameterType == TypeId.class) {
-				addTypeIdArgument(as2cgVisitor, cgOperationCallExp, asOperationCallExp.getTypeId());
-			}
-			else if (jParameterType == Object.class) {
-				if (cgSource != null) {
-					cgArguments.add(cgSource);
-				}
-				break;
-			}
-			else {
-				throw new UnsupportedOperationException();
-			}
-		}
 		boolean isRequired = cgOperation.isRequired();
-		init(as2cgVisitor, cgOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+		CGLibraryOperationCallExp cgOperationCallExp = createCGMethodOperationCallExp(as2cgVisitor, libraryOperation, cgSource, asOperationCallExp);
+		initCallExp(as2cgVisitor, cgOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+		initCallArguments(as2cgVisitor, cgOperationCallExp);
 		return cgOperationCallExp;
 	}
 

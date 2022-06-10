@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +42,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -74,7 +77,6 @@ import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 
@@ -366,6 +368,17 @@ public class CodeGenAnalyzer
 		cgNativeOperationCallExp.setReferredOperation(cgOperation);
 	//	callingConvention.createCGOperationCallExp(null, cgOperation, null, cgOperation, null)
 		return cgNativeOperationCallExp;
+	}
+
+	public @NonNull CGNativePropertyCallExp createCGNativePropertyCallExp(@NonNull Field field, @NonNull PropertyCallingConvention callingConvention) {		// XXX @NonNull
+	//	assert method != null;
+		CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
+		cgNativePropertyCallExp.setField(field);		// Use cc
+		Property asProperty = getNativeProperty(field, callingConvention);
+		CGProperty cgProperty = getCGProperty(asProperty);
+		cgNativePropertyCallExp.setReferredProperty(cgProperty);
+	//	callingConvention.createCGOperationCallExp(null, cgOperation, null, cgOperation, null)
+		return cgNativePropertyCallExp;
 	}
 
 	public @NonNull CGNull createCGNull() {
@@ -660,8 +673,15 @@ public class CodeGenAnalyzer
 	/*
 	 * Return a native operation for method flattening the signature into the name.
 	 */
+	public @NonNull Operation getNativeOperation(@NonNull Method method) {
+		return getJavaLanguageSupport().getNativeOperation(method);
+	}
+
+	/*
+	 * Return a native operation for method flattening the signature into the name.
+	 */
 	public @NonNull Operation getNativeOperation(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {
-		Operation asOperation = getJavaLanguageSupport().getNativeOperation(method);
+		Operation asOperation = getNativeOperation(method);
 		CGOperation cgOperation = asOperation2cgOperation.get(asOperation);
 		if (cgOperation == null) {
 			CGNativeOperation cgNativeOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
@@ -689,6 +709,34 @@ public class CodeGenAnalyzer
 		return asOperation;
 	}
 
+	/*
+	 * Return a native property for field.
+	 */
+	public @NonNull Property getNativeProperty(@NonNull Field field) {
+		return getJavaLanguageSupport().getNativeProperty(field);
+	}
+
+	/*
+	 * Return a native property for field.
+	 */
+	public @NonNull Property getNativeProperty(@NonNull Field field, @NonNull PropertyCallingConvention callingConvention) {
+		Property asProperty = getNativeProperty(field);
+		CGProperty cgProperty = asProperty2cgProperty.get(asProperty);
+		if (cgProperty == null) {
+			CGNativeProperty cgNativeProperty = CGModelFactory.eINSTANCE.createCGNativeProperty();
+			cgNativeProperty.setAst(asProperty);
+			TypeId asTypeId = asProperty.getTypeId();
+			globalNameManager.getNameResolution(cgNativeProperty);
+			cgNativeProperty.setTypeId(getCGTypeId(asTypeId));
+			cgNativeProperty.setRequired(asProperty.isIsRequired());
+			cgNativeProperty.setCallingConvention(callingConvention);
+			cgNativeProperty.setAst(asProperty);
+			NestedNameManager nameManager = globalNameManager.createNestedNameManager(null, cgNativeProperty);
+			addCGProperty(cgNativeProperty);		// XXX Use installProperty and then inline addCGProperty
+		}
+		return asProperty;
+	}
+
 	public boolean hasOclVoidOperation(@NonNull OperationId operationId) {
 		PivotMetamodelManager metamodelManager = codeGenerator.getEnvironmentFactory().getMetamodelManager();
 		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclVoidType());
@@ -707,7 +755,7 @@ public class CodeGenAnalyzer
 	public @NonNull CGOperation installOperation(@NonNull Operation asOperation, @NonNull CGOperation cgOperation, @NonNull OperationCallingConvention callingConvention) {
 		assert cgOperation.getAst() == null;
 		assert cgOperation.getCallingConvention() == null;
-		System.out.println("installOperation " + callingConvention.getClass().getSimpleName() + " " + NameUtil.debugSimpleName(cgOperation) + " " + NameUtil.debugSimpleName(asOperation) + " : " + asOperation);
+//		System.out.println("installOperation " + callingConvention.getClass().getSimpleName() + " " + NameUtil.debugSimpleName(cgOperation) + " " + NameUtil.debugSimpleName(asOperation) + " : " + asOperation);
 		cgOperation.setAst(asOperation);
 		cgOperation.setTypeId(getCGTypeId(asOperation.getTypeId()));
 		cgOperation.setRequired(asOperation.isIsRequired());

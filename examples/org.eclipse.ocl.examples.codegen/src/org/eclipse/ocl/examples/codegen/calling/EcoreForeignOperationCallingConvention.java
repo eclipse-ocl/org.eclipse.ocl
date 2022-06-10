@@ -59,13 +59,14 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
+		initCallExp(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getArguments();
 		CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
 		cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 		if (cgSource != null) {
 			cgArguments.add(cgSource);
 		}
-		init(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+		initCallArguments(as2cgVisitor, cgForeignOperationCallExp);
 		return cgForeignOperationCallExp;
 	}
 }

@@ -20,7 +20,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
@@ -32,12 +31,6 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
  */
 public interface OperationCallingConvention extends CallingConvention
 {
-	/**
-	 * Create the body for an CGOperation.
-	 */
-	@Deprecated
-	void createCGBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull OCLExpression asExpression);
-
 	/**
 	 * Create the body for an CGOperation.
 	 */

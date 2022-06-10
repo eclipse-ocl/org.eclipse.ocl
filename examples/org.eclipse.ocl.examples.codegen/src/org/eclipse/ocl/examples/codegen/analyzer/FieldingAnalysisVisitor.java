@@ -36,7 +36,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /*
  * An earlier version of this analysis determined variables accessed outside the prevailing containment tree
@@ -193,7 +192,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull ReturnState visitCGIsEqualExp(@NonNull CGIsEqualExp object) {
 		String s = String.valueOf(object.getAst());
-		System.out.println(s);
+	//	System.out.println(s);
 		if (s.contains("indexOf")) {
 			getClass();		// XXX
 		}
@@ -227,7 +226,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		CGOperation cgIteration = CGUtil.getIteration(cgIterationCallExp);
 		Operation asIteration = CGUtil.getAST(cgIteration);
 		String s = String.valueOf(cgIterationCallExp.getAst());
-		System.out.println("\t" + s);
+	//	System.out.println("\t" + s);
 		if (s.contains("select(")) {
 			getClass();		// XXX
 		}
@@ -275,7 +274,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull ReturnState visitCGOperation(@NonNull CGOperation cgOperation) {
-		System.out.println(NameUtil.debugSimpleName(cgOperation));
+	//	System.out.println(NameUtil.debugSimpleName(cgOperation));
 		for (CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {		// XXX use callingConvention
 			visit(cgParameter);
 		}
@@ -284,7 +283,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 			return requiredReturn;
 		}
 		String s = String.valueOf(cgBody.getAst());
-		System.out.println("    " + s);
+	//	System.out.println("    " + s);
 		if (s.contains("forAll")) {
 			getClass();		// XXX
 		}

@@ -230,12 +230,12 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 
 	/**
 	 * {@inheritDoc}
-	 * @generated
+	 * @generated NOT XXX
 	 */
 	@Override
 	public boolean isNonInvalid() {
 		CGValuedElement source = getSource();
-		return source.isNonNull() && source.isNonInvalid();
+		return ((asProperty != null) && asProperty.isIsStatic()) || (source.isNonNull() && source.isNonInvalid());
 	}
 
 	/**

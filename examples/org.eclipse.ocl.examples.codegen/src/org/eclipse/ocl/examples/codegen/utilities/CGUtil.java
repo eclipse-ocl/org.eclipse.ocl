@@ -62,6 +62,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.Property;
@@ -275,6 +276,10 @@ public class CGUtil
 
 	public static @NonNull Operation getAST(@NonNull CGOperation cgOperation) {
 		return ClassUtil.nonNullState((Operation)cgOperation.getAst());
+	}
+
+	public static @NonNull OperationCallExp getAST(@NonNull CGOperationCallExp cgOperationCallExp) {
+		return ClassUtil.nonNullState((OperationCallExp)cgOperationCallExp.getAst());
 	}
 
 	public static @NonNull /*ParameterVariable*/ VariableDeclaration getAST(@NonNull CGParameter cgParameter) {

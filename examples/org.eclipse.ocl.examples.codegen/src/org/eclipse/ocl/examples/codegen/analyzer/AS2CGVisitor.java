@@ -446,7 +446,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				}
 				OperationCallingConvention callingConvention = context.getCallingConvention(asOperation, requireFinal);
 				cgOperation = callingConvention.createCGOperation(this, asSourceType, asOperation);
-				System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " : " + asOperation);
+//				System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " : " + asOperation);
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
 //				classNameManager.declarePreferredName(cgOperation);
@@ -995,18 +995,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		LanguageExpression specification = asOperation.getBodyExpression();
 		CGOperation cgFinalOperation = generateOperationDeclaration(null, asOperation, true);
-		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
+//		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
 		pushNameManager(cgFinalOperation);
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
-			cgFinalOperation.getCallingConvention().createCGBody(this, cgFinalOperation, PivotUtil.getOwnedBody((ExpressionInOCL)specification));
+			cgFinalOperation.getCallingConvention().createCGBody(this, cgFinalOperation);
 		}
 		popNameManager();
 		CGOperation cgVirtualOperation = generateOperationDeclaration(null, asOperation, true);
 		if (cgVirtualOperation != cgFinalOperation) {
-			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
+//			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
 			pushNameManager(cgVirtualOperation);
 			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
-				cgVirtualOperation.getCallingConvention().createCGBody(this, cgVirtualOperation, PivotUtil.getOwnedBody((ExpressionInOCL)specification));
+				cgVirtualOperation.getCallingConvention().createCGBody(this, cgVirtualOperation);
 			}
 			popNameManager();
 		}
