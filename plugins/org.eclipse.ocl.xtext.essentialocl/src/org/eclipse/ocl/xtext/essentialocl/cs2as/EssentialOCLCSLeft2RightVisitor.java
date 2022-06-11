@@ -1183,11 +1183,11 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						if ((parameters != null) && argIndex < parameters.size()) {
 							Parameter parameter = parameters.get(argIndex);
 							if (parameter.isIsTypeof() || (parameter.getTypeId() == standardLibrary.getOclTypeType().getTypeId())) {
-								isType = true;
 								NameExpCS csNameExp = (NameExpCS)csName;
 								PathNameCS csPathName = csNameExp.getOwnedPathName();
 								Type type = context.getConverter().lookupType(csNameExp, ClassUtil.nonNullState(csPathName));
 								if (type != null) {
+									isType = true;
 									arg = resolveTypeExp(csNameExp, type);
 								}
 							}

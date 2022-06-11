@@ -578,6 +578,21 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	}
 
 	/**
+	 * Tests the oclIsKindOf() operator.
+	 */
+	@Test public void test_oclIsKindOf_580139() {
+		MyOCL ocl = createOCL();
+		//
+		ocl.assertQueryFalse(null, "let t : ocl::OclType = Integer in 4.0.oclIsKindOf(t)");
+		ocl.assertQueryTrue(null, "let t : ocl::OclType = Integer in 4.oclIsKindOf(t)");
+		ocl.assertQueryTrue(null, "let t = Real in 4.oclIsKindOf(t)");
+		ocl.assertQueryFalse(null, "let t = if self <> null then Real else Integer endif in true.oclIsKindOf(t)");
+		ocl.assertQueryFalse(null, "let t = Real in true.oclIsKindOf(t)");
+		ocl.assertQueryTrue(null, "let t = UnlimitedNatural in *.oclIsKindOf(t)");
+		ocl.dispose();
+	}
+
+	/**
 	 * Tests the oclIsModelKindOf() operator.
 	 */
 	@Test public void test_oclIsModelKindOf() {

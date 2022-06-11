@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.eclipse.ocl</groupId>
     <artifactId>org.eclipse.ocl.releng.tycho</artifactId>
-    <version>6.17.1-SNAPSHOT</version>
+    <version>6.17.2-SNAPSHOT</version>
     <relativePath>../releng/org.eclipse.ocl.releng.tycho</relativePath>
   </parent>
   <artifactId>org.eclipse.ocl.tests-folder</artifactId>
