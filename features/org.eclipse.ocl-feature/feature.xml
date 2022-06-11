@@ -13,7 +13,7 @@
 <feature
       id="org.eclipse.ocl"
       label="%featureName"
-      version="3.17.1.qualifier"
+      version="3.17.2.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.ocl.ecore"
       license-feature="org.eclipse.license"

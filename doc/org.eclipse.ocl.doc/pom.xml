@@ -20,7 +20,7 @@
   <parent>
     <groupId>org.eclipse.ocl</groupId>
     <artifactId>org.eclipse.ocl.doc-folder</artifactId>
-    <version>6.17.1-SNAPSHOT</version>
+    <version>6.17.2-SNAPSHOT</version>
   </parent>
   <profiles>
     <profile>
