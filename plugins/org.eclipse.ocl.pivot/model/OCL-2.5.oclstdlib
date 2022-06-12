@@ -1021,6 +1021,14 @@ abstract type OclElement conformsTo OclAny {
 --		post IsType: result.oclIsKindOf(type);
 	}
 	/**
+	Returns the application instances of the stereotypes that conform to stereotype applied to this element.
+	*/
+	operation oclExtension(stereotype : OclStereotype[1]) : Set(OclElement[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation';
+	/**
+	Returns the application instances of all stereotypes applied to this element.
+	*/
+	operation oclExtensions() : Set(OclElement[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation';
+	/**
 	Returns the object for which self is a composed content or null if there is no such object.
 	*/
 	operation oclContainer() : OclElement[?] => 'org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation';
@@ -1904,6 +1912,9 @@ type UnlimitedNatural : PrimitiveType conformsTo OclComparable {
 	Converts oclText[self] to an Integer value unless oclText[self] is e[unlimited] in which case oclText[self] is converted to oclText[null].
 	**/
 	operation toInteger() : Integer[?] => 'org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation';
+}
+
+type Stereotype conformsTo OclStereotype {
 }
 
 }

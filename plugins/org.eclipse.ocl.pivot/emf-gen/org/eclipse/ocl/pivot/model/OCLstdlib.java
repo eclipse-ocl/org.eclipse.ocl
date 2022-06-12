@@ -317,6 +317,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Class _OclType = createClass(OCLstdlibPackage.Literals.OCL_TYPE);
 		private final @NonNull VoidType _OclVoid = createVoidType(OCLstdlibPackage.Literals.OCL_VOID);
 		private final @NonNull Class _State = createClass("State");
+		private final @NonNull Class _Stereotype = createClass("Stereotype");
 		private final @NonNull Class _Type = createClass("Type");
 
 		private final @NonNull PrimitiveType _Boolean = createPrimitiveType(OCLstdlibPackage.Literals.BOOLEAN);
@@ -616,6 +617,9 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type = _State);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclState);
+			ownedClasses.add(type = _Stereotype);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclStereotype);
 			ownedClasses.add(type = _Type);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclType);
@@ -1569,6 +1573,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclElement_oclAsModelType = createOperation("oclAsModelType", tp_OclElement_oclAsModelType_TT, "org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE, tp_OclElement_oclAsModelType_TT);
 		private final @NonNull Operation op_OclElement_oclContainer = createOperation("oclContainer", _OclElement, "org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclContents = createOperation("oclContents", _Set_OclElement_NullFree, "org.eclipse.ocl.pivot.library.classifier.ClassifierOclContentsOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierOclContentsOperation.INSTANCE);
+		private final @NonNull Operation op_OclElement_oclExtension = createOperation("oclExtension", _Set_OclElement_NullFree, "org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation.INSTANCE);
+		private final @NonNull Operation op_OclElement_oclExtensions = createOperation("oclExtensions", _Set_OclElement_NullFree, "org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclIsModelKindOf = createOperation("oclIsModelKindOf", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclModelType = createOperation("oclModelType", _OclSelf, "org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclModelTypes = createOperation("oclModelTypes", _Set_OclSelf, "org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation.INSTANCE);
@@ -2140,6 +2146,10 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_OclElement_oclContainer);
 			operation.setIsRequired(false);
 			ownedOperations.add(operation = op_OclElement_oclContents);
+			ownedOperations.add(operation = op_OclElement_oclExtension);
+			ownedParameters = operation.getOwnedParameters();
+			ownedParameters.add(parameter = createParameter("stereotype", _OclStereotype, true));
+			ownedOperations.add(operation = op_OclElement_oclExtensions);
 			ownedOperations.add(operation = op_OclElement_oclIsModelKindOf);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("type", _OclType, true));
@@ -3444,6 +3454,8 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_OclElement_oclContainer, "Returns the object for which self is a composed content or null if there is no such object.");
 			installComment(pr_OclElement_oclContents, "The composed contents of self.");
 			installComment(op_OclElement_oclContents, "Returns the composed contents of self.");
+			installComment(op_OclElement_oclExtension, "Returns the application instances of the stereotypes that conform to stereotype applied to this element.");
+			installComment(op_OclElement_oclExtensions, "Returns the application instances of all stereotypes applied to this element.");
 			installComment(op_OclElement_oclIsModelKindOf, "Evaluates to oclText[true] if the type of oclText[self] conforms to the model type oclText[type].\nThat is, oclText[self] is of type oclText[type] or a subtype of oclText[type].\n\nThe return is normally oclText[false] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
 			installComment(op_OclElement_oclModelType, "Evaluates to the most derived model type of which oclText[self] is currently an instance. If oclText[self] is an instance of a multiply\nclassified model type, the return is the most derived type of the current classification which is established\nby an oclText[oclAsModelType()] call.\n\nThe return is normally oclText[invalid] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
 			installComment(op_OclElement_oclModelTypes, "Evaluates to all of the most derived model types of which oclText[self] is an instance. The return from oclText[oclModelTypes()]\nis normally equivalent to that from oclText[oclModelType()] unless oclText[self] is an instance of multiply classified model type.\n\nThe return is normally oclText[invalid] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");

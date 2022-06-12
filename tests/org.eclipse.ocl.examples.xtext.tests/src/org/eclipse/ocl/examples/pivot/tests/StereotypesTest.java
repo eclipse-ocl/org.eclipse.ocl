@@ -53,6 +53,8 @@ import org.eclipse.uml2.uml.util.UMLUtil;
 import org.junit.After;
 import org.junit.Before;
 
+import com.google.common.collect.Sets;
+
 /**
  * Tests for stereotype expressions.
  */
@@ -384,6 +386,26 @@ public class StereotypesTest extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.mm.umlGermanClass, umlBold, "self.extension_Internationalized.face");
 		ocl.assertQueryEquals(ocl.mm.asGermanClass, asBold/*umlBold*/, "self.extension_Internationalized.face()");
 		ocl.assertQueryEquals(ocl.mm.umlGermanClass, umlBold, "self.extension_Internationalized.face()");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests M2 parsing and M1 evaluation using enumeration.
+	 */
+	public void test_extensions_580136() throws Exception {
+		MyOCL ocl = createOCL();
+	//	EnumerationLiteral asBold = ocl.mmm.asFace.getEnumerationLiteral("BOLD");
+	//	org.eclipse.uml2.uml.EnumerationLiteral umlBold = ocl.mmm.umlFace.getOwnedLiteral("BOLD");
+		//
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mm.umlEnglishClassInEnglish), "self.oclExtension(InternationalizedProfile::Internationalized.oclAsType(ocl::OclStereotype))");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mm.umlEnglishClassInEnglish), "self.oclExtensions()");
+	//ok	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mm.umlEnglishClassInEnglish, "self.extension_Internationalized");
+	//ok	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()");
+	//ok	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()->select(true)");
+	//bad missing boxing normalization for loop compare	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()->select(s | s = InternationalizedProfile::InEnglish)");
+	//ok	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(), "self.getAppliedStereotypes()->selectByKind(InternationalizedProfile::Internationalized)");	// wrong metalevel
+
+
 		ocl.dispose();
 	}
 }

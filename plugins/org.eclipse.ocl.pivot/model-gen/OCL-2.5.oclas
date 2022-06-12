@@ -1326,6 +1326,15 @@
           type="#U6ALG">
         <ownedComments body="Returns the composed contents of self."/>
       </ownedOperations>
+      <ownedOperations xmi:id="+IPyW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation" name="oclExtension"
+          type="#U6ALG">
+        <ownedComments body="Returns the application instances of the stereotypes that conform to stereotype applied to this element."/>
+        <ownedParameters name="stereotype" type="#ZNWlJ"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="omW7u" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation" name="oclExtensions"
+          type="#U6ALG">
+        <ownedComments body="Returns the application instances of all stereotypes applied to this element."/>
+      </ownedOperations>
       <ownedOperations xmi:id="hgQiG" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation" name="oclIsModelKindOf"
           type="#XEMMs">
         <ownedComments body="Evaluates to oclText[true] if the type of oclText[self] conforms to the model type oclText[type].&#xA;That is, oclText[self] is of type oclText[type] or a subtype of oclText[type].&#xA;&#xA;The return is normally oclText[false] since few model elements have model types. UML's InstanceSpecification::classifier provides&#xA;a multiple classification for a model type.&#xA;"/>
@@ -2175,6 +2184,7 @@
         </ownedDetails>
       </ownedAnnotations>
     </ownedClasses>
+    <ownedClasses xmi:id="hRA+k" name="Stereotype" superClasses="#ZNWlJ"/>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="AlwVZ" name="String" superClasses="#BEwMu #D4eXY">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">

@@ -78,6 +78,7 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -1182,7 +1183,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					if (csName instanceof NameExpCS) {
 						if ((parameters != null) && argIndex < parameters.size()) {
 							Parameter parameter = parameters.get(argIndex);
-							if (parameter.isIsTypeof() || (parameter.getTypeId() == standardLibrary.getOclTypeType().getTypeId())) {
+							if (parameter.isIsTypeof() || (parameter.getTypeId() == TypeId.OCL_TYPE) || (parameter.getTypeId() == TypeId.OCL_STEREOTYPE)) {
 								NameExpCS csNameExp = (NameExpCS)csName;
 								PathNameCS csPathName = csNameExp.getOwnedPathName();
 								Type type = context.getConverter().lookupType(csNameExp, ClassUtil.nonNullState(csPathName));
