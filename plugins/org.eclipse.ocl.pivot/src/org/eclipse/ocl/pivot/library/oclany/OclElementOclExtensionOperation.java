@@ -15,13 +15,14 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * OclElementOclExtensionOperation realises the OclElement::oclExtension() library operation.
@@ -33,10 +34,11 @@ public class OclElementOclExtensionOperation extends AbstractBinaryOperation
 	public static final @NonNull OclElementOclExtensionOperation INSTANCE = new OclElementOclExtensionOperation();
 
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
+	public @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
 		assert sourceValue != null;
-		Type stereotype = ValueUtil.asClass(argumentValue);
+		Stereotype stereotype = ValueUtil.asStereotype(argumentValue);
 		List<@NonNull ElementExtension> selectedExtensions = ExtensionProperty.selectExtensions(executor, stereotype, sourceValue);
-		return selectedExtensions != null ? ValueUtil.createSetValue((CollectionTypeId)returnTypeId, selectedExtensions) : null;
+		CollectionTypeId collectionTypeId = (CollectionTypeId)returnTypeId;
+		return selectedExtensions != null ? ValueUtil.createSetValue(collectionTypeId, selectedExtensions) : ValueUtil.createSetOfEach(collectionTypeId);
 	}
 }

@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -93,8 +94,9 @@ public class EssentialOCLScoping
 				csContext = (ElementCS) pathName.eContainer();
 			}
 			assert csContext != null;
-			String messageTemplate;
+			String messageTemplate = null;
 			String argumentText = null;
+			String typeText = null;
 			ExpCS navigationArgument = null;
 			Type sourceType = null;
 			if ((index + 1) < path.size()) {
@@ -115,7 +117,24 @@ public class EssentialOCLScoping
 					}
 				}
 				else {
-					messageTemplate = csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ : PivotMessagesInternal.UnresolvedProperty_ERROR_;
+					int pathSize = path.size();
+					if (pathSize > 0) {
+						PathElementCS csLastPathElement = path.get(pathSize-1);
+						if (csLastPathElement.getElementType() == PivotPackage.Literals.TYPE) {
+							messageTemplate = PivotMessagesInternal.UnresolvedType_ERROR_;
+							StringBuilder s = new StringBuilder();
+							for (int i = 0; i < pathSize-1; i++) {
+								if (i > 0) {
+									s.append("::");
+								}
+								s.append(path.get(i).toString());
+							}
+							typeText = s.toString();
+						}
+					}
+					if (messageTemplate == null) {
+						messageTemplate = csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ : PivotMessagesInternal.UnresolvedProperty_ERROR_;
+					}
 				}
 				if (csNameExp.getSourceTypeValue() != null) {
 					sourceType = csNameExp.getSourceTypeValue();
@@ -176,20 +195,22 @@ public class EssentialOCLScoping
 					source = PivotUtil.getPivot(OCLExpression.class, csSource);
 				}
 			}
-			String typeText = "";
-			if (source != null) {
-				typeText = PivotConstantsInternal.UNKNOWN_TYPE_TEXT;
-				if (sourceType == null) {
-					sourceType = source.getType();
-				}
-				if (sourceType != null) {
-					sourceType = PivotUtil.getBehavioralType(sourceType);
-					OperatorExpCS csParent = navigationArgument != null ? navigationArgument.getLocalParent() : null;
-					if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(((InfixExpCS)csParent).getName())) {
-						typeText = "Set(" + sourceType.toString() + ")";
+			if (typeText == null) {
+				typeText = "";
+				if (source != null) {
+					typeText = PivotConstantsInternal.UNKNOWN_TYPE_TEXT;
+					if (sourceType == null) {
+						sourceType = source.getType();
 					}
-					else {
-						typeText = sourceType.toString();
+					if (sourceType != null) {
+						sourceType = PivotUtil.getBehavioralType(sourceType);
+						OperatorExpCS csParent = navigationArgument != null ? navigationArgument.getLocalParent() : null;
+						if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(((InfixExpCS)csParent).getName())) {
+							typeText = "Set(" + sourceType.toString() + ")";
+						}
+						else {
+							typeText = sourceType.toString();
+						}
 					}
 				}
 			}

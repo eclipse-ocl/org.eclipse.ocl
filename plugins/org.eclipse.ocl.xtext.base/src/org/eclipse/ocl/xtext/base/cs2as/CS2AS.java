@@ -335,6 +335,17 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		}
 	}
 
+	public static void resetElementType(@NonNull PathNameCS pathNameCS) {
+		List<PathElementCS> path = pathNameCS.getOwnedPathElements();
+		int iMax = path.size();
+		for (int i = 0; i < iMax; i++) {
+			PathElementCS pathElementCS = path.get(i);
+			if (pathElementCS.basicGetReferredElement().eIsProxy()) {
+				pathElementCS.setElementType(null);
+			}
+		}
+	}
+
 	public static void setElementType(@NonNull PathNameCS pathNameCS, /*@NonNull*/ EClass elementType, @NonNull ElementCS csContext, @Nullable ScopeFilter scopeFilter) {
 		assert elementType != null;
 		refreshContext(pathNameCS, csContext);

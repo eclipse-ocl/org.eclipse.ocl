@@ -390,22 +390,31 @@ public class StereotypesTest extends PivotTestSuite
 	}
 
 	/**
-	 * Tests M2 parsing and M1 evaluation using enumeration.
+	 * Tests M2 parsing and M1 evaluation using oclExtension()/oclExtensions() and diverse KindOf.
 	 */
 	public void test_extensions_580136() throws Exception {
 		MyOCL ocl = createOCL();
-	//	EnumerationLiteral asBold = ocl.mmm.asFace.getEnumerationLiteral("BOLD");
-	//	org.eclipse.uml2.uml.EnumerationLiteral umlBold = ocl.mmm.umlFace.getOwnedLiteral("BOLD");
 		//
-		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mm.umlEnglishClassInEnglish), "self.oclExtension(InternationalizedProfile::Internationalized.oclAsType(ocl::OclStereotype))");
-		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mm.umlEnglishClassInEnglish), "self.oclExtensions()");
-	//ok	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mm.umlEnglishClassInEnglish, "self.extension_Internationalized");
-	//ok	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()");
-	//ok	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()->select(true)");
+		//ok	ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(standard::Class_Focus)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "standard");
+		//ok	ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::NoSuchFocus)", PivotMessagesInternal.UnresolvedType_ERROR_, "Standard", "NoSuchFocus");
+		//ok	ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(), "self.oclExtension(Standard::Focus)");
+		//ok	ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtension", "Class");
+		//ok	ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(), "self.oclExtension(Ecore::EClass)");
+		//ok	ocl.assertQueryEquals(ocl.mm.umlPlainClass, Sets.newHashSet(), "self.oclExtension(InternationalizedProfile::Internationalized)");
+		//ok	ocl.assertQueryEquals(ocl.mm.umlPlainClass, Sets.newHashSet(), "self.oclExtensions()");
+		//ok	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "self.oclExtension(InternationalizedProfile::Internationalized)");
+		//ok	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "self.oclExtensions()");
+		//ok	ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "self.oclExtension(InternationalizedProfile::Internationalized)");
+		//ok	ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "self.oclExtensions()");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "let st = InternationalizedProfile::Internationalized in self.oclExtension(st)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "self.oclExtensions()->selectByKind(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "let st = InternationalizedProfile::Internationalized in self.oclExtensions()->select(oclIsKindOf(st))");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mm.umlEnglishClassInEnglish, "self.extension_Internationalized");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()->select(true)");
 	//bad missing boxing normalization for loop compare	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()->select(s | s = InternationalizedProfile::InEnglish)");
-	//ok	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(), "self.getAppliedStereotypes()->selectByKind(InternationalizedProfile::Internationalized)");	// wrong metalevel
-
-
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(), "self.getAppliedStereotypes()->selectByKind(InternationalizedProfile::Internationalized)");	// wrong metalevel
+		//
 		ocl.dispose();
 	}
 }

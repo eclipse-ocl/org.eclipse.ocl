@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * OclElementOclExtensionsOperation realises the OclElement::oclExtensions() library operation.
@@ -32,9 +33,10 @@ public class OclElementOclExtensionsOperation extends AbstractUnaryOperation
 	public static final @NonNull OclElementOclExtensionsOperation INSTANCE = new OclElementOclExtensionsOperation();
 
 	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
+	public @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
 		assert sourceValue != null;
 		List<@NonNull ElementExtension> selectedExtensions = ExtensionProperty.selectExtensions(executor, null, sourceValue);
-		return selectedExtensions != null ? ValueUtil.createSetValue((CollectionTypeId)returnTypeId, selectedExtensions) : null;
+		CollectionTypeId collectionTypeId = (CollectionTypeId)returnTypeId;
+		return selectedExtensions != null ? ValueUtil.createSetValue(collectionTypeId, selectedExtensions) : ValueUtil.createSetOfEach(collectionTypeId);
 	}
 }

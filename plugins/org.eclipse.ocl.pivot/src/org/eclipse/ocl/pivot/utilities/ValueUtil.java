@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
@@ -332,6 +333,15 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.SET_NAME, getTypeName(value));
+		}
+	}
+
+	public static @NonNull Stereotype asStereotype(@Nullable Object value) {
+		if (value instanceof Stereotype) {
+			return (Stereotype)value;
+		}
+		else {
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, "Stereotype", getTypeName(value));
 		}
 	}
 

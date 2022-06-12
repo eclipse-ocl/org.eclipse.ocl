@@ -68,6 +68,7 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
+import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
@@ -1191,6 +1192,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 									isType = true;
 									arg = resolveTypeExp(csNameExp, type);
 								}
+								else {
+									CS2AS.refreshScopeFilter(csPathName, null);
+									CS2AS.resetElementType(csPathName);
+								}
 							}
 						}
 					}
@@ -1513,6 +1518,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Type asType = null;
 		if (type instanceof TemplateParameter) {
 			asType = metamodelManager.getOclType("TemplateParameter");
+		}
+		else if (type instanceof Stereotype){
+			asType = metamodelManager.getOclType("Stereotype");
 		}
 		else {
 			asType = standardLibrary.getClassType();
