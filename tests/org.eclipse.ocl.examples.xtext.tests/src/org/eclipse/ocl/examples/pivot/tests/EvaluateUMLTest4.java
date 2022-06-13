@@ -182,7 +182,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclIsInState() throws InvocationTargetException, ParserException {
 		UMLStandaloneSetup.init();
-		MyOCL ocl = createOCL();
+		MyOCL ocl = createOCLWithProjectMap();
 		ocl.initStateMachinePackage(getTestModelURI("models/uml/StateMachines.uml"),
 			new @NonNull String[] {
 			"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : «null»[1]'",
@@ -207,7 +207,8 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 	 * @throws ParserException
 	 */
 	@Test public void test_stereotypes_Bug431638() throws Exception {
-		MyOCL ocl = createOCL();
+		UMLStandaloneSetup.init();
+		MyOCL ocl = createOCLWithProjectMap();
 		//		UML2AS.ADD_ELEMENT_EXTENSION.setState(true);
 		//		UML2AS.ADD_IMPORTED_RESOURCE.setState(true);
 		//		UML2AS.ADD_PROFILE_APPLICATION.setState(true);
@@ -249,7 +250,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 	 */
 	@Test public void test_enumerations_Bug455394() throws Exception {
 		UMLStandaloneSetup.init();
-		MyOCL ocl = createOCL();
+		MyOCL ocl = createOCLWithProjectMap();
 		IdResolver idResolver = ocl.getIdResolver();
 		EObject context = doLoadUML(ocl, getTestModelURI("models/uml/Bug455394.uml"), "Model.Class1.class2");
 		assertNotNull(context);
@@ -289,7 +290,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 	 */
 	@Test public void test_signal_allinstances_Bug496210() throws Exception {
 		UMLStandaloneSetup.init();
-		MyOCL ocl = createOCL();
+		MyOCL ocl = createOCLWithProjectMap();
 		URI umlURI = getTestModelURI("models/uml/Bug496210.uml");
 		Resource umlResource = ocl.getResourceSet().getResource(umlURI, true);
 		EObject umlClass1 = ClassUtil.nonNullState(umlResource.getEObject("Class1"));
