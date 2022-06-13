@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.uml.internal.utilities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EAnnotation;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DynamicElement;
 import org.eclipse.ocl.pivot.Element;
@@ -42,6 +44,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.Envir
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.pivot.uml.internal.library.InstanceSlotNavigationProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLBaseProperty;
 import org.eclipse.ocl.pivot.uml.internal.library.UMLExtensionProperty;
@@ -142,12 +145,12 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			metamodel = IdManager.METAMODEL;
 		}
 		else if (eObject2 instanceof UMLPackage) {
-			@SuppressWarnings("null")@NonNull String nsUri = UMLPackage.eNS_URI;
+			@NonNull String nsUri = UMLPackage.eNS_URI;
 			environmentFactory.getMetamodelManager().getCompleteModel().addPackageURI2completeURI(nsUri, PivotConstants.UML_METAMODEL_NAME);
 			metamodel = IdManager.getRootPackageId(PivotConstants.UML_METAMODEL_NAME);
 		}
 		else if (eObject2 instanceof TypesPackage) {
-			@SuppressWarnings("null")@NonNull String nsUri = TypesPackage.eNS_URI;
+			@NonNull String nsUri = TypesPackage.eNS_URI;
 			environmentFactory.getMetamodelManager().getCompleteModel().addPackageURI2completeURI(nsUri, PivotConstants.TYPES_METAMODEL_NAME);
 			metamodel = IdManager.getRootPackageId(PivotConstants.TYPES_METAMODEL_NAME);
 		}
@@ -179,6 +182,40 @@ public class UMLEcoreTechnology extends AbstractTechnology
 			}
 		}
 		return IdManager.METAMODEL;
+	}
+
+	// FIXME BUG 581043 the extra properties need to go in a distinct partial class as part of the Orphanage.
+	// FIXME do we really want to create all possible properties when name is null?
+	@Override
+	public @Nullable Iterable<@NonNull Property> getMissingProperties(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable String name) {
+		if ((name != null) && !name.startsWith(UML2AS.STEREOTYPE_EXTENSION_PREFIX)) {
+			return null;
+		}
+		String stereotypeName = (name != null) ? name.substring(UML2AS.STEREOTYPE_EXTENSION_PREFIX.length()) : null;
+		List<@NonNull Property> missingProperties = null;
+		for (@NonNull CompletePackage completePackage : environmentFactory.getCompleteModel().getAllCompletePackages()) {
+			for (org.eclipse.ocl.pivot.@NonNull Class aClass : completePackage.getAllClasses()) {
+				if (aClass instanceof Stereotype) {
+					String propertyName = null;
+					if (stereotypeName == null) {
+						propertyName = UML2AS.STEREOTYPE_EXTENSION_PREFIX + aClass.getName();
+					}
+					else if (stereotypeName.equals(aClass.getName())) {
+						propertyName = name;
+					}
+					if (propertyName != null) {
+						Property asProperty = PivotUtil.createProperty(propertyName, aClass);
+						asProperty.setIsTransient(true);
+						// ?? add to a / the / a special CompleteClass
+						if (missingProperties == null) {
+							missingProperties = new ArrayList<>();
+						}
+						missingProperties.add(asProperty);
+					}
+				}
+			}
+		}
+		return missingProperties;
 	}
 
 	@Override

@@ -51,6 +51,13 @@ public interface Technology
 
 	@NonNull PackageId getMetapackageId(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
+	/**
+	 * Return and if necessary create any synthetic properties that satidsfy the name access to asClass.
+	 * >br>
+	 * This is typically used to lazily create the transient properties for an unapplied UML extension.
+	 */
+	@Nullable Iterable<@NonNull Property> getMissingProperties(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable String name);
+
 	@Nullable String getOriginalName(@NonNull ENamedElement eNamedElement);
 
 	@Nullable Element getParseableElement(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull EObject eObject) throws ParserException;

@@ -13,9 +13,12 @@ package org.eclipse.ocl.pivot.internal.attributes;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 
 public class ClassAttribution extends AbstractAttribution
@@ -37,6 +40,14 @@ public class ClassAttribution extends AbstractAttribution
 		environmentView.addAllOperations(targetClass, null);
 		environmentView.addAllProperties(targetClass, null);
 		environmentView.addAllStates(targetClass);
+		if (!environmentView.hasFinalResult()) {
+			EnvironmentFactoryInternal environmentFactory = environmentView.getEnvironmentFactory();
+			Technology technology = environmentFactory.getTechnology();
+			Iterable<@NonNull Property> missingProperties = technology.getMissingProperties(environmentFactory, targetClass, environmentView.getName());
+			if (missingProperties != null) {
+				environmentView.addElements(missingProperties);
+			}
+		}
 //		if (!environmentView.hasFinalResult()) {
 //			MetamodelManager metamodelManager = environmentView.getMetamodelManager();
 //			Type metatype = metamodelManager.getPivotType(targetClass.eClass().getName());		// FIXME getMetaType

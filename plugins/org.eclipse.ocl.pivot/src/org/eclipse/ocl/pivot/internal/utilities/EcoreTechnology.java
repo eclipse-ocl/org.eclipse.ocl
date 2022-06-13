@@ -18,6 +18,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -68,6 +70,11 @@ public class EcoreTechnology extends AbstractTechnology
 			}
 		}
 		return IdManager.METAMODEL;
+	}
+
+	@Override
+	public @Nullable Iterable<@NonNull Property> getMissingProperties(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable String name) {
+		return null;
 	}
 
 	@Override
