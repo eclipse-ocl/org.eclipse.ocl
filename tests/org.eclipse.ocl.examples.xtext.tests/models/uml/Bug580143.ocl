@@ -1,0 +1,10 @@
+import 'platform:/plugin/org.eclipse.uml2.uml/model/UML.ecore'
+import 'platform:/plugin/org.eclipse.uml2.uml.profile.standard/model/Standard.ecore'
+
+package UML
+
+context Operation
+
+def: hasCreateStereo(): Boolean = self.extension_Create->notEmpty()
+
+endpackage

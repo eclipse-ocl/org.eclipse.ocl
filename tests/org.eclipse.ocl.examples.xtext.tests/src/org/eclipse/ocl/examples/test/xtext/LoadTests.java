@@ -1212,6 +1212,14 @@ public class LoadTests extends XtextTestCase
 		assertFalse("Bug535712.ocl.oclas should not exist", testFileC2.getFile().exists());
 	}
 
+	public void testLoad_Bug580143_ocl() throws IOException, InterruptedException {
+		UMLStandaloneSetup.init();
+		OCL ocl = createOCLWithProjectMap();
+		UMLPackage.eINSTANCE.getClass();
+		doLoad(ocl, getTestModelURI("models/uml/Bug580143.ocl"));
+		ocl.dispose();
+	}
+
 	public void testLoad_Fruit_ocl() throws IOException, InterruptedException {
 		UMLStandaloneSetup.init();
 		OCL ocl = createOCLWithProjectMap();
