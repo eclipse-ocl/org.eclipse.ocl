@@ -146,7 +146,7 @@ public class BaseScopeView extends AbstractScope implements IScopeView
 	protected final @NonNull ElementCS target;							// CS node in which a lookup is to be performed
 	protected final @Nullable ElementCS child;							// CS node from which a lookup is to be performed
 	protected final @NonNull EReference targetReference;				// The AST reference to the location at which the lookup is to be stored
-	protected final boolean isQualified;
+	protected final boolean isQualified;								// FIXME always false
 	private Attribution attribution = null;								// Lazily computed Attributes helper for the target CS node
 
 	private final @Nullable ParserContext parserContext;		// FIXME only non-null for API compatibility

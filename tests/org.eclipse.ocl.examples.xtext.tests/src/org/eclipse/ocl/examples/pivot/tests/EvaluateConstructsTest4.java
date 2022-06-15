@@ -104,7 +104,7 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 4/2+5*3, "4/2 + let a : Integer = 5 in a * 3");
 		ocl.assertQueryEquals(null, 4/2+3*5*7, "4/2 + (let a : Integer = 5 in 3 * (let b : Integer = 7 in a * b))");
 		ocl.assertSemanticErrorQuery(null, "4/2 + (let a : Integer = 5 in 3) * (let b : Integer = 7 in a * b)",
-			PivotMessagesInternal.UnresolvedProperty_ERROR_, "", "a");
+			PivotMessagesInternal.UnresolvedElement_ERROR_, "", "a");
 		ocl.assertQueryEquals(null, 4/2+3*5*7, "4/2 + let a : Integer = 5 in 3 * let b : Integer = 7 in a * b");
 		ocl.assertQueryEquals(null, (64.0 / 16) / (8 / 4), "(64 / 16) / (let b : Integer = 0 in 8 / (let c : Integer = 0 in 4 ))");
 		ocl.assertQueryEquals(null, (64.0 / 16) / (8 / 4), "64 / 16 / let b : Integer = 0 in 8 / let c : Integer = 0 in 4");

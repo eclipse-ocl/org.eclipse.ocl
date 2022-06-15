@@ -981,7 +981,12 @@ public class EnvironmentView
 		if (getName() == null) {
 			return false; // No name means search full hierarchy
 		}
-		return true;
+		for (Object object : contentsByName.values()) {
+			if (!(object instanceof Property) || !((Property)object).isIsImplicit()) { // See Bug 580139 - generalize to isExplicit
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public boolean isQualifier() {

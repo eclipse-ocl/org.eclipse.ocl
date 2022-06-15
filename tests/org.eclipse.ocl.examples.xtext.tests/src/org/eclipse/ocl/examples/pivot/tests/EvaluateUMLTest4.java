@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.uml.UMLStandaloneSetup;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
@@ -192,7 +193,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		EObject context = ocl.statefulEFactory.create(ocl.c1Class);
 		org.eclipse.ocl.pivot.Class contextType = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Class.class, ocl.c1Class);
 		assert contextType != null;
-		ocl.assertSemanticErrorQuery(contextType, "self.oclIsInState(S2b)", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Model::C1", "S2b");
+		ocl.assertSemanticErrorQuery(contextType, "self.oclIsInState(S2b)", PivotMessagesInternal.UnresolvedElement_ERROR_, "Model::C1", "S2b");
 		ocl.assertQueryInvalid(context, "self.oclIsInState(S1a)", StringUtil.bind(PivotMessagesInternal.FailedToEvaluate_ERROR_, "OclAny::oclIsInState(OclState[?]) : Boolean[1]", "C1", "self.oclIsInState(S1a)"), UnsupportedOperationException.class);
 		ocl.dispose();
 	}
@@ -282,6 +283,39 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(train1, ValueUtil.createSetOfEach(setTypeId, application1, application2), "TestProfile::Train.allInstances()");
 		ocl.assertQueryEquals(train1, ValueUtil.createSetOfEach(setTypeId, application1, application2), "self.extension_Train.oclType().allInstances()");
 		ocl.assertQueryResults(train1, "Bag{'Train1','Train2'}", "TestProfile::Train.allInstances().base_Class.name");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests uses of allInstances on a stereotype
+	 */
+	@Test public void test_type_literals_Bug580140() throws Exception {
+		UMLStandaloneSetup.init();
+		MyOCL ocl = createOCLWithProjectMap();
+		EObject umlTrain = doLoadUML(ocl, getTestModelURI("models/uml/Bug485225.uml"), "_zKtRgLUyEeWSV7DXeOPrdA"); //RootElement.Train1");
+		assert umlTrain != null;
+		org.eclipse.ocl.pivot.Class asTrain = ((EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory()).getASOf(org.eclipse.ocl.pivot.Class.class, umlTrain);
+		assert asTrain != null;
+		//
+		ocl.assertValidQuery(asTrain, "self.oclIsKindOf(Train1)");
+		ocl.assertValidQuery(asTrain, "self.oclIsKindOf(Train2)");
+		ocl.assertValidQuery(asTrain, "self.oclIsKindOf(RootElement::Train1)");		// Correct Class => true
+		ocl.assertValidQuery(asTrain, "self.oclIsKindOf(RootElement::Train2)");		// Sibling class => false
+		ocl.assertValidQuery(asTrain, "self.oclIsKindOf(TestProfile::Train)");		// Stereotype metaclass => false
+		ocl.assertSemanticErrorQuery(asTrain, "self.oclIsKindOf(Train)", PivotMessagesInternal.UnresolvedElement_ERROR_, "RootElement::Train1", "Train");
+		ocl.assertSemanticErrorQuery(asTrain, "self.oclIsKindOf(RootElement::Train)", PivotMessagesInternal.UnresolvedElement_ERROR_, "RootElement::Train1", "RootElement::Train");
+		//
+		ocl.assertValidQuery(asTrain, "let t = Train1 in self.oclIsKindOf(t)");
+		ocl.assertValidQuery(asTrain, "let t = Train2 in self.oclIsKindOf(t)");
+		ocl.assertValidQuery(asTrain, "let t = RootElement::Train1 in self.oclIsKindOf(t)");
+		ocl.assertValidQuery(asTrain, "let t = RootElement::Train2 in self.oclIsKindOf(t)");
+		ocl.assertValidQuery(asTrain, "let t = TestProfile::Train in self.oclIsKindOf(t)");
+		ocl.assertSemanticErrorQuery(asTrain, "let t = Train in self.oclIsKindOf(t)", PivotMessagesInternal.UnresolvedElement_ERROR_, "", "Train");
+		ocl.assertSemanticErrorQuery(asTrain, "let t = RootElement::Train in self.oclIsKindOf(t)", PivotMessagesInternal.UnresolvedElement_ERROR_, "", "RootElement::Train");
+		//
+		//	aTrain = ... no Ecore instance available
+		//	ocl.assertQueryEquals(aTrain, false, "let t = TestProfile::Train in self.oclIsKindOf(t)");
+		//	ocl.assertQueryEquals(aTrain, false, "self.oclIsKindOf(TestProfile::Train)");
 		ocl.dispose();
 	}
 

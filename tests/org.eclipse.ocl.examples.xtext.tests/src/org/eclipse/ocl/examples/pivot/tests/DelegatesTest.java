@@ -576,7 +576,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		//
 		delegate = factory.createQueryDelegate(companyClass, variables, badName);
 		executeWithException2(delegate, acme, null, getErrorsInMessage(PivotConstantsInternal.QUERY_ROLE, "company::Company", badName) +
-			StringUtil.bind("1:1: " + PivotMessagesInternal.UnresolvedProperty_ERROR_, "", badName));
+			StringUtil.bind("1:1: " + PivotMessagesInternal.UnresolvedElement_ERROR_, "", badName));
 		//
 		//	Definition of undeclared variable
 		//

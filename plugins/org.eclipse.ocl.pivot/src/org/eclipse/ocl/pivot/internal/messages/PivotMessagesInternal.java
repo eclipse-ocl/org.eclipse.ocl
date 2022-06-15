@@ -248,6 +248,7 @@ public class PivotMessagesInternal
 	public static String MissingLibraryURI_ERROR_;
 	public static String RedundantIterator_WARNING_;
 	public static String UnknownContextType_ERROR_;
+	public static String UnresolvedElement_ERROR_;
 	public static String UnresolvedImport_ERROR_;
 	public static String UnresolvedInclude_ERROR_;
 	public static String UnresolvedIterationCall_ERROR_;
@@ -256,7 +257,7 @@ public class PivotMessagesInternal
 	public static String UnresolvedOperation_ERROR_;
 	public static String UnresolvedOperationCall_ERROR_;
 	public static String UnresolvedProperty_ERROR_;
-	@Deprecated /* @deprecated ststic distinction eleminated */
+	@Deprecated /* @deprecated static distinction eleminated */
 	public static String UnresolvedStaticOperationCall_ERROR_;
 	@Deprecated /* @deprecated ststic distinction eleminated */
 	public static String UnresolvedStaticProperty_ERROR_;
