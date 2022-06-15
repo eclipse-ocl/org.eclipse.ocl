@@ -122,11 +122,19 @@ public class EssentialOCLScoping
 					}
 				}
 				else {
-					messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ :*/ PivotMessagesInternal.UnresolvedProperty_ERROR_;
+					EClassifier elementType = CS2AS.getElementType(pathName);
+					if (elementType == PivotPackage.Literals.PROPERTY) {
+						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticProperty_ERROR_ :*/ PivotMessagesInternal.UnresolvedProperty_ERROR_;
+					}
+					else {
+						assert elementType == PivotPackage.Literals.ELEMENT;
+						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticElement_ERROR_ :*/ PivotMessagesInternal.UnresolvedElement_ERROR_;
+					}
 				}
 				if (csNameExp.getSourceTypeValue() != null) {
 					sourceType = csNameExp.getSourceTypeValue();
 				}
+				linkText = pathName.toString();
 			}
 			else if (csContext instanceof TypeNameExpCS) {
 				messageTemplate = PivotMessagesInternal.UnresolvedType_ERROR_;

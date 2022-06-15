@@ -520,6 +520,23 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		return csRoot;
 	}
 
+	protected boolean isAssociationClassCallExp(@NonNull NameExpCS csNameExp) {		// See Bug 423905
+		List<SquareBracketedClauseCS> csSquareBracketedClauses = csNameExp.getOwnedSquareBracketedClauses();
+		if (csSquareBracketedClauses.size() == 0) {
+			return false;
+		}
+		if (csSquareBracketedClauses.size() == 1) {
+			List<ExpCS> csTerms = csSquareBracketedClauses.get(0).getOwnedTerms();
+			if (csTerms.size() == 1) {
+				ExpCS csTerm = csTerms.get(0);
+				if (csTerm instanceof NumberLiteralExpCS) {	// only numerics ambiguous * / .. are MultiplicityCS
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	protected boolean isInvalidType(@Nullable Type type) {
 		return (type == null) || (type instanceof InvalidType)
 				|| ((type instanceof CollectionType) && (((CollectionType)type).getElementType() instanceof InvalidType));
@@ -553,7 +570,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		return callExp;
 	}
 
-	protected Element resolveAssociationClassCallExp(@NonNull NameExpCS csNameExp) {
+	protected Element resolveAssociationClassCallExp(@NonNull NameExpCS csNameExp) {			// See Bug 423905
 		//		PathNameCS pathName = csNameExp.getPathName();
 		RoundBracketedClauseCS csRoundBracketedClause = csNameExp.getOwnedRoundBracketedClause();
 		List<SquareBracketedClauseCS> csSquareBracketedClauses = csNameExp.getOwnedSquareBracketedClauses();
@@ -727,7 +744,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			}
 			propertyScopeFilter = new PropertyScopeFilter(csSquareBracketedClauses);	// FIXME nonStatic
 		}
-		// FIXME Qualified navigation
+		// FIXME Qualified navigation See Bug 423905
 		Property resolvedProperty = context.lookupProperty(csNameExp, ownedPathName, propertyScopeFilter);
 		if ((resolvedProperty != null) && !resolvedProperty.eIsProxy()) {
 			if (resolvedProperty.getType() instanceof Stereotype) {			// FIXME Bug 578010 - M2 properties need reification with correct types at M1
@@ -1207,25 +1224,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			else if (csArgument.getRole() == NavigationRole.EXPRESSION) {
 				ExpCS csName = csArgument.getOwnedNameExpression();
 				if (csName != null) {
-					OCLExpression arg = null;
-					boolean isType = false;
-					if (csName instanceof NameExpCS) {
-						if ((parameters != null) && argIndex < parameters.size()) {
-							Parameter parameter = parameters.get(argIndex);
-							if (parameter.isIsTypeof() || (parameter.getTypeId() == standardLibrary.getOclTypeType().getTypeId())) {
-								NameExpCS csNameExp = (NameExpCS)csName;
-								PathNameCS csPathName = csNameExp.getOwnedPathName();
-								Type type = context.getConverter().lookupType(csNameExp, ClassUtil.nonNullState(csPathName));
-								if (type != null) {
-									isType = true;
-									arg = resolveTypeExp(csNameExp, type);
-								}
-							}
-						}
-					}
-					if (!isType) {
-						arg = context.visitLeft2Right(OCLExpression.class, csName);
-					}
+					OCLExpression arg = context.visitLeft2Right(OCLExpression.class, csName);
 					if (arg != null) {
 						context.installPivotUsage(csArgument, arg);
 					}
@@ -2117,7 +2116,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (csNameExp.getOwnedCurlyBracketedClause() != null) {
 			return resolveShadowExp(csNameExp);
 		}
-		else if (csNameExp.getOwnedSquareBracketedClauses().size() > 0) {
+		else if (isAssociationClassCallExp(csNameExp)) {
 			return resolveAssociationClassCallExp(csNameExp);
 		}
 		else if (csRoundBracketedClause != null) {
