@@ -117,6 +117,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
+import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.DiagnosticWrappedException;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -910,7 +911,7 @@ public class PivotUtil
 				s.append(": ");
 			}
 			s.append(diagnostic.getMessage());
-			for (Object obj : diagnostic.getData()) {
+		/*	for (Object obj : diagnostic.getData()) {
 				s.append(newLine);
 				s.append("\t");
 				//				if (obj instanceof Throwable) {
@@ -919,10 +920,22 @@ public class PivotUtil
 				//				else {
 				s.append(obj);
 				//				}
+			} */
+			List<?> datas = diagnostic.getData();
+			if (datas != null) {
+				for (Object data : datas) {
+					if (data instanceof Throwable)  {
+						Throwable cause = ((Throwable)data).getCause();
+						if ((cause != null) && (cause != data)) {
+							s.append(newLine + "\t" + cause.toString());
+						}
+					}
+				}
 			}
 			for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
 				if (childDiagnostic != null) {
-					formatDiagnostic(s, childDiagnostic, newLine + "\t");
+					String childNewLine = newLine + "\t";
+					formatDiagnostic(s, childDiagnostic, childNewLine);
 				}
 			}
 		}
@@ -955,6 +968,12 @@ public class PivotUtil
 				} catch (Exception e) {}	// UnsupportedOperationException was normal for Bug 380232 fixed in Xtext 2.9
 				s.append(": ");
 				s.append(diagnostic.getMessage());
+				if (diagnostic instanceof DiagnosticWrappedException)  {
+					Throwable cause = ((DiagnosticWrappedException)diagnostic).getCause();
+					if ((cause != null) && (cause != diagnostic)) {
+						s.append(" - " + cause.toString());
+					}
+				}
 			}
 		}
 		return s.toString();

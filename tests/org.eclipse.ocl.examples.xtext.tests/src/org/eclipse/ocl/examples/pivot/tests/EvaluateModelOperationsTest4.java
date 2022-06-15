@@ -389,7 +389,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		OrderedSetValue kids1 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(children1Type.getTypeId()), children1);
 		OrderedSetValue kids2 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(children2Type.getTypeId()), children2);
 		//
-		ocl.assertSemanticErrorQuery(parentType, "parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, "", "parent");
+		ocl.assertSemanticErrorQuery(parentType, "parent", PivotMessagesInternal.UnresolvedElement_ERROR_, "", "parent");
 		ocl.assertSemanticErrorQuery(parentType, "self.parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, parentType, "parent");
 		ocl.assertQueryEquals(parent, parentType, "Parent");
 		ocl.assertSemanticErrorQuery(parentType, "self.Parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, parentType, "Parent");
@@ -410,7 +410,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(parent, children2Type, "Children2");
 		ocl.assertSemanticErrorQuery(parentType, "self.Children2", PivotMessagesInternal.UnresolvedProperty_ERROR_, parentType, "Children2");
 		//
-		ocl.assertSemanticErrorQuery(child1Type, "parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, "", "parent");
+		ocl.assertSemanticErrorQuery(child1Type, "parent", PivotMessagesInternal.UnresolvedElement_ERROR_, "", "parent");
 		ocl.assertQueryEquals(child2, parentType, "Parent");
 		ocl.assertSemanticErrorQuery(child1Type, "self.parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, child1Type, "parent");
 		ocl.assertQueryEquals(child1, parent, "self.Parent");
@@ -420,7 +420,7 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(child2, parent, "self.parent");
 		ocl.assertSemanticErrorQuery(child2Type, "self.Parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, child2Type, "Parent");
 		//
-		ocl.assertSemanticErrorQuery(children1Type, "parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, "", "parent");
+		ocl.assertSemanticErrorQuery(children1Type, "parent", PivotMessagesInternal.UnresolvedElement_ERROR_, "", "parent");
 		ocl.assertQueryEquals(children1, parentType, "Parent");
 		ocl.assertSemanticErrorQuery(children1Type, "self.parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, children1Type, "parent");
 		ocl.assertQueryEquals(children1, parent, "self.Parent");

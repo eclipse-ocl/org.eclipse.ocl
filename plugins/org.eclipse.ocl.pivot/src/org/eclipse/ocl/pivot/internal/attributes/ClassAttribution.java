@@ -37,14 +37,6 @@ public class ClassAttribution extends AbstractAttribution
 		environmentView.addAllOperations(targetClass, null);
 		environmentView.addAllProperties(targetClass, null);
 		environmentView.addAllStates(targetClass);
-//		if (!environmentView.hasFinalResult()) {
-//			MetamodelManager metamodelManager = environmentView.getMetamodelManager();
-//			Type metatype = metamodelManager.getPivotType(targetClass.eClass().getName());		// FIXME getMetaType
-//			if (metatype != null) {
-//				environmentView.addAllOperations(metatype, FeatureFilter.SELECT_STATIC);
-//				environmentView.addAllProperties(metatype, FeatureFilter.SELECT_STATIC);
-//			}
-//		}
 		return scopeView.getParent();
 	}
 }

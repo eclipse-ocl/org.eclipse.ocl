@@ -277,6 +277,12 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		}
 	}
 
+	public static @Nullable EClassifier getElementType(@NonNull PathNameCS pathNameCS) {
+		List<PathElementCS> path = pathNameCS.getOwnedPathElements();
+		int iSize = path.size();
+		return iSize > 0 ? path.get(iSize-1).getElementType() : null;
+	}
+
 	public static MessageBinder getMessageBinder() {
 		return messageBinder;
 	}
