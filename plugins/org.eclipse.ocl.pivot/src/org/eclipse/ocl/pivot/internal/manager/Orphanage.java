@@ -419,6 +419,8 @@ public class Orphanage extends PackageImpl
 
 	/**
 	 * Return the global Orphanage.
+	 *
+	 * @since 1.18
 	 */
 	public static @NonNull Orphanage getOrphanage() {
 		OrphanResource orphanResource = ORPHAN_RESOURCE;
