@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -36,18 +37,10 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  */
 public class ExtensionProperty extends AbstractProperty
 {
-	protected final @NonNull Property property;
-
-	public ExtensionProperty(@NonNull Property property) {
-		this.property = property;
-	}
-
-	@Override
-	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		Type staticType = property.getType();
-		if (staticType == null) {
-			return null;
-		}
+	/**
+	 * @since 1.18
+	 */
+	public static @Nullable List<@NonNull ElementExtension> selectExtensions(@NonNull Executor executor, @Nullable Type staticType, @NonNull Object sourceValue) {
 		Element element = null;
 		if (sourceValue instanceof Element) {
 			element = (Element)sourceValue;
@@ -56,34 +49,48 @@ public class ExtensionProperty extends AbstractProperty
 			try {
 				element = ((EnvironmentFactoryInternalExtension)executor.getEnvironmentFactory()).getASOf(Element.class, (EObject)sourceValue);
 			} catch (ParserException e) {
-				return new InvalidValueException(e, "Failed to parse " + property);
+				throw new InvalidValueException(e, "Failed to access Stereotype extensions");
 			}
 		}
-		if (element != null) {
-			List<ElementExtension> selectedExtensions = null;
-			for (ElementExtension elementExtension : element.getOwnedExtensions()) {
-				Stereotype dynamicStereotype = elementExtension.getStereotype();
-				if (dynamicStereotype.conformsTo(executor.getStandardLibrary(), staticType)) {
-					if (selectedExtensions == null) {
-						selectedExtensions = new ArrayList<ElementExtension>();
-					}
-					selectedExtensions.add(elementExtension);
+		if (element == null) {
+			return null;
+		}
+		List<@NonNull ElementExtension> selectedExtensions = null;
+		for (@NonNull ElementExtension elementExtension : PivotUtil.getOwnedExtensions(element)) {
+			Stereotype dynamicStereotype = elementExtension.getStereotype();
+			if ((staticType == null) || dynamicStereotype.conformsTo(executor.getStandardLibrary(), staticType)) {
+				if (selectedExtensions == null) {
+					selectedExtensions = new ArrayList<>();
 				}
-			}
-			if (selectedExtensions == null) {
-				return null;
-			}
-			TypeId typeId = property.getTypeId();
-			if (typeId instanceof CollectionTypeId) {
-				return ValueUtil.createSetValue((CollectionTypeId) typeId, selectedExtensions);
-			}
-			else if (selectedExtensions.size() == 1) {
-				return selectedExtensions.get(0);
-			}
-			else {
-				return new InvalidValueException("Multiple applied stereotypes for " + property);
+				selectedExtensions.add(elementExtension);
 			}
 		}
-		return staticType;
+		return (selectedExtensions != null) && (selectedExtensions.size() > 0) ? selectedExtensions : null;
+	}
+
+	protected final @NonNull Property property;
+
+	public ExtensionProperty(@NonNull Property property) {
+		this.property = property;
+	}
+
+	@Override
+	public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
+		Type staticType = PivotUtil.getType(property);
+		assert sourceValue != null;
+		List<@NonNull ElementExtension> selectedExtensions = selectExtensions(executor, staticType, sourceValue);
+		if (selectedExtensions == null) {
+			return null;
+		}
+		TypeId typeId = property.getTypeId();
+		if (typeId instanceof CollectionTypeId) {
+			return ValueUtil.createSetValue((CollectionTypeId) typeId, selectedExtensions);
+		}
+		else if (selectedExtensions.size() == 1) {
+			return selectedExtensions.get(0);
+		}
+		else {
+			return new InvalidValueException("Multiple applied stereotypes for " + property);
+		}
 	}
 }
