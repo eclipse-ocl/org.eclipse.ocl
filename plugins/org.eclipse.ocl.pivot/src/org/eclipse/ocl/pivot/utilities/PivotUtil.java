@@ -54,6 +54,7 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -1558,6 +1559,13 @@ public class PivotUtil
 	 */
 	public static @NonNull OCLExpression getOwnedElse(@NonNull IfExp ifExp) {
 		return ClassUtil.nonNullState(ifExp.getOwnedElse());
+	}
+
+	/**
+	 * @since 1.17
+	 */
+	public static @NonNull Iterable<@NonNull ElementExtension> getOwnedExtensions(Element asElement) {
+		return ClassUtil.nullFree(asElement.getOwnedExtensions());
 	}
 
 	/**

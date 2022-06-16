@@ -30,8 +30,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
@@ -46,6 +48,7 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.BagValueImpl;
 import org.eclipse.ocl.pivot.internal.values.BigIntegerValueImpl;
@@ -180,6 +183,15 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.COLLECTION_NAME, getTypeName(value));
+		}
+	}
+
+	public static @NonNull ElementExtension asElementExtension(@Nullable Object value) {
+		if (value instanceof ElementExtension) {
+			return (ElementExtension)value;
+		}
+		else {
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, "ElementExtension", getTypeName(value));
 		}
 	}
 
@@ -332,6 +344,15 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.SET_NAME, getTypeName(value));
+		}
+	}
+
+	public static @NonNull Stereotype asStereotype(@Nullable Object value) {
+		if (value instanceof Stereotype) {
+			return (Stereotype)value;
+		}
+		else {
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, "Stereotype", getTypeName(value));
 		}
 	}
 
@@ -704,6 +725,28 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.InvalidReal, anObject);
+		}
+	}
+
+	/**
+	 * If value is a jClass AS value return it as is, else return the jClass counterpart of the ES value.
+	 */
+	public static <T extends Element> @NonNull T getASorASofES(@NonNull Executor executor, @NonNull Class<T> jClass, @NonNull Object value) {
+		/* if (value == null) {
+			return null;
+		}
+		else */ if (jClass.isAssignableFrom(value.getClass())) {
+			@SuppressWarnings("unchecked")
+			T castValue = (T)value;
+			return castValue;
+		}
+		else {
+			try {
+				EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)executor.getEnvironmentFactory();
+				return ClassUtil.nonNullState(environmentFactory.getASOf(jClass, (EObject)value));
+			} catch (Throwable e) {
+				throw new InvalidValueException(e, "Failed to access AS of " + value);
+			}
 		}
 	}
 

@@ -1021,6 +1021,26 @@ abstract type OclElement conformsTo OclAny {
 --		post IsType: result.oclIsKindOf(type);
 	}
 	/**
+	Returns the application class that is extended by this extension element. Returns null for an orphan extension of nothing.
+	*/
+	operation oclBase() : OclType[?] => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation';
+	/**
+	Returns the application class conforming to base extended by this extension element. Returns null if no such class.
+	*/
+	operation oclBase(base : OclType[1]) : OclType[?] => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation';
+	/**
+	Returns the application instance of the Stereotype that conforms to stereotype applied to this element. Returns invalid if more than one.
+	*/
+	operation oclExtension(stereotype : OclStereotype[1]) : OclElement[?] invalidating => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation';
+	/**
+	Returns the application instances of the Stereotypes that conform to stereotype applied to this element.
+	*/
+	operation oclExtensions(stereotype : OclStereotype[1]) : Set(OclElement[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation';
+	/**
+	Returns the application instances of all Stereotypes applied to this element.
+	*/
+	operation oclExtensions() : Set(OclElement[*|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation';
+	/**
 	Returns the object for which self is a composed content or null if there is no such object.
 	*/
 	operation oclContainer() : OclElement[?] => 'org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation';
@@ -1904,6 +1924,9 @@ type UnlimitedNatural : PrimitiveType conformsTo OclComparable {
 	Converts oclText[self] to an Integer value unless oclText[self] is e[unlimited] in which case oclText[self] is converted to oclText[null].
 	**/
 	operation toInteger() : Integer[?] => 'org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation';
+}
+
+type Stereotype conformsTo OclStereotype {
 }
 
 }
