@@ -127,7 +127,15 @@ public interface TypeId extends ElementId
 	 */
 	public static final @NonNull OclInvalidTypeId OCL_INVALID = new OclInvalidTypeIdImpl(OCL_INVALID_NAME);
 	public static final @NonNull PrimitiveTypeId OCL_SELF = IdManager.getPrimitiveTypeId(OCL_SELF_NAME);	// ?? need SelfTypeId
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull ClassId OCL_STEREOTYPE = IdManager.METAMODEL.getClassId(OCL_STEREOTYPE_NAME, 0);
 	public static final @NonNull PrimitiveTypeId OCL_SUMMABLE = IdManager.getPrimitiveTypeId(OCL_SUMMABLE_NAME);
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull ClassId OCL_TYPE = IdManager.METAMODEL.getClassId(OCL_TYPE_NAME, 0);
 
 	/**
 	 * OclVoid has a distinct Id that captures its conformance to everything (except invalid).

@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
-import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -208,7 +207,7 @@ public class BooleanLiteralExpImpl
 			else {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Boolean = idResolver.getClass(TypeId.BOOLEAN, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull BooleanType symbol_0 = (BooleanType)TYP_Boolean;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_Boolean;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == symbol_0.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				symbol_1 = logDiagnostic;

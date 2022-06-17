@@ -244,6 +244,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$FragmentOperations1">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="FragmentOperations1"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Properties">
         <filter id="338755678">
             <message_arguments>
@@ -1436,6 +1443,20 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
                 <message_argument value="getType(TypeId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TypeId.java" type="org.eclipse.ocl.pivot.ids.TypeId">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="OCL_STEREOTYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="OCL_TYPE"/>
             </message_arguments>
         </filter>
     </resource>
