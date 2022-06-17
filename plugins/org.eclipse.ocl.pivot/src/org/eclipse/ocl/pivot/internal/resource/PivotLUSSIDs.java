@@ -241,6 +241,9 @@ public class PivotLUSSIDs extends LUSSIDs
 		else if (eObject instanceof Model) {
 			return true;
 		}
+		else if (eObject instanceof Parameter) {
+			return true;
+		}
 		return false;
 	}
 }
