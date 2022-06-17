@@ -1375,6 +1375,15 @@
           <ownedParameters xmi:id="00OUM" name="TT"/>
         </ownedSignature>
       </ownedOperations>
+      <ownedOperations xmi:id="YjePj" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation" isRequired="false"
+          name="oclBase" type="#hlrMH">
+        <ownedComments body="Returns the application class conforming to base extended by this extension element. Returns null if no such class."/>
+        <ownedParameters xmi:id="0xwrX" name="base" type="#hlrMH"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="l58yN" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation" isRequired="false"
+          name="oclBase" type="#hlrMH">
+        <ownedComments body="Returns the application class that is extended by this extension element. Returns null for an orphan extension of nothing."/>
+      </ownedOperations>
       <ownedOperations xmi:id="lyeXH" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation" isRequired="false"
           name="oclContainer" type="#zfDWR">
         <ownedComments body="Returns the object for which self is a composed content or null if there is no such object."/>
@@ -1382,6 +1391,20 @@
       <ownedOperations xmi:id="ua8bl" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierOclContentsOperation" name="oclContents"
           type="#U6ALG">
         <ownedComments body="Returns the composed contents of self."/>
+      </ownedOperations>
+      <ownedOperations xmi:id="+IPyW" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation" isInvalidating="true"
+          isRequired="false" name="oclExtension" type="#zfDWR">
+        <ownedComments body="Returns the application instance of the Stereotype that conforms to stereotype applied to this element. Returns invalid if more than one."/>
+        <ownedParameters xmi:id="jyuDS" name="stereotype" type="#ZNWlJ"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="D+JXK" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation" name="oclExtensions"
+          type="#U6ALG">
+        <ownedComments body="Returns the application instances of the Stereotypes that conform to stereotype applied to this element."/>
+        <ownedParameters xmi:id="UjPCG" name="stereotype" type="#ZNWlJ"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="omW7u" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation" name="oclExtensions"
+          type="#U6ALG">
+        <ownedComments body="Returns the application instances of all Stereotypes applied to this element."/>
       </ownedOperations>
       <ownedOperations xmi:id="hgQiG" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation" name="oclIsModelKindOf"
           type="#XEMMs">
@@ -2238,7 +2261,7 @@
         </ownedDetails>
       </ownedAnnotations>
     </ownedClasses>
-    <ownedClasses xmi:id="hRA+k" name="Stereotype" superClasses="#zfDWR">
+    <ownedClasses xmi:id="hRA+k" name="Stereotype" superClasses="#ZNWlJ">
       <ownedOperations xmi:id="v7iP2" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
           type="#UQF4+">
         <ownedComments body="Return a set of all instances of the stereotype and derived types of self."/>
