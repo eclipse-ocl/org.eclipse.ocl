@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:InternationalizedProfile="http://www.eclipse.org/ocl/examples/Internationalized" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/ocl/examples/Internationalized Internationalized.profile.uml#_1CnJUOyFEeK3EpfBjgn1Sw">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:InternationalizedProfile="http://www.eclipse.org/ocl/examples/Internationalized" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http://www.eclipse.org/ocl/examples/Internationalized Internationalized.profile.uml#_1CnJUOyFEeK3EpfBjgn1Sw">
   <uml:Model xmi:id="_iHBam_EUEeGbmcl4mtVQXA" name="Model" URI="http://www.eclipse.org/ocl/examples/International">
-    <packageImport xmi:type="uml:PackageImport" xmi:id="_iHBanPEUEeGbmcl4mtVQXA">
+    <packageImport xmi:id="_iHBanPEUEeGbmcl4mtVQXA">
       <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
     </packageImport>
     <packagedElement xmi:type="uml:Class" xmi:id="_k1-T4PEUEeGbmcl4mtVQXA" name="EnglishClass">
-      <generalization xmi:type="uml:Generalization" xmi:id="_NfH6gPEaEeGbmcl4mtVQXA" general="_JRPk0PEaEeGbmcl4mtVQXA"/>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_zXzMUPEZEeGbmcl4mtVQXA" name="englishName" visibility="public" type="_8dgMkPEZEeGbmcl4mtVQXA">
+      <generalization xmi:id="_NfH6gPEaEeGbmcl4mtVQXA" general="_JRPk0PEaEeGbmcl4mtVQXA"/>
+      <ownedAttribute xmi:id="_zXzMUPEZEeGbmcl4mtVQXA" name="englishName" visibility="public" type="_8dgMkPEZEeGbmcl4mtVQXA">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="__48YsPEZEeGbmcl4mtVQXA" value="1"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="__48YsfEZEeGbmcl4mtVQXA" value="1"/>
         <defaultValue xmi:type="uml:LiteralString" xmi:id="__48YsvEZEeGbmcl4mtVQXA">
@@ -15,8 +15,8 @@
       </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_zj3EoPEUEeGbmcl4mtVQXA" name="FrenchClass">
-      <generalization xmi:type="uml:Generalization" xmi:id="_OHlosPEaEeGbmcl4mtVQXA" general="_JRPk0PEaEeGbmcl4mtVQXA"/>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_B5MZMPEaEeGbmcl4mtVQXA" name="frenchName" visibility="public" type="_8dgMkPEZEeGbmcl4mtVQXA">
+      <generalization xmi:id="_OHlosPEaEeGbmcl4mtVQXA" general="_JRPk0PEaEeGbmcl4mtVQXA"/>
+      <ownedAttribute xmi:id="_B5MZMPEaEeGbmcl4mtVQXA" name="frenchName" visibility="public" type="_8dgMkPEZEeGbmcl4mtVQXA">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_EMLIcPEaEeGbmcl4mtVQXA" value="1"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_EMLIcfEaEeGbmcl4mtVQXA" value="1"/>
         <defaultValue xmi:type="uml:LiteralString" xmi:id="_EMLIcvEaEeGbmcl4mtVQXA">
@@ -25,8 +25,8 @@
       </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_4Ci2cPEUEeGbmcl4mtVQXA" name="GermanClass">
-      <generalization xmi:type="uml:Generalization" xmi:id="_Oq_3wPEaEeGbmcl4mtVQXA" general="_JRPk0PEaEeGbmcl4mtVQXA"/>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_FGMgsPEaEeGbmcl4mtVQXA" name="germanName" visibility="public" type="_8dgMkPEZEeGbmcl4mtVQXA">
+      <generalization xmi:id="_Oq_3wPEaEeGbmcl4mtVQXA" general="_JRPk0PEaEeGbmcl4mtVQXA"/>
+      <ownedAttribute xmi:id="_FGMgsPEaEeGbmcl4mtVQXA" name="germanName" visibility="public" type="_8dgMkPEZEeGbmcl4mtVQXA">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_HHfDAPEaEeGbmcl4mtVQXA" value="1"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_HHfDAfEaEeGbmcl4mtVQXA" value="1"/>
         <defaultValue xmi:type="uml:LiteralString" xmi:id="_HHfDAvEaEeGbmcl4mtVQXA">
@@ -35,11 +35,11 @@
       </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_rsu64PEVEeGbmcl4mtVQXA" name="PlainClass">
-      <generalization xmi:type="uml:Generalization" xmi:id="_POaG0PEaEeGbmcl4mtVQXA" general="_JRPk0PEaEeGbmcl4mtVQXA"/>
+      <generalization xmi:id="_POaG0PEaEeGbmcl4mtVQXA" general="_JRPk0PEaEeGbmcl4mtVQXA"/>
     </packagedElement>
     <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_8dgMkPEZEeGbmcl4mtVQXA" name="String"/>
     <packagedElement xmi:type="uml:Class" xmi:id="_JRPk0PEaEeGbmcl4mtVQXA" name="LanguageClass">
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_LKWbgPEaEeGbmcl4mtVQXA" name="name" visibility="public" type="_8dgMkPEZEeGbmcl4mtVQXA">
+      <ownedAttribute xmi:id="_LKWbgPEaEeGbmcl4mtVQXA" name="name" visibility="public" type="_8dgMkPEZEeGbmcl4mtVQXA">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MY55UPEaEeGbmcl4mtVQXA" value="1"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MY55UfEaEeGbmcl4mtVQXA" value="1"/>
         <defaultValue xmi:type="uml:LiteralString" xmi:id="_MY55UvEaEeGbmcl4mtVQXA">
@@ -47,14 +47,20 @@
         </defaultValue>
       </ownedAttribute>
     </packagedElement>
-    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_sMi40PEUEeGbmcl4mtVQXA">
-      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_sMsp0PEUEeGbmcl4mtVQXA" source="http://www.eclipse.org/uml2/2.0.0/UML">
+    <packagedElement xmi:type="uml:Class" xmi:id="_VdLzsO2OEeyedcx5-3T3Sg" name="MultiLingualClass">
+      <generalization xmi:id="_VdLzse2OEeyedcx5-3T3Sg" general="_JRPk0PEaEeGbmcl4mtVQXA"/>
+    </packagedElement>
+    <profileApplication xmi:id="_sMi40PEUEeGbmcl4mtVQXA">
+      <eAnnotations xmi:id="_sMsp0PEUEeGbmcl4mtVQXA" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="Internationalized.profile.uml#_UuTWoOyUEeK3EpfBjgn1Sw"/>
       </eAnnotations>
-      <appliedProfile xmi:type="uml:Profile" href="Internationalized.profile.uml#_bNIm0PETEeGbmcl4mtVQXA"/>
+      <appliedProfile href="Internationalized.profile.uml#_bNIm0PETEeGbmcl4mtVQXA"/>
     </profileApplication>
   </uml:Model>
   <InternationalizedProfile:InEnglish xmi:id="_t7-PEPEUEeGbmcl4mtVQXA" base_Class="_k1-T4PEUEeGbmcl4mtVQXA" text="Thank You"/>
   <InternationalizedProfile:InFrench xmi:id="_29NmEPEUEeGbmcl4mtVQXA" base_Class="_zj3EoPEUEeGbmcl4mtVQXA" text="Merci" face="ITALIC"/>
   <InternationalizedProfile:InGerman xmi:id="_6WkukPEUEeGbmcl4mtVQXA" base_Class="_4Ci2cPEUEeGbmcl4mtVQXA" text="Danke Schon" face="BOLD"/>
+  <InternationalizedProfile:InEnglish xmi:id="_ehqr8O2OEeyedcx5-3T3Sg" base_Class="_VdLzsO2OEeyedcx5-3T3Sg"/>
+  <InternationalizedProfile:InFrench xmi:id="_ehqr8e2OEeyedcx5-3T3Sg" base_Class="_VdLzsO2OEeyedcx5-3T3Sg"/>
+  <InternationalizedProfile:InGerman xmi:id="_ehqr8u2OEeyedcx5-3T3Sg" base_Class="_VdLzsO2OEeyedcx5-3T3Sg"/>
 </xmi:XMI>

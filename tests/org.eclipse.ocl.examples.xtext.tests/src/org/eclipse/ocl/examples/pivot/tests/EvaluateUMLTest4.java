@@ -303,7 +303,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		ocl.assertValidQuery(asTrain, "self.oclIsKindOf(RootElement::Train2)");		// Sibling class => false
 		ocl.assertValidQuery(asTrain, "self.oclIsKindOf(TestProfile::Train)");		// Stereotype metaclass => false
 		ocl.assertSemanticErrorQuery(asTrain, "self.oclIsKindOf(Train)", PivotMessagesInternal.UnresolvedElement_ERROR_, "RootElement::Train1", "Train");
-		ocl.assertSemanticErrorQuery(asTrain, "self.oclIsKindOf(RootElement::Train)", PivotMessagesInternal.UnresolvedElement_ERROR_, "RootElement::Train1", "RootElement::Train");
+		ocl.assertSemanticErrorQuery(asTrain, "self.oclIsKindOf(RootElement::Train)", PivotMessagesInternal.UnresolvedElement_ERROR_, "RootElement", "Train");
 		//
 		ocl.assertValidQuery(asTrain, "let t = Train1 in self.oclIsKindOf(t)");
 		ocl.assertValidQuery(asTrain, "let t = Train2 in self.oclIsKindOf(t)");
@@ -311,7 +311,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		ocl.assertValidQuery(asTrain, "let t = RootElement::Train2 in self.oclIsKindOf(t)");
 		ocl.assertValidQuery(asTrain, "let t = TestProfile::Train in self.oclIsKindOf(t)");
 		ocl.assertSemanticErrorQuery(asTrain, "let t = Train in self.oclIsKindOf(t)", PivotMessagesInternal.UnresolvedElement_ERROR_, "", "Train");
-		ocl.assertSemanticErrorQuery(asTrain, "let t = RootElement::Train in self.oclIsKindOf(t)", PivotMessagesInternal.UnresolvedElement_ERROR_, "", "RootElement::Train");
+		ocl.assertSemanticErrorQuery(asTrain, "let t = RootElement::Train in self.oclIsKindOf(t)", PivotMessagesInternal.UnresolvedElement_ERROR_, "RootElement", "Train");
 		//
 		//	aTrain = ... no Ecore instance available
 		//	ocl.assertQueryEquals(aTrain, false, "let t = TestProfile::Train in self.oclIsKindOf(t)");

@@ -53,6 +53,8 @@ import org.eclipse.uml2.uml.util.UMLUtil;
 import org.junit.After;
 import org.junit.Before;
 
+import com.google.common.collect.Sets;
+
 /**
  * Tests for stereotype expressions.
  */
@@ -95,15 +97,25 @@ public class StereotypesTest extends PivotTestSuite
 		org.eclipse.uml2.uml.Type umlFrenchClass;
 		org.eclipse.uml2.uml.Type umlGermanClass;
 		org.eclipse.uml2.uml.Type umlLanguageClass;
+		org.eclipse.uml2.uml.Type umlMultiLingualClass;
 		org.eclipse.uml2.uml.Type umlPlainClass;
 		org.eclipse.uml2.uml.Type umlString;
 		UMLElementExtension umlEnglishClassInEnglish;
+		EObject umlEnglishClassInEnglish2;
+		EObject umlMultiLingualClassInEnglish2;
+		EObject umlMultiLingualClassInFrench2;
+		EObject umlMultiLingualClassInGerman2;
 		org.eclipse.ocl.pivot.Class asEnglishClass;
 		org.eclipse.ocl.pivot.Class asFrenchClass;
 		org.eclipse.ocl.pivot.Class asGermanClass;
+		org.eclipse.ocl.pivot.Class asPlainClass;
+		org.eclipse.ocl.pivot.Class asMultiLingualClass;
 		ElementExtension asEnglishClassInEnglish;
 		ElementExtension asFrenchClassInEnglish;
 		ElementExtension asGermanClassInEnglish;
+		ElementExtension asMultiLingualClassInEnglish;
+		ElementExtension asMultiLingualClassInFrench;
+		ElementExtension asMultiLingualClassInGerman;
 
 		public InternationalizedMetamodel(@NonNull OCL ocl, @NonNull InternationalizedProfile mmm, org.eclipse.uml2.uml.Package umlPackage) throws ParserException {
 			EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
@@ -118,16 +130,26 @@ public class StereotypesTest extends PivotTestSuite
 			umlFrenchClass = umlPackage.getOwnedType("FrenchClass");
 			umlGermanClass = umlPackage.getOwnedType("GermanClass");
 			umlLanguageClass = umlPackage.getOwnedType("LanguageClass");
+			umlMultiLingualClass = umlPackage.getOwnedType("MultiLingualClass");
 			umlPlainClass = umlPackage.getOwnedType("PlainClass");
 			umlString = umlPackage.getOwnedType("String");
 			asEnglishClass = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, umlEnglishClass);
 			asFrenchClass = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, umlFrenchClass);
 			asGermanClass = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, umlGermanClass);
+			asPlainClass = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, umlPlainClass);
+			asMultiLingualClass = environmentFactory.getASOf(org.eclipse.ocl.pivot.Class.class, umlMultiLingualClass);
 			//
 			umlEnglishClassInEnglish = (UMLElementExtension) UMLElementExtension.getUMLElementExtension(mmm.asInEnglishStereotype, umlEnglishClass);
 			asEnglishClassInEnglish = NameUtil.getNameable(asEnglishClass.getOwnedExtensions(), "EnglishClass$InEnglish");
 			asFrenchClassInEnglish = NameUtil.getNameable(asFrenchClass.getOwnedExtensions(), "FrenchClass$InFrench");
 			asGermanClassInEnglish = NameUtil.getNameable(asGermanClass.getOwnedExtensions(), "GermanClass$InGerman");
+			asMultiLingualClassInEnglish = NameUtil.getNameable(asMultiLingualClass.getOwnedExtensions(), "MultiLingualClass$InEnglish");
+			asMultiLingualClassInFrench = NameUtil.getNameable(asMultiLingualClass.getOwnedExtensions(), "MultiLingualClass$InFrench");
+			asMultiLingualClassInGerman = NameUtil.getNameable(asMultiLingualClass.getOwnedExtensions(), "MultiLingualClass$InGerman");
+			umlEnglishClassInEnglish2 = asEnglishClassInEnglish.getESObject();
+			umlMultiLingualClassInEnglish2 = asMultiLingualClassInEnglish.getESObject();
+			umlMultiLingualClassInFrench2 = asMultiLingualClassInFrench.getESObject();
+			umlMultiLingualClassInGerman2 = asMultiLingualClassInGerman.getESObject();
 		}
 	}
 
@@ -312,7 +334,7 @@ public class StereotypesTest extends PivotTestSuite
 			IdResolver idResolver2 = ocl2.getIdResolver();
 			ocl2.setModelManager(new LazyEcoreModelManager(ocl2.mm.umlEnglishClass.eResource().getContents(), null, null));
 			ocl2.assertQueryEquals(ocl2.mm.umlEnglishClass, idResolver2.createSetOfEach(TypeId.SET), "Model::EnglishClass.allInstances()");
-			ocl2.assertQueryEquals(ocl2.mm.umlEnglishClass, idResolver2.createSetOfEach(TypeId.SET, ocl2.mm.umlPlainClass, ocl2.mm.umlEnglishClass, ocl2.mm.umlLanguageClass, ocl2.mm.umlFrenchClass, ocl2.mm.umlGermanClass), "Class.allInstances()");
+			ocl2.assertQueryEquals(ocl2.mm.umlEnglishClass, idResolver2.createSetOfEach(TypeId.SET, ocl2.mm.umlPlainClass, ocl2.mm.umlEnglishClass, ocl2.mm.umlLanguageClass, ocl2.mm.umlFrenchClass, ocl2.mm.umlGermanClass, ocl2.mm.umlMultiLingualClass), "Class.allInstances()");
 			ocl2.dispose();
 		}
 		//M1 - Pivot
@@ -320,7 +342,7 @@ public class StereotypesTest extends PivotTestSuite
 			MyOCL ocl3 = createOCL();
 			IdResolver idResolver3 = ocl3.getIdResolver();
 			ocl3.setModelManager(new LazyEcoreModelManager(ocl3.mm.asEnglishClass.eResource().getContents(), null, null));
-			ocl3.assertQueryEquals(ocl3.mm.asEnglishClass, idResolver3.createSetOfEach(TypeId.SET, ocl3.mm.asEnglishClassInEnglish, ocl3.mm.asFrenchClassInEnglish, ocl3.mm.asGermanClassInEnglish), "ocl::ElementExtension.allInstances()");
+			ocl3.assertQueryEquals(ocl3.mm.asEnglishClass, idResolver3.createSetOfEach(TypeId.SET, ocl3.mm.asEnglishClassInEnglish, ocl3.mm.asFrenchClassInEnglish, ocl3.mm.asGermanClassInEnglish, ocl3.mm.asMultiLingualClassInEnglish, ocl3.mm.asMultiLingualClassInFrench, ocl3.mm.asMultiLingualClassInGerman), "ocl::ElementExtension.allInstances()");
 			//
 			//    	ocl.assertQueryEquals(ocl.mm.umlMMM, metamodelManager.createSetValueOf(null, ocl.mm.string, ocl.mm.plainClass, ocl.mm.englishClass, ocl.mm.languageClass, ocl.mm.frenchClass, ocl.mm.germanClass), "uml::Stereotype.allInstances()");
 			//    	ocl.assertQueryEquals(metamodelManager.getOclAnyType(), metamodelManager.createSetValueOf(null, ocl.mm.string, ocl.mm.plainClass, ocl.mm.englishClass, ocl.mm.languageClass, ocl.mm.frenchClass, ocl.mm.germanClass), "ocl::Stereotype.allInstances()");
@@ -383,6 +405,111 @@ public class StereotypesTest extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.mm.umlGermanClass, umlBold, "self.extension_Internationalized.face");
 		ocl.assertQueryEquals(ocl.mm.asGermanClass, asBold/*umlBold*/, "self.extension_Internationalized.face()");
 		ocl.assertQueryEquals(ocl.mm.umlGermanClass, umlBold, "self.extension_Internationalized.face()");
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests M2 parsing and M1 evaluation using oclBase().
+	 */
+	public void testStereotypes_oclBase() throws Exception {
+		MyOCL ocl = createOCL();
+		//
+		//	AS => AS
+		//
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, ocl.mm.asEnglishClassInEnglish, "self.oclExtension(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClassInEnglish, ocl.mm.asEnglishClass, "self.oclBase()");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClassInEnglish, ocl.mm.asEnglishClass, "self.oclBase(Model::EnglishClass)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClassInEnglish, null, "self.oclBase(Model::GermanClass)");
+		ocl.assertQueryEquals(ocl.mm.asMultiLingualClassInEnglish, ocl.mm.asMultiLingualClass, "self.oclBase()");
+		ocl.assertQueryEquals(ocl.mm.asMultiLingualClassInEnglish, ocl.mm.asMultiLingualClass, "self.oclBase(Model::MultiLingualClass)");
+		ocl.assertQueryEquals(ocl.mm.asMultiLingualClassInEnglish, null, "self.oclBase(Model::EnglishClass)");
+		//
+		//	UML => UML
+		//
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mm.umlEnglishClassInEnglish2, "self.oclExtension(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClassInEnglish2, ocl.mm.umlEnglishClass, "self.oclBase()");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClassInEnglish2, ocl.mm.umlEnglishClass, "self.oclBase(Model::EnglishClass)");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClassInEnglish2, null, "self.oclBase(Model::GermanClass)");
+		ocl.assertQueryEquals(ocl.mm.umlMultiLingualClassInEnglish2, ocl.mm.umlMultiLingualClass, "self.oclBase()");
+		ocl.assertQueryEquals(ocl.mm.umlMultiLingualClassInEnglish2, ocl.mm.umlMultiLingualClass, "self.oclBase(Model::MultiLingualClass)");
+		ocl.assertQueryEquals(ocl.mm.umlMultiLingualClassInEnglish2, null, "self.oclBase(Model::EnglishClass)");
+		//
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests M2 parsing and M1 evaluation using oclExtension()/oclExtensions() and diverse KindOf.
+	 */
+	public void testStereotypes_oclExtensions() throws Exception {
+		MyOCL ocl = createOCL();
+		//
+		//	AS => AS
+		//
+		ocl.assertQueryEquals(ocl.mm.asPlainClass, Sets.newHashSet(), "self.oclExtensions()");
+		ocl.assertQueryEquals(ocl.mm.asPlainClass, null, "self.oclExtension(InternationalizedProfile::Internationalized)");
+		//
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "self.oclExtensions()");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "self.oclExtensions(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(), "self.oclExtensions(Standard::Focus)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, ocl.mm.asEnglishClassInEnglish, "self.oclExtension(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, null, "self.oclExtension(Standard::Focus)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, null, "self.oclExtension(Ecore::EClass)");
+		//
+		ocl.assertQueryEquals(ocl.mm.asMultiLingualClass, Sets.newHashSet(ocl.mm.asMultiLingualClassInEnglish, ocl.mm.asMultiLingualClassInFrench, ocl.mm.asMultiLingualClassInGerman), "self.oclExtensions()");
+		ocl.assertQueryEquals(ocl.mm.asMultiLingualClass, Sets.newHashSet(ocl.mm.asMultiLingualClassInEnglish, ocl.mm.asMultiLingualClassInFrench, ocl.mm.asMultiLingualClassInGerman), "self.oclExtensions(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.asMultiLingualClass, Sets.newHashSet(ocl.mm.asMultiLingualClassInGerman), "self.oclExtensions(InternationalizedProfile::InGerman)");
+		ocl.assertQueryEquals(ocl.mm.asMultiLingualClass, ocl.mm.asMultiLingualClassInGerman, "self.oclExtension(InternationalizedProfile::InGerman)");
+		ocl.assertQueryInvalid(ocl.mm.asMultiLingualClass, "self.oclExtension(InternationalizedProfile::Internationalized)");
+		//
+		//	UML => UML
+		//
+		ocl.assertQueryEquals(ocl.mm.umlPlainClass, Sets.newHashSet(), "self.oclExtensions()");
+		ocl.assertQueryEquals(ocl.mm.umlPlainClass, null, "self.oclExtension(InternationalizedProfile::Internationalized)");
+		//
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mm.umlEnglishClassInEnglish2), "self.oclExtensions()");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mm.umlEnglishClassInEnglish2), "self.oclExtensions(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(), "self.oclExtensions(Standard::Focus)");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mm.umlEnglishClassInEnglish2, "self.oclExtension(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, null, "self.oclExtension(Standard::Focus)");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, null, "self.oclExtension(Ecore::EClass)");
+		//
+		ocl.assertQueryEquals(ocl.mm.umlMultiLingualClass, Sets.newHashSet(ocl.mm.umlMultiLingualClassInEnglish2, ocl.mm.umlMultiLingualClassInFrench2, ocl.mm.umlMultiLingualClassInGerman2), "self.oclExtensions()");
+		ocl.assertQueryEquals(ocl.mm.umlMultiLingualClass, Sets.newHashSet(ocl.mm.umlMultiLingualClassInEnglish2, ocl.mm.umlMultiLingualClassInFrench2, ocl.mm.umlMultiLingualClassInGerman2), "self.oclExtensions(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.umlMultiLingualClass, Sets.newHashSet(ocl.mm.umlMultiLingualClassInGerman2), "self.oclExtensions(InternationalizedProfile::InGerman)");
+		ocl.assertQueryEquals(ocl.mm.umlMultiLingualClass, ocl.mm.umlMultiLingualClassInGerman2, "self.oclExtension(InternationalizedProfile::InGerman)");
+		ocl.assertQueryInvalid(ocl.mm.umlMultiLingualClass, "self.oclExtension(InternationalizedProfile::Internationalized)");
+		//
+		//	Errors
+		//
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(standard::Class_Focus)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "standard");
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::NoSuchFocus::WhoCares)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "Standard", "NoSuchFocus");
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::NoSuchFocus)", PivotMessagesInternal.UnresolvedElement_ERROR_, "Standard", "NoSuchFocus");
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtension", "Class");
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtensions(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtensions", "Class");
+		//
+		ocl.dispose();
+	}
+
+	/**
+	 * Tests M2 parsing and M1 evaluation using more diverse oclbBase()/oclExtension()/oclExtensions() and in particular let.
+	 */
+	public void testStereotypes_let_580136() throws Exception {
+		MyOCL ocl = createOCL();
+		//
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, ocl.mm.asEnglishClass, "self.oclExtension(InternationalizedProfile::Internationalized).oclBase()");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mm.umlEnglishClass, "self.oclExtension(InternationalizedProfile::Internationalized).oclBase()");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClassInEnglish, ocl.mm.asEnglishClassInEnglish, "self.oclBase().oclExtension(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClassInEnglish2, ocl.mm.umlEnglishClassInEnglish2, "self.oclBase().oclExtension(InternationalizedProfile::Internationalized)");
+		//
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "let st = InternationalizedProfile::Internationalized in self.oclExtensions(st)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "self.oclExtensions()->selectByKind(InternationalizedProfile::Internationalized)");
+		ocl.assertQueryEquals(ocl.mm.asEnglishClass, Sets.newHashSet(ocl.mm.asEnglishClassInEnglish), "let st = InternationalizedProfile::Internationalized in self.oclExtensions()->select(oclIsKindOf(st))");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, ocl.mm.umlEnglishClassInEnglish, "self.extension_Internationalized");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()->select(true)");
+	//bad missing boxing normalization for loop compare	ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(ocl.mmm.umlInEnglishStereotype), "self.getAppliedStereotypes()->select(s | s = InternationalizedProfile::InEnglish)");
+		ocl.assertQueryEquals(ocl.mm.umlEnglishClass, Sets.newHashSet(), "self.getAppliedStereotypes()->selectByKind(InternationalizedProfile::Internationalized)");	// wrong metalevel
+		//
 		ocl.dispose();
 	}
 }

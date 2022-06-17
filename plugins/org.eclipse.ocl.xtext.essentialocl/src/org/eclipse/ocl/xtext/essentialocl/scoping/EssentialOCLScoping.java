@@ -13,6 +13,7 @@ package org.eclipse.ocl.xtext.essentialocl.scoping;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -86,7 +87,8 @@ public class EssentialOCLScoping
 		public String getMessage(@NonNull EObject eObject, @NonNull String linkText) {
 			PathElementCS csPathElement = (PathElementCS) eObject;
 			PathNameCS pathName = csPathElement.getOwningPathName();
-			List<PathElementCS> path = pathName.getOwnedPathElements();
+			EList<PathElementCS> pathElements = pathName.getOwnedPathElements();
+			List<PathElementCS> path = pathElements;
 			int index = path.indexOf(csPathElement);
 			for (int i = 0; i < index; i++) {
 				PathElementCS csElement = path.get(i);
@@ -101,11 +103,22 @@ public class EssentialOCLScoping
 			}
 			assert csContext != null;
 			String messageTemplate;
+			String typeText = null;
 			String argumentText = null;
 			ExpCS navigationArgument = null;
 			Type sourceType = null;
 			if ((index + 1) < path.size()) {
 				messageTemplate = PivotMessagesInternal.UnresolvedNamespace_ERROR_;
+				if (pathElements.size() > 0) {
+					StringBuilder s = new StringBuilder();
+					for (int i = 0; i < index; i++) {
+						if (i > 0) {
+							s.append("::");
+						}
+						s.append(pathElements.get(i));
+					}
+					typeText = s.toString();
+				}
 			}
 			else if (csContext instanceof NameExpCS) {
 				NameExpCS csNameExp = (NameExpCS)csContext;
@@ -134,7 +147,16 @@ public class EssentialOCLScoping
 				if (csNameExp.getSourceTypeValue() != null) {
 					sourceType = csNameExp.getSourceTypeValue();
 				}
-				linkText = pathName.toString();
+				if (index > 0) {
+					StringBuilder s = new StringBuilder();
+					for (int i = 0; i < index; i++) {
+						if (i > 0) {
+							s.append("::");
+						}
+						s.append(pathElements.get(i));
+					}
+					typeText = s.toString();
+				}
 			}
 			else if (csContext instanceof TypeNameExpCS) {
 				messageTemplate = PivotMessagesInternal.UnresolvedType_ERROR_;
@@ -155,61 +177,63 @@ public class EssentialOCLScoping
 			else {
 				messageTemplate = "Unresolved ''{0}'' ''{1}''";
 			}
-			assert messageTemplate != null;
-			TypedElement source = null;
-			ExpCS csSource = navigationArgument;
-			OperatorExpCS csOperator = null;
-			for (ExpCS aSource = csSource; aSource != null; ) {										// FIXME rewrite me
-				csOperator = aSource.getLocalParent();
-				if ((csOperator != null) && (csOperator.getSource() != aSource)) {
-					csSource = csOperator.getSource();
-					break;
+			if (typeText == null) {
+				assert messageTemplate != null;
+				TypedElement source = null;
+				ExpCS csSource = navigationArgument;
+				OperatorExpCS csOperator = null;
+				for (ExpCS aSource = csSource; aSource != null; ) {										// FIXME rewrite me
+					csOperator = aSource.getLocalParent();
+					if ((csOperator != null) && (csOperator.getSource() != aSource)) {
+						csSource = csOperator.getSource();
+						break;
+					}
+					EObject eContainer = aSource.eContainer();
+					if (eContainer instanceof NavigatingArgCS) {
+						aSource = ((NavigatingArgCS)eContainer).getOwningRoundBracketedClause().getOwningNameExp();
+					}
+					else if (eContainer instanceof InfixExpCS) {
+						aSource = (InfixExpCS)eContainer;
+					}
+					else if (eContainer instanceof PrefixExpCS) {
+						aSource = (PrefixExpCS)eContainer;
+					}
+					else if (eContainer instanceof NestedExpCS) {
+						aSource = (NestedExpCS)eContainer;
+					}
+					else if (eContainer instanceof SpecificationCS) {
+						ExpressionInOCL expression = PivotUtil.getContainingExpressionInOCL(((SpecificationCS)eContainer).getPivot());
+						source = expression!= null ? expression.getOwnedContext() : null;
+						break;
+					}
+					else {
+						break;
+					}
 				}
-				EObject eContainer = aSource.eContainer();
-				if (eContainer instanceof NavigatingArgCS) {
-					aSource = ((NavigatingArgCS)eContainer).getOwningRoundBracketedClause().getOwningNameExp();
+				if (source == null) {
+					if ((csSource != null) && (csSource != navigationArgument)) {
+						source = PivotUtil.getPivot(OCLExpression.class, csSource);
+					}
 				}
-				else if (eContainer instanceof InfixExpCS) {
-					aSource = (InfixExpCS)eContainer;
-				}
-				else if (eContainer instanceof PrefixExpCS) {
-					aSource = (PrefixExpCS)eContainer;
-				}
-				else if (eContainer instanceof NestedExpCS) {
-					aSource = (NestedExpCS)eContainer;
-				}
-				else if (eContainer instanceof SpecificationCS) {
-					ExpressionInOCL expression = PivotUtil.getContainingExpressionInOCL(((SpecificationCS)eContainer).getPivot());
-					source = expression!= null ? expression.getOwnedContext() : null;
-					break;
-				}
-				else {
-					break;
-				}
-			}
-			if (source == null) {
-				if ((csSource != null) && (csSource != navigationArgument)) {
-					source = PivotUtil.getPivot(OCLExpression.class, csSource);
-				}
-			}
-			if (source != null) {
-				if (sourceType == null) {
-					sourceType = source.getType();
-				}
-				if (csOperator != null) {
-					boolean isAggregate = PivotUtil.isAggregate(sourceType);
-					if (isAggregate) {
-						String navigationOperatorName = csOperator.getName();
-						if (PivotUtil.isObjectNavigationOperator(navigationOperatorName)) {
-							if (source.eContainingFeature() == PivotPackage.Literals.CALL_EXP__OWNED_SOURCE) {
-								EObject eContainer = source.eContainer();
-								if (eContainer instanceof IteratorExp) {
-									IteratorExp iteratorExp = (IteratorExp)eContainer;
-									if (iteratorExp.isIsImplicit()) {
-										LibraryFeature iterationImplementation = iteratorExp.getReferredIteration().getImplementation();
-										if (iterationImplementation == CollectIteration.INSTANCE) {
-											Variable iterator = PivotUtil.getOwnedIterators(iteratorExp).iterator().next();
-											sourceType = PivotUtil.getType(iterator);
+				if (source != null) {
+					if (sourceType == null) {
+						sourceType = source.getType();
+					}
+					if (csOperator != null) {
+						boolean isAggregate = PivotUtil.isAggregate(sourceType);
+						if (isAggregate) {
+							String navigationOperatorName = csOperator.getName();
+							if (PivotUtil.isObjectNavigationOperator(navigationOperatorName)) {
+								if (source.eContainingFeature() == PivotPackage.Literals.CALL_EXP__OWNED_SOURCE) {
+									EObject eContainer = source.eContainer();
+									if (eContainer instanceof IteratorExp) {
+										IteratorExp iteratorExp = (IteratorExp)eContainer;
+										if (iteratorExp.isIsImplicit()) {
+											LibraryFeature iterationImplementation = iteratorExp.getReferredIteration().getImplementation();
+											if (iterationImplementation == CollectIteration.INSTANCE) {
+												Variable iterator = PivotUtil.getOwnedIterators(iteratorExp).iterator().next();
+												sourceType = PivotUtil.getType(iterator);
+											}
 										}
 									}
 								}
@@ -217,21 +241,21 @@ public class EssentialOCLScoping
 						}
 					}
 				}
-			}
-			String typeText = "";
-			if (source != null) {
-				typeText = PivotConstantsInternal.UNKNOWN_TYPE_TEXT;
-				if (sourceType == null) {
-					sourceType = source.getType();
-				}
-				if (sourceType != null) {
-				//	sourceType = PivotUtil.getBehavioralType(sourceType);
-					OperatorExpCS csParent = navigationArgument != null ? navigationArgument.getLocalParent() : null;
-					if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(((InfixExpCS)csParent).getName())) {
-						typeText = "Set(" + sourceType.toString() + ")";
+				typeText = "";
+				if (source != null) {
+					typeText = PivotConstantsInternal.UNKNOWN_TYPE_TEXT;
+					if (sourceType == null) {
+						sourceType = source.getType();
 					}
-					else {
-						typeText = sourceType.toString();
+					if (sourceType != null) {
+					//	sourceType = PivotUtil.getBehavioralType(sourceType);
+						OperatorExpCS csParent = navigationArgument != null ? navigationArgument.getLocalParent() : null;
+						if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(((InfixExpCS)csParent).getName())) {
+							typeText = "Set(" + sourceType.toString() + ")";
+						}
+						else {
+							typeText = sourceType.toString();
+						}
 					}
 				}
 			}
