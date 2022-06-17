@@ -52,6 +52,7 @@ public class PathElementCSAttribution extends AbstractAttribution
 			int index = path.indexOf(csPathElement);
 			int indexes = path.size();
 			boolean lastElement = index >= indexes-1;
+			environmentView.setIsQualified(index > 0);
 			environmentView.setIsQualifier(!lastElement);
 			if (lastElement) {			// Last element may have a scope filter
 				scopeFilter = csPathName.getScopeFilter();

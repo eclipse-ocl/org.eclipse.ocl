@@ -549,10 +549,10 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertQueryEquals(redApple, redApple, "self.oclAsType(fruit::Apple)");
 		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(TypeId.SET, redApple), "self->oclAsType(Set(Fruit))");
 		ocl.assertQueryEquals(redApple, idResolver.createSetOfEach(TypeId.SET, redApple), "self->oclAsType(Set(fruit::Apple))");
-		ocl.assertSemanticErrorQuery(appleType, "self.oclAsType(fruit::fruit::Apple)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "fruit");	// Demonstrates Bug 353985
+		ocl.assertSemanticErrorQuery(appleType, "self.oclAsType(fruit::fruit::Apple)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "fruit", "fruit");	// Demonstrates Bug 353985
 		ocl.assertSemanticErrorQuery(appleType, "self->oclAsType(Set(fruit::apple::BadApple))", PivotMessagesInternal.UnresolvedType_ERROR_, "", "BadApple");
 		ocl.assertSemanticErrorQuery(appleType, "self->oclAsType(Set(fruit::apple::BadApple))", PivotMessagesInternal.UnresolvedType_ERROR_, "", "BadApple");
-		ocl.assertSemanticErrorQuery(appleType, "self->oclAsType(Set(fruit::badapple::BadApple))", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "badapple");
+		ocl.assertSemanticErrorQuery(appleType, "self->oclAsType(Set(fruit::badapple::BadApple))", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "fruit", "badapple");
 		ocl.assertSemanticErrorQuery(appleType, "self->oclAsType(Set(badfruit::badapple::BadApple))", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "badfruit");
 		ocl.assertQueryInvalid(redApple, "self->oclAsType(Set(fruit::apple::EatingApple))");
 		ocl.assertQueryInvalid(redApple, "self->oclAsType(Set(fruit::Tree))");
