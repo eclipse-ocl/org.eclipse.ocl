@@ -756,7 +756,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclTupleType() {
 		org.eclipse.ocl.pivot.Class oclTupleType2 = oclTupleType;
 		if (oclTupleType2 == null) {
-			oclTupleType2 = oclTupleType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclTuple");
+			oclTupleType2 = oclTupleType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_TUPLE_NAME);
 		}
 		return oclTupleType2;
 	}
@@ -770,7 +770,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getOclTypeType() {
 		org.eclipse.ocl.pivot.Class oclTypeType2 = oclTypeType;
 		if (oclTypeType2 == null) {
-			oclTypeType2 = oclTypeType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclType");
+			oclTypeType2 = oclTypeType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_TYPE_NAME);
 		}
 		return oclTypeType2;
 	}

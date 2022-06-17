@@ -298,7 +298,16 @@ public class EnvironmentView
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull EStructuralFeature reference;
 	private EClassifier requiredType;
-	private boolean isQualifier;
+
+	/**
+	 * True if the required name is qualified. e.g ...::RequiredName
+	 */
+	private boolean isQualified = false;
+
+	/**
+	 * True if the required name qualifies something. e.g ...RequiredName::...
+	 */
+	private boolean isQualifier = false;
 	protected final @Nullable String name;
 
 	private final @NonNull Map<@NonNull String, Object> contentsByName = new HashMap<>(); // Single Object or MyList
@@ -315,7 +324,6 @@ public class EnvironmentView
 		this.environmentFactory = (EnvironmentFactoryInternal)parserContext.getEnvironmentFactory();
 		this.reference = reference;
 		this.requiredType = reference.getEType();
-		this.isQualifier = false;
 		this.name = name;
 	}
 
@@ -328,7 +336,6 @@ public class EnvironmentView
 		this.environmentFactory = environmentFactory;
 		this.reference = reference;
 		this.requiredType = reference.getEType();
-		this.isQualifier = false;
 		this.name = name;
 	}
 
@@ -989,6 +996,10 @@ public class EnvironmentView
 		return false;
 	}
 
+	public boolean isQualified() {
+		return isQualified;
+	}
+
 	public boolean isQualifier() {
 		return isQualifier;
 	}
@@ -1056,6 +1067,10 @@ public class EnvironmentView
 			contentsSize = newSize;
 		}
 		return getSize();
+	}
+
+	public void setIsQualified(boolean isQualified) {
+		this.isQualified = isQualified;
 	}
 
 	public void setIsQualifier(boolean isQualifier) {
