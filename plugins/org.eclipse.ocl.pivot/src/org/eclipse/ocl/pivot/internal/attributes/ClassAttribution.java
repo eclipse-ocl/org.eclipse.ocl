@@ -41,12 +41,12 @@ public class ClassAttribution extends AbstractAttribution
 		environmentView.addAllOperations(targetClass, null);
 		environmentView.addAllProperties(targetClass, null);
 		environmentView.addAllStates(targetClass);
-		if (environmentView.accepts(PivotPackage.Literals.PROPERTY) && (environmentView.getContent() == null)) {
+		if (environmentView.accepts(PivotPackage.Literals.PROPERTY) && !environmentView.hasAnyResult()) {
 			String name = environmentView.getName();
 			if (name != null) {
 				EnvironmentFactoryInternal environmentFactory = environmentView.getEnvironmentFactory();
 				Technology technology = environmentFactory.getTechnology();
-				Property asProperty = technology.createSyntheticProperty(environmentFactory, targetClass, name);
+				Property asProperty = null; //technology.createSyntheticProperty(environmentFactory, targetClass, name);
 				if (asProperty != null) {
 					environmentView.addNamedElement(asProperty);
 				}

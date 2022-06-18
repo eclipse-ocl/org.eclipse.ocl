@@ -977,6 +977,14 @@ public class EnvironmentView
 	}
 
 	/**
+	 * Return true once the EnvironmentView has accumulated any result.
+	 * This inhibits the fallback support for synthetic properties such as extension_XXX.
+	 */
+	public boolean hasAnyResult() {
+		return contentsSize > 0;
+	}
+
+	/**
 	 * Return true once the EnvironmentView has accumulated sufficient results
 	 * to satisfy the lookup criterion for which it was created. i.e. any result
 	 * for a non-null name, all results for a null name.
