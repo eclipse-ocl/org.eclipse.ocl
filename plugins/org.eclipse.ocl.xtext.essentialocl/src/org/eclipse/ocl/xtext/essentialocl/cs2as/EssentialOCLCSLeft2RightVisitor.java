@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
-import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
@@ -744,7 +743,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			propertyScopeFilter = new PropertyScopeFilter(csSquareBracketedClauses);	// FIXME nonStatic
 		}
 		// FIXME Qualified navigation See Bug 423905
-		Property resolvedProperty = context.lookupProperty(csNameExp, ownedPathName, propertyScopeFilter);
+	/*	Property resolvedProperty = context.lookupProperty(csNameExp, ownedPathName, propertyScopeFilter);
 		if ((resolvedProperty != null) && !resolvedProperty.eIsProxy()) {
 			if (resolvedProperty.getType() instanceof Stereotype) {			// FIXME Bug 578010 - M2 properties need reification with correct types at M1
 				return resolvePropertyCallExp(sourceExp, csNameExp, resolvedProperty);
@@ -755,6 +754,17 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				return resolvePropertyCallExp(sourceExp, csNameExp, resolvedProperty);
 			}
 			context.addError(csNameExp, EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, resolvedProperty);
+		*/
+		Property asProperty = context.lookupProperty(csNameExp, ownedPathName, propertyScopeFilter);
+		if ((asProperty != null) && !asProperty.eIsProxy()) {
+			if (asProperty.eContainer() == null) {		// UML extension_XXX / base_XXX
+				OCLExpression callExp = environmentFactory.getTechnology().createSyntheticPropertyCallExp(helper, sourceExp, asProperty);
+				if (callExp != null) {
+					return callExp;
+				}
+			}
+			CallExp callExp = resolvePropertyCallExp(sourceExp, csNameExp, asProperty);
+			return callExp;
 		}
 		Property oclInvalidProperty = standardLibrary.getOclInvalidProperty();
 		PropertyCallExp expression = refreshPropertyCallExp(csNameExp, sourceExp, oclInvalidProperty);

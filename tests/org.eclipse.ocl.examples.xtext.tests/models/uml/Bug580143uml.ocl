@@ -5,7 +5,7 @@ package UML
 
 context Operation
 
---def: hasCreateStereo(): Boolean = self.extension_Create->notEmpty()
-def: hasCreateStereo(): Boolean = self.oclExtensions(Standard::Create)->notEmpty()
+def: hasCreateStereo1(): Boolean = self.extension_Create->notEmpty()
+def: hasCreateStereo2(): Boolean = self.oclExtensions(Standard::Create)->notEmpty()
 
 endpackage

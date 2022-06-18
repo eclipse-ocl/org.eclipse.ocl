@@ -17,12 +17,14 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 
 /**
  * Technology instances encapsulate behaviour that varies according to the metamodel technologies in use.
@@ -44,6 +46,15 @@ public interface Technology
 	@NonNull IdResolver createIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory);
 
 	@NonNull LibraryProperty createStereotypePropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property);
+
+	default @Nullable Property createSyntheticProperty(@NonNull EnvironmentFactoryInternal environmentFactory,
+			org.eclipse.ocl.pivot.@NonNull Class targetClass, @NonNull String name) {
+		return null;
+	}
+
+	default @Nullable OCLExpression createSyntheticPropertyCallExp(@NonNull PivotHelper helper, @NonNull OCLExpression asSourceExpression, @NonNull Property asProperty) {
+		return null;
+	}
 
 	String getExtensionName(@NonNull Element asStereotypedElement);
 

@@ -13,9 +13,13 @@ package org.eclipse.ocl.pivot.internal.attributes;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 
 public class ClassAttribution extends AbstractAttribution
@@ -37,6 +41,17 @@ public class ClassAttribution extends AbstractAttribution
 		environmentView.addAllOperations(targetClass, null);
 		environmentView.addAllProperties(targetClass, null);
 		environmentView.addAllStates(targetClass);
+		if (environmentView.accepts(PivotPackage.Literals.PROPERTY) && (environmentView.getContent() == null)) {
+			String name = environmentView.getName();
+			if (name != null) {
+				EnvironmentFactoryInternal environmentFactory = environmentView.getEnvironmentFactory();
+				Technology technology = environmentFactory.getTechnology();
+				Property asProperty = technology.createSyntheticProperty(environmentFactory, targetClass, name);
+				if (asProperty != null) {
+					environmentView.addNamedElement(asProperty);
+				}
+			}
+		}
 		return scopeView.getParent();
 	}
 }

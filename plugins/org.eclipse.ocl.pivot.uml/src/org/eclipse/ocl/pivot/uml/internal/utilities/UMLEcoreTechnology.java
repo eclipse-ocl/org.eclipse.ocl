@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.uml.internal.utilities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -21,14 +24,20 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DynamicElement;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Profile;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -36,6 +45,7 @@ import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ExtensionProperty;
 import org.eclipse.ocl.pivot.internal.library.ImplicitNonCompositionProperty;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractTechnology;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -52,6 +62,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.uml2.types.TypesPackage;
 import org.eclipse.uml2.uml.UMLPackage;
@@ -118,6 +129,67 @@ public class UMLEcoreTechnology extends AbstractTechnology
 	@Override
 	public @NonNull LibraryProperty createStereotypePropertyImplementation(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property property) {
 		return new UMLStereotypeProperty(property);
+	}
+
+	@Override
+	public @Nullable Property createSyntheticProperty(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Class targetClass, @NonNull String name) {
+		if (name.startsWith(DerivedConstants.STEREOTYPE_BASE_PREFIX) || name.startsWith(DerivedConstants.STEREOTYPE_EXTENSION_PREFIX)) {
+			Property asProperty = PivotFactory.eINSTANCE.createProperty();
+			asProperty.setName(name);
+			Orphanage orphanage = environmentFactory.getCompleteModel().getOrphanage();
+			orphanage.eResource().getContents().add(asProperty);
+			return asProperty;
+		}
+		return null;
+	}
+
+	@Override
+	public @Nullable OCLExpression createSyntheticPropertyCallExp(@NonNull PivotHelper helper, @NonNull OCLExpression asSourceExpression, @NonNull Property asProperty) {
+		Map<@NonNull String, @NonNull List<@NonNull CompleteClass>> stereotypeName2completeClass = new HashMap<>();
+		CompleteModel completeModel = helper.getEnvironmentFactory().getCompleteModel();
+		for (@NonNull CompletePackage completePackage : completeModel.getAllCompletePackages()) {
+			for (@NonNull CompleteClass completeClass : completePackage.getOwnedCompleteClasses()) {
+				for (org.eclipse.ocl.pivot.@NonNull Class asClass : completeClass.getPartialClasses()) {
+					if (asClass instanceof Stereotype) {
+						String name = completeClass.getName();
+						List<@NonNull CompleteClass> completeClasses = stereotypeName2completeClass.get(name);
+						if (completeClasses == null) {
+							completeClasses = new ArrayList<>();
+							stereotypeName2completeClass.put(name, completeClasses);
+						}
+						completeClasses.add(completeClass);
+						break;
+					}
+				}
+			}
+		}
+		String syntheticName = asProperty.getName();
+		String operationName = null;
+		String stereotypeName = null;
+		if (syntheticName.startsWith(DerivedConstants.STEREOTYPE_BASE_PREFIX)) {
+			operationName = "oclBase";
+			stereotypeName = syntheticName.substring(DerivedConstants.STEREOTYPE_BASE_PREFIX.length());
+		}
+		else if (syntheticName.startsWith(DerivedConstants.STEREOTYPE_EXTENSION_PREFIX)) {
+			operationName = "oclExtensions";
+			stereotypeName = syntheticName.substring(DerivedConstants.STEREOTYPE_EXTENSION_PREFIX.length());
+		}
+		else {
+			//error
+		}
+		List<@NonNull CompleteClass> completeClasses = stereotypeName2completeClass.get(stereotypeName);
+		if (completeClasses == null) {
+			return null;			// ERROR
+		}
+		else if (completeClasses.size() != 1) {
+			return null;			// ERROR
+		}
+		if (operationName == null) {
+			return null;		// ERROR
+		}
+		org.eclipse.ocl.pivot.Class primaryClass = completeClasses.get(0).getPrimaryClass();
+		TypeExp asTypeExp = helper.createTypeExp(primaryClass);
+		return helper.createOperationCallExp(asSourceExpression, operationName, asTypeExp);
 	}
 
 	@Override
