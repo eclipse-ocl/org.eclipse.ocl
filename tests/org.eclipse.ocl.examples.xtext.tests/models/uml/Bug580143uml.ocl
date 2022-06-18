@@ -1,0 +1,11 @@
+import 'http://www.eclipse.org/uml2/5.0.0/UML'
+import 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard'
+
+package UML
+
+context Operation
+
+--def: hasCreateStereo(): Boolean = self.extension_Create->notEmpty()
+def: hasCreateStereo(): Boolean = self.oclExtensions(Standard::Create)->notEmpty()
+
+endpackage

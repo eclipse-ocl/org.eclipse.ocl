@@ -1212,11 +1212,33 @@ public class LoadTests extends XtextTestCase
 		assertFalse("Bug535712.ocl.oclas should not exist", testFileC2.getFile().exists());
 	}
 
-	public void testLoad_Bug580143_ocl() throws IOException, InterruptedException {
+	/*
+	 * Supporting Stereotypes on Ecore models is an enthusiasm too far.
+	 *
+	public void testLoad_Bug580143ecore_ocl() throws IOException, InterruptedException {
 		UMLStandaloneSetup.init();
 		OCL ocl = createOCLWithProjectMap();
 		UMLPackage.eINSTANCE.getClass();
-		doLoad(ocl, getTestModelURI("models/uml/Bug580143.ocl"));
+		doLoad(ocl, getTestModelURI("models/uml/Bug580143ecore.ocl"));
+		ocl.dispose();
+	} */
+
+	/*
+	 * FIXME we really ought to sort out why UML model names are not redirected to their local models.
+	 *
+	public void testLoad_Bug580143omg_ocl() throws IOException, InterruptedException {
+		UMLStandaloneSetup.init();
+		OCL ocl = createOCLWithProjectMap();
+		UMLPackage.eINSTANCE.getClass();
+		doLoad(ocl, getTestModelURI("models/uml/Bug580143omg.ocl"));
+		ocl.dispose();
+	} */
+
+	public void testLoad_Bug580143uml_ocl() throws IOException, InterruptedException {
+		UMLStandaloneSetup.init();
+		OCL ocl = createOCLWithProjectMap();
+		UMLPackage.eINSTANCE.getClass();
+		doLoad(ocl, getTestModelURI("models/uml/Bug580143uml.ocl"));
 		ocl.dispose();
 	}
 
