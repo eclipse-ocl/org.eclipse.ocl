@@ -1,0 +1,13 @@
+--import 'http://www.omg.org/spec/UML/20131001/UML.xmi'
+--import 'http://www.omg.org/spec/UML/20131001/StandardProfile.xmi'
+import 'platform:/plugin/org.eclipse.uml2/model/UML.xmi'
+import 'platform:/plugin/org.eclipse.uml2/model/StandardProfile.xmi'
+
+package UML
+
+context Operation
+
+--def: hasCreateStereo(): Boolean = self.extension_Create->notEmpty()
+def: hasCreateStereo(): Boolean = self.oclExtensions(StandardProfile::Create)->notEmpty()
+
+endpackage
