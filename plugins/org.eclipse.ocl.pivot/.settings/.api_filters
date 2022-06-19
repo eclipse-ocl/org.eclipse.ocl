@@ -1450,6 +1450,24 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="ANY_TYPE_NAME"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="BOOLEAN_TYPE_NAME"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="INVALID_TYPE_NAME"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
                 <message_argument value="OCL_STEREOTYPE"/>
             </message_arguments>
         </filter>
@@ -1457,6 +1475,18 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
                 <message_argument value="OCL_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="STEREOTYPE_NAME"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
+                <message_argument value="VOID_TYPE_NAME"/>
             </message_arguments>
         </filter>
     </resource>

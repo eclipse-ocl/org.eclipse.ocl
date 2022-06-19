@@ -1248,11 +1248,22 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		if (asClass instanceof AnyType) {
 			return EcoreExecutorAnyType.class;
 		}
-		else if (asClass instanceof BagType) {
-			return EcoreExecutorBagType.class;
-		}
-		else if (asClass instanceof BooleanType) {
-			return EcoreExecutorBooleanType.class;
+		else if (asClass instanceof CollectionType) {
+			if (asClass instanceof BagType) {
+				return EcoreExecutorBagType.class;
+			}
+			else if (asClass instanceof OrderedSetType) {
+				return EcoreExecutorOrderedSetType.class;
+			}
+			else if (asClass instanceof SequenceType) {
+				return EcoreExecutorSequenceType.class;
+			}
+			else if (asClass instanceof SetType) {
+				return EcoreExecutorSetType.class;
+			}
+			else {
+				return EcoreExecutorCollectionType.class;
+			}
 		}
 		else if (asClass instanceof Enumeration) {
 			return EcoreExecutorEnumeration.class;
@@ -1261,22 +1272,15 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			return EcoreExecutorInvalidType.class;
 		}
 		else if (asClass instanceof PrimitiveType) {
-			return EcoreExecutorPrimitiveType.class;
-		}
-		else if (asClass instanceof OrderedSetType) {
-			return EcoreExecutorOrderedSetType.class;
-		}
-		else if (asClass instanceof SequenceType) {
-			return EcoreExecutorSequenceType.class;
-		}
-		else if (asClass instanceof SetType) {
-			return EcoreExecutorSetType.class;
+			if (asClass instanceof BooleanType) {
+				return EcoreExecutorBooleanType.class;
+			}
+			else {
+				return EcoreExecutorPrimitiveType.class;
+			}
 		}
 		else if (asClass instanceof VoidType) {
 			return EcoreExecutorVoidType.class;
-		}
-		else if (asClass instanceof CollectionType) {
-			return EcoreExecutorCollectionType.class;
 		}
 		return EcoreExecutorType.class;
 	}

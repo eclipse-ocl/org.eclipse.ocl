@@ -193,6 +193,10 @@ public class CGUtil
 		return ClassUtil.nonNullState((Constraint)cgConstraint.getAst());
 	}
 
+	public static @NonNull Type getAST(@NonNull CGExecutorType cgExecutorType) {
+		return ClassUtil.nonNullState((Type)cgExecutorType.getAst());
+	}
+
 	public static @NonNull Variable getAST(@NonNull CGIterator cgIterator) {
 		return ClassUtil.nonNullState((Variable)cgIterator.getAst());
 	}

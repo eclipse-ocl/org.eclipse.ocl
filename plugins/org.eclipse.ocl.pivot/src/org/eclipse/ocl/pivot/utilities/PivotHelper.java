@@ -15,7 +15,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
@@ -323,14 +322,14 @@ public class PivotHelper
 				boolean gotOne = true;
 				for (int i = 0; i < argumentCount; i++) {
 					Type asParameterType = ClassUtil.nonNullState(asParameters.get(i).getType());
+					OCLExpression asArgument = asArguments[i];
+					Type asArgumentType = asArgument.getType();
 					if (asParameterType instanceof SelfType) {
-						Type asArgumentType = asArguments[i].getType();
 						if (asArgumentType.conformsTo(standardLibrary, asType) && asType.conformsTo(standardLibrary, asArgumentType)) {
 							exactMatches++;
 						}
 					}
 					else {
-						Type asArgumentType = asArguments[i].getType();
 						if (!asArgumentType.conformsTo(standardLibrary, asParameterType)) {
 							gotOne = false;
 							break;
@@ -489,15 +488,14 @@ public class PivotHelper
 		return tupleLiteralPart;
 	}
 
-	public @NonNull TypeExp createTypeExp(@NonNull Type type) {
+	public @NonNull TypeExp createTypeExp(@NonNull Type type) {		// FIXME Class
+		assert type instanceof org.eclipse.ocl.pivot.Class;		// Not TemplateParameter
 		TypeExp asTypeExp = PivotFactory.eINSTANCE.createTypeExp();
 		asTypeExp.setIsRequired(true);
 		asTypeExp.setReferredType(type);
 		asTypeExp.setName(type.getName());
-	//	asTypeExp.setType(type instanceof TemplateParameter ? metamodelManager.getOclType("TemplateParameter") : standardLibrary.getClassType());
-		EClass eClass = type.eClass();
-		assert eClass != null;
-		asTypeExp.setType(environmentFactory.getIdResolver().getType(eClass));
+		Type metaType = standardLibrary.getMetaclass(type);
+		asTypeExp.setType(metaType);
 		asTypeExp.setTypeValue(type);
 		return asTypeExp;
 	}

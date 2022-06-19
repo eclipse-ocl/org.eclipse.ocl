@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
+@Deprecated /* @deprecated not used */
 public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 {
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;

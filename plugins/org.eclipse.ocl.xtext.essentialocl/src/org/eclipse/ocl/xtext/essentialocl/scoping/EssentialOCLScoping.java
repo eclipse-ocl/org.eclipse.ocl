@@ -13,7 +13,6 @@ package org.eclipse.ocl.xtext.essentialocl.scoping;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -87,7 +86,7 @@ public class EssentialOCLScoping
 		public String getMessage(@NonNull EObject eObject, @NonNull String linkText) {
 			PathElementCS csPathElement = (PathElementCS) eObject;
 			PathNameCS pathName = csPathElement.getOwningPathName();
-			EList<PathElementCS> pathElements = pathName.getOwnedPathElements();
+			List<@NonNull PathElementCS> pathElements = ClassUtil.nullFree(pathName.getOwnedPathElements());
 			List<PathElementCS> path = pathElements;
 			int index = path.indexOf(csPathElement);
 			for (int i = 0; i < index; i++) {
@@ -130,7 +129,7 @@ public class EssentialOCLScoping
 					if ((arguments.size() > 0) && (arguments.get(0).getRole() == NavigationRole.ITERATOR)) {
 						messageTemplate = PivotMessagesInternal.UnresolvedIterationCall_ERROR_;
 					}
-					else {
+					else {		// FIXME If e.g. self.unresolved() for a Class-valued self, csNameExp.getSourceTypeValue() != null -- is the 'static' diagnosis valid / helpful ?
 						messageTemplate = /*csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_ :*/ PivotMessagesInternal.UnresolvedOperationCall_ERROR_;
 					}
 				}
@@ -153,7 +152,7 @@ public class EssentialOCLScoping
 						if (i > 0) {
 							s.append("::");
 						}
-						s.append(pathElements.get(i));
+						s.append(ElementUtil.getTextName(pathElements.get(i)));
 					}
 					typeText = s.toString();
 				}
@@ -259,6 +258,7 @@ public class EssentialOCLScoping
 					}
 				}
 			}
+			assert messageTemplate != null;
 			MessageBinder messageBinder = CS2AS.getMessageBinder();
 			String messageText;
 			if (argumentText == null) {

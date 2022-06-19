@@ -358,7 +358,7 @@ public abstract class ValueUtil
 			return (Stereotype)value;
 		}
 		else {
-			throw new InvalidValueException(PivotMessages.TypedValueRequired, "Stereotype", getTypeName(value));
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.STEREOTYPE_NAME, getTypeName(value));
 		}
 	}
 

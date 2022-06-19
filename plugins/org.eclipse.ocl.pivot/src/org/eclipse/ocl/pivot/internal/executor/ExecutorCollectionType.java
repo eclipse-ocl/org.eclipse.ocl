@@ -14,12 +14,8 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -34,50 +30,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType implements CollectionType
 {
-	/**
-	 * @since 1.18
-	 */
-	public static class ExecutorBagType extends ExecutorCollectionType implements BagType
-	{
-		public ExecutorBagType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
-				@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-			super(name, containerType, elementType, isNullFree, lower, upper);
-		}
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	public static class ExecutorOrderedSetType extends ExecutorCollectionType implements OrderedSetType
-	{
-		public ExecutorOrderedSetType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
-				@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-			super(name, containerType, elementType, isNullFree, lower, upper);
-		}
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	public static class ExecutorSequenceType extends ExecutorCollectionType implements SequenceType
-	{
-		public ExecutorSequenceType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
-				@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-			super(name, containerType, elementType, isNullFree, lower, upper);
-		}
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	public static class ExecutorSetType extends ExecutorCollectionType implements SetType
-	{
-		public ExecutorSetType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
-				@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-			super(name, containerType, elementType, isNullFree, lower, upper);
-		}
-	}
-
 	protected final @NonNull Type elementType;
 	protected final boolean isNullFree;
 	protected final @NonNull IntegerValue lower;

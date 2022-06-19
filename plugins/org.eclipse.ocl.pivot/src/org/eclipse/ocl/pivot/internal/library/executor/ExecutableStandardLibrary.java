@@ -19,6 +19,7 @@ import java.util.WeakHashMap;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
@@ -28,6 +29,9 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StandardLibrary.StandardLibraryExtension;
 import org.eclipse.ocl.pivot.TupleType;
@@ -36,14 +40,13 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorElement;
+import org.eclipse.ocl.pivot.internal.executor.ExecutorBagType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType.ExecutorBagType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType.ExecutorOrderedSetType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType.ExecutorSequenceType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType.ExecutorSetType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorMapType;
+import org.eclipse.ocl.pivot.internal.executor.ExecutorOrderedSetType;
+import org.eclipse.ocl.pivot.internal.executor.ExecutorSequenceType;
+import org.eclipse.ocl.pivot.internal.executor.ExecutorSetType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
@@ -73,7 +76,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	/**
 	 * Shared cache of the lazily created lazily deleted tuples.
 	 */
-	private @NonNull Map<@NonNull TupleTypeId, @NonNull WeakReference<@Nullable TupleType>> tupleTypeMap = new WeakHashMap<>();		// Keys are singletons
+	private @NonNull Map<@NonNull TupleTypeId, @NonNull WeakReference<@NonNull TupleType>> tupleTypeMap = new WeakHashMap<>();		// Keys are singletons
 
 	/**
 	 * Configuration of validation preferences.
@@ -144,20 +147,21 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			specializedType = weakGet(map, typeParameters);
 		}
 		if (specializedType == null) {
-			if (genericType == getBagType()) {
-				specializedType = new ExecutorBagType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			String name = ClassUtil.nonNullModel(genericType.getName());
+			if (genericType instanceof BagType) {
+				specializedType = new ExecutorBagType(name, genericType, elementType, isNullFree, lower, upper);
 			}
-			else if (genericType == getOrderedSetType()) {
-				specializedType = new ExecutorOrderedSetType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			else if (genericType instanceof OrderedSetType) {
+				specializedType = new ExecutorOrderedSetType(name, genericType, elementType, isNullFree, lower, upper);
 			}
-			else if (genericType == getSequenceType()) {
-				specializedType = new ExecutorSequenceType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			else if (genericType instanceof SequenceType) {
+				specializedType = new ExecutorSequenceType(name, genericType, elementType, isNullFree, lower, upper);
 			}
-			else if (genericType == getSetType()) {
-				specializedType = new ExecutorSetType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			else if (genericType instanceof SetType) {
+				specializedType = new ExecutorSetType(name, genericType, elementType, isNullFree, lower, upper);
 			}
-			else {		// Never happens - ExecutorCollectionType could be abstract
-				specializedType = new ExecutorCollectionType(ClassUtil.nonNullModel(genericType.getName()), genericType, elementType, isNullFree, lower, upper);
+			else {
+				specializedType = new ExecutorCollectionType(name, genericType, elementType, isNullFree, lower, upper);
 			}
 			map.put(typeParameters, new WeakReference<>(specializedType));
 		}
@@ -223,42 +227,14 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		return specializedType;
 	}
 
-	// FIXME cf MetamodelManager
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType) {
-		org.eclipse.ocl.pivot.Class metaType = null;
-		if (classType instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)classType;
-			if (collectionType.isOrdered()) {
-				if (collectionType.isUnique()) {
-					metaType = getPivotType(TypeId.ORDERED_SET_TYPE_NAME);
-				}
-				else {
-					metaType =  getPivotType(TypeId.SEQUENCE_TYPE_NAME);
-				}
-			}
-			else {
-				if (collectionType.isUnique()) {
-					metaType =  getPivotType(TypeId.SET_TYPE_NAME);
-				}
-				else {
-					metaType =  getPivotType(TypeId.BAG_TYPE_NAME);
-				}
-			}
-
-		}
-		else if (classType instanceof MapType) {
-			metaType =  getPivotType(TypeId.MAP_TYPE_NAME);
-		}
-		if (metaType != null) {
-			return metaType;
-		}
-		//		return OCLstdlibTables.Types._OclType;
-		return getClassType();
+	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
+		String metaclassName = TypeUtil.getMetaclassName(asInstanceType);
+		return ClassUtil.nonNullState(getPivotType(metaclassName));
 	}
 
 	@Override
-	public Type getMetaType(@NonNull Type instanceType) {
+	public @NonNull Type getMetaType(@NonNull Type instanceType) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -491,7 +467,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	}
 
 	public synchronized @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		WeakReference<TupleType> ref = tupleTypeMap.get(typeId);
+		WeakReference<@NonNull TupleType> ref = tupleTypeMap.get(typeId);
 		if (ref != null) {
 			TupleType domainTupleType = ref.get();
 			if (domainTupleType != null) {
@@ -542,7 +518,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	 * Return the map.get(key).get() entry if there is one or null if not, removing any stale
 	 * entry that may be encountered.
 	 */
-	protected <K, V> @Nullable V weakGet(@NonNull Map<K, WeakReference<V>> map, @NonNull K key) {
+	protected <K, V> @Nullable V weakGet(@NonNull Map<K, @NonNull WeakReference<V>> map, @NonNull K key) {
 		WeakReference<V> ref = map.get(key);
 		if (ref == null) {
 			return null;

@@ -854,13 +854,6 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitTypeExp(@NonNull TypeExp t) {
-		//		DomainMetaclass domainMetaclass = (DomainMetaclass)t.getType();
-		//		DomainType instanceType = domainMetaclass.getInstanceType();
-		//		assert instanceType != null;
-		//		return ValuesUtil.createTypeValue(instanceType);
-		//		DomainMetaclass domainMetaclass = (DomainMetaclass)t.getType();
-		//		DomainType instanceType = domainMetaclass.getInstanceType();
-		//		assert instanceType != null;
 		return t.getReferredType();
 	}
 
