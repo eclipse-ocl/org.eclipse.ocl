@@ -101,29 +101,29 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		return cgOperationCallExp;
 	} */
 
-	public CGOperation createCGInnerOperation(@NonNull AS2CGVisitor as2cgVisitor, LibraryOperation libraryOperation, @NonNull Operation asOperation) {
+	public CGOperation createCGInnerOperation(@NonNull AS2CGVisitor as2cgVisitor, LibraryOperation libraryOperation, @NonNull Operation asOuterOperation) {
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		Method jMethod = libraryOperation.getEvaluateMethod(asOuterOperation);
+		CGLibraryOperation cgInnerOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	//	analyzer.installOperation(asOperation, cgOperation, this);
-		assert cgOperation.getAst() == null;
-		assert cgOperation.getCallingConvention() == null;
+		assert cgInnerOperation.getAst() == null;
+		assert cgInnerOperation.getCallingConvention() == null;
 //		System.out.println("installOperation " + callingConvention.getClass().getSimpleName() + " " + NameUtil.debugSimpleName(cgOperation) + " " + NameUtil.debugSimpleName(asOperation) + " : " + asOperation);
-		cgOperation.setAst(asOperation);
-		cgOperation.setTypeId(analyzer.getCGTypeId(asOperation.getTypeId()));
-		cgOperation.setRequired(asOperation.isIsRequired());
-		cgOperation.setCallingConvention(this);
+		cgInnerOperation.setAst(asOuterOperation);		// no inner available
+		cgInnerOperation.setTypeId(analyzer.getCGTypeId(asOuterOperation.getTypeId()));
+		cgInnerOperation.setRequired(asOuterOperation.isIsRequired());
+		cgInnerOperation.setCallingConvention(this);
 //		analyzer.addCGOperation(cgOperation);
 	//	createCGParameters(as2cgVisitor, gOperation, null;
 		ExpressionInOCL expressionInOCL	= null;
 		//	Operation asOperation = CGUtil.getAST(cgOperation);
 		NestedNameManager nameManager = as2cgVisitor.getNameManager();
-		List<CGParameter> cgParameters = cgOperation.getParameters();
+		List<CGParameter> cgParameters = cgInnerOperation.getParameters();
 	//	LibraryOperation libraryOperation = (LibraryOperation)as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
 	//	Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-		cgOperation.setRequired(as2cgVisitor.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);
-		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
-		int i = asOperation.isIsStatic() ? 0 : -1;
+		cgInnerOperation.setRequired(as2cgVisitor.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);
+		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOuterOperation.getOwnedParameters());
+		int i = asOuterOperation.isIsStatic() ? 0 : -1;
 		if (Modifier.isStatic(jMethod.getModifiers())) {
 			cgParameters.add(nameManager.getThisParameter());
 		}
@@ -143,7 +143,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 					else {
 						selfParameter = nameManager.getSelfParameter();
 					}
-					if (as2cgVisitor.getAnalyzer().hasOclVoidOperation(asOperation.getOperationId())) {
+					if (as2cgVisitor.getAnalyzer().hasOclVoidOperation(asOuterOperation.getOperationId())) {
 						selfParameter.setRequired(false);
 					}
 					cgParameters.add(selfParameter);
@@ -160,7 +160,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 			}
 		}
 		assert i == asParameters.size();
-		return cgOperation;
+		return cgInnerOperation;
 	}
 
 	public @NonNull CGLibraryOperationCallExp createCGInnerOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOuterOperation, @NonNull LibraryOperation libraryOperation, @NonNull Operation asOuterOperation) {
