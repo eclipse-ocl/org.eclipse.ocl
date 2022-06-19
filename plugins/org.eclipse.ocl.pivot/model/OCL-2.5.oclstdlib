@@ -1981,7 +1981,7 @@ type InvalidType {
 	*/
 	operation allInstances() : Set(OclSelf) => 'org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation';
 }
-type Stereotype {
+type Stereotype conformsTo OclStereotype {
 	/**
 	Return a set of all instances of the stereotype and derived types of self.
 	*/

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -22,14 +21,11 @@ import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
@@ -44,11 +40,9 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
-import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -226,36 +220,6 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
 	}
 
-	protected @NonNull CGLibraryOperationCallExp createCGMethodOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull LibraryOperation libraryOperation,
-			CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-		//	assert (cgSource == null) == Modifier.isStatic(jMethod.getModifiers());
-			CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
-			cgOperationCallExp.setLibraryOperation(libraryOperation);
-			List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
-			for (Class<?> jParameterType : jMethod.getParameterTypes()) {
-				if (jParameterType == Executor.class) {
-					CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
-					cgArguments.add(analyzer.createCGVariableExp(executorVariable));
-				}
-				else if (jParameterType == TypeId.class) {
-					addTypeIdArgument(as2cgVisitor, cgOperationCallExp, asOperationCallExp.getTypeId());
-				}
-				else if (jParameterType == Object.class) {
-					if (cgSource != null) {
-						cgArguments.add(cgSource);
-					}
-					break;
-				}
-				else {
-					throw new UnsupportedOperationException();
-				}
-			}
-		return cgOperationCallExp;
-	}
-
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
 		return createCGOperation(as2cgVisitor.getAnalyzer(), asSourceType, asOperation);
@@ -386,6 +350,25 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgOperationCallExp.setReferredOperation(cgOperation);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
+		cgOperationCallExp.setRequired(isRequired);
+	}
+
+	protected void initCallExp2(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp,
+			@NonNull CGOperation cgOperation, boolean isRequired) {		// XXX wip eliminate isRequired
+	//	Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
+	//	boolean isRequired2 = asOperation.isIsRequired();
+	//	Boolean ecoreIsRequired = as2cgVisitor.getCodeGenerator().isNonNull(asOperationCallExp);
+	//	if (ecoreIsRequired != null) {
+	//		isRequired2 = ecoreIsRequired;
+	//	}
+	//	assert isRequired == isRequired2;
+	//	cgOperationCallExp.setAsOperation(asOperation);
+	//	cgOperationCallExp.setAst(asOperationCallExp);
+	//	TypeId asTypeId = asOperationCallExp.getTypeId();
+		cgOperationCallExp.setTypeId(cgOperation.getTypeId());
+		cgOperationCallExp.setReferredOperation(cgOperation);
+	//	cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
+	//	cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);
 	}
 
