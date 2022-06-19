@@ -733,7 +733,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
 		org.eclipse.ocl.pivot.Class classType = standardLibrary.getClassType();
-		org.eclipse.ocl.pivot.Class primitiveType = useCodeGen ? classType : environmentFactory.getASClass("PrimitiveType");
+		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
 		assert primitiveType != null;
 		ocl.assertQueryEquals(null, booleanType, "true.oclType()");
 		ocl.assertQueryEquals(null, "Boolean", "true.oclType().name");
@@ -802,7 +802,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		@NonNull Type collectionKindType = ClassUtil.nonNullState(environmentFactory.getASClass("CollectionKind"));
-		org.eclipse.ocl.pivot.Class enumerationType = useCodeGen ? standardLibrary.getClassType() : standardLibrary.getEnumerationType();
+		org.eclipse.ocl.pivot.Class enumerationType = standardLibrary.getEnumerationType();
 		//    	ocl.assertQueryEquals(null, metamodelManager.getPivotType("EnumerationLiteral"), "CollectionKind::Set.oclType()");
 		// NB this is not EnumerationLiteral: cf. 4.oclType() is Integer not IntegerLiteral.
 		ocl.assertQueryEquals(null, environmentFactory.getASClass("CollectionKind"), "CollectionKind::Set.oclType()");
@@ -811,7 +811,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, "CollectionKind", "CollectionKind.name");
 		ocl.assertQueryEquals(null, enumerationType, "CollectionKind.oclType()");
 		ocl.assertQueryEquals(null, 5, "CollectionKind.allLiterals->size()");
-		ocl.assertSemanticErrorQuery(null, "CollectionKind.oclType().ownedLiteral", PivotMessagesInternal.UnresolvedStaticProperty_ERROR_, "Class", "ownedLiteral");
+		ocl.assertSemanticErrorQuery(null, "CollectionKind.oclType().ownedLiteral", PivotMessagesInternal.UnresolvedStaticProperty_ERROR_, "Enumeration", "ownedLiteral");
 		ocl.assertQueryResults(null, "Set{CollectionKind::Bag,CollectionKind::Collection,CollectionKind::_'OrderedSet',CollectionKind::_'Sequence',CollectionKind::_'Set'}", "CollectionKind.allInstances()");
 		ocl.assertQueryResults(null, "Set{CollectionKind::Bag,CollectionKind::Collection,CollectionKind::OrderedSet,CollectionKind::Sequence,CollectionKind::Set}", "CollectionKind::Set.oclType().allInstances()");
 		ocl.assertQueryResults(null, "Set{}", "CollectionKind.oclType().allInstances()");
@@ -825,8 +825,10 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-		org.eclipse.ocl.pivot.Class primitiveType = useCodeGen ? standardLibrary.getClassType() : environmentFactory.getASClass("PrimitiveType");
+		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
 		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
+		ocl.assertQueryEquals(null, integerType, "Integer");
+//
 		ocl.assertQueryEquals(null, standardLibrary.getIntegerType(), "3.oclType()");
 		ocl.assertQueryEquals(null, standardLibrary.getRealType(), "3.0.oclType()");
 		ocl.assertQueryEquals(null, standardLibrary.getUnlimitedNaturalType(), "*.oclType()");
@@ -847,7 +849,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class anyType = standardLibrary.getOclAnyType();
-		org.eclipse.ocl.pivot.Class anyTypeClass = useCodeGen ? standardLibrary.getClassType() : environmentFactory.getASClass("AnyType");
+		org.eclipse.ocl.pivot.Class anyTypeClass = environmentFactory.getASClass("AnyType");
 		ocl.assertQueryEquals(null, standardLibrary.getOclVoidType(), "null.oclType()");
 		//    	ocl.assertQueryEquals(null, standardLibrary.getOclVoidType(), "null.oclAsType(OclAny).oclType()");		// Cast does not change the dynamic type
 		//    	ocl.assertQueryEquals(null, "OclAny", "null.oclAsType(OclAny).name");
@@ -868,7 +870,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class invalidType = standardLibrary.getOclInvalidType();
-		org.eclipse.ocl.pivot.Class invalidTypeClass = useCodeGen ? standardLibrary.getClassType() : environmentFactory.getASClass("InvalidType");
+		org.eclipse.ocl.pivot.Class invalidTypeClass = environmentFactory.getASClass("InvalidType");
 		ocl.assertQueryInvalid(null, "invalid.oclType()");
 		ocl.assertQueryInvalid(null, "invalid.oclType().name");
 		ocl.assertQueryEquals(null, invalidType, "OclInvalid");
@@ -888,7 +890,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-		org.eclipse.ocl.pivot.Class voidTypeClass = useCodeGen ? standardLibrary.getClassType() : environmentFactory.getASClass("VoidType");
+		org.eclipse.ocl.pivot.Class voidTypeClass = environmentFactory.getASClass("VoidType");
 		org.eclipse.ocl.pivot.Class nullType = standardLibrary.getOclVoidType();
 		ocl.assertQueryEquals(null, nullType, "null.oclType()");
 		ocl.assertQueryEquals(null, "OclVoid", "null.oclType().name");
@@ -909,7 +911,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-		org.eclipse.ocl.pivot.Class tupleTypeClass = useCodeGen ? standardLibrary.getClassType() : environmentFactory.getASClass("TupleType");
+		org.eclipse.ocl.pivot.Class tupleTypeClass = environmentFactory.getASClass("TupleType");
 		TuplePartId partId = IdManager.getTuplePartId(0, "a", TypeId.INTEGER);
 		TupleTypeId tupleId = IdManager.getTupleTypeId("Tuple", partId);
 		TupleType tupleType = ocl.getIdResolver().getTupleType(tupleId);
@@ -930,7 +932,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-		org.eclipse.ocl.pivot.Class primitiveType = useCodeGen ? standardLibrary.getClassType() : environmentFactory.getASClass("PrimitiveType");
+		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
 		assert primitiveType != null;
 		ocl.assertQueryEquals(null, standardLibrary.getStringType(), "'string'.oclType()");
 		ocl.assertQueryEquals(null, standardLibrary.getOclVoidType(), "self.oclType()");
@@ -949,8 +951,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-		org.eclipse.ocl.pivot.Class primitiveType = useCodeGen ? standardLibrary.getClassType() : environmentFactory.getASClass("PrimitiveType");
-		org.eclipse.ocl.pivot.Class classType = useCodeGen ? standardLibrary.getClassType() : environmentFactory.getASClass("Class");
+		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
+		org.eclipse.ocl.pivot.Class classType = environmentFactory.getASClass("Class");
 		assert primitiveType != null;
 		CollectionTypeId bagTypeId = TypeId.BAG.getSpecializedId(TypeId.OCL_ANY);
 		CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(TypeId.OCL_ANY);

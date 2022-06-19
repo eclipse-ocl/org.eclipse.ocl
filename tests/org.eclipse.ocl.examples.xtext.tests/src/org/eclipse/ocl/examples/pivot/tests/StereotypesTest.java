@@ -485,8 +485,8 @@ public class StereotypesTest extends PivotTestSuite
 		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(standard::Class_Focus)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "", "standard");
 		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::NoSuchFocus::WhoCares)", PivotMessagesInternal.UnresolvedNamespace_ERROR_, "Standard", "NoSuchFocus");
 		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Standard::NoSuchFocus)", PivotMessagesInternal.UnresolvedElement_ERROR_, "Standard", "NoSuchFocus");
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtension", "Class");
-		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtensions(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtensions", "Class");
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtension(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtension", "PrimitiveType");
+		ocl.assertSemanticErrorQuery(ocl.mm.asEnglishClass, "self.oclExtensions(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Model::EnglishClass", "oclExtensions", "PrimitiveType");
 		//
 		ocl.dispose();
 	}

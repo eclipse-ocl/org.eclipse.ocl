@@ -862,7 +862,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	@Override
 	public @Nullable ElementCS visitTypeExp(@NonNull TypeExp asTypeExp) {
 		Type asType = getNonNullType(asTypeExp.getReferredType());
-		if (asType instanceof TemplateParameter) {
+		if (asType instanceof TemplateParameter) {			// FIXME Never happens
 			NameExpCS csNameExp = EssentialOCLCSFactory.eINSTANCE.createNameExpCS();
 			PathNameCS csPathName = BaseCSFactory.eINSTANCE.createPathNameCS();
 			csNameExp.setOwnedPathName(csPathName);

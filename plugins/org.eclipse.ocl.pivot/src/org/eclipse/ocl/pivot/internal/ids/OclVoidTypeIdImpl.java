@@ -67,7 +67,7 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 
 	@Override
 	public @NonNull String getMetaTypeName() {
-		return "VoidType";
+		return TypeId.VOID_TYPE_NAME;
 	}
 
 	public @Nullable Element getOrigin() {

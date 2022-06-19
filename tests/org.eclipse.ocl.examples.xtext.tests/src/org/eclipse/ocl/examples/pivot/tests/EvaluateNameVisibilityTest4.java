@@ -132,8 +132,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		ocl.assertSemanticErrorQuery(null, "let a : Set(Type) = null in a->Package()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Type)", "Package");
 		ocl.assertSemanticErrorQuery(null, "Type->Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Class)", "Package");
 		ocl.assertSemanticErrorQuery(null, "Type->Package()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Class)", "Package");
-		ocl.assertSemanticErrorQuery(null, "Set(Type)->Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(Class)", "Package");
-		ocl.assertSemanticErrorQuery(null, "Set(Type)->Package()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Class)", "Package");
+		ocl.assertSemanticErrorQuery(null, "Set(Type)->Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(SetType)", "Package");
+		ocl.assertSemanticErrorQuery(null, "Set(Type)->Package()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(SetType)", "Package");
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a.if", "no viable alternative following input ''if''");
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a->if", "no viable alternative following input ''if''");
 		// oclAsSet()

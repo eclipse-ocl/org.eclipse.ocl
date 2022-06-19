@@ -62,6 +62,7 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
@@ -381,7 +382,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		if (cgTypeId != null) {
 			cgTypeId.accept(this);
 		}
-		cgExecutorType.setTypeId(analyzer.getTypeId(JavaConstants.CLASS_TYPE_ID));		// FIXME
+		Type asType = CGUtil.getAST(cgExecutorType);
+		Type asMetaType = codeGenerator.getEnvironmentFactory().getStandardLibrary().getMetaclass(asType);
+	//	cgExecutorType.setTypeId(analyzer.getTypeId(JavaConstants.CLASS_TYPE_ID));		// FIXME
+		cgExecutorType.setTypeId(analyzer.getTypeId(asMetaType.getTypeId()));
 		return super.visitCGExecutorType(cgExecutorType);
 	}
 

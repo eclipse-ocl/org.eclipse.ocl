@@ -1877,10 +1877,17 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGExecutorType(@NonNull CGExecutorType cgExecutorType) {
 		js.appendDeclaration(cgExecutorType);
 		js.append(" = ");
-		js.appendValueName(localContext.getIdResolverVariable(cgExecutorType));
-		js.append(".getClass(");
-		js.appendIdReference(cgExecutorType.getUnderlyingTypeId().getElementId());
-		js.append(", null);\n");
+		SubStream castBody1 = new SubStream() {
+			@Override
+			public void append() {
+				js.appendValueName(localContext.getIdResolverVariable(cgExecutorType));
+				js.append(".getClass(");
+				js.appendIdReference(cgExecutorType.getUnderlyingTypeId().getElementId());
+				js.append(", null)");
+			}
+		};
+		js.appendClassCast(cgExecutorType, castBody1);
+		js.append(";\n");
 		return true;
 	}
 

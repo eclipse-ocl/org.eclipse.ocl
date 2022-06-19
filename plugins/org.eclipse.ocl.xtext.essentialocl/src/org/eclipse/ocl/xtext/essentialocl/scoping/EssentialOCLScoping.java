@@ -124,7 +124,7 @@ public class EssentialOCLScoping
 					if ((arguments.size() > 0) && (arguments.get(0).getRole() == NavigationRole.ITERATOR)) {
 						messageTemplate = PivotMessagesInternal.UnresolvedIterationCall_ERROR_;
 					}
-					else {
+					else {		// FIXME If e.g. self.unresolved() for a Class-valued self, csNameExp.getSourceTypeValue() != null -- is the 'static' diagnosis valid / helpful ?
 						messageTemplate = csNameExp.getSourceTypeValue() != null ? PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_ : PivotMessagesInternal.UnresolvedOperationCall_ERROR_;
 					}
 				}

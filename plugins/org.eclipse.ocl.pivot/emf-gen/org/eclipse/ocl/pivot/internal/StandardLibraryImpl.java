@@ -606,10 +606,10 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	}
 
 	@Override
-	public Type getMetaType(@NonNull Type instanceType) {
-		if (instanceType instanceof PrimitiveType) {
-			return getASClass(TypeId.PRIMITIVE_TYPE_NAME);
-		}
+	public @NonNull Type getMetaType(@NonNull Type instanceType) {
+	//	if (instanceType instanceof PrimitiveType) {
+	//		return getASClass(TypeId.PRIMITIVE_TYPE_NAME);
+	//	}
 		//		throw new UnsupportedOperationException();
 		return getMetaclass(instanceType);
 	}

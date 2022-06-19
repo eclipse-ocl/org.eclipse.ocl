@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.internal.ids.OclVoidTypeIdImpl;
  */
 public interface TypeId extends ElementId
 {
+	public static final @NonNull String ANY_TYPE_NAME = "AnyType";
 	public static final @NonNull String BAG_NAME = "Bag";
 	public static final @NonNull String BAG_TYPE_NAME = "BagType";
 	public static final @NonNull String BOOLEAN_NAME = "Boolean";
@@ -42,6 +43,7 @@ public interface TypeId extends ElementId
 	public static final @NonNull String ENUMERATION_NAME = "Enumeration";
 	public static final @NonNull String INTEGER_NAME = "Integer";
 	public static final @NonNull String INTEGER_RANGE_NAME = "IntegerRange";
+	public static final @NonNull String INVALID_TYPE_NAME = "InvalidType";
 	/**
 	 * @since 1.6
 	 */
@@ -100,11 +102,13 @@ public interface TypeId extends ElementId
 	public static final @NonNull String SEQUENCE_TYPE_NAME = "SequenceType";
 	public static final @NonNull String SET_NAME = "Set";
 	public static final @NonNull String SET_TYPE_NAME = "SetType";
+	public static final @NonNull String STEREOTYPE_NAME = "Stereotype";
 	public static final @NonNull String STRING_NAME = "String";
 	public static final @NonNull String TUPLE_NAME = "Tuple";
 	public static final @NonNull String TUPLE_TYPE_NAME = "TupleType";
 	public static final @NonNull String UNIQUE_COLLECTION_NAME = "UniqueCollection";
 	public static final @NonNull String UNLIMITED_NATURAL_NAME = "UnlimitedNatural";
+	public static final @NonNull String VOID_TYPE_NAME = "VoidType";
 
 	public static final @NonNull PrimitiveTypeId BOOLEAN = IdManager.getPrimitiveTypeId(BOOLEAN_NAME);
 	public static final @NonNull PrimitiveTypeId INTEGER = IdManager.getPrimitiveTypeId(INTEGER_NAME);
