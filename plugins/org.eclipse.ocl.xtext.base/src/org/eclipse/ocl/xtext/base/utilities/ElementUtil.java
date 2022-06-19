@@ -409,7 +409,7 @@ public class ElementUtil
 	}
 
 	/**
-	 * Return the logical text associated with a csElement. (EScaped identifers are unescaped.)
+	 * Return the logical text associated with a csElement. (Escaped identifers are unescaped.)
 	 */
 	public static @Nullable String getTextName(@NonNull ElementCS csElement) {
 		String text = getText(csElement);

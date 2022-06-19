@@ -1443,32 +1443,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return new CompleteClassPropertiesIterable(getAllTypes(type), selectStatic);
 	}
 
-	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type domainInstanceType) {
-		org.eclipse.ocl.pivot.Class metaType = null;
-		if (domainInstanceType instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)domainInstanceType;
-			if (collectionType.isOrdered()) {
-				if (collectionType.isUnique()) {
-					metaType = getASClass(TypeId.ORDERED_SET_TYPE_NAME);
-				}
-				else {
-					metaType = getASClass(TypeId.SEQUENCE_TYPE_NAME);
-				}
-			}
-			else {
-				if (collectionType.isUnique()) {
-					metaType = getASClass(TypeId.SET_TYPE_NAME);
-				}
-				else {
-					metaType = getASClass(TypeId.BAG_TYPE_NAME);
-				}
-			}
-
-		}
-		if (metaType != null) {
-			return metaType;
-		}
-		return standardLibrary.getClassType();
+	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
+		String metaclassName = TypeUtil.getMetaclassName(asInstanceType);
+		return ClassUtil.nonNullState(getASClass(metaclassName));
 	}
 
 	public @Nullable Type getOclType(@NonNull String typeName) {

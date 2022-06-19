@@ -113,7 +113,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		if (value instanceof AbstractExecutorType) {	// FIXME Bug 577889 The direct CGed Executor has no eClass() so use getMetaclass()
 			Type type = key2type.get(value);
 			if (type == null) {
-				type = standardLibrary.getMetaclass((AbstractExecutorType) value);
+				type = standardLibrary.getMetaclass((AbstractExecutorType)value);
 				assert type != null;
 				key2type.put(value, type);
 			}

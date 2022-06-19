@@ -1453,7 +1453,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			actualType = formalType;
 		}
 		if (property.isIsStatic() && (actualType.isTemplateParameter() != null)) {
-			actualType = metamodelManager.getMetaclass(actualType);
+		//	actualType = metamodelManager.getMetaclass(actualType);
+			actualType = standardLibrary.getClassType();   //getASClass("TemplateParameter");	// BUG 496810#c8 review once static functionality fixed
 		}
 		return actualType;
 	}
@@ -1527,20 +1528,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		return expression;
 	}
 
-	protected @NonNull TypeExp resolveTypeExp(@NonNull ExpCS csExp, @NonNull Type type) {
+	protected @NonNull TypeExp resolveTypeExp(@NonNull ExpCS csExp, @NonNull Type type) {		// FIXME Class
+		assert type instanceof org.eclipse.ocl.pivot.Class;		// Not TemplateParameter
 		TypeExp expression = context.refreshModelElement(TypeExp.class, PivotPackage.Literals.TYPE_EXP, csExp);
-	//	IdResolver idResolver = metamodelManager.getEnvironmentFactory().getIdResolver();
-	//	Type asType = idResolver.getStaticTypeOfValue(null, type);
-		Type asType = null;
-		if (type instanceof TemplateParameter) {
-			asType = metamodelManager.getOclType("TemplateParameter");
-		}
-		else if (type instanceof Stereotype){
-			asType = metamodelManager.getOclType("Stereotype");
-		}
-		else {
-			asType = standardLibrary.getClassType();
-		}
+		Type asType = standardLibrary.getMetaclass(type);
 		helper.setType(expression, asType, true, type);
 		expression.setReferredType(type);
 		expression.setName(type.getName());

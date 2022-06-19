@@ -14,25 +14,32 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionKind;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StandardLibrary.StandardLibraryExtension;
+import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
@@ -185,6 +192,57 @@ public class TypeUtil
 			parameterTypes[iParameter++] = ClassUtil.nonNullState(parameterType);
 		}
 		return parameterTypes;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull String getMetaclassName(@NonNull Type asInstanceType) {
+		if (asInstanceType instanceof CollectionType) {
+			if (asInstanceType instanceof BagType) {
+				return TypeId.BAG_TYPE_NAME;
+			}
+			else if (asInstanceType instanceof OrderedSetType) {
+				return TypeId.ORDERED_SET_TYPE_NAME;
+			}
+			else if (asInstanceType instanceof SequenceType) {
+				return TypeId.SEQUENCE_TYPE_NAME;
+			}
+			else if (asInstanceType instanceof SetType) {
+				return TypeId.SET_TYPE_NAME;
+			}
+			else {
+				return TypeId.COLLECTION_TYPE_NAME;
+			}
+		}
+		else if (asInstanceType instanceof AnyType) {
+			return TypeId.ANY_TYPE_NAME;
+		}
+		else if (asInstanceType instanceof Enumeration) {
+			return TypeId.ENUMERATION_NAME;
+		}
+		else if (asInstanceType instanceof InvalidType) {
+			return TypeId.INVALID_TYPE_NAME;
+		}
+		else if (asInstanceType instanceof MapType) {
+			return TypeId.MAP_TYPE_NAME;
+		}
+		else if (asInstanceType instanceof VoidType) {
+			return TypeId.VOID_TYPE_NAME;
+		}
+		else if (asInstanceType instanceof BooleanType) {
+			return TypeId.BOOLEAN_TYPE_NAME;
+		}
+		else if (asInstanceType instanceof PrimitiveType) {
+			return TypeId.PRIMITIVE_TYPE_NAME;
+		}
+		else if (asInstanceType instanceof Stereotype) {
+			return TypeId.STEREOTYPE_NAME;
+		}
+		else if (asInstanceType instanceof TupleType) {
+			return TypeId.TUPLE_TYPE_NAME;
+		}
+		return TypeId.CLASS_NAME;		// fallback for e.g. TemplateParameter
 	}
 
 	public static @NonNull Type @NonNull [] getOperationParameterTypes(@NonNull Operation anOperation) {

@@ -363,29 +363,29 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
 //
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}->elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(String)", "elementType");
-		ocl.assertSemanticErrorQuery(null, "Set{'1'}->_'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(String)", "elementType");
+		ocl.assertSemanticErrorQuery(null, "Set{'1'}->_'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}->SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType");
 //
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "String", "elementType");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType");
-		ocl.assertSemanticErrorQuery(null, "Set{'1'}._'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "String", "elementType");
+		ocl.assertSemanticErrorQuery(null, "Set{'1'}._'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
 //
 		ocl.assertQueryEquals(null, stringType, "Set{'1'}->oclType().elementType");
 		ocl.assertQueryEquals(null, stringType, "Set{'1'}->oclType().SetType::elementType");
-		ocl.assertSemanticErrorQuery(null, "Set{'1'}->oclType()._'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(String)", "elementType");
+		ocl.assertSemanticErrorQuery(null, "Set{'1'}->oclType()._'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
 //
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()->elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bag(PrimitiveType)", "elementType");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()->SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType");
-		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()->_'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Bag(PrimitiveType)", "elementType");
+		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()->_'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
 //
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType().elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "PrimitiveType", "elementType");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType().SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType");
-		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()._'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "PrimitiveType", "elementType");
+		ocl.assertSemanticErrorQuery(null, "Set{'1'}.oclType()._'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
 //
 		ocl.assertQueryEquals(null, oclAnyType, "Set{1, 2.0, '3'}->oclType().elementType");
 		ocl.assertQueryEquals(null, integerType, "Set{1, 2, 3}->oclType().elementType");
 		ocl.assertQueryEquals(null, integerType, "Set{1, 2, 3}->oclAsType(Collection(Real))->oclType().elementType");
-		ocl.assertSemanticErrorQuery(null, "Set{'1'}->SetType::size()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(String)", "size");
+		ocl.assertSemanticErrorQuery(null, "Set{'1'}->SetType::size()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "SetType", "size");
 	}
 
 	@Test public void testCollectionEqual() {

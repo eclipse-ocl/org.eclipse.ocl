@@ -983,7 +983,7 @@ public class EnvironmentView
 	 */
 	public boolean hasFinalResult() {
 		if (contentsSize == 0) {
-			return false; // Not thing found is not a final result
+			return false; // Nothing found is not a final result
 		}
 		if (getName() == null) {
 			return false; // No name means search full hierarchy
