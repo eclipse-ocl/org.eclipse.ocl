@@ -1058,18 +1058,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "static", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection_ElementType(),
-		   source,
-		   new String[] {
-			   "static", "true" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection_Lower(),
-		   source,
-		   new String[] {
-			   "static", "true" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getCollection_Lower(),
 		   source,
 		   new String[] {
@@ -1082,25 +1070,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "static", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection_Upper(),
-		   source,
-		   new String[] {
-			   "static", "true" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getMap_KeyType(),
-		   source,
-		   new String[] {
-			   "static", "true" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap_KeyType(),
-		   source,
-		   new String[] {
-			   "static", "true" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap_ValueType(),
 		   source,
 		   new String[] {
 			   "static", "true" //$NON-NLS-1$ //$NON-NLS-2$
