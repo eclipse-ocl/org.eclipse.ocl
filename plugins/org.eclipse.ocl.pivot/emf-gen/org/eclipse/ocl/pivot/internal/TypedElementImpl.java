@@ -197,9 +197,9 @@ implements TypedElement {
 		 */
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @Nullable Type type = bodySpecification.getType();
-		final /*@NonInvalid*/ @NonNull Object IsEQ2_ = type == null;
+		final /*@NonInvalid*/ boolean IsEQ2_ = type == null;
 		/*@Thrown*/ @Nullable Boolean IF_IsEQ2_;
-		if (IsEQ2_ == Boolean.TRUE) {
+		if (IsEQ2_) {
 			IF_IsEQ2_ = null;
 		}
 		else {
@@ -208,7 +208,7 @@ implements TypedElement {
 			}
 			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-			IF_IsEQ2_ = conformsTo;
+			IF_IsEQ2_ = (Boolean)conformsTo;
 		}
 		if (IF_IsEQ2_ == null) {
 			throw new InvalidValueException("Null body for \'pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");
