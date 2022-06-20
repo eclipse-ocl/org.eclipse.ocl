@@ -92,6 +92,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		asOperation.setName(evaluateNameResolution.getResolvedName());
 		asClass.getOwnedOperations().add(asOperation);
 		asOperation.setBodyExpression(expInOcl);
+	//	asOperation.setType(expInOcl.getType());
+		asHelper.setType(asOperation, expInOcl.getType(), expInOcl.isIsRequired());
 //		CGOperation cgOperation2 = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 //		cgOperation2.setAst(asOperation);
 //		cgOperation2.setName("test");		// FIXME
@@ -112,7 +114,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CGOperation cgOperation = junitCallingConvention.createCGOperation(as2cgVisitor, asClass, asOperation);
 		cgOperation.setCallingConvention(junitCallingConvention);
 		evaluateNameResolution.addCGElement(cgOperation);
-		as2cgVisitor.initAst(cgOperation, expInOcl);
+		as2cgVisitor.initAst(cgOperation, asOperation/*expInOcl*/);
 		as2cgVisitor.pushNameManager(cgOperation);
 		junitCallingConvention.createCGParameters(as2cgVisitor, cgOperation, expInOcl);
 		junitCallingConvention.createCGBody(as2cgVisitor, cgOperation);

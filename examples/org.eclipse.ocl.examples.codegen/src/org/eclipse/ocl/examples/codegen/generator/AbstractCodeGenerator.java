@@ -84,6 +84,7 @@ import org.eclipse.ocl.pivot.library.map.MapValueTypeProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 
 import com.google.common.collect.Iterables;
 
@@ -93,6 +94,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	public static final @NonNull String ORG_ECLIPSE_JDT_ANNOTATION_NULLABLE = "org.eclipse.jdt.annotation.Nullable";
 
 	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
+	protected final @NonNull  PivotHelper asHelper;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
@@ -132,6 +134,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 
 	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
 		this.environmentFactory = (EnvironmentFactoryInternalExtension) environmentFactory;
+		this.asHelper = new PivotHelper(environmentFactory);
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.globalNameManager = createGlobalNameManager();
 		this.genModelHelper = createGenModelHelper(genModel);
@@ -141,6 +144,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	protected AbstractCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull GlobalNameManager globalNameManager,
 			@NonNull GenModelHelper genModelHelper) {
 		this.environmentFactory = (EnvironmentFactoryInternalExtension) environmentFactory;
+		this.asHelper = new PivotHelper(environmentFactory);
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		this.globalNameManager = globalNameManager;
 		this.genModelHelper = genModelHelper;

@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -70,8 +71,9 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		cgParameters.add(codeGenerator.createExecutorParameter());
 		cgParameters.add(codeGenerator.createTypeIdParameter());
 		if (contextVariable != null) {
-			CGParameter cgContext = nameManager.getParameter(contextVariable, (String)null);			// getSelf ???
+			CGParameter cgContext = nameManager.getParameter(contextVariable, (String)null);			// XXX getSelf ???
 			cgContext.setIsSelf(true);
+			cgContext.setTypeId(codeGenerator.getAnalyzer().getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgParameters.add(cgContext);
 		}
 		for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {

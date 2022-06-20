@@ -1456,7 +1456,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		Type asType = context.lookupType(csNameExp, pathName);
 		@NonNull ShadowExp pivotElement = context.refreshModelElement(ShadowExp.class, PivotPackage.Literals.SHADOW_EXP, csNameExp);
-		pivotElement.setType(asType);
+	//	pivotElement.setType(asType);		// XXX refresh
+		helper.setType(pivotElement, asType, true);
 		for (ShadowPartCS csPart : csCurlyBracketedClause.getOwnedParts()) {
 			assert csPart != null;
 			context.visitLeft2Right(ShadowPart.class, csPart);
