@@ -2238,7 +2238,7 @@
         </ownedDetails>
       </ownedAnnotations>
     </ownedClasses>
-    <ownedClasses xmi:id="hRA+k" name="Stereotype" superClasses="#zfDWR">
+    <ownedClasses xmi:id="hRA+k" name="Stereotype" superClasses="#ZNWlJ">
       <ownedOperations xmi:id="v7iP2" implementationClass="org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation" name="allInstances"
           type="#UQF4+">
         <ownedComments body="Return a set of all instances of the stereotype and derived types of self."/>

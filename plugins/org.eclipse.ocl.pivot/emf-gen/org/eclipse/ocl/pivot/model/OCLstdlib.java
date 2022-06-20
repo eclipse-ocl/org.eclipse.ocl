@@ -644,7 +644,7 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclState);
 			ownedClasses.add(type = _Stereotype);
 			superClasses = type.getSuperClasses();
-			superClasses.add(_OclElement);
+			superClasses.add(_OclStereotype);
 			ownedClasses.add(type = _Type);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclType);
