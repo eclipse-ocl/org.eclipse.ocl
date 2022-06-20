@@ -71,7 +71,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		cgParameters.add(codeGenerator.createExecutorParameter());
 		cgParameters.add(codeGenerator.createTypeIdParameter());
 		if (contextVariable != null) {
-			CGParameter cgContext = nameManager.getParameter(contextVariable, (String)null);			// getSelf ???
+			CGParameter cgContext = nameManager.getParameter(contextVariable, (String)null);			// XXX getSelf ???
 			cgContext.setIsSelf(true);
 			cgContext.setTypeId(codeGenerator.getAnalyzer().getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgParameters.add(cgContext);
