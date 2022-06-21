@@ -218,8 +218,11 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		if (cgNamedElement == null) {
 			result.append(NULL_PLACEHOLDER);
 		}
-		else {
+		else if (cgNamedElement.getName() != null) {
 			result.append(cgNamedElement.getName());
+		}
+		else {
+			appendName((NamedElement)cgNamedElement.getAst());
 		}
 	}
 

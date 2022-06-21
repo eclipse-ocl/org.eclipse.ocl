@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.pivot.Class;
@@ -33,17 +32,8 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 
 	@Override
 	public @NonNull CGClass visitClass(@NonNull Class asClass) {
-		CGClass cgClass = analyzer.basicGetCGClass(asClass);
-		if (cgClass == null) {
-			cgClass = CGModelFactory.eINSTANCE.createCGClass();
-			cgClass.setAst(asClass);
-			cgClass.setName(asClass.getName());
-			analyzer.addCGClass(cgClass);
-		}
-		else {
-			assert cgClass.getAst() == asClass;
-		}
-		pushNameManager(cgClass);
+		CGClass cgClass = analyzer.getCGClass(asClass);
+		pushClassNameManager(cgClass);
 	/*	for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
 			cgClass.getInvariants().add(cgConstraint);
