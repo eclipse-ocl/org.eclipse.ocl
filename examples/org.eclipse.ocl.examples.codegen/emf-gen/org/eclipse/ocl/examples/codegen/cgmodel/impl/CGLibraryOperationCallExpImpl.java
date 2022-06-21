@@ -101,6 +101,9 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	 */
 	@Override
 	public void setLibraryOperation(LibraryOperation newLibraryOperation) {
+		if ((newLibraryOperation !=null) && "Helper4getModule".equals(newLibraryOperation.getClass().getSimpleName())) {
+			getClass();		// XXX
+		}
 		LibraryOperation oldLibraryOperation = libraryOperation;
 		libraryOperation = newLibraryOperation;
 		if (eNotificationRequired())

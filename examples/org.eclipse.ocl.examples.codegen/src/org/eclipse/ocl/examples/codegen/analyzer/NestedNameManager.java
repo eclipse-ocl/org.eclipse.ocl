@@ -30,6 +30,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -109,7 +110,11 @@ public class NestedNameManager extends NameManager
 		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
 		this.isStatic = /*(asScope == null) ||*/ staticFeature;
 		assert !(parent instanceof NestedNameManager) || (((NestedNameManager)parent).cgScope != cgScope);		// XXX
+	// XXX	assert at most one ancestral class
 		parent.addChild(this);
+		if ((cgScope instanceof CGClass) || (cgScope instanceof CGPackage)) {
+			assert (parent instanceof GlobalNameManager) || (((NestedNameManager)parent).cgScope instanceof CGPackage);
+		}
 	}
 
 	public void addNameVariant(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
@@ -454,6 +459,10 @@ public class NestedNameManager extends NameManager
 		return null;
 	}
 
+//	public @NonNull CGNamedElement getCGScope() {
+//		return cgScope;
+//	}
+
 	public @NonNull CGVariable getCGVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = basicGetVariable(asVariable);
 		if (cgVariable == null) {
@@ -464,6 +473,19 @@ public class NestedNameManager extends NameManager
 			}
 		}
 		return cgVariable;
+	}
+
+	/**
+	 * Return the NestedNameManager that can be the parent of another CGClass. Returns null for global.
+	 */
+	public @Nullable NestedNameManager getClassParentNameManager() {
+		for (NestedNameManager nameManager = this; nameManager != null; nameManager = nameManager.parent instanceof NestedNameManager ? (NestedNameManager)nameManager.parent : null) {
+			CGNamedElement cgScope = nameManager.cgScope;
+			if (cgScope instanceof CGClass) {
+				return nameManager.parent instanceof NestedNameManager ? (NestedNameManager)nameManager.parent : null;
+			}
+		}
+		return null;
 	}
 
 	public @NonNull JavaCodeGenerator getCodeGenerator() {
