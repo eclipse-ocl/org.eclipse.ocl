@@ -89,8 +89,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			assert cgConstraint.basicGetNameResolution() == null;
 			cgConstraint.setAst(asConstraint);
 //			getNameManager().declarePreferredName(cgConstraint);
-			pushNameManager(cgConstraint);
-			NestedNameManager nameManager = getNameManager();
+			NestedNameManager nameManager = pushNestedNameManager(cgConstraint);
 			try {
 				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
 				String constraintName = PivotUtil.getName(asConstraint);
