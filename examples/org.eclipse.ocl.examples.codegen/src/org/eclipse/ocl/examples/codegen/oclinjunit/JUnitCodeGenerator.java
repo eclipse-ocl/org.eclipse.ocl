@@ -115,7 +115,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		cgOperation.setCallingConvention(junitCallingConvention);
 		evaluateNameResolution.addCGElement(cgOperation);
 		as2cgVisitor.initAst(cgOperation, asOperation/*expInOcl*/);
-		as2cgVisitor.pushNameManager(cgOperation);
+		as2cgVisitor.pushNestedNameManager(cgOperation);
 		junitCallingConvention.createCGParameters(as2cgVisitor, cgOperation, expInOcl);
 		junitCallingConvention.createCGBody(as2cgVisitor, cgOperation);
 		cgRootClass.getOperations().add(cgOperation);
