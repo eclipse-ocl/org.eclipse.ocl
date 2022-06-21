@@ -170,18 +170,6 @@ public class CodeGenAnalyzer
 		this.cgNull = createCGNull();
 	}
 
-	public void addCGClass(@NonNull CGClass cgClass) {
-		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
-		CGClass old = asClass2cgClass.put(asClass, cgClass);
-		assert old == null;
-		if (cgRootClass == null) {
-			cgRootClass = cgClass;
-		}
-		else {
-			cgRootClass.getClasses().add(cgClass);
-		}
-	}
-
 	public void addCGOperation(@NonNull CGOperation cgOperation) {
 		assert cgOperation.getCallingConvention() != VirtualOperationCallingConvention.INSTANCE;
 		Operation asOperation = CGUtil.getAST(cgOperation);
@@ -523,7 +511,23 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGClass getCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return ClassUtil.nonNullState(asClass2cgClass.get(asClass));
+		CGClass cgClass = asClass2cgClass.get(asClass);
+		if (cgClass == null) {
+			cgClass = CGModelFactory.eINSTANCE.createCGClass();
+			cgClass.setAst(asClass);
+			cgClass.setName(PivotUtil.getName(asClass));
+			asClass2cgClass.put(asClass, cgClass);
+			if (cgRootClass == null) {
+				cgRootClass = cgClass;
+			}
+			else {
+				cgRootClass.getClasses().add(cgClass);
+			}
+		}
+		else {
+			assert cgClass.getAst() == asClass;
+		}
+		return cgClass;
 	}
 
 	public @NonNull CGElementId getCGElementId(@NonNull ElementId elementId) {
@@ -709,7 +713,7 @@ public class CodeGenAnalyzer
 			cgNativeOperation.setRequired(asOperation.isIsRequired());
 			cgNativeOperation.setCallingConvention(callingConvention);
 			cgNativeOperation.setAst(asOperation);
-			NestedNameManager nameManager = globalNameManager.createNestedNameManager(null, cgNativeOperation);
+			/*NestedNameManager nameManager =*/ globalNameManager.createNestedNameManager(null, cgNativeOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
 			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {
 				Type asParameterType = asParameter.getType();
@@ -748,7 +752,7 @@ public class CodeGenAnalyzer
 			cgNativeProperty.setRequired(asProperty.isIsRequired());
 			cgNativeProperty.setCallingConvention(callingConvention);
 			cgNativeProperty.setAst(asProperty);
-			NestedNameManager nameManager = globalNameManager.createNestedNameManager(null, cgNativeProperty);
+			/*NestedNameManager nameManager =*/ globalNameManager.createNestedNameManager(null, cgNativeProperty);
 			addCGProperty(cgNativeProperty);		// XXX Use installProperty and then inline addCGProperty
 		}
 		return asProperty;

@@ -216,6 +216,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 		Class<?>[] jParameterTypes = jMethod.getParameterTypes();
 		int syntheticArgumentSize = jParameterTypes.length - cgParameters.size();
+		assert syntheticArgumentSize == 42;		// XXX
 		for (int i = 0; i < syntheticArgumentSize; i++) {
 			Class<?> jParameterType = jParameterTypes[i];
 			if (jParameterType == Executor.class) {
