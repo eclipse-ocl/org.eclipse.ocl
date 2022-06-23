@@ -282,9 +282,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					}
 				}
 				callingConvention.createCGParameters(this, cgOperation, asExpressionInOCL);
-				popNameManager();
+				popNestedNameManager();
 			} finally {
-				popNameManager();
+				popClassNameManager();
 			}
 		}
 		return cgOperation;
@@ -390,7 +390,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		//			cgBuiltInIterationCallExp.setNonNull();
 		cgIterationCallExp.setRequired(isRequired);
-		popNameManager();
+		popNestedNameManager();
 		return cgIterationCallExp;
 	}
 
@@ -449,9 +449,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					}
 				}
 				callingConvention.createCGParameters(this, cgOperation, asExpressionInOCL);
-				popNameManager();
+				popNestedNameManager();
 			} finally {
-				popNameManager();
+				popClassNameManager();
 			}
 		}
 		return cgOperation;
@@ -504,7 +504,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				}
 			}
 			callingConvention.createCGParameters(innerNameManager, cgProperty, query);
-			popNameManager();
+			popNestedNameManager();
 		}
 		return cgProperty;
 	}
@@ -713,7 +713,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return JavaConstants.THIS_NAME.equals(asParameter.getName());
 	} */
 
-	public  @Nullable NestedNameManager popNameManager() {
+	public  @Nullable NestedNameManager popClassNameManager() {
+		assert (currentNameManager != null) && (currentNameManager.getCGScope() instanceof CGClass);
+		nameManagerStack.pop();
+		currentNameManager = nameManagerStack.isEmpty() ? null : nameManagerStack.peek();
+		return currentNameManager;
+	}
+
+	public  @Nullable NestedNameManager popNestedNameManager() {
+		assert (currentNameManager != null) && !(currentNameManager.getCGScope() instanceof CGClass);
 		nameManagerStack.pop();
 		currentNameManager = nameManagerStack.isEmpty() ? null : nameManagerStack.peek();
 		return currentNameManager;
@@ -805,7 +813,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 		}
-		popNameManager();
+		popClassNameManager();
 		return cgClass;
 	}
 
@@ -863,7 +871,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
-				popNameManager();
+				popNestedNameManager();
 			}
 		}
 		return cgConstraint;
@@ -991,7 +999,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 			cgFinalOperation.getCallingConvention().createCGBody(this, cgFinalOperation);
 		}
-		popNameManager();
+		popNestedNameManager();
 		CGOperation cgVirtualOperation = generateOperationDeclaration(null, asOperation, true);
 		if (cgVirtualOperation != cgFinalOperation) {
 //			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
@@ -999,7 +1007,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 				cgVirtualOperation.getCallingConvention().createCGBody(this, cgVirtualOperation);
 			}
-			popNameManager();
+			popNestedNameManager();
 		}
 		return cgFinalOperation;
 	}
@@ -1065,7 +1073,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		pushNestedNameManager(cgProperty);
 		// parse ownedExpression here to simplify createImplementation arguments
 		callingConvention.createImplementation(this, cgProperty);
-		popNameManager();
+		popNestedNameManager();
 		return cgProperty;
 	}
 
