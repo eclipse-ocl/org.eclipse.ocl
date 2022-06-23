@@ -377,7 +377,8 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		if (cgOperation.isRequired()) {
 			CGValuedElement body = cgOperation.getBody();
 			if (body != null) {
-				boxingAnalyzer.rewriteAsGuarded(body, false, "body for '" + cgOperation.getAst() + "'");
+				String message = "body for '" + cgOperation.getAst() + "'";
+				boxingAnalyzer.rewriteAsGuarded(body, false, message);
 			}
 		}
 	}

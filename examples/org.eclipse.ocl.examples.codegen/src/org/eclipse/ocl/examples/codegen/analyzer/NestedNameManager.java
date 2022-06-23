@@ -459,9 +459,9 @@ public class NestedNameManager extends NameManager
 		return null;
 	}
 
-//	public @NonNull CGNamedElement getCGScope() {
-//		return cgScope;
-//	}
+	public @NonNull CGNamedElement getCGScope() {
+		return cgScope;
+	}
 
 	public @NonNull CGVariable getCGVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = basicGetVariable(asVariable);
