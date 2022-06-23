@@ -116,7 +116,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			} catch (ParserException e) {
 				throw new WrappedException(e);
 			} finally {
-				popNameManager();
+				popNestedNameManager();
 			}
 		}
 		return cgConstraint;

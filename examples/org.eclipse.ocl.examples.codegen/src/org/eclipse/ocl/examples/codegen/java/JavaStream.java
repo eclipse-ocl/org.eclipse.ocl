@@ -1122,7 +1122,7 @@ public class JavaStream
 	}
 
 	public void appendTypeDeclaration(@NonNull CGValuedElement cgElement) {
-		boxedTypeRepresentation.appendTypeDeclaration(cgElement);;
+		boxedTypeRepresentation.appendTypeDeclaration(cgElement);			// FIXME this doesn't enforce boxed if cgElement is primitive
 	}
 
 	public void appendTypeParameters(boolean useExtends, @NonNull Class<?>... typeParameters) {
