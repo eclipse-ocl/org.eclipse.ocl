@@ -46,7 +46,7 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 			CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 		} */
-		popNameManager();
+		popClassNameManager();
 		return cgClass;
 	}
 

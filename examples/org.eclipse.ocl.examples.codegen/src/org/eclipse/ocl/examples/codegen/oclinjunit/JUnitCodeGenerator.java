@@ -122,8 +122,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		junitCallingConvention.createCGBody(as2cgVisitor, cgOperation);
 		cgRootClass.getOperations().add(cgOperation);
 		cgAnalyzer.analyzeExternalFeatures(as2cgVisitor);
-		as2cgVisitor.popNameManager();
-		as2cgVisitor.popNameManager();
+		as2cgVisitor.popNestedNameManager();
+		as2cgVisitor.popClassNameManager();
 		as2cgVisitor.freeze();
 		return cgPackage;
 	}
