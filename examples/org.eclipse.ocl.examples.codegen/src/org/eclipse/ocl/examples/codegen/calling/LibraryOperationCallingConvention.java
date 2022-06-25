@@ -122,44 +122,18 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	//	LibraryOperation libraryOperation = (LibraryOperation)as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
 	//	Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
 		cgInnerOperation.setRequired(as2cgVisitor.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);
-		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOuterOperation.getOwnedParameters());
-		int i = asOuterOperation.isIsStatic() ? 0 : -1;
-		if (Modifier.isStatic(jMethod.getModifiers())) {
-			cgParameters.add(nameManager.getThisParameter());
+	//	List<@NonNull Parameter> asParameters = PivotUtil.getOwnedParameters(asOuterOperation);
+	//	int i = asOuterOperation.isIsStatic() ? 0 : -1;
+	//	if (Modifier.isStatic(jMethod.getModifiers())) {
+	//		cgParameters.add(nameManager.getThisParameter());
+	//	}
+		cgParameters.add(nameManager.getExecutorParameter());
+		cgParameters.add(nameManager.getTypeIdParameter());
+		for (Parameter asParameter : PivotUtil.getOwnedParameters(asOuterOperation)) {
+			CGParameter cgParameter = nameManager.getParameter(asParameter, (String)null);
+			cgParameters.add(cgParameter);
 		}
-		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
-			if (jParameterType == Executor.class) {
-				cgParameters.add(nameManager.getExecutorParameter());
-			}
-			else if (jParameterType == TypeId.class) {
-				cgParameters.add(nameManager.getTypeIdParameter());
-			}
-			else if (jParameterType == Object.class)  {
-				if (i < 0) {
-					CGParameter selfParameter;
-					if (expressionInOCL != null) {
-						selfParameter = nameManager.getSelfParameter(PivotUtil.getOwnedContext(expressionInOCL));
-					}
-					else {
-						selfParameter = nameManager.getSelfParameter();
-					}
-					if (as2cgVisitor.getAnalyzer().hasOclVoidOperation(asOuterOperation.getOperationId())) {
-						selfParameter.setRequired(false);
-					}
-					cgParameters.add(selfParameter);
-					i = 0;
-				}
-				else {
-					Parameter aParameter = asParameters.get(i++);
-					CGParameter cgParameter = nameManager.getParameter(aParameter, (String)null);
-					cgParameters.add(cgParameter);
-				}
-			}
-			else {
-				throw new UnsupportedOperationException();
-			}
-		}
-		assert i == asParameters.size();
+	//	assert i == asParameters.size();
 		return cgInnerOperation;
 	}
 
@@ -216,29 +190,29 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 		Class<?>[] jParameterTypes = jMethod.getParameterTypes();
 		int syntheticArgumentSize = jParameterTypes.length - cgParameters.size();
-		assert syntheticArgumentSize == 42;		// XXX
-		for (int i = 0; i < syntheticArgumentSize; i++) {
-			Class<?> jParameterType = jParameterTypes[i];
-			if (jParameterType == Executor.class) {
+	//	assert syntheticArgumentSize == 42;		// XXX
+	//	for (int i = 0; i < syntheticArgumentSize; i++) {
+	//		Class<?> jParameterType = jParameterTypes[i];
+	//		if (jParameterType == Executor.class) {
 				CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
-				cgArguments.add(analyzer.createCGVariableExp(executorVariable));
-			}
-			else if (jParameterType == TypeId.class) {
+	//			cgArguments.add(analyzer.createCGVariableExp(executorVariable));
+	//		}
+	//		else if (jParameterType == TypeId.class) {
 			//	addTypeIdArgument(as2cgVisitor, cgOperationCallExp, asFunction/*CallExp*/.getTypeId());
 				TypeId asTypeId = cgOuterOperation.getASTypeId();
 				assert asTypeId != null;
-				addTypeIdArgument(as2cgVisitor, cgOperationCallExp, asTypeId);
-			}
-			else if (jParameterType == Object.class) {
-				if (cgSource != null) {
-					cgArguments.add(cgSource);
-				}
-				break;
-			}
-			else {
-				throw new UnsupportedOperationException();
-			}
-		}
+	//			addTypeIdArgument(as2cgVisitor, cgOperationCallExp, asTypeId);
+	//		}
+	//		else if (jParameterType == Object.class) {
+	//			if (cgSource != null) {
+	//				cgArguments.add(cgSource);
+	//			}
+	//			break;
+	//		}
+	//		else {
+	//			throw new UnsupportedOperationException();
+	//		}
+	//	}
 		for (@NonNull CGParameter cgParameter : cgParameters) {
 			cgArguments.add(analyzer.createCGVariableExp(cgParameter));
 		}
