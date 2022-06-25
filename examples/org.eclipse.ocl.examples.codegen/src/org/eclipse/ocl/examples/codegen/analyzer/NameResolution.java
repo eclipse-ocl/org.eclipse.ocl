@@ -153,7 +153,7 @@ public class NameResolution
 	}
 
 	protected boolean debugNameHint() {
-		if (nameHint.contains("getCommonType")) {
+		if (nameHint.contains("CACHED_OP")) {
 			getClass();		// XXX
 		}
 		if ("IMPPROPid_d3atlExpression".equals(nameHint)) {

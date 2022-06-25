@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 
@@ -88,5 +89,8 @@ public abstract class LanguageSupport
 		return null;
 	}
 
+	public abstract org.eclipse.ocl.pivot.@NonNull Class getCacheClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name);
+	public abstract org.eclipse.ocl.pivot.@NonNull Class getCacheClass(@NonNull Feature asFeature);
+	public abstract org.eclipse.ocl.pivot.@NonNull Class getNativeClass(/*@NonNull */Class<?> jClass);
 	public abstract @Nullable Invocations resolveInvocations(@NonNull Type requiredSourceType, boolean hasExplicitSourceExp, @NonNull String qualifiedOperationName);
 }

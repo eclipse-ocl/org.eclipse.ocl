@@ -219,7 +219,7 @@ public class NestedNameManager extends NameManager
 		else if (cgVariable != null) {
 			throw new IllegalStateException(cgVariable + " is not  a CGParameter");
 		}
-		else if (parent instanceof NestedNameManager) {				// XXX polymorphize
+		else if (!(asScope instanceof Operation) && (parent instanceof NestedNameManager)) {				// XXX polymorphize
 			return ((NestedNameManager)parent).basicGetParameter(asVariable);
 		}
 		else {

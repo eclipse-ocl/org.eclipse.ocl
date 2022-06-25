@@ -138,6 +138,8 @@
         eOpposite="#//CGClass/containingClass"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="containingClass" eType="#//CGClass"
         resolveProxies="false" eOpposite="#//CGClass/classes"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callingConvention" lowerBound="1"
+        eType="#//ClassCallingConvention" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGCollectionExp" eSuperTypes="#//CGValuedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parts" upperBound="-1"
@@ -756,6 +758,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ClassCallingConvention" instanceClassName="org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Element" instanceClassName="org.eclipse.ocl.pivot.Element"/>
   <eClassifiers xsi:type="ecore:EDataType" name="ElementId" instanceClassName="org.eclipse.ocl.pivot.ids.ElementId"/>
   <eClassifiers xsi:type="ecore:EDataType" name="EnumerationLiteralId" instanceClassName="org.eclipse.ocl.pivot.ids.EnumerationLiteralId"/>

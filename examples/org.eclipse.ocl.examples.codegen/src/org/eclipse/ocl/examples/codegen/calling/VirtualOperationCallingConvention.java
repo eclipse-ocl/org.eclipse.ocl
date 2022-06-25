@@ -28,7 +28,6 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -90,14 +89,14 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
 		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		FinalAnalysis finalAnalysis = analyzer .getMetamodelManager().getFinalAnalysis();
 		Iterable<@NonNull Operation> asOverrideOperations = finalAnalysis.getOverrides(asOperation);
 		assert Iterables.contains(asOverrideOperations, asOperation);
 		List<@NonNull CGCachedOperation> cgOverrideOperations = new ArrayList<>();
 		for (@NonNull Operation asOverrideOperation : asOverrideOperations) {
-			CGOperation cgOverrideOperation = as2cgVisitor.generateOperationDeclaration(null, asOverrideOperation, true);
+			CGOperation cgOverrideOperation = as2cgVisitor.generateOperationDeclaration(asOverrideOperation, true);
 		/*	CGOperation cgOperation = asFinalOperation2cgOperation.get(asOverride);
 			if (cgOperation == null) {
 				cgOperation = createFinalCGOperationWithoutBody(asOverride);
@@ -132,7 +131,8 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	//		}
 	//	}
 		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();		// XXX ??? cache post rather than pre-dispatch
-		analyzer.installOperation(asOperation, cgOperation, this);
+		initOperation(analyzer, cgOperation, asOperation);
+		analyzer.addVirtualCGOperation(asOperation, cgOperation);
 		cgOperation.getFinalOperations().addAll(cgOverrideOperations);
 		return cgOperation;
 	}
@@ -163,7 +163,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	} */
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		throw new UnsupportedOperationException();
 	}
 

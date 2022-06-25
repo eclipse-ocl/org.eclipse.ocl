@@ -98,7 +98,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 		js.append(")");
 		js.append(globalNameManager.getEvaluationCacheName());
 		js.append(".");
-		js.append(globalNameManager.getGetCachedEvaluationResultName());
+		js.append(globalNameManager.getGetResultName());
 		js.append("(this, caller, new ");
 		js.appendClassReference(false, Object.class);
 		js.append("[]{");
