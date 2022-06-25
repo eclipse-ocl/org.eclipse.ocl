@@ -103,6 +103,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
 		CGClass cgRootClass = cgPackage.getClasses().get(0);
 	//	cgAnalyzer.setCGRootClass(cgRootClass);
+		assert cgRootClass != null;
+		as2cgVisitor.pushClassNameManager(cgRootClass);
 
 
 		//
@@ -120,6 +122,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		junitCallingConvention.createCGBody(as2cgVisitor, cgOperation);
 		cgRootClass.getOperations().add(cgOperation);
 		cgAnalyzer.analyzeExternalFeatures(as2cgVisitor);
+		as2cgVisitor.popNameManager();
 		as2cgVisitor.popNameManager();
 		as2cgVisitor.freeze();
 		return cgPackage;

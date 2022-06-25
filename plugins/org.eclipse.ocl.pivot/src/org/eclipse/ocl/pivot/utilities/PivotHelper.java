@@ -658,6 +658,7 @@ public class PivotHelper
 		OCLExpression oldSourceExpression = unsafeObjectCallExp.getOwnedSource();
 		assert oldSourceExpression != null;
 		//
+		PivotUtilInternal.resetContainer(oldSourceExpression);
 		LetVariable unsafeSourceVariable = createLetVariable("unsafe", oldSourceExpression);
 		OCLExpression unsafeSourceExpression1 = createVariableExp(unsafeSourceVariable);
 		unsafeObjectCallExp.setOwnedSource(unsafeSourceExpression1);
