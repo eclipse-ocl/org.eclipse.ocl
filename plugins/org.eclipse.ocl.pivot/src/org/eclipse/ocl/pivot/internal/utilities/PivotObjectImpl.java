@@ -23,11 +23,18 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 {
 	private @Nullable EObject esObject;
 
+	/**
+	 * Overridden to detect child stealing whereby a previous parent is inadvertently displaced by another one leading to obscure downstream errors.
+	 * If a rewrite is genuinely intended, precede the call by a container reset. See {@link PivotUtilInternal#resetContainer(EObject)}.
+	 */
 	@Override
 	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
 		if (newContainer != null) {
 			EObject oldContainer = eInternalContainer();
-			assert (oldContainer == null) || oldContainer.eIsProxy() || (newContainer == oldContainer) || (oldContainer.eResource() == null);
+			assert (oldContainer == null)					// The expected use case
+			/*|| (newContainer == oldContainer)*/			// OK, a gratuitous redundant use case, but hides a problem in the caller
+			/*|| oldContainer.eIsProxy()*/					// Is it OK? probably hides a problem in the caller
+			/*|| (oldContainer.eResource() == null)*/;		// Not OK, working in an orphan tree is another problem
 		}
 		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
