@@ -27,7 +27,6 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -42,19 +41,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	public static final @NonNull JUnitOperationCallingConvention INSTANCE = new JUnitOperationCallingConvention();
 
 	@Override
-	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		js.append("@Override\n");
-		js.append("public ");
-		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
-		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
-		js.append(" ");
-		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
-		js.append(" ");
-		js.appendValueName(cgOperation);
-	}
-
-	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
@@ -86,7 +73,14 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
-		appendDeclaration(cg2javaVisitor, js, cgOperation);
+		js.append("@Override\n");
+		js.append("public ");
+		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
+		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+		js.append(" ");
+		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+		js.append(" ");
+		js.appendValueName(cgOperation);
 		appendParameterList(js, cgOperation);
 		appendBody(cg2javaVisitor, js, body);
 		return true;

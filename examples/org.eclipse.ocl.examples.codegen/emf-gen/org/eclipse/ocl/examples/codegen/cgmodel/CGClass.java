@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,6 +33,7 @@ import org.eclipse.jdt.annotation.NonNull;
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getTemplateParameters <em>Template Parameters</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getClasses <em>Classes</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getContainingClass <em>Containing Class</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getCallingConvention <em>Calling Convention</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGClass()
@@ -184,6 +186,27 @@ public interface CGClass extends CGNamedElement {
 	 * @generated
 	 */
 	void setContainingClass(CGClass value);
+
+	/**
+	 * Returns the value of the '<em><b>Calling Convention</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Calling Convention</em>' attribute.
+	 * @see #setCallingConvention(ClassCallingConvention)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGClass_CallingConvention()
+	 * @generated
+	 */
+	ClassCallingConvention getCallingConvention();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getCallingConvention <em>Calling Convention</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Calling Convention</em>' attribute.
+	 * @see #getCallingConvention()
+	 * @generated
+	 */
+	void setCallingConvention(ClassCallingConvention value);
 
 	/**
 	 * Returns the value of the '<em><b>Containing Package</b></em>' container reference.

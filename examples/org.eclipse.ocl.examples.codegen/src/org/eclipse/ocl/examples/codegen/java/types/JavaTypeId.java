@@ -63,9 +63,16 @@ public class JavaTypeId extends UnscopedId implements PrimitiveTypeId
 		this.javaClass = javaClass;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull IdVisitor<R> visitor) {
-		return visitor.visitPrimitiveTypeId(this);
+		if (visitor instanceof CGIdVisitor) {
+			return (R) ((CGIdVisitor<?>)visitor).visitJavaTypeId(this);
+		}
+		else {
+		//	return super.accept(visitor);
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	public @NonNull Class<?> getJavaClass() {

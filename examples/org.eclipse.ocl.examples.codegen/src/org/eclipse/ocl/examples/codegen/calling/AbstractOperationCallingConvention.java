@@ -31,14 +31,12 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -96,7 +94,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		js.appendCommentWithOCL(title + "\n", expressionInOCL);
 	}
 
-	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+/*	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		js.append("generateJavaDeclaration " + this);
 	//	return true;
 	//	assert false : "Missing overload for " + cgOperation.getCallingConvention().getClass().getSimpleName();
@@ -129,7 +127,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			js.append("op_");
 		}
 		js.appendValueName(cgOperation);
-	}
+	} */
 
 /*	Original merged function  temporaily retained in case derivations need review.
   	protected @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
@@ -221,11 +219,11 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
-		return createCGOperation(as2cgVisitor.getAnalyzer(), asSourceType, asOperation);
+	public @NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+		return createCGOperation(as2cgVisitor.getAnalyzer(), asOperation);
 	}
 
-	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation);
+	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
 
 	@Override
 	public /*final*/ void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
@@ -290,26 +288,10 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 	}
 
-@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor,
-			@NonNull JavaStream js,
-			@NonNull CGOperationCallExp cgOperationCallExp) {
+	@Override
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-//	@Override
-//	public @NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
-//		return createCGOperation(as2cgVisitor, asSourceType, asOperation);
-//	}
-
-	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
-		//
-		appendDeclaration(cg2javaVisitor, js, cgOperation);
-		appendParameterList(js, cgOperation);
-		appendBody(cg2javaVisitor, js, body);
-		return true;
 	}
 
 	protected boolean generateLocals(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
@@ -321,6 +303,11 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public @NonNull ClassCallingConvention getClassCallingConvention() {
+		return ContextClassCallingConvention.INSTANCE;
 	}
 
 	protected void initCallArguments(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
@@ -353,23 +340,13 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgOperationCallExp.setRequired(isRequired);
 	}
 
-	protected void initCallExp2(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp,
-			@NonNull CGOperation cgOperation, boolean isRequired) {		// XXX wip eliminate isRequired
-	//	Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
-	//	boolean isRequired2 = asOperation.isIsRequired();
-	//	Boolean ecoreIsRequired = as2cgVisitor.getCodeGenerator().isNonNull(asOperationCallExp);
-	//	if (ecoreIsRequired != null) {
-	//		isRequired2 = ecoreIsRequired;
-	//	}
-	//	assert isRequired == isRequired2;
-	//	cgOperationCallExp.setAsOperation(asOperation);
-	//	cgOperationCallExp.setAst(asOperationCallExp);
-	//	TypeId asTypeId = asOperationCallExp.getTypeId();
-		cgOperationCallExp.setTypeId(cgOperation.getTypeId());
-		cgOperationCallExp.setReferredOperation(cgOperation);
-	//	cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
-	//	cgOperationCallExp.setValidating(asOperation.isIsValidating());
-		cgOperationCallExp.setRequired(isRequired);
+	protected void initOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull Operation asOperation) {
+		TypeId asTypeId = asOperation.getTypeId();
+		CGTypeId cgTypeId = analyzer.getCGTypeId(asTypeId);
+		cgOperation.setAst(asOperation);
+		cgOperation.setTypeId(cgTypeId);
+		cgOperation.setRequired(asOperation.isIsRequired());
+		cgOperation.setCallingConvention(this);
 	}
 
 	@Override
@@ -441,7 +418,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 				}
 			}
 			else {
-				Parameter asParameter = CGUtil.basicGetParameter(cgParameter);
+			//	Parameter asParameter = CGUtil.basicGetParameter(cgParameter);
 			//	if ((asParameter != null) && asParameter.isIsRequired() && !cgArgument.isNonNull()) {
 				if (cgParameter.isRequired() && !cgArgument.isNonNull()) {
 //					rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");

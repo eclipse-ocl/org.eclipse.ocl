@@ -1672,6 +1672,28 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryConstants.java" type="org.eclipse.ocl.pivot.library.LibraryConstants">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryConstants"/>
+                <message_argument value="AND"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryConstants"/>
+                <message_argument value="AND2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryFeature.java" type="org.eclipse.ocl.pivot.library.LibraryFeature">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryFeature"/>
+                <message_argument value="getEvaluateMethod()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/LibraryIteration.java" type="org.eclipse.ocl.pivot.library.LibraryIteration">
         <filter id="403984517">
             <message_arguments>

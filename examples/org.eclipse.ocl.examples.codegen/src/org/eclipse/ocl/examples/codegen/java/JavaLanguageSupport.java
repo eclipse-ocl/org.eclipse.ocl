@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -38,6 +39,9 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ClassImpl;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.library.NativeOperation;
@@ -180,6 +184,10 @@ public class JavaLanguageSupport extends LanguageSupport
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}
 
+	public @Nullable Model basicGetNativeModel() {
+		return nativeModel;
+	}
+
 	private @NonNull Type getBoxedType(@NonNull Class<?> jClass) {
 		Class<?> jComponentClass = jClass.getComponentType();
 		if (jComponentClass != null) {
@@ -223,8 +231,75 @@ public class JavaLanguageSupport extends LanguageSupport
 	}
 
 	/*
+	 * Return a cache class for asFeature.
+	 */
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(@NonNull Feature asFeature) {
+		org.eclipse.ocl.pivot.@NonNull Class asClass = PivotUtil.getOwningClass(asFeature);
+		String name = "HC_" + PivotUtil.getName(asClass) + "_" + PivotUtil.getName(asFeature);
+		org.eclipse.ocl.pivot.@NonNull Class asCacheClass = getCacheClass(asClass, name);
+		return asCacheClass;
+	/*	org.eclipse.ocl.pivot.@NonNull Package asPackage = PivotUtil.getOwningPackage(asClass);
+		org.eclipse.ocl.pivot.@NonNull Package asCachePackage = getCachePackage(asPackage);
+		Package jPackage = jClass.getPackage();
+		if (jPackage == null) {
+			jPackage = jClass.getComponentType().getPackage();
+		}
+		assert jPackage != null;
+		org.eclipse.ocl.pivot.@NonNull Package asPackage = getNativePackage(jPackage);
+		String verboseName = jClass.getName();
+		int iStart = 0;
+		for (int iDot; (iDot = verboseName.indexOf('.', iStart)) >= 0; ) {
+			iStart = iDot+1;
+		}
+		String trimmedName = verboseName.substring(iStart);
+		List<org.eclipse.ocl.pivot.@NonNull Class> asCacheClasses = PivotUtilInternal.getOwnedClassesList(asPackage);
+		org.eclipse.ocl.pivot.Class asCacheClass = NameUtil.getNameable(asCacheClasses, trimmedName);
+		if (asCacheClass == null) {
+			asCacheClass = PivotFactory.eINSTANCE.createClass();
+			asCacheClass.setName(trimmedName);
+			asCacheClasses.add(asCacheClass);
+		}
+		return asCacheClass; */
+	}
+
+	/*
+	 * Return a cache class for asClass.
+	 */
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
+		org.eclipse.ocl.pivot.@NonNull Package asPackage = PivotUtil.getOwningPackage(asClass);
+		org.eclipse.ocl.pivot.@NonNull Package asCachePackage = getCachePackage(asPackage);
+		List<org.eclipse.ocl.pivot.@NonNull Class> asCacheClasses = PivotUtilInternal.getOwnedClassesList(asCachePackage);
+		org.eclipse.ocl.pivot.Class asCacheClass = NameUtil.getNameable(asCacheClasses, name);
+		if (asCacheClass == null) {
+			asCacheClass = PivotFactory.eINSTANCE.createClass();
+			asCacheClass.setName(name);
+			asCacheClasses.add(asCacheClass);
+		}
+		return asCacheClass;
+	}
+
+	/*
+	 * Return a native package for jPackage flattening nested packages.
+	 */
+	private org.eclipse.ocl.pivot.@NonNull Package getCachePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		Model asModel = getNativeModel();
+		String qualifiedName = asPackage.toString().replaceAll("::", "_");
+		List<org.eclipse.ocl.pivot.@NonNull Package> asCachePackages = PivotUtilInternal.getOwnedPackagesList(asModel);
+		org.eclipse.ocl.pivot.Package asCachePackage = NameUtil.getNameable(asCachePackages, qualifiedName);
+		if (asCachePackage == null) {
+			asCachePackage = PivotFactory.eINSTANCE.createPackage();
+			asCachePackage.setName(qualifiedName);
+			asCachePackages.add(asCachePackage);
+		}
+		return asCachePackage;
+	}
+
+	/*
 	 * Return a native class for jClass flattening nested classes.
 	 */
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNativeClass(/*@NonNull */Class<?> jClass) {
 		assert jClass != null;
 		Package jPackage = jClass.getPackage();
@@ -239,26 +314,29 @@ public class JavaLanguageSupport extends LanguageSupport
 			iStart = iDot+1;
 		}
 		String trimmedName = verboseName.substring(iStart);
-		List<org.eclipse.ocl.pivot.Class> asClasses = asPackage.getOwnedClasses();
+		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = PivotUtilInternal.getOwnedClassesList(asPackage);
 		org.eclipse.ocl.pivot.Class asClass = NameUtil.getNameable(asClasses, trimmedName);
 		if (asClass == null) {
-			asClass = PivotFactory.eINSTANCE.createClass();
+		//	asClass = PivotFactory.eINSTANCE.createClass();
+			asClass = new ClassImpl(JavaConstants.getJavaTypeId(jClass));
 			asClass.setName(trimmedName);
+		//	asClass.setTypeId(JavaConstants.getJavaTypeId(jClass));
 			asClasses.add(asClass);
 		}
 		return asClass;
 	}
 
-	@NonNull
-	public Model getNativeModel() {
+	public @NonNull Model getNativeModel() {
 		Model asModel = nativeModel;
 		if (asModel == null) {
 			asModel = PivotFactory.eINSTANCE.createModel();
-			asModel.setName("native-java");
+			asModel.setExternalURI("native-java");
 			nativeModel = asModel;
 			ResourceSet nativeResourceSet = new ResourceSetImpl();
-			Resource nativeResourcet = nativeResourceSet.createResource(URI.createURI("native-java.xml"));
-			nativeResourcet.getContents().add(asModel);
+			Resource nativeResource = nativeResourceSet.createResource(URI.createURI("native-java.xml"));
+			nativeResource.getContents().add(asModel);
+			PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
+			nativeResourceSet.eAdapters().add(metamodelManager);
 		}
 		return asModel;
 	}
@@ -278,7 +356,7 @@ public class JavaLanguageSupport extends LanguageSupport
 			iStart = verboseName.lastIndexOf(' ', iOpen);
 		}
 		String trimmedName = verboseName.substring(iStart+1, iOpen) + "::" + verboseName.substring(iOpen+1, iClose);
-		List<Operation> asOperations = asClass.getOwnedOperations();
+		List<@NonNull Operation> asOperations = PivotUtilInternal.getOwnedOperationsList(asClass);
 		Operation asOperation = NameUtil.getNameable(asOperations, trimmedName);
 		if (asOperation == null) {
 			Class<?> jReturnClass = method.getReturnType();
@@ -292,7 +370,7 @@ public class JavaLanguageSupport extends LanguageSupport
 			asOperation.setImplementation(new JavaNativeOperation(method));
 			asOperation.setImplementationClass(jClass.getCanonicalName());
 			asOperations.add(asOperation);
-			List<org.eclipse.ocl.pivot.Parameter> asParameters = asOperation.getOwnedParameters();
+			List<org.eclipse.ocl.pivot.@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
 			for (Parameter jParameter : method.getParameters()) {
 				Class<?> jParameterClass = jParameter.getType();
 				assert jParameterClass != null;
@@ -316,7 +394,7 @@ public class JavaLanguageSupport extends LanguageSupport
 		assert jClass != null;
 		org.eclipse.ocl.pivot.Class asClass = getNativeClass(jClass);
 		String trimmedName = field.getName();
-		List<Property> asProperties = asClass.getOwnedProperties();
+		List<@NonNull Property> asProperties = PivotUtilInternal.getOwnedPropertiesList(asClass);
 		Property asProperty = NameUtil.getNameable(asProperties, trimmedName);
 		if (asProperty == null) {
 			Class<?> jReturnClass = field.getType();
@@ -340,7 +418,7 @@ public class JavaLanguageSupport extends LanguageSupport
 	private org.eclipse.ocl.pivot.@NonNull Package getNativePackage(@NonNull Package jPackage) {
 		Model asModel = getNativeModel();
 		String qualifiedName = jPackage.getName();
-		List<org.eclipse.ocl.pivot.Package> asPackages = asModel.getOwnedPackages();
+		List<org.eclipse.ocl.pivot.@NonNull Package> asPackages = PivotUtilInternal.getOwnedPackagesList(asModel);
 		org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(asPackages, qualifiedName);
 		if (asPackage == null) {
 			asPackage = PivotFactory.eINSTANCE.createPackage();

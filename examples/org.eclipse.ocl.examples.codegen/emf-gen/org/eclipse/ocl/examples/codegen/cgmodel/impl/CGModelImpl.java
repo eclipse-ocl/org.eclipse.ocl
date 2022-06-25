@@ -211,4 +211,13 @@ public class CGModelImpl extends CGNamedElementImpl implements CGModel {
 		return visitor.visitCGModel(this);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isGlobal() {
+		return true;
+	}
+
 } //CGModelImpl

@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * An IdVisitor supports visting an ElementId to react according to the derived Element type.
  */
 public interface IdVisitor<R>
-{	
+{
 	R visitClassId(@NonNull ClassId id);
 	R visitCollectionTypeId(@NonNull CollectionTypeId id);
 	R visitDataTypeId(@NonNull DataTypeId id);

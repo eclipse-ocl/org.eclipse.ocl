@@ -394,7 +394,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			}
 			else if (eContainer instanceof CGVariable) {
 				NameResolution containerNameResolution = ((CGValuedElement)eContainer).basicGetNameResolution();
-				if (containerNameResolution != containerNameResolution) {
+				if (containerNameResolution != containerNameResolution) {			// XXX redundant / typo
 					System.out.println("Bad " + NameUtil.debugSimpleName(nameResolution) + " for " + NameUtil.debugSimpleName(cgElement) + " below " + NameUtil.debugSimpleName(((CGValuedElement)eContainer).basicGetNameResolution()) + " for " + NameUtil.debugSimpleName(eContainer));		// XXX YYY
 				}
 				assert (nameResolution == containerNameResolution);
@@ -612,6 +612,14 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		return nameResolution;
 	} */
+
+//	@Override
+	public @NonNull String getNestedClassName(org.eclipse.ocl.pivot.@NonNull Feature asFeature) {
+		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
+		s.append(JavaConstants.NESTED_CLASS_PREFIX);
+		s.appendAndEncodeQualifiedName(asFeature);
+		return s.toString();
+	}
 
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert false : "Unsupported getQualifiedForeignClassName";
