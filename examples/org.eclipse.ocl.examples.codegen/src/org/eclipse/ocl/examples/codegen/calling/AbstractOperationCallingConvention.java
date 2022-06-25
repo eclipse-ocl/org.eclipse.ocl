@@ -353,25 +353,6 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgOperationCallExp.setRequired(isRequired);
 	}
 
-	protected void initCallExp2(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp,
-			@NonNull CGOperation cgOperation, boolean isRequired) {		// XXX wip eliminate isRequired
-	//	Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
-	//	boolean isRequired2 = asOperation.isIsRequired();
-	//	Boolean ecoreIsRequired = as2cgVisitor.getCodeGenerator().isNonNull(asOperationCallExp);
-	//	if (ecoreIsRequired != null) {
-	//		isRequired2 = ecoreIsRequired;
-	//	}
-	//	assert isRequired == isRequired2;
-	//	cgOperationCallExp.setAsOperation(asOperation);
-	//	cgOperationCallExp.setAst(asOperationCallExp);
-	//	TypeId asTypeId = asOperationCallExp.getTypeId();
-		cgOperationCallExp.setTypeId(cgOperation.getTypeId());
-		cgOperationCallExp.setReferredOperation(cgOperation);
-	//	cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
-	//	cgOperationCallExp.setValidating(asOperation.isIsValidating());
-		cgOperationCallExp.setRequired(isRequired);
-	}
-
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
 		if (cgOperation.isRequired()) {
