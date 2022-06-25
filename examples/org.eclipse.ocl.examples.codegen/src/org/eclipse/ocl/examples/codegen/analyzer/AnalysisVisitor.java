@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
@@ -94,10 +95,12 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		}
 		else if (cgCondition.isTrue()) {
 			CGValuedElement cgThen = context.getCGExpression(cgIfExp.getThenExpression());
+			PivotUtilInternal.resetContainer(cgThen);
 			context.replace(cgIfExp, cgThen, "Null then-expression");
 		}
 		else if (cgCondition.isFalse()) {
 			CGValuedElement cgElse = context.getCGExpression(cgIfExp.getElseExpression());
+			PivotUtilInternal.resetContainer(cgElse);
 			context.replace(cgIfExp, cgElse, "Null else-expression");
 		}
 		else if (cgCondition.isConstant()) {
@@ -108,6 +111,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 			CGValuedElement cgThen = context.getCGExpression(cgIfExp.getThenExpression());
 			CGValuedElement cgElse = context.getCGExpression(cgIfExp.getElseExpression());
 			if (cgThen.isEquivalentTo(cgElse) == Boolean.TRUE) {
+				PivotUtilInternal.resetContainer(cgThen);
 				context.replace(cgIfExp, cgThen, "Null then/else-expression");
 			}
 		}
@@ -143,9 +147,11 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 				context.setCGConstant(cgIsEqualExp, context.getCGBoolean(cgIsEqualExp.isNotEquals()));
 			}
 			else if (cgSource.isTrue() && cgArgument.isNonNull() && (cgArgument.getASTypeId() == TypeId.BOOLEAN)) {
+				PivotUtilInternal.resetContainer(cgSource);
 				context.replace(cgIsEqualExp, cgArgument, "Null term");
 			}
 			else if (cgArgument.isTrue() && cgSource.isNonNull() && (cgSource.getASTypeId() == TypeId.BOOLEAN)) {
+				PivotUtilInternal.resetContainer(cgSource);
 				context.replace(cgIsEqualExp, cgSource, "Null term");
 			}
 		}
@@ -201,9 +207,11 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 			context.setCGConstant(cgIsEqual2Exp, context.getCGBoolean(false));
 		}
 		else if (cgSource.isTrue() && cgArgument.isNonNull() && (cgArgument.getASTypeId() == TypeId.BOOLEAN)) {
+			PivotUtilInternal.resetContainer(cgArgument);
 			context.replace(cgIsEqual2Exp, cgArgument, "Null term");
 		}
 		else if (cgArgument.isTrue() && cgSource.isNonNull() && (cgSource.getASTypeId() == TypeId.BOOLEAN)) {
+			PivotUtilInternal.resetContainer(cgSource);
 			context.replace(cgIsEqual2Exp, cgSource, "Null term");
 		}
 		return null;
@@ -251,6 +259,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		//		}
 		//		else {
 		if (cgIn.isConstant()) {
+			PivotUtilInternal.resetContainer(cgIn);
 			context.replace(cgLetExp, cgIn, "Null let-expression");
 		}
 		//		}

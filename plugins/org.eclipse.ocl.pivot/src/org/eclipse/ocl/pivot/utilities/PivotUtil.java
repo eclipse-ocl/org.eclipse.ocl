@@ -513,6 +513,8 @@ public class PivotUtil
 	}
 
 	public static @NonNull LetExp createLetExp(@NonNull Variable asVariable, @NonNull OCLExpression asIn) {
+		assert asVariable.eContainer() == null;		// Earlier child stealing detection
+		assert asIn.eContainer() == null;			// Earlier child stealing detection
 		LetExp asLetExp = PivotFactory.eINSTANCE.createLetExp();
 		asLetExp.setOwnedIn(asIn);
 		asLetExp.setType(asIn.getType());
