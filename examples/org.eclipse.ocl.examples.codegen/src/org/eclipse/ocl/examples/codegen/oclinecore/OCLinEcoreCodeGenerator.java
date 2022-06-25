@@ -669,6 +669,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//
 		OCLExpression asResultVariableInit = asSynthesizedQuery.getOwnedBody();
 		assert asResultVariableInit != null;
+		PivotUtilInternal.resetContainer(asResultVariableInit);
 		LetVariable asResultVariable = asHelper.createLetVariable("result", asResultVariableInit);
 		//
 		//	Cache the severity in a let-variable

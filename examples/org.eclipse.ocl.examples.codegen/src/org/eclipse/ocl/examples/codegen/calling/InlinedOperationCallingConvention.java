@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -70,11 +71,12 @@ public class InlinedOperationCallingConvention extends ConstrainedOperationCalli
 		LanguageExpression bodyExpression = asOperation.getBodyExpression();
 		assert (bodyExpression != null);
 		//
-		// The AS clone is presumably to ensaure a unique AS2CG mapping. NOw the CPOPerationCallExp etc have
-		// CGOPeration/CGParamter the AS2CG mapping could well be a redundant concern.
+		// The AS clone is presumably to ensaure a unique AS2CG mapping. Now the CGOperationCallExp etc have
+		// CGOperation/CGParameter the AS2CG mapping could well be a redundant concern.
 		//
 		ExpressionInOCL asClone = createCopy((ExpressionInOCL)bodyExpression);
 		OCLExpression asExpression = ClassUtil.nonNullState(asClone.getOwnedBody());
+		PivotUtilInternal.resetContainer(asExpression);
 		List<@NonNull OCLExpression> asArguments = ClassUtil.nullFree(asOperationCallExp.getOwnedArguments());
 		int argumentsSize = asArguments.size();
 		if (argumentsSize > 0) {
@@ -93,8 +95,12 @@ public class InlinedOperationCallingConvention extends ConstrainedOperationCalli
 			}
 		}
 		Variable asVariable = asClone.getOwnedContext();
-		asClone.setOwnedContext(null);				// Defeat child-stealing detector
-		asExpression = createLetExp(asVariable, asOperationCallExp.getOwnedSource(), asExpression);
+	//	asClone.setOwnedContext(null);				// Defeat child-stealing detector
+		OCLExpression ownedSource = asOperationCallExp.getOwnedSource();
+		PivotUtilInternal.resetContainer(ownedSource);	// Defeat child-stealing detector
+		PivotUtilInternal.resetContainer(asVariable);	// Defeat child-stealing detector
+		PivotUtilInternal.resetContainer(asExpression);	// Defeat child-stealing detector
+		asExpression = createLetExp(asVariable, ownedSource, asExpression);
 		ASResource asResource = (ASResource) bodyExpression.eResource();
 		try {
 			boolean wasUpdating = asResource.setUpdating(true);			// FIXME Avoid immutable change
