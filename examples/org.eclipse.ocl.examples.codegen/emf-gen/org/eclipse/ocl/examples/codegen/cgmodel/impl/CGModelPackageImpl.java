@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
+import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
@@ -825,6 +826,13 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EDataType classCallingConventionEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType elementEDataType = null;
 
 	/**
@@ -1352,6 +1360,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	@Override
 	public EReference getCGClass_ContainingClass() {
 		return (EReference)cgClassEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getCGClass_CallingConvention() {
+		return (EAttribute)cgClassEClass.getEStructuralFeatures().get(9);
 	}
 
 	/**
@@ -3120,6 +3138,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
+	public EDataType getClassCallingConvention() {
+		return classCallingConventionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EDataType getElement() {
 		return elementEDataType;
 	}
@@ -3379,6 +3407,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		createEReference(cgClassEClass, 8);
 		createEReference(cgClassEClass, 9);
 		createEReference(cgClassEClass, 10);
+		createEAttribute(cgClassEClass, 11);
 
 		cgCollectionExpEClass = createEClass(13);
 		createEReference(cgCollectionExpEClass, 6);
@@ -3641,25 +3670,26 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		nameableEClass = createEClass(96);
 
 		// Create data types
-		elementEDataType = createEDataType(97);
-		elementIdEDataType = createEDataType(98);
-		enumerationLiteralIdEDataType = createEDataType(99);
-		iterationEDataType = createEDataType(100);
-		fieldEDataType = createEDataType(101);
-		libraryIterationEDataType = createEDataType(102);
-		libraryOperationEDataType = createEDataType(103);
-		libraryPropertyEDataType = createEDataType(104);
-		methodEDataType = createEDataType(105);
-		nameResolutionEDataType = createEDataType(106);
-		numberEDataType = createEDataType(107);
-		objectEDataType = createEDataType(108);
-		operationEDataType = createEDataType(109);
-		operationCallingConventionEDataType = createEDataType(110);
-		propertyEDataType = createEDataType(111);
-		propertyCallingConventionEDataType = createEDataType(112);
-		tuplePartIdEDataType = createEDataType(113);
-		typeEDataType = createEDataType(114);
-		typeIdEDataType = createEDataType(115);
+		classCallingConventionEDataType = createEDataType(97);
+		elementEDataType = createEDataType(98);
+		elementIdEDataType = createEDataType(99);
+		enumerationLiteralIdEDataType = createEDataType(100);
+		iterationEDataType = createEDataType(101);
+		fieldEDataType = createEDataType(102);
+		libraryIterationEDataType = createEDataType(103);
+		libraryOperationEDataType = createEDataType(104);
+		libraryPropertyEDataType = createEDataType(105);
+		methodEDataType = createEDataType(106);
+		nameResolutionEDataType = createEDataType(107);
+		numberEDataType = createEDataType(108);
+		objectEDataType = createEDataType(109);
+		operationEDataType = createEDataType(110);
+		operationCallingConventionEDataType = createEDataType(111);
+		propertyEDataType = createEDataType(112);
+		propertyCallingConventionEDataType = createEDataType(113);
+		tuplePartIdEDataType = createEDataType(114);
+		typeEDataType = createEDataType(115);
+		typeIdEDataType = createEDataType(116);
 	}
 
 	/**
@@ -3833,6 +3863,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEReference(getCGClass_TemplateParameters(), this.getCGClass(), null, "templateParameters", null, 0, -1, CGClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCGClass_Classes(), this.getCGClass(), this.getCGClass_ContainingClass(), "classes", null, 0, -1, CGClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getCGClass_ContainingClass(), this.getCGClass(), this.getCGClass_Classes(), "containingClass", null, 0, 1, CGClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGClass_CallingConvention(), this.getClassCallingConvention(), "callingConvention", null, 1, 1, CGClass.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgCollectionExpEClass, CGCollectionExp.class, "CGCollectionExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getCGCollectionExp_Parts(), this.getCGCollectionPart(), this.getCGCollectionPart_CollectionExp(), "parts", null, 0, -1, CGCollectionExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4095,6 +4126,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEClass(nameableEClass, Nameable.class, "Nameable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Initialize data types
+		initEDataType(classCallingConventionEDataType, ClassCallingConvention.class, "ClassCallingConvention", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(elementEDataType, Element.class, "Element", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(elementIdEDataType, ElementId.class, "ElementId", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(enumerationLiteralIdEDataType, EnumerationLiteralId.class, "EnumerationLiteralId", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

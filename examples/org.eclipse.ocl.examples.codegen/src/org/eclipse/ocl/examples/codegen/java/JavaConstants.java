@@ -47,7 +47,8 @@ public class JavaConstants {
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
 	public static final @NonNull String EVALUATION_CACHE_NAME = "evaluationCache";
 	public static final @NonNull String EXECUTOR_NAME = "executor";
-	public static final @NonNull String GET_CACHED_EVLUATION_RESULT_NAME = "getCachedEvaluationResult";
+//	public static final @NonNull String GET_CACHED_EVALUATION_RESULT_NAME = "getCachedEvaluationResult";
+	public static final @NonNull String GET_RESULT_NAME = "getResult";
 	public static final @NonNull String ID_RESOLVER_NAME = "idResolver";
 	public static final @NonNull String INSTANCE_NAME = "INSTANCE";
 	public static final @NonNull String MODEL_MANAGER_NAME = "modelManager";
@@ -60,6 +61,7 @@ public class JavaConstants {
 	public static final @NonNull String EXTERNAL_CLASS_PREFIX = "EC_";
 	public static final @NonNull String EXTERNAL_OPERATION_PREFIX = "EO_";
 	public static final @NonNull String EXTERNAL_PROPERTY_PREFIX = "EP_";
+	public static final @NonNull String NESTED_CLASS_PREFIX = "NC_";
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);
 	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(Property.class);

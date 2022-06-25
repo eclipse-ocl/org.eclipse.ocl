@@ -23,6 +23,7 @@
   <foreignModel>cgmodel.ecore</foreignModel>
   <genPackages prefix="CGModel" basePackage="org.eclipse.ocl.examples.codegen" disposableProviderFactory="true"
       contentTypeIdentifier="org.eclipse.ocl.examples.codegen.cgmodel" ecorePackage="cgmodel.ecore#/">
+    <genDataTypes ecoreDataType="cgmodel.ecore#//ClassCallingConvention"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Element"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//ElementId"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//EnumerationLiteralId"/>
@@ -84,6 +85,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGClass/templateParameters"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGClass/classes"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGClass/containingClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGClass/callingConvention"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGCollectionExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGCollectionExp/parts"/>

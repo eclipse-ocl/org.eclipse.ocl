@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
@@ -70,164 +69,16 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 {
 	public static final @NonNull LibraryOperationCallingConvention INSTANCE = new LibraryOperationCallingConvention();
 
-/*	public @NonNull CGLibraryOperationCallExp createCGMethodOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull LibraryOperation libraryOperation,
-			CGValuedElement cgSource, @NonNull Operation asOperation) {
-	//		CGValuedElement cgSource, @NonNull OperationCallExp zzasOperationCallExp) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-	//	Operation zzasOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-		//	assert (cgSource == null) == Modifier.isStatic(jMethod.getModifiers());
-			CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
-			cgOperationCallExp.setLibraryOperation(libraryOperation);
-			List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
-			for (Class<?> jParameterType : jMethod.getParameterTypes()) {
-				if (jParameterType == Executor.class) {
-					CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
-					cgArguments.add(analyzer.createCGVariableExp(executorVariable));
-				}
-				else if (jParameterType == TypeId.class) {
-					addTypeIdArgument(as2cgVisitor, cgOperationCallExp, asOperation/*CallExp* /.getTypeId());
-				}
-				else if (jParameterType == Object.class) {
-					if (cgSource != null) {
-						cgArguments.add(cgSource);
-					}
-					break;
-				}
-				else {
-					throw new UnsupportedOperationException();
-				}
-			}
-		return cgOperationCallExp;
-	} */
-
-	public CGOperation createCGInnerOperation(@NonNull AS2CGVisitor as2cgVisitor, LibraryOperation libraryOperation, @NonNull Operation asOuterOperation) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-		Method jMethod = libraryOperation.getEvaluateMethod(asOuterOperation);
-		CGLibraryOperation cgInnerOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-	//	analyzer.installOperation(asOperation, cgOperation, this);
-		assert cgInnerOperation.getAst() == null;
-		assert cgInnerOperation.getCallingConvention() == null;
-//		System.out.println("installOperation " + callingConvention.getClass().getSimpleName() + " " + NameUtil.debugSimpleName(cgOperation) + " " + NameUtil.debugSimpleName(asOperation) + " : " + asOperation);
-		cgInnerOperation.setAst(asOuterOperation);		// no inner available
-		cgInnerOperation.setTypeId(analyzer.getCGTypeId(asOuterOperation.getTypeId()));
-		cgInnerOperation.setRequired(asOuterOperation.isIsRequired());
-		cgInnerOperation.setCallingConvention(this);
-//		analyzer.addCGOperation(cgOperation);
-	//	createCGParameters(as2cgVisitor, gOperation, null;
-		ExpressionInOCL expressionInOCL	= null;
-		//	Operation asOperation = CGUtil.getAST(cgOperation);
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
-		List<CGParameter> cgParameters = cgInnerOperation.getParameters();
-	//	LibraryOperation libraryOperation = (LibraryOperation)as2cgVisitor.getMetamodelManager().getImplementation(asOperation);
-	//	Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-		cgInnerOperation.setRequired(as2cgVisitor.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);
-	//	List<@NonNull Parameter> asParameters = PivotUtil.getOwnedParameters(asOuterOperation);
-	//	int i = asOuterOperation.isIsStatic() ? 0 : -1;
-	//	if (Modifier.isStatic(jMethod.getModifiers())) {
-	//		cgParameters.add(nameManager.getThisParameter());
-	//	}
-		cgParameters.add(nameManager.getExecutorParameter());
-		cgParameters.add(nameManager.getTypeIdParameter());
-		for (Parameter asParameter : PivotUtil.getOwnedParameters(asOuterOperation)) {
-			CGParameter cgParameter = nameManager.getParameter(asParameter, (String)null);
-			cgParameters.add(cgParameter);
-		}
-	//	assert i == asParameters.size();
-		return cgInnerOperation;
-	}
-
-	public @NonNull CGLibraryOperationCallExp createCGInnerOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOuterOperation, @NonNull LibraryOperation libraryOperation, @NonNull Operation asOuterOperation) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-	//	Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-	//	System.out.println("createCGOperationCallExp: to " + asOperation);
-	//	assert (cgSource == null) == asOperation.isIsStatic();
-	//	CGValuedElement cgSource = null;
-		boolean isRequired = cgOuterOperation.isRequired();
-		Method jMethod = libraryOperation.getEvaluateMethod(asOuterOperation);
-		//	assert (cgSource == null) == Modifier.isStatic(jMethod.getModifiers());
-		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
-		cgOperationCallExp.setLibraryOperation(libraryOperation);
-		initCallExp2(as2cgVisitor, cgOperationCallExp, cgOuterOperation, isRequired);
-
-	/*	List<@NonNull OCLExpression> asArguments = PivotUtilInternal.getOwnedArgumentsList(asOperationCallExp);
-		int asArgumentSize = asArguments.size();
-		assert asArgumentSize == asOuterOperation.getOwnedParameters().size();
-
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
-		Class<?>[] jParameterTypes = jMethod.getParameterTypes();
-		int syntheticArgumentSize = jParameterTypes.length - asArgumentSize;
-		for (int i = 0; i < syntheticArgumentSize; i++) {
-			Class<?> jParameterType = jParameterTypes[i];
-			if (jParameterType == Executor.class) {
-				CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
-				cgArguments.add(analyzer.createCGVariableExp(executorVariable));
-			}
-			else if (jParameterType == TypeId.class) {
-				addTypeIdArgument(as2cgVisitor, cgOperationCallExp, asOuterOperation/*CallExp* /.getTypeId());
-			}
-			else if (jParameterType == Object.class) {
-				if (cgSource != null) {
-					cgArguments.add(cgSource);
-				}
-				break;
-			}
-			else {
-				throw new UnsupportedOperationException();
-			}
-		}
-		for (@NonNull OCLExpression asArgument : asArguments) {
-			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
-			cgArguments.add(cgArgument);
-		}
-	//	initCallArguments(as2cgVisitor, cgOperationCallExp); */
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOuterOperation);
-		//	int cgParametersSize = cgParameters.size();
-		//	assert asArgumentSize == asFunction.getOwnedParameters().size();
-
-		CGValuedElement cgSource = null;
-
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
-		Class<?>[] jParameterTypes = jMethod.getParameterTypes();
-		int syntheticArgumentSize = jParameterTypes.length - cgParameters.size();
-	//	assert syntheticArgumentSize == 42;		// XXX
-	//	for (int i = 0; i < syntheticArgumentSize; i++) {
-	//		Class<?> jParameterType = jParameterTypes[i];
-	//		if (jParameterType == Executor.class) {
-				CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
-	//			cgArguments.add(analyzer.createCGVariableExp(executorVariable));
-	//		}
-	//		else if (jParameterType == TypeId.class) {
-			//	addTypeIdArgument(as2cgVisitor, cgOperationCallExp, asFunction/*CallExp*/.getTypeId());
-				TypeId asTypeId = cgOuterOperation.getASTypeId();
-				assert asTypeId != null;
-	//			addTypeIdArgument(as2cgVisitor, cgOperationCallExp, asTypeId);
-	//		}
-	//		else if (jParameterType == Object.class) {
-	//			if (cgSource != null) {
-	//				cgArguments.add(cgSource);
-	//			}
-	//			break;
-	//		}
-	//		else {
-	//			throw new UnsupportedOperationException();
-	//		}
-	//	}
-		for (@NonNull CGParameter cgParameter : cgParameters) {
-			cgArguments.add(analyzer.createCGVariableExp(cgParameter));
-		}
-		return cgOperationCallExp;
-	}
-
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
  		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		assert !(libraryOperation instanceof EObjectOperation);
 		assert !(libraryOperation instanceof ForeignOperation);
 		assert !(libraryOperation instanceof ConstrainedOperation);
 		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		analyzer.installOperation(asOperation, cgOperation, this);
+		initOperation(analyzer, cgOperation, asOperation);
+		analyzer.addCGOperation(cgOperation);
 		return cgOperation;
 	}
 

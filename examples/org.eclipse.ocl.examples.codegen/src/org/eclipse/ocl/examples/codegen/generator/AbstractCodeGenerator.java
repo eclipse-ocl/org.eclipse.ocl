@@ -184,6 +184,10 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		return new CodeGenOptions();
 	}
 
+//	public @NonNull ClassCallingConvention getCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+//		return JUnitClassCallingConvention.INSTANCE;		// XXX
+//	}
+
 	@Override
 	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal) {
 		if (asOperation instanceof Iteration) {

@@ -21,7 +21,7 @@ public interface LibraryConstants
 	/**
 	 *	The URI of this Standard Library.
 	 */
-	public static final @NonNull String STDLIB_URI = "http://www.eclipse.org/ocl/2015/Library"; //$NON-NLS-1$
+	static final @NonNull String STDLIB_URI = "http://www.eclipse.org/ocl/2015/Library"; //$NON-NLS-1$
 
 	/**
 	 *	The URI of the Ecore serialization of this Standard Library.
@@ -34,5 +34,13 @@ public interface LibraryConstants
 	 */
 	//	public static final @NonNull String ECORE_STDLIB_PREFIX = "OCL_E"; //$NON-NLS-1$
 
+	/**
+	 * @since 1.18
+	 */
+	static final @NonNull String AND = "and"; //$NON-NLS-1$
+	/**
+	 * @since 1.18
+	 */
+	static final @NonNull String AND2 = "and2"; //$NON-NLS-1$
 	static final @NonNull String COMPARE_TO = "compareTo"; //$NON-NLS-1$
 }

@@ -370,6 +370,17 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGClass_ContainingClass();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getCallingConvention <em>Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getCallingConvention()
+	 * @see #getCGClass()
+	 * @generated
+	 */
+	EAttribute getCGClass_CallingConvention();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp <em>CG Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2296,6 +2307,16 @@ public interface CGModelPackage extends EPackage {
 	EClass getNameable();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention <em>Class Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Class Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention
+	 * @generated
+	 */
+	EDataType getClassCallingConvention();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.Element <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2743,6 +2764,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_CLASS__CONTAINING_CLASS = eINSTANCE.getCGClass_ContainingClass();
+
+		/**
+		 * The meta object literal for the '<em><b>Calling Convention</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_CLASS__CALLING_CONVENTION = eINSTANCE.getCGClass_CallingConvention();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCallExpImpl <em>CG Call Exp</em>}' class.
@@ -4381,6 +4410,16 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass NAMEABLE = eINSTANCE.getNameable();
+
+		/**
+		 * The meta object literal for the '<em>Class Calling Convention</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getClassCallingConvention()
+		 * @generated
+		 */
+		EDataType CLASS_CALLING_CONVENTION = eINSTANCE.getClassCallingConvention();
 
 		/**
 		 * The meta object literal for the '<em>Element</em>' data type.

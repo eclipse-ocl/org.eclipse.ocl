@@ -159,10 +159,12 @@ public class GlobalNameManager extends NameManager
 	protected final @NonNull NameResolution evaluateName;
 	protected final @NonNull NameResolution evaluationCacheName;
 	protected final @NonNull NameResolution executorName;
-	protected final @NonNull NameResolution getCachedEvaluationResult;
+//	protected final @NonNull NameResolution getCachedEvaluationResultName;
+	protected final @NonNull NameResolution getResultName;
 	protected final @NonNull NameResolution idResolverName;
 	protected final @NonNull NameResolution initValueName;
 	protected final @NonNull NameResolution instanceName;
+	protected final @NonNull NameResolution isEqualName;
 	protected final @NonNull NameResolution modelManagerName;
 	protected final @NonNull NameResolution selfName;
 	protected final @NonNull NameResolution sourceAndArgumentValuesName;
@@ -185,10 +187,12 @@ public class GlobalNameManager extends NameManager
 		this.evaluateName = declareGlobalName(null, JavaConstants.EVALUATE_NAME);
 		this.evaluationCacheName = declareGlobalName(null, JavaConstants.EVALUATION_CACHE_NAME);
 		this.executorName = declareGlobalName(null, JavaConstants.EXECUTOR_NAME);
-		this.getCachedEvaluationResult = declareGlobalName(null, JavaConstants.GET_CACHED_EVLUATION_RESULT_NAME);
+	//	this.getCachedEvaluationResultName = declareGlobalName(null, JavaConstants.GET_CACHED_EVALUATION_RESULT_NAME);
+		this.getResultName = declareGlobalName(null, JavaConstants.GET_RESULT_NAME);
 		this.idResolverName = declareGlobalName(null, JavaConstants.ID_RESOLVER_NAME);
 		this.initValueName = declareGlobalName(null, "initValue");
 		this.instanceName = declareGlobalName(null, JavaConstants.INSTANCE_NAME);
+		this.isEqualName = declareGlobalName(null, "isEqual");
 		this.modelManagerName = declareGlobalName(null, JavaConstants.MODEL_MANAGER_NAME);
 		this.selfName = declareGlobalName(null, PivotConstants.SELF_NAME);
 		this.sourceAndArgumentValuesName = declareGlobalName(null, JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
@@ -352,8 +356,20 @@ public class GlobalNameManager extends NameManager
 		return executorName;
 	}
 
-	public @NonNull String getGetCachedEvaluationResultName() {
-		return getCachedEvaluationResult.getResolvedName();
+//	public @NonNull NameResolution getGetCachedEvaluationResultNameResolution() {
+//		return getCachedEvaluationResultName;
+//	}
+
+//	public @NonNull String getGetCachedEvaluationResultName() {
+//		return getCachedEvaluationResultName.getResolvedName();
+//	}
+
+	public @NonNull NameResolution getGetResultNameResolution() {
+		return getResultName;
+	}
+
+	public @NonNull String getGetResultName() {
+		return getResultName.getResolvedName();
 	}
 
 	public @NonNull Collection<@NonNull CGValuedElement> getGlobals() {
@@ -382,6 +398,10 @@ public class GlobalNameManager extends NameManager
 
 	public @NonNull NameResolution getInstanceNameResolution() {
 		return instanceName;
+	}
+
+	public @NonNull NameResolution getIsEqualNameResolution() {
+		return isEqualName;
 	}
 
 	public @NonNull String getModelManagerName() {
