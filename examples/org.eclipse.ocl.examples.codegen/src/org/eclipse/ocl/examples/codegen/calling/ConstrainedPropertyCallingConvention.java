@@ -28,6 +28,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 
@@ -105,7 +106,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 	} */
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
 	//	analyzer.addForeignFeature(asProperty);
 		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();
 	}

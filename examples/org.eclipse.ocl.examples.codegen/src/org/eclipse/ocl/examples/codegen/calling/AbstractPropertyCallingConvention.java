@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -42,7 +43,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	public void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {}
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
 		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();  // XXX Overrides may add state
 	}
 
@@ -69,6 +70,18 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 				e.printStackTrace();		// XXX
 			}
 		}
+	}
+
+	@Override
+	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js,
+			@NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue) {
+		js.appendReferenceTo(cgProperty);
+		js.append(".initValue(");
+		js.appendValueName(slotValue);
+		js.append(", ");
+		js.appendValueName(initValue);
+		js.append(");\n");
+		return false;
 	}
 
 	@Override

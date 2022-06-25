@@ -22,7 +22,6 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 
 /**
@@ -39,8 +38,8 @@ public interface OperationCallingConvention extends CallingConvention
 	/**
 	 * Create the appropriate CGOperation less parameters and body.
 	 */
-	@NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation);
-//	@NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation);
+	@NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation);
+//	@NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
 
 	/**
 	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource, or return null
@@ -69,6 +68,12 @@ public interface OperationCallingConvention extends CallingConvention
 	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation);
 
 //	FieldingAnalyzer.@NonNull ReturnState getRequiredReturn(@NonNull CGOperation cgOperation);
+
+	/**
+	 * Return the calling convention for the containing class.
+	 * @return
+	 */
+	@NonNull ClassCallingConvention getClassCallingConvention();
 
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation);
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp);

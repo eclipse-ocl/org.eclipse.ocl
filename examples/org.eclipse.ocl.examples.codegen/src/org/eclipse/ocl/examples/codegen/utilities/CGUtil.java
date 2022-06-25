@@ -497,6 +497,10 @@ public class CGUtil
 		return ClassUtil.nullFree(cgTupleExp.getParts());
 	}
 
+	public static @NonNull Iterable<@NonNull CGProperty> getProperties(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getProperties());
+	}
+
 	public static @NonNull List<@NonNull CGProperty> getPropertiesList(@NonNull CGClass cgClass) {
 		return ClassUtil.nullFree(cgClass.getProperties());
 	}
@@ -527,6 +531,14 @@ public class CGUtil
 
 	public static @NonNull CGValuedElement getSource(@NonNull CGSourcedCallExp cgSourcedCallExp) {
 		return ClassUtil.nonNullState(cgSourcedCallExp.getSource());
+	}
+
+	public static @NonNull Iterable<@NonNull CGClass> getSuperTypes(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getSuperTypes());
+	}
+
+	public static @NonNull List<@NonNull CGClass> getSuperTypesList(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getSuperTypes());
 	}
 
 	public static @NonNull CGValuedElement getThis(@NonNull CGOperationCallExp cgOperationCallExp) {
