@@ -168,27 +168,27 @@ public class CodeGenAnalyzer
 		this.cgNull = createCGNull();
 	}
 
-	public void addCGOperation(@NonNull CGOperation cgOperation) {
+	public void addCGOperation(@NonNull CGOperation cgOperation) {			// private
 		assert cgOperation.getCallingConvention() != VirtualOperationCallingConvention.INSTANCE;
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		CGOperation old = asOperation2cgOperation.put(asOperation, cgOperation);
 		assert old == null;
-		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
-		if (callingConvention.needsGeneration()) {
-			assert cgRootClass != null;
-			cgRootClass.getOperations().add(cgOperation);
-		}
+	//	OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
+	//	if (callingConvention.needsGeneration()) {
+	//		assert cgRootClass != null;
+	//		cgRootClass.getOperations().add(cgOperation);
+	//	}
 	}
 
-	public void addCGProperty(@NonNull CGProperty cgProperty) {
+	public void addCGProperty(@NonNull CGProperty cgProperty) {			// private
 		Property asProperty = CGUtil.getAST(cgProperty);
 		CGProperty old = asProperty2cgProperty.put(asProperty, cgProperty);
 		assert old == null;
-		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-		if (callingConvention.needsGeneration()) {
-			assert cgRootClass != null;
-			cgRootClass.getProperties().add(cgProperty);
-		}
+	//	PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
+	//	if (callingConvention.needsGeneration()) {
+	//		assert cgRootClass != null;
+	//		cgRootClass.getProperties().add(cgProperty);
+	//	}
 	}
 
 	public void addExternalFeature(@NonNull Feature asFeature) {
@@ -515,9 +515,9 @@ public class CodeGenAnalyzer
 			if (cgRootClass == null) {
 				cgRootClass = cgClass;
 			}
-			else {
-				cgRootClass.getClasses().add(cgClass);
-			}
+		//	else {
+		//		cgRootClass.getClasses().add(cgClass);
+		//	}
 		}
 		else {
 			assert cgClass.getAst() == asClass;
@@ -782,9 +782,11 @@ public class CodeGenAnalyzer
 	 */
 	public @NonNull CGValuedElement replace(@NonNull CGValuedElement oldElement, @NonNull CGValuedElement newElement,
 			/*@NonNull*/ String messageTemplate, Object... bindings) {
+		assert oldElement.eContainer() != null;
 		if (oldElement.isRequired() && newElement.isNull()) {
 			newElement = getCGInvalid(messageTemplate, bindings);
 		}
+		assert newElement.eContainer() == null;			// Detect child stealing detector four calls sooner than eBasicSetContainer().
 		return CGUtil.replace(oldElement, newElement);
 	}
 
