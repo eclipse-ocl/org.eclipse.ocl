@@ -480,6 +480,24 @@ public class CodeGenAnalyzer
 		return cgExternalClass;
 	}
 
+/*	public CGClass createNestedCGClass(@NonNull List<@NonNull CGClass> cgExternalClasses,
+			@NonNull Map<@NonNull String, @NonNull CGClass> name2class, @NonNull Feature asExternalFeature) {
+		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
+		org.eclipse.ocl.pivot.Class asExternalClass = PivotUtil.getOwningClass(asExternalFeature);
+		String CGModelFactory = codeGenerator.getExternalClassName(asExternalClass);
+		CGClass cgNestedClass = name2class.get(externalClassName);
+	//	if (cgExternalClass == null) {
+			importNameManager.reserveLocalName(externalClassName);
+			CGClass cgNestedClass = CGModelFactory.eINSTANCE.createCGClass();
+			cgNestedClass.setName(nestedClassName);
+		//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
+			cgExternalClasses.add(cgExternalClass);
+			name2class.put(externalClassName, cgExternalClass);
+			cgRootClass.getClasses().add(cgNestedClass);
+	//	}
+		return cgExternalClass;
+	} */
+
 	public boolean equals(@NonNull Element asElement1, @NonNull Element asElement2) {
 		ExpressionInOCL asExpressionInOCL1 = PivotUtil.getContainingExpressionInOCL(asElement1);
 		ExpressionInOCL asExpressionInOCL2 = PivotUtil.getContainingExpressionInOCL(asElement2);
