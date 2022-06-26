@@ -60,6 +60,7 @@ public class JavaConstants {
 	public static final @NonNull String EXTERNAL_CLASS_PREFIX = "EC_";
 	public static final @NonNull String EXTERNAL_OPERATION_PREFIX = "EO_";
 	public static final @NonNull String EXTERNAL_PROPERTY_PREFIX = "EP_";
+	public static final @NonNull String NESTED_CLASS_PREFIX = "NC_";
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);
 	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(Property.class);

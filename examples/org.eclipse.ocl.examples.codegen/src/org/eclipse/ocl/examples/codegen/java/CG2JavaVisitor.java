@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
@@ -792,6 +793,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		return metamodelManager.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
 	}
 
+	@Deprecated // mocing to ClassCallingConvention
 	protected boolean isEmpty(@NonNull CGClass cgClass) {
 		for (CGOperation cgOperation : cgClass.getOperations()) {
 			if (cgOperation.getCallingConvention().needsGeneration()) {
@@ -1134,6 +1136,17 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGClass(@NonNull CGClass cgClass) {
+		System.out.println("visitCGClass " + NameUtil.debugSimpleName(cgClass) + " : " + cgClass.getAst());
+		pushNameManager(cgClass);
+		try {
+			ClassCallingConvention callingConvention = cgClass.getCallingConvention();
+			callingConvention.generateJavaDeclaration(this, js, cgClass);
+		}
+		finally {
+			popNameManager();
+		}
+		return true;
+/*
 		if (!isEmpty(cgClass)) {
 			CGPackage containingPackage = cgClass.getContainingPackage();
 			if (containingPackage != null) {
@@ -1184,7 +1197,9 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.append("}\n");
 		}
 		return true;
+		*/
 	}
+
 	@Override
 	public @NonNull Boolean visitCGCollectionExp(@NonNull CGCollectionExp cgCollectionExp) {
 		int ranges = 0;

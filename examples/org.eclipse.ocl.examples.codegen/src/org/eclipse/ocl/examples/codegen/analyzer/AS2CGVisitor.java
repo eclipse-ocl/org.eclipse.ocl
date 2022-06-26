@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ExecutorShadowPartCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
@@ -255,6 +256,26 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	/**
+	 * Generate / share the CG declaration for asClass.
+	 * @param callingConvention
+	 */
+	public @NonNull CGClass generateClassDeclaration(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable ClassCallingConvention callingConvention) {
+		CGClass cgClass = analyzer.basicGetCGClass(asClass);
+		if (cgClass == null) {
+			if (callingConvention == null) {
+				callingConvention = context.getCallingConvention(asClass);
+			}
+			cgClass = callingConvention.createCGClass(this, asClass);
+			cgClass.setAst(asClass);
+		//	cgClass.setTypeId(analyzer.getCGTypeId(asClass.getTypeId()));
+		//	cgClass.setRequired(asClass.isIsRequired());
+			cgClass.setCallingConvention(callingConvention);
+			analyzer.addCGClass(cgClass);
+		}
+		return cgClass;
+	}
+
+	/**
 	 * Generate / share the CG declaration for asOperation.
 	 * @param asSourceType
 	 */
@@ -425,7 +446,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGOperation cgOperation = analyzer.basicGetCGOperation(asOperation);
 		if (cgOperation == null) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
-			CGClass cgClass = analyzer.getCGClass(asClass);
+			CGClass cgClass = generateClassDeclaration(asClass, null);
 			pushClassNameManager(cgClass);
 			try {
 				if (asOperation.getName().contains("_unqualified_env_Class")) {
@@ -799,7 +820,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		CGClass cgClass = analyzer.getCGClass(asClass);
+		CGClass cgClass = generateClassDeclaration(asClass, null);
 		pushClassNameManager(cgClass);
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
@@ -1058,7 +1079,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 		cgPackage.setAst(asPackage);
-		globalNameManager.declareGlobalName(cgPackage, asPackage.getName());
+		globalNameManager.declareGlobalName(cgPackage, PivotUtil.getName(asPackage));
 		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
 			CGClass cgClass = doVisit(CGClass.class, asType);
 			cgPackage.getClasses().add(cgClass);

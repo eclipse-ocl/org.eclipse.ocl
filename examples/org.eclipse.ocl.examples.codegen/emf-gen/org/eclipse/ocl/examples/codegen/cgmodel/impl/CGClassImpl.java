@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -51,6 +52,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGClassImpl#getTemplateParameters <em>Template Parameters</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGClassImpl#getClasses <em>Classes</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGClassImpl#getContainingClass <em>Containing Class</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGClassImpl#getCallingConvention <em>Calling Convention</em>}</li>
  * </ul>
  *
  * @generated
@@ -63,7 +65,7 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_CLASS_FEATURE_COUNT = CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 9;
+	public static final int CG_CLASS_FEATURE_COUNT = CGNamedElementImpl.CG_NAMED_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The cached value of the '{@link #getOperations() <em>Operations</em>}' containment reference list.
@@ -144,6 +146,26 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 	 * @ordered
 	 */
 	protected EList<CGClass> classes;
+
+	/**
+	 * The default value of the '{@link #getCallingConvention() <em>Calling Convention</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCallingConvention()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final ClassCallingConvention CALLING_CONVENTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getCallingConvention() <em>Calling Convention</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCallingConvention()
+	 * @generated
+	 * @ordered
+	 */
+	protected ClassCallingConvention callingConvention = CALLING_CONVENTION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -363,6 +385,29 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public ClassCallingConvention getCallingConvention() {
+		return callingConvention;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCallingConvention(ClassCallingConvention newCallingConvention) {
+		ClassCallingConvention oldCallingConvention = callingConvention;
+		callingConvention = newCallingConvention;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldCallingConvention, callingConvention));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	@Override
@@ -463,6 +508,8 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 				return getClasses();
 			case 10:
 				return getContainingClass();
+			case 11:
+				return getCallingConvention();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -509,6 +556,9 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 			case 10:
 				setContainingClass((CGClass)newValue);
 				return;
+			case 11:
+				setCallingConvention((ClassCallingConvention)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -548,6 +598,9 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 			case 10:
 				setContainingClass((CGClass)null);
 				return;
+			case 11:
+				setCallingConvention(CALLING_CONVENTION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -578,6 +631,8 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 				return classes != null && !classes.isEmpty();
 			case 10:
 				return getContainingClass() != null;
+			case 11:
+				return CALLING_CONVENTION_EDEFAULT == null ? callingConvention != null : !CALLING_CONVENTION_EDEFAULT.equals(callingConvention);
 		}
 		return super.eIsSet(featureID);
 	}

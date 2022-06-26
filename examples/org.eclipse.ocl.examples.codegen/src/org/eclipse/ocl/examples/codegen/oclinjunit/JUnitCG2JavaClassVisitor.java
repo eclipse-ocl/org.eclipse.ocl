@@ -12,14 +12,9 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 
 /**
@@ -42,7 +37,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 		return (JUnitCodeGenerator)context;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Boolean visitCGClass(@NonNull CGClass cgClass) {		// XXX override redundant ??
 		if (!isEmpty(cgClass)) {
 			String className = CGUtil.getName(cgClass);
@@ -74,7 +69,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 				else {
 					js.append("/*\n");
 					js.append("«IF expInOcl.messageExpression != null»«(expInOcl.messageExpression as StringLiteralExp).stringSymbol»«ENDIF»\n");
-					js.append("*/\n");
+					js.append("* /\n");
 				}
 				for (CGClass cgNestedClass : cgClass.getClasses()) {
 				//	boolean first = true;
@@ -111,7 +106,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 			}
 		}
 		return true;
-	}
+	} */
 
 	@Override
 	public @NonNull Boolean visitCGLibraryOperation(@NonNull CGLibraryOperation cgOperation) {

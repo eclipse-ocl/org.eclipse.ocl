@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.calling.JUnitClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -100,8 +101,11 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 //		cgRootClass.getOperations().add(cgOperation2);
 
 		AS2CGVisitor as2cgVisitor = new JUnitAS2CGVisitor(this);
+		CGClass cgRootClass = as2cgVisitor.generateClassDeclaration(asClass, JUnitClassCallingConvention.INSTANCE);
+	//	cgAnalyzer.addCGClass(cgRootClass);
 		CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
-		CGClass cgRootClass = cgPackage.getClasses().get(0);
+
+	//	/*CGClass cgRootClass =*/ cgPackage.getClasses().add(cgRootClass);
 	//	cgAnalyzer.setCGRootClass(cgRootClass);
 		assert cgRootClass != null;
 		as2cgVisitor.pushClassNameManager(cgRootClass);
