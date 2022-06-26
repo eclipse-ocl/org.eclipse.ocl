@@ -142,6 +142,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		optimize(cgPackage);
 		Iterable<@NonNull CGValuedElement> sortedGlobals = pregenerate(cgPackage);
 		JUnitCG2JavaClassVisitor cg2JavaClassVisitor = new JUnitCG2JavaClassVisitor(this, expInOcl, sortedGlobals);
+		cgAnalyzer.setGlobals(sortedGlobals);
 		cg2JavaClassVisitor.safeVisit(cgPackage);
 		ImportNameManager importNameManager = cg2JavaClassVisitor.getImportNameManager();
 	//	for (@NonNull CGClass cgClass : cgPackage.getClasses()) {

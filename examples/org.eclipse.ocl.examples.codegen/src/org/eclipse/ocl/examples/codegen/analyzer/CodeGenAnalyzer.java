@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.ExternalClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConvention;
@@ -165,6 +166,8 @@ public class CodeGenAnalyzer
 	 */
 	private final @NonNull Map<@NonNull Operation, @NonNull CGOperation> asVirtualOperation2cgOperation = new HashMap<>();
 
+	private @Nullable Iterable<@NonNull CGValuedElement> cgGlobals = null;
+
 	public CodeGenAnalyzer(@NonNull JavaCodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
@@ -272,13 +275,13 @@ public class CodeGenAnalyzer
 			if (cgExternalFeature instanceof CGOperation) {
 				CGOperation cgOperation = (CGOperation)cgExternalFeature;
 				OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
-				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(cgExternalClasses, asExternalFeature) : cgRootClass;
+				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : cgRootClass;
 				cgParentClass.getOperations().add(cgOperation);
 			}
 			else if (cgExternalFeature instanceof CGProperty) {
 				CGProperty cgProperty = (CGProperty)cgExternalFeature;
 				PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(cgExternalClasses, asExternalFeature) : cgRootClass;
+				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : cgRootClass;
 				cgParentClass.getProperties().add(cgProperty);
 			}
 			else if (cgExternalFeature != null) {
@@ -493,14 +496,20 @@ public class CodeGenAnalyzer
 		return cgType;
 	}
 
-	protected @NonNull CGClass createExternalCGClass(@NonNull List<@NonNull CGClass> cgExternalClasses, @NonNull Feature asExternalFeature) {
+	protected @NonNull CGClass createExternalCGClass(@NonNull AS2CGVisitor as2cgVisitor, @NonNull List<@NonNull CGClass> cgExternalClasses, @NonNull Feature asExternalFeature) {
 		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
 		org.eclipse.ocl.pivot.Class asExternalClass = PivotUtil.getOwningClass(asExternalFeature);
+
+
+
 		String externalClassName = codeGenerator.getExternalClassName(asExternalClass);
 		CGClass cgExternalClass = name2cgNestedClass.get(externalClassName);
 		if (cgExternalClass == null) {
 			importNameManager.reserveLocalName(externalClassName);
-			cgExternalClass = CGModelFactory.eINSTANCE.createCGClass();
+		//	cgExternalClass = ExternalClassCallingConvention.INSTANCE.createCGClass(asExternalClass);
+			cgExternalClass = as2cgVisitor.generateClassDeclaration(asExternalClass, ExternalClassCallingConvention.INSTANCE);
+		//	cgExternalClass = CGModelFactory.eINSTANCE.createCGClass();
+		//	cgExternalClass.setName(externalClassName);
 			globalNameManager.declareGlobalName(cgExternalClass, externalClassName);		// XXX nest in currentNameManager
 		//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
 			cgExternalClasses.add(cgExternalClass);
@@ -714,6 +723,10 @@ public class CodeGenAnalyzer
 		return ClassUtil.nonNullState(globalNameManager);
 	}
 
+	public @Nullable Iterable<@NonNull CGValuedElement> getGlobals() {
+		return cgGlobals;
+	}
+
 	private @NonNull JavaLanguageSupport getJavaLanguageSupport() {
 		return (JavaLanguageSupport)ClassUtil.nonNullState(codeGenerator.getEnvironmentFactory().getLanguageSupport("java"));
 	}
@@ -849,5 +862,9 @@ public class CodeGenAnalyzer
 	public void setCGRootClass(@NonNull CGClass cgClass) {
 		assert cgRootClass == null;
 		cgRootClass = cgClass;
+	}
+
+	public void setGlobals(@Nullable Iterable<@NonNull CGValuedElement> cgGlobals) {
+		this.cgGlobals  = cgGlobals;
 	}
 }

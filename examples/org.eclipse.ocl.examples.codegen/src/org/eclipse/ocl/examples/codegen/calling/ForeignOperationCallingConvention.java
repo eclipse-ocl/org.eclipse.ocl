@@ -296,6 +296,11 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
+	public @NonNull ClassCallingConvention getClassCallingConvention() {
+		return ExternalClassCallingConvention.INSTANCE;
+	}
+
+	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
 		CGLibraryOperation cgForeignOperation = (CGLibraryOperation)cgOperation;
 		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgForeignOperation);

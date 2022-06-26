@@ -323,6 +323,11 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		return true;
 	}
 
+	@Override
+	public @NonNull ClassCallingConvention getClassCallingConvention() {
+		return ContextClassCallingConvention.INSTANCE;
+	}
+
 	protected void initCallArguments(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		OperationCallExp asOperationCallExp = CGUtil.getAST(cgOperationCallExp);
 		Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
