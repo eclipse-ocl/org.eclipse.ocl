@@ -19,7 +19,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.calling.ContextClassCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ExternalClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
@@ -519,16 +519,16 @@ public class CodeGenAnalyzer
 		return cgExternalClass;
 	}
 
-	public @NonNull CGClass createNestedCGClass(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Feature asExternalFeature) {
+	public @NonNull CGClass createNestedCGClass(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Feature asExternalFeature, @NonNull ClassCallingConvention callingConvention) {
 	//	ImportNameManager importNameManager = codeGenerator.getImportNameManager();
 	//	org.eclipse.ocl.pivot.Class asExternalClass = PivotUtil.getOwningClass(asExternalFeature);
 		String nestedClassName = codeGenerator.getNestedClassName(asExternalFeature);
 		CGClass cgNestedClass = name2cgNestedClass.get(nestedClassName);
 		assert cgNestedClass == null;
 	//	importNameManager.reserveLocalName(nestedClassName);
-		cgNestedClass = CGModelFactory.eINSTANCE.createCGClass();				// XXX Merge wrt generateClassDeclaration(
+		cgNestedClass = callingConvention.createCGClass(asExternalFeature);				// XXX Merge wrt generateClassDeclaration(
 		globalNameManager.declareGlobalName(cgNestedClass, nestedClassName);		// XXX nest in currentNameManager
-		cgNestedClass.setCallingConvention(ContextClassCallingConvention.INSTANCE);
+		cgNestedClass.setCallingConvention(callingConvention);
 		cgNestedClass.setAst(asExternalFeature);
 		//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
 	//	cgExternalClasses.add(cgNestedClass);
@@ -753,7 +753,10 @@ public class CodeGenAnalyzer
 		Operation asOperation = getNativeOperation(method);
 		CGOperation cgOperation = asOperation2cgOperation.get(asOperation);
 		if (cgOperation == null) {
-			CGNativeOperation cgNativeOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
+
+		//	CGNativeOperation cgNativeOperation = callingConvention.createCGOperation(this, null, asOperation);
+
+			CGNativeOperation cgNativeOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();	// Use callingConvention
 			cgNativeOperation.setAst(asOperation);
 			TypeId asTypeId = asOperation.getTypeId();
 			globalNameManager.getNameResolution(cgNativeOperation);
@@ -819,23 +822,6 @@ public class CodeGenAnalyzer
 		}
 		CompleteClass owningCompleteClass = metamodelManager.getCompleteClass(owningType);
 		return completeClass == owningCompleteClass;
-	}
-
-	public @NonNull CGOperation installOperation(@NonNull Operation asOperation, @NonNull CGOperation cgOperation, @NonNull OperationCallingConvention callingConvention) {
-		assert cgOperation.getAst() == null;
-		assert cgOperation.getCallingConvention() == null;
-//		System.out.println("installOperation " + callingConvention.getClass().getSimpleName() + " " + NameUtil.debugSimpleName(cgOperation) + " " + NameUtil.debugSimpleName(asOperation) + " : " + asOperation);
-		cgOperation.setAst(asOperation);
-		cgOperation.setTypeId(getCGTypeId(asOperation.getTypeId()));
-		cgOperation.setRequired(asOperation.isIsRequired());
-		cgOperation.setCallingConvention(callingConvention);
-		if (callingConvention == VirtualOperationCallingConvention.INSTANCE) {		// XXX move to OperationCallingConvention
-			addVirtualCGOperation(asOperation, (CGCachedOperation)cgOperation);
-		}
-		else {
-			addCGOperation(cgOperation);
-		}
-		return cgOperation;
 	}
 
 	public boolean isExternal(@NonNull Feature asFeature) {

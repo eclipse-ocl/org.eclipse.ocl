@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -90,7 +89,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		CGOperation cgOperation = null;
 		EOperation eOperation = (EOperation) asOperation.getESObject();
 		if ((eOperation != null) && !PivotUtil.isStatic(eOperation)) {
@@ -109,7 +108,8 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		}
 		analyzer.addExternalFeature(asOperation);
-		analyzer.installOperation(asOperation, cgOperation, this);
+		initOperation(analyzer, cgOperation, asOperation);
+		analyzer.addCGOperation(cgOperation);
 		return cgOperation;
 	}
 

@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
@@ -71,14 +70,15 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	public static final @NonNull LibraryOperationCallingConvention INSTANCE = new LibraryOperationCallingConvention();
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
  		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		assert !(libraryOperation instanceof EObjectOperation);
 		assert !(libraryOperation instanceof ForeignOperation);
 		assert !(libraryOperation instanceof ConstrainedOperation);
 		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		analyzer.installOperation(asOperation, cgOperation, this);
+		initOperation(analyzer, cgOperation, asOperation);
+		analyzer.addCGOperation(cgOperation);
 		return cgOperation;
 	}
 

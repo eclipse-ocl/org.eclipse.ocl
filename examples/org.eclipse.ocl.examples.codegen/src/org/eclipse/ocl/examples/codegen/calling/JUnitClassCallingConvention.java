@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -68,28 +67,14 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 			js.append("\n");
 		}
 		if (expInOcl.getOwnedContext() != null) {
-			boolean first = true;
-			for (CGOperation cgOperation : cgClass.getOperations()) {
-				if (!first) {
-					js.append("\n");
-				}
-				cgOperation.accept(cg2javaVisitor);
-				first = false;
-			}
+			generateOperations(cg2javaVisitor, js, cgClass);
 		}
 		else {
 			js.append("/*\n");
 			js.append("«IF expInOcl.messageExpression != null»«(expInOcl.messageExpression as StringLiteralExp).stringSymbol»«ENDIF»\n");
 			js.append("* /\n");
 		}
-		for (CGClass cgNestedClass : cgClass.getClasses()) {
-		//	boolean first = true;
-		//	if (!first) {
-				js.append("\n");
-		//	}
-				cgNestedClass.accept(cg2javaVisitor);
-		//	first = false;
-		}
+		generateClasses(cg2javaVisitor, js, cgClass);
 		js.popClassBody(false);
 		assert js.peekClassNameStack() == null;
 		return true;

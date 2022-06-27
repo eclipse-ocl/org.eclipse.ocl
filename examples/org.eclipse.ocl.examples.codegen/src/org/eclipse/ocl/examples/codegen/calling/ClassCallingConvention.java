@@ -15,7 +15,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.NamedElement;
 
 /**
  *  ClassCallingConvention defines a particular style of Class declaration.
@@ -23,9 +23,9 @@ import org.eclipse.ocl.pivot.Class;
 public interface ClassCallingConvention extends CallingConvention
 {
 	/**
-	 * Create the appropriate CGClass less properties and operation.
+	 * Create the appropriate CGClass less properties and operation to support a class/cached-operation/cached-property.
 	 */
-	@NonNull CGClass createCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
+	@NonNull CGClass createCGClass(@NonNull NamedElement asNamedElement);
 
 	/**
 	 * Generate the Java code for a Class declaration.
@@ -33,5 +33,5 @@ public interface ClassCallingConvention extends CallingConvention
 	 */
 	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass);
 
-	@NonNull String getName(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Class asClass);
+	@NonNull String getName(@NonNull AS2CGVisitor as2cgVisitor, @NonNull NamedElement asNamedElement);
 }

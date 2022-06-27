@@ -14,7 +14,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
-import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -22,16 +26,47 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractClassCallingConvention implements ClassCallingConvention
 {
-	/**
-	 * Create the appropriate CGClass less properties and operation.
-	 */
 	@Override
-	public @NonNull CGClass createCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public @NonNull CGClass createCGClass(@NonNull NamedElement asNamedElement) {
 		return CGModelFactory.eINSTANCE.createCGClass();
 	}
 
+	protected void generateClasses(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	//	boolean first = true;
+		for (CGClass cgNestedClass : cgClass.getClasses()) {
+		//	boolean first = true;
+		//	if (!first) {
+				js.append("\n");
+		//	}
+				cgNestedClass.accept(cg2javaVisitor);
+		//	first = false;
+		}
+	}
+
+	protected void generateOperations(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+		boolean first = true;
+		for (CGOperation cgOperation : cgClass.getOperations()) {
+			if (!first) {
+				js.append("\n");
+			}
+			cgOperation.accept(cg2javaVisitor);
+			first = false;
+		}
+	}
+
+	protected void generateProperties(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	//	boolean first = true;
+		for (CGProperty cgProperty : cgClass.getProperties()) {
+	//		if (!first) {
+	//			js.append("\n");
+	//		}
+			cgProperty.accept(cg2javaVisitor);
+	//		first = false;
+		}
+	}
+
 	@Override
-	public @NonNull String getName(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Class asClass) {
-		return PivotUtil.getName(asClass);
+	public @NonNull String getName(@NonNull AS2CGVisitor as2cgVisitor, @NonNull NamedElement asNamedElement) {
+		return PivotUtil.getName(asNamedElement);
 	}
 }

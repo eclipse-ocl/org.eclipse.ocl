@@ -42,21 +42,8 @@ public class ContextClassCallingConvention extends AbstractClassCallingConventio
 			js.appendCommentWithOCL(title, cgClass.getAst());
 			js.append("public static class " + className);
 			js.pushClassBody(className);
-			boolean first = true;
-			for (CGProperty cgProperty : cgClass.getProperties()) {
-				if (!first) {
-					js.append("\n");
-				}
-				cgProperty.accept(cg2javaVisitor);
-				first = false;
-			}
-			for (CGOperation cgOperation : cgClass.getOperations()) {
-				if (!first) {
-					js.append("\n");
-				}
-				cgOperation.accept(cg2javaVisitor);
-				first = false;
-			}
+			generateProperties(cg2javaVisitor, js, cgClass);
+			generateOperations(cg2javaVisitor, js, cgClass);
 			js.popClassBody(false);
 		}
 		return true;

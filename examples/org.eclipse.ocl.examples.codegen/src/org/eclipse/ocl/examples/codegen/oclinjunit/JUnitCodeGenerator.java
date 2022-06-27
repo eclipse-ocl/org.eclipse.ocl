@@ -117,7 +117,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 			contextVariable.setIsRequired(false); // May be null for test
 		}
 		JUnitOperationCallingConvention junitCallingConvention = JUnitOperationCallingConvention.INSTANCE;
-		CGOperation cgOperation = junitCallingConvention.createCGOperation(as2cgVisitor, asClass, asOperation);
+		CGOperation cgOperation = junitCallingConvention.createCGOperation(as2cgVisitor, asOperation);
 		cgOperation.setCallingConvention(junitCallingConvention);
 		evaluateNameResolution.addCGElement(cgOperation);
 		as2cgVisitor.initAst(cgOperation, asOperation/*expInOcl*/);

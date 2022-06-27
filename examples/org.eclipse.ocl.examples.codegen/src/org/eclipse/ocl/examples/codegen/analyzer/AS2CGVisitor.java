@@ -268,7 +268,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 			cgClass = callingConvention.createCGClass(asClass);
 			cgClass.setAst(asClass);
-			globalNameManager.declareGlobalName(cgClass, callingConvention.getName(this, asClass));		// XXX use hint
+			globalNameManager.declareGlobalName(cgClass, callingConvention.getName(this, asClass));		// XXX use hint, defer via NameResolution
 		//	cgClass.setTypeId(analyzer.getCGTypeId(asClass.getTypeId()));
 		//	cgClass.setRequired(asClass.isIsRequired());
 			cgClass.setCallingConvention(callingConvention);
@@ -291,7 +291,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			pushClassNameManager(cgClass);
 			try {
 				OperationCallingConvention callingConvention = context.getCallingConvention(asIteration, true);
-				cgOperation = callingConvention.createCGOperation(this, asSourceType, asIteration);
+				cgOperation = callingConvention.createCGOperation(this, asIteration);
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
 //				classNameManager.declarePreferredName(cgOperation);
@@ -454,7 +454,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGClass cgClass = generateClassDeclaration(asClass, callingConvention.getClassCallingConvention());
 			pushClassNameManager(cgClass);
 			try {
-				cgOperation = callingConvention.createCGOperation(this, asSourceType, asOperation);
+				cgOperation = callingConvention.createCGOperation(this, asOperation);
 //				System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " : " + asOperation);
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
@@ -755,7 +755,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			NestedNameManager parentNameManager = currentNameManager != null ? currentNameManager.getClassParentNameManager() : null;
 			nameManager = globalNameManager.createNestedNameManager(parentNameManager, cgClass);
 		}
-		else {}			// First push for operation declaration then another push for operation body
 		currentNameManager = nameManager;
 		nameManagerStack.push(nameManager);
 		return nameManager;
@@ -767,7 +766,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			assert (currentNameManager != null) && (currentNameManager.findCGScope() != null);
 			nameManager = globalNameManager.createNestedNameManager(currentNameManager, cgNamedElement);
 		}
-		else {}			// First push for operation declaration then another push for operation body
 		currentNameManager = nameManager;
 		nameManagerStack.push(nameManager);
 		return nameManager;

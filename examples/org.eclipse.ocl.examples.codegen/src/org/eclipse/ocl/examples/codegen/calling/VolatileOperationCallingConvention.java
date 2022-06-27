@@ -84,12 +84,13 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		assert analyzer.getMetamodelManager().getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
 		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		analyzer.installOperation(asOperation, cgOperation, this);
+		initOperation(analyzer, cgOperation, asOperation);
+		analyzer.addCGOperation(cgOperation);
 		return cgOperation;
 	}
 

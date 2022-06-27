@@ -28,11 +28,6 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
-import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
-import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation;
@@ -41,33 +36,20 @@ import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
- *  BuiltInOperationCallingConvention defines the support for the call of an operation realized by inline code.
+ *  ConstructorOperationCallingConvention defines the support for the call of a cache costructor.
  */
-public class BuiltInOperationCallingConvention extends AbstractOperationCallingConvention
+public class ConstructorOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	public static final @NonNull BuiltInOperationCallingConvention INSTANCE = new BuiltInOperationCallingConvention();
-
-	public boolean canHandle(@NonNull LibraryOperation libraryOperation) {
-		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {
-			return true;
-		}
-		else if (libraryOperation instanceof OclAnyOclIsUndefinedOperation) {
-			return true;
-		}
-		else if (libraryOperation instanceof OclAnyEqualOperation) {
-			return true;
-		}
-		return false;
-	}
+	public static final @NonNull ConstructorOperationCallingConvention INSTANCE = new ConstructorOperationCallingConvention();
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 //		return fallbackCreateCGOperationWithoutBody(as2cgVisitor, asOperation);
- 		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		assert !(libraryOperation instanceof EObjectOperation);
-		assert !(libraryOperation instanceof ForeignOperation);
-		assert !(libraryOperation instanceof ConstrainedOperation);
+ 	//	PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
+	//	LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+	//	assert !(libraryOperation instanceof EObjectOperation);
+	//	assert !(libraryOperation instanceof ForeignOperation);
+	//	assert !(libraryOperation instanceof ConstrainedOperation);
 		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		initOperation(analyzer, cgOperation, asOperation);
 		analyzer.addCGOperation(cgOperation);

@@ -13,30 +13,26 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.NamedElement;
 
 /**
- *  ExternalClassCallingConvention defines the style of a nested Class that augments an external Java class.
+ *  CacheClassCallingConvention defines the style of a nested Class whose instance caches a feature computation.
  */
-public class ExternalClassCallingConvention extends AbstractClassCallingConvention
+public class CacheClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static final @NonNull ExternalClassCallingConvention INSTANCE = new ExternalClassCallingConvention();
+	public static final @NonNull CacheClassCallingConvention INSTANCE = new CacheClassCallingConvention();
 
-	/**
-	 * Generate the Java code for a Class declaration.
-	 * Returns true if control flow continues, false if an exception throw has been synthesized.
-	 */
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+		assert cgClass.getContainingPackage() == null;			// container is a cgClass
 		String className = CGUtil.getName(cgClass);
-		CGPackage cgContainingPackage = cgClass.getContainingPackage();
-		assert cgContainingPackage == null;
-		String title = cgClass.getName() + " provides the Java implementation for the additional non-Ecore features of\n";
+		String title = cgClass.getName() + " provides the Java implementation to cache evaluations of\n";
 		js.appendCommentWithOCL(title, cgClass.getAst());
-		js.append("public static class " + className);
+		js.append("protected static class " + className);
 		js.pushClassBody(className);
 		generateProperties(cg2javaVisitor, js, cgClass);
 		generateOperations(cg2javaVisitor, js, cgClass);
@@ -45,7 +41,7 @@ public class ExternalClassCallingConvention extends AbstractClassCallingConventi
 	}
 
 	@Override
-	public @NonNull String getName(@NonNull AS2CGVisitor as2cgVisitor, org.eclipse.ocl.pivot.@NonNull NamedElement asNamedElement) {
-		return as2cgVisitor.getCodeGenerator().getExternalClassName((org.eclipse.ocl.pivot.Class)asNamedElement);
+	public @NonNull String getName(@NonNull AS2CGVisitor as2cgVisitor, @NonNull NamedElement asNamedElement) {
+		return as2cgVisitor.getCodeGenerator().getNestedClassName((Feature) asNamedElement);
 	}
 }

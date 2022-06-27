@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -221,11 +220,11 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
-		return createCGOperation(as2cgVisitor.getAnalyzer(), asSourceType, asOperation);
+	public @NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
+		return createCGOperation(as2cgVisitor.getAnalyzer(), asOperation);
 	}
 
-	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation);
+	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
 
 	@Override
 	public /*final*/ void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
@@ -356,6 +355,15 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);
+	}
+
+	protected void initOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull Operation asOperation) {
+		TypeId asTypeId = asOperation.getTypeId();
+		CGTypeId cgTypeId = analyzer.getCGTypeId(asTypeId);
+		cgOperation.setAst(asOperation);
+		cgOperation.setTypeId(cgTypeId);
+		cgOperation.setRequired(asOperation.isIsRequired());
+		cgOperation.setCallingConvention(this);
 	}
 
 	@Override
