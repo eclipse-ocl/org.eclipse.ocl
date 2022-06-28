@@ -90,7 +90,6 @@ public interface CGNamedElement extends CGElement, org.eclipse.ocl.pivot.utiliti
 
 	@Nullable NameResolution basicGetNameResolution();
 	@NonNull String getResolvedName();
-//	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
 	boolean isUnresolved();
 
 } // CGNamedElement
