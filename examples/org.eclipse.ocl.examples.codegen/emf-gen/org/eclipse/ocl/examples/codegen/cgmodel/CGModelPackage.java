@@ -1568,15 +1568,15 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGNamedElement_Ast();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getNameResolution <em>Name Resolution</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getName()
+	 * @return the meta object for the attribute '<em>Name Resolution</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getNameResolution()
 	 * @see #getCGNamedElement()
 	 * @generated
 	 */
-	EAttribute getCGNamedElement_Name();
+	EAttribute getCGNamedElement_NameResolution();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation <em>CG Native Operation</em>}'.
@@ -2384,6 +2384,16 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getMethod();
+
+	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.examples.codegen.analyzer.NameResolution <em>Name Resolution</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Name Resolution</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.analyzer.NameResolution
+	 * @generated
+	 */
+	EDataType getNameResolution();
 
 	/**
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Number</em>}'.
@@ -3759,12 +3769,12 @@ public interface CGModelPackage extends EPackage {
 		EAttribute CG_NAMED_ELEMENT__AST = eINSTANCE.getCGNamedElement_Ast();
 
 		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Name Resolution</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CG_NAMED_ELEMENT__NAME = eINSTANCE.getCGNamedElement_Name();
+		EAttribute CG_NAMED_ELEMENT__NAME_RESOLUTION = eINSTANCE.getCGNamedElement_NameResolution();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNativeOperationImpl <em>CG Native Operation</em>}' class.
@@ -4461,6 +4471,16 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType METHOD = eINSTANCE.getMethod();
+
+		/**
+		 * The meta object literal for the '<em>Name Resolution</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.analyzer.NameResolution
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getNameResolution()
+		 * @generated
+		 */
+		EDataType NAME_RESOLUTION = eINSTANCE.getNameResolution();
 
 		/**
 		 * The meta object literal for the '<em>Number</em>' data type.

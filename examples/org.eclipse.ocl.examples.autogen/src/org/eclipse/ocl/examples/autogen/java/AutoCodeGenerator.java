@@ -182,13 +182,13 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		CGPackage cgPackage = externalPackages.get(packageName);
 		if (cgPackage == null) {
 			cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
-			cgPackage.setName(packageName);
+			globalNameManager.declareGlobalName(cgPackage, packageName != null ? packageName : "");
 			externalPackages.put(packageName, cgPackage);
 		}
 		CGClass cgClass = NameUtil.getNameable(cgPackage.getClasses(), className);
 		if (cgClass == null) {
 			cgClass = CGModelFactory.eINSTANCE.createCGClass();
-			cgClass.setName(className);
+			globalNameManager.declareGlobalName(cgClass, className);
 			cgClass.setInterface(isInterface);
 			cgPackage.getClasses().add(cgClass);
 		}
