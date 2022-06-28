@@ -50,6 +50,12 @@ public interface PropertyCallingConvention extends CallingConvention
 	void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty);
 
 	/**
+	 * Generate the Java code for a Property assign.
+	 * Returns true if control flow continues, false if an exception throw has been synthesized.
+	 */
+	boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue);
+
+	/**
 	 * Generate the Java code for a Property call.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */

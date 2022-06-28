@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -24,6 +25,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.TuplePartProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -52,6 +54,24 @@ public class CachePropertyCallingConvention extends AbstractPropertyCallingConve
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
+	}
+
+	@Override
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
+		// TODO Auto-generated method stub
+		return super.createCGProperty(analyzer, asTypedElement);
+	}
+
+	@Override
+	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js,
+			@NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue) {
+		js.appendValueName(slotValue);			// Always "this"
+		js.append(".");
+		js.appendReferenceTo(cgProperty);
+		js.append(" = ");
+		js.appendValueName(initValue);
+		js.append(";\n");
+		return false;
 	}
 
 	@Override

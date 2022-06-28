@@ -304,4 +304,13 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 		return visitor.visitCGPackage(this);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isGlobal() {
+		return true;
+	}
+
 } //CGPackageImpl

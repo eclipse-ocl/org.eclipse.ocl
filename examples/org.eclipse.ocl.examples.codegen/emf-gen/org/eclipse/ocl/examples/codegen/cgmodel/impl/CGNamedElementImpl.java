@@ -168,7 +168,7 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 	 */
 	@Override
 	public boolean isGlobal() {
-		return true;
+		return false;
 	}
 
 	/**

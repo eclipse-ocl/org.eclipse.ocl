@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("Parent")) {
+				if (string.contains("NOT_NEEDED")) {
 					getClass();		// XXX
 				}
 				if (string.contains("IF_CAUGHT_isEmpty")) {

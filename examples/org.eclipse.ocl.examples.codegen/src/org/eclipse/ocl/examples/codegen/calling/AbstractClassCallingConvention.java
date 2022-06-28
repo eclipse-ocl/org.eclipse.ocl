@@ -44,13 +44,13 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 	}
 
 	protected void generateOperations(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
-		boolean first = true;
+	//	boolean first = true;
 		for (CGOperation cgOperation : cgClass.getOperations()) {
-			if (!first) {
+	//		if (!first) {
 				js.append("\n");
-			}
+	//		}
 			cgOperation.accept(cg2javaVisitor);
-			first = false;
+	//		first = false;
 		}
 	}
 

@@ -31,7 +31,6 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -95,7 +94,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		js.appendCommentWithOCL(title + "\n", expressionInOCL);
 	}
 
-	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+/*	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		js.append("generateJavaDeclaration " + this);
 	//	return true;
 	//	assert false : "Missing overload for " + cgOperation.getCallingConvention().getClass().getSimpleName();
@@ -128,7 +127,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			js.append("op_");
 		}
 		js.appendValueName(cgOperation);
-	}
+	} */
 
 /*	Original merged function  temporaily retained in case derivations need review.
   	protected @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
@@ -289,26 +288,10 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 	}
 
-@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor,
-			@NonNull JavaStream js,
-			@NonNull CGOperationCallExp cgOperationCallExp) {
+	@Override
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-//	@Override
-//	public @NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type asSourceType, @NonNull Operation asOperation) {
-//		return createCGOperation(as2cgVisitor, asSourceType, asOperation);
-//	}
-
-	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
-		//
-		appendDeclaration(cg2javaVisitor, js, cgOperation);
-		appendParameterList(js, cgOperation);
-		appendBody(cg2javaVisitor, js, body);
-		return true;
 	}
 
 	protected boolean generateLocals(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
@@ -435,7 +418,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 				}
 			}
 			else {
-				Parameter asParameter = CGUtil.basicGetParameter(cgParameter);
+			//	Parameter asParameter = CGUtil.basicGetParameter(cgParameter);
 			//	if ((asParameter != null) && asParameter.isIsRequired() && !cgArgument.isNonNull()) {
 				if (cgParameter.isRequired() && !cgArgument.isNonNull()) {
 //					rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");

@@ -137,7 +137,13 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		return super.generateJavaDeclaration(cg2javaVisitor, js, cgOperation);
+		throw new UnsupportedOperationException();
+/*		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
+		//
+		appendDeclaration(cg2javaVisitor, js, cgOperation);
+		appendParameterList(js, cgOperation);
+		appendBody(cg2javaVisitor, js, body);
+		return true; */
 	}
 
 	protected @NonNull CGOperationCallExp volatileOperationCall(@NonNull AS2CGVisitor as2cgVisitor, @NonNull OperationCallExp element,

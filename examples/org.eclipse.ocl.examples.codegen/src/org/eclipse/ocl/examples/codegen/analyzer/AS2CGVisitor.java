@@ -268,11 +268,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 			cgClass = callingConvention.createCGClass(asClass);
 			cgClass.setAst(asClass);
-			globalNameManager.declareGlobalName(cgClass, callingConvention.getName(this, asClass));		// XXX use hint, defer via NameResolution
+		//	cgClass.setName(callingConvention.getName(this, asClass));			// XXX defer via NameResolution
 		//	cgClass.setTypeId(analyzer.getCGTypeId(asClass.getTypeId()));
 		//	cgClass.setRequired(asClass.isIsRequired());
 			cgClass.setCallingConvention(callingConvention);
 			analyzer.addCGClass(cgClass);
+			String name = callingConvention.getName(this, asClass);
+			if ((currentNameManager == null) || (asClass.eContainer() instanceof org.eclipse.ocl.pivot.Package)) {
+				globalNameManager.declareGlobalName(cgClass, name);
+			}
+			else {
+				new NameResolution(getNameManager(), cgClass, name);
+			}
 			pushClassNameManager(cgClass);
 			popClassNameManager();
 		}
@@ -420,10 +427,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
-		OCLExpression asSource = asOperationCallExp.getOwnedSource();
-		Type asSourceType = asSource != null ? asSource.getType() : null;
+	//	OCLExpression asSource = asOperationCallExp.getOwnedSource();
+	//	Type asSourceType = asSource != null ? asSource.getType() : null;
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		CGOperation cgOperation = generateOperationDeclaration(asSourceType, asOperation, false);
+		CGOperation cgOperation = generateOperationDeclaration(asOperation, false);
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		CGValuedElement cgCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
@@ -440,7 +447,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 * Generate / share the CG declaration for asOperation.
 	 * @param asSourceType
 	 */
-	public @NonNull CGOperation generateOperationDeclaration(@Nullable Type asSourceType, @NonNull Operation asOperation, boolean requireFinal) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
+	public @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation, boolean requireFinal) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
 		if (!requireFinal) {
 			CGOperation cgVirtualOperation = analyzer.basicGetVirtualCGOperation(asOperation);
 			if (cgVirtualOperation != null) {
@@ -538,7 +545,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Operation asExcludingOperation = standardLibrary.getCollectionExcludingOperation();
 		OCLExpression asSource = callExp.getOwnedSource();
 		assert asSource != null;
-		CGOperation cgOperation = generateOperationDeclaration(asSource.getType(), asExcludingOperation, true);
+		CGOperation cgOperation = generateOperationDeclaration(asExcludingOperation, true);
 		cgOperationCallExp.setReferredOperation(cgOperation);
 		cgOperationCallExp.setTypeId(analyzer.getCGTypeId(asSource.getTypeId()));
 		cgOperationCallExp.setRequired(true);
@@ -1013,14 +1020,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			getClass();		// XXX
 		}
 		LanguageExpression specification = asOperation.getBodyExpression();
-		CGOperation cgFinalOperation = generateOperationDeclaration(null, asOperation, true);
+		CGOperation cgFinalOperation = generateOperationDeclaration(asOperation, true);
 //		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
 		pushNestedNameManager(cgFinalOperation);
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 			cgFinalOperation.getCallingConvention().createCGBody(this, cgFinalOperation);
 		}
 		popNestedNameManager();
-		CGOperation cgVirtualOperation = generateOperationDeclaration(null, asOperation, true);
+		CGOperation cgVirtualOperation = generateOperationDeclaration(asOperation, true);
 		if (cgVirtualOperation != cgFinalOperation) {
 //			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
 			pushNestedNameManager(cgVirtualOperation);

@@ -646,4 +646,13 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 		return visitor.visitCGClass(this);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isGlobal() {
+		return ast.eContainer() instanceof org.eclipse.ocl.pivot.Package;
+	}
+
 } //CGClassImpl

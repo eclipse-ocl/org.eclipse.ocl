@@ -73,6 +73,18 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	}
 
 	@Override
+	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js,
+			@NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue) {
+		js.appendReferenceTo(cgProperty);
+		js.append(".initValue(");
+		js.appendValueName(slotValue);
+		js.append(", ");
+		js.appendValueName(initValue);
+		js.append(");\n");
+		return false;
+	}
+
+	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		Property asProperty = CGUtil.getAST(cgProperty);
 		js.append("«");

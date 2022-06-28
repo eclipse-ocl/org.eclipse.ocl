@@ -96,7 +96,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		assert Iterables.contains(asOverrideOperations, asOperation);
 		List<@NonNull CGCachedOperation> cgOverrideOperations = new ArrayList<>();
 		for (@NonNull Operation asOverrideOperation : asOverrideOperations) {
-			CGOperation cgOverrideOperation = as2cgVisitor.generateOperationDeclaration(null, asOverrideOperation, true);
+			CGOperation cgOverrideOperation = as2cgVisitor.generateOperationDeclaration(asOverrideOperation, true);
 		/*	CGOperation cgOperation = asFinalOperation2cgOperation.get(asOverride);
 			if (cgOperation == null) {
 				cgOperation = createFinalCGOperationWithoutBody(asOverride);
