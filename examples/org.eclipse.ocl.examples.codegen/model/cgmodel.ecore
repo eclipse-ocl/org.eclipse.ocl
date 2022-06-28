@@ -477,7 +477,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNamedElement" abstract="true" eSuperTypes="#//CGElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ast" lowerBound="1" eType="#//Element"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameResolution" eType="#//NameResolution"
+        transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNativeOperation" eSuperTypes="#//CGOperation">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -764,6 +765,8 @@
   <eClassifiers xsi:type="ecore:EDataType" name="LibraryOperation" instanceClassName="org.eclipse.ocl.pivot.library.LibraryOperation"/>
   <eClassifiers xsi:type="ecore:EDataType" name="LibraryProperty" instanceClassName="org.eclipse.ocl.pivot.library.LibraryProperty"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Method" instanceClassName="java.lang.reflect.Method"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="NameResolution" instanceClassName="org.eclipse.ocl.examples.codegen.analyzer.NameResolution"
+      serializable="false"/>
   <eClassifiers xsi:type="ecore:EClass" name="Nameable" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Number" instanceClassName="java.lang.Number"/>

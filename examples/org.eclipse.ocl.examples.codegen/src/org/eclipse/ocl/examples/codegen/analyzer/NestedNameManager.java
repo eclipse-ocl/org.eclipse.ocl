@@ -185,7 +185,7 @@ public class NestedNameManager extends NameManager
 		if (reservedNameResolutions != null) {
 			for (@NonNull NameResolution nameResolution : reservedNameResolutions) {
 				String resolvedName = nameResolution.getResolvedName();
-				CGValuedElement primaryElement = nameResolution.getPrimaryElement();
+				CGNamedElement primaryElement = nameResolution.getPrimaryElement();
 				context.reserveName(resolvedName, primaryElement);
 			}
 		}

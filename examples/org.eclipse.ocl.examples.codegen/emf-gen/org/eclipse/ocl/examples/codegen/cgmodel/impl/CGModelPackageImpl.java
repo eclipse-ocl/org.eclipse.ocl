@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
@@ -881,6 +882,13 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	private EDataType methodEDataType = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType nameResolutionEDataType = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2422,7 +2430,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getCGNamedElement_Name() {
+	public EAttribute getCGNamedElement_NameResolution() {
 		return (EAttribute)cgNamedElementEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -3202,6 +3210,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
+	public EDataType getNameResolution() {
+		return nameResolutionEDataType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EDataType getNumber() {
 		return numberEDataType;
 	}
@@ -3632,15 +3650,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		libraryOperationEDataType = createEDataType(103);
 		libraryPropertyEDataType = createEDataType(104);
 		methodEDataType = createEDataType(105);
-		numberEDataType = createEDataType(106);
-		objectEDataType = createEDataType(107);
-		operationEDataType = createEDataType(108);
-		operationCallingConventionEDataType = createEDataType(109);
-		propertyEDataType = createEDataType(110);
-		propertyCallingConventionEDataType = createEDataType(111);
-		tuplePartIdEDataType = createEDataType(112);
-		typeEDataType = createEDataType(113);
-		typeIdEDataType = createEDataType(114);
+		nameResolutionEDataType = createEDataType(106);
+		numberEDataType = createEDataType(107);
+		objectEDataType = createEDataType(108);
+		operationEDataType = createEDataType(109);
+		operationCallingConventionEDataType = createEDataType(110);
+		propertyEDataType = createEDataType(111);
+		propertyCallingConventionEDataType = createEDataType(112);
+		tuplePartIdEDataType = createEDataType(113);
+		typeEDataType = createEDataType(114);
+		typeIdEDataType = createEDataType(115);
 	}
 
 	/**
@@ -3962,7 +3981,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 
 		initEClass(cgNamedElementEClass, CGNamedElement.class, "CGNamedElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCGNamedElement_Ast(), this.getElement(), "ast", null, 1, 1, CGNamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCGNamedElement_Name(), ecorePackage.getEString(), "name", null, 1, 1, CGNamedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCGNamedElement_NameResolution(), this.getNameResolution(), "nameResolution", null, 0, 1, CGNamedElement.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgNativeOperationEClass, CGNativeOperation.class, "CGNativeOperation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -4085,6 +4104,7 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEDataType(libraryOperationEDataType, LibraryOperation.class, "LibraryOperation", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(libraryPropertyEDataType, LibraryProperty.class, "LibraryProperty", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(methodEDataType, Method.class, "Method", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+		initEDataType(nameResolutionEDataType, NameResolution.class, "NameResolution", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(numberEDataType, Number.class, "Number", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(objectEDataType, Object.class, "Object", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 		initEDataType(operationEDataType, Operation.class, "Operation", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -13,9 +13,13 @@ package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,7 +30,7 @@ import org.eclipse.ocl.pivot.Element;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNamedElementImpl#getAst <em>Ast</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNamedElementImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNamedElementImpl#getNameResolution <em>Name Resolution</em>}</li>
  * </ul>
  *
  * @generated
@@ -62,24 +66,24 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 	protected Element ast = AST_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The default value of the '{@link #getNameResolution() <em>Name Resolution</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getNameResolution()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
+	protected static final NameResolution NAME_RESOLUTION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #getNameResolution() <em>Name Resolution</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getNameResolution()
 	 * @generated
 	 * @ordered
 	 */
-	protected String name = NAME_EDEFAULT;
+	protected NameResolution nameResolution = NAME_RESOLUTION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -105,9 +109,17 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+//	@Override
+	public NameResolution getNameResolutionGen() {
+		return nameResolution;
+	}
+
 	@Override
-	public String getName() {
-		return name;
+	public @NonNull NameResolution getNameResolution() {
+//		if (nameResolution == null) {
+//			isInlined();		// XXX
+//		}
+		return ClassUtil.nonNullState(nameResolution);
 	}
 
 	/**
@@ -115,12 +127,18 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
+	public void setNameResolutionGen(NameResolution newNameResolution) {
+		NameResolution oldNameResolution = nameResolution;
+		nameResolution = newNameResolution;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldNameResolution, nameResolution));
+	}
+
+	@Override
+	public void setNameResolution(NameResolution nameResolution) {
+		assert nameResolution != null;
+		assert this.nameResolution == null;
+		setNameResolutionGen(nameResolution);
 	}
 
 	/**
@@ -157,6 +175,15 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 	}
 
 	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isGlobal() {
+		return true;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -167,7 +194,7 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 			case 0:
 				return getAst();
 			case 1:
-				return getName();
+				return getNameResolution();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -184,7 +211,7 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 				setAst((Element)newValue);
 				return;
 			case 1:
-				setName((String)newValue);
+				setNameResolution((NameResolution)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -202,7 +229,7 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 				setAst(AST_EDEFAULT);
 				return;
 			case 1:
-				setName(NAME_EDEFAULT);
+				setNameResolution(NAME_RESOLUTION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -219,10 +246,57 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 			case 0:
 				return AST_EDEFAULT == null ? ast != null : !AST_EDEFAULT.equals(ast);
 			case 1:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+				return NAME_RESOLUTION_EDEFAULT == null ? nameResolution != null : !NAME_RESOLUTION_EDEFAULT.equals(nameResolution);
 		}
 		return super.eIsSet(featureID);
 	}
 
+	@Override
+	public @Nullable NameResolution basicGetNameResolution() {
+		return nameResolution;
+	}
+
+	@Override
+	public String getName() {
+		NameResolution nameResolution2 = nameResolution;
+		if (nameResolution2 == null) {
+			return null; //super.getName();			// XXX Obsolete the name field
+		}
+		String resolvedName = nameResolution2.basicGetResolvedName();
+		if (resolvedName != null) {
+			return resolvedName;
+		}
+		else {
+			return nameResolution2.getNameHint();
+		}
+	}
+
+	@Override
+	public @NonNull String getResolvedName() {
+		return getNameResolution().getResolvedName();
+	}
+
+	@Override
+	public boolean isUnresolved() {
+		NameResolution nameResolution2 = nameResolution;
+		return (nameResolution2 == null) || nameResolution2.isUnresolved();
+	}
+
+/*	@Override
+	public void setName(String newName) {
+	//	assert newName != null;
+		NameResolution nameResolution2 = nameResolution;
+		if (newName == null) {
+			System.out.println("null CGValuedElementImpl::setName for " + NameUtil.debugSimpleName(this));
+		}
+		else if ((nameResolution2 == null) || (nameResolution2.basicGetResolvedName() == null)) {
+			System.out.println("Premature CGValuedElementImpl::setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
+		}
+		else if (!newName.equals(nameResolution2.getResolvedName())) {
+			System.out.println("Inconsistent CGValuedElementImpl::setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
+		}
+	//	assert newName.equals(getNameResolution().getResolvedName());
+		super.setName(newName);
+	} */
 
 } //CGNamedElementImpl

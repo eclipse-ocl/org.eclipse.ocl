@@ -277,7 +277,7 @@ public class GlobalNameManager extends NameManager
 	 * Declare that cgElement has a name which should immediately default to nameHint.
 	 * This is typically used to provide an eager name reservation for global particularly Ecore names.
 	 */
-	public @NonNull NameResolution declareGlobalName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
+	public @NonNull NameResolution declareGlobalName(@Nullable CGNamedElement cgElement, @NonNull String nameHint) {
 		NameResolution baseNameResolution = new NameResolution(this, cgElement, nameHint);
 		baseNameResolution.resolveIn(context);
 		return baseNameResolution;
@@ -287,7 +287,7 @@ public class GlobalNameManager extends NameManager
 	 * Declare that cgElement has a name which should immediately equate to nameHint.
 	 * This is typically used to ensure that reserved Java names are used only for their Java purpose.
 	 */
-	public @NonNull NameResolution declareReservedName(@Nullable CGValuedElement cgElement, @NonNull String nameHint) {
+	public @NonNull NameResolution declareReservedName(@Nullable CGNamedElement cgElement, @NonNull String nameHint) {
 		NameResolution baseNameResolution = new NameResolution(this, cgElement, nameHint);
 		assert reservedJavaNames.contains(nameHint);
 		baseNameResolution.setResolvedName(nameHint);
