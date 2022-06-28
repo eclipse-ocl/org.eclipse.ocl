@@ -472,7 +472,7 @@ public class CodeGenAnalyzer
 		if (cgExternalClass == null) {
 			importNameManager.reserveLocalName(externalClassName);
 			cgExternalClass = CGModelFactory.eINSTANCE.createCGClass();
-			globalNameManager.declareGlobalName(cgExternalClass, externalClassName);
+			globalNameManager.declareGlobalName(cgExternalClass, externalClassName);		// XXX nest in currentNameManager
 		//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
 			cgExternalClasses.add(cgExternalClass);
 			name2class.put(externalClassName, cgExternalClass);
