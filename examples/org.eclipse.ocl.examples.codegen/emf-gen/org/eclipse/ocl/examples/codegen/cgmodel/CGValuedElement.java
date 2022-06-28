@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 
 
 
@@ -210,14 +209,6 @@ public interface CGValuedElement extends CGTypedElement {
 	boolean isFalse();
 
 	/**
-	 * Return true if this value is a global constant (independent of the user type system).
-	 *
-	 * @generated
-	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Glo$7
-	boolean isGlobal();
-
-	/**
 	 * Return true if this value is inlined and so has no local or global declaration.
 	 *
 	 * @generated
@@ -296,12 +287,5 @@ public interface CGValuedElement extends CGTypedElement {
 	 */
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Ct$5
 	void setCaught(boolean isCaught);
-
-	@Nullable NameResolution basicGetNameResolution();
-	@NonNull NameResolution getNameResolution();
-	@NonNull String getResolvedName();
-//	@NonNull String getVariantResolvedName(@NonNull NameVariant nameVariant);
-	boolean isUnresolved();
-	void setNameResolution(@NonNull NameResolution nameResolution);
 
 } // CGValuedElement

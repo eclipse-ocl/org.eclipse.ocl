@@ -224,7 +224,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 			cgModel.getPackages().add(cgPackage);
 			cgPackage.setAst(asPackage);
-			cgPackage.setName(asPackage.getName());
+			globalNameManager.declareGlobalName(cgPackage, asPackage.getName());
 			convertClasses(cgPackage, asPackage.getOwnedClasses());
 		}
 
@@ -236,7 +236,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
 			cgPackage.getClasses().add(cgClass);
 			cgClass.setAst(asClass);
-			cgClass.setName(asClass.getName());
+			globalNameManager.declareGlobalName(cgClass, PivotUtil.getName(asClass));
 			convertProperties(cgClass, asClass.getOwnedProperties());
 			convertOperations(cgClass, asClass.getOwnedOperations());
 			convertSuperTypes(cgClass);
