@@ -107,38 +107,26 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
-//	@Override
-	public NameResolution getNameResolutionGen() {
-		return nameResolution;
-	}
-
 	@Override
 	public @NonNull NameResolution getNameResolution() {
-//		if (nameResolution == null) {
-//			isInlined();		// XXX
-//		}
 		return ClassUtil.nonNullState(nameResolution);
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
-	public void setNameResolutionGen(NameResolution newNameResolution) {
-		NameResolution oldNameResolution = nameResolution;
+	@Override
+	public void setNameResolution(NameResolution newNameResolution) {
+		assert newNameResolution != null;
+		assert this.nameResolution == null;
+		NameResolution oldNameResolution = newNameResolution;
 		nameResolution = newNameResolution;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 1, oldNameResolution, nameResolution));
-	}
-
-	@Override
-	public void setNameResolution(NameResolution nameResolution) {
-		assert nameResolution != null;
-		assert this.nameResolution == null;
-		setNameResolutionGen(nameResolution);
 	}
 
 	/**
@@ -281,22 +269,5 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 		NameResolution nameResolution2 = nameResolution;
 		return (nameResolution2 == null) || nameResolution2.isUnresolved();
 	}
-
-/*	@Override
-	public void setName(String newName) {
-	//	assert newName != null;
-		NameResolution nameResolution2 = nameResolution;
-		if (newName == null) {
-			System.out.println("null CGValuedElementImpl::setName for " + NameUtil.debugSimpleName(this));
-		}
-		else if ((nameResolution2 == null) || (nameResolution2.basicGetResolvedName() == null)) {
-			System.out.println("Premature CGValuedElementImpl::setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
-		}
-		else if (!newName.equals(nameResolution2.getResolvedName())) {
-			System.out.println("Inconsistent CGValuedElementImpl::setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
-		}
-	//	assert newName.equals(getNameResolution().getResolvedName());
-		super.setName(newName);
-	} */
 
 } //CGNamedElementImpl
