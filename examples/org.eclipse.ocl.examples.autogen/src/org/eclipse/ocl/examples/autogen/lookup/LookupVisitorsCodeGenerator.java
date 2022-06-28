@@ -209,10 +209,10 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 			@NonNull Map<Operation, @NonNull Operation> envOperation2asOperation, @NonNull Map<Element,Element> reDefinitions) throws ParserException {
 
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
-		cgPackage.setName(getVisitorPackageName());
+		globalNameManager.declareGlobalName(cgPackage, getVisitorPackageName());
 		cgModel.getPackages().add(cgPackage);
 		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
-		cgClass.setName(classNAme);
+		globalNameManager.declareGlobalName(cgClass, classNAme);
 		cgPackage.getClasses().add(cgClass);
 		convertSuperTypes(cgClass);
 		convertProperties(cgClass, asClass.getOwnedProperties());

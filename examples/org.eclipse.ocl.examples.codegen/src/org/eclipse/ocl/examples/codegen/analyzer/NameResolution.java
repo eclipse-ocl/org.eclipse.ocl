@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.CodeGenConstants;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
@@ -72,7 +73,7 @@ public class NameResolution
 	/**
 	 * The CGElement that computes the value to be accessed by the resolved name. May be null for uncomputed globals.
 	 */
-	protected final @Nullable CGValuedElement primaryElement;
+	protected final @Nullable CGNamedElement primaryElement;
 
 	/**
 	 * The resolved name based on nameHint after ensuring that it is unique at and below the nameManager. Non-null once resolved.
@@ -82,9 +83,9 @@ public class NameResolution
 	/**
 	 * Additional CGElements that propagate the unchanged value to be accessed by the resolved name.
 	 */
-	private @Nullable List<@NonNull CGValuedElement> cgElements = null;		// XXX obsolete
+	private @Nullable List<@NonNull CGNamedElement> cgElements = null;		// XXX obsolete
 
-	public NameResolution(@NonNull NameManager nameManager, @Nullable CGValuedElement primaryElement, @Nullable String nameHint) {
+	public NameResolution(@NonNull NameManager nameManager, @Nullable CGNamedElement primaryElement, @Nullable String nameHint) {
 		this.nameManager = nameManager;
 		this.primaryElement = primaryElement;
 		assert (primaryElement != null) || (nameHint != null);
@@ -120,12 +121,12 @@ public class NameResolution
 	//	System.out.println("NameResolution '" + nameHint + "' : " + nameManager.toString() + " : " + primaryElement);
 	}
 
-	public void addCGElement(@NonNull CGValuedElement cgElement) {
+	public void addCGElement(@NonNull CGNamedElement cgElement) {
 		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
 		if (String.valueOf(primaryElement).contains("oclContainer")) {
 			getClass();		// XXX
 		}
-		List<@NonNull CGValuedElement> cgElements2 = cgElements;
+		List<@NonNull CGNamedElement> cgElements2 = cgElements;
 		if (cgElements2 == null) {
 			cgElements = cgElements2 = new ArrayList<>();
 		}
@@ -143,7 +144,7 @@ public class NameResolution
 	//	assert (primaryElement == null) || (cgElements2.size() == 1);
 	}
 
-	public @Nullable CGValuedElement basicGetPrimaryElement() {
+	public @Nullable CGNamedElement basicGetPrimaryElement() {
 		return primaryElement;
 	}
 
@@ -164,7 +165,7 @@ public class NameResolution
 		return true;
 	}
 
-	public @Nullable Iterable<@NonNull CGValuedElement> getCGElements() {
+	public @Nullable Iterable<@NonNull CGNamedElement> getCGElements() {
 		return cgElements;
 	}
 
@@ -176,7 +177,7 @@ public class NameResolution
 		return nameManager;
 	}
 
-	public @NonNull CGValuedElement getPrimaryElement() {
+	public @NonNull CGNamedElement getPrimaryElement() {
 		return ClassUtil.nonNullState(primaryElement);
 	}
 
@@ -209,7 +210,7 @@ public class NameResolution
 			StringBuilder s = new StringBuilder();
 			s.append(NameUtil.debugSimpleName(this) + " in " + NameUtil.debugSimpleName(nameManager) + " " + nameHint + " => " + resolvedName);
 			if (cgElements != null) {
-				for (@NonNull CGValuedElement cgElement2 : cgElements) {
+				for (@NonNull CGNamedElement cgElement2 : cgElements) {
 					s.append(" " + NameUtil.debugSimpleName(cgElement2));
 				}
 			}
@@ -236,7 +237,7 @@ public class NameResolution
 			StringBuilder s = new StringBuilder();
 			s.append("resolveIn " + NameUtil.debugSimpleName(this) + " in " + NameUtil.debugSimpleName(nameManager) + " " + nameHint + " => " + resolvedName);
 			if (cgElements != null) {
-				for (@NonNull CGValuedElement cgElement2 : cgElements) {
+				for (@NonNull CGNamedElement cgElement2 : cgElements) {
 					s.append(" " + NameUtil.debugSimpleName(cgElement2));
 				}
 			}
@@ -248,7 +249,7 @@ public class NameResolution
 	public void resolveNameHint() {
 		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
 		if (nameHint == UNRESOLVED) {
-			CGValuedElement primaryElement2 = primaryElement;
+			CGNamedElement primaryElement2 = primaryElement;
 			assert primaryElement2 != null;
 			nameHint = nameManager.getNameHint(primaryElement2);
 			if ("_171_UNRESOLVED_187".equals(nameHint)) {			// XXX
