@@ -11,8 +11,8 @@
 package org.eclipse.ocl.examples.codegen.cgmodel.utilities;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper.CGNameHelper;
+import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
+import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper.CGNameHelper;
 
 /**
  * @noextend This class is not intended to be subclassed by clients. It is part of the hierarchy for auto-generated visitors.

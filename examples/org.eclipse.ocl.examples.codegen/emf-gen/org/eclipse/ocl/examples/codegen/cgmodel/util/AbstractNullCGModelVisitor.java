@@ -250,6 +250,11 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitCGIndexExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGIndexExp object) {
+		return null;
+	}
+
+	@Override
 	public R visitCGInlinedOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGInlinedOperation object) {
 		return null;
 	}

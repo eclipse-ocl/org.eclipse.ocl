@@ -370,6 +370,17 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGClass_ContainingClass();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getCallingConvention <em>Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGClass#getCallingConvention()
+	 * @see #getCGClass()
+	 * @generated
+	 */
+	EAttribute getCGClass_CallingConvention();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp <em>CG Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1537,6 +1548,27 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGIfExp_ElseExpression();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp <em>CG Index Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CG Index Exp</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp
+	 * @generated
+	 */
+	EClass getCGIndexExp();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Index</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp#getIndex()
+	 * @see #getCGIndexExp()
+	 * @generated
+	 */
+	EReference getCGIndexExp_Index();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGInlinedOperation <em>CG Inlined Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1568,15 +1600,15 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGNamedElement_Ast();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getNameResolution <em>Name Resolution</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getName()
+	 * @return the meta object for the attribute '<em>Name Resolution</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getNameResolution()
 	 * @see #getCGNamedElement()
 	 * @generated
 	 */
-	EAttribute getCGNamedElement_Name();
+	EAttribute getCGNamedElement_NameResolution();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation <em>CG Native Operation</em>}'.
@@ -2296,6 +2328,16 @@ public interface CGModelPackage extends EPackage {
 	EClass getNameable();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention <em>Class Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Class Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention
+	 * @generated
+	 */
+	EDataType getClassCallingConvention();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.Element <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2384,6 +2426,16 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getMethod();
+
+	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.examples.codegen.naming.NameResolution <em>Name Resolution</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Name Resolution</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.naming.NameResolution
+	 * @generated
+	 */
+	EDataType getNameResolution();
 
 	/**
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Number</em>}'.
@@ -2733,6 +2785,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_CLASS__CONTAINING_CLASS = eINSTANCE.getCGClass_ContainingClass();
+
+		/**
+		 * The meta object literal for the '<em><b>Calling Convention</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_CLASS__CALLING_CONVENTION = eINSTANCE.getCGClass_CallingConvention();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCallExpImpl <em>CG Call Exp</em>}' class.
@@ -3731,6 +3791,24 @@ public interface CGModelPackage extends EPackage {
 		EReference CG_IF_EXP__ELSE_EXPRESSION = eINSTANCE.getCGIfExp_ElseExpression();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIndexExpImpl <em>CG Index Exp</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIndexExpImpl
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGIndexExp()
+		 * @generated
+		 */
+		EClass CG_INDEX_EXP = eINSTANCE.getCGIndexExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_INDEX_EXP__INDEX = eINSTANCE.getCGIndexExp_Index();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGInlinedOperationImpl <em>CG Inlined Operation</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3759,12 +3837,12 @@ public interface CGModelPackage extends EPackage {
 		EAttribute CG_NAMED_ELEMENT__AST = eINSTANCE.getCGNamedElement_Ast();
 
 		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Name Resolution</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CG_NAMED_ELEMENT__NAME = eINSTANCE.getCGNamedElement_Name();
+		EAttribute CG_NAMED_ELEMENT__NAME_RESOLUTION = eINSTANCE.getCGNamedElement_NameResolution();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNativeOperationImpl <em>CG Native Operation</em>}' class.
@@ -4373,6 +4451,16 @@ public interface CGModelPackage extends EPackage {
 		EClass NAMEABLE = eINSTANCE.getNameable();
 
 		/**
+		 * The meta object literal for the '<em>Class Calling Convention</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getClassCallingConvention()
+		 * @generated
+		 */
+		EDataType CLASS_CALLING_CONVENTION = eINSTANCE.getClassCallingConvention();
+
+		/**
 		 * The meta object literal for the '<em>Element</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4461,6 +4549,16 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType METHOD = eINSTANCE.getMethod();
+
+		/**
+		 * The meta object literal for the '<em>Name Resolution</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.naming.NameResolution
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getNameResolution()
+		 * @generated
+		 */
+		EDataType NAME_RESOLUTION = eINSTANCE.getNameResolution();
 
 		/**
 		 * The meta object literal for the '<em>Number</em>' data type.

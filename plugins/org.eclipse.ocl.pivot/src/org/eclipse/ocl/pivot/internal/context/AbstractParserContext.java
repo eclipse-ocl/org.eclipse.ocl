@@ -219,6 +219,13 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		return rootElement;
 	}
 
+	/**
+	 * @since 1.18
+	 */
+	public @NonNull URI getURI() {
+		return uri;
+	}
+
 	@Override
 	public void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression) {
 		//		List<String> language = expression.getLanguage();

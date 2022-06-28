@@ -628,7 +628,7 @@ implements PropertyCallExp {
 							/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 							try {
 								if (THROWN_IF_IsEQ2_ == null) {
-									throw new InvalidValueException("Null \'\'IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								@SuppressWarnings("null")
 								final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();

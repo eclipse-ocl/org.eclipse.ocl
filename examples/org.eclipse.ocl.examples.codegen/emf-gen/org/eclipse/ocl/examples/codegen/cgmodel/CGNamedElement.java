@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.pivot.Element;
 
 
@@ -24,7 +27,7 @@ import org.eclipse.ocl.pivot.Element;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getAst <em>Ast</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getNameResolution <em>Name Resolution</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNamedElement()
@@ -32,30 +35,33 @@ import org.eclipse.ocl.pivot.Element;
  */
 public interface CGNamedElement extends CGElement, org.eclipse.ocl.pivot.utilities.Nameable {
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * Returns the value of the '<em><b>Name Resolution</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNamedElement_Name()
+	 * @return the value of the '<em>Name Resolution</em>' attribute.
+	 * @see #setNameResolution(NameResolution)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNamedElement_NameResolution()
 	 * @generated
 	 */
-	@Override
-	String getName();
+	NameResolution getNameResolution();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement#getNameResolution <em>Name Resolution</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
+	 * @param value the new value of the '<em>Name Resolution</em>' attribute.
+	 * @see #getNameResolution()
 	 * @generated
 	 */
-	void setName(String value);
+	void setNameResolution(NameResolution value);
+
+	/**
+	 * Return true if this value is a global constant (independent of the user type system).
+	 *
+	 * @generated
+	 */
+	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Glo$10
+	boolean isGlobal();
 
 	/**
 	 * Returns the value of the '<em><b>Ast</b></em>' attribute.
@@ -81,5 +87,9 @@ public interface CGNamedElement extends CGElement, org.eclipse.ocl.pivot.utiliti
 	 * @generated
 	 */
 	void setAst(Element value);
+
+	@Nullable NameResolution basicGetNameResolution();
+	@NonNull String getResolvedName();
+	boolean isUnresolved();
 
 } // CGNamedElement

@@ -277,7 +277,19 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="BAG_CLSSid_OclElement"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="BAG_CLSSid_Property_0"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="BAG_INVid"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -302,6 +314,24 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="CLSSid_OclComparable"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_OclEnumeration"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_OclState"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_OclStereotype"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -349,8 +379,7 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
-                <message_argument value="DATAid_EcoreObject"/>
-                <message_argument value="COL_"/>
+                <message_argument value="ORD_"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -387,6 +416,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="SET_PRIMid_OclSelf"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="SET_PRIMid_OclSelf_0"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -403,7 +438,17 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="BAG_CLSSid_OclElement"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="BAG_CLSSid_Property_0"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="BAG_INVid"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -424,6 +469,21 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="CLSSid_OclComparable"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_OclEnumeration"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_OclState"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_OclStereotype"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -463,8 +523,7 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="DATAid_EcoreObject"/>
-                <message_argument value="COL_"/>
+                <message_argument value="ORD_"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -495,6 +554,11 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="SET_PRIMid_OclSelf"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="SET_PRIMid_OclSelf_0"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -515,101 +579,11 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Operations">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Operations"/>
-                <message_argument value="_BooleanType__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Operations"/>
-                <message_argument value="_Class__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Operations"/>
-                <message_argument value="_Enumeration__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Operations"/>
-                <message_argument value="_InvalidType__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Operations"/>
-                <message_argument value="_Stereotype__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Operations"/>
-                <message_argument value="_VoidType__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_BooleanType__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_Class__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_Enumeration__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_InvalidType__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_Stereotype__allInstances"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_VoidType__allInstances"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Properties">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Properties"/>
-                <message_argument value="_ElementLiteralExp__referredElement"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Properties"/>
-                <message_argument value="_IteratorVariable__LoopExp__ownedCoIterators"/>
-            </message_arguments>
-        </filter>
         <filter id="338755678">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables.Properties"/>
                 <message_argument value="_Variable__LoopExp__ownedCoIterators"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_ElementLiteralExp__referredElement"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="_IteratorVariable__LoopExp__ownedCoIterators"/>
             </message_arguments>
         </filter>
     </resource>
@@ -693,11 +667,6 @@
                 <message_argument value="8"/>
             </message_arguments>
         </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="computeNormalizedId()"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CollectionTypeImpl.java" type="org.eclipse.ocl.pivot.internal.CollectionTypeImpl">
         <filter id="388194388">
@@ -759,11 +728,6 @@
                 <message_argument value="org.eclipse.ocl.pivot.internal.LambdaTypeImpl"/>
                 <message_argument value="LAMBDA_TYPE_OPERATION_COUNT"/>
                 <message_argument value="8"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="computeNormalizedId()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -2529,6 +2493,20 @@
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryBinaryOperation"/>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/LibraryConstants.java" type="org.eclipse.ocl.pivot.library.LibraryConstants">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryConstants"/>
+                <message_argument value="AND"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryConstants"/>
+                <message_argument value="AND2"/>
             </message_arguments>
         </filter>
     </resource>

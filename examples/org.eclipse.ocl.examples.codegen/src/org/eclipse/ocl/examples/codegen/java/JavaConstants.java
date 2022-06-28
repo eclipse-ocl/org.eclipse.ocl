@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId.JavaTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Property;
@@ -47,7 +48,8 @@ public class JavaConstants {
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
 	public static final @NonNull String EVALUATION_CACHE_NAME = "evaluationCache";
 	public static final @NonNull String EXECUTOR_NAME = "executor";
-	public static final @NonNull String GET_CACHED_EVLUATION_RESULT_NAME = "getCachedEvaluationResult";
+//	public static final @NonNull String GET_CACHED_EVALUATION_RESULT_NAME = "getCachedEvaluationResult";
+	public static final @NonNull String GET_RESULT_NAME = "getResult";
 	public static final @NonNull String ID_RESOLVER_NAME = "idResolver";
 	public static final @NonNull String INSTANCE_NAME = "INSTANCE";
 	public static final @NonNull String MODEL_MANAGER_NAME = "modelManager";
@@ -60,6 +62,7 @@ public class JavaConstants {
 	public static final @NonNull String EXTERNAL_CLASS_PREFIX = "EC_";
 	public static final @NonNull String EXTERNAL_OPERATION_PREFIX = "EO_";
 	public static final @NonNull String EXTERNAL_PROPERTY_PREFIX = "EP_";
+	public static final @NonNull String NESTED_CLASS_PREFIX = "NC_";
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);
 	public static final @NonNull TypeId PROPERTY_TYPE_ID = getJavaTypeId(Property.class);
@@ -86,13 +89,13 @@ public class JavaConstants {
 
 	static {
 		try {
-			EXECUTOR_GET_ID_RESOLVER_METHOD = Executor.class.getMethod("getIdResolver");
-			EXECUTOR_GET_MODEL_MANAGER_METHOD = Executor.class.getMethod("getModelManager");
-			EXECUTOR_GET_STANDARD_LIBRARY_METHOD = Executor.class.getMethod("getStandardLibrary");
-			MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD = ModelManager.class.getMethod("basicGetForeignPropertyValue", Object.class, PropertyId.class);
-			MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD = ModelManager.class.getMethod("getForeignPropertyValue", Object.class, PropertyId.class, OCLExpression.class, Object.class);
-			MODEL_MANAGER_SET_FOREIGN_PROPERTY_VALUE_METHOD = ModelManager.class.getMethod("setForeignPropertyValue", Object.class, PropertyId.class, Object.class);
-			PIVOT_UTIL_GET_EXECUTOR_GET_METHOD = PivotUtil.class.getMethod("getExecutor", EObject.class);
+			EXECUTOR_GET_ID_RESOLVER_METHOD = SupportOperationCallingConvention.addSupportMethod(Executor.class.getMethod("getIdResolver"));
+			EXECUTOR_GET_MODEL_MANAGER_METHOD = SupportOperationCallingConvention.addSupportMethod(Executor.class.getMethod("getModelManager"));
+			EXECUTOR_GET_STANDARD_LIBRARY_METHOD = SupportOperationCallingConvention.addSupportMethod(Executor.class.getMethod("getStandardLibrary"));
+			MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD = SupportOperationCallingConvention.addSupportMethod(ModelManager.class.getMethod("basicGetForeignPropertyValue", Object.class, PropertyId.class));
+			MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD = SupportOperationCallingConvention.addSupportMethod(ModelManager.class.getMethod("getForeignPropertyValue", Object.class, PropertyId.class, OCLExpression.class, Object.class));
+			MODEL_MANAGER_SET_FOREIGN_PROPERTY_VALUE_METHOD = SupportOperationCallingConvention.addSupportMethod(ModelManager.class.getMethod("setForeignPropertyValue", Object.class, PropertyId.class, Object.class));
+			PIVOT_UTIL_GET_EXECUTOR_GET_METHOD = SupportOperationCallingConvention.addSupportMethod(PivotUtil.class.getMethod("getExecutor", EObject.class));
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw new RuntimeException(e);
 		}

@@ -11,23 +11,18 @@
 package org.eclipse.ocl.examples.codegen.oclinjunit;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 
-/**
- * JUnitNestedNameManager provides JUnit-specific overrides for nested contexts.
- */
-public class JUnitNestedNameManager extends NestedNameManager
+public class JUnitAnalyzer extends CodeGenAnalyzer
 {
-	public JUnitNestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
-		super(codeGenerator, parent, cgScope);
+	public JUnitAnalyzer(@NonNull JUnitCodeGenerator codeGenerator) {
+		super(codeGenerator);
 	}
 
 	@Override
-	public @NonNull CGVariable getExecutorVariable() {
-		return getExecutorParameter();
+	public @NonNull CGVariable getExecutorVariable(@NonNull ExecutableNameManager executableNameManager) {
+		return executableNameManager.getExecutorParameter();
 	}
 }

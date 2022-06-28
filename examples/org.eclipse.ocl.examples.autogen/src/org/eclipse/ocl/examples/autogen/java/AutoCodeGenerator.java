@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.AutoCodeGenOptions;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -62,7 +61,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 {
 	//	private static final Logger logger = Logger.getLogger(AutoCodeGenerator.class);
 
-	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
+	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final org.eclipse.ocl.pivot.@Nullable Package asSuperPackage;
 	protected final @NonNull PivotHelper helper;
@@ -84,7 +83,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		this.helper = new PivotHelper(environmentFactory);
 		this.genModel = ClassUtil.nonNullState(genPackage.getGenModel());
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
-		cgAnalyzer = new CodeGenAnalyzer(this);
+		this.analyzer = createCodeGenAnalyzer();
 		this.asPackage = asPackage;
 		this.asSuperPackage = asSuperPackage;
 		this.genPackage = genPackage;
@@ -113,11 +112,6 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		String prefix = baseGenPackage.getPrefix();
 		assert prefix != null;
 		return prefix;
-	}
-
-
-	protected @NonNull AS2CGVisitor createAS2CGVisitor() {
-		return new AS2CGVisitor(this);
 	}
 
 	@Override
@@ -159,7 +153,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 
 	@Override
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
-		return cgAnalyzer;
+		return analyzer;
 	}
 
 	protected @NonNull CGClass getExternalClass(@NonNull Class<?> javaClass, CGClass... javaGenerics) {
@@ -182,13 +176,13 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		CGPackage cgPackage = externalPackages.get(packageName);
 		if (cgPackage == null) {
 			cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
-			cgPackage.setName(packageName);
+			globalNameManager.declareEagerName(cgPackage, packageName != null ? packageName : "");
 			externalPackages.put(packageName, cgPackage);
 		}
 		CGClass cgClass = NameUtil.getNameable(cgPackage.getClasses(), className);
 		if (cgClass == null) {
 			cgClass = CGModelFactory.eINSTANCE.createCGClass();
-			cgClass.setName(className);
+			globalNameManager.declareEagerName(cgClass, className);
 			cgClass.setInterface(isInterface);
 			cgPackage.getClasses().add(cgClass);
 		}

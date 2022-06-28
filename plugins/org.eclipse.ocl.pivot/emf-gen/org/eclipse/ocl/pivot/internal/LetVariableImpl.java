@@ -126,7 +126,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 					else {
 						assert ownedInit != null;
 						final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
-						IF_IsEQ2_ = isRequired;
+						IF_IsEQ2_ = (Boolean)isRequired;
 					}
 					final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
 					final /*@Thrown*/ boolean IsEQ_ = (IF_IsEQ2_ == Boolean.TRUE) == isRequired_0;
@@ -210,7 +210,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 							/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 							try {
 								if (THROWN_type == null) {
-									throw new InvalidValueException("Null \'\'IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, THROWN_type, type_0).booleanValue();

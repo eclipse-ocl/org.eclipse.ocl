@@ -34,6 +34,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
 
@@ -55,6 +56,8 @@ import org.eclipse.ocl.pivot.Operation;
  */
 public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@NonNull ReturnState, @NonNull FieldingAnalyzer>
 {
+	protected final @NonNull GlobalNameManager globalNameManager;
+
 	/**
 	 * The required return state. Polymorphism is not used for the alternatives to allow derived AnalysisVisitor
 	 * implementations to overload just once rather than three times.
@@ -63,6 +66,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	public FieldingAnalysisVisitor(@NonNull FieldingAnalyzer context, @NonNull ReturnState requiredReturn) {
 		super(context);
+		this.globalNameManager = context.getAnalyzer().getGlobalNameManager();
 		this.requiredReturn = requiredReturn;
 	}
 
@@ -85,7 +89,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (mayBeInvalid) {
 			CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
 			cgCatchExp.setCaught(true);
-			CGUtil.wrap(cgCatchExp, cgChild);
+			globalNameManager.wrap(cgCatchExp, cgChild);
 		}
 	}
 
@@ -96,7 +100,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (mayBeInvalid) {
 			CGThrowExp cgThrowExp = CGModelFactory.eINSTANCE.createCGThrowExp();
 			cgThrowExp.setCaught(false);
-			CGUtil.wrap(cgThrowExp, cgChild);
+			globalNameManager.wrap(cgThrowExp, cgChild);
 		}
 	}
 

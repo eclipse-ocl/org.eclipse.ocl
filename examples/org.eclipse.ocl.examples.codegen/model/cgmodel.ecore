@@ -138,6 +138,8 @@
         eOpposite="#//CGClass/containingClass"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="containingClass" eType="#//CGClass"
         resolveProxies="false" eOpposite="#//CGClass/classes"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callingConvention" lowerBound="1"
+        eType="#//ClassCallingConvention" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGCollectionExp" eSuperTypes="#//CGValuedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parts" upperBound="-1"
@@ -326,6 +328,17 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="elseExpression" lowerBound="1"
         eType="#//CGValuedElement" containment="true" resolveProxies="false"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGIndexExp" eSuperTypes="#//CGSourcedCallExp">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="CGIndexExp returns the index'th value from a source array."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="index" lowerBound="1" eType="#//CGValuedElement"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The this expression for the call when invoking a native or ecore implementation."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGInlinedOperation" eSuperTypes="#//CGOperation">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A native operation that must be called using the native calling convention. Source argument and result values are boxed."/>
@@ -477,7 +490,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNamedElement" abstract="true" eSuperTypes="#//CGElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ast" lowerBound="1" eType="#//Element"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nameResolution" eType="#//NameResolution"
+        transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNativeOperation" eSuperTypes="#//CGOperation">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -755,6 +769,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ClassCallingConvention" instanceClassName="org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Element" instanceClassName="org.eclipse.ocl.pivot.Element"/>
   <eClassifiers xsi:type="ecore:EDataType" name="ElementId" instanceClassName="org.eclipse.ocl.pivot.ids.ElementId"/>
   <eClassifiers xsi:type="ecore:EDataType" name="EnumerationLiteralId" instanceClassName="org.eclipse.ocl.pivot.ids.EnumerationLiteralId"/>
@@ -764,6 +779,8 @@
   <eClassifiers xsi:type="ecore:EDataType" name="LibraryOperation" instanceClassName="org.eclipse.ocl.pivot.library.LibraryOperation"/>
   <eClassifiers xsi:type="ecore:EDataType" name="LibraryProperty" instanceClassName="org.eclipse.ocl.pivot.library.LibraryProperty"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Method" instanceClassName="java.lang.reflect.Method"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="NameResolution" instanceClassName="org.eclipse.ocl.examples.codegen.naming.NameResolution"
+      serializable="false"/>
   <eClassifiers xsi:type="ecore:EClass" name="Nameable" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Number" instanceClassName="java.lang.Number"/>

@@ -24,15 +24,12 @@ import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.ControlPlace;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -508,75 +505,5 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public void setCaught(boolean isCaught) {
 		caught = isCaught;
-	}
-
-	private @Nullable NameResolution nameResolution = null;
-
-	@Override
-	public @Nullable NameResolution basicGetNameResolution() {
-		return nameResolution;
-	}
-
-	@Override
-	public String getName() {
-		NameResolution nameResolution2 = nameResolution;
-		if (nameResolution2 ==  null) {
-			return super.getName();			// XXX Obsolete the name field
-		}
-		String resolvedName = nameResolution2.basicGetResolvedName();
-		if (resolvedName != null) {
-			return resolvedName;
-		}
-		else {
-			return nameResolution2.getNameHint();
-		}
-	}
-
-	@Override
-	public @NonNull NameResolution getNameResolution() {
-		if (nameResolution == null) {
-			isInlined();		// XXX
-		}
-		return ClassUtil.nonNullState(nameResolution);
-	}
-
-	@Override
-	public @NonNull String getResolvedName() {
-		return getNameResolution().getResolvedName();
-	}
-
-	@Override
-	public boolean isUnresolved() {
-		NameResolution nameResolution2 = nameResolution;
-		return (nameResolution2 == null) || nameResolution2.isUnresolved();
-	}
-
-	@Override
-	public void setName(String newName) {
-	//	assert newName != null;
-		NameResolution nameResolution2 = nameResolution;
-		if (newName == null) {
-			System.out.println("null CGValuedElementImpl::setName for " + NameUtil.debugSimpleName(this));
-		}
-		else if ((nameResolution2 == null) || (nameResolution2.basicGetResolvedName() == null)) {
-			System.out.println("Premature CGValuedElementImpl::setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
-		}
-		else if (!newName.equals(nameResolution2.getResolvedName())) {
-			System.out.println("Inconsistent CGValuedElementImpl::setName '" + newName + "' for " + NameUtil.debugSimpleName(this));
-		}
-	//	assert newName.equals(getNameResolution().getResolvedName());
-		super.setName(newName);
-	}
-
-	@Override
-	public void setNameResolution(@NonNull NameResolution nameResolution) {
-		assert this.nameResolution == null;
-		this.nameResolution = nameResolution;
-	//	System.out.println("setNameResolution " + eClass().getName() + " = " + nameResolution);		// XXX
-	}
-
-	@Deprecated /* @deprecated nolonger used */		// XXX
-	protected void resetNameResolution() {
-		nameResolution = null;
 	}
 } //CGValuedElementImpl

@@ -38,7 +38,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -59,6 +58,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -266,6 +266,10 @@ public class CGUtil
 		return ClassUtil.nonNullState((Type)cgExecutorType.getAst());
 	}
 
+	public static @NonNull LoopExp getAST(@NonNull CGIterationCallExp cgIterationCallExp) {
+		return ClassUtil.nonNullState((LoopExp)cgIterationCallExp.getAst());
+	}
+
 	public static @NonNull Variable getAST(@NonNull CGIterator cgIterator) {
 		return ClassUtil.nonNullState((Variable)cgIterator.getAst());
 	}
@@ -280,6 +284,10 @@ public class CGUtil
 
 	public static @NonNull OperationCallExp getAST(@NonNull CGOperationCallExp cgOperationCallExp) {
 		return ClassUtil.nonNullState((OperationCallExp)cgOperationCallExp.getAst());
+	}
+
+	public static org.eclipse.ocl.pivot.@NonNull Package getAST(@NonNull CGPackage cgPackage) {
+		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Package)cgPackage.getAst());
 	}
 
 	public static @NonNull /*ParameterVariable*/ VariableDeclaration getAST(@NonNull CGParameter cgParameter) {
@@ -357,6 +365,14 @@ public class CGUtil
 			}
 		}
 		return null;
+	}
+
+	public static @NonNull CGClass getContainingClass(@NonNull CGOperation cgOperation) {
+		return ClassUtil.nonNullState(cgOperation.getContainingClass());
+	}
+
+	public static @NonNull CGClass getContainingClass(@NonNull CGProperty cgProperty) {
+		return ClassUtil.nonNullState(cgProperty.getContainingClass());
 	}
 
 	public static @Nullable CGConstraint getContainingConstraint(@NonNull CGElement cgExpression) {
@@ -497,6 +513,10 @@ public class CGUtil
 		return ClassUtil.nullFree(cgTupleExp.getParts());
 	}
 
+	public static @NonNull Iterable<@NonNull CGProperty> getProperties(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getProperties());
+	}
+
 	public static @NonNull List<@NonNull CGProperty> getPropertiesList(@NonNull CGClass cgClass) {
 		return ClassUtil.nullFree(cgClass.getProperties());
 	}
@@ -527,6 +547,14 @@ public class CGUtil
 
 	public static @NonNull CGValuedElement getSource(@NonNull CGSourcedCallExp cgSourcedCallExp) {
 		return ClassUtil.nonNullState(cgSourcedCallExp.getSource());
+	}
+
+	public static @NonNull Iterable<@NonNull CGClass> getSuperTypes(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getSuperTypes());
+	}
+
+	public static @NonNull List<@NonNull CGClass> getSuperTypesList(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getSuperTypes());
 	}
 
 	public static @NonNull CGValuedElement getThis(@NonNull CGOperationCallExp cgOperationCallExp) {
@@ -604,23 +632,6 @@ public class CGUtil
 	}
 
 	/**
-	 * Insert and return a CGLetExp above cgIn for cgCSE.
-	 */
-	public static @NonNull CGLetExp rewriteAsLet(@NonNull CGValuedElement cgIn, @NonNull CGVariable cgVariable) {
-		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
-		cgLetExp.setTypeId(cgIn.getTypeId());
-		cgLetExp.setAst(cgIn.getAst());
-		CGUtil.replace(cgIn, cgLetExp);
-		cgLetExp.setIn(cgIn);
-		cgLetExp.setInit(cgVariable);
-//		System.out.println("re-let " + NameUtil.debugSimpleName(cgLetExp) + " : " + cgLetExp.toString());
-//		for (EObject eObject : new TreeIterable(cgLetExp, true)) {		// XXX
-//			System.out.println("\t" + NameUtil.debugSimpleName(eObject) + " : " + eObject.toString());
-//		}
-		return cgLetExp;
-	}
-
-	/**
 	 * Trim trailing spaces from lines.
 	 */
 	public static @NonNull String trimLines(@NonNull String classFileContent) {
@@ -642,15 +653,5 @@ public class CGUtil
 			e.printStackTrace();
 		}
 		return classFileContent;
-	}
-
-	/**
-	 * Use wrapExp to wrap wrappedExp.
-	 */
-	public static void wrap(@NonNull CGSourcedCallExp wrapExp, @NonNull CGValuedElement wrappedExp) {
-		wrapExp.setTypeId(wrappedExp.getTypeId());
-		wrapExp.setAst(wrappedExp.getAst());
-		replace(wrappedExp, wrapExp);
-		wrapExp.setSource(wrappedExp);
 	}
 }

@@ -12,24 +12,28 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.PropertyId;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
@@ -39,36 +43,52 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public abstract class AbstractPropertyCallingConvention implements PropertyCallingConvention
 {
 	@Override
-	public void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {}
+	public void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {}
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
-		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();  // XXX Overrides may add state
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
+		CGConstrainedProperty cgProperty = CGModelFactory.eINSTANCE.createCGConstrainedProperty();
+		initProperty(analyzer, cgProperty, asTypedElement);
+		analyzer.addCGProperty(cgProperty);
+		return cgProperty;  // XXX Overrides may add state
 	}
 
 	@Override
-	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty) {
+	public void createImplementation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty) {
 	//	assert (this instanceof StereotypePropertyCallingConvention)
 	//		|| (this instanceof ConstrainedPropertyCallingConvention)
 	//		|| (this instanceof NativePropertyCallingConvention)
 	//		|| (this instanceof ForeignPropertyCallingConvention);
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
+		ExecutableNameManager propertyNameManager = analyzer.getGlobalNameManager().usePropertyNameManager(cgProperty);
 		Property asProperty = CGUtil.getAST(cgProperty);
 		cgProperty.setRequired(asProperty.isIsRequired());
 		LanguageExpression specification = asProperty.getOwnedExpression();
 		if (specification != null) {
 			try {
-				ExpressionInOCL query = as2cgVisitor.getEnvironmentFactory().parseSpecification(specification);
+				EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)analyzer.getCodeGenerator().getEnvironmentFactory();
+				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					nameManager.getSelfParameter(contextVariable);
+					analyzer.getSelfParameter(propertyNameManager, contextVariable);
 				}
-				((CGBodiedProperty)cgProperty).setBody(as2cgVisitor.doVisit(CGValuedElement.class, query.getOwnedBody()));
+				((CGBodiedProperty)cgProperty).setBody(analyzer.createCGElement(CGValuedElement.class, query.getOwnedBody()));
 			} catch (ParserException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();		// XXX
 			}
 		}
+	}
+
+	@Override
+	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js,
+			@NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue) {
+		js.appendReferenceTo(cgProperty);
+		js.append(".initValue(");
+		js.appendValueName(slotValue);
+		js.append(", ");
+		js.appendValueName(initValue);
+		js.append(");\n");
+		return false;
 	}
 
 	@Override
@@ -85,6 +105,20 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 		js.append("»\n");
 		return true;
 	//	throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".generateJavaDeclaration");	// A number of Property Calling Conventions are call-only
+	}
+
+	@Override
+	public @NonNull ClassCallingConvention getClassCallingConvention() {
+		return ContextClassCallingConvention.INSTANCE;
+	}
+
+	protected void initProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty, @NonNull TypedElement asProperty) {
+ 		TypeId asTypeId = asProperty.getTypeId();
+		CGTypeId cgTypeId = analyzer.getCGTypeId(asTypeId);
+		cgProperty.setAst(asProperty);
+		cgProperty.setTypeId(cgTypeId);
+		cgProperty.setRequired(asProperty.isIsRequired());
+		cgProperty.setCallingConvention(this);
 	}
 
 	@Override

@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("evaluate")) {
+				if (string.contains("NOT_NEEDED")) {
 					getClass();		// XXX
 				}
 				if (string.contains("IF_CAUGHT_isEmpty")) {
@@ -475,11 +475,14 @@ public class JavaStream
 	public void appendClassHeader(@Nullable CGPackage cgPackage) {
 		appendCopyrightHeader();
 		if (cgPackage != null) {
-			append("package ");
-			appendClassHeaderInternal(cgPackage);
-			append(";\n");
+			String name = cgPackage.getName();
+			if ((cgPackage.eContainer() != null) || !((name == null) || (name.length() == 0))) {
+				append("package ");
+				appendClassHeaderInternal(cgPackage);
+				append(";\n");
+				append("\n");
+			}
 		}
-		append("\n");
 		append(ImportUtils.IMPORTS_MARKER + "\n");
 	}
 	private void appendClassHeaderInternal(@NonNull CGPackage cgPackage) {
@@ -526,7 +529,14 @@ public class JavaStream
 				append(javaClass.getName());
 			}
 			else {
-				appendClassReference(isRequired, javaClass.getName());
+				Boolean componentIsRequired = isRequired;
+				for (Class<?> jClass = javaClass; true; jClass = jClass.getComponentType()) {
+					if (jClass.getComponentType() == null)  {
+						appendClassReference(componentIsRequired, jClass.getName());
+						break;
+					}
+					componentIsRequired = Boolean.FALSE;
+				}
 				TypeVariable<?>[] typeParameters = javaClass.getTypeParameters();
 				if (typeParameters.length > 0) {
 					append("<");
@@ -1123,7 +1133,7 @@ public class JavaStream
 	}
 
 	public void appendTypeDeclaration(@NonNull CGValuedElement cgElement) {
-		boxedTypeRepresentation.appendTypeDeclaration(cgElement);;
+		boxedTypeRepresentation.appendTypeDeclaration(cgElement);			// FIXME this doesn't enforce boxed if cgElement is primitive
 	}
 
 	public void appendTypeParameters(boolean useExtends, @NonNull Class<?>... typeParameters) {

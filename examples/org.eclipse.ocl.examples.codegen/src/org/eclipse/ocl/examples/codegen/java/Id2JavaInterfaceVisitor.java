@@ -11,13 +11,14 @@
 package org.eclipse.ocl.examples.codegen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.java.types.CGIdVisitor;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
-import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -39,7 +40,7 @@ import org.eclipse.ocl.pivot.ids.WildcardId;
 /**
  * An Id2JavaClassVisitor return the Java Interface for an Id.
  */
-public class Id2JavaInterfaceVisitor implements IdVisitor<@NonNull Class<? extends ElementId>>
+public class Id2JavaInterfaceVisitor implements CGIdVisitor<@NonNull Class<? extends ElementId>>
 {
 	@Override
 	public @NonNull Class<? extends ElementId> visitClassId(@NonNull ClassId id) {
@@ -74,6 +75,11 @@ public class Id2JavaInterfaceVisitor implements IdVisitor<@NonNull Class<? exten
 	@Override
 	public @NonNull Class<? extends ElementId> visitLambdaTypeId(@NonNull LambdaTypeId id) {
 		return LambdaTypeId.class;
+	}
+
+	@Override
+	public @NonNull Class<? extends ElementId> visitJavaTypeId(@NonNull JavaTypeId id) {
+		return JavaTypeId.class;
 	}
 
 	@Override

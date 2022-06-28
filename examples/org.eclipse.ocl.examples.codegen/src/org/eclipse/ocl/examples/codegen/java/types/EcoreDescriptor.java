@@ -11,11 +11,11 @@
 package org.eclipse.ocl.examples.codegen.java.types;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 
 /**
  * An EcoreDescriptor defines the description of a type that may be used where an Ecore representation is required.
@@ -25,7 +25,7 @@ public interface EcoreDescriptor extends TypeDescriptor
 	/**
 	 * Append a statement to create the cgEcoreExp value by converting unboxedValue as specified by this EcoreDescriptor.
 	 */
-	@NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
+	@NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue);
 
 	/**

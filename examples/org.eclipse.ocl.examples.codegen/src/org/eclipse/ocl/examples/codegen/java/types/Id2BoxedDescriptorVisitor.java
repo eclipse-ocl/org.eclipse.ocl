@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -67,7 +66,7 @@ import org.eclipse.ocl.pivot.values.TupleValue;
  * An Id2BoxedDescriptorVisitor visit returns a descriptor for the boxed type and a delegation to a descriptor for the unboxed type,
  * each corresponding to a visited ElementId.
  */
-public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
+public class Id2BoxedDescriptorVisitor implements CGIdVisitor<BoxedDescriptor>
 {
 	/*	private static @NonNull Map<String, BoxedValueDescriptor> classDescriptors = new HashMap<String, BoxedValueDescriptor>();
 
@@ -311,6 +310,11 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 	@Override
 	public @NonNull BoxedDescriptor visitInvalidId(@NonNull OclInvalidTypeId id) {
 		return new SimpleValueDescriptor(id, InvalidValueException.class);
+	}
+
+	@Override
+	public BoxedDescriptor visitJavaTypeId(@NonNull JavaTypeId id) {
+		return new SimpleValueDescriptor(id, id.getJavaClass());
 	}
 
 	@Override

@@ -14,10 +14,9 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -25,9 +24,10 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -42,27 +42,25 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	public static final @NonNull JUnitOperationCallingConvention INSTANCE = new JUnitOperationCallingConvention();
 
 	@Override
-	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		js.append("@Override\n");
-		js.append("public ");
-		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
-		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
-		js.append(" ");
-		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
-		js.append(" ");
-		js.appendValueName(cgOperation);
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		NameResolution evaluateNameResolution = analyzer.getGlobalNameManager().getEvaluateNameResolution();
+		assert evaluateNameResolution.getResolvedName().equals(asOperation.getName());
+		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		initOperation(analyzer, cgOperation, asOperation);
+		analyzer.addCGOperation(cgOperation);
+	//	ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
+	//	ClassNameManager classNameManager = operationNameManager.getClassNameManager();
+	//	classNameManager.declareEagerName(cgOperation);			// Eager enforcement of built-in "evaluate"
+		evaluateNameResolution.addCGElement(cgOperation);
+		return cgOperation;
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
-	}
-
-	@Override
-	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
+	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
-		JavaCodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
+		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
+		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
 			contextVariable.setIsRequired(false); 				// May be null for test
@@ -71,13 +69,13 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		cgParameters.add(codeGenerator.createExecutorParameter());
 		cgParameters.add(codeGenerator.createTypeIdParameter());
 		if (contextVariable != null) {
-			CGParameter cgContext = nameManager.getParameter(contextVariable, (String)null);			// XXX getSelf ???
+			CGParameter cgContext = operationNameManager.getParameter(contextVariable, (String)null);			// XXX getSelf ???
 			cgContext.setIsSelf(true);
-			cgContext.setTypeId(codeGenerator.getAnalyzer().getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
+			cgContext.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgParameters.add(cgContext);
 		}
 		for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
-			CGParameter cgParameter = nameManager.getParameter(parameterVariable, (String)null);
+			CGParameter cgParameter = operationNameManager.getParameter(parameterVariable, (String)null);
 			cgParameters.add(cgParameter);
 		}
 	}
@@ -86,7 +84,14 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
-		appendDeclaration(cg2javaVisitor, js, cgOperation);
+		js.append("@Override\n");
+		js.append("public ");
+		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
+		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+		js.append(" ");
+		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+		js.append(" ");
+		js.appendValueName(cgOperation);
 		appendParameterList(js, cgOperation);
 		appendBody(cg2javaVisitor, js, body);
 		return true;

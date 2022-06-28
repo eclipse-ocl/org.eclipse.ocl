@@ -14,10 +14,8 @@ import java.lang.reflect.Method;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorNavigationProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
@@ -34,9 +32,11 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -52,16 +52,17 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 	public static final @NonNull ExecutorPropertyCallingConvention INSTANCE = new ExecutorPropertyCallingConvention();
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
-	//	return as2cgVisitor.getAnalyzer().getCGExecutorNavigationProperty(asProperty, this);
-		return CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
+		CGExecutorNavigationProperty cgProperty = CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
+		initProperty(analyzer, cgProperty, asTypedElement);
+		analyzer.addCGProperty(cgProperty);
+		return cgProperty;
 	}
 
 	@Override
-	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
+	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
-		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+		CodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		PropertyId propertyId = asProperty.getPropertyId();
 		CGElementId cgPropertyId = analyzer.getCGElementId(propertyId);
@@ -70,11 +71,12 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		Method jMethod = UnboxedExplicitNavigationProperty.CREATE_METHOD;
 		OperationCallingConvention supportOperationCallingConvention = SupportOperationCallingConvention.INSTANCE;
 		CGNativeOperationCallExp cgNativeOperationCallExp = analyzer.createCGNativeOperationCallExp(jMethod, supportOperationCallingConvention);
+//		cgNativeOperationCallExp.setAst(asPropertyCallExp);
 		cgNativeOperationCallExp.getArguments().add(analyzer.createCGConstantExp(cgPropertyId));
 		cgNativeOperationCallExp.setTypeId(analyzer.getCGTypeId(JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID));
 //		NameResolution nameResolution = cgProperty.getNameResolution();
 //		nameResolution.addCGElement(cgNativeOperationCallExp);
-		CGFinalVariable cgVariable = as2cgVisitor.getNameManager().createCGVariable(cgNativeOperationCallExp);
+		CGFinalVariable cgVariable = analyzer.useExecutableNameManager(asPropertyCallExp).createCGVariable(cgNativeOperationCallExp);
 		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorPropertyCallExp();
 		cgExecutorPropertyCallExp.setReferredProperty(cgProperty);
 		cgExecutorPropertyCallExp.setAsProperty(asProperty);

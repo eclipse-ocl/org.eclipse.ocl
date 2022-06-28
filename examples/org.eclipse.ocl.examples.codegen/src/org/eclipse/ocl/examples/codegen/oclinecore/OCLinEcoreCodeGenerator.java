@@ -32,13 +32,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
@@ -91,7 +88,6 @@ import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -506,9 +502,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	protected final @NonNull StandardLibraryInternal standardLibrary;
-	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final @NonNull GenPackage genPackage;
-	protected final @NonNull PivotHelper asHelper;
+	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull AnyType oclAnyType;
 	protected final @NonNull PrimitiveType booleanType;
 	protected final @NonNull PrimitiveType integerType;
@@ -522,9 +517,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		genModel.reconcile();
 		metamodelManager.addGenModel(genModel);
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
-		this.cgAnalyzer = new CodeGenAnalyzer(this);
+		this.analyzer = createCodeGenAnalyzer();
 		this.genPackage = genPackage;
-		asHelper = new PivotHelper(environmentFactory);
 		this.oclAnyType = standardLibrary.getOclAnyType();
 		this.booleanType = standardLibrary.getBooleanType();
 		this.integerType = standardLibrary.getIntegerType();
@@ -535,23 +529,28 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
-		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
-		cgAnalyzer.setCGRootClass(cgClass);
+		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();			// Regularize as tx from AS
+		analyzer.setCGRootClass(cgClass);
+	}
+
+	@Override
+	public @NonNull AS2CGVisitor createAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
+		return new OCLinEcoreAS2CGVisitor(analyzer);
 	}
 
 	@Override
 	public @NonNull BoxingAnalyzer createBoxingAnalyzer() {
-		return new EcoreBoxingAnalyzer(cgAnalyzer);
+		return new EcoreBoxingAnalyzer(analyzer);
+	}
+
+	@Override
+	protected @NonNull CodeGenAnalyzer createCodeGenAnalyzer() {
+		return new OCLinEcoreAnalyzer(this);
 	}
 
 	@Override
 	public @NonNull ImportNameManager createImportNameManager() {
 		return new OCLinEcoreImportNameManager();
-	}
-
-	@Override
-	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
-		return new OCLinEcoreNestedNameManager(this, outerNameManager, cgScope);
 	}
 
 	protected void generate(@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body, @NonNull Map<GenPackage, String> constantsTexts, @NonNull Map<@NonNull Feature, @NonNull GenTypedElement> foreignFeatures) {
@@ -560,9 +559,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			EPackage ecorePackage = genPackage.getEcorePackage();
 			org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
 			assert asPackage != null;
-			AS2CGVisitor as2cgVisitor = new OCLinEcoreAS2CGVisitor(this);
-			CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
-			as2cgVisitor.freeze();
+			CGPackage cgPackage = analyzer.createCGElement(CGPackage.class, asPackage);
+	//		cgAnalyzer.freeze();
 			optimize(cgPackage);
 			Iterable<@NonNull CGValuedElement> sortedGlobals = pregenerate(cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);
@@ -573,7 +571,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	//		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 			String constantsText = cg2java.generateConstants(sortedGlobals);
 			constantsTexts.put(genPackage, constantsText);
-			Iterable<@NonNull Feature> foreignFeatures2 = cgAnalyzer.getExternalFeatures();
+			Iterable<@NonNull Feature> foreignFeatures2 = analyzer.getExternalFeatures();
 			if (foreignFeatures2 != null) {
 				for (@NonNull Feature foreignFeature : foreignFeatures2) {
 					if (foreignFeature instanceof Operation) {
@@ -595,6 +593,10 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			for (Map.Entry<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> entry : newQuery2oldQuery2.entrySet()) {
 				ExpressionInOCL newQuery = entry.getKey();
 				ExpressionInOCL oldQuery = entry.getValue();
+//				System.out.println("key2: " + NameUtil.debugSimpleName(newQuery) + " : " + NameUtil.debugSimpleName(newQuery.eContainer()) + " : " + newQuery);
+//				System.out.println("val2: " + NameUtil.debugSimpleName(oldQuery) + " : " + NameUtil.debugSimpleName(oldQuery.eContainer()) + " : " + oldQuery);
+				assert newQuery.eContainer() != null;
+				assert oldQuery.eContainer() == null;
 				Constraint eContainer = (Constraint) newQuery.eContainer();
 				PivotUtilInternal.resetContainer(newQuery);
 				eContainer.setOwnedSpecification(oldQuery);
@@ -605,8 +607,9 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 	@Override
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
-		return cgAnalyzer;
+		return analyzer;
 	}
+
 	@Override
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
@@ -622,6 +625,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	protected @NonNull ExpressionInOCL rewriteQuery(@NonNull ExpressionInOCL oldQuery) {
+		assert oldQuery.eContainer() != null;
 		OCLExpression oldBody = oldQuery.getOwnedBody();
 		if ((oldBody instanceof BooleanLiteralExp) && ((BooleanLiteralExp)oldBody).isBooleanSymbol()) {
 			return oldQuery;		// Unconditionally true (typically obsolete) constraint needs no added complexity
@@ -698,14 +702,20 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//
 		asSynthesizedQuery.setOwnedBody(asHelper.createLetExp(asSeverityVariable, asSeverityExpression));
 		//
-		//	Install replacment query in the original Constraint.
+		//	Install replacement query in the original Constraint.
 		//
 		Constraint eContainer = (Constraint) oldQuery.eContainer();
 		PivotUtilInternal.resetContainer(oldQuery);
 		eContainer.setOwnedSpecification(asSynthesizedQuery);
 		Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery2 = newQuery2oldQuery;
 		assert newQuery2oldQuery2 != null;
+//		System.out.println("key1: " + NameUtil.debugSimpleName(asSynthesizedQuery) + " : " + NameUtil.debugSimpleName(asSynthesizedQuery.eContainer()) + " : " + asSynthesizedQuery);
+//		System.out.println("val1: " + NameUtil.debugSimpleName(oldQuery) + " : " + NameUtil.debugSimpleName(oldQuery.eContainer()) + " : " + oldQuery);
+		assert !newQuery2oldQuery2.containsKey(asSynthesizedQuery);
+		assert !newQuery2oldQuery2.containsKey(oldQuery);
 		newQuery2oldQuery2.put(asSynthesizedQuery, oldQuery);
+		assert asSynthesizedQuery.eContainer() != null;
+		assert oldQuery.eContainer() == null;
 		return asSynthesizedQuery;
 	}
 

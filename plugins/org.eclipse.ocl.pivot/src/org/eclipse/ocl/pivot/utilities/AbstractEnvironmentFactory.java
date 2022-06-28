@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -155,6 +156,21 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		@Override
 		public @Nullable Invocations resolveInvocations(@NonNull Type requiredSourceType, boolean hasExplicitSourceExp, @NonNull String qualifiedOperationName) {
 			throw new IllegalStateException();
+		}
+
+		@Override
+		public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(@NonNull Feature asFeature) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public org.eclipse.ocl.pivot.@NonNull Class getNativeClass(Class<?> jClass) {
+			throw new UnsupportedOperationException();
 		}
 	};
 

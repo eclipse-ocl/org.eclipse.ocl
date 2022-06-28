@@ -44,6 +44,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVis
 import org.eclipse.ocl.examples.codegen.cse.GlobalPlace;
 import org.eclipse.ocl.examples.codegen.cse.SimpleAnalysis;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.types.CGIdVisitor;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -51,7 +53,6 @@ import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
-import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -367,7 +368,7 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + visitable.getClass().getSimpleName());
 	}
 
-	public class Id2DependencyVisitor implements IdVisitor<@Nullable Object>
+	public class Id2DependencyVisitor implements CGIdVisitor<@Nullable Object>
 	{
 		@Override
 		public @Nullable Object visitClassId(final @NonNull ClassId id) {
@@ -407,6 +408,11 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 		@Override
 		public @Nullable Object visitInvalidId(@NonNull OclInvalidTypeId id) {
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitJavaTypeId(@NonNull JavaTypeId id) {
 			return null;
 		}
 

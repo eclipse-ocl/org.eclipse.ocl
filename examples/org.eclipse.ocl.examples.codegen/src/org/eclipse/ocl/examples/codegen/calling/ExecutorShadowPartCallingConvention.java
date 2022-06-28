@@ -12,13 +12,14 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 
@@ -38,7 +39,9 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 		CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)cgProperty;
 		js.appendDeclaration(cgExecutorShadowPart);
 		js.append(" = ");
-		js.appendValueName(cg2javaVisitor.getCodeGenerator().getGlobalNameManager().findNestedNameManager(cgExecutorShadowPart).getIdResolverVariable());
+		CodeGenAnalyzer analyzer = cg2javaVisitor.getCodeGenerator().getAnalyzer();
+		ExecutableNameManager selfNameManager = analyzer.getGlobalNameManager().useSelfExecutableNameManager(cgExecutorShadowPart);
+		js.appendValueName(selfNameManager.getIdResolverVariable());
 		js.append(".getProperty(");
 		js.appendIdReference(cgExecutorShadowPart.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");
@@ -46,11 +49,8 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 	}
 
 	@Override
-	public @NonNull CGValuedElement createCGNavigationCallExp(
-			@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
-			@NonNull LibraryProperty libraryProperty,
-			@Nullable CGValuedElement cgSource,
-			@NonNull NavigationCallExp asPropertyCallExp) {
+	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
+			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}

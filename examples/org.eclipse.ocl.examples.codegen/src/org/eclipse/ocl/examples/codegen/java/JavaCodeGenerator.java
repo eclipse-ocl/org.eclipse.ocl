@@ -24,18 +24,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
@@ -79,6 +75,16 @@ import org.eclipse.ocl.examples.codegen.java.types.BoxedDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EcoreDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.Id2BoxedDescriptorVisitor;
 import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
+import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.naming.NameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
+import org.eclipse.ocl.examples.codegen.naming.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.examples.codegen.utilities.AbstractCGModelResourceFactory;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResource;
@@ -101,6 +107,7 @@ import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -226,6 +233,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private /*@LazyNonNull*/ GlobalPlace globalPlace = null;
 	private @NonNull Map<ElementId, BoxedDescriptor> boxedDescriptors = new HashMap<ElementId, BoxedDescriptor>();
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
+	private/* @LazyNonNull*/ JavaLanguageSupport javaLanguageSupport = null;
 
 	private final @NonNull NameVariant BODY_NameVariant;
 	private final @NonNull NameVariant IMPL_NameVariant;
@@ -250,6 +258,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	@Override
+	public @NonNull AS2CGVisitor createAS2CGVisitor(@NonNull CodeGenAnalyzer codeGenAnalyzer) {
+		return new AS2CGVisitor(codeGenAnalyzer);
+	}
+
+	@Override
 	public @NonNull BoxingAnalyzer createBoxingAnalyzer() {
 		return new BoxingAnalyzer(getAnalyzer());
 	}
@@ -267,15 +280,24 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new CG2JavaPreVisitor(this);
 	}
 
-	protected void createConstrainedOperations(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGClass cgClass) {
+	public @NonNull ClassNameManager createClassNameManager(@NonNull ClassableNameManager outerNameManager, @NonNull CGClass cgClass) {
+		return new ClassNameManager(this, outerNameManager, cgClass);
+	}
+
+	protected @NonNull CodeGenAnalyzer createCodeGenAnalyzer() {
+		return new CodeGenAnalyzer(this);
+	}
+
+	protected void createConstrainedOperations(@NonNull CGClass cgClass) {
 		Iterable<@NonNull Operation> constrainedOperations = getConstrainedOperations();
 		if (constrainedOperations != null) {
+			CodeGenAnalyzer analyzer2 = getAnalyzer();
 			for (@NonNull Operation constrainedOperation : constrainedOperations) {		// FIXME recurse for nested calls
-				CGNamedElement cgOperation = constrainedOperation.accept(as2cgVisitor);
-				cgClass.getOperations().add((CGOperation)cgOperation);
+			//	CGNamedElement cgOperation = constrainedOperation.accept(as2cgVisitor);
+				CGOperation cgOperation = analyzer2.createCGElement(CGOperation.class, constrainedOperation);
+				cgClass.getOperations().add(cgOperation);
 			}
 		}
-
 	}
 
 	@Override
@@ -291,6 +313,22 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		executorParameter.setNonInvalid();
 		executorParameter.setNonNull();
 		return executorParameter;
+	}
+
+	public @NonNull ExecutableNameManager createConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
+		return new ExecutableNameManager(classNameManager, classNameManager, cgConstraint);
+	}
+
+	public @NonNull ExecutableNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull ExecutableNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
+		return new ExecutableNameManager(classNameManager, parentNameManager, cgIterationCallExp);
+	}
+
+	public @NonNull ExecutableNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
+		return new ExecutableNameManager(classNameManager, classNameManager, cgOperation);
+	}
+
+	public @NonNull ExecutableNameManager createPropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
+		return new ExecutableNameManager(classNameManager, classNameManager, cgProperty);
 	}
 
 	@Override
@@ -329,8 +367,13 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new NameManagerHelper();
 	}
 
-	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
-		return new NestedNameManager(this, outerNameManager, cgScope);
+	public @NonNull PackageNameManager createPackageNameManager(@Nullable PackageNameManager outerNameManager, @NonNull CGPackage cgPackage) {
+		if (outerNameManager != null) {
+			return new PackageNameManager(this, outerNameManager, cgPackage);
+		}
+		else {
+			return new PackageNameManager(this, globalNameManager, cgPackage);
+		}
 	}
 
 	@Override
@@ -397,7 +440,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			}
 			else if (eContainer instanceof CGVariable) {
 				NameResolution containerNameResolution = ((CGValuedElement)eContainer).basicGetNameResolution();
-				if (containerNameResolution != containerNameResolution) {
+				if (containerNameResolution != containerNameResolution) {			// XXX redundant / typo
 					System.out.println("Bad " + NameUtil.debugSimpleName(nameResolution) + " for " + NameUtil.debugSimpleName(cgElement) + " below " + NameUtil.debugSimpleName(((CGValuedElement)eContainer).basicGetNameResolution()) + " for " + NameUtil.debugSimpleName(eContainer));		// XXX YYY
 				}
 				assert (nameResolution == containerNameResolution);
@@ -557,6 +600,15 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 	}
 
+	public @NonNull LanguageSupport getLanguageSupport() {
+		JavaLanguageSupport javaLanguageSupport2 = javaLanguageSupport;
+		if (javaLanguageSupport2 == null) {
+			javaLanguageSupport = javaLanguageSupport2 = (JavaLanguageSupport)environmentFactory.getLanguageSupport("java");
+			assert javaLanguageSupport2 != null;
+		}
+		return javaLanguageSupport2;
+	}
+
 	public @Nullable Method getLeastDerivedMethod(@NonNull Class<?> requiredClass, @NonNull String getAccessor) {
 		Method leastDerivedMethod = getLeastDerivedMethodInternal(requiredClass, getAccessor);
 		if (leastDerivedMethod != null) {
@@ -615,6 +667,14 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		return nameResolution;
 	} */
+
+//	@Override
+	public @NonNull String getNestedClassName(org.eclipse.ocl.pivot.@NonNull Feature asFeature) {
+		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
+		s.append(JavaConstants.NESTED_CLASS_PREFIX);
+		s.appendAndEncodeQualifiedName(asFeature);
+		return s.toString();
+	}
 
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert false : "Unsupported getQualifiedForeignClassName";
@@ -770,7 +830,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	protected void optimize(@NonNull CGPackage cgPackage) {
 		NameResolution.inhibitNameResolution = true;
 		CGModelResource resource = getCGResourceFactory().createResource(URI.createURI("cg.xmi"));
-		resource.getContents().add(cgPackage);
+		resource.getContents().add(EcoreUtil.getRootContainer(cgPackage));								// Nested GenModel has nested 'roots'
 		getAnalyzer().analyze(cgPackage);
 		CG2JavaPreVisitor cg2PreVisitor = createCG2JavaPreVisitor();
 		cgPackage.accept(cg2PreVisitor);
@@ -808,7 +868,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	/**
-	 * Propagate the parennt name hint down to the descendants of cgElement so that initializers for variables use a name
+	 * Propagate the parent name hint down to the descendants of cgElement so that initializers for variables use a name
 	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
 	 */
 	protected void propagateNameResolution(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
@@ -820,10 +880,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					CGVariable cgVariable = (@NonNull CGVariable)cgElement;
 					NameResolution nameResolution = cgVariable.basicGetNameResolution();
 					if (nameResolution == null) {
-						if (cgVariable.toString().contains("create('pkg'::A::bs)")) {
-							getClass();		// XXX
-						}
-						NestedNameManager nestedNameManager = globalNameManager.findNestedNameManager(cgVariable);
+						NestedNameManager nestedNameManager = globalNameManager.useSelfNestedNameManager(cgVariable);
 						nameResolution = nestedNameManager.getNameResolution(cgVariable);
 					}
 					propagateNameResolution(cgChild, nameResolution);
@@ -857,13 +914,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						parentNameResolution.addCGElement(cgValuedElement2);
 					}
 					else {
-						NestedNameManager nameManager = globalNameManager.basicFindNestedNameManager(cgValuedElement2);
-						if (nameManager != null) {
-							nameResolution = nameManager.getNameResolution(cgValuedElement2);
-						}
-						else {
-							nameResolution = globalNameManager.getNameResolution(cgValuedElement2);
-						}
+						NameManager nameManager = globalNameManager.useSelfNameManager(cgValuedElement2);
+						nameResolution = nameManager.getNameResolution(cgValuedElement2);
 					}
 				}
 				if (nameResolution != null) {
@@ -876,7 +928,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-							NestedNameManager localNameManager = globalNameManager.findNestedNameManager(cgValuedElement);
+							NestedNameManager localNameManager = globalNameManager.useSelfExecutableNameManager(cgValuedElement);
 							localNameManager.getNameResolution(cgValuedElement);		// XXX redundant ??
 						}
 					}

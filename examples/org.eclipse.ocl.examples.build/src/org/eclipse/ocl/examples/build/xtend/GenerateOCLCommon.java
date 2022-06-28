@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -215,23 +216,53 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		private final @NonNull List<@NonNull TemplateSignature> sortedTemplateSignatures = new ArrayList<>();
 		private final @NonNull List<@NonNull TemplateableElement> sortedTemplateableElements = new ArrayList<>();
 		private final @NonNull List<@NonNull TupleType> sortedTupleTypes = new ArrayList<>();
+	//	private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> zzexternalClasses = new HashSet<>();
+		/**
+		 * All (derived) classes defined by the generated model.
+		 */
 		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> internalClasses = new HashSet<>();
-		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> externalClasses = new HashSet<>();
+		/**
+		 * All (derived) classes delegated from the generated model to a pre-existing library model.
+		 */
+		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> libraryClasses = new HashSet<>();
 		private final @NonNull Set<@NonNull NamedElement> allReferences = new HashSet<>();
 
 		protected ContentAnalysis(@NonNull GenerateOCLCommon context) {
 			super(context);
 		}
 
+		public void addLibraryClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass(asClass);
+			for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : completeClass.getPartialClasses()) {
+				libraryClasses.add(asPartialClass);
+			}
+			context.addExternalReference(asClass, context.thisModel);
+		}
+
 		protected void analyze(@NonNull Model thisModel) {
-			for (NamedElement asElement : context.external2name.keySet()) {
+		//	int nonOrphanPackages = 0;
+			for (org.eclipse.ocl.pivot.Package asPackage : thisModel.getOwnedPackages()) {
+				if (!Orphanage.isOrphanage(asPackage)) {
+					for (org.eclipse.ocl.pivot.Class asClass : asPackage.getOwnedClasses()) {
+						CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass(asClass);
+						String prefix = "_"+context.partialName(asClass);
+						String symbolName = context.getPrefixedSymbolNameWithoutNormalization(asClass, prefix);
+						if (!libraryClasses.contains(asClass)) {
+							for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : completeClass.getPartialClasses()) {
+								internalClasses.add(asPartialClass);
+							}
+						}
+					}
+				}
+			}
+	/*		for (NamedElement asElement : context.external2name.keySet()) {
 				if (asElement instanceof org.eclipse.ocl.pivot.Class) {
 					CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass((org.eclipse.ocl.pivot.Class)asElement);
 					for (org.eclipse.ocl.pivot.@NonNull Class  asPartialClass : completeClass.getPartialClasses()) {
 						externalClasses.add(asPartialClass);
 					}
 				}
-			}
+			} */
 			for (@NonNull EObject eObject : new TreeIterable(thisModel, true)) {
 				((Element)eObject).accept(this);
 			}
@@ -292,6 +323,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					context.addExternalReference(asNamedElement, thisModel);
 				}
 			}
+		//	assert internalClasses.equals(internalClasses2);
+		//	assert externalClasses.equals(externalClasses2);
 		}
 
 		protected void doSuperClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -346,12 +379,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			if (asClass.isTemplateParameter() != null) {			// FIXME can never happen
 				sortedParameterTypes.add(asClass);
 			}
-			else if (!externalClasses.contains(asClass)){
-				CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass(asClass);
-				for (org.eclipse.ocl.pivot.@NonNull Class  asPartialClass : completeClass.getPartialClasses()) {
-					internalClasses.add(asPartialClass);
-				}
-			}
 			doSuperClasses(asClass);
 			doTemplateableElement(asClass);
 			return null;
@@ -374,7 +401,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		@Override
 		public @Nullable Object visitComment(@NonNull Comment asComment) {
 			Element owningElement = asComment.getOwningElement();
-			if (!externalClasses.contains(owningElement)) {
+			if (!libraryClasses.contains(owningElement)) {
 				sortedCommentedElements.add(owningElement);
 			}
 			return null;
@@ -561,7 +588,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitTypedElement(@NonNull TypedElement asTypedElement) {
-			allReferences.add(asTypedElement.getType());
+			Type type = asTypedElement.getType();
+			allReferences.add(type);
 			return null;
 		}
 	}
@@ -625,14 +653,12 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		if (reference == null) {
 			return;
 		}
+		assert !contentAnalysis.internalClasses.contains(reference);
 		Model containingModel = PivotUtil.getContainingModel(reference);
 		if ((containingModel == root) || external2name.containsKey(reference) || Orphanage.isOrphanage(containingModel)) {
 			return;
 		}
 		if (reference instanceof Model) {
-			return;
-		}
-		if (contentAnalysis.internalClasses.contains(reference)) {
 			return;
 		}
 		//		boolean hasComplements = false;
@@ -705,8 +731,26 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 	}
 
+	/**
+	 * Configure asClass for use from a pre-existing library.
+	 * <br>
+	 * This is used to ensure that the MetaModel redefinition of e.g. Boolean delegates to the OCLstdlib definition.
+	 */
+	public void addLibraryClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		contentAnalysis.addLibraryClass(asClass);
+	}
+
 	public void addGeneratedClassNameMap(Mapping mapping) {
 		generatedClassNameMap.put(mapping.getFrom(), mapping.getTo());
+	}
+
+	protected org.eclipse.ocl.pivot.@Nullable Package basicGetOrphanPackage(@NonNull Model asModel) {
+		for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(asModel)) {
+			if (PivotConstants.ORPHANAGE_NAME.equals(asPackage.getName())) {
+				return asPackage;
+			}
+		}
+		return null;
 	}
 
 	protected @NonNull ContentAnalysis createContentAnalysis() {
@@ -798,13 +842,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return getOrphanPackage(getRootPackage(elem));
 	}
 
-	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Model elem) {
-		for (org.eclipse.ocl.pivot.@NonNull Package pkg : PivotUtil.getOwnedPackages(elem)) {
-			if (PivotConstants.ORPHANAGE_NAME.equals(pkg.getName())) {
-				return pkg;
-			}
-		}
-		throw new IllegalStateException();
+	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Model asModel) {
+		return ClassUtil.nonNullState(basicGetOrphanPackage(asModel));
 	}
 
 	protected @NonNull String getPartialName(@NonNull Property property) {
@@ -937,12 +976,15 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return externalPackages;
 	}
 
-	protected @NonNull List<String> getSortedExternals(@NonNull Model root) {
-		List<NamedElement> sortedExternals = new ArrayList<>(name2external.values());
+	protected @NonNull List<@NonNull String> getSortedExternals(@NonNull Model root) {
+		List<@NonNull NamedElement> sortedExternals = new ArrayList<>(name2external.values());
 		Collections.sort(sortedExternals, externalComparator);
-		List<String> sortedExternalNames = new ArrayList<>(sortedExternals.size());
-		for (NamedElement sortedExternal : sortedExternals) {
-			sortedExternalNames.add(external2name.get(sortedExternal));
+		List<@NonNull String> sortedExternalNames = new ArrayList<>(sortedExternals.size());
+		for (@NonNull NamedElement sortedExternal : sortedExternals) {
+			String name = external2name.get(sortedExternal);
+			if (name != null) {
+				sortedExternalNames.add(name);
+			}
 		}
 		return sortedExternalNames;
 	}
@@ -1156,74 +1198,76 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	 * local copy had been corrupted to point at the local.
 	 */
 	protected void initOrphanSymbolNames(@NonNull ASSaverWithInverse asSaver) {
-		org.eclipse.ocl.pivot.Package localOrphanage = getOrphanPackage(thisModel);
-		for (EObject localOrphan : new TreeIterable(localOrphanage, true)) {
-			StringBuilder s = new StringBuilder();
-			if (localOrphan instanceof CollectionType) {
-				CollectionType type = (CollectionType)localOrphan;
-				s.append("_" + type.getName());
-				s.append("_" + partialName(type.getElementType()));
-				s.append("_" + (type.isIsNullFree() ? "T" : "F"));
-				if (type.getLowerValue() != ValueUtil.ZERO_VALUE) {
-					s.append("_L" + type.getLowerValue());
+		org.eclipse.ocl.pivot.Package localOrphanage = basicGetOrphanPackage(thisModel);
+		if (localOrphanage != null) {
+			for (EObject localOrphan : new TreeIterable(localOrphanage, true)) {
+				StringBuilder s = new StringBuilder();
+				if (localOrphan instanceof CollectionType) {
+					CollectionType type = (CollectionType)localOrphan;
+					s.append("_" + type.getName());
+					s.append("_" + partialName(type.getElementType()));
+					s.append("_" + (type.isIsNullFree() ? "T" : "F"));
+					if (type.getLowerValue() != ValueUtil.ZERO_VALUE) {
+						s.append("_L" + type.getLowerValue());
+					}
+					if (type.getUpperValue() != ValueUtil.UNLIMITED_VALUE) {
+						s.append("_U" + type.getUpperValue());
+					}
 				}
-				if (type.getUpperValue() != ValueUtil.UNLIMITED_VALUE) {
-					s.append("_U" + type.getUpperValue());
+				else if (localOrphan instanceof LambdaType) {
+					LambdaType type = (LambdaType)localOrphan;
+					s.append("_" + type.getName());
+					s.append("_" + partialName(type.getContextType()));
+					for (Type parameterType : type.getParameterTypes()) {
+						s.append("_" + partialName(parameterType));
+					}
+					s.append("_" + partialName(type.getResultType()));
 				}
-			}
-			else if (localOrphan instanceof LambdaType) {
-				LambdaType type = (LambdaType)localOrphan;
-				s.append("_" + type.getName());
-				s.append("_" + partialName(type.getContextType()));
-				for (Type parameterType : type.getParameterTypes()) {
-					s.append("_" + partialName(parameterType));
+				else if (localOrphan instanceof MapType) {
+					MapType type = (MapType)localOrphan;
+					s.append("_" + type.getName());
+					s.append("_" + partialName(type.getKeyType()));
+					s.append("_" + (type.isKeysAreNullFree() ? "T" : "F"));
+					s.append("_" + partialName(type.getValueType()));
+					s.append("_" + (type.isValuesAreNullFree() ? "T" : "F"));
 				}
-				s.append("_" + partialName(type.getResultType()));
-			}
-			else if (localOrphan instanceof MapType) {
-				MapType type = (MapType)localOrphan;
-				s.append("_" + type.getName());
-				s.append("_" + partialName(type.getKeyType()));
-				s.append("_" + (type.isKeysAreNullFree() ? "T" : "F"));
-				s.append("_" + partialName(type.getValueType()));
-				s.append("_" + (type.isValuesAreNullFree() ? "T" : "F"));
-			}
-			else if (localOrphan instanceof Property) {
-				s.append("_" + partialName(localOrphan));
-			}
-		//	else if (localOrphan instanceof TemplateParameter) {
-		//		TemplateParameter type = (TemplateParameter)localOrphan;
-		//		s.append("tp_" + type.getTemplateParameterId().getIndex());
-		//	}
-			else if (localOrphan instanceof TupleType) {
-				s.append("_" + partialName(localOrphan));
-			}
-			else if (localOrphan instanceof TemplateBinding) {
-			}
-			else if (localOrphan instanceof TemplateParameterSubstitution) {
-			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
-				s.append("orphanClass");
-			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {
-				s.append("orphanPackage");
-			}
-			else {
-				System.out.println("Unexpected localOrphan: " + NameUtil.debugSimpleName(localOrphan));
-				s.append("_" + partialName(localOrphan));
-			}
-			if (s.length() > 0) {
-				String symbolName = getPrefixedSymbolName(localOrphan, s.toString());
-				EObject sharedOrphan = asSaver.basicGetSource(localOrphan);
-				if (sharedOrphan != null) {
-					nameQueries.putSymbolName(sharedOrphan, symbolName);
+				else if (localOrphan instanceof Property) {
+					s.append("_" + partialName(localOrphan));
 				}
-				else if (localOrphan == localOrphanage) {
-					Orphanage sharedOrphanage = Orphanage.getOrphanage(environmentFactory.getCompleteModel().getOrphanage());
-					nameQueries.putSymbolName(sharedOrphanage, symbolName);
+			//	else if (localOrphan instanceof TemplateParameter) {
+			//		TemplateParameter type = (TemplateParameter)localOrphan;
+			//		s.append("tp_" + type.getTemplateParameterId().getIndex());
+			//	}
+				else if (localOrphan instanceof TupleType) {
+					s.append("_" + partialName(localOrphan));
+				}
+				else if (localOrphan instanceof TemplateBinding) {
+				}
+				else if (localOrphan instanceof TemplateParameterSubstitution) {
+				}
+				else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
+					s.append("orphanClass");
+				}
+				else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {
+					s.append("orphanPackage");
 				}
 				else {
-					System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);
+					System.out.println("Unexpected localOrphan: " + NameUtil.debugSimpleName(localOrphan));
+					s.append("_" + partialName(localOrphan));
+				}
+				if (s.length() > 0) {
+					String symbolName = getPrefixedSymbolName(localOrphan, s.toString());
+					EObject sharedOrphan = asSaver.basicGetSource(localOrphan);
+					if (sharedOrphan != null) {
+						nameQueries.putSymbolName(sharedOrphan, symbolName);
+					}
+					else if (localOrphan == localOrphanage) {
+						Orphanage sharedOrphanage = Orphanage.getOrphanage(environmentFactory.getCompleteModel().getOrphanage());
+						nameQueries.putSymbolName(sharedOrphanage, symbolName);
+					}
+					else {
+						System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);
+					}
 				}
 			}
 		}

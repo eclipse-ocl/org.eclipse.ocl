@@ -38,7 +38,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.ids.ElementId;
@@ -53,8 +53,11 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  */
 public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable Object, @NonNull CodeGenAnalyzer>
 {
+	protected final @NonNull GlobalNameManager globalNameManager;
+
 	public AnalysisVisitor(@NonNull CodeGenAnalyzer analyzer) {
 		super(analyzer);
+		this.globalNameManager = analyzer.getGlobalNameManager();
 	}
 
 	@Override
@@ -88,7 +91,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		CGValuedElement cgCondition = context.getCGExpression(cgIfExp.getCondition());
 		CGInvalid cgInvalidValue = cgCondition.getInvalidValue();
 		if (cgInvalidValue != null) {
-			CGUtil.replace(cgIfExp, context.createCGConstantExp(cgInvalidValue));
+			globalNameManager.replace(cgIfExp, context.createCGConstantExp(cgInvalidValue));
 		}
 		else if (cgCondition.isNull()) {
 			context.setCGConstant(cgIfExp, context.getCGInvalid("Null cgCondition"));
@@ -410,12 +413,10 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		TypeExp pTypeExp = (TypeExp) cgTemplateParameterExp.getAst();
 		Type referredType = pTypeExp.getReferredType();
 		if (referredType != null) {
-			NestedNameManager localNameManager = context.getGlobalNameManager().findNestedNameManager(cgTemplateParameterExp);
-			if (localNameManager != null) {
-				CGValuedElement cgTemplateableElement = cgTemplateParameterExp.getTemplateableElement();
-				//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());
-				cgTemplateParameterExp.getDependsOn().add(cgTemplateableElement);
-			}
+		//	NestedNameManager localNameManager = context.useSelfExecutableNameManager(cgTemplateParameterExp);
+			CGValuedElement cgTemplateableElement = cgTemplateParameterExp.getTemplateableElement();
+			//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());
+			cgTemplateParameterExp.getDependsOn().add(cgTemplateableElement);
 		}
 		return super.visitCGTemplateParameterExp(cgTemplateParameterExp);
 	}
@@ -434,12 +435,10 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		TypeExp pTypeExp = (TypeExp) cgTypeExp.getAst();
 		Type referredType = pTypeExp.getReferredType();
 		if (referredType != null) {
-			NestedNameManager localNameManager = context.getGlobalNameManager().findNestedNameManager(cgTypeExp);
-			if (localNameManager != null) {
-				CGExecutorType cgExecutorType = cgTypeExp.getExecutorType();
-				//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());
-				cgTypeExp.getDependsOn().add(cgExecutorType);
-			}
+		//	NestedNameManager localNameManager = context.useSelfExecutableNameManager(cgTypeExp);
+			CGExecutorType cgExecutorType = cgTypeExp.getExecutorType();
+			//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());
+			cgTypeExp.getDependsOn().add(cgExecutorType);
 		}
 		return super.visitCGTypeExp(cgTypeExp);
 	}

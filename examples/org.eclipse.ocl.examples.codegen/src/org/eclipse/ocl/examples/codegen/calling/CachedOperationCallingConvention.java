@@ -14,12 +14,9 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -57,7 +54,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 	public static final @NonNull CachedOperationCallingConvention INSTANCE = new CachedOperationCallingConvention();
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @Nullable Type asSourceType, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
 		assert metamodelManager.getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
@@ -85,7 +82,8 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 
 	//	CGOperation cgOperation2 = analyzer.basicGetFinalCGOperation(asOperation);
 	//	assert cgOperation2 == cgOperation;
-		analyzer.installOperation(asOperation, cgOperation, this);
+		initOperation(analyzer, cgOperation, asOperation);
+		analyzer.addCGOperation(cgOperation);
 		return cgOperation;
 
 
@@ -97,17 +95,16 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 	}
 
 	@Override
-	public @NonNull CGValuedElement createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
+	public @NonNull CGValuedElement createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		OCLExpression asSource = asOperationCallExp.getOwnedSource();
 	//	assert asSource != null;
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		Type sourceType = asSource != null ? asSource.getType() : null;
 	//	generateDeclarationHierarchy(as2cgVisitor, sourceType, asOperation);
-		Operation finalOperation = sourceType!= null ? as2cgVisitor.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType) : asOperation;	// FIXME cast
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
-		CGClass currentClass = nameManager.findCGScope();
-		assert currentClass != null;
+		Operation finalOperation = sourceType!= null ? analyzer.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType) : asOperation;	// FIXME cast
+	//	NestedNameManager nameManager = analyzer.getNameManager();
+	//	CGClass currentClass = nameManager.getCGClass();
 	//	CGOperationCallExp cgCallExp;
 		assert (finalOperation != null);
 	//	if (finalOperation != null) {
@@ -121,10 +118,10 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 			cgArguments.add(cgSource);
 			cgOperationCallExp.setThisIsSelf(false);
 			for (@NonNull OCLExpression asArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
-				CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
+				CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, asArgument);
 				cgArguments.add(cgArgument);
 			}
-			as2cgVisitor.initAst(cgOperationCallExp, asOperationCallExp);
+			analyzer.initAst(cgOperationCallExp, asOperationCallExp);
 	//	} else {
 	//		Iterable<@NonNull Operation> overrides = as2cgVisitor.getMetamodelManager().getFinalAnalysis().getOverrides(asOperation);
 	//		cgCallExp = cachedOperationCall(as2cgVisitor, asOperationCallExp, currentClass, cgSource, asOperation, overrides);

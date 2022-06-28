@@ -26,7 +26,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaPreVisitor;
 import org.eclipse.ocl.examples.autogen.java.AutoCodeGenerator;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModel;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -68,7 +67,6 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	public static final @NonNull String MATCHES_OP_NAME = "matches";
 	public static final @NonNull String ELEMENT_NAME = "element";
 
-	protected final @NonNull AS2CGVisitor as2cgVisitor;
 	protected final @NonNull String lookupPackageName;
 	protected final @Nullable String superLookupPackageName;
 	protected final @NonNull String baseLookupPackage;
@@ -100,11 +98,11 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		this.baseLookupPackage = baseLookupPackage != null ? baseLookupPackage :
 			superLookupPackageName != null ? superLookupPackageName :
 				lookupPackageName;
-		this.as2cgVisitor = createAS2CGVisitor();
+	//	this.as2cgVisitor = createAS2CGVisitor();
 		this.asPackages = createASPackages();
-		globalNameManager.declareGlobalName(null, APPLIES_FILTER_OP_PREFIX);
-		globalNameManager.declareGlobalName(null, ELEMENT_NAME);
-		globalNameManager.declareGlobalName(null, MATCHES_OP_NAME);
+		globalNameManager.declareEagerName(null, APPLIES_FILTER_OP_PREFIX);
+		globalNameManager.declareEagerName(null, ELEMENT_NAME);
+		globalNameManager.declareEagerName(null, MATCHES_OP_NAME);
 	}
 
 	private @NonNull List<org.eclipse.ocl.pivot.Package> createASPackages() {
@@ -224,7 +222,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 			cgModel.getPackages().add(cgPackage);
 			cgPackage.setAst(asPackage);
-			cgPackage.setName(asPackage.getName());
+			globalNameManager.declareEagerName(cgPackage, asPackage.getName());
 			convertClasses(cgPackage, asPackage.getOwnedClasses());
 		}
 
@@ -236,7 +234,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
 			cgPackage.getClasses().add(cgClass);
 			cgClass.setAst(asClass);
-			cgClass.setName(asClass.getName());
+			globalNameManager.declareEagerName(cgClass, PivotUtil.getName(asClass));
 			convertProperties(cgClass, asClass.getOwnedProperties());
 			convertOperations(cgClass, asClass.getOwnedOperations());
 			convertSuperTypes(cgClass);
@@ -249,7 +247,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		List<Operation> sortedOperations = new ArrayList<Operation>(asOperations);
 		Collections.sort(sortedOperations, NameUtil.NAMEABLE_COMPARATOR);
 		for (Operation asOperation : sortedOperations) {
-			CGOperation cgOperation = as2cgVisitor.doVisit(CGOperation.class, asOperation);
+			CGOperation cgOperation = analyzer.createCGElement(CGOperation.class, asOperation);
 			cgClass.getOperations().add(cgOperation);
 		}
 	}
@@ -259,7 +257,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	 */
 	protected void convertProperties(@NonNull CGClass cgClass, @NonNull List<Property> asProperties) {
 		for (Property asProperty : asProperties) {
-			CGProperty cgProperty = as2cgVisitor.doVisit(CGProperty.class, asProperty);
+			CGProperty cgProperty = analyzer.createCGElement(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 			if (filteringProps.contains(asProperty)) {
 				List<CGProperty> cgProps = cgClass2cgFilteringProps.get(cgClass);
@@ -329,7 +327,8 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		// accesses
 		if (cgEvaluatorVariable == null) {
 			Property prop = createNativeProperty(globalNameManager.getExecutorName(), Executor.class, true, true);
-			cgEvaluatorVariable = as2cgVisitor.visitProperty(prop);
+		//	cgEvaluatorVariable = cgAnalyzer.getAS2CGVisitor().visitProperty(prop);
+			cgEvaluatorVariable = analyzer.createCGElement(CGProperty.class, prop);
 		}
 		return ClassUtil.nonNullState(cgEvaluatorVariable);
 	}
@@ -341,7 +340,8 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		// accesses
 		if (cgIdResolverVariable == null) {
 			Property prop = createNativeProperty(JavaConstants.ID_RESOLVER_NAME, IdResolver.class, true, true);
-			cgIdResolverVariable = as2cgVisitor.visitProperty(prop);
+		//	cgIdResolverVariable = analyzer.getAS2CGVisitor().visitProperty(prop);
+			cgIdResolverVariable = analyzer.createCGElement(CGProperty.class, prop);
 		}
 		return ClassUtil.nonNullState(cgIdResolverVariable);
 	}

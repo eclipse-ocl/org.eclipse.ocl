@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
@@ -18,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
 
 /**
  *  The SupportOperationCallingConvention defines the support for the call of a native (Java) operation
@@ -28,6 +32,25 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 public class SupportOperationCallingConvention extends NativeOperationCallingConvention
 {
 	public static final @NonNull SupportOperationCallingConvention INSTANCE = new SupportOperationCallingConvention();
+
+	/**
+	 * Java methods used by the code generator support that must use the SupportOperationCallingConvention.INSTANCE
+	 * to avoid inappropriate boxing / type conversion.
+	 */
+	private static final @NonNull Set<@NonNull Method> supportMethods = new HashSet<>();
+
+	public static @NonNull Method addSupportMethod(@NonNull Method jMethod) {
+		supportMethods.add(jMethod);
+		return jMethod;
+	}
+
+	static {
+		addSupportMethod(UnboxedExplicitNavigationProperty.CREATE_METHOD);
+	}
+
+	public boolean canHandle(@NonNull Method jMethod) {
+		return supportMethods.contains(jMethod);
+	}
 
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
