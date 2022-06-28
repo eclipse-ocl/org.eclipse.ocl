@@ -32,6 +32,7 @@
     <genDataTypes ecoreDataType="cgmodel.ecore#//LibraryOperation"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//LibraryProperty"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Method"/>
+    <genDataTypes ecoreDataType="cgmodel.ecore#//NameResolution"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Number"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Object"/>
     <genDataTypes ecoreDataType="cgmodel.ecore#//Operation"/>
@@ -213,7 +214,7 @@
     </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGNamedElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNamedElement/ast"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNamedElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNamedElement/nameResolution"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGNativeOperation"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGNativeOperationCallExp">

@@ -73,6 +73,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGLocalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
@@ -1082,6 +1083,9 @@ public class CGValuedElementModelSpec extends ModelSpec
 		public static final @NonNull Glo MPART = new Glo() { @Override public @NonNull String generateIsGlobal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return key.isGlobal() && value.isGlobal();";
 		}};
+		public static final @NonNull Glo NAME = new Glo() { @Override public @NonNull String generateIsGlobal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+			return "return true;";
+		}};
 		public static final @NonNull Glo PARTS = new Glo() { @Override public @NonNull String generateIsGlobal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "for (" + cgModelSpec.delegate + " cgPart : getParts()) {\n" +
 					"			if (!cgPart.isGlobal()) {\n" +
@@ -1106,7 +1110,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			return "return true;";
 		}};
 
-		public static MethodSpec isGlobal = new MyMethodSpec(CGValuedElement.class, "boolean isGlobal()", null,
+		public static MethodSpec isGlobal = new MyMethodSpec(CGNamedElement.class, "boolean isGlobal()", null,
 				"Return true if this value is a global constant (independent of the user type system).")
 		{
 			@Override
@@ -2274,6 +2278,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 	public static class Register {
 		public Register() {
 			new CGValuedElementModelSpec(CGElement.class, null,							null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , Rew.UNSUP, null    );
+
+			new CGValuedElementModelSpec(CGNamedElement.class, null,					null     , null     , null     , null     , null     , Glo.NAME , null     , null    , null     , null     , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , Rew.UNSUP, null    );
 
 			new CGValuedElementModelSpec(CGValuedElement.class, null,					Box.ROOT , Ths.ROOT , Log.ROOT , Nul.ROOT , Inv.ROOT , Glo.ROOT , Inl.ROOT , Set.FALSE, Ct.ROOT , Con.ROOT , Val.ROOT , null     , Ctx.FALSE, Ctl.CNTRL, Com.MAY  , Rew.VAREX, Eq.ROOT );
 
