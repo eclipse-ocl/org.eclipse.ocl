@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  *  CacheClassCallingConvention defines the style of a nested Class whose instance caches a feature computation.
@@ -33,6 +34,7 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 		String title = cgClass.getName() + " provides the Java implementation to cache evaluations of\n";
 		js.appendCommentWithOCL(title, cgClass.getAst());
 		js.append("protected static class " + className);
+		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
 		generateProperties(cg2javaVisitor, js, cgClass);
 		generateOperations(cg2javaVisitor, js, cgClass);
@@ -42,6 +44,7 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 
 	@Override
 	public @NonNull String getName(@NonNull AS2CGVisitor as2cgVisitor, @NonNull NamedElement asNamedElement) {
-		return as2cgVisitor.getCodeGenerator().getNestedClassName((Feature) asNamedElement);
+		Feature asFeature = (Feature)asNamedElement;
+		return "CACHE_" + ClassUtil.nonNullState(asFeature.getOwningClass()).getName() + "_" + asFeature.getName();
 	}
 }

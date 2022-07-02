@@ -45,6 +45,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
@@ -334,7 +335,7 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGCachedOperation(@NonNull CGCachedOperation object) {
-			return "CACHED_" + context.getNameHint(object.getAst());
+			return PivotUtil.getName(CGUtil.getAST(object));
 		}
 
 		@Override
@@ -479,6 +480,17 @@ public class NameManagerHelper
 			}
 			else {
 				return method.getName();
+			}
+		}
+
+		@Override
+		public @NonNull String visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgNavigationCallExp) {
+			Element asElement = cgNavigationCallExp.getAst();
+			if (asElement instanceof NamedElement) {
+				return context.getNameHint(asElement);
+			}
+			else {
+				return context.getNameHint(cgNavigationCallExp.getReferredProperty().getAst());
 			}
 		}
 

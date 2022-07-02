@@ -14,20 +14,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePartCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.internal.library.TuplePartProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 
 /**
@@ -35,14 +28,12 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  *   *  </br>
  *  e.g. as XXXTables.FOREIGN_qualified_class.FC_class.INSTANCE.evaluate(executor, arguments)
  */
-public class CachePropertyCallingConvention extends AbstractPropertyCallingConvention
+public abstract class AbstractCachePropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull CachePropertyCallingConvention INSTANCE = new CachePropertyCallingConvention();
-
 	@Override
 	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
-		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
+	/*	CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		boolean isRequired = asProperty.isIsRequired();
 		assert libraryProperty instanceof TuplePartProperty;
@@ -53,7 +44,8 @@ public class CachePropertyCallingConvention extends AbstractPropertyCallingConve
 		as2cgVisitor.initAst(cgPropertyCallExp, asPropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
-		return cgPropertyCallExp;
+		return cgPropertyCallExp; */
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -76,14 +68,22 @@ public class CachePropertyCallingConvention extends AbstractPropertyCallingConve
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
-		js.append("private ");
-		js.appendDeclaration(cgProperty);
+		js.append(" /*@NonInvalid*/ ");
+		js.getBoxedTypeRepresentation().appendClassReference(cgProperty.isRequired(), cgProperty);
+		js.append(" ");
+		js.appendValueName(cgProperty);
 		js.append(";\n");
 		return true;
 	}
 
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
-		throw new UnsupportedOperationException();
+	//	js.appendDeclaration(cgPropertyCallExp);
+	//	js.append(" = ");
+		js.appendValueName(cgPropertyCallExp.getSource());			// Always "this"
+		js.append(".");
+		js.appendReferenceTo(cgPropertyCallExp.getReferredProperty());
+	//	js.append(";\n");
+		return true;
 	}
 }

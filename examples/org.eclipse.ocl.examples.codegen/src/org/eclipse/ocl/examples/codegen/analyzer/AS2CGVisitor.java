@@ -506,7 +506,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 * Generate / share the CG declaration for asProperty.
 	 * @param callingConvention
 	 */
-	protected final @NonNull CGProperty generatePropertyDeclaration(@NonNull Property asProperty, @Nullable PropertyCallingConvention callingConvention) {
+	public final @NonNull CGProperty generatePropertyDeclaration(@NonNull Property asProperty, @Nullable PropertyCallingConvention callingConvention) {
 		CGProperty cgProperty = analyzer.basicGetCGProperty(asProperty);
 		if (cgProperty == null) {
 			if (callingConvention == null) {
@@ -828,6 +828,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgClass = generateClassDeclaration(asClass, null);
 		pushClassNameManager(cgClass);
+		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
+			CGClass cgSuperClass = doVisit(CGClass.class, asSuperClass);
+			cgClass.getSuperTypes().add(cgSuperClass);
+		}
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
 			cgClass.getInvariants().add(cgConstraint);
@@ -919,7 +923,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		NestedNameManager nameManager = getNameManager();
 		Variable contextVariable = query.getOwnedContext();
 		if (contextVariable != null) {
-			CGVariable cgContext = nameManager.getParameter(contextVariable, null);
+		//	CGVariable cgContext = nameManager.getParameter(contextVariable, null);
+			CGVariable cgContext = nameManager.getThisParameter(contextVariable);
 			cgContext.setNonInvalid();
 			//			cgContext.setNonNull();
 		}

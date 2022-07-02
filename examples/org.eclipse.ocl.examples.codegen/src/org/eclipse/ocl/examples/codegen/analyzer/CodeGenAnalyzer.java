@@ -519,17 +519,17 @@ public class CodeGenAnalyzer
 		return cgExternalClass;
 	}
 
-	public @NonNull CGClass createNestedCGClass(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Feature asExternalFeature, @NonNull ClassCallingConvention callingConvention) {
+	public @NonNull CGClass createNestedCGClass(@NonNull AS2CGVisitor as2cgVisitor, org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull ClassCallingConvention callingConvention) {
 	//	ImportNameManager importNameManager = codeGenerator.getImportNameManager();
 	//	org.eclipse.ocl.pivot.Class asExternalClass = PivotUtil.getOwningClass(asExternalFeature);
-		String nestedClassName = codeGenerator.getNestedClassName(asExternalFeature);
+		String nestedClassName = PivotUtil.getName(asClass); //codeGenerator.getNestedClassName(asExternalFeature);
 		CGClass cgNestedClass = name2cgNestedClass.get(nestedClassName);
 		assert cgNestedClass == null;
 	//	importNameManager.reserveLocalName(nestedClassName);
-		cgNestedClass = callingConvention.createCGClass(asExternalFeature);				// XXX Merge wrt generateClassDeclaration(
+		cgNestedClass = callingConvention.createCGClass(asClass);				// XXX Merge wrt generateClassDeclaration(
 		globalNameManager.declareGlobalName(cgNestedClass, nestedClassName);		// XXX nest in currentNameManager
 		cgNestedClass.setCallingConvention(callingConvention);
-		cgNestedClass.setAst(asExternalFeature);
+		cgNestedClass.setAst(asClass);
 		//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
 	//	cgExternalClasses.add(cgNestedClass);
 		name2cgNestedClass.put(nestedClassName, cgNestedClass);

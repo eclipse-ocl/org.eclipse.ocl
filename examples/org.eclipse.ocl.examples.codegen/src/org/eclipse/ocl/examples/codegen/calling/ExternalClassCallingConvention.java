@@ -37,6 +37,7 @@ public class ExternalClassCallingConvention extends AbstractClassCallingConventi
 		String title = cgClass.getName() + " provides the Java implementation for the additional non-Ecore features of\n";
 		js.appendCommentWithOCL(title, cgClass.getAst());
 		js.append("public static class " + className);
+		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
 		generateProperties(cg2javaVisitor, js, cgClass);
 		generateOperations(cg2javaVisitor, js, cgClass);

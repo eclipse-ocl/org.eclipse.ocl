@@ -257,4 +257,9 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 		return false;
 	}
 
+	@Override
+	public boolean isNonNull() {			// XXX why this irregularity ?
+		return isRequired();
+	}
+
 } //CGCachedOperationImpl

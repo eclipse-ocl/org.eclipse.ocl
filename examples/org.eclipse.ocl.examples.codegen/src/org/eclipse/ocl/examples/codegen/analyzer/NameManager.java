@@ -317,7 +317,7 @@ public abstract class NameManager
 		}
 
 		private boolean debugAllocatedName(@NonNull String name) {
-			if (name.contains("getCommonType")) {
+			if (name.contains("CACHED_OP")) {
 				getClass();			// XXX
 			}
 			return true;

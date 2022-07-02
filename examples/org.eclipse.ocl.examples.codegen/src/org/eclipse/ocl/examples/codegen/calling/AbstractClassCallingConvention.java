@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -26,6 +27,21 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractClassCallingConvention implements ClassCallingConvention
 {
+	protected void appendSuperTypes(@NonNull JavaStream js, @NonNull CGClass cgClass) {
+		boolean isFirst = true;
+		for (@NonNull CGClass cgSuperClass : CGUtil.getSuperTypes(cgClass)) {
+			if (isFirst) {
+				js.append(" extends ");
+			}
+			else {
+				js.append(", ");
+			}
+			js.append(cgSuperClass.getName());
+			isFirst = false;
+		}
+//			}
+	}
+
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull NamedElement asNamedElement) {
 		return CGModelFactory.eINSTANCE.createCGClass();

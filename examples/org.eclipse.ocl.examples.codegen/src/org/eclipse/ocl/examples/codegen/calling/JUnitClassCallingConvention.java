@@ -60,6 +60,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		//	js.append("@SuppressWarnings(\"nls\")\n");
 		js.append("public class " + className + " extends ");
 		js.appendClassReference(null, baseClass);
+	//	appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
 		Iterable<@NonNull CGValuedElement> sortedGlobals = cg2javaVisitor.getAnalyzer().getGlobals();
 		if (sortedGlobals != null) {

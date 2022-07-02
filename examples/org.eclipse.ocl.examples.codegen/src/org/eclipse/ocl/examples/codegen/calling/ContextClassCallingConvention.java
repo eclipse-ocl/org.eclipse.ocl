@@ -41,6 +41,9 @@ public class ContextClassCallingConvention extends AbstractClassCallingConventio
 			String title = cgClass.getName() + " provides the Java implementation for the additional non-Ecore features of\n";
 			js.appendCommentWithOCL(title, cgClass.getAst());
 			js.append("public static class " + className);
+//			Iterable<@NonNull CGClass> cgSuperTypes = CGUtil.getSuperTypes(cgClass);
+//			if (!Iterables.isEmpty(cgSuperTypes)) {
+			appendSuperTypes(js, cgClass);
 			js.pushClassBody(className);
 			generateProperties(cg2javaVisitor, js, cgClass);
 			generateOperations(cg2javaVisitor, js, cgClass);
