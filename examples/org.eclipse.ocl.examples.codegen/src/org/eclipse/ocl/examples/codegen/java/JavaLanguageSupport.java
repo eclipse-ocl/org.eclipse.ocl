@@ -183,6 +183,10 @@ public class JavaLanguageSupport extends LanguageSupport
 		this.standardLibrary = environmentFactory.getStandardLibrary();
 	}
 
+	public @Nullable Model basicGetNativeModel() {
+		return nativeModel;
+	}
+
 	private @NonNull Type getBoxedType(@NonNull Class<?> jClass) {
 		Class<?> jComponentClass = jClass.getComponentType();
 		if (jComponentClass != null) {
@@ -228,6 +232,7 @@ public class JavaLanguageSupport extends LanguageSupport
 	/*
 	 * Return a cache class for asFeature.
 	 */
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(@NonNull Feature asFeature) {
 		org.eclipse.ocl.pivot.@NonNull Class asClass = PivotUtil.getOwningClass(asFeature);
 		String name = "HC_" + PivotUtil.getName(asClass) + "_" + PivotUtil.getName(asFeature);
@@ -260,6 +265,7 @@ public class JavaLanguageSupport extends LanguageSupport
 	/*
 	 * Return a cache class for asClass.
 	 */
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
 		org.eclipse.ocl.pivot.@NonNull Package asPackage = PivotUtil.getOwningPackage(asClass);
 		org.eclipse.ocl.pivot.@NonNull Package asCachePackage = getCachePackage(asPackage);
@@ -292,6 +298,7 @@ public class JavaLanguageSupport extends LanguageSupport
 	/*
 	 * Return a native class for jClass flattening nested classes.
 	 */
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNativeClass(/*@NonNull */Class<?> jClass) {
 		assert jClass != null;
 		Package jPackage = jClass.getPackage();
@@ -316,8 +323,7 @@ public class JavaLanguageSupport extends LanguageSupport
 		return asClass;
 	}
 
-	@NonNull
-	public Model getNativeModel() {
+	public @NonNull Model getNativeModel() {
 		Model asModel = nativeModel;
 		if (asModel == null) {
 			asModel = PivotFactory.eINSTANCE.createModel();
@@ -326,7 +332,8 @@ public class JavaLanguageSupport extends LanguageSupport
 			ResourceSet nativeResourceSet = new ResourceSetImpl();
 			Resource nativeResource = nativeResourceSet.createResource(URI.createURI("native-java.xml"));
 			nativeResource.getContents().add(asModel);
-			nativeResourceSet.eAdapters().add((PivotMetamodelManager)environmentFactory.getMetamodelManager());
+			PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
+			nativeResourceSet.eAdapters().add(metamodelManager);
 		}
 		return asModel;
 	}
