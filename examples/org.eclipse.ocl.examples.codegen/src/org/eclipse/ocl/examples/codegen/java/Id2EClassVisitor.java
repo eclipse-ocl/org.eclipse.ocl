@@ -13,6 +13,8 @@ package org.eclipse.ocl.examples.codegen.java;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.java.types.CGIdVisitor;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -20,7 +22,6 @@ import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
-import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -39,7 +40,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 
-public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
+public class Id2EClassVisitor implements CGIdVisitor<@Nullable EClass>
 {
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 
@@ -75,6 +76,11 @@ public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 
 	@Override
 	public @Nullable EClass visitInvalidId(@NonNull OclInvalidTypeId id) {
+		return null;
+	}
+
+	@Override
+	public @Nullable EClass visitJavaTypeId(@NonNull JavaTypeId id) {
 		return null;
 	}
 

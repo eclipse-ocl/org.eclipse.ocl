@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
+import org.eclipse.ocl.examples.codegen.java.types.CGIdVisitor;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
@@ -21,7 +22,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.ElementId;
-import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
@@ -44,7 +44,7 @@ import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
-public abstract class AbstractId2JavaClassVisitor implements IdVisitor<Class<?>>
+public abstract class AbstractId2JavaClassVisitor implements CGIdVisitor<Class<?>>
 {
 	protected final @NonNull GenModelHelper genModelHelper;;
 

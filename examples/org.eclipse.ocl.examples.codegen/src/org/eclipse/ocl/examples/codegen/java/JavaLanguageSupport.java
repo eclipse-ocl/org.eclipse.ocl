@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
@@ -316,8 +317,10 @@ public class JavaLanguageSupport extends LanguageSupport
 		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = PivotUtilInternal.getOwnedClassesList(asPackage);
 		org.eclipse.ocl.pivot.Class asClass = NameUtil.getNameable(asClasses, trimmedName);
 		if (asClass == null) {
-			asClass = PivotFactory.eINSTANCE.createClass();
+		//	asClass = PivotFactory.eINSTANCE.createClass();
+			asClass = new ClassImpl(JavaConstants.getJavaTypeId(jClass));
 			asClass.setName(trimmedName);
+		//	asClass.setTypeId(JavaConstants.getJavaTypeId(jClass));
 			asClasses.add(asClass);
 		}
 		return asClass;

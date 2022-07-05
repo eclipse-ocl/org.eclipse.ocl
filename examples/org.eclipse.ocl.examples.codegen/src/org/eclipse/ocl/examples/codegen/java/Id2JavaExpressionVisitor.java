@@ -13,6 +13,8 @@ package org.eclipse.ocl.examples.codegen.java;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.java.types.CGIdVisitor;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -21,7 +23,6 @@ import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -46,7 +47,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * An Id2JavaExpressionVisitor appends the expression body of an Id declaration.
  */
-public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
+public class Id2JavaExpressionVisitor implements CGIdVisitor<@Nullable Object>
 {
 	protected final @NonNull JavaStream js;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
@@ -121,6 +122,13 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		js.appendClassReference(null, TypeId.class);
 		js.append(".");
 		js.append(id.getLiteralName());
+		return null;
+	}
+
+	@Override
+	public @Nullable Object visitJavaTypeId(@NonNull JavaTypeId id) {
+		js.appendClassReference(null, id.getClass());
+		js.append(".class");
 		return null;
 	}
 

@@ -1323,6 +1323,14 @@ implements org.eclipse.ocl.pivot.Class {
 	/**
 	 * @since 1.18
 	 */
+	public ClassImpl(@NonNull TypeId typeId) {
+		super();
+		this.typeId = typeId;
+	}
+
+	/**
+	 * @since 1.18
+	 */
 	@Override
 	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
 		return ClassifierAllInstancesOperation.allInstances(executor, returnTypeId, this);

@@ -58,6 +58,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGUnlimited;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
+import org.eclipse.ocl.examples.codegen.java.types.CGIdVisitor;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
@@ -97,7 +99,6 @@ import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
-import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -620,11 +621,11 @@ public class NameManagerHelper
 		}
 	}
 
-	public static class IdNameHeper implements IdVisitor<@NonNull String>
+	public static class IdNameHelper implements CGIdVisitor<@NonNull String>
 	{
 		protected final @NonNull NameManagerHelper context;
 
-		public IdNameHeper(@NonNull NameManagerHelper context) {
+		public IdNameHelper(@NonNull NameManagerHelper context) {
 			this.context = context;
 		}
 
@@ -678,6 +679,11 @@ public class NameManagerHelper
 		@Override
 		public @NonNull String visitInvalidId(@NonNull OclInvalidTypeId id) {
 			return "INVid";
+		}
+
+		@Override
+		public @NonNull String visitJavaTypeId(@NonNull JavaTypeId id) {
+			return "JAVAid_" + id.getName();
 		}
 
 		@Override
@@ -765,7 +771,7 @@ public class NameManagerHelper
 
 	protected final @NonNull ASNameHelper asVisitor;
 	protected final @NonNull CGNameHelper cgVisitor;
-	protected final @NonNull IdNameHeper idVisitor;
+	protected final @NonNull IdNameHelper idVisitor;
 
 	public NameManagerHelper() {
 		this.asVisitor = createASNameHelper();
@@ -781,8 +787,8 @@ public class NameManagerHelper
 		return new CGNameHelper(this);
 	}
 
-	protected @NonNull IdNameHeper createIdNameHelper() {
-		return new IdNameHeper(this);
+	protected @NonNull IdNameHelper createIdNameHelper() {
+		return new IdNameHelper(this);
 	}
 
 //	protected @NonNull ASNameHelper getAsVisitor() {
