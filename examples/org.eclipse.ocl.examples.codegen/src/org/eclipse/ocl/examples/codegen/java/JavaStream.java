@@ -526,7 +526,14 @@ public class JavaStream
 				append(javaClass.getName());
 			}
 			else {
-				appendClassReference(isRequired, javaClass.getName());
+				Boolean componentIsRequired = isRequired;
+				for (Class<?> jClass = javaClass; true; jClass = jClass.getComponentType()) {
+					if (jClass.getComponentType() == null)  {
+						appendClassReference(componentIsRequired, jClass.getName());
+						break;
+					}
+					componentIsRequired = Boolean.FALSE;
+				}
 				TypeVariable<?>[] typeParameters = javaClass.getTypeParameters();
 				if (typeParameters.length > 0) {
 					append("<");
@@ -538,6 +545,13 @@ public class JavaStream
 					}
 					append(">");
 				}
+			}
+			for (Class<?> jClass = javaClass; (jClass = jClass.getComponentType()) != null; ) {
+				if (isRequired != null) {
+					append(" ");
+					appendIsRequired(isRequired);
+				}
+				append(" []");
 			}
 		}
 		else {

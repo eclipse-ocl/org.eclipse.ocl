@@ -55,6 +55,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqual2Exp;
@@ -1632,6 +1633,19 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		}
 		js.append("}\n");
 		return flowContinues;
+	}
+
+	@Override
+	public @NonNull Boolean visitCGIndexExp(@NonNull CGIndexExp cgIndexExp) {
+		CGValuedElement cgSource = getExpression(cgIndexExp.getSource());
+		if (!js.appendLocalStatements(cgSource)) {
+			return false;
+		}
+		js.appendDeclaration(cgIndexExp);
+		js.append(" = ");
+		js.appendValueName(cgSource);
+		js.append("[" + cgIndexExp.getIndex() + "];\n");
+		return true;
 	}
 
 	@Override
