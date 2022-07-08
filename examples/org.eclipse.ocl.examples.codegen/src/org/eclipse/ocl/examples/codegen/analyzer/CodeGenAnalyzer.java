@@ -36,6 +36,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
@@ -352,6 +353,16 @@ public class CodeGenAnalyzer
 		cgIfExp.setTypeId(cgThenExpression.getTypeId());		// FIXME common type
 		cgIfExp.setRequired(cgThenExpression.isRequired() && cgElseExpression.isRequired());
 		return cgIfExp;
+	}
+
+	public @NonNull CGIndexExp createCGIndexExp(@NonNull CGValuedElement cgValue, int index) {
+		CGIndexExp cgIndexExp = CGModelFactory.eINSTANCE.createCGIndexExp();
+	//	setAst(cgVariableExp, asVariableExp);
+		cgIndexExp.setSource(cgValue);
+		cgIndexExp.setIndex(createCGConstantExp(getCGInteger(index)));
+		cgIndexExp.setTypeId(getCGTypeId(TypeId.OCL_ANY));
+		cgIndexExp.setRequired(cgValue.isRequired());
+		return cgIndexExp;
 	}
 
 	public @NonNull CGValuedElement createCGIsEqual(@NonNull CGValuedElement cgLeft, @NonNull CGValuedElement cgRight) {

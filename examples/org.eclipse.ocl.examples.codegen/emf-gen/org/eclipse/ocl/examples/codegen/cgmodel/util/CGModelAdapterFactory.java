@@ -337,6 +337,10 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGIfExpAdapter();
 			}
 			@Override
+			public Adapter caseCGIndexExp(CGIndexExp object) {
+				return createCGIndexExpAdapter();
+			}
+			@Override
 			public Adapter caseCGInlinedOperation(CGInlinedOperation object) {
 				return createCGInlinedOperationAdapter();
 			}
@@ -1469,6 +1473,20 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGIfExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp <em>CG Index Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp
+	 * @generated
+	 */
+	public Adapter createCGIndexExpAdapter() {
 		return null;
 	}
 

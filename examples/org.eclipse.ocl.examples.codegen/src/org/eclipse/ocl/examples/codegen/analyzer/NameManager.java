@@ -317,7 +317,7 @@ public abstract class NameManager
 		}
 
 		private boolean debugAllocatedName(@NonNull String name) {
-			if (name.contains("CACHED_OP")) {
+			if (name.contains("firstValue_1")) {
 				getClass();			// XXX
 			}
 			return true;

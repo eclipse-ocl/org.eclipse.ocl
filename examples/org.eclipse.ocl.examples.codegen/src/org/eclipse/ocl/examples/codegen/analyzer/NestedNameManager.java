@@ -32,6 +32,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
@@ -82,7 +83,7 @@ public class NestedNameManager extends NameManager
 	/**
 	 * Mapping from an AS Variable to the CG Variable defined in this cgScope.
 	 */
-	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> cgVariables = new HashMap<>();
+	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> asVariable2cgVariable = new HashMap<>();
 
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / caached local thread lookup
@@ -132,7 +133,7 @@ public class NestedNameManager extends NameManager
 
 	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
 		// XXX verify scope / class consistency
-		CGVariable old = cgVariables.put(asVariable, cgVariable);
+		CGVariable old = asVariable2cgVariable.put(asVariable, cgVariable);
 		assert old == null;
 	}
 
@@ -204,7 +205,7 @@ public class NestedNameManager extends NameManager
 	}
 
 	public @Nullable CGVariable basicGetLocalVariable(@NonNull VariableDeclaration asVariable) {
-		return cgVariables.get(asVariable);
+		return asVariable2cgVariable.get(asVariable);
 	}
 
 	public @Nullable CGVariable basicGetModelManagerVariable() {
@@ -212,7 +213,7 @@ public class NestedNameManager extends NameManager
 	}
 
 	public @Nullable CGParameter basicGetParameter(@NonNull VariableDeclaration asVariable) {
-		CGVariable cgVariable = cgVariables.get(asVariable);
+		CGVariable cgVariable = asVariable2cgVariable.get(asVariable);
 		if (cgVariable instanceof CGParameter) {
 			return (CGParameter)cgVariable;
 		}
@@ -221,6 +222,19 @@ public class NestedNameManager extends NameManager
 		}
 		else if (!(asScope instanceof Operation) && (parent instanceof NestedNameManager)) {				// XXX polymorphize
 			return ((NestedNameManager)parent).basicGetParameter(asVariable);
+		}
+		else {
+			return null;
+		}
+	}
+
+	public @Nullable CGVariable basicGetParameterVariable(@NonNull VariableDeclaration asVariable) {
+		CGVariable cgVariable = asVariable2cgVariable.get(asVariable);
+		if (cgVariable != null) {
+			return cgVariable;
+		}
+		else if (!(asScope instanceof Operation) && (parent instanceof NestedNameManager)) {				// XXX polymorphize
+			return ((NestedNameManager)parent).basicGetParameterVariable(asVariable);
 		}
 		else {
 			return null;
@@ -240,7 +254,7 @@ public class NestedNameManager extends NameManager
 	}
 
 	public @Nullable CGVariable basicGetVariable(@NonNull VariableDeclaration asVariable) {
-		CGVariable cgVariable = cgVariables.get(asVariable);
+		CGVariable cgVariable = asVariable2cgVariable.get(asVariable);
 		if (cgVariable != null) {
 			return cgVariable;
 		}
@@ -420,6 +434,22 @@ public class NestedNameManager extends NameManager
 		thisParameter.setNonInvalid();
 		thisParameter.setNonNull();
 		return thisParameter;
+	}
+
+	/**
+	 * Declare that cgElement has a name which should be distinct in this NameManager.
+	 * This is typically used to ensure that a local name is available for re-use.
+	 * <br>
+	 * This should be used sparingly. Most names will be lazily declared adequately.
+	 */
+	public @NonNull NameResolution declareLocalName(@Nullable CGNamedElement cgElement) {
+		assert (cgElement instanceof CGProperty);
+		boolean savedInhibitNameResolution = NameResolution.inhibitNameResolution;
+		NameResolution.inhibitNameResolution = false;			// XXX do we still need this debug design enforcement
+		NameResolution nameResolution = new NameResolution(this, cgElement, null);
+	//	baseNameResolution.resolveIn(context);
+		NameResolution.inhibitNameResolution = savedInhibitNameResolution;
+		return nameResolution;
 	}
 
 	public @Nullable CGClass findCGScope() { // XXX ??? use GlobalNameManager.findNameManager

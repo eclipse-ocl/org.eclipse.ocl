@@ -520,6 +520,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			analyzer.addCGProperty(cgProperty);
 			NestedNameManager outerNameManager = getNameManager();
 			assert outerNameManager != null;
+			outerNameManager.declareLocalName(cgProperty);
 			NestedNameManager innerNameManager = pushNestedNameManager(cgProperty);
 //			outerNameManager.declarePreferredName(cgProperty);
 			ExpressionInOCL query = null;
@@ -929,7 +930,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			//			cgContext.setNonNull();
 		}
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(query.getOwnedParameters())) {
-			@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, null);
+			CGVariable cgParameterVariable = nameManager.basicGetParameterVariable(parameterVariable);
+			if (cgParameterVariable == null) {				// May be pre-mapped to a CG let variable
+				@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, null);
+			}
 		}
 		CGValuedElement cgBody = doVisit(CGValuedElement.class, query.getOwnedBody());
 		//		cgOperation.getDependsOn().add(cgBody);
