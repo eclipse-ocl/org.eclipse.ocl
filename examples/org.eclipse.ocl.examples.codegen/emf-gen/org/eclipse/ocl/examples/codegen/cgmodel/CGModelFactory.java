@@ -572,6 +572,15 @@ public interface CGModelFactory extends EFactory {
 	@NonNull CGIfExp createCGIfExp();
 
 	/**
+	 * Returns a new object of class '<em>CG Index Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>CG Index Exp</em>'.
+	 * @generated
+	 */
+	CGIndexExp createCGIndexExp();
+
+	/**
 	 * Returns a new object of class '<em>CG Inlined Operation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

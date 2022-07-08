@@ -418,6 +418,11 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		return null;
 	}
 
+//	@Override
+//	public @Nullable Object visitCGIndexExp(@NonNull CGIndexExp cgIndexExp) {
+//		return null;
+//	}
+
 	@Override
 	public @Nullable Object visitCGIsEqualExp(@NonNull CGIsEqualExp cgElement) {
 		super.visitCGIsEqualExp(cgElement);
