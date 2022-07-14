@@ -177,13 +177,14 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-						ownedClasses.add(type = «type.getSymbolName()»);
+						type = «type.getSymbolName()»;
 						«IF type.isAbstract»
 						type.setIsAbstract(true);
 						«ENDIF»
 						«IF !(type instanceof AnyType)»
 							«type.emitSuperClasses("type")»
 						«ENDIF»
+						ownedClasses.add(type);
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -205,7 +206,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»
-						ownedClasses.add(type = «type.getSymbolName()»);
+						type = «type.getSymbolName()»;
 						«IF type.isAbstract»
 						type.setIsAbstract(true);
 						«ENDIF»
@@ -219,6 +220,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						type.setIsNullFree(true);
 						«ENDIF»
 						«type.emitSuperClasses("type")»
+						ownedClasses.add(type);
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -252,12 +254,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR enumeration : ClassUtil.nullFree(pkge2enumerations.get(pkge))»
-						ownedClasses.add(type = «enumeration.getSymbolName()»);
+						type = «enumeration.getSymbolName()»;
 						enumerationLiterals = type.getOwnedLiterals();
 						«FOR enumerationLiteral : enumeration.ownedLiterals»
 							enumerationLiterals.add(«enumerationLiteral.getSymbolName()»);
 						«ENDFOR»
 						type.getSuperClasses().add(_OclEnumeration);
+						ownedClasses.add(type);
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -399,8 +402,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
-						ownedClasses.add(type = «type.getSymbolName()»);
+						type = «type.getSymbolName()»;
 						«type.emitSuperClasses("type")»
+						ownedClasses.add(type);
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -536,10 +540,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
 						«var superClasses = type.getSuperclassesInPackage()»
-						ownedClasses.add(type = «type.getSymbolNameWithoutNormalization()»);
+						type = «type.getSymbolNameWithoutNormalization()»;
 						«FOR superClass : superClasses»
 							type.getSuperClasses().add(«superClass.getSymbolName()»);
 						«ENDFOR»
+						ownedClasses.add(type);
 					«ENDFOR»
 				«ENDFOR»
 			}
