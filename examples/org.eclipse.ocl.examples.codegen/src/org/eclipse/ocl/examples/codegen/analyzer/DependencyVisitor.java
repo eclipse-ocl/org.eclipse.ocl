@@ -43,6 +43,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVis
 import org.eclipse.ocl.examples.codegen.cse.GlobalPlace;
 import org.eclipse.ocl.examples.codegen.cse.SimpleAnalysis;
 import org.eclipse.ocl.pivot.ids.BindingsId;
+import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -50,6 +51,7 @@ import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.IntegerLiteralId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -67,6 +69,7 @@ import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.ids.UnlimitedNaturalLiteralId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -357,6 +360,11 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public class Id2DependencyVisitor implements IdVisitor<@Nullable Object>
 	{
 		@Override
+		public @Nullable Object visitBooleanLiteralId(@NonNull BooleanLiteralId id) {
+			return null;
+		}
+
+		@Override
 		public @Nullable Object visitClassId(final @NonNull ClassId id) {
 			addElementIdDependency(id, id.getParent());
 			return null;
@@ -389,6 +397,11 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		@Override
 		public @Nullable Object visitEnumerationLiteralId(final @NonNull EnumerationLiteralId id) {
 			addElementIdDependency(id, id.getParentId());
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitIntegerLiteralId(@NonNull IntegerLiteralId id) {
 			return null;
 		}
 
@@ -484,6 +497,11 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			for (TuplePartId partId : id.getPartIds()) {
 				addElementIdDependency(id, partId);
 			}
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitUnlimitedNaturalLiteralId(@NonNull UnlimitedNaturalLiteralId id) {
 			return null;
 		}
 

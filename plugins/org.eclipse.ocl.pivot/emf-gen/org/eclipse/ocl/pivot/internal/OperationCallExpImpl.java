@@ -714,7 +714,7 @@ implements OperationCallExp {
 							/*@Thrown*/ @Nullable Type requiredType;
 							if (isTypeof) {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class = idResolver.getClass(PivotTables.CLSSid_Class, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_Class;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_Class;
 								requiredType = symbol_0;
 							}
 							else {

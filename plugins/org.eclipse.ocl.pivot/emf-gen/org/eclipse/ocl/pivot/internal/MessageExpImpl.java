@@ -415,7 +415,7 @@ public class MessageExpImpl
 						@SuppressWarnings("null")
 						final /*@NonInvalid*/ @NonNull OCLExpression ownedTarget = this.getOwnedTarget();
 						final /*@NonInvalid*/ @Nullable Type type = ownedTarget.getType();
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_0;
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_CollectionType_0;
 						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, symbol_0).booleanValue();
 						CAUGHT_oclIsKindOf = oclIsKindOf;
 					}

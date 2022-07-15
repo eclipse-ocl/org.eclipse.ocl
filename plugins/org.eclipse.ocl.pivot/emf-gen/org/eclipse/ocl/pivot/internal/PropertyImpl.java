@@ -1023,7 +1023,7 @@ implements Property {
 		/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 		try {
 			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_Class_0;
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_Class_0;
 			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, symbol_0).booleanValue();
 			CAUGHT_oclIsKindOf = oclIsKindOf;
 		}
@@ -1038,7 +1038,7 @@ implements Property {
 			/*@Caught*/ @NonNull Object CAUGHT_includes;
 			try {
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_1 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = (org.eclipse.ocl.pivot.Class)TYP_Class_1;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = TYP_Class_1;
 				@SuppressWarnings("null")
 				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, symbol_1);
 				final /*@Thrown*/ @NonNull List<Property> ownedProperties = oclAsType.getOwnedProperties();
@@ -1116,7 +1116,7 @@ implements Property {
 							/*@Caught*/ @NonNull Object CAUGHT_ne_0;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_ExpressionInOCL_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_ExpressionInOCL_0;
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, symbol_0);
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();

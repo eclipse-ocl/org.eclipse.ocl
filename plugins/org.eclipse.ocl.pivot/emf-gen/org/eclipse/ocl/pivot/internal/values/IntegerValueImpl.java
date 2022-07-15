@@ -201,7 +201,7 @@ public abstract class IntegerValueImpl extends NumberValueImpl implements Intege
 
 	@Override
 	public @Nullable UnlimitedNaturalValue isUnlimitedNaturalValue() {
-		return signum() >= 0 ?this : null;
+		return signum() >= 0 ? this : null;
 	}
 
 	@Override

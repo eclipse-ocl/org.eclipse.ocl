@@ -314,7 +314,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 								safe_type_source = type_0;
 							}
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_0 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_MapType_0;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_MapType_0;
 							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, symbol_0).booleanValue();
 							/*@Thrown*/ boolean symbol_3;
 							if (oclIsKindOf) {
@@ -325,7 +325,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							}
 							else {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = TYP_CollectionType_0;
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull CollectionType oclAsType_0 = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, symbol_2);
 								final /*@Thrown*/ boolean isNullFree = oclAsType_0.isIsNullFree();
@@ -456,7 +456,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 							@SuppressWarnings("null")
 							final /*@NonInvalid*/ @NonNull OCLExpression ownedBody_3 = this.getOwnedBody();
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_0;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_CollectionType_0;
 							final /*@NonInvalid*/ @Nullable Type type_3 = ownedBody_3.getType();
 							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_3, symbol_0).booleanValue();
 							/*@Thrown*/ @Nullable Type bodyElementType;
@@ -468,7 +468,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							}
 							else {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_0 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = (org.eclipse.ocl.pivot.Class)TYP_MapType_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = TYP_MapType_0;
 								final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_3, symbol_2).booleanValue();
 								/*@Thrown*/ @Nullable Type symbol_4;
 								if (oclIsKindOf_0) {
@@ -623,7 +623,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 						try {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 							final /*@NonInvalid*/ @Nullable Type type = this.getType();
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_0;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_CollectionType_0;
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, symbol_0);
 							final /*@Thrown*/ @NonNull Type resultElementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
@@ -766,7 +766,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 								}
 								else {
 									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SequenceType_0 = idResolver.getClass(PivotTables.CLSSid_SequenceType, null);
-									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_SequenceType_0;
+									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_SequenceType_0;
 									final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, symbol_0).booleanValue();
 									safe_oclIsKindOf_source = oclIsKindOf_0;
 								}
@@ -794,7 +794,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 										final /*@Thrown*/ @Nullable Type type_2 = ownedSource_0.getType();
 										safe_type_source_0 = type_2;
 									}
-									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = (org.eclipse.ocl.pivot.Class)TYP_OrderedSetType_0;
+									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = TYP_OrderedSetType_0;
 									final /*@Thrown*/ boolean oclIsKindOf_1 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source_0, symbol_1).booleanValue();
 									CAUGHT_oclIsKindOf_1 = oclIsKindOf_1;
 								}
@@ -825,13 +825,13 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							/*@Thrown*/ boolean symbol_4;
 							if (or) {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OrderedSetType_1 = idResolver.getClass(PivotTables.CLSSid_OrderedSetType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = (org.eclipse.ocl.pivot.Class)TYP_OrderedSetType_1;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = TYP_OrderedSetType_1;
 								final /*@Thrown*/ boolean oclIsKindOf_2 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_4, symbol_2).booleanValue();
 								symbol_4 = oclIsKindOf_2;
 							}
 							else {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SetType_0 = idResolver.getClass(PivotTables.CLSSid_SetType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_3 = (org.eclipse.ocl.pivot.Class)TYP_SetType_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_3 = TYP_SetType_0;
 								final /*@Thrown*/ boolean oclIsKindOf_3 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_4, symbol_3).booleanValue();
 								symbol_4 = oclIsKindOf_3;
 							}
@@ -912,7 +912,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 						try {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 							final /*@NonInvalid*/ @Nullable Type type = this.getType();
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_0;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_CollectionType_0;
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, symbol_0);
 							final /*@Thrown*/ @NonNull Type elementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
@@ -1053,7 +1053,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 									final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
 									safe_type_source = type_0;
 								}
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_SequenceType_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_SequenceType_0;
 								final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, symbol_0).booleanValue();
 								CAUGHT_oclIsKindOf = oclIsKindOf;
 							}
@@ -1079,7 +1079,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 										final /*@Thrown*/ @Nullable Type type_2 = ownedSource_0.getType();
 										safe_type_source_0 = type_2;
 									}
-									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = (org.eclipse.ocl.pivot.Class)TYP_OrderedSetType_0;
+									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = TYP_OrderedSetType_0;
 									final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source_0, symbol_1).booleanValue();
 									CAUGHT_oclIsKindOf_0 = oclIsKindOf_0;
 								}
@@ -1105,13 +1105,13 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							/*@Thrown*/ boolean symbol_4;
 							if (or) {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SequenceType_1 = idResolver.getClass(PivotTables.CLSSid_SequenceType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = (org.eclipse.ocl.pivot.Class)TYP_SequenceType_1;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = TYP_SequenceType_1;
 								final /*@Thrown*/ boolean oclIsKindOf_1 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_4, symbol_2).booleanValue();
 								symbol_4 = oclIsKindOf_1;
 							}
 							else {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_BagType_0 = idResolver.getClass(PivotTables.CLSSid_BagType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_3 = (org.eclipse.ocl.pivot.Class)TYP_BagType_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_3 = TYP_BagType_0;
 								final /*@Thrown*/ boolean oclIsKindOf_2 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_4, symbol_3).booleanValue();
 								symbol_4 = oclIsKindOf_2;
 							}
@@ -1209,7 +1209,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 									final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
 									safe_type_source = type_0;
 								}
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_SequenceType_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_SequenceType_0;
 								final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, symbol_0).booleanValue();
 								CAUGHT_oclIsKindOf = oclIsKindOf;
 							}
@@ -1235,7 +1235,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 										final /*@Thrown*/ @Nullable Type type_2 = ownedSource_0.getType();
 										safe_type_source_0 = type_2;
 									}
-									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = (org.eclipse.ocl.pivot.Class)TYP_BagType_0;
+									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = TYP_BagType_0;
 									final /*@Thrown*/ boolean oclIsKindOf_0 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source_0, symbol_1).booleanValue();
 									CAUGHT_oclIsKindOf_0 = oclIsKindOf_0;
 								}
@@ -1261,13 +1261,13 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							/*@Thrown*/ boolean symbol_4;
 							if (or) {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_SequenceType_1 = idResolver.getClass(PivotTables.CLSSid_SequenceType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = (org.eclipse.ocl.pivot.Class)TYP_SequenceType_1;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = TYP_SequenceType_1;
 								final /*@Thrown*/ boolean oclIsKindOf_1 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_4, symbol_2).booleanValue();
 								symbol_4 = oclIsKindOf_1;
 							}
 							else {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OrderedSetType_0 = idResolver.getClass(PivotTables.CLSSid_OrderedSetType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_3 = (org.eclipse.ocl.pivot.Class)TYP_OrderedSetType_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_3 = TYP_OrderedSetType_0;
 								final /*@Thrown*/ boolean oclIsKindOf_2 = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type_4, symbol_3).booleanValue();
 								symbol_4 = oclIsKindOf_2;
 							}
@@ -1347,7 +1347,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 						/*@Caught*/ @NonNull Object CAUGHT_eq_0;
 						try {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_1 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_1;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = TYP_CollectionType_1;
 							final /*@NonInvalid*/ @Nullable Type type = this.getType();
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, type, symbol_1);
@@ -1463,7 +1463,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 						if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 							throw (InvalidValueException)CAUGHT_safe_type_source;
 						}
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_0;
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_CollectionType_0;
 						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, symbol_0).booleanValue();
 						CAUGHT_oclIsKindOf = oclIsKindOf;
 					}
@@ -1481,7 +1481,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_safe_type_source;
 							}
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_1;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = TYP_CollectionType_1;
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, symbol_1);
 							final /*@Thrown*/ @NonNull Type sourceElementType = CollectionElementTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
@@ -1634,7 +1634,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 						if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 							throw (InvalidValueException)CAUGHT_safe_type_source;
 						}
-						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_MapType_0;
+						final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_MapType_0;
 						final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, symbol_0).booleanValue();
 						CAUGHT_oclIsKindOf = oclIsKindOf;
 					}
@@ -1652,7 +1652,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_safe_type_source;
 							}
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = (org.eclipse.ocl.pivot.Class)TYP_MapType_1;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_1 = TYP_MapType_1;
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull MapType oclAsType = (@NonNull MapType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, symbol_1);
 							final /*@Thrown*/ @NonNull Type sourceKeyType = MapKeyTypeProperty.INSTANCE.evaluate(executor, PivotTables.CLSSid_Type, oclAsType);
@@ -1903,7 +1903,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 									safe_type_source = type_0;
 								}
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_0 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_MapType_0;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_MapType_0;
 								final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, symbol_0).booleanValue();
 								/*@Thrown*/ boolean symbol_3;
 								if (oclIsKindOf) {
@@ -1914,7 +1914,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 								}
 								else {
 									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_0 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_0;
+									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_2 = TYP_CollectionType_0;
 									@SuppressWarnings("null")
 									final /*@Thrown*/ @NonNull CollectionType oclAsType_0 = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, symbol_2);
 									final /*@Thrown*/ boolean isNullFree = oclAsType_0.isIsNullFree();

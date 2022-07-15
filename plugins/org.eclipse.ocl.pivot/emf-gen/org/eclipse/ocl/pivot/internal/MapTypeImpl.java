@@ -579,7 +579,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			return TypeId.MAP;
 		}
 		else {
-			return TypeId.MAP.getSpecializedId(getKeyType().getTypeId(), getValueType().getTypeId());
+			return TypeId.MAP.getSpecializedMapTypeId(getKeyType().getTypeId(), TypeId.valueOf(isKeysAreNullFree()), getValueType().getTypeId(), TypeId.valueOf(isValuesAreNullFree()));
 		}
 	}
 

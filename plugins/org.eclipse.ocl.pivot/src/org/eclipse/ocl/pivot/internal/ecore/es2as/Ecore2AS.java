@@ -1162,7 +1162,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		referencers = new HashSet<>();
 		genericTypes = new ArrayList<>();
 		eDataTypes = new ArrayList<>();
-		boolean wasUpdating = ((ASResource)asResource).setUpdating(true);
+		boolean wasUpdating = asResource.setUpdating(true);
 		/*
 		 * Establish the declarations.
 		 */

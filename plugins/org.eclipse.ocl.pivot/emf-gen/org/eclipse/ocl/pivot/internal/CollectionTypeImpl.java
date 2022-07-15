@@ -607,7 +607,7 @@ implements CollectionType {
 			}
 		}
 		else {
-			return TypeId.COLLECTION.getSpecializedId(getElementType().getTypeId());
+			return TypeId.COLLECTION.getSpecializedCollectionTypeId(getElementType().getTypeId(), TypeId.valueOf(isIsNullFree()), TypeId.ZERO_VALUE, TypeId.UNLIMITED_VALUE);
 		}
 	}
 

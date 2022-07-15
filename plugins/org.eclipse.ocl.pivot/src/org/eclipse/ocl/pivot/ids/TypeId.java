@@ -12,8 +12,14 @@ package org.eclipse.ocl.pivot.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.ids.BooleanLiteralIdImpl;
+import org.eclipse.ocl.pivot.internal.ids.IntegerLiteralIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.OclInvalidTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.OclVoidTypeIdImpl;
+import org.eclipse.ocl.pivot.internal.ids.UnlimitedNaturalLiteralIdImpl;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * A TypeId provides a unique hierarchical semantic identifier for type which may have many 'actual' type variants.
@@ -58,6 +64,10 @@ public interface TypeId extends ElementId
 	 * @since 1.6
 	 */
 	public static final @NonNull String ITERABLE_NAME = "Iterable";
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull String LAMBDA_NAME = "Lambda";
 	public static final @NonNull String LAMBDA_TYPE_NAME = "LambdaType";
 	public static final @NonNull String MAP_ENTRY_NAME = "MapEntry";
 	public static final @NonNull String MAP_NAME = "Map";
@@ -173,11 +183,61 @@ public interface TypeId extends ElementId
 	public static final @NonNull CollectionTypeId SET = IdManager.getCollectionTypeId(SET_NAME);
 	public static final @NonNull CollectionTypeId UNIQUE_COLLECTION = IdManager.getCollectionTypeId(UNIQUE_COLLECTION_NAME);
 
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull LambdaTypeId LAMBDA = IdManager.getLambdaTypeId(LAMBDA_NAME);
 	public static final @NonNull MapTypeId MAP = IdManager.getMapTypeId(MAP_NAME);
+
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull BooleanLiteralId FALSE_VALUE = BooleanLiteralIdImpl.valueOf(false);
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull IntegerLiteralId ONE_VALUE = IntegerLiteralIdImpl.valueOf(ValueUtil.ONE_VALUE);
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull BooleanLiteralId TRUE_VALUE = BooleanLiteralIdImpl.valueOf(true);
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull UnlimitedNaturalLiteralId UNLIMITED_VALUE = UnlimitedNaturalLiteralIdImpl.valueOf(ValueUtil.UNLIMITED_VALUE);
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull IntegerLiteralId ZERO_VALUE = IntegerLiteralIdImpl.valueOf(ValueUtil.ZERO_VALUE);
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull BooleanLiteralId valueOf(boolean value) {
+		return value ? TRUE_VALUE : FALSE_VALUE;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull IntegerLiteralId valueOf(@NonNull IntegerValue value) {
+		return IntegerLiteralIdImpl.valueOf(value);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull UnlimitedNaturalLiteralId valueOf(@NonNull UnlimitedNaturalValue value) {
+		return UnlimitedNaturalLiteralIdImpl.valueOf(value);
+	}
 
 	public static final @NonNull TemplateParameterId T_1 = IdManager.getTemplateParameterId(0);
 	public static final @NonNull TemplateParameterId T_2 = IdManager.getTemplateParameterId(1);
 	public static final @NonNull TemplateParameterId T_3 = IdManager.getTemplateParameterId(2);
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull TemplateParameterId T_4 = IdManager.getTemplateParameterId(3);
 
 	public static final @NonNull String @NonNull [] NULL_STRING_ARRAY = new @NonNull String[0];
 	public static final @NonNull TuplePartId @NonNull [] NULL_TUPLE_PART_ID_ARRAY = new @NonNull TuplePartId[0];

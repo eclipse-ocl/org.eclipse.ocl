@@ -790,7 +790,7 @@ implements DataType {
 						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 						try {
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_PrimitiveType = idResolver.getClass(PivotTables.CLSSid_PrimitiveType, null);
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = (org.eclipse.ocl.pivot.Class)TYP_PrimitiveType;
+							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class symbol_0 = TYP_PrimitiveType;
 							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, behavioralClass, symbol_0).booleanValue();
 							CAUGHT_oclIsKindOf = oclIsKindOf;
 						}

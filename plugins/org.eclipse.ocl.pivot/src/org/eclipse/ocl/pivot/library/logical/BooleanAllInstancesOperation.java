@@ -27,7 +27,7 @@ public class BooleanAllInstancesOperation extends AbstractUntypedUnaryOperation
 {
 	@Deprecated /* @deprecated invoke the polymorphic BooleanTypeImpl.allInstances() */
 	public static final @NonNull BooleanAllInstancesOperation INSTANCE = new BooleanAllInstancesOperation();
-	public static final @NonNull CollectionTypeId SET_BOOLEAN = TypeId.SET.getSpecializedId(TypeId.BOOLEAN);
+	public static final @NonNull CollectionTypeId SET_BOOLEAN = TypeId.SET.getSpecializedCollectionTypeId(TypeId.BOOLEAN);
 
 	/**
 	 * @since 1.18

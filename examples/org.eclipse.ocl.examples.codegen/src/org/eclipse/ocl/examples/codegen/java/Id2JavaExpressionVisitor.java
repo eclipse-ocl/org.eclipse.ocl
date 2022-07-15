@@ -14,6 +14,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.BindingsId;
+import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -22,6 +23,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.IntegerLiteralId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -39,9 +41,13 @@ import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.ids.UnlimitedNaturalLiteralId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * An Id2JavaExpressionVisitor appends the expression body of an Id declaration.
@@ -54,6 +60,52 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	public Id2JavaExpressionVisitor(@NonNull JavaStream js) {
 		this.js = js;
 		this.metamodelManager = js.getCodeGenerator().getEnvironmentFactory().getMetamodelManager();
+	}
+
+	@Override
+	public @Nullable Object visitBooleanLiteralId(@NonNull BooleanLiteralId id) {
+		js.appendClassReference(null, TypeId.class);
+		js.append(".");
+		js.append(id.getValue() ? "TRUE_VALUE" : "FALSE_VALUE");
+		return null;
+	}
+
+	@Override
+	public @Nullable Object visitIntegerLiteralId(@NonNull IntegerLiteralId id) {
+		js.appendClassReference(null, TypeId.class);
+		js.append(".");
+		IntegerValue value = id.getValue();
+		if (value == ValueUtil.ZERO_VALUE) {
+			js.append("ZERO_VALUE");
+		}
+		else if (value == ValueUtil.ONE_VALUE) {
+			js.append("ONE_VALUE");
+		}
+		else {
+			js.append("valueOf(");
+			js.appendClassReference(null, ValueUtil.class);
+			js.append(".integerValueOf(");
+			js.appendIntegerString(value.asInteger());
+			js.append("))");
+		}
+		return null;
+	}
+
+	@Override
+	public @Nullable Object visitUnlimitedNaturalLiteralId(@NonNull UnlimitedNaturalLiteralId id) {
+		js.appendClassReference(null, TypeId.class);
+		js.append(".");
+		UnlimitedNaturalValue value = id.getValue();
+		if (value.isUnlimited()) {
+			js.append("UNLIMITED_VALUE");
+		}
+		else {
+			js.appendClassReference(null, ValueUtil.class);
+			js.append(".unlimitedNaturalValueOf(");
+			js.appendIntegerString(value.asInteger());
+			js.append("))");
+		}
+		return null;
 	}
 
 	@Override
@@ -75,7 +127,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		}
 		js.append("." + idName);
 		if (id instanceof SpecializedId) {
-			js.append(".getSpecializedId(");
+			js.append(".getSpecializedCollectionTypeId(");
 			BindingsId templateBindings = ((SpecializedId)id).getTemplateBindings();
 			for (int i = 0; i < templateBindings.size(); i++) {
 				if (i > 0) {
@@ -140,7 +192,7 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		}
 		js.append("." + idName);
 		if (id instanceof SpecializedId) {
-			js.append(".getSpecializedId(");
+			js.append(".getSpecializedMapTypeId(");
 			BindingsId templateBindings = ((SpecializedId)id).getTemplateBindings();
 			for (int i = 0; i < templateBindings.size(); i++) {
 				if (i > 0) {

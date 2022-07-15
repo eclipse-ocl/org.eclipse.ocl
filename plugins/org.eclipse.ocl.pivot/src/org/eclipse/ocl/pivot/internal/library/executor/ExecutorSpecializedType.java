@@ -14,10 +14,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -26,16 +24,17 @@ public class ExecutorSpecializedType extends AbstractExecutorClass implements Ex
 {
 	protected final @NonNull TypeId typeId;
 
+	@Deprecated			/* Let unspecializedTypeId define the name */
 	public ExecutorSpecializedType(@NonNull String name, @NonNull ExecutorTypeArgument... typeArguments) {
-		super(name, 0);
-		if (typeArguments.length == 2) {
-			MapTypeId mapTypeId = IdManager.getMapTypeId(name);
-			typeId = (TypeId) mapTypeId.specialize(IdManager.getBindingsId(typeArguments));
-		}
-		else {
-			CollectionTypeId collectionTypeId = IdManager.getCollectionTypeId(name);
-			typeId = (TypeId) collectionTypeId.specialize(IdManager.getBindingsId(typeArguments));
-		}
+		this(TypeId.MAP_NAME.equals(name) ? IdManager.getMapTypeId(name) : IdManager.getCollectionTypeId(name), typeArguments);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public ExecutorSpecializedType(@NonNull TypeId unspecializedTypeId, @NonNull ExecutorTypeArgument... typeArguments) {
+		super(unspecializedTypeId.getDisplayName(), 0);
+		typeId = (TypeId)unspecializedTypeId.specialize(IdManager.getBindingsId(typeArguments));
 	}
 
 	@Override

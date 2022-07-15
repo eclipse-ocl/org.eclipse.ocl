@@ -5,6 +5,9 @@ FALSE
 TRUE
  Ljava/lang/Boolean;
  L1java/lang/Boolean;
+toString
+ (Z)Ljava/lang/String;
+ (Z)L1java/lang/String;
 valueOf
  (Ljava/lang/String;)Ljava/lang/Boolean;
  (Ljava/lang/String;)L1java/lang/Boolean;

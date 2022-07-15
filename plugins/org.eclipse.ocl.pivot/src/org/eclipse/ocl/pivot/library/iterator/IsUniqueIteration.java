@@ -42,7 +42,7 @@ public class IsUniqueIteration extends AbstractIteration
 	 */
 	@Override
 	public SetValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
-		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedId(accumulatorTypeId));
+		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedCollectionTypeId(accumulatorTypeId));
 	}
 	
 	@Override

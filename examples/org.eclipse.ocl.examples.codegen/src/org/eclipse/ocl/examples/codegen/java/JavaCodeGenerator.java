@@ -32,6 +32,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
@@ -79,6 +80,8 @@ import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+
+import com.google.common.collect.Lists;
 
 /**
  * OCL2JavaClass supports generation of the content of a JavaClassFile to
@@ -572,6 +575,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		getAnalyzer().analyze(cgPackage);
 		CG2JavaPreVisitor cg2PreVisitor = createCG2JavaPreVisitor();
 		cgPackage.accept(cg2PreVisitor);
+		for (CGElementId cgElementId : Lists.newArrayList(getAnalyzer().getCGElementIds())) {			// FIXME Avoid test_allInstances CME
+			cgElementId.accept(cg2PreVisitor);
+		}
 		CommonSubexpressionEliminator cseEliminator = createCommonSubexpressionEliminator();
 		cseEliminator.optimize(cgPackage);
 	}

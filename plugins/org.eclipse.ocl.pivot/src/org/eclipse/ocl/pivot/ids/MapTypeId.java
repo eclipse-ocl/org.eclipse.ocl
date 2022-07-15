@@ -24,6 +24,24 @@ public interface MapTypeId extends BuiltInTypeId, TemplateableId
 	@NonNull String getMetaTypeName();
 	@Override
 	@NonNull MapTypeId getSpecializedId(@NonNull BindingsId templateBindings);
+	@Deprecated
 	@NonNull MapTypeId getSpecializedId(@NonNull ElementId... templateBindings);
+	/**
+	 * @since 1.18
+	 */
+	@NonNull MapTypeId getSpecializedMapTypeId(@NonNull ElementId keyTypeId, @NonNull ElementId valueTypeId);
+	/**
+	 * @since 1.18
+	 */
+	@NonNull MapTypeId getSpecializedMapTypeId(@NonNull ElementId keyTypeId, @NonNull BooleanLiteralId keysAreNullTypeId,
+			@NonNull ElementId valueTypeId, @NonNull BooleanLiteralId valuesAreNullTypeId);
 	@NonNull TypeId getValueTypeId();
+	/**
+	 * @since 1.18
+	 */
+	boolean isKeysAreNullFree();
+	/**
+	 * @since 1.18
+	 */
+	boolean isValuesAreNullFree();
 }

@@ -607,7 +607,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	@Override
 	public Object visitMapLiteralExp(@NonNull MapLiteralExp mapLiteralExp) {
 		List<MapLiteralPart> parts = mapLiteralExp.getOwnedParts();
-		MapType type = (MapType) mapLiteralExp.getType();
+		MapType type = (MapType) PivotUtil.getType(mapLiteralExp);
 		Map<Object, Object> mapEntries = new HashMap<Object, Object>();
 		for (MapLiteralPart part : parts) {
 			OCLExpression key = part.getOwnedKey();
@@ -616,7 +616,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			Object valueVal = value.accept(undecoratedVisitor);
 			mapEntries.put(keyVal, valueVal);
 		}
-		return idResolver.createMapOfAll(ClassUtil.nonNullModel(type.getKeyType()).getTypeId(), ClassUtil.nonNullModel(type.getValueType()).getTypeId(), mapEntries);
+		return idResolver.createMapOfAll(PivotUtil.getKeyType(type).getTypeId(), type.isKeysAreNullFree(), PivotUtil.getValueType(type).getTypeId(), type.isValuesAreNullFree(), mapEntries);
 	}
 
 	@Override

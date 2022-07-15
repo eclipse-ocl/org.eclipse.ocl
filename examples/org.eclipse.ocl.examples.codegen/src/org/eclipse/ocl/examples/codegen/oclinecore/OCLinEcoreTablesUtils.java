@@ -480,9 +480,45 @@ public class OCLinEcoreTablesUtils
 			s.append("new ");
 			s.appendClassReference(null, ExecutorSpecializedType.class);
 			s.append("(");
-			s.appendString(ClassUtil.nonNullModel(type.getName()));
+			String name = PivotUtil.getName(type);
+			String typeIdName = null;
+			if (TypeId.BAG_NAME.equals(name)) {
+				typeIdName = "BAG";
+			}
+			else if (TypeId.COLLECTION_NAME.equals(name)) {
+				typeIdName = "COLLECTION";
+			}
+			else if (TypeId.ORDERED_COLLECTION_NAME.equals(name)) {
+				typeIdName = "ORDERED_COLLECTION";
+			}
+			else if (TypeId.ORDERED_SET_NAME.equals(name)) {
+				typeIdName = "ORDERED_SET";
+			}
+			else if (TypeId.SEQUENCE_NAME.equals(name)) {
+				typeIdName = "SEQUENCE";
+			}
+			else if (TypeId.SET_NAME.equals(name)) {
+				typeIdName = "SET";
+			}
+			else if (TypeId.UNIQUE_COLLECTION_NAME.equals(name)) {
+				typeIdName = "UNIQUE_COLLECTION";
+			}
+			if (typeIdName != null) {
+				s.appendClassReference(null, TypeId.class);
+				s.append(".");
+				s.append(typeIdName);
+			}
+			else {
+				s.appendString(name);		// Never happens
+			}
 			s.append(", ");
 			type.getElementType().accept(this);
+		//	s.append(", ");
+		//	standardLibrary.getBooleanType().accept(this);
+		//	s.append(", ");
+		//	standardLibrary.getIntegerType().accept(this);
+		//	s.append(", ");
+		//	standardLibrary.getUnlimitedNaturalType().accept(this);
 			s.append(")");
 			return null;
 		}
@@ -504,7 +540,7 @@ public class OCLinEcoreTablesUtils
 			s.append("new ");
 			s.appendClassReference(null, ExecutorLambdaType.class);
 			s.append("(");
-			s.appendString(ClassUtil.nonNullModel(lambdaType.getName()));
+			s.appendString(PivotUtil.getName(lambdaType));		// Never happens
 			s.append(", ");
 			lambdaType.getContextType().accept(this);
 			for (Type parameterType : lambdaType.getParameterType()) {
@@ -520,11 +556,27 @@ public class OCLinEcoreTablesUtils
 			s.append("new ");
 			s.appendClassReference(null, ExecutorSpecializedType.class);
 			s.append("(");
-			s.appendString(ClassUtil.nonNullModel(type.getName()));
+			String name = PivotUtil.getName(type);
+			String typeIdName = null;
+			if (TypeId.MAP_NAME.equals(name)) {
+				typeIdName = "MAP";
+			}
+			if (typeIdName != null) {
+				s.appendClassReference(null, TypeId.class);
+				s.append(".");
+				s.append(typeIdName);
+			}
+			else {
+				s.appendString(name);		// Never happens
+			}
 			s.append(", ");
 			type.getKeyType().accept(this);
+		//	s.append(", ");
+		//	standardLibrary.getBooleanType().accept(this);
 			s.append(", ");
 			type.getValueType().accept(this);
+		//	s.append(", ");
+		//	standardLibrary.getBooleanType().accept(this);
 			s.append(")");
 			return null;
 		}

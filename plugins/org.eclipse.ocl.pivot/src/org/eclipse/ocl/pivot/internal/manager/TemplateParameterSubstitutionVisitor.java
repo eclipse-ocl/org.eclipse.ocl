@@ -302,6 +302,15 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 			CollectionType unspecializedCollectionType = PivotUtil.getUnspecializedTemplateableElement(collectionType);
 			return metamodelManager.getCompleteEnvironment().getCollectionType(unspecializedCollectionType, specializedElementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
 		}
+		else if (type instanceof MapType) {
+			MapType mapType = (MapType)type;
+			Type keyType = ClassUtil.nonNullModel(mapType.getKeyType());
+			Type valueType = ClassUtil.nonNullModel(mapType.getValueType());
+			Type specializedKeyType = specializeType(keyType);
+			Type specializedValueType = specializeType(valueType);
+			MapType unspecializedMapType = PivotUtil.getUnspecializedTemplateableElement(mapType);
+			return metamodelManager.getCompleteEnvironment().getMapType(unspecializedMapType, specializedKeyType, mapType.isKeysAreNullFree(), specializedValueType, mapType.isValuesAreNullFree());
+		}
 		else if (type instanceof TupleType) {
 			return getSpecializedTupleType((TupleType) type);
 		}

@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -59,6 +60,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -67,6 +69,7 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.IntegerLiteralId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -84,6 +87,7 @@ import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.ids.UnlimitedNaturalLiteralId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -121,6 +125,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 
 		@Override
+		public @Nullable Object visitBooleanLiteralId(@NonNull BooleanLiteralId id) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public @Nullable Object visitClassId(@NonNull ClassId id) {
 			throw new UnsupportedOperationException();
 		}
@@ -142,6 +151,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 		@Override
 		public @Nullable Object visitEnumerationLiteralId(@NonNull EnumerationLiteralId id) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Object visitIntegerLiteralId(@NonNull IntegerLiteralId id) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -232,6 +246,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 		@Override
 		public @Nullable Object visitTupleTypeId(@NonNull TupleTypeId id) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Object visitUnlimitedNaturalLiteralId(@NonNull UnlimitedNaturalLiteralId id) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -386,7 +405,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 					dynamicType = standardLibrary.getOclInvalidType();
 				}
 				TypeId elementTypeId = dynamicType.getTypeId();
-				CollectionTypeId collectedTypeId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
+				CollectionTypeId collectedTypeId = TypeId.SEQUENCE.getSpecializedCollectionTypeId(elementTypeId);
 				return createSequenceOfEach(collectedTypeId, (@Nullable Object @NonNull [])unboxedValue);
 			}
 			catch (IllegalArgumentException e) {}
@@ -399,19 +418,19 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			}
 			TypeId elementTypeId = dynamicType.getTypeId();
 			if ((unboxedValue instanceof LinkedHashSet) || (unboxedValue instanceof OrderedSet)) {
-				CollectionTypeId collectedTypeId = TypeId.ORDERED_SET.getSpecializedId(elementTypeId);
+				CollectionTypeId collectedTypeId = TypeId.ORDERED_SET.getSpecializedCollectionTypeId(elementTypeId);
 				return createOrderedSetOfAll(collectedTypeId, unboxedValues);
 			}
 			else if (unboxedValue instanceof Bag) {
-				CollectionTypeId collectedTypeId = TypeId.BAG.getSpecializedId(elementTypeId);
+				CollectionTypeId collectedTypeId = TypeId.BAG.getSpecializedCollectionTypeId(elementTypeId);
 				return createBagOfAll(collectedTypeId, unboxedValues);
 			}
 			else if (unboxedValue instanceof Set) {
-				CollectionTypeId collectedTypeId = TypeId.SET.getSpecializedId(elementTypeId);
+				CollectionTypeId collectedTypeId = TypeId.SET.getSpecializedCollectionTypeId(elementTypeId);
 				return createSetOfAll(collectedTypeId, unboxedValues);
 			}
 			else {
-				CollectionTypeId collectedTypeId = TypeId.SEQUENCE.getSpecializedId(elementTypeId);
+				CollectionTypeId collectedTypeId = TypeId.SEQUENCE.getSpecializedCollectionTypeId(elementTypeId);
 				return createSequenceOfAll(collectedTypeId, unboxedValues);
 			}
 		}
@@ -484,7 +503,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			else {
 				unboxedMap = (Map<?,?>)unboxedValue;
 			}
-			return createMapOfAll(mapTypeId.getKeyTypeId(), mapTypeId.getValueTypeId(), unboxedMap);
+			return createMapOfAll(mapTypeId.getKeyTypeId(), mapTypeId.isKeysAreNullFree(), mapTypeId.getValueTypeId(), mapTypeId.isValuesAreNullFree(), unboxedMap);	// XXX Map
 		}
 		else {
 			return boxedValueOf(unboxedValue, eClassifier);
@@ -549,18 +568,18 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public @NonNull CollectionValue createCollectionOfAll(boolean isOrdered, boolean isUnique, @NonNull TypeId elementTypeId, @NonNull Iterable<? extends Object> unboxedValues) {
 		if (isOrdered) {
 			if (isUnique) {
-				return createOrderedSetOfAll(TypeId.ORDERED_SET.getSpecializedId(elementTypeId), unboxedValues);
+				return createOrderedSetOfAll(TypeId.ORDERED_SET.getSpecializedCollectionTypeId(elementTypeId), unboxedValues);
 			}
 			else {
-				return createSequenceOfAll(TypeId.SEQUENCE.getSpecializedId(elementTypeId), unboxedValues);
+				return createSequenceOfAll(TypeId.SEQUENCE.getSpecializedCollectionTypeId(elementTypeId), unboxedValues);
 			}
 		}
 		else {
 			if (isUnique) {
-				return createSetOfAll(TypeId.SET.getSpecializedId(elementTypeId), unboxedValues);
+				return createSetOfAll(TypeId.SET.getSpecializedCollectionTypeId(elementTypeId), unboxedValues);
 			}
 			else {
-				return createBagOfAll(TypeId.BAG.getSpecializedId(elementTypeId), unboxedValues);
+				return createBagOfAll(TypeId.BAG.getSpecializedCollectionTypeId(elementTypeId), unboxedValues);
 			}
 		}
 	}
@@ -602,13 +621,21 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		return typeId.accept(visitor);
 	}
 
-	@Override
+	@Override @Deprecated
 	public @NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<?, ?> unboxedValues) {
+		return createMapOfAll(keyTypeId, false, valueTypeId, false, unboxedValues);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, boolean keysAreNullFree, @NonNull TypeId valueTypeId, boolean valuesAreNullFree, @NonNull Map<?, ?> unboxedValues) {
 		Map<Object, Object> boxedValues = new HashMap<>();
 		for (Map.Entry<?, ?> unboxedValue : unboxedValues.entrySet()) {
 			boxedValues.put(boxedValueOf(unboxedValue.getKey()), boxedValueOf(unboxedValue.getValue()));
 		}
-		return ValueUtil.createMapValue(keyTypeId, valueTypeId, boxedValues);
+		return ValueUtil.createMapValue(keyTypeId, keysAreNullFree, valueTypeId, valuesAreNullFree, boxedValues);
 	}
 
 	@Override
@@ -842,7 +869,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			CollectionTypeId collectedId = collectionTypeId;
 			CollectionTypeId collectionId = collectedId.getGeneralizedId();
 			TypeId elementTypeId = elementType.getTypeId();
-			collectedId = collectionId.getSpecializedId(elementTypeId);
+			collectedId = collectionId.getSpecializedCollectionTypeId(elementTypeId);
 			final IntegerValue size = collectionValue.size();
 			return getCollectionType(collectedId, false, size, size.asUnlimitedNaturalValue());		// FIXME dynamic isNullFree
 		}
@@ -1648,6 +1675,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		return new EcoreEList.UnmodifiableEList<>(null, null, boxedValues.length, unboxedValues);
 	}
 
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull BooleanLiteralExp visitBooleanLiteralId(@NonNull BooleanLiteralId id) {
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public @NonNull Type visitClassId(@NonNull ClassId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
@@ -1715,6 +1750,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			throw new UnsupportedOperationException();
 		}
 		return enumerationLiteral;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public Element visitIntegerLiteralId(@NonNull IntegerLiteralId id) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1927,6 +1970,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	@Override
 	public @NonNull Type visitTupleTypeId(@NonNull TupleTypeId id) {
 		return getTupleType(id);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public Element visitUnlimitedNaturalLiteralId(@NonNull UnlimitedNaturalLiteralId id) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

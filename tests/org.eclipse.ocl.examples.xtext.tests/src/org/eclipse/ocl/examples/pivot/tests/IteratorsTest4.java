@@ -242,7 +242,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
-		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
+		CollectionTypeId typeId = TypeId.SET.getSpecializedCollectionTypeId(packageType.getTypeId());
 		CollectionValue expected1 = idResolver.createSetOfEach(typeId, ocl.pkg1, ocl.pkg3, ocl.pkg5, ocl.george); // closure does include sources (george)
 		ocl.assertQueryEquals(ocl.george, expected1, "self.oclAsType(Package)->closure(owningPackage)");
 
@@ -262,7 +262,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.pkg1, idResolver.createSetOfEach(collectedId, ocl.pkg1), "self.oclAsType(Package)->closure(owningPackage)");
 		//WIP        ocl.assertQueryNotEquals(ocl.pkg1, getEmptySetValue(), "self->closure(owningPackage)");
 		// empty closure
-		collectedId = TypeId.ORDERED_SET.getSpecializedId(packageType.getTypeId());
+		collectedId = TypeId.ORDERED_SET.getSpecializedCollectionTypeId(packageType.getTypeId());
 		ocl.assertQueryEquals(ocl.pkg1, idResolver.createOrderedSetOfEach(collectedId, ocl.pkg1), "self.oclAsType(Package)->asSequence()->closure(owningPackage)");
 		//WIP 		ocl.assertQueryNotEquals(ocl.pkg1, metamodelManager.createOrderedSetValue(metamodelManager.getOrderedSetType(elementType)), "self->asSequence()->closure(owningPackage)");
 		ocl.dispose();
@@ -276,7 +276,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
-		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
+		CollectionTypeId typeId = TypeId.SET.getSpecializedCollectionTypeId(packageMetaclass.getTypeId());
 		Object ownedPackages = getAttribute(packageMetaclass, "ownedPackages", packageMetaclass);
 		Object owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
 		assert (owningPackage != null) && (ownedPackages != null);
@@ -367,7 +367,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		IdResolver idResolver = ocl.getIdResolver();
 		org.eclipse.ocl.pivot.@NonNull Class packageMetaclass = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		org.eclipse.ocl.pivot.@NonNull Class propertyMetaclass = ClassUtil.nonNullState(environmentFactory.getASClass("Property"));
-		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageMetaclass.getTypeId());
+		CollectionTypeId typeId = TypeId.SET.getSpecializedCollectionTypeId(packageMetaclass.getTypeId());
 		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
 		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
 		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
@@ -455,7 +455,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		IdResolver idResolver = ocl.getIdResolver();
 		//    	Abstract2Moniker.TRACE_MONIKERS.setState(true);
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
-		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
+		CollectionTypeId typeId = TypeId.BAG.getSpecializedCollectionTypeId(packageType.getTypeId());
 		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
 		// complete form
 		ocl.assertQueryEquals(ocl.pkg1, expected1, "ownedPackages?->collect(p : ocl::Package | p.name)");
@@ -503,7 +503,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
 		String self = "foo";
-		CollectionTypeId typeId = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
+		CollectionTypeId typeId = TypeId.SEQUENCE.getSpecializedCollectionTypeId(TypeId.STRING);
 		SequenceValue expected = idResolver.createSequenceOfEach(typeId, "THIS AND", "THAT", "THE OTHER");
 
 		ocl.assertQueryEquals(self, expected, "Sequence{Sequence{'this and', 'that'}, Sequence{'the other'}}->collect(s : Sequence(String) | s.toUpperCase())");
@@ -550,7 +550,7 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		// in the case of a null value, null is allowed in a collection, so
 		// it does not result in invalid
-		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.OCL_ANY);
+		CollectionTypeId typeId = TypeId.BAG.getSpecializedCollectionTypeId(TypeId.OCL_ANY);
 		BagValue expected = idResolver.createBagOfEach(typeId, null, null, null);
 		ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
 				"let b:Boolean = null in Bag{1, 2, 3}->collect(null)");
@@ -563,12 +563,12 @@ public class IteratorsTest4 extends PivotTestSuite
 	@Test public void test_collectBy() {
 		TestOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
-		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.INTEGER);
+		CollectionTypeId typeId = TypeId.BAG.getSpecializedCollectionTypeId(TypeId.INTEGER);
 		Map<Object,Object> map = new HashMap<>();
 		for (int i = 1; i <= 5; i++) {
 			map.put(i,  i*i);
 		}
-		MapValue expected1 = idResolver.createMapOfAll(TypeId.INTEGER, TypeId.INTEGER, map);
+		MapValue expected1 = idResolver.createMapOfAll(TypeId.INTEGER, false, TypeId.INTEGER, false, map);
 		CollectionValue expected1k = idResolver.createSetOfAll(typeId, map.keySet());
 		CollectionValue expected1v = idResolver.createBagOfAll(typeId, map.values());
 
@@ -598,7 +598,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
-		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(packageType.getTypeId());
+		CollectionTypeId typeId = TypeId.BAG.getSpecializedCollectionTypeId(packageType.getTypeId());
 		CollectionValue expected1 = idResolver.createBagOfEach(typeId, "pkg2", "bob", "pkg3");
 
 		// complete form
@@ -640,7 +640,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		Set<BigInteger> e1 = Collections.singleton(BigInteger.valueOf(1));
 		Object e2 = null;
 		Set<BigInteger> e3 = Collections.singleton(BigInteger.valueOf(3));
-		CollectionTypeId typeId = TypeId.BAG.getSpecializedId(TypeId.INTEGER);
+		CollectionTypeId typeId = TypeId.BAG.getSpecializedCollectionTypeId(TypeId.INTEGER);
 		BagValue expected = idResolver.createBagOfEach(typeId, e1, e2, e3);
 		ocl.assertQueryEquals(EcorePackage.eINSTANCE, expected,
 				"let b:Boolean = null in Bag{1, 2, 3}->collectNested(e | if e = 2 then null else Set{e} endif)");
@@ -893,7 +893,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	@Test public void test_iterate() {
 		MyOCL ocl = createOCL();
 		IdResolver idResolver = ocl.getIdResolver();
-		CollectionTypeId typeId = TypeId.SET.getSpecializedId(TypeId.STRING);
+		CollectionTypeId typeId = TypeId.SET.getSpecializedCollectionTypeId(TypeId.STRING);
 		SetValue expected = idResolver.createSetOfEach(typeId, "pkg2", "bob", "pkg3");
 
 		// complete form
@@ -996,7 +996,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
-		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
+		CollectionTypeId typeId = TypeId.SET.getSpecializedCollectionTypeId(packageType.getTypeId());
 		CollectionValue expected = idResolver.createSetOfEach(typeId, ocl.pkg2, ocl.pkg3);
 
 		// complete form
@@ -1042,7 +1042,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
-		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
+		CollectionTypeId typeId = TypeId.SET.getSpecializedCollectionTypeId(packageType.getTypeId());
 		CollectionValue expected = idResolver.createSetOfEach(typeId, ocl.pkg2, ocl.pkg3);
 
 		// complete form
@@ -1090,7 +1090,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
-		CollectionTypeId typeId = TypeId.ORDERED_SET.getSpecializedId(packageType.getTypeId());
+		CollectionTypeId typeId = TypeId.ORDERED_SET.getSpecializedCollectionTypeId(packageType.getTypeId());
 		OrderedSetValue expectedSet = idResolver.createOrderedSetOfEach(typeId, ocl.bob, ocl.pkg2, ocl.pkg3);
 
 		// complete form
@@ -1102,7 +1102,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		// shortest form
 		ocl.assertQueryEquals(ocl.pkg1, expectedSet, "ownedPackages?->sortedBy(name)");
 
-		CollectionTypeId stringsTypeId = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
+		CollectionTypeId stringsTypeId = TypeId.SEQUENCE.getSpecializedCollectionTypeId(TypeId.STRING);
 		SequenceValue expected = idResolver.createSequenceOfEach(stringsTypeId, "a", "b", "c", "d", "e");
 		ocl.assertQueryEquals(ocl.pkg1, expected, "Bag{'d', 'b', 'e', 'a', 'c'}->sortedBy(e | e)");
 		ocl.assertQueryResults(null, "Sequence{'x', 'aa', 'zzz', 'zzz', 'zzz', 'yyyy', 'yyyy'}", "Bag{'x', 'yyyy', 'zzz', 'aa', 'zzz', 'yyyy', 'zzz'}->sortedBy(size())");

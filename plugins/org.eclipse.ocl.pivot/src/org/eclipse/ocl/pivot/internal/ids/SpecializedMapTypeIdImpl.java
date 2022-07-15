@@ -13,6 +13,8 @@ package org.eclipse.ocl.pivot.internal.ids;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.BindingsId;
+import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
+import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -45,6 +47,37 @@ public class SpecializedMapTypeIdImpl extends AbstractSpecializedIdImpl<MapTypeI
 		return keyTypeId2;
 	}
 
+	@Override		// FIXME refactor to share Generalized/Specialized functionality
+	public @NonNull MapTypeId getSpecializedId(@NonNull BindingsId templateBindings) {
+		if (templateBindings.size() == 2) {					// Legacy compatibility / generator default case optimization
+			return getSpecializedMapTypeId(templateBindings.get(0), TypeId.FALSE_VALUE, templateBindings.get(1), TypeId.FALSE_VALUE);
+		}
+		else {
+			return super.getSpecializedId(templateBindings);
+		}
+	}
+
+	@Override		// FIXME refactor to share Generalized/Specialized functionality
+	public @NonNull MapTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
+		if (templateBindings.length == 2) {					// Legacy compatibility / generator default case optimization
+			return getSpecializedMapTypeId(templateBindings[0], TypeId.FALSE_VALUE, templateBindings[1], TypeId.FALSE_VALUE);
+		}
+		else {
+			return super.getSpecializedId(templateBindings);
+		}
+	}
+
+	@Override
+	public @NonNull MapTypeId getSpecializedMapTypeId(@NonNull ElementId keyTypeId, @NonNull ElementId valueTypeId) {
+		return getSpecializedId(keyTypeId, TypeId.FALSE_VALUE, valueTypeId, TypeId.FALSE_VALUE);
+	}
+
+	@Override
+	public @NonNull MapTypeId getSpecializedMapTypeId(@NonNull ElementId keyTypeId, @NonNull BooleanLiteralId keysAreNullTypeId,
+			@NonNull ElementId valueTypeId, @NonNull BooleanLiteralId valuesAreNullTypeId) {
+		return getSpecializedId(keyTypeId, keysAreNullTypeId, valueTypeId, valuesAreNullTypeId);
+	}
+
 	@Override
 	public @NonNull TypeId getValueTypeId() {
 		TypeId valueTypeId2 = valueTypeId;
@@ -52,6 +85,18 @@ public class SpecializedMapTypeIdImpl extends AbstractSpecializedIdImpl<MapTypeI
 			valueTypeId = valueTypeId2 = (TypeId) generalizedId.getValueTypeId().specialize(templateBindings);
 		}
 		return valueTypeId2;
+	}
+
+	@Override
+	public boolean isKeysAreNullFree() {
+		BooleanLiteralId keysAreNullFree = (BooleanLiteralId) TypeId.T_2.specialize(templateBindings);
+		return keysAreNullFree.getValue();
+	}
+
+	@Override
+	public boolean isValuesAreNullFree() {
+		BooleanLiteralId valuesAreNullFree = (BooleanLiteralId) TypeId.T_4.specialize(templateBindings);
+		return valuesAreNullFree.getValue();
 	}
 
     @Override

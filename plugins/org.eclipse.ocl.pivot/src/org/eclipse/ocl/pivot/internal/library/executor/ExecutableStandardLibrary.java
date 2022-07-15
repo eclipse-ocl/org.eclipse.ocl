@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
@@ -202,7 +203,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			specializedType = weakGet(map, typeParameters);
 		}
 		if (specializedType == null) {
-			specializedType = new ExecutorMapType(ClassUtil.nonNullModel(genericType.getName()), genericType, keyType, valueType);
+			specializedType = new ExecutorMapType(PivotUtil.getName(genericType), genericType, keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 			map.put(typeParameters, new WeakReference<>(specializedType));
 		}
 		return specializedType;

@@ -716,7 +716,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		/*		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		IdResolver idResolver = ocl.getIdResolver();
 		@SuppressWarnings("null") @NonNull Type packageType = environmentFactory.getASClass("Package");
-		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
+		CollectionTypeId typeId = TypeId.SET.getSpecializedCollectionTypeId(packageType.getTypeId());
 		CollectionValue expected = idResolver.createSetOfEach(typeId, ocl.pkg2, ocl.pkg3);
 
 		// complete form

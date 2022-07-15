@@ -129,7 +129,6 @@ implements TypeExp {
 	 */
 	@Override
 	public void setReferredType(Type newReferredType) {
-		assert !(newReferredType instanceof TemplateParameter);
 		Type oldReferredType = referredType;
 		referredType = newReferredType;
 		if (eNotificationRequired())

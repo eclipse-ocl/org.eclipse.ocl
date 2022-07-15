@@ -491,7 +491,7 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	} */
 
 	public @NonNull CollectionTypeId getBagTypeId() {
-		return TypeId.BAG.getSpecializedId(getElementTypeId());
+		return TypeId.BAG.getSpecializedCollectionTypeId(typeId);
 	}
 
 	//	public @NonNull CollectionTypeId getCollectionTypeId() {
@@ -533,15 +533,15 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	public @NonNull CollectionTypeId getOrderedSetTypeId() {
-		return TypeId.ORDERED_SET.getSpecializedId(getElementTypeId());
+		return TypeId.ORDERED_SET.getSpecializedCollectionTypeId(typeId);
 	}
 
 	public @NonNull CollectionTypeId getSequenceTypeId() {
-		return TypeId.SEQUENCE.getSpecializedId(getElementTypeId());
+		return TypeId.SEQUENCE.getSpecializedCollectionTypeId(typeId);
 	}
 
 	public @NonNull CollectionTypeId getSetTypeId() {
-		return TypeId.SET.getSpecializedId(getElementTypeId());
+		return TypeId.SET.getSpecializedCollectionTypeId(typeId);
 	}
 
 	@Override

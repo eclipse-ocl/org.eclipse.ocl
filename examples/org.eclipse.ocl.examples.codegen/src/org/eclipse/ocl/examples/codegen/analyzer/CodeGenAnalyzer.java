@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
+import org.eclipse.ocl.pivot.ids.SpecializedId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -81,15 +82,15 @@ public class CodeGenAnalyzer
 {
 	protected final @NonNull CodeGenerator codeGenerator;
 	protected final @NonNull NameManager nameManager;
-	private @NonNull Map<ElementId, CGElementId> cgElementIds = new HashMap<ElementId, CGElementId>();
+	private @NonNull Map<@NonNull ElementId, @NonNull CGElementId> cgElementIds = new HashMap<>();
 	protected final @NonNull CGBoolean cgFalse;
 	protected final @NonNull CGBoolean cgTrue;
 	private /*@LazyNonNull*/ CGUnlimited cgUnlimited = null;
 	private /*@LazyNonNull*/ CGInvalid cgInvalid = null;
 	protected final @NonNull CGNull cgNull;
-	private final @NonNull Map<Number, CGInteger> cgIntegers = new HashMap<Number, CGInteger>();
-	private final @NonNull Map<Number, CGReal> cgReals = new HashMap<Number, CGReal>();
-	private final @NonNull Map<String, CGString> cgStrings = new HashMap<String, CGString>();
+	private final @NonNull Map<Number, CGInteger> cgIntegers = new HashMap<>();
+	private final @NonNull Map<Number, CGReal> cgReals = new HashMap<>();
+	private final @NonNull Map<String, CGString> cgStrings = new HashMap<>();
 
 	public CodeGenAnalyzer(@NonNull CodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
@@ -216,6 +217,10 @@ public class CodeGenAnalyzer
 		return aBoolean ? cgTrue : cgFalse;
 	}
 
+	public @NonNull Iterable<@NonNull CGElementId> getCGElementIds() {
+		return cgElementIds.values();
+	}
+
 	public @NonNull CodeGenerator getCodeGenerator() {
 		return codeGenerator;
 	}
@@ -320,6 +325,11 @@ public class CodeGenAnalyzer
 			cgTypeId.setName(nameManager.getGlobalSymbolName(typeId));
 			cgTypeId.setValueName(ClassUtil.nonNullState(cgTypeId.getName()));
 			cgElementIds.put(typeId, cgTypeId);
+			if (typeId instanceof SpecializedId) {
+				for (ElementId elementId : ((SpecializedId)typeId).getTemplateBindings()) {
+					getElementId(elementId);
+				}
+			}
 		}
 		return cgTypeId;
 	}

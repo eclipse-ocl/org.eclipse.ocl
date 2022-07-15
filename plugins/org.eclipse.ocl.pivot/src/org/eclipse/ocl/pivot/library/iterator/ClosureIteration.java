@@ -111,7 +111,7 @@ public class ClosureIteration extends AbstractIteration
 		else {
 			Executor executor = iterationManager2.getExecutor();
 			Type elementType = executor.getStaticTypeOfValue(null, bodyVal);
-			CollectionTypeId sequenceId = TypeId.SEQUENCE.getSpecializedId(elementType.getTypeId());
+			CollectionTypeId sequenceId = TypeId.SEQUENCE.getSpecializedCollectionTypeId(elementType.getTypeId());
 			collectionValue = executor.getIdResolver().createSequenceOfEach(sequenceId, bodyVal);
 		}
 		evaluateIteration(iterationManager2.createNestedIterationManager(collectionValue));

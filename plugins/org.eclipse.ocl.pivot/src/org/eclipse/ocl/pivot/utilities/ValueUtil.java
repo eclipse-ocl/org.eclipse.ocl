@@ -131,10 +131,15 @@ public abstract class ValueUtil
 	public static final @NonNull InvalidValueException INVALID_VALUE = new InvalidValueException("invalid");
 	public static final @NonNull NullValue NULL_VALUE = new NullValueImpl();
 	public static final @NonNull IntegerValue ONE_VALUE = integerValueOf(1);
-	public static final @NonNull UnlimitedNaturalValue UNLIMITED_ONE_VALUE = (UnlimitedNaturalValue)ONE_VALUE;
 	public static final @NonNull Boolean TRUE_VALUE = Boolean.TRUE;
-	public static final @NonNull UnlimitedValue UNLIMITED_VALUE = new UnlimitedValueImpl();
 	public static final @NonNull IntegerValue ZERO_VALUE = integerValueOf(0);
+
+	public static final @NonNull UnlimitedNaturalValue UNLIMITED_ONE_VALUE = (UnlimitedNaturalValue)ONE_VALUE;
+	public static final @NonNull UnlimitedValue UNLIMITED_VALUE = new UnlimitedValueImpl();
+	/**
+	 * @since 1.18
+	 */
+	public static final @NonNull UnlimitedNaturalValue UNLIMITED_ZERO_VALUE = (UnlimitedNaturalValue)ZERO_VALUE;
 
 	private static boolean allStaticsInitialized = false;
 
@@ -601,7 +606,14 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull MapValue createMapValue(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<Object, Object> boxedValues) {
-		return new MapValueImpl(TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId), boxedValues);
+		return createMapValue(keyTypeId, false, valueTypeId, false, boxedValues);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull MapValue createMapValue(@NonNull TypeId keyTypeId, boolean keysAreNullFree, @NonNull TypeId valueTypeId, boolean valuesAreNullFree, @NonNull Map<Object, Object> boxedValues) {
+		return new MapValueImpl(TypeId.MAP.getSpecializedMapTypeId(keyTypeId, TypeId.valueOf(keysAreNullFree), valueTypeId, TypeId.valueOf(valuesAreNullFree)), boxedValues);
 	}
 
 	public static @NonNull ObjectValue createObjectValue(@NonNull TypeId typeId, @NonNull Object object) {
@@ -678,7 +690,7 @@ public abstract class ValueUtil
 	 * @since 1.6
 	 */
 	public static SetValue.@NonNull Accumulator createSetAccumulatorValue(@NonNull MapTypeId mapId) {
-		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedId(mapId.getKeyTypeId()));
+		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedCollectionTypeId(mapId.getKeyTypeId()));
 	}
 
 	public static @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {
