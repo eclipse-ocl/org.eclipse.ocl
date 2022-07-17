@@ -96,12 +96,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	}
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns BulletElement
 	 *     BulletElement returns BulletElement
 	 *
 	 * Constraint:
 	 *     (level=INT? elements+=MarkupElement*)
+	 * </pre>
 	 */
 	protected void sequence_BulletElement(ISerializationContext context, BulletElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -109,12 +111,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns FigureElement
 	 *     FigureElement returns FigureElement
 	 *
 	 * Constraint:
 	 *     (def=ID? src=STRING (alt=STRING (requiredWidth=INT requiredHeight=INT?)?)?)
+	 * </pre>
 	 */
 	protected void sequence_FigureElement(ISerializationContext context, FigureElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -122,12 +126,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns FigureRefElement
 	 *     FigureRefElement returns FigureRefElement
 	 *
 	 * Constraint:
 	 *     ref=[FigureElement|ID]
+	 * </pre>
 	 */
 	protected void sequence_FigureRefElement(ISerializationContext context, FigureRefElement semanticObject) {
 		if (errorAcceptor != null) {
@@ -141,12 +147,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns FontElement
 	 *     FontElement returns FontElement
 	 *
 	 * Constraint:
 	 *     ((font='b' | font='e') elements+=MarkupElement*)
+	 * </pre>
 	 */
 	protected void sequence_FontElement(ISerializationContext context, FontElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -154,12 +162,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns FootnoteElement
 	 *     FootnoteElement returns FootnoteElement
 	 *
 	 * Constraint:
 	 *     elements+=MarkupElement*
+	 * </pre>
 	 */
 	protected void sequence_FootnoteElement(ISerializationContext context, FootnoteElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -167,12 +177,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns HeadingElement
 	 *     HeadingElement returns HeadingElement
 	 *
 	 * Constraint:
 	 *     (level=INT? elements+=MarkupElement*)
+	 * </pre>
 	 */
 	protected void sequence_HeadingElement(ISerializationContext context, HeadingElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -180,11 +192,13 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Markup returns Markup
 	 *
 	 * Constraint:
 	 *     elements+=MarkupElement+
+	 * </pre>
 	 */
 	protected void sequence_Markup(ISerializationContext context, Markup semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -192,12 +206,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns NewLineElement
 	 *     NewLineElement returns NewLineElement
 	 *
 	 * Constraint:
 	 *     text=NL
+	 * </pre>
 	 */
 	protected void sequence_NewLineElement(ISerializationContext context, NewLineElement semanticObject) {
 		if (errorAcceptor != null) {
@@ -211,12 +227,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns NullElement
 	 *     NullElement returns NullElement
 	 *
 	 * Constraint:
 	 *     elements+=MarkupElement*
+	 * </pre>
 	 */
 	protected void sequence_NullElement(ISerializationContext context, NullElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -224,12 +242,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns OCLCodeElement
 	 *     OCLCodeElement returns OCLCodeElement
 	 *
 	 * Constraint:
 	 *     elements+=MarkupElement*
+	 * </pre>
 	 */
 	protected void sequence_OCLCodeElement(ISerializationContext context, OCLCodeElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -237,12 +257,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns OCLEvalElement
 	 *     OCLEvalElement returns OCLEvalElement
 	 *
 	 * Constraint:
 	 *     elements+=MarkupElement*
+	 * </pre>
 	 */
 	protected void sequence_OCLEvalElement(ISerializationContext context, OCLEvalElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -250,12 +272,14 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns OCLTextElement
 	 *     OCLTextElement returns OCLTextElement
 	 *
 	 * Constraint:
 	 *     elements+=MarkupElement*
+	 * </pre>
 	 */
 	protected void sequence_OCLTextElement(ISerializationContext context, OCLTextElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -263,6 +287,7 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MarkupElement returns TextElement
 	 *     TextElement returns TextElement
@@ -280,6 +305,7 @@ public abstract class AbstractMarkupSemanticSequencer extends AbstractDelegating
 	 *         )+ |
 	 *         text+=MarkupKeyword
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_TextElement(ISerializationContext context, TextElement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

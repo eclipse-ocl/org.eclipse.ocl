@@ -380,6 +380,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	}
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PrimitiveLiteralExpCS returns BooleanLiteralExpCS
 	 *     BooleanLiteralExpCS returns BooleanLiteralExpCS
@@ -391,6 +392,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     (symbol='true' | symbol='false')
+	 * </pre>
 	 */
 	protected void sequence_BooleanLiteralExpCS(ISerializationContext context, BooleanLiteralExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -398,11 +400,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     CoIteratorVariableCS returns VariableCS
 	 *
 	 * Constraint:
 	 *     (name=UnrestrictedName ownedType=TypeExpCS?)
+	 * </pre>
 	 */
 	protected void sequence_CoIteratorVariableCS(ISerializationContext context, VariableCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -410,6 +414,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     CollectionLiteralExpCS returns CollectionLiteralExpCS
 	 *     ExpCS returns CollectionLiteralExpCS
@@ -420,6 +425,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     (ownedType=CollectionTypeCS (ownedParts+=CollectionLiteralPartCS ownedParts+=CollectionLiteralPartCS*)?)
+	 * </pre>
 	 */
 	protected void sequence_CollectionLiteralExpCS(ISerializationContext context, CollectionLiteralExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -427,11 +433,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     CollectionLiteralPartCS returns CollectionLiteralPartCS
 	 *
 	 * Constraint:
 	 *     ((ownedExpression=ExpCS ownedLastExpression=ExpCS?) | ownedExpression=PatternExpCS)
+	 * </pre>
 	 */
 	protected void sequence_CollectionLiteralPartCS(ISerializationContext context, CollectionLiteralPartCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -439,12 +447,14 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     CollectionPatternCS returns CollectionPatternCS
 	 *     TypeExpWithoutMultiplicityCS returns CollectionPatternCS
 	 *
 	 * Constraint:
 	 *     (ownedType=CollectionTypeCS (ownedParts+=PatternExpCS ownedParts+=PatternExpCS* restVariableName=Identifier)?)
+	 * </pre>
 	 */
 	protected void sequence_CollectionPatternCS(ISerializationContext context, CollectionPatternCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -452,11 +462,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeExpCS returns CollectionPatternCS
 	 *
 	 * Constraint:
 	 *     (ownedType=CollectionTypeCS (ownedParts+=PatternExpCS ownedParts+=PatternExpCS* restVariableName=Identifier)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_CollectionPatternCS_TypeExpCS(ISerializationContext context, CollectionPatternCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -464,6 +476,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     CollectionTypeCS returns CollectionTypeCS
 	 *     TypeLiteralCS returns CollectionTypeCS
@@ -471,6 +484,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     (name=CollectionTypeIdentifier (ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS?)?)
+	 * </pre>
 	 */
 	protected void sequence_CollectionTypeCS(ISerializationContext context, CollectionTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -478,6 +492,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeExpCS returns CollectionTypeCS
 	 *
@@ -487,6 +502,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *         (ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS?)?
 	 *         ownedMultiplicity=MultiplicityCS?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CollectionTypeCS_TypeExpCS(ISerializationContext context, CollectionTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -494,6 +510,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeLiteralWithMultiplicityCS returns CollectionTypeCS
 	 *
@@ -503,6 +520,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *         (ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS?)?
 	 *         ownedMultiplicity=MultiplicityCS?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CollectionTypeCS_TypeLiteralWithMultiplicityCS(ISerializationContext context, CollectionTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -510,11 +528,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     CurlyBracketedClauseCS returns CurlyBracketedClauseCS
 	 *
 	 * Constraint:
 	 *     (ownedParts+=ShadowPartCS ownedParts+=ShadowPartCS*)?
+	 * </pre>
 	 */
 	protected void sequence_CurlyBracketedClauseCS(ISerializationContext context, CurlyBracketedClauseCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -522,11 +542,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElseIfThenExpCS returns IfThenExpCS
 	 *
 	 * Constraint:
 	 *     (ownedCondition=ExpCS ownedThenExpression=ExpCS)
+	 * </pre>
 	 */
 	protected void sequence_ElseIfThenExpCS(ISerializationContext context, IfThenExpCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -543,12 +565,14 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ExpCS returns InfixExpCS
 	 *     NavigatingArgExpCS returns InfixExpCS
 	 *
 	 * Constraint:
 	 *     (ownedLeft=ExpCS_InfixExpCS_0_1_0 name=BinaryOperatorName ownedRight=ExpCS)
+	 * </pre>
 	 */
 	protected void sequence_ExpCS(ISerializationContext context, InfixExpCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -568,6 +592,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ExpCS returns IfExpCS
 	 *     ExpCS.InfixExpCS_0_1_0 returns IfExpCS
@@ -583,6 +608,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *         ownedIfThenExpressions+=ElseIfThenExpCS*
 	 *         ownedElseExpression=ExpCS
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_IfExpCS(ISerializationContext context, IfExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -590,6 +616,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PrimitiveLiteralExpCS returns InvalidLiteralExpCS
 	 *     InvalidLiteralExpCS returns InvalidLiteralExpCS
@@ -601,6 +628,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     {InvalidLiteralExpCS}
+	 * </pre>
 	 */
 	protected void sequence_InvalidLiteralExpCS(ISerializationContext context, InvalidLiteralExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -608,6 +636,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LambdaLiteralExpCS returns LambdaLiteralExpCS
 	 *     ExpCS returns LambdaLiteralExpCS
@@ -618,6 +647,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     ownedExpressionCS=ExpCS
+	 * </pre>
 	 */
 	protected void sequence_LambdaLiteralExpCS(ISerializationContext context, LambdaLiteralExpCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -631,6 +661,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ExpCS returns LetExpCS
 	 *     PrefixedLetExpCS returns LetExpCS
@@ -639,6 +670,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     (ownedVariables+=LetVariableCS ownedVariables+=LetVariableCS* ownedInExpression=ExpCS)
+	 * </pre>
 	 */
 	protected void sequence_LetExpCS(ISerializationContext context, LetExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -646,11 +678,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     LetVariableCS returns LetVariableCS
 	 *
 	 * Constraint:
 	 *     (name=UnrestrictedName ownedRoundBracketedClause=RoundBracketedClauseCS? ownedType=TypeExpCS? ownedInitExpression=ExpCS)
+	 * </pre>
 	 */
 	protected void sequence_LetVariableCS(ISerializationContext context, LetVariableCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -658,6 +692,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MapLiteralExpCS returns MapLiteralExpCS
 	 *     ExpCS returns MapLiteralExpCS
@@ -668,6 +703,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     (ownedType=MapTypeCS (ownedParts+=MapLiteralPartCS ownedParts+=MapLiteralPartCS*)?)
+	 * </pre>
 	 */
 	protected void sequence_MapLiteralExpCS(ISerializationContext context, MapLiteralExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -675,11 +711,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MapLiteralPartCS returns MapLiteralPartCS
 	 *
 	 * Constraint:
 	 *     (ownedKey=ExpCS ownedValue=ExpCS)
+	 * </pre>
 	 */
 	protected void sequence_MapLiteralPartCS(ISerializationContext context, MapLiteralPartCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -696,6 +734,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MapTypeCS returns MapTypeCS
 	 *     TypeLiteralCS returns MapTypeCS
@@ -703,6 +742,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     (name='Map' (ownedKeyType=TypeExpCS ownedValueType=TypeExpCS)?)
+	 * </pre>
 	 */
 	protected void sequence_MapTypeCS(ISerializationContext context, MapTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -710,11 +750,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeExpCS returns MapTypeCS
 	 *
 	 * Constraint:
 	 *     (name='Map' (ownedKeyType=TypeExpCS ownedValueType=TypeExpCS)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_MapTypeCS_TypeExpCS(ISerializationContext context, MapTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -722,11 +764,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeLiteralWithMultiplicityCS returns MapTypeCS
 	 *
 	 * Constraint:
 	 *     (name='Map' (ownedKeyType=TypeExpCS ownedValueType=TypeExpCS)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_MapTypeCS_TypeLiteralWithMultiplicityCS(ISerializationContext context, MapTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -734,11 +778,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Model returns ContextCS
 	 *
 	 * Constraint:
 	 *     ownedExpression=ExpCS
+	 * </pre>
 	 */
 	protected void sequence_Model(ISerializationContext context, ContextCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -752,6 +798,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ExpCS returns NameExpCS
 	 *     ExpCS.InfixExpCS_0_1_0 returns NameExpCS
@@ -768,6 +815,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *         ownedCurlyBracketedClause=CurlyBracketedClauseCS?
 	 *         isPre?='@'?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_NameExpCS(ISerializationContext context, NameExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -775,6 +823,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     NavigatingArgCS returns NavigatingArgCS
 	 *
@@ -790,6 +839,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *         ) |
 	 *         ownedType=TypeExpCS
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_NavigatingArgCS(ISerializationContext context, NavigatingArgCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -797,11 +847,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     NavigatingBarArgCS returns NavigatingArgCS
 	 *
 	 * Constraint:
 	 *     (prefix='|' ownedNameExpression=NavigatingArgExpCS (ownedType=TypeExpCS ownedInitExpression=ExpCS?)?)
+	 * </pre>
 	 */
 	protected void sequence_NavigatingBarArgCS(ISerializationContext context, NavigatingArgCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -809,6 +861,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     NavigatingCommaArgCS returns NavigatingArgCS
 	 *
@@ -822,6 +875,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *             (ownedType=TypeExpCS? ownedCoIterator=CoIteratorVariableCS? ownedInitExpression=ExpCS)
 	 *         )?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_NavigatingCommaArgCS(ISerializationContext context, NavigatingArgCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -829,11 +883,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     NavigatingSemiArgCS returns NavigatingArgCS
 	 *
 	 * Constraint:
 	 *     (prefix=';' ownedNameExpression=NavigatingArgExpCS (ownedType=TypeExpCS ownedInitExpression=ExpCS?)?)
+	 * </pre>
 	 */
 	protected void sequence_NavigatingSemiArgCS(ISerializationContext context, NavigatingArgCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -841,6 +897,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ExpCS returns NestedExpCS
 	 *     ExpCS.InfixExpCS_0_1_0 returns NestedExpCS
@@ -851,6 +908,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     ownedExpression=ExpCS
+	 * </pre>
 	 */
 	protected void sequence_NestedExpCS(ISerializationContext context, NestedExpCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -864,6 +922,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PrimitiveLiteralExpCS returns NullLiteralExpCS
 	 *     NullLiteralExpCS returns NullLiteralExpCS
@@ -875,6 +934,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     {NullLiteralExpCS}
+	 * </pre>
 	 */
 	protected void sequence_NullLiteralExpCS(ISerializationContext context, NullLiteralExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -882,6 +942,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PrimitiveLiteralExpCS returns NumberLiteralExpCS
 	 *     NumberLiteralExpCS returns NumberLiteralExpCS
@@ -893,6 +954,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     symbol=NUMBER_LITERAL
+	 * </pre>
 	 */
 	protected void sequence_NumberLiteralExpCS(ISerializationContext context, NumberLiteralExpCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -906,11 +968,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PatternExpCS returns PatternExpCS
 	 *
 	 * Constraint:
 	 *     (patternVariableName=UnrestrictedName? ownedPatternType=TypeExpCS)
+	 * </pre>
 	 */
 	protected void sequence_PatternExpCS(ISerializationContext context, PatternExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -918,11 +982,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PrefixedLetExpCS returns PrefixExpCS
 	 *
 	 * Constraint:
 	 *     (name=UnaryOperatorName ownedRight=PrefixedLetExpCS)
+	 * </pre>
 	 */
 	protected void sequence_PrefixedLetExpCS(ISerializationContext context, PrefixExpCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -939,12 +1005,14 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ExpCS returns PrefixExpCS
 	 *     NavigatingArgExpCS returns PrefixExpCS
 	 *
 	 * Constraint:
 	 *     ((name=UnaryOperatorName ownedRight=PrefixedLetExpCS) | (name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS))
+	 * </pre>
 	 */
 	protected void sequence_PrefixedLetExpCS_PrefixedPrimaryExpCS(ISerializationContext context, PrefixExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -952,12 +1020,14 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ExpCS.InfixExpCS_0_1_0 returns PrefixExpCS
 	 *     PrefixedPrimaryExpCS returns PrefixExpCS
 	 *
 	 * Constraint:
 	 *     (name=UnaryOperatorName ownedRight=PrefixedPrimaryExpCS)
+	 * </pre>
 	 */
 	protected void sequence_PrefixedPrimaryExpCS(ISerializationContext context, PrefixExpCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -974,6 +1044,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PrimitiveTypeCS returns PrimitiveTypeRefCS
 	 *     TypeLiteralCS returns PrimitiveTypeRefCS
@@ -981,6 +1052,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     name=PrimitiveTypeIdentifier
+	 * </pre>
 	 */
 	protected void sequence_PrimitiveTypeCS(ISerializationContext context, PrimitiveTypeRefCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -994,11 +1066,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeExpCS returns PrimitiveTypeRefCS
 	 *
 	 * Constraint:
 	 *     (name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_PrimitiveTypeCS_TypeExpCS(ISerializationContext context, PrimitiveTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1006,11 +1080,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeLiteralWithMultiplicityCS returns PrimitiveTypeRefCS
 	 *
 	 * Constraint:
 	 *     (name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_PrimitiveTypeCS_TypeLiteralWithMultiplicityCS(ISerializationContext context, PrimitiveTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1018,6 +1094,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     RoundBracketedClauseCS returns RoundBracketedClauseCS
 	 *
@@ -1026,6 +1103,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *         ownedArguments+=NavigatingArgCS
 	 *         (ownedArguments+=NavigatingCommaArgCS | ownedArguments+=NavigatingSemiArgCS | ownedArguments+=NavigatingBarArgCS)*
 	 *     )?
+	 * </pre>
 	 */
 	protected void sequence_RoundBracketedClauseCS(ISerializationContext context, RoundBracketedClauseCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1033,6 +1111,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ExpCS returns SelfExpCS
 	 *     ExpCS.InfixExpCS_0_1_0 returns SelfExpCS
@@ -1043,6 +1122,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     {SelfExpCS}
+	 * </pre>
 	 */
 	protected void sequence_SelfExpCS(ISerializationContext context, SelfExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1050,6 +1130,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ShadowPartCS returns ShadowPartCS
 	 *
@@ -1058,6 +1139,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *         (referredProperty=[Property|UnrestrictedName] (ownedInitExpression=ExpCS | ownedInitExpression=PatternExpCS)) |
 	 *         ownedInitExpression=StringLiteralExpCS
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ShadowPartCS(ISerializationContext context, ShadowPartCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1065,11 +1147,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SimplePathNameCS returns PathNameCS
 	 *
 	 * Constraint:
 	 *     ownedPathElements+=FirstPathElementCS
+	 * </pre>
 	 */
 	protected void sequence_SimplePathNameCS(ISerializationContext context, PathNameCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1077,11 +1161,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SquareBracketedClauseCS returns SquareBracketedClauseCS
 	 *
 	 * Constraint:
 	 *     (ownedTerms+=ExpCS ownedTerms+=ExpCS*)
+	 * </pre>
 	 */
 	protected void sequence_SquareBracketedClauseCS(ISerializationContext context, SquareBracketedClauseCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1089,6 +1175,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PrimitiveLiteralExpCS returns StringLiteralExpCS
 	 *     StringLiteralExpCS returns StringLiteralExpCS
@@ -1100,6 +1187,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     segments+=StringLiteral+
+	 * </pre>
 	 */
 	protected void sequence_StringLiteralExpCS(ISerializationContext context, StringLiteralExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1107,6 +1195,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TupleLiteralExpCS returns TupleLiteralExpCS
 	 *     ExpCS returns TupleLiteralExpCS
@@ -1117,6 +1206,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     (ownedParts+=TupleLiteralPartCS ownedParts+=TupleLiteralPartCS*)
+	 * </pre>
 	 */
 	protected void sequence_TupleLiteralExpCS(ISerializationContext context, TupleLiteralExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1124,11 +1214,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TupleLiteralPartCS returns TupleLiteralPartCS
 	 *
 	 * Constraint:
 	 *     (name=UnrestrictedName ownedType=TypeExpCS? ownedInitExpression=ExpCS)
+	 * </pre>
 	 */
 	protected void sequence_TupleLiteralPartCS(ISerializationContext context, TupleLiteralPartCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1136,11 +1228,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TuplePartCS returns TuplePartCS
 	 *
 	 * Constraint:
 	 *     (name=UnrestrictedName ownedType=TypeExpCS)
+	 * </pre>
 	 */
 	protected void sequence_TuplePartCS(ISerializationContext context, TuplePartCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -1157,6 +1251,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TupleTypeCS returns TupleTypeCS
 	 *     TypeLiteralCS returns TupleTypeCS
@@ -1164,6 +1259,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     (name='Tuple' (ownedParts+=TuplePartCS ownedParts+=TuplePartCS*)?)
+	 * </pre>
 	 */
 	protected void sequence_TupleTypeCS(ISerializationContext context, TupleTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1171,11 +1267,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeExpCS returns TupleTypeCS
 	 *
 	 * Constraint:
 	 *     (name='Tuple' (ownedParts+=TuplePartCS ownedParts+=TuplePartCS*)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_TupleTypeCS_TypeExpCS(ISerializationContext context, TupleTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1183,11 +1281,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeLiteralWithMultiplicityCS returns TupleTypeCS
 	 *
 	 * Constraint:
 	 *     (name='Tuple' (ownedParts+=TuplePartCS ownedParts+=TuplePartCS*)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_TupleTypeCS_TypeLiteralWithMultiplicityCS(ISerializationContext context, TupleTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1195,11 +1295,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeExpCS returns TypeNameExpCS
 	 *
 	 * Constraint:
 	 *     (ownedPathName=PathNameCS (ownedCurlyBracketedClause=CurlyBracketedClauseCS ownedPatternGuard=ExpCS?)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_TypeExpCS_TypeNameExpCS(ISerializationContext context, TypeNameExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1207,6 +1309,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeLiteralExpCS returns TypeLiteralExpCS
 	 *     ExpCS returns TypeLiteralExpCS
@@ -1217,6 +1320,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     ownedType=TypeLiteralWithMultiplicityCS
+	 * </pre>
 	 */
 	protected void sequence_TypeLiteralExpCS(ISerializationContext context, TypeLiteralExpCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -1230,12 +1334,14 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeNameExpCS returns TypeNameExpCS
 	 *     TypeExpWithoutMultiplicityCS returns TypeNameExpCS
 	 *
 	 * Constraint:
 	 *     (ownedPathName=PathNameCS (ownedCurlyBracketedClause=CurlyBracketedClauseCS ownedPatternGuard=ExpCS?)?)
+	 * </pre>
 	 */
 	protected void sequence_TypeNameExpCS(ISerializationContext context, TypeNameExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1243,11 +1349,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     URIFirstPathElementCS returns PathElementCS
 	 *
 	 * Constraint:
 	 *     referredElement=[NamedElement|UnrestrictedName]
+	 * </pre>
 	 */
 	protected void sequence_URIFirstPathElementCS(ISerializationContext context, PathElementCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -1261,11 +1369,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     URIFirstPathElementCS returns PathElementWithURICS
 	 *
 	 * Constraint:
 	 *     referredElement=[Namespace|URI]
+	 * </pre>
 	 */
 	protected void sequence_URIFirstPathElementCS(ISerializationContext context, PathElementWithURICS semanticObject) {
 		if (errorAcceptor != null) {
@@ -1279,11 +1389,13 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     URIPathNameCS returns PathNameCS
 	 *
 	 * Constraint:
 	 *     (ownedPathElements+=URIFirstPathElementCS ownedPathElements+=NextPathElementCS*)
+	 * </pre>
 	 */
 	protected void sequence_URIPathNameCS(ISerializationContext context, PathNameCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1291,6 +1403,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PrimitiveLiteralExpCS returns UnlimitedNaturalLiteralExpCS
 	 *     UnlimitedNaturalLiteralExpCS returns UnlimitedNaturalLiteralExpCS
@@ -1302,6 +1415,7 @@ public abstract class AbstractEssentialOCLSemanticSequencer extends BaseSemantic
 	 *
 	 * Constraint:
 	 *     {UnlimitedNaturalLiteralExpCS}
+	 * </pre>
 	 */
 	protected void sequence_UnlimitedNaturalLiteralExpCS(ISerializationContext context, UnlimitedNaturalLiteralExpCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

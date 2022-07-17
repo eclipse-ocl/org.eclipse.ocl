@@ -504,6 +504,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	}
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AnnotationCS returns AnnotationCS
 	 *     AnnotationElementCS returns AnnotationCS
@@ -515,6 +516,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         ownedAnnotations+=AnnotationElementCS?
 	 *         ((ownedContents+=ModelElementCS | ownedReferences+=ModelElementRefCS)? ownedAnnotations+=AnnotationElementCS?)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AnnotationCS(ISerializationContext context, AnnotationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -522,6 +524,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AttributeCS returns AttributeCS
 	 *     ModelElementCS returns AttributeCS
@@ -554,6 +557,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         ownedAnnotations+=AnnotationElementCS?
 	 *         ((ownedDefaultExpressions+=SpecificationCS | ownedDefaultExpressions+=SpecificationCS)? ownedAnnotations+=AnnotationElementCS?)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_AttributeCS(ISerializationContext context, AttributeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -561,6 +565,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns CollectionTypeCS
 	 *
@@ -570,6 +575,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedType=TypeExpWithoutMultiplicityCS ownedCollectionMultiplicity=MultiplicityCS?)?
 	 *         ownedMultiplicity=MultiplicityCS?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_CollectionTypeCS_TypedMultiplicityRefCS(ISerializationContext context, CollectionTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -577,6 +583,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ClassCS returns DataTypeCS
 	 *     DataTypeCS returns DataTypeCS
@@ -591,6 +598,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         isSerializable?='serializable'?
 	 *         (ownedAnnotations+=AnnotationElementCS | ownedConstraints+=InvariantConstraintCS)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_DataTypeCS(ISerializationContext context, DataTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -598,6 +606,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     DetailCS returns DetailCS
 	 *
@@ -607,6 +616,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         values+=SINGLE_QUOTED_STRING?
 	 *         (values+=ML_SINGLE_QUOTED_STRING? values+=SINGLE_QUOTED_STRING?)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_DetailCS(ISerializationContext context, DetailCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -614,12 +624,14 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AnnotationElementCS returns DocumentationCS
 	 *     DocumentationCS returns DocumentationCS
 	 *
 	 * Constraint:
 	 *     (value=SINGLE_QUOTED_STRING? (ownedDetails+=DetailCS ownedDetails+=DetailCS*)?)
+	 * </pre>
 	 */
 	protected void sequence_DocumentationCS(ISerializationContext context, DocumentationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -627,6 +639,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ClassCS returns EnumerationCS
 	 *     EnumerationCS returns EnumerationCS
@@ -640,6 +653,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         isSerializable?='serializable'?
 	 *         (ownedAnnotations+=AnnotationElementCS | ownedLiterals+=EnumerationLiteralCS | ownedConstraints+=InvariantConstraintCS)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_EnumerationCS(ISerializationContext context, EnumerationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -647,12 +661,14 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     EnumerationLiteralCS returns EnumerationLiteralCS
 	 *     ModelElementCS returns EnumerationLiteralCS
 	 *
 	 * Constraint:
 	 *     ((name=UnrestrictedName | name=EnumerationLiteralName) literal=SINGLE_QUOTED_STRING? value=SIGNED? ownedAnnotations+=AnnotationElementCS*)
+	 * </pre>
 	 */
 	protected void sequence_EnumerationLiteralCS(ISerializationContext context, EnumerationLiteralCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -660,6 +676,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ImplicitOppositeCS returns ImplicitOppositeCS
 	 *
@@ -669,6 +686,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         ownedType=TypedMultiplicityRefCS
 	 *         (qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique')*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ImplicitOppositeCS(ISerializationContext context, ImplicitOppositeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -676,11 +694,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ImportCS returns ImportCS
 	 *
 	 * Constraint:
 	 *     (name=UnrestrictedName? ownedPathName=URIPathNameCS isAll?='::*'?)
+	 * </pre>
 	 */
 	protected void sequence_ImportCS(ISerializationContext context, ImportCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -688,6 +708,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     InvariantConstraintCS returns OCLinEcoreConstraintCS
 	 *
@@ -698,6 +719,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (name=UnrestrictedName ownedMessageSpecification=SpecificationCS?)?
 	 *         ownedSpecification=SpecificationCS?
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_InvariantConstraintCS(ISerializationContext context, OCLinEcoreConstraintCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -705,11 +727,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns MapTypeCS
 	 *
 	 * Constraint:
 	 *     (name='Map' (ownedKeyType=TypeExpCS ownedValueType=TypeExpCS)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_MapTypeCS_TypedMultiplicityRefCS(ISerializationContext context, MapTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -717,11 +741,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ModelElementRefCS returns ModelElementRefCS
 	 *
 	 * Constraint:
 	 *     ownedPathName=PathNameCS
+	 * </pre>
 	 */
 	protected void sequence_ModelElementRefCS(ISerializationContext context, ModelElementRefCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -735,6 +761,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ModelElementCS returns OperationCS
 	 *     OperationCS returns OperationCS
@@ -747,7 +774,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (ownedParameters+=ParameterCS ownedParameters+=ParameterCS*)?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         (ownedExceptions+=TypedRefCS ownedExceptions+=TypedRefCS*)?
-	 *         qualifiers+='!transient'?
+	 *         qualifiers+='!unique'?
 	 *         (
 	 *             (
 	 *                 qualifiers+='derived' |
@@ -755,10 +782,10 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='transient' |
-	 *                 qualifiers+='unique' |
-	 *                 qualifiers+='!unique'
+	 *                 qualifiers+='!transient' |
+	 *                 qualifiers+='unique'
 	 *             )?
-	 *             qualifiers+='!transient'?
+	 *             qualifiers+='!unique'?
 	 *         )*
 	 *         (
 	 *             ownedAnnotations+=AnnotationElementCS |
@@ -767,6 +794,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *             ownedPostconditions+=PostconditionConstraintCS
 	 *         )*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_OperationCS(ISerializationContext context, OperationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -774,6 +802,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ModelElementCS returns PackageCS
 	 *     PackageCS returns PackageCS
@@ -785,6 +814,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         nsURI=URI?
 	 *         (ownedAnnotations+=AnnotationElementCS | ownedPackages+=PackageCS | ownedClasses+=ClassCS)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_PackageCS(ISerializationContext context, PackageCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -792,6 +822,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ParameterCS returns ParameterCS
 	 *
@@ -802,6 +833,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         (qualifiers+='ordered' | qualifiers+='!ordered' | qualifiers+='unique' | qualifiers+='!unique')*
 	 *         ownedAnnotations+=AnnotationElementCS*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ParameterCS(ISerializationContext context, ParameterCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -809,11 +841,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PostconditionConstraintCS returns OCLinEcoreConstraintCS
 	 *
 	 * Constraint:
 	 *     (stereotype='postcondition' (name=UnrestrictedName ownedMessageSpecification=SpecificationCS?)? ownedSpecification=SpecificationCS?)
+	 * </pre>
 	 */
 	protected void sequence_PostconditionConstraintCS(ISerializationContext context, OCLinEcoreConstraintCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -821,11 +855,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PreconditionConstraintCS returns OCLinEcoreConstraintCS
 	 *
 	 * Constraint:
 	 *     (stereotype='precondition' (name=UnrestrictedName ownedMessageSpecification=SpecificationCS?)? ownedSpecification=SpecificationCS?)
+	 * </pre>
 	 */
 	protected void sequence_PreconditionConstraintCS(ISerializationContext context, OCLinEcoreConstraintCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -833,11 +869,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns PrimitiveTypeRefCS
 	 *
 	 * Constraint:
 	 *     (name=PrimitiveTypeIdentifier ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_PrimitiveTypeCS_TypedMultiplicityRefCS(ISerializationContext context, PrimitiveTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -845,6 +883,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ModelElementCS returns ReferenceCS
 	 *     ReferenceCS returns ReferenceCS
@@ -857,13 +896,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         referredOpposite=[Property|UnrestrictedName]?
 	 *         ownedType=TypedMultiplicityRefCS?
 	 *         default=SINGLE_QUOTED_STRING?
-	 *         qualifiers+='ordered'?
+	 *         qualifiers+='composes'?
 	 *         (
 	 *             (
-	 *                 qualifiers+='composes' |
 	 *                 qualifiers+='!composes' |
 	 *                 qualifiers+='derived' |
 	 *                 qualifiers+='!derived' |
+	 *                 qualifiers+='ordered' |
 	 *                 qualifiers+='!ordered' |
 	 *                 qualifiers+='readonly' |
 	 *                 qualifiers+='!readonly' |
@@ -878,7 +917,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *                 qualifiers+='volatile' |
 	 *                 qualifiers+='!volatile'
 	 *             )?
-	 *             qualifiers+='ordered'?
+	 *             qualifiers+='composes'?
 	 *         )*
 	 *         (
 	 *             (
@@ -890,6 +929,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *             (referredKeys+=[Property|UnrestrictedName] referredKeys+=[Property|UnrestrictedName]*)?
 	 *         )+
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ReferenceCS(ISerializationContext context, ReferenceCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -897,11 +937,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     SpecificationCS returns ExpSpecificationCS
 	 *
 	 * Constraint:
 	 *     (ownedExpression=ExpCS | exprString=UNQUOTED_STRING)
+	 * </pre>
 	 */
 	protected void sequence_SpecificationCS(ISerializationContext context, ExpSpecificationCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -909,6 +951,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ClassCS returns StructuredClassCS
 	 *     ModelElementCS returns StructuredClassCS
@@ -924,6 +967,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *         isInterface?='interface'?
 	 *         (ownedAnnotations+=AnnotationElementCS | ownedOperations+=OperationCS | ownedProperties+=StructuralFeatureCS | ownedConstraints+=InvariantConstraintCS)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_StructuredClassCS(ISerializationContext context, StructuredClassCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -931,12 +975,14 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     AnnotationElementCS returns SysMLCS
 	 *     SysMLCS returns SysMLCS
 	 *
 	 * Constraint:
 	 *     (ownedDetails+=DetailCS | ownedDetails+=DetailCS+)?
+	 * </pre>
 	 */
 	protected void sequence_SysMLCS(ISerializationContext context, SysMLCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -944,11 +990,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TemplateSignatureCS returns TemplateSignatureCS
 	 *
 	 * Constraint:
 	 *     ((ownedParameters+=TypeParameterCS ownedParameters+=TypeParameterCS*) | (ownedParameters+=TypeParameterCS ownedParameters+=TypeParameterCS*))
+	 * </pre>
 	 */
 	protected void sequence_TemplateSignatureCS(ISerializationContext context, TemplateSignatureCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -956,11 +1004,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TopLevelCS returns TopLevelCS
 	 *
 	 * Constraint:
 	 *     (ownedImports+=ImportCS* ownedPackages+=PackageCS*)
+	 * </pre>
 	 */
 	protected void sequence_TopLevelCS(ISerializationContext context, TopLevelCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -968,11 +1018,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns TupleTypeCS
 	 *
 	 * Constraint:
 	 *     (name='Tuple' (ownedParts+=TuplePartCS ownedParts+=TuplePartCS*)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_TupleTypeCS_TypedMultiplicityRefCS(ISerializationContext context, TupleTypeCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -980,11 +1032,13 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedMultiplicityRefCS returns TypedTypeRefCS
 	 *
 	 * Constraint:
 	 *     (ownedPathName=PathNameCS (ownedBinding=TemplateBindingCS | ownedBinding=TemplateBindingCS)? ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_TypedMultiplicityRefCS_TypedTypeRefCS(ISerializationContext context, TypedTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -992,6 +1046,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypedRefCS returns TypedTypeRefCS
 	 *     TypedTypeRefCS returns TypedTypeRefCS
@@ -999,6 +1054,7 @@ public abstract class AbstractOCLinEcoreSemanticSequencer extends EssentialOCLSe
 	 *
 	 * Constraint:
 	 *     (ownedPathName=PathNameCS (ownedBinding=TemplateBindingCS | ownedBinding=TemplateBindingCS)?)
+	 * </pre>
 	 */
 	protected void sequence_TypedTypeRefCS(ISerializationContext context, TypedTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

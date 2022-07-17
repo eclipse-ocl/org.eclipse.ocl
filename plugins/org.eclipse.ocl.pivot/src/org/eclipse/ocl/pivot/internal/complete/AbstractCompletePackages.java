@@ -41,7 +41,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 			COMPLETE_PACKAGES.println("Create " + this);
 		}
 	}
-	
+
 	@Override
 	public void addUnique(CompletePackage completePackage) {
 		assert completePackage != null;
@@ -165,7 +165,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 	public @Nullable CompletePackageInternal getOwnedCompletePackage(@Nullable String name) {
 		return name2completePackage.get(name);
 	}
-	
+
 	protected abstract @NonNull CompletePackageInternal getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 
 	protected abstract @NonNull Iterable<org.eclipse.ocl.pivot.Package> getPartialPackages();

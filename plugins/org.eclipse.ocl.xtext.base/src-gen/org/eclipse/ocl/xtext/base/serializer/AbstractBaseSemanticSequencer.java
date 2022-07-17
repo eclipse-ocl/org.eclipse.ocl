@@ -112,11 +112,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	}
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     FirstPathElementCS returns PathElementCS
 	 *
 	 * Constraint:
 	 *     referredElement=[NamedElement|UnrestrictedName]
+	 * </pre>
 	 */
 	protected void sequence_FirstPathElementCS(ISerializationContext context, PathElementCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -130,11 +132,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MultiplicityBoundsCS returns MultiplicityBoundsCS
 	 *
 	 * Constraint:
 	 *     (lowerBound=LOWER upperBound=UPPER?)
+	 * </pre>
 	 */
 	protected void sequence_MultiplicityBoundsCS(ISerializationContext context, MultiplicityBoundsCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -142,11 +146,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MultiplicityCS returns MultiplicityBoundsCS
 	 *
 	 * Constraint:
 	 *     (lowerBound=LOWER upperBound=UPPER? isNullFree?='|1'?)
+	 * </pre>
 	 */
 	protected void sequence_MultiplicityBoundsCS_MultiplicityCS(ISerializationContext context, MultiplicityBoundsCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -154,11 +160,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MultiplicityCS returns MultiplicityStringCS
 	 *
 	 * Constraint:
 	 *     ((stringBounds='*' | stringBounds='+' | stringBounds='?') isNullFree?='|1'?)
+	 * </pre>
 	 */
 	protected void sequence_MultiplicityCS_MultiplicityStringCS(ISerializationContext context, MultiplicityStringCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -166,11 +174,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     MultiplicityStringCS returns MultiplicityStringCS
 	 *
 	 * Constraint:
 	 *     (stringBounds='*' | stringBounds='+' | stringBounds='?')
+	 * </pre>
 	 */
 	protected void sequence_MultiplicityStringCS(ISerializationContext context, MultiplicityStringCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -178,11 +188,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     NextPathElementCS returns PathElementCS
 	 *
 	 * Constraint:
 	 *     referredElement=[NamedElement|UnreservedName]
+	 * </pre>
 	 */
 	protected void sequence_NextPathElementCS(ISerializationContext context, PathElementCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -196,11 +208,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     PathNameCS returns PathNameCS
 	 *
 	 * Constraint:
 	 *     (ownedPathElements+=FirstPathElementCS ownedPathElements+=NextPathElementCS*)
+	 * </pre>
 	 */
 	protected void sequence_PathNameCS(ISerializationContext context, PathNameCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -208,11 +222,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TemplateBindingCS returns TemplateBindingCS
 	 *
 	 * Constraint:
 	 *     (ownedSubstitutions+=TemplateParameterSubstitutionCS ownedSubstitutions+=TemplateParameterSubstitutionCS* ownedMultiplicity=MultiplicityCS?)
+	 * </pre>
 	 */
 	protected void sequence_TemplateBindingCS(ISerializationContext context, TemplateBindingCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -220,11 +236,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TemplateParameterSubstitutionCS returns TemplateParameterSubstitutionCS
 	 *
 	 * Constraint:
 	 *     ownedActualParameter=TypeRefCS
+	 * </pre>
 	 */
 	protected void sequence_TemplateParameterSubstitutionCS(ISerializationContext context, TemplateParameterSubstitutionCS semanticObject) {
 		if (errorAcceptor != null) {
@@ -238,11 +256,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TemplateSignatureCS returns TemplateSignatureCS
 	 *
 	 * Constraint:
 	 *     (ownedParameters+=TypeParameterCS ownedParameters+=TypeParameterCS*)
+	 * </pre>
 	 */
 	protected void sequence_TemplateSignatureCS(ISerializationContext context, TemplateSignatureCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -250,11 +270,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeParameterCS returns TypeParameterCS
 	 *
 	 * Constraint:
 	 *     (name=UnrestrictedName (ownedExtends+=TypedRefCS ownedExtends+=TypedRefCS*)?)
+	 * </pre>
 	 */
 	protected void sequence_TypeParameterCS(ISerializationContext context, TypeParameterCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -262,6 +284,7 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeRefCS returns TypedTypeRefCS
 	 *     TypedRefCS returns TypedTypeRefCS
@@ -269,6 +292,7 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	 *
 	 * Constraint:
 	 *     (ownedPathName=PathNameCS ownedBinding=TemplateBindingCS?)
+	 * </pre>
 	 */
 	protected void sequence_TypedTypeRefCS(ISerializationContext context, TypedTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -276,11 +300,13 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     UnreservedPathNameCS returns PathNameCS
 	 *
 	 * Constraint:
 	 *     (ownedPathElements+=NextPathElementCS ownedPathElements+=NextPathElementCS*)
+	 * </pre>
 	 */
 	protected void sequence_UnreservedPathNameCS(ISerializationContext context, PathNameCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -288,12 +314,14 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 
 
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     TypeRefCS returns WildcardTypeRefCS
 	 *     WildcardTypeRefCS returns WildcardTypeRefCS
 	 *
 	 * Constraint:
 	 *     ownedExtends=TypedRefCS?
+	 * </pre>
 	 */
 	protected void sequence_WildcardTypeRefCS(ISerializationContext context, WildcardTypeRefCS semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

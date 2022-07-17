@@ -128,6 +128,7 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
 	 *
@@ -136,47 +137,59 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	 *     (rule start) 'def' (ambiguity) ':' ownedSignature=TemplateSignatureCS
 	 *     isStatic?='static' 'def' (ambiguity) ':' name=UnrestrictedName
 	 *     isStatic?='static' 'def' (ambiguity) ':' ownedSignature=TemplateSignatureCS
+
+	 * </pre>
 	 */
 	protected void emit_DefOperationCS_UnrestrictedNameParserRuleCall_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) 'def' (ambiguity) ':' name=UnrestrictedName
 	 *     isStatic?='static' 'def' (ambiguity) ':' name=UnrestrictedName
+
+	 * </pre>
 	 */
 	protected void emit_DefPropertyCS_UnrestrictedNameParserRuleCall_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     'import' | 'include' | 'library'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) name=Identifier
 	 *     (rule start) (ambiguity) ownedPathName=URIPathNameCS
+
+	 * </pre>
 	 */
 	protected void emit_ImportCS_ImportKeyword_0_0_or_IncludeKeyword_0_1_or_LibraryKeyword_0_2(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedKey=ExpCS (ambiguity) ownedValue=ExpCS
+
+	 * </pre>
 	 */
 	protected void emit_MapLiteralPartCS_LessThanSignHyphenMinusKeyword_1_1_or_WithKeyword_1_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '|?'?
 	 *
@@ -186,80 +199,101 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	 *     stringBounds='+' (ambiguity) ']' (rule end)
 	 *     stringBounds='?' (ambiguity) ']' (rule end)
 	 *     upperBound=UPPER (ambiguity) ']' (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_0_0_1_or_WithKeyword_0_1_0_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_1_2_0_1_or_WithKeyword_0_1_1_2_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
 	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_2_1_0_1_or_WithKeyword_0_1_2_1_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_0_0_1_or_WithKeyword_2_0_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_1_2_0_1_or_WithKeyword_2_1_2_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
 	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_2_1_0_1_or_WithKeyword_2_2_1_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
 	 *
@@ -270,42 +304,53 @@ public abstract class AbstractCompleteOCLSyntacticSequencer extends AbstractSynt
 	 *     ownedPostconditions+=ConstraintCS 'body' (ambiguity) ':' ownedBodies+=SpecificationCS
 	 *     ownedPreconditions+=ConstraintCS 'body' (ambiguity) ':' ownedBodies+=SpecificationCS
 	 *     ownedType=TypeExpCS 'body' (ambiguity) ':' ownedBodies+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_OperationContextDeclCS_UnrestrictedNameParserRuleCall_8_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS 'derive' (ambiguity) ':' ownedDefaultExpressions+=SpecificationCS
 	 *     ownedType=TypeExpCS 'derive' (ambiguity) ':' ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_0_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS 'init' (ambiguity) ':' ownedDefaultExpressions+=SpecificationCS
 	 *     ownedType=TypeExpCS 'init' (ambiguity) ':' ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_PropertyContextDeclCS_UnrestrictedNameParserRuleCall_4_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' ')')?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     name='Tuple' (ambiguity) (rule end)
 	 *     name='Tuple' (ambiguity) ownedMultiplicity=MultiplicityCS
+
+	 * </pre>
 	 */
 	protected void emit_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

@@ -308,6 +308,7 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ','?
 	 *
@@ -984,12 +985,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='volatile' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='volatile' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='volatile' (ambiguity) qualifiers+='volatile'
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS_CommaKeyword_5_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';'
 	 *
@@ -1013,12 +1017,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' ','? '}' (ambiguity) (rule end)
 	 *     qualifiers+='unsettable' ','? '}' (ambiguity) (rule end)
 	 *     qualifiers+='volatile' ','? '}' (ambiguity) (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_____DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2_SemicolonKeyword_6_0_1_2_4___or___InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2_SemicolonKeyword_6_0_1_1_4____a_RightCurlyBracketKeyword_6_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
 	 *
@@ -1254,12 +1261,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *         (';' ('derivation' UnrestrictedName? ':' ';')* 'initial' (ambiguity) ':')*
 	 *         ownedDefaultExpressions+=SpecificationCS
 	 *     )
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS_UnrestrictedNameParserRuleCall_6_0_1_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
 	 *
@@ -1495,24 +1505,30 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *         (';' ('initial' UnrestrictedName? ':' ';')* 'derivation' (ambiguity) ':')*
 	 *         ownedDefaultExpressions+=SpecificationCS
 	 *     )
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS_UnrestrictedNameParserRuleCall_6_0_1_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('derivation' UnrestrictedName? ':' ';' ('initial' UnrestrictedName? ':' ';')*)*
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS ';' ('initial' UnrestrictedName? ':' ';')* (ambiguity) '}' (rule end)
 	 *     ownedDefaultExpressions+=SpecificationCS ';' ('initial' UnrestrictedName? ':' ';')* (ambiguity) ownedAnnotations+=AnnotationElementCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS___DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2_SemicolonKeyword_6_0_1_2_4___InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2_SemicolonKeyword_6_0_1_1_4__a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('derivation' UnrestrictedName? ':' ';')*
 	 *
@@ -1539,12 +1555,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' ','? '}' '{' (ambiguity) 'initial' UnrestrictedName? ':' (';' (ambiguity) 'initial' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
 	 *     qualifiers+='unsettable' ','? '}' '{' (ambiguity) 'initial' UnrestrictedName? ':' (';' (ambiguity) 'initial' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
 	 *     qualifiers+='volatile' ','? '}' '{' (ambiguity) 'initial' UnrestrictedName? ':' (';' (ambiguity) 'initial' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS___DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2_SemicolonKeyword_6_0_1_2_4__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (
 	  *         ('derivation' UnrestrictedName? ':' (';' 'derivation' UnrestrictedName? ':')*) |
@@ -1568,24 +1587,30 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS ';' (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS___DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2___SemicolonKeyword_6_0_1_2_4_DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2__a___or_____DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2___SemicolonKeyword_6_0_1_2_4_DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2__a_SemicolonKeyword_6_0_1_2_4__q___InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2_SemicolonKeyword_6_0_1_1_4__p_DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2___SemicolonKeyword_6_0_1_2_4_DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2__a___SemicolonKeyword_6_0_1_2_4___InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2_SemicolonKeyword_6_0_1_1_4__p_DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2___SemicolonKeyword_6_0_1_2_4_DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2__a__a__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('initial' UnrestrictedName? ':' ';' ('derivation' UnrestrictedName? ':' ';')*)*
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS ';' ('derivation' UnrestrictedName? ':' ';')* (ambiguity) '}' (rule end)
 	 *     ownedDefaultExpressions+=SpecificationCS ';' ('derivation' UnrestrictedName? ':' ';')* (ambiguity) ownedAnnotations+=AnnotationElementCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS___InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2_SemicolonKeyword_6_0_1_1_4___DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2_SemicolonKeyword_6_0_1_2_4__a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('initial' UnrestrictedName? ':' ';')*
 	 *
@@ -1612,12 +1637,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' ','? '}' '{' (ambiguity) 'derivation' UnrestrictedName? ':' (';' (ambiguity) 'derivation' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
 	 *     qualifiers+='unsettable' ','? '}' '{' (ambiguity) 'derivation' UnrestrictedName? ':' (';' (ambiguity) 'derivation' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
 	 *     qualifiers+='volatile' ','? '}' '{' (ambiguity) 'derivation' UnrestrictedName? ':' (';' (ambiguity) 'derivation' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS___InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2_SemicolonKeyword_6_0_1_1_4__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (
 	  *         ('initial' UnrestrictedName? ':' (';' 'initial' UnrestrictedName? ':')*) |
@@ -1641,12 +1669,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS ';' (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS___InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2___SemicolonKeyword_6_0_1_1_4_InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2__a___or_____InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2___SemicolonKeyword_6_0_1_1_4_InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2__a_SemicolonKeyword_6_0_1_1_4__q___DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2_SemicolonKeyword_6_0_1_2_4__p_InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2___SemicolonKeyword_6_0_1_1_4_InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2__a___SemicolonKeyword_6_0_1_1_4___DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2_SemicolonKeyword_6_0_1_2_4__p_InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2___SemicolonKeyword_6_0_1_1_4_InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2__a__a__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (';' ('derivation' UnrestrictedName? ':' ';')* 'initial' UnrestrictedName? ':')*
 	 *
@@ -1671,23 +1702,29 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' ','? '}' '{' ('derivation' UnrestrictedName? ':' ';')* 'initial' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
 	 *     qualifiers+='unsettable' ','? '}' '{' ('derivation' UnrestrictedName? ':' ';')* 'initial' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
 	 *     qualifiers+='volatile' ','? '}' '{' ('derivation' UnrestrictedName? ':' ';')* 'initial' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS___SemicolonKeyword_6_0_1_1_4___DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2_SemicolonKeyword_6_0_1_2_4__a_InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (';' ('derivation' UnrestrictedName? ':' ';')* 'initial' UnrestrictedName? ':')+
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS___SemicolonKeyword_6_0_1_1_4___DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2_SemicolonKeyword_6_0_1_2_4__a_InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (';' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':')*
 	 *
@@ -1712,23 +1749,29 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' ','? '}' '{' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
 	 *     qualifiers+='unsettable' ','? '}' '{' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
 	 *     qualifiers+='volatile' ','? '}' '{' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS___SemicolonKeyword_6_0_1_2_4___InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2_SemicolonKeyword_6_0_1_1_4__a_DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (';' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':')+
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS___SemicolonKeyword_6_0_1_2_4___InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2_SemicolonKeyword_6_0_1_1_4__a_DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))*
 	 *
@@ -1754,12 +1797,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' ','? '}' '{' (ambiguity) ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='unsettable' ','? '}' '{' (ambiguity) ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='volatile' ','? '}' '{' (ambiguity) ownedAnnotations+=AnnotationElementCS
+
+	 * </pre>
 	 */
 	protected void emit_AttributeCS_____DerivationKeyword_6_0_1_2_0_UnrestrictedNameParserRuleCall_6_0_1_2_1_q_ColonKeyword_6_0_1_2_2_SemicolonKeyword_6_0_1_2_4___or___InitialKeyword_6_0_1_1_0_UnrestrictedNameParserRuleCall_6_0_1_1_1_q_ColonKeyword_6_0_1_1_2_SemicolonKeyword_6_0_1_1_4____a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}') | ';'
 	 *
@@ -1768,12 +1814,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     isSerializable?='serializable' '}' (ambiguity) (rule end)
 	 *     name=UnrestrictedName ('{' '!serializable'? '}')? (ambiguity) (rule end)
 	 *     ownedSignature=TemplateSignatureCS ('{' '!serializable'? '}')? (ambiguity) (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_DataTypeCS_SemicolonKeyword_6_1_or___LeftCurlyBracketKeyword_6_0_0_RightCurlyBracketKeyword_6_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '!serializable'? '}')?
 	 *
@@ -1787,12 +1836,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedAnnotations+=AnnotationElementCS
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) (('{' '}') | ';') (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_DataTypeCS___LeftCurlyBracketKeyword_5_0_SerializableKeyword_5_1_1_q_RightCurlyBracketKeyword_5_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}') | ';'
 	 *
@@ -1801,12 +1853,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     isSerializable?='serializable' '}' (ambiguity) (rule end)
 	 *     name=UnrestrictedName ('{' '!serializable'? '}')? (ambiguity) (rule end)
 	 *     ownedSignature=TemplateSignatureCS ('{' '!serializable'? '}')? (ambiguity) (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_EnumerationCS_SemicolonKeyword_5_1_or___LeftCurlyBracketKeyword_5_0_0_RightCurlyBracketKeyword_5_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '!serializable'? '}')?
 	 *
@@ -1823,12 +1878,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedConstraints+=InvariantConstraintCS
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) '{' ownedLiterals+=EnumerationLiteralCS
 	 *     ownedSignature=TemplateSignatureCS (ambiguity) (('{' '}') | ';') (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_EnumerationCS___LeftCurlyBracketKeyword_4_0_SerializableKeyword_4_1_1_q_RightCurlyBracketKeyword_4_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}') | ';'
 	 *
@@ -1837,12 +1895,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     name=EnumerationLiteralName (ambiguity) (rule end)
 	 *     name=UnrestrictedName (ambiguity) (rule end)
 	 *     value=SIGNED (ambiguity) (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_EnumerationLiteralCS_SemicolonKeyword_3_1_or___LeftCurlyBracketKeyword_3_0_0_RightCurlyBracketKeyword_3_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ','?
 	 *
@@ -1867,24 +1928,30 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='!unique'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='ordered'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='unique'
+
+	 * </pre>
 	 */
 	protected void emit_ImplicitOppositeCS_CommaKeyword_4_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     'import' | 'library'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) name=UnrestrictedName
 	 *     (rule start) (ambiguity) ownedPathName=URIPathNameCS
+
+	 * </pre>
 	 */
 	protected void emit_ImportCS_ImportKeyword_0_0_or_LibraryKeyword_0_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (':' ';') | ';'
 	 *
@@ -1892,23 +1959,29 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     name=UnrestrictedName (ambiguity) (rule end)
 	 *     ownedMessageSpecification=SpecificationCS ')' (ambiguity) (rule end)
 	 *     stereotype='invariant' (ambiguity) (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_InvariantConstraintCS_SemicolonKeyword_3_1_or___ColonKeyword_3_0_0_SemicolonKeyword_3_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedKey=ExpCS (ambiguity) ownedValue=ExpCS
+
+	 * </pre>
 	 */
 	protected void emit_MapLiteralPartCS_LessThanSignHyphenMinusKeyword_1_1_or_WithKeyword_1_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '|?'?
 	 *
@@ -1918,80 +1991,101 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     stringBounds='+' (ambiguity) ']' (rule end)
 	 *     stringBounds='?' (ambiguity) ']' (rule end)
 	 *     upperBound=UPPER (ambiguity) ']' (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_0_0_1_or_WithKeyword_0_1_0_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_1_2_0_1_or_WithKeyword_0_1_1_2_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
 	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingArgCS_LessThanSignHyphenMinusKeyword_0_1_2_1_0_1_or_WithKeyword_0_1_2_1_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_0_0_1_or_WithKeyword_2_0_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_1_2_0_1_or_WithKeyword_2_1_2_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
-	 *     'with' | '<-'
+	 *     'with' | '&lt;-'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedNameExpression=NavigatingArgExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
 	 *     ownedType=TypeExpCS (ambiguity) ownedCoIterator=CoIteratorVariableCS
+
+	 * </pre>
 	 */
 	protected void emit_NavigatingCommaArgCS_LessThanSignHyphenMinusKeyword_2_2_1_0_1_or_WithKeyword_2_2_1_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ','?
 	 *
@@ -2100,12 +2194,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='ordered'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='transient'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='unique'
+
+	 * </pre>
 	 */
 	protected void emit_OperationCS_CommaKeyword_9_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' ('body' UnrestrictedName? ':' ';')* '}') | ';'
 	 *
@@ -2122,12 +2219,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='ordered' ','? '}' (ambiguity) (rule end)
 	 *     qualifiers+='transient' ','? '}' (ambiguity) (rule end)
 	 *     qualifiers+='unique' ','? '}' (ambiguity) (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_OperationCS_SemicolonKeyword_10_1_or___LeftCurlyBracketKeyword_10_0_0___BodyKeyword_10_0_1_2_0_UnrestrictedNameParserRuleCall_10_0_1_2_1_q_ColonKeyword_10_0_1_2_2_SemicolonKeyword_10_0_1_2_4__a_RightCurlyBracketKeyword_10_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
 	 *
@@ -2147,12 +2247,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='ordered' ','? '}' '{' 'body' (ambiguity) ':' (';' 'body' (ambiguity) ':')* ownedBodyExpressions+=SpecificationCS
 	 *     qualifiers+='transient' ','? '}' '{' 'body' (ambiguity) ':' (';' 'body' (ambiguity) ':')* ownedBodyExpressions+=SpecificationCS
 	 *     qualifiers+='unique' ','? '}' '{' 'body' (ambiguity) ':' (';' 'body' (ambiguity) ':')* ownedBodyExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_OperationCS_UnrestrictedNameParserRuleCall_10_0_1_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('body' UnrestrictedName? ':' ';')*
 	 *
@@ -2209,12 +2312,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' ','? '}' '{' (ambiguity) ownedAnnotations+=AnnotationElementCS
 	 *     qualifiers+='unique' ','? '}' '{' (ambiguity) ownedPostconditions+=PostconditionConstraintCS
 	 *     qualifiers+='unique' ','? '}' '{' (ambiguity) ownedPreconditions+=PreconditionConstraintCS
+
+	 * </pre>
 	 */
 	protected void emit_OperationCS___BodyKeyword_10_0_1_2_0_UnrestrictedNameParserRuleCall_10_0_1_2_1_q_ColonKeyword_10_0_1_2_2_SemicolonKeyword_10_0_1_2_4__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (';' 'body' UnrestrictedName? ':')*
 	 *
@@ -2234,23 +2340,29 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='ordered' ','? '}' '{' 'body' UnrestrictedName? ':' (ambiguity) ownedBodyExpressions+=SpecificationCS
 	 *     qualifiers+='transient' ','? '}' '{' 'body' UnrestrictedName? ':' (ambiguity) ownedBodyExpressions+=SpecificationCS
 	 *     qualifiers+='unique' ','? '}' '{' 'body' UnrestrictedName? ':' (ambiguity) ownedBodyExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_OperationCS___SemicolonKeyword_10_0_1_2_4_BodyKeyword_10_0_1_2_0_UnrestrictedNameParserRuleCall_10_0_1_2_1_q_ColonKeyword_10_0_1_2_2__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (';' 'body' UnrestrictedName? ':')+
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedBodyExpressions+=SpecificationCS (ambiguity) ownedBodyExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_OperationCS___SemicolonKeyword_10_0_1_2_4_BodyKeyword_10_0_1_2_0_UnrestrictedNameParserRuleCall_10_0_1_2_1_q_ColonKeyword_10_0_1_2_2__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}') | ';'
 	 *
@@ -2258,12 +2370,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     name=UnrestrictedName (ambiguity) (rule end)
 	 *     nsPrefix=UnrestrictedName (ambiguity) (rule end)
 	 *     nsURI=URI (ambiguity) (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_PackageCS_SemicolonKeyword_4_1_or___LeftCurlyBracketKeyword_4_0_0_RightCurlyBracketKeyword_4_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ','?
 	 *
@@ -2292,12 +2407,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='!unique'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='ordered'
 	 *     qualifiers+='unique' (ambiguity) qualifiers+='unique'
+
+	 * </pre>
 	 */
 	protected void emit_ParameterCS_CommaKeyword_2_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}')?
 	 *
@@ -2308,12 +2426,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='!unique' ','? '}' (ambiguity) (rule end)
 	 *     qualifiers+='ordered' ','? '}' (ambiguity) (rule end)
 	 *     qualifiers+='unique' ','? '}' (ambiguity) (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_ParameterCS___LeftCurlyBracketKeyword_3_0_RightCurlyBracketKeyword_3_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ','?
 	 *
@@ -3146,12 +3267,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='volatile' (ambiguity) qualifiers+='unique'
 	 *     qualifiers+='volatile' (ambiguity) qualifiers+='unsettable'
 	 *     qualifiers+='volatile' (ambiguity) qualifiers+='volatile'
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS_CommaKeyword_6_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))* '}') | ';'
 	 *
@@ -3178,12 +3302,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='unsettable' ','? '}' (ambiguity) (rule end)
 	 *     qualifiers+='volatile' ','? '}' (ambiguity) (rule end)
 	 *     referredOpposite=[Property|UnrestrictedName] (ambiguity) (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS_SemicolonKeyword_7_1_or___LeftCurlyBracketKeyword_7_0_0_____DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2_SemicolonKeyword_7_0_1_3_4___or___InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2_SemicolonKeyword_7_0_1_2_4____a_RightCurlyBracketKeyword_7_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
 	 *
@@ -3473,12 +3600,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *         (';' ('derivation' UnrestrictedName? ':' ';')* 'initial' (ambiguity) ':')*
 	 *         ownedDefaultExpressions+=SpecificationCS
 	 *     )
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS_UnrestrictedNameParserRuleCall_7_0_1_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     UnrestrictedName?
 	 *
@@ -3768,12 +3898,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *         (';' ('initial' UnrestrictedName? ':' ';')* 'derivation' (ambiguity) ':')*
 	 *         ownedDefaultExpressions+=SpecificationCS
 	 *     )
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS_UnrestrictedNameParserRuleCall_7_0_1_3_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('derivation' UnrestrictedName? ':' ';' ('initial' UnrestrictedName? ':' ';')*)*
 	 *
@@ -3782,12 +3915,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     ownedDefaultExpressions+=SpecificationCS ';' ('initial' UnrestrictedName? ':' ';')* (ambiguity) '}' (rule end)
 	 *     ownedDefaultExpressions+=SpecificationCS ';' ('initial' UnrestrictedName? ':' ';')* (ambiguity) ownedAnnotations+=AnnotationElementCS
 	 *     ownedDefaultExpressions+=SpecificationCS ';' ('initial' UnrestrictedName? ':' ';')* (ambiguity) ownedImplicitOpposites+=ImplicitOppositeCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS___DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2_SemicolonKeyword_7_0_1_3_4___InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2_SemicolonKeyword_7_0_1_2_4__a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('derivation' UnrestrictedName? ':' ';')*
 	 *
@@ -3821,12 +3957,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='volatile' ','? '}' '{' (ambiguity) 'initial' UnrestrictedName? ':' (';' (ambiguity) 'initial' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
 	 *     referredKeys+=[Property|UnrestrictedName] ';' (ambiguity) 'initial' UnrestrictedName? ':' (';' (ambiguity) 'initial' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
 	 *     referredOpposite=[Property|UnrestrictedName] '{' (ambiguity) 'initial' UnrestrictedName? ':' (';' (ambiguity) 'initial' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS___DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2_SemicolonKeyword_7_0_1_3_4__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (
 	  *         ('derivation' UnrestrictedName? ':' (';' 'derivation' UnrestrictedName? ':')*) |
@@ -3850,12 +3989,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS ';' (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS___DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2___SemicolonKeyword_7_0_1_3_4_DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2__a___or_____DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2___SemicolonKeyword_7_0_1_3_4_DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2__a_SemicolonKeyword_7_0_1_3_4__q___InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2_SemicolonKeyword_7_0_1_2_4__p_DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2___SemicolonKeyword_7_0_1_3_4_DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2__a___SemicolonKeyword_7_0_1_3_4___InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2_SemicolonKeyword_7_0_1_2_4__p_DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2___SemicolonKeyword_7_0_1_3_4_DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2__a__a__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('initial' UnrestrictedName? ':' ';' ('derivation' UnrestrictedName? ':' ';')*)*
 	 *
@@ -3864,12 +4006,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     ownedDefaultExpressions+=SpecificationCS ';' ('derivation' UnrestrictedName? ':' ';')* (ambiguity) '}' (rule end)
 	 *     ownedDefaultExpressions+=SpecificationCS ';' ('derivation' UnrestrictedName? ':' ';')* (ambiguity) ownedAnnotations+=AnnotationElementCS
 	 *     ownedDefaultExpressions+=SpecificationCS ';' ('derivation' UnrestrictedName? ':' ';')* (ambiguity) ownedImplicitOpposites+=ImplicitOppositeCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS___InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2_SemicolonKeyword_7_0_1_2_4___DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2_SemicolonKeyword_7_0_1_3_4__a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('initial' UnrestrictedName? ':' ';')*
 	 *
@@ -3903,12 +4048,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='volatile' ','? '}' '{' (ambiguity) 'derivation' UnrestrictedName? ':' (';' (ambiguity) 'derivation' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
 	 *     referredKeys+=[Property|UnrestrictedName] ';' (ambiguity) 'derivation' UnrestrictedName? ':' (';' (ambiguity) 'derivation' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
 	 *     referredOpposite=[Property|UnrestrictedName] '{' (ambiguity) 'derivation' UnrestrictedName? ':' (';' (ambiguity) 'derivation' UnrestrictedName? ':')* ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS___InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2_SemicolonKeyword_7_0_1_2_4__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (
 	  *         ('initial' UnrestrictedName? ':' (';' 'initial' UnrestrictedName? ':')*) |
@@ -3932,12 +4080,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS ';' (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS___InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2___SemicolonKeyword_7_0_1_2_4_InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2__a___or_____InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2___SemicolonKeyword_7_0_1_2_4_InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2__a_SemicolonKeyword_7_0_1_2_4__q___DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2_SemicolonKeyword_7_0_1_3_4__p_InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2___SemicolonKeyword_7_0_1_2_4_InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2__a___SemicolonKeyword_7_0_1_2_4___DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2_SemicolonKeyword_7_0_1_3_4__p_InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2___SemicolonKeyword_7_0_1_2_4_InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2__a__a__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (';' ('derivation' UnrestrictedName? ':' ';')* 'initial' UnrestrictedName? ':')*
 	 *
@@ -3967,23 +4118,29 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='volatile' ','? '}' '{' ('derivation' UnrestrictedName? ':' ';')* 'initial' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
 	 *     referredKeys+=[Property|UnrestrictedName] ';' ('derivation' UnrestrictedName? ':' ';')* 'initial' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
 	 *     referredOpposite=[Property|UnrestrictedName] '{' ('derivation' UnrestrictedName? ':' ';')* 'initial' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS___SemicolonKeyword_7_0_1_2_4___DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2_SemicolonKeyword_7_0_1_3_4__a_InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (';' ('derivation' UnrestrictedName? ':' ';')* 'initial' UnrestrictedName? ':')+
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS___SemicolonKeyword_7_0_1_2_4___DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2_SemicolonKeyword_7_0_1_3_4__a_InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (';' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':')*
 	 *
@@ -4013,23 +4170,29 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     qualifiers+='volatile' ','? '}' '{' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
 	 *     referredKeys+=[Property|UnrestrictedName] ';' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
 	 *     referredOpposite=[Property|UnrestrictedName] '{' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':' (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS___SemicolonKeyword_7_0_1_3_4___InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2_SemicolonKeyword_7_0_1_2_4__a_DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (';' ('initial' UnrestrictedName? ':' ';')* 'derivation' UnrestrictedName? ':')+
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     ownedDefaultExpressions+=SpecificationCS (ambiguity) ownedDefaultExpressions+=SpecificationCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS___SemicolonKeyword_7_0_1_3_4___InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2_SemicolonKeyword_7_0_1_2_4__a_DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     (('initial' UnrestrictedName? ':' ';') | ('derivation' UnrestrictedName? ':' ';'))*
 	 *
@@ -4112,12 +4275,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     referredOpposite=[Property|UnrestrictedName] '{' (ambiguity) 'key' referredKeys+=[Property|UnrestrictedName]
 	 *     referredOpposite=[Property|UnrestrictedName] '{' (ambiguity) ownedAnnotations+=AnnotationElementCS
 	 *     referredOpposite=[Property|UnrestrictedName] '{' (ambiguity) ownedImplicitOpposites+=ImplicitOppositeCS
+
+	 * </pre>
 	 */
 	protected void emit_ReferenceCS_____DerivationKeyword_7_0_1_3_0_UnrestrictedNameParserRuleCall_7_0_1_3_1_q_ColonKeyword_7_0_1_3_2_SemicolonKeyword_7_0_1_3_4___or___InitialKeyword_7_0_1_2_0_UnrestrictedNameParserRuleCall_7_0_1_2_1_q_ColonKeyword_7_0_1_2_2_SemicolonKeyword_7_0_1_2_4____a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}') | ';'
 	 *
@@ -4127,12 +4293,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     name=UnrestrictedName ('{' '}')? (ambiguity) (rule end)
 	 *     ownedSignature=TemplateSignatureCS ('{' '}')? (ambiguity) (rule end)
 	 *     ownedSuperTypes+=TypedRefCS ('{' '}')? (ambiguity) (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_StructuredClassCS_SemicolonKeyword_7_1_or___LeftCurlyBracketKeyword_7_0_0_RightCurlyBracketKeyword_7_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}')?
 	 *
@@ -4157,12 +4326,15 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     ownedSuperTypes+=TypedRefCS (ambiguity) '{' ownedOperations+=OperationCS
 	 *     ownedSuperTypes+=TypedRefCS (ambiguity) '{' ownedProperties+=StructuralFeatureCS
 	 *     ownedSuperTypes+=TypedRefCS (ambiguity) (('{' '}') | ';') (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_StructuredClassCS___LeftCurlyBracketKeyword_6_0_RightCurlyBracketKeyword_6_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('module' UnrestrictedName)?
 	 *
@@ -4170,18 +4342,23 @@ public abstract class AbstractOCLinEcoreSyntacticSequencer extends AbstractSynta
 	 *     (rule start) (ambiguity) (rule start)
 	 *     (rule start) (ambiguity) ownedImports+=ImportCS
 	 *     (rule start) (ambiguity) ownedPackages+=PackageCS
+
+	 * </pre>
 	 */
 	protected void emit_TopLevelCS___ModuleKeyword_1_0_UnrestrictedNameParserRuleCall_1_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('(' ')')?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     name='Tuple' (ambiguity) (rule end)
 	 *     name='Tuple' (ambiguity) ownedMultiplicity=MultiplicityCS
+
+	 * </pre>
 	 */
 	protected void emit_TupleTypeCS___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

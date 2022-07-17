@@ -54,6 +54,7 @@ public abstract class AbstractBaseSyntacticSequencer extends AbstractSyntacticSe
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     '|?'?
 	 *
@@ -63,6 +64,8 @@ public abstract class AbstractBaseSyntacticSequencer extends AbstractSyntacticSe
 	 *     stringBounds='+' (ambiguity) ']' (rule end)
 	 *     stringBounds='?' (ambiguity) ']' (rule end)
 	 *     upperBound=UPPER (ambiguity) ']' (rule end)
+
+	 * </pre>
 	 */
 	protected void emit_MultiplicityCS_VerticalLineQuestionMarkKeyword_2_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
