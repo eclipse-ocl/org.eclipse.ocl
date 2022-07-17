@@ -216,7 +216,8 @@ public class Orphanage extends PackageImpl
 
 		@Override
 		public void addUnique(T object) {
-			throw new UnsupportedOperationException();
+		//	throw new UnsupportedOperationException();
+			basicAdd(object, null);
 		}
 
 		@Override
@@ -490,11 +491,24 @@ public class Orphanage extends PackageImpl
 
 	@Override
 	public @NonNull EList<org.eclipse.ocl.pivot.Class> getOwnedClasses() {
-		EList<org.eclipse.ocl.pivot.Class> ownedType2 = ownedClasses;
-		if (ownedType2 == null)
+		EList<org.eclipse.ocl.pivot.Class> ownedClasses2 = ownedClasses;
+		if (ownedClasses2 == null)
 		{
-			ownedType2 = ownedClasses = new WeakEList<org.eclipse.ocl.pivot.Class>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_TYPE, PivotPackage.TYPE__PACKAGE*/);
+			ownedClasses2 = ownedClasses = new WeakEList<org.eclipse.ocl.pivot.Class>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_TYPE, PivotPackage.TYPE__PACKAGE*/);
 		}
-		return ownedType2;
+		return ownedClasses2;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull EList<org.eclipse.ocl.pivot.Package> getOwnedPackages() {
+		EList<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
+		if (ownedPackages2 == null)
+		{
+			ownedPackages2 = ownedPackages = new WeakEList<org.eclipse.ocl.pivot.Package>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_PACKAGE, PivotPackage.PACKAGE__OWNING_PACKAGE*/);
+		}
+		return ownedPackages2;
 	}
 }

@@ -35,6 +35,8 @@ import java.util.Set
 import org.eclipse.ocl.examples.autogen.lookup.LookupCGUtil
 import org.eclipse.ocl.examples.build.xtend.GenerateVisitorsXtend
 import org.eclipse.ocl.examples.build.xtend.MergeWriter
+import org.eclipse.emf.mwe.core.WorkflowContext
+import org.eclipse.emf.mwe.core.monitor.ProgressMonitor
 
 class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 {
@@ -54,6 +56,11 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 		if (!isDefined(lookupFilePath)) {
 			issues.addError(this, "lookupFilePath must be specified");
 		}
+	}
+	
+	override invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
+		super.invokeInternal(ctx, monitor, issues);
+		genModelHelper = null;
 	}
 
 	/**
