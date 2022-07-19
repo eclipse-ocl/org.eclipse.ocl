@@ -591,8 +591,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 	}
 
-	@Deprecated /* @deprecated - not used - use the shared global Orphanage */
-	public @NonNull Orphanage createOrphanage() {				// XXX
+	public @NonNull Orphanage createOrphanage() {
 		return Orphanage.getOrphanage(asResourceSet);
 	}
 

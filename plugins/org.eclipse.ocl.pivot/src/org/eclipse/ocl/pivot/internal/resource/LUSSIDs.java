@@ -420,7 +420,7 @@ public abstract class LUSSIDs
 	}
 
 	protected void assignXMIIDs(@NonNull AS2ID as2id) {
-		assert !asResource.isOrphanage();
+	// XXX	assert !asResource.isOrphanage();
 		Map<@NonNull String, @NonNull List<@NonNull Element>> xmiid2collisions2 = xmiid2collisions;
 		for (@NonNull Element element : identifiedElement2lussid.keySet()) {
 			Integer lussid = identifiedElement2lussid.get(element);

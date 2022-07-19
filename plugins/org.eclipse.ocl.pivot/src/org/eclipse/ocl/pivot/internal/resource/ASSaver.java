@@ -179,12 +179,9 @@ public class ASSaver
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Resource resource) {
-		Package orphanage2 = orphanage;
+		org.eclipse.ocl.pivot.Package orphanage2 = orphanage;
 		if (orphanage2 == null) {
-			orphanage = orphanage2 = PivotFactory.eINSTANCE.createPackage();
-			orphanage2.setName(PivotConstants.ORPHANAGE_NAME);
-			orphanage2.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
-			orphanage2.setURI(PivotConstants.ORPHANAGE_URI);
+			orphanage = orphanage2 = Orphanage.createLocalOrphanage();
 			EList<EObject> contents = resource.getContents();
 			if ((contents.size() > 0) && (contents.get(0) instanceof Model)) {
 				((Model)contents.get(0)).getOwnedPackages().add(orphanage2);
