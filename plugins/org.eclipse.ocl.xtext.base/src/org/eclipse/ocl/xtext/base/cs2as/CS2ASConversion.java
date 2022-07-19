@@ -347,6 +347,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 		allPivotResources.addAll(metamodelManager.getLibraries());			// Library elements are not dead
 		allPivotResources.addAll(cs2asResourceMap.keySet());			// Incoming elements are not dead
+		allPivotResources.remove(metamodelManager.getCompleteModel().getOrphanage().eResource());			// XXX
 		@SuppressWarnings("serial")
 		Map<EObject, Collection<Setting>> referencesToOrphans = new EcoreUtil.CrossReferencer(allPivotResources)
 		{

@@ -596,7 +596,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull Orphanage getOrphanage() {
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 == null) {
-			orphanage2 = orphanage = Orphanage.getOrphanage();
+			orphanage2 = orphanage = environmentFactory.getMetamodelManager().createOrphanage();
 			PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
 			orphanage2.addPackageListener(partialPackages);
 			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {

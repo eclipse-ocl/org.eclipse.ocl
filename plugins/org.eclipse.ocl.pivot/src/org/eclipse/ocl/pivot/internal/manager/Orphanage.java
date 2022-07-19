@@ -57,7 +57,8 @@ public class Orphanage extends PackageImpl
 	{
 		protected OrphanResource(@NonNull URI uri) {
 			super(uri, OCLASResourceFactory.getInstance());
-			setUpdating(true);
+			setUpdating(true);			// XXX
+			setSaveable(false);
 		}
 
 		@Override
@@ -405,7 +406,6 @@ public class Orphanage extends PackageImpl
 	 * Return the Orphanage for an eObject, which is the Orphanage resource in the same ResourceSet as
 	 * the eObject, else the global Orphanage.
 	 */
-	@Deprecated /* @deprecated Not used, the global orphanage should always be used - See Bug 579051 */
 	public static @Nullable Orphanage getOrphanage(@NonNull EObject eObject) {
 		//		if (eObject == null) {
 		//			return null;
@@ -422,7 +422,7 @@ public class Orphanage extends PackageImpl
 	 * Return the global Orphanage.
 	 *
 	 * @since 1.18
-	 */
+	 *
 	public static @NonNull Orphanage getOrphanage() {
 		OrphanResource orphanResource = ORPHAN_RESOURCE;
 		Orphanage orphanPackage = ORPHAN_PACKAGE;
@@ -437,14 +437,14 @@ public class Orphanage extends PackageImpl
 			orphanResource.setSaveable(false);
 		}
 		return orphanPackage;
-	}
+	} */
 
 	/**
 	 * Return the Orphanage for resourceSet.
 	 * The global orphanage contains the globally unique shared orphan,
 	 * A local orphanage holds the subset of the overall orphans necessary to support serialization.
-	 */
-	@Deprecated /* @deprecated - not used - use the shared global Prphange */
+	 *
+	@Deprecated /* @deprecated - not used - use the shared global Prphange * /
 	public static @NonNull Orphanage getOrphanage(@NonNull ResourceSet resourceSet) {
 		if (ORPHAN_PACKAGE == null) {
 			return getOrphanage();
@@ -461,6 +461,40 @@ public class Orphanage extends PackageImpl
 		}
 		resources.add(orphanResource);
 		return orphanPackage;
+	} */
+
+	/**
+	 * Return the Orphanage for a resourceSet if non-null, else the global Orphanage.
+	 */
+	public static @NonNull Orphanage getOrphanage(@Nullable ResourceSet resourceSet) {
+		assert resourceSet != null;				// XXX
+		if (resourceSet == null) {
+			Orphanage instance2 = ORPHAN_PACKAGE;
+			if (instance2 == null) {
+				instance2 = ORPHAN_PACKAGE = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+			}
+			return instance2;
+		}
+		for (Resource aResource : resourceSet.getResources()) {
+			for (EObject eContent : aResource.getContents()) {
+				if (eContent instanceof Model) {
+					for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eContent).getOwnedPackages()) {
+						if (asPackage instanceof Orphanage) {
+							return (Orphanage) asPackage;
+						}
+					}
+				}
+			}
+		}
+		Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+		Model orphanModel = PivotFactory.eINSTANCE.createModel();
+		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
+		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
+		orphanModel.getOwnedPackages().add(orphanage);
+		Resource orphanageResource = new OrphanResource(ORPHANAGE_URI);
+		orphanageResource.getContents().add(orphanModel);
+		resourceSet.getResources().add(orphanageResource);
+		return orphanage;
 	}
 
 	/**

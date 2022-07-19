@@ -242,7 +242,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 //			specializedMetaclass.setInstanceType(instanceType);
 //		}
 		specializedType.setUnspecializedElement(unspecializedType);
-		Orphanage orphanage = Orphanage.getOrphanage();
+		Orphanage orphanage = getCompleteModel().getOrphanage();
 		specializedType.setOwningPackage(orphanage);
 		return specializedType;
 	}

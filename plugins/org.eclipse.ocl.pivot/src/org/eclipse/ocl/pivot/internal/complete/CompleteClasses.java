@@ -98,7 +98,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 				logger.error("Out of range upper bound", e);
 			}
 			specializedType.setUnspecializedElement(unspecializedType);
-			Orphanage orphanage = Orphanage.getOrphanage();
+			Orphanage orphanage = getCompleteModel().getOrphanage();
 			specializedType.setOwningPackage(orphanage);
 			return specializedType;
 		}
@@ -196,7 +196,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			specializedMapType.setKeysAreNullFree(typeParameters.isKeysAreNullFree());
 			specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
 			specializedMapType.setUnspecializedElement(unspecializedType);
-			Orphanage orphanage = Orphanage.getOrphanage();
+			Orphanage orphanage = getCompleteModel().getOrphanage();
 			specializedMapType.setOwningPackage(orphanage);
 			specializedMapType.setEntryClass(typeParameters.getEntryClass());
 			return specializedMapType;
