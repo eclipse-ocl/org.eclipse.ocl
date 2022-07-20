@@ -151,7 +151,41 @@ public final class IdManager
 	 * Return the bindingsId for a given type list.
 	 */
 	public static @NonNull BindingsId getBindingsId(@NonNull ElementId @NonNull ... elementIds) {
-		return bindingsIds.getSingleton(PRIVATE_INSTANCE, elementIds);
+		return bindingsIds.getSingleton(PRIVATE_INSTANCE, elementIds, null);
+	}
+
+	/**
+	 * Return the bindingsId for a given types followed by values list.
+	 *
+	 * @since 1.18
+	 */
+	public static @NonNull BindingsId getBindingsId(@NonNull Object @NonNull ... elementIdAndValues) {
+		int elementIdCount = 0;
+		for (@NonNull Object elementId : elementIdAndValues) {
+			if (elementId instanceof ElementId) {
+				elementIdCount++;
+			}
+		}
+		int valuesCount = elementIdAndValues.length - elementIdCount;
+		@NonNull ElementId[] elementIds = new @NonNull ElementId[elementIdCount];
+		@NonNull Object[] values = new @NonNull Object[valuesCount];
+		int index = 0;
+		for (int i = 0; i < elementIdCount; i++) {
+			elementIds[i] = (ElementId)elementIdAndValues[index++];
+		}
+		for (int i = 0; i < valuesCount; i++) {
+			values[i] = elementIdAndValues[index++];
+		}
+		return bindingsIds.getSingleton(PRIVATE_INSTANCE, elementIds, values);
+	}
+
+	/**
+	 * Return the bindingsId for a given type list of element and value parameters.
+	 *
+	 * @since 1.18
+	 */
+	public static @NonNull BindingsId getBindingsId(@NonNull ElementId @NonNull [] elementIds, @NonNull Object @Nullable [] values) {
+		return bindingsIds.getSingleton(PRIVATE_INSTANCE, elementIds, values);
 	}
 
 	/**

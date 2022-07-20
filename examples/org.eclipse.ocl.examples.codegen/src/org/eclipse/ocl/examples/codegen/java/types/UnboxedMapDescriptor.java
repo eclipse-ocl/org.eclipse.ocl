@@ -67,14 +67,14 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 		}
 		js.appendReferenceTo(localContext.getIdResolverVariable(cgBoxExp));
 		js.append(".createMapOfAll(");
-		js.appendIdReference(mapTypeId != null ? mapTypeId.getKeyTypeId() : null);
+		js.appendIdReference(mapTypeId);// != null ? mapTypeId.getKeyTypeId() : null);
 		js.append(", ");
-		js.appendBooleanString((mapTypeId != null) && mapTypeId.isKeysAreNullFree());
-		js.append(", ");
-		js.appendIdReference(mapTypeId != null ? mapTypeId.getValueTypeId() : null);
-		js.append(", ");
-		js.appendBooleanString((mapTypeId != null) && mapTypeId.isValuesAreNullFree());
-		js.append(", ");
+	//	js.appendBooleanString((mapTypeId != null) && mapTypeId.isKeysAreNullFree());
+	//	js.append(", ");
+	//	js.appendIdReference(mapTypeId != null ? mapTypeId.getValueTypeId() : null);
+	//	js.append(", ");
+	//	js.appendBooleanString((mapTypeId != null) && mapTypeId.isValuesAreNullFree());
+	//	js.append(", ");
 		js.appendAtomicReferenceTo(true, EMap.class, true, unboxedValue, Object.class, Object.class);
 		js.append(".map());\n");
 		return true;

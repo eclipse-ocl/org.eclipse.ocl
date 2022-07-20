@@ -27,7 +27,7 @@ public abstract class AbstractSpecializedIdImpl<T extends TemplateableId> extend
 		int generalizedTemplateParameters = generalizedId.getTemplateParameters();
 		int templateParameterCount = generalizedTemplateParameters;
 		assert templateParameterCount > 0;
-		assert templateBindings.size() == templateParameterCount;
+		assert templateParameterCount == templateBindings.elementIdSize() + templateBindings.valuesSize();
 	}
 
 	@Override
@@ -35,12 +35,18 @@ public abstract class AbstractSpecializedIdImpl<T extends TemplateableId> extend
 		StringBuilder s = new StringBuilder();
 		s.append(generalizedId.getDisplayName());
 		s.append("<");
-		for (int i = 0; i < templateParameters; i++) {
+		int elementIdSize = templateBindings.elementIdSize();
+		for (int i = 0; i < elementIdSize; i++) {
 			if (i > 0) {
 				s.append(",");
 			}
 			s.append("$" + i + ":");
-			s.append(templateBindings.get(i));
+			s.append(templateBindings.getElementId(i));
+		}
+		for (int i = 0; i < templateBindings.valuesSize(); i++) {
+			s.append(",");
+			s.append("$" + (i + elementIdSize) + ":");
+			s.append(templateBindings.getValue(i));
 		}
 		s.append(">");
 		return s.toString();

@@ -130,7 +130,7 @@ public class TemplateParameterIdImpl /*extends AbstractTypeId*/ implements Templ
 
 	@Override
 	public @NonNull ElementId specialize(@NonNull BindingsId templateBindings) {
-		ElementId elementId = templateBindings.get(index);
+		ElementId elementId = templateBindings.getElementId(index);
 		assert elementId != null;
 		return elementId;
 	}

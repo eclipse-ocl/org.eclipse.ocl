@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -22,7 +21,6 @@ import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
-import org.eclipse.ocl.pivot.ids.IntegerLiteralId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -38,7 +36,6 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.ids.UnlimitedNaturalLiteralId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 
@@ -48,11 +45,6 @@ public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 
 	protected Id2EClassVisitor(@NonNull PivotMetamodelManager metamodelManager) {
 		this.metamodelManager = metamodelManager;
-	}
-
-	@Override
-	public @Nullable EClass visitBooleanLiteralId(@NonNull BooleanLiteralId id) {
-		return null;
 	}
 
 	@Override
@@ -78,11 +70,6 @@ public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 
 	@Override
 	public @Nullable EClass visitEnumerationLiteralId(@NonNull EnumerationLiteralId id) {
-		return null;
-	}
-
-	@Override
-	public @Nullable EClass visitIntegerLiteralId(@NonNull IntegerLiteralId id) {
 		return null;
 	}
 
@@ -158,11 +145,6 @@ public class Id2EClassVisitor implements IdVisitor<@Nullable EClass>
 
 	@Override
 	public @Nullable EClass visitTupleTypeId(@NonNull TupleTypeId id) {
-		return null;
-	}
-
-	@Override
-	public @Nullable EClass visitUnlimitedNaturalLiteralId(@NonNull UnlimitedNaturalLiteralId id) {
 		return null;
 	}
 

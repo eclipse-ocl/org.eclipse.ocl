@@ -11,7 +11,9 @@
 package org.eclipse.ocl.pivot.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -30,24 +32,32 @@ public interface CollectionTypeId extends BuiltInTypeId, TemplateableId
 	@NonNull String getMetaTypeName();
 	@Override
 	@NonNull CollectionTypeId getSpecializedId(@NonNull BindingsId templateBindings);
+
 	@Deprecated
-	@NonNull CollectionTypeId getSpecializedId(@NonNull ElementId... templateBindings);
+	default @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
+		assert templateBindings.length == 1;			// Legacy compatibility
+		return getSpecializedId(templateBindings[0], false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	}
+
 	/**
 	 * @since 1.18
 	 */
-	@NonNull CollectionTypeId getSpecializedCollectionTypeId(@NonNull ElementId elementId);
+	default @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId elementId) {
+		return getSpecializedId(elementId, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	}
+
 	/**
 	 * @since 1.18
 	 */
-	@NonNull CollectionTypeId getSpecializedCollectionTypeId(@NonNull ElementId elementId, @NonNull BooleanLiteralId isNullFree, @NonNull IntegerLiteralId lowerValue, @NonNull UnlimitedNaturalLiteralId upperValue);
-	/**
-	 * @since 1.18
-	 */
-	@NonNull CollectionTypeId getSpecializedCollectionTypeId(@NonNull CollectionTypeId collectionTypeId);
+	default @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId elementId, boolean isNullFree, @NonNull IntegerValue lowerValue, @NonNull NumberValue upperValue) {
+		return getSpecializedId(IdManager.getBindingsId(new @NonNull ElementId[] {elementId}, new @NonNull Object[] {isNullFree, lowerValue, upperValue}));
+	}
+
 	/**
 	 * @since 1.18
 	 */
 	@NonNull UnlimitedNaturalValue getUpperValue();
+
 	/**
 	 * @since 1.18
 	 */

@@ -17,19 +17,11 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public interface IdVisitor<R>
 {
-	/**
-	 * @since 1.18
-	 */
-	R visitBooleanLiteralId(@NonNull BooleanLiteralId id);
 	R visitClassId(@NonNull ClassId id);
 	R visitCollectionTypeId(@NonNull CollectionTypeId id);
 	R visitDataTypeId(@NonNull DataTypeId id);
 	R visitEnumerationId(@NonNull EnumerationId id);
 	R visitEnumerationLiteralId(@NonNull EnumerationLiteralId id);
-	/**
-	 * @since 1.18
-	 */
-	R visitIntegerLiteralId(@NonNull IntegerLiteralId id);
 	R visitInvalidId(@NonNull OclInvalidTypeId id);
 	R visitLambdaTypeId(@NonNull LambdaTypeId id);
 	R visitMapTypeId(@NonNull MapTypeId id);
@@ -45,9 +37,5 @@ public interface IdVisitor<R>
 	R visitTemplateableTypeId(@NonNull TemplateableTypeId id);
 	R visitTuplePartId(@NonNull TuplePartId id);
 	R visitTupleTypeId(@NonNull TupleTypeId id);
-	/**
-	 * @since 1.18
-	 */
-	R visitUnlimitedNaturalLiteralId(@NonNull UnlimitedNaturalLiteralId id);
 	R visitUnspecifiedId(@NonNull UnspecifiedId id);
 }

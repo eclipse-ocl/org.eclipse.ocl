@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.values.SequenceValue;
 public class StringCharactersOperation extends AbstractSimpleUnaryOperation
 {
 	public static final @NonNull StringCharactersOperation INSTANCE = new StringCharactersOperation();
-	public static final @NonNull CollectionTypeId SEQ_STRING = TypeId.SEQUENCE.getSpecializedCollectionTypeId(TypeId.STRING);
+	public static final @NonNull CollectionTypeId SEQ_STRING = TypeId.SEQUENCE.getSpecializedId(TypeId.STRING);
 
 	@Override
 	public @NonNull SequenceValue evaluate(@Nullable Object sourceVal) {

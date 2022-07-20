@@ -25,7 +25,7 @@ public class OclVoidAllInstancesOperation extends AbstractSimpleUnaryOperation
 {
 	@Deprecated /* @deprecated invoke the polymorphic VoidTypeImpl.allInstances() */
 	public static final @NonNull OclVoidAllInstancesOperation INSTANCE = new OclVoidAllInstancesOperation();
-	public static final @NonNull CollectionTypeId SET_OCL_VOID = TypeId.SET.getSpecializedCollectionTypeId(TypeId.OCL_VOID);
+	public static final @NonNull CollectionTypeId SET_OCL_VOID = TypeId.SET.getSpecializedId(TypeId.OCL_VOID);
 
 	/**
 	 * @since 1.18

@@ -75,7 +75,7 @@ public class OrderedSetTypeImpl
 			return TypeId.ORDERED_SET;
 		}
 		else {
-			return TypeId.ORDERED_SET.getSpecializedCollectionTypeId(getElementType().getTypeId(), TypeId.valueOf(isIsNullFree()), TypeId.valueOf(getLowerValue()), TypeId.valueOf(getUpperValue()));
+			return TypeId.ORDERED_SET.getSpecializedId(getElementType().getTypeId(), isIsNullFree(), getLowerValue(), getUpperValue());
 		}
 	}
 

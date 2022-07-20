@@ -14,11 +14,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 public class ExecutorSpecializedType extends AbstractExecutorClass implements ExecutorTypeArgument
 {
@@ -34,7 +36,21 @@ public class ExecutorSpecializedType extends AbstractExecutorClass implements Ex
 	 */
 	public ExecutorSpecializedType(@NonNull TypeId unspecializedTypeId, @NonNull ExecutorTypeArgument... typeArguments) {
 		super(unspecializedTypeId.getDisplayName(), 0);
-		typeId = (TypeId)unspecializedTypeId.specialize(IdManager.getBindingsId(typeArguments));
+		BindingsId bindingsId = null;
+		if (unspecializedTypeId == TypeId.MAP) {
+			if (typeArguments.length == 2) {
+				bindingsId = IdManager.getBindingsId(typeArguments[0].getTypeId(), typeArguments[1].getTypeId(), false, false);
+			}
+		}
+		else {
+			if (typeArguments.length == 1) {
+				bindingsId = IdManager.getBindingsId(typeArguments[0].getTypeId(), false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+			}
+		}
+		if (bindingsId == null) {
+			bindingsId = IdManager.getBindingsId(typeArguments);
+		}
+		typeId = (TypeId)unspecializedTypeId.specialize(bindingsId);
 	}
 
 	@Override

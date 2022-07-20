@@ -72,6 +72,7 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -616,7 +617,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			Object valueVal = value.accept(undecoratedVisitor);
 			mapEntries.put(keyVal, valueVal);
 		}
-		return idResolver.createMapOfAll(PivotUtil.getKeyType(type).getTypeId(), type.isKeysAreNullFree(), PivotUtil.getValueType(type).getTypeId(), type.isValuesAreNullFree(), mapEntries);
+		return idResolver.createMapOfAll((MapTypeId)type.getTypeId(), mapEntries);
 	}
 
 	@Override

@@ -974,8 +974,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class classType = environmentFactory.getASClass("Class");
 		org.eclipse.ocl.pivot.Class booleanMetaType = environmentFactory.getASClass("BooleanType");
 		assert primitiveType != null;
-		CollectionTypeId bagTypeId = TypeId.BAG.getSpecializedCollectionTypeId(TypeId.OCL_ANY);
-		CollectionTypeId setTypeId = TypeId.SET.getSpecializedCollectionTypeId(TypeId.OCL_ANY);
+		CollectionTypeId bagTypeId = TypeId.BAG.getSpecializedId(TypeId.OCL_ANY);
+		CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(TypeId.OCL_ANY);
 		if (!useCodeGen) {				// FIXME Bad CG Set equals
 			ocl.assertQueryEquals(null, ValueUtil.createSetOfEach(setTypeId, standardLibrary.getStringType()), "'string'.oclTypes()");
 			ocl.assertQueryEquals(null, ValueUtil.createSetOfEach(setTypeId, standardLibrary.getOclVoidType()), "self.oclTypes()");

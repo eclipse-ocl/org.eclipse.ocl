@@ -61,8 +61,8 @@ public abstract class AbstractTemplateableIdImpl<T extends TemplateableId> exten
 	public static class SpecializedSingletonScope<T extends TemplateableId> extends AbstractSingletonScope<@NonNull T, @NonNull BindingsId>
 	{
 
-		public @NonNull T getSingleton(@NonNull AbstractTemplateableIdImpl<T> generalizedId, @NonNull BindingsId value) {
-			return getSingletonFor(new SpecializedValue<T>(generalizedId, value));
+		public @NonNull T getSingleton(@NonNull AbstractTemplateableIdImpl<T> generalizedId, @NonNull BindingsId bindingsId) {
+			return getSingletonFor(new SpecializedValue<T>(generalizedId, bindingsId));
 		}
 	}
 
@@ -79,7 +79,7 @@ public abstract class AbstractTemplateableIdImpl<T extends TemplateableId> exten
 		this.templateParameters = templateParameters;
 	}
 
-	protected abstract @NonNull T createSpecializedId(@NonNull BindingsId templateBindings);
+	protected abstract @NonNull T createSpecializedId(@NonNull BindingsId bindingsId);
 
 	public @NonNull EnumerationLiteralId getEnumerationLiteralId(@NonNull String name) {
 		throw new UnsupportedOperationException();		// Only NestableTypeIds may have enumeration literals.

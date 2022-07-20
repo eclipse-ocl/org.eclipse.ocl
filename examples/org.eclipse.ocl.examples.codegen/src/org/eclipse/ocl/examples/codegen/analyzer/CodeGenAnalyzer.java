@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
@@ -326,7 +327,9 @@ public class CodeGenAnalyzer
 			cgTypeId.setValueName(ClassUtil.nonNullState(cgTypeId.getName()));
 			cgElementIds.put(typeId, cgTypeId);
 			if (typeId instanceof SpecializedId) {
-				for (ElementId elementId : ((SpecializedId)typeId).getTemplateBindings()) {
+				BindingsId templateBindings = ((SpecializedId)typeId).getTemplateBindings();
+				for (int i = 0; i < templateBindings.elementIdSize(); i++) {
+					ElementId elementId = templateBindings.getElementId(i);
 					getElementId(elementId);
 				}
 			}

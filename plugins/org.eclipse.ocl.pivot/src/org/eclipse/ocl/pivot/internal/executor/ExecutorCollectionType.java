@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -44,7 +43,7 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 		this.isNullFree = isNullFree;
 		this.lower = lower != null ? lower : ValueUtil.ZERO_VALUE;
 		this.upper = upper != null ? upper : ValueUtil.UNLIMITED_VALUE;
-		this.typeId = IdManager.getCollectionTypeId(name).getSpecializedCollectionTypeId(elementType.getTypeId(), TypeId.valueOf(isNullFree), TypeId.valueOf(this.lower), TypeId.valueOf(this.upper));
+		this.typeId = IdManager.getCollectionTypeId(name).getSpecializedId(elementType.getTypeId(), isNullFree, this.lower, this.upper);
 	}
 
 	@Override

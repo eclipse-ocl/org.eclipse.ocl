@@ -16,14 +16,12 @@ import java.math.BigInteger;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -32,7 +30,6 @@ import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
-import org.eclipse.ocl.pivot.ids.IntegerLiteralId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -49,7 +46,6 @@ import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.ids.UnlimitedNaturalLiteralId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -114,11 +110,6 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public @Nullable BoxedDescriptor visitBooleanLiteralId(@NonNull BooleanLiteralId id) {
-		return visiting(id);	// XXX ? Boolean.
 	}
 
 	@Override
@@ -317,11 +308,6 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 	}
 
 	@Override
-	public BoxedDescriptor visitIntegerLiteralId(@NonNull IntegerLiteralId id) {
-		return visiting(id);	// XXX ? Integer.
-	}
-
-	@Override
 	public @NonNull BoxedDescriptor visitInvalidId(@NonNull OclInvalidTypeId id) {
 		return new SimpleValueDescriptor(id, InvalidValueException.class);
 	}
@@ -484,11 +470,6 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 	@Override
 	public @NonNull BoxedDescriptor visitTupleTypeId(@NonNull TupleTypeId id) {
 		return new SimpleValueDescriptor(id, TupleValue.class);
-	}
-
-	@Override
-	public BoxedDescriptor visitUnlimitedNaturalLiteralId(@NonNull UnlimitedNaturalLiteralId id) {
-		return visiting(id);	// XXX ? UnlimitedNatural.
 	}
 
 	@Override

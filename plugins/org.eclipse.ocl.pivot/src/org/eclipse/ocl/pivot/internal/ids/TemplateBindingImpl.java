@@ -25,7 +25,7 @@ public class TemplateBindingImpl extends AbstractTypeId implements TemplateBindi
 {
 	private TemplateParameter templateParameter;
 	private TemplateParameterId templateParameterId;
-	
+
 	public TemplateBindingImpl(@NonNull TemplateParameter templateParameter) {
 		this.templateParameter = templateParameter;
 	}
@@ -57,11 +57,11 @@ public class TemplateBindingImpl extends AbstractTypeId implements TemplateBindi
 		this.templateParameterId = templateParameterId;
 		this.templateParameter = null;
 	}
-	   
+
     @Override
 	public @NonNull TypeId specialize(@NonNull BindingsId templateBindings) {
     	int index = templateParameterId.getIndex();
-		ElementId templateBinding = templateBindings.get(index);
+		ElementId templateBinding = templateBindings.getElementId(index);
 		if (templateBinding instanceof TemplateBinding) {
 			return new TemplateBindingImpl(((TemplateBinding)templateBinding).getTemplateParameter());
 		}

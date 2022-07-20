@@ -77,7 +77,7 @@ public interface IdResolver extends IdVisitor<Element>
 	/**
 	 * @since 1.18
 	 */
-	@NonNull MapValue createMapOfAll(@NonNull TypeId keyTypeId, boolean keysAreNullFree, @NonNull TypeId valueTypeId, boolean valuesAreNullFree, @NonNull Map<?, ?> mapEntries);
+	@NonNull MapValue createMapOfAll(@NonNull MapTypeId mapTypeId, @NonNull Map<?, ?> mapEntries);
 
 	@NonNull OrderedSetValue createOrderedSetOfAll(@NonNull CollectionTypeId typeId, @NonNull Iterable<? extends Object> unboxedValues);
 

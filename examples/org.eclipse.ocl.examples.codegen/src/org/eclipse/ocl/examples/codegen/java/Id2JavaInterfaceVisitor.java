@@ -11,7 +11,6 @@
 package org.eclipse.ocl.examples.codegen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -19,7 +18,6 @@ import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
-import org.eclipse.ocl.pivot.ids.IntegerLiteralId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -35,7 +33,6 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.ids.UnlimitedNaturalLiteralId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 
 /**
@@ -43,11 +40,6 @@ import org.eclipse.ocl.pivot.ids.UnspecifiedId;
  */
 public class Id2JavaInterfaceVisitor implements IdVisitor<@NonNull Class<? extends ElementId>>
 {
-	@Override
-	public @NonNull Class<? extends ElementId> visitBooleanLiteralId(@NonNull BooleanLiteralId id) {
-		return BooleanLiteralId.class;
-	}
-
 	@Override
 	public @NonNull Class<? extends ElementId> visitClassId(@NonNull ClassId id) {
 		return ClassId.class;
@@ -71,11 +63,6 @@ public class Id2JavaInterfaceVisitor implements IdVisitor<@NonNull Class<? exten
 	@Override
 	public @NonNull Class<? extends ElementId> visitEnumerationLiteralId(@NonNull EnumerationLiteralId id) {
 		return EnumerationLiteralId.class;
-	}
-
-	@Override
-	public @NonNull Class<? extends ElementId> visitIntegerLiteralId(@NonNull IntegerLiteralId id) {
-		return IntegerLiteralId.class;
 	}
 
 	@Override
@@ -151,11 +138,6 @@ public class Id2JavaInterfaceVisitor implements IdVisitor<@NonNull Class<? exten
 	@Override
 	public @NonNull Class<? extends ElementId> visitTupleTypeId(@NonNull TupleTypeId id) {
 		return TupleTypeId.class;
-	}
-
-	@Override
-	public @NonNull Class<? extends ElementId> visitUnlimitedNaturalLiteralId(@NonNull UnlimitedNaturalLiteralId id) {
-		return UnlimitedNaturalLiteralId.class;
 	}
 
 	@Override

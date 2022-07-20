@@ -1515,29 +1515,48 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/BindingsId.java" type="org.eclipse.ocl.pivot.ids.BindingsId">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.BindingsId"/>
+                <message_argument value="elementIdSize()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.BindingsId"/>
+                <message_argument value="get(int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.BindingsId"/>
+                <message_argument value="getElementId(int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.BindingsId"/>
+                <message_argument value="getValue(int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.BindingsId"/>
+                <message_argument value="valuesSize()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="get(int)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/CollectionTypeId.java" type="org.eclipse.ocl.pivot.ids.CollectionTypeId">
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.CollectionTypeId"/>
                 <message_argument value="getLowerValue()"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.CollectionTypeId"/>
-                <message_argument value="getSpecializedCollectionTypeId(CollectionTypeId)"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.CollectionTypeId"/>
-                <message_argument value="getSpecializedCollectionTypeId(ElementId)"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.CollectionTypeId"/>
-                <message_argument value="getSpecializedCollectionTypeId(ElementId, BooleanLiteralId, IntegerLiteralId, UnlimitedNaturalLiteralId)"/>
             </message_arguments>
         </filter>
         <filter id="403804204">
@@ -1552,8 +1571,26 @@
                 <message_argument value="isNullFree()"/>
             </message_arguments>
         </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.CollectionTypeId"/>
+                <message_argument value="getSpecializedId(ElementId)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.CollectionTypeId"/>
+                <message_argument value="getSpecializedId(ElementId, boolean, IntegerValue, NumberValue)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/IdResolver.java" type="org.eclipse.ocl.pivot.ids.IdResolver">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
+                <message_argument value="createMapOfAll(MapTypeId, Map&lt;?,?&gt;)"/>
+            </message_arguments>
+        </filter>
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.IdResolver"/>
@@ -1571,12 +1608,6 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.IdVisitor"/>
-                <message_argument value="visitBooleanLiteralId(BooleanLiteralId)"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.IdVisitor"/>
                 <message_argument value="visitIntegerLiteralId(IntegerLiteralId)"/>
             </message_arguments>
         </filter>
@@ -1591,18 +1622,6 @@
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.MapTypeId"/>
-                <message_argument value="getSpecializedMapTypeId(ElementId, BooleanLiteralId, ElementId, BooleanLiteralId)"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.MapTypeId"/>
-                <message_argument value="getSpecializedMapTypeId(ElementId, ElementId)"/>
-            </message_arguments>
-        </filter>
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.MapTypeId"/>
                 <message_argument value="isKeysAreNullFree()"/>
             </message_arguments>
         </filter>
@@ -1610,6 +1629,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.MapTypeId"/>
                 <message_argument value="isValuesAreNullFree()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.MapTypeId"/>
+                <message_argument value="getSpecializedId(ElementId, ElementId, boolean, boolean)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1624,12 +1649,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
                 <message_argument value="BOOLEAN_TYPE_NAME"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="FALSE_VALUE"/>
             </message_arguments>
         </filter>
         <filter id="403767336">
@@ -1665,19 +1684,7 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="ONE_VALUE"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
                 <message_argument value="STEREOTYPE_NAME"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="TRUE_VALUE"/>
             </message_arguments>
         </filter>
         <filter id="403767336">
@@ -1689,19 +1696,7 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="UNLIMITED_VALUE"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
                 <message_argument value="VOID_TYPE_NAME"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.TypeId"/>
-                <message_argument value="ZERO_VALUE"/>
             </message_arguments>
         </filter>
     </resource>

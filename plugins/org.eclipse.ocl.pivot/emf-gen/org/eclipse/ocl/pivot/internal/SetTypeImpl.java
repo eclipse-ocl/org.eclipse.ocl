@@ -75,7 +75,7 @@ public class SetTypeImpl
 			return TypeId.SET;
 		}
 		else {
-			return TypeId.SET.getSpecializedCollectionTypeId(getElementType().getTypeId(), TypeId.valueOf(isIsNullFree()), TypeId.valueOf(getLowerValue()), TypeId.valueOf(getUpperValue()));
+			return TypeId.SET.getSpecializedId(getElementType().getTypeId(), isIsNullFree(), getLowerValue(), getUpperValue());
 		}
 	}
 

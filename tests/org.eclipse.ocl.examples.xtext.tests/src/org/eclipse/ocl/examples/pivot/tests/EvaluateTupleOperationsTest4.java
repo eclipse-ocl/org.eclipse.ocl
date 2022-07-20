@@ -90,7 +90,7 @@ public class EvaluateTupleOperationsTest4 extends PivotTestSuite
 		Map<@NonNull TuplePartId, @Nullable Object> bValues = new HashMap<@NonNull TuplePartId, @Nullable Object>();
 		bValues.put(bTuplePartId, ValueUtil.integerValueOf(4));
 		TupleValue bValue = ValueUtil.createTupleValue(bTupleTypeId, bValues);
-		CollectionTypeId collectionTypeId = TypeId.SET.getSpecializedCollectionTypeId(TypeId.OCL_ANY);
+		CollectionTypeId collectionTypeId = TypeId.SET.getSpecializedId(TypeId.OCL_ANY);
 		SetValue setValue = ValueUtil.createSetOfEach(collectionTypeId,  aValue, bValue);
 		ocl.assertQueryEquals(null, setValue, "Set{Tuple{a = 3}, Tuple{b = 4}, Tuple{a = 3}}");						// BUG 4404404
 		ocl.assertValidationErrorQuery(null, "let s : Set(Tuple(a:Integer)) = Set{Tuple{a = 3}, Tuple{b = 4}} in s",

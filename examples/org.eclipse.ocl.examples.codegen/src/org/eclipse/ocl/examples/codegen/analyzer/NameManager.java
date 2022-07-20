@@ -64,7 +64,6 @@ import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -72,7 +71,6 @@ import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
-import org.eclipse.ocl.pivot.ids.IntegerLiteralId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedPackageId;
@@ -91,7 +89,6 @@ import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.ids.UnlimitedNaturalLiteralId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
@@ -212,11 +209,6 @@ public class NameManager
 	public static @NonNull IdVisitor<@NonNull String> idVisitor = new IdVisitor<@NonNull String>()
 	{
 		@Override
-		public @NonNull String visitBooleanLiteralId(@NonNull BooleanLiteralId id) {
-			return "BOOLid_" + Boolean.toString(id.getValue());
-		}
-
-		@Override
 		public @NonNull String visitClassId(@NonNull ClassId id) {
 			return "CLSSid_" + id.getName();
 		}
@@ -264,11 +256,6 @@ public class NameManager
 		}
 
 		@Override
-		public @NonNull String visitIntegerLiteralId(@NonNull IntegerLiteralId id) {
-			return "INTid_" + id.getValue().toString();
-		}
-
-		@Override
 		public @NonNull String visitInvalidId(@NonNull OclInvalidTypeId id) {
 			return "INVid";
 		}
@@ -286,7 +273,7 @@ public class NameManager
 				return idPrefix;
 			}
 			else {
-				return idPrefix + id.getKeyTypeId().accept(this) + id.getValueTypeId().accept(this);
+				return idPrefix + id.getKeyTypeId().accept(this) + "_" + id.getValueTypeId().accept(this);
 			}
 		}
 
@@ -348,11 +335,6 @@ public class NameManager
 		@Override
 		public @NonNull String visitTupleTypeId(@NonNull TupleTypeId id) {
 			return "TUPLid_";
-		}
-
-		@Override
-		public @NonNull String visitUnlimitedNaturalLiteralId(@NonNull UnlimitedNaturalLiteralId id) {
-			return "UNLid_" + id.getValue().toString();
 		}
 
 		@Override

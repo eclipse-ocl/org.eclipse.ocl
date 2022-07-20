@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
@@ -57,7 +56,7 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 		this.keyValuesAreNullFree = keyValuesAreNullFree;
 		this.valueType = valueType;
 		this.valuesAreNullFree = valuesAreNullFree;
-		this.typeId = IdManager.getMapTypeId(name).getSpecializedMapTypeId(keyType.getTypeId(), TypeId.valueOf(keyValuesAreNullFree), valueType.getTypeId(), TypeId.valueOf(valuesAreNullFree));
+		this.typeId = IdManager.getMapTypeId(name).getSpecializedId(keyType.getTypeId(), valueType.getTypeId(), keyValuesAreNullFree, valuesAreNullFree);
 	}
 
 	@Override

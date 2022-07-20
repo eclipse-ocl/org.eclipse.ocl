@@ -597,23 +597,25 @@ public abstract class ValueUtil
 		return new MapValueImpl.Accumulator(typeId);
 	}
 
-	public static @NonNull MapValue createMapOfEach(@NonNull MapTypeId typeId, @NonNull MapEntry @NonNull ... mapEntries) {
-		return MapValueImpl.createMapValueOfEach(typeId, mapEntries);
+	public static @NonNull MapValue createMapOfEach(@NonNull MapTypeId mapTypeId, @NonNull MapEntry @NonNull ... mapEntries) {
+		return MapValueImpl.createMapValueOfEach(mapTypeId, mapEntries);
 	}
 
 	public static @NonNull MapEntry createMapEntry(@Nullable Object key, @Nullable Object value) {
 		return new MapEntryImpl(key, value);
 	}
 
+	@Deprecated /* @deprecated not used */
 	public static @NonNull MapValue createMapValue(@NonNull TypeId keyTypeId, @NonNull TypeId valueTypeId, @NonNull Map<Object, Object> boxedValues) {
-		return createMapValue(keyTypeId, false, valueTypeId, false, boxedValues);
+	//	BindingsId bindingsId = IdManager.getBindingsId(keyTypeId, valueTypeId, false, false);
+		return createMapValue(TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, false, false), boxedValues);
 	}
 
 	/**
 	 * @since 1.18
 	 */
-	public static @NonNull MapValue createMapValue(@NonNull TypeId keyTypeId, boolean keysAreNullFree, @NonNull TypeId valueTypeId, boolean valuesAreNullFree, @NonNull Map<Object, Object> boxedValues) {
-		return new MapValueImpl(TypeId.MAP.getSpecializedMapTypeId(keyTypeId, TypeId.valueOf(keysAreNullFree), valueTypeId, TypeId.valueOf(valuesAreNullFree)), boxedValues);
+	public static @NonNull MapValue createMapValue(@NonNull MapTypeId mapTypeId, @NonNull Map<Object, Object> boxedValues) {
+		return new MapValueImpl(mapTypeId, boxedValues);
 	}
 
 	public static @NonNull ObjectValue createObjectValue(@NonNull TypeId typeId, @NonNull Object object) {
@@ -690,7 +692,7 @@ public abstract class ValueUtil
 	 * @since 1.6
 	 */
 	public static SetValue.@NonNull Accumulator createSetAccumulatorValue(@NonNull MapTypeId mapId) {
-		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedCollectionTypeId(mapId.getKeyTypeId()));
+		return new SetValueImpl.Accumulator(TypeId.SET.getSpecializedId(mapId.getKeyTypeId()));
 	}
 
 	public static @NonNull SetValue createSetOfEach(@NonNull CollectionTypeId typeId, @Nullable Object @NonNull ... boxedValues) {

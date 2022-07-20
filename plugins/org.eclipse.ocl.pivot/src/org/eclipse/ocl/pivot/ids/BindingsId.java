@@ -10,12 +10,36 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
+import java.util.Iterator;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 
 /**
- * BindingsId provides a hashable list of elementIds suitable for use when indexing specializations.
+ * BindingsId provides a hashable list of Class-typed elementIds and/or DataType-typed values that parameterize a template specialization.
  */
-public interface BindingsId extends IndexableIterable<@NonNull ElementId>
+public interface BindingsId extends IndexableIterable<@NonNull ElementId>	// Use of IndexableIterable is deprecated
 {
+	/**
+	 * @since 1.18
+	 */
+	int elementIdSize();
+	@Override @Deprecated
+	@NonNull ElementId get(int index);
+	/**
+	 * @since 1.18
+	 */
+	@NonNull ElementId getElementId(int i);
+	/**
+	 * @since 1.18
+	 */
+	@NonNull Object getValue(int i);
+	@Override @Deprecated
+	@NonNull Iterator<@NonNull ElementId> iterator();
+	@Override @Deprecated
+	int size();
+	/**
+	 * @since 1.18
+	 */
+	int valuesSize();
 }

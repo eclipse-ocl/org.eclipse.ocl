@@ -356,7 +356,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 
 	@Override
 	public @NonNull SetValue getKeys() {
-		CollectionTypeId setId = TypeId.SET.getSpecializedCollectionTypeId(typeId.getValueTypeId(), TypeId.valueOf(typeId.isKeysAreNullFree()), TypeId.ZERO_VALUE, TypeId.UNLIMITED_VALUE);
+		CollectionTypeId setId = TypeId.SET.getSpecializedId(typeId.getValueTypeId());
 		return ValueUtil.createSetValue(setId, keySet());
 	}
 
@@ -367,7 +367,7 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 
 	@Override
 	public @NonNull BagValue getValues() {
-		CollectionTypeId bagId = TypeId.BAG.getSpecializedCollectionTypeId(typeId.getValueTypeId(), TypeId.valueOf(typeId.isValuesAreNullFree()), TypeId.ZERO_VALUE, TypeId.UNLIMITED_VALUE);
+		CollectionTypeId bagId = TypeId.BAG.getSpecializedId(typeId.getValueTypeId());
 		Iterable<Object> values = boxedValues.values();
 		return ValueUtil.createBagValue(bagId, new BagImpl<>(values));
 	}

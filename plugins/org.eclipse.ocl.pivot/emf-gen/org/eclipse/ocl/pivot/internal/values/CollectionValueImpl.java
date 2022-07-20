@@ -491,35 +491,10 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	} */
 
 	public @NonNull CollectionTypeId getBagTypeId() {
-		return TypeId.BAG.getSpecializedCollectionTypeId(typeId);
+		return TypeId.BAG.getSpecializedId(typeId);
 	}
 
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.COLLECTION.getCollectedTypeId(getElementType().getTypeId());
-	//	}
-
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		CollectionTypeId typeId2 = typeId;
-	//		if (typeId2 == null) {
-	//			typeId2 = getCollectionTypeId().getCollectedTypeId(getElementTypeId());
-	//		}
-	//		return typeId2;
-	//	}
-
-	//	public @NonNull CollectionTypeId getCollectionTypeId() {
-	//		return TypeId.COLLECTION;
-	//	}
-
 	public @NonNull TypeId getElementTypeId() {
-		//    	DomainType elementType = standardLibrary.getOclVoidType();
-		//    	for (Object value : values) {
-		//    		assert value != null;
-		//    		elementType = elementType.getCommonType(standardLibrary, standardLibrary.typeOf(value));
-		//    	}
-		//		for (Value element : iterable()) {
-		//
-		//		}
-
 		return getTypeId().getElementTypeId();
 	}
 
@@ -533,15 +508,15 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 	}
 
 	public @NonNull CollectionTypeId getOrderedSetTypeId() {
-		return TypeId.ORDERED_SET.getSpecializedCollectionTypeId(typeId);
+		return TypeId.ORDERED_SET.getSpecializedId(typeId);
 	}
 
 	public @NonNull CollectionTypeId getSequenceTypeId() {
-		return TypeId.SEQUENCE.getSpecializedCollectionTypeId(typeId);
+		return TypeId.SEQUENCE.getSpecializedId(typeId);
 	}
 
 	public @NonNull CollectionTypeId getSetTypeId() {
-		return TypeId.SET.getSpecializedCollectionTypeId(typeId);
+		return TypeId.SET.getSpecializedId(typeId);
 	}
 
 	@Override

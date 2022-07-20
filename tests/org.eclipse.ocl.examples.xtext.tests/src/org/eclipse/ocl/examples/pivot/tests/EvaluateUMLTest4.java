@@ -260,7 +260,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		ocl.assertQueryTrue(context, "self.aggregation=UML::AggregationKind::composite");
 		ocl.assertQueryResults(context, "UML::AggregationKind::composite", "self.aggregation");
 		EObject associationContext = doLoadUML(ocl, getTestModelURI("models/uml/Bug455394.uml"), "Model.A_class2_class1");
-		CollectionTypeId collectionTypeId = TypeId.ORDERED_SET.getSpecializedCollectionTypeId(contextType.getTypeId());
+		CollectionTypeId collectionTypeId = TypeId.ORDERED_SET.getSpecializedId(contextType.getTypeId());
 		ocl.assertQueryEquals(associationContext, idResolver.createOrderedSetOfEach(collectionTypeId, context), "self.memberEnd?->select(e|e.aggregation=AggregationKind::composite)");
 		ocl.dispose();
 	}
@@ -279,7 +279,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		assert train1 != null;
 		assert application1 != null;
 		assert application2 != null;
-		CollectionTypeId setTypeId = TypeId.SET.getSpecializedCollectionTypeId(contextType.getTypeId());
+		CollectionTypeId setTypeId = TypeId.SET.getSpecializedId(contextType.getTypeId());
 		ocl.assertQueryEquals(train1, ValueUtil.createSetOfEach(setTypeId, application1, application2), "TestProfile::Train.allInstances()");
 		ocl.assertQueryEquals(train1, ValueUtil.createSetOfEach(setTypeId, application1, application2), "self.extension_Train.oclType().allInstances()");
 		ocl.assertQueryResults(train1, "Bag{'Train1','Train2'}", "TestProfile::Train.allInstances().base_Class.name");

@@ -14,17 +14,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
-import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
-import org.eclipse.ocl.pivot.ids.IntegerLiteralId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.ids.UnlimitedNaturalLiteralId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -84,8 +80,8 @@ public class GeneralizedCollectionTypeIdImpl extends GeneralizedTypeIdImpl<@NonN
 	}
 
 	@Override
-	protected @NonNull CollectionTypeId createSpecializedId(@NonNull BindingsId templateBindings) {
-		return new SpecializedCollectionTypeIdImpl(this, templateBindings);
+	protected @NonNull CollectionTypeId createSpecializedId(@NonNull BindingsId bindingsId) {
+		return new SpecializedCollectionTypeIdImpl(this, bindingsId);
 	}
 
 	@Override
@@ -139,57 +135,6 @@ public class GeneralizedCollectionTypeIdImpl extends GeneralizedTypeIdImpl<@NonN
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return name + "Type";
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Override
-	public @NonNull CollectionTypeId getSpecializedCollectionTypeId(@NonNull CollectionTypeId collectionTypeId) {
-		return getSpecializedId(collectionTypeId.getElementTypeId(), TypeId.valueOf(collectionTypeId.isNullFree()), TypeId.valueOf(collectionTypeId.getLowerValue()), TypeId.valueOf(collectionTypeId.getUpperValue()));
-	}
-
-	@Override
-	public @NonNull CollectionTypeId getSpecializedCollectionTypeId(@NonNull ElementId elementId) {
-		return getSpecializedId(elementId, TypeId.FALSE_VALUE, TypeId.ZERO_VALUE, TypeId.UNLIMITED_VALUE);
-	}
-
-	@Override
-	public @NonNull CollectionTypeId getSpecializedCollectionTypeId(@NonNull ElementId elementId, @NonNull BooleanLiteralId isNullFree,
-			@NonNull IntegerLiteralId lowerValue, @NonNull UnlimitedNaturalLiteralId upperValue) {
-		return getSpecializedId(elementId, isNullFree, lowerValue, upperValue);
-	}
-
-	@Override		// FIXME refactor to share Generalized/Specialized functionality
-	public @NonNull CollectionTypeId getSpecializedId(@NonNull BindingsId templateBindings) {
-		if (templateBindings.size() == 1) {					// Legacy compatibility / generator default case optimization
-			return getSpecializedCollectionTypeId(templateBindings.get(0), TypeId.FALSE_VALUE, TypeId.ZERO_VALUE, TypeId.UNLIMITED_VALUE);
-		}
-		else if (templateBindings.size() == 2) {					// Legacy compatibility / generator default case optimization
-			return getSpecializedCollectionTypeId(templateBindings.get(0), (BooleanLiteralId)templateBindings.get(1), TypeId.ZERO_VALUE, TypeId.UNLIMITED_VALUE);
-		}
-		else if (templateBindings.size() == 3) {					// Legacy compatibility / generator default case optimization
-			return getSpecializedCollectionTypeId(templateBindings.get(0), (BooleanLiteralId)templateBindings.get(1), (IntegerLiteralId)templateBindings.get(2), TypeId.UNLIMITED_VALUE);
-		}
-		else {
-			return super.getSpecializedId(templateBindings);
-		}
-	}
-
-	@Override		// FIXME refactor to share Generalized/Specialized functionality
-	public @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
-		if (templateBindings.length == 1) {					// Legacy compatibility / generator default case optimization
-			return getSpecializedCollectionTypeId(templateBindings[0], TypeId.FALSE_VALUE, TypeId.ZERO_VALUE, TypeId.UNLIMITED_VALUE);
-		}
-		else if (templateBindings.length == 2) {					// Legacy compatibility / generator default case optimization
-			return getSpecializedCollectionTypeId(templateBindings[0], (BooleanLiteralId)templateBindings[1], TypeId.ZERO_VALUE, TypeId.UNLIMITED_VALUE);
-		}
-		else if (templateBindings.length == 3) {					// Legacy compatibility / generator default case optimization
-			return getSpecializedCollectionTypeId(templateBindings[0], (BooleanLiteralId)templateBindings[1], (IntegerLiteralId)templateBindings[2], TypeId.UNLIMITED_VALUE);
-		}
-		else {
-			return super.getSpecializedId(templateBindings);
-		}
 	}
 
 	@Override

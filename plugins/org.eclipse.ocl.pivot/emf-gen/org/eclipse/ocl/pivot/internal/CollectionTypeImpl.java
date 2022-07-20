@@ -593,7 +593,8 @@ implements CollectionType {
 
 	@Override
 	public @NonNull TypeId computeId() {
-		if (getUnspecializedElement() == null) {
+		TemplateableElement unspecializedElement2 = getUnspecializedElement();
+		if (unspecializedElement2 == null) {
 			if (TypeId.COLLECTION_NAME.equals(name)) {
 				return TypeId.COLLECTION;
 			}
@@ -607,7 +608,7 @@ implements CollectionType {
 			}
 		}
 		else {
-			return TypeId.COLLECTION.getSpecializedCollectionTypeId(getElementType().getTypeId(), TypeId.valueOf(isIsNullFree()), TypeId.ZERO_VALUE, TypeId.UNLIMITED_VALUE);
+			return ((CollectionType)unspecializedElement2).getTypeId().getSpecializedId(getElementType().getTypeId(), isIsNullFree(), getLowerValue(), getUpperValue());
 		}
 	}
 

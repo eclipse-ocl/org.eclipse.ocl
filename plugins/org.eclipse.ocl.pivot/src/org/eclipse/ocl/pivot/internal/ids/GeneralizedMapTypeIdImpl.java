@@ -14,8 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
-import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
-import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
@@ -78,8 +76,8 @@ public class GeneralizedMapTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull Map
 	}
 
 	@Override
-	protected @NonNull MapTypeId createSpecializedId(@NonNull BindingsId templateBindings) {
-		return new SpecializedMapTypeIdImpl(this, templateBindings);
+	protected @NonNull MapTypeId createSpecializedId(@NonNull BindingsId bindingsId) {
+		return new SpecializedMapTypeIdImpl(this, bindingsId);
 	}
 
 	@Override
@@ -107,40 +105,9 @@ public class GeneralizedMapTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull Map
 		return name + "Type";
 	}
 
-	@Override		// FIXME refactor to share Generalized/Specialized functionality
-	public @NonNull MapTypeId getSpecializedId(@NonNull BindingsId templateBindings) {
-		if (templateBindings.size() == 2) {					// Legacy compatibility / generator default case optimization
-			return getSpecializedMapTypeId(templateBindings.get(0), TypeId.FALSE_VALUE, templateBindings.get(1), TypeId.FALSE_VALUE);
-		}
-		else {
-			return super.getSpecializedId(templateBindings);
-		}
-	}
-
-	@Override		// FIXME refactor to share Generalized/Specialized functionality
-	public @NonNull MapTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
-		if (templateBindings.length == 2) {					// Legacy compatibility / generator default case optimization
-			return getSpecializedMapTypeId(templateBindings[0], TypeId.FALSE_VALUE, templateBindings[1], TypeId.FALSE_VALUE);
-		}
-		else {
-			return super.getSpecializedId(templateBindings);
-		}
-	}
-
-	@Override
-	public @NonNull MapTypeId getSpecializedMapTypeId(@NonNull ElementId keyTypeId, @NonNull ElementId valueTypeId) {
-		return getSpecializedId(keyTypeId, TypeId.FALSE_VALUE, valueTypeId, TypeId.FALSE_VALUE);
-	}
-
-	@Override
-	public @NonNull MapTypeId getSpecializedMapTypeId(@NonNull ElementId keyTypeId, @NonNull BooleanLiteralId keysAreNullTypeId,
-			@NonNull ElementId valueTypeId, @NonNull BooleanLiteralId valuesAreNullTypeId) {
-		return getSpecializedId(keyTypeId, keysAreNullTypeId, valueTypeId, valuesAreNullTypeId);
-	}
-
 	@Override
 	public @NonNull TemplateParameterId getValueTypeId() {
-		return TypeId.T_3;
+		return TypeId.T_2;
 	}
 
     @Override

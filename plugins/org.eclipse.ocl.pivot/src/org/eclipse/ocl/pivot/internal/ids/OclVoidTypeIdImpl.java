@@ -14,15 +14,12 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ids.BindingsId;
-import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
-import org.eclipse.ocl.pivot.ids.IntegerLiteralId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.ids.UnlimitedNaturalLiteralId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -101,31 +98,6 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 
 	@Override
 	public @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
-		return this;
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Override
-	public @NonNull CollectionTypeId getSpecializedCollectionTypeId(@NonNull CollectionTypeId collectionTypeId) {
-		return this;
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Override
-	public @NonNull CollectionTypeId getSpecializedCollectionTypeId(@NonNull ElementId elementId) {
-		return this;
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Override
-	public @NonNull CollectionTypeId getSpecializedCollectionTypeId(@NonNull ElementId elementId, @NonNull BooleanLiteralId isNullFree,
-			@NonNull IntegerLiteralId lowerValue, @NonNull UnlimitedNaturalLiteralId upperValue) {
 		return this;
 	}
 

@@ -897,19 +897,19 @@ public class TestOCL extends OCLInternal
 	}
 
 	public @NonNull Value getEmptyBagValue() {
-		return getIdResolver().createBagOfEach(TypeId.BAG.getSpecializedCollectionTypeId(TypeId.OCL_VOID));
+		return getIdResolver().createBagOfEach(TypeId.BAG.getSpecializedId(TypeId.OCL_VOID));
 	}
 
 	public @NonNull Value getEmptyOrderedSetValue() {
-		return getIdResolver().createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedCollectionTypeId(TypeId.OCL_VOID));
+		return getIdResolver().createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(TypeId.OCL_VOID));
 	}
 
 	public @NonNull Value getEmptySequenceValue() {
-		return getIdResolver().createSequenceOfEach(TypeId.SEQUENCE.getSpecializedCollectionTypeId(TypeId.OCL_VOID));
+		return getIdResolver().createSequenceOfEach(TypeId.SEQUENCE.getSpecializedId(TypeId.OCL_VOID));
 	}
 
 	public @NonNull Value getEmptySetValue() {
-		return getIdResolver().createSetOfEach(TypeId.SET.getSpecializedCollectionTypeId(TypeId.OCL_VOID));
+		return getIdResolver().createSetOfEach(TypeId.SET.getSpecializedId(TypeId.OCL_VOID));
 	}
 
 	/**

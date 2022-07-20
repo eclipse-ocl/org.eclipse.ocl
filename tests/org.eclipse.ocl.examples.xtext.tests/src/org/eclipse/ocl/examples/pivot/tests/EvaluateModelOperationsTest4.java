@@ -313,8 +313,8 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		Object b2_value = idResolver.boxedValueOf(b2);
 		Object c1_value = idResolver.boxedValueOf(c1);
 		Object c2_value = idResolver.boxedValueOf(c2);
-		Value orderedSet_b1_b2 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedCollectionTypeId(TypeId.OCL_ANY), b1_value, b2_value);
-		Value sequence_c1_c2 = idResolver.createSequenceOfEach(TypeId.SEQUENCE.getSpecializedCollectionTypeId(TypeId.OCL_ANY), c1_value, c2_value);
+		Value orderedSet_b1_b2 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(TypeId.OCL_ANY), b1_value, b2_value);
+		Value sequence_c1_c2 = idResolver.createSequenceOfEach(TypeId.SEQUENCE.getSpecializedId(TypeId.OCL_ANY), c1_value, c2_value);
 		//
 		ocl.assertQueryEquals(a, orderedSet_b1_b2, "bs");
 		ocl.assertQueryEquals(a, sequence_c1_c2, "bs?.c");
@@ -386,8 +386,8 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class children1Type = idResolver.getType(children1Class);
 		org.eclipse.ocl.pivot.Class children2Type = idResolver.getType(children2Class);
 		//
-		OrderedSetValue kids1 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedCollectionTypeId(children1Type.getTypeId()), children1);
-		OrderedSetValue kids2 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedCollectionTypeId(children2Type.getTypeId()), children2);
+		OrderedSetValue kids1 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(children1Type.getTypeId()), children1);
+		OrderedSetValue kids2 = idResolver.createOrderedSetOfEach(TypeId.ORDERED_SET.getSpecializedId(children2Type.getTypeId()), children2);
 		//
 		ocl.assertSemanticErrorQuery(parentType, "parent", PivotMessagesInternal.UnresolvedElement_ERROR_, "", "parent");
 		ocl.assertSemanticErrorQuery(parentType, "self.parent", PivotMessagesInternal.UnresolvedProperty_ERROR_, parentType, "parent");

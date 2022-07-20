@@ -11,21 +11,15 @@
 package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.BindingsId;
-import org.eclipse.ocl.pivot.ids.BooleanLiteralId;
-import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class SpecializedMapTypeIdImpl extends AbstractSpecializedIdImpl<MapTypeId> implements MapTypeId
+public class SpecializedMapTypeIdImpl extends AbstractSpecializedIdImpl<@NonNull MapTypeId> implements MapTypeId
 {
-	private @Nullable TypeId keyTypeId;
-	private @Nullable TypeId valueTypeId;
-
-	public SpecializedMapTypeIdImpl(@NonNull MapTypeId generalizedId, @NonNull BindingsId templateBindings) {
-		super(generalizedId, templateBindings);
+	public SpecializedMapTypeIdImpl(@NonNull MapTypeId generalizedId, @NonNull BindingsId bindingsId) {
+		super(generalizedId, bindingsId);
 	}
 
 	@Override
@@ -40,63 +34,22 @@ public class SpecializedMapTypeIdImpl extends AbstractSpecializedIdImpl<MapTypeI
 
 	@Override
 	public @NonNull TypeId getKeyTypeId() {
-		TypeId keyTypeId2 = keyTypeId;
-		if (keyTypeId2 == null) {
-			keyTypeId = keyTypeId2 = (TypeId) generalizedId.getKeyTypeId().specialize(templateBindings);
-		}
-		return keyTypeId2;
-	}
-
-	@Override		// FIXME refactor to share Generalized/Specialized functionality
-	public @NonNull MapTypeId getSpecializedId(@NonNull BindingsId templateBindings) {
-		if (templateBindings.size() == 2) {					// Legacy compatibility / generator default case optimization
-			return getSpecializedMapTypeId(templateBindings.get(0), TypeId.FALSE_VALUE, templateBindings.get(1), TypeId.FALSE_VALUE);
-		}
-		else {
-			return super.getSpecializedId(templateBindings);
-		}
-	}
-
-	@Override		// FIXME refactor to share Generalized/Specialized functionality
-	public @NonNull MapTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
-		if (templateBindings.length == 2) {					// Legacy compatibility / generator default case optimization
-			return getSpecializedMapTypeId(templateBindings[0], TypeId.FALSE_VALUE, templateBindings[1], TypeId.FALSE_VALUE);
-		}
-		else {
-			return super.getSpecializedId(templateBindings);
-		}
-	}
-
-	@Override
-	public @NonNull MapTypeId getSpecializedMapTypeId(@NonNull ElementId keyTypeId, @NonNull ElementId valueTypeId) {
-		return getSpecializedId(keyTypeId, TypeId.FALSE_VALUE, valueTypeId, TypeId.FALSE_VALUE);
-	}
-
-	@Override
-	public @NonNull MapTypeId getSpecializedMapTypeId(@NonNull ElementId keyTypeId, @NonNull BooleanLiteralId keysAreNullTypeId,
-			@NonNull ElementId valueTypeId, @NonNull BooleanLiteralId valuesAreNullTypeId) {
-		return getSpecializedId(keyTypeId, keysAreNullTypeId, valueTypeId, valuesAreNullTypeId);
+		return (TypeId)templateBindings.getElementId(0);
 	}
 
 	@Override
 	public @NonNull TypeId getValueTypeId() {
-		TypeId valueTypeId2 = valueTypeId;
-		if (valueTypeId2 == null) {
-			valueTypeId = valueTypeId2 = (TypeId) generalizedId.getValueTypeId().specialize(templateBindings);
-		}
-		return valueTypeId2;
+		return (TypeId)templateBindings.getElementId(1);
 	}
 
 	@Override
 	public boolean isKeysAreNullFree() {
-		BooleanLiteralId keysAreNullFree = (BooleanLiteralId) TypeId.T_2.specialize(templateBindings);
-		return keysAreNullFree.getValue();
+		return (boolean)templateBindings.getValue(0);
 	}
 
 	@Override
 	public boolean isValuesAreNullFree() {
-		BooleanLiteralId valuesAreNullFree = (BooleanLiteralId) TypeId.T_4.specialize(templateBindings);
-		return valuesAreNullFree.getValue();
+		return (boolean)templateBindings.getValue(1);
 	}
 
     @Override
