@@ -32,7 +32,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
@@ -102,7 +104,7 @@ public class Orphanage extends PackageImpl
 	 * A cached sorted list copy of the map is created on demand and may be shared by multiple iterators. However it must not be modified
 	 * since its staleness is detected by a simple size comparison with the map.
 	 */
-	private static class WeakEList<T> extends AbstractEList<T> implements InternalEList<T>
+	private static abstract class WeakEList<T extends NamedElement> extends AbstractEList<T> implements InternalEList<T>
 	{
 		/**
 		 * A simple immutable iterator that caches the list image on construction to avoid changes.
@@ -182,7 +184,7 @@ public class Orphanage extends PackageImpl
 		private final @NonNull WeakHashMap<@NonNull T, @NonNull Integer> weakMap = new WeakHashMap<>();
 
 		/**
-		 * Incrermenting counter used to sort the list into a predictable order.
+		 * Incrementing counter used to sort the list into a predictable order.
 		 */
 		private int counter = 0;
 
@@ -232,6 +234,8 @@ public class Orphanage extends PackageImpl
 			}
 			return notifications;
 		}
+
+		protected abstract @NonNull ElementId getElementId(T object);
 
 		@Override
 		public boolean basicContains(Object object) {
@@ -437,6 +441,9 @@ public class Orphanage extends PackageImpl
 			return null;
 		}
 		ResourceSet resourceSet = resource.getResourceSet();
+		if (resourceSet == null) {
+			return null;
+		}
 		return getOrphanage(resourceSet);
 	}
 
@@ -510,7 +517,14 @@ public class Orphanage extends PackageImpl
 		EList<org.eclipse.ocl.pivot.Class> ownedClasses2 = ownedClasses;
 		if (ownedClasses2 == null)
 		{
-			ownedClasses2 = ownedClasses = new WeakEList<org.eclipse.ocl.pivot.Class>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_TYPE, PivotPackage.TYPE__PACKAGE*/);
+			ownedClasses2 = ownedClasses = new WeakEList<org.eclipse.ocl.pivot.Class>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_TYPE, PivotPackage.TYPE__PACKAGE*/)
+					{
+						@Override
+						protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Class object) {
+							return object.getTypeId();
+						}
+
+					};
 		}
 		return ownedClasses2;
 	}
@@ -523,7 +537,14 @@ public class Orphanage extends PackageImpl
 		EList<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
 		if (ownedPackages2 == null)
 		{
-			ownedPackages2 = ownedPackages = new WeakEList<org.eclipse.ocl.pivot.Package>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_PACKAGE, PivotPackage.PACKAGE__OWNING_PACKAGE*/);
+			ownedPackages2 = ownedPackages = new WeakEList<org.eclipse.ocl.pivot.Package>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_PACKAGE, PivotPackage.PACKAGE__OWNING_PACKAGE*/)
+			{
+				@Override
+				protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Package object) {
+					return object.getPackageId();
+				}
+
+			};
 		}
 		return ownedPackages2;
 	}
