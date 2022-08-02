@@ -176,17 +176,21 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				Class type;
 				«FOR pkge : sortedPackages»
 
-					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
-					«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-						type = «type.getSymbolName()»;
-						«IF type.isAbstract»
-						type.setIsAbstract(true);
-						«ENDIF»
-						«IF !(type instanceof AnyType)»
-							«type.emitSuperClasses("type")»
-						«ENDIF»
-						ownedClasses.add(type);
-					«ENDFOR»
+				ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
+				«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»«var templateSignature = type.getOwnedSignature()»
+				type = «type.getSymbolName()»;
+				«IF type.isAbstract»
+				type.setIsAbstract(true);
+				«ENDIF»
+				«IF !(type instanceof AnyType)»
+					«type.emitSuperClasses("type")»
+				«ENDIF»
+				«IF templateSignature !== null»«var templateParameters = templateSignature.getOwnedParameters()»«IF templateParameters.size() > 0»
+					createTemplateSignature(«type.getSymbolName()», «FOR templateParameter : templateParameters SEPARATOR(", ")»«templateParameter.getSymbolName()»«ENDFOR»);
+				«ENDIF»
+				«ENDIF»
+				ownedClasses.add(type);
+				«ENDFOR»
 				«ENDFOR»
 			}
 		'''

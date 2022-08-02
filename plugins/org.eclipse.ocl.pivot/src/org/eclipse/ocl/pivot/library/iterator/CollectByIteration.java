@@ -12,11 +12,15 @@ package org.eclipse.ocl.pivot.library.iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.MapValue;
 
 /**
@@ -41,5 +45,74 @@ public class CollectByIteration extends AbstractIteration
 		assert accumulatorValue != null;
 		accumulatorValue.add(keyVal, bodyVal);
 		return CARRY_ON;
+	}
+
+	@Override
+	public @Nullable Type resolveBodyType(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp, @Nullable Type bodyType) {
+		// TODO Auto-generated method stub
+		return super.resolveBodyType(environmentFactory, callExp, bodyType);
+	}
+
+	@Override
+	public boolean resolveReturnNullity(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp, boolean returnIsRequired) {
+		// TODO Auto-generated method stub
+		return super.resolveReturnNullity(environmentFactory, callExp,
+			returnIsRequired);
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp, @Nullable Type returnType) {
+		// TODO Auto-generated method stub
+		return super.resolveReturnType(environmentFactory, callExp, returnType);
+	}
+
+	@Override
+	public @Nullable Object resolveReturnValue(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp) {
+		// TODO Auto-generated method stub
+		return super.resolveReturnValue(environmentFactory, callExp);
+	}
+
+	@Override
+	public void resolveUnmodeledTemplateParameterSubstitutions(
+			@NonNull TemplateParameterSubstitutionVisitor templateParameterSubstitutions,
+			@NonNull CallExp callExp) {
+		// TODO Auto-generated method stub
+		super.resolveUnmodeledTemplateParameterSubstitutions(
+			templateParameterSubstitutions, callExp);
+	}
+
+	@Override
+	protected @Nullable Type resolveCollectionAsCollectionReturnType(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp, @Nullable Type returnType) {
+		// TODO Auto-generated method stub
+		return super.resolveCollectionAsCollectionReturnType(environmentFactory,
+			callExp, returnType);
+	}
+
+	@Override
+	protected boolean resolveCollectionSourceElementReturnNullity(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp, boolean returnIsRequired) {
+		// TODO Auto-generated method stub
+		return super.resolveCollectionSourceElementReturnNullity(environmentFactory,
+			callExp, returnIsRequired);
+	}
+
+	@Override
+	protected @Nullable Type resolveCollectionSourceReturnType(
+			@NonNull EnvironmentFactory environmentFactory,
+			@NonNull CallExp callExp, @Nullable Type returnType) {
+		// TODO Auto-generated method stub
+		return super.resolveCollectionSourceReturnType(environmentFactory, callExp,
+			returnType);
 	}
 }

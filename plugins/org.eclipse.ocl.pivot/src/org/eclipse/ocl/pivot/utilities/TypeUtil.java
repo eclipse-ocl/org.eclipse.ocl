@@ -362,8 +362,9 @@ public class TypeUtil
 	 * Return true if asType has been normalized by replacing any context-specific TemplateParameter by a shared TemplateParameter.
 	 */
 	public static boolean isNormalized(Type asType) {
-	/*	if (asType instanceof TemplateParameter) {
-			TemplateSignature asTemplateSignature = ((TemplateParameter)asType).getOwningSignature();
+		if (asType instanceof TemplateParameter) {
+			assert asType.eContainer() != null;
+		/*	TemplateSignature asTemplateSignature = ((TemplateParameter)asType).getOwningSignature();
 			if (asTemplateSignature == null) {
 				return false;
 			}
@@ -375,8 +376,8 @@ public class TypeUtil
 			if (asPackage == null) {
 				return false;
 			}
-			return Orphanage.isOrphanage(asPackage);
-		} */
+			return Orphanage.isOrphanage(asPackage); */
+		}
 		return true;
 	}
 

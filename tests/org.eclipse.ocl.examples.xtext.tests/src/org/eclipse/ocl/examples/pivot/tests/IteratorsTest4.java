@@ -1000,6 +1000,8 @@ public class IteratorsTest4 extends PivotTestSuite
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		CollectionTypeId typeId = TypeId.SET.getSpecializedId(packageType.getTypeId());
 		CollectionValue expected = idResolver.createSetOfEach(typeId, ocl.pkg2, ocl.pkg3);
+// XXX
+		ocl.assertQueryResults(null, "Map{1 with 1, 3 with 9}", "Sequence{1..3}->collectBy(k | k*k)->reject(k with v | k = 2)");
 
 		// complete form
 		ocl.assertQueryEquals(ocl.pkg1, expected, "ownedPackages?->reject(p : ocl::Package | p.name = 'bob')");

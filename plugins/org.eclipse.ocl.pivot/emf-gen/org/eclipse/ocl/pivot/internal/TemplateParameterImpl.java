@@ -387,6 +387,7 @@ public class TemplateParameterImpl
 
 	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId() {
+		assert eContainer() != null;		// XXX
 		TemplateParameterId templateParameterId2 = templateParameterId;
 		if (templateParameterId2 == null) {
 			synchronized (this) {

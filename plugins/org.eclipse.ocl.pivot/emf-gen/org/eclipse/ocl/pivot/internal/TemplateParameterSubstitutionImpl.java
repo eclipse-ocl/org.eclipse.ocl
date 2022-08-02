@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -512,6 +513,7 @@ public class TemplateParameterSubstitutionImpl
 	@Override
 	public void setActual(Type newActual)
 	{
+		assert TypeUtil.isNormalized(newActual);			// XXX
 		setActualGen(newActual);
 		setOwnedWildcard(newActual instanceof WildcardType ? (WildcardType)newActual : null);
 	}
