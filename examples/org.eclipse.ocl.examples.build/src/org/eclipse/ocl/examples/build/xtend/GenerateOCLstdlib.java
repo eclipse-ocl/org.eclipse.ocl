@@ -41,13 +41,18 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -149,6 +154,33 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			saver.localizeSpecializations();
 			String fileName = folder + "/" + javaClassName + ".java";
 		//	log.info("Generating '" + fileName + "'");
+
+
+			List<org.eclipse.ocl.pivot.@NonNull Package> ownedPackages = PivotUtilInternal.getOwnedPackagesList((Model)pivotModel);
+			org.eclipse.ocl.pivot.Package orphanPackage = NameUtil.getNameable(ownedPackages, PivotConstants.ORPHANAGE_NAME);
+			if (orphanPackage == null) {
+				orphanPackage = Orphanage.createLocalOrphanage();
+				ownedPackages.add(orphanPackage);
+			}
+			List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtilInternal.getOwnedClassesList(orphanPackage);
+			org.eclipse.ocl.pivot.Class orphanClass = NameUtil.getNameable(ownedClasses, PivotConstants.ORPHANAGE_NAME);
+			if (orphanClass == null) {
+				orphanClass = PivotUtil.createClass(PivotConstants.ORPHANAGE_NAME);
+				ownedClasses.add(orphanClass);
+			}
+			TemplateSignature asTemplateSignature = orphanClass.getOwnedSignature();
+			if (asTemplateSignature == null) {
+				asTemplateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
+				orphanClass.setOwnedSignature(asTemplateSignature);
+			}
+			List<TemplateParameter> ownedParameters = asTemplateSignature.getOwnedParameters();
+			for (int i = 0; i < 4; i++ ) {
+				ownedParameters.add(PivotUtil.createTemplateParameter("$" + i));
+			}
+
+
+
+
 			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel((Model)pivotModel, excludedEClassifierNames);
 			MergeWriter fw = new MergeWriter(fileName);
 			fw.append(metamodel);

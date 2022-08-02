@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.TemplateSignature
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import org.eclipse.ocl.pivot.values.Unlimited
+import org.eclipse.ocl.pivot.Type
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -377,11 +378,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				List<Class> superClasses;
 				«FOR type : allLambdaTypes»
 					orphanTypes.add(type = «type.getSymbolName()»);
-					type.setContextType(«type.contextType.getSymbolName()»);
+					type.setContextType(«normalizeType(orphanPackage, type.contextType).getSymbolName()»);
 					«FOR parameterType : type.parameterType»
-						type.getParameterType().add(«parameterType.getSymbolName()»);
+						type.getParameterType().add(«normalizeType(orphanPackage, parameterType).getSymbolName()»);
 					«ENDFOR»
-					type.setResultType(«type.resultType.getSymbolName()»);
+					type.setResultType(«normalizeType(orphanPackage, type.resultType).getSymbolName()»);
 					«type.emitSuperClasses("type")»
 				«ENDFOR»
 			}

@@ -358,6 +358,28 @@ public class TypeUtil
 		return firstParts == secondParts;
 	}
 
+	/**
+	 * Return true if asType has been normalized by replacing any context-specific TemplateParameter by a shared TemplateParameter.
+	 */
+	public static boolean isNormalized(Type asType) {
+	/*	if (asType instanceof TemplateParameter) {
+			TemplateSignature asTemplateSignature = ((TemplateParameter)asType).getOwningSignature();
+			if (asTemplateSignature == null) {
+				return false;
+			}
+			TemplateableElement asTemplateableElement = asTemplateSignature.getOwningElement();
+			if (!(asTemplateableElement instanceof org.eclipse.ocl.pivot.Class)) {
+				return false;
+			}
+			org.eclipse.ocl.pivot.Package asPackage = ((org.eclipse.ocl.pivot.Class)asTemplateableElement).getOwningPackage();
+			if (asPackage == null) {
+				return false;
+			}
+			return Orphanage.isOrphanage(asPackage);
+		} */
+		return true;
+	}
+
 	public static CollectionKind getCollectionKind(CollectionType collectionType) {
 		if (collectionType instanceof OrderedSetType) {
 			return CollectionKind.ORDERED_SET;

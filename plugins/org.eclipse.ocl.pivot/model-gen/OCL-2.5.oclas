@@ -3302,5 +3302,13 @@
         <ownedSubstitutions actual="#,5eVD" formal="#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses name="$$">
+      <ownedSignature>
+        <ownedParameters xmi:id="pU+S6" name="$0"/>
+        <ownedParameters xmi:id="qU+S6" name="$1"/>
+        <ownedParameters xmi:id="rU+S6" name="$2"/>
+        <ownedParameters xmi:id="sU+S6" name="$3"/>
+      </ownedSignature>
+    </ownedClasses>
   </ownedPackages>
 </pivot:Model>

@@ -751,6 +751,11 @@ public class PivotUtil
 		return pivotTemplateParameter;
 	}
 
+//	public static @NonNull TemplateParameter createTemplateParameter(@NonNull Package orphanage, int index, @NonNull TemplateParameter asTemplateParameter) {
+		// TODO Auto-generated method stub
+//		return null;
+//	}
+
 	public static @NonNull TemplateParameterSubstitution createTemplateParameterSubstitution(@NonNull TemplateParameter formal, @NonNull Type actual) {
 		TemplateParameterSubstitution pivotTemplateParameterSubstitution = PivotFactory.eINSTANCE.createTemplateParameterSubstitution();
 		pivotTemplateParameterSubstitution.setFormal(formal);

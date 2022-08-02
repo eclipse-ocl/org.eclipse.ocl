@@ -332,6 +332,9 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«FOR pkge : root.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDFOR»
+						Class orphanageClass = createClass("$$");
+						createTemplateSignature(orphanageClass, tp_0, tp_1, tp_2);
+						orphanage.getOwnedClasses().add(orphanageClass);
 						«root.installPackages()»
 						«root.installClassTypes()»
 						«root.installPrimitiveTypes()»

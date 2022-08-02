@@ -166,6 +166,7 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	@Override
 	public void setContextType(Type newContextType)
 	{
+		assert TypeUtil.isNormalized(newContextType);			// XXX
 		Type oldContextType = contextType;
 		contextType = newContextType;
 		if (eNotificationRequired())
@@ -227,6 +228,7 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	@Override
 	public void setResultType(Type newResultType)
 	{
+		assert TypeUtil.isNormalized(newResultType);			// XXX
 		Type oldResultType = resultType;
 		resultType = newResultType;
 		if (eNotificationRequired())
