@@ -47,6 +47,8 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
@@ -769,7 +771,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						Type superActual = superParameterSubstitution.getActual();
 						for (TemplateBinding specializedTemplateBinding : specializedTemplateBindings) {
 							for (TemplateParameterSubstitution specializedParameterSubstitution : specializedTemplateBinding.getOwnedSubstitutions()) {
-								if (specializedParameterSubstitution.getFormal() == superActual) {
+								TemplateParameterId formalTemplateParameterId = specializedParameterSubstitution.getFormal().getTemplateParameterId();
+								TypeId actualTypeId = superActual.getTypeId();
+								if ((actualTypeId instanceof TemplateParameterId) && (formalTemplateParameterId.getIndex() == ((TemplateParameterId)actualTypeId).getIndex())) {
 									Type specializedActual = ClassUtil.nonNullModel(specializedParameterSubstitution.getActual());
 									TemplateParameter superFormal = ClassUtil.nonNullModel(superParameterSubstitution.getFormal());
 									superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);

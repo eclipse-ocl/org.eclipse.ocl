@@ -36,6 +36,8 @@ import org.eclipse.ocl.pivot.StandardLibrary.StandardLibraryExtension;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
+import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -364,19 +366,15 @@ public class TypeUtil
 	public static boolean isNormalized(Type asType) {
 		if (asType instanceof TemplateParameter) {
 			assert asType.eContainer() != null;
-		/*	TemplateSignature asTemplateSignature = ((TemplateParameter)asType).getOwningSignature();
-			if (asTemplateSignature == null) {
-				return false;
-			}
+			TemplateSignature asTemplateSignature = ((TemplateParameter)asType).getOwningSignature();
+			assert asTemplateSignature != null;
 			TemplateableElement asTemplateableElement = asTemplateSignature.getOwningElement();
 			if (!(asTemplateableElement instanceof org.eclipse.ocl.pivot.Class)) {
-				return false;
+				return true;
 			}
 			org.eclipse.ocl.pivot.Package asPackage = ((org.eclipse.ocl.pivot.Class)asTemplateableElement).getOwningPackage();
-			if (asPackage == null) {
-				return false;
-			}
-			return Orphanage.isOrphanage(asPackage); */
+			assert asPackage != null;
+			return true; //Orphanage.isOrphanage(asPackage);
 		}
 		return true;
 	}

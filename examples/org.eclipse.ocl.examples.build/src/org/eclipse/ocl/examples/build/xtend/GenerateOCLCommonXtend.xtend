@@ -633,6 +633,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String defineTemplateBindings(/*@NonNull*/ Model root) {
+		var orphanPackage = root.getOrphanPackage();
 		var allTemplateableElements = root.getSortedTemplateableElements(symbolNameComparator);
 		if (allTemplateableElements.isEmpty()) return "";
 		'''
@@ -641,7 +642,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«FOR templateableElement : allTemplateableElements»
 					«FOR templateBinding : templateableElement.ownedBindings»
 						«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions»
-							addBinding(«templateableElement.getSymbolName()», «templateParameterSubstitution.actual.getSymbolName()»);
+							addBinding(«templateableElement.getSymbolName()», «normalizeType(orphanPackage, templateParameterSubstitution.actual).getSymbolName()»);
 						«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
