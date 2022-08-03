@@ -27,7 +27,6 @@ import org.eclipse.emf.mwe.utils.Mapping;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -46,7 +45,6 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -60,17 +58,15 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.xtext.util.Strings;
 
 @SuppressWarnings("all")
@@ -642,13 +638,13 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return getOrphanPackage(getRootPackage(elem));
 	}
 
-	protected org.eclipse.ocl.pivot.@Nullable Package getOrphanPackage(@NonNull Model elem) {
+	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Model elem) {
 		for (org.eclipse.ocl.pivot.Package pkg : getAllPackages(elem)) {
 			if (PivotConstants.ORPHANAGE_NAME.equals(pkg.getName())) {
 				return pkg;
 			}
 		}
-		return null;
+		throw new IllegalStateException();
 	}
 
 	protected @NonNull String getPartialName(@NonNull Property property) {
@@ -1420,27 +1416,36 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected @NonNull String javaString(@NonNull LanguageExpression anExpression) {
 		return Strings.convertToJavaString(anExpression.getBody().trim());
 	}
-
-	protected Type normalizeType(Package orphanagePackage, Type type) {
+	/**
+	 * Return the normalized type by replacing any specific contextual TemplateParameter instances by the
+	 * shared TemplateParameter within the orphanagePackage.
+	 *
+	 * @since 1.18
+	 */
+	protected @NonNull Type normalizeType(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, @NonNull Type type) {
+		assert TypeUtil.isNormalized(type);
 		if (type instanceof TemplateParameter) {
-			TemplateParameterId templateParameterId = ((TemplateParameter)type).getTemplateParameterId();
+		/*	TemplateParameterId templateParameterId = ((TemplateParameter)type).getTemplateParameterId();
+			List<@NonNull TemplateParameter> ownedParameters2 = ownedParameters;
+			if (ownedParameters2 == null) {
+				List<@NonNull Class> ownedClasses = PivotUtilInternal.getOwnedClassesList(this);
+				org.eclipse.ocl.pivot.Class orphanClass = NameUtil.getNameable(ownedClasses, PivotConstants.ORPHANAGE_NAME);
+				if (orphanClass == null) {
+					orphanClass = PivotUtil.createClass(PivotConstants.ORPHANAGE_NAME);
+					orphanClass.setOwningPackage(this);
+				}
+				TemplateSignature asTemplateSignature = orphanClass.getOwnedSignature();
+				if (asTemplateSignature == null) {
+					asTemplateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
+					orphanClass.setOwnedSignature(asTemplateSignature);
+				}
+				ownedParameters = ownedParameters2 = PivotUtilInternal.getOwnedParametersList(asTemplateSignature);
+			}
 			int index = templateParameterId.getIndex();
-			List<@NonNull Class> ownedClasses = PivotUtilInternal.getOwnedClassesList(orphanagePackage);
-			org.eclipse.ocl.pivot.Class orphanClass = NameUtil.getNameable(ownedClasses, PivotConstants.ORPHANAGE_NAME);
-			if (orphanClass == null) {
-				orphanClass = PivotUtil.createClass(PivotConstants.ORPHANAGE_NAME);
-				ownedClasses.add(orphanClass);
+			for (int i = ownedParameters2.size(); i <= index; i++ ) {
+				ownedParameters2.add(PivotUtil.createTemplateParameter("$" + i));
 			}
-			TemplateSignature asTemplateSignature = orphanClass.getOwnedSignature();
-			if (asTemplateSignature == null) {
-				asTemplateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
-				orphanClass.setOwnedSignature(asTemplateSignature);
-			}
-			List<TemplateParameter> ownedParameters = asTemplateSignature.getOwnedParameters();
-			for (int i = ownedParameters.size(); i <= index; i++ ) {
-				ownedParameters.add(PivotUtil.createTemplateParameter("$" + i));
-			}
-			return ownedParameters.get(index);
+			return ownedParameters2.get(index); */
 		}
 		return type;
 	}

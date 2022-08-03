@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.internal.values.MapTypeParametersImpl;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
@@ -374,7 +375,7 @@ public class TypeUtil
 			}
 			org.eclipse.ocl.pivot.Package asPackage = ((org.eclipse.ocl.pivot.Class)asTemplateableElement).getOwningPackage();
 			assert asPackage != null;
-			return true; //Orphanage.isOrphanage(asPackage);
+			return Orphanage.isOrphanage(asPackage);
 		}
 		return true;
 	}

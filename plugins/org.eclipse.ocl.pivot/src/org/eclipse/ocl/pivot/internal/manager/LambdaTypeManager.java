@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
@@ -64,6 +65,11 @@ public class LambdaTypeManager
 	}
 
 	private @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
+		assert TypeUtil.isNormalized(contextType);			// XXX
+		for (@NonNull Type parameterType : parameterTypes) {
+			assert TypeUtil.isNormalized(parameterType);	// XXX
+		}
+		assert TypeUtil.isNormalized(resultType);			// XXX
 		Map<@Nullable Type, @NonNull List<@NonNull LambdaType>> contextMap = lambdaTypes.get(contextType);
 		if (contextMap == null) {
 			contextMap = new HashMap<>();

@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -130,14 +131,22 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 		@Override
 		public BasicContinuation<?> execute() {
+			Orphanage orphanage = context.getEnvironmentFactory().getCompleteModel().getOrphanage();
 			Type contextType = PivotUtil.getPivot(Type.class, csElement.getOwnedContextType());
+			if (contextType != null) {
+				contextType = orphanage.normalizeType(contextType);
+			}
 			Type resultType = PivotUtil.getPivot(Type.class, csElement.getOwnedResultType());
+			if (resultType != null) {
+				resultType = orphanage.normalizeType(resultType);
+			}
 			String name = csElement.getName();
 			if ((contextType != null) && (resultType != null) && (name != null)) {
 				List<@NonNull Type> parameterTypes = new ArrayList<>();
 				for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {
 					Type parameterType = PivotUtil.getPivot(Type.class, csParameterType);
 					if (parameterType != null) {
+						parameterType = orphanage.normalizeType(parameterType);
 						parameterTypes.add(parameterType);
 					}
 				}

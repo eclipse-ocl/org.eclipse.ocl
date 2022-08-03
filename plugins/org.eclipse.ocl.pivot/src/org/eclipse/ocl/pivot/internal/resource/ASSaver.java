@@ -30,7 +30,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
+//import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -76,7 +76,7 @@ public class ASSaver
 	/**
 	 * The extra package for copies of specializations.
 	 */
-	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Package orphanage = null;
+	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Package localOrphanage = null;
 
 	/**
 	 * Map of original specialization to local specialization
@@ -179,18 +179,18 @@ public class ASSaver
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Resource resource) {
-		org.eclipse.ocl.pivot.Package orphanage2 = orphanage;
-		if (orphanage2 == null) {
-			orphanage = orphanage2 = Orphanage.createLocalOrphanage();
+		org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
+		if (localOrphanage2 == null) {
+			localOrphanage = localOrphanage2 = Orphanage.createLocalOrphanage();
 			EList<EObject> contents = resource.getContents();
 			if ((contents.size() > 0) && (contents.get(0) instanceof Model)) {
-				((Model)contents.get(0)).getOwnedPackages().add(orphanage2);
+				((Model)contents.get(0)).getOwnedPackages().add(localOrphanage2);
 			}
 			else {
-				contents.add(orphanage2);
+				contents.add(localOrphanage2);
 			}
 		}
-		return orphanage2;
+		return localOrphanage2;
 	}
 
 	protected @NonNull ASSaverResolveVisitor getResolveVisitor(@NonNull EObject eObject) {
@@ -240,18 +240,18 @@ public class ASSaver
 
 	protected void loadOrphanage(@NonNull Resource resource) {
 		Model root = null;
-		Package orphanage2 = orphanage;
-		if (orphanage2 == null) {
+		org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
+		if (localOrphanage2 == null) {
 			for (EObject eRoot : resource.getContents()) {
 				if (eRoot instanceof Model) {
 					if (root == null) {
 						root = (Model) eRoot;
 					}
-					if (orphanage2 == null) {
+					if (localOrphanage2 == null) {
 						for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eRoot).getOwnedPackages()) {
 							if (Orphanage.isTypeOrphanage(asPackage)) {
-								orphanage = orphanage2 = asPackage;
-								for (org.eclipse.ocl.pivot.Class asType : orphanage2.getOwnedClasses()) {
+								localOrphanage = localOrphanage2 = asPackage;		// XXX
+								for (org.eclipse.ocl.pivot.Class asType : localOrphanage2.getOwnedClasses()) {
 									if (PivotConstants.ORPHANAGE_NAME.equals(asType.getName())) {
 										orphanageClass = asType;
 									}
@@ -265,8 +265,8 @@ public class ASSaver
 					}
 				}
 				if ((eRoot instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eRoot)) {	// FIXME Obsolete
-					orphanage = orphanage2 = (org.eclipse.ocl.pivot.Package)eRoot;
-					for (org.eclipse.ocl.pivot.Class asType : orphanage2.getOwnedClasses()) {
+					localOrphanage = localOrphanage2 = (org.eclipse.ocl.pivot.Package)eRoot;
+					for (org.eclipse.ocl.pivot.Class asType : localOrphanage2.getOwnedClasses()) {
 						if (PivotConstants.ORPHANAGE_NAME.equals(asType.getName())) {
 							orphanageClass = asType;
 						}
@@ -329,11 +329,11 @@ public class ASSaver
 		}
 		T resolvedOperation = ClassUtil.nonNullEMF(EcoreUtil.copy(referredOperation));
 		if (orphanageClass == null) {
-			Package orphanage2 = orphanage;
-			if (orphanage2 == null) {
-				orphanage2 = getOrphanPackage(resource);
+			org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
+			if (localOrphanage2 == null) {
+				localOrphanage2 = getOrphanPackage(resource);
 			}
-			orphanageClass = getOrphanClass(orphanage2);
+			orphanageClass = getOrphanClass(localOrphanage2);
 		}
 		orphanageClass.getOwnedOperations().add(resolvedOperation);
 		operations.put(moniker, resolvedOperation);
@@ -371,11 +371,11 @@ public class ASSaver
 			specializations.put(resolvedType, resolvedType);
 			EObject eContainer = resolvedType.eContainer();
 			if (eContainer == null) {
-				Package orphanage2 = orphanage;
-				if (orphanage2 == null) {
-					orphanage2 = getOrphanPackage(resource);
+				org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
+				if (localOrphanage2 == null) {
+					localOrphanage2 = getOrphanPackage(resource);
 				}
-				orphanage.getOwnedClasses().add(resolvedType);
+				localOrphanage.getOwnedClasses().add(resolvedType);
 			}
 		}
 		locateSpecializations(Collections.singletonList(resolvedType));

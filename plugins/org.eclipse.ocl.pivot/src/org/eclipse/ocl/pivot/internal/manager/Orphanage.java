@@ -31,16 +31,24 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ElementId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * An Orphanage provides a Package that weakly contains elements such as type specializations that
@@ -496,6 +504,8 @@ public class Orphanage extends PackageImpl
 		}
 	}
 
+	private @Nullable List<@NonNull TemplateParameter> ownedParameters = null;
+
 	public Orphanage(@NonNull String name, @NonNull String nsURI) {
 		//		super(uri);
 		//		setLoaded(true);
@@ -547,5 +557,38 @@ public class Orphanage extends PackageImpl
 			};
 		}
 		return ownedPackages2;
+	}
+
+	/**
+	 * Return the normalized type by replacing any specific contextual TemplateParameter instances by the
+	 * shared TemplateParameter within the orphanagePackage.
+	 *
+	 * @since 1.18
+	 */
+	public @NonNull Type normalizeType(@NonNull Type type) {
+		if (type instanceof TemplateParameter) {
+			TemplateParameterId templateParameterId = ((TemplateParameter)type).getTemplateParameterId();
+			List<@NonNull TemplateParameter> ownedParameters2 = ownedParameters;
+			if (ownedParameters2 == null) {
+				List<@NonNull Class> ownedClasses = PivotUtilInternal.getOwnedClassesList(this);
+				org.eclipse.ocl.pivot.Class orphanClass = NameUtil.getNameable(ownedClasses, PivotConstants.ORPHANAGE_NAME);
+				if (orphanClass == null) {
+					orphanClass = PivotUtil.createClass(PivotConstants.ORPHANAGE_NAME);
+					orphanClass.setOwningPackage(this);
+				}
+				TemplateSignature asTemplateSignature = orphanClass.getOwnedSignature();
+				if (asTemplateSignature == null) {
+					asTemplateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
+					orphanClass.setOwnedSignature(asTemplateSignature);
+				}
+				ownedParameters = ownedParameters2 = PivotUtilInternal.getOwnedParametersList(asTemplateSignature);
+			}
+			int index = templateParameterId.getIndex();
+			for (int i = ownedParameters2.size(); i <= index; i++ ) {
+				ownedParameters2.add(PivotUtil.createTemplateParameter("$" + i));
+			}
+			return ownedParameters2.get(index);
+		}
+		return type;
 	}
 }

@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -1312,6 +1313,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 			else {
 				Type pivotActualParameter = PivotUtil.getPivot(Type.class, csActualParameter);
+				if (pivotActualParameter != null) {
+					Orphanage orphanage = environmentFactory.getCompleteModel().getOrphanage();
+					pivotActualParameter = orphanage.normalizeType(pivotActualParameter);
+				}
 				templateParameterSubstitution.setActual(pivotActualParameter);
 			}
 			converter.installPivotDefinition(csTemplateParameterSubstitution, templateParameterSubstitution);

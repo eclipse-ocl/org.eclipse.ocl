@@ -81,6 +81,9 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			TemplateParameter formalParameter = ClassUtil.nonNull(templateParameters.get(0));
 			assert formalParameter != null;
 			Type elementType = typeParameters.getElementType();
+			if (elementType != null) {			// XXX
+				elementType = getCompleteModel().getOrphanage().normalizeType(elementType);
+			}
 			TemplateParameterSubstitution templateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(formalParameter, elementType);
 			templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 			specializedType.getOwnedBindings().add(templateBinding);
@@ -172,6 +175,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		private @Nullable /*WeakHash*/Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>> maps = null;
 
 		protected @NonNull MapType createSpecialization(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
+			Orphanage orphanage = getCompleteModel().getOrphanage();
 			org.eclipse.ocl.pivot.Class unspecializedType = getPrimaryClass();
 			String typeName = unspecializedType.getName();
 			TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
@@ -185,8 +189,8 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			TemplateParameter valueFormalParameter = templateParameters.get(1);
 			assert keyFormalParameter != null;
 			assert valueFormalParameter != null;
-			Type keyType = typeParameters.getKeyType();
-			Type valueType = typeParameters.getValueType();
+			Type keyType = orphanage.normalizeType(typeParameters.getKeyType());		// XXX in caller ???
+			Type valueType = orphanage.normalizeType(typeParameters.getValueType());
 			TemplateParameterSubstitution keyTemplateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(keyFormalParameter, keyType);
 			TemplateParameterSubstitution valueTemplateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(valueFormalParameter, valueType);
 			templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
@@ -196,7 +200,6 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			specializedMapType.setKeysAreNullFree(typeParameters.isKeysAreNullFree());
 			specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
 			specializedMapType.setUnspecializedElement(unspecializedType);
-			Orphanage orphanage = getCompleteModel().getOrphanage();
 			specializedMapType.setOwningPackage(orphanage);
 			specializedMapType.setEntryClass(typeParameters.getEntryClass());
 			return specializedMapType;

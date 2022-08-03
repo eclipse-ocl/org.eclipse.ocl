@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.build.xtend
 
 import java.util.ArrayList
+import java.util.Collection
 import java.util.Collections
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.ocl.pivot.AnyType
@@ -32,9 +33,7 @@ import org.eclipse.ocl.pivot.TemplateParameter
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution
 import org.eclipse.ocl.pivot.TemplateSignature
 import org.eclipse.ocl.pivot.utilities.ClassUtil
-import java.util.Collection
 import org.eclipse.ocl.pivot.values.Unlimited
-import org.eclipse.ocl.pivot.Type
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -382,9 +381,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				List<Class> superClasses;
 				«FOR type : allLambdaTypes»
 					orphanTypes.add(type = «type.getSymbolName()»);
-					type.setContextType(«normalizeType(orphanPackage, type.contextType).getSymbolName()»);
+					type.setContextType(«normalizeType(orphanPackage,  type.contextType).getSymbolName()»);
 					«FOR parameterType : type.parameterType»
-						type.getParameterType().add(«normalizeType(orphanPackage, parameterType).getSymbolName()»);
+						type.getParameterType().add(«normalizeType(orphanPackage,parameterType).getSymbolName()»);
 					«ENDFOR»
 					type.setResultType(«normalizeType(orphanPackage, type.resultType).getSymbolName()»);
 					«type.emitSuperClasses("type")»
