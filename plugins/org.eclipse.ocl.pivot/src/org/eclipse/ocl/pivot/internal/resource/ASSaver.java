@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * ASSaver ensures that all references to synthesized types are terminated
@@ -361,6 +362,7 @@ public class ASSaver
 	 * of a local copy of a specialization.
 	 */
 	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T resolveType(@NonNull T referredType) {
+		assert TypeUtil.isNormalized(referredType);
 		if (!PivotUtilInternal.isOrphanType(referredType)) {
 			return referredType;
 		}

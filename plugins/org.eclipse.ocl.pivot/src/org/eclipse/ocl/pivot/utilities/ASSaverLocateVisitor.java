@@ -175,6 +175,10 @@ public class ASSaverLocateVisitor extends AbstractExtendingVisitor<Object, ASSav
 	@Override
 	public Object visitTypedElement(@NonNull TypedElement object) {
 		Type referredType = object.getType();
+		assert TypeUtil.isNormalized(referredType);
+		if (referredType instanceof TemplateParameter) {
+			getClass();		// XXX
+		}
 		org.eclipse.ocl.pivot.Class referredClass = referredType != null ? referredType.isClass() : null;
 		if (referredClass != null) {
 			context.addSpecializingElement(object, referredClass);
