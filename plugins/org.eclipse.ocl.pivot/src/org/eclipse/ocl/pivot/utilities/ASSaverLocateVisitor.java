@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.util.Visitable;
  * LocateVisitor locates references to shared specializations, so that
  * local copies can be created and then replaced by the ResolveVisitor.
  */
+@Deprecated /* @deprecated Replaced by safer EcoreUtil.Copier/CrossReferencer functionality */
 public class ASSaverLocateVisitor extends AbstractExtendingVisitor<Object, ASSaver>
 {
 	public ASSaverLocateVisitor(@NonNull ASSaver context) {

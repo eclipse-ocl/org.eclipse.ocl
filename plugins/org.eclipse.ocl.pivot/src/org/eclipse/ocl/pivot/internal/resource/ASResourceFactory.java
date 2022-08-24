@@ -108,7 +108,15 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	/**
 	 * Create a visitor to locate orphan specializations.
 	 */
+	@Deprecated /* @deprecated Replaced by safer EcoreUtil.Copier/CrossReferencer functionality */
 	@NonNull ASSaverLocateVisitor createASSaverLocateVisitor(@NonNull ASSaver asSaver);
+
+	/**
+	 * Create a visitor to normalize content.
+	 *
+	 * @since 1.18
+	 */
+	@NonNull ASSaverNormalizeVisitor createASSaverNormalizeVisitor(@NonNull AbstractASSaver asSaver);
 
 	/**
 	 * Create a visitor to normalize content.
@@ -118,6 +126,7 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	/**
 	 * Create a visitor to resolve orphan specializations.
 	 */
+	@Deprecated /* @deprecated Replaced by safer EcoreUtil.Copier/CrossReferencer functionality */
 	@NonNull ASSaverResolveVisitor createASSaverResolveVisitor(@NonNull ASSaver asSaver);
 
 	/**

@@ -220,6 +220,11 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 	}
 
 	@Override
+	public @NonNull ASSaverNormalizeVisitor createASSaverNormalizeVisitor(@NonNull AbstractASSaver asSaver) {
+		return new ASSaverNormalizeVisitor(asSaver);
+	}
+
+	@Override
 	public @NonNull ASSaverNormalizeVisitor createASSaverNormalizeVisitor(@NonNull ASSaver saver) {
 		return new ASSaverNormalizeVisitor(saver);
 	}

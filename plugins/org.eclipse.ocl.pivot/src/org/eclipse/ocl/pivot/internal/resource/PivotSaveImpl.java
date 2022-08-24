@@ -23,10 +23,12 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -37,6 +39,41 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  */
 public final class PivotSaveImpl extends XMISaveImpl
 {
+	/**
+	 * @since 1.18
+	 */
+	public static class PivotXMIHelperImpl extends XMIHelperImpl
+	{
+		private @NonNull ASSaverNew asSaver;
+
+		public PivotXMIHelperImpl(@NonNull ASResource asResource) {
+			super(asResource);
+			this.asSaver = new ASSaverNew(asResource);
+		}
+
+		@Override
+		public String getHREF(EObject unresolvedObject) {
+			if (unresolvedObject == null) {
+				System.out.println("getHRef: " + NameUtil.debugSimpleName(unresolvedObject) + " => null");
+				return null;
+			}
+			EObject resolvedObject = asSaver.resolveOrphan(unresolvedObject);
+			if (resolvedObject == null) {
+			//	return null;
+				//return super.getHREF(unresolvedObject);
+			}
+			String href = super.getHREF(resolvedObject);
+			if ("Mapping".equals(unresolvedObject.eClass().getName())) {
+				System.out.println("getHRef: " + NameUtil.debugSimpleName(unresolvedObject) + " => " + NameUtil.debugSimpleName(resolvedObject) + " => " + href + " : " + ((NamedElement)unresolvedObject.eContainer()).getName() + "::" + ((NamedElement)unresolvedObject).getName());
+			}
+			return href;
+		}
+
+		public @NonNull ASSaverNew getSaver() {
+			return asSaver;
+		}
+	}
+
 	/**
 	 * The Lookup override enforces alphabetical order on saved features.
 	 */
@@ -54,8 +91,11 @@ public final class PivotSaveImpl extends XMISaveImpl
 		}
 	}
 
-	public PivotSaveImpl(XMLHelper helper) {
+	private @NonNull ASSaverNew asSaver;
+
+	public PivotSaveImpl(@NonNull XMLHelper helper) {
 		super(helper);
+		this.asSaver = ((PivotXMIHelperImpl)helper).getSaver();
 	}
 
 	/**
@@ -75,8 +115,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 				}
 			}
 		}
-		ASSaver asSaver = new ASSaver(asResource);
-		asSaver.localizeSpecializations();
+		asSaver.localizeOrphans();
 		Map<@NonNull Object, @Nullable Object> saveOptions = new HashMap<>();
 		if (options != null) {
 			for (Object key : options.keySet()) {

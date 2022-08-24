@@ -19,9 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -30,7 +27,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
+//import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -39,7 +36,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ASSaverLocateVisitor;
-import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
 import org.eclipse.ocl.pivot.utilities.ASSaverResolveVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -50,12 +46,11 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * ASSaver ensures that all references to synthesized types are terminated
  * by local copies of the synthesized types.
  */
-public class ASSaver
+@Deprecated /* @deprecated Replaced by safer EcoreUtil.Copier/CrossReferencer functionality */
+public class ASSaver extends AbstractASSaver
 {
-	protected final @NonNull Resource resource;
-
 	public ASSaver(@NonNull Resource resource) {
-		this.resource = resource;
+		super(resource);
 	}
 
 	/**
@@ -76,7 +71,7 @@ public class ASSaver
 	/**
 	 * The extra package for copies of specializations.
 	 */
-	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Package orphanage = null;
+	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Package localOrphanage = null;
 
 	/**
 	 * Map of original specialization to local specialization
@@ -87,11 +82,6 @@ public class ASSaver
 	 * The extra package for copies of specializations.
 	 */
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class orphanageClass = null;
-
-	/**
-	 * The appropriate normalization visitor for each Resource.
-	 */
-	private /*@LazyNonNull*/ Map<@NonNull Resource, @NonNull ASSaverNormalizeVisitor> resource2normalizeVisitor = null;
 
 	public void addSpecializingElement(@NonNull Element object) {
 		if (!resolvedSpecializingElements.contains(object)) {
@@ -145,29 +135,6 @@ public class ASSaver
 		}
 	}
 
-	protected @NonNull ASSaverNormalizeVisitor getNormalizeVisitor(@NonNull EObject eObject) {
-		Resource resource = eObject.eResource();
-		if (resource == null) {
-			throw new IllegalStateException("Cannot locate " + ASSaverLocateVisitor.class.getName() + " for resource-less " + eObject.eClass().getName());
-		}
-		if (resource2normalizeVisitor == null) {
-			resource2normalizeVisitor = new HashMap<>();
-		}
-		ASSaverNormalizeVisitor visitor = resource2normalizeVisitor.get(resource);
-		if (visitor != null) {
-			return visitor;
-		}
-		if (resource instanceof ASResource) {
-			ASResource asResource = (ASResource)resource;
-			visitor = asResource.getASResourceFactory().createASSaverNormalizeVisitor(this);
-			resource2normalizeVisitor.put(resource, visitor);
-			return visitor;
-		}
-		else {
-			throw new IllegalStateException("Cannot locate " + ASSaverLocateVisitor.class.getName() + " for non-OCL " + resource.getClass().getName());
-		}
-	}
-
 	protected org.eclipse.ocl.pivot.@NonNull Class getOrphanClass(org.eclipse.ocl.pivot.@NonNull Package orphanagePackage) {
 		org.eclipse.ocl.pivot.Class orphanageClass2 = orphanageClass;
 		if (orphanageClass2 == null) {
@@ -179,18 +146,11 @@ public class ASSaver
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Resource resource) {
-		org.eclipse.ocl.pivot.Package orphanage2 = orphanage;
-		if (orphanage2 == null) {
-			orphanage = orphanage2 = Orphanage.createLocalOrphanage();
-			EList<EObject> contents = resource.getContents();
-			if ((contents.size() > 0) && (contents.get(0) instanceof Model)) {
-				((Model)contents.get(0)).getOwnedPackages().add(orphanage2);
-			}
-			else {
-				contents.add(orphanage2);
-			}
+		org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
+		if (localOrphanage2 == null) {
+			localOrphanage = localOrphanage2 = Orphanage.createLocalOrphanPackage(PivotUtil.getModel(resource));
 		}
-		return orphanage2;
+		return localOrphanage2;
 	}
 
 	protected @NonNull ASSaverResolveVisitor getResolveVisitor(@NonNull EObject eObject) {
@@ -240,18 +200,18 @@ public class ASSaver
 
 	protected void loadOrphanage(@NonNull Resource resource) {
 		Model root = null;
-		Package orphanage2 = orphanage;
-		if (orphanage2 == null) {
+		org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
+		if (localOrphanage2 == null) {
 			for (EObject eRoot : resource.getContents()) {
 				if (eRoot instanceof Model) {
 					if (root == null) {
 						root = (Model) eRoot;
 					}
-					if (orphanage2 == null) {
+					if (localOrphanage2 == null) {
 						for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eRoot).getOwnedPackages()) {
 							if (Orphanage.isTypeOrphanage(asPackage)) {
-								orphanage = orphanage2 = asPackage;
-								for (org.eclipse.ocl.pivot.Class asType : orphanage2.getOwnedClasses()) {
+								localOrphanage = localOrphanage2 = asPackage;
+								for (org.eclipse.ocl.pivot.Class asType : localOrphanage2.getOwnedClasses()) {
 									if (PivotConstants.ORPHANAGE_NAME.equals(asType.getName())) {
 										orphanageClass = asType;
 									}
@@ -265,8 +225,8 @@ public class ASSaver
 					}
 				}
 				if ((eRoot instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eRoot)) {	// FIXME Obsolete
-					orphanage = orphanage2 = (org.eclipse.ocl.pivot.Package)eRoot;
-					for (org.eclipse.ocl.pivot.Class asType : orphanage2.getOwnedClasses()) {
+					localOrphanage = localOrphanage2 = (org.eclipse.ocl.pivot.Package)eRoot;
+					for (org.eclipse.ocl.pivot.Class asType : localOrphanage2.getOwnedClasses()) {
 						if (PivotConstants.ORPHANAGE_NAME.equals(asType.getName())) {
 							orphanageClass = asType;
 						}
@@ -292,26 +252,6 @@ public class ASSaver
 		}
 	}
 
-	public void normalizeContents() {
-		List<@NonNull EObject> allContents = new ArrayList<>();
-		for (@NonNull TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
-			EObject eObject = tit.next();
-			if (eObject instanceof Visitable) {
-				allContents.add(eObject);
-			}
-		}
-		Map<EClass, @NonNull ASSaverNormalizeVisitor> eClass2normalizeVisitor = new HashMap<>();
-		for (@NonNull EObject eObject : allContents) {
-			EClass eClass = eObject.eClass();
-			ASSaverNormalizeVisitor normalizeVisitor = eClass2normalizeVisitor.get(eClass);
-			if (normalizeVisitor == null) {
-				normalizeVisitor = getNormalizeVisitor(eObject);
-				eClass2normalizeVisitor.put(eClass, normalizeVisitor);
-			}
-			normalizeVisitor.safeVisit((Visitable) eObject);
-		}
-	}
-
 	/**
 	 * Return the resolved variant of referredType, which may require creation
 	 * of a local copy of a specialization.
@@ -329,11 +269,11 @@ public class ASSaver
 		}
 		T resolvedOperation = ClassUtil.nonNullEMF(EcoreUtil.copy(referredOperation));
 		if (orphanageClass == null) {
-			Package orphanage2 = orphanage;
-			if (orphanage2 == null) {
-				orphanage2 = getOrphanPackage(resource);
+			org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
+			if (localOrphanage2 == null) {
+				localOrphanage2 = getOrphanPackage(resource);
 			}
-			orphanageClass = getOrphanClass(orphanage2);
+			orphanageClass = getOrphanClass(localOrphanage2);
 		}
 		orphanageClass.getOwnedOperations().add(resolvedOperation);
 		operations.put(moniker, resolvedOperation);
@@ -371,11 +311,11 @@ public class ASSaver
 			specializations.put(resolvedType, resolvedType);
 			EObject eContainer = resolvedType.eContainer();
 			if (eContainer == null) {
-				Package orphanage2 = orphanage;
-				if (orphanage2 == null) {
-					orphanage2 = getOrphanPackage(resource);
+				org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
+				if (localOrphanage2 == null) {
+					localOrphanage2 = getOrphanPackage(resource);
 				}
-				orphanage.getOwnedClasses().add(resolvedType);
+				localOrphanage.getOwnedClasses().add(resolvedType);
 			}
 		}
 		locateSpecializations(Collections.singletonList(resolvedType));

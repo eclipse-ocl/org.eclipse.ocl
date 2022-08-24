@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -44,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * An Orphanage provides a Package that weakly contains elements such as type specializations that
@@ -53,10 +55,11 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
  * There is no global orphanage. Any reference to one is stale.
  * <br>
  * Each OCL CompleteModel has a shared orphanage that contains the referenced unique synthesized elements.
- * The shared orphanage is never saved.
+ * The shared orphanage is never saved and so the Orphanage class can be used.
  * <br>
  * Each saved ASResource has a local orphanage that contains a selective copy of the shared orphanage so that
- * all references are terminated locally. ASSaver creates this copy via PivotSaveImpl.init().
+ * all references are terminated locally. ASSaver creates this copy via PivotSaveImpl.init(). The local orphanages
+ * use a regular Package to avod the need for Orphange support in XMI.
  */
 public class Orphanage extends PackageImpl
 {
@@ -399,11 +402,38 @@ public class Orphanage extends PackageImpl
 	/**
 	 * @since 1.18
 	 */
+	public static org.eclipse.ocl.pivot.@Nullable Package basicGetLocalOrphanPackage(@NonNull Model asModel) {
+		for (org.eclipse.ocl.pivot.Package asPackage : PivotUtil.getOwnedPackages(asModel)) {
+			if (isOrphanage(asPackage)) {
+				return asPackage;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Deprecated
 	public static org.eclipse.ocl.pivot.@NonNull Package createLocalOrphanage() {
 		org.eclipse.ocl.pivot.Package orphanage = PivotFactory.eINSTANCE.createPackage();
 		orphanage.setName(PivotConstants.ORPHANAGE_NAME);
 		orphanage.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
 		orphanage.setURI(PivotConstants.ORPHANAGE_URI);
+		return orphanage;
+	}
+
+	/**
+	 * Create and return the local orphanage Package within resource.
+	 *
+	 * @since 1.18
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Package createLocalOrphanPackage(@NonNull Model asModel) {
+		org.eclipse.ocl.pivot.Package orphanage = PivotFactory.eINSTANCE.createPackage();
+		orphanage.setName(PivotConstants.ORPHANAGE_NAME);
+		orphanage.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
+		orphanage.setURI(PivotConstants.ORPHANAGE_URI);
+		asModel.getOwnedPackages().add(orphanage);
 		return orphanage;
 	}
 
@@ -489,6 +519,26 @@ public class Orphanage extends PackageImpl
 			}
 		}
 		return createSharedOrphanage(resourceSet);
+	}
+
+	/**
+	 * Return true if asElement is transitively contained by a local or shared orphanage.
+	 *
+	 * @since 1.18
+	 */
+	public static boolean isOrphan(@NonNull Element asElement) {
+		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getContainingPackage(asElement);
+		return (asPackage != null) && isOrphanage(asPackage);
+	}
+
+	/**
+	 * Return true if asModel is a shared orphanage for synthesized model elements.
+	 *
+	 * @since 1.18
+	 */
+	public static boolean isOrphanage(@NonNull Model asModel) {
+		String uri = asModel.getExternalURI();
+		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
 	}
 
 	/**

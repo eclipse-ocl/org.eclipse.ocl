@@ -28,8 +28,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.xmi.XMLSave;
-import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -41,6 +39,7 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -95,7 +94,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		}
 
 		@Override
-		public void notifyChanged(Notification notification) {			// FIXME All irregularitoes should be transient
+		public void notifyChanged(Notification notification) {			// FIXME All irregularities should be transient
 			if (!notification.isTouch() && !ASResourceImpl.this.isUpdating && !ASResourceImpl.this.isUnloading) {
 				Object notifier = notification.getNotifier();
 				Object feature = notification.getFeature();
@@ -304,21 +303,27 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		return new ImmutabilityCheckingAdapter();
 	}
 
+	/**
+	 * @since 1.18
+	 */
+	protected @NonNull AbstractASSaver createASSaver() {
+		return new ASSaverNew(this);
+	}
+
+	/**
+	 * @since 1.18
+	 */
 	@Override
-	protected XMLSave createXMLSave() {
-		return new PivotSaveImpl(new XMIHelperImpl(this)
-		{
-			@Override
-			public String getHREF(EObject obj) {
-				if (obj instanceof Property) {			// Avoid generating a referemce to an EObject that might not exist
-					Property asProperty = (Property)obj;
-					if (asProperty.isIsImplicit() && (asProperty.getOpposite() != null)) {
-						return null;
-					}
-				}
-				return super.getHREF(obj);
-			}
-		});
+	protected @NonNull PivotXMIHelperImpl createXMLHelper() {
+		return new PivotXMIHelperImpl(this);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	protected @NonNull PivotSaveImpl createXMLSave() {
+		return new PivotSaveImpl(createXMLHelper());
 	}
 
 	@Override
@@ -451,7 +456,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		}
 		reader.close();
 		String string = s.toString();
-		int index = string.indexOf(";#//@");
+		int index = string.indexOf("#//@");
 		if (index < 0) {
 			return true;
 		}

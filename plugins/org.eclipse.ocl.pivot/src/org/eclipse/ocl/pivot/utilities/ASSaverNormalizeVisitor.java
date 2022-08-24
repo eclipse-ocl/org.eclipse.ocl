@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
+import org.eclipse.ocl.pivot.internal.resource.AbstractASSaver;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 
@@ -25,7 +26,7 @@ import org.eclipse.ocl.pivot.util.Visitable;
  * ASSaverNormalizeVisitor normalizes contents by alphabeticizing
  * - lists of Property.
  */
-public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, ASSaver>
+public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AbstractASSaver>
 {
 	/**
 	 * @since 1.4
@@ -81,8 +82,16 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AS
 		}
 	}
 
-	public ASSaverNormalizeVisitor(@NonNull ASSaver context) {
+	/**
+	 * @since 1.18
+	 */
+	public ASSaverNormalizeVisitor(@NonNull AbstractASSaver context) {
 		super(context);
+	}
+
+	@Deprecated /* @deprecated Replaced by safer EcoreUtil.Copier/CrossReferencer functionality */
+	public ASSaverNormalizeVisitor(@NonNull ASSaver context) {
+		this((AbstractASSaver)context);
 	}
 
 	@Override

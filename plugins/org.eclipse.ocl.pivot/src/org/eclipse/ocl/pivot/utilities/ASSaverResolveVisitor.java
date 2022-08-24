@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.util.Visitable;
  * ResolveVisitor converts references to shared specializations
  * to references to local copies.
  */
+@Deprecated /* @deprecated Replaced by safer EcoreUtil.Copier/CrossReferencer functionality */
 public class ASSaverResolveVisitor extends AbstractExtendingVisitor<Object, ASSaver>
 {
 	public ASSaverResolveVisitor(@NonNull ASSaver saver) {

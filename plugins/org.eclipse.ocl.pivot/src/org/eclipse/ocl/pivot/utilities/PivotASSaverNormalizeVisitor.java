@@ -12,14 +12,23 @@ package org.eclipse.ocl.pivot.utilities;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
+import org.eclipse.ocl.pivot.internal.resource.AbstractASSaver;
 
 /**
  * @since 1.1
  * @noextend This class is not intended to be subclassed by clients. It is part of the hierarchy for auto-generated visitors.
  */
-public class PivotASSaverNormalizeVisitor extends ASSaverNormalizeVisitor {
-
-	public PivotASSaverNormalizeVisitor(@NonNull ASSaver context) {
+public class PivotASSaverNormalizeVisitor extends ASSaverNormalizeVisitor
+{
+	/**
+	 * @since 1.18
+	 */
+	public PivotASSaverNormalizeVisitor(@NonNull AbstractASSaver context) {
 		super(context);
+	}
+
+	@Deprecated /* @deprecated Replaced by safer EcoreUtil.Copier/CrossReferencer functionality */
+	public PivotASSaverNormalizeVisitor(@NonNull ASSaver context) {
+		this((AbstractASSaver)context);
 	}
 }
