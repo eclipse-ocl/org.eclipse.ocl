@@ -109,5 +109,15 @@ public interface TypedElement extends NamedElement {
 	 */
 	void setIsRequired(boolean value);
 
+	/**
+	 * Return a unique StandardLibrary-independent TemplateParameter-independent identifier for this typed element.
+	 *
+	 * @since 1.18
+	 */
+	default @NonNull TypeId getNormalizedTypeId() { return getTypeId(); }
+
+	/**
+	 * Return a unique StandardLibrary-independent identifier for this typed element.
+	 */
 	@NonNull TypeId getTypeId();
 } // TypedElement

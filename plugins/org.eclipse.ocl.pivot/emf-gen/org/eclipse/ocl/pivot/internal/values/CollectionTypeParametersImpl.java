@@ -58,7 +58,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 		this.isNullFree = isNullFree;
 		this.lower = lower != null ? lower : ValueUtil.ZERO_VALUE;
 		this.upper = upper != null ? upper : ValueUtil.UNLIMITED_VALUE;
-		int hash = elementType.hashCode() + (isNullFree ? 9876 : 0);
+		int hash = elementType.getTypeId().hashCode() + (isNullFree ? 9876 : 0);
 		hash = 111 * hash + this.lower.hashCode();
 		hash = 111 * hash + this.upper.hashCode();
 		hashCode = hash;
@@ -76,7 +76,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 		if (this.isNullFree != that.isNullFree) {
 			return false;
 		}
-		if (!this.elementType.equals(that.elementType)) {
+		if (this.elementType.getTypeId() != that.elementType.getTypeId()) {
 			return false;
 		}
 		if (!this.lower.equals(that.lower)) {

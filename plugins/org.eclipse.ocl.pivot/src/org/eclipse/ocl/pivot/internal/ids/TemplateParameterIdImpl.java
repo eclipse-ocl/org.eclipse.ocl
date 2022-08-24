@@ -12,6 +12,8 @@ package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdHash;
@@ -20,20 +22,81 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
+import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
+import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class TemplateParameterIdImpl /*extends AbstractTypeId*/ implements TemplateParameterId
+public class TemplateParameterIdImpl extends AbstractElementId implements TemplateParameterId
 {
+	private static class TemplateParameterIdValue extends AbstractKeyAndValue<@NonNull TemplateParameterId>
+	{
+		private final @NonNull TemplateableId generalizedId;
+		private final int index;
+		private final @NonNull String name;
+
+		private TemplateParameterIdValue(@NonNull TemplateableId generalizedId, int index, @NonNull String name) {
+			super(computeHashCode(generalizedId, name));
+			this.generalizedId = generalizedId;
+			this.index = index;
+			this.name = name;
+		}
+
+		@Override
+		public @NonNull TemplateParameterId createSingleton() {
+			return new TemplateParameterIdImpl(generalizedId, index, name);
+		}
+
+		@Override
+		public boolean equals(@Nullable Object that) {
+			if (that instanceof TemplateParameterIdImpl) {
+				TemplateParameterIdImpl singleton = (TemplateParameterIdImpl)that;
+				return name.equals(singleton.getName());
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static class TemplateParameterIdSingletonScope extends AbstractSingletonScope<@NonNull TemplateParameterId, @NonNull TemplateParameter>
+	{
+		public @NonNull TemplateParameterId getSingleton(@NonNull TemplateableId generalizedId, int index, @NonNull String name) {
+			return getSingletonFor(new TemplateParameterIdValue(generalizedId, index, name));
+		}
+	}
+
+	private static int computeHashCode(@NonNull TemplateableId generalizedId, @NonNull String name) {
+		return IdHash.createChildHash(generalizedId, name);
+	}
+
+	private final @Nullable TemplateableId templateableId;
+
 	private final int index;
 	private final @NonNull String name;
 	private final int hashCode;
 
+	@Deprecated /* @deprecated normalization no longer used for TemplateParameterId */
 	public TemplateParameterIdImpl(@NonNull IdManager idManager, int index) {
 		//		System.out.println("create " + ClassUtil.debugFullName(this));
+		this.templateableId = null;
 		this.index = index;
 		this.name = "$" + Integer.toString(index);
-		this.hashCode = IdHash.createGlobalHash(TemplateParameterId.class, name);
+		this.hashCode = TemplateParameterIdImpl.class.hashCode() + name.hashCode();
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public TemplateParameterIdImpl(@NonNull TemplateableId templateableId, int index, @NonNull String name) {
+		//		System.out.println("create " + ClassUtil.debugFullName(this));
+		this.templateableId = templateableId;
+		this.index = index;
+		this.name = name;
+		this.hashCode = computeHashCode(templateableId, name);
 	}
 
 	@Override
@@ -42,26 +105,16 @@ public class TemplateParameterIdImpl /*extends AbstractTypeId*/ implements Templ
 	}
 
 	@Override
-	public boolean equals(Object that) {
-		if (this == that) {
-			return true;
-		}
-		if (hashCode() != that.hashCode()) {
-			return false;
-		}
-		if (!(that instanceof TemplateParameterId)) {
-			return false;
-		}
-		if (index != ((TemplateParameterId)that).getIndex()) {
-			return false;
-		}
-		assert false;	// Never happens; should be a singleton
-		return true;
-	}
-
-	@Override
 	public @NonNull String getDisplayName() {
 		return name;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @Nullable TemplateableId getTemplateableId() {
+		return templateableId;
 	}
 
 	@Override
@@ -69,6 +122,7 @@ public class TemplateParameterIdImpl /*extends AbstractTypeId*/ implements Templ
 		return index;
 	}
 
+	@Deprecated /* @deprecated no longer used */
 	@Override
 	public @Nullable String getLiteralName() {
 		if (this == TypeId.T_1) {
@@ -137,6 +191,11 @@ public class TemplateParameterIdImpl /*extends AbstractTypeId*/ implements Templ
 
 	@Override
 	public String toString() {
-		return getDisplayName();
+		if (templateableId != null) {
+			return templateableId.getDisplayName() + "::" + getDisplayName();
+		}
+		else {
+			return getDisplayName();
+		}
 	}
 }

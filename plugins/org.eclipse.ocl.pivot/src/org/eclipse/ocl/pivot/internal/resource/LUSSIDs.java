@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 /**
  * The LUSSIDs class maintains the element to LUSSID and LUSSID to element mapping for the elements
@@ -64,6 +65,8 @@ public abstract class LUSSIDs
 	protected static final int LAMBDA_TYPE_CONTEXT_MULTIPLIER = 71;
 	protected static final int LAMBDA_TYPE_PARAMETER_TYPE_MULTIPLIER = 73;
 	protected static final int LAMBDA_TYPE_RETURN_TYPE_MULTIPLIER = 79;
+	protected static final int MAP_KEYS_ARE_NULL_FREE_MULTIPLIER = 101;
+	protected static final int MAP_VALUES_ARE_NULL_FREE_MULTIPLIER = 103;
 	protected static final int OPERATION_PARAMETER_TYPE_MULTIPLIER = 83;
 	protected static final int OPPOSITE_PROPERTY_NAME_MULTIPLIER = 7;
 	protected static final int SIBLING_INDEX_MULTIPLIER = 1;
@@ -370,7 +373,6 @@ public abstract class LUSSIDs
 					}
 				}
 			}
-			//			System.out.println(Integer.toHexString(id) + (normalizeTemplateParameters ? " <- " : " <= ") + element);
 			return id;
 		}
 		finally {
@@ -380,6 +382,7 @@ public abstract class LUSSIDs
 
 	protected void assignLUSSIDs(@NonNull AS2ID as2id) {
 		assignmentStarted = true;
+		UniqueList<@NonNull ASResource> referencedASResources = null;
 		for (@NonNull EObject eObject : new TreeIterable(asResource)) {
 			EClass eClass = eObject.eClass();
 			assert eClass != null;
@@ -408,7 +411,10 @@ public abstract class LUSSIDs
 					}
 					else if (eResource instanceof ASResource) {
 						if (!((ASResource)eResource).isOrphanage()) {
-							as2id.assignLUSSIDs((ASResource)eResource);
+							if (referencedASResources == null) {
+								referencedASResources = new UniqueList<>();
+							}
+							referencedASResources.add((ASResource)eResource);
 						}
 						else {
 							//	as2id.assignLUSSIDs((ASResource)eResource);
@@ -417,10 +423,14 @@ public abstract class LUSSIDs
 				}
 			}
 		}
+		if (referencedASResources != null) {
+			for (@NonNull ASResource referencedASResource : referencedASResources) {
+				as2id.assignLUSSIDs(referencedASResource);
+			}
+		}
 	}
 
 	protected void assignXMIIDs(@NonNull AS2ID as2id) {
-	// FIXME	assert !asResource.isOrphanage();
 		Map<@NonNull String, @NonNull List<@NonNull Element>> xmiid2collisions2 = xmiid2collisions;
 		for (@NonNull Element element : identifiedElement2lussid.keySet()) {
 			Integer lussid = identifiedElement2lussid.get(element);
@@ -521,6 +531,8 @@ public abstract class LUSSIDs
 
 	/**
 	 * Return true if eObject may be referenced from another XMI file and so must have an xmi:id.
+	 *
+	 * FIXME misnomer. Internal references need xmi:ids too.
 	 */
 	protected abstract boolean isExternallyReferenceable(@NonNull EObject eObject);
 

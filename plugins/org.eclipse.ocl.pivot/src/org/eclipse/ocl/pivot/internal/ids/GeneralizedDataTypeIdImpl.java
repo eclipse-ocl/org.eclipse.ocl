@@ -13,12 +13,14 @@ package org.eclipse.ocl.pivot.internal.ids;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
+import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
+import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
 public class GeneralizedDataTypeIdImpl extends GeneralizedNestedTypeIdImpl implements DataTypeId
@@ -77,6 +79,11 @@ public class GeneralizedDataTypeIdImpl extends GeneralizedNestedTypeIdImpl imple
 	@Override
 	public <R> R accept(@NonNull IdVisitor<R> visitor) {
 		return visitor.visitDataTypeId(this);
+	}
+
+	@Override
+	protected @NonNull TemplateableTypeId createSpecializedId(@NonNull BindingsId templateBindings) {
+		return new SpecializedDataTypeIdImpl(this, templateBindings);
 	}
 
 	@Override

@@ -183,13 +183,12 @@ public interface TypeId extends ElementId
 	public static final @NonNull LambdaTypeId LAMBDA = IdManager.getLambdaTypeId(LAMBDA_NAME);
 	public static final @NonNull MapTypeId MAP = IdManager.getMapTypeId(MAP_NAME);
 
+	@Deprecated /* @deprecated no longer used */
 	public static final @NonNull TemplateParameterId T_1 = IdManager.getTemplateParameterId(0);
+	@Deprecated /* @deprecated no longer used */
 	public static final @NonNull TemplateParameterId T_2 = IdManager.getTemplateParameterId(1);
+	@Deprecated /* @deprecated no longer used */
 	public static final @NonNull TemplateParameterId T_3 = IdManager.getTemplateParameterId(2);
-	/**
-	 * @since 1.18
-	 */
-	public static final @NonNull TemplateParameterId T_4 = IdManager.getTemplateParameterId(3);
 
 	public static final @NonNull String @NonNull [] NULL_STRING_ARRAY = new @NonNull String[0];
 	public static final @NonNull TuplePartId @NonNull [] NULL_TUPLE_PART_ID_ARRAY = new @NonNull TuplePartId[0];
@@ -204,6 +203,7 @@ public interface TypeId extends ElementId
 	 * <p>
 	 * Throws UnsupportedException for typeIds such as Primitive Types that may not have operations.
 	 */
+	// FIXME This should only be available to ClassId
 	@NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId);
 
 	/**

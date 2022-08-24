@@ -1132,6 +1132,7 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	private TypeId typeId = null;
+	private TypeId normalizedTypeId = null;
 	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
 
 	@Override
@@ -1149,6 +1150,13 @@ implements org.eclipse.ocl.pivot.Class {
 
 	public @NonNull TypeId computeId() {
 		return IdManager.getClassId(this);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public @NonNull TypeId computeNormalizedId() {
+		return computeId();
 	}
 
 	@Override
@@ -1326,6 +1334,23 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
 		return ClassifierAllInstancesOperation.allInstances(executor, returnTypeId, this);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull TypeId getNormalizedTypeId() {
+		TypeId normalizedTypeId2 = normalizedTypeId;
+		if (normalizedTypeId2 == null) {
+			synchronized (this) {
+				normalizedTypeId2 = normalizedTypeId;
+				if (normalizedTypeId2 == null) {
+					normalizedTypeId = normalizedTypeId2 = computeNormalizedId();
+				}
+			}
+		}
+		return normalizedTypeId2;
 	}
 
 	@Override

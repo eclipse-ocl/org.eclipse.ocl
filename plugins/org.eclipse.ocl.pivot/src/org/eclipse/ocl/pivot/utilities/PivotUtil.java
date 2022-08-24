@@ -14,6 +14,7 @@ package org.eclipse.ocl.pivot.utilities;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -1946,6 +1947,30 @@ public class PivotUtil
 	 */
 	public static @NonNull Type getResultType(@NonNull LambdaType lambdaType) {
 		return ClassUtil.nonNullState(lambdaType.getResultType());
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @Nullable List<@NonNull TemplateParameter> getTemplateParameters(@NonNull Element element) {
+		List<@NonNull TemplateParameter> templateParameters = null;
+		EObject eContainer = element.eContainer();
+		if (eContainer instanceof Element) {
+			templateParameters = getTemplateParameters((Element) eContainer);
+		}
+		if (element instanceof TemplateableElement) {
+			TemplateSignature templateSignature = ((TemplateableElement)element).getOwnedSignature();
+			if (templateSignature != null) {
+				List<@NonNull TemplateParameter> ownedParameters = PivotUtilInternal.getOwnedParametersList(templateSignature);
+				if (ownedParameters.size() > 0) {
+					if (templateParameters == null) {
+						templateParameters = new ArrayList<>();
+					}
+					templateParameters.addAll(ownedParameters);
+				}
+			}
+		}
+		return templateParameters;
 	}
 
 	/**

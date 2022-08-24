@@ -70,7 +70,7 @@ public class GeneralizedCollectionTypeIdImpl extends GeneralizedTypeIdImpl<@NonN
 	}
 
 	public GeneralizedCollectionTypeIdImpl(@NonNull IdManager idManager, @NonNull String name) {
-		super(computeHashCode(name), 4, name);
+		super(computeHashCode(name), 1, name);
 		assert !MAP_NAME.equals(name);
 	}
 
@@ -88,7 +88,7 @@ public class GeneralizedCollectionTypeIdImpl extends GeneralizedTypeIdImpl<@NonN
 	public @NonNull String getDisplayName() {
 		StringBuilder s = new StringBuilder();
 		s.append(name);
-		s.append(IdManager.getParametersId(CollectionTypeId.T_1));
+	//	s.append(IdManager.getParametersId(CollectionTypeId.T_1));
 		return s.toString();
 	}
 

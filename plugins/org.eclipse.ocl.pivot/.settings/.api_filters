@@ -349,12 +349,33 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Type.java" type="org.eclipse.ocl.pivot.Type">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Type"/>
+                <message_argument value="getNormalizedTypeId()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/TypedElement.java" type="org.eclipse.ocl.pivot.TypedElement">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.TypedElement"/>
+                <message_argument value="getNormalizedTypeId()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/BagTypeImpl.java" type="org.eclipse.ocl.pivot.internal.BagTypeImpl">
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.BagTypeImpl"/>
                 <message_argument value="BAG_TYPE_OPERATION_COUNT"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="computeNormalizedId()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -418,6 +439,11 @@
                 <message_argument value="org.eclipse.ocl.pivot.internal.LambdaTypeImpl"/>
                 <message_argument value="LAMBDA_TYPE_OPERATION_COUNT"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="computeNormalizedId()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1560,6 +1586,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/ClassId.java" type="org.eclipse.ocl.pivot.ids.ClassId">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.ClassId"/>
+                <message_argument value="getSpecializedId(BindingsId)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/CollectionTypeId.java" type="org.eclipse.ocl.pivot.ids.CollectionTypeId">
         <filter id="403804204">
             <message_arguments>
@@ -1589,6 +1623,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.CollectionTypeId"/>
                 <message_argument value="getSpecializedId(ElementId, boolean, IntegerValue, NumberValue)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/DataTypeId.java" type="org.eclipse.ocl.pivot.ids.DataTypeId">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.DataTypeId"/>
+                <message_argument value="getSpecializedId(BindingsId)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1654,6 +1696,22 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.MapTypeId"/>
                 <message_argument value="getSpecializedId(ElementId, ElementId, boolean, boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TemplateParameterId.java" type="org.eclipse.ocl.pivot.ids.TemplateParameterId">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TemplateParameterId"/>
+                <message_argument value="getTemplateableId()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/ids/TemplateableId.java" type="org.eclipse.ocl.pivot.ids.TemplateableId">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.TemplateableId"/>
+                <message_argument value="getTemplateParameterId(int, String)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1795,6 +1853,30 @@
             <message_arguments>
                 <message_argument value="ASResource"/>
                 <message_argument value="ASResourceImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/resource/LUSSIDs.java" type="org.eclipse.ocl.pivot.internal.resource.LUSSIDs">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.LUSSIDs"/>
+                <message_argument value="MAP_KEYS_ARE_NULL_FREE_MULTIPLIER"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.resource.LUSSIDs"/>
+                <message_argument value="MAP_VALUES_ARE_NULL_FREE_MULTIPLIER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="MAP_KEYS_ARE_NULL_FREE_MULTIPLIER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="MAP_VALUES_ARE_NULL_FREE_MULTIPLIER"/>
             </message_arguments>
         </filter>
     </resource>

@@ -118,16 +118,21 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			if (weakReference == null) {
 				return null;
 			}
-			CollectionType type = weakReference.get();
-			if (type == null) {
-				synchronized (specializations2) {
-					type = weakReference.get();
-					if (type == null) {
-						specializations2.remove(typeParameters);
+			CollectionType specializedType;
+			synchronized (specializations2) {
+				specializedType = weakReference.get();
+				if (specializedType != null) {
+					Type elementType = specializedType.getElementType();
+					if ((elementType == null) || (elementType.eResource() == null)) {		// If GC pending
+						specializedType = null;
+						weakReference.clear();
 					}
 				}
+				if (specializedType == null) {
+					specializations2.remove(typeParameters);
+				}
 			}
-			return type;
+			return specializedType;
 		}
 
 		@Override
@@ -146,6 +151,13 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 				WeakReference<@Nullable CollectionType> weakReference = specializations2.get(typeParameters);
 				if (weakReference != null) {
 					specializedType = weakReference.get();
+					if (specializedType != null) {
+						Type elementType = specializedType.getElementType();
+						if ((elementType == null) || (elementType.eResource() == null)) {		// If GC pending
+							specializedType = null;
+							weakReference.clear();
+						}
+					}
 				}
 				if (specializedType == null) {
 					specializedType = createSpecialization(typeParameters);
@@ -217,16 +229,22 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			if (weakReference == null) {
 				return null;
 			}
-			MapType type = weakReference.get();
-			if (type == null) {
-				synchronized (specializations2) {
-					type = weakReference.get();
-					if (type == null) {
-						specializations2.remove(typeParameters);
+			MapType specializedType;
+			synchronized (specializations2) {
+				specializedType = weakReference.get();
+				if (specializedType != null) {
+					Type keyType = specializedType.getKeyType();
+					Type valueType = specializedType.getValueType();
+					if ((keyType == null) || (valueType == null) || (keyType.eResource() == null) || (valueType.eResource() == null)) {		// If GC pending
+						specializedType = null;
+						weakReference.clear();
 					}
 				}
+				if (specializedType == null) {
+					specializations2.remove(typeParameters);
+				}
 			}
-			return type;
+			return specializedType;
 		}
 
 		@Override
@@ -243,6 +261,17 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			synchronized (specializations2) {
 				MapType specializedType = null;
 				WeakReference<@Nullable MapType> weakReference = specializations2.get(typeParameters);
+				if (weakReference != null) {
+					specializedType = weakReference.get();
+					if (specializedType != null) {
+						Type keyType = specializedType.getKeyType();
+						Type valueType = specializedType.getValueType();
+						if ((keyType == null) || (valueType == null) || (keyType.eResource() == null) || (valueType.eResource() == null)) {		// If GC pending
+							specializedType = null;
+							weakReference.clear();
+						}
+					}
+				}
 				if (weakReference != null) {
 					specializedType = weakReference.get();
 				}

@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -98,6 +99,14 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 
 	@Override
 	public @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId... templateBindings) {
+		return this;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name) {
 		return this;
 	}
 

@@ -98,13 +98,9 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNu
 	@Override
 	public @NonNull String getDisplayName() {
 		StringBuilder s = new StringBuilder();
-//		if (templateParameters > 0) {
-//			s.append("<" + templateParameters + ">");
-//		}
 		s.append(parentId);
 		s.append("::");
 		s.append(name);
-		s.append(parametersId);
 		return s.toString();
 	}
 

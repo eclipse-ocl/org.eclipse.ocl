@@ -75,7 +75,19 @@ public class BagTypeImpl
 			return TypeId.BAG;
 		}
 		else {
-			return TypeId.BAG.getSpecializedId(getElementType().getTypeId(), isIsNullFree(), getLowerValue(), getUpperValue());
+			TypeId elementTypeId = getElementType().getTypeId();
+			return TypeId.BAG.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
+		}
+	}
+
+	@Override
+	public @NonNull TypeId computeNormalizedId() {
+		if (getUnspecializedElement() == null) {
+			return TypeId.BAG;
+		}
+		else {
+			TypeId elementTypeId = getElementType().getNormalizedTypeId();
+			return TypeId.BAG.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
 		}
 	}
 } //BagTypeImpl

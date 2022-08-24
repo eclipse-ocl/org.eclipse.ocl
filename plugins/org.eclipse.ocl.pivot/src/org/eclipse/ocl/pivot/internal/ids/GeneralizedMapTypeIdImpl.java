@@ -67,7 +67,7 @@ public class GeneralizedMapTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull Map
 	}
 
 	public GeneralizedMapTypeIdImpl(@NonNull IdManager idManager, @NonNull String name) {
-		super(computeHashCode(name), 4, name);
+		super(computeHashCode(name), 2, name);
 	}
 
 	@Override

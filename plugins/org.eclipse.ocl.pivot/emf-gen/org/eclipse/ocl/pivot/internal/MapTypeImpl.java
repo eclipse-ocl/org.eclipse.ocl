@@ -579,7 +579,24 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			return TypeId.MAP;
 		}
 		else {
-			return TypeId.MAP.getSpecializedId(getKeyType().getTypeId(), getValueType().getTypeId(), isKeysAreNullFree(), isValuesAreNullFree());
+			TypeId keyTypeId = getKeyType().getTypeId();
+			TypeId valueTypeId = getValueType().getTypeId();
+			return TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, isKeysAreNullFree(), isValuesAreNullFree());
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull TypeId computeNormalizedId() {
+		if (getUnspecializedElement() == null) {
+			return TypeId.MAP;
+		}
+		else {
+			TypeId keyTypeId = getKeyType().getNormalizedTypeId();
+			TypeId valueTypeId = getValueType().getNormalizedTypeId();
+			return TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, isKeysAreNullFree(), isValuesAreNullFree());
 		}
 	}
 

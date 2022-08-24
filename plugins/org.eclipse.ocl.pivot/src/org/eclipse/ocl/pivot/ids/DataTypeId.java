@@ -10,9 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * A DataTypeId provides a unique hierarchical identifier for a datatype which is nested by unique name in a parent package.
  */
 public interface DataTypeId extends NestedTypeId
 {
+	/**
+	 * @since 1.18
+	 */
+	@NonNull TemplateableId getSpecializedId(@NonNull BindingsId bindingsId);
 }

@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  *
  * @generated
  */
-@SuppressWarnings("cast")
 public class TupleTypeImpl
 		extends DataTypeImpl
 		implements TupleType {
@@ -77,7 +76,7 @@ public class TupleTypeImpl
 		return PivotPackage.Literals.TUPLE_TYPE;
 	}
 
-	private /*final @NonNull*/ TupleTypeId tupleTypeId;		// PivotSaver has to 'clone' these using EcoreUtil.Copier
+	private /*final @NonNull*/ TupleTypeId tupleTypeId;		// FIXME Redundant, but PivotSaver has to 'clone' these using EcoreUtil.Copier
 
 	public TupleTypeImpl(@NonNull TupleTypeId tupleTypeId) {
 		this.tupleTypeId = tupleTypeId;
@@ -103,6 +102,28 @@ public class TupleTypeImpl
 		return tupleTypeId2;
 	}
 
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull TypeId computeNormalizedId() {
+	//	TupleTypeId tupleTypeId2 = tupleTypeId;
+	//	if (tupleTypeId2 == null) {
+			String name2 = NameUtil.getSafeName(this);
+			List<Property> parts = getOwnedProperties();
+			int iSize = parts.size();
+			List<@NonNull TuplePartId> partIds = new ArrayList<@NonNull TuplePartId>(iSize);
+			for (int i = 0; i < iSize; i++) {
+				@SuppressWarnings("null")@NonNull TypedElement part = parts.get(i);
+				String partName = NameUtil.getSafeName(part);
+				TypeId partTypeId = part.getNormalizedTypeId();
+				partIds.add(IdManager.getTuplePartId(i, partName, partTypeId));
+			}
+			TypeId tupleTypeId2 = IdManager.getTupleTypeId(name2, partIds);
+	//	}
+		return tupleTypeId2;
+	}
+
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitTupleType(this);
@@ -116,7 +137,7 @@ public class TupleTypeImpl
 
 	@Override
 	public @NonNull TupleTypeId getTupleTypeId() {
-		return (TupleTypeId) getTypeId();
+		return getTypeId();
 	}
 
 	@Override

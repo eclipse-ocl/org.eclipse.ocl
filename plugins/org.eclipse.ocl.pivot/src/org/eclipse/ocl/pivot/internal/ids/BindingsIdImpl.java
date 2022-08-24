@@ -87,7 +87,7 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 	}
 
 	private static int computeHashCode(@NonNull ElementId @NonNull [] elementIds, @NonNull Object @Nullable [] values) {
-		return IdHash.createParametersHash(BindingsId.class, elementIds);
+		return IdHash.createParametersHash(BindingsId.class, elementIds, values);
 	}
 
 	private final @NonNull ElementId @NonNull [] elementIds;
@@ -167,9 +167,13 @@ public class BindingsIdImpl implements BindingsId, WeakHashMapOfListOfWeakRefere
 			}
 		}
 		@NonNull Object[] theseValues = values;
+		if ((theseValues != null) != (thoseValues != null)) {
+			return false;
+		}
 		if (theseValues != null) {
+			assert thoseValues != null;
 			int length = theseValues.length;
-			if ((thoseValues == null) || (length != thoseValues.length)) {
+			if (length != thoseValues.length) {
 				return false;
 			}
 			for (int i = 0; i < length; i++) {

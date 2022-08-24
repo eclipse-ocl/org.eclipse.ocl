@@ -383,16 +383,26 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (weakReference == null) {
 			return null;
 		}
-		org.eclipse.ocl.pivot.Class type = weakReference.get();
-		if (type == null) {
+		org.eclipse.ocl.pivot.Class specializedType = weakReference.get();
+		if (specializedType != null) {
+			int templateArgumentSize = templateArguments.parametersSize();
+			for (int i = 0; i < templateArgumentSize; i++) {
+				Type templateArgument = templateArguments.get(i);
+				if (templateArgument.eResource() == null) {		// If GC pending
+					specializedType = null;
+					break;
+				}
+			}
+		}
+		if (specializedType == null) {
 			synchronized (specializations2) {
-				type = weakReference.get();
-				if (type == null) {
+				specializedType = weakReference.get();
+				if (specializedType == null) {
 					specializations2.remove(templateArguments);
 				}
 			}
 		}
-		return type;
+		return specializedType;
 	}
 
 	private void gatherAllStereotypes(@NonNull Set<Stereotype> allStereotypes, @NonNull Iterable<Stereotype> moreStereotypes) {
@@ -679,6 +689,17 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			WeakReference<org.eclipse.ocl.pivot.Class> weakReference = specializations2.get(templateArguments);
 			if (weakReference != null) {
 				specializedType = weakReference.get();
+				if (specializedType != null) {
+					int templateArgumentSize = templateArguments.parametersSize();
+					for (int i = 0; i < templateArgumentSize; i++) {
+						Type templateArgument = templateArguments.get(i);
+						if (templateArgument.eResource() == null) {		// If GC pending
+							specializedType = null;
+							weakReference.clear();
+							break;
+						}
+					}
+				}
 			}
 			if (specializedType == null) {
 				specializedType = createSpecialization(templateArguments);

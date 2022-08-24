@@ -19,17 +19,27 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorType;
 
 public class ExecutorTypeParameter extends AbstractExecutorType implements ExecutorTypeArgument, TemplateParameter
 {
-	private final @NonNull TemplateParameterId typeid;
+	private final @NonNull TemplateParameterId typeid;		// FIXME probably only need the index
 
+	@Deprecated /* @deprecated use index */
 	public ExecutorTypeParameter(@NonNull TemplateParameterId typeid, @NonNull String name) {
 		super(name, 0);
 		this.typeid = typeid;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public ExecutorTypeParameter(int index, @NonNull String name) {
+		super(name, 0);
+		this.typeid = IdManager.getTemplateParameterId(index);
 	}
 
 	@Override
@@ -41,7 +51,7 @@ public class ExecutorTypeParameter extends AbstractExecutorType implements Execu
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		throw new UnsupportedOperationException();			// WIP fixme
 	}
-	
+
 	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId() {
 		return typeid;
@@ -51,7 +61,7 @@ public class ExecutorTypeParameter extends AbstractExecutorType implements Execu
 	public @NonNull TemplateParameterId getTypeId() {
 		return typeid;
 	}
-	
+
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class isClass() {
 		return null;

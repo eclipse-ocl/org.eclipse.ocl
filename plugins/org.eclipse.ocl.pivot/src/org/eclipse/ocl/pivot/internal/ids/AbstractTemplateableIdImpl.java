@@ -112,6 +112,7 @@ public abstract class AbstractTemplateableIdImpl<T extends TemplateableId> exten
 		return getSpecializedId(IdManager.getBindingsId(templateBindings));
 	}
 
+	@Deprecated /* @deprecated normalization no longer used for TemplateParameterId */
 	public @NonNull TemplateParameterId getTemplateParameterId(int index) {
 		return IdManager.getTemplateParameterId(index);
 	}

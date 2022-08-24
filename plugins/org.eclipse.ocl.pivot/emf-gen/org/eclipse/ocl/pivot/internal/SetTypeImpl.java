@@ -75,7 +75,19 @@ public class SetTypeImpl
 			return TypeId.SET;
 		}
 		else {
-			return TypeId.SET.getSpecializedId(getElementType().getTypeId(), isIsNullFree(), getLowerValue(), getUpperValue());
+			TypeId elementTypeId = getElementType().getTypeId();
+			return TypeId.SET.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
+		}
+	}
+
+	@Override
+	public @NonNull TypeId computeNormalizedId() {
+		if (getUnspecializedElement() == null) {
+			return TypeId.SET;
+		}
+		else {
+			TypeId elementTypeId = getElementType().getNormalizedTypeId();
+			return TypeId.SET.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
 		}
 	}
 

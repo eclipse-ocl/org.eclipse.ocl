@@ -75,7 +75,19 @@ public class SequenceTypeImpl
 			return TypeId.SEQUENCE;
 		}
 		else {
-			return TypeId.SEQUENCE.getSpecializedId(getElementType().getTypeId(), isIsNullFree(), getLowerValue(), getUpperValue());
+			TypeId elementTypeId = getElementType().getTypeId();
+			return TypeId.SEQUENCE.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
+		}
+	}
+
+	@Override
+	public @NonNull TypeId computeNormalizedId() {
+		if (getUnspecializedElement() == null) {
+			return TypeId.SEQUENCE;
+		}
+		else {
+			TypeId elementTypeId = getElementType().getNormalizedTypeId();
+			return TypeId.SEQUENCE.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
 		}
 	}
 

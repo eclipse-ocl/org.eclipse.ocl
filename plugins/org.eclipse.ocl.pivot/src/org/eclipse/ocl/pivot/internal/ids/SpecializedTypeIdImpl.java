@@ -13,9 +13,12 @@ package org.eclipse.ocl.pivot.internal.ids;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
+import org.eclipse.ocl.pivot.ids.NestedTypeId;
+import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 
-public class SpecializedTypeIdImpl extends AbstractSpecializedIdImpl<TemplateableTypeId> implements TemplateableTypeId
+public /*abstract*/ class SpecializedTypeIdImpl extends AbstractSpecializedIdImpl<TemplateableTypeId> implements TemplateableTypeId, NestedTypeId
 {
 	public SpecializedTypeIdImpl(@NonNull TemplateableTypeId generalizedId, @NonNull BindingsId templateBindings) {
 		super(generalizedId, templateBindings);
@@ -23,19 +26,31 @@ public class SpecializedTypeIdImpl extends AbstractSpecializedIdImpl<Templateabl
 
 	@Override
 	public <R> R accept(@NonNull IdVisitor<R> visitor) {
-		return visitor.visitTemplateableTypeId(this);
+		throw new UnsupportedOperationException();		// Must be overridden since logically abstract
+//		return visitor.visitTemplateableTypeId(this);
 	}
 
 	@Override
 	protected @NonNull TemplateableTypeId createSpecializedId(@NonNull BindingsId templateBindings) {
-		return new SpecializedTypeIdImpl(this, templateBindings);
+		throw new UnsupportedOperationException();		// FIXME migrate to generalized only
+//		return new SpecializedTypeIdImpl(this, templateBindings);
 	}
 
 //	public @NonNull String getDisplayName() {
 //		return parent + "::" + typeParameters;
 //	}
 
+	@Override
+	public @NonNull PackageId getParent() {
+		return ((NestedTypeId)generalizedId).getParent();
+	}
+
     @Override
+	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name) {
+		throw new UnsupportedOperationException();		// FIXME migrate to generalized only
+	}
+
+	@Override
 	public @NonNull TemplateableTypeId specialize(@NonNull BindingsId templateBindings) {
     	return createSpecializedId(templateBindings);
 	}

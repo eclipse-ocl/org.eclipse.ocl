@@ -75,7 +75,19 @@ public class OrderedSetTypeImpl
 			return TypeId.ORDERED_SET;
 		}
 		else {
-			return TypeId.ORDERED_SET.getSpecializedId(getElementType().getTypeId(), isIsNullFree(), getLowerValue(), getUpperValue());
+			TypeId elementTypeId = getElementType().getTypeId();
+			return TypeId.ORDERED_SET.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
+		}
+	}
+
+	@Override
+	public @NonNull TypeId computeNormalizedId() {
+		if (getUnspecializedElement() == null) {
+			return TypeId.ORDERED_SET;
+		}
+		else {
+			TypeId elementTypeId = getElementType().getNormalizedTypeId();
+			return TypeId.ORDERED_SET.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
 		}
 	}
 

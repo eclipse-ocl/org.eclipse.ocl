@@ -17,7 +17,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -30,6 +29,7 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -38,6 +38,8 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ids.AbstractGeneralizedIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -379,7 +381,7 @@ public class TemplateParameterImpl
 			return getInheritance(standardLibrary).getPivotClass();
 		}
 		catch (Throwable e) {
-			return standardLibrary.getOclAnyType();			// WIP FIXME should never happen
+			return standardLibrary.getOclAnyType();			// FIXME should never happen
 		}
 	}
 
@@ -387,33 +389,46 @@ public class TemplateParameterImpl
 
 	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId() {
+		assert eContainer() != null;
 		TemplateParameterId templateParameterId2 = templateParameterId;
 		if (templateParameterId2 == null) {
 			synchronized (this) {
 				templateParameterId2 = templateParameterId;
 				if (templateParameterId2 == null) {
-					int index = 0;
 					TemplateSignature templateSignature1 = getOwningSignature();
-					if (templateSignature1 != null) {
-						index = templateSignature1.getOwnedParameters().indexOf(this);
-						TemplateableElement template = templateSignature1.getOwningElement();
-						if (template != null) {
-							for (EObject eContainer = template.eContainer(); eContainer != null; eContainer = eContainer.eContainer()) {
-								if (eContainer instanceof TemplateableElement) {
-									TemplateableElement eObject = PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)eContainer);
-									TemplateSignature templateSignature2 = eObject.getOwnedSignature();
-									if (templateSignature2 != null) {
-										index += templateSignature2.getOwnedParameters().size();
-									}
-								}
-							}
-						}
+					assert templateSignature1 != null;
+					TemplateableElement templateableElement = templateSignature1.getOwningElement();
+					AbstractGeneralizedIdImpl<?> generalizedTypeId;
+					if (templateableElement instanceof Operation) {
+						generalizedTypeId = (AbstractGeneralizedIdImpl<?>)((Operation)templateableElement).getOperationId();
 					}
-					templateParameterId = templateParameterId2 = IdManager.getTemplateParameterId(index);
+					else if (templateableElement instanceof org.eclipse.ocl.pivot.Class) {
+						generalizedTypeId = (AbstractGeneralizedIdImpl<?>)((org.eclipse.ocl.pivot.Class)templateableElement).getTypeId();
+					}
+					else {
+						assert false; //templateableElement != null;
+						generalizedTypeId = null;
+					}
+					if (generalizedTypeId != null) {
+						List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(this);
+						assert templateParameters != null;
+						int index = templateParameters.indexOf(this);
+						assert index >= 0;
+						templateParameterId = templateParameterId2 = generalizedTypeId.getTemplateParameterId(index, PivotUtil.getName(this));
+					}
+					assert templateParameterId2 != null;
 				}
 			}
 		}
 		return templateParameterId2;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull TypeId getNormalizedTypeId() {
+		return IdManager.getTemplateParameterIndexId(this);
 	}
 
 	@Override

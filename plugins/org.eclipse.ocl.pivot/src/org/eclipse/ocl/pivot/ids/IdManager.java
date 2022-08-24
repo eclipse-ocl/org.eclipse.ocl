@@ -33,7 +33,11 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateParameters;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl.BindingsIdSingletonScope;
@@ -55,6 +59,8 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
+
+import com.google.common.collect.Iterables;
 
 /**
  * IdManager supervises the thread-safe allocation of unique hierarchical identifier to each metamodel element.
@@ -107,7 +113,7 @@ public final class IdManager
 	/**
 	 * List of template parameters; 0 index at least index ... up to most nested
 	 */
-	private static final @NonNull List<@NonNull TemplateParameterId> templateParameters = new ArrayList<>(10);
+	private static final @NonNull List<@NonNull TemplateParameterIdImpl> templateParameterNormalizedIds = new ArrayList<>(10);
 
 	/**
 	 * Map from the Tuple hashCode to the tuple typeIds with the same hash.
@@ -140,6 +146,30 @@ public final class IdManager
 			metamodelURI2name = metamodelURI2name2 = new HashMap<>();
 		}
 		metamodelURI2name2.put(metamodelNsURI, metamodelName);
+	}
+
+	/**
+	 * Return the bindingsId for a given list of bindings.
+	 *
+	 * @since 1.18
+	 */
+	public static @Nullable BindingsId basicGetBindingsId(@Nullable Iterable<@NonNull TemplateBinding> templateBindings) {
+		if (templateBindings == null) {
+			return null;
+		}
+		List<@NonNull ElementId> elementIdList = new ArrayList<>();
+		for (@NonNull TemplateBinding templateBinding : templateBindings) {
+			for (@NonNull TemplateParameterSubstitution templateParameterSubstitution : PivotUtil.getOwnedSubstitutions(templateBinding)) {
+				Type actual = templateParameterSubstitution.getActual();
+				elementIdList.add(actual.getTypeId());
+			}
+		}
+		int size = elementIdList.size();
+		if (size <= 0) {
+			return null;
+		}
+		@NonNull ElementId[] elementIds = elementIdList.toArray(new @NonNull ElementId[size]);
+		return bindingsIds.getSingleton(PRIVATE_INSTANCE, elementIds, null);
 	}
 
 	public static @NonNull BindingsId getBindingsId(@NonNull Type... types) {
@@ -203,9 +233,11 @@ public final class IdManager
 		assert name != null;
 		org.eclipse.ocl.pivot.Package parentPackage = unspecializedType.getOwningPackage();
 		if (parentPackage != null) {
-			TemplateParameters typeParameters = aType.getTypeParameters();
+			TemplateParameters typeParameters = unspecializedType.getTypeParameters();
 			PackageId packageId = parentPackage.getPackageId();
-			return packageId.getClassId(name, typeParameters.parametersSize());
+			ClassId unspecializedClassId = packageId.getClassId(name, typeParameters.parametersSize());
+			BindingsId bindingsId = basicGetBindingsId(PivotUtil.getOwnedBindings(aType));
+			return bindingsId != null ? (ClassId)unspecializedClassId.getSpecializedId(bindingsId) : unspecializedClassId;
 		}
 		else {
 			return getUnspecifiedTypeId(aType);		// FIXME This occurs for underspecified/wildcard types
@@ -234,16 +266,22 @@ public final class IdManager
 	 * Return the dataTypeId for aType.
 	 */
 	public static @NonNull DataTypeId getDataTypeId(org.eclipse.ocl.pivot.@NonNull Class aType) {
+		if (aType.eIsProxy()) {
+			return getUnspecifiedTypeId(aType);		// FIXME This occurs for underspecified/wildcard types
+		}
+		org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(aType);
 		String name = aType.getName();
 		assert name != null;
-		org.eclipse.ocl.pivot.Package parentPackage = aType.getOwningPackage();
+		org.eclipse.ocl.pivot.Package parentPackage = unspecializedType.getOwningPackage();
 		if (parentPackage != null) {
-			TemplateParameters typeParameters = aType.getTypeParameters();
+			TemplateParameters typeParameters = unspecializedType.getTypeParameters();
 			PackageId packageId = parentPackage.getPackageId();
-			return packageId.getDataTypeId(name, typeParameters.parametersSize());
+			DataTypeId unspecializedDataTypeId = packageId.getDataTypeId(name, typeParameters.parametersSize());
+			BindingsId bindingsId = basicGetBindingsId(PivotUtil.getOwnedBindings(aType));
+			return bindingsId != null ? (DataTypeId)unspecializedDataTypeId.getSpecializedId(bindingsId) : unspecializedDataTypeId;
 		}
 		else {
-			return new UnspecifiedIdImpl(PRIVATE_INSTANCE, aType);		// FIXME This occurs for underspecified/wildcard types
+			return getUnspecifiedTypeId(aType);		// FIXME This occurs for underspecified/wildcard types
 		}
 	}
 
@@ -333,12 +371,37 @@ public final class IdManager
 	 */
 	public static @NonNull OperationId getOperationId(@NonNull Operation anOperation) {
 		String name = NameUtil.getSafeName(anOperation);
-		org.eclipse.ocl.pivot.Class parentType = anOperation.getOwningClass();
-		TypeId parentTypeId = parentType.getTypeId();
-		@NonNull Type @NonNull [] parameterTypes = TypeUtil.getOperationParameterTypes(anOperation);
+		org.eclipse.ocl.pivot.Class owningClass = PivotUtil.getOwningClass(anOperation);
+		TypeId parentTypeId = owningClass.getTypeId();
 		TemplateParameters typeParameters = anOperation.getTypeParameters();
-		ParametersId parametersId = getParametersId(parameterTypes);
-		return parentTypeId.getOperationId(typeParameters.parametersSize(), name, parametersId);
+		int typeParametersSize = typeParameters.parametersSize();
+		ParametersId parametersId;
+		if ((typeParametersSize <= 0) || (anOperation.getUnspecializedElement() != null)) {	// If unspecializeable or specialized
+			@NonNull Type @NonNull [] parameterTypes = TypeUtil.getOperationParameterTypes(anOperation);
+			parametersId = getParametersId(parameterTypes);
+		}
+		else {																				// If unspecialized
+			List<@NonNull TemplateParameter> contextTemplateParameters = PivotUtil.getTemplateParameters(owningClass);
+			TemplateSignature operationTemplateSignature = anOperation.getOwnedSignature();
+			if (operationTemplateSignature == null) {										// Never happens
+				parametersId = ParametersId.EMPTY;
+			}
+			else {
+				int operationTemplateParameterSize = Iterables.size(PivotUtil.getOwnedParameters(operationTemplateSignature));
+				if (operationTemplateParameterSize <= 0) {									// Never happens
+					parametersId = ParametersId.EMPTY;
+				}
+				else {		// Templated operations cannot be overloaded so use the normalized template parameter ids only
+					@NonNull TypeId typeIds[] = new @NonNull TypeId[operationTemplateParameterSize];
+					int contextTemplateParameterSize = contextTemplateParameters != null ? contextTemplateParameters.size() : 0;
+					for (int i = 0; i < operationTemplateParameterSize; i++) {
+						typeIds[i] = IdManager.getTemplateParameterId(contextTemplateParameterSize + i);
+					}
+					parametersId = getParametersId(typeIds);
+				}
+			}
+		}
+		return parentTypeId.getOperationId(typeParametersSize, name, parametersId);
 	}
 
 	/**
@@ -433,7 +496,7 @@ public final class IdManager
 		for (int i = 0; i < iSize; i++) {
 			Type parameterType = parameterTypes[i];
 			@SuppressWarnings("null")boolean isNonNull = parameterType != null;
-			typeIds[i] = isNonNull ? parameterType.getTypeId() : TypeId.OCL_INVALID;		// Never happens NPE guard
+			typeIds[i] = isNonNull ? parameterType.getNormalizedTypeId() : TypeId.OCL_INVALID;		// Never happens NPE guard
 		}
 		return getParametersId(typeIds);
 	}
@@ -474,15 +537,27 @@ public final class IdManager
 		return roots.getSingleton(PRIVATE_INSTANCE, name);
 	}
 
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull TemplateParameterId getTemplateParameterIndexId(@NonNull TemplateParameter templateParameter) {
+		List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(templateParameter);
+		assert templateParameters != null;
+		int index = templateParameters.indexOf(templateParameter);
+		return getTemplateParameterId(index);
+	}
+
+	@Deprecated /* @deprecated change to private and probably inlined */
 	public static @NonNull TemplateParameterId getTemplateParameterId(int index) {
-		if (index >= templateParameters.size()) {
-			synchronized (templateParameters) {
-				while (index >= templateParameters.size()) {
-					templateParameters.add(new TemplateParameterIdImpl(PRIVATE_INSTANCE, templateParameters.size()));
+		assert index >= 0;
+		if (index >= templateParameterNormalizedIds.size()) {
+			synchronized (templateParameterNormalizedIds) {
+				while (index >= templateParameterNormalizedIds.size()) {
+					templateParameterNormalizedIds.add(new TemplateParameterIdImpl(PRIVATE_INSTANCE, templateParameterNormalizedIds.size()));
 				}
 			}
 		}
-		TemplateParameterId templateParameterId = templateParameters.get(index);
+		TemplateParameterIdImpl templateParameterId = templateParameterNormalizedIds.get(index);
 		assert templateParameterId != null;
 		return templateParameterId;
 	}

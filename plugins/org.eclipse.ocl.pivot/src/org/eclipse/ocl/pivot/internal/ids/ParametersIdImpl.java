@@ -97,7 +97,7 @@ public class ParametersIdImpl implements ParametersId, WeakHashMapOfListOfWeakRe
 	}
 
 	private static int computeHashCode(@NonNull TypeId @NonNull [] typeIds) {
-		return IdHash.createParametersHash(ParametersIdImpl.class, typeIds);
+		return IdHash.createParametersHash(ParametersIdImpl.class, typeIds, null);
 	}
 
 	private final int hashCode;

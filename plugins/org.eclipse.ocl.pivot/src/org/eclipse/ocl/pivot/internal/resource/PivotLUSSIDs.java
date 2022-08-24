@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapLiteralPart;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -104,18 +105,20 @@ public class PivotLUSSIDs extends LUSSIDs
 		}
 		localId += name.hashCode();
 		if (element instanceof TemplateableElement) {
+			int templateIndexMultiplier = TEMPLATE_BINDING_MULTIPLIER;
 			for (@NonNull TemplateBinding templateBinding :  PivotUtil.getOwnedBindings((TemplateableElement)element)) {
 				for (@NonNull TemplateParameterSubstitution templateParameterSubstitution :  PivotUtil.getOwnedSubstitutions(templateBinding)) {
 					Element actual = templateParameterSubstitution.getActual();
 					if (actual instanceof WildcardType) {
-						localId += TEMPLATE_BINDING_MULTIPLIER;
+						localId += templateIndexMultiplier;
 					}
 					else if (actual instanceof Type) {
-						localId += TEMPLATE_BINDING_MULTIPLIER * computeReferenceLUSSID(as2id, (Type) actual, normalizeTemplateParameters);
+						localId += templateIndexMultiplier * computeReferenceLUSSID(as2id, (Type) actual, normalizeTemplateParameters);
 					}
 					else if (actual != null) {
-						localId += TEMPLATE_BINDING_MULTIPLIER * as2id.assignLUSSID(actual, false, normalizeTemplateParameters);
+						localId += templateIndexMultiplier * as2id.assignLUSSID(actual, false, normalizeTemplateParameters);
 					}
+					templateIndexMultiplier += 2 * TEMPLATE_BINDING_MULTIPLIER;
 				}
 			}
 			if (element instanceof CollectionType) {
@@ -130,6 +133,15 @@ public class PivotLUSSIDs extends LUSSIDs
 				Number upper = collectionType.getUpper();
 				if (!(upper instanceof Unlimited)) {
 					localId += COLLECTION_UPPER_BOUND_MULTIPLIER * upper.intValue();
+				}
+			}
+			else if (element instanceof MapType) {
+				MapType mapType = (MapType)element;
+				if (!mapType.isKeysAreNullFree()) {
+					localId += MAP_KEYS_ARE_NULL_FREE_MULTIPLIER;
+				}
+				if (!mapType.isValuesAreNullFree()) {
+					localId += MAP_VALUES_ARE_NULL_FREE_MULTIPLIER;
 				}
 			}
 			else if (element instanceof LambdaType) {
@@ -222,9 +234,9 @@ public class PivotLUSSIDs extends LUSSIDs
 	@Override
 	protected boolean isExternallyReferenceable(@NonNull EObject eObject) {
 		if (eObject instanceof Type) {				// Class, TemplateParameter
-			if ((typeOrphanage == null) || (eObject.eContainer() != typeOrphanage)) {
+		//	if ((typeOrphanage == null) || (eObject.eContainer() != typeOrphanage)) {
 				return true;
-			}
+		//	}
 		}
 		else if (eObject instanceof org.eclipse.ocl.pivot.Package) {		// Profile
 			if (eObject != typeOrphanage) {
@@ -232,9 +244,9 @@ public class PivotLUSSIDs extends LUSSIDs
 			}
 		}
 		else if (eObject instanceof Feature) {		// Iteration, Operation, Property
-			if ((featureOrphanage == null) || (eObject.eContainer() != featureOrphanage)) {
+		//	if ((featureOrphanage == null) || (eObject.eContainer() != featureOrphanage)) {
 				return true;
-			}
+		//	}
 		}
 		else if (eObject instanceof CollectionLiteralPart) {
 			return true;

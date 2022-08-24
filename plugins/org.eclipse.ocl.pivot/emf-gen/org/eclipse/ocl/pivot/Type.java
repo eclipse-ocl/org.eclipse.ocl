@@ -74,6 +74,13 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary);
 
 	/**
+	 * Return a unique StandardLibrary-independent TemplateParameter-independent identifier for this type.
+	 *
+	 * @since 1.18
+	 */
+	default @NonNull TypeId getNormalizedTypeId() { return getTypeId(); }
+
+	/**
 	 * Return a unique StandardLibrary-independent identifier for this type.
 	 */
 	@NonNull TypeId getTypeId();
