@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -332,6 +333,13 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	public @Nullable Object visitUnspecifiedId(@NonNull UnspecifiedId id) {
 		// TODO Auto-generated method stub
 		return visiting(id);
+	}
+
+	@Override
+	public @Nullable Object visitWildcardId(@NonNull WildcardId id) {
+		js.appendClassReference(null, IdManager.class);
+		js.append(".getWildcardId()");
+		return null;
 	}
 
 	public @Nullable Object visiting(@NonNull ElementId id) {

@@ -31,6 +31,8 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -492,6 +494,11 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitWildcardType(this);
+	}
+
+	@Override
+	public @NonNull TypeId computeId() {
+		return IdManager.getWildcardId();
 	}
 
 } //WildcardTypeImpl

@@ -497,6 +497,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TemplateParameterSubstitutionImpl.java" type="org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl"/>
+                <message_argument value="setActualGen(Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TupleTypeImpl.java" type="org.eclipse.ocl.pivot.internal.TupleTypeImpl">
         <filter id="388194388">
             <message_arguments>
@@ -1615,6 +1623,17 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.IdVisitor"/>
                 <message_argument value="visitUnlimitedNaturalLiteralId(UnlimitedNaturalLiteralId)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.ids.IdVisitor"/>
+                <message_argument value="visitWildcardId(WildcardId)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="visitWildcardId(WildcardId)"/>
             </message_arguments>
         </filter>
     </resource>

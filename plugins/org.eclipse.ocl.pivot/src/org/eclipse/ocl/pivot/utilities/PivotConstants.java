@@ -109,6 +109,10 @@ public interface PivotConstants
 	static final @NonNull String ORPHANAGE_PREFIX = "orphanage";
 	static final @NonNull String ORPHANAGE_URI = "http://www.eclipse.org/ocl/2015/Orphanage";
 	static final @NonNull String PRIMITIVES_URI = "http://www.eclipse.org/ocl/2015/Primitives";
+	/**
+	 * @since 1.18
+	 */
+	static final @NonNull String WILDCARD_NAME = "$?";
 
 	static final @NonNull String OCL_LANGUAGE = "OCL";			// More visible UMLUtil.Language_OCL
 	static final @NonNull String OCL_NAME = "ocl";

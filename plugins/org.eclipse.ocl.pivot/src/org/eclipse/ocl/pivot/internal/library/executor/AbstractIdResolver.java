@@ -85,6 +85,7 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
@@ -237,6 +238,11 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 		@Override
 		public @Nullable Object visitUnspecifiedId(@NonNull UnspecifiedId id) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @Nullable Object visitWildcardId(@NonNull WildcardId id) {
 			throw new UnsupportedOperationException();
 		}
 	}
@@ -1940,6 +1946,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	@Override
 	public @NonNull Type visitUnspecifiedId(@NonNull UnspecifiedId id) {
 		return (Type) id.getSpecifier();
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull Type visitWildcardId(@NonNull WildcardId id) {
+		throw new UnsupportedOperationException();
 	}
 
 	/**

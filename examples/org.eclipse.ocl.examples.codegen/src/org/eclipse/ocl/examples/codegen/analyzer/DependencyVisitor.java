@@ -68,6 +68,7 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -489,8 +490,13 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 		@Override
 		public @Nullable Object visitUnspecifiedId(@NonNull UnspecifiedId id) {
-			// TODO Auto-generated method stub
 			return visiting(id);
+		}
+
+		@Override
+		public @Nullable Object visitWildcardId(@NonNull WildcardId id) {
+	//		return visiting(id);
+			return null;
 		}
 
 		public @Nullable Object visiting(@NonNull ElementId id) {

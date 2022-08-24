@@ -38,4 +38,5 @@ public interface IdVisitor<R>
 	R visitTuplePartId(@NonNull TuplePartId id);
 	R visitTupleTypeId(@NonNull TupleTypeId id);
 	R visitUnspecifiedId(@NonNull UnspecifiedId id);
+	R visitWildcardId(@NonNull  WildcardId id);
 }

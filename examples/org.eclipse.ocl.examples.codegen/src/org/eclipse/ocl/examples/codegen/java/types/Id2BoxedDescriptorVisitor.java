@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -474,6 +475,11 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 
 	@Override
 	public @NonNull BoxedDescriptor visitUnspecifiedId(@NonNull UnspecifiedId id) {
+		return visiting(id);
+	}
+
+	@Override
+	public @NonNull BoxedDescriptor visitWildcardId(@NonNull WildcardId id) {
 		return visiting(id);
 	}
 

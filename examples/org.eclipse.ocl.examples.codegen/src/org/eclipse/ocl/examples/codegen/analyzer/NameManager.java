@@ -90,6 +90,7 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -340,6 +341,11 @@ public class NameManager
 		@Override
 		public @NonNull String visitUnspecifiedId(@NonNull UnspecifiedId id) {
 			return "UNSPid_";
+		}
+
+		@Override
+		public @NonNull String visitWildcardId(@NonNull WildcardId id) {
+			return "WILDid_";
 		}
 	};
 

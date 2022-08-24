@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -1308,7 +1309,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 			TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
 			if (csActualParameter instanceof WildcardTypeRefCS) {
-				templateParameterSubstitution.setActual(null);		// null is the wildcard
+				Orphanage orphanage = environmentFactory.getCompleteModel().getOrphanage();
+				templateParameterSubstitution.setActual(Orphanage.getOrphanWildcardType(orphanage));
 			}
 			else {
 				Type pivotActualParameter = PivotUtil.getPivot(Type.class, csActualParameter);

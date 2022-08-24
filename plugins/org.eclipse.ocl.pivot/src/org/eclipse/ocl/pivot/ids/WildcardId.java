@@ -10,12 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 /**
- * A UnspecifiedTypeId provides a unique identifier for an unspecified type such as an under-specified type.
+ * A WildcardId provides a unique identifier for a wildcard.
+ *
+ * @since 1.18
  */
-public interface UnspecifiedId extends TypeId
+public interface WildcardId extends TypeId
 {
-	@NonNull Object getSpecifier();
 }

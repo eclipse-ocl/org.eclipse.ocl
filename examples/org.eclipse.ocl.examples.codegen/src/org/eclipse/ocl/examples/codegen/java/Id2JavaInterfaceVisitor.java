@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 
 /**
  * An Id2JavaClassVisitor return the Java Interface for an Id.
@@ -143,5 +144,10 @@ public class Id2JavaInterfaceVisitor implements IdVisitor<@NonNull Class<? exten
 	@Override
 	public @NonNull Class<? extends ElementId> visitUnspecifiedId(@NonNull UnspecifiedId id) {
 		return UnspecifiedId.class;
+	}
+
+	@Override
+	public @NonNull Class<? extends ElementId> visitWildcardId(@NonNull WildcardId id) {
+		return WildcardId.class;
 	}
 }
