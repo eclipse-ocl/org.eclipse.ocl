@@ -1110,7 +1110,7 @@ public class LoadTests extends XtextTestCase
 						"def : isB() : Boolean = true\n" +
 						"endpackage\n";
 		TestFile testFile = createOCLinEcoreFile("Bug450950.ocl", bug450950);
-		String message = "\\nAmbiguous xmi:id TVXWp\\n	 bug450950\\n	 bug450950\\ncollision at 693728595\\n	bug450950\\n	bug450950";
+		String message = "\n\tambiguous xmi:id TVXWp\n\t\tbug450950\n\t\tbug450950\n\tcollision at 693728595\n\t\tbug450950\n\t\tbug450950";
 		Resource asResource = doLoad_Concrete(ocl, testFile.getFileURI(), StringUtil.bind(PivotMessagesInternal.UnstableXMIid_ERROR_, message));
 		assertResourceErrors("Save", asResource, StringUtil.bind(PivotMessagesInternal.UnstableXMIid_ERROR_, message));
 		ocl.dispose();

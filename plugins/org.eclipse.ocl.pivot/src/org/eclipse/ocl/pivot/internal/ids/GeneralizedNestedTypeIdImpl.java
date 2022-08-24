@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.BindingsId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -66,7 +67,12 @@ public abstract class GeneralizedNestedTypeIdImpl extends GeneralizedTypeIdImpl<
 
 	@Override
 	public String toString() {
-		return parent + "::" + name;
+		if (parent != IdManager.METAMODEL) {
+			return parent + "::" + name;
+		}
+		else {
+			return name;
+		}
 	}
 
 }

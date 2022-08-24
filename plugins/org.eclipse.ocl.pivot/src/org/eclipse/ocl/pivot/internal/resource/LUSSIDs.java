@@ -175,7 +175,7 @@ public abstract class LUSSIDs
 
 		@Override
 		public String getMessage() {
-			return message.replace("\n",  "\\n");
+			return message;//.replace("\n",  "\\n");
 		}
 
 		@Override
@@ -252,13 +252,13 @@ public abstract class LUSSIDs
 			s = new StringBuilder();
 			for (@NonNull String xmiid : xmiid2collisions2.keySet()) {
 				if (s != null) {
-					s.append("\nAmbiguous xmi:id " + xmiid);
+					s.append("\n\tambiguous xmi:id " + xmiid);
 				}
 				List<@NonNull Element> collisions = xmiid2collisions2.get(xmiid);
 				assert collisions != null;
 				for (@NonNull Element element : collisions) {
 					if (s != null) {
-						s.append("\n\t " + element);
+						s.append("\n\t\t" + element);
 					}
 				}
 			}
@@ -270,11 +270,11 @@ public abstract class LUSSIDs
 			Map<@NonNull Integer, @NonNull List<@NonNull Element>> debugLUSSID2collisions2 = debugLUSSID2collisions;
 			if (debugLUSSID2collisions2 != null) {
 				for (@NonNull Integer lussid : debugLUSSID2collisions2.keySet()) {
-					s.append("\ncollision at " + lussid);
+					s.append("\n\tcollision at " + lussid);
 					List<@NonNull Element> collisions = debugLUSSID2collisions2.get(lussid);
 					assert collisions != null;
 					for (@NonNull Element element : collisions) {
-						s.append("\n\t" + element);
+						s.append("\n\t\t" + element);
 					}
 				}
 			}

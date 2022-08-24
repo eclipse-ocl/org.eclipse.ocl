@@ -924,9 +924,9 @@ public class PivotUtil
 				for (Object data : datas) {
 					if (data instanceof Throwable)  {
 						Throwable cause = ((Throwable)data).getCause();
-						if ((cause != null) && (cause != data)) {
-							s.append(newLine + "\t" + cause.toString());
-						}
+					//	if ((cause != null) && (cause != data)) {
+							s.append(newLine + "\t" + (cause != null ? cause : data).toString());
+					//	}
 					}
 				}
 			}
