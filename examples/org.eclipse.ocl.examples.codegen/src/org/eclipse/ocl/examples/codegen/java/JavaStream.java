@@ -443,6 +443,7 @@ public class JavaStream
 		}
 	}
 
+	@Deprecated /* @deprecated pass actualJavaClass so that redundant casts are suppressed */
 	public void appendClassCast(@Nullable CGValuedElement cgValue, @NonNull SubStream subStream) {
 		if (cgValue == null) {
 			append("<<null-appendClassCast>>");
@@ -974,7 +975,7 @@ public class JavaStream
 				String qualifiedPackageName = genPackage.getQualifiedPackageName() + AbstractGenModelHelper.TABLES_PACKAGE_NAME;
 				String tablesClassName = genPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
 				appendClassReference(null, qualifiedPackageName + "." + tablesClassName);
-				append(".Operations._" + type.getName() + "__" + AbstractGenModelHelper.encodeName(anOperation));
+				append("." + AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME + "._" + type.getName() + "__" + AbstractGenModelHelper.encodeName(anOperation));
 			}
 		}
 	}

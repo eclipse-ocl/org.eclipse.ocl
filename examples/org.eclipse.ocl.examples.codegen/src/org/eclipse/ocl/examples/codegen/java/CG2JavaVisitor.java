@@ -1916,7 +1916,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append(", null)");
 			}
 		};
-		js.appendClassCast(cgExecutorType, castBody1);
+		js.appendClassCast(cgExecutorType, Boolean.TRUE, org.eclipse.ocl.pivot.Class.class, castBody1);
 		js.append(";\n");
 		return true;
 	}

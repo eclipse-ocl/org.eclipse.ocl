@@ -24,17 +24,20 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -92,6 +95,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -545,33 +549,42 @@ public class NameManager
 			}
 			String lastResort = null;
 			if (nameHints != null) {
-				for (String nameHint : nameHints) {
-					if (nameHint != null)  {
-						String validHint = getValidJavaIdentifier(nameHint, false, anObject);
-						if (!reservedJavaNames.contains(validHint) || ((anObject instanceof CGValuedElement) && isNative((CGValuedElement)anObject))) {
-							if (anObject != null) {
-								Object oldElement = name2object.get(validHint);
-								if (oldElement == anObject) {
-									return validHint;
-								}
-								if ((oldElement == null) && !name2object.containsKey(validHint)) {
-									install(validHint, anObject);
-									return validHint;
+				boolean isNative = (anObject instanceof CGValuedElement) && isNative((CGValuedElement)anObject);
+				boolean hasRawNameHint = false;
+				for (int hintSuffix = 0; lastResort == null; hintSuffix++) {
+					for (String rawNameHint : nameHints) {
+						if (rawNameHint != null)  {
+							hasRawNameHint = true;
+							String nameHint = hintSuffix > 0 ? rawNameHint + hintSuffix : rawNameHint;
+							String validHint = getValidJavaIdentifier(nameHint, false, anObject);
+							if (!reservedJavaNames.contains(validHint) || isNative) {
+								if (anObject != null) {
+									Object oldElement = name2object.get(validHint);
+									if (oldElement == anObject) {
+										return validHint;
+									}
+									if ((oldElement == null) && !name2object.containsKey(validHint)) {
+										install(validHint, anObject);
+										return validHint;
+									}
+									else {
+										nameHint.toString();
+									}
 								}
 								else {
-									nameHint.toString();
+									if (!name2object.containsKey(validHint)) {
+										install(validHint, anObject);
+										return validHint;
+									}
 								}
-							}
-							else {
-								if (!name2object.containsKey(validHint)) {
-									install(validHint, anObject);
-									return validHint;
+								if (lastResort == null) {
+									lastResort = validHint;
 								}
-							}
-							if (lastResort == null) {
-								lastResort = validHint;
 							}
 						}
+					}
+					if (!hasRawNameHint) {
+						break;
 					}
 				}
 			}
@@ -793,6 +806,9 @@ public class NameManager
 			else if (anObject instanceof CGBoxExp) {
 				return "BOXED_" + ((CGBoxExp)anObject).getSourceValue().getValueName();
 			}
+			else if (anObject instanceof CGCastExp) {
+				return "CAST_" + ((CGCastExp)anObject).getSourceValue().getValueName();
+			}
 			else if (anObject instanceof CGEcoreExp) {
 				return "ECORE_" + ((CGEcoreExp)anObject).getSourceValue().getValueName();
 			}
@@ -812,6 +828,9 @@ public class NameManager
 				return null;
 			}
 		}
+		else if (anObject instanceof CGIfExp) {
+			return "IF_" + ((CGIfExp)anObject).getCondition().getValueName();
+		}
 		else if (anObject instanceof RealLiteralExp) {
 			Number numberSymbol = ((RealLiteralExp)anObject).getRealSymbol();
 			return numberSymbol != null ? getNumericNameHint(numberSymbol) : null;
@@ -830,6 +849,9 @@ public class NameManager
 		else if (anObject instanceof StringLiteralExp) {
 			String stringSymbol = ((StringLiteralExp)anObject).getStringSymbol();
 			return stringSymbol != null ? getStringNameHint(stringSymbol) : null;
+		}
+		else if (anObject instanceof CGTupleExp) {
+			return TUPLE_NAME_HINT_PREFIX;
 		}
 		else if (anObject instanceof Type) {
 			return getTypeNameHint((Type)anObject);
@@ -862,6 +884,7 @@ public class NameManager
 			return name != null ? getValidJavaIdentifier(name, false, anObject) : null;
 		}
 		else {
+			System.out.println("Missing nameHint for " + NameUtil.debugSimpleName(anObject));
 			return null;
 		}
 	}

@@ -53,8 +53,18 @@ import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 public abstract class AbstractGenModelHelper implements GenModelHelper
 {
+	public static final @NonNull String ENUMERATION_LITERALS_PACKAGE_NAME = "EnumerationLiterals";
+	public static final @NonNull String FRAGMENT_OPERATIONS_PACKAGE_NAME = "FragmentOperations";
+	public static final @NonNull String FRAGMENTS_PACKAGE_NAME = "Fragments";
+	public static final @NonNull String FRAGMENT_PROPERTIES_PACKAGE_NAME = "FragmentProperties";
+	public static final @NonNull String OPERATIONS_PACKAGE_NAME = "Operations";
+	public static final @NonNull String PARAMETERS_PACKAGE_NAME = "Parameters";
+	public static final @NonNull String PROPERTIES_PACKAGE_NAME = "Properties";
 	public static final @NonNull String TABLES_CLASS_SUFFIX = "Tables";
 	public static final @NonNull String TABLES_PACKAGE_NAME = "";
+	public static final @NonNull String TYPE_FRAGMENTS_PACKAGE_NAME = "TypeFragments";
+	public static final @NonNull String TYPE_PARAMETERS_PACKAGE_NAME = "TypeParameters";
+	public static final @NonNull String TYPES_PACKAGE_NAME = "Types";
 
 	public static @NonNull GenModelHelper create(@NonNull PivotMetamodelManager metamodelManager, @Nullable GenModel genModel) {
 		if (genModel instanceof org.eclipse.uml2.codegen.ecore.genmodel.GenModel) {

@@ -65,14 +65,14 @@ public class NameQueries
 		//		if (elem == null) {
 		//			logger.error("getPrefixedSymbolName for '" + prefix + "'and null");
 		//		}
-		/*		if ((elem instanceof CollectionType) && (((CollectionType)elem).getUnspecializedElement() != null)) {
+				if ((elem instanceof CollectionType) && (((CollectionType)elem).getUnspecializedElement() != null)) {
 		}
 		else if ((elem instanceof MapType) && (((MapType)elem).getUnspecializedElement() != null)) {
 		}
 		else if (elem instanceof org.eclipse.ocl.pivot.Class) {
 			//	elem = metamodelManager.getCompleteModel().getCompleteClass((Type)elem);
 			elem = metamodelManager.getPrimaryClass((org.eclipse.ocl.pivot.Class)elem);
-		} */
+		}
 		return definedSymbols.get(elem);
 	}
 
@@ -241,6 +241,15 @@ public class NameQueries
 	}
 
 	public void putSymbolName(@NonNull Object elem, @NonNull String symbolName) {
+		if (symbolName.startsWith("Model")) {
+			getClass();			// FIXME Debugging
+		}
+		if (symbolName.startsWith("symbol_")) {
+			getClass();			// FIXME Debugging
+		}
+		if (symbolName.startsWith("_OclElement")) {
+			getClass();			// FIXME Debugging
+		}
 		String oldSymbolName = definedSymbols.put(elem, symbolName);
 		assert oldSymbolName == null;
 	}

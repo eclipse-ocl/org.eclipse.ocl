@@ -224,26 +224,29 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	/**
-	 * Insert a CGCastExp around cgChild.
+	 * Insert a CGCastExp around cgChild if required.
 	 */
-	protected CGValuedElement rewriteAsCast(@Nullable CGValuedElement/*CGVariableExp*/ cgChild) {
-		if (cgChild == null) {
+	protected CGValuedElement rewriteAsCast(@NonNull CGVariableExp cgChild) {
+		CGVariable cgVariable = cgChild.getReferredVariable();
+		CGTypeId cgRequiredTypeId = cgChild.getTypeId();
+		CGTypeId cgActualTypeId = cgVariable.getTypeId();
+		if (cgRequiredTypeId == cgActualTypeId) {
 			return cgChild;
 		}
 		TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgChild);
 		if (typeDescriptor.getJavaClass() == Object.class) {
 			return cgChild;
 		}
-		TypedElement pivot = (TypedElement) cgChild.getAst();
-		Type asType = pivot.getType();
+		TypedElement asChild = (TypedElement) cgChild.getAst();
+		Type asType = asChild.getType();
 		CGCastExp cgCastExp = CGModelFactory.eINSTANCE.createCGCastExp();
 		CGUtil.wrap(cgCastExp, cgChild);
-		cgCastExp.setAst(pivot);
+		cgCastExp.setAst(asChild);
 		if (asType != null) {
 			CGExecutorType cgExecutorType = context.createExecutorType(asType);
 			cgCastExp.setExecutorType(cgExecutorType);
 		}
-		cgCastExp.setTypeId(codeGenerator.getAnalyzer().getTypeId(pivot.getTypeId()));
+		cgCastExp.setTypeId(codeGenerator.getAnalyzer().getTypeId(asChild.getTypeId()));
 		return cgCastExp;
 	}
 
@@ -602,7 +605,8 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGTypeExp(@NonNull CGTypeExp cgTypeExp) {
 		super.visitCGTypeExp(cgTypeExp);
-		rewriteAsCast(cgTypeExp);
+	//	CGExecutorType executorType = cgTypeExp.getExecutorType();
+	//	rewriteAsCast(cgTypeExp);
 		return null;
 	}
 

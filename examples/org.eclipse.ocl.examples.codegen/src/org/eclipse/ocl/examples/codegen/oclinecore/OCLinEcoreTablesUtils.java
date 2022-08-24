@@ -57,7 +57,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -65,6 +64,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
@@ -87,6 +87,19 @@ import org.eclipse.xtext.util.Strings;
 
 public class OCLinEcoreTablesUtils
 {
+	private static int SHOW_TABLES_PACKAGE = 1;
+	private static int SHOW_TABLES_SUBPACKAGE = 2;
+
+	public Comparator<@NonNull ParameterTypes> leegacyTemplateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
+	{
+		@Override
+		public int compare(@NonNull ParameterTypes o1, @NonNull ParameterTypes o2) {
+			String n1 = getLegacyTemplateBindingsName(o1);
+			String n2 = getLegacyTemplateBindingsName(o2);
+			return n1.compareTo(n2);
+		}
+	};
+
 	public Comparator<@NonNull ParameterTypes> templateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
 	{
 		@Override
@@ -599,13 +612,10 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter asTemplateParameter) {
 			asTemplateParameter.accept(emitQualifiedLiteralVisitor);
+		//	s.append(Integer.toString(asTemplateParameter.getTemplateParameterId().getIndex()));
 			return null;
 		}
 	}
-
-	private static int SHOW_TABLES_PACKAGE = 1;
-	private static int SHOW_TABLES_SUBPACKAGE = 2;
-
 
 	public class EmitLiteralVisitor extends AbstractExtendingVisitor<Object, Object>
 	{
@@ -642,7 +652,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			appendTablesPackageQualification(asClass);
-			appendTablesSubackageQualification("Types");
+			appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
 			s.append("_");
 			s.appendAndEncodeName(asClass);
 			return null;
@@ -652,7 +662,7 @@ public class OCLinEcoreTablesUtils
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
 			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(type);
 			appendTablesPackageQualification(type);
-			appendTablesSubackageQualification("Types");
+			appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
 			s.append("_");
 			s.appendAndEncodeName(unspecializedType);
 			return null;
@@ -672,7 +682,7 @@ public class OCLinEcoreTablesUtils
 		public @Nullable Object visitEnumerationLiteral(@NonNull EnumerationLiteral asEnumerationLiteral) {
 			Enumeration asEnumeration = PivotUtil.getOwningEnumeration(asEnumerationLiteral);
 			appendTablesPackageQualification(asEnumeration);
-			appendTablesSubackageQualification("EnumerationLiterals");
+			appendTablesSubackageQualification(AbstractGenModelHelper.ENUMERATION_LITERALS_PACKAGE_NAME);
 			s.append("_");
 			s.appendAndEncodeName(asEnumeration);
 			s.append("__");
@@ -694,7 +704,7 @@ public class OCLinEcoreTablesUtils
 		public @Nullable Object visitOperation(@NonNull Operation asOperation) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
 			appendTablesPackageQualification(asClass);
-			appendTablesSubackageQualification("Operations");
+			appendTablesSubackageQualification(AbstractGenModelHelper.OPERATIONS_PACKAGE_NAME);
 			s.append("_");
 			s.appendAndEncodeName(asClass);
 			s.append("__");
@@ -713,7 +723,7 @@ public class OCLinEcoreTablesUtils
 		public @Nullable Object visitProperty(@NonNull Property asProperty) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
 			appendTablesPackageQualification(asClass);
-			appendTablesSubackageQualification("Properties");
+			appendTablesSubackageQualification(AbstractGenModelHelper.PROPERTIES_PACKAGE_NAME);
 			s.append("_");
 			s.appendAndEncodeName(asClass);
 			s.append("__");
@@ -730,29 +740,10 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter asTemplateParameter) {
-			TemplateSignature asTemplateSignature = asTemplateParameter.getOwningSignature();
-			TemplateableElement asTemplateableElement = asTemplateSignature.getOwningElement();
-			org.eclipse.ocl.pivot.Class asClass = null;
-			if (asTemplateableElement instanceof Operation) {
-				Operation asOperation = (Operation)asTemplateableElement;
-				asClass = PivotUtil.getOwningClass(asOperation);
-			}
-			else if (asTemplateableElement instanceof org.eclipse.ocl.pivot.Class) {
-				asClass = (org.eclipse.ocl.pivot.Class)asTemplateableElement;
-			}
-			if (asClass != null) {
-				appendTablesPackageQualification(asClass);
-				appendTablesSubackageQualification("TypeParameters");
-				if (asTemplateableElement instanceof Operation) {
-					s.append("_");
-				}
-				asTemplateableElement.accept(emitLiteralVisitor);
-				s.append("_");
-				s.appendAndEncodeName(asTemplateParameter);
-			}
-			else {
-				s.append("null");
-			}
+		//	appendLegacyTemplateParameterName(asTemplateParameter);
+		//	appendTablesPackageQualification(asClass);
+			appendTablesSubackageQualification(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
+			s.append(getTemplateParameterName(asTemplateParameter));
 			return null;
 		}
 
@@ -785,6 +776,7 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull EmitLiteralVisitor emitScopedLiteralVisitor;		// emit YYY._ZZZ
 	protected final @NonNull EmitLiteralVisitor emitQualifiedLiteralVisitor;	// emit XXXTables.YYY._ZZZ
 	protected final @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByName;
+	protected final @NonNull Map<@NonNull ParameterTypes, String> legacyTemplateBindingsNames = new HashMap<>();
 	protected final @NonNull Map<@NonNull ParameterTypes, String> templateBindingsNames = new HashMap<>();
 	protected final @NonNull GenModelHelper genModelHelper;
 
@@ -1034,6 +1026,64 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
+	protected @NonNull String getLegacyTemplateBindingsName(@NonNull ParameterTypes templateBindings) {
+		String name2 = legacyTemplateBindingsNames.get(templateBindings);
+		if (name2 == null) {
+			StringBuilder s = new StringBuilder();
+			s.append("_");
+			if (templateBindings.size() > 0 ) {
+				for (int i = 0; i < templateBindings.size(); i++) {
+					if (i > 0) {
+						s.append("___");
+					}
+					Type element = templateBindings.get(i);
+					getLegacyTemplateBindingsName(s, element);
+				}
+			}
+			name2 = s.toString();
+			legacyTemplateBindingsNames.put(templateBindings, name2);
+		}
+		return name2;
+	}
+	private void getLegacyTemplateBindingsName(@NonNull StringBuilder s, @NonNull Type element) {
+		TemplateParameter templateParameter = element.isTemplateParameter();
+		if (templateParameter != null) {
+			TemplateableElement template = templateParameter.getOwningSignature().getOwningElement();
+			if (template instanceof Operation) {
+				s.append(AbstractGenModelHelper.encodeName(ClassUtil.nonNullModel(((Operation) template).getOwningClass())));
+				s.append("_");
+			}
+			s.append(AbstractGenModelHelper.encodeName(ClassUtil.nonNullModel((NamedElement) template)));
+			s.append("_");
+		}
+		s.append(AbstractGenModelHelper.encodeName(element));
+		if (element instanceof TemplateableElement) {
+			List<TemplateBinding> templateBindings = ((TemplateableElement)element).getOwnedBindings();
+			if (templateBindings.size() > 0) {
+				s.append("_");
+				for (TemplateBinding templateBinding : templateBindings) {
+					for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
+						s.append("_");
+						getLegacyTemplateBindingsName(s, ClassUtil.nonNullModel(templateParameterSubstitution.getActual()));
+					}
+				}
+				s.append("__");
+			}
+		}
+		if (element instanceof LambdaType) {
+			LambdaType lambdaType = (LambdaType)element;
+			s.append("_");
+			getLegacyTemplateBindingsName(s, ClassUtil.nonNullModel(lambdaType.getContextType()));
+			for (/*@NonNull*/ Type type : lambdaType.getParameterType()) {
+				assert type != null;
+				s.append("_");
+				getLegacyTemplateBindingsName(s, type);
+			}
+			s.append("_");
+			getLegacyTemplateBindingsName(s, ClassUtil.nonNullModel(lambdaType.getResultType()));
+		}
+	}
+
 	protected @NonNull Iterable<@NonNull Operation> getLocalOperationsSortedBySignature(org.eclipse.ocl.pivot.@NonNull Class pClass) {
 		// cls.getOperations()->sortedBy(op2 : Operation | op2.getSignature())
 		List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
@@ -1197,12 +1247,7 @@ public class OCLinEcoreTablesUtils
 	private void getTemplateBindingsName(@NonNull StringBuilder s, @NonNull Type element) {
 		TemplateParameter templateParameter = element.isTemplateParameter();
 		if (templateParameter != null) {
-			TemplateableElement template = templateParameter.getOwningSignature().getOwningElement();
-			if (template instanceof Operation) {
-				s.append(AbstractGenModelHelper.encodeName(ClassUtil.nonNullModel(((Operation) template).getOwningClass())));
-				s.append("_");
-			}
-			s.append(AbstractGenModelHelper.encodeName(ClassUtil.nonNullModel((NamedElement) template)));
+			s.append(Integer.toString(templateParameter.getTemplateParameterId().getIndex()));
 			s.append("_");
 		}
 		s.append(AbstractGenModelHelper.encodeName(element));
@@ -1231,6 +1276,11 @@ public class OCLinEcoreTablesUtils
 			s.append("_");
 			getTemplateBindingsName(s, ClassUtil.nonNullModel(lambdaType.getResultType()));
 		}
+	}
+
+	protected @NonNull String getTemplateParameterName(@NonNull TemplateParameter asTemplateParameter) {
+		TemplateParameterId asTemplateParameterId = asTemplateParameter.getTemplateParameterId();
+		return "_" + asTemplateParameterId.getIndex() + "_" + asTemplateParameter.getName();
 	}
 
 	/**

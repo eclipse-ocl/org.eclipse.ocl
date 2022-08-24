@@ -57,8 +57,8 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 		'''
 	}
 
-	protected override String generateMetamodel(Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
-		thisModel = root;
+	protected override String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
+		var Model root = thisModel;
 		var Package pkg = root.ownedPackages.findPackage();
 		if (pkg === null) {
 			return null;

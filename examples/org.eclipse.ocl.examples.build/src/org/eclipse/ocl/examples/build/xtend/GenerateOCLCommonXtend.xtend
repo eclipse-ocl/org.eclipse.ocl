@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.build.xtend
 
 import java.util.ArrayList
+import java.util.Collection
 import java.util.Collections
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.ocl.pivot.AnyType
@@ -32,8 +33,10 @@ import org.eclipse.ocl.pivot.TemplateParameter
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution
 import org.eclipse.ocl.pivot.TemplateSignature
 import org.eclipse.ocl.pivot.utilities.ClassUtil
-import java.util.Collection
 import org.eclipse.ocl.pivot.values.Unlimited
+import org.eclipse.ocl.pivot.utilities.PivotConstants
+import org.eclipse.ocl.pivot.ids.TypeId
+import org.eclipse.ocl.pivot.utilities.NameUtil
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -61,7 +64,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
 			«IF type.getOwnedSignature() !== null»
-			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»("«type.name»"/*«type.elementType.name»*/, "«type.lower.toString()»", "«type.upper.toString()»"«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
+			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»(«getEcoreLiteral(type)»«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
 			«ENDIF»
 			«ENDFOR»
 			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
@@ -102,7 +105,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 				«IF type.getOwnedSignature() !== null»
 					private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
-					eClass.name»("«type.name»"/*«type.keyType.name» «type.valueType.name»*/«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
+					eClass.name»(«getEcoreLiteral(type)»«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
 				«ENDIF»
 			«ENDFOR»
 			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
@@ -175,17 +178,21 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				Class type;
 				«FOR pkge : sortedPackages»
 
-					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
-					«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-						type = «type.getSymbolName()»;
-						«IF type.isAbstract»
-						type.setIsAbstract(true);
-						«ENDIF»
-						«IF !(type instanceof AnyType)»
-							«type.emitSuperClasses("type")»
-						«ENDIF»
-						ownedClasses.add(type);
-					«ENDFOR»
+				ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
+				«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»«var templateSignature = type.getOwnedSignature()»
+				type = «type.getSymbolName()»;
+				«IF type.isAbstract»
+				type.setIsAbstract(true);
+				«ENDIF»
+				«IF !(type instanceof AnyType)»
+					«type.emitSuperClasses("type")»
+				«ENDIF»
+				«IF templateSignature !== null»«IF templateSignature.getOwnedParameters().size() > 0»
+					createTemplateSignature(type, «FOR templateParameter : templateSignature.getOwnedParameters() SEPARATOR(", ")»«templateParameter.getSymbolName()»«ENDFOR»);
+				«ENDIF»
+				«ENDIF»
+				ownedClasses.add(type);
+				«ENDFOR»
 				«ENDFOR»
 			}
 		'''
@@ -475,7 +482,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var allPackages = root.getSortedPackages();
 		var import2alias = root.getSortedImports();
 		var importKeys = new ArrayList<Package>(import2alias.keySet());
-		Collections.sort(importKeys, nameableComparator);
+		Collections.sort(importKeys, NameUtil.NAMEABLE_COMPARATOR);
 		if (allPackages.isEmpty()) return "";
 		'''
 
@@ -719,7 +726,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				superClasses = «typeName».getSuperClasses();
 				superClasses.add(_OclAny);
 			«ELSEIF (type instanceof AnyType)»
-			«ELSEIF "OclElement".equals(type.getName())»
+			«ELSEIF TypeId.OCL_ELEMENT_NAME.equals(type.getName())»
+			«ELSEIF PivotConstants.ORPHANAGE_NAME.equals(type.getName())»
 			«ELSE»
 				superClasses = «typeName».getSuperClasses();
 				superClasses.add(_OclElement);
@@ -727,16 +735,16 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String installCoercions(/*@NonNull*/ Model root) {
-		var allCoercions = root.getSortedCoercions();
-		if (allCoercions.isEmpty()) return "";
-		'''installCoercions();'''
-	}
-
 	protected def String installClassTypes(/*@NonNull*/ Model root) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
 		'''installClassTypes();'''
+	}
+
+	protected def String installCoercions(/*@NonNull*/ Model root) {
+		var allCoercions = root.getSortedCoercions();
+		if (allCoercions.isEmpty()) return "";
+		'''installCoercions();'''
 	}
 
 	protected def String installCollectionTypes(/*@NonNull*/ Model root) {
@@ -805,7 +813,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 	
 	protected def String installTemplateBindings(/*@NonNull*/ Model root) {
-		var allTemplateableElements = root.getSortedTemplateableElements(null);
+		var allTemplateableElements = root.getSortedTemplateableElements();
 		if (allTemplateableElements.isEmpty()) return "";
 		'''installTemplateBindings();'''
 	}

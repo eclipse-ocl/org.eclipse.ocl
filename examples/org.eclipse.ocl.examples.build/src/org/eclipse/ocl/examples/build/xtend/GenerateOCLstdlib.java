@@ -45,7 +45,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
-import org.eclipse.ocl.pivot.internal.resource.ASSaver;
+import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
@@ -62,7 +62,6 @@ import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
 public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 {
-	protected Model thisModel;
 	protected String ecoreFile;
 	protected String libraryName;
 	protected String libraryNsPrefix;
@@ -70,7 +69,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 	protected boolean useOCLstdlib = false;
 	protected @NonNull List<@NonNull String> excludedEClassifierNames = new ArrayList<>();
 
-	protected abstract /*@NonNull*/ String generateMetamodel(/*@NonNull*/ Model pivotModel, @NonNull Collection<@NonNull String> excludedEClassifierNames);
+	protected abstract /*@NonNull*/ String generateMetamodel(@NonNull Collection<@NonNull String> excludedEClassifierNames);
 
 	public void addExcludedEClassifierName(String excludedEClassifierName) {
 		assert excludedEClassifierName != null;
@@ -98,13 +97,13 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 	}
 
 	@Override
-	protected @NonNull Map<org.eclipse.ocl.pivot.Package, List<CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
-		return super.getSortedCollectionTypes(root, monikerComparator);
+	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
+		return super.getSortedCollectionTypes(root, contentAnalysis.monikerComparator);
 	}
 
 	@Override
-	protected Model getThisModel() {
-		return thisModel;
+	protected @NonNull Model getThisModel() {
+		return ClassUtil.nonNullState(thisModel);
 	}
 
 	@Override
@@ -144,12 +143,14 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			//			if (asResource == null) {
 			//				return;
 			//			}
-			EObject pivotModel = ClassUtil.nonNullState(asResource.getContents().get(0));
-			ASSaver saver = new ASSaver(asResource);
-			saver.localizeSpecializations();
+			Model pivotModel = (Model)ClassUtil.nonNullState(asResource.getContents().get(0));
+		//	assert pivotModel.getOwnedPackages().size() == 1;				// No orphanage, but may have an implicit package, so 100% to synthesize
+			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
+			saver.localizeOrphans();
 			String fileName = folder + "/" + javaClassName + ".java";
 		//	log.info("Generating '" + fileName + "'");
-			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel((Model)pivotModel, excludedEClassifierNames);
+			initModel(pivotModel, saver);
+			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel(excludedEClassifierNames);
 			MergeWriter fw = new MergeWriter(fileName);
 			fw.append(metamodel);
 			fw.close();

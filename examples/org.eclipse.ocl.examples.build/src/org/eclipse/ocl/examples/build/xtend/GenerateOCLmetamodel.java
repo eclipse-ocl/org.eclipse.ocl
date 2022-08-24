@@ -17,7 +17,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -44,7 +43,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
-import org.eclipse.ocl.pivot.internal.resource.ASSaver;
+import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
@@ -84,8 +83,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			return u1.compareTo(u2);
 		}
 	};
-
-	protected Model thisModel;
 
 	protected CollectionType findCollectionType(Iterable<org.eclipse.ocl.pivot.Class> types, String name) {
 		CollectionType collType = null;
@@ -130,7 +127,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		return super.getExternalReference(element);
 	}
 
-	protected abstract String generateMetamodel(/*@NonNull*/ Model pivotModel, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames);
+	protected abstract String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames);
 
 	protected String getEcoreLiteral(@NonNull EnumerationLiteral elem) {
 		return nameQueries.getEcoreLiteral(elem);
@@ -139,12 +136,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	@Override
 	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Package elem) {
 		return nameQueries.getEcoreLiteral(elem);
-	}
-
-	@Override
-	protected @NonNull Set<PrimitiveType> getAllPrimitiveTypes(@NonNull Model root) {
-		@NonNull Set<PrimitiveType> emptySet = Collections.emptySet();
-		return emptySet;
 	}
 
 	@Override
@@ -158,19 +149,19 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	}
 
 	@Override
-	protected @NonNull Map<org.eclipse.ocl.pivot.Package, List<CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
+	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
 		return super.getSortedCollectionTypes(root, collectionTypeComparator);
 	}
 
 	@Override
-	protected @NonNull Map<org.eclipse.ocl.pivot.Package, List<PrimitiveType>> getSortedPrimitiveTypes(@NonNull Model root) {
-		Map<org.eclipse.ocl.pivot.Package, List<PrimitiveType>> pkge2primitiveTypes = new HashMap<org.eclipse.ocl.pivot.Package, List<PrimitiveType>>();
+	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> getSortedPrimitiveTypes(@NonNull Model root) {
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> pkge2primitiveTypes = new HashMap<>();
 		return pkge2primitiveTypes;
 	}
 
 	@Override
-	protected Model getThisModel() {
-		return thisModel;
+	protected @NonNull Model getThisModel() {
+		return ClassUtil.nonNullState(thisModel);
 	}
 
 	@Override
@@ -209,26 +200,26 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			}
 			sourceFile = "/" + projectName + "/" + modelFile;
 			EObject asRoot = asResource.getContents().get(0);
-			ASSaver saver = new ASSaver(asResource);
-			/*Package orphanage =*/ saver.localizeSpecializations();
+			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
+			/*Package orphanage =*/ saver.localizeOrphans();
 			//			if ((orphanage != null) && (pivotModel instanceof Root)) {
 			//				(pivotModel as Root).getOwnedPackages().add(orphanage);
 			//			}
 			String fileName = outputFolder + "/" + javaClassName + ".java";
 			log.info("Generating '" + fileName + "'");
 			assert asRoot instanceof Model;
-			Model asRoot2 = (Model)asRoot;
+			Model asModel = (Model)asRoot;
 			StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
-			getExternals(asRoot2);
-			addExternalReference(standardLibrary.getBooleanType(), asRoot2);
-			addExternalReference(standardLibrary.getIntegerType(), asRoot2);
-			addExternalReference(standardLibrary.getOclAnyType(), asRoot2);
-			addExternalReference(standardLibrary.getOclElementType(), asRoot2);
-			addExternalReference(standardLibrary.getOclEnumerationType(), asRoot2);
-			addExternalReference(standardLibrary.getRealType(), asRoot2);
-			addExternalReference(standardLibrary.getStringType(), asRoot2);
-			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asRoot2);
-			String metamodel = generateMetamodel(asRoot2, Collections.emptyList());
+			addExternalReference(standardLibrary.getBooleanType(), asModel);
+			addExternalReference(standardLibrary.getIntegerType(), asModel);
+			addExternalReference(standardLibrary.getOclAnyType(), asModel);
+			addExternalReference(standardLibrary.getOclElementType(), asModel);
+			addExternalReference(standardLibrary.getOclEnumerationType(), asModel);
+			addExternalReference(standardLibrary.getRealType(), asModel);
+			addExternalReference(standardLibrary.getStringType(), asModel);
+			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asModel);
+			initModel(asModel, saver);
+			String metamodel = generateMetamodel(Collections.emptyList());
 			MergeWriter fw = new MergeWriter(fileName);
 			if (metamodel != null) {
 				fw.append(metamodel);

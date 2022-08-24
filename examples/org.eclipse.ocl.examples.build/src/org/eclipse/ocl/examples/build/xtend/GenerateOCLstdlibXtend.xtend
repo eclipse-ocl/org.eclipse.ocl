@@ -38,50 +38,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 		'''
 	}
 
-	protected override String declareCollectionTypes(Model root) {
-		var pkge2collectionTypes = root.getSortedCollectionTypes();
-		if (pkge2collectionTypes.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2collectionTypes.keySet());
-		'''
-		«FOR pkge : sortedPackages»
-
-			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
-			«IF type.getOwnedSignature() !== null»
-			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»(«getEcoreLiteral(type)»«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
-			«ENDIF»
-			«ENDFOR»
-			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
-			«IF type.getOwnedSignature() === null»
-			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
-			«ENDIF»
-			«ENDFOR»
-		«ENDFOR»
-		'''
-	}
-
-	protected override String declareMapTypes(/*@NonNull*/ Model root) {
-		var pkge2mapTypes = root.getSortedMapTypes();
-		if (pkge2mapTypes.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2mapTypes.keySet());
-		'''
-
-		«FOR pkge : sortedPackages»
-			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
-				«IF type.getOwnedSignature() !== null»
-					private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
-					eClass.name»(«getEcoreLiteral(type)»«IF type.getOwnedSignature() !== null»«FOR templateParameter : type.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
-				«ENDIF»
-			«ENDFOR»
-			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
-				«IF type.getOwnedSignature() === null»
-					private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
-					eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
-				«ENDIF»
-			«ENDFOR»
-		«ENDFOR»
-		'''
-	}
-
 	protected override String declarePrimitiveTypes(/*@NonNull*/ Model root) {
 		var pkge2primitiveTypes = root.getSortedPrimitiveTypes();
 		if (pkge2primitiveTypes.isEmpty()) return "";
@@ -112,10 +68,10 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			private void DataType «type.getPrefixedSymbolName("_"+type.partialName())» = createDataType("«type.name»");«ENDIF»
 	'''}
 
-	/*@NonNull*/ protected override String generateMetamodel(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
-		thisModel = root;
-		var lib = ClassUtil.nonNullState(root.getLibrary());
-		var externalPackages = root.getSortedExternalPackages();
+	/*@NonNull*/ protected override String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
+		// initModel(root); in caller
+		var lib = ClassUtil.nonNullState(thisModel.getLibrary());
+		var externalPackages = thisModel.getSortedExternalPackages();
 		var year = new GregorianCalendar().get(GregorianCalendar.YEAR);
 		'''
 			/*******************************************************************************
@@ -401,60 +357,60 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			
 				private static class Contents extends AbstractContents
 				{
-					private final @NonNull Model «root.getPrefixedSymbolName("model")»;
-					«FOR pkge : root.getSortedPackages()»
-					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == root.getOrphanPackage()) "orphanage" else pkge.getName())»;
+					private final @NonNull Model «thisModel.getPrefixedSymbolName("model")»;
+					«FOR pkge : thisModel.getSortedPackages()»
+					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 			
 					private Contents(@NonNull String asURI)
 					{
-						«root.getSymbolName()» = createModel(asURI);
-						«FOR pkge : root.getSortedPackages()»
+						«thisModel.getSymbolName()» = createModel(asURI);
+						«FOR pkge : thisModel.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDFOR»
-						«root.installPackages()»
-						«root.installClassTypes()»
-						«root.installPrimitiveTypes()»
-						«root.installEnumerations()»
-						«root.installCollectionTypes()»
-						«root.installMapTypes()»
-						«root.installLambdaTypes()»
-						«root.installTupleTypes()»
-						«root.installOperations()»
-						«root.installIterations()»
-						«root.installCoercions()»
-						«root.installProperties()»
-						«root.installTemplateBindings()»
-						«root.installPrecedences()»
-						«root.installComments()»
+						«thisModel.installPackages()»
+						«thisModel.installClassTypes()»
+						«thisModel.installPrimitiveTypes()»
+						«thisModel.installEnumerations()»
+						«thisModel.installCollectionTypes()»
+						«thisModel.installMapTypes()»
+						«thisModel.installLambdaTypes()»
+						«thisModel.installTupleTypes()»
+						«thisModel.installOperations()»
+						«thisModel.installIterations()»
+						«thisModel.installCoercions()»
+						«thisModel.installProperties()»
+						«thisModel.installTemplateBindings()»
+						«thisModel.installPrecedences()»
+						«thisModel.installComments()»
 					}
 			
 					public @NonNull Model getModel() {
-						return «root.getSymbolName()»;
+						return «thisModel.getSymbolName()»;
 					}
-					«root.defineExternals()»
-					«root.definePackages()»
-					«root.declareClassTypes(excludedEClassifierNames)»
-					«root.declarePrimitiveTypes()»
-					«root.declareEnumerations()»
-					«root.defineTemplateParameters()»
-					«root.declareTupleTypes()»
-					«root.declareCollectionTypes()»
-					«root.declareMapTypes()»
-					«root.defineClassTypes()»
-					«root.definePrimitiveTypes()»
-					«root.defineEnumerations()»
-					«root.defineCollectionTypes()»
-					«root.defineMapTypes()»
-					«root.defineTupleTypes()»
-					«root.defineLambdaTypes()»
-					«root.defineOperations()»
-					«root.defineIterations()»
-					«root.defineCoercions()»
-					«root.defineProperties()»
-					«root.defineTemplateBindings()»
-					«root.definePrecedences()»
-					«root.defineComments()»
+					«thisModel.defineExternals()»
+					«thisModel.definePackages()»
+					«thisModel.declareClassTypes(excludedEClassifierNames)»
+					«thisModel.declarePrimitiveTypes()»
+					«thisModel.declareEnumerations()»
+					«thisModel.defineTemplateParameters()»
+					«thisModel.declareTupleTypes()»
+					«thisModel.declareCollectionTypes()»
+					«thisModel.declareMapTypes()»
+					«thisModel.defineClassTypes()»
+					«thisModel.definePrimitiveTypes()»
+					«thisModel.defineEnumerations()»
+					«thisModel.defineCollectionTypes()»
+					«thisModel.defineMapTypes()»
+					«thisModel.defineTupleTypes()»
+					«thisModel.defineLambdaTypes()»
+					«thisModel.defineOperations()»
+					«thisModel.defineIterations()»
+					«thisModel.defineCoercions()»
+					«thisModel.defineProperties()»
+					«thisModel.defineTemplateBindings()»
+					«thisModel.definePrecedences()»
+					«thisModel.defineComments()»
 				}
 			}
 		'''

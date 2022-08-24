@@ -59,7 +59,7 @@ public interface ParserContext // extends Adapter
 	@Nullable Type getClassContext();
 
 	/**
-	 * Return the element that hsts an expression that may reference the self variable.
+	 * Return the element that hosts an expression that may reference the self variable.
 	 * This may be an Operation rather than a Type.
 	 *
 	 * @since 1.7

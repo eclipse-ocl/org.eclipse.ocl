@@ -484,7 +484,7 @@ public abstract class CS2AS extends AbstractConversion	// FIXME migrate function
 		return helper2;
 	}
 
-	public Element getPivotElement(@NonNull ModelElementCS csElement) {
+	public @Nullable Element getPivotElement(@NonNull ModelElementCS csElement) {
 		return csi2asMapping.get(csElement);
 	}
 
