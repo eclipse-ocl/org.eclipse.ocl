@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -54,19 +53,10 @@ public final class PivotSaveImpl extends XMISaveImpl
 		@Override
 		public String getHREF(EObject unresolvedObject) {
 			if (unresolvedObject == null) {
-				System.out.println("getHRef: " + NameUtil.debugSimpleName(unresolvedObject) + " => null");
 				return null;
 			}
 			EObject resolvedObject = asSaver.resolveOrphan(unresolvedObject);
-			if (resolvedObject == null) {
-			//	return null;
-				//return super.getHREF(unresolvedObject);
-			}
-			String href = super.getHREF(resolvedObject);
-			if ("Mapping".equals(unresolvedObject.eClass().getName())) {
-				System.out.println("getHRef: " + NameUtil.debugSimpleName(unresolvedObject) + " => " + NameUtil.debugSimpleName(resolvedObject) + " => " + href + " : " + ((NamedElement)unresolvedObject.eContainer()).getName() + "::" + ((NamedElement)unresolvedObject).getName());
-			}
-			return href;
+			return super.getHREF(resolvedObject);
 		}
 
 		public @NonNull ASSaverNew getSaver() {
