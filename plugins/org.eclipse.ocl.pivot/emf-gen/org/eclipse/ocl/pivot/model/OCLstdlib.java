@@ -1368,6 +1368,8 @@ public class OCLstdlib extends ASResourceImpl
 
 			ownedClasses = orphanPackage.getOwnedClasses();
 			type = _Map_Collection_T_F_Collection_collectBy_V_F;
+			type.setKeysAreNullFree(false);
+			type.setValuesAreNullFree(false);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -1388,10 +1390,14 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
 			type = _Map_Map_K_F_Map_collectBy_V2_F;
+			type.setKeysAreNullFree(false);
+			type.setValuesAreNullFree(false);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
 			type = _Map_Map_K_F_Map_collectNested_V2_F;
+			type.setKeysAreNullFree(false);
+			type.setValuesAreNullFree(false);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);

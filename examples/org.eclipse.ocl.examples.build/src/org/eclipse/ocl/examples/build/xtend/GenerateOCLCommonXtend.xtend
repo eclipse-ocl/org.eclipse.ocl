@@ -410,6 +410,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 						type = «type.getSymbolName()»;
+						«IF !type.keysAreNullFree»
+						type.setKeysAreNullFree(false);
+						«ENDIF»
+						«IF !type.valuesAreNullFree»
+						type.setValuesAreNullFree(false);
+						«ENDIF»
 						«type.emitSuperClasses("type")»
 						ownedClasses.add(type);
 					«ENDFOR»
