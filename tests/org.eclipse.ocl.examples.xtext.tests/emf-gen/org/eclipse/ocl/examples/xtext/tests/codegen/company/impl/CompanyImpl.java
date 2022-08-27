@@ -212,14 +212,14 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		 */
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
-		@NonNull Iterator<Object> ITERATOR__1 = CodegencompanyTables.table.iterator();
+		@NonNull Iterator<Object> ITER_1_ = CodegencompanyTables.table.iterator();
 		/*@NonInvalid*/ @NonNull TupleValue any;
 		while (true) {
-			if (!ITERATOR__1.hasNext()) {
+			if (!ITER_1_.hasNext()) {
 				throw new InvalidValueException("Nothing to return for ''any''");
 			}
 			@SuppressWarnings("null")
-			/*@NonInvalid*/ @NonNull TupleValue _1 = (@NonNull TupleValue)ITERATOR__1.next();
+			/*@NonInvalid*/ @NonNull TupleValue _1 = (@NonNull TupleValue)ITER_1_.next();
 			/**
 			 * range->includes(employees->size())
 			 */
@@ -228,8 +228,8 @@ public class CompanyImpl extends EObjectImpl implements Company {
 			@SuppressWarnings("null")
 			final /*@NonInvalid*/ @NonNull List<Employee> employees = this.getEmployees();
 			final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_employees = idResolver.createOrderedSetOfAll(CodegencompanyTables.ORD_CLSSid_Employee, employees);
-			final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
-			final /*@NonInvalid*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(range, size).booleanValue();
+			final /*@NonInvalid*/ @NonNull IntegerValue size_1 = CollectionSizeOperation.INSTANCE.evaluate(BOXED_employees);
+			final /*@NonInvalid*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(range, size_1).booleanValue();
 			//
 			if (includes) {			// Carry on till something found
 				any = _1;
@@ -239,8 +239,8 @@ public class CompanyImpl extends EObjectImpl implements Company {
 		@SuppressWarnings("null")
 		final /*@NonInvalid*/ @NonNull EnumerationLiteralId size_0 = (@NonNull EnumerationLiteralId)any.getValue(1/*size*/);
 		@SuppressWarnings("null")
-		final /*@NonInvalid*/ @NonNull CompanySizeKind ECORE_size_0 = (@NonNull CompanySizeKind)idResolver.ecoreValueOf(Enumerator.class, size_0);
-		return ECORE_size_0;
+		final /*@NonInvalid*/ @NonNull CompanySizeKind ECORE_size = (@NonNull CompanySizeKind)idResolver.ecoreValueOf(Enumerator.class, size_0);
+		return ECORE_size;
 	}
 
 	/**

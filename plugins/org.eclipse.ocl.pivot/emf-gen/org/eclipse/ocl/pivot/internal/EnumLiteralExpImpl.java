@@ -181,16 +181,16 @@ public class EnumLiteralExpImpl
 				try {
 					final /*@NonInvalid*/ @Nullable Type type = this.getType();
 					final /*@NonInvalid*/ @Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
-					final /*@NonInvalid*/ @NonNull Object owningEnumeration = referredLiteral == null;
+					final /*@NonInvalid*/ @NonNull Object owningEnumeration_0 = referredLiteral == null;
 					/*@Thrown*/ @Nullable Enumeration safe_owningEnumeration_source;
-					if (owningEnumeration == Boolean.TRUE) {
+					if (owningEnumeration_0 == Boolean.TRUE) {
 						safe_owningEnumeration_source = null;
 					}
 					else {
 						assert referredLiteral != null;
 						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull Enumeration owningEnumeration_0 = referredLiteral.getOwningEnumeration();
-						safe_owningEnumeration_source = owningEnumeration_0;
+						final /*@Thrown*/ @NonNull Enumeration owningEnumeration = referredLiteral.getOwningEnumeration();
+						safe_owningEnumeration_source = owningEnumeration;
 					}
 					final /*@Thrown*/ boolean result = (type != null) && (safe_owningEnumeration_source != null) ? (type.getTypeId() == safe_owningEnumeration_source.getTypeId()) : false;
 					CAUGHT_result = result;

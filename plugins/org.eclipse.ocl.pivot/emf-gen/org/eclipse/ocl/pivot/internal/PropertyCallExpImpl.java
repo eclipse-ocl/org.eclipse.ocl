@@ -557,15 +557,15 @@ implements PropertyCallExp {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
 						try {
 							final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
-							final /*@NonInvalid*/ @NonNull Object isStatic_0 = referredProperty == null;
+							final /*@NonInvalid*/ @NonNull Object isStatic = referredProperty == null;
 							/*@Thrown*/ @Nullable Boolean safe_isStatic_source;
-							if (isStatic_0 == Boolean.TRUE) {
+							if (isStatic == Boolean.TRUE) {
 								safe_isStatic_source = null;
 							}
 							else {
 								assert referredProperty != null;
-								final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
-								safe_isStatic_source = isStatic;
+								final /*@Thrown*/ boolean isStatic_0 = referredProperty.isIsStatic();
+								safe_isStatic_source = isStatic_0;
 							}
 							CAUGHT_safe_isStatic_source = safe_isStatic_source;
 						}
@@ -617,9 +617,9 @@ implements PropertyCallExp {
 							catch (Exception THROWN_safe_type_source) {
 								CAUGHT_safe_type_source = ValueUtil.createInvalidValue(THROWN_safe_type_source);
 							}
-							final /*@NonInvalid*/ @NonNull Object conformsTo_0 = CAUGHT_safe_type_source == null;
+							final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_safe_type_source == null;
 							/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-							if (conformsTo_0 == Boolean.TRUE) {
+							if (conformsTo == Boolean.TRUE) {
 								safe_conformsTo_source = null;
 							}
 							else {
@@ -628,8 +628,8 @@ implements PropertyCallExp {
 								}
 								@SuppressWarnings("null")
 								final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
-								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
-								safe_conformsTo_source = conformsTo;
+								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
+								safe_conformsTo_source = conformsTo_0;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 						}

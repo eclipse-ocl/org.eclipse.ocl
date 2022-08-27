@@ -252,19 +252,19 @@ public abstract class CallExpImpl
 						try {
 							/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
 							try {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_10 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType_1 = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
 								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-								final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
+								final /*@NonInvalid*/ @NonNull Object type_0 = ownedSource == null;
 								/*@Thrown*/ @Nullable Type safe_type_source;
-								if (type == Boolean.TRUE) {
+								if (type_0 == Boolean.TRUE) {
 									safe_type_source = null;
 								}
 								else {
 									assert ownedSource != null;
-									final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
-									safe_type_source = type_0;
+									final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
+									safe_type_source = type;
 								}
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType = (org.eclipse.ocl.pivot.Class)TYP_CollectionType_10;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_CollectionType = TYP_CollectionType_1;
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, CAST_TYP_CollectionType);
 								final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
@@ -371,15 +371,15 @@ public abstract class CallExpImpl
 							/*@Caught*/ @Nullable Object CAUGHT_safe_type_source;
 							try {
 								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-								final /*@NonInvalid*/ @NonNull Object type_0 = ownedSource == null;
+								final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
 								/*@Thrown*/ @Nullable Type safe_type_source;
-								if (type_0 == Boolean.TRUE) {
+								if (type == Boolean.TRUE) {
 									safe_type_source = null;
 								}
 								else {
 									assert ownedSource != null;
-									final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
-									safe_type_source = type;
+									final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
+									safe_type_source = type_0;
 								}
 								CAUGHT_safe_type_source = safe_type_source;
 							}
@@ -406,11 +406,11 @@ public abstract class CallExpImpl
 								try {
 									/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 									try {
-										final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_3 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
+										final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_8 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
 										if (CAUGHT_safe_type_source instanceof InvalidValueException) {
 											throw (InvalidValueException)CAUGHT_safe_type_source;
 										}
-										final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_MapType = (org.eclipse.ocl.pivot.Class)TYP_MapType_3;
+										final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_MapType = TYP_MapType_8;
 										final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, CAUGHT_safe_type_source, CAST_TYP_MapType).booleanValue();
 										CAUGHT_oclIsKindOf = oclIsKindOf;
 									}
@@ -522,9 +522,9 @@ public abstract class CallExpImpl
 				IF__l_q = true;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_2 = idResolver.getClass(TypeId.OCL_INVALID, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_OclInvalid_9 = idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_2;
+				final /*@NonInvalid*/ @NonNull InvalidType CAST_TYP_OclInvalid = (InvalidType)TYP_OclInvalid_9;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != CAST_TYP_OclInvalid.getTypeId()) : true;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;

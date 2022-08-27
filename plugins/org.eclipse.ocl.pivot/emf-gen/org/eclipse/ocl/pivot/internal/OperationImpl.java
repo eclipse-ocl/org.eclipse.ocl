@@ -803,8 +803,8 @@ implements Operation {
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT__l_g;
 							try {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_ExpressionInOCL = (org.eclipse.ocl.pivot.Class)TYP_ExpressionInOCL;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_ExpressionInOCL = TYP_ExpressionInOCL_0;
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression, CAST_TYP_ExpressionInOCL);
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();

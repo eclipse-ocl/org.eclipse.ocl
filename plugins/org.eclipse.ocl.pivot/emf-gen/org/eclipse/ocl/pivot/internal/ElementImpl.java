@@ -236,7 +236,7 @@ public abstract class ElementImpl
 					throw new InvalidValueException("Null \'\'OclElement\'\' rather than \'\'OclVoid\'\' value required");
 				}
 				final /*@Thrown*/ @NonNull SetValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OclElement, CAST_1_);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Element = (org.eclipse.ocl.pivot.Class)TYP_Element;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Element = TYP_Element;
 				final /*@Thrown*/ @NonNull SetValue selectByKind = (@Nullable SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, CAST_TYP_Element);
 				return selectByKind;
 			}
@@ -245,7 +245,7 @@ public abstract class ElementImpl
 		@SuppressWarnings("null")
 		final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure.evaluateIteration(MGR_closure);
 		final /*@Thrown*/ @NonNull List<Element> ECORE_closure = ((IdResolverExtension)idResolver).ecoreValueOfAll(Element.class, closure);
-		return (List<Element>)ECORE_closure;
+		return ECORE_closure;
 	}
 
 	/**
