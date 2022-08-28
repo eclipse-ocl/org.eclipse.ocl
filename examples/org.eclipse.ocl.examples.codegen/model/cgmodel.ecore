@@ -471,12 +471,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNativeOperation" eSuperTypes="#//CGOperation">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A native operation that must be called using the native calling convention. Source argument and result values are unboxed."/>
+      <details key="documentation" value="A native operation that is called using a Java method. Boxing of source argument and result values are determined by the calling convention."/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNativeOperationCallExp" eSuperTypes="#//CGOperationCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A call of an operation using its Java declaration. The OCL self may be passed as an extra argument.&#xA;Other arguments and returns use the unboxed representation."/>
+      <details key="documentation" value="A call of an operation using its Java method declaration. The OCL self may be passed as an extra argument.&#xA;Other arguments and returns use the unboxed representation."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" lowerBound="1"
         eType="#//Method"/>
@@ -534,6 +534,8 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="containingClass" lowerBound="1"
         eType="#//CGClass" resolveProxies="false" eOpposite="#//CGClass/operations"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callingConvention" lowerBound="1"
+        eType="#//OperationCallingConvention" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGOperationCallExp" abstract="true"
       eSuperTypes="#//CGCallExp">
@@ -573,6 +575,8 @@
         <details key="documentation" value="The optional initializer or derivation."/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callingConvention" lowerBound="1"
+        eType="#//PropertyCallingConvention" transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGPropertyCallExp" abstract="true" eSuperTypes="#//CGNavigationCallExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="CGReal" eSuperTypes="#//CGNumber">
@@ -731,8 +735,10 @@
   <eClassifiers xsi:type="ecore:EDataType" name="Number" instanceClassName="java.lang.Number"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Operation" instanceClassName="org.eclipse.ocl.pivot.Operation"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="OperationCallingConvention" instanceClassName="org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Property" instanceClassName="org.eclipse.ocl.pivot.Property"/>
   <eClassifiers xsi:type="ecore:EDataType" name="TuplePartId" instanceClassName="org.eclipse.ocl.pivot.ids.TuplePartId"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Type" instanceClassName="org.eclipse.ocl.pivot.Type"/>
   <eClassifiers xsi:type="ecore:EDataType" name="TypeId" instanceClassName="org.eclipse.ocl.pivot.ids.TypeId"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="PropertyCallingConvention" instanceClassName="org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention"/>
 </ecore:EPackage>

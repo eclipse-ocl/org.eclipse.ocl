@@ -110,7 +110,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 		CGParameter oldParameter = parameter;
 		parameter = newParameter;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldParameter, newParameter);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 9, oldParameter, newParameter);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -126,14 +126,14 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 		if (newParameter != parameter) {
 			NotificationChain msgs = null;
 			if (parameter != null)
-				msgs = ((InternalEObject)parameter).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
+				msgs = ((InternalEObject)parameter).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
 			if (newParameter != null)
-				msgs = ((InternalEObject)newParameter).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
+				msgs = ((InternalEObject)newParameter).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
 			msgs = basicSetParameter(newParameter, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, newParameter, newParameter));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, newParameter, newParameter));
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 8:
+			case 9:
 				return basicSetParameter(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -158,7 +158,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 9:
 				return getParameter();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -169,10 +169,11 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 9:
 				setParameter((CGParameter)newValue);
 				return;
 		}
@@ -187,7 +188,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 9:
 				setParameter((CGParameter)null);
 				return;
 		}
@@ -202,7 +203,7 @@ public class CGForeignPropertyImpl extends CGPropertyImpl implements CGForeignPr
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 9:
 				return parameter != null;
 		}
 		return super.eIsSet(featureID);

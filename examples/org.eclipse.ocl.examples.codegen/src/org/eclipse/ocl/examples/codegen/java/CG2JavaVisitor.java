@@ -123,7 +123,6 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapType;
@@ -2056,7 +2055,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGForeignPropertyCallExp(@NonNull CGForeignPropertyCallExp cgForeignPropertyCallExp) {
 	//	assert cgPropertyCallExp.getSource() == null;		// XXX
 		Property asProperty = CGUtil.getReferredProperty(cgForeignPropertyCallExp);
-		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass((Feature)asProperty);
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
 		String foreignClassName = context.getQualifiedForeignClassName(asClass);
 		String propertyName = PivotUtil.getName(asProperty);
 		CGValuedElement cgSource = cgForeignPropertyCallExp.getSource();

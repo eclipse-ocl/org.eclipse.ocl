@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -39,6 +40,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOperationImpl#getPreconditions <em>Preconditions</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOperationImpl#getPostconditions <em>Postconditions</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOperationImpl#getContainingClass <em>Containing Class</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOperationImpl#getCallingConvention <em>Calling Convention</em>}</li>
  * </ul>
  *
  * @generated
@@ -51,7 +53,7 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_OPERATION_FEATURE_COUNT = CGCallableImpl.CG_CALLABLE_FEATURE_COUNT + 3;
+	public static final int CG_OPERATION_FEATURE_COUNT = CGCallableImpl.CG_CALLABLE_FEATURE_COUNT + 4;
 
 	/**
 	 * The cached value of the '{@link #getPreconditions() <em>Preconditions</em>}' containment reference list.
@@ -72,6 +74,26 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	 * @ordered
 	 */
 	protected EList<CGConstraint> postconditions;
+
+	/**
+	 * The default value of the '{@link #getCallingConvention() <em>Calling Convention</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCallingConvention()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final OperationCallingConvention CALLING_CONVENTION_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getCallingConvention() <em>Calling Convention</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCallingConvention()
+	 * @generated
+	 * @ordered
+	 */
+	protected OperationCallingConvention callingConvention = CALLING_CONVENTION_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -169,6 +191,29 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	 * @generated
 	 */
 	@Override
+	public OperationCallingConvention getCallingConvention() {
+		return callingConvention;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setCallingConvention(OperationCallingConvention newCallingConvention) {
+		OperationCallingConvention oldCallingConvention = callingConvention;
+		callingConvention = newCallingConvention;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldCallingConvention, callingConvention));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case 10:
@@ -225,6 +270,8 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 				return getPostconditions();
 			case 10:
 				return getContainingClass();
+			case 11:
+				return getCallingConvention();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -249,6 +296,9 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 			case 10:
 				setContainingClass((CGClass)newValue);
 				return;
+			case 11:
+				setCallingConvention((OperationCallingConvention)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -270,6 +320,9 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 			case 10:
 				setContainingClass((CGClass)null);
 				return;
+			case 11:
+				setCallingConvention(CALLING_CONVENTION_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -288,7 +341,25 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 				return postconditions != null && !postconditions.isEmpty();
 			case 10:
 				return getContainingClass() != null;
+			case 11:
+				return CALLING_CONVENTION_EDEFAULT == null ? callingConvention != null : !CALLING_CONVENTION_EDEFAULT.equals(callingConvention);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuilder result = new StringBuilder(super.toString());
+		result.append(" (callingConvention: ");
+		result.append(callingConvention);
+		result.append(')');
+		return result.toString();
 	}
 } //CGOperationImpl

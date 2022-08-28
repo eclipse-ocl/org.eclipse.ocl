@@ -167,7 +167,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 				Property asProperty = CGUtil.getAST(cgProperty);
 				FeatureBody body = null;
 				if (cgBody != null) {
-					Class asClass = PivotUtil.getOwningClass((Feature)asProperty);
+					Class asClass = PivotUtil.getOwningClass(asProperty);
 					boolean isStatic = asProperty.isIsStatic();
 					String packageName;
 					String className;

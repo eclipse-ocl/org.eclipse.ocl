@@ -1737,6 +1737,17 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGOperation_ContainingClass();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperation#getCallingConvention <em>Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGOperation#getCallingConvention()
+	 * @see #getCGOperation()
+	 * @generated
+	 */
+	EAttribute getCGOperation_CallingConvention();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp <em>CG Operation Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1884,6 +1895,17 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCGProperty_Body();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getCallingConvention <em>Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGProperty#getCallingConvention()
+	 * @see #getCGProperty()
+	 * @generated
+	 */
+	EAttribute getCGProperty_CallingConvention();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp <em>CG Property Call Exp</em>}'.
@@ -2340,6 +2362,16 @@ public interface CGModelPackage extends EPackage {
 	EDataType getOperation();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention <em>Operation Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Operation Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention
+	 * @generated
+	 */
+	EDataType getOperationCallingConvention();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.Property <em>Property</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2378,6 +2410,16 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EDataType getTypeId();
+
+	/**
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention <em>Property Calling Convention</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Property Calling Convention</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention
+	 * @generated
+	 */
+	EDataType getPropertyCallingConvention();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -3805,6 +3847,14 @@ public interface CGModelPackage extends EPackage {
 		EReference CG_OPERATION__CONTAINING_CLASS = eINSTANCE.getCGOperation_ContainingClass();
 
 		/**
+		 * The meta object literal for the '<em><b>Calling Convention</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_OPERATION__CALLING_CONVENTION = eINSTANCE.getCGOperation_CallingConvention();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGOperationCallExpImpl <em>CG Operation Call Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3925,6 +3975,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_PROPERTY__BODY = eINSTANCE.getCGProperty_Body();
+
+		/**
+		 * The meta object literal for the '<em><b>Calling Convention</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_PROPERTY__CALLING_CONVENTION = eINSTANCE.getCGProperty_CallingConvention();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyCallExpImpl <em>CG Property Call Exp</em>}' class.
@@ -4339,6 +4397,16 @@ public interface CGModelPackage extends EPackage {
 		EDataType OPERATION = eINSTANCE.getOperation();
 
 		/**
+		 * The meta object literal for the '<em>Operation Calling Convention</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getOperationCallingConvention()
+		 * @generated
+		 */
+		EDataType OPERATION_CALLING_CONVENTION = eINSTANCE.getOperationCallingConvention();
+
+		/**
 		 * The meta object literal for the '<em>Property</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -4377,6 +4445,16 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EDataType TYPE_ID = eINSTANCE.getTypeId();
+
+		/**
+		 * The meta object literal for the '<em>Property Calling Convention</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getPropertyCallingConvention()
+		 * @generated
+		 */
+		EDataType PROPERTY_CALLING_CONVENTION = eINSTANCE.getPropertyCallingConvention();
 
 	}
 
