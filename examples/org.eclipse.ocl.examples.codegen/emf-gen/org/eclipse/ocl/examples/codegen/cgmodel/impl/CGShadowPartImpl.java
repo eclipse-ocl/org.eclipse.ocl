@@ -398,6 +398,24 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	 * @generated
 	 */
 	@Override
+	public boolean isNonNull() {
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isNull() {
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public boolean isUnboxed() {
 		return false;
 	}

@@ -433,7 +433,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	 */
 	@Override
 	public boolean isBoxed() {
-		return false;
+		return valueIsBoxed;
 	}
 
 	/**
@@ -442,7 +442,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	 */
 	@Override
 	public boolean isEcore() {
-		return false;
+		return valueIsEcore;
 	}
 
 	/**
@@ -463,7 +463,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	 */
 	@Override
 	public boolean isUnboxed() {
-		return true;
+		return !valueIsBoxed && !valueIsEcore;
 	}
 
 } //CGMethodOperationCallExpImpl
