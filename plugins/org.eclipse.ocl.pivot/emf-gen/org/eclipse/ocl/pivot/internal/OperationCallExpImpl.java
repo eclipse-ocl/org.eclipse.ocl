@@ -639,26 +639,26 @@ implements OperationCallExp {
 				/*@Caught*/ @Nullable Object CAUGHT_forAll;
 				try {
 					final /*@NonInvalid*/ @Nullable Operation operation = this.getReferredOperation();
-					final /*@NonInvalid*/ @NonNull Object ownedParameters = operation == null;
+					final /*@NonInvalid*/ @NonNull Object ownedParameters_0 = operation == null;
 					/*@Thrown*/ @Nullable OrderedSetValue safe_ownedParameters_source;
-					if (ownedParameters == Boolean.TRUE) {
+					if (ownedParameters_0 == Boolean.TRUE) {
 						safe_ownedParameters_source = null;
 					}
 					else {
 						assert operation != null;
-						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters_0 = operation.getOwnedParameters();
-						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters_0);
+						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters = operation.getOwnedParameters();
+						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
 						safe_ownedParameters_source = BOXED_ownedParameters;
 					}
-					final /*@NonInvalid*/ @NonNull Object owningClass_0 = operation == null;
+					final /*@NonInvalid*/ @NonNull Object owningClass = operation == null;
 					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class safe_owningClass_source;
-					if (owningClass_0 == Boolean.TRUE) {
+					if (owningClass == Boolean.TRUE) {
 						safe_owningClass_source = null;
 					}
 					else {
 						assert operation != null;
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class owningClass = operation.getOwningClass();
-						safe_owningClass_source = owningClass;
+						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class owningClass_0 = operation.getOwningClass();
+						safe_owningClass_source = owningClass_0;
 					}
 					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
 					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
@@ -713,8 +713,8 @@ implements OperationCallExp {
 							final /*@Thrown*/ boolean isTypeof = parameter.isIsTypeof();
 							/*@Thrown*/ @Nullable Type requiredType;
 							if (isTypeof) {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_30 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class = TYP_Class_30;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_6 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class = TYP_Class_6;
 								requiredType = CAST_TYP_Class;
 							}
 							else {
@@ -725,16 +725,16 @@ implements OperationCallExp {
 								catch (Exception THROWN_parameterType) {
 									CAUGHT_parameterType = ValueUtil.createInvalidValue(THROWN_parameterType);
 								}
-								final /*@NonInvalid*/ @NonNull Object specializeIn_0 = CAUGHT_parameterType == null;
+								final /*@NonInvalid*/ @NonNull Object specializeIn = CAUGHT_parameterType == null;
 								/*@Thrown*/ @Nullable Type safe_specializeIn_source;
-								if (specializeIn_0 == Boolean.TRUE) {
+								if (specializeIn == Boolean.TRUE) {
 									safe_specializeIn_source = null;
 								}
 								else {
 									assert parameterType != null;
 									@SuppressWarnings("null")
-									final /*@Thrown*/ @NonNull Type specializeIn = parameterType.specializeIn(this, safe_owningClass_source);
-									safe_specializeIn_source = specializeIn;
+									final /*@Thrown*/ @NonNull Type specializeIn_0 = parameterType.specializeIn(this, safe_owningClass_source);
+									safe_specializeIn_source = specializeIn_0;
 								}
 								requiredType = safe_specializeIn_source;
 							}
