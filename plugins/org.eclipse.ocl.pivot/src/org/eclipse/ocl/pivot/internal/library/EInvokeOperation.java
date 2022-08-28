@@ -138,6 +138,14 @@ public class EInvokeOperation extends AbstractOperation
 		}
 	}
 
+
+	/**
+	 * @since 1.18
+	 */
+	public @NonNull EOperation getEOperation() {
+		return eOperation;
+	}
+
 	/** @deprecated use Executor */
 	@Deprecated
 	protected @Nullable Object getResultValue(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object eResult) {

@@ -51,6 +51,8 @@ public interface StandardLibraryInternal extends StandardLibrary.StandardLibrary
 	@Override
 	@NonNull PrimitiveType getBooleanType();
 	@Override
+	@NonNull Operation getCollectionExcludingOperation();
+	@Override
 	@NonNull CollectionType getCollectionType();
 	@NonNull CompleteModelInternal getCompleteModel();
 	@NonNull String getDefaultStandardLibraryURI();

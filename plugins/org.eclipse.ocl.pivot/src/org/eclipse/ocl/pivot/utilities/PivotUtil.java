@@ -12,6 +12,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Comparator;
@@ -950,12 +951,14 @@ public class PivotUtil
 			for (Object obj : diagnostic.getData()) {
 				s.append(newLine);
 				s.append("\t");
-				//				if (obj instanceof Throwable) {
-				//					s.append(((Throwable)obj).getMessage());
-				//				}
-				//				else {
-				s.append(obj);
-				//				}
+				if (obj instanceof Throwable) {
+					Throwable t = (Throwable)obj;
+				//	s.append(t.getMessage());
+					t.printStackTrace(new PrintWriter(new StringBuilderWriter(s)));
+				}
+				else {
+					s.append(obj);
+					}
 			}
 			for (Diagnostic childDiagnostic : diagnostic.getChildren()) {
 				if (childDiagnostic != null) {
@@ -1830,22 +1833,6 @@ public class PivotUtil
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Feature feature) {
 		return ClassUtil.nonNullState(feature.getOwningClass());
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* @deprecated use Feature */
-	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Operation operation) {
-		return ClassUtil.nonNullState(operation.getOwningClass());
-	}
-
-	/**
-	 * @since 1.3
-	 */
-	@Deprecated /* @deprecated use Feature */
-	public static org.eclipse.ocl.pivot.@NonNull Class getOwningClass(@NonNull Property property) {
-		return ClassUtil.nonNullState(property.getOwningClass());
 	}
 
 	/**

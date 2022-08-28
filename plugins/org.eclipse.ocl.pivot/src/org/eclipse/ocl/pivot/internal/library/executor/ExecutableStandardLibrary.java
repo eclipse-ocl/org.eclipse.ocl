@@ -119,6 +119,11 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	}
 
 	@Override
+	public @NonNull Operation getCollectionExcludingOperation() {
+		throw new UnsupportedOperationException();		// XXX;
+	}
+
+	@Override
 	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(genericType, elementType, false, lower, upper);
 	}

@@ -695,9 +695,9 @@ implements DataType {
 								/**
 								 * b.name <> name
 								 */
-								final /*@NonInvalid*/ @Nullable String name = b.getName();
-								final /*@NonInvalid*/ @Nullable String name_0 = this.getName();
-								final /*@NonInvalid*/ boolean ne_0 = (name != null) ? !name.equals(name_0) : (name_0 != null);
+								final /*@NonInvalid*/ @Nullable String name_0 = b.getName();
+								final /*@NonInvalid*/ @Nullable String name = this.getName();
+								final /*@NonInvalid*/ boolean ne_0 = (name_0 != null) ? !name_0.equals(name) : (name != null);
 								//
 								if (!ne_0) {					// Normal unsuccessful body evaluation result
 									forAll = ValueUtil.FALSE_VALUE;
