@@ -557,15 +557,15 @@ implements PropertyCallExp {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
 						try {
 							final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
-							final /*@NonInvalid*/ @NonNull Object isStatic_0 = referredProperty == null;
+							final /*@NonInvalid*/ @NonNull Object isStatic = referredProperty == null;
 							/*@Thrown*/ @Nullable Boolean safe_isStatic_source;
-							if (isStatic_0 == Boolean.TRUE) {
+							if (isStatic == Boolean.TRUE) {
 								safe_isStatic_source = null;
 							}
 							else {
 								assert referredProperty != null;
-								final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
-								safe_isStatic_source = isStatic;
+								final /*@Thrown*/ boolean isStatic_0 = referredProperty.isIsStatic();
+								safe_isStatic_source = isStatic_0;
 							}
 							CAUGHT_safe_isStatic_source = safe_isStatic_source;
 						}
