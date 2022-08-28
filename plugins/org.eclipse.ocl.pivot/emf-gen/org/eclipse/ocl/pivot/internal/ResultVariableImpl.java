@@ -122,15 +122,15 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 						/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-							final /*@NonInvalid*/ @NonNull Object isRequired = ownedInit == null;
+							final /*@NonInvalid*/ @NonNull Object isRequired_1 = ownedInit == null;
 							/*@Thrown*/ @Nullable Boolean safe_isRequired_source;
-							if (isRequired == Boolean.TRUE) {
+							if (isRequired_1 == Boolean.TRUE) {
 								safe_isRequired_source = null;
 							}
 							else {
 								assert ownedInit != null;
-								final /*@Thrown*/ boolean isRequired_1 = ownedInit.isIsRequired();
-								safe_isRequired_source = isRequired_1;
+								final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
+								safe_isRequired_source = isRequired;
 							}
 							CAUGHT_safe_isRequired_source = safe_isRequired_source;
 						}
@@ -140,19 +140,19 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 						if (CAUGHT_safe_isRequired_source instanceof InvalidValueException) {
 							throw (InvalidValueException)CAUGHT_safe_isRequired_source;
 						}
-						final /*@Thrown*/ @Nullable Boolean not_0;
+						final /*@Thrown*/ @Nullable Boolean not;
 						if (CAUGHT_safe_isRequired_source == ValueUtil.FALSE_VALUE) {
-							not_0 = ValueUtil.TRUE_VALUE;
+							not = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							if (CAUGHT_safe_isRequired_source == ValueUtil.TRUE_VALUE) {
-								not_0 = ValueUtil.FALSE_VALUE;
+								not = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								not_0 = null;
+								not = null;
 							}
 						}
-						CAUGHT_not = not_0;
+						CAUGHT_not = not;
 					}
 					catch (Exception THROWN_not) {
 						CAUGHT_not = ValueUtil.createInvalidValue(THROWN_not);
@@ -163,26 +163,26 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 					}
 					else {
 						final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
-						final /*@NonInvalid*/ @Nullable Boolean not;
+						final /*@NonInvalid*/ @Nullable Boolean not_0;
 						if (!isRequired_0) {
-							not = ValueUtil.TRUE_VALUE;
+							not_0 = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							if (isRequired_0) {
-								not = ValueUtil.FALSE_VALUE;
+								not_0 = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								not = null;
+								not_0 = null;
 							}
 						}
-						if (not == ValueUtil.TRUE_VALUE) {
+						if (not_0 == ValueUtil.TRUE_VALUE) {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							if (CAUGHT_not instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_not;
 							}
-							if ((CAUGHT_not == null) || (not == null)) {
+							if ((CAUGHT_not == null) || (not_0 == null)) {
 								result = null;
 							}
 							else {
