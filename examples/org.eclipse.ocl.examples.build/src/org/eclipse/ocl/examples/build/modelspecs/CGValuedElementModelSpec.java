@@ -88,6 +88,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSettableVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
@@ -2251,7 +2252,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGElementId.class, null,						Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , Cvl.EL_ID, null     , null     , Com.MUST , null     , Eq.EL_ID);
 			new CGValuedElementModelSpec(CGTypeId.class, null,							null     , null     , null     , null     , null     , null     , Inl.T_ID , null     , null    , null     , null     , null     , null     , null     , Com.MUST , null     , null    );
 
-			new CGValuedElementModelSpec(CGCallExp.class, null,							null     , null     , null     , null     , null     , Glo.FALSE, null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.EQUIV);
+			new CGValuedElementModelSpec(CGCallExp.class, null,							null     , null     , null     , null     , null     , Glo.FALSE, null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
+			new CGValuedElementModelSpec(CGSourcedCallExp.class, null,					null     , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.EQUIV);
 			new CGValuedElementModelSpec(CGAssertNonNullExp.class, "source",			Box.DELEG, null     , null     , Nul.NEVER, null,      null     , null     , null     , null    , null     , Val.DELNM, null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGCastExp.class, "source",	                    Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , Val.DELVL, null     , null     , Ctl.CNTRL, null     , null     , null    );
 			new CGValuedElementModelSpec(CGBoxExp.class, "source",						Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , Val.DELVL, null     , null     , null     , null     , null     , null    );

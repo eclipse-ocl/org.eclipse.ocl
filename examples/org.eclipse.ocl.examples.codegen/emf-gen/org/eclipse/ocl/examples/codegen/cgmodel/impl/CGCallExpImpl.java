@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCallExpImpl#isInvalidating <em>Invalidating</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCallExpImpl#isValidating <em>Validating</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCallExpImpl#getSource <em>Source</em>}</li>
  * </ul>
  *
  * @generated
@@ -45,7 +44,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_CALL_EXP_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3;
+	public static final int CG_CALL_EXP_FEATURE_COUNT = CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The default value of the '{@link #isInvalidating() <em>Invalidating</em>}' attribute.
@@ -86,16 +85,6 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	 * @ordered
 	 */
 	protected boolean validating = VALIDATING_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getSource() <em>Source</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSource()
-	 * @generated
-	 * @ordered
-	 */
-	protected CGValuedElement source;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -165,70 +154,11 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public CGValuedElement getSource() {
-		return source;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetSource(CGValuedElement newSource, NotificationChain msgs) {
-		CGValuedElement oldSource = source;
-		source = newSource;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldSource, newSource);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setSource(CGValuedElement newSource) {
-		if (newSource != source) {
-			NotificationChain msgs = null;
-			if (source != null)
-				msgs = ((InternalEObject)source).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
-			if (newSource != null)
-				msgs = ((InternalEObject)newSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
-			msgs = basicSetSource(newSource, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, newSource, newSource));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
 		return super.toString();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case 8:
-				return basicSetSource(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -243,8 +173,6 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 				return isInvalidating();
 			case 7:
 				return isValidating();
-			case 8:
-				return getSource();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -262,9 +190,6 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 				return;
 			case 7:
 				setValidating((Boolean)newValue);
-				return;
-			case 8:
-				setSource((CGValuedElement)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -284,9 +209,6 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 			case 7:
 				setValidating(VALIDATING_EDEFAULT);
 				return;
-			case 8:
-				setSource((CGValuedElement)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -303,19 +225,8 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 				return invalidating != INVALIDATING_EDEFAULT;
 			case 7:
 				return validating != VALIDATING_EDEFAULT;
-			case 8:
-				return source != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
-		return (getClass() == thatValue.getClass()) ? EquivalenceUtil.isEquivalent(this, (CGCallExp)thatValue) : null;
 	}
 
 	/**

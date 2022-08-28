@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.Operation;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getSource <em>Source</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getReferredOperation <em>Referred Operation</em>}</li>
  * </ul>
@@ -32,6 +33,30 @@ import org.eclipse.ocl.pivot.Operation;
  * @generated
  */
 public interface CGOperationCallExp extends CGCallExp {
+	/**
+	 * Returns the value of the '<em><b>Source</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The source expression for the call.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Source</em>' containment reference.
+	 * @see #setSource(CGValuedElement)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_Source()
+	 * @generated
+	 */
+	CGValuedElement getSource();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getSource <em>Source</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Source</em>' containment reference.
+	 * @see #getSource()
+	 * @generated
+	 */
+	void setSource(CGValuedElement value);
+
 	/**
 	 * Returns the value of the '<em><b>Referred Operation</b></em>' attribute.
 	 * <!-- begin-user-doc -->

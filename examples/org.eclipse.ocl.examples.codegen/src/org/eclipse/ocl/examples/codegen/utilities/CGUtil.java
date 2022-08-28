@@ -41,6 +41,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -311,7 +312,7 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgVariableExp.getReferredVariable());
 	}
 
-	public static @NonNull CGValuedElement getSource(@NonNull CGCallExp cgCallExp) {
+	public static @NonNull CGValuedElement getSource(@NonNull CGSourcedCallExp cgCallExp) {
 		return ClassUtil.nonNullState(cgCallExp.getSource());
 	}
 
@@ -421,7 +422,7 @@ public class CGUtil
 	/**
 	 * Use wrapExp to wrap wrappedExp.
 	 */
-	public static void wrap(@NonNull CGCallExp wrapExp, @NonNull CGValuedElement wrappedExp) {
+	public static void wrap(@NonNull CGSourcedCallExp wrapExp, @NonNull CGValuedElement wrappedExp) {
 		wrapExp.setTypeId(wrappedExp.getTypeId());
 		wrapExp.setAst(wrappedExp.getAst());
 		replace(wrappedExp, wrapExp);

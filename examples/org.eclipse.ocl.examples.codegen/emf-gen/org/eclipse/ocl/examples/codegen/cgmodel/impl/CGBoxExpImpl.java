@@ -24,7 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
  *
  * @generated
  */
-public class CGBoxExpImpl extends CGCallExpImpl implements CGBoxExp {
+public class CGBoxExpImpl extends CGSourcedCallExpImpl implements CGBoxExp {
 	/**
 	 * The number of structural features of the '<em>CG Box Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -32,7 +32,7 @@ public class CGBoxExpImpl extends CGCallExpImpl implements CGBoxExp {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_BOX_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0;
+	public static final int CG_BOX_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 0;
 
 	/**
 	 * <!-- begin-user-doc -->

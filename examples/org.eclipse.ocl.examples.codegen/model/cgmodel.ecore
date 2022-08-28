@@ -12,7 +12,7 @@
       <details key="documentation" value="A CGAccumulator is a mutable possibly invalid variable for use as an accumulator."/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGAssertNonNullExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGAssertNonNullExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGAssertNonNullExp asserts that its source is non-null causing an assertion failure if null."/>
     </eAnnotations>
@@ -28,7 +28,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGBoxExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGBoxExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGBoxExp converts an unboxed source value to a boxed value."/>
     </eAnnotations>
@@ -83,14 +83,8 @@
         <details key="documentation" value="Whether this call expression may return a non-invalid result for invalid inputs."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//CGValuedElement"
-        containment="true" resolveProxies="false">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The source expression for the call."/>
-      </eAnnotations>
-    </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGCastExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGCastExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A cast expression imposes a known type on a poorly typer source such as a CGEcoreParameter."/>
     </eAnnotations>
@@ -101,7 +95,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGCatchExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGCatchExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGCatchExp converts an invalid source exception to an invalid value."/>
     </eAnnotations>
@@ -178,7 +172,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="eDataType" lowerBound="1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType" resolveProxies="false"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGEcoreExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGEcoreExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGEcoreExp converts a source value to an Ecore value."/>
     </eAnnotations>
@@ -304,7 +298,7 @@
       <details key="documentation" value="A call of an operation using the ForeignProperty boxed-value access API."/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGGuardExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGGuardExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGGuardExp checks that its source is non-null and throws an invalid value exception if null."/>
     </eAnnotations>
@@ -350,7 +344,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGIsEqualExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGIsEqualExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGIsEqualExp realizes the built-in &quot;=&quot; operation."/>
     </eAnnotations>
@@ -367,7 +361,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGIsEqual2Exp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGIsEqual2Exp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGIsEqualExp realizes the built-in &quot;===&quot; operation that has only a 2-valued true/false return."/>
     </eAnnotations>
@@ -378,12 +372,12 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGIsInvalidExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGIsInvalidExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGIsInvalidExp realizes the built-in &quot;oclIsInvalid&quot; operation."/>
     </eAnnotations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGIsKindOfExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGIsKindOfExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGIsKindOfExp realizes the built-in &quot;oclIsKindOf&quot; operation."/>
     </eAnnotations>
@@ -394,13 +388,13 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGIsUndefinedExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGIsUndefinedExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGIsUndefinedExp realizes the built-in &quot;oclIsUndefined&quot; operation."/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGIterationCallExp" abstract="true"
-      eSuperTypes="#//CGCallExp">
+      eSuperTypes="#//CGSourcedCallExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="referredIteration" lowerBound="1"
         eType="#//Iteration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="iterators" upperBound="-1"
@@ -505,7 +499,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="field" lowerBound="1" eType="#//Field"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNavigationCallExp" abstract="true"
-      eSuperTypes="#//CGCallExp">
+      eSuperTypes="#//CGSourcedCallExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="referredProperty" lowerBound="1"
         eType="#//Property"/>
   </eClassifiers>
@@ -543,6 +537,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGOperationCallExp" abstract="true"
       eSuperTypes="#//CGCallExp">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//CGValuedElement"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The source expression for the call."/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
         eType="#//CGValuedElement" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="referredOperation" lowerBound="1"
@@ -603,6 +603,14 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGSourcedCallExp" abstract="true" eSuperTypes="#//CGCallExp">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//CGValuedElement"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The source expression for the call."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGString" eSuperTypes="#//CGConstant">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="CGInteger represents a string value."/>
@@ -630,7 +638,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGThrowExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGThrowExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGThrowExp converts an invalid source value to a thrown invalid exception."/>
     </eAnnotations>
@@ -667,7 +675,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="required" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGUnboxExp" eSuperTypes="#//CGCallExp">
+  <eClassifiers xsi:type="ecore:EClass" name="CGUnboxExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A CGUnboxExp converts a boxed source value to an unboxed value."/>
     </eAnnotations>

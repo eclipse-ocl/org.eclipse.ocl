@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.Property;
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNavigationCallExp()
  * @generated
  */
-public interface CGNavigationCallExp extends CGCallExp {
+public interface CGNavigationCallExp extends CGSourcedCallExp {
 	/**
 	 * Returns the value of the '<em><b>Referred Property</b></em>' attribute.
 	 * <!-- begin-user-doc -->

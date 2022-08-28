@@ -440,6 +440,11 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitCGSourcedCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGSourcedCallExp object) {
+		return null;
+	}
+
+	@Override
 	public R visitCGString(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGString object) {
 		return null;
 	}

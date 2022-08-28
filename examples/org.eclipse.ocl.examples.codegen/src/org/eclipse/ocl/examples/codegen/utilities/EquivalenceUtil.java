@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
@@ -28,6 +27,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNumber;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTuplePart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -61,24 +61,6 @@ import org.eclipse.ocl.pivot.values.RealValue;
  */
 public class EquivalenceUtil
 {
-	public static @Nullable Boolean isEquivalent(@NonNull CGCallExp thisValue, @NonNull CGCallExp thatValue) {
-		if (thisValue == thatValue) {
-			return Boolean.TRUE;
-		}
-		CGValuedElement thisSource = thisValue.getSource();
-		CGValuedElement thatSource = thatValue.getSource();
-		if ((thisSource != null) || (thatSource != null)) {
-			if ((thisSource == null) || (thatSource == null)) {
-				return null;			// Inconsistent sources should never happen
-			}
-			Boolean equivalence = thisSource.isEquivalentTo(thatSource);
-			if (equivalence != Boolean.TRUE) {
-				return null;			// Different sources do not guarantee different results
-			}
-		}
-		return Boolean.TRUE;
-	}
-
 	public static @Nullable Boolean isEquivalent(@NonNull CGCollectionExp thisValue, @NonNull CGCollectionExp thatValue) {
 		if (thisValue == thatValue) {
 			return Boolean.TRUE;
@@ -500,6 +482,24 @@ public class EquivalenceUtil
 			return null;			// Null inits should never happen
 		}
 		return thisPartInit.isEquivalentTo(thatPartInit);
+	}
+
+	public static @Nullable Boolean isEquivalent(@NonNull CGSourcedCallExp thisValue, @NonNull CGSourcedCallExp thatValue) {
+		if (thisValue == thatValue) {
+			return Boolean.TRUE;
+		}
+		CGValuedElement thisSource = thisValue.getSource();
+		CGValuedElement thatSource = thatValue.getSource();
+		if ((thisSource != null) || (thatSource != null)) {
+			if ((thisSource == null) || (thatSource == null)) {
+				return null;			// Inconsistent sources should never happen
+			}
+			Boolean equivalence = thisSource.isEquivalentTo(thatSource);
+			if (equivalence != Boolean.TRUE) {
+				return null;			// Different sources do not guarantee different results
+			}
+		}
+		return Boolean.TRUE;
 	}
 
 	public static @Nullable Boolean isEquivalent(@NonNull CGTupleExp thisValue, @NonNull CGTupleExp thatValue) {

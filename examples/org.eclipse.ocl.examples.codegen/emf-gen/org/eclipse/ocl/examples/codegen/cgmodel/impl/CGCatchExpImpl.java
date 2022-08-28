@@ -31,7 +31,7 @@ import org.eclipse.ocl.examples.codegen.cse.CatchPlace;
  *
  * @generated
  */
-public class CGCatchExpImpl extends CGCallExpImpl implements CGCatchExp {
+public class CGCatchExpImpl extends CGSourcedCallExpImpl implements CGCatchExp {
 	/**
 	 * The number of structural features of the '<em>CG Catch Exp</em>' class.
 	 * <!-- begin-user-doc -->
@@ -39,7 +39,7 @@ public class CGCatchExpImpl extends CGCallExpImpl implements CGCatchExp {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_CATCH_EXP_FEATURE_COUNT = CGCallExpImpl.CG_CALL_EXP_FEATURE_COUNT + 0;
+	public static final int CG_CATCH_EXP_FEATURE_COUNT = CGSourcedCallExpImpl.CG_SOURCED_CALL_EXP_FEATURE_COUNT + 0;
 
 	/**
 	 * <!-- begin-user-doc -->
