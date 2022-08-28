@@ -22,6 +22,8 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#getCallable <em>Callable</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsSelf <em>Is Self</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsThis <em>Is This</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGParameter()
@@ -55,4 +57,54 @@ public interface CGParameter extends CGVariable {
 	 * @generated
 	 */
 	void setCallable(CGCallable value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Self</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Whether this parameter supports the OCL self concept from the Abstract Syntax.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Is Self</em>' attribute.
+	 * @see #setIsSelf(boolean)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGParameter_IsSelf()
+	 * @generated
+	 */
+	boolean isIsSelf();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsSelf <em>Is Self</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Self</em>' attribute.
+	 * @see #isIsSelf()
+	 * @generated
+	 */
+	void setIsSelf(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Is This</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Whether this parameter supports the Java this concept.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Is This</em>' attribute.
+	 * @see #setIsThis(boolean)
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGParameter_IsThis()
+	 * @generated
+	 */
+	boolean isIsThis();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsThis <em>Is This</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is This</em>' attribute.
+	 * @see #isIsThis()
+	 * @generated
+	 */
+	void setIsThis(boolean value);
 } // CGParameter

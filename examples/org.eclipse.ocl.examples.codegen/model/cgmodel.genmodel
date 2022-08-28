@@ -218,7 +218,10 @@
     <genClasses ecoreClass="cgmodel.ecore#//CGNativeOperation"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGNativeOperationCallExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNativeOperationCallExp/method"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGNativeOperationCallExp/cgThis"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNativeOperationCallExp/thisIsSelf"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNativeOperationCallExp/valueIsBoxed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNativeOperationCallExp/valueIsEcore"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGNativeProperty"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGNativePropertyCallExp">
@@ -226,6 +229,7 @@
     </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGNavigationCallExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGNavigationCallExp/referredProperty"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGNavigationCallExp/cgProperty"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGNull"/>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGNumber">
@@ -250,6 +254,8 @@
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGParameter">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGParameter/callable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGParameter/isSelf"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGParameter/isThis"/>
     </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGProperty">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGProperty/containingClass"/>

@@ -1600,6 +1600,39 @@ public interface CGModelPackage extends EPackage {
 	EAttribute getCGNativeOperationCallExp_Method();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsBoxed <em>Value Is Boxed</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value Is Boxed</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsBoxed()
+	 * @see #getCGNativeOperationCallExp()
+	 * @generated
+	 */
+	EAttribute getCGNativeOperationCallExp_ValueIsBoxed();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsEcore <em>Value Is Ecore</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Value Is Ecore</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsEcore()
+	 * @see #getCGNativeOperationCallExp()
+	 * @generated
+	 */
+	EAttribute getCGNativeOperationCallExp_ValueIsEcore();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#getCgThis <em>Cg This</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Cg This</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#getCgThis()
+	 * @see #getCGNativeOperationCallExp()
+	 * @generated
+	 */
+	EReference getCGNativeOperationCallExp_CgThis();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isThisIsSelf <em>This Is Self</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1661,6 +1694,17 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getCGNavigationCallExp_ReferredProperty();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getCgProperty <em>Cg Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Cg Property</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getCgProperty()
+	 * @see #getCGNavigationCallExp()
+	 * @generated
+	 */
+	EReference getCGNavigationCallExp_CgProperty();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNull <em>CG Null</em>}'.
@@ -1863,6 +1907,28 @@ public interface CGModelPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCGParameter_Callable();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsSelf <em>Is Self</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Self</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsSelf()
+	 * @see #getCGParameter()
+	 * @generated
+	 */
+	EAttribute getCGParameter_IsSelf();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsThis <em>Is This</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is This</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGParameter#isIsThis()
+	 * @see #getCGParameter()
+	 * @generated
+	 */
+	EAttribute getCGParameter_IsThis();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGProperty <em>CG Property</em>}'.
@@ -3731,6 +3797,30 @@ public interface CGModelPackage extends EPackage {
 		EAttribute CG_NATIVE_OPERATION_CALL_EXP__METHOD = eINSTANCE.getCGNativeOperationCallExp_Method();
 
 		/**
+		 * The meta object literal for the '<em><b>Value Is Boxed</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_NATIVE_OPERATION_CALL_EXP__VALUE_IS_BOXED = eINSTANCE.getCGNativeOperationCallExp_ValueIsBoxed();
+
+		/**
+		 * The meta object literal for the '<em><b>Value Is Ecore</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_NATIVE_OPERATION_CALL_EXP__VALUE_IS_ECORE = eINSTANCE.getCGNativeOperationCallExp_ValueIsEcore();
+
+		/**
+		 * The meta object literal for the '<em><b>Cg This</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_NATIVE_OPERATION_CALL_EXP__CG_THIS = eINSTANCE.getCGNativeOperationCallExp_CgThis();
+
+		/**
 		 * The meta object literal for the '<em><b>This Is Self</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3783,6 +3873,14 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute CG_NAVIGATION_CALL_EXP__REFERRED_PROPERTY = eINSTANCE.getCGNavigationCallExp_ReferredProperty();
+
+		/**
+		 * The meta object literal for the '<em><b>Cg Property</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_NAVIGATION_CALL_EXP__CG_PROPERTY = eINSTANCE.getCGNavigationCallExp_CgProperty();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGNullImpl <em>CG Null</em>}' class.
@@ -3949,6 +4047,22 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_PARAMETER__CALLABLE = eINSTANCE.getCGParameter_Callable();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Self</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_PARAMETER__IS_SELF = eINSTANCE.getCGParameter_IsSelf();
+
+		/**
+		 * The meta object literal for the '<em><b>Is This</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CG_PARAMETER__IS_THIS = eINSTANCE.getCGParameter_IsThis();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGPropertyImpl <em>CG Property</em>}' class.
