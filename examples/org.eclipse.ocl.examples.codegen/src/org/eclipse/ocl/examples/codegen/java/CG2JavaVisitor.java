@@ -1972,7 +1972,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		localContext = localContext2;
 		try {
 			Property asProperty = CGUtil.getAST(cgForeignProperty);
-			CGParameter cgParameter = cgForeignProperty.getParameter();
+			List<CGParameter> cgParameters = cgForeignProperty.getParameters();
+			CGParameter cgParameter = cgParameters.size() > 0 ? cgParameters.get(0) : null;
 			CGValuedElement cgInitExpression = getExpression(cgForeignProperty.getBody());
 			js.append("public static ");
 			js.appendTypeDeclaration(cgForeignProperty);

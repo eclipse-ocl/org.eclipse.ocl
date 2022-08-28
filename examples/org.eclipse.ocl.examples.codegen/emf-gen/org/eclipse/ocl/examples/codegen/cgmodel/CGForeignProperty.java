@@ -14,6 +14,8 @@
  */
 package org.eclipse.ocl.examples.codegen.cgmodel;
 
+import java.util.List;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -28,7 +30,7 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter <em>Parameter</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGForeignProperty()
@@ -37,26 +39,16 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
 public interface CGForeignProperty extends CGProperty {
 
 	/**
-	 * Returns the value of the '<em><b>Parameter</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.examples.codegen.cgmodel.CGParameter}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * The parameters of this operation, with 'self' as the first parameter.
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Parameter</em>' containment reference.
-	 * @see #setParameter(CGParameter)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGForeignProperty_Parameter()
+	 * @return the value of the '<em>Parameters</em>' containment reference list.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGForeignProperty_Parameters()
 	 * @generated
 	 */
-	CGParameter getParameter();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter <em>Parameter</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Parameter</em>' containment reference.
-	 * @see #getParameter()
-	 * @generated
-	 */
-	void setParameter(CGParameter value);
+	List<CGParameter> getParameters();
 } // CGForeignProperty

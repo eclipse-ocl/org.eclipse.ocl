@@ -991,15 +991,15 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGForeignProperty();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter <em>Parameter</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameters <em>Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Parameter</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameter()
+	 * @return the meta object for the containment reference list '<em>Parameters</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty#getParameters()
 	 * @see #getCGForeignProperty()
 	 * @generated
 	 */
-	EReference getCGForeignProperty_Parameter();
+	EReference getCGForeignProperty_Parameters();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp <em>CG Foreign Property Call Exp</em>}'.
@@ -3275,12 +3275,12 @@ public interface CGModelPackage extends EPackage {
 		EClass CG_FOREIGN_PROPERTY = eINSTANCE.getCGForeignProperty();
 
 		/**
-		 * The meta object literal for the '<em><b>Parameter</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CG_FOREIGN_PROPERTY__PARAMETER = eINSTANCE.getCGForeignProperty_Parameter();
+		EReference CG_FOREIGN_PROPERTY__PARAMETERS = eINSTANCE.getCGForeignProperty_Parameters();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGForeignPropertyCallExpImpl <em>CG Foreign Property Call Exp</em>}' class.

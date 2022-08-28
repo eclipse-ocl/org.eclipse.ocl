@@ -145,7 +145,7 @@
     <genClasses ecoreClass="cgmodel.ecore#//CGFinalVariable"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGForeignOperationCallExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGForeignProperty">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGForeignProperty/parameter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGForeignProperty/parameters"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGForeignPropertyCallExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGGuardExp">

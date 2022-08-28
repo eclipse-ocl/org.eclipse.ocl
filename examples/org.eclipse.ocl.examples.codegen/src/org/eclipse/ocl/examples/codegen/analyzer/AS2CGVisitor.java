@@ -691,7 +691,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		setAst(cgForeignProperty, asProperty);
 		JavaLocalContext<?> localContext = (JavaLocalContext<?>) pushLocalContext(cgForeignProperty, asProperty);
 		CGParameter cgParameter = localContext.getSelfParameter();
-		cgForeignProperty.setParameter(cgParameter);
+		if (cgParameter != null) {
+			cgForeignProperty.getParameters().add(cgParameter);
+		}
 
 		PropertyId propertyId = asProperty.getPropertyId();
 
