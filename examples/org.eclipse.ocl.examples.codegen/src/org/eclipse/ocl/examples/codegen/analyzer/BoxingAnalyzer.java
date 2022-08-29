@@ -541,7 +541,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 					}
 				}
 				else {
-					Parameter asParameter = ownedParameters.get(i);
+					Parameter asParameter = ownedParameters.get(i-1);
 					if (asParameter.isIsRequired()) {
 						if (cgArgument.isNull()) {
 		//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
@@ -566,7 +566,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			}
 			else {
 				rewriteAsBoxed(cgArgument);
-				Parameter asParameter = ownedParameters.get(i);
+				Parameter asParameter = ownedParameters.get(i-1);
 				if (asParameter.isIsRequired() && !cgArgument.isNonNull()) {
 	//				rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
 					rewriteAsGuarded(cgArgument, false, "''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");

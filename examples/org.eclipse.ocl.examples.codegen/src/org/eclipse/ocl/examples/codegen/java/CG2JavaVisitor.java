@@ -1707,7 +1707,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		appendSuppressWarningsNull(cgOperationCallExp, ecoreIsRequired);
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		int iMax = Math.min(pParameters.size(), cgArguments.size());
+		int iMax = Math.min(pParameters.size()+1, cgArguments.size());
+		assert iMax >= 1;
 		for (int i = 0; i < iMax; i++) {
 			CGValuedElement cgArgument = cgArguments.get(i);
 			if (i == 0) {
@@ -1721,7 +1722,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 					js.append(", ");
 				}
 				CGValuedElement argument = getExpression(cgArgument);
-				Parameter pParameter = ClassUtil.nonNullState(pParameters.get(i));
+				Parameter pParameter = ClassUtil.nonNullState(pParameters.get(i-1));
 				GenParameter genParameter = context.getGenModelHelper().getGenParameter(pParameter);
 				if (genParameter != null) {
 					String rawBoundType = ClassUtil.nonNullState(genParameter.getRawBoundType());
@@ -2566,9 +2567,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				return false;
 			}
 		}
-		for (int i = 0; i < cgArguments.size(); i++) {
+		for (int i = 1; i < cgArguments.size(); i++) {
 			CGValuedElement cgArgument = cgArguments.get(i);
-			Parameter asParameter = cgOperationCallExp.getReferredOperation().getOwnedParameters().get(i);
+			Parameter asParameter = cgOperationCallExp.getReferredOperation().getOwnedParameters().get(i-1);
 			if (asParameter.isIsRequired()) {
 				if (cgArgument.isNull()) {
 					js.append("throw new ");
@@ -2800,7 +2801,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgNativeOperationCallExp) {
 	//	Operation asOperation = cgOperationCallExp.getReferredOperation();
 	//	boolean thisIsSelf = cgOperationCallExp.isThisIsSelf();
-		assert cgNativeOperationCallExp.getCgThis() == null;
+	//	assert cgNativeOperationCallExp.getCgThis() == null;
 		CGValuedElement cgThis = cgNativeOperationCallExp.getCgThis();
 		CGValuedElement cgThis2 = cgThis != null ? getExpression(cgThis) :  null;
 	//	boolean thisIsSelf = cgNativeOperationCallExp.isThisIsSelf();

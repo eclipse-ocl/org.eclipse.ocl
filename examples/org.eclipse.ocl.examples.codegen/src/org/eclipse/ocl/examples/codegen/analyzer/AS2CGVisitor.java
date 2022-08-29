@@ -986,6 +986,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);
 	//	cgOperationCallExp.setSource(cgSource);
+		cgOperationCallExp.getCgArguments().add(cgSource);
 		//		cgOperationCallExp.getDependsOn().add(cgSource);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
