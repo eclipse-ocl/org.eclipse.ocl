@@ -111,7 +111,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	//	executorParameter.setValueName(executorName);
 		executorParameter.setNonInvalid();
 		executorParameter.setNonNull();
-		executorName.addSecondaryElement(executorParameter);
+		executorName.addCGElement(executorParameter);
 		return executorParameter;
 	}
 
@@ -131,7 +131,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	//	executorVariable.setValueName(executorName);
 		executorVariable.setNonInvalid();
 		executorVariable.setNonNull();
-		executorName.addSecondaryElement(executorVariable);
+		executorName.addCGElement(executorVariable);
 		return executorVariable;
 	}
 
@@ -149,7 +149,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	//	idResolverVariable.setValueName(idResolverName);
 		idResolverVariable.setNonInvalid();
 		idResolverVariable.setNonNull();
-		idResolverNameResolution.addSecondaryElement(idResolverVariable);
+		idResolverNameResolution.addCGElement(idResolverVariable);
 		return idResolverVariable;
 	}
 
@@ -167,7 +167,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	//	modelManagerVariable.setValueName(modelManagerName);
 		modelManagerVariable.setNonInvalid();
 		modelManagerVariable.setNonNull();
-		modelManagerName.addSecondaryElement(modelManagerVariable);
+		modelManagerName.addCGElement(modelManagerVariable);
 		return modelManagerVariable;
 	}
 
@@ -178,7 +178,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		qualifiedThisVariable.setInit(getThisParameter());
 		qualifiedThisVariable.setNonInvalid();
 		qualifiedThisVariable.setNonNull();
-		qualifiedThisName.addSecondaryElement(qualifiedThisVariable);
+		qualifiedThisName.addCGElement(qualifiedThisVariable);
 		return qualifiedThisVariable;
 	}
 
@@ -188,7 +188,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		CGParameter selfParameter = analyzer.createCGParameter(selfName.getResolvedName(), analyzer.getTypeId(asType.getTypeId()), true);
 		selfParameter.setNonInvalid();
 		selfParameter.setNonNull();
-		selfName.addSecondaryElement(selfParameter);
+		selfName.addCGElement(selfParameter);
 		return selfParameter;
 	}
 
@@ -206,7 +206,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	//	standardLibraryVariable.setValueName(standardLibraryName);
 		standardLibraryVariable.setNonInvalid();
 		standardLibraryVariable.setNonNull();
-		standardLibraryNameResolution.addSecondaryElement(standardLibraryVariable);
+		standardLibraryNameResolution.addCGElement(standardLibraryVariable);
 		return standardLibraryVariable;
 	}
 
@@ -216,7 +216,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 		CGParameter thisParameter = analyzer.createCGParameter(thisName.getResolvedName(), analyzer.getTypeId(asType.getTypeId()), true);
 		thisParameter.setNonInvalid();
 		thisParameter.setNonNull();
-		thisName.addSecondaryElement(thisParameter);
+		thisName.addCGElement(thisParameter);
 		return thisParameter;
 	}
 
@@ -227,7 +227,7 @@ public class JavaLocalContext<@NonNull CG extends JavaCodeGenerator> extends Abs
 	//	typeIdParameter.setValueName(typeIdName);
 		typeIdParameter.setNonInvalid();
 		typeIdParameter.setNonNull();
-		typeIdNameResolution.addSecondaryElement(typeIdParameter);
+		typeIdNameResolution.addCGElement(typeIdParameter);
 		return typeIdParameter;
 	}
 

@@ -25,9 +25,12 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
@@ -38,18 +41,19 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsKindOfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGUnlimited;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -57,6 +61,8 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
@@ -127,6 +133,7 @@ public class NameManagerHelper
 {
 	public static final String BAG_NAME_HINT_PREFIX = "BAG";
 	public static final String COLLECTION_NAME_HINT_PREFIX = "COL";
+	public static final String CONSTRAINT_NAME_HINT_PREFIX = "";
 	public static final String DEFAULT_GLOBAL_NAME_PREFIX = "global";
 	public static final String DEFAULT_LOCAL_NAME_PREFIX = "symbol";
 	//	public static final String ID_NAME_HINT_PREFIX = "TID";
@@ -168,6 +175,11 @@ public class NameManagerHelper
 		@Override
 		public @NonNull String visitCollectionRange(@NonNull CollectionRange object) {
 			return RANGE_NAME_HINT_PREFIX;
+		}
+
+		@Override
+		public @NonNull String visitConstraint(@NonNull Constraint object) {
+			return context.getConstraintNameHint(object);
 		}
 
 		@Override
@@ -313,7 +325,8 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGBoxExp(@NonNull CGBoxExp object) {
-			return "BOXED_" + context.getNameHint(object.getSourceValue());
+//			return "BOXED_" + context.getNameHint(object.getSourceValue());
+			return visiting(object);			// NameVariant should be eagerly declared
 		}
 
 		@Override
@@ -328,18 +341,26 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGCatchExp(@NonNull CGCatchExp object) {
-			return "CAUGHT_" + context.getNameHint(object.getSourceValue());
+//			return "CAUGHT_" + context.getNameHint(object.getSourceValue());
+			return visiting(object);			// NameVariant should be eagerly declared
 		}
 
 		@Override
 		public @NonNull String visitCGCollectionExp(@NonNull CGCollectionExp object) {
-			String kind = object.getName();
-			return context.getKindHint(kind);
+			CollectionLiteralExp asCollectionLiteralExp = CGUtil.getAST(object);
+			return context.getTypeNameHint(asCollectionLiteralExp.getType());
+//			return String.valueOf(asCollectionLiteralExp.getKind().getName());
 		}
 
 		@Override
 		public @NonNull String visitCGCollectionPart(@NonNull CGCollectionPart object) {
 			return RANGE_NAME_HINT_PREFIX;
+		}
+
+		@Override
+		public @NonNull String visitCGConstraint(@NonNull CGConstraint object) {
+			Constraint asConstraint = CGUtil.getAST(object);
+			return context.getConstraintNameHint(asConstraint);
 		}
 
 		@Override
@@ -354,6 +375,18 @@ public class NameManagerHelper
 		}
 
 		@Override
+		public @NonNull String visitCGExecutorProperty(@NonNull CGExecutorProperty object) {
+			Property asProperty = CGUtil.getAST(object);
+			return "IMPPROPid_" + context.getPropertyNameHint(asProperty);
+		}
+
+		@Override
+		public @NonNull String visitCGExecutorShadowPart(@NonNull CGExecutorShadowPart object) {
+			Property asProperty = CGUtil.getAST(object);
+			return "CTORid_" + context.getPropertyNameHint(asProperty);
+		}
+
+		@Override
 		public @NonNull String visitCGExecutorType(@NonNull CGExecutorType object) {
 			Type asType = CGUtil.getAST(object);
 			return context.getTypeNameHint(asType);
@@ -361,7 +394,9 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitCGGuardExp(@NonNull CGGuardExp object) {
-			return "GUARDED_" + context.getNameHint(object.getSourceValue());
+		//	return "GUARDED2_" + context.getNameHint(object.getSourceValue());			// XXX
+			//	return visiting(object);			// NameVariant should be eagerly declared
+				return super.visitCGGuardExp(object);			// NameVariant should be eagerly declared
 		}
 
 		@Override
@@ -408,9 +443,24 @@ public class NameManagerHelper
 		}
 
 		@Override
+		public @NonNull String visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp object) {
+			Element asElement = object.getAst();
+			if (asElement == null) {		// Synthetic operation call such as excluding()
+				return context.getNameableHint(object);
+			}
+			return super.visitCGLibraryOperationCallExp(object);
+		}
+
+		@Override
 		public @NonNull String visitCGMapPart(@NonNull CGMapPart object) {
 			String nameHint = MAP_PART_HINT_PREFIX;
 			return nameHint;
+		}
+
+		@Override
+		public @NonNull String visitCGNamedElement(@NonNull CGNamedElement object) {
+			NamedElement asNamedElement = CGUtil.getAST(object);
+			return context.getNameHint(asNamedElement);
 		}
 
 		@Override
@@ -426,25 +476,32 @@ public class NameManagerHelper
 		}
 
 		@Override
-		public @NonNull String visitCGOperationCallExp(@NonNull CGOperationCallExp object) {
-			Operation referredOperation = object.getReferredOperation();
-			return context.getOperationCallExpNameHint(referredOperation);
+		public @NonNull String visitCGOperation(@NonNull CGOperation object) {
+			Operation asOperation = CGUtil.getAST(object);
+			return context.getNameableHint(asOperation);
 		}
 
-		@Override
-		public @NonNull String visitCGOppositePropertyCallExp(@NonNull CGOppositePropertyCallExp object) {
-		//	Property referredOppositeProperty = ((OppositePropertyCallExp)object.getAst()).getReferredProperty();
-			Property referredOppositeProperty = object.getReferredProperty();
-			Property referredProperty = referredOppositeProperty != null ? referredOppositeProperty.getOpposite() : null;
-			return context.getPropertyNameHint(referredProperty);
-		}
+//		@Override
+//		public @NonNull String visitCGOperationCallExp(@NonNull CGOperationCallExp object) {
+	//		Operation referredOperation = object.getReferredOperation();
+	//		return context.getOperationCallExpNameHint(referredOperation);
+//		return super.visitCGOperationCallExp(object);
+//		}
 
-		@Override
-		public @NonNull String visitCGPropertyCallExp(@NonNull CGPropertyCallExp object) {
-		//	Property referredProperty = ((PropertyCallExp)object.getAst()).getReferredProperty();
-			Property referredProperty = object.getReferredProperty();
-			return context.getPropertyNameHint(referredProperty);
-		}
+//		@Override
+//		public @NonNull String visitCGOppositePropertyCallExp(@NonNull CGOppositePropertyCallExp object) {
+//		//	Property referredOppositeProperty = ((OppositePropertyCallExp)object.getAst()).getReferredProperty();
+//			Property referredOppositeProperty = object.getReferredProperty();
+//			Property referredProperty = referredOppositeProperty != null ? referredOppositeProperty.getOpposite() : null;
+//			return context.getPropertyNameHint(referredProperty);
+//		}
+
+//		@Override
+//		public @NonNull String visitCGPropertyCallExp(@NonNull CGPropertyCallExp object) {
+//		//	Property referredProperty = ((PropertyCallExp)object.getAst()).getReferredProperty();
+//			Property referredProperty = object.getReferredProperty();
+//			return context.getPropertyNameHint(referredProperty);
+//		}
 
 		@Override
 		public @NonNull String visitCGReal(@NonNull CGReal object) {
@@ -478,6 +535,54 @@ public class NameManagerHelper
 		public @NonNull String visitCGUnboxExp(@NonNull CGUnboxExp object) {
 			return "UNBOXED_" + context.getNameHint(object.getSourceValue());
 		}
+
+		@Override
+		public @NonNull String visitCGUnlimited(@NonNull CGUnlimited object) {
+		//	Number numericValue = object.getNumericValue();
+		//	return context.getNumericNameHint(numericValue);
+			return "XXYYZ";
+		}
+
+		@Override
+		public @NonNull String visitCGValuedElement(@NonNull CGValuedElement object) {
+			NameResolution nameResolution = object.basicGetNameResolution();
+			if (nameResolution != null) {
+				if (!nameResolution.isUnresolved()) {
+					return nameResolution.getNameHint();
+				}
+			}
+			Element asElement = object.getAst();
+			if (asElement != null) {
+			//	return super.visitCGValuedElement(object);
+				return context.getNameHint(asElement);
+		}
+		//	NameResolution nameResolution = object.basicGetNameResolution();
+		//	assert nameResolution == null;
+//				return nameResolution.getNameHint();
+//			}
+			CGValuedElement namedValue = object.getNamedValue();
+			if (namedValue != object) {
+				return context.getNameHint(namedValue);
+			}
+			else {
+				return super.visitCGValuedElement(object);
+			}
+		}
+
+//		@Override
+//		public @NonNull String visitCGVariable(@NonNull CGVariable object) {
+//			return visitCGNamedElement(object);		// Leapfrog getNamedValue reirection
+//		}
+
+	//	@Override
+	//	public @NonNull String visitCGVariableExp(@NonNull CGVariableExp object) {
+		//	assert object.basicGetNameResolution() ==
+		//	CGVariable cgVariable = CGUtil.getReferredVariable(object);
+		//	String name = cgVariable.accept(this);
+		//	return context.getNameHint(cgVariable);
+		//	return visiting(object);			// CGVariableExp should redirect to CGVariable when created
+	//		return super.visitCGVariableExp(object);			// CGVariableExp should redirect to CGVariable when created
+	//	}
 
 		@Override
 		public @NonNull String visiting(@NonNull CGElement visitable) {
@@ -661,6 +766,19 @@ public class NameManagerHelper
 //		return cgVisitor;
 //	}
 
+	protected @NonNull String getConstraintNameHint(@Nullable Constraint aConstraint) {
+		if (aConstraint != null) {
+			String string = aConstraint.getName();
+			if (string == null) {
+				string = "anon";
+			}
+			return CONSTRAINT_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, CONSTRAINT_NAME_HINT_PREFIX.length() > 0, aConstraint);
+		}
+		else {
+			return getFallBackHint("constraint");
+		}
+	}
+
 	/**
 	 * Return defaultHint as a fall-back after failing to provide a better hint. This routine is just a communal debug opportinity.
 	 */
@@ -715,15 +833,24 @@ public class NameManagerHelper
 	 * The returned name is not guaranteed to be unique. Uniqueness is enforced when the hint is passed to getSymbolName().
 	 */
 	public @NonNull String getNameHint(@NonNull Object anObject) {
-		if (anObject instanceof CGElement) {
-			if (anObject instanceof CGValuedElement) {
-				CGValuedElement cgValuedElement = ((CGValuedElement)anObject).getNamedValue();
-				String name = cgValuedElement.getName();
-				if (name != null) {
-					return name;
+	/*	if (anObject instanceof CGNamedElement) {
+			CGNamedElement cgNamedElement = (CGNamedElement)anObject;
+			Element asElement = cgNamedElement.getAst();
+			if (asElement != null) {
+				EObject eContainer = asElement;
+				EStructuralFeature eContainingFeature;
+				while ((eContainingFeature = eContainer.eContainingFeature()) == PivotPackage.Literals.LET_EXP__OWNED_IN) {
+					eContainer = eContainer.eContainer();
 				}
-				anObject = cgValuedElement;
+				if (eContainingFeature == PivotPackage.Literals.VARIABLE__OWNED_INIT) {
+					eContainer = eContainer.eContainer();
+					assert eContainer != null;
+					return getNameHint(eContainer);
+				}
 			}
+			return cgNamedElement.accept(cgVisitor);
+		}
+		else */ if (anObject instanceof CGElement) {
 			return ((CGElement)anObject).accept(cgVisitor);
 		}
 		else if (anObject instanceof Visitable) {

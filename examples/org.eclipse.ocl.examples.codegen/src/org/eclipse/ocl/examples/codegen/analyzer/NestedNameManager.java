@@ -70,7 +70,7 @@ public class NestedNameManager extends NameManager
 	/**
 	 * Declare that cgElement has a name which can eventually default to its preferred value.
 	 * This is typically used to provide an eager name resolution for a variable without reserving the name.
-	 *
+	 */
 	public @NonNull NameResolution declarePreferredName(@NonNull CGValuedElement cgElement) {
 	//	assert cgElement.getNamedValue() == cgElement;
 		NameResolution nameResolution = cgElement.basicGetNameResolution();
@@ -79,7 +79,7 @@ public class NestedNameManager extends NameManager
 		}
 		String nameHint = helper.getNameHint(cgElement);
 		return new BaseNameResolution(this, cgElement, nameHint);
-	} */
+	}
 
 	@Override
 	public @NonNull BaseNameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint) {

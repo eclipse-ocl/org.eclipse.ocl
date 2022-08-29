@@ -45,7 +45,7 @@ public class BaseNameResolution extends AbstractNameResolution
 	/**
 	 * A non-null placeholder for a nameHint whose resolution is deferred until the CG containment tree is sound.
 	 */
-	private static final @NonNull String UNRESOLVED = "Â«UNRESOLVEDÂ»";
+	private static final @NonNull String UNRESOLVED = "«UNRESOLVED»";
 
 	/**
 	 * The namespace at and below whch this resolved name and all its variants must be unique.

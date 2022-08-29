@@ -361,7 +361,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgOperationCallExp.getCgArguments().add(cgArgument);
 		}
 		initAst(cgOperationCallExp, element);
-		cgOperationCallExp.setName(element.getName());
 		cgOperationCallExp.setReferredOperation(asOperation);
 		if (asOverrideOperations != null) {
 			CGOperation cgOperation = asVirtualOperation2cgOperation.get(asOperation);
@@ -385,7 +384,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgOperationCallExp.getCgArguments().add(cgArgument);
 		}
 		initAst(cgOperationCallExp, element);
-		cgOperationCallExp.setName(element.getName());
 		cgOperationCallExp.setReferredOperation(finalOperation);
 		cgOperationCallExp.setLibraryOperation(constrainedOperation);
 		if (codeGenerator.addConstrainedOperation(finalOperation)) {
@@ -425,7 +423,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGLetExp createCGLetExp(@NonNull TypedElement element, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgIn) {
 		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
 		initAst(cgLetExp, element);
-		cgLetExp.setName(element.getName());
 		cgLetExp.setInit(cgVariable);
 		cgLetExp.setIn(cgIn);
 		return cgLetExp;
@@ -468,8 +465,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			assert cgVariable.eContainer() == null;
 		}
 		initAst(cgVariable, asVariable);
-		cgVariable.setName(asVariable.getName());
-		//		cgVariable.setInit(doVisit(CGValuedElement.class, asVariable.getInitExpression()));
+		getNameManager().declarePreferredName(cgVariable);
 		return cgVariable;
 	}
 
@@ -490,7 +486,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		VariableDeclaration asVariable = PivotUtil.getReferredVariable(asVariableExp);
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
 		initAst(cgVariableExp, asVariableExp);
-		cgVariableExp.setName(asVariableExp.getName());
 		CGVariable cgVariable;
 		if ((asVariable instanceof Parameter) && isThis((Parameter)asVariable)) {
 			JavaLocalContext<?> localContext = (JavaLocalContext<?>)codeGenerator.getGlobalContext().getLocalContext(getCurrentClass());
@@ -505,6 +500,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgVariable = getVariable(asVariable);
 		}
 		cgVariableExp.setReferredVariable(cgVariable);
+		cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		return cgVariableExp;
 	}
 
@@ -693,7 +689,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		context.addForeignFeature(asProperty);
 		CGForeignProperty cgForeignProperty = CGModelFactory.eINSTANCE.createCGForeignProperty();
 		initAst(cgForeignProperty, asProperty);
-		cgForeignProperty.setName(asProperty.getName());
+	//	cgForeignProperty.setName(asProperty.getName());
 		JavaLocalContext<?> localContext = (JavaLocalContext<?>) pushLocalContext(cgForeignProperty, asProperty);
 		CGParameter cgParameter = localContext.getSelfParameter();
 		if (cgParameter != null) {
@@ -738,7 +734,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgIterationCallExp = cgLibraryIterationCallExp;
 		}
 		initAst(cgIterationCallExp, element);
-		cgIterationCallExp.setName(element.getName());
 		cgIterationCallExp.setReferredIteration(asIteration);
 		cgIterationCallExp.setInvalidating(asIteration.isIsInvalidating());
 		cgIterationCallExp.setValidating(asIteration.isIsValidating());
@@ -791,6 +786,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					if (!asIteration.isIsValidating()) {
 						cgAccumulator.setNonInvalid();
 					}
+					getNameManager().declarePreferredName(cgAccumulator);
 					cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
 				}
 			}
@@ -828,7 +824,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGIsInvalidExp cgIsInvalidExp = CGModelFactory.eINSTANCE.createCGIsInvalidExp();
 			cgIsInvalidExp.setSource(cgSource);
 			initAst(cgIsInvalidExp, element);
-			cgIsInvalidExp.setName(element.getName());
 			cgIsInvalidExp.setInvalidating(false);
 			cgIsInvalidExp.setValidating(true);
 			return cgIsInvalidExp;
@@ -837,7 +832,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGIsUndefinedExp cgIsUndefinedExp = CGModelFactory.eINSTANCE.createCGIsUndefinedExp();
 			cgIsUndefinedExp.setSource(cgSource);
 			initAst(cgIsUndefinedExp, element);
-			cgIsUndefinedExp.setName(element.getName());
 			cgIsUndefinedExp.setInvalidating(false);
 			cgIsUndefinedExp.setValidating(true);
 			return cgIsUndefinedExp;
@@ -850,7 +844,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgIsEqualExp.setSource(cgSource);
 			cgIsEqualExp.setArgument(cgArgument);
 			initAst(cgIsEqualExp, element);
-			cgIsEqualExp.setName(element.getName());
 			cgIsEqualExp.setInvalidating(false);
 			cgIsEqualExp.setValidating(true);
 			return cgIsEqualExp;
@@ -865,7 +858,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				cgForeignOperationCallExp.getCgArguments().add(cgArgument);
 			}
 			initAst(cgForeignOperationCallExp, element);
-			cgForeignOperationCallExp.setName(element.getName());
 			cgForeignOperationCallExp.setReferredOperation(asOperation);
 			return cgForeignOperationCallExp;
 		}
@@ -886,7 +878,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				cgNativeOperationCallExp.getCgArguments().add(cgArgument);
 			}
 			initAst(cgNativeOperationCallExp, element);
-			cgNativeOperationCallExp.setName(element.getName());
 			cgNativeOperationCallExp.setReferredOperation(asOperation);
 			return cgNativeOperationCallExp;
 		}
@@ -942,7 +933,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 							cgNativeOperationCallExp.getCgArguments().add(cgArgument);
 						}
 						initAst(cgNativeOperationCallExp, element);
-						cgNativeOperationCallExp.setName(element.getName());
 						cgNativeOperationCallExp.setReferredOperation(asOperation);
 						cgNativeOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 						cgNativeOperationCallExp.setValidating(asOperation.isIsValidating());
@@ -961,7 +951,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 							cgForeignOperationCallExp.getCgArguments().add(cgArgument);
 						}
 						initAst(cgForeignOperationCallExp, element);
-						cgForeignOperationCallExp.setName(element.getName());
 						cgForeignOperationCallExp.setReferredOperation(asOperation);
 						return cgForeignOperationCallExp;
 					}
@@ -993,7 +982,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		cgOperationCallExp.setReferredOperation(asOperation);
 		initAst(cgOperationCallExp, element);
-		cgOperationCallExp.setName(element.getName());
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);
@@ -1052,7 +1040,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		cgPropertyCallExp.setReferredProperty(asProperty);
 		initAst(cgPropertyCallExp, element);
-		cgPropertyCallExp.setName(element.getName());
 		cgPropertyCallExp.setRequired(isRequired);
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
@@ -1160,7 +1147,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		cgPropertyCallExp.setReferredProperty(asProperty);
 		initAst(cgPropertyCallExp, element);
-		cgPropertyCallExp.setName(element.getName());
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
@@ -1198,30 +1184,25 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
 		OCLExpression asSource = ClassUtil.nonNullModel(callExp.getOwnedSource());
 		initAst(cgVariableExp, asSource);
-		cgVariableExp.setName(asSource.getName());
+	//	cgVariableExp.setName(asSource.getName());
 		cgVariableExp.setReferredVariable(cgVariable);
 		//
 		CGConstantExp cgNullExpression = context.createCGConstantExp(callExp, context.getNull());
 		initAst(cgNullExpression, callExp);
-		cgNullExpression.setName(callExp.getName());
 		//
 		CGIsEqual2Exp cgCondition = CGModelFactory.eINSTANCE.createCGIsEqual2Exp();
 		cgCondition.setSource(cgVariableExp);
 		cgCondition.setArgument(cgNullExpression);
 		initAst(cgCondition, callExp);
-		cgCondition.setName(callExp.getName());
 		cgCondition.setTypeId(context.getTypeId(TypeId.BOOLEAN));
 		cgCondition.setInvalidating(false);
 		cgCondition.setValidating(true);
 		//
 		CGConstantExp cgThenExpression = context.createCGConstantExp(callExp, context.getNull());
 		initAst(cgThenExpression, callExp);
-		cgThenExpression.setName(callExp.getName());
 		//
 		CGIfExp cgIfExp = createCGIfExp(cgCondition, cgThenExpression, cgUnsafeExp);
 		initAst(cgIfExp, callExp);
-		cgIfExp.setName(callExp.getName());
-		cgIfExp.setName(cgVariable.getName());
 		//
 		CGLetExp cgLetExp = createCGLetExp(callExp, cgVariable, cgIfExp);
 		return cgLetExp;
@@ -1234,14 +1215,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgVariable.setInit(cgSource);
 		cgVariable.setAst(cgSource.getAst());
 		cgVariable.setTypeId(cgSource.getTypeId());
-		cgVariable.setName(nameHint);
+	//	cgVariable.setName(nameHint);
 		return cgVariable;
 	}
 
 	protected @NonNull CGVariableExp generateSafeVariableExp(@NonNull OCLExpression element, @NonNull CGFinalVariable cgVariable) {
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
 		initAst(cgVariableExp, element);
-		cgVariableExp.setName(element.getName());
+	//	cgVariableExp.setName(element.getName());
 		cgVariableExp.setReferredVariable(cgVariable);
 		return cgVariableExp;
 	}
@@ -1300,15 +1281,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	public @NonNull CGIterator getIterator(@NonNull VariableDeclaration asVariable) {
-		CGParameter cgParameter = (CGParameter) variablesStack.getVariable(asVariable);
-		if (cgParameter == null) {
-			cgParameter = CGModelFactory.eINSTANCE.createCGIterator();
-			initAst(cgParameter, asVariable);
-			cgParameter.setName(asVariable.getName());
-			cgParameter.setTypeId(context.getTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
-			variablesStack.putVariable(asVariable, cgParameter);
+		CGIterator cgIterator = (CGIterator) variablesStack.getVariable(asVariable);
+		if (cgIterator == null) {
+			cgIterator = CGModelFactory.eINSTANCE.createCGIterator();
+			cgIterator.setAst(asVariable);
+			cgIterator.setTypeId(context.getTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
+			getNameManager().declarePreferredName(cgIterator);
+			variablesStack.putVariable(asVariable, cgIterator);
 		}
-		return (CGIterator) cgParameter;
+		return cgIterator;
 	}
 
 	public @NonNull CGVariable getLocalVariable(@NonNull VariableDeclaration asVariable) {
@@ -1316,7 +1297,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgVariable == null) {
 			cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 			initAst(cgVariable, asVariable);
-			cgVariable.setName(asVariable.getName());
+			getNameManager().declareLazyName(cgVariable);
 			variablesStack.putVariable(asVariable, cgVariable);
 		}
 		return cgVariable;
@@ -1346,9 +1327,16 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 			initAst(cgParameter, aParameter);
-			cgParameter.setName(aParameter.getName());
 			if (explicitName == null) {
-				context.setNames(cgParameter, aParameter);
+			//	context.setNames(cgParameter, aParameter);
+
+				String name = context.getGlobalNameManager().getNameHint(aParameter);
+				//	String name = globalNameManager.helper.getNameHint(anObject);
+				//	cgValue.setName(name);
+				//	cgValue.setValueName(name);
+				getNameManager().declarePreferredName(cgParameter);
+
+
 			//	NameResolution nameResolution = cgParameter.getNameResolution();
 			//	nameResolution.setResolvedName(parameterVariable.getName());
 			//	getNameManager().addNameResolution(nameResolution);
@@ -1378,11 +1366,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGParameter cgParameter = variablesStack.getParameter(aParameter);
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-			cgParameter.setName(aParameter.getName());
+		//	cgParameter.setName(aParameter.getName());
 		//	cgParameter.setValueName(explicitName);
-			nameResolution.addSecondaryElement(cgParameter);
+			nameResolution.addCGElement(cgParameter);
 			initAst(cgParameter, aParameter);
-			cgParameter.setName(aParameter.getName());
+			getNameManager().declareLazyName(cgParameter);
 			//			cgParameter.setTypeId(context.getTypeId(aParameter.getTypeId()));
 			addParameter(aParameter, cgParameter);
 			cgParameter.setRequired(aParameter.isIsRequired());
@@ -1632,7 +1620,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGConstant constant = context.getBoolean(element.isBooleanSymbol());
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
 		initAst(cgLiteralExp, element);
-		cgLiteralExp.setName(element.getName());
 		return cgLiteralExp;
 	}
 
@@ -1663,7 +1650,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGCollectionPart visitCollectionItem(@NonNull CollectionItem element) {
 		CGCollectionPart cgCollectionPart = CGModelFactory.eINSTANCE.createCGCollectionPart();
 		initAst(cgCollectionPart, element);
-		cgCollectionPart.setName(element.getName());
 		cgCollectionPart.setFirst(doVisit(CGValuedElement.class, element.getOwnedItem()));
 		return cgCollectionPart;
 	}
@@ -1672,8 +1658,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGCollectionExp visitCollectionLiteralExp(@NonNull CollectionLiteralExp element) {
 		CGCollectionExp cgCollectionExp = CGModelFactory.eINSTANCE.createCGCollectionExp();
 		initAst(cgCollectionExp, element);
-		cgCollectionExp.setName(element.getName());
-		cgCollectionExp.setName(element.getKind().getName());
 		List<CGCollectionPart> cgParts = cgCollectionExp.getParts();
 		for (@NonNull CollectionLiteralPart asPart : ClassUtil.nullFree(element.getOwnedParts())) {
 			cgParts.add(doVisit(CGCollectionPart.class, asPart));
@@ -1686,7 +1670,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGCollectionPart visitCollectionRange(@NonNull CollectionRange element) {
 		CGCollectionPart cgCollectionPart = CGModelFactory.eINSTANCE.createCGCollectionPart();
 		initAst(cgCollectionPart, element);
-		cgCollectionPart.setName(element.getName());
 		cgCollectionPart.setFirst(doVisit(CGValuedElement.class, element.getOwnedFirst()));
 		cgCollectionPart.setLast(doVisit(CGValuedElement.class, element.getOwnedLast()));
 		cgCollectionPart.setTypeId(context.getTypeId(TypeId.INTEGER_RANGE));
@@ -1726,7 +1709,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGConstant constant = context.getElementId(element.getReferredLiteral().getEnumerationLiteralId());
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
 		initAst(cgLiteralExp, element);
-		cgLiteralExp.setName(element.getName());
 		return cgLiteralExp;
 	}
 
@@ -1754,7 +1736,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGValuedElement cgElseExpression = doVisit(CGValuedElement.class, element.getOwnedElse());
 		CGIfExp cgIfExp = createCGIfExp(cgCondition, cgThenExpression, cgElseExpression);
 		initAst(cgIfExp, element);
-		cgIfExp.setName(element.getName());
 		return cgIfExp;
 	}
 
@@ -1764,7 +1745,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGInteger constant = context.getInteger(integerSymbol != null ? integerSymbol : 0);
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
 		initAst(cgLiteralExp, element);
-		cgLiteralExp.setName(element.getName());
 		return cgLiteralExp;
 	}
 
@@ -1772,7 +1752,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGConstantExp visitInvalidLiteralExp(@NonNull InvalidLiteralExp element) {
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, context.getInvalid());
 		initAst(cgLiteralExp, element);
-		cgLiteralExp.setName(element.getName());
 		return cgLiteralExp;
 	}
 
@@ -1780,7 +1759,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGLetExp visitLetExp(@NonNull LetExp element) {
 		Variable variable = element.getOwnedVariable();
 		CGValuedElement initExpression = doVisit(CGValuedElement.class, variable.getOwnedInit());
-		initExpression.setName(variable.getName());
+	//	initExpression.setName(variable.getName());
 		CGFinalVariable cgVariable = (CGFinalVariable) createCGVariable(variable);		// FIXME Lose cast
 		cgVariable.setInit(initExpression);
 		//		initExpression.setVariableValue(cgVariable);
@@ -1800,8 +1779,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGNamedElement visitMapLiteralExp(@NonNull MapLiteralExp element) {
 		CGMapExp cgMapExp = CGModelFactory.eINSTANCE.createCGMapExp();
 		initAst(cgMapExp, element);
-		cgMapExp.setName(element.getName());
-		cgMapExp.setName("Map");
 		List<@NonNull CGMapPart> cgParts = ClassUtil.nullFree(cgMapExp.getParts());
 		for (@NonNull MapLiteralPart asPart : ClassUtil.nullFree(element.getOwnedParts())) {
 			cgParts.add(doVisit(CGMapPart.class, asPart));
@@ -1830,7 +1807,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGConstantExp visitNullLiteralExp(@NonNull NullLiteralExp element) {
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, context.getNull());
 		initAst(cgLiteralExp, element);
-		cgLiteralExp.setName(element.getName());
 		return cgLiteralExp;
 	}
 
@@ -1981,7 +1957,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGReal cgReal = context.getReal(realSymbol != null ? realSymbol : Double.valueOf(0.0));
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, cgReal);
 		initAst(cgLiteralExp, element);
-		cgLiteralExp.setName(element.getName());
 		return cgLiteralExp;
 	}
 
@@ -2014,8 +1989,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgShadowExp.setExecutorType(cgExecutorType);
 			cgShadowExp.getOwns().add(cgExecutorType);
 			initAst(cgShadowExp, element);
-			cgShadowExp.setName(element.getName());
-			//			context.setNames(cgShadowExp, element);
 			List<@NonNull ShadowPart> asParts = new ArrayList<>(ClassUtil.nullFree(element.getOwnedParts()));
 			Collections.sort(asParts, NameUtil.NAMEABLE_COMPARATOR);
 			List<@NonNull CGShadowPart> cgParts = ClassUtil.nullFree(cgShadowExp.getParts());		// Ensure deterministic CGShadowPart order
@@ -2030,7 +2003,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGShadowPart visitShadowPart(@NonNull ShadowPart element) {
 		CGShadowPart cgShadowPart = CGModelFactory.eINSTANCE.createCGShadowPart();
 		initAst(cgShadowPart, element);
-		cgShadowPart.setName(element.getName());
 		cgShadowPart.setInit(doVisit(CGValuedElement.class, element.getOwnedInit()));
 		Property referredProperty = element.getReferredProperty();
 		if (referredProperty != null) {
@@ -2058,7 +2030,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGTupleExp visitTupleLiteralExp(@NonNull TupleLiteralExp element) {
 		CGTupleExp cgTupleExp = CGModelFactory.eINSTANCE.createCGTupleExp();
 		initAst(cgTupleExp, element);
-		cgTupleExp.setName(element.getName());
 		List<@NonNull CGTuplePart> cgParts = new ArrayList<>();
 		for (@NonNull TupleLiteralPart asPart : ClassUtil.nullFree(element.getOwnedParts())) {
 			cgParts.add(doVisit(CGTuplePart.class, asPart));
@@ -2073,7 +2044,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGTuplePart visitTupleLiteralPart(@NonNull TupleLiteralPart element) {
 		CGTuplePart cgTuplePart = CGModelFactory.eINSTANCE.createCGTuplePart();
 		initAst(cgTuplePart, element);
-		cgTuplePart.setName(element.getName());
 		cgTuplePart.setInit(doVisit(CGValuedElement.class, element.getOwnedInit()));
 		TuplePartId partId = element.getPartId();
 		if (partId != null) {
@@ -2092,8 +2062,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGExecutorType cgExecutorType = context.createExecutorType(referredType);
 			cgTypeExp.setExecutorType(cgExecutorType);
 			cgTypeExp.getOwns().add(cgExecutorType);
-			//		cgTypeExp.setReferredType(codeGenerator.getGlobalContext().getLocalContext(cgTypeExp).getExecutorType(pTypeExp.getReferredType()));
-			cgTypeExp.setName(cgExecutorType.getName());
 			return cgTypeExp;
 		}
 		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;
@@ -2138,7 +2106,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgLiteralExp = context.createCGConstantExp(element, context.getInteger(0));
 		}
 		initAst(cgLiteralExp, element);
-		cgLiteralExp.setName(element.getName());
 		return cgLiteralExp;
 	}
 

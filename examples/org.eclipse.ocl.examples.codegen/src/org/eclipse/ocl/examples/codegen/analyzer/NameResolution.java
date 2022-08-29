@@ -39,11 +39,6 @@ public interface NameResolution
 {
 	void addCGElement(@NonNull CGValuedElement cgElement);
 
-	@Deprecated
-	default void addSecondaryElement(@NonNull CGValuedElement cgElement) {
-		addCGElement(cgElement);
-	}
-
 	@NonNull NameResolution addNameVariant(@NonNull NameVariant nameVariant);
 
 	@Nullable String basicGetResolvedName();
