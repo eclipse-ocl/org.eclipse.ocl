@@ -329,19 +329,11 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (isSelf: ");
-		result.append(isSelf);
-		result.append(", isThis: ");
-		result.append(isThis);
-		result.append(')');
-		return result.toString();
+		return super.toString();
 	}
 
 	/**

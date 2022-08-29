@@ -96,4 +96,6 @@ public interface CGOperationCallExp extends CGCallExp {
 	 */
 	List<CGValuedElement> getCgArguments();
 
+	default CGValuedElement getCgThis() { return null; }
+
 } // CGOperationCallExp
