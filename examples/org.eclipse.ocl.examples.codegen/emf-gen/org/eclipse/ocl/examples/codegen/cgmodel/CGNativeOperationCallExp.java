@@ -27,10 +27,9 @@ import java.lang.reflect.Method;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#getMethod <em>Method</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#getCgThis <em>Cg This</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isThisIsSelf <em>This Is Self</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsBoxed <em>Value Is Boxed</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isValueIsEcore <em>Value Is Ecore</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#getCgThis <em>Cg This</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNativeOperationCallExp()
@@ -133,29 +132,5 @@ public interface CGNativeOperationCallExp extends CGOperationCallExp {
 	 * @generated
 	 */
 	void setCgThis(CGValuedElement value);
-
-	/**
-	 * Returns the value of the '<em><b>This Is Self</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * true when OCL's self is Java's this, false when OCL's self is passed as an additional first argument
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>This Is Self</em>' attribute.
-	 * @see #setThisIsSelf(boolean)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNativeOperationCallExp_ThisIsSelf()
-	 * @generated
-	 */
-	boolean isThisIsSelf();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp#isThisIsSelf <em>This Is Self</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>This Is Self</em>' attribute.
-	 * @see #isThisIsSelf()
-	 * @generated
-	 */
-	void setThisIsSelf(boolean value);
 
 } // CGMethodOperationCallExp
