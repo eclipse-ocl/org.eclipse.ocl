@@ -406,16 +406,14 @@ public class FieldingAnalyzer
 			//					System.out.println("Got it");
 			//				}
 			//			}
-			List<CGValuedElement> cgArguments = cgElement.getArguments();
+			List<CGValuedElement> cgArguments = cgElement.getCgArguments();
 			int iSize = cgArguments.size();
 			if (cgElement.isValidating()) {
-				rewriteAsCaught(cgElement.getSource());
 				for (int i = 0; i < iSize; i++) {				// Indexed to avoid CME
 					rewriteAsCaught(cgArguments.get(i));
 				}
 			}
 			else {
-				rewriteAsThrown(cgElement.getSource());
 				for (int i = 0; i < iSize; i++) {				// Indexed to avoid CME
 					rewriteAsThrown(cgArguments.get(i));
 				}

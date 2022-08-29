@@ -587,13 +587,15 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			else {
 				name = libraryOperation.getClass().getSimpleName();
 			}
-			CGValuedElement source = oc.getSource();
-			safeVisit(source);
+			CGValuedElement cgThis = oc.getCgThis();
+			if (cgThis != null) {
+				safeVisit(cgThis);
+			}
 			append(".");
 			append(name);
 			append("(");
 			String prefix = "";//$NON-NLS-1$
-			for (CGValuedElement argument : oc.getArguments()) {
+			for (CGValuedElement argument : oc.getCgArguments()) {
 				append(prefix);
 				safeVisit(argument);
 				prefix = ", ";//$NON-NLS-1$
@@ -652,16 +654,16 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 
 	@Override
 	public @Nullable String visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp oc) {
-		CGValuedElement source = oc.getSource();
-		if (source != null) {
-			safeVisit(source);
+		CGValuedElement cgThis = oc.getCgThis();
+		if (cgThis != null) {
+			safeVisit(cgThis);
 			append(".");
 		}
 		Method method = oc.getMethod();
 		append(method.getName());
 		append("(");
 		String prefix = "";//$NON-NLS-1$
-		for (CGValuedElement argument : oc.getArguments()) {
+		for (CGValuedElement argument : oc.getCgArguments()) {
 			append(prefix);
 			safeVisit(argument);
 			prefix = ", ";//$NON-NLS-1$
@@ -689,8 +691,8 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 
 	@Override
 	public @Nullable String visitCGOperationCallExp(@NonNull CGOperationCallExp oc) {
-		CGValuedElement source = oc.getSource();
-		safeVisit(source);
+		CGValuedElement cgThis = oc.getCgThis();
+		safeVisit(cgThis);
 		OperationCallExp operationCallExp = (OperationCallExp) oc.getAst();
 		Operation oper = operationCallExp.getReferredOperation();
 		Type sourceType = operationCallExp.getOwnedSource() != null ? operationCallExp.getOwnedSource().getType() : null;
@@ -698,7 +700,7 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		appendName(oper);
 		append("(");
 		String prefix = "";//$NON-NLS-1$
-		for (CGValuedElement argument : oc.getArguments()) {
+		for (CGValuedElement argument : oc.getCgArguments()) {
 			append(prefix);
 			safeVisit(argument);
 			prefix = ", ";//$NON-NLS-1$

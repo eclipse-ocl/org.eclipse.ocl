@@ -172,7 +172,7 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGOperationCallExp(@NonNull CGOperationCallExp cgElement) {
 		List<@Nullable Object> elements = append(super.visitCGOperationCallExp(cgElement), cgElement.getReferredOperation());
-		elements.addAll(cgElement.getArguments());
+		elements.addAll(cgElement.getCgArguments());
 		return elements;
 	}
 

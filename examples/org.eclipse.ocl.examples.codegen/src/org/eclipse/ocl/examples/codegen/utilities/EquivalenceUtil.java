@@ -367,19 +367,19 @@ public class EquivalenceUtil
 			return null;			// Different operations do not guarantee different results
 		}
 		// FIXME non-conformant return types can be guaranteed to be different
-		CGValuedElement thisSource = thisValue.getSource();
-		CGValuedElement thatSource = thatValue.getSource();
-		if ((thisSource != null) || (thatSource != null)) {
-			if ((thisSource == null) || (thatSource == null)) {
+		CGValuedElement thisThis = thisValue.getCgThis();
+		CGValuedElement thatThis = thatValue.getCgThis();
+		if ((thisThis != null) || (thatThis != null)) {
+			if ((thisThis == null) || (thatThis == null)) {
 				return null;			// Inconsistently null sources should never happen
 			}
-			Boolean equivalence = thisSource.isEquivalentTo(thatSource);
+			Boolean equivalence = thisThis.isEquivalentTo(thatThis);
 			if (equivalence != Boolean.TRUE) {
 				return null;			// Different sources do not guarantee different results
 			}
 		}
-		List<CGValuedElement> theseArguments = thisValue.getArguments();
-		List<CGValuedElement> thoseArguments = thatValue.getArguments();
+		List<CGValuedElement> theseArguments = thisValue.getCgArguments();
+		List<CGValuedElement> thoseArguments = thatValue.getCgArguments();
 		int iSize = theseArguments.size();
 		if (iSize != thoseArguments.size()) {
 			return null;				// Different argument lists do not guarantee different results

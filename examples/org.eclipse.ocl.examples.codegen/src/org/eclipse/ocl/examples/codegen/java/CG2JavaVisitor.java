@@ -1303,13 +1303,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	public @NonNull Boolean visitCGCachedOperationCallExp(@NonNull CGCachedOperationCallExp cgOperationCallExp) {
 		Operation pOperation = cgOperationCallExp.getReferredOperation();
 		boolean thisIsSelf = cgOperationCallExp.isThisIsSelf();
-		CGValuedElement source = getExpression(cgOperationCallExp.getSource());
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+		assert cgOperationCallExp.getCgThis() == null;
+	//	CGValuedElement source = getExpression(cgOperationCallExp.getSource());
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		List<Parameter> pParameters = pOperation.getOwnedParameters();
 		//
-		if (!js.appendLocalStatements(source)) {
-			return false;
-		}
+	//	if (!js.appendLocalStatements(source)) {
+	//		return false;
+	//	}
 		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
 			CGValuedElement argument = getExpression(cgArgument);
 			if (!js.appendLocalStatements(argument)) {
@@ -1335,8 +1336,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append(globalContext.getEvaluateName());
 		//		js.append(cgOperationCallExp.getReferredOperation().getName());
 		js.append("(");
+		assert thisIsSelf;
 		if (!thisIsSelf) {
-			js.appendValueName(source);
+		//	js.appendValueName(source);
 		}
 		int iMax = Math.min(pParameters.size(), cgArguments.size());
 		for (int i = 0; i < iMax; i++) {
@@ -1675,13 +1677,15 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		CGTypeId cgTypeId = analyzer.getTypeId(pOperation.getOwningClass().getTypeId());
 		//		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(cgTypeId.getElementId());
 		TypeDescriptor requiredTypeDescriptor = context.getUnboxedDescriptor(ClassUtil.nonNullState(cgTypeId.getElementId()));
-		CGValuedElement source = getExpression(cgOperationCallExp.getSource());
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+	//	boolean thisIsSelf = cgOperationCallExp.isThisIsSelf();
+		assert cgOperationCallExp.getCgThis() == null;
+	//	CGValuedElement source = getExpression(cgOperationCallExp.getSource());
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		List<Parameter> pParameters = pOperation.getOwnedParameters();
 		//
-		if (!js.appendLocalStatements(source)) {
-			return false;
-		}
+	//	if (!js.appendLocalStatements(source)) {
+	//		return false;
+	//	}
 		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
 			CGValuedElement argument = getExpression(cgArgument);
 			if (!js.appendLocalStatements(argument)) {
@@ -1703,29 +1707,32 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		appendSuppressWarningsNull(cgOperationCallExp, ecoreIsRequired);
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		js.appendAtomicReferenceTo(requiredTypeDescriptor, source);
-		js.append(".");
-		js.append(operationAccessor);
-		js.append("(");
 		int iMax = Math.min(pParameters.size(), cgArguments.size());
 		for (int i = 0; i < iMax; i++) {
-			if (i > 0) {
-				js.append(", ");
-			}
 			CGValuedElement cgArgument = cgArguments.get(i);
-			CGValuedElement argument = getExpression(cgArgument);
-			Parameter pParameter = ClassUtil.nonNullState(pParameters.get(i));
-			GenParameter genParameter = context.getGenModelHelper().getGenParameter(pParameter);
-			if (genParameter != null) {
-				String rawBoundType = ClassUtil.nonNullState(genParameter.getRawBoundType());
-				TypeDescriptor typeDescriptor = context.getTypeDescriptor(argument);
-				typeDescriptor.appendEcoreValue(js, rawBoundType, argument);
+			if (i == 0) {
+				js.appendAtomicReferenceTo(requiredTypeDescriptor, cgArgument);
+				js.append(".");
+				js.append(operationAccessor);
+				js.append("(");
 			}
-			else {	// ? never happens
-				CGTypeId cgParameterTypeId = analyzer.getTypeId(pParameter.getTypeId());
-				TypeDescriptor parameterTypeDescriptor = context.getUnboxedDescriptor(ClassUtil.nonNullState(cgParameterTypeId.getElementId()));
-				js.appendReferenceTo(parameterTypeDescriptor, argument);
-
+			else {
+				if (i > 1) {
+					js.append(", ");
+				}
+				CGValuedElement argument = getExpression(cgArgument);
+				Parameter pParameter = ClassUtil.nonNullState(pParameters.get(i));
+				GenParameter genParameter = context.getGenModelHelper().getGenParameter(pParameter);
+				if (genParameter != null) {
+					String rawBoundType = ClassUtil.nonNullState(genParameter.getRawBoundType());
+					TypeDescriptor typeDescriptor = context.getTypeDescriptor(argument);
+					typeDescriptor.appendEcoreValue(js, rawBoundType, argument);
+				}
+				else {	// ? never happens
+					CGTypeId cgParameterTypeId = analyzer.getTypeId(pParameter.getTypeId());
+					TypeDescriptor parameterTypeDescriptor = context.getUnboxedDescriptor(ClassUtil.nonNullState(cgParameterTypeId.getElementId()));
+					js.appendReferenceTo(parameterTypeDescriptor, argument);
+				}
 			}
 		}
 		js.append(");\n");
@@ -1835,9 +1842,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGExecutorOperationCallExp(@NonNull CGExecutorOperationCallExp cgOperationCallExp) {
 		Operation pOperation = cgOperationCallExp.getReferredOperation();
-		CGValuedElement asSource = cgOperationCallExp.getSource();
-		CGValuedElement cgSource = asSource != null ? getExpression(asSource) : null;
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+		CGValuedElement cgThis = cgOperationCallExp.getCgThis();
+		CGValuedElement cgSource = cgThis != null ? getExpression(cgThis) : null;
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
 		List<Parameter> pParameters = pOperation.getOwnedParameters();
 		//
 		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {
@@ -2005,14 +2012,14 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		Operation asReferredOperation = CGUtil.getReferredOperation(cgForeignOperationCallExp);
 		boolean isStatic = asReferredOperation.isIsStatic();
 		CGValuedElement cgSource = null;
-		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getArguments();
+		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getCgArguments();
 		//
-		if (!isStatic) {
-			cgSource = getExpression(cgForeignOperationCallExp.getSource());
-			if (!js.appendLocalStatements(cgSource)) {
-				return false;
-			}
-		}
+	//	if (!isStatic) {
+	//		cgSource = getExpression(cgForeignOperationCallExp.getSource());
+	//		if (!js.appendLocalStatements(cgSource)) {
+	//			return false;
+	//		}
+	//	}
 		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
 			CGValuedElement argument = getExpression(cgArgument);
 			if (!js.appendLocalStatements(argument)) {
@@ -2542,23 +2549,25 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (libraryOperationHandler != null) {
 			return libraryOperationHandler.generate(cgOperationCallExp);
 		}
-		final CGValuedElement source = getExpression(cgOperationCallExp.getSource());
-		final List<CGValuedElement> arguments = cgOperationCallExp.getArguments();
-		Method actualMethod = getJavaMethod(libraryOperation, arguments.size());
+	//	boolean thisIsSelf = cgOperationCallExp.isThisIsSelf();
+		assert cgOperationCallExp.getCgThis() == null;
+	//	final CGValuedElement source = getExpression(cgOperationCallExp.getSource());
+		List<CGValuedElement> cgArguments = cgOperationCallExp.getCgArguments();
+		Method actualMethod = getJavaMethod(libraryOperation, cgArguments.size());
 		Class<?> actualReturnClass = actualMethod != null ? actualMethod.getReturnType() : null;
 		boolean actualIsNonNull = (actualMethod != null) && (context.getIsNonNull(actualMethod) == Boolean.TRUE);
 		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
 		final CGTypeId resultType = cgOperationCallExp.getTypeId();
-		if (!js.appendLocalStatements(source)) {
-			return false;
-		}
-		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : arguments) {
+	//	if (!js.appendLocalStatements(source)) {
+	//		return false;
+	//	}
+		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
 			if (!js.appendLocalStatements(cgArgument)) {
 				return false;
 			}
 		}
-		for (int i = 0; i < arguments.size(); i++) {
-			CGValuedElement cgArgument = arguments.get(i);
+		for (int i = 0; i < cgArguments.size(); i++) {
+			CGValuedElement cgArgument = cgArguments.get(i);
 			Parameter asParameter = cgOperationCallExp.getReferredOperation().getOwnedParameters().get(i);
 			if (asParameter.isIsRequired()) {
 				if (cgArgument.isNull()) {
@@ -2633,16 +2642,20 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 						js.append(", ");
 					}
 				}
-				if (source.isNull()) {
-					js.append("(Object)");
-				}
-				js.appendValueName(source);
-				for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : arguments) {
-					js.append(", ");
+			//	if (source.isNull()) {
+			//		js.append("(Object)");
+			//	}
+			//	js.appendValueName(source);
+				int i = 0;
+				for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
+					if (i > 0) {
+						js.append(", ");
+					}
 					if (cgArgument.isNull()) {
 						js.append("(Object)");
 					}
 					js.appendValueName(cgArgument);		// FIXME cast
+					i++;
 				}
 				js.append(")");
 			}
@@ -2786,15 +2799,19 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 	@Override
 	public @NonNull Boolean visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgNativeOperationCallExp) {
 	//	Operation asOperation = cgOperationCallExp.getReferredOperation();
-		boolean thisIsSelf = cgNativeOperationCallExp.isThisIsSelf();
-		CGValuedElement cgSource = cgNativeOperationCallExp.getSource();
-		CGValuedElement source = cgSource != null ? getExpression(cgSource) :  null;
+	//	boolean thisIsSelf = cgOperationCallExp.isThisIsSelf();
+		assert cgNativeOperationCallExp.getCgThis() == null;
+		CGValuedElement cgThis = cgNativeOperationCallExp.getCgThis();
+		CGValuedElement cgThis2 = cgThis != null ? getExpression(cgThis) :  null;
+	//	boolean thisIsSelf = cgNativeOperationCallExp.isThisIsSelf();
+	//	CGValuedElement cgSource = cgNativeOperationCallExp.getSource();
+	//	CGValuedElement source = cgSource != null ? getExpression(cgSource) :  null;
 		//
-		if ((source != null) && !js.appendLocalStatements(source)) {
-			return false;
-		}
+	//	if ((source != null) && !js.appendLocalStatements(source)) {
+	//		return false;
+	//	}
 		Method javaMethod = cgNativeOperationCallExp.getMethod();
-		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getArguments();
+		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getCgArguments();
 		//	List<Parameter> pParameters = asOperation.getOwnedParameters();
 		java.lang.reflect.Parameter[] javaParameters = javaMethod.getParameters();
 		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
@@ -2806,8 +2823,8 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		js.appendDeclaration(cgNativeOperationCallExp);
 		js.append(" = ");
-		if ((source != null) && !thisIsSelf) {
-			js.appendValueName(source);
+		if (cgThis2 != null) {
+			js.appendValueName(cgThis2);
 		}
 		else {
 			js.appendClassReference(null, javaMethod.getDeclaringClass());

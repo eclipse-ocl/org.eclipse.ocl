@@ -354,11 +354,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			currentClass.getOperations().add(cgOperation);
 		}
 		CGCachedOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGCachedOperationCallExp();
-		cgOperationCallExp.setSource(cgSource);
+	//	cgOperationCallExp.setSource(cgSource);
+		cgOperationCallExp.getCgArguments().add(cgSource);
 		cgOperationCallExp.setThisIsSelf(false);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-			cgOperationCallExp.getArguments().add(cgArgument);
+			cgOperationCallExp.getCgArguments().add(cgArgument);
 		}
 		setAst(cgOperationCallExp, element);
 		cgOperationCallExp.setReferredOperation(asOperation);
@@ -376,11 +377,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	protected @NonNull CGValuedElement constrainedOperationCall(@NonNull OperationCallExp element,
 			CGValuedElement cgSource, @NonNull Operation finalOperation, @NonNull ConstrainedOperation constrainedOperation) {
 		@NonNull CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
-		cgOperationCallExp.setSource(cgSource);
+	//	cgOperationCallExp.setSource(cgSource);
+		cgOperationCallExp.getCgArguments().add(cgSource);
 		//		cgOperationCallExp.setThisIsSelf(false);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-			cgOperationCallExp.getArguments().add(cgArgument);
+			cgOperationCallExp.getCgArguments().add(cgArgument);
 		}
 		setAst(cgOperationCallExp, element);
 		cgOperationCallExp.setReferredOperation(finalOperation);
@@ -438,10 +440,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull Method method, @NonNull CGValuedElement... cgArguments) {
 		CGNativeOperationCallExp cgCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-		cgCallExp.setSource(cgSource);
+	//	cgCallExp.setSource(cgSource);
 		cgCallExp.setMethod(method);
 		if (cgArguments != null) {
-			List<CGValuedElement> cgArguments2 = cgCallExp.getArguments();
+			List<CGValuedElement> cgArguments2 = cgCallExp.getCgArguments();
 			for (@NonNull CGValuedElement cgArgument : cgArguments) {
 				cgArguments2.add(cgArgument);
 			}
@@ -853,7 +855,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 			for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 				CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-				cgForeignOperationCallExp.getArguments().add(cgArgument);
+				cgForeignOperationCallExp.getCgArguments().add(cgArgument);
 			}
 			setAst(cgForeignOperationCallExp, element);
 			cgForeignOperationCallExp.setReferredOperation(asOperation);
@@ -868,11 +870,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				}
 			}
 			CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-			cgNativeOperationCallExp.setSource(cgSource);
-			cgNativeOperationCallExp.setThisIsSelf(true);
+			cgNativeOperationCallExp.setCgThis(cgSource);
+		//	cgNativeOperationCallExp.setSource(cgSource);
+		//	cgNativeOperationCallExp.setThisIsSelf(true);
 			for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 				CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-				cgNativeOperationCallExp.getArguments().add(cgArgument);
+				cgNativeOperationCallExp.getCgArguments().add(cgArgument);
 			}
 			setAst(cgNativeOperationCallExp, element);
 			cgNativeOperationCallExp.setReferredOperation(asOperation);
@@ -923,11 +926,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 					String className = asType.getInstanceClassName();
 					if (className != null) {
 						CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
-						cgNativeOperationCallExp.setSource(cgSource);
-						cgNativeOperationCallExp.setThisIsSelf(true);
+						cgNativeOperationCallExp.setCgThis(cgSource);
+					//	cgNativeOperationCallExp.setThisIsSelf(true);
 						for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 							CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-							cgNativeOperationCallExp.getArguments().add(cgArgument);
+							cgNativeOperationCallExp.getCgArguments().add(cgArgument);
 						}
 						setAst(cgNativeOperationCallExp, element);
 						cgNativeOperationCallExp.setReferredOperation(asOperation);
@@ -941,10 +944,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 						assert !asOperation.isIsStatic();
 						context.addForeignFeature(asOperation);
 						CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
-						cgForeignOperationCallExp.setSource(cgSource);
+					//	cgForeignOperationCallExp.setSource(cgSource);
+						cgForeignOperationCallExp.getCgArguments().add(cgSource);
 						for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 							CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-							cgForeignOperationCallExp.getArguments().add(cgArgument);
+							cgForeignOperationCallExp.getCgArguments().add(cgArgument);
 						}
 						setAst(cgForeignOperationCallExp, element);
 						cgForeignOperationCallExp.setReferredOperation(asOperation);
@@ -981,11 +985,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 		cgOperationCallExp.setRequired(isRequired);
-		cgOperationCallExp.setSource(cgSource);
+	//	cgOperationCallExp.setSource(cgSource);
 		//		cgOperationCallExp.getDependsOn().add(cgSource);
 		for (@NonNull OCLExpression pArgument : ClassUtil.nullFree(element.getOwnedArguments())) {
 			CGValuedElement cgArgument = doVisit(CGValuedElement.class, pArgument);
-			cgOperationCallExp.getArguments().add(cgArgument);
+			cgOperationCallExp.getCgArguments().add(cgArgument);
 			//			cgOperationCallExp.getDependsOn().add(cgArgument);
 		}
 		//		cgOperationCallExp.setOperation(getOperation(element.getReferredOperation()));
@@ -1164,12 +1168,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	//	setAst(cgOperationCallExp, asSource.getTypeId(), "safe_" + callExp.getName() + "_sources"/*nameManagerContext.getSymbolName(callExp, "safe")*/);
 		//		cgOperationCallExp.setAst(asSource);
 		cgOperationCallExp.setRequired(true);
-		cgOperationCallExp.setSource(cgSource);
+	//	cgOperationCallExp.setSource(cgSource);
+		cgOperationCallExp.getCgArguments().add(cgSource);
 		CGConstantExp cgArgument = CGModelFactory.eINSTANCE.createCGConstantExp();
 		//		cgArgument.setAst(element);
 		cgArgument.setReferredConstant(context.getNull());
 		cgArgument.setTypeId(context.getTypeId(TypeId.OCL_VOID));
-		cgOperationCallExp.getArguments().add(cgArgument);
+		cgOperationCallExp.getCgArguments().add(cgArgument);
 		return cgOperationCallExp;
 	}
 
