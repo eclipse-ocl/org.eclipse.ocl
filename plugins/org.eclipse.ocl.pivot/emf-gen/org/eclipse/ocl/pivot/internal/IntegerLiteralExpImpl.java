@@ -166,7 +166,7 @@ public class IntegerLiteralExpImpl
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.INTEGER_LITERAL_EXP___VALIDATE_TYPE_IS_INTEGER__DIAGNOSTICCHAIN_MAP);
 			@SuppressWarnings("null")
-			final /*@NonInvalid*/ boolean le = ((@NonNull Boolean)OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0)).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
 				IF__l_q = true;
@@ -177,7 +177,7 @@ public class IntegerLiteralExpImpl
 				final /*@NonInvalid*/ @NonNull PrimitiveType CAST_TYP_Integer = (PrimitiveType)TYP_Integer;
 				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == CAST_TYP_Integer.getTypeId()) : false;
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ boolean logDiagnostic = ((@NonNull Boolean)CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0)).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}
 			return IF__l_q;

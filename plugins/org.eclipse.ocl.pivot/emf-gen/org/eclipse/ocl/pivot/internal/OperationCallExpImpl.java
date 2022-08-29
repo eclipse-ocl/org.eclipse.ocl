@@ -631,7 +631,7 @@ implements OperationCallExp {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP);
 			@SuppressWarnings("null")
-			final /*@NonInvalid*/ boolean le = ((@NonNull Boolean)OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0)).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
 				IF__l_q = true;
@@ -640,15 +640,15 @@ implements OperationCallExp {
 				/*@Caught*/ @Nullable Object CAUGHT_forAll;
 				try {
 					final /*@NonInvalid*/ @Nullable Operation operation = this.getReferredOperation();
-					final /*@NonInvalid*/ @NonNull Object ownedParameters = operation == null;
+					final /*@NonInvalid*/ @NonNull Object ownedParameters_0 = operation == null;
 					/*@Thrown*/ @Nullable OrderedSetValue safe_ownedParameters_source;
-					if (ownedParameters == Boolean.TRUE) {
+					if (ownedParameters_0 == Boolean.TRUE) {
 						safe_ownedParameters_source = null;
 					}
 					else {
 						assert operation != null;
-						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters_0 = operation.getOwnedParameters();
-						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters_0);
+						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters = operation.getOwnedParameters();
+						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
 						safe_ownedParameters_source = BOXED_ownedParameters;
 					}
 					final /*@NonInvalid*/ @NonNull Object owningClass_0 = operation == null;
@@ -664,7 +664,7 @@ implements OperationCallExp {
 					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
 					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull IntegerValue size = (@NonNull IntegerValue)CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
+					final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
 					final /*@NonInvalid*/ @NonNull IntegerRange RNG = ValueUtil.createRange(PivotTables.INT_1, size);
 					final /*@NonInvalid*/ @NonNull SequenceValue Sequence = ValueUtil.createSequenceRange(PivotTables.SEQ_PRIMid_Integer, RNG);
 					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
@@ -716,8 +716,8 @@ implements OperationCallExp {
 							final /*@Thrown*/ boolean isTypeof = parameter.isIsTypeof();
 							/*@Thrown*/ @Nullable Type requiredType;
 							if (isTypeof) {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_15 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class = (org.eclipse.ocl.pivot.Class)TYP_Class_15;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_10 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class = TYP_Class_10;
 								requiredType = CAST_TYP_Class;
 							}
 							else {
@@ -728,16 +728,16 @@ implements OperationCallExp {
 								catch (Exception THROWN_parameterType) {
 									CAUGHT_parameterType = ValueUtil.createInvalidValue(THROWN_parameterType);
 								}
-								final /*@NonInvalid*/ @NonNull Object specializeIn = CAUGHT_parameterType == null;
+								final /*@NonInvalid*/ @NonNull Object specializeIn_0 = CAUGHT_parameterType == null;
 								/*@Thrown*/ @Nullable Type safe_specializeIn_source;
-								if (specializeIn == Boolean.TRUE) {
+								if (specializeIn_0 == Boolean.TRUE) {
 									safe_specializeIn_source = null;
 								}
 								else {
 									assert parameterType != null;
 									@SuppressWarnings("null")
-									final /*@Thrown*/ @NonNull Type specializeIn_0 = parameterType.specializeIn(this, safe_owningClass_source);
-									safe_specializeIn_source = specializeIn_0;
+									final /*@Thrown*/ @NonNull Type specializeIn = parameterType.specializeIn(this, safe_owningClass_source);
+									safe_specializeIn_source = specializeIn;
 								}
 								requiredType = safe_specializeIn_source;
 							}
@@ -762,7 +762,7 @@ implements OperationCallExp {
 									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								@SuppressWarnings("null")
-								final /*@Thrown*/ boolean conformsTo_0 = ((@NonNull Boolean)OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType)).booleanValue();
+								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType).booleanValue();
 								safe_conformsTo_source = conformsTo_0;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
@@ -796,7 +796,7 @@ implements OperationCallExp {
 					CAUGHT_forAll = ValueUtil.createInvalidValue(THROWN_forAll);
 				}
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ boolean logDiagnostic = ((@NonNull Boolean)CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_forAll, PivotTables.INT_0)).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_forAll, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}
 			return IF__l_q;
@@ -833,7 +833,7 @@ implements OperationCallExp {
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP);
 			@SuppressWarnings("null")
-			final /*@NonInvalid*/ boolean le = ((@NonNull Boolean)OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0)).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
 				IF__l_q = true;
@@ -915,7 +915,7 @@ implements OperationCallExp {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ boolean logDiagnostic = ((@NonNull Boolean)CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0)).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}
 			return IF__l_q;
@@ -953,7 +953,7 @@ implements OperationCallExp {
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP);
 			@SuppressWarnings("null")
-			final /*@NonInvalid*/ boolean le = ((@NonNull Boolean)OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0)).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
 				IF__l_q = true;
@@ -1081,7 +1081,7 @@ implements OperationCallExp {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ boolean logDiagnostic = ((@NonNull Boolean)CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0)).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}
 			return IF__l_q;
@@ -1120,7 +1120,7 @@ implements OperationCallExp {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP);
 			@SuppressWarnings("null")
-			final /*@NonInvalid*/ boolean le = ((@NonNull Boolean)OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0)).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
 				IF__l_q = true;
@@ -1131,17 +1131,17 @@ implements OperationCallExp {
 					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
 					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull IntegerValue size = (@NonNull IntegerValue)CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
+					final /*@NonInvalid*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
 					final /*@NonInvalid*/ @Nullable Operation referredOperation = this.getReferredOperation();
-					final /*@NonInvalid*/ @NonNull Object ownedParameters = referredOperation == null;
+					final /*@NonInvalid*/ @NonNull Object ownedParameters_0 = referredOperation == null;
 					/*@Thrown*/ @Nullable OrderedSetValue safe_ownedParameters_source;
-					if (ownedParameters == Boolean.TRUE) {
+					if (ownedParameters_0 == Boolean.TRUE) {
 						safe_ownedParameters_source = null;
 					}
 					else {
 						assert referredOperation != null;
-						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters_0 = referredOperation.getOwnedParameters();
-						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters_0);
+						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters = referredOperation.getOwnedParameters();
+						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
 						safe_ownedParameters_source = BOXED_ownedParameters;
 					}
 					if (safe_ownedParameters_source == null) {
@@ -1150,15 +1150,15 @@ implements OperationCallExp {
 					@SuppressWarnings("null")
 					final /*@Thrown*/ @NonNull OrderedSetValue excluding = (@NonNull OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
 					@SuppressWarnings("null")
-					final /*@Thrown*/ @NonNull IntegerValue size_0 = (@NonNull IntegerValue)CollectionSizeOperation.INSTANCE.evaluate(excluding);
-					final /*@Thrown*/ boolean result = size.equals(size_0);
+					final /*@Thrown*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(excluding);
+					final /*@Thrown*/ boolean result = size_0.equals(size);
 					CAUGHT_result = result;
 				}
 				catch (Exception THROWN_result) {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ boolean logDiagnostic = ((@NonNull Boolean)CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0)).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}
 			return IF__l_q;

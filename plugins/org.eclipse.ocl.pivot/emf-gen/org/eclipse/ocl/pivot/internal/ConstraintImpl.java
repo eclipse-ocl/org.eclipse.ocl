@@ -474,7 +474,7 @@ implements Constraint {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.CONSTRAINT___VALIDATE_BOOLEAN_VALUED__DIAGNOSTICCHAIN_MAP);
 			@SuppressWarnings("null")
-			final /*@NonInvalid*/ boolean le = ((@NonNull Boolean)OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0)).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
 				IF__l_q = true;
@@ -496,15 +496,15 @@ implements Constraint {
 					}
 					else {
 						final /*@NonInvalid*/ @NonNull BooleanType CAST_TYP_Boolean = (BooleanType)TYP_Boolean_0;
-						final /*@NonInvalid*/ boolean eq_0 = (type != null) ? (type.getTypeId() == CAST_TYP_Boolean.getTypeId()) : false;
+						final /*@NonInvalid*/ boolean eq = (type != null) ? (type.getTypeId() == CAST_TYP_Boolean.getTypeId()) : false;
 						final /*@NonInvalid*/ @Nullable Boolean or;
-						if (eq_0) {
+						if (eq) {
 							or = ValueUtil.TRUE_VALUE;
 						}
 						else {
 							final /*@NonInvalid*/ @NonNull VoidType CAST_TYP_OclVoid = (VoidType)TYP_OclVoid;
-							final /*@NonInvalid*/ boolean eq = (type != null) ? (type.getTypeId() == CAST_TYP_OclVoid.getTypeId()) : false;
-							if (eq) {
+							final /*@NonInvalid*/ boolean eq_0 = (type != null) ? (type.getTypeId() == CAST_TYP_OclVoid.getTypeId()) : false;
+							if (eq_0) {
 								or = ValueUtil.TRUE_VALUE;
 							}
 							else {
@@ -529,7 +529,7 @@ implements Constraint {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ boolean logDiagnostic = ((@NonNull Boolean)CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0)).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}
 			return IF__l_q;
