@@ -262,4 +262,9 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 		return (referredVariable != null) && referredVariable.isUnboxed();
 	}
 
+	@Override
+	public void resetNameResolution() {
+		super.resetNameResolution();
+	}
+
 } //CGVariableExpImpl

@@ -56,4 +56,5 @@ public interface CGVariableExp extends CGValuedElement {
 	 */
 	void setReferredVariable(CGVariable value);
 
+	void resetNameResolution();
 } // CGVariableExp

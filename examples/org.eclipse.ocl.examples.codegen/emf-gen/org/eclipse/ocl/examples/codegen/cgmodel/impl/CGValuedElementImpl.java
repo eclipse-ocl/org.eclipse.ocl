@@ -532,6 +532,10 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 		return getNameResolution().getVariantResolvedName(nameVariant);
 	}
 
+	protected void resetNameResolution() {
+		nameResolution = null;
+	}
+
 	@Override
 	public void setNameResolution(@NonNull NameResolution nameResolution) {
 		assert this.nameResolution == null;
