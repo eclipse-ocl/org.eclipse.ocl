@@ -598,9 +598,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		}
 	//	setAst(cgOperation, asOperation);
-		cgOperation.setAst(asOperation);
-		TypeId asTypeId = asOperation.getTypeId();
-		cgOperation.setTypeId(context.getTypeId(asTypeId));
+		initAst(cgOperation, asOperation);
 		cgOperation.setRequired(asOperation.isIsRequired());
 		CGOperation oldCGOperation = asFinalOperation2cgOperation.put(asOperation, cgOperation);
 		assert oldCGOperation == null;
@@ -2090,13 +2088,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (!(referredType instanceof TemplateParameter)) {
 			CGTypeExp cgTypeExp = CGModelFactory.eINSTANCE.createCGTypeExp();
 			//		setPivot(cgTypeExp, pTypeExp);
-			cgTypeExp.setAst(pTypeExp);
+			initAst(cgTypeExp, pTypeExp);
 			CGExecutorType cgExecutorType = context.createExecutorType(referredType);
 			cgTypeExp.setExecutorType(cgExecutorType);
 			cgTypeExp.getOwns().add(cgExecutorType);
 			//		cgTypeExp.setReferredType(codeGenerator.getGlobalContext().getLocalContext(cgTypeExp).getExecutorType(pTypeExp.getReferredType()));
-			TypeId asTypeId = pTypeExp.getTypeId();
-			cgTypeExp.setTypeId(context.getTypeId(asTypeId)); //-- no need to reify the metaclassid
 			cgTypeExp.setName(cgExecutorType.getName());
 			return cgTypeExp;
 		}
@@ -2118,12 +2114,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGTemplateParameterExp cgTemplateParameterExp = CGModelFactory.eINSTANCE.createCGTemplateParameterExp();
 		cgTemplateParameterExp.setIndex(index);
 		//		setPivot(cgTypeExp, pTypeExp);
-		cgTemplateParameterExp.setAst(pTypeExp);
+		initAst(cgTemplateParameterExp, pTypeExp);
 		cgTemplateParameterExp.setTemplateableElement(cgTemplateableElement);
 		cgTemplateParameterExp.getOwns().add(cgTemplateableElement);
 		//		cgTypeExp.setReferredType(codeGenerator.getGlobalContext().getLocalContext(cgTypeExp).getExecutorType(pTypeExp.getReferredType()));
-		TypeId asTypeId = pTypeExp.getTypeId();
-		cgTemplateParameterExp.setTypeId(context.getTypeId(asTypeId)); //-- no need to reify the metaclassid
 		return cgTemplateParameterExp;
 	}
 
