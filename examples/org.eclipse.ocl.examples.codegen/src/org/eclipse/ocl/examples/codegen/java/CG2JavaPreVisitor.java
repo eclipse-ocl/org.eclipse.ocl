@@ -143,7 +143,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 //	protected void declareNameVariant(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
-//		getNameManager().declareStandardName(cgElement, nameVariant);
+//		getNameManager().declareLazyName(cgElement, nameVariant);
 //	}
 
 	protected void doTypedElement(@NonNull CGTypedElement cgTypedElement) {
@@ -250,7 +250,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	@Override
 	public @Nullable Object visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		CGValuedElement cgSource = CGUtil.getSource(cgCatchExp);
-		NameResolution catchNameResolution = getNameManager().declareStandardName(cgSource);
+		NameResolution catchNameResolution = getNameManager().declareLazyName(cgSource);
 		catchNameResolution.addNameVariant(codeGenerator.getTHROWN_NameVariant());
 		return super.visitCGCatchExp(cgCatchExp);
 	}
@@ -455,10 +455,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		CGValuedElement cgSource = cgIterationCallExp.getSource();
 		NameManager nameManager = getNameManager();
 		if (cgSource != null) {
-			nameManager.declareStandardName(cgSource);
+			nameManager.declareLazyName(cgSource);
 			cgSource.accept(this);
 		}
-		NameResolution iterationNameResolution = nameManager.declareStandardName(cgIterationCallExp);
+		NameResolution iterationNameResolution = nameManager.declareLazyName(cgIterationCallExp);
 		iterationNameResolution.addNameVariant(codeGenerator.getBODY_NameVariant());
 		iterationNameResolution.addNameVariant(codeGenerator.getIMPL_NameVariant());
 		iterationNameResolution.addNameVariant(codeGenerator.getMGR_NameVariant());
@@ -468,14 +468,14 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			savedLocalContext = pushLocalContext(cgIterationCallExp);
 		}
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
-			NameResolution iteratorNameResolution = nameManager.declareStandardName(cgIterator);
+			NameResolution iteratorNameResolution = nameManager.declareLazyName(cgIterator);
 			iteratorNameResolution.addNameVariant(codeGenerator.getITER_NameVariant());
 			cgIterator.accept(this);
 		}
 		if (cgIterationCallExp instanceof CGBuiltInIterationCallExp) {
 			CGIterator cgAccumulator = ((CGBuiltInIterationCallExp)cgIterationCallExp).getAccumulator();
 			if (cgAccumulator != null) {
-				nameManager.declareStandardName(cgAccumulator);
+				nameManager.declareLazyName(cgAccumulator);
 				cgAccumulator.accept(this);;
 			}
 		}

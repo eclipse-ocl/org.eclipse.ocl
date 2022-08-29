@@ -438,16 +438,6 @@ public abstract class NameManager
 	 */
 	public abstract @NonNull BaseNameResolution declareReservedName(@NonNull CGValuedElement cgElement, @NonNull String nameHint);
 
-	@Deprecated
-	public @NonNull NameResolution declareStandardName(@NonNull CGValuedElement cgElement) {
-		return declareLazyName(cgElement);
-	}
-
-	@Deprecated
-	public void declareStandardName(@NonNull CGValuedElement cgElement, String contextName) {
-		declareLazyName(cgElement);
-	}
-
 	@Deprecated // not needed
 	protected abstract @NonNull Context getContext();
 

@@ -506,7 +506,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		if (nameResolution == null) {
 			NestedNameManager nameManager = getGlobalContext().getLocalContext(cgElement).getNameManager();
 		//	nameResolution = nameManager.declareLazyName(cgElement);
-			nameResolution = nameManager.declareStandardName(cgElement);
+			nameResolution = nameManager.declareLazyName(cgElement);
 		}
 		return nameResolution;
 	}
@@ -709,7 +709,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			if ((cgValuedElement2.basicGetNameResolution() == null) && !cgValuedElement2.isInlined()) {
 				JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement2);
 				NameManager nameManager = (localContext != null) && !cgValuedElement2.isGlobal() ? localContext.getNameManager() : globalNameManager;
-				nameManager.declareStandardName(cgValuedElement2);
+				nameManager.declareLazyName(cgValuedElement2);
 			}
 			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 				if (eObject instanceof CGElement) {
@@ -719,7 +719,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
 							JavaLocalContext<?> localContext = globalContext.basicGetLocalContext(cgValuedElement);
 							NameManager nameManager = localContext != null ? localContext.getNameManager() : globalNameManager;
-							nameManager.declareStandardName(cgValuedElement);
+							nameManager.declareLazyName(cgValuedElement);
 						}
 					}
 				}
