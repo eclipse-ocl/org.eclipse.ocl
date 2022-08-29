@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
@@ -59,6 +60,7 @@ public interface CodeGenerator
 	@NonNull ImportNameManager getImportNameManager();
 	@Nullable IterationHelper getIterationHelper(@NonNull Iteration iteration);
 	@NonNull GlobalNameManager getGlobalNameManager();
+	@NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgChild);
 	@NonNull CodeGenOptions getOptions();
 	@Nullable List<@NonNull Exception> getProblems();
 	@NonNull TypeDescriptor getTypeDescriptor(@NonNull CGValuedElement cgElement);
@@ -90,5 +92,8 @@ public interface CodeGenerator
 	 */
 	boolean maybePrimitive(@NonNull CGValuedElement cgValue);
 
+	@NonNull NameVariant getBOXED_NameVariant();
+	@NonNull NameVariant getCAUGHT_NameVariant();
+//	@NonNull NameVariant getGUARDED_NameVariant();
 	@NonNull NameVariant getSAFE_NameVariant();
 }

@@ -32,6 +32,8 @@ import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -207,6 +209,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
 
 	private final @NonNull NameVariant BODY_NameVariant;
+	private final @NonNull NameVariant BOXED_NameVariant;
+	private final @NonNull NameVariant CAUGHT_NameVariant;
+//	private final @NonNull NameVariant GUARDED_NameVariant;		// GUARD is a prefix throw - no new variable
 	private final @NonNull NameVariant IMPL_NameVariant;
 	private final @NonNull NameVariant ITER_NameVariant;
 	private final @NonNull NameVariant MGR_NameVariant;
@@ -223,6 +228,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
 		super(environmentFactory, genModel);
 		BODY_NameVariant = globalNameManager.addNameVariantPrefix("BODY_");
+		BOXED_NameVariant = globalNameManager.addNameVariantPrefix("BOXED_");
+		CAUGHT_NameVariant = globalNameManager.addNameVariantPrefix("CAUGHT_");
+//		GUARDED_NameVariant = globalNameManager.addNameVariantPrefix("GUARDED_");
 		IMPL_NameVariant = globalNameManager.addNameVariantPrefix("IMPL_");
 		ITER_NameVariant = globalNameManager.addNameVariantPrefix("ITER_");
 		MGR_NameVariant = globalNameManager.addNameVariantPrefix("MGR_");
@@ -307,6 +315,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	@Override
+	public @NonNull NameVariant getBOXED_NameVariant() {
+		return BOXED_NameVariant;
+	}
+
+	@Override
 	public @NonNull BoxedDescriptor getBoxedDescriptor(@NonNull ElementId elementId) {
 		BoxedDescriptor boxedDescriptor = boxedDescriptors.get(elementId);
 		if (boxedDescriptor != null) {
@@ -316,6 +329,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		assert boxedDescriptor != null;
 		boxedDescriptors.put(elementId, boxedDescriptor);
 		return boxedDescriptor;
+	}
+
+	@Override
+	public @NonNull NameVariant getCAUGHT_NameVariant() {
+		return CAUGHT_NameVariant;
 	}
 
 	public @NonNull CGModelResourceFactory getCGResourceFactory() {
@@ -343,6 +361,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	public abstract @NonNull JavaGlobalContext<@NonNull ? extends JavaCodeGenerator> getGlobalContext();
+
+//	@Override
+//	public @NonNull NameVariant getGUARDED_NameVariant() {
+//		return GUARDED_NameVariant;
+//	}
 
 	@Override
 	public @NonNull GlobalPlace getGlobalPlace() {
@@ -475,6 +498,17 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	public @NonNull NameVariant getMGR_NameVariant() {
 		return MGR_NameVariant;
+	}
+
+	@Override
+	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
+		NameResolution nameResolution = cgElement.basicGetNameResolution(); //.getNameVariant(guardedNameVariant);
+		if (nameResolution == null) {
+			NestedNameManager nameManager = getGlobalContext().getLocalContext(cgElement).getNameManager();
+		//	nameResolution = nameManager.declareLazyName(cgElement);
+			nameResolution = nameManager.declareStandardName(cgElement);
+		}
+		return nameResolution;
 	}
 
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
