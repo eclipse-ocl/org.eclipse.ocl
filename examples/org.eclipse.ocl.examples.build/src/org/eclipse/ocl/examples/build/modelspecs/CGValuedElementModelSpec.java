@@ -1415,15 +1415,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"				// normal use case - nonInvalid if all inputs nonInvalid\n" +
 						"			}\n" +
 						"		}\n" +
-						"		if (referredOperation.isIsStatic()) {\n" +
-						"			if (source != null) {\n" +
-						"				return false;\n" +
-						"			}\n" +
-						"		}\n" +
-						"		else if (!source.isNonNull() || !source.isNonInvalid()) {\n" +
-						"			return false;\n" +
-						"		}\n" +
-						"		for (@NonNull " + classRef(CGValuedElement.class) + " argument : " + classRef(ClassUtil.class) + ".nullFree(getArguments())) {\n" +
+						"		for (@NonNull " + classRef(CGValuedElement.class) + " argument : " + classRef(ClassUtil.class) + ".nullFree(getCgArguments())) {\n" +
 						"			if (!argument.isNonNull() || !argument.isNonInvalid()) {\n" +
 						"				return false;\n" +
 						"			}\n" +
@@ -1820,7 +1812,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "return false;";
 			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return referredOperation != null ? referredOperation.isIsRequired() : isRequired();";
+				return "return cgOperation != null ? cgOperation.isRequired() : referredOperation != null ? referredOperation.isIsRequired() : isRequired();";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return false;";

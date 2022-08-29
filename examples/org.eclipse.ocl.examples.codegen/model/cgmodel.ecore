@@ -480,18 +480,6 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" lowerBound="1"
         eType="#//Method"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="cgThis" eType="#//CGValuedElement"
-        containment="true" resolveProxies="false">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The this expression for the call when invoking a native or ecore implementation."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="thisIsSelf" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="true when OCL's self is Java's this, false when OCL's self is passed as an additional first argument"/>
-      </eAnnotations>
-    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueIsBoxed" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -502,6 +490,12 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="true when OCL's self is Java's this, false when OCL's self is passed as an additional first argument"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cgThis" eType="#//CGValuedElement"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The this expression for the call when invoking a native or ecore implementation."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -563,16 +557,20 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGOperationCallExp" abstract="true"
       eSuperTypes="#//CGCallExp">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//CGValuedElement"
-        containment="true" resolveProxies="false">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The source expression for the call."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
-        eType="#//CGValuedElement" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="referredOperation" lowerBound="1"
         eType="#//Operation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cgOperation" lowerBound="1"
+        eType="#//CGOperation" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The this expression for the call when invoking a native or ecore implementation."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cgArguments" upperBound="-1"
+        eType="#//CGValuedElement" containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="All argument expressions for the call often corresponding to executor then typeid then source/self then arguments"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGOppositePropertyCallExp" abstract="true"
       eSuperTypes="#//CGNavigationCallExp"/>
