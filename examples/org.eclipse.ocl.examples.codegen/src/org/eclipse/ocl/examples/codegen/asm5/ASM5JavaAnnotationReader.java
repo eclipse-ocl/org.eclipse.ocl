@@ -241,7 +241,8 @@ public class ASM5JavaAnnotationReader
 						public void visitMultiANewArrayInsn(String desc, int dims) {}
 
 						@Override
-						public void visitParameter(String name, int access) {}
+						public void visitParameter(String name, int access) { 	getClass();		// XXX
+						}
 
 						@Override
 						public AnnotationVisitor visitParameterAnnotation(int parameter, String desc, boolean visible) {

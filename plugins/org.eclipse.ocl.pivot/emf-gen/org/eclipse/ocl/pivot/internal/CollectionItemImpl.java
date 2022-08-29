@@ -177,19 +177,17 @@ public class CollectionItemImpl
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.COLLECTION_ITEM___VALIDATE_TYPE_IS_ITEM_TYPE__DIAGNOSTICCHAIN_MAP);
-			@SuppressWarnings("null")
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
 				IF__l_q = true;
 			}
 			else {
-				final /*@NonInvalid*/ @Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 				@SuppressWarnings("null")
 				final /*@NonInvalid*/ @NonNull OCLExpression ownedItem = this.getOwnedItem();
-				final /*@NonInvalid*/ @Nullable Type type_0 = ownedItem.getType();
-				final /*@NonInvalid*/ boolean result = (type != null) && (type_0 != null) ? (type.getTypeId() == type_0.getTypeId()) : false;
-				@SuppressWarnings("null")
+				final /*@NonInvalid*/ @Nullable Type type = ownedItem.getType();
+				final /*@NonInvalid*/ boolean result = (type_0 != null) && (type != null) ? (type_0.getTypeId() == type.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}

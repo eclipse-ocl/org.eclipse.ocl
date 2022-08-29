@@ -19,8 +19,8 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.BaseNameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -49,21 +49,22 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	//	Java reserved word. Access should therefore use globalContext.getYYY rather than JavaConstants.YYY
 	//	to minimize eiting if a new Java reserved word interferes.
 	//
-//	protected final @NonNull NameResolution eName;
-	protected final @NonNull NameResolution evaluateName;
-	protected final @NonNull NameResolution evaluationCacheName;
-	protected final @NonNull NameResolution executorName;
-	protected final @NonNull NameResolution getCachedEvaluationResult;
-	protected final @NonNull NameResolution idResolverName;
-	protected final @NonNull NameResolution initValueName;
-	protected final @NonNull NameResolution instanceName;
-	protected final @NonNull NameResolution modelManagerName;
-	protected final @NonNull NameResolution selfName;
-	protected final @NonNull NameResolution sourceAndArgumentValuesName;
-	protected final @NonNull NameResolution standardLibraryVariableName;
-	protected final @NonNull NameResolution thisName;
-	protected final @NonNull NameResolution typeIdName;
-	protected final @NonNull NameResolution valueName;
+	protected final @NonNull BaseNameResolution anyName;
+//	protected final @NonNull BaseNameResolution eName;
+	protected final @NonNull BaseNameResolution evaluateName;
+	protected final @NonNull BaseNameResolution evaluationCacheName;
+	protected final @NonNull BaseNameResolution executorName;
+	protected final @NonNull BaseNameResolution getCachedEvaluationResult;
+	protected final @NonNull BaseNameResolution idResolverName;
+	protected final @NonNull BaseNameResolution initValueName;
+	protected final @NonNull BaseNameResolution instanceName;
+	protected final @NonNull BaseNameResolution modelManagerName;
+	protected final @NonNull BaseNameResolution selfName;
+	protected final @NonNull BaseNameResolution sourceAndArgumentValuesName;
+	protected final @NonNull BaseNameResolution standardLibraryVariableName;
+	protected final @NonNull BaseNameResolution thisName;
+	protected final @NonNull BaseNameResolution typeIdName;
+	protected final @NonNull BaseNameResolution valueName;
 
 	public JavaGlobalContext(@NonNull CG codeGenerator) {
 		super(codeGenerator);
@@ -72,6 +73,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		//
 		this.thisName = globalNameManager.declareReservedName(null, JavaConstants.THIS_NAME);
 		//
+		this.anyName = globalNameManager.declareGlobalName(null, JavaConstants.ANY_NAME);
 //		this.eName = globalNameManager.declareGlobalName(null, JavaConstants.E_NAME);
 		this.evaluateName = globalNameManager.declareGlobalName(null, JavaConstants.EVALUATE_NAME);
 		this.evaluationCacheName = globalNameManager.declareGlobalName(null, JavaConstants.EVALUATION_CACHE_NAME);
@@ -146,7 +148,11 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 	} */
 
 	public @NonNull JavaLocalContext<@NonNull ? extends CG> createLocalContext(@Nullable JavaLocalContext<@NonNull ?> outerContext, @NonNull CGNamedElement cgNamedElement, @NonNull NamedElement asNamedElement) {
-		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends CG>)outerContext, cgNamedElement, asNamedElement, true);
+		return new JavaLocalContext<CG>(this, (JavaLocalContext<@NonNull ? extends CG>)outerContext, cgNamedElement, asNamedElement);
+	}
+
+	public @NonNull BaseNameResolution getAnyNameResolution() {
+		return anyName;
 	}
 
 	public @Nullable EClass getEClass(@NonNull ElementId elementId) {
@@ -158,7 +164,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return evaluateName.getResolvedName();
 	}
 
-	public @NonNull NameResolution getEvaluateNameResolution() {
+	public @NonNull BaseNameResolution getEvaluateNameResolution() {
 		return evaluateName;
 	}
 
@@ -170,7 +176,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return executorName.getResolvedName();
 	}
 
-	public @NonNull NameResolution getExecutorNameResolution() {
+	public @NonNull BaseNameResolution getExecutorNameResolution() {
 		return executorName;
 	}
 
@@ -186,7 +192,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return idResolverName.getResolvedName();
 	}
 
-	public @NonNull NameResolution getIdResolverNameResolution() {
+	public @NonNull BaseNameResolution getIdResolverNameResolution() {
 		return idResolverName;
 	}
 
@@ -208,7 +214,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return instanceName.getResolvedName();
 	}
 
-	public @NonNull NameResolution getInstanceNameResolution() {
+	public @NonNull BaseNameResolution getInstanceNameResolution() {
 		return instanceName;
 	}
 
@@ -221,7 +227,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return modelManagerName.getResolvedName();
 	}
 
-	public @NonNull NameResolution getModelManagerNameResolution() {
+	public @NonNull BaseNameResolution getModelManagerNameResolution() {
 		return modelManagerName;
 	}
 
@@ -252,7 +258,7 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return selfName.getResolvedName();
 	}
 
-	public @NonNull NameResolution getSelfNameResolution() {
+	public @NonNull BaseNameResolution getSelfNameResolution() {
 		return selfName;
 	}
 
@@ -260,15 +266,15 @@ public class JavaGlobalContext<@NonNull CG extends JavaCodeGenerator> extends Ab
 		return sourceAndArgumentValuesName.getResolvedName();
 	}
 
-	public @NonNull NameResolution getStandardLibraryVariableNameResolution() {
+	public @NonNull BaseNameResolution getStandardLibraryVariableNameResolution() {
 		return standardLibraryVariableName;
 	}
 
-	public @NonNull NameResolution getThisNameResolution() {
+	public @NonNull BaseNameResolution getThisNameResolution() {
 		return thisName;
 	}
 
-	public @NonNull NameResolution getTypeIdNameResolution() {
+	public @NonNull BaseNameResolution getTypeIdNameResolution() {
 		return typeIdName;
 	}
 

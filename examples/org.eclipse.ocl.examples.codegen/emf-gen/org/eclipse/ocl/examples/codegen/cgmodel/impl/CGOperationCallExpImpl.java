@@ -87,16 +87,6 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	protected CGOperation cgOperation;
 
 	/**
-	 * The cached value of the '{@link #getCgArguments() <em>Cg Arguments</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCgArguments()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<CGValuedElement> cgArguments;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -113,6 +103,19 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	protected EClass eStaticClass() {
 		return CGModelPackage.Literals.CG_OPERATION_CALL_EXP;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<CGValuedElement> getCgArguments() {
+		if (cgArguments == null) {
+			cgArguments = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 10);
+		}
+		return cgArguments;
 	}
 
 	/**
@@ -159,19 +162,6 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 		cgOperation = newCgOperation;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldCgOperation, cgOperation));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public List<CGValuedElement> getCgArguments() {
-		if (cgArguments == null) {
-			cgArguments = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 10);
-		}
-		return cgArguments;
 	}
 
 	/**
@@ -338,4 +328,13 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 		return false;
 	}
 
+	/**
+	 * The cached value of the '{@link #getCgArguments() <em>Cg Arguments</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getCgArguments()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<CGValuedElement> cgArguments;
 } //CGOperationCallExpImpl

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -273,6 +274,20 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void setNonNull() {
 		nonNull = true;
+	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer) {
+		if (newContainer == null) {
+			getClass();
+		}
+		super.eBasicSetContainer(newContainer);
+	}
+
+	@Override
+	public void setNameResolution(@NonNull NameResolution nameResolution) {
+//		System.out.println("Set " + NameUtil.debugSimpleName(nameResolution) + " for " + NameUtil.debugSimpleName(this));		// XXX YYY
+		super.setNameResolution(nameResolution);
 	}
 
 } //CGBuiltInIterationCallExpImpl

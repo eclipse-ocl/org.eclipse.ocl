@@ -20,7 +20,6 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
@@ -276,6 +275,9 @@ public abstract class NameManager
 				if (anObject != NOT_AN_OBJECT) {
 					Object oldElement = name2object.get(validHint);
 					if (oldElement == null) {									// New allocation
+						if ("diagnostics".equals(validHint)) {
+							getClass();			// XXX
+						}
 						name2object.put(validHint, anObject);
 						return validHint;
 					}
@@ -327,8 +329,14 @@ public abstract class NameManager
 		}
 
 		public void reserveName(@NonNull String name, @NonNull Object object) {
+			if ("diagnostics".equals(name)) {
+				getClass();			// XXX
+			}
 			Object old = name2object.put(name, object);
-			assert old == null;
+		//	assert old == null;
+		//	if (old != null) {
+		//		System.out.println(object + " occludes " + old);	// Parameter can hide Property
+		//	}
 		}
 
 		@Override
@@ -420,9 +428,6 @@ public abstract class NameManager
 		CGValuedElement cgNamedValue = cgElement.getNamedValue();
 		nameResolution = cgNamedValue.basicGetNameResolution();
 		if (nameResolution == null) {
-			if (cgNamedValue instanceof CGIterator) {
-				getClass();		// XXX
-			}
 			String nameHint = getLazyNameHint(cgNamedValue);		// globals must have a name soon, nested resolve later
 			nameResolution = new BaseNameResolution(this, cgNamedValue, nameHint);
 		}

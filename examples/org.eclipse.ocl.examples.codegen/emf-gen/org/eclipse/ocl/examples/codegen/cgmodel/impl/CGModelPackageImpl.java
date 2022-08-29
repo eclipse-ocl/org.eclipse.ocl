@@ -2624,6 +2624,16 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
+	public EReference getCGOperationCallExp_CgArguments() {
+		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EAttribute getCGOperationCallExp_ReferredOperation() {
 		return (EAttribute)cgOperationCallExpEClass.getEStructuralFeatures().get(0);
 	}
@@ -2636,16 +2646,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	@Override
 	public EReference getCGOperationCallExp_CgOperation() {
 		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getCGOperationCallExp_CgArguments() {
-		return (EReference)cgOperationCallExpEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**

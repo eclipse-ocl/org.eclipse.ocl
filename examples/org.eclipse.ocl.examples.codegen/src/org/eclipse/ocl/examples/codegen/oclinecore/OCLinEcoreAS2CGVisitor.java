@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -63,26 +64,39 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 	public @NonNull CGParameter getParameter(@NonNull Variable aParameter, @Nullable String name) {
 		CGParameter cgParameter = super.getParameter(aParameter, name);
 		assert !PivotConstants.SELF_NAME.equals(aParameter.getName());
-		//	globalContext.getThisName().addCGElement(cgParameter);;
+		//	globalContext.getThisName().addSecondaryElement(cgParameter);;
 		//	cgParameter.setValueName(JavaConstants.THIS_NAME);
 	//	}
 		return cgParameter;
 	} */
 
 	@Override
-	public @NonNull CGParameter getSelfParameter(@NonNull Variable aParameter) {
-		CGParameter cgParameter = super.getSelfParameter(aParameter);
+	public @NonNull CGParameter getSelfParameter(@NonNull VariableDeclaration aParameter) {
+		CGParameter cgParameter = super.getThisParameter(aParameter);
 	//	assert (PivotConstants.SELF_NAME.equals(aParameter.getName())) {
-		globalContext.getThisNameResolution().addCGElement(cgParameter);;
+	//	globalContext.getThisNameResolution().addSecondaryElement(cgParameter);
+	//	globalContext.getSelfNameResolution().addSecondaryElement(cgParameter);
 		//	cgParameter.setValueName(JavaConstants.THIS_NAME);
 	//	}
 		return cgParameter;
 	}
 
+/*	@Override
+	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		List<Constraint> asConstraints = asClass.getOwnedConstraints();
+		if (!asConstraints.isEmpty()) {
+			LocalContext classContext = pushClassContext(asClass);
+		//	classContext.getNameManager().
+		//	CGClass cgClass = (CGClass)classContext.getScope();
+			popClassContext();
+		}
+		return super.visitClass(asClass);
+	} */
+
 	@Override
 	public @Nullable CGConstraint visitConstraint(@NonNull Constraint element) {
 		CGConstraint cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
-		pushLocalContext(cgConstraint, element);
+		pushDeclarationContext(cgConstraint, element);
 		LanguageExpression specification = element.getOwnedSpecification();
 		if (specification != null) {
 			try {
@@ -112,7 +126,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 				throw new WrappedException(e);
 			}
 		}
-		popLocalContext(cgConstraint);
+		popLocalContext();
 		return cgConstraint;
 	}
 }

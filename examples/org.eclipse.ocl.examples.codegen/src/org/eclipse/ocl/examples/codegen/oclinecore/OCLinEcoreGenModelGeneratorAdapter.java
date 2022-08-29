@@ -28,9 +28,12 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.URIUtil;
 import org.eclipse.emf.codegen.ecore.genmodel.GenAnnotation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
+import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
+import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
+import org.eclipse.emf.codegen.ecore.genmodel.GenTypedElement;
 import org.eclipse.emf.codegen.ecore.genmodel.generator.GenBaseGeneratorAdapter;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
@@ -245,6 +248,60 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 		}
 
+		protected class RemoveGenOperation implements Edit
+		{
+			private final @NonNull GenOperation genOperation;
+			private final @NonNull List<GenOperation> genOperations;
+			private final int genIndex;
+			private final @NonNull List<EOperation> eOperations;
+			private final int eIndex;
+
+			@SuppressWarnings("null")
+			public RemoveGenOperation(@NonNull GenOperation genOperation) {
+				this.genOperation = genOperation;
+				this.genOperations = genOperation.getGenClass().getGenOperations();
+				this.genIndex = genOperations.indexOf(genOperation);
+				genOperations.remove(genOperation);
+				EOperation eOperation = genOperation.getEcoreOperation();
+				this.eOperations = eOperation.getEContainingClass().getEOperations();
+				this.eIndex = eOperations.indexOf(eOperation);
+				eOperations.remove(eOperation);
+			}
+
+			@Override
+			public void undo() {
+				eOperations.add(eIndex, genOperation.getEcoreOperation());
+				genOperations.add(genIndex, genOperation);
+			}
+		}
+
+		protected class RemoveGenFeature implements Edit
+		{
+			private final @NonNull GenFeature genFeature;
+			private final @NonNull List<GenFeature> genFeatures;
+			private final int genIndex;
+			private final @NonNull List<EStructuralFeature> eStructuralFeatures;
+			private final int eIndex;
+
+			@SuppressWarnings("null")
+			public RemoveGenFeature(@NonNull GenFeature genFeature) {
+				this.genFeature = genFeature;
+				this.genFeatures = genFeature.getGenClass().getGenFeatures();
+				this.genIndex = genFeatures.indexOf(genFeature);
+				genFeatures.remove(genFeature);
+				EStructuralFeature eStructuralFeature = genFeature.getEcoreFeature();
+				this.eStructuralFeatures = eStructuralFeature.getEContainingClass().getEStructuralFeatures();
+				this.eIndex = eStructuralFeatures.indexOf(eStructuralFeature);
+				eStructuralFeatures.remove(eStructuralFeature);
+			}
+
+			@Override
+			public void undo() {
+				eStructuralFeatures.add(eIndex, genFeature.getEcoreFeature());
+				genFeatures.add(genIndex, genFeature);
+			}
+		}
+
 		protected class SetEAnnotationDetail implements Edit
 		{
 			private final @NonNull EAnnotation eAnnotation;
@@ -357,7 +414,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 
 		private @NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body = new HashMap<>();
 
-		private @NonNull List<@NonNull Feature> foreignFeatures = new ArrayList<>();
+		private @NonNull Map<@NonNull Feature, @NonNull GenTypedElement> foreignFeatures = new HashMap<>();
 
 		private OCLinEcoreStateAdapter(@NonNull GenModel genModel) {
 			Resource eResource = genModel.eResource();
@@ -503,7 +560,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 		}
 
 		public @Nullable Iterable<@NonNull Feature> getForeignFeatures() {
-			return foreignFeatures;
+			return foreignFeatures.keySet();
 		}
 
 		protected @NonNull OCLinEcoreGenModelGeneratorAdapter getGenModelGeneratorAdapter() {
@@ -521,6 +578,20 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 
 		public @NonNull Map<@NonNull String, @NonNull FeatureBody> getUri2body() {
 			return uri2body;
+		}
+
+		public void installForeignFeatures() {
+			for (@NonNull GenTypedElement genFeature : foreignFeatures.values()) {
+				if (genFeature instanceof GenOperation) {
+					edits.add(new RemoveGenOperation((GenOperation)genFeature));
+				}
+				else if (genFeature instanceof GenFeature) {
+					edits.add(new RemoveGenFeature((GenFeature)genFeature));
+				}
+				else {
+					assert false;
+				}
+			}
 		}
 
 		protected void installJavaBodies(@NonNull MetamodelManagerInternal metamodelManager, @NonNull GenModel genModel, @NonNull Map<@NonNull String, @NonNull FeatureBody> results) {
@@ -564,11 +635,13 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				}
 				body = "throw new UnsupportedOperationException();  // FIXME Unimplemented " + (pOperation != null ? AS2Moniker.toString(pOperation) : "");
 			}
-			addEAnnotationDetail(eOperation, GenModelPackage.eNS_URI, "body", body);
-			//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
-			//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));
-			//	removeEAnnotation(eOperation.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT));
-			removeEAnnotation(eOperation.getEAnnotation(UML2GenModelUtil.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI));
+			if ((featureBody != null) && featureBody.getFeatureLocality().isEcore()) {
+				addEAnnotationDetail(eOperation, GenModelPackage.eNS_URI, "body", body);
+				//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
+				//	removeEAnnotation(eOperation.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));
+				//	removeEAnnotation(eOperation.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT));
+				removeEAnnotation(eOperation.getEAnnotation(UML2GenModelUtil.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI));
+			}
 		}
 
 		protected void installProperty(@NonNull Ecore2AS ecore2as, @NonNull EStructuralFeature eFeature, @NonNull Map<@NonNull String, @NonNull FeatureBody> results) {
@@ -583,11 +656,13 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				}
 				body = "throw new UnsupportedOperationException();  // FIXME Unimplemented " + (pProperty != null ? AS2Moniker.toString(pProperty) : "");
 			}
-			addEAnnotationDetail(eFeature, GenModelPackage.eNS_URI, "get", body);
-			//	removeEAnnotation(eFeature.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
-			//	removeEAnnotation(eFeature.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));
-			//	removeEAnnotation(eFeature.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT));
-			removeEAnnotation(eFeature.getEAnnotation(UML2GenModelUtil.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI));
+			if ((featureBody != null) && featureBody.getFeatureLocality().isEcore()) {
+				addEAnnotationDetail(eFeature, GenModelPackage.eNS_URI, "get", body);
+				//	removeEAnnotation(eFeature.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
+				//	removeEAnnotation(eFeature.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));
+				//	removeEAnnotation(eFeature.getEAnnotation(PivotConstants.OCL_DELEGATE_URI_PIVOT));
+				removeEAnnotation(eFeature.getEAnnotation(UML2GenModelUtil.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI));
+			}
 		}
 
 		/**
@@ -728,7 +803,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 					body.rewriteManagedImports(importManager);		// Adjust non-staic bodoes to suit JET
 				}
 				stateAdapter.installJavaBodies(metamodelManager, genModel, results);
-		//		stateAdapter.installForeignFeatures(foreignFeatures);
+				stateAdapter.installForeignFeatures();
 				stateAdapter.pruneDelegates(genModel);
 			}
 		} catch (Exception e) {

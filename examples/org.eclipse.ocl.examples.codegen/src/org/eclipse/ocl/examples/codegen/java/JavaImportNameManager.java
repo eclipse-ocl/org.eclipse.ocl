@@ -85,9 +85,6 @@ public class JavaImportNameManager extends AbstractImportNameManager
 	 * Returns null if no short name can be allocated - reserved for a primitive/important class or another user class.
 	 */
 	public @Nullable String addImport(@NonNull String newLongName) {
-		if (newLongName.contains("FOREIGN")) {
-			getClass();		// XXX
-		}
 		int index = newLongName.lastIndexOf(".");
 		String shortName = index >= 0 ? newLongName.substring(index+1) : newLongName;
 		String oldLongName = short2longName.get(shortName);

@@ -1022,9 +1022,8 @@ implements Property {
 		final /*@NonInvalid*/ @Nullable Object container = ClassifierOclContainerOperation.INSTANCE.evaluate(executor, this);
 		/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 		try {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class = TYP_Class_0;
-			@SuppressWarnings("null")
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_4 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class = TYP_Class_4;
 			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, container, CAST_TYP_Class).booleanValue();
 			CAUGHT_oclIsKindOf = oclIsKindOf;
 		}
@@ -1038,13 +1037,12 @@ implements Property {
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_includes;
 			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class = idResolver.getClass(PivotTables.CLSSid_Class, null);
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class_0 = TYP_Class;
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_10 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_Class_0 = TYP_Class_10;
 				@SuppressWarnings("null")
 				final /*@Thrown*/ org.eclipse.ocl.pivot.@NonNull Class oclAsType = (org.eclipse.ocl.pivot.@NonNull Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, container, CAST_TYP_Class_0);
 				final /*@Thrown*/ @NonNull List<Property> ownedProperties = oclAsType.getOwnedProperties();
 				final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedProperties = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Property, ownedProperties);
-				@SuppressWarnings("null")
 				final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_ownedProperties, this).booleanValue();
 				CAUGHT_includes = includes;
 			}
@@ -1098,7 +1096,6 @@ implements Property {
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.PROPERTY___VALIDATE_COMPATIBLE_DEFAULT_EXPRESSION__DIAGNOSTICCHAIN_MAP);
-			@SuppressWarnings("null")
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
@@ -1110,21 +1107,21 @@ implements Property {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
-						final /*@NonInvalid*/ boolean ne = ownedExpression != null;
+						final /*@NonInvalid*/ boolean ne_0 = ownedExpression != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!ne) {
+						if (!ne_0) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT__l_g;
 							try {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_ExpressionInOCL = TYP_ExpressionInOCL;
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_TYP_ExpressionInOCL = TYP_ExpressionInOCL_0;
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, CAST_TYP_ExpressionInOCL);
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
-								final /*@Thrown*/ boolean ne_0 = ownedBody != null;
-								CAUGHT__l_g = ne_0;
+								final /*@Thrown*/ boolean ne = ownedBody != null;
+								CAUGHT__l_g = ne;
 							}
 							catch (Exception THROWN__l_g) {
 								CAUGHT__l_g = ValueUtil.createInvalidValue(THROWN__l_g);
@@ -1181,7 +1178,6 @@ implements Property {
 				catch (Exception THROWN_result) {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				@SuppressWarnings("null")
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}
@@ -1217,7 +1213,6 @@ implements Property {
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue severity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.PROPERTY___VALIDATE_STATIC_PROPERTY_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP);
-			@SuppressWarnings("null")
 			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, severity, PivotTables.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF__l_q;
 			if (le) {
@@ -1235,41 +1230,41 @@ implements Property {
 						/*@Caught*/ @Nullable Object CAUGHT_or;
 						try {
 							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
-							final /*@NonInvalid*/ boolean ne = ownedExpression != null;
-							final /*@NonInvalid*/ @Nullable Boolean or_0;
-							if (ne) {
-								or_0 = ValueUtil.TRUE_VALUE;
-							}
-							else {
-								final /*@NonInvalid*/ @Nullable String defaultValueString = this.getDefaultValueString();
-								final /*@NonInvalid*/ boolean ne_1 = defaultValueString != null;
-								if (ne_1) {
-									or_0 = ValueUtil.TRUE_VALUE;
-								}
-								else {
-									or_0 = ValueUtil.FALSE_VALUE;
-								}
-							}
-							final /*@Thrown*/ @Nullable Boolean or;
-							if (or_0 == ValueUtil.TRUE_VALUE) {
+							final /*@NonInvalid*/ boolean ne_1 = ownedExpression != null;
+							final /*@NonInvalid*/ @Nullable Boolean or;
+							if (ne_1) {
 								or = ValueUtil.TRUE_VALUE;
 							}
 							else {
-								final /*@NonInvalid*/ @Nullable String implementationClass = this.getImplementationClass();
-								final /*@NonInvalid*/ boolean ne_0 = implementationClass != null;
+								final /*@NonInvalid*/ @Nullable String defaultValueString = this.getDefaultValueString();
+								final /*@NonInvalid*/ boolean ne_0 = defaultValueString != null;
 								if (ne_0) {
 									or = ValueUtil.TRUE_VALUE;
 								}
 								else {
-									if (or_0 == null) {
-										or = null;
+									or = ValueUtil.FALSE_VALUE;
+								}
+							}
+							final /*@Thrown*/ @Nullable Boolean or_0;
+							if (or == ValueUtil.TRUE_VALUE) {
+								or_0 = ValueUtil.TRUE_VALUE;
+							}
+							else {
+								final /*@NonInvalid*/ @Nullable String implementationClass = this.getImplementationClass();
+								final /*@NonInvalid*/ boolean ne = implementationClass != null;
+								if (ne) {
+									or_0 = ValueUtil.TRUE_VALUE;
+								}
+								else {
+									if (or == null) {
+										or_0 = null;
 									}
 									else {
-										or = ValueUtil.FALSE_VALUE;
+										or_0 = ValueUtil.FALSE_VALUE;
 									}
 								}
 							}
-							CAUGHT_or = or;
+							CAUGHT_or = or_0;
 						}
 						catch (Exception THROWN_or) {
 							CAUGHT_or = ValueUtil.createInvalidValue(THROWN_or);
@@ -1294,7 +1289,6 @@ implements Property {
 				catch (Exception THROWN_result) {
 					CAUGHT_result = ValueUtil.createInvalidValue(THROWN_result);
 				}
-				@SuppressWarnings("null")
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF__l_q = logDiagnostic;
 			}

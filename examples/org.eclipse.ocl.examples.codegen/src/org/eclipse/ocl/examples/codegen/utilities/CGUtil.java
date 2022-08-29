@@ -551,6 +551,10 @@ public class CGUtil
 		CGUtil.replace(cgIn, cgLetExp);
 		cgLetExp.setIn(cgIn);
 		cgLetExp.setInit(cgVariable);
+//		System.out.println("re-let " + NameUtil.debugSimpleName(cgLetExp) + " : " + cgLetExp.toString());
+//		for (EObject eObject : new TreeIterable(cgLetExp, true)) {		// XXX
+//			System.out.println("\t" + NameUtil.debugSimpleName(eObject) + " : " + eObject.toString());
+//		}
 		return cgLetExp;
 	}
 

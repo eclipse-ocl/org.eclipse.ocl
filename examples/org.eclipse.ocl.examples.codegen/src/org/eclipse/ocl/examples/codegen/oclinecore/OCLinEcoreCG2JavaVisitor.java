@@ -26,7 +26,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -39,6 +38,7 @@ import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator.FeatureBody;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator.FeatureLocality;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -58,7 +58,10 @@ import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.AbstractStaticOperation;
 import org.eclipse.ocl.pivot.internal.library.AbstractStaticProperty;
+import org.eclipse.ocl.pivot.internal.library.ForeignOperation;
+import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -130,7 +133,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 
 	public @NonNull Map<@NonNull String, @NonNull FeatureBody> generateBodies() {
 		Map<@NonNull String, @NonNull FeatureBody> bodies = new HashMap<>();
-		for (CGClass cgClass : cgPackage.getClasses()) {
+		for (@NonNull CGClass cgClass : CGUtil.getClasses(cgPackage)) {
 			for (CGConstraint cgConstraint : cgClass.getInvariants()) {
 				CGValuedElement cgBody = cgConstraint.getBody();
 				org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
@@ -141,60 +144,22 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 					String bodyText = generateValidatorBody(cgBody, asConstraint, asClass);
 					String fragmentURI = getFragmentURI(asClass) + "==" + getRuleName(asConstraint);
 					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
+					assert foreignPackageName != null;
 					String foreignClassName = context.getForeignClassName(asClass);
-					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, false, foreignPackageName,foreignClassName, bodyText));
+					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, FeatureLocality.ECORE_IMPL, foreignPackageName, foreignClassName, bodyText));
 				}
 			}
 			for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {
-				Operation asOperation = CGUtil.getAST(cgOperation);
-				FeatureBody body = null;
 				CGValuedElement cgBody = cgOperation.getBody();
 				if (cgBody != null) {
-					String returnClassName = genModelHelper.getOperationReturnType(asOperation);
-					localContext = globalContext.basicGetLocalContext(cgOperation);
-					String bodyText = generateBody(cgOperation.getParameters(), cgBody, returnClassName);
-					String fragmentURI = getFragmentURI(asOperation);
-					String foreignPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
-					String foreignClassName = context.getForeignClassName(asOperation.getOwningClass());
-					body = new FeatureBody(fragmentURI, asOperation, asOperation.isIsStatic(), foreignPackageName, foreignClassName, bodyText);
-				}
-				if (body != null) {
+					FeatureBody body = generateOperationBody(cgOperation, cgBody);
 					bodies.put(body.getURI(), body);
 				}
 			}
 			for (CGProperty cgProperty : cgClass.getProperties()) {
 				CGValuedElement cgBody = cgProperty.getBody();
-				Property asProperty = CGUtil.getAST(cgProperty);
-				FeatureBody body = null;
 				if (cgBody != null) {
-					Class asClass = PivotUtil.getOwningClass(asProperty);
-					boolean isStatic = asProperty.isIsStatic();
-					String packageName;
-					String className;
-					String bodyText;
-					if (cgProperty instanceof CGForeignProperty) {
-						localContext = globalContext.basicGetLocalContext(cgProperty);
-						js.resetStream();
-						js.appendCommentWithOCL(null, cgBody.getAst());
-						cgProperty.accept(this);
-						bodyText = toString();
-						packageName = genPackage.getReflectionPackageName();
-						className = context.getForeignClassName(asClass);
-					}
-					else {
-						assert !isStatic;
-						localContext = globalContext.getLocalContext(cgProperty);
-						String returnClassName = genModelHelper.getPropertyResultType(asProperty);
-						bodyText = generateBody(null, cgBody, returnClassName);
-						packageName = genPackage.getReflectionClassPackageName();
-						GenClass genClass = (GenClass)genModelHelper.getGenClassifier(asClass);
-						assert genClass != null;
-						className = genClass.getClassName();
-					}
-					assert packageName != null;
-					assert className != null;
-					String fragmentURI = getFragmentURI(asProperty);
-					body = new FeatureBody(fragmentURI, asProperty, isStatic, packageName, className, bodyText);
+					FeatureBody body = generatePropertyBody(cgProperty, cgBody);
 					bodies.put(body.getURI(), body);
 				}
 			}
@@ -247,11 +212,103 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return toString();
 	}
 
+	protected @NonNull FeatureBody generateOperationBody(@NonNull CGOperation cgOperation, @NonNull CGValuedElement cgBody) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		assert asOperation != null;
+		Class asClass = PivotUtil.getOwningClass(asOperation);
+		FeatureLocality featureLocality = getFeatureLocality(asOperation);
+		String packageName;
+		String className;
+		String bodyText;
+		if (featureLocality == FeatureLocality.FOREIGN_STATIC) {
+			localContext = globalContext.basicGetLocalContext(cgOperation);
+			js.resetStream();
+		//	js.appendCommentWithOCL(null, cgOperation.getAst());
+			cgOperation.accept(this);
+			bodyText = toString();
+			packageName = genPackage.getReflectionPackageName();
+			className = context.getForeignClassName(asClass);
+		}
+		else if (featureLocality == FeatureLocality.FOREIGN_IMPL) {
+			localContext = globalContext.basicGetLocalContext(cgOperation);
+			js.resetStream();
+			js.appendCommentWithOCL(null, cgOperation.getAst());
+			cgOperation.accept(this);
+			bodyText = toString();
+			packageName = genPackage.getReflectionPackageName();
+			className = context.getForeignClassName(asClass);
+		}
+		else if (featureLocality == FeatureLocality.ECORE_IMPL) {
+			featureLocality = FeatureLocality.ECORE_IMPL;
+			String returnClassName = genModelHelper.getOperationReturnType(asOperation);
+			localContext = globalContext.basicGetLocalContext(cgOperation);
+			bodyText = generateBody(cgOperation.getParameters(), cgBody, returnClassName);
+			packageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
+			className = context.getForeignClassName(asClass);
+		}
+		else {
+			assert false;
+			packageName = "xyzzy";
+			className = "xyzzy";
+			bodyText = "xyzzy";
+		}
+		String fragmentURI = getFragmentURI(asOperation);
+		assert packageName != null;		// XXX
+		return new FeatureBody(fragmentURI, asOperation, featureLocality, packageName, className, bodyText);
+	}
+
+	protected @NonNull FeatureBody generatePropertyBody(@NonNull CGProperty cgProperty, @NonNull CGValuedElement cgBody) {
+		Property asProperty = CGUtil.getAST(cgProperty);
+		Class asClass = PivotUtil.getOwningClass(asProperty);
+		FeatureLocality featureLocality = getFeatureLocality(asProperty);
+		String packageName;
+		String className;
+		String bodyText;
+		if (featureLocality == FeatureLocality.FOREIGN_IMPL) {
+			localContext = globalContext.basicGetLocalContext(cgProperty);
+			js.resetStream();
+			js.appendCommentWithOCL(null, cgProperty.getAst());
+			cgProperty.accept(this);
+			bodyText = toString();
+			packageName = genPackage.getReflectionPackageName();
+			className = context.getForeignClassName(asClass);
+		}
+		else if (featureLocality == FeatureLocality.FOREIGN_STATIC) {
+			localContext = globalContext.basicGetLocalContext(cgProperty);
+			js.resetStream();
+			js.appendCommentWithOCL(null, cgProperty.getAst());
+			cgProperty.accept(this);
+			bodyText = toString();
+			packageName = genPackage.getReflectionPackageName();
+			className = context.getForeignClassName(asClass);
+		}
+		else if (featureLocality == FeatureLocality.ECORE_IMPL) {
+			localContext = globalContext.getLocalContext(cgProperty);
+			String returnClassName = genModelHelper.getPropertyResultType(asProperty);
+			bodyText = generateBody(null, cgBody, returnClassName);
+			packageName = genPackage.getReflectionClassPackageName();
+			GenClass genClass = (GenClass)genModelHelper.getGenClassifier(asClass);
+			assert genClass != null;
+			className = genClass.getClassName();
+		}
+		else {
+			assert false;
+			packageName = "xyzzy";
+			className = "xyzzy";
+			bodyText = "xyzzy";
+		}
+		assert packageName != null;
+		assert className != null;
+		String fragmentURI = getFragmentURI(asProperty);
+		return new FeatureBody(fragmentURI, asProperty, featureLocality, packageName, className, bodyText);
+	}
+
 	protected @NonNull FeatureBody generateStaticOperation(@NonNull CGOperation cgOperation) {
 		localContext = globalContext.getLocalContext(cgOperation);
 		js.resetStream();
 		//
 		Operation asOperation = CGUtil.getAST(cgOperation);
+		assert asOperation != null;
 		assert asOperation.isIsStatic();
 		String className = "SO_" + context.getForeignClassName(PivotUtil.getOwningClass(asOperation));
 		List<CGParameter> cgParameters = cgOperation.getParameters();
@@ -308,7 +365,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asOperation);
 		String foreignPackageName = getGlobalContext().getTablesClassName();
-		return new FeatureBody(fragmentURI, asOperation, true, foreignPackageName, className, bodyText);
+		FeatureLocality featureLocality = FeatureLocality.FOREIGN_STATIC;
+		return new FeatureBody(fragmentURI, asOperation, featureLocality, foreignPackageName, className, bodyText);
 	}
 
 	protected @NonNull FeatureBody generateStaticProperty(@NonNull CGProperty cgProperty) {
@@ -376,7 +434,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		String bodyText = toString();
 		String fragmentURI = getFragmentURI(asProperty);
 		String foreignPackageName = getGlobalContext().getTablesClassName();
-		return new FeatureBody(fragmentURI, asProperty, true, foreignPackageName, className, bodyText);
+		FeatureLocality featureLocality = FeatureLocality.FOREIGN_STATIC;
+		return new FeatureBody(fragmentURI, asProperty, featureLocality, foreignPackageName, className, bodyText);
 	}
 
 	private void appendIdPath(@NonNull Element element) {
@@ -456,6 +515,48 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return toString();
 	}
 
+	protected @NonNull FeatureLocality getFeatureLocality(@NonNull Operation asOperation) {
+		boolean isStatic = asOperation.isIsStatic();
+		LibraryFeature operationImplementation = asOperation.getImplementation();
+		if (isStatic) {
+			if (operationImplementation instanceof ForeignOperation) {
+				return FeatureLocality.FOREIGN_STATIC;			// XXX FIXME
+			}
+			else {
+				return FeatureLocality.FOREIGN_STATIC;
+			}
+		}
+		else {
+			if (operationImplementation instanceof ForeignOperation) {
+				return FeatureLocality.FOREIGN_IMPL;
+			}
+			else {
+				return FeatureLocality.ECORE_IMPL;
+			}
+		}
+	}
+
+	protected @NonNull FeatureLocality getFeatureLocality(@NonNull Property asProperty) {
+		boolean isStatic = asProperty.isIsStatic();
+		LibraryFeature propertyImplementation = asProperty.getImplementation();
+		if (isStatic) {
+			if (propertyImplementation instanceof ForeignProperty) {
+				return FeatureLocality.FOREIGN_STATIC;		// XXX FIXME
+			}
+			else {
+				return FeatureLocality.FOREIGN_STATIC;
+			}
+		}
+		else {
+			if (propertyImplementation instanceof ForeignProperty) {
+				return FeatureLocality.FOREIGN_IMPL;
+			}
+			else {
+				return FeatureLocality.ECORE_IMPL;
+			}
+		}
+	}
+
 	protected @NonNull String getFragmentURI(@NonNull Element element) {
 		return String.valueOf(EcoreUtil.getURI(element).fragment());
 	}
@@ -508,12 +609,13 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 	}
 
 	@Override
-	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
+	public @NonNull Boolean visitCGPackage(@NonNull CGPackage cgPackage) {
 		return true;
 	}
 
 	@Override
-	public @NonNull Boolean visitCGPackage(@NonNull CGPackage cgPackage) {
-		return true;
+	public @NonNull Boolean visitCGProperty(@NonNull CGProperty cgProperty) {
+		// TODO Auto-generated method stub
+		return super.visitCGProperty(cgProperty);
 	}
 }

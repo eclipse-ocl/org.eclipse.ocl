@@ -148,7 +148,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	protected void doTypedElement(@NonNull CGTypedElement cgTypedElement) {
 		CGTypeId cgTypeId = cgTypedElement.getTypeId();
-		if (cgTypeId != null) {
+		if ((cgTypeId != null) && (cgTypeId != cgTypedElement)) {		// XXX Better way to terminate mta recursion
 			cgTypeId.accept(this);
 		}
 	}
@@ -250,8 +250,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	@Override
 	public @Nullable Object visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
 		CGValuedElement cgSource = CGUtil.getSource(cgCatchExp);
-		NameResolution catchNameResolution = getNameManager().declareLazyName(cgSource);
-		catchNameResolution.addNameVariant(codeGenerator.getTHROWN_NameVariant());
+		NameResolution rawNameResolution = getNameManager().declareLazyName(cgSource);
+		rawNameResolution.addNameVariant(codeGenerator.getTHROWN_NameVariant());
 		return super.visitCGCatchExp(cgCatchExp);
 	}
 
@@ -320,7 +320,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		TypeId typeId = asClass.getTypeId();
 		CGTypeId cgTypeId = codeGenerator.getAnalyzer().getTypeId(typeId);
 	//	String nameHint = globalNameManager.getNameHint(typeId);
-		globalNameManager.declareStandardName(cgTypeId);		// XXX promote / generalize
+		globalNameManager.declareLazyName(cgTypeId);		// XXX promote / generalize
 		return super.visitCGEcorePropertyCallExp(cgEcorePropertyCallExp);
 	}
 
@@ -455,7 +455,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		CGValuedElement cgSource = cgIterationCallExp.getSource();
 		NameManager nameManager = getNameManager();
 		if (cgSource != null) {
-			nameManager.declareLazyName(cgSource);
+			nameManager.declareLazyName(cgSource);		// source must be declared in outer namespace
 			cgSource.accept(this);
 		}
 		NameResolution iterationNameResolution = nameManager.declareLazyName(cgIterationCallExp);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -32,6 +32,20 @@ import org.eclipse.ocl.pivot.Operation;
  * @generated
  */
 public interface CGOperationCallExp extends CGCallExp {
+	/**
+	 * Returns the value of the '<em><b>Cg Arguments</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * All argument expressions for the call often corresponding to executor then typeid then source/self then arguments
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Cg Arguments</em>' containment reference list.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_CgArguments()
+	 * @generated
+	 */
+	List<CGValuedElement> getCgArguments();
+
 	/**
 	 * Returns the value of the '<em><b>Referred Operation</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -81,20 +95,5 @@ public interface CGOperationCallExp extends CGCallExp {
 	 */
 	void setCgOperation(CGOperation value);
 
-	/**
-	 * Returns the value of the '<em><b>Cg Arguments</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * All argument expressions for the call often corresponding to executor then typeid then source/self then arguments
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Cg Arguments</em>' containment reference list.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_CgArguments()
-	 * @generated
-	 */
-	List<CGValuedElement> getCgArguments();
-
 	default CGValuedElement getCgThis() { return null; }
-
 } // CGOperationCallExp

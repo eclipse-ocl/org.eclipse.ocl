@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -25,8 +24,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 
@@ -136,12 +133,14 @@ public class CommonAnalysis extends AbstractAnalysis
 			}
 		}
 		if ((simpleAnalyses.size() > 1) || !cgCSE.isUncommonable()) {
-			JavaGlobalContext<@NonNull ?> globalContext = ((JavaCodeGenerator)analyzer.getCodeGenerator()).getGlobalContext();
-			NameManager nameManager = globalContext.getLocalContext(controlElement).getNameManager();;
+		//	JavaGlobalContext<@NonNull ?> globalContext = ((JavaCodeGenerator)analyzer.getCodeGenerator()).getGlobalContext();
+		//	NameManager nameManager = globalContext.getLocalContext(controlElement).getNameManager();;
 			CGVariable cgVariable = CGModelFactory.eINSTANCE.createCGLocalVariable();
 			cgVariable.setTypeId(cgCSE.getTypeId());
 			cgVariable.setRequired(cgCSE.isNonNull());
 			cgVariable.setAst(cgCSE.getAst());
+		//	nameManager.declareStandardName(cgVariable);
+			analyzer.getCodeGenerator().getNameResolution(cgCSE).addCGElement(cgVariable);
 		//	nameManager.queueValueName(cgVariable, null, "_cse");		// let post-order nameHint resolution find a name
 			for (SimpleAnalysis simpleAnalysis : simpleAnalyses) {
 				CGValuedElement commonElement = simpleAnalysis.getElement();
@@ -170,11 +169,12 @@ public class CommonAnalysis extends AbstractAnalysis
 	}
 
 	protected void rewriteAsVariableExp(@NonNull CGValuedElement cgElement, @NonNull CGVariable cgVariable) {
-		CGVariableExp cgVarExp = CGModelFactory.eINSTANCE.createCGVariableExp();
-		cgVarExp.setTypeId(cgVariable.getTypeId());
-		cgVarExp.setAst(cgVariable.getAst());
-		cgVarExp.setReferredVariable(cgVariable);
-		CGUtil.replace(cgElement, cgVarExp);
+		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
+		cgVariableExp.setTypeId(cgVariable.getTypeId());
+		cgVariableExp.setAst(cgVariable.getAst());
+		cgVariableExp.setReferredVariable(cgVariable);
+		cgVariable.getNameResolution().addCGElement(cgVariableExp);
+		CGUtil.replace(cgElement, cgVariableExp);
 	}
 
 	public void rewriteGlobal(@NonNull CodeGenAnalyzer analyzer) {
@@ -194,7 +194,7 @@ public class CommonAnalysis extends AbstractAnalysis
 					primaryConstantExp.setReferredConstant(primaryElement);
 					primaryConstantExp.setAst(primaryElement.getAst());
 					primaryConstantExp.setTypeId(primaryElement.getTypeId());
-					primaryConstantExp.setName(primaryElement.getName());
+				//	primaryConstantExp.setName(primaryElement.getName());
 					CGUtil.replace(primaryElement, primaryConstantExp);
 				}
 			}
@@ -215,7 +215,7 @@ public class CommonAnalysis extends AbstractAnalysis
 							secondaryConstantExp.setReferredConstant(secondaryElement);
 							secondaryConstantExp.setAst(secondaryElement.getAst());
 							secondaryConstantExp.setTypeId(secondaryElement.getTypeId());
-							secondaryConstantExp.setName(secondaryElement.getName());
+						//	secondaryConstantExp.setName(secondaryElement.getName());
 							CGUtil.replace(secondaryElement, secondaryConstantExp);
 						}
 					}

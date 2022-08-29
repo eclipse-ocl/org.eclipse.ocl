@@ -68,6 +68,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 * @ordered
 	 */
 	protected static final boolean IS_SELF_EDEFAULT = false;
+
 	/**
 	 * The cached value of the '{@link #isIsSelf() <em>Is Self</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -77,6 +78,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 * @ordered
 	 */
 	protected boolean isSelf = IS_SELF_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #isIsThis() <em>Is This</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -86,6 +88,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 * @ordered
 	 */
 	protected static final boolean IS_THIS_EDEFAULT = false;
+
 	/**
 	 * The cached value of the '{@link #isIsThis() <em>Is This</em>}' attribute.
 	 * <!-- begin-user-doc -->
