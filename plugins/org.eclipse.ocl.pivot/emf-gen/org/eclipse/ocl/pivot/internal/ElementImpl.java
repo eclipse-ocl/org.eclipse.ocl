@@ -233,7 +233,7 @@ public abstract class ElementImpl
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Element = idResolver.getClass(PivotTables.CLSSid_Element, null);
 				final /*@NonInvalid*/ @Nullable Element CAST_1_ = (Element)_1;
 				if (CAST_1_ == null) {
-					throw new InvalidValueException("Null \'\'$metamodel$::Element\'\' rather than \'\'OclVoid\'\' value required");
+					throw new InvalidValueException("Null \'\'Element\'\' rather than \'\'OclVoid\'\' value required");
 				}
 				final /*@Thrown*/ @NonNull SetValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OclElement, CAST_1_);
 				final /*@Thrown*/ @NonNull SetValue selectByKind = (@Nullable SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element);
