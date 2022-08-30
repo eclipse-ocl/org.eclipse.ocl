@@ -211,8 +211,8 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 
 	@Override
 	public void createCGBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation) {
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		ExpressionInOCL asSpecification = (ExpressionInOCL)asOperation.getBodyExpression();
+		Element asOperation = cgOperation.getAst();
+		ExpressionInOCL asSpecification = (ExpressionInOCL) (asOperation instanceof ExpressionInOCL ? asOperation : ((Operation)asOperation).getBodyExpression());
 		assert (asSpecification != null);
 		OCLExpression asExpression = PivotUtil.getOwnedBody(asSpecification);
 		CGValuedElement cgBody = as2cgVisitor.doVisit(CGValuedElement.class, asExpression);
