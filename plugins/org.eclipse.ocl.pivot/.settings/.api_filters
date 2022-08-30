@@ -224,6 +224,12 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="BAG_TMPLid_"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="CLSSid_BooleanType"/>
             </message_arguments>
         </filter>
@@ -279,6 +285,18 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="ORD_CLSSid_IteratorVariable"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="ORD_TMPLid_"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="SEQ_TMPLid_"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -318,6 +336,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="BAG_TMPLid_"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="CLSSid_BooleanType"/>
             </message_arguments>
         </filter>
@@ -364,6 +387,16 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="ORD_CLSSid_IteratorVariable"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ORD_TMPLid_"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="SEQ_TMPLid_"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -2115,6 +2148,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/library/UnboxedExplicitNavigationProperty.java" type="org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty"/>
+                <message_argument value="CREATE_METHOD"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/messages/PivotMessagesInternal.java" type="org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal">
         <filter id="336658481">
             <message_arguments>
@@ -2133,14 +2174,6 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.resource.ASResourceFactory"/>
                 <message_argument value="createASSaverNormalizeVisitor(AbstractASSaver)"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/library/UnboxedExplicitNavigationProperty.java" type="org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty"/>
-                <message_argument value="CREATE_METHOD"/>
             </message_arguments>
         </filter>
     </resource>

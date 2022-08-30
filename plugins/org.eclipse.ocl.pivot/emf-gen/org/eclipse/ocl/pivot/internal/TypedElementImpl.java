@@ -197,14 +197,14 @@ implements TypedElement {
 		 */
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @Nullable Type type = bodySpecification.getType();
-		final /*@NonInvalid*/ @NonNull Object IsEQ2_ = type == null;
+		final /*@NonInvalid*/ boolean IsEQ2_ = type == null;
 		/*@Thrown*/ @Nullable Boolean IF_IsEQ2_;
-		if (IsEQ2_ == Boolean.TRUE) {
+		if (IsEQ2_) {
 			IF_IsEQ2_ = null;
 		}
 		else {
 			if (type == null) {
-				throw new InvalidValueException("Null \'\'$metamodel$::IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
+				throw new InvalidValueException("Null \'\'IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
 			}
 			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
