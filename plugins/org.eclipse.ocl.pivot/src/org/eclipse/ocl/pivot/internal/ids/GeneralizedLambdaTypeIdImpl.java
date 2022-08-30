@@ -101,7 +101,11 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 		//			s.append(">");
 		//		}
 		s.append(name);
-		for (int i = 0; i < parametersId.size(); i++) {
+		int iSize = parametersId.size();
+		if (iSize <= 0) {					// During initialization
+			s.append(" ?(");
+		}
+		for (int i = 0; i < iSize; i++) {
 			TypeId parameterId = parametersId.get(i);
 			assert parameterId != null;
 			if (i == 0) {
@@ -120,7 +124,7 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 			}
 		}
 		s.append(") : ");
-		if (parametersId.size() > 1) {
+		if (iSize > 1) {
 			TypeId parameterId = parametersId.get(1);
 			assert parameterId != null;
 			s.append(parameterId.toString());

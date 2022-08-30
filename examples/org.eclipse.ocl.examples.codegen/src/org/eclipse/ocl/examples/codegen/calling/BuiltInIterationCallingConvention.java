@@ -14,14 +14,18 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -103,6 +107,20 @@ public class BuiltInIterationCallingConvention extends AbstractOperationCallingC
 			return cgIsEqualExp;
 		}
 		throw new IllegalStateException("Unsupported built-in " + libraryOperation); */
+	}
+
+	@Override
+	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
+		Iteration asIteration = (Iteration)CGUtil.getAST(cgOperation);
+		NestedNameManager nameManager = as2cgVisitor.getNameManager();
+		CGParameter cgParameter = nameManager.getSelfParameter();
+		//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
+		//			cgParameter.setRequired(contextVariable.isIsRequired());
+		cgOperation.getParameters().add(cgParameter);
+	//	for (@NonNull Parameter parameterVariable : ClassUtil.nullFree(asIteration.getOwnedParameters())) {
+	//		CGParameter cgParameter = nameManager.getParameter(parameterVariable, (String)null);		-- creates a bad (unsupported) global LambdaTypeId
+	//		cgOperation.getParameters().add(cgParameter);
+	//	}
 	}
 
 	@Override
