@@ -343,6 +343,8 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 	}
 
 	public @Nullable Object visiting(@NonNull ElementId id) {
-		throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + id.getClass().getName());
+		System.out.println("Unsupported " + getClass().getSimpleName() + ": " + id.getClass().getName());			// XXX
+		return null;
+	//	throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + id.getClass().getName());
 	}
 }

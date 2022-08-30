@@ -412,7 +412,6 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 		@Override
 		public @Nullable Object visitLambdaTypeId(@NonNull LambdaTypeId id) {
-			// TODO Auto-generated method stub
 			return visiting(id);
 		}
 
@@ -512,7 +511,9 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		}
 
 		public @Nullable Object visiting(@NonNull ElementId id) {
-			throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + id.getClass().getName());
+			System.out.println("Unsupported " + getClass().getSimpleName() + ": " + id.getClass().getName());			// XXX
+			return null;
+		//	throw new UnsupportedOperationException(getClass().getSimpleName() + ": " + id.getClass().getName());
 		}
 	}
 }
