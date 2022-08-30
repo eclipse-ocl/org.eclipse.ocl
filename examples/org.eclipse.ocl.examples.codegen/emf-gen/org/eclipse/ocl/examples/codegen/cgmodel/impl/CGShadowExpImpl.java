@@ -316,7 +316,8 @@ public abstract class CGShadowExpImpl extends CGValuedElementImpl implements CGS
 	@Override
 	public boolean isNonInvalid() {
 		for (CGShadowPart cgPart : getParts()) {
-			if (!cgPart.isNonInvalid()) {
+			boolean mayBeInvalid = !cgPart.isNonInvalid();
+			if (mayBeInvalid) {
 				return false;
 			}
 		}
