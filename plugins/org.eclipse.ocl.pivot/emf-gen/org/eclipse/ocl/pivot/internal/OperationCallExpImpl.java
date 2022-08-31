@@ -828,7 +828,7 @@ implements OperationCallExp {
 							/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 							try {
 								if (THROWN_type_0 == null) {
-									throw new InvalidValueException("Null \'\'IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								if (IF_CAUGHT_isTypeof instanceof InvalidValueException) {
 									throw (InvalidValueException)IF_CAUGHT_isTypeof;
