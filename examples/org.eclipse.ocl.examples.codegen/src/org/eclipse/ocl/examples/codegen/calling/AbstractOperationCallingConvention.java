@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -216,7 +215,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		OCLExpression asExpression = PivotUtil.getOwnedBody(asSpecification);
 		CGValuedElement cgBody = as2cgVisitor.doVisit(CGValuedElement.class, asExpression);
 		cgOperation.setBody(cgBody);
-		System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
+	//	System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
 	}
 
 	@Override
