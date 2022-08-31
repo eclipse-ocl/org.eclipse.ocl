@@ -588,7 +588,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 							try {
 								if (THROWN_IF_CAUGHT_oclIsKindOf == null) {
-									throw new InvalidValueException("Null \'\'IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								if (CAUGHT_type instanceof InvalidValueException) {
 									throw (InvalidValueException)CAUGHT_type;
@@ -749,7 +749,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 							try {
 								if (THROWN_type == null) {
-									throw new InvalidValueException("Null \'\'IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								if (CAUGHT_elementType instanceof InvalidValueException) {
 									throw (InvalidValueException)CAUGHT_elementType;

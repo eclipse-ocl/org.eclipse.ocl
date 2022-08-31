@@ -218,7 +218,19 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="BAG_CLSSid_OclElement"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="BAG_CLSSid_Property_0"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="BAG_INVid"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -243,6 +255,24 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="CLSSid_OclComparable"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_OclEnumeration"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_OclState"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="CLSSid_OclStereotype"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -284,6 +314,12 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="ORD_"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="ORD_CLSSid_IteratorVariable"/>
             </message_arguments>
         </filter>
@@ -315,6 +351,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="SET_PRIMid_OclSelf"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="SET_PRIMid_OclSelf_0"/>
             </message_arguments>
         </filter>
         <filter id="336658481">
@@ -331,7 +373,17 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="BAG_CLSSid_OclElement"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="BAG_CLSSid_Property_0"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="BAG_INVid"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -352,6 +404,21 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="CLSSid_OclComparable"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_OclEnumeration"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_OclState"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_OclStereotype"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -386,6 +453,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="ORD_"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="ORD_CLSSid_IteratorVariable"/>
             </message_arguments>
         </filter>
@@ -412,6 +484,11 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="SET_PRIMid_OclSelf"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="SET_PRIMid_OclSelf_0"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">

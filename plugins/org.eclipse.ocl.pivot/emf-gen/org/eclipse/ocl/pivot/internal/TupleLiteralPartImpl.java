@@ -245,7 +245,7 @@ implements TupleLiteralPart {
 							}
 							final /*@Thrown*/ @Nullable Type type_0 = ownedInit_0.getType();
 							if (type_0 == null) {
-								throw new InvalidValueException("Null \'\'IteratorExp\'\' rather than \'\'OclVoid\'\' value required");
+								throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 							}
 							final /*@NonInvalid*/ @Nullable Type type_1 = this.getType();
 							final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type_1).booleanValue();
