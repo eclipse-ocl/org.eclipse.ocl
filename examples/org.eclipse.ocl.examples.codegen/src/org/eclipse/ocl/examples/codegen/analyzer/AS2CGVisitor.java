@@ -280,8 +280,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			else {
 				new NameResolution(getNameManager(), cgClass, name);
 			}
-			pushClassNameManager(cgClass);
-			popClassNameManager();
+		//	pushClassNameManager(cgClass);
+		//	popClassNameManager();
 		}
 		return cgClass;
 	}
@@ -467,18 +467,21 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				assert cgOperation.getCallingConvention() == callingConvention;
 //				classNameManager.declarePreferredName(cgOperation);
 				pushNestedNameManager(cgOperation);						// XXX too soon wrong currentNameManager ancestry defer to visit
-				ExpressionInOCL asExpressionInOCL = null;
-				LanguageExpression asSpecification = asOperation.getBodyExpression();
-				if (asSpecification != null) {
-					try {
-						asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);
-					} catch (ParserException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+				try {
+					ExpressionInOCL asExpressionInOCL = null;
+					LanguageExpression asSpecification = asOperation.getBodyExpression();
+					if (asSpecification != null) {
+						try {
+							asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);
+						} catch (ParserException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
+					callingConvention.createCGParameters(this, cgOperation, asExpressionInOCL);
+				} finally {
+					popNestedNameManager();
 				}
-				callingConvention.createCGParameters(this, cgOperation, asExpressionInOCL);
-				popNestedNameManager();
 			} finally {
 				popClassNameManager();
 			}
@@ -826,25 +829,28 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		CGClass cgClass = generateClassDeclaration(asClass, null);
-		pushClassNameManager(cgClass);
-		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
-			CGClass cgSuperClass = doVisit(CGClass.class, asSuperClass);
-			cgClass.getSuperTypes().add(cgSuperClass);
+		CGClass cgClass = analyzer.basicGetCGClass(asClass);
+		if (cgClass == null) {
+			cgClass = generateClassDeclaration(asClass, null);
+			pushClassNameManager(cgClass);
+			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
+				CGClass cgSuperClass = doVisit(CGClass.class, asSuperClass);
+				cgClass.getSuperTypes().add(cgSuperClass);
+			}
+			for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
+				CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
+				cgClass.getInvariants().add(cgConstraint);
+			}
+			for (@NonNull Operation asOperation : ClassUtil.nullFree(asClass.getOwnedOperations())) {
+				CGOperation cgOperation = doVisit(CGOperation.class, asOperation);
+				cgClass.getOperations().add(cgOperation);
+			}
+			for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
+				CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
+				cgClass.getProperties().add(cgProperty);
+			}
+			popClassNameManager();
 		}
-		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
-			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
-			cgClass.getInvariants().add(cgConstraint);
-		}
-		for (@NonNull Operation asOperation : ClassUtil.nullFree(asClass.getOwnedOperations())) {
-			CGOperation cgOperation = doVisit(CGOperation.class, asOperation);
-			cgClass.getOperations().add(cgOperation);
-		}
-		for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
-			CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
-			cgClass.getProperties().add(cgProperty);
-		}
-		popClassNameManager();
 		return cgClass;
 	}
 

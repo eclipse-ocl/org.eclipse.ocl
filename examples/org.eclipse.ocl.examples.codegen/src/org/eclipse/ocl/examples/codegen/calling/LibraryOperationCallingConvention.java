@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -207,7 +208,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				throw new UnsupportedOperationException();
 			}
 		}
-		assert i == asParameters.size();
+		assert (i == asParameters.size()) || (libraryOperation == OclAnyUnsupportedOperation.INSTANCE);
 	}
 
 	@Override

@@ -595,6 +595,10 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			for (Map.Entry<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> entry : newQuery2oldQuery2.entrySet()) {
 				ExpressionInOCL newQuery = entry.getKey();
 				ExpressionInOCL oldQuery = entry.getValue();
+			//	System.out.println("key2: " + NameUtil.debugSimpleName(newQuery) + " : " + NameUtil.debugSimpleName(newQuery.eContainer()) + " : " + newQuery);
+			//	System.out.println("val2: " + NameUtil.debugSimpleName(oldQuery) + " : " + NameUtil.debugSimpleName(oldQuery.eContainer()) + " : " + oldQuery);
+				assert newQuery.eContainer() != null;
+				assert oldQuery.eContainer() == null;
 				Constraint eContainer = (Constraint) newQuery.eContainer();
 				PivotUtilInternal.resetContainer(newQuery);
 				eContainer.setOwnedSpecification(oldQuery);
@@ -622,6 +626,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	protected @NonNull ExpressionInOCL rewriteQuery(@NonNull ExpressionInOCL oldQuery) {
+		assert oldQuery.eContainer() != null;
 		OCLExpression oldBody = oldQuery.getOwnedBody();
 		if ((oldBody instanceof BooleanLiteralExp) && ((BooleanLiteralExp)oldBody).isBooleanSymbol()) {
 			return oldQuery;		// Unconditionally true (typically obsolete) constraint needs no added complexity
@@ -698,14 +703,20 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//
 		asSynthesizedQuery.setOwnedBody(asHelper.createLetExp(asSeverityVariable, asSeverityExpression));
 		//
-		//	Install replacment query in the original Constraint.
+		//	Install replacement query in the original Constraint.
 		//
 		Constraint eContainer = (Constraint) oldQuery.eContainer();
 		PivotUtilInternal.resetContainer(oldQuery);
 		eContainer.setOwnedSpecification(asSynthesizedQuery);
 		Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery2 = newQuery2oldQuery;
 		assert newQuery2oldQuery2 != null;
+	//	System.out.println("key1: " + NameUtil.debugSimpleName(asSynthesizedQuery) + " : " + NameUtil.debugSimpleName(asSynthesizedQuery.eContainer()) + " : " + asSynthesizedQuery);
+	//	System.out.println("val1: " + NameUtil.debugSimpleName(oldQuery) + " : " + NameUtil.debugSimpleName(oldQuery.eContainer()) + " : " + oldQuery);
+		assert !newQuery2oldQuery2.containsKey(asSynthesizedQuery);
+		assert !newQuery2oldQuery2.containsKey(oldQuery);
 		newQuery2oldQuery2.put(asSynthesizedQuery, oldQuery);
+		assert asSynthesizedQuery.eContainer() != null;
+		assert oldQuery.eContainer() == null;
 		return asSynthesizedQuery;
 	}
 
