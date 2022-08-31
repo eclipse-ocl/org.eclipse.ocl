@@ -71,6 +71,7 @@ import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -709,6 +710,15 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		generatedClassNameMap.put(mapping.getFrom(), mapping.getTo());
 	}
 
+	protected org.eclipse.ocl.pivot.@Nullable Package basicGetOrphanPackage(@NonNull Model asModel) {
+		for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(asModel)) {
+			if (PivotConstants.ORPHANAGE_NAME.equals(asPackage.getName())) {
+				return asPackage;
+			}
+		}
+		return null;
+	}
+
 	protected @NonNull ContentAnalysis createContentAnalysis() {
 		return new ContentAnalysis(this);
 	}
@@ -798,13 +808,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return getOrphanPackage(getRootPackage(elem));
 	}
 
-	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Model elem) {
-		for (org.eclipse.ocl.pivot.@NonNull Package pkg : PivotUtil.getOwnedPackages(elem)) {
-			if (PivotConstants.ORPHANAGE_NAME.equals(pkg.getName())) {
-				return pkg;
-			}
-		}
-		throw new IllegalStateException();
+	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Model asModel) {
+		return ClassUtil.nonNullState(basicGetOrphanPackage(asModel));
 	}
 
 	protected @NonNull String getPartialName(@NonNull Property property) {
@@ -1156,74 +1161,76 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	 * local copy had been corrupted to point at the local.
 	 */
 	protected void initOrphanSymbolNames(@NonNull ASSaverWithInverse asSaver) {
-		org.eclipse.ocl.pivot.Package localOrphanage = getOrphanPackage(thisModel);
-		for (EObject localOrphan : new TreeIterable(localOrphanage, true)) {
-			StringBuilder s = new StringBuilder();
-			if (localOrphan instanceof CollectionType) {
-				CollectionType type = (CollectionType)localOrphan;
-				s.append("_" + type.getName());
-				s.append("_" + partialName(type.getElementType()));
-				s.append("_" + (type.isIsNullFree() ? "T" : "F"));
-				if (type.getLowerValue() != ValueUtil.ZERO_VALUE) {
-					s.append("_L" + type.getLowerValue());
+		org.eclipse.ocl.pivot.Package localOrphanage = basicGetOrphanPackage(thisModel);
+		if (localOrphanage != null) {
+			for (EObject localOrphan : new TreeIterable(localOrphanage, true)) {
+				StringBuilder s = new StringBuilder();
+				if (localOrphan instanceof CollectionType) {
+					CollectionType type = (CollectionType)localOrphan;
+					s.append("_" + type.getName());
+					s.append("_" + partialName(type.getElementType()));
+					s.append("_" + (type.isIsNullFree() ? "T" : "F"));
+					if (type.getLowerValue() != ValueUtil.ZERO_VALUE) {
+						s.append("_L" + type.getLowerValue());
+					}
+					if (type.getUpperValue() != ValueUtil.UNLIMITED_VALUE) {
+						s.append("_U" + type.getUpperValue());
+					}
 				}
-				if (type.getUpperValue() != ValueUtil.UNLIMITED_VALUE) {
-					s.append("_U" + type.getUpperValue());
+				else if (localOrphan instanceof LambdaType) {
+					LambdaType type = (LambdaType)localOrphan;
+					s.append("_" + type.getName());
+					s.append("_" + partialName(type.getContextType()));
+					for (Type parameterType : type.getParameterTypes()) {
+						s.append("_" + partialName(parameterType));
+					}
+					s.append("_" + partialName(type.getResultType()));
 				}
-			}
-			else if (localOrphan instanceof LambdaType) {
-				LambdaType type = (LambdaType)localOrphan;
-				s.append("_" + type.getName());
-				s.append("_" + partialName(type.getContextType()));
-				for (Type parameterType : type.getParameterTypes()) {
-					s.append("_" + partialName(parameterType));
+				else if (localOrphan instanceof MapType) {
+					MapType type = (MapType)localOrphan;
+					s.append("_" + type.getName());
+					s.append("_" + partialName(type.getKeyType()));
+					s.append("_" + (type.isKeysAreNullFree() ? "T" : "F"));
+					s.append("_" + partialName(type.getValueType()));
+					s.append("_" + (type.isValuesAreNullFree() ? "T" : "F"));
 				}
-				s.append("_" + partialName(type.getResultType()));
-			}
-			else if (localOrphan instanceof MapType) {
-				MapType type = (MapType)localOrphan;
-				s.append("_" + type.getName());
-				s.append("_" + partialName(type.getKeyType()));
-				s.append("_" + (type.isKeysAreNullFree() ? "T" : "F"));
-				s.append("_" + partialName(type.getValueType()));
-				s.append("_" + (type.isValuesAreNullFree() ? "T" : "F"));
-			}
-			else if (localOrphan instanceof Property) {
-				s.append("_" + partialName(localOrphan));
-			}
-		//	else if (localOrphan instanceof TemplateParameter) {
-		//		TemplateParameter type = (TemplateParameter)localOrphan;
-		//		s.append("tp_" + type.getTemplateParameterId().getIndex());
-		//	}
-			else if (localOrphan instanceof TupleType) {
-				s.append("_" + partialName(localOrphan));
-			}
-			else if (localOrphan instanceof TemplateBinding) {
-			}
-			else if (localOrphan instanceof TemplateParameterSubstitution) {
-			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
-				s.append("orphanClass");
-			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {
-				s.append("orphanPackage");
-			}
-			else {
-				System.out.println("Unexpected localOrphan: " + NameUtil.debugSimpleName(localOrphan));
-				s.append("_" + partialName(localOrphan));
-			}
-			if (s.length() > 0) {
-				String symbolName = getPrefixedSymbolName(localOrphan, s.toString());
-				EObject sharedOrphan = asSaver.basicGetSource(localOrphan);
-				if (sharedOrphan != null) {
-					nameQueries.putSymbolName(sharedOrphan, symbolName);
+				else if (localOrphan instanceof Property) {
+					s.append("_" + partialName(localOrphan));
 				}
-				else if (localOrphan == localOrphanage) {
-					Orphanage sharedOrphanage = Orphanage.getOrphanage(environmentFactory.getCompleteModel().getOrphanage());
-					nameQueries.putSymbolName(sharedOrphanage, symbolName);
+			//	else if (localOrphan instanceof TemplateParameter) {
+			//		TemplateParameter type = (TemplateParameter)localOrphan;
+			//		s.append("tp_" + type.getTemplateParameterId().getIndex());
+			//	}
+				else if (localOrphan instanceof TupleType) {
+					s.append("_" + partialName(localOrphan));
+				}
+				else if (localOrphan instanceof TemplateBinding) {
+				}
+				else if (localOrphan instanceof TemplateParameterSubstitution) {
+				}
+				else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
+					s.append("orphanClass");
+				}
+				else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {
+					s.append("orphanPackage");
 				}
 				else {
-					System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);
+					System.out.println("Unexpected localOrphan: " + NameUtil.debugSimpleName(localOrphan));
+					s.append("_" + partialName(localOrphan));
+				}
+				if (s.length() > 0) {
+					String symbolName = getPrefixedSymbolName(localOrphan, s.toString());
+					EObject sharedOrphan = asSaver.basicGetSource(localOrphan);
+					if (sharedOrphan != null) {
+						nameQueries.putSymbolName(sharedOrphan, symbolName);
+					}
+					else if (localOrphan == localOrphanage) {
+						Orphanage sharedOrphanage = Orphanage.getOrphanage(environmentFactory.getCompleteModel().getOrphanage());
+						nameQueries.putSymbolName(sharedOrphanage, symbolName);
+					}
+					else {
+						System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);
+					}
 				}
 			}
 		}
