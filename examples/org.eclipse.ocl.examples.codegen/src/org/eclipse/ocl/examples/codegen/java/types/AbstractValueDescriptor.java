@@ -31,7 +31,7 @@ public abstract class AbstractValueDescriptor extends AbstractDescriptor
 
 	public AbstractValueDescriptor(@NonNull ElementId elementId, @NonNull Class<?> javaClass) {
 		super(elementId);
-		assert javaClass != Object.class;
+		assert (javaClass != Object.class) || (elementId instanceof JavaTypeId);
 		this.javaClass = javaClass;
 	}
 
