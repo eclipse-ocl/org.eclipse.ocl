@@ -312,7 +312,9 @@ public class CGLibrary extends ASResourceImpl
 			PrimitiveType type;
 		
 			ownedClasses = ocl.getOwnedClasses();
-			ownedClasses.add(type = _String_1);
+			type = _String_1;
+			type.getSuperClasses().add(_OclElement);
+			ownedClasses.add(type);
 		}
 		
 		private final @NonNull Operation op_String_getSeverity = createOperation("getSeverity", _Integer, "org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation", org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation.INSTANCE);
@@ -325,7 +327,7 @@ public class CGLibrary extends ASResourceImpl
 			Operation operation;
 			Parameter parameter;
 		
-			ownedOperations = _String_1.getOwnedOperations();
+			ownedOperations = _String.getOwnedOperations();
 			ownedOperations.add(operation = op_String_getSeverity);
 			ownedOperations.add(operation = op_String_logDiagnostic);
 			operation.setIsValidating(true);
