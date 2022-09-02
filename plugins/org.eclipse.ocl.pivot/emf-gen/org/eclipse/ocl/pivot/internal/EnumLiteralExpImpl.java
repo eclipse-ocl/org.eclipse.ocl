@@ -180,16 +180,16 @@ public class EnumLiteralExpImpl
 				/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
 				try {
 					final /*@NonInvalid*/ @Nullable Type type = this.getType();
-					final /*@NonInvalid*/ @Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
-					final /*@NonInvalid*/ boolean IsEQ2_ = referredLiteral == null;
+					final /*@NonInvalid*/ @Nullable EnumerationLiteral referredLiteral_0 = this.getReferredLiteral();
+					final /*@NonInvalid*/ boolean IsEQ2_ = referredLiteral_0 == null;
 					/*@Thrown*/ @Nullable Enumeration IF_IsEQ2_;
 					if (IsEQ2_) {
 						IF_IsEQ2_ = null;
 					}
 					else {
-						assert referredLiteral != null;
+						assert referredLiteral_0 != null;
 						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull Enumeration owningEnumeration = referredLiteral.getOwningEnumeration();
+						final /*@Thrown*/ @NonNull Enumeration owningEnumeration = referredLiteral_0.getOwningEnumeration();
 						IF_IsEQ2_ = owningEnumeration;
 					}
 					final /*@Thrown*/ boolean IsEQ_ = (type != null) && (IF_IsEQ2_ != null) ? (type.getTypeId() == IF_IsEQ2_.getTypeId()) : false;

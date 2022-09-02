@@ -521,8 +521,8 @@ implements CollectionLiteralExp {
 				/*@Caught*/ @Nullable Object CAUGHT_implies;
 				try {
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
-					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind.getName()));
+					final /*@NonInvalid*/ @NonNull CollectionKind kind_0 = this.getKind();
+					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.nonNullState(kind_0.getName()));
 					final /*@NonInvalid*/ boolean IsEQ_ = BOXED_kind == PivotTables.ELITid_Bag;
 					final /*@Thrown*/ @Nullable Boolean implies;
 					if (!IsEQ_) {

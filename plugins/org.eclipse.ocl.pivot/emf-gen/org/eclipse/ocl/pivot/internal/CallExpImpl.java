@@ -242,9 +242,9 @@ public abstract class CallExpImpl
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_implies;
 				try {
-					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+					final /*@NonInvalid*/ boolean isSafe_0 = this.isIsSafe();
 					final /*@Thrown*/ @Nullable Boolean implies;
-					if (!isSafe) {
+					if (!isSafe_0) {
 						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -253,15 +253,15 @@ public abstract class CallExpImpl
 							/*@Caught*/ @NonNull Object CAUGHT_isNullFree;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_CollectionType = idResolver.getClass(PivotTables.CLSSid_CollectionType, null);
-								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-								final /*@NonInvalid*/ boolean IsEQ2_ = ownedSource == null;
+								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
+								final /*@NonInvalid*/ boolean IsEQ2_ = ownedSource_0 == null;
 								/*@Thrown*/ @Nullable Type IF_IsEQ2_;
 								if (IsEQ2_) {
 									IF_IsEQ2_ = null;
 								}
 								else {
-									assert ownedSource != null;
-									final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
+									assert ownedSource_0 != null;
+									final /*@Thrown*/ @Nullable Type type = ownedSource_0.getType();
 									IF_IsEQ2_ = type;
 								}
 								final /*@Thrown*/ @Nullable CollectionType oclAsType = (@Nullable CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, IF_IsEQ2_, TYP_CollectionType);

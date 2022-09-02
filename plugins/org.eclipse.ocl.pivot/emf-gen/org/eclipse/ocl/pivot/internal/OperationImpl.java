@@ -794,8 +794,8 @@ implements Operation {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression = this.getBodyExpression();
-						final /*@NonInvalid*/ boolean IsEQ_ = bodyExpression != null;
+						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_0 = this.getBodyExpression();
+						final /*@NonInvalid*/ boolean IsEQ_ = bodyExpression_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
 						if (!IsEQ_) {
 							and = ValueUtil.FALSE_VALUE;
@@ -804,7 +804,7 @@ implements Operation {
 							/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression, TYP_ExpressionInOCL);
+								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression_0, TYP_ExpressionInOCL);
 								if (oclAsType == null) {
 									throw new InvalidValueException("Null source for \'ExpressionInOCL::ownedBody\'");
 								}
@@ -837,8 +837,8 @@ implements Operation {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 						try {
-							final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_0 = this.getBodyExpression();
-							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_0);
+							final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression_1 = this.getBodyExpression();
+							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(bodyExpression_1);
 							CAUGHT_CompatibleBody = CompatibleBody;
 						}
 						catch (Exception THROWN_CAUGHT_CompatibleBody) {
@@ -925,8 +925,8 @@ implements Operation {
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_isUnique;
 				try {
-					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPreconditions = this.getOwnedPreconditions();
-					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPreconditions_0 = this.getOwnedPreconditions();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions_0);
 					/*@NonInvalid*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
 					@NonNull Iterator<Object> ITER__1 = BOXED_ownedPreconditions.iterator();
 					/*@Thrown*/ boolean isUnique;
@@ -999,8 +999,8 @@ implements Operation {
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_isUnique;
 				try {
-					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPostconditions = this.getOwnedPostconditions();
-					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPostconditions_0 = this.getOwnedPostconditions();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions_0);
 					/*@NonInvalid*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
 					@NonNull Iterator<Object> ITER__1 = BOXED_ownedPostconditions.iterator();
 					/*@Thrown*/ boolean isUnique;

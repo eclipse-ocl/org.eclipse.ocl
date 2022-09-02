@@ -1194,18 +1194,18 @@ implements OperationCallExp {
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
 				try {
-					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
-					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments);
+					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments_0 = this.getOwnedArguments();
+					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression, ownedArguments_0);
 					final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
-					final /*@NonInvalid*/ @Nullable Operation referredOperation = this.getReferredOperation();
-					final /*@NonInvalid*/ boolean IsEQ2_ = referredOperation == null;
+					final /*@NonInvalid*/ @Nullable Operation referredOperation_0 = this.getReferredOperation();
+					final /*@NonInvalid*/ boolean IsEQ2_ = referredOperation_0 == null;
 					/*@Thrown*/ @Nullable OrderedSetValue IF_IsEQ2_;
 					if (IsEQ2_) {
 						IF_IsEQ2_ = null;
 					}
 					else {
-						assert referredOperation != null;
-						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters = referredOperation.getOwnedParameters();
+						assert referredOperation_0 != null;
+						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters = referredOperation_0.getOwnedParameters();
 						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
 						IF_IsEQ2_ = BOXED_ownedParameters;
 					}

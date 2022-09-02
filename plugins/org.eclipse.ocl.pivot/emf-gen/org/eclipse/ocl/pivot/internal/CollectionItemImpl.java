@@ -185,8 +185,8 @@ public class CollectionItemImpl
 			else {
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ @NonNull OCLExpression ownedItem = this.getOwnedItem();
-				final /*@NonInvalid*/ @Nullable Type type_0 = ownedItem.getType();
+				final /*@NonInvalid*/ @NonNull OCLExpression ownedItem_0 = this.getOwnedItem();
+				final /*@NonInvalid*/ @Nullable Type type_0 = ownedItem_0.getType();
 				final /*@NonInvalid*/ boolean IsEQ_ = (type != null) && (type_0 != null) ? (type.getTypeId() == type_0.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, IsEQ_, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;

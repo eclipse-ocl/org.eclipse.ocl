@@ -271,8 +271,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
-						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
+						final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts_0 = this.getOwnedParts();
+						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts_0);
 						final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedParts);
 						final /*@NonInvalid*/ boolean IsEQ_ = size.equals(PivotTables.INT_1);
 						if (IsEQ_) {

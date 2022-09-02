@@ -1106,8 +1106,8 @@ implements Property {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression = this.getOwnedExpression();
-						final /*@NonInvalid*/ boolean IsEQ_ = ownedExpression != null;
+						final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
+						final /*@NonInvalid*/ boolean IsEQ_ = ownedExpression_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
 						if (!IsEQ_) {
 							and = ValueUtil.FALSE_VALUE;
@@ -1116,7 +1116,7 @@ implements Property {
 							/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, TYP_ExpressionInOCL_0);
+								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression_0, TYP_ExpressionInOCL_0);
 								if (oclAsType == null) {
 									throw new InvalidValueException("Null source for \'ExpressionInOCL::ownedBody\'");
 								}
@@ -1149,8 +1149,8 @@ implements Property {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_CompatibleBody;
 						try {
-							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_0 = this.getOwnedExpression();
-							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression_0);
+							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_1 = this.getOwnedExpression();
+							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression_1);
 							CAUGHT_CompatibleBody = CompatibleBody;
 						}
 						catch (Exception THROWN_CAUGHT_CompatibleBody) {
@@ -1237,8 +1237,8 @@ implements Property {
 								or_0 = ValueUtil.TRUE_VALUE;
 							}
 							else {
-								final /*@NonInvalid*/ @Nullable String defaultValueString = this.getDefaultValueString();
-								final /*@NonInvalid*/ boolean IsEQ__0 = defaultValueString != null;
+								final /*@NonInvalid*/ @Nullable String defaultValueString_0 = this.getDefaultValueString();
+								final /*@NonInvalid*/ boolean IsEQ__0 = defaultValueString_0 != null;
 								if (IsEQ__0) {
 									or_0 = ValueUtil.TRUE_VALUE;
 								}

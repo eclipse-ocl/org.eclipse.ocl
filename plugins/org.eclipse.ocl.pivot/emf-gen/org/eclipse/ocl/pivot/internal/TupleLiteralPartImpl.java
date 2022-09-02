@@ -198,8 +198,8 @@ implements TupleLiteralPart {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-						final /*@NonInvalid*/ boolean IsEQ_ = ownedInit != null;
+						final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_0 = this.getOwnedInit();
+						final /*@NonInvalid*/ boolean IsEQ_ = ownedInit_0 != null;
 						final /*@Thrown*/ @Nullable Boolean and;
 						if (!IsEQ_) {
 							and = ValueUtil.FALSE_VALUE;
@@ -207,10 +207,10 @@ implements TupleLiteralPart {
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
 							try {
-								if (ownedInit == null) {
+								if (ownedInit_0 == null) {
 									throw new InvalidValueException("Null source for \'TypedElement::type\'");
 								}
-								final /*@Thrown*/ @Nullable Type type = ownedInit.getType();
+								final /*@Thrown*/ @Nullable Type type = ownedInit_0.getType();
 								final /*@Thrown*/ boolean IsEQ__0 = type != null;
 								CAUGHT_IsEQ_ = IsEQ__0;
 							}
@@ -239,11 +239,11 @@ implements TupleLiteralPart {
 					else {
 						/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_0 = this.getOwnedInit();
-							if (ownedInit_0 == null) {
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_1 = this.getOwnedInit();
+							if (ownedInit_1 == null) {
 								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
-							final /*@Thrown*/ @Nullable Type type_0 = ownedInit_0.getType();
+							final /*@Thrown*/ @Nullable Type type_0 = ownedInit_1.getType();
 							if (type_0 == null) {
 								throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 							}

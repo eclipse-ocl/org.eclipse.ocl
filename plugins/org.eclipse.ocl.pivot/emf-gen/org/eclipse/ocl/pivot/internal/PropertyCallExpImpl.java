@@ -554,8 +554,8 @@ implements PropertyCallExp {
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_not;
 					try {
-						final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
-						final /*@NonInvalid*/ boolean IsEQ2_ = referredProperty == null;
+						final /*@NonInvalid*/ @Nullable Property referredProperty_0 = this.getReferredProperty();
+						final /*@NonInvalid*/ boolean IsEQ2_ = referredProperty_0 == null;
 						/*@Caught*/ @Nullable Object IF_IsEQ2_;
 						if (IsEQ2_) {
 							IF_IsEQ2_ = null;
@@ -563,8 +563,8 @@ implements PropertyCallExp {
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_isStatic;
 							try {
-								assert referredProperty != null;
-								final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
+								assert referredProperty_0 != null;
+								final /*@Thrown*/ boolean isStatic = referredProperty_0.isIsStatic();
 								CAUGHT_isStatic = isStatic;
 							}
 							catch (Exception THROWN_CAUGHT_isStatic) {

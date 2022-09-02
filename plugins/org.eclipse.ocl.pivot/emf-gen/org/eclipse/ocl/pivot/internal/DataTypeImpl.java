@@ -641,8 +641,8 @@ implements DataType {
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_implies;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
-					final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass != null;
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass_0 = this.getBehavioralClass();
+					final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass_0 != null;
 					final /*@Thrown*/ @Nullable Boolean implies;
 					if (!IsEQ_) {
 						implies = ValueUtil.TRUE_VALUE;

@@ -707,8 +707,8 @@ implements org.eclipse.ocl.pivot.Class {
 			else {
 				/*@Caught*/ @NonNull Object CAUGHT_isUnique;
 				try {
-					final /*@NonInvalid*/ @NonNull List<Constraint> ownedInvariants = this.getOwnedInvariants();
-					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedInvariants = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants);
+					final /*@NonInvalid*/ @NonNull List<Constraint> ownedInvariants_0 = this.getOwnedInvariants();
+					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedInvariants = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedInvariants_0);
 					/*@NonInvalid*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
 					@NonNull Iterator<Object> ITER__1 = BOXED_ownedInvariants.iterator();
 					/*@Thrown*/ boolean isUnique;

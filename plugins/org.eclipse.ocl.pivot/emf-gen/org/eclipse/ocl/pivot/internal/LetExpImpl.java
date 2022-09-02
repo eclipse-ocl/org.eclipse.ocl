@@ -251,8 +251,8 @@ implements LetExp {
 			else {
 				final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ @NonNull OCLExpression ownedIn = this.getOwnedIn();
-				final /*@NonInvalid*/ boolean isRequired_0 = ownedIn.isIsRequired();
+				final /*@NonInvalid*/ @NonNull OCLExpression ownedIn_0 = this.getOwnedIn();
+				final /*@NonInvalid*/ boolean isRequired_0 = ownedIn_0.isIsRequired();
 				final /*@NonInvalid*/ boolean IsEQ_ = isRequired == isRequired_0;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, IsEQ_, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;

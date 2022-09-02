@@ -200,8 +200,8 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			}
 			else {
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ @NonNull OCLExpression ownedInit = this.getOwnedInit();
-				final /*@NonInvalid*/ @Nullable Type type = ownedInit.getType();
+				final /*@NonInvalid*/ @NonNull OCLExpression ownedInit_0 = this.getOwnedInit();
+				final /*@NonInvalid*/ @Nullable Type type = ownedInit_0.getType();
 				final /*@NonInvalid*/ boolean IsEQ2_ = type == null;
 				/*@Caught*/ @Nullable Object IF_IsEQ2_;
 				if (IsEQ2_) {
