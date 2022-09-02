@@ -216,23 +216,53 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		private final @NonNull List<@NonNull TemplateSignature> sortedTemplateSignatures = new ArrayList<>();
 		private final @NonNull List<@NonNull TemplateableElement> sortedTemplateableElements = new ArrayList<>();
 		private final @NonNull List<@NonNull TupleType> sortedTupleTypes = new ArrayList<>();
+	//	private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> zzexternalClasses = new HashSet<>();
+		/**
+		 * All (derived) classes defined by the generated model.
+		 */
 		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> internalClasses = new HashSet<>();
-		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> externalClasses = new HashSet<>();
+		/**
+		 * All (derived) classes delegated from the generated model to a pre-existing library model.
+		 */
+		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> libraryClasses = new HashSet<>();
 		private final @NonNull Set<@NonNull NamedElement> allReferences = new HashSet<>();
 
 		protected ContentAnalysis(@NonNull GenerateOCLCommon context) {
 			super(context);
 		}
 
+		public void addLibraryClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass(asClass);
+			for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : completeClass.getPartialClasses()) {
+				libraryClasses.add(asPartialClass);
+			}
+			context.addExternalReference(asClass, context.thisModel);
+		}
+
 		protected void analyze(@NonNull Model thisModel) {
-			for (NamedElement asElement : context.external2name.keySet()) {
+		//	int nonOrphanPackages = 0;
+			for (org.eclipse.ocl.pivot.Package asPackage : thisModel.getOwnedPackages()) {
+				if (!Orphanage.isOrphanage(asPackage)) {
+					for (org.eclipse.ocl.pivot.Class asClass : asPackage.getOwnedClasses()) {
+						CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass(asClass);
+						String prefix = "_"+context.partialName(asClass);
+						String symbolName = context.getPrefixedSymbolNameWithoutNormalization(asClass, prefix);
+						if (!libraryClasses.contains(asClass)) {
+							for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : completeClass.getPartialClasses()) {
+								internalClasses.add(asPartialClass);
+							}
+						}
+					}
+				}
+			}
+	/*		for (NamedElement asElement : context.external2name.keySet()) {
 				if (asElement instanceof org.eclipse.ocl.pivot.Class) {
 					CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass((org.eclipse.ocl.pivot.Class)asElement);
 					for (org.eclipse.ocl.pivot.@NonNull Class  asPartialClass : completeClass.getPartialClasses()) {
 						externalClasses.add(asPartialClass);
 					}
 				}
-			}
+			} */
 			for (@NonNull EObject eObject : new TreeIterable(thisModel, true)) {
 				((Element)eObject).accept(this);
 			}
@@ -293,6 +323,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					context.addExternalReference(asNamedElement, thisModel);
 				}
 			}
+		//	assert internalClasses.equals(internalClasses2);
+		//	assert externalClasses.equals(externalClasses2);
 		}
 
 		protected void doSuperClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -347,12 +379,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			if (asClass.isTemplateParameter() != null) {			// FIXME can never happen
 				sortedParameterTypes.add(asClass);
 			}
-			else if (!externalClasses.contains(asClass)){
-				CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass(asClass);
-				for (org.eclipse.ocl.pivot.@NonNull Class  asPartialClass : completeClass.getPartialClasses()) {
-					internalClasses.add(asPartialClass);
-				}
-			}
 			doSuperClasses(asClass);
 			doTemplateableElement(asClass);
 			return null;
@@ -375,7 +401,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		@Override
 		public @Nullable Object visitComment(@NonNull Comment asComment) {
 			Element owningElement = asComment.getOwningElement();
-			if (!externalClasses.contains(owningElement)) {
+			if (!libraryClasses.contains(owningElement)) {
 				sortedCommentedElements.add(owningElement);
 			}
 			return null;
@@ -562,7 +588,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitTypedElement(@NonNull TypedElement asTypedElement) {
-			allReferences.add(asTypedElement.getType());
+			Type type = asTypedElement.getType();
+			allReferences.add(type);
 			return null;
 		}
 	}
@@ -626,14 +653,12 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		if (reference == null) {
 			return;
 		}
+		assert !contentAnalysis.internalClasses.contains(reference);
 		Model containingModel = PivotUtil.getContainingModel(reference);
 		if ((containingModel == root) || external2name.containsKey(reference) || Orphanage.isOrphanage(containingModel)) {
 			return;
 		}
 		if (reference instanceof Model) {
-			return;
-		}
-		if (contentAnalysis.internalClasses.contains(reference)) {
 			return;
 		}
 		//		boolean hasComplements = false;
@@ -704,6 +729,15 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		if ((getGeneratedClassName(reference) == null) && (eContainer instanceof NamedElement)) {
 			addExternalReference((NamedElement)eContainer, root);
 		}
+	}
+
+	/**
+	 * Configure asClass for use from a pre-existing library.
+	 * <br>
+	 * This is used to ensure that the MetaModel redefinition of e.g. Boolean delegates to the OCLstdlib definition.
+	 */
+	public void addLibraryClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		contentAnalysis.addLibraryClass(asClass);
 	}
 
 	public void addGeneratedClassNameMap(Mapping mapping) {
@@ -942,12 +976,15 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return externalPackages;
 	}
 
-	protected @NonNull List<String> getSortedExternals(@NonNull Model root) {
-		List<NamedElement> sortedExternals = new ArrayList<>(name2external.values());
+	protected @NonNull List<@NonNull String> getSortedExternals(@NonNull Model root) {
+		List<@NonNull NamedElement> sortedExternals = new ArrayList<>(name2external.values());
 		Collections.sort(sortedExternals, externalComparator);
-		List<String> sortedExternalNames = new ArrayList<>(sortedExternals.size());
-		for (NamedElement sortedExternal : sortedExternals) {
-			sortedExternalNames.add(external2name.get(sortedExternal));
+		List<@NonNull String> sortedExternalNames = new ArrayList<>(sortedExternals.size());
+		for (@NonNull NamedElement sortedExternal : sortedExternals) {
+			String name = external2name.get(sortedExternal);
+			if (name != null) {
+				sortedExternalNames.add(name);
+			}
 		}
 		return sortedExternalNames;
 	}
