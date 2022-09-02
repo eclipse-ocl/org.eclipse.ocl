@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -181,9 +182,10 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		OCLstdlib.install();
 		log.info("Loading Pivot Model '" + inputURI);
 		try {
-			setEnvironmentFactory(ocl.getEnvironmentFactory());
-			ResourceSet asResourceSet = metamodelManager.getASResourceSet();
-			Resource ecoreResource = ClassUtil.nonNullState(asResourceSet.getResource(inputURI, true));
+			EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+			setEnvironmentFactory(environmentFactory);
+			ResourceSet esResourceSet = environmentFactory.getResourceSet();
+			Resource ecoreResource = ClassUtil.nonNullState(esResourceSet.getResource(inputURI, true));
 			getEnvironmentFactory().adapt(ecoreResource);
 			String ecoreErrorsString = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(ecoreResource.getErrors()), "Loading " + inputURI, "\n");
 			if (ecoreErrorsString != null) {
@@ -210,14 +212,14 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			assert asRoot instanceof Model;
 			Model asModel = (Model)asRoot;
 			StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
-			addExternalReference(standardLibrary.getBooleanType(), asModel);
-			addExternalReference(standardLibrary.getIntegerType(), asModel);
-			addExternalReference(standardLibrary.getOclAnyType(), asModel);
-			addExternalReference(standardLibrary.getOclElementType(), asModel);
-			addExternalReference(standardLibrary.getOclEnumerationType(), asModel);
-			addExternalReference(standardLibrary.getRealType(), asModel);
-			addExternalReference(standardLibrary.getStringType(), asModel);
-			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asModel);
+			addLibraryClass(standardLibrary.getBooleanType());
+			addLibraryClass(standardLibrary.getIntegerType());
+			addLibraryClass(standardLibrary.getOclAnyType());
+			addLibraryClass(standardLibrary.getOclElementType());
+			addLibraryClass(standardLibrary.getOclEnumerationType());
+			addLibraryClass(standardLibrary.getRealType());
+			addLibraryClass(standardLibrary.getStringType());
+			addLibraryClass(standardLibrary.getUnlimitedNaturalType());
 			initModel(asModel, saver);
 			String metamodel = generateMetamodel(Collections.emptyList());
 			MergeWriter fw = new MergeWriter(fileName);
