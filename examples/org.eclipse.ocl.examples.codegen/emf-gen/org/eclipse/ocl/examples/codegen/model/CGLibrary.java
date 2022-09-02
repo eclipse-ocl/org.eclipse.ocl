@@ -298,21 +298,20 @@ public class CGLibrary extends ASResourceImpl
 		private final @NonNull Class _Integer = getPrimitiveType(_ocl, "Integer");
 		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
 		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
-		private final @NonNull Class _String = getPrimitiveType(_ocl, "String");
 		
 		private void installPackages() {
 			model.getOwnedPackages().add(ocl);
 			model.getOwnedImports().add(createImport(null, _ocl));
 		}
 		
-		private final @NonNull PrimitiveType _String_1 = createPrimitiveType(OCLstdlibPackage.Literals.STRING);
+		private final @NonNull PrimitiveType _String = createPrimitiveType(OCLstdlibPackage.Literals.STRING);
 		
 		private void installPrimitiveTypes() {
 			List<Class> ownedClasses;
 			PrimitiveType type;
 		
 			ownedClasses = ocl.getOwnedClasses();
-			type = _String_1;
+			type = _String;
 			type.getSuperClasses().add(_OclElement);
 			ownedClasses.add(type);
 		}
