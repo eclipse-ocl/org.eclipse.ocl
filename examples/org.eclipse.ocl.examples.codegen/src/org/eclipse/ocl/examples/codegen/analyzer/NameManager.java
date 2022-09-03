@@ -246,13 +246,11 @@ public abstract class NameManager
 
 	protected static class Context
 	{
-		private final @NonNull NameManager nameManager;
 		private @NonNull Map<@NonNull String, @NonNull Object> name2object;		// User of each name, null if name ambiguous
 		private @Nullable Map<@NonNull String, @NonNull Integer> name2counter;	// Auto-generation counter for each colliding name
 		private boolean hasChildren = false;									// Set tru once a child context has copied state
 
 		protected Context(@NonNull NameManager nameManager) {
-			this.nameManager = nameManager;
 			if (nameManager.isGlobal()) {
 				this.name2object = new HashMap<>();
 				this.name2counter = null;

@@ -275,7 +275,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			analyzer.addCGClass(cgClass);
 			String name = callingConvention.getName(this, asClass);
 			if ((currentNameManager == null) || (asClass.eContainer() instanceof org.eclipse.ocl.pivot.Package)) {
-				globalNameManager.declareGlobalName(cgClass, name);
+				globalNameManager.declareEagerName(cgClass, name);
 			}
 			else {
 				new NameResolution.Lazy(getNameManager(), cgClass, name);
@@ -1107,7 +1107,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 		cgPackage.setAst(asPackage);
-		globalNameManager.declareGlobalName(cgPackage, PivotUtil.getName(asPackage));
+		globalNameManager.declareEagerName(cgPackage, PivotUtil.getName(asPackage));
 		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
 			CGClass cgClass = doVisit(CGClass.class, asType);
 			cgPackage.getClasses().add(cgClass);

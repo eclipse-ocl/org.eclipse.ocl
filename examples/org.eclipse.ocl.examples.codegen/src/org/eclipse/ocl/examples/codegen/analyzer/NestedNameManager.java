@@ -374,7 +374,7 @@ public class NestedNameManager extends NameManager
 	}
 
 	public @NonNull CGVariable createQualifiedThisVariable() {
-		NameResolution qualifiedThisNameResolution = globalNameManager.declareGlobalName(null, asType.getName() + "_" + JavaConstants.THIS_NAME);
+		NameResolution qualifiedThisNameResolution = globalNameManager.declareEagerName(null, asType.getName() + "_" + JavaConstants.THIS_NAME);
 		CGVariable qualifiedThisVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		qualifiedThisVariable.setTypeId(analyzer.getCGTypeId(asType.getTypeId()));
 		qualifiedThisVariable.setInit(getThisParameter());

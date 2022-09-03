@@ -527,7 +527,7 @@ public class CodeGenAnalyzer
 			cgExternalClass = as2cgVisitor.generateClassDeclaration(asExternalClass, ExternalClassCallingConvention.INSTANCE);
 		//	cgExternalClass = CGModelFactory.eINSTANCE.createCGClass();
 		//	cgExternalClass.setName(externalClassName);
-			globalNameManager.declareGlobalName(cgExternalClass, externalClassName);		// XXX nest in currentNameManager
+			globalNameManager.declareEagerName(cgExternalClass, externalClassName);		// XXX nest in currentNameManager
 		//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
 			cgExternalClasses.add(cgExternalClass);
 			name2cgNestedClass.put(externalClassName, cgExternalClass);
@@ -543,7 +543,7 @@ public class CodeGenAnalyzer
 		assert cgNestedClass == null;
 	//	importNameManager.reserveLocalName(nestedClassName);
 		cgNestedClass = callingConvention.createCGClass(asClass);				// XXX Merge wrt generateClassDeclaration(
-		globalNameManager.declareGlobalName(cgNestedClass, nestedClassName);		// XXX nest in currentNameManager
+		globalNameManager.declareEagerName(cgNestedClass, nestedClassName);		// XXX nest in currentNameManager
 		cgNestedClass.setCallingConvention(callingConvention);
 		cgNestedClass.setAst(asClass);
 		//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
@@ -587,7 +587,7 @@ public class CodeGenAnalyzer
 		if (cgClass == null) {
 			cgClass = CGModelFactory.eINSTANCE.createCGClass();
 			cgClass.setAst(asClass);
-			globalNameManager.declareGlobalName(cgClass, PivotUtil.getName(asClass));
+			globalNameManager.declareEagerName(cgClass, PivotUtil.getName(asClass));
 			asClass2cgClass.put(asClass, cgClass);
 			if (cgRootClass == null) {
 				cgRootClass = cgClass;

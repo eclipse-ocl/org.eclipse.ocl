@@ -47,21 +47,16 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 public abstract class NameResolution
 {
 	/**
-	 * A Global NameResolution specifies an exact symbol name spelling for immediate allocation in the global scope.
+	 * An Eager NameResolution specifies an exact symbol name spelling for immediate allocation in some scope.
 	 */
-	public static class Global extends NameResolution
+	public static class Eager extends NameResolution
 	{
 		/**
 		 * The resolved name based on nameHint after ensuring that it is unique at and below the nameManager. Non-null once resolved.
 		 */
 		protected final @NonNull String resolvedName;
 
-		public Global(@NonNull GlobalNameManager nameManager, @NonNull String resolvedName) {
-			this(nameManager, null, resolvedName);
-		}
-
-		@Deprecated
-		public Global(@NonNull GlobalNameManager nameManager, @Nullable CGNamedElement primaryElement, @NonNull String resolvedName) {
+		public Eager(@NonNull GlobalNameManager nameManager, @Nullable CGNamedElement primaryElement, @NonNull String resolvedName) {
 			super(nameManager, primaryElement);
 			this.resolvedName = resolvedName;
 			if (NAMES_RESOLVE.isActive()) {

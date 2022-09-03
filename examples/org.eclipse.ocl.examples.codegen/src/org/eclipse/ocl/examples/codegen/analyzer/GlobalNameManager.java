@@ -20,7 +20,6 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 //import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -180,26 +179,29 @@ public class GlobalNameManager extends NameManager
 		this.analyzer = codeGenerator.getAnalyzer();
 		this.importNameManager = codeGenerator.createImportNameManager();
 		//
-		this.thisName = declareReservedName(JavaConstants.THIS_NAME);
+		//	Java reserved words first
 		//
-		this.anyName = declareGlobalName(JavaConstants.ANY_NAME);
-//		this.eName = declareGlobalName(JavaConstants.E_NAME);
-		this.evaluateName = declareGlobalName(JavaConstants.EVALUATE_NAME);
-		this.evaluationCacheName = declareGlobalName(JavaConstants.EVALUATION_CACHE_NAME);
-		this.executorName = declareGlobalName(JavaConstants.EXECUTOR_NAME);
-	//	this.getCachedEvaluationResultName = declareGlobalName(JavaConstants.GET_CACHED_EVALUATION_RESULT_NAME);
-		this.getResultName = declareGlobalName(JavaConstants.GET_RESULT_NAME);
-		this.idResolverName = declareGlobalName(JavaConstants.ID_RESOLVER_NAME);
-		this.initValueName = declareGlobalName("initValue");
-		this.instanceName = declareGlobalName(JavaConstants.INSTANCE_NAME);
-		this.isEqualName = declareGlobalName("isEqual");
-		this.modelManagerName = declareGlobalName(JavaConstants.MODEL_MANAGER_NAME);
-		this.selfName = declareGlobalName(PivotConstants.SELF_NAME);
-		this.sourceAndArgumentValuesName = declareGlobalName(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
-		this.standardLibraryVariableName = declareGlobalName(JavaConstants.STANDARD_LIBRARY_NAME);
-//.		this.thisName = getReservedName(null, JavaConstants.THIS_NAME);
-		this.typeIdName = declareGlobalName(JavaConstants.TYPE_ID_NAME);
-		this.valueName = declareGlobalName("value");
+		this.thisName = declareEagerName(null, JavaConstants.THIS_NAME);
+		//
+		//	Synthesized OCL key concepts next
+		//
+		this.anyName = declareEagerName(null, JavaConstants.ANY_NAME);
+	//	this.eName = declareEagerName(null, JavaConstants.E_NAME);
+		this.evaluateName = declareEagerName(null, JavaConstants.EVALUATE_NAME);
+		this.evaluationCacheName = declareEagerName(null, JavaConstants.EVALUATION_CACHE_NAME);
+		this.executorName = declareEagerName(null, JavaConstants.EXECUTOR_NAME);
+	//	this.getCachedEvaluationResultName = declareEagerName(null, JavaConstants.GET_CACHED_EVALUATION_RESULT_NAME);
+		this.getResultName = declareEagerName(null, JavaConstants.GET_RESULT_NAME);
+		this.idResolverName = declareEagerName(null, JavaConstants.ID_RESOLVER_NAME);
+		this.initValueName = declareEagerName(null, "initValue");
+		this.instanceName = declareEagerName(null, JavaConstants.INSTANCE_NAME);
+		this.isEqualName = declareEagerName(null, "isEqual");
+		this.modelManagerName = declareEagerName(null, JavaConstants.MODEL_MANAGER_NAME);
+		this.selfName = declareEagerName(null, PivotConstants.SELF_NAME);
+		this.sourceAndArgumentValuesName = declareEagerName(null, JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
+		this.standardLibraryVariableName = declareEagerName(null, JavaConstants.STANDARD_LIBRARY_NAME);
+		this.typeIdName = declareEagerName(null, JavaConstants.TYPE_ID_NAME);
+		this.valueName = declareEagerName(null, "value");
 	}
 
 	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
@@ -211,9 +213,6 @@ public class GlobalNameManager extends NameManager
 	}
 
 	public void addNameManager(@NonNull CGNamedElement cgElement, @NonNull NameManager nameManager) {
-		if (cgElement instanceof CGBuiltInIterationCallExp) {
-			getClass();		// XXX
-		}
 		NameManager old = cgElement2nameManager.put(cgElement, nameManager);
 		assert (old == null) || (old == nameManager);
 	}
@@ -266,9 +265,6 @@ public class GlobalNameManager extends NameManager
 	}
 
 	public @NonNull NestedNameManager createNestedNameManager(@Nullable NestedNameManager outerNameManager, @NonNull CGNamedElement cgScope) {
-		if (cgScope instanceof CGBuiltInIterationCallExp) {
-			getClass();		// XXX
-		}
 		NestedNameManager nestedNameManager = codeGenerator.createNestedNameManager(outerNameManager != null ? outerNameManager : this, cgScope);
 		NestedNameManager old = cgElement2nestedNameManager.put(cgScope, nestedNameManager);
 		assert old == null;
@@ -278,32 +274,13 @@ public class GlobalNameManager extends NameManager
 	}
 
 	/**
-	 * Declare that cgElement has a name which should immediately default to reservedName.
+	 * Declare that cgElement has a name which should immediately default to reservedName. cgElement to reserve a name
+	 * such as "this" for many purposes but no specific primary element.
 	 * This is typically used to provide an eager name reservation for global particularly Ecore names.
 	 */
-	public @NonNull NameResolution declareGlobalName(@NonNull String reservedName) {
-		return declareGlobalName(null, reservedName);
-	}
-	@Deprecated
-	public @NonNull NameResolution declareGlobalName(@Nullable CGNamedElement cgElement, @NonNull String reservedName) {
-	//	assert !reservedJavaNames.contains(reservedName);
-		NameResolution.Global baseNameResolution = new NameResolution.Global(this, cgElement, reservedName);
-		context.allocateReservedName(reservedName, cgElement != null ? cgElement : NameManager.NOT_AN_OBJECT);
-		return baseNameResolution;
-	}
-
-	/**
-	 * Declare that cgElement has a name which should immediately equate to reservedName.
-	 * This is typically used to ensure that reserved Java names are used only for their Java purpose.
-	 */
-	public @NonNull NameResolution declareReservedName(@NonNull String reservedName) {
-		return declareReservedName(null, reservedName);
-	}
-	@Deprecated
-	public @NonNull NameResolution declareReservedName(@Nullable CGNamedElement cgElement, @NonNull String reservedName) {
-	//	assert reservedJavaNames.contains(reservedName);
-		NameResolution baseNameResolution = new NameResolution.Global(this, cgElement, reservedName);
-		context.allocateReservedName(reservedName, cgElement != null ? cgElement : NameManager.NOT_AN_OBJECT);
+	public @NonNull NameResolution declareEagerName(@Nullable CGNamedElement cgElement, @NonNull String reservedName) {
+		NameResolution.Eager baseNameResolution = new NameResolution.Eager(this, cgElement, reservedName);
+		context.allocateReservedName(reservedName, cgElement != null ? cgElement : NOT_AN_OBJECT);
 		return baseNameResolution;
 	}
 

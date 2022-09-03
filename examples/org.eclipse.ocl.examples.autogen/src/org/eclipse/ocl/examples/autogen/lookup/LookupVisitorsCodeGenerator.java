@@ -131,7 +131,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		this.asThisVariable = helper.createParameterVariable("this", asVisitorClass, true);
 		this.asContextVariable = helper.createParameterVariable(CONTEXT_NAME, asEnvironmentType, true);
 		CGVariable cgVariable = as2cgVisitor.getNameManager().getCGVariable(asContextVariable);
-		globalNameManager.declareReservedName(cgVariable, /*null,*/ CONTEXT_NAME);
+		globalNameManager.declareEagerName(cgVariable, CONTEXT_NAME);
 
 		//
 		//	Create new AS Visitor helper properties
@@ -148,17 +148,17 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		//
 		List<Operation> asVisitorOperations = asVisitorClass.getOwnedOperations();
 		asVisitorOperations.addAll(createAdditionalASOperations());
-		globalNameManager.declareGlobalName(null, CHILD_NAME);
-		//		globalNameManager.declareGlobalName(null, CONTEXT_NAME);
-		globalNameManager.declareGlobalName(null, ELEMENT_NAME);
-		globalNameManager.declareGlobalName(null, UNQUALIFIED_ENV_NAME);
-		globalNameManager.declareGlobalName(null, EXPORTED_ENV_NAME);
-		globalNameManager.declareGlobalName(null, HAS_FINAL_RESULT_NAME);
-		globalNameManager.declareGlobalName(null, INMPORTER_NAME);
-		globalNameManager.declareGlobalName(null, NESTED_ENV_NAME);
-		globalNameManager.declareGlobalName(null, PARENT_NAME);
-		globalNameManager.declareGlobalName(null, PARENT_ENV_NAME);
-		globalNameManager.declareGlobalName(null, QUALIFIED_ENV_NAME);
+		globalNameManager.declareEagerName(null, CHILD_NAME);
+		//		globalNameManager.declareEagerName(null, CONTEXT_NAME);
+		globalNameManager.declareEagerName(null, ELEMENT_NAME);
+		globalNameManager.declareEagerName(null, UNQUALIFIED_ENV_NAME);
+		globalNameManager.declareEagerName(null, EXPORTED_ENV_NAME);
+		globalNameManager.declareEagerName(null, HAS_FINAL_RESULT_NAME);
+		globalNameManager.declareEagerName(null, INMPORTER_NAME);
+		globalNameManager.declareEagerName(null, NESTED_ENV_NAME);
+		globalNameManager.declareEagerName(null, PARENT_NAME);
+		globalNameManager.declareEagerName(null, PARENT_ENV_NAME);
+		globalNameManager.declareEagerName(null, QUALIFIED_ENV_NAME);
 	}
 
 
@@ -209,10 +209,10 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 			@NonNull Map<Operation, @NonNull Operation> envOperation2asOperation, @NonNull Map<Element,Element> reDefinitions) throws ParserException {
 
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
-		globalNameManager.declareGlobalName(cgPackage, getVisitorPackageName());
+		globalNameManager.declareEagerName(cgPackage, getVisitorPackageName());
 		cgModel.getPackages().add(cgPackage);
 		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
-		globalNameManager.declareGlobalName(cgClass, classNAme);
+		globalNameManager.declareEagerName(cgClass, classNAme);
 		cgPackage.getClasses().add(cgClass);
 		convertSuperTypes(cgClass);
 		convertProperties(cgClass, asClass.getOwnedProperties());

@@ -102,9 +102,9 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 				lookupPackageName;
 		this.as2cgVisitor = createAS2CGVisitor();
 		this.asPackages = createASPackages();
-		globalNameManager.declareGlobalName(null, APPLIES_FILTER_OP_PREFIX);
-		globalNameManager.declareGlobalName(null, ELEMENT_NAME);
-		globalNameManager.declareGlobalName(null, MATCHES_OP_NAME);
+		globalNameManager.declareEagerName(null, APPLIES_FILTER_OP_PREFIX);
+		globalNameManager.declareEagerName(null, ELEMENT_NAME);
+		globalNameManager.declareEagerName(null, MATCHES_OP_NAME);
 	}
 
 	private @NonNull List<org.eclipse.ocl.pivot.Package> createASPackages() {
@@ -224,7 +224,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 			cgModel.getPackages().add(cgPackage);
 			cgPackage.setAst(asPackage);
-			globalNameManager.declareGlobalName(cgPackage, asPackage.getName());
+			globalNameManager.declareEagerName(cgPackage, asPackage.getName());
 			convertClasses(cgPackage, asPackage.getOwnedClasses());
 		}
 
@@ -236,7 +236,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 			CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
 			cgPackage.getClasses().add(cgClass);
 			cgClass.setAst(asClass);
-			globalNameManager.declareGlobalName(cgClass, PivotUtil.getName(asClass));
+			globalNameManager.declareEagerName(cgClass, PivotUtil.getName(asClass));
 			convertProperties(cgClass, asClass.getOwnedProperties());
 			convertOperations(cgClass, asClass.getOwnedOperations());
 			convertSuperTypes(cgClass);
