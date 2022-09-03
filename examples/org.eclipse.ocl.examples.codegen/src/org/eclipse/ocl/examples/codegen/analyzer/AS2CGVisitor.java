@@ -128,6 +128,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -844,6 +845,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CompleteClassInternal completeClass = getEnvironmentFactory().getCompleteModel().getCompleteClass(asClass);
+		asClass = completeClass.getPrimaryClass();
 		CGClass cgClass = analyzer.basicGetCGClass(asClass);
 		if (cgClass == null) {
 			cgClass = generateClassDeclaration(asClass, null);
