@@ -69,7 +69,7 @@ public class NestedNameManager extends NameManager
 	 * Names that must be used within a nested namespace. Typically these are Ecore assigned property/operation/parameter
 	 * names whose spelling is not adjustable.
 	 */
-	private @Nullable List<NameResolution.@NonNull Reserved> reservedNameResolutions = null;
+	private @Nullable List<NameResolution.@NonNull NestedEager> reservedNameResolutions = null;
 
 	/**
 	 * The value name assignments.
@@ -453,9 +453,9 @@ public class NestedNameManager extends NameManager
 		boolean savedInhibitNameResolution = NameResolution.inhibitNameResolution;
 		NameResolution.inhibitNameResolution = false;			// XXX do we still need this debug design enforcement
 		String reservedName = getNameHint(cgElement);
-		NameResolution.Reserved nameResolution = new NameResolution.Reserved(this, cgElement, reservedName);
+		NameResolution.NestedEager nameResolution = new NameResolution.NestedEager(this, cgElement, reservedName);
 	//	nameResolution.resolveIn(getContext());
-		List<NameResolution.@NonNull Reserved> reservedNameResolutions2 = reservedNameResolutions;
+		List<NameResolution.@NonNull NestedEager> reservedNameResolutions2 = reservedNameResolutions;
 		if (reservedNameResolutions2 == null) {
 			reservedNameResolutions = reservedNameResolutions2 = new ArrayList<>();
 		}
