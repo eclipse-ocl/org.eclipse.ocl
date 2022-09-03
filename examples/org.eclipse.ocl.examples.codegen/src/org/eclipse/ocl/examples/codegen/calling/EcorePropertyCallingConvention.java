@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
@@ -32,8 +33,10 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
@@ -141,6 +144,29 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
+	}
+
+	@Override
+	public void createCGParameters(@NonNull NestedNameManager nameManager,
+			@NonNull CGProperty cgProperty,
+			@Nullable ExpressionInOCL initExpression) {
+		// TODO Auto-generated method stub
+		super.createCGParameters(nameManager, cgProperty, initExpression);
+	}
+
+	@Override
+	public @NonNull CGProperty createCGProperty(
+			@NonNull CodeGenAnalyzer analyzer,
+			@NonNull TypedElement asTypedElement) {
+		// TODO Auto-generated method stub
+		return super.createCGProperty(analyzer, asTypedElement);
+	}
+
+	@Override
+	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor,
+			@NonNull CGProperty cgProperty) {
+		// TODO Auto-generated method stub
+		super.createImplementation(as2cgVisitor, cgProperty);
 	}
 
 	@Override

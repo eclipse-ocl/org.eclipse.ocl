@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +69,7 @@ public class NestedNameManager extends NameManager
 	 * Names that must be used within a nested namespace. Typically these are Ecore assigned property/operation/parameter
 	 * names whose spelling is not adjustable.
 	 */
-	private @Nullable List<@NonNull NameResolution> reservedNameResolutions = null;
+	private @Nullable List<NameResolution.@NonNull Reserved> reservedNameResolutions = null;
 
 	/**
 	 * The value name assignments.
@@ -185,7 +186,10 @@ public class NestedNameManager extends NameManager
 	protected void assignReservedNames(@NonNull Context context) {
 		if (reservedNameResolutions != null) {
 			for (@NonNull NameResolution nameResolution : reservedNameResolutions) {
-				String resolvedName = nameResolution.getResolvedName();
+			//	String resolvedName = nameResolution.basicGetResolvedName();
+			//	assert resolvedName == null;
+				String resolvedName = nameResolution.resolveIn(context);
+			//	}
 				CGNamedElement primaryElement = nameResolution.getPrimaryElement();
 				context.reserveName(resolvedName, primaryElement);
 			}
@@ -441,13 +445,21 @@ public class NestedNameManager extends NameManager
 	 * This is typically used to ensure that a local name is available for re-use.
 	 * <br>
 	 * This should be used sparingly. Most names will be lazily declared adequately.
+	 * <br>
+	 * Valid usages are to force usage of the Ecore genmodel allocated name for a Property or Parameter.
 	 */
-	public @NonNull NameResolution declareLocalName(@Nullable CGNamedElement cgElement) {
-		assert (cgElement instanceof CGProperty);
+	public @NonNull NameResolution declareLocalName(@NonNull CGNamedElement cgElement) {
+		assert (cgElement instanceof CGProperty) || (cgElement instanceof CGParameter);
 		boolean savedInhibitNameResolution = NameResolution.inhibitNameResolution;
 		NameResolution.inhibitNameResolution = false;			// XXX do we still need this debug design enforcement
-		NameResolution nameResolution = new NameResolution(this, cgElement, null);
-	//	baseNameResolution.resolveIn(context);
+		String reservedName = getNameHint(cgElement);
+		NameResolution.Reserved nameResolution = new NameResolution.Reserved(this, cgElement, reservedName);
+	//	nameResolution.resolveIn(getContext());
+		List<NameResolution.@NonNull Reserved> reservedNameResolutions2 = reservedNameResolutions;
+		if (reservedNameResolutions2 == null) {
+			reservedNameResolutions = reservedNameResolutions2 = new ArrayList<>();
+		}
+		reservedNameResolutions2.add(nameResolution);
 		NameResolution.inhibitNameResolution = savedInhibitNameResolution;
 		return nameResolution;
 	}
@@ -587,7 +599,7 @@ public class NestedNameManager extends NameManager
 			CGValuedElement cgNamedValue = cgElement.getNamedValue();
 			nameResolution = cgNamedValue.basicGetNameResolution();
 			if (nameResolution == null) {
-				nameResolution = new NameResolution(this, cgNamedValue, null);
+				nameResolution = new NameResolution.Lazy(this, cgNamedValue, null);
 			}
 			if (cgElement != cgNamedValue) {
 				nameResolution.addCGElement(cgElement);
@@ -618,6 +630,7 @@ public class NestedNameManager extends NameManager
 			}
 			else {
 				assert explicitName.equals(asParameter.getName());
+				declareLocalName(cgParameter);
 				Operation asOperation = PivotUtil.getContainingOperation(asParameter);
 				Constraint asConstraint = PivotUtil.getContainingConstraint(asParameter);
 				assert ((asOperation != null) && (asOperation.getESObject() instanceof EOperation)) || ((asConstraint != null) && (asConstraint.getESObject() instanceof EOperation));

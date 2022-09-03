@@ -62,6 +62,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.dynamic.ExplicitClassLoader;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaClasspath;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaFileUtil;
@@ -1733,6 +1734,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	public void testEnumTypes412685() throws Throwable {
+		NameResolution.NAMES_RESOLVE.setState(true);
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1752,6 +1754,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						+ "        attribute eBlack : Color = 'BLACK' { readonly };\n"
 						+ "        attribute eWhite : Color = 'WHITE' { readonly };\n"
 						+ "        attribute eColor : Color { derived readonly volatile } { derivation: otherColor(Color::BLACK); }\n"
+//						+ "        attribute eColor : Color { derived readonly volatile } { derivation: Color::BLACK; }\n"
 						+ "        operation opaqueColor(eColor : Color) : OclAny { body: eColor; }\n"
 						+ "        operation otherColor(eColor : Color) : Color { body: if eColor = Color::BLACK then Color::WHITE else Color::BLACK endif; }\n"
 						+ "    }\n"

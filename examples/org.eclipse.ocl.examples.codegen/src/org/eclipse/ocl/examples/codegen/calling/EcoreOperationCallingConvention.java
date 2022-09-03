@@ -38,6 +38,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
@@ -130,6 +131,33 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		} catch (GenModelException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+
+	@Override
+	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
+	/*	if (bodyExpression != null) {
+			NestedNameManager nameManager = as2cgVisitor.getNameManager();
+			Variable contextVariable = bodyExpression.getOwnedContext();
+			if (contextVariable != null) {
+				CGParameter cgParameter = nameManager.getSelfParameter(contextVariable);
+				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
+				//			cgParameter.setRequired(contextVariable.isIsRequired());
+				cgOperation.getParameters().add(cgParameter);
+			}
+			for (@NonNull Variable parameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
+				CGParameter cgParameter;
+				if (cgOperation instanceof CGEcoreOperation) {		// XXX use CallingConvention
+					cgParameter = nameManager.getParameter(parameterVariable, parameterVariable.getName());
+				}
+				else {
+					cgParameter = nameManager.getParameter(parameterVariable, (String)null);
+				}
+				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
+				//			cgParameter.setRequired(parameterVariable.isIsRequired());
+				cgOperation.getParameters().add(cgParameter);
+			} */
+		// TODO Auto-generated method stub
+		super.createCGParameters(as2cgVisitor, cgOperation, bodyExpression);
 	}
 
 	@Override

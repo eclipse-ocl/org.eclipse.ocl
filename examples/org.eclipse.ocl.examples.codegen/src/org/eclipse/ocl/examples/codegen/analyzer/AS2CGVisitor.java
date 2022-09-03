@@ -278,7 +278,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				globalNameManager.declareGlobalName(cgClass, name);
 			}
 			else {
-				new NameResolution(getNameManager(), cgClass, name);
+				new NameResolution.Lazy(getNameManager(), cgClass, name);
 			}
 		//	pushClassNameManager(cgClass);
 		//	popClassNameManager();
@@ -523,9 +523,16 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			analyzer.addCGProperty(cgProperty);
 			NestedNameManager outerNameManager = getNameManager();
 			assert outerNameManager != null;
-			outerNameManager.declareLocalName(cgProperty);
+			if (asProperty.isIsImplicit()) {
+		//		outerNameManager.declareLazyName(cgProperty);
+			}
+			else {
+				outerNameManager.declareLocalName(cgProperty);
+			}
 			NestedNameManager innerNameManager = pushNestedNameManager(cgProperty);
-//			outerNameManager.declarePreferredName(cgProperty);
+		//	if (callingConvention instanceof EcorePropertyCallingConvention) {
+		//		outerNameManager.declarePreferredName(cgProperty);
+		//	}
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
 			if (specification != null) {
@@ -838,17 +845,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				CGClass cgSuperClass = doVisit(CGClass.class, asSuperClass);
 				cgClass.getSuperTypes().add(cgSuperClass);
 			}
-			for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
+			for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {			// Properties define (outer) Class-scoped names
+				CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
+				cgClass.getProperties().add(cgProperty);
+			}
+			for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {		// Operations define (inner) Operation-scoped parameter names
 				CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
 				cgClass.getInvariants().add(cgConstraint);
 			}
 			for (@NonNull Operation asOperation : ClassUtil.nullFree(asClass.getOwnedOperations())) {
 				CGOperation cgOperation = doVisit(CGOperation.class, asOperation);
 				cgClass.getOperations().add(cgOperation);
-			}
-			for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
-				CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
-				cgClass.getProperties().add(cgProperty);
 			}
 			popClassNameManager();
 		}
