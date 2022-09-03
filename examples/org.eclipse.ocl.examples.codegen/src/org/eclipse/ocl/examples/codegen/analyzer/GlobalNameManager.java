@@ -279,8 +279,8 @@ public class GlobalNameManager extends NameManager
 	 * This is typically used to provide an eager name reservation for global particularly Ecore names.
 	 */
 	public @NonNull NameResolution declareEagerName(@Nullable CGNamedElement cgElement, @NonNull String reservedName) {
-		NameResolution.Eager baseNameResolution = new NameResolution.GlobalEager(this, cgElement, reservedName);
-		context.allocateReservedName(reservedName, cgElement != null ? cgElement : NOT_AN_OBJECT);
+		NameResolution.EagerGlobal baseNameResolution = new NameResolution.EagerGlobal(this, cgElement, reservedName);
+		context.allocateEagerName(reservedName, cgElement);
 		return baseNameResolution;
 	}
 

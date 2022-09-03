@@ -49,6 +49,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
@@ -484,7 +485,7 @@ public class NameManagerHelper
 		public @NonNull String visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgNativeOperationCallExp) {
 			Method method = cgNativeOperationCallExp.getMethod();
 			if (method == UnboxedExplicitNavigationProperty.CREATE_METHOD) {
-				return "IMP" + context.getNameHint(cgNativeOperationCallExp.getArguments().get(0));
+				return "IMP" + context.getNameHint(CGUtil.getArgumentsList(cgNativeOperationCallExp).get(0));
 			}
 			else {
 				return method.getName();
@@ -498,7 +499,8 @@ public class NameManagerHelper
 				return context.getNameHint(asElement);
 			}
 			else {
-				return context.getNameHint(cgNavigationCallExp.getReferredProperty().getAst());
+				CGProperty referredProperty = CGUtil.getReferredProperty(cgNavigationCallExp);
+				return context.getNameHint(CGUtil.getAST(referredProperty));
 			}
 		}
 
@@ -938,9 +940,9 @@ public class NameManagerHelper
 		else if (anObject == NameManager.NOT_AN_OBJECT) {
 			return getFallBackHint("not-an-object");
 		}
-		else if (anObject == null) {
-			return getFallBackHint("null-object");
-		}
+	//	else if (anObject == null) {
+	//		return getFallBackHint("null-object");
+	//	}
 		else {
 			return getFallBackHint("unknown-object " + getClass().getSimpleName() + " : " + anObject.getClass().getSimpleName());
 		}

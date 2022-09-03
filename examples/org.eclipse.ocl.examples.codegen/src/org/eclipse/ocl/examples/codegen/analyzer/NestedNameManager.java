@@ -69,7 +69,7 @@ public class NestedNameManager extends NameManager
 	 * Names that must be used within a nested namespace. Typically these are Ecore assigned property/operation/parameter
 	 * names whose spelling is not adjustable.
 	 */
-	private @Nullable List<NameResolution.@NonNull NestedEager> reservedNameResolutions = null;
+	private @Nullable List<NameResolution.@NonNull EagerNested> reservedNameResolutions = null;
 
 	/**
 	 * The value name assignments.
@@ -163,7 +163,7 @@ public class NestedNameManager extends NameManager
 					String name = entry2.getValue();
 					assert name == null;
 					String variantNameHint = nameVariant.getName(resolvedName);
-					String variantName = context.allocateUniqueName(variantNameHint, cgElement);
+					String variantName = context.allocateLazyName(variantNameHint, cgElement);
 					nameVariant2name.put(nameVariant, variantName);
 				}
 			}
@@ -188,7 +188,7 @@ public class NestedNameManager extends NameManager
 			for (@NonNull NameResolution nameResolution : reservedNameResolutions) {
 			//	String resolvedName = nameResolution.basicGetResolvedName();
 			//	assert resolvedName == null;
-				String resolvedName = nameResolution.resolveIn(context);
+				String resolvedName = nameResolution.resolveIn(context, null);
 			//	}
 				CGNamedElement primaryElement = nameResolution.getPrimaryElement();
 				context.reserveName(resolvedName, primaryElement);
@@ -453,9 +453,9 @@ public class NestedNameManager extends NameManager
 		boolean savedInhibitNameResolution = NameResolution.inhibitNameResolution;
 		NameResolution.inhibitNameResolution = false;			// XXX do we still need this debug design enforcement
 		String reservedName = getNameHint(cgElement);
-		NameResolution.NestedEager nameResolution = new NameResolution.NestedEager(this, cgElement, reservedName);
+		NameResolution.EagerNested nameResolution = new NameResolution.EagerNested(this, cgElement, reservedName);
 	//	nameResolution.resolveIn(getContext());
-		List<NameResolution.@NonNull NestedEager> reservedNameResolutions2 = reservedNameResolutions;
+		List<NameResolution.@NonNull EagerNested> reservedNameResolutions2 = reservedNameResolutions;
 		if (reservedNameResolutions2 == null) {
 			reservedNameResolutions = reservedNameResolutions2 = new ArrayList<>();
 		}
