@@ -1137,7 +1137,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGClass(@NonNull CGClass cgClass) {
-		System.out.println("visitCGClass " + NameUtil.debugSimpleName(cgClass) + " : " + cgClass.getAst());
+	//	System.out.println("visitCGClass " + NameUtil.debugSimpleName(cgClass) + " : " + cgClass.getAst());
 		pushNameManager(cgClass);
 		try {
 			ClassCallingConvention callingConvention = cgClass.getCallingConvention();
@@ -2145,7 +2145,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
-		System.out.println("visitCGOperation " + NameUtil.debugSimpleName(cgOperation) + " : " + cgOperation.getAst());
+	//	System.out.println("visitCGOperation " + NameUtil.debugSimpleName(cgOperation) + " : " + cgOperation.getAst());
 		pushNameManager(cgOperation);
 		try {
 			OperationCallingConvention callingConvention = cgOperation.getCallingConvention();

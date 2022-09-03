@@ -92,12 +92,6 @@ public abstract class NameResolution
 		}
 
 		@Override
-		public @NonNull String resolveIn(@NonNull Context context, @Nullable CGNamedElement cgElement) {
-			context.allocateEagerName(resolvedName, primaryElement);
-			return resolvedName;
-		}
-
-		@Override
 		public void resolveNameHint() {}
 
 		@Override
@@ -114,6 +108,12 @@ public abstract class NameResolution
 		public EagerGlobal(@NonNull GlobalNameManager nameManager, @Nullable CGNamedElement primaryElement, @NonNull String resolvedName) {
 			super(nameManager, primaryElement, resolvedName);
 		}
+
+		@Override
+		public @NonNull String resolveIn(@NonNull Context context, @Nullable CGNamedElement cgElement) {
+			// context.allocateEagerName(resolvedName, cgElement != null ? cgElement : primaryElement); -- invoked after construction
+			return resolvedName;
+		}
 	}
 
 	/**
@@ -121,8 +121,14 @@ public abstract class NameResolution
 	 */
 	public static class EagerNested extends Eager
 	{
-		public EagerNested(@NonNull NestedNameManager nameManager, @NonNull CGNamedElement primaryElement, @NonNull String resolvedName) {
-			super(nameManager, primaryElement, resolvedName);
+		public EagerNested(@NonNull NestedNameManager nameManager, @NonNull CGNamedElement primaryElement, @NonNull String eagerName) {
+			super(nameManager, primaryElement, eagerName);
+		}
+
+		@Override
+		public @NonNull String resolveIn(@NonNull Context context, @Nullable CGNamedElement cgElement) {
+			context.allocateEagerName(resolvedName, cgElement != null ? cgElement : primaryElement);
+			return resolvedName;
 		}
 	}
 
@@ -166,15 +172,6 @@ public abstract class NameResolution
 
 		@Override
 		public @NonNull String getResolvedName() {
-		/*	StringBuilder s = new StringBuilder();
-			s.append("getResolvedName " + NameUtil.debugSimpleName(this) + " in " + NameUtil.debugSimpleName(nameManager) + " " + nameHint + " => " + resolvedName);
-			if (cgElements != null) {
-				for (@NonNull CGValuedElement cgElement : cgElements) {
-					s.append(" " + NameUtil.debugSimpleName(cgElement));
-				}
-			}
-			System.out.println(s.toString());
-		*/	// XXX assert !isUnresolved();	-- maybe unresolved if containerless as a result of a CSE rewrite
 			return ClassUtil.nonNullState(basicGetResolvedName());
 		}
 

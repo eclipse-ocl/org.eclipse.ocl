@@ -87,4 +87,10 @@ public class CGLibraryOperationImpl extends CGOperationImpl implements CGLibrary
 	public boolean isUnboxed() {
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
 } //CGLibraryOperationImpl

@@ -527,7 +527,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		//		outerNameManager.declareLazyName(cgProperty);
 			}
 			else {
-				outerNameManager.declareLocalName(cgProperty);
+				outerNameManager.declareEagerName(cgProperty);
 			}
 			NestedNameManager innerNameManager = pushNestedNameManager(cgProperty);
 		//	if (callingConvention instanceof EcorePropertyCallingConvention) {
@@ -1111,6 +1111,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
 			CGClass cgClass = doVisit(CGClass.class, asType);
 			cgPackage.getClasses().add(cgClass);
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : ClassUtil.nullFree(asPackage.getOwnedPackages())) {
+			CGPackage cgNestedPackage = doVisit(CGPackage.class, asNestedPackage);
+			cgPackage.getPackages().add(cgNestedPackage);
 		}
 		return cgPackage;
 	}

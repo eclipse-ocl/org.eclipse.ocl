@@ -70,19 +70,30 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	}
 
 	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,
-			@NonNull String packageName, @NonNull String className) {
+			@NonNull String qualifiedPackageName, @NonNull String className) {
 		assert expInOcl.eContainer() == null;
 		NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
 	//	NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
-		org.eclipse.ocl.pivot.Package asPackage = PivotFactory.eINSTANCE.createPackage();
-		asPackage.setName(packageName);
-	//	CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
-//		cgPackage.setAst(asPackage);
-	//	cgPackage.setName(packageName);
+		@NonNull String packageNames[] = qualifiedPackageName.split("\\.");
+		org.eclipse.ocl.pivot.Package asRootPackage = null;
+		org.eclipse.ocl.pivot.Package asLeafPackage = null;
+		for (@NonNull String packageName : packageNames) {
+			org.eclipse.ocl.pivot.Package asPackage = PivotFactory.eINSTANCE.createPackage();
+			asPackage.setName(packageName);
+			if (asLeafPackage != null) {
+				asLeafPackage.getOwnedPackages().add(asPackage);
+			}
+			else {
+				asRootPackage = asPackage;
+			}
+			asLeafPackage = asPackage;
+		}
+		assert asRootPackage != null;
+		assert asLeafPackage != null;
 		//
 		org.eclipse.ocl.pivot.Class asClass = PivotFactory.eINSTANCE.createClass();
 		asClass.setName(className);
-		asPackage.getOwnedClasses().add(asClass);
+		asLeafPackage.getOwnedClasses().add(asClass);
 	//GClass cgRootClass = CGModelFactory.eINSTANCE.createCGClass();
 	//gRootClass.setAst(asClass);
 	//gRootClass.setName(className);
@@ -103,7 +114,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		AS2CGVisitor as2cgVisitor = new JUnitAS2CGVisitor(this);
 		CGClass cgRootClass = as2cgVisitor.generateClassDeclaration(asClass, JUnitClassCallingConvention.INSTANCE);
 	//	cgAnalyzer.addCGClass(cgRootClass);
-		CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
+		CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asRootPackage.accept(as2cgVisitor));
 
 	//	/*CGClass cgRootClass =*/ cgPackage.getClasses().add(cgRootClass);
 	//	cgAnalyzer.setCGRootClass(cgRootClass);
