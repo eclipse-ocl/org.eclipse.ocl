@@ -121,13 +121,18 @@ public abstract class NameResolution
 	 */
 	public static class EagerNested extends Eager
 	{
+		private boolean allocated = false;
+
 		public EagerNested(@NonNull NestedNameManager nameManager, @NonNull CGNamedElement primaryElement, @NonNull String eagerName) {
 			super(nameManager, primaryElement, eagerName);
 		}
 
 		@Override
 		public @NonNull String resolveIn(@NonNull Context context, @Nullable CGNamedElement cgElement) {
-			context.allocateEagerName(resolvedName, cgElement != null ? cgElement : primaryElement);
+			if (!allocated) {
+				context.allocateEagerName(resolvedName, cgElement != null ? cgElement : primaryElement);
+				allocated = true;
+			}
 			return resolvedName;
 		}
 	}

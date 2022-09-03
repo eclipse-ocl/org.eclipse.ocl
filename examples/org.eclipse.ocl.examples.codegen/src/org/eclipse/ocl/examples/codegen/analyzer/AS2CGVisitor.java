@@ -515,36 +515,43 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			if (callingConvention == null) {
 				callingConvention = context.getCallingConvention(asProperty);
 			}
-			cgProperty = callingConvention.createCGProperty(analyzer, asProperty);
-			cgProperty.setAst(asProperty);
-			cgProperty.setTypeId(analyzer.getCGTypeId(asProperty.getTypeId()));
-			cgProperty.setRequired(asProperty.isIsRequired());
-			cgProperty.setCallingConvention(callingConvention);
-			analyzer.addCGProperty(cgProperty);
-			NestedNameManager outerNameManager = getNameManager();
-			assert outerNameManager != null;
-			if (asProperty.isIsImplicit()) {
-		//		outerNameManager.declareLazyName(cgProperty);
-			}
-			else {
-				outerNameManager.declareEagerName(cgProperty);
-			}
-			NestedNameManager innerNameManager = pushNestedNameManager(cgProperty);
-		//	if (callingConvention instanceof EcorePropertyCallingConvention) {
-		//		outerNameManager.declarePreferredName(cgProperty);
-		//	}
-			ExpressionInOCL query = null;
-			LanguageExpression specification = asProperty.getOwnedExpression();
-			if (specification != null) {
-				try {
-					query = environmentFactory.parseSpecification(specification);		// Redundant already parsed
-				} catch (ParserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
+			CGClass cgClass = generateClassDeclaration(asClass, callingConvention.getClassCallingConvention());
+			pushClassNameManager(cgClass);
+			try {
+				cgProperty = callingConvention.createCGProperty(analyzer, asProperty);
+				cgProperty.setAst(asProperty);
+				cgProperty.setTypeId(analyzer.getCGTypeId(asProperty.getTypeId()));
+				cgProperty.setRequired(asProperty.isIsRequired());
+				cgProperty.setCallingConvention(callingConvention);
+				analyzer.addCGProperty(cgProperty);
+				NestedNameManager outerNameManager = getNameManager();
+				assert outerNameManager != null;
+				if (asProperty.isIsImplicit()) {
+			//		outerNameManager.declareLazyName(cgProperty);
 				}
+				else {
+					outerNameManager.declareEagerName(cgProperty);
+				}
+				NestedNameManager innerNameManager = pushNestedNameManager(cgProperty);
+			//	if (callingConvention instanceof EcorePropertyCallingConvention) {
+			//		outerNameManager.declarePreferredName(cgProperty);
+			//	}
+				ExpressionInOCL query = null;
+				LanguageExpression specification = asProperty.getOwnedExpression();
+				if (specification != null) {
+					try {
+						query = environmentFactory.parseSpecification(specification);		// Redundant already parsed
+					} catch (ParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				callingConvention.createCGParameters(innerNameManager, cgProperty, query);
+				popNestedNameManager();
+			} finally {
+				popClassNameManager();
 			}
-			callingConvention.createCGParameters(innerNameManager, cgProperty, query);
-			popNestedNameManager();
 		}
 		return cgProperty;
 	}

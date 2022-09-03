@@ -265,20 +265,23 @@ public abstract class NameManager
 			}
 		}
 
-		protected @NonNull String allocateEagerName(@NonNull String reservedName, @Nullable CGNamedElement cgElement) {
+		protected @NonNull String allocateEagerName(@NonNull String eagerName, @Nullable CGNamedElement cgElement) {
+			if ("opposite".equals(eagerName)) {
+				getClass();		// XXX
+			}
 			Object anObject = cgElement != null ? cgElement : NOT_AN_OBJECT;
-			assert reservedName != NameResolution.NOT_NEEDED;
-			assert reservedName.equals(getValidJavaIdentifier(reservedName, false, null));
+			assert eagerName != NameResolution.NOT_NEEDED;
+			assert eagerName.equals(getValidJavaIdentifier(eagerName, false, null));
 		//	assert !reservedJavaNames.contains(reservedName);
 		//	assert anObject != NOT_AN_OBJECT;
-			Object oldElement = name2object.get(reservedName);
+			Object oldElement = name2object.get(eagerName);
 			if (oldElement == null) {									// New allocation
-				name2object.put(reservedName, anObject);
-				assert debugAllocatedName(reservedName);
-				return reservedName;
+				name2object.put(eagerName, anObject);
+				assert debugAllocatedName(eagerName);
+				return eagerName;
 			}
-			System.err.println("Multiple reservation for global name \"" + reservedName + "\"");
-			return allocateFallBackName(reservedName);
+			System.err.println("Multiple reservation for eager name \"" + eagerName + "\"");
+			return allocateFallBackName(eagerName);
 		}
 
 		private @NonNull String allocateFallBackName(@NonNull String validHint) {
@@ -301,6 +304,9 @@ public abstract class NameManager
 		}
 
 		protected @NonNull String allocateLazyName(@NonNull String nameHint, @Nullable CGNamedElement cgElement) {
+			if ("opposite".equals(nameHint)) {
+				getClass();		// XXX
+			}
 			Object anObject = cgElement != null ? cgElement : NOT_AN_OBJECT;
 			if (nameHint == NameResolution.NOT_NEEDED) {
 				assert debugAllocatedName(nameHint);

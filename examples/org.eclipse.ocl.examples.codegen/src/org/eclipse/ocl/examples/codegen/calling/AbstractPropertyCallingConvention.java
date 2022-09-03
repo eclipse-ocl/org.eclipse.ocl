@@ -101,6 +101,11 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	}
 
 	@Override
+	public @NonNull ClassCallingConvention getClassCallingConvention() {
+		return ContextClassCallingConvention.INSTANCE;
+	}
+
+	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGProperty cgProperty) {
 	}
 

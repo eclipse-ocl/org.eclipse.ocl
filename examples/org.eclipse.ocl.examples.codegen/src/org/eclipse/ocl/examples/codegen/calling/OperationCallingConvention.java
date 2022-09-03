@@ -69,12 +69,6 @@ public interface OperationCallingConvention extends CallingConvention
 
 //	FieldingAnalyzer.@NonNull ReturnState getRequiredReturn(@NonNull CGOperation cgOperation);
 
-	/**
-	 * Return the calling convention for the containing class.
-	 * @return
-	 */
-	@NonNull ClassCallingConvention getClassCallingConvention();
-
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation);
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp);
 }
