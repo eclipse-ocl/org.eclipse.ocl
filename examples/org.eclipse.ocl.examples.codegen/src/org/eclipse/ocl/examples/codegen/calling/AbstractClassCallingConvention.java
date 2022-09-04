@@ -82,6 +82,11 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 	}
 
 	@Override
+	public @NonNull ClassCallingConvention getClassCallingConvention() {
+		return this;
+	}
+
+	@Override
 	public @NonNull String getName(@NonNull AS2CGVisitor as2cgVisitor, @NonNull NamedElement asNamedElement) {
 		return PivotUtil.getName(asNamedElement);
 	}
