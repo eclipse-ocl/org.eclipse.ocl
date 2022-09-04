@@ -11,7 +11,7 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -46,7 +46,7 @@ public class ExternalClassCallingConvention extends AbstractClassCallingConventi
 	}
 
 	@Override
-	public @NonNull String getName(@NonNull AS2CGVisitor as2cgVisitor, org.eclipse.ocl.pivot.@NonNull NamedElement asNamedElement) {
-		return as2cgVisitor.getCodeGenerator().getExternalClassName((org.eclipse.ocl.pivot.Class)asNamedElement);
+	public @NonNull String getName(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull NamedElement asNamedElement) {
+		return analyzer.getCodeGenerator().getExternalClassName((org.eclipse.ocl.pivot.Class)asNamedElement);
 	}
 }

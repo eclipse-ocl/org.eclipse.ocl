@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
@@ -31,6 +30,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.PropertyId;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
@@ -48,23 +48,24 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	}
 
 	@Override
-	public void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty) {
+	public void createImplementation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty) {
 	//	assert (this instanceof StereotypePropertyCallingConvention)
 	//		|| (this instanceof ConstrainedPropertyCallingConvention)
 	//		|| (this instanceof NativePropertyCallingConvention)
 	//		|| (this instanceof ForeignPropertyCallingConvention);
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
+		NestedNameManager nameManager = analyzer.getNameManager();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		cgProperty.setRequired(asProperty.isIsRequired());
 		LanguageExpression specification = asProperty.getOwnedExpression();
 		if (specification != null) {
 			try {
-				ExpressionInOCL query = as2cgVisitor.getEnvironmentFactory().parseSpecification(specification);
+				EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)analyzer.getCodeGenerator().getEnvironmentFactory();
+				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
 					nameManager.getSelfParameter(contextVariable);
 				}
-				((CGBodiedProperty)cgProperty).setBody(as2cgVisitor.doVisit(CGValuedElement.class, query.getOwnedBody()));
+				((CGBodiedProperty)cgProperty).setBody(analyzer.createCGElement(CGValuedElement.class, query.getOwnedBody()));
 			} catch (ParserException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();		// XXX

@@ -12,7 +12,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -46,11 +46,8 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 	}
 
 	@Override
-	public @NonNull CGValuedElement createCGNavigationCallExp(
-			@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
-			@NonNull LibraryProperty libraryProperty,
-			@Nullable CGValuedElement cgSource,
-			@NonNull NavigationCallExp asPropertyCallExp) {
+	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
+			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}

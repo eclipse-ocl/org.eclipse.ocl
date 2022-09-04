@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * JUnitCodeGenerator supports generation of an ExpressionInOCL for execution in a JUNit test.
@@ -62,12 +61,14 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
-	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
-
 	protected JUnitCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel, boolean useNullAnnotations) {
 		super(environmentFactory, genModel);
 		getOptions().setUseNullAnnotations(useNullAnnotations);
-		cgAnalyzer = new CodeGenAnalyzer(this);
+	}
+
+	@Override
+	public @NonNull AS2CGVisitor createAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
+		return new JUnitAS2CGVisitor(analyzer);
 	}
 
 	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,
@@ -101,15 +102,14 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 //		cgOperation2.setName("test");		// FIXME
 //		cgRootClass.getOperations().add(cgOperation2);
 
-		AS2CGVisitor as2cgVisitor = new JUnitAS2CGVisitor(this);
-		CGClass cgRootClass = as2cgVisitor.generateClassDeclaration(asClass, JUnitClassCallingConvention.INSTANCE);
+		CGClass cgRootClass = cgAnalyzer.generateClassDeclaration(asClass, JUnitClassCallingConvention.INSTANCE);
 	//	cgAnalyzer.addCGClass(cgRootClass);
-		CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
+		CGPackage cgPackage = cgAnalyzer.createCGElement(CGPackage.class, asPackage);
 
 	//	/*CGClass cgRootClass =*/ cgPackage.getClasses().add(cgRootClass);
 	//	cgAnalyzer.setCGRootClass(cgRootClass);
 		assert cgRootClass != null;
-		as2cgVisitor.pushClassNameManager(cgRootClass);
+		cgAnalyzer.pushClassNameManager(cgRootClass);
 
 
 		//
@@ -118,18 +118,18 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 			contextVariable.setIsRequired(false); // May be null for test
 		}
 		JUnitOperationCallingConvention junitCallingConvention = JUnitOperationCallingConvention.INSTANCE;
-		CGOperation cgOperation = junitCallingConvention.createCGOperation(as2cgVisitor, asOperation);
+		CGOperation cgOperation = junitCallingConvention.createCGOperation(cgAnalyzer, asOperation);
 		cgOperation.setCallingConvention(junitCallingConvention);
 		evaluateNameResolution.addCGElement(cgOperation);
-		as2cgVisitor.initAst(cgOperation, asOperation/*expInOcl*/);
-		as2cgVisitor.pushNestedNameManager(cgOperation);
-		junitCallingConvention.createCGParameters(as2cgVisitor, cgOperation, expInOcl);
-		junitCallingConvention.createCGBody(as2cgVisitor, cgOperation);
+		cgAnalyzer.initAst(cgOperation, asOperation/*expInOcl*/);
+		cgAnalyzer.pushNestedNameManager(cgOperation);
+		junitCallingConvention.createCGParameters(cgAnalyzer, cgOperation, expInOcl);
+		junitCallingConvention.createCGBody(cgAnalyzer, cgOperation);
 		cgRootClass.getOperations().add(cgOperation);
-		cgAnalyzer.analyzeExternalFeatures(as2cgVisitor);
-		as2cgVisitor.popNestedNameManager();
-		as2cgVisitor.popClassNameManager();
-		as2cgVisitor.freeze();
+		cgAnalyzer.analyzeExternalFeatures();
+		cgAnalyzer.popNestedNameManager();
+		cgAnalyzer.popClassNameManager();
+		cgAnalyzer.freeze();
 		return cgPackage;
 	}
 

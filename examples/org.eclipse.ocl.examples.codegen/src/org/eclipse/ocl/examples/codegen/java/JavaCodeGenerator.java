@@ -29,6 +29,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.ClassNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
@@ -222,6 +223,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		javaPrimitiveNames.put(class1.getName(), class2);
 	}
 
+	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	private /*@LazyNonNull*/ Id2EClassVisitor id2EClassVisitor = null;
 	//	protected final @NonNull Id2JavaInterfaceVisitor id2JavaInterfaceVisitor;
 	private /*@LazyNonNull*/ Id2BoxedDescriptorVisitor id2BoxedDescriptorVisitor = null;
@@ -243,12 +245,18 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	public JavaCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel) {
 		super(environmentFactory, genModel);
+		this.cgAnalyzer = createCodeGenAnalyzer();
 		BODY_NameVariant = globalNameManager.addNameVariantPrefix("BODY_");
 		IMPL_NameVariant = globalNameManager.addNameVariantPrefix("IMPL_");
 		ITER_NameVariant = globalNameManager.addNameVariantPrefix("ITER_");
 		MGR_NameVariant = globalNameManager.addNameVariantPrefix("MGR_");
 		THROWN_NameVariant = globalNameManager.addNameVariantPrefix("THROWN_");
 		TYPE_NameVariant = globalNameManager.addNameVariantPrefix("TYPE_");
+	}
+
+	@Override
+	public @NonNull AS2CGVisitor createAS2CGVisitor(@NonNull CodeGenAnalyzer codeGenAnalyzer) {
+		return new AS2CGVisitor(codeGenAnalyzer);
 	}
 
 	@Override
@@ -273,15 +281,19 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new ClassNameManager(this, outerNameManager, cgClass);
 	}
 
-	protected void createConstrainedOperations(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGClass cgClass) {
+	protected @NonNull CodeGenAnalyzer createCodeGenAnalyzer() {
+		return new CodeGenAnalyzer(this);
+	}
+
+	protected void createConstrainedOperations(@NonNull CGClass cgClass) {
 		Iterable<@NonNull Operation> constrainedOperations = getConstrainedOperations();
 		if (constrainedOperations != null) {
 			for (@NonNull Operation constrainedOperation : constrainedOperations) {		// FIXME recurse for nested calls
-				CGNamedElement cgOperation = constrainedOperation.accept(as2cgVisitor);
-				cgClass.getOperations().add((CGOperation)cgOperation);
+			//	CGNamedElement cgOperation = constrainedOperation.accept(as2cgVisitor);
+				CGOperation cgOperation = cgAnalyzer.createCGElement(CGOperation.class, constrainedOperation);
+				cgClass.getOperations().add(cgOperation);
 			}
 		}
-
 	}
 
 	@Override
@@ -431,6 +443,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		if (NameResolution.NAMES_GATHER.isActive()) {
 			NameResolution.NAMES_GATHER.println(NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(nameResolution) + " in " + NameUtil.debugSimpleName(nameManager));
 		}
+	}
+
+	@Override
+	public @NonNull CodeGenAnalyzer getAnalyzer() {
+		return cgAnalyzer;
 	}
 
 	public @NonNull NameVariant getBODY_NameVariant() {

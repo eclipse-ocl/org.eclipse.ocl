@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
@@ -114,30 +113,29 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
+	public @NonNull CGCallExp createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		assert cgSource == null;
 		assert asOperation.isIsStatic();
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
 		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
-		initCallExp(as2cgVisitor, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
-		CGVariable executorVariable = as2cgVisitor.getNameManager().getExecutorVariable();
+		initCallExp(analyzer, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+		CGVariable executorVariable = analyzer.getNameManager().getExecutorVariable();
 		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
-		addExpressionInOCLParameters(as2cgVisitor, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
-		initCallArguments(as2cgVisitor, cgForeignOperationCallExp);
+		addExpressionInOCLParameters(analyzer, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
+		initCallArguments(analyzer, cgForeignOperationCallExp);
 		return cgForeignOperationCallExp;
 	}
 
 	@Override
-	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
+	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		cgParameters.add(as2cgVisitor.getNameManager().getExecutorParameter());
-		super.createCGParameters(as2cgVisitor, cgOperation, expressionInOCL);
+		cgParameters.add(analyzer.getNameManager().getExecutorParameter());
+		super.createCGParameters(analyzer, cgOperation, expressionInOCL);
 	}
 
 	@Override

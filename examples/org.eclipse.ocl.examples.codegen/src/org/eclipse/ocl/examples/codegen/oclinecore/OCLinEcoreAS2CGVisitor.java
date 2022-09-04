@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -31,8 +32,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 {
-	public OCLinEcoreAS2CGVisitor(@NonNull OCLinEcoreCodeGenerator codeGenerator) {
-		super(codeGenerator);
+	public OCLinEcoreAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
+		super(analyzer);
 	}
 
 //	private void createSeverityOperations(@NonNull EnvironmentFactoryInternal environmentFactory) {
@@ -64,11 +65,6 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 		return cgParameter;
 	} */
 
-	@Override
-	public @NonNull OCLinEcoreCodeGenerator getCodeGenerator() {
-		return (OCLinEcoreCodeGenerator)context;
-	}
-
 /*	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		List<Constraint> asConstraints = asClass.getOwnedConstraints();
@@ -89,7 +85,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 			assert cgConstraint.basicGetNameResolution() == null;
 			cgConstraint.setAst(asConstraint);
 //			getNameManager().declarePreferredName(cgConstraint);
-			NestedNameManager nameManager = pushNestedNameManager(cgConstraint);
+			NestedNameManager nameManager = context.pushNestedNameManager(cgConstraint);
 			try {
 				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
 				String constraintName = PivotUtil.getName(asConstraint);
@@ -100,7 +96,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 						constraintName = containerName + "::" + constraintName;
 					}
 				}
-				ExpressionInOCL asSynthesizedQuery = getCodeGenerator().rewriteQuery(oldQuery);
+				ExpressionInOCL asSynthesizedQuery = ((OCLinEcoreCodeGenerator)codeGenerator).rewriteQuery(oldQuery);
 				OCLExpression asSynthesizedExpression = asSynthesizedQuery.getOwnedBody();
 			//	OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.basicGetLocalContext(cgConstraint);
 				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
@@ -112,11 +108,11 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 					CGParameter cgParameter = nameManager.getParameter(parameterVariable, parameterVariable.getName());
 					cgConstraint.getParameters().add(cgParameter);
 				}
-				cgConstraint.setBody(doVisit(CGValuedElement.class, asSynthesizedExpression));
+				cgConstraint.setBody(context.createCGElement(CGValuedElement.class, asSynthesizedExpression));
 			} catch (ParserException e) {
 				throw new WrappedException(e);
 			} finally {
-				popNestedNameManager();
+				context.popNestedNameManager();
 			}
 		}
 		return cgConstraint;
