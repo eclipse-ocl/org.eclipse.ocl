@@ -16,10 +16,11 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NonClassNameManager;
 import org.eclipse.ocl.examples.codegen.calling.JUnitClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -133,8 +134,13 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
-		return new JUnitNestedNameManager(this, outerNameManager, cgScope);
+	public @NonNull ClassNameManager createClassNameManager(@NonNull NameManager outerNameManager, @NonNull CGClass cgClass) {
+		return new JUnitClassNameManager(this, outerNameManager, cgClass);
+	}
+
+	@Override
+	public @NonNull NonClassNameManager createNonClassNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
+		return new JUnitNonClassNameManager(this, outerNameManager, cgScope);
 	}
 
 	protected @NonNull String generate(@NonNull ExpressionInOCL expInOcl, @NonNull String packageName, @NonNull String className) {

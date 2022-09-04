@@ -28,6 +28,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NonClassNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
@@ -267,6 +269,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new CG2JavaPreVisitor(this);
 	}
 
+	public @NonNull ClassNameManager createClassNameManager(@NonNull NameManager outerNameManager, @NonNull CGClass cgClass) {
+		return new ClassNameManager(this, outerNameManager, cgClass);
+	}
+
 	protected void createConstrainedOperations(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGClass cgClass) {
 		Iterable<@NonNull Operation> constrainedOperations = getConstrainedOperations();
 		if (constrainedOperations != null) {
@@ -329,8 +335,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new NameManagerHelper();
 	}
 
-	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
-		return new NestedNameManager(this, outerNameManager, cgScope);
+	public @NonNull NonClassNameManager createNonClassNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
+		return new NonClassNameManager(this, outerNameManager, cgScope);
 	}
 
 	@Override

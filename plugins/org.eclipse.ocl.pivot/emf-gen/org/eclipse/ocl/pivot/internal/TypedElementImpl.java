@@ -208,7 +208,7 @@ implements TypedElement {
 			}
 			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 			final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-			IF_IsEQ2_ = conformsTo;
+			IF_IsEQ2_ = (Boolean)conformsTo;
 		}
 		if (IF_IsEQ2_ == null) {
 			throw new InvalidValueException("Null body for \'pivot::TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");

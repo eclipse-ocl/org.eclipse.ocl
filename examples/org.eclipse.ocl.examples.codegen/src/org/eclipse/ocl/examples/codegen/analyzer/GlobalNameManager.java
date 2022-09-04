@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 //import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -265,11 +266,20 @@ public class GlobalNameManager extends NameManager
 		return cgElement2nestedNameManager.get(cgElement);
 	}
 
-	public @NonNull NestedNameManager createNestedNameManager(@Nullable NestedNameManager outerNameManager, @NonNull CGNamedElement cgScope) {
+	public @NonNull ClassNameManager createClassNameManager(@Nullable NestedNameManager outerNameManager, @NonNull CGClass cgClass) {
+		ClassNameManager nestedNameManager = codeGenerator.createClassNameManager(outerNameManager != null ? outerNameManager : this, cgClass);
+		NestedNameManager old = cgElement2nestedNameManager.put(cgClass, nestedNameManager);
+		assert old == null;
+	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
+	//	addNameManager(cgScope, nestedNameManager.getParent());
+		return nestedNameManager;
+	}
+
+	public @NonNull NonClassNameManager createNonClassNameManager(@Nullable NestedNameManager outerNameManager, @NonNull CGNamedElement cgScope) {
 		if (cgScope instanceof CGBuiltInIterationCallExp) {
 			getClass();		// XXX
 		}
-		NestedNameManager nestedNameManager = codeGenerator.createNestedNameManager(outerNameManager != null ? outerNameManager : this, cgScope);
+		NonClassNameManager nestedNameManager = codeGenerator.createNonClassNameManager(outerNameManager != null ? outerNameManager : this, cgScope);
 		NestedNameManager old = cgElement2nestedNameManager.put(cgScope, nestedNameManager);
 		assert old == null;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
