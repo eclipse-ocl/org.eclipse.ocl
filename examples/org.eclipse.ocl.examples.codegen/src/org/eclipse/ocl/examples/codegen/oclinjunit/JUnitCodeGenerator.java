@@ -123,7 +123,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		cgOperation.setCallingConvention(junitCallingConvention);
 		evaluateNameResolution.addCGElement(cgOperation);
 		cgAnalyzer.initAst(cgOperation, asOperation/*expInOcl*/);
-		cgAnalyzer.pushNestedNameManager(cgOperation);
+		cgAnalyzer.pushOperationNameManager(cgOperation);
 		junitCallingConvention.createCGParameters(cgAnalyzer, cgOperation, expInOcl);
 		junitCallingConvention.createCGBody(cgAnalyzer, cgOperation);
 		cgRootClass.getOperations().add(cgOperation);
