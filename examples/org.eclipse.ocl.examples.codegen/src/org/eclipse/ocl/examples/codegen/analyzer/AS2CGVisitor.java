@@ -298,7 +298,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			assert cgConstraint.basicGetNameResolution() == null;
 			cgConstraint.setAst(asConstraint);
 		//	getNameManager().declarePreferredName(cgConstraint);
-			FeatureNameManager innerNameManager = context.pushNestedNameManager(cgConstraint);
+			FeatureNameManager innerNameManager = context.pushConstraintNameManager(cgConstraint);
 			try {
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
@@ -440,7 +440,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		LanguageExpression specification = asOperation.getBodyExpression();
 		CGOperation cgFinalOperation = context.generateOperationDeclaration(asOperation, true);
 //		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
-		context.pushNestedNameManager(cgFinalOperation);
+		context.pushOperationNameManager(cgFinalOperation);
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 			cgFinalOperation.getCallingConvention().createCGBody(context, cgFinalOperation);
 		}
@@ -448,7 +448,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGOperation cgVirtualOperation = context.generateOperationDeclaration(asOperation, true);
 		if (cgVirtualOperation != cgFinalOperation) {
 //			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
-			context.pushNestedNameManager(cgVirtualOperation);
+			context.pushOperationNameManager(cgVirtualOperation);
 			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 				cgVirtualOperation.getCallingConvention().createCGBody(context, cgVirtualOperation);
 			}
@@ -515,7 +515,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
 		CGProperty cgProperty = context.generatePropertyDeclaration(asProperty, null);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-		context.pushNestedNameManager(cgProperty);
+		context.pushPropertyNameManager(cgProperty);
 		// parse ownedExpression here to simplify createImplementation arguments
 		callingConvention.createImplementation(context, cgProperty);
 		context.popNestedNameManager();

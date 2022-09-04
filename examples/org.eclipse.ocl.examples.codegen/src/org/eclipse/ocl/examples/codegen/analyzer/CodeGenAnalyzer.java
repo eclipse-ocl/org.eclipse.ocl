@@ -688,7 +688,7 @@ public class CodeGenAnalyzer
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
 //				classNameManager.declarePreferredName(cgOperation);
-				pushNestedNameManager(cgOperation);
+				pushOperationNameManager(cgOperation);
 				ExpressionInOCL asExpressionInOCL = null;
 				LanguageExpression asSpecification = asIteration.getBodyExpression();
 				if (asSpecification != null) {
@@ -736,7 +736,7 @@ public class CodeGenAnalyzer
 		FeatureNameManager nameManager;
 		if (iterationHelper == null) {			// No helper: iterators are arguments of a nested context
 			initAst(cgIterationCallExp, asLoopExp);
-			nameManager = pushNestedNameManager(cgIterationCallExp);
+			nameManager = pushIterateNameManager(cgIterationCallExp);
 		}
 		else {
 			nameManager = getFeatureNameManager();
@@ -790,7 +790,7 @@ public class CodeGenAnalyzer
 		}
 		if (iterationHelper != null) {			// Helper: iterators are part of invocation context
 			initAst(cgIterationCallExp, asLoopExp);
-			pushNestedNameManager(cgIterationCallExp);
+			pushIterateNameManager(cgIterationCallExp);
 		}
 		//
 		//	Body
@@ -852,7 +852,7 @@ public class CodeGenAnalyzer
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
 //				classNameManager.declarePreferredName(cgOperation);
-				pushNestedNameManager(cgOperation);						// XXX too soon wrong currentNameManager ancestry defer to visit
+				pushOperationNameManager(cgOperation);						// XXX too soon wrong currentNameManager ancestry defer to visit
 				try {
 					ExpressionInOCL asExpressionInOCL = null;
 					LanguageExpression asSpecification = asOperation.getBodyExpression();
@@ -910,7 +910,7 @@ public class CodeGenAnalyzer
 			addCGProperty(cgProperty);
 			NestedNameManager outerNameManager = getNameManager();
 			assert outerNameManager != null;
-			FeatureNameManager innerNameManager = pushNestedNameManager(cgProperty);
+			FeatureNameManager innerNameManager = pushPropertyNameManager(cgProperty);
 //			outerNameManager.declarePreferredName(cgProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
@@ -1251,7 +1251,7 @@ public class CodeGenAnalyzer
 			cgNativeOperation.setRequired(asOperation.isIsRequired());
 			cgNativeOperation.setCallingConvention(callingConvention);
 			cgNativeOperation.setAst(asOperation);
-			pushNestedNameManager(cgNativeOperation);
+			pushOperationNameManager(cgNativeOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
 			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {
 				Type asParameterType = asParameter.getType();
@@ -1297,7 +1297,7 @@ public class CodeGenAnalyzer
 			cgNativeProperty.setCallingConvention(callingConvention);
 			cgNativeProperty.setAst(asProperty);
 		//	/*NestedNameManager nameManager =*/ globalNameManager.createFeatureNameManager(classNameManager, null, cgNativeProperty);
-			pushNestedNameManager(cgNativeProperty);
+			pushPropertyNameManager(cgNativeProperty);
 			addCGProperty(cgNativeProperty);		// XXX Use installProperty and then inline addCGProperty
 			popNestedNameManager();
 			popClassNameManager();
@@ -1389,6 +1389,18 @@ public class CodeGenAnalyzer
 		return (externalFeatures != null) && externalFeatures.contains(asFeature);
 	}
 
+	protected @NonNull ClassNameManager lazyGetClassNameManager(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CGClass cgClass = basicGetCGClass(asClass);
+		if (cgClass == null) {
+			cgClass = generateClassDeclaration(asClass, null);
+		}
+		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetNestedNameManager(cgClass);
+		if (classNameManager == null) {			//
+			classNameManager = globalNameManager.createClassNameManager(null, cgClass);
+		}
+		return classNameManager;
+	}
+
 	public  @Nullable NestedNameManager popClassNameManager() {
 		assert (currentNameManager != null) && (currentNameManager.getCGScope() instanceof CGClass);
 		nameManagerStack.pop();
@@ -1414,7 +1426,7 @@ public class CodeGenAnalyzer
 		return nameManager;
 	}
 
-	public @NonNull FeatureNameManager pushNestedNameManager(@NonNull CGConstraint cgConstraint) {
+	public @NonNull FeatureNameManager pushConstraintNameManager(@NonNull CGConstraint cgConstraint) {
 		FeatureNameManager nameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgConstraint);
 		if (nameManager == null) {			//
 			NestedNameManager currentNameManager2 = currentNameManager;
@@ -1426,7 +1438,7 @@ public class CodeGenAnalyzer
 		return nameManager;
 	}
 
-	public @NonNull FeatureNameManager pushNestedNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
+	public @NonNull FeatureNameManager pushIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
 		FeatureNameManager nameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgIterationCallExp);
 		if (nameManager == null) {			//
 			NestedNameManager currentNameManager2 = currentNameManager;
@@ -1438,28 +1450,34 @@ public class CodeGenAnalyzer
 		return nameManager;
 	}
 
-	public @NonNull NestedNameManager pushNestedNameManager(@NonNull CGOperation cgOperation) {
-		NestedNameManager nameManager = globalNameManager.basicGetNestedNameManager(cgOperation);
-		if (nameManager == null) {			//
+	public @NonNull NestedNameManager pushOperationNameManager(@NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
+		ClassNameManager classNameManager = lazyGetClassNameManager(asClass);
+		NestedNameManager operationNameManager = globalNameManager.basicGetNestedNameManager(cgOperation);
+		if (operationNameManager == null) {			//
 			NestedNameManager currentNameManager2 = currentNameManager;
 			assert currentNameManager2 != null;
-			nameManager = globalNameManager.createFeatureNameManager(currentNameManager2.getClassNameManager(), cgOperation);
+			operationNameManager = globalNameManager.createFeatureNameManager(classNameManager, cgOperation);
 		}
-		currentNameManager = nameManager;
-		nameManagerStack.push(nameManager);
-		return nameManager;
+		currentNameManager = operationNameManager;
+		nameManagerStack.push(operationNameManager);
+		return operationNameManager;
 	}
 
-	public @NonNull FeatureNameManager pushNestedNameManager(@NonNull CGProperty cgProperty) {
-		FeatureNameManager nameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgProperty);
-		if (nameManager == null) {			//
+	public @NonNull FeatureNameManager pushPropertyNameManager(@NonNull CGProperty cgProperty) {
+		Property asProperty = CGUtil.getAST(cgProperty);
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
+		ClassNameManager classNameManager = lazyGetClassNameManager(asClass);
+		FeatureNameManager propertyNameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgProperty);
+		if (propertyNameManager == null) {			//
 			NestedNameManager currentNameManager2 = currentNameManager;
 			assert currentNameManager2 != null;
-			nameManager = globalNameManager.createFeatureNameManager(currentNameManager2.getClassNameManager(), cgProperty);
+			propertyNameManager = globalNameManager.createFeatureNameManager(classNameManager, cgProperty);
 		}
-		currentNameManager = nameManager;
-		nameManagerStack.push(nameManager);
-		return nameManager;
+		currentNameManager = propertyNameManager;
+		nameManagerStack.push(propertyNameManager);
+		return propertyNameManager;
 	}
 
 	/**
