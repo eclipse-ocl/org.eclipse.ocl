@@ -184,7 +184,7 @@ public class CodeGenAnalyzer
 	public void addCGClass(@NonNull CGClass cgClass) {
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		CompleteClassInternal completeClass = codeGenerator.getEnvironmentFactory().getCompleteModel().getCompleteClass(asClass);
-		assert asClass == completeClass.getPrimaryClass();
+	//	assert asClass == completeClass.getPrimaryClass();
 		CGClass old = asClass2cgClass.put(completeClass, cgClass);
 		assert old == null;
 		if (cgRootClass == null) {
@@ -304,7 +304,7 @@ public class CodeGenAnalyzer
 
 	public @Nullable CGClass basicGetCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CompleteClassInternal completeClass = codeGenerator.getEnvironmentFactory().getCompleteModel().getCompleteClass(asClass);
-		assert asClass == completeClass.getPrimaryClass();
+	//	assert asClass == completeClass.getPrimaryClass();
 		return asClass2cgClass.get(completeClass);
 	}
 
@@ -588,7 +588,7 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGClass getCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CompleteClassInternal completeClass = codeGenerator.getEnvironmentFactory().getCompleteModel().getCompleteClass(asClass);
-		assert asClass == completeClass.getPrimaryClass();
+	//	assert asClass == completeClass.getPrimaryClass();
 		return ClassUtil.nonNullState(asClass2cgClass.get(completeClass));
 	/*	CGClass cgClass = asClass2cgClass.get(asClass);
 		if (cgClass == null) {

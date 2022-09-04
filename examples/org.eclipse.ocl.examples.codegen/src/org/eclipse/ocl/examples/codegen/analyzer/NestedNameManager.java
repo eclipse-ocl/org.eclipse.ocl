@@ -62,7 +62,7 @@ public class NestedNameManager extends NameManager
 	protected final @NonNull NameManager parent;
 	protected final @NonNull CGNamedElement cgScope;
 	protected final @NonNull NamedElement asScope;
-	protected final @NonNull Type asType;
+	protected final @NonNull Type zasType;
 	protected final boolean isStatic;
 
 	/**
@@ -104,7 +104,8 @@ public class NestedNameManager extends NameManager
 		this.cgScope = cgScope;
 		this.asScope = CGUtil.getAST(cgScope);
 		if (parent instanceof GlobalNameManager) {
-			this.asType = ClassUtil.nonNullState(PivotUtil.getContainingType(asScope));
+		//	this.asType = ClassUtil.nonNullState(PivotUtil.getContainingType(asScope));
+			this.asType = PivotUtil.basicGetContainingType(asScope);
 		}
 		else {
 			this.asType = ((NestedNameManager)parent).asType;

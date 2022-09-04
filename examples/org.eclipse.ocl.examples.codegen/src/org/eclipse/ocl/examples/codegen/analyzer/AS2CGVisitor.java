@@ -128,7 +128,6 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -775,6 +774,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return currentNameManager;
 	}
 
+	public  @Nullable NestedNameManager popPackageNameManager() {
+		assert (currentNameManager != null) && (currentNameManager.getCGScope() instanceof CGPackage);
+		nameManagerStack.pop();
+		currentNameManager = nameManagerStack.isEmpty() ? null : nameManagerStack.peek();
+		return currentNameManager;
+	}
+
 	public @NonNull NestedNameManager pushClassNameManager(@NonNull CGClass cgClass) {
 		NestedNameManager nameManager = globalNameManager.basicGetNestedNameManager(cgClass);
 		if (nameManager == null) {			//
@@ -791,6 +797,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (nameManager == null) {			//
 			assert (currentNameManager != null) && (currentNameManager.findCGScope() != null);
 			nameManager = globalNameManager.createNestedNameManager(currentNameManager, cgNamedElement);
+		}
+		currentNameManager = nameManager;
+		nameManagerStack.push(nameManager);
+		return nameManager;
+	}
+
+	public @NonNull NestedNameManager pushPackageNameManager(@NonNull CGPackage cgPackage) {
+		NestedNameManager nameManager = globalNameManager.basicGetNestedNameManager(cgPackage);
+		if (nameManager == null) {			//
+			NestedNameManager parentNameManager = currentNameManager != null ? currentNameManager.getClassParentNameManager() : null;
+			nameManager = globalNameManager.createNestedNameManager(parentNameManager, cgPackage);
 		}
 		currentNameManager = nameManager;
 		nameManagerStack.push(nameManager);
@@ -845,8 +862,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		CompleteClassInternal completeClass = getEnvironmentFactory().getCompleteModel().getCompleteClass(asClass);
-		asClass = completeClass.getPrimaryClass();
+	//	CompleteClassInternal completeClass = getEnvironmentFactory().getCompleteModel().getCompleteClass(asClass);
+	//	asClass = completeClass.getPrimaryClass();
 		CGClass cgClass = analyzer.basicGetCGClass(asClass);
 		if (cgClass == null) {
 			cgClass = generateClassDeclaration(asClass, null);
@@ -1118,6 +1135,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 		cgPackage.setAst(asPackage);
 		globalNameManager.declareEagerName(cgPackage, PivotUtil.getName(asPackage));
+		pushPackageNameManager(cgPackage);
 		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
 			CGClass cgClass = doVisit(CGClass.class, asType);
 			cgPackage.getClasses().add(cgClass);
@@ -1126,6 +1144,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGPackage cgNestedPackage = doVisit(CGPackage.class, asNestedPackage);
 			cgPackage.getPackages().add(cgNestedPackage);
 		}
+		popPackageNameManager();
 		return cgPackage;
 	}
 
