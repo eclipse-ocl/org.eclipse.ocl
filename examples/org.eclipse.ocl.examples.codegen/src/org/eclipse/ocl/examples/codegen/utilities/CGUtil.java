@@ -282,6 +282,10 @@ public class CGUtil
 		return ClassUtil.nonNullState((OperationCallExp)cgOperationCallExp.getAst());
 	}
 
+	public static org.eclipse.ocl.pivot.@NonNull Package getAST(@NonNull CGPackage cgPackage) {
+		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Package)cgPackage.getAst());
+	}
+
 	public static @NonNull /*ParameterVariable*/ VariableDeclaration getAST(@NonNull CGParameter cgParameter) {
 		return ClassUtil.nonNullState((VariableDeclaration)cgParameter.getAst());
 	}

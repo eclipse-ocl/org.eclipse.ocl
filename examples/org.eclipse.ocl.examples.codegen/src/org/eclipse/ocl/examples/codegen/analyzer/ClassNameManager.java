@@ -35,30 +35,24 @@ public class ClassNameManager extends NestedNameManager
 		assert (parent instanceof GlobalNameManager) || (((ClassNameManager)parent).cgClass instanceof CGPackage);
 	}
 
-	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getASClass() {
 		return asClass;
 	}
 
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getASScope() {
-		return asClass;
-	}
-
-	@Override
+//	@Override
 	public @NonNull CGClass getCGClass() {
 		return cgClass;
 	}
 
-	@Override
-	public @NonNull CGClass getCGScope() {
-		return cgClass;
-	}
+//	@Override
+//	public @NonNull CGClass getCGScope() {
+//		return cgClass;
+//	}
 
-	@Override
-	public @NonNull ClassNameManager getClassNameManager() {
-		return this;
-	}
+//	@Override
+//	public @NonNull ClassNameManager getClassNameManager() {
+//		return this;
+//	}
 
 	/**
 	 * Return the NestedNameManager that can be the parent of another CGClass. Returns null for global.

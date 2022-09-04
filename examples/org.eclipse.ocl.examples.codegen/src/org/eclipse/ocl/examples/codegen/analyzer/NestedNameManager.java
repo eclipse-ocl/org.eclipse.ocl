@@ -18,12 +18,10 @@ import java.util.Map.Entry;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -134,19 +132,15 @@ public abstract class NestedNameManager extends NameManager
 		return nameVariant2name != null ? nameVariant2name.get(nameVariant) : null;
 	}
 
-	public abstract org.eclipse.ocl.pivot.@NonNull Class getASClass();
-
-	public abstract @NonNull NamedElement getASScope();
-
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
 		return codeGenerator.getAnalyzer();
 	}
 
-	public abstract @NonNull CGClass getCGClass();
+//	public abstract @NonNull CGClass getCGClass();
 
-	public abstract @NonNull CGNamedElement getCGScope();
+//	public abstract @NonNull CGNamedElement getCGScope();
 
-	public abstract @NonNull ClassNameManager getClassNameManager();
+//	public abstract @NonNull ClassNameManager getClassNameManager();
 
 	/**
 	 * Return the NestedNameManager that can be the parent of another CGClass. Returns null for global.

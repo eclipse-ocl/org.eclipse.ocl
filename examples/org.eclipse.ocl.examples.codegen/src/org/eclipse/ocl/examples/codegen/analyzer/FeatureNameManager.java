@@ -328,12 +328,7 @@ public class FeatureNameManager extends NestedNameManager
 		return thisParameter;
 	}
 
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getASClass() {
-		return classNameManager.getASClass();
-	}
 
-	@Override
 	public @NonNull NamedElement getASScope() {
 		return asScope;
 	}
@@ -361,17 +356,17 @@ public class FeatureNameManager extends NestedNameManager
 		return null;
 	}
 
-	@Override
-	public @NonNull CGClass getCGClass() {
-		return classNameManager.getCGClass();
-	}
+//	@Override
+//	public @NonNull CGClass getCGClass() {
+//		return classNameManager.getCGClass();
+//	}
 
-	@Override
+//	@Override
 	public @NonNull CGNamedElement getCGScope() {
 		return cgScope;
 	}
 
-	@Override
+//	@Override
 	public @NonNull ClassNameManager getClassNameManager() {
 		return classNameManager;
 	}
@@ -393,14 +388,14 @@ public class FeatureNameManager extends NestedNameManager
 	 */
 	@Override
 	public @Nullable FeatureNameManager getClassParentNameManager() {
-		throw new UnsupportedOperationException();
-	/*	for (FeatureNameManager nameManager = this; nameManager != null; nameManager = nameManager.parent instanceof FeatureNameManager ? (FeatureNameManager)nameManager.parent : null) {
+	//	throw new UnsupportedOperationException();
+		for (FeatureNameManager nameManager = this; nameManager != null; nameManager = nameManager.parent instanceof FeatureNameManager ? (FeatureNameManager)nameManager.parent : null) {
 			CGNamedElement cgScope = nameManager.cgScope;
 			if (cgScope instanceof CGClass) {
 				return nameManager.parent instanceof FeatureNameManager ? (FeatureNameManager)nameManager.parent : null;
 			}
 		}
-		return null; */
+		return null;
 	}
 
 	public @NonNull CGParameter getExecutorParameter() {
