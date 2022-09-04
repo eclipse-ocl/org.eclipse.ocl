@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -45,7 +45,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 	//	}
 
 	@Override
-	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
+	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		EClassifier eClassifier = cgEcoreExp.getEClassifier();
 		Class<?> ecoreClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
@@ -69,7 +69,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 //		return super.appendEcore(js, localContext, cgEcoreExp, unboxedValue);
 		js.appendDeclaration(cgEcoreExp);

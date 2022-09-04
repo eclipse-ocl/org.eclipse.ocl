@@ -15,7 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -40,7 +40,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 	}
 
 	@Override
-	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
@@ -61,7 +61,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 		return true;
 	}
 
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement nonEcoreValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement nonEcoreValue) {
 		//		TypeId typeId = nonEcoreValue.getASTypeId();
 		EClassifier eClassifier = cgEcoreExp.getEcoreClassifier();
 		Class<?> instanceClass = eClassifier != null ? eClassifier.getInstanceClass() : null;

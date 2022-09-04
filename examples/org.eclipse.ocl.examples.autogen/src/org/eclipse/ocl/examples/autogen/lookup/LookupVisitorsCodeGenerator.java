@@ -125,7 +125,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		this.asVisitorClass = createASClass(asVisitorPackage, visitorClassName);
 		this.asThisVariable = helper.createParameterVariable("this", asVisitorClass, true);
 		this.asContextVariable = helper.createParameterVariable(CONTEXT_NAME, asEnvironmentType, true);
-		CGVariable cgVariable = getAnalyzer().getNameManager().getCGVariable(asContextVariable);
+		CGVariable cgVariable = getAnalyzer().getFeatureNameManager().getCGVariable(asContextVariable);
 		globalNameManager.declareReservedName(cgVariable, /*null,*/ CONTEXT_NAME);
 
 		//

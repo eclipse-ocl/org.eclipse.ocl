@@ -73,7 +73,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		cgNativeOperationCallExp.setTypeId(analyzer.getCGTypeId(JavaConstants.UNBOXED_EXPLICIT_NAVIGATION_PROPERTY_TYPE_ID));
 //		NameResolution nameResolution = cgProperty.getNameResolution();
 //		nameResolution.addCGElement(cgNativeOperationCallExp);
-		CGFinalVariable cgVariable = analyzer.getNameManager().createCGVariable(cgNativeOperationCallExp);
+		CGFinalVariable cgVariable = analyzer.getFeatureNameManager().createCGVariable(cgNativeOperationCallExp);
 		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorPropertyCallExp();
 		cgExecutorPropertyCallExp.setReferredProperty(cgProperty);
 		cgExecutorPropertyCallExp.setAsProperty(asProperty);

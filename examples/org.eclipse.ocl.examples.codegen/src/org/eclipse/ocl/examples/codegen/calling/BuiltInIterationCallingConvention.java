@@ -13,7 +13,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -111,7 +111,7 @@ public class BuiltInIterationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
 		Iteration asIteration = (Iteration)CGUtil.getAST(cgOperation);
-		NestedNameManager nameManager = analyzer.getNameManager();
+		FeatureNameManager nameManager = analyzer.getFeatureNameManager();
 		CGParameter cgParameter = nameManager.getSelfParameter();
 		//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 		//			cgParameter.setRequired(contextVariable.isIsRequired());

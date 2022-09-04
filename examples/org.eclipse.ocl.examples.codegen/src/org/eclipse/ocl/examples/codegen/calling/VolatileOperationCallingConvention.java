@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -59,8 +58,7 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 			Type sourceType = asSource.getType();
 			asFinalOperation = analyzer.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast
 		}
-		CGClass currentClass = analyzer.getNameManager().findCGScope();
-		assert currentClass == null;
+	//	CGClass currentClass = analyzer.getNameManager().getCGClass();
 		CGOperationCallExp cgCallExp = null;
 		assert asFinalOperation != null;
 		if (asFinalOperation != null) {

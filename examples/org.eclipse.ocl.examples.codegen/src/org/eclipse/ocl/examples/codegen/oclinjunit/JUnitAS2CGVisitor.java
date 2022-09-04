@@ -13,7 +13,7 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -53,7 +53,7 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 
 	@Override
 	public @NonNull CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL element) {
-		NestedNameManager nameManager = context.getNameManager();
+		FeatureNameManager nameManager = context.getFeatureNameManager();
 		Variable contextVariable = element.getOwnedContext();
 		if (contextVariable != null) {
 			CGVariable cgContext = nameManager.getParameter(contextVariable, (String)null);

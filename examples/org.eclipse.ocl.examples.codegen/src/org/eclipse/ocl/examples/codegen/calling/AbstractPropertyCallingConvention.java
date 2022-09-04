@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
@@ -40,7 +40,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public abstract class AbstractPropertyCallingConvention implements PropertyCallingConvention
 {
 	@Override
-	public void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {}
+	public void createCGParameters(@NonNull FeatureNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {}
 
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
@@ -53,7 +53,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	//		|| (this instanceof ConstrainedPropertyCallingConvention)
 	//		|| (this instanceof NativePropertyCallingConvention)
 	//		|| (this instanceof ForeignPropertyCallingConvention);
-		NestedNameManager nameManager = analyzer.getNameManager();
+		FeatureNameManager nameManager = analyzer.getFeatureNameManager();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		cgProperty.setRequired(asProperty.isIsRequired());
 		LanguageExpression specification = asProperty.getOwnedExpression();

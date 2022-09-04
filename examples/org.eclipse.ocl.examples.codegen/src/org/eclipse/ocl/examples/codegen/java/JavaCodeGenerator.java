@@ -31,6 +31,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
@@ -38,7 +39,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NonClassNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
@@ -311,6 +311,22 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return executorParameter;
 	}
 
+	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
+		return new FeatureNameManager(classNameManager, cgConstraint);
+	}
+
+	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager outerNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
+		return new FeatureNameManager(classNameManager, outerNameManager, cgIterationCallExp);
+	}
+
+	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
+		return new FeatureNameManager(classNameManager, cgOperation);
+	}
+
+	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
+		return new FeatureNameManager(classNameManager, cgProperty);
+	}
+
 	@Override
 	public @NonNull FieldingAnalyzer createFieldingAnalyzer() {
 		return new FieldingAnalyzer(getAnalyzer());
@@ -345,10 +361,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {
 		return new NameManagerHelper();
-	}
-
-	public @NonNull NonClassNameManager createNonClassNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
-		return new NonClassNameManager(this, outerNameManager, cgScope);
 	}
 
 	@Override
