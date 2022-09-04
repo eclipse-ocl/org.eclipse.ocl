@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -42,7 +42,7 @@ public interface PropertyCallingConvention extends CallingConvention
 	/**
 	 * Elaborate the CGProperty with the parameters appropriate to initExpression.
 	 */
-	void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression);
+	void createCGParameters(@NonNull FeatureNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression);
 
 	@NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement);
 

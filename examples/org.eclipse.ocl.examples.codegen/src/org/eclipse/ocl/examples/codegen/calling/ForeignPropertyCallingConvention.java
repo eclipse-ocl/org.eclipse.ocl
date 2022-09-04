@@ -17,8 +17,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
@@ -82,7 +82,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {
+	public void createCGParameters(@NonNull FeatureNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
 		List<CGParameter> cgParameters = cgForeignProperty.getParameters();
 		cgParameters.add(nameManager.getExecutorParameter());
@@ -111,7 +111,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	@Override
 	public void createImplementation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty) {
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
-		NestedNameManager nameManager = analyzer.getNameManager();
+		FeatureNameManager nameManager = analyzer.getFeatureNameManager();
 		Property asProperty = CGUtil.getAST(cgForeignProperty);
 //		CGParameter cgParameter = asProperty.isIsStatic() ? localContext.getAnyParameter() : localContext.getSelfParameter();
 //		cgForeignProperty.getParameters().add(localContext.getExecutorParameter());
@@ -128,7 +128,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	//	basicGetValueInit.setTypeId(cacheTypeId);
 		basicGetValueInit.setValueIsBoxed(true);
 		CGValuedElement castBasicGetValueInit = analyzer.createCGCastExp(cgCastType, basicGetValueInit);
-		CGFinalVariable basicGetValueVariable = analyzer.getNameManager().createCGVariable(castBasicGetValueInit);
+		CGFinalVariable basicGetValueVariable = analyzer.getFeatureNameManager().createCGVariable(castBasicGetValueInit);
 //		nameManager.declareLazyName(basicGetValueVariable);
 		CGValuedElement cgCondition = analyzer.createCGIsEqual(analyzer.createCGVariableExp(basicGetValueVariable), analyzer.createCGNull());
 		CGNativeOperationCallExp getValue = createCGBoxedNativeOperationCallExp(analyzer, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,

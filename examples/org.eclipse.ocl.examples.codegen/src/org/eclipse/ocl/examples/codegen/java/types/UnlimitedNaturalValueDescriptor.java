@@ -11,7 +11,7 @@
 package org.eclipse.ocl.examples.codegen.java.types;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -28,7 +28,7 @@ public class UnlimitedNaturalValueDescriptor extends BoxedValueDescriptor
 	}
 
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull NestedNameManager localNameManager,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 		js.appendDeclaration(cgUnboxExp);
 		js.append(" = ");

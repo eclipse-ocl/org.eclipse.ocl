@@ -15,10 +15,8 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -105,9 +103,8 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		Type sourceType = asSource != null ? asSource.getType() : null;
 	//	generateDeclarationHierarchy(as2cgVisitor, sourceType, asOperation);
 		Operation finalOperation = sourceType!= null ? analyzer.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType) : asOperation;	// FIXME cast
-		NestedNameManager nameManager = analyzer.getNameManager();
-		CGClass currentClass = nameManager.findCGScope();
-		assert currentClass != null;
+	//	NestedNameManager nameManager = analyzer.getNameManager();
+	//	CGClass currentClass = nameManager.getCGClass();
 	//	CGOperationCallExp cgCallExp;
 		assert (finalOperation != null);
 	//	if (finalOperation != null) {

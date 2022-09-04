@@ -359,6 +359,14 @@ public class CGUtil
 		return null;
 	}
 
+	public static @NonNull CGClass getContainingClass(@NonNull CGOperation cgOperation) {
+		return ClassUtil.nonNullState(cgOperation.getContainingClass());
+	}
+
+	public static @NonNull CGClass getContainingClass(@NonNull CGProperty cgProperty) {
+		return ClassUtil.nonNullState(cgProperty.getContainingClass());
+	}
+
 	public static @Nullable CGConstraint getContainingConstraint(@NonNull CGElement cgExpression) {
 		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
 			if (cgElement instanceof CGConstraint) {

@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -19,6 +22,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -26,32 +30,29 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
- * A NestedNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
+ * A FeatureNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
  * named without collisions at some node in the name nesting hierarchy..
  */
-public class NonClassNameManager extends NestedNameManager
+public class FeatureNameManager extends NestedNameManager
 {
+	protected final @NonNull ClassNameManager classNameManager;
 	protected final @NonNull CGNamedElement cgScope;
 	protected final @NonNull NamedElement asScope;
-	protected final @NonNull Type asType;
 	protected final boolean isStatic;
 
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
@@ -64,62 +65,104 @@ public class NonClassNameManager extends NestedNameManager
 	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// A local orphan parameter spelled "this"
 	private /*@LazyNonNull*/ CGParameter typeIdParameter = null;			// A local orphan parameter spelled "typeId"
 
-	public NonClassNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
-		super(codeGenerator, parent, cgScope);
-		this.cgScope = cgScope;
-		this.asScope = CGUtil.getAST(cgScope);
-		if (parent instanceof GlobalNameManager) {
-			this.asType = ClassUtil.nonNullState(PivotUtil.getContainingType(asScope));
-		}
-		else {
-			this.asType = ((NestedNameManager)parent).getASType();
-		}
-		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
-		this.isStatic = /*(asScope == null) ||*/ staticFeature;
-		assert !(parent instanceof NonClassNameManager) || (((NonClassNameManager)parent).cgScope != cgScope);		// XXX
-	// XXX	assert at most one ancestral class
-		parent.addChild(this);
-		if ((cgScope instanceof CGClass) || (cgScope instanceof CGPackage)) {
-			assert (parent instanceof GlobalNameManager) || (((NonClassNameManager)parent).cgScope instanceof CGPackage);
-		}
+	/**
+	 * Mapping from an AS Variable to the CG Variable defined in this cgScope.
+	 */
+	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> cgVariables = new HashMap<>();
+
+	public FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
+		this(classNameManager, classNameManager, cgConstraint);
 	}
 
-	@Override
+	public FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager parent, @NonNull CGIterationCallExp cgIterationCallExp) {
+		this(classNameManager, (NestedNameManager)parent, (CGNamedElement)cgIterationCallExp);		// XXX IterateNameManager
+	}
+
+	public FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
+		this(classNameManager, classNameManager, cgOperation);
+	}
+
+	public FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
+		this(classNameManager, classNameManager, cgProperty);
+	}
+
+	private FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parent, @NonNull CGNamedElement cgScope) {
+		super(classNameManager.getCodeGenerator(), parent, cgScope);
+		this.classNameManager = classNameManager;
+		this.cgScope = cgScope;
+		this.asScope = CGUtil.getAST(cgScope);
+		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
+		this.isStatic = /*(asScope == null) ||*/ staticFeature;
+		assert !(parent instanceof FeatureNameManager) || (((FeatureNameManager)parent).cgScope != cgScope);		// XXX
+		assert !(cgScope instanceof CGClass) || (cgScope instanceof CGPackage);
+	}
+
+	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
+		CGVariable old = cgVariables.put(asVariable, cgVariable);
+		assert old == null;
+	}
+
 	public @Nullable CGParameter basicGetAnyParameter() {
 		return anyParameter;
 	}
 
-	@Override
 	public @Nullable CGVariable basicGetExecutorVariable() {
 		return (executorVariable != null) && !(executorVariable instanceof CGParameter) ? executorVariable : null;
 	}
 
-	@Override
 	public @Nullable CGVariable basicGetIdResolverVariable() {
 		return idResolverVariable;
 	}
 
-	@Override
+	public @Nullable CGVariable basicGetLocalVariable(@NonNull VariableDeclaration asVariable) {
+		return cgVariables.get(asVariable);
+	}
+
 	public @Nullable CGVariable basicGetModelManagerVariable() {
 		return modelManagerVariable;
 	}
 
-	@Override
+	public @Nullable CGParameter basicGetParameter(@NonNull VariableDeclaration asVariable) {		// XXX Migrate to FeatureNameManager
+		CGVariable cgVariable = cgVariables.get(asVariable);
+		if (cgVariable instanceof CGParameter) {
+			return (CGParameter)cgVariable;
+		}
+		else if (cgVariable != null) {
+			throw new IllegalStateException(cgVariable + " is not  a CGParameter");
+		}
+		else if (!(getASScope() instanceof Operation) && (parent instanceof FeatureNameManager)) {				// XXX polymorphize
+			return ((FeatureNameManager)parent).basicGetParameter(asVariable);
+		}
+		else {
+			return null;
+		}
+	}
+
 	public @Nullable CGVariable basicGetQualifiedThisVariable() {
 		return qualifiedThisVariable;
 	}
 
-	@Override
 	public @Nullable CGParameter basicGetSelfParameter() {
 		return selfParameter;
 	}
 
-	@Override
 	public @Nullable CGVariable basicGetStandardLibraryVariable() {
 		return standardLibraryVariable;
 	}
 
-	@Override
+	public @Nullable CGVariable basicGetVariable(@NonNull VariableDeclaration asVariable) {
+		CGVariable cgVariable = cgVariables.get(asVariable);
+		if (cgVariable != null) {
+			return cgVariable;
+		}
+		else if (parent instanceof FeatureNameManager) {				// XXX polymorphize
+			return ((FeatureNameManager)parent).basicGetVariable(asVariable);
+		}
+		else {
+			return null;
+		}
+	}
+
 	protected @NonNull CGParameter createAnyParameter() {
 		assert isStatic;
 		NameResolution anyName = globalNameManager.getAnyNameResolution();
@@ -128,7 +171,6 @@ public class NonClassNameManager extends NestedNameManager
 		return anyParameter;
 	}
 
-	@Override
 	public @NonNull CGFinalVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
 		assert basicGetVariable(asVariable) == null;
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -139,7 +181,6 @@ public class NonClassNameManager extends NestedNameManager
 		return cgVariable;
 	}
 
-	@Override
 	public @NonNull CGFinalVariable createCGVariable(@NonNull CGValuedElement cgInit) {
 //		NameResolution nameResolution = getNameResolution(cgInit);
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -150,7 +191,6 @@ public class NonClassNameManager extends NestedNameManager
 		return cgVariable;
 	}
 
-	@Override
 	protected @NonNull CGVariable createExecutorVariable() {
 		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.INSTANCE);
 		NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
@@ -187,7 +227,6 @@ public class NonClassNameManager extends NestedNameManager
 		return executorVariable;
 	}
 
-	@Override
 	public @NonNull CGVariable createIdResolverVariable() {
 		CGNativeOperationCallExp idResolverInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD, SupportOperationCallingConvention.INSTANCE);
 		NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
@@ -205,7 +244,6 @@ public class NonClassNameManager extends NestedNameManager
 		return idResolverVariable;
 	}
 
-	@Override
 	public @NonNull CGVariable createModelManagerVariable() {
 		CGNativeOperationCallExp modelManagerInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD, SupportOperationCallingConvention.INSTANCE);
 		NameResolution modelManagerNameResolution = globalNameManager.getModelManagerNameResolution();
@@ -223,11 +261,10 @@ public class NonClassNameManager extends NestedNameManager
 		return modelManagerVariable;
 	}
 
-	@Override
 	public @NonNull CGVariable createQualifiedThisVariable() {
-		NameResolution qualifiedThisNameResolution = globalNameManager.declareGlobalName(null, asType.getName() + "_" + JavaConstants.THIS_NAME);
+		NameResolution qualifiedThisNameResolution = globalNameManager.declareGlobalName(null, classNameManager.getASClass().getName() + "_" + JavaConstants.THIS_NAME);
 		CGVariable qualifiedThisVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-		qualifiedThisVariable.setTypeId(analyzer.getCGTypeId(asType.getTypeId()));
+		qualifiedThisVariable.setTypeId(analyzer.getCGTypeId(classNameManager.getASClass().getTypeId()));
 		qualifiedThisVariable.setInit(getThisParameter());
 		qualifiedThisVariable.setNonInvalid();
 		qualifiedThisVariable.setNonNull();
@@ -235,7 +272,6 @@ public class NonClassNameManager extends NestedNameManager
 		return qualifiedThisVariable;
 	}
 
-	@Override
 	protected @NonNull CGParameter createSelfParameter() {
 	//	assert !isStatic;
 		if (cgScope instanceof CGForeignProperty) {
@@ -243,7 +279,7 @@ public class NonClassNameManager extends NestedNameManager
 		//	OperationId operationId = referredOperation.getOperationId();
 			boolean sourceMayBeNull = false; //analyzer.hasOclVoidOperation(operationId);	// FIXME redundant since LibraryOperationCallingConvention.createParaeters invokes hasOclVoidOperation
 			NameResolution selfName = globalNameManager.getSelfNameResolution();
-			CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getCGTypeId(asType.getTypeId()), !sourceMayBeNull);
+			CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getCGTypeId(classNameManager.getASClass().getTypeId()), !sourceMayBeNull);
 			selfParameter.setIsSelf(true);
 			selfParameter.setNonInvalid();
 			selfParameter.setNonNull();
@@ -254,7 +290,7 @@ public class NonClassNameManager extends NestedNameManager
 			OperationId operationId = referredOperation.getOperationId();
 			boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);	// FIXME redundant since LibraryOperationCallingConvention.createParaeters invokes hasOclVoidOperation
 			NameResolution selfName = globalNameManager.getSelfNameResolution();
-			CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getCGTypeId(asType.getTypeId()), !sourceMayBeNull);
+			CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getCGTypeId(classNameManager.getASClass().getTypeId()), !sourceMayBeNull);
 			selfParameter.setIsSelf(true);
 			selfParameter.setNonInvalid();
 			selfParameter.setNonNull();
@@ -265,7 +301,6 @@ public class NonClassNameManager extends NestedNameManager
 		}
 	}
 
-	@Override
 	public @NonNull CGVariable createStandardLibraryVariable() {
 		CGNativeOperationCallExp standardLibraryInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_STANDARD_LIBRARY_METHOD, SupportOperationCallingConvention.INSTANCE);
 		NameResolution standardLibraryNameResolution = globalNameManager.getStandardLibraryVariableNameResolution();
@@ -283,11 +318,10 @@ public class NonClassNameManager extends NestedNameManager
 		return standardLibraryVariable;
 	}
 
-	@Override
 	protected @NonNull CGParameter createThisParameter() {
 		assert !isStatic;
 		NameResolution thisName = globalNameManager.getThisNameResolution();
-		CGParameter thisParameter = analyzer.createCGParameter(thisName, analyzer.getCGTypeId(asType.getTypeId()), true);
+		CGParameter thisParameter = analyzer.createCGParameter(thisName, analyzer.getCGTypeId(classNameManager.getASClass().getTypeId()), true);
 		thisParameter.setIsThis(true);
 		thisParameter.setNonInvalid();
 		thisParameter.setNonNull();
@@ -295,16 +329,15 @@ public class NonClassNameManager extends NestedNameManager
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getASClass() {
+		return classNameManager.getASClass();
+	}
+
+	@Override
 	public @NonNull NamedElement getASScope() {
 		return asScope;
 	}
 
-	@Override
-	public @NonNull Type getASType() {
-		return asType;
-	}
-
-	@Override
 	public @NonNull CGParameter getAnyParameter() {
 	//	assert !isStatic;
 		CGParameter anyParameter2 = anyParameter;
@@ -314,7 +347,6 @@ public class NonClassNameManager extends NestedNameManager
 		return anyParameter2;
 	}
 
-	@Override
 	public @Nullable CGValuedElement getBody() {
 		if (cgScope instanceof CGConstraint) {
 			return ((CGConstraint)cgScope).getBody();
@@ -330,11 +362,20 @@ public class NonClassNameManager extends NestedNameManager
 	}
 
 	@Override
+	public @NonNull CGClass getCGClass() {
+		return classNameManager.getCGClass();
+	}
+
+	@Override
 	public @NonNull CGNamedElement getCGScope() {
 		return cgScope;
 	}
 
 	@Override
+	public @NonNull ClassNameManager getClassNameManager() {
+		return classNameManager;
+	}
+
 	public @NonNull CGVariable getCGVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = basicGetVariable(asVariable);
 		if (cgVariable == null) {
@@ -351,17 +392,17 @@ public class NonClassNameManager extends NestedNameManager
 	 * Return the NestedNameManager that can be the parent of another CGClass. Returns null for global.
 	 */
 	@Override
-	public @Nullable NonClassNameManager getClassParentNameManager() {
-		for (NonClassNameManager nameManager = this; nameManager != null; nameManager = nameManager.parent instanceof NonClassNameManager ? (NonClassNameManager)nameManager.parent : null) {
+	public @Nullable FeatureNameManager getClassParentNameManager() {
+		throw new UnsupportedOperationException();
+	/*	for (FeatureNameManager nameManager = this; nameManager != null; nameManager = nameManager.parent instanceof FeatureNameManager ? (FeatureNameManager)nameManager.parent : null) {
 			CGNamedElement cgScope = nameManager.cgScope;
 			if (cgScope instanceof CGClass) {
-				return nameManager.parent instanceof NonClassNameManager ? (NonClassNameManager)nameManager.parent : null;
+				return nameManager.parent instanceof FeatureNameManager ? (FeatureNameManager)nameManager.parent : null;
 			}
 		}
-		return null;
+		return null; */
 	}
 
-	@Override
 	public @NonNull CGParameter getExecutorParameter() {
 		CGVariable executorVariable2 = executorVariable;
 		if (executorVariable2 == null) {
@@ -370,11 +411,13 @@ public class NonClassNameManager extends NestedNameManager
 		return (CGParameter)executorVariable2;
 	}
 
-	@Override
 	public @NonNull CGVariable getExecutorVariable() {
-		if (asScope instanceof CallExp) {
-			return ((NonClassNameManager)parent).getExecutorVariable();
+		if (parent instanceof FeatureNameManager) {
+			return ((FeatureNameManager)parent).getExecutorVariable();
 		}
+	//	if (asScope instanceof CallExp) {
+	//		return ((FeatureNameManager)parent).getExecutorVariable();
+	//	}
 		CGVariable executorVariable2 = executorVariable;
 		if (executorVariable2 == null) {
 			executorVariable = executorVariable2 = createExecutorVariable();
@@ -382,11 +425,13 @@ public class NonClassNameManager extends NestedNameManager
 		return executorVariable2;
 	}
 
-	@Override
 	public @NonNull CGVariable getIdResolverVariable() {
-		if (asScope instanceof CallExp) {
-			return ((NonClassNameManager)parent).getIdResolverVariable();
+		if (parent instanceof FeatureNameManager) {
+			return ((FeatureNameManager)parent).getIdResolverVariable();
 		}
+	//	if (asScope instanceof CallExp) {
+	//		return ((FeatureNameManager)parent).getIdResolverVariable();
+	//	}
 		CGVariable idResolverVariable2 = idResolverVariable;
 		if (idResolverVariable2 == null) {
 			idResolverVariable = idResolverVariable2 = createIdResolverVariable();
@@ -394,7 +439,6 @@ public class NonClassNameManager extends NestedNameManager
 		return idResolverVariable2;
 	}
 
-	@Override
 	public @NonNull CGIterator getIterator(@NonNull VariableDeclaration asVariable) {
 		CGIterator cgIterator = (CGIterator)basicGetVariable(asVariable);
 		if (cgIterator == null) {
@@ -407,11 +451,13 @@ public class NonClassNameManager extends NestedNameManager
 		return cgIterator;
 	}
 
-	@Override
 	public @NonNull CGVariable getModelManagerVariable() {
-		if (asScope instanceof CallExp) {
-			return ((NonClassNameManager)parent).getModelManagerVariable();
+		if (parent instanceof FeatureNameManager) {
+			return ((FeatureNameManager)parent).getModelManagerVariable();
 		}
+	//	if (asScope instanceof CallExp) {
+	//		return ((FeatureNameManager)parent).getModelManagerVariable();
+	//	}
 		CGVariable modelManagerVariable2 = modelManagerVariable;
 		if (modelManagerVariable2 == null) {
 			modelManagerVariable = modelManagerVariable2 = createModelManagerVariable();
@@ -419,23 +465,6 @@ public class NonClassNameManager extends NestedNameManager
 		return modelManagerVariable2;
 	}
 
-	@Override
-	public @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement) {
-		NameResolution nameResolution = cgElement.basicGetNameResolution();
-		if (nameResolution == null) {
-			CGValuedElement cgNamedValue = cgElement.getNamedValue();
-			nameResolution = cgNamedValue.basicGetNameResolution();
-			if (nameResolution == null) {
-				nameResolution = new NameResolution(this, cgNamedValue, null);
-			}
-			if (cgElement != cgNamedValue) {
-				nameResolution.addCGElement(cgElement);
-			}
-		}
-		return nameResolution;
-	}
-
-	@Override
 	public @NonNull CGParameter getParameter(@NonNull VariableDeclaration asParameter, @Nullable String explicitName) {
 		CGParameter cgParameter = basicGetParameter(asParameter);
 		if (cgParameter == null) {
@@ -495,11 +524,13 @@ public class NonClassNameManager extends NestedNameManager
 		return cgParameter;
 	} */
 
-	@Override
 	public @NonNull CGVariable getQualifiedThisVariable() {
-		if (asScope != asType) {
-			return ((NonClassNameManager)parent).getQualifiedThisVariable();
+		if (parent instanceof FeatureNameManager) {
+			return ((FeatureNameManager)parent).getQualifiedThisVariable();
 		}
+	//	if (asScope != classNameManager.getASClass()) {				// XXX
+	//		return ((FeatureNameManager)parent).getQualifiedThisVariable();
+	//	}
 		CGVariable qualifiedThisVariable2 = qualifiedThisVariable;
 		if (qualifiedThisVariable2 == null) {
 			qualifiedThisVariable = qualifiedThisVariable2 = createQualifiedThisVariable();
@@ -507,7 +538,6 @@ public class NonClassNameManager extends NestedNameManager
 		return qualifiedThisVariable2;
 	}
 
-	@Override
 	public @NonNull CGParameter getSelfParameter() {
 	//	assert !isStatic;
 		CGParameter selfParameter2 = selfParameter;
@@ -517,7 +547,6 @@ public class NonClassNameManager extends NestedNameManager
 		return selfParameter2;
 	}
 
-	@Override
 	public @NonNull CGParameter getSelfParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants
 		CGParameter cgParameter = basicGetParameter(asParameter);
 		if (cgParameter == null) {
@@ -535,11 +564,13 @@ public class NonClassNameManager extends NestedNameManager
 		return cgParameter;
 	}
 
-	@Override
 	public @NonNull CGVariable getStandardLibraryVariable() {
-		if (asScope instanceof CallExp) {
-			return ((NonClassNameManager)parent).getStandardLibraryVariable();
+		if (parent instanceof FeatureNameManager) {
+			return ((FeatureNameManager)parent).getStandardLibraryVariable();
 		}
+	//	if (asScope instanceof CallExp) {
+	//		return ((FeatureNameManager)parent).getStandardLibraryVariable();
+	//	}
 		CGVariable standardLibraryVariable2 = standardLibraryVariable;
 		if (standardLibraryVariable2 == null) {
 			standardLibraryVariable = standardLibraryVariable2 = createStandardLibraryVariable();
@@ -547,7 +578,6 @@ public class NonClassNameManager extends NestedNameManager
 		return standardLibraryVariable2;
 	}
 
-	@Override
 	public @NonNull CGParameter getThisParameter() {
 		assert !isStatic;
 		CGParameter thisParameter2 = thisParameter;
@@ -557,7 +587,6 @@ public class NonClassNameManager extends NestedNameManager
 		return thisParameter2;
 	}
 
-	@Override
 	public @NonNull CGParameter getThisParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants
 		CGParameter cgParameter = basicGetParameter(asParameter);
 		if (cgParameter == null) {
@@ -575,7 +604,6 @@ public class NonClassNameManager extends NestedNameManager
 		return cgParameter;
 	}
 
-	@Override
 	public @NonNull CGParameter getTypeIdParameter() {
 	//	assert !isStatic;
 		CGParameter typeIdParameter2 = typeIdParameter;
@@ -596,25 +624,11 @@ public class NonClassNameManager extends NestedNameManager
 		return typeIdParameter2;
 	} */
 
-/*	public @NonNull String getVariantResolvedName(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant) {
-		Map<@NonNull NameVariant, @Nullable String> nameVariant2name = element2nameVariant2name.get(cgElement);
-		assert nameVariant2name != null;
-		String name = nameVariant2name.get(nameVariant);
-		assert name != null;
-		return name;
-	} */
-
-	@Override
-	public boolean isGlobal() {
-		return false;
-	}
-
 	@Override
 	public @NonNull String toString() {
 		return "locals-" + cgScope.eClass().getName() + "-" + CGUtil.getAST(cgScope).getName();
 	}
 
-	@Override
 	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
 		CGVariable qualifiedThisVariable = basicGetQualifiedThisVariable();
 		if (qualifiedThisVariable != null) {

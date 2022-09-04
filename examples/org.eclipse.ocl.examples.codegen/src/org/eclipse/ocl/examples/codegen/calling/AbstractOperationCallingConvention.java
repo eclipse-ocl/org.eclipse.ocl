@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
@@ -50,7 +50,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public abstract class AbstractOperationCallingConvention implements OperationCallingConvention
 {
 	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
-		NestedNameManager nameManager = analyzer.getNameManager();
+		FeatureNameManager nameManager = analyzer.getFeatureNameManager();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 	//	assert isStatic(cgOperation) == (contextVariable == null);
@@ -222,7 +222,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 //	}
 //
 //	public void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
-		NestedNameManager nameManager = analyzer.getNameManager();
+		FeatureNameManager nameManager = analyzer.getFeatureNameManager();
 		if (bodyExpression != null) {
 			Variable contextVariable = bodyExpression.getOwnedContext();
 			if (contextVariable != null) {

@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
@@ -159,8 +160,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return context;
 	}
 
-	protected @NonNull NestedNameManager getTreeNameManager() {
-		return ClassUtil.nonNullState(treeNameManager);
+	protected @NonNull FeatureNameManager getTreeNameManager() {
+		return (FeatureNameManager)ClassUtil.nonNullState(treeNameManager);
 	}
 
 	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgElement) {
@@ -176,7 +177,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	protected @Nullable NestedNameManager popNameManager() {
-		NestedNameManager innerNameManager = currentNameManager;
+		FeatureNameManager innerNameManager = (FeatureNameManager)currentNameManager;
 		assert innerNameManager != null;
 		nameManagerStack.pop();
 		NestedNameManager outerNameManager = (nameManagerStack.isEmpty() ? null : nameManagerStack.peek());

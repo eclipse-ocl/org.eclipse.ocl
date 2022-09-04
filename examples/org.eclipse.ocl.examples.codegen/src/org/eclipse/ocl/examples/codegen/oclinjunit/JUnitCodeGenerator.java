@@ -18,14 +18,15 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
-import org.eclipse.ocl.examples.codegen.analyzer.NonClassNameManager;
 import org.eclipse.ocl.examples.codegen.calling.JUnitClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
@@ -134,13 +135,23 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull ClassNameManager createClassNameManager(@NonNull NameManager outerNameManager, @NonNull CGClass cgClass) {
-		return new JUnitClassNameManager(this, outerNameManager, cgClass);
+	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
+		return new JUnitFeatureNameManager(classNameManager, cgConstraint);
 	}
 
 	@Override
-	public @NonNull NonClassNameManager createNonClassNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
-		return new JUnitNonClassNameManager(this, outerNameManager, cgScope);
+	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager outerNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
+		return new JUnitFeatureNameManager(classNameManager, outerNameManager, cgIterationCallExp);
+	}
+
+	@Override
+	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
+		return new JUnitFeatureNameManager(classNameManager, cgOperation);
+	}
+
+	@Override
+	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
+		return new JUnitFeatureNameManager(classNameManager, cgProperty);
 	}
 
 	protected @NonNull String generate(@NonNull ExpressionInOCL expInOcl, @NonNull String packageName, @NonNull String className) {
