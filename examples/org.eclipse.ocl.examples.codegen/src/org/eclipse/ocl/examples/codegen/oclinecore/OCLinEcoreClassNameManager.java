@@ -11,9 +11,9 @@
 package org.eclipse.ocl.examples.codegen.oclinecore;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.pivot.VariableDeclaration;
@@ -21,10 +21,10 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 /**
  * OCLinEcoreNestedNameManager provides OCLinEcore-specific overrides for nested contexts.
  */
-public class OCLinEcoreNestedNameManager extends NestedNameManager
+public class OCLinEcoreClassNameManager extends ClassNameManager
 {
-	public OCLinEcoreNestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
-		super(codeGenerator, parent, cgScope);
+	public OCLinEcoreClassNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGClass cgClass) {
+		super(codeGenerator, parent, cgClass);
 	}
 
 	@Override

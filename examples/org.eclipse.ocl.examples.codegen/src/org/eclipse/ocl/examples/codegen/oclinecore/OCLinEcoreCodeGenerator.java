@@ -31,9 +31,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NonClassNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
@@ -550,8 +551,13 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull NestedNameManager createNestedNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
-		return new OCLinEcoreNestedNameManager(this, outerNameManager, cgScope);
+	public @NonNull ClassNameManager createClassNameManager(@NonNull NameManager outerNameManager, @NonNull CGClass cgClass) {
+		return new OCLinEcoreClassNameManager(this, outerNameManager, cgClass);
+	}
+
+	@Override
+	public @NonNull NonClassNameManager createNonClassNameManager(@NonNull NameManager outerNameManager, @NonNull CGNamedElement cgScope) {
+		return new OCLinEcoreNonClassNameManager(this, outerNameManager, cgScope);
 	}
 
 	protected void generate(@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body, @NonNull Map<GenPackage, String> constantsTexts, @NonNull Map<@NonNull Feature, @NonNull GenTypedElement> foreignFeatures) {

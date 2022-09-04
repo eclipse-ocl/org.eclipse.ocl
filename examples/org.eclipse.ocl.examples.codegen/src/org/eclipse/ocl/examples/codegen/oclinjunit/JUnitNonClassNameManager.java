@@ -12,7 +12,7 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.NonClassNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
@@ -20,9 +20,9 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 /**
  * JUnitNestedNameManager provides JUnit-specific overrides for nested contexts.
  */
-public class JUnitNestedNameManager extends NestedNameManager
+public class JUnitNonClassNameManager extends NonClassNameManager
 {
-	public JUnitNestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
+	public JUnitNonClassNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
 		super(codeGenerator, parent, cgScope);
 	}
 

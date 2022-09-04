@@ -126,7 +126,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 					else {
 						assert ownedInit != null;
 						final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
-						IF_IsEQ2_ = isRequired;
+						IF_IsEQ2_ = (Boolean)isRequired;
 					}
 					final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
 					final /*@Thrown*/ boolean IsEQ_ = (IF_IsEQ2_ == Boolean.TRUE) == isRequired_0;

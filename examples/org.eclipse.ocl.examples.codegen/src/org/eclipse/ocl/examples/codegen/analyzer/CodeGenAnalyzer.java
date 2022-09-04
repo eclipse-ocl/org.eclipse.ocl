@@ -781,7 +781,7 @@ public class CodeGenAnalyzer
 			cgNativeOperation.setRequired(asOperation.isIsRequired());
 			cgNativeOperation.setCallingConvention(callingConvention);
 			cgNativeOperation.setAst(asOperation);
-			/*NestedNameManager nameManager =*/ globalNameManager.createNestedNameManager(null, cgNativeOperation);
+			/*NestedNameManager nameManager =*/ globalNameManager.createNonClassNameManager(null, cgNativeOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
 			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {
 				Type asParameterType = asParameter.getType();
@@ -820,7 +820,7 @@ public class CodeGenAnalyzer
 			cgNativeProperty.setRequired(asProperty.isIsRequired());
 			cgNativeProperty.setCallingConvention(callingConvention);
 			cgNativeProperty.setAst(asProperty);
-			/*NestedNameManager nameManager =*/ globalNameManager.createNestedNameManager(null, cgNativeProperty);
+			/*NestedNameManager nameManager =*/ globalNameManager.createNonClassNameManager(null, cgNativeProperty);
 			addCGProperty(cgNativeProperty);		// XXX Use installProperty and then inline addCGProperty
 		}
 		return asProperty;

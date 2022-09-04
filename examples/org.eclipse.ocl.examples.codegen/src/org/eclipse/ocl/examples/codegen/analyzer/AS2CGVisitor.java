@@ -763,7 +763,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		NestedNameManager nameManager = globalNameManager.basicGetNestedNameManager(cgClass);
 		if (nameManager == null) {			//
 			NestedNameManager parentNameManager = currentNameManager != null ? currentNameManager.getClassParentNameManager() : null;
-			nameManager = globalNameManager.createNestedNameManager(parentNameManager, cgClass);
+			nameManager = globalNameManager.createClassNameManager(parentNameManager, cgClass);
 		}
 		currentNameManager = nameManager;
 		nameManagerStack.push(nameManager);
@@ -774,7 +774,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		NestedNameManager nameManager = globalNameManager.basicGetNestedNameManager(cgNamedElement);
 		if (nameManager == null) {			//
 			assert (currentNameManager != null) && (currentNameManager.findCGScope() != null);
-			nameManager = globalNameManager.createNestedNameManager(currentNameManager, cgNamedElement);
+			nameManager = globalNameManager.createNonClassNameManager(currentNameManager, cgNamedElement);
 		}
 		currentNameManager = nameManager;
 		nameManagerStack.push(nameManager);

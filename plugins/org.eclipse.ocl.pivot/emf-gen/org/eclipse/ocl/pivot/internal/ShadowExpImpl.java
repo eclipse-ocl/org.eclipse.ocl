@@ -620,7 +620,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									throw new InvalidValueException("Null \'\'String\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								final /*@Thrown*/ boolean startsWith = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl).booleanValue();
-								IF_IsEQ2_ = startsWith;
+								IF_IsEQ2_ = (Boolean)startsWith;
 							}
 							if (IF_IsEQ2_ == null) {
 								throw new InvalidValueException("Null body for \'Set(T).reject(Set.T[?] | Lambda T() : Boolean[1]) : Set(T)\'");
