@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -26,14 +27,14 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  */
 public final class JUnitAS2CGVisitor extends AS2CGVisitor
 {
-	public JUnitAS2CGVisitor(@NonNull JUnitCodeGenerator codeGenerator) {
-		super(codeGenerator);
+	public JUnitAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
+		super(analyzer);
 	}
 
 	@Override
 	public @NonNull CGClass visitClass(@NonNull Class asClass) {
-		CGClass cgClass = analyzer.getCGClass(asClass);
-		pushClassNameManager(cgClass);
+		CGClass cgClass = context.getCGClass(asClass);
+		context.pushClassNameManager(cgClass);
 	/*	for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
 			cgClass.getInvariants().add(cgConstraint);
@@ -46,24 +47,24 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 			CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 		} */
-		popClassNameManager();
+		context.popClassNameManager();
 		return cgClass;
 	}
 
 	@Override
 	public @NonNull CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL element) {
-		NestedNameManager nameManager = getNameManager();
+		NestedNameManager nameManager = context.getNameManager();
 		Variable contextVariable = element.getOwnedContext();
 		if (contextVariable != null) {
 			CGVariable cgContext = nameManager.getParameter(contextVariable, (String)null);
-			cgContext.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
+			cgContext.setTypeId(context.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgContext.setNonInvalid();
 //			cgContext.setNonNull();
 		}
 		for (@SuppressWarnings("null")@NonNull Variable parameterVariable : element.getOwnedParameters()) {
 			@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, (String)null);
 		}
-		CGValuedElement cgBody = doVisit(CGValuedElement.class, element.getOwnedBody());
+		CGValuedElement cgBody = context.createCGElement(CGValuedElement.class, element.getOwnedBody());
 //		cgOperation.getDependsOn().add(cgBody);
 		return cgBody;
 	}

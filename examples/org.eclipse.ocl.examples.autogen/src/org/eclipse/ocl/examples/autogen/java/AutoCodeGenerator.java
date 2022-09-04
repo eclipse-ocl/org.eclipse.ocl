@@ -26,7 +26,6 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.AutoCodeGenOptions;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -115,11 +114,6 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		return prefix;
 	}
 
-
-	protected @NonNull AS2CGVisitor createAS2CGVisitor() {
-		return new AS2CGVisitor(this);
-	}
-
 	@Override
 	public abstract @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor();
 
@@ -155,11 +149,6 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		ImportNameManager importNameManager = generator.getImportNameManager();
 		Map<@NonNull String, @Nullable String> long2ShortImportNames = importNameManager.getLong2ShortImportNames();
 		return ImportUtils.resolveImports(generator.toString(), long2ShortImportNames, false);
-	}
-
-	@Override
-	public @NonNull CodeGenAnalyzer getAnalyzer() {
-		return cgAnalyzer;
 	}
 
 	protected @NonNull CGClass getExternalClass(@NonNull Class<?> javaClass, CGClass... javaGenerics) {

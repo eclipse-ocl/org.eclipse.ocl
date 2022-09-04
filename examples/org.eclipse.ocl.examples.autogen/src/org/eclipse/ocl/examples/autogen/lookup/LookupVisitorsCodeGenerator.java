@@ -24,7 +24,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaPreVisitor;
 import org.eclipse.ocl.examples.autogen.java.AutoVisitorsCodeGenerator;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModel;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -80,8 +79,6 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	protected final @NonNull String packageName;
 	protected final @NonNull String visitorClassName;
 
-	protected final @NonNull AS2CGVisitor as2cgVisitor;
-
 	protected final @NonNull String envOperationName;
 	//
 	//	Expected AS elements
@@ -111,8 +108,6 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		this.envOperationName = envOpName;
 		this.packageName = getSourcePackageName();
 		this.visitorClassName = getLookupVisitorClassName(getProjectPrefix());
-
-		this.as2cgVisitor = createAS2CGVisitor();
 		//
 		//	Find expected AS elements
 		//
@@ -130,7 +125,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		this.asVisitorClass = createASClass(asVisitorPackage, visitorClassName);
 		this.asThisVariable = helper.createParameterVariable("this", asVisitorClass, true);
 		this.asContextVariable = helper.createParameterVariable(CONTEXT_NAME, asEnvironmentType, true);
-		CGVariable cgVariable = as2cgVisitor.getNameManager().getCGVariable(asContextVariable);
+		CGVariable cgVariable = getAnalyzer().getNameManager().getCGVariable(asContextVariable);
 		globalNameManager.declareReservedName(cgVariable, /*null,*/ CONTEXT_NAME);
 
 		//
@@ -221,7 +216,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		rewriteOperationCalls(asOperations);
 		asClass.getOwnedOperations().addAll(asOperations);
 		convertOperations(cgClass, asOperations);
-		createConstrainedOperations(as2cgVisitor, cgClass);
+		createConstrainedOperations(cgClass);
 		/*Resource dummyResource = EssentialOCLASResourceFactory.getInstance().createResource(URI.createURI("dummy.essentialocl"));
 		dummyResource.getContents().addAll(asOperations);		// PrettyPrinter needs containment*/
 	}
@@ -233,7 +228,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		List<Operation> sortedOperations = new ArrayList<Operation>(asOperations);
 		Collections.sort(sortedOperations, NameUtil.NAMEABLE_COMPARATOR);
 		for (Operation asOperation : sortedOperations) {
-			CGOperation cgOperation = as2cgVisitor.doVisit(CGOperation.class, asOperation);
+			CGOperation cgOperation = cgAnalyzer.createCGElement(CGOperation.class, asOperation);
 			cgClass.getOperations().add(cgOperation);
 		}
 	}
@@ -243,7 +238,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	 */
 	protected void convertProperties(@NonNull CGClass cgClass, @NonNull List<Property> asProperties) {
 		for (Property asProperty : asProperties) {
-			CGProperty cgProperty = as2cgVisitor.doVisit(CGProperty.class, asProperty);
+			CGProperty cgProperty = cgAnalyzer.createCGElement(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 			if (asProperty == asEvaluatorProperty) {
 				cgEvaluatorVariable = cgProperty;

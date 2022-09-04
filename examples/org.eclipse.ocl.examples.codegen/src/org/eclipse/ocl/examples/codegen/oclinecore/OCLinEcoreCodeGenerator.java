@@ -92,7 +92,6 @@ import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -507,9 +506,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	protected final @NonNull StandardLibraryInternal standardLibrary;
-	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final @NonNull GenPackage genPackage;
-	protected final @NonNull PivotHelper asHelper;
 	protected final @NonNull AnyType oclAnyType;
 	protected final @NonNull PrimitiveType booleanType;
 	protected final @NonNull PrimitiveType integerType;
@@ -523,9 +520,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		genModel.reconcile();
 		metamodelManager.addGenModel(genModel);
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
-		this.cgAnalyzer = new CodeGenAnalyzer(this);
 		this.genPackage = genPackage;
-		asHelper = new PivotHelper(environmentFactory);
 		this.oclAnyType = standardLibrary.getOclAnyType();
 		this.booleanType = standardLibrary.getBooleanType();
 		this.integerType = standardLibrary.getIntegerType();
@@ -538,6 +533,11 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
 		cgAnalyzer.setCGRootClass(cgClass);
+	}
+
+	@Override
+	public @NonNull AS2CGVisitor createAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
+		return new OCLinEcoreAS2CGVisitor(analyzer);
 	}
 
 	@Override
@@ -566,9 +566,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			EPackage ecorePackage = genPackage.getEcorePackage();
 			org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
 			assert asPackage != null;
-			AS2CGVisitor as2cgVisitor = new OCLinEcoreAS2CGVisitor(this);
-			CGPackage cgPackage = (CGPackage) ClassUtil.nonNullState(asPackage.accept(as2cgVisitor));
-			as2cgVisitor.freeze();
+			CGPackage cgPackage = cgAnalyzer.createCGElement(CGPackage.class, asPackage);
+			cgAnalyzer.freeze();
 			optimize(cgPackage);
 			Iterable<@NonNull CGValuedElement> sortedGlobals = pregenerate(cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);
@@ -613,10 +612,6 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
-	@Override
-	public @NonNull CodeGenAnalyzer getAnalyzer() {
-		return cgAnalyzer;
-	}
 	@Override
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);

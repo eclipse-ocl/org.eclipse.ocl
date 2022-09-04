@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
@@ -106,14 +105,14 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
+	public @NonNull CGCallExp createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		EOperation eOperation = (EOperation) asOperation.getESObject();
 		assert eOperation != null;
 		boolean isRequired = asOperation.isIsRequired();
-		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
-		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
+		GenModelHelper genModelHelper = analyzer.getGenModelHelper();
+		CodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		try {
 			genModelHelper.getOperationAccessor(asOperation);
 			Boolean ecoreIsRequired = codeGenerator.isNonNull(asOperationCallExp);
@@ -122,10 +121,10 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 			}
 			CGEcoreOperationCallExp cgEcoreOperationCallExp = CGModelFactory.eINSTANCE.createCGEcoreOperationCallExp();
 			cgEcoreOperationCallExp.setEOperation(eOperation);
-			initCallExp(as2cgVisitor, cgEcoreOperationCallExp, asOperationCallExp, cgOperation, isRequired);
+			initCallExp(analyzer, cgEcoreOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		//	cgEcoreOperationCallExp.setCgThis(cgSource);
 			cgEcoreOperationCallExp.getArguments().add(cgSource);
-			initCallArguments(as2cgVisitor, cgEcoreOperationCallExp);
+			initCallArguments(analyzer, cgEcoreOperationCallExp);
 			return cgEcoreOperationCallExp;
 		} catch (GenModelException e) {
 			throw new IllegalStateException(e);

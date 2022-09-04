@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
@@ -37,7 +36,7 @@ public interface PropertyCallingConvention extends CallingConvention
 	 * if this OperationCallingConvention cannot handle it.
 	 * @param cgOperation
 	 */
-	@NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty, @NonNull LibraryProperty libraryProperty,
+	@NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty, @NonNull LibraryProperty libraryProperty,
 			@Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp);
 
 	/**
@@ -47,7 +46,7 @@ public interface PropertyCallingConvention extends CallingConvention
 
 	@NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement);
 
-	void createImplementation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty);
+	void createImplementation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty);
 
 	/**
 	 * Generate the Java code for a Property assign.

@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
@@ -72,7 +71,7 @@ public class BuiltInIterationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public @NonNull CGCallExp createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
+	public @NonNull CGCallExp createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		throw new UnsupportedOperationException();		// XXX
 /*		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {
@@ -110,9 +109,9 @@ public class BuiltInIterationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
+	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
 		Iteration asIteration = (Iteration)CGUtil.getAST(cgOperation);
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
+		NestedNameManager nameManager = analyzer.getNameManager();
 		CGParameter cgParameter = nameManager.getSelfParameter();
 		//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 		//			cgParameter.setRequired(contextVariable.isIsRequired());

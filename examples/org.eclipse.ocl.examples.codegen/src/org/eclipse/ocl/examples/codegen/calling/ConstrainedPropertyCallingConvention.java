@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
@@ -65,10 +64,9 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 	} */
 
 	@Override
-	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
+	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
-		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+		CodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		boolean isRequired = asProperty.isIsRequired();
 		assert libraryProperty instanceof ConstrainedProperty;
@@ -78,7 +76,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		cgPropertyCallExp.getOwns().add(cgPropertyId);
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
-		as2cgVisitor.initAst(cgPropertyCallExp, asPropertyCallExp);
+		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;

@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
@@ -50,8 +49,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractOperationCallingConvention implements OperationCallingConvention
 {
-	protected void addExpressionInOCLParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
+	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
+		NestedNameManager nameManager = analyzer.getNameManager();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 	//	assert isStatic(cgOperation) == (contextVariable == null);
@@ -72,8 +71,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 //	}
 
 
-	protected void addTypeIdArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
-		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
+	protected void addTypeIdArgument(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 		CGTypeId cgTypeId = analyzer.getCGTypeId(asTypeId);
 		cgArguments.add(analyzer.createCGConstantExp(cgTypeId));
@@ -208,30 +206,23 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public void createCGBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation) {
+	public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
 		Element asOperation = cgOperation.getAst();
 		ExpressionInOCL asSpecification = (ExpressionInOCL) (asOperation instanceof ExpressionInOCL ? asOperation : ((Operation)asOperation).getBodyExpression());
 		assert (asSpecification != null);
 		OCLExpression asExpression = PivotUtil.getOwnedBody(asSpecification);
-		CGValuedElement cgBody = as2cgVisitor.doVisit(CGValuedElement.class, asExpression);
+		CGValuedElement cgBody = analyzer.createCGElement(CGValuedElement.class, asExpression);
 		cgOperation.setBody(cgBody);
 	//	System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
-		return createCGOperation(as2cgVisitor.getAnalyzer(), asOperation);
-	}
-
-	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
-
-	@Override
-	public /*final*/ void createCGParameters(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
+	public /*final*/ void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
 //		createCGParameters(as2cgVisitor.getNameManager(), cgOperation, bodyExpression);
 //	}
 //
 //	public void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
+		NestedNameManager nameManager = analyzer.getNameManager();
 		if (bodyExpression != null) {
 			Variable contextVariable = bodyExpression.getOwnedContext();
 			if (contextVariable != null) {
@@ -310,18 +301,18 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		return ContextClassCallingConvention.INSTANCE;
 	}
 
-	protected void initCallArguments(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected void initCallArguments(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		OperationCallExp asOperationCallExp = CGUtil.getAST(cgOperationCallExp);
 		Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
 		assert asOperationCallExp.getOwnedArguments().size() == asOperation.getOwnedParameters().size();
 		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
 		for (@NonNull OCLExpression asArgument : PivotUtil.getOwnedArguments(asOperationCallExp)) {
-			CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
+			CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, asArgument);
 			cgArguments.add(cgArgument);
 		}
 	}
 
-	protected void initCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull OperationCallExp asOperationCallExp,
+	protected void initCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull OperationCallExp asOperationCallExp,
 			@NonNull CGOperation cgOperation, boolean isRequired) {		// XXX wip eliminate isRequired
 		Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
 	//	boolean isRequired2 = asOperation.isIsRequired();
@@ -333,7 +324,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		cgOperationCallExp.setAsOperation(asOperation);
 		cgOperationCallExp.setAst(asOperationCallExp);
 		TypeId asTypeId = asOperationCallExp.getTypeId();
-		cgOperationCallExp.setTypeId(as2cgVisitor.getAnalyzer().getCGTypeId(asTypeId));
+		cgOperationCallExp.setTypeId(analyzer.getCGTypeId(asTypeId));
 		cgOperationCallExp.setReferredOperation(cgOperation);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());

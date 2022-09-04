@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
@@ -98,15 +97,15 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 	}
 
 	@Override
-	public @NonNull CGValuedElement createCGOperationCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
+	public @NonNull CGValuedElement createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		OCLExpression asSource = asOperationCallExp.getOwnedSource();
 	//	assert asSource != null;
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		Type sourceType = asSource != null ? asSource.getType() : null;
 	//	generateDeclarationHierarchy(as2cgVisitor, sourceType, asOperation);
-		Operation finalOperation = sourceType!= null ? as2cgVisitor.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType) : asOperation;	// FIXME cast
-		NestedNameManager nameManager = as2cgVisitor.getNameManager();
+		Operation finalOperation = sourceType!= null ? analyzer.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType) : asOperation;	// FIXME cast
+		NestedNameManager nameManager = analyzer.getNameManager();
 		CGClass currentClass = nameManager.findCGScope();
 		assert currentClass != null;
 	//	CGOperationCallExp cgCallExp;
@@ -122,10 +121,10 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 			cgArguments.add(cgSource);
 			cgOperationCallExp.setThisIsSelf(false);
 			for (@NonNull OCLExpression asArgument : ClassUtil.nullFree(asOperationCallExp.getOwnedArguments())) {
-				CGValuedElement cgArgument = as2cgVisitor.doVisit(CGValuedElement.class, asArgument);
+				CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, asArgument);
 				cgArguments.add(cgArgument);
 			}
-			as2cgVisitor.initAst(cgOperationCallExp, asOperationCallExp);
+			analyzer.initAst(cgOperationCallExp, asOperationCallExp);
 	//	} else {
 	//		Iterable<@NonNull Operation> overrides = as2cgVisitor.getMetamodelManager().getFinalAnalysis().getOverrides(asOperation);
 	//		cgCallExp = cachedOperationCall(as2cgVisitor, asOperationCallExp, currentClass, cgSource, asOperation, overrides);
