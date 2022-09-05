@@ -28,18 +28,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
-import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
-import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
-import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
@@ -83,6 +74,16 @@ import org.eclipse.ocl.examples.codegen.java.types.BoxedDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EcoreDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.Id2BoxedDescriptorVisitor;
 import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
+import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
+import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.naming.NameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
+import org.eclipse.ocl.examples.codegen.naming.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.examples.codegen.utilities.AbstractCGModelResourceFactory;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResource;
@@ -278,7 +279,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new CG2JavaPreVisitor(this);
 	}
 
-	public @NonNull ClassNameManager createClassNameManager(@NonNull NameManager outerNameManager, @NonNull CGClass cgClass) {
+	public @NonNull ClassNameManager createClassNameManager(@NonNull ClassableNameManager outerNameManager, @NonNull CGClass cgClass) {
 		return new ClassNameManager(this, outerNameManager, cgClass);
 	}
 
@@ -364,8 +365,13 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new NameManagerHelper();
 	}
 
-	public @NonNull PackageNameManager createPackageNameManager(@NonNull NameManager outerNameManager, @NonNull CGPackage cgPackage) {
-		return new PackageNameManager(this, outerNameManager, cgPackage);
+	public @NonNull PackageNameManager createPackageNameManager(@Nullable PackageNameManager outerNameManager, @NonNull CGPackage cgPackage) {
+		if (outerNameManager != null) {
+			return new PackageNameManager(this, outerNameManager, cgPackage);
+		}
+		else {
+			return new PackageNameManager(this, globalNameManager, cgPackage);
+		}
 	}
 
 	@Override

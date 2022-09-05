@@ -10,16 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.naming;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 /**
- * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
- * named without collisions.
+ * A NestedNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
+ * named without collisions at some node in the name nesting hierarchy..
  */
-public interface NameManager
+public interface ClassableNameManager extends NameManager
 {
-	@NonNull GlobalNameManager getGlobalNameManager();
-//	@NonNull NameManagerHelper getHelper();
-	@NonNull String getNameHint(@NonNull Object anObject);
-	boolean isGlobal();
 }

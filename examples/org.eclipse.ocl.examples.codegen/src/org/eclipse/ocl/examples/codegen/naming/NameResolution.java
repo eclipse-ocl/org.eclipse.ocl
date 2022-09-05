@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.analyzer;
+package org.eclipse.ocl.examples.codegen.naming;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.CodeGenConstants;
-import org.eclipse.ocl.examples.codegen.analyzer.NameManager.Context;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
+import org.eclipse.ocl.examples.codegen.naming.AbstractNameManager.Context;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -122,7 +122,8 @@ public class NameResolution
 	}
 
 	public void addCGElement(@NonNull CGNamedElement cgElement) {
-		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
+	//	assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
+		assert !inhibitNameResolution || nameManager.isGlobal();
 		if (String.valueOf(primaryElement).contains("oclContainer")) {
 			getClass();		// XXX
 		}
@@ -204,7 +205,7 @@ public class NameResolution
 	public void resolveIn(@NonNull Context context) {
 		assert !isUnresolved();
 		assert resolvedName == null;
-		String resolvedName = context.allocateUniqueName(getNameHint(), NameManager.NOT_AN_OBJECT);
+		String resolvedName = context.allocateUniqueName(getNameHint(), AbstractNameManager.NOT_AN_OBJECT);
 		setResolvedName(resolvedName);
 		if (NAMES_RESOLVE.isActive()) {
 			StringBuilder s = new StringBuilder();

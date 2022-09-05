@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.analyzer;
+package org.eclipse.ocl.examples.codegen.naming;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -20,19 +20,26 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
  * A PackageNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
  * named without collisions at some node in the name nesting hierarchy..
  */
-public class PackageNameManager extends NestedNameManager
+public class PackageNameManager extends NestedNameManager implements ClassableNameManager
 {
 	protected final @NonNull CGPackage cgPackage;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 
-	public PackageNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGPackage cgPackage) {
+	public PackageNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull GlobalNameManager parent, @NonNull CGPackage cgPackage) {
+		this(codeGenerator, (AbstractNameManager)parent, cgPackage);
+	}
+
+	public PackageNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull PackageNameManager parent, @NonNull CGPackage cgPackage) {
+		this(codeGenerator, (AbstractNameManager)parent, cgPackage);
+	}
+
+	private PackageNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull AbstractNameManager parent, @NonNull CGPackage cgPackage) {
 		super(codeGenerator, parent, cgPackage);
 		this.cgPackage = cgPackage;
 		this.asPackage = CGUtil.getAST(cgPackage);
-		assert (parent instanceof GlobalNameManager) || (parent instanceof PackageNameManager);
 	}
 
-	public @NonNull CGPackage getCCGPackage() {
+	public @NonNull CGPackage getCGPackage() {
 		return cgPackage;
 	}
 
@@ -53,6 +60,11 @@ public class PackageNameManager extends NestedNameManager
 			}
 		} */
 		return null;
+	}
+
+	@Override
+	public boolean isGlobal() {
+		return true;
 	}
 
 	@Override

@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.analyzer;
+package org.eclipse.ocl.examples.codegen.naming;
 
 import java.util.HashMap;
 import java.util.Map;

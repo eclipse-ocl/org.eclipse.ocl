@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.analyzer;
+package org.eclipse.ocl.examples.codegen.naming;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +17,11 @@ import java.util.Map.Entry;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -28,11 +29,11 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * A NestedNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
  * named without collisions at some node in the name nesting hierarchy..
  */
-public abstract class NestedNameManager extends NameManager
+public abstract class NestedNameManager extends AbstractNameManager
 {
 	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull CodeGenAnalyzer analyzer;
-	protected final @NonNull NameManager parent;
+	protected final @NonNull AbstractNameManager parent;
 
 	/**
 	 * Names that must be used within a nested namespace. Typically these are Ecore assigned property/operation/parameter
@@ -50,7 +51,7 @@ public abstract class NestedNameManager extends NameManager
 	 */
 	private @NonNull Map<@NonNull CGNamedElement, @Nullable Map<@NonNull NameVariant, @Nullable String>> element2nameVariant2name = new HashMap<>();
 
-	protected NestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManager parent, @NonNull CGNamedElement cgScope) {
+	protected NestedNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull AbstractNameManager parent, @NonNull CGNamedElement cgScope) {
 		super(parent, parent.helper);
 		this.codeGenerator = codeGenerator;
 		this.analyzer = codeGenerator.getAnalyzer();

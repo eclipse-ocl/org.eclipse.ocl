@@ -11,13 +11,13 @@
 package org.eclipse.ocl.examples.codegen.oclinecore;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.analyzer.ClassNameManager;
-import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
+import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 
 /**
