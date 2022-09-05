@@ -1445,6 +1445,14 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull FeatureNameManager pushIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
+		LoopExp asLoopExp = (LoopExp)CGUtil.getAST(cgIterationCallExp);
+		CGIterationCallExp cgIterationCallExp2 = basicGetCGIterationCallExp(asLoopExp);
+		if (cgIterationCallExp2 == null) {
+			addCGIterationCallExp(cgIterationCallExp);
+		}
+		else {
+			assert cgIterationCallExp2 == cgIterationCallExp;
+		}
 		FeatureNameManager nameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgIterationCallExp);
 		if (nameManager == null) {			//
 			NestedNameManager currentNameManager2 = currentNameManager;
@@ -1566,8 +1574,8 @@ public class CodeGenAnalyzer
 		return featureNameManager;
 	}
 
-	public @NonNull FeatureNameManager useFeatureNameManager(@NonNull OCLExpression asExpression) {
-		for (EObject eObject = asExpression; eObject != null; eObject = eObject.eContainer()) {
+	public @NonNull FeatureNameManager useFeatureNameManager(@NonNull TypedElement asTypedElement) {	// OCLExpression or ExpressionInOCL
+		for (EObject eObject = asTypedElement; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Constraint) {
 				CGConstraint cgConstraint = getCGConstraint((Constraint)eObject);
 				return useConstraintNameManager(cgConstraint);
@@ -1587,7 +1595,7 @@ public class CodeGenAnalyzer
 				return usePropertyNameManager(cgProperty);
 			}
 		}
-		throw new IllegalStateException("No FeatureNameManager for " + asExpression.eClass().getName() + ": " + asExpression);
+		throw new IllegalStateException("No FeatureNameManager for " + asTypedElement.eClass().getName() + ": " + asTypedElement);
 	}
 
 	public @NonNull FeatureNameManager useIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
