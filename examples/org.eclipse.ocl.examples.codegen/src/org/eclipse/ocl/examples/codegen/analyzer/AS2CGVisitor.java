@@ -292,11 +292,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGConstraint visitConstraint(@NonNull Constraint asConstraint) {
-		CGConstraint cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
+		CGConstraint cgConstraint = context.generateConstraintDeclaration(asConstraint);
 		LanguageExpression specification = asConstraint.getOwnedSpecification();
 		if (specification != null) {
 			assert cgConstraint.basicGetNameResolution() == null;
-			cgConstraint.setAst(asConstraint);
 		//	getNameManager().declarePreferredName(cgConstraint);
 			FeatureNameManager innerNameManager = context.pushConstraintNameManager(cgConstraint);
 			try {

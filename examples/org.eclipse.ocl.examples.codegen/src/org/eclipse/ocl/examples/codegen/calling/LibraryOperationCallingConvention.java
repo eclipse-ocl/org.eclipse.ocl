@@ -105,7 +105,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		for (int i = 0; i < syntheticArgumentSize; i++) {
 			Class<?> jParameterType = jParameterTypes[i];
 			if (jParameterType == Executor.class) {
-				CGVariable executorVariable = analyzer.getFeatureNameManager().getExecutorVariable();
+				CGVariable executorVariable = analyzer.useFeatureNameManager(asOperationCallExp).getExecutorVariable();
 				cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 			}
 			else if (jParameterType == TypeId.class) {
@@ -163,7 +163,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 	//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
 		Operation asOperation = CGUtil.getAST(cgOperation);
-		FeatureNameManager nameManager = analyzer.getFeatureNameManager();
+		FeatureNameManager nameManager = analyzer.useOperationNameManager(cgOperation);
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)analyzer.getMetamodelManager().getImplementation(asOperation);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);

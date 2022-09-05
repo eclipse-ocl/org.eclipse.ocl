@@ -18,7 +18,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.Constraint;
@@ -79,11 +78,10 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 
 	@Override
 	public @Nullable CGConstraint visitConstraint(@NonNull Constraint asConstraint) {
-		CGConstraint cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
+		CGConstraint cgConstraint = context.generateConstraintDeclaration(asConstraint);
 		LanguageExpression specification = asConstraint.getOwnedSpecification();
 		if (specification != null) {
 			assert cgConstraint.basicGetNameResolution() == null;
-			cgConstraint.setAst(asConstraint);
 //			getNameManager().declarePreferredName(cgConstraint);
 			FeatureNameManager nameManager = context.pushConstraintNameManager(cgConstraint);
 			try {

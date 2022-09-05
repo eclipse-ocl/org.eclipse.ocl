@@ -122,7 +122,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		initCallExp(analyzer, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
-		CGVariable executorVariable = analyzer.getFeatureNameManager().getExecutorVariable();
+		CGVariable executorVariable = analyzer.useOperationNameManager(cgOperation).getExecutorVariable();
 		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
 		addExpressionInOCLParameters(analyzer, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
@@ -134,7 +134,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		cgParameters.add(analyzer.getFeatureNameManager().getExecutorParameter());
+		cgParameters.add(analyzer.useOperationNameManager(cgOperation).getExecutorParameter());
 		super.createCGParameters(analyzer, cgOperation, expressionInOCL);
 	}
 

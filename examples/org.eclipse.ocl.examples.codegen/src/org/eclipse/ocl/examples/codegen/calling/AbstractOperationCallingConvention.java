@@ -50,7 +50,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public abstract class AbstractOperationCallingConvention implements OperationCallingConvention
 {
 	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
-		FeatureNameManager nameManager = analyzer.getFeatureNameManager();
+		FeatureNameManager nameManager = analyzer.useOperationNameManager(cgOperation);
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 	//	assert isStatic(cgOperation) == (contextVariable == null);
@@ -222,7 +222,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 //	}
 //
 //	public void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
-		FeatureNameManager nameManager = analyzer.getFeatureNameManager();
+		FeatureNameManager nameManager = analyzer.useOperationNameManager(cgOperation);
 		if (bodyExpression != null) {
 			Variable contextVariable = bodyExpression.getOwnedContext();
 			if (contextVariable != null) {
