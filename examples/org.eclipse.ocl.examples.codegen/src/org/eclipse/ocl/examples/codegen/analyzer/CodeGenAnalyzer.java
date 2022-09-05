@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -226,8 +225,8 @@ public class CodeGenAnalyzer
 	 * may result in arbitrary nesting of scope classes. It is therefore NOT appropriate to search for anything on the stack.
 	 * Searches should use the parent ancestry of the NameManager entries.
 	 */
-	private @NonNull Stack<@NonNull NestedNameManager> nameManagerStack = new Stack<>();
-	private @Nullable NestedNameManager currentNameManager = null;		// == nameManagerStack.peek()
+//	private @NonNull Stack<@NonNull NestedNameManager> nameManagerStack = new Stack<>();
+//	private @Nullable NestedNameManager currentNameManager = null;		// == nameManagerStack.peek()
 
 	public CodeGenAnalyzer(@NonNull JavaCodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
@@ -350,7 +349,8 @@ public class CodeGenAnalyzer
 	}
 
 	public @Nullable NestedNameManager basicGetNameManager() {
-		return currentNameManager;
+//		return currentNameManager;
+		throw new UnsupportedOperationException();
 	}
 
 	public @Nullable CGOperation basicGetVirtualCGOperation(@NonNull Operation asOperation) {
@@ -654,7 +654,7 @@ public class CodeGenAnalyzer
 				cgRootClass = cgClass;				// XXX eleminate
 			}
 			String name = callingConvention.getName(this, asClass);
-			if ((basicGetNameManager() == null) || (asClass.eContainer() instanceof org.eclipse.ocl.pivot.Package)) {
+			if ((asClass.eContainer() instanceof org.eclipse.ocl.pivot.Package) || (basicGetNameManager() == null)) {
 				globalNameManager.declareGlobalName(cgClass, name);
 			}
 			else {
@@ -1225,8 +1225,9 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull NestedNameManager getNameManager() {
-		assert currentNameManager != null;
-		return currentNameManager;
+//		assert currentNameManager != null;
+//		return currentNameManager;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -1397,28 +1398,28 @@ public class CodeGenAnalyzer
 		return (externalFeatures != null) && externalFeatures.contains(asFeature);
 	}
 
-	public  @Nullable NestedNameManager popClassNameManager() {
-		assert (currentNameManager != null) && (currentNameManager.getCGScope() instanceof CGClass);
-		nameManagerStack.pop();
-		currentNameManager = nameManagerStack.isEmpty() ? null : nameManagerStack.peek();
-		return currentNameManager;
+	public void popClassNameManager() {
+//		assert (currentNameManager != null) && (currentNameManager.getCGScope() instanceof CGClass);
+//		nameManagerStack.pop();
+//		currentNameManager = nameManagerStack.isEmpty() ? null : nameManagerStack.peek();
+//		return currentNameManager;
 	}
 
-	public  @Nullable NestedNameManager popNestedNameManager() {
-		assert (currentNameManager != null) && !(currentNameManager.getCGScope() instanceof CGClass);
-		nameManagerStack.pop();
-		currentNameManager = nameManagerStack.isEmpty() ? null : nameManagerStack.peek();
-		return currentNameManager;
+	public void popNestedNameManager() {
+//		assert (currentNameManager != null) && !(currentNameManager.getCGScope() instanceof CGClass);
+//		nameManagerStack.pop();
+//		currentNameManager = nameManagerStack.isEmpty() ? null : nameManagerStack.peek();
+//		return currentNameManager;
 	}
 
 	public @NonNull ClassNameManager pushClassNameManager(@NonNull CGClass cgClass) {
 		ClassNameManager nameManager = (ClassNameManager) globalNameManager.basicGetNestedNameManager(cgClass);
 		if (nameManager == null) {			//
-			NestedNameManager parentNameManager = currentNameManager != null ? currentNameManager.getClassNameManager().getClassParentNameManager() : null;
+			NestedNameManager parentNameManager = null; //currentNameManager != null ? currentNameManager.getClassNameManager().getClassParentNameManager() : null;
 			nameManager = globalNameManager.createClassNameManager(parentNameManager, cgClass);
 		}
-		currentNameManager = nameManager;
-		nameManagerStack.push(nameManager);
+//		currentNameManager = nameManager;
+//		nameManagerStack.push(nameManager);
 		return nameManager;
 	}
 
@@ -1430,15 +1431,15 @@ public class CodeGenAnalyzer
 			ClassNameManager classNameManager = getClassNameManager(asClass);
 			nameManager = globalNameManager.createFeatureNameManager(classNameManager, cgConstraint);
 		}
-		currentNameManager = nameManager;
-		nameManagerStack.push(nameManager);
+//		currentNameManager = nameManager;
+//		nameManagerStack.push(nameManager);
 		return nameManager;
 	}
 
 	public @NonNull FeatureNameManager pushIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
 		FeatureNameManager nameManager = getIterateNameManager(cgIterationCallExp);
-		currentNameManager = nameManager;
-		nameManagerStack.push(nameManager);
+//		currentNameManager = nameManager;
+//		nameManagerStack.push(nameManager);
 		return nameManager;
 	}
 
@@ -1457,8 +1458,8 @@ public class CodeGenAnalyzer
 			ClassNameManager classNameManager = getClassNameManager(asClass);
 			operationNameManager = globalNameManager.createFeatureNameManager(classNameManager, cgOperation);
 		}
-		currentNameManager = operationNameManager;
-		nameManagerStack.push(operationNameManager);
+//		currentNameManager = operationNameManager;
+//		nameManagerStack.push(operationNameManager);
 		return operationNameManager;
 	}
 
@@ -1477,8 +1478,8 @@ public class CodeGenAnalyzer
 			ClassNameManager classNameManager = getClassNameManager(asClass);
 			propertyNameManager = globalNameManager.createFeatureNameManager(classNameManager, cgProperty);
 		}
-		currentNameManager = propertyNameManager;
-		nameManagerStack.push(propertyNameManager);
+//		currentNameManager = propertyNameManager;
+//		nameManagerStack.push(propertyNameManager);
 		return propertyNameManager;
 	}
 
@@ -1542,21 +1543,13 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull ClassNameManager useClassNameManager(@NonNull CGClass cgClass) {
-		ClassNameManager classNameManager = (ClassNameManager)currentNameManager;
-		assert classNameManager != null;
-		assert classNameManager.getCGScope() == cgClass;
-		ClassNameManager classNameManager2 = (ClassNameManager)globalNameManager.basicGetNestedNameManager(cgClass);
-		assert classNameManager2 == classNameManager;
-		return classNameManager;
+		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetNestedNameManager(cgClass);
+		return ClassUtil.nonNullState(classNameManager);
 	}
 
 	public @NonNull FeatureNameManager useConstraintNameManager(@NonNull CGConstraint cgConstraint) {
-		FeatureNameManager featureNameManager = (FeatureNameManager)currentNameManager;
-		assert featureNameManager != null;
-		assert featureNameManager.getCGScope() == cgConstraint;
-		FeatureNameManager featureNameManager2 = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgConstraint);
-		assert featureNameManager2 == featureNameManager;
-		return featureNameManager;
+		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgConstraint);
+		return ClassUtil.nonNullState(featureNameManager);
 	}
 
 	public @NonNull FeatureNameManager useFeatureNameManager(@NonNull TypedElement asTypedElement) {	// OCLExpression or ExpressionInOCL
@@ -1584,12 +1577,8 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull FeatureNameManager useIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
-		FeatureNameManager featureNameManager = (FeatureNameManager)currentNameManager;
-		assert featureNameManager != null;
-		assert featureNameManager.getCGScope() == cgIterationCallExp;
-		FeatureNameManager featureNameManager2 = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgIterationCallExp);
-		assert featureNameManager2 == featureNameManager;
-		return featureNameManager;
+		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgIterationCallExp);
+		return ClassUtil.nonNullState(featureNameManager);
 	}
 
 /*	public @NonNull NestedNameManager useNestedNameManager(@NonNull TypedElement asTypedElement) {	// OCLExpression or ExpressionInOCL
@@ -1621,21 +1610,12 @@ public class CodeGenAnalyzer
 	} */
 
 	public @NonNull FeatureNameManager useOperationNameManager(@NonNull CGOperation cgOperation) {
-		globalNameManager.basicGetNestedNameManager(cgOperation);
-		FeatureNameManager featureNameManager = (FeatureNameManager)currentNameManager;
-		assert featureNameManager != null;
-		assert featureNameManager.getCGScope() == cgOperation;
-		FeatureNameManager featureNameManager2 = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgOperation);
-		assert featureNameManager2 == featureNameManager;
-		return featureNameManager;
+		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgOperation);
+		return ClassUtil.nonNullState(featureNameManager);
 	}
 
 	public @NonNull FeatureNameManager usePropertyNameManager(@NonNull CGProperty cgProperty) {
-		FeatureNameManager featureNameManager = (FeatureNameManager)currentNameManager;
-		assert featureNameManager != null;
-		assert featureNameManager.getCGScope() == cgProperty;
-		FeatureNameManager featureNameManager2 = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgProperty);
-		assert featureNameManager2 == featureNameManager;
-		return featureNameManager;
+		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgProperty);
+		return ClassUtil.nonNullState(featureNameManager);
 	}
 }
