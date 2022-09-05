@@ -35,7 +35,6 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 	public @NonNull CGClass visitClass(@NonNull Class asClass) {		// Why overloaded ??
 		CGClass cgClass = context.getCGClass(asClass);
 		context.getClassNameManager(asClass);
-	//	context.pushClassNameManager(cgClass);
 	/*	for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = doVisit(CGConstraint.class, asConstraint);
 			cgClass.getInvariants().add(cgConstraint);
@@ -48,7 +47,6 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 			CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 		} */
-	//	context.popClassNameManager();
 		return cgClass;
 	}
 

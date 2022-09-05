@@ -242,7 +242,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGClass cgClass = context.basicGetCGClass(asClass);
 		if (cgClass == null) {
 			cgClass = context.generateClassDeclaration(asClass, null);
-			context.pushClassNameManager(cgClass);
+			context.getClassNameManager(asClass);
 			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
 				CGClass cgSuperClass = context.createCGElement(CGClass.class, asSuperClass);
 				cgClass.getSuperTypes().add(cgSuperClass);
@@ -259,7 +259,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				CGProperty cgProperty = context.createCGElement(CGProperty.class, asProperty);
 				cgClass.getProperties().add(cgProperty);
 			}
-			context.popClassNameManager();
 		}
 		return cgClass;
 	}
@@ -300,7 +299,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (specification != null) {
 			assert cgConstraint.basicGetNameResolution() == null;
 		//	getNameManager().declarePreferredName(cgConstraint);
-			FeatureNameManager innerNameManager = context.pushConstraintNameManager(cgConstraint);
+			FeatureNameManager innerNameManager = context.getConstraintNameManager(cgConstraint);
 			try {
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
@@ -316,8 +315,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			} catch (ParserException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
-				context.popNestedNameManager();
 			}
 		}
 		return cgConstraint;
@@ -442,19 +439,17 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		LanguageExpression specification = asOperation.getBodyExpression();
 		CGOperation cgFinalOperation = context.generateOperationDeclaration(asOperation, true);
 //		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
-		context.pushOperationNameManager(cgFinalOperation);
+		context.getOperationNameManager(cgFinalOperation);
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 			cgFinalOperation.getCallingConvention().createCGBody(context, cgFinalOperation);
 		}
-		context.popNestedNameManager();
 		CGOperation cgVirtualOperation = context.generateOperationDeclaration(asOperation, true);
 		if (cgVirtualOperation != cgFinalOperation) {
 //			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
-			context.pushOperationNameManager(cgVirtualOperation);
+			context.getOperationNameManager(cgVirtualOperation);
 			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 				cgVirtualOperation.getCallingConvention().createCGBody(context, cgVirtualOperation);
 			}
-			context.popNestedNameManager();
 		}
 		return cgFinalOperation;
 	}
@@ -515,12 +510,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
-		CGProperty cgProperty = context.generatePropertyDeclaration(asProperty, null);
+		CGProperty cgProperty = context.generatePropertyDeclaration(asProperty, null);		// XXX redundant
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-		context.pushPropertyNameManager(cgProperty);
+		context.getPropertyNameManager(cgProperty);
 		// parse ownedExpression here to simplify createImplementation arguments
 		callingConvention.createImplementation(context, cgProperty);
-		context.popNestedNameManager();
 		return cgProperty;
 	}
 
