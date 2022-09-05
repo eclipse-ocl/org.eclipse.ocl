@@ -82,8 +82,7 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 		LanguageExpression specification = asConstraint.getOwnedSpecification();
 		if (specification != null) {
 			assert cgConstraint.basicGetNameResolution() == null;
-//			getNameManager().declarePreferredName(cgConstraint);
-			FeatureNameManager nameManager = context.pushConstraintNameManager(cgConstraint);
+			FeatureNameManager nameManager = context.getConstraintNameManager(cgConstraint);
 			try {
 				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
 				String constraintName = PivotUtil.getName(asConstraint);
@@ -109,8 +108,6 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 				cgConstraint.setBody(context.createCGElement(CGValuedElement.class, asSynthesizedExpression));
 			} catch (ParserException e) {
 				throw new WrappedException(e);
-			} finally {
-				context.popNestedNameManager();
 			}
 		}
 		return cgConstraint;

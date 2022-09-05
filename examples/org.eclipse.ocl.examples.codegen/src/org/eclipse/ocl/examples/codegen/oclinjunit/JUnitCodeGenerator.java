@@ -103,14 +103,14 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 //		cgOperation2.setName("test");		// FIXME
 //		cgRootClass.getOperations().add(cgOperation2);
 
-		CGClass cgRootClass = cgAnalyzer.generateClassDeclaration(asClass, JUnitClassCallingConvention.INSTANCE);
+		CGClass cgRootClass = cgAnalyzer.generateClassDeclaration(asClass, JUnitClassCallingConvention.INSTANCE);	// XXX redundant
 	//	cgAnalyzer.addCGClass(cgRootClass);
 		CGPackage cgPackage = cgAnalyzer.createCGElement(CGPackage.class, asPackage);
 
 	//	/*CGClass cgRootClass =*/ cgPackage.getClasses().add(cgRootClass);
 	//	cgAnalyzer.setCGRootClass(cgRootClass);
 		assert cgRootClass != null;
-		cgAnalyzer.pushClassNameManager(cgRootClass);
+		cgAnalyzer.getClassNameManager(cgRootClass);
 
 
 		//
@@ -123,13 +123,13 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		cgOperation.setCallingConvention(junitCallingConvention);
 		evaluateNameResolution.addCGElement(cgOperation);
 		cgAnalyzer.initAst(cgOperation, asOperation/*expInOcl*/);
-		cgAnalyzer.pushOperationNameManager(cgOperation);
+		cgAnalyzer.getOperationNameManager(cgOperation);
 		junitCallingConvention.createCGParameters(cgAnalyzer, cgOperation, expInOcl);
 		junitCallingConvention.createCGBody(cgAnalyzer, cgOperation);
 		cgRootClass.getOperations().add(cgOperation);
 		cgAnalyzer.analyzeExternalFeatures();
-		cgAnalyzer.popNestedNameManager();
-		cgAnalyzer.popClassNameManager();
+	//	cgAnalyzer.popNestedNameManager();
+	//	cgAnalyzer.popClassNameManager();
 	//	cgAnalyzer.freeze();
 		return cgPackage;
 	}
