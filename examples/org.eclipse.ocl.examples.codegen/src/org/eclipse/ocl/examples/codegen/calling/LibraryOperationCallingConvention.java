@@ -130,9 +130,9 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	public @NonNull CGLibraryOperationCallExp createCGMethodOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull LibraryOperation libraryOperation,
-			CGValuedElement cgSource, @NonNull Operation asOperation) {
-	//		CGValuedElement cgSource, @NonNull OperationCallExp zzasOperationCallExp) {
-	//	Operation zzasOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
+	//		CGValuedElement cgSource, @NonNull Operation asOperation) {
+			CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
+		Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
 		//	assert (cgSource == null) == Modifier.isStatic(jMethod.getModifiers());
 			CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
@@ -140,7 +140,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 			List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 			for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 				if (jParameterType == Executor.class) {
-					CGVariable executorVariable = analyzer.getFeatureNameManager().getExecutorVariable();
+					CGVariable executorVariable = analyzer.useFeatureNameManager(asOperationCallExp).getExecutorVariable();
 					cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 				}
 				else if (jParameterType == TypeId.class) {

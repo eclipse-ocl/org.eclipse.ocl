@@ -53,7 +53,7 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 
 	@Override
 	public @NonNull CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL element) {
-		FeatureNameManager nameManager = context.getFeatureNameManager();
+		FeatureNameManager nameManager = context.useFeatureNameManager(element);
 		Variable contextVariable = element.getOwnedContext();
 		if (contextVariable != null) {
 			CGVariable cgContext = nameManager.getParameter(contextVariable, (String)null);
