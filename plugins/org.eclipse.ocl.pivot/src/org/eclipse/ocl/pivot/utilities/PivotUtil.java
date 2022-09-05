@@ -217,6 +217,18 @@ public class PivotUtil
 	/**
 	 * @since 1.18
 	 */
+	public static org.eclipse.ocl.pivot.@Nullable Class basicGetContainingClass(@NonNull Element asElement) {
+		for (EObject eObject = asElement; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof org.eclipse.ocl.pivot.Class) {
+				return (org.eclipse.ocl.pivot.Class)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 1.18
+	 */
 	public static @Nullable Operation basicGetContainingOperation(@Nullable EObject element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Operation) {
@@ -1162,6 +1174,13 @@ public class PivotUtil
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypedElement typedElement) {
 		return ClassUtil.nonNullState((org.eclipse.ocl.pivot.Class)typedElement.getType());
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Class getContainingClass(@NonNull Element asElement) {
+		return ClassUtil.nonNullState(basicGetContainingClass(asElement));
 	}
 
 	public static @Nullable Constraint getContainingConstraint(@Nullable Element element) {
