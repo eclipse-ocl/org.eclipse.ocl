@@ -48,7 +48,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		FeatureNameManager nameManager = analyzer.getFeatureNameManager();
+		FeatureNameManager nameManager = analyzer.useOperationNameManager(cgOperation);
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
 			contextVariable.setIsRequired(false); 				// May be null for test

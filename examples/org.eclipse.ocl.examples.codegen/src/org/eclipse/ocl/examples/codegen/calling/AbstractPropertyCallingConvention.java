@@ -53,7 +53,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	//		|| (this instanceof ConstrainedPropertyCallingConvention)
 	//		|| (this instanceof NativePropertyCallingConvention)
 	//		|| (this instanceof ForeignPropertyCallingConvention);
-		FeatureNameManager nameManager = analyzer.getFeatureNameManager();
+		FeatureNameManager nameManager = analyzer.usePropertyNameManager(cgProperty);
 		Property asProperty = CGUtil.getAST(cgProperty);
 		cgProperty.setRequired(asProperty.isIsRequired());
 		LanguageExpression specification = asProperty.getOwnedExpression();
