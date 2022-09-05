@@ -39,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.NameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.analyzer.NameResolution;
 import org.eclipse.ocl.examples.codegen.analyzer.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
@@ -361,6 +362,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {
 		return new NameManagerHelper();
+	}
+
+	public @NonNull PackageNameManager createPackageNameManager(@NonNull NameManager outerNameManager, @NonNull CGPackage cgPackage) {
+		return new PackageNameManager(this, outerNameManager, cgPackage);
 	}
 
 	@Override

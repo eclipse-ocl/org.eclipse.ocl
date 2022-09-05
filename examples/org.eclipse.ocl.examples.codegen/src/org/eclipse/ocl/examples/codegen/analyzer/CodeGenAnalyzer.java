@@ -61,6 +61,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
@@ -209,6 +210,11 @@ public class CodeGenAnalyzer
 	private @NonNull Map<@NonNull Operation, @NonNull CGOperation> asOperation2cgOperation = new HashMap<>();
 
 	/**
+	 * Mapping from each AS Package to its corresponding CGPackage.
+	 */
+	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull CGPackage> asPackage2cgPackage = new HashMap<>();
+
+	/**
 	 * Mapping from each AS Property to its corresponding CGProperty.
 	 */
 	private @NonNull Map<@NonNull Property, @NonNull CGProperty> asProperty2cgProperty = new HashMap<>();
@@ -219,14 +225,6 @@ public class CodeGenAnalyzer
 	private final @NonNull Map<@NonNull Operation, @NonNull CGOperation> asVirtualOperation2cgOperation = new HashMap<>();
 
 	private @Nullable Iterable<@NonNull CGValuedElement> cgGlobals = null;
-
-	/**
-	 * A push/pop stack of currentNameManager in tree-traversal convenience order. Resolution of recursive operations
-	 * may result in arbitrary nesting of scope classes. It is therefore NOT appropriate to search for anything on the stack.
-	 * Searches should use the parent ancestry of the NameManager entries.
-	 */
-//	private @NonNull Stack<@NonNull NestedNameManager> nameManagerStack = new Stack<>();
-//	private @Nullable NestedNameManager currentNameManager = null;		// == nameManagerStack.peek()
 
 	public CodeGenAnalyzer(@NonNull JavaCodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
@@ -250,6 +248,15 @@ public class CodeGenAnalyzer
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		CGOperation old = asOperation2cgOperation.put(asOperation, cgOperation);
 		assert old == null;
+	}
+
+	public void addCGPackage(@NonNull CGPackage cgPackage) {
+		org.eclipse.ocl.pivot.Package asPackage = CGUtil.getAST(cgPackage);
+		CGPackage old = asPackage2cgPackage.put(asPackage, cgPackage);
+		assert old == null;
+	//	if (cgRootPackage == null) {
+	//		cgRootPackage = cgPackage;
+	//	}
 	}
 
 	public void addCGProperty(@NonNull CGProperty cgProperty) {			// private
@@ -342,6 +349,10 @@ public class CodeGenAnalyzer
 
 	public @Nullable CGOperation basicGetCGOperation(@NonNull Operation asOperation) {
 		return asOperation2cgOperation.get(asOperation);
+	}
+
+	public @Nullable CGPackage basicGetCGPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return asPackage2cgPackage.get(asPackage);
 	}
 
 	public @Nullable CGProperty basicGetCGProperty(@NonNull Property asProperty) {
@@ -882,6 +893,31 @@ public class CodeGenAnalyzer
 		return callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asOppositePropertyCallExp);
 	}
 
+	/**
+	 * Generate / share the CG declaration for asPackage.
+	 */
+	public @NonNull CGPackage generatePackageDeclaration(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		CGPackage cgPackage = basicGetCGPackage(asPackage);
+		if (cgPackage == null) {
+			cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
+			cgPackage.setAst(asPackage);
+		//	cgPackage.setName(callingConvention.getName(this, asPackage));			// XXX defer via NameResolution
+		//	cgPackage.setTypeId(analyzer.getCGTypeId(asPackage.getTypeId()));
+		//	cgPackage.setRequired(asPackage.isIsRequired());
+			addCGPackage(cgPackage);
+			String name = asPackage.getName();
+			if ((basicGetNameManager() == null) || (asPackage.eContainer() instanceof org.eclipse.ocl.pivot.Package)) {
+				globalNameManager.declareGlobalName(cgPackage, name);
+			}
+			else {
+				new NameResolution(getNameManager(), cgPackage, name);
+			}
+		//	pushClassNameManager(cgClass);
+		//	popClassNameManager();
+		}
+		return cgPackage;
+	}
+
 	public @NonNull CGValuedElement generatePropertyCallExp(@Nullable CGValuedElement cgSource, @NonNull PropertyCallExp asPropertyCallExp) {
 		Property asProperty = PivotUtil.getReferredProperty(asPropertyCallExp);
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);
@@ -1054,6 +1090,10 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGOperation getCGOperation(@NonNull Operation asOperation) {
 		return ClassUtil.nonNullState(asOperation2cgOperation.get(asOperation));
+	}
+
+	public @NonNull CGPackage getCGPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return ClassUtil.nonNullState(asPackage2cgPackage.get(asPackage));
 	}
 
 	public @NonNull CGProperty getCGProperty(@NonNull Property asProperty) {
@@ -1398,19 +1438,11 @@ public class CodeGenAnalyzer
 		return (externalFeatures != null) && externalFeatures.contains(asFeature);
 	}
 
-	public void popClassNameManager() {
-//		assert (currentNameManager != null) && (currentNameManager.getCGScope() instanceof CGClass);
-//		nameManagerStack.pop();
-//		currentNameManager = nameManagerStack.isEmpty() ? null : nameManagerStack.peek();
-//		return currentNameManager;
-	}
+	@Deprecated
+	public void popClassNameManager() {}
 
-	public void popNestedNameManager() {
-//		assert (currentNameManager != null) && !(currentNameManager.getCGScope() instanceof CGClass);
-//		nameManagerStack.pop();
-//		currentNameManager = nameManagerStack.isEmpty() ? null : nameManagerStack.peek();
-//		return currentNameManager;
-	}
+	@Deprecated
+	public void popNestedNameManager() {}
 
 	public @NonNull ClassNameManager pushClassNameManager(@NonNull CGClass cgClass) {
 		ClassNameManager nameManager = (ClassNameManager) globalNameManager.basicGetNestedNameManager(cgClass);
@@ -1418,8 +1450,6 @@ public class CodeGenAnalyzer
 			NestedNameManager parentNameManager = null; //currentNameManager != null ? currentNameManager.getClassNameManager().getClassParentNameManager() : null;
 			nameManager = globalNameManager.createClassNameManager(parentNameManager, cgClass);
 		}
-//		currentNameManager = nameManager;
-//		nameManagerStack.push(nameManager);
 		return nameManager;
 	}
 
@@ -1431,15 +1461,11 @@ public class CodeGenAnalyzer
 			ClassNameManager classNameManager = getClassNameManager(asClass);
 			nameManager = globalNameManager.createFeatureNameManager(classNameManager, cgConstraint);
 		}
-//		currentNameManager = nameManager;
-//		nameManagerStack.push(nameManager);
 		return nameManager;
 	}
 
 	public @NonNull FeatureNameManager pushIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
 		FeatureNameManager nameManager = getIterateNameManager(cgIterationCallExp);
-//		currentNameManager = nameManager;
-//		nameManagerStack.push(nameManager);
 		return nameManager;
 	}
 
@@ -1458,8 +1484,6 @@ public class CodeGenAnalyzer
 			ClassNameManager classNameManager = getClassNameManager(asClass);
 			operationNameManager = globalNameManager.createFeatureNameManager(classNameManager, cgOperation);
 		}
-//		currentNameManager = operationNameManager;
-//		nameManagerStack.push(operationNameManager);
 		return operationNameManager;
 	}
 
@@ -1478,8 +1502,6 @@ public class CodeGenAnalyzer
 			ClassNameManager classNameManager = getClassNameManager(asClass);
 			propertyNameManager = globalNameManager.createFeatureNameManager(classNameManager, cgProperty);
 		}
-//		currentNameManager = propertyNameManager;
-//		nameManagerStack.push(propertyNameManager);
 		return propertyNameManager;
 	}
 

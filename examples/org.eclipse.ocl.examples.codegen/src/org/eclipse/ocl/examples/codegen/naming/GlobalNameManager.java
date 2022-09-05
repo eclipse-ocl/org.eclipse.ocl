@@ -28,6 +28,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
@@ -270,7 +271,7 @@ public class GlobalNameManager extends NameManager
 		return cgElement2nestedNameManager.get(cgElement);
 	}
 
-	public @NonNull ClassNameManager createClassNameManager(@Nullable NestedNameManager outerNameManager, @NonNull CGClass cgClass) {
+	public @NonNull ClassNameManager createClassNameManager(@NonNull NestedNameManager outerNameManager, @NonNull CGClass cgClass) {
 		ClassNameManager nestedNameManager = codeGenerator.createClassNameManager(outerNameManager != null ? outerNameManager : this, cgClass);
 		NestedNameManager old = cgElement2nestedNameManager.put(cgClass, nestedNameManager);
 		assert old == null;
@@ -321,6 +322,15 @@ public class GlobalNameManager extends NameManager
 		}
 		FeatureNameManager nestedNameManager = codeGenerator.createFeatureNameManager(classNameManager, cgProperty);
 		NestedNameManager old = cgElement2nestedNameManager.put(cgProperty, nestedNameManager);
+		assert old == null;
+	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
+	//	addNameManager(cgScope, nestedNameManager.getParent());
+		return nestedNameManager;
+	}
+
+	public @NonNull PackageNameManager createPackageNameManager(@Nullable NestedNameManager outerNameManager, @NonNull CGPackage cgPackage) {
+		PackageNameManager nestedNameManager = codeGenerator.createPackageNameManager(outerNameManager != null ? outerNameManager : this, cgPackage);
+		NestedNameManager old = cgElement2nestedNameManager.put(cgPackage, nestedNameManager);
 		assert old == null;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
