@@ -8,11 +8,13 @@
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.analyzer;
+package org.eclipse.ocl.examples.codegen.naming;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -58,6 +60,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGUnlimited;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.types.CGIdVisitor;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -166,6 +169,187 @@ public class NameManagerHelper
 	public static final String TYPE_NAME_HINT_PREFIX = "TYP_";
 	public static final String UNLIMITED_NAME_HINT_PREFIX = "UNL_";
 	public static final String VARIABLE_DECLARATION_NAME_HINT_PREFIX = "";
+
+	/**
+	 * Names that will not be allocated to temporary variables.
+	 * <p>
+	 * This Set is public and unsynchronized. Clients may change it in arbitrary ways at their own risk.
+	 * <p>
+	 * It is strongly recommended that clients do no more than add additional names.
+	 */
+	public static final Set<@NonNull String> reservedJavaNames = new HashSet<>();
+	{
+		reservedJavaNames.add("Boolean");
+		reservedJavaNames.add("Character");
+		reservedJavaNames.add("Class");
+		reservedJavaNames.add("Double");
+		reservedJavaNames.add("Float");
+		reservedJavaNames.add("Integer");
+		reservedJavaNames.add("List");
+		reservedJavaNames.add("Long");
+		reservedJavaNames.add("Map");
+		reservedJavaNames.add("Package");
+		reservedJavaNames.add("String");
+
+		reservedJavaNames.add("boolean");
+		reservedJavaNames.add("byte");
+		reservedJavaNames.add("char");
+		reservedJavaNames.add("double");
+		reservedJavaNames.add("float");
+		reservedJavaNames.add("int");
+		reservedJavaNames.add("long");
+		reservedJavaNames.add("short");
+		reservedJavaNames.add("void");
+
+		reservedJavaNames.add("abstract");		// FIXME Exploit CodeGenUtil.getJavaReservedWords()
+		reservedJavaNames.add("assert");
+		reservedJavaNames.add("break");
+		reservedJavaNames.add("case");
+		reservedJavaNames.add("catch");
+		reservedJavaNames.add("class");
+		reservedJavaNames.add("const");
+		reservedJavaNames.add("continue");
+		reservedJavaNames.add("default");
+		reservedJavaNames.add("do");
+		reservedJavaNames.add("else");
+		reservedJavaNames.add("enum");
+		reservedJavaNames.add("extends");
+		reservedJavaNames.add("final");
+		reservedJavaNames.add("finally");
+		reservedJavaNames.add("for");
+		reservedJavaNames.add("goto");
+		reservedJavaNames.add("if");
+		reservedJavaNames.add("implements");
+		reservedJavaNames.add("import");
+		reservedJavaNames.add("instanceof");
+		reservedJavaNames.add("interface");
+		reservedJavaNames.add("native");
+		reservedJavaNames.add("new");
+		reservedJavaNames.add("package");
+		reservedJavaNames.add("private");
+		reservedJavaNames.add("protected");
+		reservedJavaNames.add("public");
+		reservedJavaNames.add("return");
+		reservedJavaNames.add("static");
+		reservedJavaNames.add("strictfp");
+		reservedJavaNames.add("switch");
+		reservedJavaNames.add("synchronized");
+		reservedJavaNames.add("throw");
+		reservedJavaNames.add("throws");
+		reservedJavaNames.add("transient");
+		reservedJavaNames.add("try");
+		reservedJavaNames.add("volatile");
+		reservedJavaNames.add("while");
+
+		reservedJavaNames.add("false");
+		reservedJavaNames.add("null");
+		reservedJavaNames.add("super");
+		reservedJavaNames.add(JavaConstants.THIS_NAME);
+		reservedJavaNames.add("true");
+	}
+
+
+	/**
+	 * Return a valid Java identifier based on nameHint. hasPrefix may be true to indicate that the
+	 * caller will supply an additional valid prefix relieving this routine of the need to avoid
+	 * leading numeric characters.
+	 * <p>
+	 * This is not intended to be a reversible algorithm; just to provide something reasonably readable.
+	 */
+	public static @NonNull String getValidJavaIdentifier(@NonNull String nameHint, boolean hasPrefix, @Nullable Object anObject) {
+		if (nameHint.equals("<")) {
+			return("lt");
+		}
+		else if (nameHint.equals("<=")) {
+			return("le");
+		}
+		else if (nameHint.equals("=")) {
+			return("eq");
+		}
+		else if (nameHint.equals("<>")) {
+			return("ne");
+		}
+		else if (nameHint.equals(">=")) {
+			return("ge");
+		}
+		else if (nameHint.equals(">")) {
+			return("gt");
+		}
+		else if (nameHint.equals("+")) {
+			return("sum");
+		}
+		else if (nameHint.equals("-")) {
+			return((anObject instanceof Operation) && ((Operation)anObject).getOwnedParameters().size() <= 0 ? "neg" : "diff");
+		}
+		else if (nameHint.equals("*")) {
+			return("prod");
+		}
+		else if (nameHint.equals("/")) {
+			return("quot");
+		}
+		else if (nameHint.equals("1_")) {
+			return("_1");
+		}
+		else if (nameHint.equals("2_")) {
+			return("_2");
+		}
+		StringBuilder s = new StringBuilder();
+		Character prefix = null;
+		int length = nameHint.length();
+		for (int i = 0; i < length; i++) {
+			char c = nameHint.charAt(i);
+			if (((i == 0) && !hasPrefix) ? Character.isJavaIdentifierStart(c) : Character.isJavaIdentifierPart(c)) {
+				if (prefix != null) {
+					s.append(prefix);
+					prefix = null;
+				}
+				s.append(c);
+			}
+			else {
+				if (c == '*') {
+					s.append("_a");
+				}
+				else if (c == ':') {
+					s.append("_c");
+				}
+				else if (c == '.') {
+					if (prefix != null) {
+						s.append(prefix);
+						prefix = null;
+					}
+				}
+				else if (c == ')') {
+					s.append("_e");
+				}
+				else if (c == '>') {
+					s.append("_g");
+				}
+				else if (c == '<') {
+					s.append("_l");
+				}
+				else if (c == '-') {
+					s.append("_m");
+				}
+				else if (c == '(') {
+					s.append("_o");
+				}
+				else if (c == '+') {
+					s.append("_p");
+				}
+				else if (c == '=') {
+					s.append("_q");
+				}
+				else if (c == '/') {
+					s.append("_s");
+				}
+				else {
+					s.append('_' + Integer.toString(c));
+				}
+				prefix = '_';
+			}
+		}
+		return s.toString();
+	}
 
 	public static class ASNameHelper extends AbstractExtendingVisitor<@NonNull String, @NonNull NameManagerHelper>
 	{
@@ -811,7 +995,7 @@ public class NameManagerHelper
 			if (string == null) {
 				string = "anon";
 			}
-			return CONSTRAINT_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, CONSTRAINT_NAME_HINT_PREFIX.length() > 0, aConstraint);
+			return CONSTRAINT_NAME_HINT_PREFIX + getValidJavaIdentifier(string, CONSTRAINT_NAME_HINT_PREFIX.length() > 0, aConstraint);
 		}
 		else {
 			return getFallBackHint("constraint");
@@ -834,7 +1018,7 @@ public class NameManagerHelper
 	protected @NonNull String getIterationNameHint(@Nullable Iteration anIteration) {
 		if (anIteration != null) {
 			@SuppressWarnings("null") @NonNull String string = anIteration.getName();
-			return ITERATION_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, ITERATION_NAME_HINT_PREFIX.length() > 0, anIteration);
+			return ITERATION_NAME_HINT_PREFIX + getValidJavaIdentifier(string, ITERATION_NAME_HINT_PREFIX.length() > 0, anIteration);
 		}
 		else {
 			return getFallBackHint("iteration");
@@ -929,7 +1113,7 @@ public class NameManagerHelper
 		else if (anObject instanceof Nameable) {
 			return getNameableHint((Nameable)anObject);
 		}
-		else if (anObject == NameManager.NOT_AN_OBJECT) {
+		else if (anObject == AbstractNameManager.NOT_AN_OBJECT) {
 			return getFallBackHint("not-an-object");
 		}
 		else if (anObject == null) {
@@ -943,7 +1127,7 @@ public class NameManagerHelper
 	public @NonNull String getNameableHint(@NonNull Nameable aNameable) {
 		String name = aNameable.getName();
 	//	assert name != null;		// XXX
-		return name != null ? NameManager.getValidJavaIdentifier(name, false, aNameable) : "XXX-null";
+		return name != null ? getValidJavaIdentifier(name, false, aNameable) : "XXX-null";
 	}
 
 	protected @NonNull String getNumericNameHint(@Nullable Number aNumber) {
@@ -953,10 +1137,10 @@ public class NameManagerHelper
 				return INTEGER_NAME_HINT_PREFIX + string;
 			}
 			else if ((aNumber instanceof BigDecimal) || (aNumber instanceof Double) || (aNumber instanceof Float)) {
-				return REAL_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, REAL_NAME_HINT_PREFIX.length() > 0, aNumber);
+				return REAL_NAME_HINT_PREFIX + getValidJavaIdentifier(string, REAL_NAME_HINT_PREFIX.length() > 0, aNumber);
 			}
 			else if (aNumber instanceof UnlimitedValue) {
-				return UNLIMITED_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, UNLIMITED_NAME_HINT_PREFIX.length() > 0, aNumber);
+				return UNLIMITED_NAME_HINT_PREFIX + getValidJavaIdentifier(string, UNLIMITED_NAME_HINT_PREFIX.length() > 0, aNumber);
 			}
 		}
 		return getFallBackHint("null-number");
@@ -965,7 +1149,7 @@ public class NameManagerHelper
 	protected @NonNull String getOperationNameHint(@Nullable Operation anOperation) {
 		if (anOperation != null) {
 			@SuppressWarnings("null") @NonNull String string = anOperation.toString();
-			return OPERATION_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, OPERATION_NAME_HINT_PREFIX.length() > 0, anOperation);
+			return OPERATION_NAME_HINT_PREFIX + getValidJavaIdentifier(string, OPERATION_NAME_HINT_PREFIX.length() > 0, anOperation);
 		}
 		else {
 			return getFallBackHint("operation");
@@ -975,7 +1159,7 @@ public class NameManagerHelper
 	protected @NonNull String getOperationCallExpNameHint(@Nullable Operation anOperation) {
 		if (anOperation != null) {
 			@SuppressWarnings("null") @NonNull String string = anOperation.getName();
-			return OPERATION_CALL_EXP_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, OPERATION_CALL_EXP_NAME_HINT_PREFIX.length() > 0, anOperation);
+			return OPERATION_CALL_EXP_NAME_HINT_PREFIX + getValidJavaIdentifier(string, OPERATION_CALL_EXP_NAME_HINT_PREFIX.length() > 0, anOperation);
 		}
 		else {
 			return getFallBackHint("operation-call");
@@ -985,7 +1169,7 @@ public class NameManagerHelper
 	protected @NonNull String getPropertyNameHint(@Nullable Property aProperty) {
 		if (aProperty != null) {
 			@SuppressWarnings("null") @NonNull String string = aProperty.getName();
-			return PROPERTY_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, PROPERTY_NAME_HINT_PREFIX.length() > 0, aProperty);
+			return PROPERTY_NAME_HINT_PREFIX + getValidJavaIdentifier(string, PROPERTY_NAME_HINT_PREFIX.length() > 0, aProperty);
 		}
 		else {
 			return getFallBackHint("property");
@@ -995,7 +1179,7 @@ public class NameManagerHelper
 	protected @NonNull String getStringNameHint(@Nullable String aString) {
 		if (aString != null) {
 			@NonNull String string = aString.length() > STRING_NAME_HINT_LIMIT ? aString.substring(0, STRING_NAME_HINT_LIMIT) : aString;
-			return STRING_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, STRING_NAME_HINT_PREFIX.length() > 0, aString);
+			return STRING_NAME_HINT_PREFIX + getValidJavaIdentifier(string, STRING_NAME_HINT_PREFIX.length() > 0, aString);
 		}
 		else {
 			return getFallBackHint("string");
@@ -1022,7 +1206,7 @@ public class NameManagerHelper
 		}
 		else if (aType != null) {
 			@SuppressWarnings("null") @NonNull String string = aType.toString();
-			return TYPE_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, TYPE_NAME_HINT_PREFIX.length() > 0, aType);
+			return TYPE_NAME_HINT_PREFIX + getValidJavaIdentifier(string, TYPE_NAME_HINT_PREFIX.length() > 0, aType);
 		}
 		else {
 			return getFallBackHint("type");
@@ -1032,7 +1216,7 @@ public class NameManagerHelper
 	protected @NonNull String getVariableDeclarationNameHint(@Nullable VariableDeclaration aVariableDeclaration) {
 		if (aVariableDeclaration != null) {
 			String string = ClassUtil.nonNullModel(aVariableDeclaration.getName());
-			return VARIABLE_DECLARATION_NAME_HINT_PREFIX + NameManager.getValidJavaIdentifier(string, VARIABLE_DECLARATION_NAME_HINT_PREFIX.length() > 0, aVariableDeclaration);
+			return VARIABLE_DECLARATION_NAME_HINT_PREFIX + getValidJavaIdentifier(string, VARIABLE_DECLARATION_NAME_HINT_PREFIX.length() > 0, aVariableDeclaration);
 		}
 		else {
 			return getFallBackHint("variable");

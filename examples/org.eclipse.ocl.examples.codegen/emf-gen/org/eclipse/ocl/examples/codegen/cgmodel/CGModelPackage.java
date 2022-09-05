@@ -2407,11 +2407,11 @@ public interface CGModelPackage extends EPackage {
 	EDataType getMethod();
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipse.ocl.examples.codegen.analyzer.NameResolution <em>Name Resolution</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.examples.codegen.naming.NameResolution <em>Name Resolution</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>Name Resolution</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.analyzer.NameResolution
+	 * @see org.eclipse.ocl.examples.codegen.naming.NameResolution
 	 * @generated
 	 */
 	EDataType getNameResolution();
@@ -4515,7 +4515,7 @@ public interface CGModelPackage extends EPackage {
 		 * The meta object literal for the '<em>Name Resolution</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.examples.codegen.analyzer.NameResolution
+		 * @see org.eclipse.ocl.examples.codegen.naming.NameResolution
 		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getNameResolution()
 		 * @generated
 		 */

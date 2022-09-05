@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.analyzer;
+package org.eclipse.ocl.examples.codegen.naming;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -20,6 +20,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
@@ -44,7 +45,7 @@ import org.eclipse.ocl.pivot.utilities.UniqueList;
  * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
  * named without collisions.
  */
-public class GlobalNameManager extends NameManager
+public class GlobalNameManager extends AbstractNameManager
 {
 	/**
 	 * A NameVariant specifies an algorithm for creating a variant of some name.
@@ -271,8 +272,8 @@ public class GlobalNameManager extends NameManager
 		return cgElement2nestedNameManager.get(cgElement);
 	}
 
-	public @NonNull ClassNameManager createClassNameManager(@NonNull NestedNameManager outerNameManager, @NonNull CGClass cgClass) {
-		ClassNameManager nestedNameManager = codeGenerator.createClassNameManager(outerNameManager != null ? outerNameManager : this, cgClass);
+	public @NonNull ClassNameManager createClassNameManager(@NonNull ClassableNameManager outerNameManager, @NonNull CGClass cgClass) {
+		ClassNameManager nestedNameManager = codeGenerator.createClassNameManager(outerNameManager, cgClass);
 		NestedNameManager old = cgElement2nestedNameManager.put(cgClass, nestedNameManager);
 		assert old == null;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
@@ -328,13 +329,13 @@ public class GlobalNameManager extends NameManager
 		return nestedNameManager;
 	}
 
-	public @NonNull PackageNameManager createPackageNameManager(@Nullable NestedNameManager outerNameManager, @NonNull CGPackage cgPackage) {
-		PackageNameManager nestedNameManager = codeGenerator.createPackageNameManager(outerNameManager != null ? outerNameManager : this, cgPackage);
-		NestedNameManager old = cgElement2nestedNameManager.put(cgPackage, nestedNameManager);
+	public @NonNull PackageNameManager createPackageNameManager(@Nullable PackageNameManager outerNameManager, @NonNull CGPackage cgPackage) {
+		PackageNameManager packageNameManager = codeGenerator.createPackageNameManager(outerNameManager, cgPackage);
+		NestedNameManager old = cgElement2nestedNameManager.put(cgPackage, packageNameManager);
 		assert old == null;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
-		return nestedNameManager;
+		return packageNameManager;
 	}
 
 	/**
@@ -353,7 +354,7 @@ public class GlobalNameManager extends NameManager
 	 */
 	public @NonNull NameResolution declareReservedName(@Nullable CGNamedElement cgElement, @NonNull String nameHint) {
 		NameResolution baseNameResolution = new NameResolution(this, cgElement, nameHint);
-		assert reservedJavaNames.contains(nameHint);
+		assert NameManagerHelper.reservedJavaNames.contains(nameHint);
 		baseNameResolution.setResolvedName(nameHint);
 		return baseNameResolution;
 	}

@@ -23,7 +23,7 @@ import org.eclipse.ocl.examples.codegen.cse.GlobalPlace
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement
-import org.eclipse.ocl.examples.codegen.analyzer.NameManagerHelper
+import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper
 
 class GenerateCGVisitors extends GenerateVisitorsXtend
 {

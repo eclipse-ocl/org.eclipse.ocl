@@ -34,6 +34,7 @@ Export-Package: org.eclipse.emf.codegen.ecore.templates.model;x-internal:=true,
  org.eclipse.ocl.examples.codegen.java.types,
  org.eclipse.ocl.examples.codegen.library,
  org.eclipse.ocl.examples.codegen.model,
+ org.eclipse.ocl.examples.codegen.naming,
  org.eclipse.ocl.examples.codegen.oclinecore,
  org.eclipse.ocl.examples.codegen.oclinjunit,
  org.eclipse.ocl.examples.codegen.utilities
