@@ -642,10 +642,10 @@ public class CodeGenAnalyzer
 
 	/**
 	 * Perform any actions / checks necessary once the visit is done.
-	 */
+	 *
 	public void freeze() {
 		assert basicGetNameManager() == null;
-	}
+	} */
 
 	/**
 	 * Generate / share the CG declaration for asClass.
@@ -669,7 +669,7 @@ public class CodeGenAnalyzer
 				globalNameManager.declareGlobalName(cgClass, name);
 			}
 			else {
-				new NameResolution(getNameManager(), cgClass, name);
+				new NameResolution(useClassNameManager(cgClass), cgClass, name);
 			}
 		//	pushClassNameManager(cgClass);
 		//	popClassNameManager();
@@ -756,8 +756,8 @@ public class CodeGenAnalyzer
 			nameManager = pushIterateNameManager(cgIterationCallExp);
 		}
 		else {
-			addCGIterationCallExp(cgIterationCallExp);
-			nameManager = getFeatureNameManager();
+		//	addCGIterationCallExp(cgIterationCallExp);
+			nameManager = useFeatureNameManager(asLoopExp);
 		}
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
 			CGIterator cgIterator = nameManager.getIterator(iterator);
@@ -869,7 +869,6 @@ public class CodeGenAnalyzer
 //				System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " : " + asOperation);
 				assert cgOperation.getAst() != null;
 				assert cgOperation.getCallingConvention() == callingConvention;
-//				classNameManager.declarePreferredName(cgOperation);
 				pushOperationNameManager(cgOperation);						// XXX too soon wrong currentNameManager ancestry defer to visit
 				try {
 					ExpressionInOCL asExpressionInOCL = null;
@@ -905,7 +904,6 @@ public class CodeGenAnalyzer
 		Property asProperty = PivotUtil.getReferredProperty(asPropertyCallExp);
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-	//	generateClassDeclaration(PivotUtil.getOwningClass(asProperty), callingConvention.getClassCallingConvention());
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		return callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asPropertyCallExp);
 	}
@@ -926,10 +924,7 @@ public class CodeGenAnalyzer
 			cgProperty.setRequired(asProperty.isIsRequired());
 			cgProperty.setCallingConvention(callingConvention);
 			addCGProperty(cgProperty);
-			NestedNameManager outerNameManager = getNameManager();
-			assert outerNameManager != null;
-			FeatureNameManager innerNameManager = pushPropertyNameManager(cgProperty);
-//			outerNameManager.declarePreferredName(cgProperty);
+			FeatureNameManager propertyNameManager = pushPropertyNameManager(cgProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
 			if (specification != null) {
@@ -940,7 +935,7 @@ public class CodeGenAnalyzer
 					e.printStackTrace();
 				}
 			}
-			callingConvention.createCGParameters(innerNameManager, cgProperty, query);
+			callingConvention.createCGParameters(propertyNameManager, cgProperty, query);
 			popNestedNameManager();
 		}
 		return cgProperty;
@@ -1149,9 +1144,9 @@ public class CodeGenAnalyzer
 		return externalFeatures;
 	}
 
-	public @NonNull FeatureNameManager getFeatureNameManager() {
-		return (FeatureNameManager)getNameManager();
-	}
+//	public @NonNull FeatureNameManager getFeatureNameManager() {
+//		return (FeatureNameManager)getNameManager();
+//	}
 
 	public GenModelHelper getGenModelHelper() {
 		return codeGenerator.getGenModelHelper();
@@ -1174,7 +1169,7 @@ public class CodeGenAnalyzer
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					getFeatureNameManager().getParameter(contextVariable, (String)null);
+					useFeatureNameManager(asProperty).getParameter(contextVariable, (String)null);
 				}
 				initExpression = createCGElement(CGValuedElement.class, query.getOwnedBody());
 			} catch (ParserException e) {
@@ -1565,6 +1560,13 @@ public class CodeGenAnalyzer
 			cgIterator.setNonNull();
 		}
 		cgIterator.setNonInvalid();
+	}
+
+	public @NonNull ClassNameManager useClassNameManager(@NonNull CGClass cgClass) {
+		ClassNameManager classNameManager = (ClassNameManager)currentNameManager;
+		assert classNameManager != null;
+		assert classNameManager.getCGScope() == cgClass;
+		return classNameManager;
 	}
 
 	public @NonNull FeatureNameManager useConstraintNameManager(@NonNull CGConstraint cgConstraint) {

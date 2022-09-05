@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaPreVisitor;
 import org.eclipse.ocl.examples.autogen.java.AutoVisitorsCodeGenerator;
+import org.eclipse.ocl.examples.codegen.analyzer.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModel;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -125,7 +126,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		this.asVisitorClass = createASClass(asVisitorPackage, visitorClassName);
 		this.asThisVariable = helper.createParameterVariable("this", asVisitorClass, true);
 		this.asContextVariable = helper.createParameterVariable(CONTEXT_NAME, asEnvironmentType, true);
-		CGVariable cgVariable = getAnalyzer().getFeatureNameManager().getCGVariable(asContextVariable);
+		CGVariable cgVariable = ((FeatureNameManager)getAnalyzer().getNameManager()).getCGVariable(asContextVariable);
 		globalNameManager.declareReservedName(cgVariable, /*null,*/ CONTEXT_NAME);
 
 		//

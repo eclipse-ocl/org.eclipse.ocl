@@ -332,7 +332,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @Nullable CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL query) {
 		assert query.getOwnedBody() != null;
-		FeatureNameManager nameManager = context.getFeatureNameManager();
+		FeatureNameManager nameManager = context.useFeatureNameManager(query);
 		Variable contextVariable = query.getOwnedContext();
 		if (contextVariable != null) {
 		//	CGVariable cgContext = nameManager.getParameter(contextVariable, null);

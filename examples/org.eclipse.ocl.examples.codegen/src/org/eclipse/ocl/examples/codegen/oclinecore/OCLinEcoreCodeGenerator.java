@@ -577,7 +577,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
 			assert asPackage != null;
 			CGPackage cgPackage = cgAnalyzer.createCGElement(CGPackage.class, asPackage);
-			cgAnalyzer.freeze();
+	//		cgAnalyzer.freeze();
 			optimize(cgPackage);
 			Iterable<@NonNull CGValuedElement> sortedGlobals = pregenerate(cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);

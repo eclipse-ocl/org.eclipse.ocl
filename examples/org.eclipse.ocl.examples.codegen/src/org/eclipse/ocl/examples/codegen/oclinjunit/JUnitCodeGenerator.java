@@ -130,7 +130,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		cgAnalyzer.analyzeExternalFeatures();
 		cgAnalyzer.popNestedNameManager();
 		cgAnalyzer.popClassNameManager();
-		cgAnalyzer.freeze();
+	//	cgAnalyzer.freeze();
 		return cgPackage;
 	}
 
