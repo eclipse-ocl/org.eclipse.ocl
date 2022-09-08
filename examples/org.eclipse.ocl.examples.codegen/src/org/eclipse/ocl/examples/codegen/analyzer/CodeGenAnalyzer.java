@@ -162,7 +162,9 @@ public class CodeGenAnalyzer
 {
 	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
+	protected final  @NonNull StandardLibraryInternal standardLibrary;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
+	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull AS2CGVisitor as2cgVisitor;
 
@@ -238,6 +240,8 @@ public class CodeGenAnalyzer
 		this.codeGenerator = codeGenerator;
 		this.environmentFactory = (EnvironmentFactoryInternalExtension) codeGenerator.getEnvironmentFactory();
 		this.metamodelManager = environmentFactory.getMetamodelManager();
+		this.standardLibrary = environmentFactory.getStandardLibrary();
+		this.genModelHelper = codeGenerator.getGenModelHelper();
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 		this.as2cgVisitor = codeGenerator.createAS2CGVisitor(this);
 		this.cgFalse = createCGBoolean(false);
@@ -455,22 +459,19 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {		// XXX @NonNull
-	//	assert method != null;
+		Operation asOperation = getNativeOperation(method);
+		CGOperation cgOperation = generateOperationDeclaration(asOperation, null, false);
 		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
 		cgNativeOperationCallExp.setMethod(method);		// Use cc
-		Operation asOperation = getNativeOperation(method, callingConvention);
-		CGOperation cgOperation = getCGOperation(asOperation);
 		cgNativeOperationCallExp.setReferredOperation(cgOperation);
-	//	callingConvention.createCGOperationCallExp(null, cgOperation, null, cgOperation, null)
 		return cgNativeOperationCallExp;
 	}
 
 	public @NonNull CGNativePropertyCallExp createCGNativePropertyCallExp(@NonNull Field field, @NonNull PropertyCallingConvention callingConvention) {		// XXX @NonNull
-	//	assert method != null;
-		CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
-		cgNativePropertyCallExp.setField(field);		// Use cc
 		Property asProperty = getNativeProperty(field, callingConvention);
 		CGProperty cgProperty = getCGProperty(asProperty);
+		CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
+		cgNativePropertyCallExp.setField(field);		// Use cc
 		cgNativePropertyCallExp.setReferredProperty(cgProperty);
 	//	callingConvention.createCGOperationCallExp(null, cgOperation, null, cgOperation, null)
 		return cgNativePropertyCallExp;
@@ -670,7 +671,7 @@ public class CodeGenAnalyzer
 			cgOperation = callingConvention.createCGOperation(this, asIteration);
 			assert cgOperation.getAst() != null;
 			assert cgOperation.getCallingConvention() == callingConvention;
-			getOperationNameManager(cgOperation);
+			getOperationNameManager(cgOperation, asIteration);
 			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asIteration.getBodyExpression();
 			if (asSpecification != null) {
@@ -790,7 +791,7 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
-		CGOperation cgOperation = generateOperationDeclaration(asOperation, false);
+		CGOperation cgOperation = generateOperationDeclaration(asOperation, null, false);
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		return callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
@@ -800,7 +801,7 @@ public class CodeGenAnalyzer
 	 * Generate / share the CG declaration for asOperation.
 	 * @param asSourceType
 	 */
-	public @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation, boolean requireFinal) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
+	public @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation, @Nullable OperationCallingConvention callingConvention, boolean requireFinal) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
 		if (!requireFinal) {
 			CGOperation cgVirtualOperation = basicGetVirtualCGOperation(asOperation);
 			if (cgVirtualOperation != null) {
@@ -809,12 +810,14 @@ public class CodeGenAnalyzer
 		}
 		CGOperation cgOperation = basicGetCGOperation(asOperation);
 		if (cgOperation == null) {
-			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asOperation, requireFinal);
+			if (callingConvention == null) {
+				callingConvention = codeGenerator.getCallingConvention(asOperation, requireFinal);
+			}
 			cgOperation = callingConvention.createCGOperation(this, asOperation);
 //			System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " : " + asOperation);
 			assert cgOperation.getAst() != null;
 			assert cgOperation.getCallingConvention() == callingConvention;
-			getOperationNameManager(cgOperation);						// XXX too soon wrong currentNameManager ancestry defer to visit ... lazy could now be ok
+			getOperationNameManager(cgOperation, asOperation);						// XXX too soon wrong currentNameManager ancestry defer to visit ... lazy could now be ok
 			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asOperation.getBodyExpression();
 			if (asSpecification != null) {
@@ -889,11 +892,11 @@ public class CodeGenAnalyzer
 				callingConvention = codeGenerator.getCallingConvention(asProperty);
 			}
 			cgProperty = callingConvention.createCGProperty(this, asProperty);
-			cgProperty.setAst(asProperty);
-			cgProperty.setTypeId(getCGTypeId(asProperty.getTypeId()));
-			cgProperty.setRequired(asProperty.isIsRequired());
-			cgProperty.setCallingConvention(callingConvention);
-			FeatureNameManager propertyNameManager = getPropertyNameManager(cgProperty);
+			assert cgProperty.getAst() != null;
+			assert cgProperty.getCallingConvention() == callingConvention;
+			assert cgProperty.getTypeId() == getCGTypeId(asProperty.getTypeId());
+			assert cgProperty.isRequired() == asProperty.isIsRequired();
+			FeatureNameManager propertyNameManager = getPropertyNameManager(cgProperty, asProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
 			if (specification != null) {
@@ -912,11 +915,10 @@ public class CodeGenAnalyzer
 	protected @NonNull CGValuedElement generateSafeExclusion(@NonNull CallExp callExp, @NonNull CGValuedElement cgSource) {
 		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
 		cgOperationCallExp.setLibraryOperation(CollectionExcludingOperation.INSTANCE);
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		Operation asExcludingOperation = standardLibrary.getCollectionExcludingOperation();
 		OCLExpression asSource = callExp.getOwnedSource();
 		assert asSource != null;
-		CGOperation cgOperation = generateOperationDeclaration(asExcludingOperation, true);
+		CGOperation cgOperation = generateOperationDeclaration(asExcludingOperation, null, true);
 		cgOperationCallExp.setReferredOperation(cgOperation);
 		cgOperationCallExp.setTypeId(getCGTypeId(asSource.getTypeId()));
 		cgOperationCallExp.setRequired(true);
@@ -1154,8 +1156,8 @@ public class CodeGenAnalyzer
 		return externalFeatures;
 	}
 
-	public GenModelHelper getGenModelHelper() {
-		return codeGenerator.getGenModelHelper();
+	public @NonNull GenModelHelper getGenModelHelper() {
+		return genModelHelper;
 	}
 
 	public @NonNull GlobalNameManager getGlobalNameManager() {
@@ -1279,7 +1281,7 @@ public class CodeGenAnalyzer
 			cgNativeOperation.setRequired(asOperation.isIsRequired());
 			cgNativeOperation.setCallingConvention(callingConvention);
 			cgNativeOperation.setAst(asOperation);
-			getOperationNameManager(cgNativeOperation);
+			getOperationNameManager(cgNativeOperation, asOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
 			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {
 				Type asParameterType = asParameter.getType();
@@ -1320,21 +1322,23 @@ public class CodeGenAnalyzer
 			cgNativeProperty.setRequired(asProperty.isIsRequired());
 			cgNativeProperty.setCallingConvention(callingConvention);
 			cgNativeProperty.setAst(asProperty);
-			getPropertyNameManager(cgNativeProperty);
+			getPropertyNameManager(cgNativeProperty, asProperty);
 		}
 		return asProperty;
 	}
 
-	public @NonNull NestedNameManager getOperationNameManager(@NonNull CGOperation cgOperation) {
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		CGOperation cgOperation2 = basicGetCGOperation(asOperation);
-		if (cgOperation2 == null) {
-			addCGOperation(cgOperation);
+	/**
+	 * Create or use the OperationNameManager for asOperation exploiting an optionally already known cgOperation.
+	 */
+	public @NonNull FeatureNameManager getOperationNameManager(@Nullable CGOperation cgOperation, @NonNull Operation asOperation) {
+		if (cgOperation == null) {
+			cgOperation = asOperation2cgOperation.get(asOperation);
+			if (cgOperation == null) {
+				cgOperation = generateOperationDeclaration(asOperation, null, false);
+			}
 		}
-		else {
-			assert cgOperation2 == cgOperation;
-		}
-		NestedNameManager operationNameManager = globalNameManager.basicGetNestedNameManager(cgOperation);
+		assert cgOperation.getAst() == asOperation;
+		FeatureNameManager operationNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgOperation);
 		if (operationNameManager == null) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
 			ClassNameManager classNameManager = getClassNameManager(null, asClass);
@@ -1368,15 +1372,17 @@ public class CodeGenAnalyzer
 		return packageNameManager;
 	}
 
-	public @NonNull FeatureNameManager getPropertyNameManager(@NonNull CGProperty cgProperty) {
-		Property asProperty = CGUtil.getAST(cgProperty);
-		CGProperty cgProperty2 = basicGetCGProperty(asProperty);
-		if (cgProperty2 == null) {
-			addCGProperty(cgProperty);
+	/**
+	 * Create or use the PropertyNameManager for asProperty exploiting an optionally already known cgProperty.
+	 */
+	public @NonNull FeatureNameManager getPropertyNameManager(@Nullable CGProperty cgProperty, @NonNull Property asProperty) {
+		if (cgProperty == null) {
+			cgProperty = asProperty2cgProperty.get(asProperty);
+			if (cgProperty == null) {
+				cgProperty = generatePropertyDeclaration(asProperty, null);
+			}
 		}
-		else {
-			assert cgProperty2 == cgProperty;
-		}
+		assert cgProperty.getAst() == asProperty;
 		FeatureNameManager propertyNameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgProperty);
 		if (propertyNameManager == null) {			//
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
@@ -1386,8 +1392,12 @@ public class CodeGenAnalyzer
 		return propertyNameManager;
 	}
 
+	public @NonNull StandardLibraryInternal getStandardLibrary() {
+		return standardLibrary;
+	}
+
 	public boolean hasOclVoidOperation(@NonNull OperationId operationId) {
-		CompleteClass completeClass = metamodelManager.getCompleteClass(metamodelManager.getStandardLibrary().getOclVoidType());
+		CompleteClass completeClass = metamodelManager.getCompleteClass(standardLibrary.getOclVoidType());
 		Operation memberOperation = completeClass.getOperation(operationId);
 		if (memberOperation == null) {
 			return false;

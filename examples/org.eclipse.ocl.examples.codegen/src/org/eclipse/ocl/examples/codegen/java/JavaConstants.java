@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId.JavaTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Property;
@@ -88,13 +89,13 @@ public class JavaConstants {
 
 	static {
 		try {
-			EXECUTOR_GET_ID_RESOLVER_METHOD = Executor.class.getMethod("getIdResolver");
-			EXECUTOR_GET_MODEL_MANAGER_METHOD = Executor.class.getMethod("getModelManager");
-			EXECUTOR_GET_STANDARD_LIBRARY_METHOD = Executor.class.getMethod("getStandardLibrary");
-			MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD = ModelManager.class.getMethod("basicGetForeignPropertyValue", Object.class, PropertyId.class);
-			MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD = ModelManager.class.getMethod("getForeignPropertyValue", Object.class, PropertyId.class, OCLExpression.class, Object.class);
-			MODEL_MANAGER_SET_FOREIGN_PROPERTY_VALUE_METHOD = ModelManager.class.getMethod("setForeignPropertyValue", Object.class, PropertyId.class, Object.class);
-			PIVOT_UTIL_GET_EXECUTOR_GET_METHOD = PivotUtil.class.getMethod("getExecutor", EObject.class);
+			EXECUTOR_GET_ID_RESOLVER_METHOD = SupportOperationCallingConvention.addSupportMethod(Executor.class.getMethod("getIdResolver"));
+			EXECUTOR_GET_MODEL_MANAGER_METHOD = SupportOperationCallingConvention.addSupportMethod(Executor.class.getMethod("getModelManager"));
+			EXECUTOR_GET_STANDARD_LIBRARY_METHOD = SupportOperationCallingConvention.addSupportMethod(Executor.class.getMethod("getStandardLibrary"));
+			MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD = SupportOperationCallingConvention.addSupportMethod(ModelManager.class.getMethod("basicGetForeignPropertyValue", Object.class, PropertyId.class));
+			MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD = SupportOperationCallingConvention.addSupportMethod(ModelManager.class.getMethod("getForeignPropertyValue", Object.class, PropertyId.class, OCLExpression.class, Object.class));
+			MODEL_MANAGER_SET_FOREIGN_PROPERTY_VALUE_METHOD = SupportOperationCallingConvention.addSupportMethod(ModelManager.class.getMethod("setForeignPropertyValue", Object.class, PropertyId.class, Object.class));
+			PIVOT_UTIL_GET_EXECUTOR_GET_METHOD = SupportOperationCallingConvention.addSupportMethod(PivotUtil.class.getMethod("getExecutor", EObject.class));
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw new RuntimeException(e);
 		}

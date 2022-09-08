@@ -41,7 +41,7 @@ public class UnboxedExplicitNavigationProperty extends AbstractProperty
 		try {
 			Method method = UnboxedExplicitNavigationProperty.class.getDeclaredMethod("create", PropertyId.class);
 			assert method != null;
-			CREATE_METHOD = method;
+			CREATE_METHOD = method;		// addSupportMethod() in SupportOperationCallingConvention
 		} catch (NoSuchMethodException | SecurityException e) {
 			throw new RuntimeException(e);
 		}
