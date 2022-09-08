@@ -106,6 +106,7 @@ import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -232,6 +233,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private /*@LazyNonNull*/ GlobalPlace globalPlace = null;
 	private @NonNull Map<ElementId, BoxedDescriptor> boxedDescriptors = new HashMap<ElementId, BoxedDescriptor>();
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
+	private/* @LazyNonNull*/ JavaLanguageSupport javaLanguageSupport = null;
 
 	private final @NonNull NameVariant BODY_NameVariant;
 	private final @NonNull NameVariant IMPL_NameVariant;
@@ -601,6 +603,15 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		else {
 			return null;			// closure, sortedBy
 		}
+	}
+
+	public @NonNull LanguageSupport getLanguageSupport() {
+		JavaLanguageSupport javaLanguageSupport2 = javaLanguageSupport;
+		if (javaLanguageSupport2 == null) {
+			javaLanguageSupport = javaLanguageSupport2 = (JavaLanguageSupport)environmentFactory.getLanguageSupport("java");
+			assert javaLanguageSupport2 != null;
+		}
+		return javaLanguageSupport2;
 	}
 
 	public @Nullable Method getLeastDerivedMethod(@NonNull Class<?> requiredClass, @NonNull String getAccessor) {

@@ -242,7 +242,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGClass cgClass = context.basicGetCGClass(asClass);
 		if (cgClass == null) {
 			cgClass = context.generateClassDeclaration(asClass, null);
-			context.getClassNameManager(asClass);
+		//	context.getClassNameManager(asClass);
 			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
 				CGClass cgSuperClass = context.createCGElement(CGClass.class, asSuperClass);
 				cgClass.getSuperTypes().add(cgSuperClass);
@@ -341,7 +341,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			//			cgContext.setNonNull();
 		}
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(query.getOwnedParameters())) {
-			@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, null);
+			CGVariable cgParameterVariable = nameManager.basicGetParameter(parameterVariable);
+			if (cgParameterVariable == null) {				// May be pre-mapped to a CG let variable
+				@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, null);
+			}
+		//	@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, null);
 		}
 		CGValuedElement cgBody = context.createCGElement(CGValuedElement.class, query.getOwnedBody());
 		//		cgOperation.getDependsOn().add(cgBody);
@@ -498,12 +502,19 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
-		cgPackage.setAst(asPackage);
-		globalNameManager.declareGlobalName(cgPackage, PivotUtil.getName(asPackage));
-		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
-			CGClass cgClass = context.createCGElement(CGClass.class, asType);
-			cgPackage.getClasses().add(cgClass);
+		CGPackage cgPackage = context.basicGetCGPackage(asPackage);
+		if (cgPackage == null) {
+			cgPackage = context.generatePackageDeclaration(asPackage);
+		//	cgPackage.setAst(asPackage);
+		//	globalNameManager.declareGlobalName(cgPackage, PivotUtil.getName(asPackage));
+			for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
+				CGClass cgClass = context.createCGElement(CGClass.class, asType);
+				assert cgPackage.getClasses().contains(cgClass);
+			}
+			for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : ClassUtil.nullFree(asPackage.getOwnedPackages())) {
+				CGPackage cgNestedPackage = context.createCGElement(CGPackage.class, asNestedPackage);
+				assert cgPackage.getPackages().contains(cgNestedPackage);
+			}
 		}
 		return cgPackage;
 	}

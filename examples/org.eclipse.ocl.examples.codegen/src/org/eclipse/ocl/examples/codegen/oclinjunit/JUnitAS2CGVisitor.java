@@ -13,11 +13,9 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -31,7 +29,7 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 		super(analyzer);
 	}
 
-	@Override
+/*	@Override
 	public @NonNull CGClass visitClass(@NonNull Class asClass) {		// Why overloaded ??
 		CGClass cgClass = context.getCGClass(asClass);
 		context.getClassNameManager(asClass);
@@ -46,9 +44,9 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 		for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
 			CGProperty cgProperty = doVisit(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
-		} */
+		} * /
 		return cgClass;
-	}
+	} */
 
 	@Override
 	public @NonNull CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL element) {

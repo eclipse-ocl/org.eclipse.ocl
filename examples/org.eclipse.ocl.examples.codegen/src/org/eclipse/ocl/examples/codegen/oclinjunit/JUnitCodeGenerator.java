@@ -13,12 +13,14 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.JUnitClassCallingConvention;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -62,6 +64,9 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
+	private org.eclipse.ocl.pivot.@Nullable Class asTestClass = null;
+	private @Nullable Operation asTestOperation = null;
+
 	protected JUnitCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel, boolean useNullAnnotations) {
 		super(environmentFactory, genModel);
 		getOptions().setUseNullAnnotations(useNullAnnotations);
@@ -72,27 +77,46 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		return new JUnitAS2CGVisitor(analyzer);
 	}
 
-	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,
-			@NonNull String packageName, @NonNull String className) {
+	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,			// XXX Change to createASPackage then regular AS2CG
+			@NonNull String qualifiedPackageName, @NonNull String className) {
 		assert expInOcl.eContainer() == null;
+		assert asTestOperation == null;
+		Resource eResource = expInOcl.eResource();
 		NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
 	//	NameResolution typeIdNameResolution = globalContext.getTypeIdNameResolution();
-		org.eclipse.ocl.pivot.Package asPackage = PivotFactory.eINSTANCE.createPackage();
-		asPackage.setName(packageName);
+		@NonNull String packageNames[] = qualifiedPackageName.split("\\.");
+		org.eclipse.ocl.pivot.Package asRootPackage = null;
+		org.eclipse.ocl.pivot.Package asLeafPackage = null;
+		for (@NonNull String packageName : packageNames) {
+			org.eclipse.ocl.pivot.Package asPackage = PivotFactory.eINSTANCE.createPackage();
+			asPackage.setName(packageName);
+			if (asLeafPackage != null) {
+				asLeafPackage.getOwnedPackages().add(asPackage);
+			}
+			else {
+				asRootPackage = asPackage;
+				if (eResource != null) {
+					eResource.getContents().add(asRootPackage);
+				}
+			}
+			asLeafPackage = asPackage;
+		}
+		assert asRootPackage != null;
+		assert asLeafPackage != null;
 	//	CGPackage cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 //		cgPackage.setAst(asPackage);
 	//	cgPackage.setName(packageName);
 		//
-		org.eclipse.ocl.pivot.Class asClass = PivotFactory.eINSTANCE.createClass();
+		org.eclipse.ocl.pivot.Class asClass = asTestClass = PivotFactory.eINSTANCE.createClass();
 		asClass.setName(className);
-		asPackage.getOwnedClasses().add(asClass);
+		asLeafPackage.getOwnedClasses().add(asClass);
 	//GClass cgRootClass = CGModelFactory.eINSTANCE.createCGClass();
 	//gRootClass.setAst(asClass);
 	//gRootClass.setName(className);
 	//	cgPackage.getClasses().add(cgRootClass);
 	//	cgAnalyzer.setCGRootClass(cgRootClass);
 		//
-		Operation asOperation = PivotFactory.eINSTANCE.createOperation();
+		Operation asOperation = asTestOperation = PivotFactory.eINSTANCE.createOperation();
 		asOperation.setName(evaluateNameResolution.getResolvedName());
 		asClass.getOwnedOperations().add(asOperation);
 		asOperation.setBodyExpression(expInOcl);
@@ -103,14 +127,14 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 //		cgOperation2.setName("test");		// FIXME
 //		cgRootClass.getOperations().add(cgOperation2);
 
-		CGClass cgRootClass = cgAnalyzer.generateClassDeclaration(asClass, JUnitClassCallingConvention.INSTANCE);	// XXX redundant
+	//	CGClass cgRootClass = cgAnalyzer.generateClassDeclaration(asClass, JUnitClassCallingConvention.INSTANCE);	// XXX redundant
 	//	cgAnalyzer.addCGClass(cgRootClass);
-		CGPackage cgPackage = cgAnalyzer.createCGElement(CGPackage.class, asPackage);
+		CGPackage cgPackage = cgAnalyzer.createCGElement(CGPackage.class, asRootPackage);
 
 	//	/*CGClass cgRootClass =*/ cgPackage.getClasses().add(cgRootClass);
 	//	cgAnalyzer.setCGRootClass(cgRootClass);
-		assert cgRootClass != null;
-		cgAnalyzer.getClassNameManager(cgRootClass);
+	//	assert cgRootClass != null;
+	//	cgAnalyzer.getClassNameManager(cgRootClass);
 
 
 		//
@@ -118,15 +142,15 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		if (contextVariable != null) {
 			contextVariable.setIsRequired(false); // May be null for test
 		}
-		JUnitOperationCallingConvention junitCallingConvention = JUnitOperationCallingConvention.INSTANCE;
+	/*	JUnitOperationCallingConvention junitCallingConvention = JUnitOperationCallingConvention.INSTANCE;
 		CGOperation cgOperation = junitCallingConvention.createCGOperation(cgAnalyzer, asOperation);
 		cgOperation.setCallingConvention(junitCallingConvention);
 		evaluateNameResolution.addCGElement(cgOperation);
-		cgAnalyzer.initAst(cgOperation, asOperation/*expInOcl*/);
+		cgAnalyzer.initAst(cgOperation, asOperation/*expInOcl* /);
 		cgAnalyzer.getOperationNameManager(cgOperation);
 		junitCallingConvention.createCGParameters(cgAnalyzer, cgOperation, expInOcl);
 		junitCallingConvention.createCGBody(cgAnalyzer, cgOperation);
-		cgRootClass.getOperations().add(cgOperation);
+		cgRootClass.getOperations().add(cgOperation); */
 		cgAnalyzer.analyzeExternalFeatures();
 	//	cgAnalyzer.popNestedNameManager();
 	//	cgAnalyzer.popClassNameManager();
@@ -174,6 +198,24 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	@Override
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
 		return cgAnalyzer;
+	}
+
+	@Override
+	public @NonNull ClassCallingConvention getCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		assert asTestClass != null;
+		if (asClass == asTestClass)  {
+			return JUnitClassCallingConvention.INSTANCE;
+		}
+		return super.getCallingConvention(asClass);
+	}
+
+	@Override
+	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal) {
+		assert asTestOperation != null;
+		if (asOperation == asTestOperation)  {
+			return JUnitOperationCallingConvention.INSTANCE;
+		}
+		return super.getCallingConvention(asOperation, requireFinal);
 	}
 
 	@Override

@@ -67,6 +67,6 @@ public class ClassNameManager extends NestedNameManager implements ClassableName
 
 	@Override
 	public @NonNull String toString() {
-		return "locals-" + cgClass.eClass().getName() + "-" + CGUtil.getAST(cgClass).getName();
+		return "Class-" + asClass;
 	}
 }
