@@ -160,7 +160,7 @@ public class NameResolution
 		if ("IMPPROPid_d3atlExpression".equals(nameHint)) {
 			getClass();			// XXX
 		}
-		if ("create".equals(nameHint)) {
+		if ("SEQ".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		return true;
@@ -266,7 +266,7 @@ public class NameResolution
 
 	protected void setResolvedName(@NonNull String resolvedName) {
 		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
-		if ("create".equals(resolvedName)) {
+		if ("SEQ".equals(resolvedName)) {
 			getClass();		// XXX
 		}
 		assert !resolvedName.contains("UNRESOLVED");

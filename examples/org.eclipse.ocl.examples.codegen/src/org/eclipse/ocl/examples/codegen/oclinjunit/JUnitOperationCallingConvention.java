@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -41,7 +42,10 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		initOperation(analyzer, cgOperation, asOperation);
+		analyzer.addCGOperation(cgOperation);
+		return cgOperation;
 	}
 
 	@Override

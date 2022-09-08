@@ -69,7 +69,7 @@ public abstract class AbstractNameManager implements NameManager
 
 		protected Context(@NonNull AbstractNameManager nameManager) {
 			this.nameManager = nameManager;
-			if (nameManager.isGlobal()) {
+			if (nameManager instanceof GlobalNameManager) {
 				this.name2object = new HashMap<>();
 				this.name2counter = null;
 			}

@@ -69,6 +69,6 @@ public class PackageNameManager extends NestedNameManager implements ClassableNa
 
 	@Override
 	public @NonNull String toString() {
-		return "locals-" + cgPackage.eClass().getName() + "-" + CGUtil.getAST(cgPackage).getName();
+		return "Package-" + asPackage;
 	}
 }

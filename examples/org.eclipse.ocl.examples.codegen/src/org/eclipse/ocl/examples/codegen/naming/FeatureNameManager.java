@@ -621,7 +621,7 @@ public class FeatureNameManager extends NestedNameManager
 
 	@Override
 	public @NonNull String toString() {
-		return "locals-" + cgScope.eClass().getName() + "-" + CGUtil.getAST(cgScope).getName();
+		return "Feature-" + asScope;
 	}
 
 	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {

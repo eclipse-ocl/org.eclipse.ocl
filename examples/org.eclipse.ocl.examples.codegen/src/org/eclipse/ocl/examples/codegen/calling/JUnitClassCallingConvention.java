@@ -54,7 +54,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		Operation asOperation = asClass.getOwnedOperations().get(0);
 		ExpressionInOCL expInOcl = (ExpressionInOCL)asOperation.getBodyExpression();
 		Class<?> baseClass = cg2javaVisitor.getGenModelHelper().getAbstractOperationClass(expInOcl.getOwnedParameters().size());
-		String title = cgClass.getName() + " provides the Java implementation for\n";
+		String title = cgClass.getName() + " provides the Java implementation for";
 		js.appendCommentWithOCL(title, expInOcl);
 		assert className != null;
 		//	js.append("@SuppressWarnings(\"nls\")\n");
