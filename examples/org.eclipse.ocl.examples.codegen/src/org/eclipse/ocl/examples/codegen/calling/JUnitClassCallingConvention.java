@@ -28,19 +28,6 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 	public static final @NonNull JUnitClassCallingConvention INSTANCE = new JUnitClassCallingConvention();
 
 	/**
-	 * Create the appropriate CGClass less properties and operation.
-	 *
-	@Override
-	public @NonNull CGClass createCGClass(@NonNull AS2CGVisitor as2cgVisitor, org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
-		cgClass.setAst(asClass);
-	//	cgClass.setName(PivotUtil.getName(asClass));
-		as2cgVisitor.getCodeGenerator().getGlobalNameManager().declareGlobalName(cgClass, PivotUtil.getName(asClass));		// XXX use hint
-		return cgClass;
-
-	} */
-
-	/**
 	 * Generate the Java code for a Class declaration.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
