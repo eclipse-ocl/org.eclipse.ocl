@@ -124,6 +124,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 {
 	protected final @NonNull JavaCodeGenerator codeGenerator;
 	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
+//	protected final @NonNull StandardLibraryInternal standardLibrary;
 	protected final @NonNull GlobalNameManager globalNameManager;
 
 	public static final class CGTuplePartNameComparator implements Comparator<@NonNull CGTuplePart>
@@ -140,6 +141,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		super(analyzer);
 		this.codeGenerator = context.getCodeGenerator();
 		this.environmentFactory = (EnvironmentFactoryInternalExtension)codeGenerator.getEnvironmentFactory();
+//		this.standardLibrary = environmentFactory.getStandardLibrary();
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
 	}
 
@@ -191,9 +193,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		return cgOperation;
 	} */
 
-//	public @NonNull CodeGenAnalyzer getAnalyzer() {
-//		return context;
-//	}
+	public @NonNull CodeGenAnalyzer getAnalyzer() {
+		return context;
+	}
 
 /*	protected @NonNull CGIterator getNullableIterator(@NonNull Variable iterator) {
 		CGIterator cgIterator = getIterator(iterator);
@@ -242,7 +244,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGClass cgClass = context.basicGetCGClass(asClass);
 		if (cgClass == null) {
 			cgClass = context.generateClassDeclaration(asClass, null);
-			context.getClassNameManager(cgClass, asClass);			// Potentially redundant here but needed downstream
+			context.getClassNameManager(cgClass, asClass);			// Nominally redundant here but needed downstream
 			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
 				CGClass cgSuperClass = context.createCGElement(CGClass.class, asSuperClass);
 				cgClass.getSuperTypes().add(cgSuperClass);
@@ -441,16 +443,16 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			getClass();		// XXX
 		}
 		LanguageExpression specification = asOperation.getBodyExpression();
-		CGOperation cgFinalOperation = context.generateOperationDeclaration(asOperation, true);
+		CGOperation cgFinalOperation = context.generateOperationDeclaration(asOperation, null, true);
 //		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
-		context.getOperationNameManager(cgFinalOperation);
+		context.getOperationNameManager(cgFinalOperation, asOperation);
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 			cgFinalOperation.getCallingConvention().createCGBody(context, cgFinalOperation);
 		}
-		CGOperation cgVirtualOperation = context.generateOperationDeclaration(asOperation, true);
+		CGOperation cgVirtualOperation = context.generateOperationDeclaration(asOperation, null, true);
 		if (cgVirtualOperation != cgFinalOperation) {
 //			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
-			context.getOperationNameManager(cgVirtualOperation);
+			context.getOperationNameManager(cgVirtualOperation, asOperation);
 			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 				cgVirtualOperation.getCallingConvention().createCGBody(context, cgVirtualOperation);
 			}
@@ -523,7 +525,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
 		CGProperty cgProperty = context.generatePropertyDeclaration(asProperty, null);		// XXX redundant
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-		context.getPropertyNameManager(cgProperty);
+	//	context.getPropertyNameManager(cgProperty);
 		// parse ownedExpression here to simplify createImplementation arguments
 		callingConvention.createImplementation(context, cgProperty);
 		return cgProperty;

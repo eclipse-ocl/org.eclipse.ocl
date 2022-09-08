@@ -59,14 +59,16 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
 		Property asProperty = (Property)asTypedElement;
-		CGNativeProperty cgNativeProperty = CGModelFactory.eINSTANCE.createCGNativeProperty();
+		CGNativeProperty cgProperty = CGModelFactory.eINSTANCE.createCGNativeProperty();
 		if (!asProperty.isIsReadOnly()) {
-			cgNativeProperty.setSettable();
+			cgProperty.setSettable();
 		}
 		else {
-			cgNativeProperty.setNonNull();
+			cgProperty.setNonNull();
 		}
-		return cgNativeProperty;
+		initProperty(analyzer, cgProperty, asTypedElement);
+		analyzer.addCGProperty(cgProperty);
+		return cgProperty;
 	}
 
 	@Override

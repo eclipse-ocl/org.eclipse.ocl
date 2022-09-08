@@ -53,8 +53,10 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
-	//	return as2cgVisitor.getAnalyzer().getCGExecutorNavigationProperty(asProperty, this);
-		return CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
+		CGExecutorNavigationProperty cgProperty = CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
+		initProperty(analyzer, cgProperty, asTypedElement);
+		analyzer.addCGProperty(cgProperty);
+		return cgProperty;
 	}
 
 	@Override

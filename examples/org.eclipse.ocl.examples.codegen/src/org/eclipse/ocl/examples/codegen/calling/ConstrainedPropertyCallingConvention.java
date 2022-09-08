@@ -106,7 +106,10 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
 	//	analyzer.addForeignFeature(asProperty);
-		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();
+		CGConstrainedProperty cgProperty = CGModelFactory.eINSTANCE.createCGConstrainedProperty();
+		initProperty(analyzer, cgProperty, asTypedElement);
+		analyzer.addCGProperty(cgProperty);
+		return cgProperty;
 	}
 
 /*	@Override
