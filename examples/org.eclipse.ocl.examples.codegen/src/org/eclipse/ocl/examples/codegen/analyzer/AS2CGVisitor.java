@@ -242,7 +242,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGClass cgClass = context.basicGetCGClass(asClass);
 		if (cgClass == null) {
 			cgClass = context.generateClassDeclaration(asClass, null);
-		//	context.getClassNameManager(asClass);
+			context.getClassNameManager(cgClass, asClass);			// Potentially redundant here but needed downstream
 			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
 				CGClass cgSuperClass = context.createCGElement(CGClass.class, asSuperClass);
 				cgClass.getSuperTypes().add(cgSuperClass);
