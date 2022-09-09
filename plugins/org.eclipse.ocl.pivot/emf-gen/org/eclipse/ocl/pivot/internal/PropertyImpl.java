@@ -1022,8 +1022,8 @@ implements Property {
 		final /*@NonInvalid*/ @Nullable Object oclContainer = ClassifierOclContainerOperation.INSTANCE.evaluate(executor, this);
 		/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
 		try {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, oclContainer, TYP_Class_0).booleanValue();
+			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class = idResolver.getClass(PivotTables.CLSSid_Class, null);
+			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, oclContainer, TYP_Class).booleanValue();
 			CAUGHT_oclIsKindOf = oclIsKindOf;
 		}
 		catch (Exception THROWN_CAUGHT_oclIsKindOf) {
@@ -1036,8 +1036,8 @@ implements Property {
 		else {
 			/*@Caught*/ @NonNull Object CAUGHT_includes;
 			try {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_1 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class oclAsType = (org.eclipse.ocl.pivot.@Nullable Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, oclContainer, TYP_Class_1);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+				final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class oclAsType = (org.eclipse.ocl.pivot.@Nullable Class)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, oclContainer, TYP_Class_0);
 				if (oclAsType == null) {
 					throw new InvalidValueException("Null source for \'Class::ownedProperties\'");
 				}
@@ -1115,8 +1115,8 @@ implements Property {
 						else {
 							/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
 							try {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL_0 = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
-								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, TYP_ExpressionInOCL_0);
+								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
+								final /*@Thrown*/ @Nullable ExpressionInOCL oclAsType = (@Nullable ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, ownedExpression, TYP_ExpressionInOCL);
 								if (oclAsType == null) {
 									throw new InvalidValueException("Null source for \'ExpressionInOCL::ownedBody\'");
 								}
