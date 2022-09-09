@@ -507,6 +507,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 	protected final @NonNull StandardLibraryInternal standardLibrary;
 	protected final @NonNull GenPackage genPackage;
+	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull AnyType oclAnyType;
 	protected final @NonNull PrimitiveType booleanType;
 	protected final @NonNull PrimitiveType integerType;
@@ -520,6 +521,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		genModel.reconcile();
 		metamodelManager.addGenModel(genModel);
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
+		this.analyzer = createCodeGenAnalyzer();
 		this.genPackage = genPackage;
 		this.oclAnyType = standardLibrary.getOclAnyType();
 		this.booleanType = standardLibrary.getBooleanType();
@@ -532,7 +534,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
 		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
-		cgAnalyzer.setCGRootClass(cgClass);
+		analyzer.setCGRootClass(cgClass);
 	}
 
 	@Override
@@ -542,7 +544,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 
 	@Override
 	public @NonNull BoxingAnalyzer createBoxingAnalyzer() {
-		return new EcoreBoxingAnalyzer(cgAnalyzer);
+		return new EcoreBoxingAnalyzer(analyzer);
 	}
 
 	@Override
@@ -581,7 +583,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			EPackage ecorePackage = genPackage.getEcorePackage();
 			org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
 			assert asPackage != null;
-			CGPackage cgPackage = cgAnalyzer.createCGElement(CGPackage.class, asPackage);
+			CGPackage cgPackage = analyzer.createCGElement(CGPackage.class, asPackage);
 	//		cgAnalyzer.freeze();
 			optimize(cgPackage);
 			Iterable<@NonNull CGValuedElement> sortedGlobals = pregenerate(cgPackage);
@@ -593,7 +595,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	//		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 			String constantsText = cg2java.generateConstants(sortedGlobals);
 			constantsTexts.put(genPackage, constantsText);
-			Iterable<@NonNull Feature> foreignFeatures2 = cgAnalyzer.getExternalFeatures();
+			Iterable<@NonNull Feature> foreignFeatures2 = analyzer.getExternalFeatures();
 			if (foreignFeatures2 != null) {
 				for (@NonNull Feature foreignFeature : foreignFeatures2) {
 					if (foreignFeature instanceof Operation) {
@@ -625,6 +627,11 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			}
 			newQuery2oldQuery = null;
 		}
+	}
+
+	@Override
+	public @NonNull CodeGenAnalyzer getAnalyzer() {
+		return analyzer;
 	}
 
 	@Override

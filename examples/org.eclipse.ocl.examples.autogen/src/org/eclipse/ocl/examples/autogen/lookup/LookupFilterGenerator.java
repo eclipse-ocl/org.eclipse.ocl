@@ -247,7 +247,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		List<Operation> sortedOperations = new ArrayList<Operation>(asOperations);
 		Collections.sort(sortedOperations, NameUtil.NAMEABLE_COMPARATOR);
 		for (Operation asOperation : sortedOperations) {
-			CGOperation cgOperation = cgAnalyzer.createCGElement(CGOperation.class, asOperation);
+			CGOperation cgOperation = analyzer.createCGElement(CGOperation.class, asOperation);
 			cgClass.getOperations().add(cgOperation);
 		}
 	}
@@ -257,7 +257,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	 */
 	protected void convertProperties(@NonNull CGClass cgClass, @NonNull List<Property> asProperties) {
 		for (Property asProperty : asProperties) {
-			CGProperty cgProperty = cgAnalyzer.createCGElement(CGProperty.class, asProperty);
+			CGProperty cgProperty = analyzer.createCGElement(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 			if (filteringProps.contains(asProperty)) {
 				List<CGProperty> cgProps = cgClass2cgFilteringProps.get(cgClass);
@@ -328,7 +328,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		if (cgEvaluatorVariable == null) {
 			Property prop = createNativeProperty(globalNameManager.getExecutorName(), Executor.class, true, true);
 		//	cgEvaluatorVariable = cgAnalyzer.getAS2CGVisitor().visitProperty(prop);
-			cgEvaluatorVariable = cgAnalyzer.createCGElement(CGProperty.class, prop);
+			cgEvaluatorVariable = analyzer.createCGElement(CGProperty.class, prop);
 		}
 		return ClassUtil.nonNullState(cgEvaluatorVariable);
 	}
@@ -340,8 +340,8 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 		// accesses
 		if (cgIdResolverVariable == null) {
 			Property prop = createNativeProperty(JavaConstants.ID_RESOLVER_NAME, IdResolver.class, true, true);
-		//	cgIdResolverVariable = cgAnalyzer.getAS2CGVisitor().visitProperty(prop);
-			cgIdResolverVariable = cgAnalyzer.createCGElement(CGProperty.class, prop);
+		//	cgIdResolverVariable = analyzer.getAS2CGVisitor().visitProperty(prop);
+			cgIdResolverVariable = analyzer.createCGElement(CGProperty.class, prop);
 		}
 		return ClassUtil.nonNullState(cgIdResolverVariable);
 	}

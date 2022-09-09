@@ -61,7 +61,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 {
 	//	private static final Logger logger = Logger.getLogger(AutoCodeGenerator.class);
 
-	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
+	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final org.eclipse.ocl.pivot.@Nullable Package asSuperPackage;
 	protected final @NonNull PivotHelper helper;
@@ -83,7 +83,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		this.helper = new PivotHelper(environmentFactory);
 		this.genModel = ClassUtil.nonNullState(genPackage.getGenModel());
 		getOptions().setUseNullAnnotations(OCLinEcoreGenModelGeneratorAdapter.useNullAnnotations(genModel));
-		cgAnalyzer = new CodeGenAnalyzer(this);
+		this.analyzer = createCodeGenAnalyzer();
 		this.asPackage = asPackage;
 		this.asSuperPackage = asSuperPackage;
 		this.genPackage = genPackage;
@@ -149,6 +149,11 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		ImportNameManager importNameManager = generator.getImportNameManager();
 		Map<@NonNull String, @Nullable String> long2ShortImportNames = importNameManager.getLong2ShortImportNames();
 		return ImportUtils.resolveImports(generator.toString(), long2ShortImportNames, false);
+	}
+
+	@Override
+	public @NonNull CodeGenAnalyzer getAnalyzer() {
+		return analyzer;
 	}
 
 	protected @NonNull CGClass getExternalClass(@NonNull Class<?> javaClass, CGClass... javaGenerics) {

@@ -64,11 +64,13 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		}
 	}
 
+	private final @NonNull CodeGenAnalyzer analyzer;
 	private org.eclipse.ocl.pivot.@Nullable Class asTestClass = null;
 	private @Nullable Operation asTestOperation = null;
 
 	protected JUnitCodeGenerator(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable GenModel genModel, boolean useNullAnnotations) {
 		super(environmentFactory, genModel);
+		this.analyzer = createCodeGenAnalyzer();
 		getOptions().setUseNullAnnotations(useNullAnnotations);
 	}
 
@@ -118,8 +120,9 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		asOperation.setBodyExpression(expInOcl);
 		asHelper.setType(asOperation, expInOcl.getType(), expInOcl.isIsRequired());
 
-		CGPackage cgPackage = cgAnalyzer.createCGElement(CGPackage.class, asRootPackage);
-		cgAnalyzer.analyzeExternalFeatures();
+		CodeGenAnalyzer analyzer2 = getAnalyzer();
+		CGPackage cgPackage = analyzer2.createCGElement(CGPackage.class, asRootPackage);
+		analyzer2.analyzeExternalFeatures();
 		return cgPackage;
 	}
 
@@ -148,7 +151,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		optimize(cgPackage);
 		Iterable<@NonNull CGValuedElement> sortedGlobals = pregenerate(cgPackage);
 		JUnitCG2JavaClassVisitor cg2JavaClassVisitor = new JUnitCG2JavaClassVisitor(this, expInOcl, sortedGlobals);
-		cgAnalyzer.setGlobals(sortedGlobals);
+		getAnalyzer().setGlobals(sortedGlobals);
 		cg2JavaClassVisitor.safeVisit(cgPackage);
 		ImportNameManager importNameManager = cg2JavaClassVisitor.getImportNameManager();
 	//	for (@NonNull CGClass cgClass : cgPackage.getClasses()) {
@@ -162,7 +165,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 
 	@Override
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
-		return cgAnalyzer;
+		return analyzer;
 	}
 
 	@Override

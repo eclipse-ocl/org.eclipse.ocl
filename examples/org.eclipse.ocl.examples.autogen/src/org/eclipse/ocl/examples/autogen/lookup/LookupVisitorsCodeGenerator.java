@@ -229,7 +229,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		List<Operation> sortedOperations = new ArrayList<Operation>(asOperations);
 		Collections.sort(sortedOperations, NameUtil.NAMEABLE_COMPARATOR);
 		for (Operation asOperation : sortedOperations) {
-			CGOperation cgOperation = cgAnalyzer.createCGElement(CGOperation.class, asOperation);
+			CGOperation cgOperation = analyzer.createCGElement(CGOperation.class, asOperation);
 			cgClass.getOperations().add(cgOperation);
 		}
 	}
@@ -239,7 +239,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	 */
 	protected void convertProperties(@NonNull CGClass cgClass, @NonNull List<Property> asProperties) {
 		for (Property asProperty : asProperties) {
-			CGProperty cgProperty = cgAnalyzer.createCGElement(CGProperty.class, asProperty);
+			CGProperty cgProperty = analyzer.createCGElement(CGProperty.class, asProperty);
 			cgClass.getProperties().add(cgProperty);
 			if (asProperty == asEvaluatorProperty) {
 				cgEvaluatorVariable = cgProperty;
