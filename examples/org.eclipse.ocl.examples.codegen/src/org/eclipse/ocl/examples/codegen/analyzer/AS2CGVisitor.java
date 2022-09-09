@@ -43,7 +43,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
@@ -112,7 +111,6 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
@@ -248,6 +246,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgClass == null) {
 			cgClass = context.generateClassDeclaration(asClass, null);
 		}
+		// XXX re-execution guard needed
 		context.getClassNameManager(cgClass, asClass);			// Nominally redundant here but needed downstream
 		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
 			CGClass cgSuperClass = context.createCGElement(CGClass.class, asSuperClass);
@@ -299,30 +298,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGConstraint visitConstraint(@NonNull Constraint asConstraint) {
-		CGConstraint cgConstraint = context.generateConstraintDeclaration(asConstraint);
-		LanguageExpression specification = asConstraint.getOwnedSpecification();
-		if (specification != null) {
-			assert cgConstraint.basicGetNameResolution() == null;
-		//	getNameManager().declarePreferredName(cgConstraint);
-			FeatureNameManager innerNameManager = context.getConstraintNameManager(cgConstraint);
-			try {
-				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
-				Variable contextVariable = query.getOwnedContext();
-				if (contextVariable != null) {
-					CGParameter cgParameter = innerNameManager.getParameter(contextVariable, null);
-					cgConstraint.getParameters().add(cgParameter);
-				}
-				for (@NonNull Variable parameterVariable : ClassUtil.nullFree(query.getOwnedParameters())) {
-					CGParameter cgParameter = innerNameManager.getParameter(parameterVariable, null);
-					cgConstraint.getParameters().add(cgParameter);
-				}
-				cgConstraint.setBody(context.createCGElement(CGValuedElement.class, query.getOwnedBody()));
-			} catch (ParserException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return cgConstraint;
+		return context.generateConstraint(asConstraint);
 	}
 
 	@Override

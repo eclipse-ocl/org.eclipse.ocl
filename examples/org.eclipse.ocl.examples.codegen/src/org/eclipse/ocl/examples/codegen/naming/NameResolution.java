@@ -160,7 +160,7 @@ public class NameResolution
 		if ("IMPPROPid_d3atlExpression".equals(nameHint)) {
 			getClass();			// XXX
 		}
-		if ("SEQ".equals(nameHint)) {
+		if ("TYP_MapType".equals(nameHint)) {
 			getClass();			// XXX
 		}
 		return true;
@@ -266,6 +266,9 @@ public class NameResolution
 
 	protected void setResolvedName(@NonNull String resolvedName) {
 		assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
+		if (resolvedName.contains("TYP_MapType")) {
+			getClass();		// XXX
+		}
 		if ("SEQ".equals(resolvedName)) {
 			getClass();		// XXX
 		}
