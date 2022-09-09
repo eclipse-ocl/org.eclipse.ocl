@@ -59,6 +59,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -264,6 +265,10 @@ public class CGUtil
 
 	public static @NonNull Type getAST(@NonNull CGExecutorType cgExecutorType) {
 		return ClassUtil.nonNullState((Type)cgExecutorType.getAst());
+	}
+
+	public static @NonNull LoopExp getAST(@NonNull CGIterationCallExp cgIterationCallExp) {
+		return ClassUtil.nonNullState((LoopExp)cgIterationCallExp.getAst());
 	}
 
 	public static @NonNull Variable getAST(@NonNull CGIterator cgIterator) {
