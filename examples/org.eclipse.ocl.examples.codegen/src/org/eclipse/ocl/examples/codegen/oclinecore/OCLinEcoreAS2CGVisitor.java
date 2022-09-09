@@ -78,36 +78,42 @@ public final class OCLinEcoreAS2CGVisitor extends AS2CGVisitor
 
 	@Override
 	public @Nullable CGConstraint visitConstraint(@NonNull Constraint asConstraint) {
+		if ("CompatibleInitialiserType".equals(asConstraint.getName())) {
+			getClass();			// XXX
+		}
 		CGConstraint cgConstraint = context.generateConstraintDeclaration(asConstraint);
-		LanguageExpression specification = asConstraint.getOwnedSpecification();
-		if (specification != null) {
-			assert cgConstraint.basicGetNameResolution() == null;
-			FeatureNameManager nameManager = context.getConstraintNameManager(cgConstraint);
-			try {
-				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
-				String constraintName = PivotUtil.getName(asConstraint);
-				EObject eContainer = asConstraint.eContainer();
-				if (eContainer instanceof NamedElement) {
-					String containerName = ((NamedElement)eContainer).getName();
-					if (containerName != null) {
-						constraintName = containerName + "::" + constraintName;
+		if (cgConstraint.getBody() == null) {
+			LanguageExpression specification = asConstraint.getOwnedSpecification();
+			if (specification != null) {
+				assert cgConstraint.basicGetNameResolution() == null;
+				FeatureNameManager nameManager = context.getConstraintNameManager(cgConstraint);
+				try {
+					ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
+					String constraintName = PivotUtil.getName(asConstraint);
+					EObject eContainer = asConstraint.eContainer();
+					if (eContainer instanceof NamedElement) {
+						String containerName = ((NamedElement)eContainer).getName();
+						if (containerName != null) {
+							constraintName = containerName + "::" + constraintName;
+						}
 					}
+					ExpressionInOCL asSynthesizedQuery = ((OCLinEcoreCodeGenerator)codeGenerator).rewriteQuery(oldQuery);
+					OCLExpression asSynthesizedExpression = asSynthesizedQuery.getOwnedBody();
+				//	OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.basicGetLocalContext(cgConstraint);
+					Variable contextVariable = asSynthesizedQuery.getOwnedContext();
+					if (contextVariable != null) {
+						CGParameter cgParameter = nameManager.getSelfParameter(contextVariable);
+						cgConstraint.getParameters().add(cgParameter);
+					}
+					for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(asSynthesizedQuery)) {
+						CGParameter cgParameter = nameManager.getParameter(parameterVariable, parameterVariable.getName());
+						cgConstraint.getParameters().add(cgParameter);
+					}
+					cgConstraint.setBody(context.createCGElement(CGValuedElement.class, asSynthesizedExpression));
+				} catch (ParserException e) {
+					cgConstraint.setBody(context.createCGConstantExp(context.getCGInvalid()));
+					throw new WrappedException(e);
 				}
-				ExpressionInOCL asSynthesizedQuery = ((OCLinEcoreCodeGenerator)codeGenerator).rewriteQuery(oldQuery);
-				OCLExpression asSynthesizedExpression = asSynthesizedQuery.getOwnedBody();
-			//	OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.basicGetLocalContext(cgConstraint);
-				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
-				if (contextVariable != null) {
-					CGParameter cgParameter = nameManager.getSelfParameter(contextVariable);
-					cgConstraint.getParameters().add(cgParameter);
-				}
-				for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(asSynthesizedQuery)) {
-					CGParameter cgParameter = nameManager.getParameter(parameterVariable, parameterVariable.getName());
-					cgConstraint.getParameters().add(cgParameter);
-				}
-				cgConstraint.setBody(context.createCGElement(CGValuedElement.class, asSynthesizedExpression));
-			} catch (ParserException e) {
-				throw new WrappedException(e);
 			}
 		}
 		return cgConstraint;

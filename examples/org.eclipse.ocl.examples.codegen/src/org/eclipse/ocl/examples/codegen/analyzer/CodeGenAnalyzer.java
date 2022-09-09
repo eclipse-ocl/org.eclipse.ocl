@@ -249,11 +249,11 @@ public class CodeGenAnalyzer
 		this.cgNull = createCGNull();
 	}
 
-	public void addCGConstraint(@NonNull CGConstraint cgConstraint) {			// private
+/*	private void addCGConstraint(@NonNull CGConstraint cgConstraint) {			// private
 		Constraint asConstraint = CGUtil.getAST(cgConstraint);
 		CGConstraint old = asConstraint2cgConstraint.put(asConstraint, cgConstraint);
 		assert old == null;
-	}
+	} */
 
 	public void addCGOperation(@NonNull CGOperation cgOperation) {			// private
 		assert cgOperation.getCallingConvention() != VirtualOperationCallingConvention.INSTANCE;
@@ -651,20 +651,39 @@ public class CodeGenAnalyzer
 	 * Generate / share the CG declaration for asConstraint.
 	 */
 	public @NonNull CGConstraint generateConstraintDeclaration(@NonNull Constraint asConstraint) {
-		CGConstraint cgConstraint = basicGetCGConstraint(asConstraint);
+		CGConstraint cgConstraint = asConstraint2cgConstraint.get(asConstraint);
 		if (cgConstraint == null) {
 			cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
 			cgConstraint.setAst(asConstraint);
 		//	cgConstraint.setTypeId(getCGTypeId(asConstraint.getTypeId()));
-			addCGConstraint(cgConstraint);
+			asConstraint2cgConstraint.put(asConstraint, cgConstraint);
 		}
 		return cgConstraint;
+	}
+
+	protected @NonNull CGIterationCallExp generateIterateDeclaration(@NonNull LoopExp asLoopExp) {
+		CGIterationCallExp cgIterationCallExp = asLoopExp2cgIterationCallExp.get(asLoopExp);
+		if (cgIterationCallExp == null) {
+			Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
+			IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
+			if (iterationHelper != null) {
+				cgIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
+			}
+			else {
+				LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
+				CGLibraryIterationCallExp cgLibraryIterationCallExp = CGModelFactory.eINSTANCE.createCGLibraryIterationCallExp();
+				cgLibraryIterationCallExp.setLibraryIteration(libraryIteration);
+				cgIterationCallExp = cgLibraryIterationCallExp;
+			}
+			asLoopExp2cgIterationCallExp.put(asLoopExp, cgIterationCallExp);
+		}
+		return cgIterationCallExp;
 	}
 
 	/**
 	 * Generate / share the CG declaration for asOperation.
 	 */
-	public @NonNull CGOperation generateIterationDeclaration(@Nullable Type asSourceType, @NonNull Iteration asIteration) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
+	public @NonNull CGOperation generateIterationDeclaration(@NonNull Iteration asIteration) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
 		CGOperation cgOperation = basicGetCGOperation(asIteration);
 		if (cgOperation == null) {
 			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asIteration, true);
@@ -690,19 +709,10 @@ public class CodeGenAnalyzer
 	protected @NonNull CGIterationCallExp generateLoopExp(@NonNull CGValuedElement cgSource, @NonNull LoopExp asLoopExp) {
 		Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
-		CGIterationCallExp cgIterationCallExp;
-		if (iterationHelper != null) {
-			cgIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
-		}
-		else {
-			LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
-			CGLibraryIterationCallExp cgLibraryIterationCallExp = CGModelFactory.eINSTANCE.createCGLibraryIterationCallExp();
-			cgLibraryIterationCallExp.setLibraryIteration(libraryIteration);
-			cgIterationCallExp = cgLibraryIterationCallExp;
-		}
+		CGIterationCallExp cgIterationCallExp = generateIterateDeclaration(asLoopExp);
 		OCLExpression asSource = asLoopExp.getOwnedSource();
 		Type asSourceType = asSource != null ? asSource.getType() : null;
-		CGOperation cgOperation = generateIterationDeclaration(asSourceType, asIteration);
+		CGOperation cgOperation = generateIterationDeclaration(/*asSourceType,*/ asIteration);
 		initAst(cgIterationCallExp, asLoopExp);
 		cgIterationCallExp.setAsIteration(asIteration);
 		cgIterationCallExp.setReferredIteration(cgOperation);
@@ -714,10 +724,10 @@ public class CodeGenAnalyzer
 		//
 		FeatureNameManager nameManager;
 		if (iterationHelper == null) {			// No helper: iterators are arguments of a nested context
-			nameManager = getIterateNameManager(cgIterationCallExp);
+			nameManager = getIterateNameManager(cgIterationCallExp, asLoopExp);
 		}
 		else {
-			nameManager = useFeatureNameManager(asLoopExp);
+			nameManager = useFeatureNameManager((TypedElement)asLoopExp.eContainer());
 		}
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
 			CGIterator cgIterator = nameManager.getIterator(iterator);
@@ -768,7 +778,7 @@ public class CodeGenAnalyzer
 		}
 		if (iterationHelper != null) {			// Helper: iterators are part of invocation context
 			initAst(cgIterationCallExp, asLoopExp);
-			getIterateNameManager(cgIterationCallExp);
+			getIterateNameManager(cgIterationCallExp, asLoopExp);
 		}
 		//
 		//	Body
@@ -1217,7 +1227,7 @@ public class CodeGenAnalyzer
 		return getInitExpression(asProperty);
 	}
 
-	public @NonNull FeatureNameManager getIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
+/*	public @NonNull FeatureNameManager getIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
 		LoopExp asLoopExp = (LoopExp)CGUtil.getAST(cgIterationCallExp);
 		CGIterationCallExp cgIterationCallExp2 = asLoopExp2cgIterationCallExp.get(asLoopExp);
 		if (cgIterationCallExp2 == null) {
@@ -1233,6 +1243,26 @@ public class CodeGenAnalyzer
 			nameManager = globalNameManager.createFeatureNameManager(classNameManager, featureNameManager, cgIterationCallExp);
 		}
 		return nameManager;
+	} */
+
+	/**
+	 * Create or use the FeatureNameManager for asProperty exploiting an optionally already known cgProperty.
+	 */
+	public @NonNull FeatureNameManager getIterateNameManager(@Nullable CGIterationCallExp cgIterationCallExp, @NonNull LoopExp asLoopExp) {
+		if (cgIterationCallExp == null) {
+			cgIterationCallExp = asLoopExp2cgIterationCallExp.get(asLoopExp);
+			if (cgIterationCallExp == null) {
+				cgIterationCallExp = generateIterateDeclaration(asLoopExp);
+			}
+		}
+		assert cgIterationCallExp.getAst() == asLoopExp;
+		FeatureNameManager iterateNameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgIterationCallExp);
+		if (iterateNameManager == null) {			//
+			FeatureNameManager featureNameManager = useFeatureNameManager((TypedElement)asLoopExp.eContainer());
+			ClassNameManager classNameManager = featureNameManager.getClassNameManager();
+			iterateNameManager = globalNameManager.createFeatureNameManager(classNameManager, featureNameManager, cgIterationCallExp);
+		}
+		return iterateNameManager;
 	}
 
 	private @NonNull JavaLanguageSupport getJavaLanguageSupport() {

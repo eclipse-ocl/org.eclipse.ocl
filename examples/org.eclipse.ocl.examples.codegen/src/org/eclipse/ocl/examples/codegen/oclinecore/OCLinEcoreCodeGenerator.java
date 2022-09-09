@@ -610,8 +610,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			for (Map.Entry<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> entry : newQuery2oldQuery2.entrySet()) {
 				ExpressionInOCL newQuery = entry.getKey();
 				ExpressionInOCL oldQuery = entry.getValue();
-			//	System.out.println("key2: " + NameUtil.debugSimpleName(newQuery) + " : " + NameUtil.debugSimpleName(newQuery.eContainer()) + " : " + newQuery);
-			//	System.out.println("val2: " + NameUtil.debugSimpleName(oldQuery) + " : " + NameUtil.debugSimpleName(oldQuery.eContainer()) + " : " + oldQuery);
+//				System.out.println("key2: " + NameUtil.debugSimpleName(newQuery) + " : " + NameUtil.debugSimpleName(newQuery.eContainer()) + " : " + newQuery);
+//				System.out.println("val2: " + NameUtil.debugSimpleName(oldQuery) + " : " + NameUtil.debugSimpleName(oldQuery.eContainer()) + " : " + oldQuery);
 				assert newQuery.eContainer() != null;
 				assert oldQuery.eContainer() == null;
 				Constraint eContainer = (Constraint) newQuery.eContainer();
@@ -721,8 +721,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		eContainer.setOwnedSpecification(asSynthesizedQuery);
 		Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery2 = newQuery2oldQuery;
 		assert newQuery2oldQuery2 != null;
-	//	System.out.println("key1: " + NameUtil.debugSimpleName(asSynthesizedQuery) + " : " + NameUtil.debugSimpleName(asSynthesizedQuery.eContainer()) + " : " + asSynthesizedQuery);
-	//	System.out.println("val1: " + NameUtil.debugSimpleName(oldQuery) + " : " + NameUtil.debugSimpleName(oldQuery.eContainer()) + " : " + oldQuery);
+//		System.out.println("key1: " + NameUtil.debugSimpleName(asSynthesizedQuery) + " : " + NameUtil.debugSimpleName(asSynthesizedQuery.eContainer()) + " : " + asSynthesizedQuery);
+//		System.out.println("val1: " + NameUtil.debugSimpleName(oldQuery) + " : " + NameUtil.debugSimpleName(oldQuery.eContainer()) + " : " + oldQuery);
 		assert !newQuery2oldQuery2.containsKey(asSynthesizedQuery);
 		assert !newQuery2oldQuery2.containsKey(oldQuery);
 		newQuery2oldQuery2.put(asSynthesizedQuery, oldQuery);
