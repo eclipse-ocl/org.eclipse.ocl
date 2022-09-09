@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConventio
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
@@ -31,6 +32,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
@@ -39,6 +41,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -68,7 +71,12 @@ public class FeatureNameManager extends NestedNameManager
 	/**
 	 * Mapping from an AS Variable to the CG Variable defined in this cgScope.
 	 */
-	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> cgVariables = new HashMap<>();
+	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> asVariable2cgVariable = new HashMap<>();
+
+	/**
+	 * Mapping from an AS Type to the CG Type defined in this cgScope.
+	 */
+	private @Nullable Map<@NonNull Type, @NonNull CGExecutorType> asType2cgType = null;
 
 	public FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
 		this(classNameManager, classNameManager, cgConstraint);
@@ -98,7 +106,7 @@ public class FeatureNameManager extends NestedNameManager
 	}
 
 	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
-		CGVariable old = cgVariables.put(asVariable, cgVariable);
+		CGVariable old = asVariable2cgVariable.put(asVariable, cgVariable);
 		assert old == null;
 	}
 
@@ -115,7 +123,7 @@ public class FeatureNameManager extends NestedNameManager
 	}
 
 	public @Nullable CGVariable basicGetLocalVariable(@NonNull VariableDeclaration asVariable) {
-		return cgVariables.get(asVariable);
+		return asVariable2cgVariable.get(asVariable);
 	}
 
 	public @Nullable CGVariable basicGetModelManagerVariable() {
@@ -123,7 +131,7 @@ public class FeatureNameManager extends NestedNameManager
 	}
 
 	public @Nullable CGParameter basicGetParameter(@NonNull VariableDeclaration asVariable) {		// XXX Migrate to FeatureNameManager
-		CGVariable cgVariable = cgVariables.get(asVariable);
+		CGVariable cgVariable = asVariable2cgVariable.get(asVariable);
 		if (cgVariable instanceof CGParameter) {
 			return (CGParameter)cgVariable;
 		}
@@ -151,7 +159,7 @@ public class FeatureNameManager extends NestedNameManager
 	}
 
 	public @Nullable CGVariable basicGetVariable(@NonNull VariableDeclaration asVariable) {
-		CGVariable cgVariable = cgVariables.get(asVariable);
+		CGVariable cgVariable = asVariable2cgVariable.get(asVariable);
 		if (cgVariable != null) {
 			return cgVariable;
 		}
@@ -356,19 +364,35 @@ public class FeatureNameManager extends NestedNameManager
 		return null;
 	}
 
-//	@Override
-//	public @NonNull CGClass getCGClass() {
-//		return classNameManager.getCGClass();
-//	}
-
-//	@Override
-	public @NonNull CGNamedElement getCGScope() {
-		return cgScope;
+	public @NonNull CGExecutorType getCGExecutorType(@NonNull Type asType) {
+		//	if (parent instanceof FeatureNameManager) {
+		//		return ((FeatureNameManager)parent).getCGExecutorType(asType);
+		//	}
+		//
+		//	It would be better to share multi-uses, but that requires the ownership to move from the calling
+		//	context to a dependency-sequenced list of let-variables to wrap the whole usage.
+		//
+		//	Map<@NonNull Type, @NonNull CGExecutorType> asType2cgType2 = asType2cgType;
+		//	if (asType2cgType2 == null) {
+		//		asType2cgType = asType2cgType2 = new HashMap<>();
+		//	}
+		//	CGExecutorType cgExecutorType = asType2cgType2.get(asType);
+		//	if (cgExecutorType == null) {
+		TypeId typeId = asType.getTypeId();
+		CGExecutorType cgExecutorType = CGModelFactory.eINSTANCE.createCGExecutorType();
+		CGTypeId cgTypeId = analyzer.getCGTypeId(typeId);
+		cgExecutorType.setUnderlyingTypeId(cgTypeId);
+		cgExecutorType.setAst(asType);
+		getNameResolution(cgExecutorType);		// Needs idResolver so cannot be global
+		cgExecutorType.setTypeId(analyzer.getCGTypeId(JavaConstants.CLASS_TYPE_ID));
+		cgExecutorType.getDependsOn().add(cgTypeId);
+		//	asType2cgType2.put(asType, cgExecutorType);
+		//	}
+		return cgExecutorType;
 	}
 
-//	@Override
-	public @NonNull ClassNameManager getClassNameManager() {
-		return classNameManager;
+	public @NonNull CGNamedElement getCGScope() {
+		return cgScope;
 	}
 
 	public @NonNull CGVariable getCGVariable(@NonNull VariableDeclaration asVariable) {
@@ -381,6 +405,10 @@ public class FeatureNameManager extends NestedNameManager
 			}
 		}
 		return cgVariable;
+	}
+
+	public @NonNull ClassNameManager getClassNameManager() {
+		return classNameManager;
 	}
 
 	/**

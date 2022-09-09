@@ -559,26 +559,6 @@ public class CodeGenAnalyzer
 		return cgProperty;
 	} */
 
-	public @NonNull CGExecutorType createExecutorType(@NonNull TypedElement asTypedElement) {
-		Type asType = PivotUtil.getType(asTypedElement);
-		return createExecutorType(asTypedElement, asType);
-	}
-
-	public @NonNull CGExecutorType createExecutorType(@NonNull TypedElement asTypedElement, @NonNull Type asType) {	// ?? in FeatureNameManager
-		TypeId typeId = asType.getTypeId();
-		CGExecutorType cgType = CGModelFactory.eINSTANCE.createCGExecutorType();
-		CGTypeId cgTypeId = getCGTypeId(typeId);
-		cgType.setUnderlyingTypeId(cgTypeId);
-		cgType.setAst(asType);
-	//	globalNameManager.declareLazyName(cgType);
-	//	cgType.setTypeId(getTypeId(JavaConstants.CLASS_TYPE_ID));
-	//	cgType.setTypeId(getTypeId(asType.getTypeId()));
-		useFeatureNameManager(asTypedElement).getNameResolution(cgType);		// Needs idResolver so cannot be global
-		cgType.setTypeId(getCGTypeId(JavaConstants.CLASS_TYPE_ID));
-		cgType.getDependsOn().add(cgTypeId);
-		return cgType;
-	}
-
 	protected @NonNull CGClass createExternalCGClass(@NonNull AS2CGVisitor as2cgVisitor, @NonNull List<@NonNull CGClass> cgExternalClasses, @NonNull Feature asExternalFeature) {
 		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
 		org.eclipse.ocl.pivot.Class asExternalClass = PivotUtil.getOwningClass(asExternalFeature);

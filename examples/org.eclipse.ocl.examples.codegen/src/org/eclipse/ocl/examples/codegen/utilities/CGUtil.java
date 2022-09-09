@@ -633,7 +633,7 @@ public class CGUtil
 	}
 
 	/**
-	 * Insert and return a CGLetExp above cgIn for cgCSE.
+	 * Insert and return a CGLetExp above cgIn for cgVariable.
 	 */
 	public static @NonNull CGLetExp rewriteAsLet(@NonNull CGValuedElement cgIn, @NonNull CGVariable cgVariable) {
 		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
