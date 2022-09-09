@@ -768,7 +768,7 @@
   <eClassifiers xsi:type="ecore:EDataType" name="LibraryOperation" instanceClassName="org.eclipse.ocl.pivot.library.LibraryOperation"/>
   <eClassifiers xsi:type="ecore:EDataType" name="LibraryProperty" instanceClassName="org.eclipse.ocl.pivot.library.LibraryProperty"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Method" instanceClassName="java.lang.reflect.Method"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="NameResolution" instanceClassName="org.eclipse.ocl.examples.codegen.analyzer.NameResolution"
+  <eClassifiers xsi:type="ecore:EDataType" name="NameResolution" instanceClassName="org.eclipse.ocl.examples.codegen.naming.NameResolution"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EClass" name="Nameable" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable"
       abstract="true" interface="true"/>
