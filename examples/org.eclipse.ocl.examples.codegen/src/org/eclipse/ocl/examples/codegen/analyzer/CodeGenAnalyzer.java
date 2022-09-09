@@ -565,10 +565,10 @@ public class CodeGenAnalyzer
 		CGTypeId cgTypeId = getCGTypeId(typeId);
 		cgType.setUnderlyingTypeId(cgTypeId);
 		cgType.setAst(asType);
-	//	getGlobalNameManager().declareLazyName(cgType);
+	//	globalNameManager.declareLazyName(cgType);
 	//	cgType.setTypeId(getTypeId(JavaConstants.CLASS_TYPE_ID));
 	//	cgType.setTypeId(getTypeId(asType.getTypeId()));
-		getGlobalNameManager().getNameResolution(cgType);
+		globalNameManager.getNameResolution(cgType);
 		cgType.setTypeId(getCGTypeId(JavaConstants.CLASS_TYPE_ID));
 		cgType.getDependsOn().add(cgTypeId);
 		return cgType;
@@ -648,17 +648,43 @@ public class CodeGenAnalyzer
 	}
 
 	/**
-	 * Generate / share the CG declaration for asConstraint.
+	 * Generate / share the CG declaration and implementation for asConstraint.
 	 */
-	public @NonNull CGConstraint generateConstraintDeclaration(@NonNull Constraint asConstraint) {
+	public @NonNull CGConstraint generateConstraint(@NonNull Constraint asConstraint) {
 		CGConstraint cgConstraint = asConstraint2cgConstraint.get(asConstraint);
 		if (cgConstraint == null) {
 			cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
 			cgConstraint.setAst(asConstraint);
 		//	cgConstraint.setTypeId(getCGTypeId(asConstraint.getTypeId()));
 			asConstraint2cgConstraint.put(asConstraint, cgConstraint);
+			generateConstraintBody(cgConstraint, asConstraint);
 		}
 		return cgConstraint;
+	}
+
+	protected void generateConstraintBody(@NonNull CGConstraint cgConstraint, @NonNull Constraint asConstraint) {
+		LanguageExpression specification = asConstraint.getOwnedSpecification();
+		if (specification != null) {
+			assert cgConstraint.basicGetNameResolution() == null;
+		//	getNameManager().declarePreferredName(cgConstraint);
+			FeatureNameManager constraintNameManager = getConstraintNameManager(cgConstraint, asConstraint);
+			try {
+				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
+				Variable contextVariable = query.getOwnedContext();
+				if (contextVariable != null) {
+					CGParameter cgParameter = constraintNameManager.getParameter(contextVariable, null);
+					cgConstraint.getParameters().add(cgParameter);
+				}
+				for (@NonNull Variable parameterVariable : ClassUtil.nullFree(query.getOwnedParameters())) {
+					CGParameter cgParameter = constraintNameManager.getParameter(parameterVariable, null);
+					cgConstraint.getParameters().add(cgParameter);
+				}
+				cgConstraint.setBody(createCGElement(CGValuedElement.class, query.getOwnedBody()));
+			} catch (ParserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	protected @NonNull CGIterationCallExp generateIterateDeclaration(@NonNull LoopExp asLoopExp) {
@@ -1151,10 +1177,9 @@ public class CodeGenAnalyzer
 		return codeGenerator;
 	}
 
-	public @NonNull FeatureNameManager getConstraintNameManager(@NonNull CGConstraint cgConstraint) {
+	public @NonNull FeatureNameManager getConstraintNameManager(@NonNull CGConstraint cgConstraint, @NonNull Constraint asConstraint) {
 		FeatureNameManager nameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgConstraint);
 		if (nameManager == null) {			//
-			Constraint asConstraint = CGUtil.getAST(cgConstraint);
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getContainingClass(asConstraint);
 			ClassNameManager classNameManager = getClassNameManager(null, asClass);
 			nameManager = globalNameManager.createFeatureNameManager(classNameManager, cgConstraint);
@@ -1171,7 +1196,7 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull GlobalNameManager getGlobalNameManager() {
-		return ClassUtil.nonNullState(globalNameManager);
+		return globalNameManager;
 	}
 
 	public @Nullable Iterable<@NonNull CGValuedElement> getGlobals() {

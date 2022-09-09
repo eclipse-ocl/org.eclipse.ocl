@@ -546,6 +546,11 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
+	protected @NonNull CodeGenAnalyzer createCodeGenAnalyzer() {
+		return new OCLinEcoreAnalyzer(this);
+	}
+
+	@Override
 	public @NonNull ImportNameManager createImportNameManager() {
 		return new OCLinEcoreImportNameManager();
 	}
