@@ -564,7 +564,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		if (cgShadowExp != null) {
-			CGExecutorType cgExecutorType = context.createExecutorType(element);
+			FeatureNameManager featureNameManager = context.useFeatureNameManager(element);
+			CGExecutorType cgExecutorType = featureNameManager.getCGExecutorType(ClassUtil.nonNullState(element.getType()));
 			cgShadowExp.setExecutorType(cgExecutorType);
 			cgShadowExp.getOwns().add(cgExecutorType);
 			context.initAst(cgShadowExp, element);
@@ -645,13 +646,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGValuedElement visitTypeExp(@NonNull TypeExp asTypeExp) {
+		FeatureNameManager featureNameManager = context.useFeatureNameManager(asTypeExp);
 		Type referredType = PivotUtil.getReferredType(asTypeExp);
 		if (!(referredType instanceof TemplateParameter)) {
 			CGTypeExp cgTypeExp = CGModelFactory.eINSTANCE.createCGTypeExp();
 			context.initAst(cgTypeExp, asTypeExp);
-			CGExecutorType cgExecutorType = context.createExecutorType(asTypeExp, referredType);
+			CGExecutorType cgExecutorType = featureNameManager.getCGExecutorType(referredType);
 			cgTypeExp.setExecutorType(cgExecutorType);
-			cgTypeExp.getOwns().add(cgExecutorType);
+			cgTypeExp.getOwns().add(cgExecutorType);	// FIXME this ownership inhibits FeatureNameManager sharing
 			return cgTypeExp;
 		}
 		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;
@@ -659,7 +661,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		TemplateableElement asTemplateableElement = PivotUtil.getOwningElement(templateSignature);
 		CGValuedElement cgTemplateableElement;
 		if (asTemplateableElement instanceof Type) {
-			cgTemplateableElement = context.createExecutorType(asTypeExp, (Type)asTemplateableElement);
+			cgTemplateableElement = featureNameManager.getCGExecutorType((Type)asTemplateableElement);
 		}
 	//	else if (asTemplateableElement instanceof Operation) {
 	//		cgTemplateableElement = context.createExecutorOperation((Operation)asTemplateableElement);

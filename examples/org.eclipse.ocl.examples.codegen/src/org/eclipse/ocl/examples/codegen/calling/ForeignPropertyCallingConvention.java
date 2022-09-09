@@ -114,7 +114,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	@Override
 	public void createImplementation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty) {
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
-		FeatureNameManager nameManager = analyzer.usePropertyNameManager(cgProperty);
+		FeatureNameManager propertyNameManager = analyzer.usePropertyNameManager(cgProperty);
 		Property asProperty = CGUtil.getAST(cgForeignProperty);
 //		CGParameter cgParameter = asProperty.isIsStatic() ? localContext.getAnyParameter() : localContext.getSelfParameter();
 //		cgForeignProperty.getParameters().add(localContext.getExecutorParameter());
@@ -122,16 +122,16 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGParameter cgSelfParameter = CGUtil.getParametersList(cgForeignProperty).get(1);
 		CGValuedElement cgInitValue = analyzer.getInitExpression(/*cgParameter,*/ asProperty);
 		assert cgInitValue != null;
-		CGVariable modelManagerVariable = nameManager.getModelManagerVariable();
+		CGVariable modelManagerVariable = propertyNameManager.getModelManagerVariable();
 		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 	//	CGTypeId cacheTypeId = context.getTypeId(asProperty.getTypeId());
-		CGExecutorType cgCastType = analyzer.createExecutorType(asProperty);
+		CGExecutorType cgCastType = propertyNameManager.getCGExecutorType(PivotUtil.getType(asProperty));
 		CGNativeOperationCallExp basicGetValueInit = createCGBoxedNativeOperationCallExp(analyzer, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId));
 	//	basicGetValueInit.setTypeId(cacheTypeId);
 		basicGetValueInit.setValueIsBoxed(true);
 		CGValuedElement castBasicGetValueInit = analyzer.createCGCastExp(cgCastType, basicGetValueInit);
-		CGFinalVariable basicGetValueVariable = nameManager.createCGVariable(castBasicGetValueInit);
+		CGFinalVariable basicGetValueVariable = propertyNameManager.createCGVariable(castBasicGetValueInit);
 //		nameManager.declareLazyName(basicGetValueVariable);
 		CGValuedElement cgCondition = analyzer.createCGIsEqual(analyzer.createCGVariableExp(basicGetValueVariable), analyzer.createCGNull());
 		CGNativeOperationCallExp getValue = createCGBoxedNativeOperationCallExp(analyzer, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
