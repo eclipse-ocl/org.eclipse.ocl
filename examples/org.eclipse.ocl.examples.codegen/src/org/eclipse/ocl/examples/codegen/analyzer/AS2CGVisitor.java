@@ -74,7 +74,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
-import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
@@ -239,32 +238,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		if ("Variable".equals(asClass.getName())) {
-			getClass();			// XXX
-		}
-		CGClass cgClass = context.basicGetCGClass(asClass);
-		if (cgClass == null) {
-			cgClass = context.generateClassDeclaration(asClass, null);
-		}
-		// XXX re-execution guard needed
-		context.getClassNameManager(cgClass, asClass);			// Nominally redundant here but needed downstream
-		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
-			CGClass cgSuperClass = context.createCGElement(CGClass.class, asSuperClass);
-			cgClass.getSuperTypes().add(cgSuperClass);
-		}
-		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
-			CGConstraint cgConstraint = context.createCGElement(CGConstraint.class, asConstraint);
-			cgClass.getInvariants().add(cgConstraint);
-		}
-		for (@NonNull Operation asOperation : ClassUtil.nullFree(asClass.getOwnedOperations())) {
-			CGOperation cgOperation = context.createCGElement(CGOperation.class, asOperation);
-			cgClass.getOperations().add(cgOperation);
-		}
-		for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
-			CGProperty cgProperty = context.createCGElement(CGProperty.class, asProperty);
-			cgClass.getProperties().add(cgProperty);
-		}
-		return cgClass;
+		return context.generateClass(asClass);
 	}
 
 	@Override
@@ -421,22 +395,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (asOperation.toString().contains("_unqualified_env_Class")) {
 			getClass();		// XXX
 		}
-		LanguageExpression specification = asOperation.getBodyExpression();
-		CGOperation cgFinalOperation = context.generateOperationDeclaration(asOperation, null, true);
-//		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
-		context.getOperationNameManager(cgFinalOperation, asOperation);
-		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
-			cgFinalOperation.getCallingConvention().createCGBody(context, cgFinalOperation);
-		}
-		CGOperation cgVirtualOperation = context.generateOperationDeclaration(asOperation, null, true);
-		if (cgVirtualOperation != cgFinalOperation) {
-//			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
-			context.getOperationNameManager(cgVirtualOperation, asOperation);
-			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
-				cgVirtualOperation.getCallingConvention().createCGBody(context, cgVirtualOperation);
-			}
-		}
-		return cgFinalOperation;
+		return context.generateOperation(asOperation);
 	}
 
 	@Override
@@ -484,6 +443,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		CGPackage cgPackage = context.basicGetCGPackage(asPackage);
+		assert cgPackage == null;
 		if (cgPackage == null) {
 			cgPackage = context.generatePackageDeclaration(asPackage);
 		//	cgPackage.setAst(asPackage);
