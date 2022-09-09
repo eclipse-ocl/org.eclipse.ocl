@@ -125,7 +125,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGVariable modelManagerVariable = nameManager.getModelManagerVariable();
 		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 	//	CGTypeId cacheTypeId = context.getTypeId(asProperty.getTypeId());
-		CGExecutorType cgCastType = analyzer.createExecutorType(PivotUtil.getType(asProperty));
+		CGExecutorType cgCastType = analyzer.createExecutorType(asProperty);
 		CGNativeOperationCallExp basicGetValueInit = createCGBoxedNativeOperationCallExp(analyzer, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
 			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId));
 	//	basicGetValueInit.setTypeId(cacheTypeId);
