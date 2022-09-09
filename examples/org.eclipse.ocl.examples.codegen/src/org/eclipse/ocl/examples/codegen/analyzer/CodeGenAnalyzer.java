@@ -121,6 +121,7 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -597,12 +598,40 @@ public class CodeGenAnalyzer
 	}
 
 	/**
+	 * Generate the full CG declaration and implementation for asClass.
+	 */
+	public @NonNull CGClass generateClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CGClass cgClass = basicGetCGClass(asClass);
+		if (cgClass == null) {
+			cgClass = generateClassDeclaration(asClass, null);
+		}
+		getClassNameManager(cgClass, asClass);			// Nominally redundant here but needed downstream
+		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
+			CGClass cgSuperClass = generateClassDeclaration(asSuperClass, null);
+			cgClass.getSuperTypes().add(cgSuperClass);
+		}
+		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
+			CGConstraint cgConstraint = createCGElement(CGConstraint.class, asConstraint);
+			cgClass.getInvariants().add(cgConstraint);
+		}
+		for (@NonNull Operation asOperation : ClassUtil.nullFree(asClass.getOwnedOperations())) {
+			CGOperation cgOperation = createCGElement(CGOperation.class, asOperation);
+			cgClass.getOperations().add(cgOperation);
+		}
+		for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
+			CGProperty cgProperty = createCGElement(CGProperty.class, asProperty);
+			cgClass.getProperties().add(cgProperty);
+		}
+		return cgClass;
+	}
+
+	/**
 	 * Generate / share the CG declaration for asClass.
-	 * @param callingConvention
 	 */
 	public @NonNull CGClass generateClassDeclaration(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable ClassCallingConvention callingConvention) {
 		CGClass cgClass = asClass2cgClass.get(asClass);
 		if (cgClass == null) {
+			System.out.println("generateClassDeclaration " + NameUtil.debugSimpleName(asClass) + " " + asClass);
 			if (callingConvention == null) {
 				callingConvention = codeGenerator.getCallingConvention(asClass);
 			}
@@ -808,6 +837,28 @@ public class CodeGenAnalyzer
 		//			cgBuiltInIterationCallExp.setNonNull();
 		cgIterationCallExp.setRequired(isRequired);
 		return cgIterationCallExp;
+	}
+
+	public @NonNull CGOperation generateOperation(@NonNull Operation asOperation) {
+	//	asOperation2cgOperation.get(asOperation);
+		LanguageExpression specification = asOperation.getBodyExpression();
+		CGOperation cgFinalOperation = generateOperationDeclaration(asOperation, null, true);
+		assert cgFinalOperation.getBody() == null;
+//		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
+		getOperationNameManager(cgFinalOperation, asOperation);
+		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
+			cgFinalOperation.getCallingConvention().createCGBody(this, cgFinalOperation);
+		}
+		CGOperation cgVirtualOperation = generateOperationDeclaration(asOperation, null, false);
+		if (cgVirtualOperation != cgFinalOperation) {
+			assert cgVirtualOperation.getBody() == null;
+//			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
+			getOperationNameManager(cgVirtualOperation, asOperation);
+			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
+				cgVirtualOperation.getCallingConvention().createCGBody(this, cgVirtualOperation);
+			}
+		}
+		return cgFinalOperation;
 	}
 
 	public @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
