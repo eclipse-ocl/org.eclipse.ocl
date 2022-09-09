@@ -559,7 +559,12 @@ public class CodeGenAnalyzer
 		return cgProperty;
 	} */
 
-	public @NonNull CGExecutorType createExecutorType(@NonNull Type asType) {
+	public @NonNull CGExecutorType createExecutorType(@NonNull TypedElement asTypedElement) {
+		Type asType = PivotUtil.getType(asTypedElement);
+		return createExecutorType(asTypedElement, asType);
+	}
+
+	public @NonNull CGExecutorType createExecutorType(@NonNull TypedElement asTypedElement, @NonNull Type asType) {	// ?? in FeatureNameManager
 		TypeId typeId = asType.getTypeId();
 		CGExecutorType cgType = CGModelFactory.eINSTANCE.createCGExecutorType();
 		CGTypeId cgTypeId = getCGTypeId(typeId);
@@ -568,7 +573,7 @@ public class CodeGenAnalyzer
 	//	globalNameManager.declareLazyName(cgType);
 	//	cgType.setTypeId(getTypeId(JavaConstants.CLASS_TYPE_ID));
 	//	cgType.setTypeId(getTypeId(asType.getTypeId()));
-		globalNameManager.getNameResolution(cgType);
+		useFeatureNameManager(asTypedElement).getNameResolution(cgType);		// Needs idResolver so cannot be global
 		cgType.setTypeId(getCGTypeId(JavaConstants.CLASS_TYPE_ID));
 		cgType.getDependsOn().add(cgTypeId);
 		return cgType;

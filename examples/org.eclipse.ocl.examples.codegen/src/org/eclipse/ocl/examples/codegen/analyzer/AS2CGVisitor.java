@@ -564,7 +564,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		if (cgShadowExp != null) {
-			CGExecutorType cgExecutorType = context.createExecutorType(ClassUtil.nonNullState(element.getType()));
+			CGExecutorType cgExecutorType = context.createExecutorType(element);
 			cgShadowExp.setExecutorType(cgExecutorType);
 			cgShadowExp.getOwns().add(cgExecutorType);
 			context.initAst(cgShadowExp, element);
@@ -649,7 +649,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (!(referredType instanceof TemplateParameter)) {
 			CGTypeExp cgTypeExp = CGModelFactory.eINSTANCE.createCGTypeExp();
 			context.initAst(cgTypeExp, asTypeExp);
-			CGExecutorType cgExecutorType = context.createExecutorType(referredType);
+			CGExecutorType cgExecutorType = context.createExecutorType(asTypeExp, referredType);
 			cgTypeExp.setExecutorType(cgExecutorType);
 			cgTypeExp.getOwns().add(cgExecutorType);
 			return cgTypeExp;
@@ -659,7 +659,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		TemplateableElement asTemplateableElement = PivotUtil.getOwningElement(templateSignature);
 		CGValuedElement cgTemplateableElement;
 		if (asTemplateableElement instanceof Type) {
-			cgTemplateableElement = context.createExecutorType((Type)asTemplateableElement);
+			cgTemplateableElement = context.createExecutorType(asTypeExp, (Type)asTemplateableElement);
 		}
 	//	else if (asTemplateableElement instanceof Operation) {
 	//		cgTemplateableElement = context.createExecutorOperation((Operation)asTemplateableElement);

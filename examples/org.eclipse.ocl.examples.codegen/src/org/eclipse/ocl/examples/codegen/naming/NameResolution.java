@@ -123,7 +123,7 @@ public class NameResolution
 
 	public void addCGElement(@NonNull CGNamedElement cgElement) {
 	//	assert !inhibitNameResolution || (nameManager instanceof GlobalNameManager);
-		assert !inhibitNameResolution || nameManager.isGlobal();
+	//	assert !inhibitNameResolution || nameManager.isGlobal();
 		if (String.valueOf(primaryElement).contains("oclContainer")) {
 			getClass();		// XXX
 		}
