@@ -945,6 +945,15 @@ public class CodeGenAnalyzer
 		return cgPackage;
 	}
 
+	public @NonNull CGProperty generateProperty(@NonNull Property asProperty) {
+		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);		// XXX redundant
+		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
+	//	getPropertyNameManager(cgProperty);
+		// parse ownedExpression here to simplify createImplementation arguments
+		callingConvention.createImplementation(this, cgProperty);
+		return cgProperty;
+	}
+
 	public @NonNull CGValuedElement generatePropertyCallExp(@Nullable CGValuedElement cgSource, @NonNull PropertyCallExp asPropertyCallExp) {
 		Property asProperty = PivotUtil.getReferredProperty(asPropertyCallExp);
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);
@@ -1101,9 +1110,9 @@ public class CodeGenAnalyzer
 		return cgInvalid;
 	}
 
-	public @NonNull CGIterationCallExp getCGIterationCallExp(@NonNull LoopExp asLoopExp) {
-		return ClassUtil.nonNullState(asLoopExp2cgIterationCallExp.get(asLoopExp));
-	}
+//	public @NonNull CGIterationCallExp getCGIterationCallExp(@NonNull LoopExp asLoopExp) {
+//		return ClassUtil.nonNullState(asLoopExp2cgIterationCallExp.get(asLoopExp));
+//	}
 
 	//	public @NonNull NameManager getNameManager() {
 //		return ClassUtil.nonNullState(nameManager);
@@ -1640,28 +1649,36 @@ public class CodeGenAnalyzer
 		return ClassUtil.nonNullState(featureNameManager);
 	}
 
-	public @NonNull FeatureNameManager useFeatureNameManager(@NonNull TypedElement asTypedElement) {	// OCLExpression or ExpressionInOCL
-		for (EObject eObject = asTypedElement; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof Constraint) {
-				CGConstraint cgConstraint = getCGConstraint((Constraint)eObject);
-				return useConstraintNameManager(cgConstraint);
-			}
-			else if (eObject instanceof LoopExp) {
-				CGIterationCallExp cgIterationCallExp = asLoopExp2cgIterationCallExp.get(eObject);
-				if (cgIterationCallExp != null) {							// may be null if flattened
-					return useIterateNameManager(cgIterationCallExp);
-				}
-			}
-			else if (eObject instanceof Operation) {
-				CGOperation cgOperation = getCGOperation((Operation)eObject);
-				return useOperationNameManager(cgOperation);
-			}
-			else if (eObject instanceof Property) {
-				CGProperty cgProperty = getCGProperty((Property)eObject);
-				return usePropertyNameManager(cgProperty);
+	public @NonNull FeatureNameManager useFeatureNameManager(@NonNull Element asElement) {	// OCLExpression or ExpressionInOCL or Mapping
+		for (EObject eObject = asElement; eObject != null; eObject = eObject.eContainer()) {
+			FeatureNameManager featureNameManager = useFeatureNameManagerInternal(eObject);
+			if (featureNameManager != null) {
+				return featureNameManager;
 			}
 		}
-		throw new IllegalStateException("No FeatureNameManager for " + asTypedElement.eClass().getName() + ": " + asTypedElement);
+		throw new IllegalStateException("No FeatureNameManager for " + asElement.eClass().getName() + ": " + asElement);
+	}
+
+	protected @Nullable FeatureNameManager useFeatureNameManagerInternal(@NonNull EObject eObject) {
+		if (eObject instanceof Constraint) {
+			CGConstraint cgConstraint = getCGConstraint((Constraint)eObject);
+			return useConstraintNameManager(cgConstraint);
+		}
+		else if (eObject instanceof LoopExp) {
+			CGIterationCallExp cgIterationCallExp = asLoopExp2cgIterationCallExp.get(eObject);
+			if (cgIterationCallExp != null) {							// may be null if flattened
+				return useIterateNameManager(cgIterationCallExp);
+			}
+		}
+		else if (eObject instanceof Operation) {
+			CGOperation cgOperation = getCGOperation((Operation)eObject);
+			return useOperationNameManager(cgOperation);
+		}
+		else if (eObject instanceof Property) {
+			CGProperty cgProperty = getCGProperty((Property)eObject);
+			return usePropertyNameManager(cgProperty);
+		}
+		return null;
 	}
 
 	public @NonNull FeatureNameManager useIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {

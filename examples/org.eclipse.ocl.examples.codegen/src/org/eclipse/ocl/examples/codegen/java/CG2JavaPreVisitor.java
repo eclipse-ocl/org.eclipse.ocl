@@ -176,7 +176,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return getTreeNameManager().getStandardLibraryVariable();
 	}
 
-	protected @Nullable NestedNameManager popNameManager() {
+	protected void popNameManager() {
 		FeatureNameManager innerNameManager = (FeatureNameManager)currentNameManager;
 		assert innerNameManager != null;
 		nameManagerStack.pop();
@@ -189,10 +189,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			}
 			treeNameManager = null;
 		}
-		return currentNameManager;
+	//	return currentNameManager;
 	}
 
-	protected @NonNull NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedlement) {
+	protected void pushNameManager(@NonNull CGNamedElement cgNamedlement) {
 		NestedNameManager outerNameManager = currentNameManager;
 		NestedNameManager innerNameManager = globalNameManager.getNestedNameManager(cgNamedlement);
 		currentNameManager = innerNameManager;
@@ -200,7 +200,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		if (outerNameManager == null) {
 			treeNameManager = innerNameManager;
 		}
-		return innerNameManager;
+	//	return innerNameManager;
 	}
 
 	@Override

@@ -94,7 +94,7 @@ public class FeatureNameManager extends NestedNameManager
 		this(classNameManager, classNameManager, cgProperty);
 	}
 
-	private FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parent, @NonNull CGNamedElement cgScope) {
+	protected FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parent, @NonNull CGNamedElement cgScope) {
 		super(classNameManager.getCodeGenerator(), parent, cgScope);
 		this.classNameManager = classNameManager;
 		this.cgScope = cgScope;
