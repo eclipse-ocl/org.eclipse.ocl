@@ -106,6 +106,7 @@ import org.eclipse.ocl.examples.codegen.java.operation.XorOperationHandler;
 import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.naming.NameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.naming.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -753,7 +754,12 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		NestedNameManager nameManager = getNameManager();
 		String variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 		if (variantResolvedName == null) {
-			nameManager = getAnalyzer().getGlobalNameManager().useNestedNameManager(cgElement);
+			NameManager basicUseSelfNameManager = globalNameManager.basicUseSelfNameManager(cgElement);
+			if (basicUseSelfNameManager == null) {
+				basicUseSelfNameManager = globalNameManager.basicUseSelfNameManager(cgElement);
+			}
+		//	nameManager = basicUseSelfNameManager;
+			nameManager = globalNameManager.useSelfNestedNameManager(cgElement);
 			variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 			assert variantResolvedName != null;
 		}
