@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.ExecutorShadowPartCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
@@ -462,12 +461,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
-		CGProperty cgProperty = context.generatePropertyDeclaration(asProperty, null);		// XXX redundant
-		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-	//	context.getPropertyNameManager(cgProperty);
-		// parse ownedExpression here to simplify createImplementation arguments
-		callingConvention.createImplementation(context, cgProperty);
-		return cgProperty;
+		return context.generateProperty(asProperty);
 	}
 
 	@Override
