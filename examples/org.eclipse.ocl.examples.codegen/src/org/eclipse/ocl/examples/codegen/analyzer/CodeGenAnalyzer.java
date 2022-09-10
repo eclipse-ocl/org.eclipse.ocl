@@ -858,6 +858,7 @@ public class CodeGenAnalyzer
 				//				cgBuiltInIterationCallExp.setNonNull();
 				setNullableIterator(cgAccumulator, accumulator);
 				((CGBuiltInIterationCallExp)cgIterationCallExp).setAccumulator(cgAccumulator);
+				globalNameManager.addSelfNameManager(cgAccumulator, iteratorNameManager);
 			}
 			else {
 				((CGLibraryIterateCallExp)cgIterationCallExp).setResult(cgAccumulator);
@@ -880,6 +881,7 @@ public class CodeGenAnalyzer
 						cgAccumulator.setNonInvalid();
 					}
 					cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
+					globalNameManager.addSelfNameManager(cgAccumulator, iteratorNameManager);
 				}
 			}
 		}

@@ -538,10 +538,10 @@ public class GlobalNameManager extends AbstractNameManager
 		return "globals";
 	}
 
-//	public @NonNull ClassNameManager useClassNameManager(@NonNull CGClass cgClass) {
-//		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetChildNameManager(cgClass);
-//		return ClassUtil.nonNullState(classNameManager);
-//	}
+	public @NonNull ClassNameManager useClassNameManager(@NonNull CGClass cgClass) {
+		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetChildNameManager(cgClass);
+		return ClassUtil.nonNullState(classNameManager);
+	}
 
 //	public @NonNull FeatureNameManager useConstraintNameManager(@NonNull CGConstraint cgConstraint) {
 //		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgConstraint);
