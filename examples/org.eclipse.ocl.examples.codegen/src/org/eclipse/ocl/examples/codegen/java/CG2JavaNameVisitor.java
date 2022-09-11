@@ -62,7 +62,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 	}
 
 	protected @NonNull NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedElement) {
-		NestedNameManager nameManager = globalNameManager.getNestedNameManager(cgNamedElement);
+		NestedNameManager nameManager = globalNameManager.getChildNameManager(cgNamedElement);
 		currentNameManager = nameManager;
 		nameManagerStack.push(nameManager);
 		return nameManager;
@@ -149,11 +149,11 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 		NestedNameManager outerNameManager = getNameManager();
 		if (cgSource != null) {
 			if (!cgSource.isGlobal()) {
-				globalNameManager.addNameManager(cgSource, outerNameManager);		// source must be declared in outer namespace
+				globalNameManager.addSelfNameManager(cgSource, outerNameManager);		// source must be declared in outer namespace
 			}
 			cgSource.accept(this);
 		}
-		globalNameManager.addNameManager(cgIterationCallExp, outerNameManager);	// result must be declared in outer namespace
+		globalNameManager.addSelfNameManager(cgIterationCallExp, outerNameManager);	// result must be declared in outer namespace
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getBODY_NameVariant());
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getIMPL_NameVariant());
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getMGR_NameVariant());
@@ -172,7 +172,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 		if (cgIterationCallExp instanceof CGBuiltInIterationCallExp) {
 			CGIterator cgAccumulator = ((CGBuiltInIterationCallExp)cgIterationCallExp).getAccumulator();
 			if (cgAccumulator != null) {
-				globalNameManager.addNameManager(cgAccumulator, innerNameManager);
+				globalNameManager.addSelfNameManager(cgAccumulator, innerNameManager);
 				cgAccumulator.accept(this);
 			}
 		}

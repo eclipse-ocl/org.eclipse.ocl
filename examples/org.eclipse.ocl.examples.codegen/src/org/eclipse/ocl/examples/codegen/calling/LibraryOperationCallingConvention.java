@@ -163,7 +163,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 	//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
 		Operation asOperation = CGUtil.getAST(cgOperation);
-		FeatureNameManager nameManager = analyzer.useOperationNameManager(cgOperation);
+		FeatureNameManager operationNameManager = analyzer.useOperationNameManager(cgOperation);
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)analyzer.getMetamodelManager().getImplementation(asOperation);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
@@ -171,23 +171,23 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
 		int i = asOperation.isIsStatic() ? 0 : -1;
 		if (Modifier.isStatic(jMethod.getModifiers())) {
-			cgParameters.add(nameManager.getThisParameter());
+			cgParameters.add(operationNameManager.getThisParameter());
 		}
 		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 			if (jParameterType == Executor.class) {
-				cgParameters.add(nameManager.getExecutorParameter());
+				cgParameters.add(operationNameManager.getExecutorParameter());
 			}
 			else if (jParameterType == TypeId.class) {
-				cgParameters.add(nameManager.getTypeIdParameter());
+				cgParameters.add(operationNameManager.getTypeIdParameter());
 			}
 			else if (jParameterType == Object.class)  {
 				if (i < 0) {
 					CGParameter selfParameter;
 					if (expressionInOCL != null) {
-						selfParameter = nameManager.getSelfParameter(PivotUtil.getOwnedContext(expressionInOCL));
+						selfParameter = operationNameManager.getSelfParameter(PivotUtil.getOwnedContext(expressionInOCL));
 					}
 					else {
-						selfParameter = nameManager.getSelfParameter();
+						selfParameter = operationNameManager.getSelfParameter();
 					}
 					if (analyzer.hasOclVoidOperation(asOperation.getOperationId())) {
 						selfParameter.setRequired(false);
@@ -197,7 +197,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				}
 				else {
 					Parameter aParameter = asParameters.get(i++);
-					CGParameter cgParameter = nameManager.getParameter(aParameter, (String)null);
+					CGParameter cgParameter = operationNameManager.getParameter(aParameter, (String)null);
 					cgParameters.add(cgParameter);
 				}
 			}

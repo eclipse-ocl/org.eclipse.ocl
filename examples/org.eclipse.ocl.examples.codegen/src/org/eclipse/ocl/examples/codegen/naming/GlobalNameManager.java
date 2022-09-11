@@ -145,12 +145,12 @@ public class GlobalNameManager extends AbstractNameManager
 	 * The name manager introduced by each scope defining elements, such as CGClass, CGOperation or CGIteratorExp for use
 	 * by its hierarchically nested children. The name of the scope itself is defined in the parent name manager.
 	 */
-	public final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgScopingElement2nestedNameManager = new HashMap<>();	// XXX not public
+	public final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgElement2childNameManager = new HashMap<>();	// XXX not public
 
 	/**
-	 * The name manager in which the name(s) of each element is defined.
+	 * The name manager in which the name(s) of this element is managed.
 	 */
-	public final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgElement2nameManager  = new HashMap<>();	// XXX not public
+	public final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgElement2selfNameManager  = new HashMap<>();	// XXX not public
 
 	//
 	//	Built-in special purpose names are dynamically reserved using a static value as the hint.
@@ -205,25 +205,25 @@ public class GlobalNameManager extends AbstractNameManager
 		this.valueName = declareGlobalName(null, "value");
 	}
 
+	/**
+	 * Specify childNameManager as the NameManager in which the names scoped by cgScopingElement are maintained.
+	 * (The name of cgScopingElement itself is maintained in the parent of childNameManager.)
+	 */
+	public void addChildNameManager(@NonNull CGNamedElement cgScopingElement, @NonNull NestedNameManager childNameManager) {
+		System.out.println("addChildNameManager " + NameUtil.debugSimpleName(cgScopingElement) + " => " + NameUtil.debugSimpleName(childNameManager)+ " : " + cgScopingElement);
+		NestedNameManager old = cgElement2childNameManager.put(cgScopingElement, childNameManager);
+		assert old == null;
+	//	assert nestedNameManager.getCGScope() == cgScopingElement;		-- but still under construction
+	//	old = asScopingElement2nestedNameManager.put(CGUtil.getAST(cgScopingElement), nestedNameManager);
+	//	assert old == null;
+	}
+
 	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
 		globals.add(cgGlobal);
 	}
 
 	public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String className) {
 		return importNameManager.addImport(isRequired, className);
-	}
-
-	/**
-	 * Specify nestedNameManager as the NameManager in which cgElement is maintained.
-	 * This must be used to impose the appropriate parent/child NameManager for an inline/out-of-line Loop.
-	 * It may be used to accelerate NameManager location.
-	 */
-	public void addNameManager(@NonNull CGNamedElement cgElement, @NonNull NestedNameManager nameManager) {
-		if (cgElement instanceof CGBuiltInIterationCallExp) {
-			getClass();		// XXX
-		}
-		NameManager old = cgElement2nameManager.put(cgElement, nameManager);
-		assert (old == null) || (old == nameManager);
 	}
 
 	public @NonNull NameVariant addNameVariantPreferred(@NonNull String name) {
@@ -239,16 +239,16 @@ public class GlobalNameManager extends AbstractNameManager
 	}
 
 	/**
-	 * Specify nestedNameManager as the NameManager in which the names scoped by cgScopingElement are maintained.
-	 * (The name of cgScopingElement itself is maintained in the parent of nestedNameManager.)
+	 * Specify nestedNameManager as the NameManager in which cgElement is maintained.
+	 * This must be used to impose the appropriate parent/child NameManager for an inline/out-of-line Loop.
+	 * It may be used to accelerate NameManager location.
 	 */
-	public void addScopingElement2NameManager(@NonNull CGNamedElement cgScopingElement, @NonNull NestedNameManager nestedNameManager) {
-		System.out.println("addScopingElement2NameManager " + NameUtil.debugSimpleName(cgScopingElement) + " => " + NameUtil.debugSimpleName(nestedNameManager)+ " : " + cgScopingElement);
-		NestedNameManager old = cgScopingElement2nestedNameManager.put(cgScopingElement, nestedNameManager);
-		assert old == null;
-	//	assert nestedNameManager.getCGScope() == cgScopingElement;		-- but still under construction
-	//	old = asScopingElement2nestedNameManager.put(CGUtil.getAST(cgScopingElement), nestedNameManager);
-	//	assert old == null;
+	public void addSelfNameManager(@NonNull CGNamedElement cgElement, @NonNull NestedNameManager nameManager) {
+		if (cgElement instanceof CGBuiltInIterationCallExp) {
+			getClass();		// XXX
+		}
+		NameManager old = cgElement2selfNameManager.put(cgElement, nameManager);
+		assert (old == null) || (old == nameManager);
 	}
 
 	public void assignNames(@NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
@@ -256,13 +256,17 @@ public class GlobalNameManager extends AbstractNameManager
 		assignNestedNames(nameManager2namedElements);
 	}
 
-	public @Nullable NestedNameManager basicGetNestedNameManager(@NonNull CGNamedElement cgScopingElement) {
-		return cgScopingElement2nestedNameManager.get(cgScopingElement);
+	public @Nullable NestedNameManager basicGetChildNameManager(@NonNull CGNamedElement cgScopingElement) {
+		return cgElement2childNameManager.get(cgScopingElement);
+	}
+
+	public @Nullable NestedNameManager basicGetSelfNameManager(@NonNull CGNamedElement cgElement) {
+		return cgElement2selfNameManager.get(cgElement);
 	}
 
 	public @NonNull ClassNameManager createClassNameManager(@NonNull ClassableNameManager outerNameManager, @NonNull CGClass cgClass) {
 		ClassNameManager nestedNameManager = codeGenerator.createClassNameManager(outerNameManager, cgClass);
-		assert cgScopingElement2nestedNameManager.get(cgClass) == nestedNameManager;
+		assert cgElement2childNameManager.get(cgClass) == nestedNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
 		return nestedNameManager;
@@ -273,7 +277,7 @@ public class GlobalNameManager extends AbstractNameManager
 			getClass();		// XXX
 		}
 		FeatureNameManager nestedNameManager = codeGenerator.createFeatureNameManager(classNameManager, cgConstraint);
-		assert cgScopingElement2nestedNameManager.get(cgConstraint) == nestedNameManager;
+		assert cgElement2childNameManager.get(cgConstraint) == nestedNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
 		return nestedNameManager;
@@ -284,7 +288,7 @@ public class GlobalNameManager extends AbstractNameManager
 			getClass();		// XXX
 		}
 		FeatureNameManager nestedNameManager = codeGenerator.createFeatureNameManager(classNameManager, parentNameManager, cgIterationCallExp);
-		assert cgScopingElement2nestedNameManager.get(cgIterationCallExp) == nestedNameManager;
+		assert cgElement2childNameManager.get(cgIterationCallExp) == nestedNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
 		return nestedNameManager;
@@ -295,7 +299,7 @@ public class GlobalNameManager extends AbstractNameManager
 			getClass();		// XXX
 		}
 		FeatureNameManager nestedNameManager = codeGenerator.createFeatureNameManager(classNameManager, cgOperation);
-		assert cgScopingElement2nestedNameManager.get(cgOperation) == nestedNameManager;
+		assert cgElement2childNameManager.get(cgOperation) == nestedNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
 		return nestedNameManager;
@@ -306,7 +310,7 @@ public class GlobalNameManager extends AbstractNameManager
 			getClass();		// XXX
 		}
 		FeatureNameManager nestedNameManager = codeGenerator.createFeatureNameManager(classNameManager, cgProperty);
-		assert cgScopingElement2nestedNameManager.get(cgProperty) == nestedNameManager;
+		assert cgElement2childNameManager.get(cgProperty) == nestedNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
 		return nestedNameManager;
@@ -314,7 +318,7 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public @NonNull PackageNameManager createPackageNameManager(@Nullable PackageNameManager outerNameManager, @NonNull CGPackage cgPackage) {
 		PackageNameManager packageNameManager = codeGenerator.createPackageNameManager(outerNameManager, cgPackage);
-		assert cgScopingElement2nestedNameManager.get(cgPackage) == packageNameManager;
+		assert cgElement2childNameManager.get(cgPackage) == packageNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
 		return packageNameManager;
@@ -345,13 +349,12 @@ public class GlobalNameManager extends AbstractNameManager
 		return anyName;
 	}
 
-	public @Nullable EClass getEClass(@NonNull ElementId elementId) {
-		IdVisitor<@Nullable EClass> id2EClassVisitor = codeGenerator.getId2EClassVisitor();
-		return elementId.accept(id2EClassVisitor);
+	public @NonNull NestedNameManager getChildNameManager(@NonNull CGNamedElement cgScopingElement) {
+		return ClassUtil.nonNullState(basicGetChildNameManager(cgScopingElement));
 	}
 
 	public @NonNull ClassNameManager getClassNameManager(@NonNull CGClass cgClass) {
-		return (ClassNameManager)getNestedNameManager(cgClass);
+		return (ClassNameManager)getChildNameManager(cgClass);
 	}
 
 	public @NonNull JavaCodeGenerator getCodeGenerator() {
@@ -361,6 +364,11 @@ public class GlobalNameManager extends AbstractNameManager
 	@Override
 	protected @NonNull Context getContext() {
 		return context;
+	}
+
+	public @Nullable EClass getEClass(@NonNull ElementId elementId) {
+		IdVisitor<@Nullable EClass> id2EClassVisitor = codeGenerator.getId2EClassVisitor();
+		return elementId.accept(id2EClassVisitor);
 	}
 
 	public @NonNull String getEvaluateName() {
@@ -458,10 +466,6 @@ public class GlobalNameManager extends AbstractNameManager
 			}
 		}
 		return nameResolution;
-	}
-
-	public @NonNull NestedNameManager getNestedNameManager(@NonNull CGNamedElement cgScopingElement) {
-		return ClassUtil.nonNullState(basicGetNestedNameManager(cgScopingElement));
 	}
 
 	public @NonNull String getReservedName(@NonNull String name) {

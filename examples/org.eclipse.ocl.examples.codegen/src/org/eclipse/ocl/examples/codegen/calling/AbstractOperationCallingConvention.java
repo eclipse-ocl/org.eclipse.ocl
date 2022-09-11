@@ -50,17 +50,17 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public abstract class AbstractOperationCallingConvention implements OperationCallingConvention
 {
 	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
-		FeatureNameManager nameManager = analyzer.useOperationNameManager(cgOperation);
+		FeatureNameManager operationNameManager = analyzer.useOperationNameManager(cgOperation);
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 	//	assert isStatic(cgOperation) == (contextVariable == null);
 		if (contextVariable != null) {
-			cgParameters.add(nameManager.getSelfParameter(contextVariable));
+			cgParameters.add(operationNameManager.getSelfParameter(contextVariable));
 		}
 		boolean hasExternalNames = cgOperation instanceof CGEcoreOperation;		// Ecore has genmodel-defined names
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {
 			String name = hasExternalNames ? parameterVariable.getName() : null;
-			CGParameter cgParameter = nameManager.getParameter(parameterVariable, name);
+			CGParameter cgParameter = operationNameManager.getParameter(parameterVariable, name);
 			cgParameters.add(cgParameter);
 		}
 	}
@@ -222,11 +222,11 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 //	}
 //
 //	public void createCGParameters(@NonNull NestedNameManager nameManager, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
-		FeatureNameManager nameManager = analyzer.useOperationNameManager(cgOperation);
+		FeatureNameManager operationNameManager = analyzer.useOperationNameManager(cgOperation);
 		if (bodyExpression != null) {
 			Variable contextVariable = bodyExpression.getOwnedContext();
 			if (contextVariable != null) {
-				CGParameter cgParameter = nameManager.getSelfParameter(contextVariable);
+				CGParameter cgParameter = operationNameManager.getSelfParameter(contextVariable);
 				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 				//			cgParameter.setRequired(contextVariable.isIsRequired());
 				cgOperation.getParameters().add(cgParameter);
@@ -234,10 +234,10 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			for (@NonNull Variable parameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
 				CGParameter cgParameter;
 				if (cgOperation instanceof CGEcoreOperation) {		// XXX use CallingConvention
-					cgParameter = nameManager.getParameter(parameterVariable, parameterVariable.getName());
+					cgParameter = operationNameManager.getParameter(parameterVariable, parameterVariable.getName());
 				}
 				else {
-					cgParameter = nameManager.getParameter(parameterVariable, (String)null);
+					cgParameter = operationNameManager.getParameter(parameterVariable, (String)null);
 				}
 				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 				//			cgParameter.setRequired(parameterVariable.isIsRequired());
@@ -247,13 +247,13 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		else {
 			Operation asOperation = CGUtil.getAST(cgOperation);
 			if (!asOperation.isIsStatic()) {
-				CGParameter cgParameter = nameManager.getSelfParameter();
+				CGParameter cgParameter = operationNameManager.getSelfParameter();
 				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 				//			cgParameter.setRequired(contextVariable.isIsRequired());
 				cgOperation.getParameters().add(cgParameter);
 			}
 			for (@NonNull Parameter parameterVariable : ClassUtil.nullFree(asOperation.getOwnedParameters())) {
-				CGParameter cgParameter = nameManager.getParameter(parameterVariable, (String)null);
+				CGParameter cgParameter = operationNameManager.getParameter(parameterVariable, (String)null);
 				cgOperation.getParameters().add(cgParameter);
 			}
 		}

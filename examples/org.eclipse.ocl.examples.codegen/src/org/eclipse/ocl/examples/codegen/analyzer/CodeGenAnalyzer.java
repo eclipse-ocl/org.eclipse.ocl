@@ -1179,7 +1179,7 @@ public class CodeGenAnalyzer
 			}
 		}
 		assert cgClass.getAst() == asClass;
-		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetNestedNameManager(cgClass);
+		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetChildNameManager(cgClass);
 		if (classNameManager == null) {
 			EObject eContainer = asClass.eContainer();
 			ClassableNameManager classableNameManager = null;
@@ -1200,7 +1200,7 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull FeatureNameManager getConstraintNameManager(@NonNull CGConstraint cgConstraint, @NonNull Constraint asConstraint) {
-		FeatureNameManager nameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgConstraint);
+		FeatureNameManager nameManager = (FeatureNameManager) globalNameManager.basicGetChildNameManager(cgConstraint);
 		if (nameManager == null) {			//
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getContainingClass(asConstraint);
 			ClassNameManager classNameManager = getClassNameManager(null, asClass);
@@ -1303,7 +1303,7 @@ public class CodeGenAnalyzer
 			}
 		}
 		assert cgIterationCallExp.getAst() == asLoopExp;
-		FeatureNameManager iterateNameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgIterationCallExp);
+		FeatureNameManager iterateNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgIterationCallExp);
 		if (iterateNameManager == null) {			//
 			FeatureNameManager featureNameManager = useFeatureNameManager((TypedElement)asLoopExp.eContainer());
 			ClassNameManager classNameManager = featureNameManager.getClassNameManager();
@@ -1415,7 +1415,7 @@ public class CodeGenAnalyzer
 			}
 		}
 		assert cgOperation.getAst() == asOperation;
-		FeatureNameManager operationNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgOperation);
+		FeatureNameManager operationNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgOperation);
 		if (operationNameManager == null) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
 			ClassNameManager classNameManager = getClassNameManager(null, asClass);
@@ -1435,7 +1435,7 @@ public class CodeGenAnalyzer
 			}
 		}
 		assert cgPackage.getAst() == asPackage;
-		PackageNameManager packageNameManager = (PackageNameManager)globalNameManager.basicGetNestedNameManager(cgPackage);
+		PackageNameManager packageNameManager = (PackageNameManager)globalNameManager.basicGetChildNameManager(cgPackage);
 		if (packageNameManager == null) {
 			org.eclipse.ocl.pivot.Package asParentPackage = asPackage.getOwningPackage();
 			if (asParentPackage != null) {
@@ -1460,7 +1460,7 @@ public class CodeGenAnalyzer
 			}
 		}
 		assert cgProperty.getAst() == asProperty;
-		FeatureNameManager propertyNameManager = (FeatureNameManager) globalNameManager.basicGetNestedNameManager(cgProperty);
+		FeatureNameManager propertyNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgProperty);
 		if (propertyNameManager == null) {			//
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
 			ClassNameManager classNameManager = getClassNameManager(null, asClass);
@@ -1616,21 +1616,21 @@ public class CodeGenAnalyzer
 		cgIterator.setNonInvalid();
 	}
 
-	public @NonNull ClassNameManager useClassNameManager(@NonNull CGClass cgClass) {
-		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetNestedNameManager(cgClass);
-		return ClassUtil.nonNullState(classNameManager);
-	}
+//	public @NonNull ClassNameManager useClassNameManager(@NonNull CGClass cgClass) {
+//		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetChildNameManager(cgClass);
+//		return ClassUtil.nonNullState(classNameManager);
+//	}
 
-	public @NonNull FeatureNameManager useConstraintNameManager(@NonNull CGConstraint cgConstraint) {
-		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgConstraint);
-		return ClassUtil.nonNullState(featureNameManager);
-	}
+//	public @NonNull FeatureNameManager useConstraintNameManager(@NonNull CGConstraint cgConstraint) {
+//		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgConstraint);
+//		return ClassUtil.nonNullState(featureNameManager);
+//	}
 
 	public @NonNull FeatureNameManager useFeatureNameManager(@NonNull Element asElement) {	// OCLExpression or ExpressionInOCL or Mapping
 		for (EObject eObject = asElement; eObject != null; eObject = eObject.eContainer()) {
 			CGNamedElement cgElement = asElement2cgElement.get(eObject);
 			if (cgElement != null) {
-				FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgElement);
+				FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgElement);
 				if (featureNameManager != null) {
 					return ClassUtil.nonNullState(featureNameManager);
 				}
@@ -1643,23 +1643,26 @@ public class CodeGenAnalyzer
 	 * Return the NestedNameManager is which cgNamedElement should be defined or null if global.
 	 */
 	public @Nullable NestedNameManager basicFindNestedNameManager(@NonNull CGNamedElement cgNamedElement) {
-		NameManager nameManager = globalNameManager.cgElement2nameManager.get(cgNamedElement);
+		NestedNameManager nameManager = globalNameManager.cgElement2selfNameManager.get(cgNamedElement);
 		if (nameManager != null) {
-			return nameManager instanceof NestedNameManager ? (NestedNameManager)nameManager : null;
+			return nameManager;
 		}
-		assert nameManager == null;				// Don't expect to search for globals
-		NestedNameManager nestedNameManager = null;
 		for (CGElement cgElement = cgNamedElement; cgElement != null; cgElement = cgElement.getParent()) {
-			nameManager = globalNameManager.cgElement2nameManager.get(cgElement);
-			if (nameManager instanceof NestedNameManager) {
-				nestedNameManager = (NestedNameManager)nameManager;
-				globalNameManager.cgElement2nameManager.put(cgNamedElement, nestedNameManager);		// ?? are lookups frequent enough to merit caching ??
-				return nestedNameManager;
+			nameManager = globalNameManager.cgElement2selfNameManager.get(cgElement);
+			if (nameManager != null) {
+				globalNameManager.cgElement2selfNameManager.put(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
+			//	NamedElement asElement = CGUtil.getAST(cgNamedElement);
+			//	FeatureNameManager featureNameManager = useFeatureNameManager(asElement);
+			//	assert featureNameManager == nameManager;
+				return nameManager;
 			}
-			nestedNameManager = globalNameManager.cgScopingElement2nestedNameManager.get(cgElement);
-			if (nestedNameManager != null) {
-				globalNameManager.cgElement2nameManager.put(cgNamedElement, nestedNameManager);		// ?? are lookups frequent enough to merit caching ??
-				return nestedNameManager;
+			nameManager = globalNameManager.cgElement2childNameManager.get(cgElement);
+			if (nameManager != null) {
+				globalNameManager.cgElement2selfNameManager.put(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
+			//	NamedElement asElement = CGUtil.getAST(cgNamedElement);
+			//	FeatureNameManager featureNameManager = useFeatureNameManager(asElement);
+			//	assert featureNameManager == nameManager;
+				return nameManager;
 			}
 		}
 		return null;
@@ -1702,10 +1705,10 @@ public class CodeGenAnalyzer
 		return null;
 	} */
 
-	public @NonNull FeatureNameManager useIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
-		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgIterationCallExp);
-		return ClassUtil.nonNullState(featureNameManager);
-	}
+//	public @NonNull FeatureNameManager useIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
+//		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgIterationCallExp);
+//		return ClassUtil.nonNullState(featureNameManager);
+//	}
 
 /*	public @NonNull NestedNameManager useNestedNameManager(@NonNull TypedElement asTypedElement) {	// OCLExpression or ExpressionInOCL
 		for (EObject eObject = asTypedElement; eObject != null; eObject = eObject.eContainer()) {
@@ -1736,12 +1739,12 @@ public class CodeGenAnalyzer
 	} */
 
 	public @NonNull FeatureNameManager useOperationNameManager(@NonNull CGOperation cgOperation) {
-		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgOperation);
+		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgOperation);
 		return ClassUtil.nonNullState(featureNameManager);
 	}
 
 	public @NonNull FeatureNameManager usePropertyNameManager(@NonNull CGProperty cgProperty) {
-		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgProperty);
+		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgProperty);
 		return ClassUtil.nonNullState(featureNameManager);
 	}
 }
