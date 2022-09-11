@@ -23,6 +23,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -58,6 +59,7 @@ public abstract class NestedNameManager extends AbstractNameManager
 		this.parent = parent;
 		// XXX	assert at most one ancestral class
 		parent.addChild(this);
+		globalNameManager.addScopingElement2NameManager(cgScope, this);
 	}
 
 	public void addNameVariant(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
@@ -137,11 +139,9 @@ public abstract class NestedNameManager extends AbstractNameManager
 		return codeGenerator.getAnalyzer();
 	}
 
-//	public abstract @NonNull CGClass getCGClass();
+	public abstract @NonNull NamedElement getASScope();
 
-//	public abstract @NonNull CGNamedElement getCGScope();
-
-//	public abstract @NonNull ClassNameManager getClassNameManager();
+	public abstract @NonNull CGNamedElement getCGScope();
 
 	/**
 	 * Return the NestedNameManager that can be the parent of another CGClass. Returns null for global.
@@ -191,5 +191,11 @@ public abstract class NestedNameManager extends AbstractNameManager
 		assert nameVariant2name != null;
 		String old = nameVariant2name.put(nameVariant, variantName);
 		assert old == null;
+	}
+
+	@Override
+	public @NonNull String toString() {
+		NamedElement asScope = getASScope();
+		return asScope.eClass().getName() + "-" + asScope;
 	}
 }

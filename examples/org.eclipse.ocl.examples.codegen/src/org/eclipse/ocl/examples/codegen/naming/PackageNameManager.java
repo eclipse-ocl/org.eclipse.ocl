@@ -12,9 +12,11 @@ package org.eclipse.ocl.examples.codegen.naming;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.NamedElement;
 
 /**
  * A PackageNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
@@ -39,14 +41,19 @@ public class PackageNameManager extends NestedNameManager implements ClassableNa
 		this.asPackage = CGUtil.getAST(cgPackage);
 	}
 
+	@Override
+	public @NonNull NamedElement getASScope() {
+		return asPackage;
+	}
+
 	public @NonNull CGPackage getCGPackage() {
 		return cgPackage;
 	}
 
-//	@Override
-//	public @NonNull PackageNameManager getClassNameManager() {
-//		return this;
-//	}
+	@Override
+	public @NonNull CGNamedElement getCGScope() {
+		return cgPackage;
+	}
 
 	/**
 	 * Return the NestedNameManager that can be the parent of another CGClass. Returns null for global.
@@ -65,10 +72,5 @@ public class PackageNameManager extends NestedNameManager implements ClassableNa
 	@Override
 	public boolean isGlobal() {
 		return true;
-	}
-
-	@Override
-	public @NonNull String toString() {
-		return "Package-" + asPackage;
 	}
 }
