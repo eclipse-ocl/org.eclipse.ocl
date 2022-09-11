@@ -1627,15 +1627,18 @@ public class CodeGenAnalyzer
 
 	public @NonNull FeatureNameManager useFeatureNameManager(@NonNull Element asElement) {	// OCLExpression or ExpressionInOCL or Mapping
 		for (EObject eObject = asElement; eObject != null; eObject = eObject.eContainer()) {
-			FeatureNameManager featureNameManager = useFeatureNameManagerInternal(eObject);
-			if (featureNameManager != null) {
-				return featureNameManager;
+			CGNamedElement cgElement = asElement2cgElement.get(eObject);
+			if (cgElement != null) {
+				FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgElement);
+				if (featureNameManager != null) {
+					return ClassUtil.nonNullState(featureNameManager);
+				}
 			}
 		}
 		throw new IllegalStateException("No FeatureNameManager for " + asElement.eClass().getName() + ": " + asElement);
 	}
 
-	protected @Nullable FeatureNameManager useFeatureNameManagerInternal(@NonNull EObject eObject) {
+/*	protected @Nullable FeatureNameManager useFeatureNameManagerInternal(@NonNull EObject eObject) {
 		if (eObject instanceof Constraint) {
 			CGConstraint cgConstraint = getCGConstraint((Constraint)eObject);
 			return useConstraintNameManager(cgConstraint);
@@ -1655,7 +1658,7 @@ public class CodeGenAnalyzer
 			return usePropertyNameManager(cgProperty);
 		}
 		return null;
-	}
+	} */
 
 	public @NonNull FeatureNameManager useIterateNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
 		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgIterationCallExp);
