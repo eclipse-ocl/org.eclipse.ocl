@@ -95,6 +95,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -201,34 +202,9 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> externalFeatures = null;
 
 	/**
-	 * Mapping from each AS Class to its corresponding CGClass.
+	 * Mapping from each AS NamedElement to its corresponding CGNamedElement.
 	 */
-	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CGClass> asClass2cgClass = new HashMap<>();
-
-	/**
-	 * Mapping from each AS Constraint to its corresponding CGConstraint.
-	 */
-	private final @NonNull Map<@NonNull Constraint, @NonNull CGConstraint> asConstraint2cgConstraint = new HashMap<>();
-
-	/**
-	 * Mapping from each AS LoopExp to its corresponding CGIterationCallExp.
-	 */
-	private final @NonNull Map<@NonNull LoopExp, @NonNull CGIterationCallExp> asLoopExp2cgIterationCallExp = new HashMap<>();
-
-	/**
-	 * Mapping from each AS Operation to its corresponding CGOperation.
-	 */
-	private final @NonNull Map<@NonNull Operation, @NonNull CGOperation> asOperation2cgOperation = new HashMap<>();
-
-	/**
-	 * Mapping from each AS Package to its corresponding CGPackage.
-	 */
-	private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull CGPackage> asPackage2cgPackage = new HashMap<>();
-
-	/**
-	 * Mapping from each AS Property to its corresponding CGProperty.
-	 */
-	private final @NonNull Map<@NonNull Property, @NonNull CGProperty> asProperty2cgProperty = new HashMap<>();
+	private @NonNull Map<@NonNull NamedElement, @NonNull CGNamedElement> asElement2cgElement = new HashMap<>();
 
 	/**
 	 * Mapping from each AS Operation that has overrides to its corresponding virtual dispatching CG Operation.
@@ -259,13 +235,13 @@ public class CodeGenAnalyzer
 	public void addCGOperation(@NonNull CGOperation cgOperation) {			// private
 		assert cgOperation.getCallingConvention() != VirtualOperationCallingConvention.INSTANCE;
 		Operation asOperation = CGUtil.getAST(cgOperation);
-		CGOperation old = asOperation2cgOperation.put(asOperation, cgOperation);
+		CGOperation old = (CGOperation)asElement2cgElement.put(asOperation, cgOperation);
 		assert old == null;
 	}
 
 	public void addCGProperty(@NonNull CGProperty cgProperty) {			// private
 		Property asProperty = CGUtil.getAST(cgProperty);
-		CGProperty old = asProperty2cgProperty.put(asProperty, cgProperty);
+		CGProperty old = (CGProperty)asElement2cgElement.put(asProperty, cgProperty);
 		assert old == null;
 	}
 
@@ -342,11 +318,11 @@ public class CodeGenAnalyzer
 	}
 
 	public @Nullable CGClass basicGetCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return asClass2cgClass.get(asClass);
+		return (CGClass)asElement2cgElement.get(asClass);
 	}
 
 	public @Nullable CGConstraint basicGetCGConstraint(@NonNull Constraint asConstraint) {
-		return asConstraint2cgConstraint.get(asConstraint);
+		return (CGConstraint)asElement2cgElement.get(asConstraint);
 	}
 
 //	public @Nullable CGIterationCallExp basicGetCGIterationCallExp(@NonNull LoopExp asLoopExp) {
@@ -354,15 +330,15 @@ public class CodeGenAnalyzer
 //	}
 
 	public @Nullable CGOperation basicGetCGOperation(@NonNull Operation asOperation) {
-		return asOperation2cgOperation.get(asOperation);
+		return (CGOperation)asElement2cgElement.get(asOperation);
 	}
 
 	public @Nullable CGPackage basicGetCGPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		return asPackage2cgPackage.get(asPackage);
+		return (CGPackage)asElement2cgElement.get(asPackage);
 	}
 
 	public @Nullable CGProperty basicGetCGProperty(@NonNull Property asProperty) {
-		return asProperty2cgProperty.get(asProperty);
+		return (CGProperty)asElement2cgElement.get(asProperty);
 	}
 
 	public @Nullable NestedNameManager basicGetNameManager() {
@@ -629,7 +605,7 @@ public class CodeGenAnalyzer
 	 * Generate / share the CG declaration for asClass.
 	 */
 	public @NonNull CGClass generateClassDeclaration(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable ClassCallingConvention callingConvention) {
-		CGClass cgClass = asClass2cgClass.get(asClass);
+		CGClass cgClass = (CGClass)asElement2cgElement.get(asClass);
 		if (cgClass == null) {
 			System.out.println("generateClassDeclaration " + NameUtil.debugSimpleName(asClass) + " " + asClass);
 			if (callingConvention == null) {
@@ -638,7 +614,7 @@ public class CodeGenAnalyzer
 			cgClass = callingConvention.createCGClass(asClass);
 			cgClass.setAst(asClass);
 			cgClass.setCallingConvention(callingConvention);
-			asClass2cgClass.put(asClass, cgClass);
+			asElement2cgElement.put(asClass, cgClass);
 			if (cgRootClass == null) {
 				cgRootClass = cgClass;				// XXX cgRootClass eliminate
 			}
@@ -665,12 +641,12 @@ public class CodeGenAnalyzer
 	 * Generate / share the CG declaration and implementation for asConstraint.
 	 */
 	public @NonNull CGConstraint generateConstraint(@NonNull Constraint asConstraint) {
-		CGConstraint cgConstraint = asConstraint2cgConstraint.get(asConstraint);
+		CGConstraint cgConstraint = (CGConstraint)asElement2cgElement.get(asConstraint);
 		if (cgConstraint == null) {
 			cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
 			cgConstraint.setAst(asConstraint);
 		//	cgConstraint.setTypeId(getCGTypeId(asConstraint.getTypeId()));
-			asConstraint2cgConstraint.put(asConstraint, cgConstraint);
+			asElement2cgElement.put(asConstraint, cgConstraint);
 			generateConstraintBody(cgConstraint, asConstraint);
 		}
 		return cgConstraint;
@@ -702,7 +678,7 @@ public class CodeGenAnalyzer
 	}
 
 	protected @NonNull CGIterationCallExp generateIterateDeclaration(@NonNull LoopExp asLoopExp) {
-		CGIterationCallExp cgIterationCallExp = asLoopExp2cgIterationCallExp.get(asLoopExp);
+		CGIterationCallExp cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(asLoopExp);
 		if (cgIterationCallExp == null) {
 			Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
 			IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
@@ -715,7 +691,7 @@ public class CodeGenAnalyzer
 				cgLibraryIterationCallExp.setLibraryIteration(libraryIteration);
 				cgIterationCallExp = cgLibraryIterationCallExp;
 			}
-			asLoopExp2cgIterationCallExp.put(asLoopExp, cgIterationCallExp);
+			asElement2cgElement.put(asLoopExp, cgIterationCallExp);
 		}
 		return cgIterationCallExp;
 	}
@@ -917,14 +893,14 @@ public class CodeGenAnalyzer
 	 * Generate / share the CG declaration for asPackage.
 	 */
 	public @NonNull CGPackage generatePackageDeclaration(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		CGPackage cgPackage = asPackage2cgPackage.get(asPackage);
+		CGPackage cgPackage = (CGPackage)asElement2cgElement.get(asPackage);
 		if (cgPackage == null) {
 			cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
 			cgPackage.setAst(asPackage);
 		//	cgPackage.setName(callingConvention.getName(this, asPackage));			// XXX defer via NameResolution
 		//	cgPackage.setTypeId(analyzer.getCGTypeId(asPackage.getTypeId()));
 		//	cgPackage.setRequired(asPackage.isIsRequired());
-			asPackage2cgPackage.put(asPackage, cgPackage);
+			asElement2cgElement.put(asPackage, cgPackage);
 			//	if (cgRootPackage == null) {
 			//		cgRootPackage = cgPackage;
 			//	}
@@ -1039,11 +1015,11 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGClass getCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return ClassUtil.nonNullState(asClass2cgClass.get(asClass));
+		return (CGClass)ClassUtil.nonNullState(asElement2cgElement.get(asClass));
 	}
 
 	public @NonNull CGConstraint getCGConstraint(@NonNull Constraint asConstraint) {
-		return ClassUtil.nonNullState(asConstraint2cgConstraint.get(asConstraint));
+		return (CGConstraint)ClassUtil.nonNullState(asElement2cgElement.get(asConstraint));
 	}
 
 	public @NonNull CGElementId getCGElementId(@NonNull ElementId elementId) {
@@ -1123,15 +1099,15 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGOperation getCGOperation(@NonNull Operation asOperation) {
-		return ClassUtil.nonNullState(asOperation2cgOperation.get(asOperation));
+		return (CGOperation)ClassUtil.nonNullState(asElement2cgElement.get(asOperation));
 	}
 
 	public @NonNull CGPackage getCGPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		return ClassUtil.nonNullState(asPackage2cgPackage.get(asPackage));
+		return (CGPackage)ClassUtil.nonNullState(asElement2cgElement.get(asPackage));
 	}
 
 	public @NonNull CGProperty getCGProperty(@NonNull Property asProperty) {
-		return ClassUtil.nonNullState(asProperty2cgProperty.get(asProperty));
+		return (CGProperty)ClassUtil.nonNullState(asElement2cgElement.get(asProperty));
 	}
 
 	public @NonNull CGReal getCGReal(@NonNull Number aNumber) {
@@ -1196,7 +1172,7 @@ public class CodeGenAnalyzer
 	 */
 	public @NonNull ClassNameManager getClassNameManager(@Nullable CGClass cgClass, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		if (cgClass == null) {
-			cgClass = asClass2cgClass.get(asClass);
+			cgClass = (CGClass)asElement2cgElement.get(asClass);
 			if (cgClass == null) {
 				cgClass = generateClassDeclaration(asClass, null);
 			}
@@ -1320,7 +1296,7 @@ public class CodeGenAnalyzer
 	 */
 	public @NonNull FeatureNameManager getIterateNameManager(@Nullable CGIterationCallExp cgIterationCallExp, @NonNull LoopExp asLoopExp) {
 		if (cgIterationCallExp == null) {
-			cgIterationCallExp = asLoopExp2cgIterationCallExp.get(asLoopExp);
+			cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(asLoopExp);
 			if (cgIterationCallExp == null) {
 				cgIterationCallExp = generateIterateDeclaration(asLoopExp);
 			}
@@ -1368,7 +1344,7 @@ public class CodeGenAnalyzer
 	 */
 	public @NonNull Operation getNativeOperation(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {
 		Operation asOperation = getNativeOperation(method);
-		CGOperation cgOperation = asOperation2cgOperation.get(asOperation);
+		CGOperation cgOperation = (CGOperation)asElement2cgElement.get(asOperation);
 		if (cgOperation == null) {
 		//	org.eclipse.ocl.pivot.Class asClass = getNativeClass(method.getDeclaringClass());
 		//	generateClassDeclaration(asClass, callingConvention.getClassCallingConvention());
@@ -1409,7 +1385,7 @@ public class CodeGenAnalyzer
 	 */
 	public @NonNull Property getNativeProperty(@NonNull Field field, @NonNull PropertyCallingConvention callingConvention) {
 		Property asProperty = getNativeProperty(field);
-		CGProperty cgProperty = asProperty2cgProperty.get(asProperty);
+		CGProperty cgProperty = (CGProperty)asElement2cgElement.get(asProperty);
 		if (cgProperty == null) {
 		//	org.eclipse.ocl.pivot.Class asClass = getNativeClass(field.getDeclaringClass());
 		//	generateClassDeclaration(asClass, callingConvention.getClassCallingConvention());
@@ -1432,7 +1408,7 @@ public class CodeGenAnalyzer
 	 */
 	public @NonNull FeatureNameManager getOperationNameManager(@Nullable CGOperation cgOperation, @NonNull Operation asOperation) {
 		if (cgOperation == null) {
-			cgOperation = asOperation2cgOperation.get(asOperation);
+			cgOperation = (CGOperation)asElement2cgElement.get(asOperation);
 			if (cgOperation == null) {
 				cgOperation = generateOperationDeclaration(asOperation, null, false);
 			}
@@ -1452,7 +1428,7 @@ public class CodeGenAnalyzer
 	 */
 	public @NonNull PackageNameManager getPackageNameManager(@Nullable CGPackage cgPackage, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		if (cgPackage == null) {
-			cgPackage = asPackage2cgPackage.get(asPackage);
+			cgPackage = (CGPackage)asElement2cgElement.get(asPackage);
 			if (cgPackage == null) {
 				cgPackage = generatePackageDeclaration(asPackage);
 			}
@@ -1477,7 +1453,7 @@ public class CodeGenAnalyzer
 	 */
 	public @NonNull FeatureNameManager getPropertyNameManager(@Nullable CGProperty cgProperty, @NonNull Property asProperty) {
 		if (cgProperty == null) {
-			cgProperty = asProperty2cgProperty.get(asProperty);
+			cgProperty = (CGProperty)asElement2cgElement.get(asProperty);
 			if (cgProperty == null) {
 				cgProperty = generatePropertyDeclaration(asProperty, null);
 			}
@@ -1665,7 +1641,7 @@ public class CodeGenAnalyzer
 			return useConstraintNameManager(cgConstraint);
 		}
 		else if (eObject instanceof LoopExp) {
-			CGIterationCallExp cgIterationCallExp = asLoopExp2cgIterationCallExp.get(eObject);
+			CGIterationCallExp cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(eObject);
 			if (cgIterationCallExp != null) {							// may be null if flattened
 				return useIterateNameManager(cgIterationCallExp);
 			}
