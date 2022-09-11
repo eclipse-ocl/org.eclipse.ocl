@@ -73,11 +73,6 @@ public class FeatureNameManager extends NestedNameManager
 	 */
 	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> asVariable2cgVariable = new HashMap<>();
 
-	/**
-	 * Mapping from an AS Type to the CG Type defined in this cgScope.
-	 */
-	private @Nullable Map<@NonNull Type, @NonNull CGExecutorType> asType2cgType = null;
-
 	public FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
 		this(classNameManager, classNameManager, cgConstraint);
 	}
@@ -336,7 +331,7 @@ public class FeatureNameManager extends NestedNameManager
 		return thisParameter;
 	}
 
-
+	@Override
 	public @NonNull NamedElement getASScope() {
 		return asScope;
 	}
@@ -391,6 +386,7 @@ public class FeatureNameManager extends NestedNameManager
 		return cgExecutorType;
 	}
 
+	@Override
 	public @NonNull CGNamedElement getCGScope() {
 		return cgScope;
 	}
@@ -415,15 +411,8 @@ public class FeatureNameManager extends NestedNameManager
 	 * Return the NestedNameManager that can be the parent of another CGClass. Returns null for global.
 	 */
 	@Override
-	public @Nullable FeatureNameManager getClassParentNameManager() {
-	//	throw new UnsupportedOperationException();
-		for (FeatureNameManager nameManager = this; nameManager != null; nameManager = nameManager.parent instanceof FeatureNameManager ? (FeatureNameManager)nameManager.parent : null) {
-			CGNamedElement cgScope = nameManager.cgScope;
-			if (cgScope instanceof CGClass) {
-				return nameManager.parent instanceof FeatureNameManager ? (FeatureNameManager)nameManager.parent : null;
-			}
-		}
-		return null;
+	public @NonNull ClassNameManager getClassParentNameManager() {
+		return getRootFeatureNameVariable().getClassNameManager();
 	}
 
 	public @NonNull CGParameter getExecutorParameter() {
@@ -561,6 +550,15 @@ public class FeatureNameManager extends NestedNameManager
 		return qualifiedThisVariable2;
 	}
 
+	public @NonNull FeatureNameManager getRootFeatureNameVariable() {
+		if (parent instanceof FeatureNameManager) {
+			return ((FeatureNameManager)parent).getRootFeatureNameVariable();
+		}
+		else {
+			return this;
+		}
+	}
+
 	public @NonNull CGParameter getSelfParameter() {
 	//	assert !isStatic;
 		CGParameter selfParameter2 = selfParameter;
@@ -646,11 +644,6 @@ public class FeatureNameManager extends NestedNameManager
 		addVariable(CGUtil.getAST(typeIdParameter2), typeIdParameter2);
 		return typeIdParameter2;
 	} */
-
-	@Override
-	public @NonNull String toString() {
-		return "Feature-" + asScope;
-	}
 
 	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
 		CGVariable qualifiedThisVariable = basicGetQualifiedThisVariable();

@@ -16,6 +16,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.NamedElement;
 
 /**
  * A ClassNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
@@ -36,15 +37,19 @@ public class ClassNameManager extends NestedNameManager implements ClassableName
 		return asClass;
 	}
 
-//	@Override
+	@Override
+	public @NonNull NamedElement getASScope() {
+		return asClass;
+	}
+
 	public @NonNull CGClass getCGClass() {
 		return cgClass;
 	}
 
-//	@Override
-//	public @NonNull CGClass getCGScope() {
-//		return cgClass;
-//	}
+	@Override
+	public @NonNull CGClass getCGScope() {
+		return cgClass;
+	}
 
 //	@Override
 //	public @NonNull ClassNameManager getClassNameManager() {
@@ -63,10 +68,5 @@ public class ClassNameManager extends NestedNameManager implements ClassableName
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public @NonNull String toString() {
-		return "Class-" + asClass;
 	}
 }
