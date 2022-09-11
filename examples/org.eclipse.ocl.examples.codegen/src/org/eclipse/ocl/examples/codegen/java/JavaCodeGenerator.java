@@ -871,6 +871,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
 	 */
 	protected void propagateNameResolution(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
+		CodeGenAnalyzer analyzer = getAnalyzer();
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 			if (eObject instanceof CGElement) {
 				CGElement cgChild = (CGElement)eObject;
@@ -882,7 +883,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						if (cgVariable.toString().contains("create('pkg'::A::bs)")) {
 							getClass();		// XXX
 						}
-						NestedNameManager nestedNameManager = globalNameManager.findNestedNameManager(cgVariable);
+						NestedNameManager nestedNameManager = analyzer.findNestedNameManager(cgVariable);
 						nameResolution = nestedNameManager.getNameResolution(cgVariable);
 					}
 					propagateNameResolution(cgChild, nameResolution);
@@ -916,7 +917,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						parentNameResolution.addCGElement(cgValuedElement2);
 					}
 					else {
-						NestedNameManager nameManager = globalNameManager.basicFindNestedNameManager(cgValuedElement2);
+						NestedNameManager nameManager = analyzer.basicFindNestedNameManager(cgValuedElement2);
 						if (nameManager != null) {
 							nameResolution = nameManager.getNameResolution(cgValuedElement2);
 						}
@@ -935,7 +936,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-							NestedNameManager localNameManager = globalNameManager.findNestedNameManager(cgValuedElement);
+							NestedNameManager localNameManager = analyzer.findNestedNameManager(cgValuedElement);
 							localNameManager.getNameResolution(cgValuedElement);		// XXX redundant ??
 						}
 					}

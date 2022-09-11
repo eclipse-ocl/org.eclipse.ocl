@@ -23,7 +23,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -146,12 +145,12 @@ public class GlobalNameManager extends AbstractNameManager
 	 * The name manager introduced by each scope defining elements, such as CGClass, CGOperation or CGIteratorExp for use
 	 * by its hierarchically nested children. The name of the scope itself is defined in the parent name manager.
 	 */
-	protected final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgScopingElement2nestedNameManager = new HashMap<>();
+	public final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgScopingElement2nestedNameManager = new HashMap<>();	// XXX not public
 
 	/**
 	 * The name manager in which the name(s) of each element is defined.
 	 */
-	private final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgElement2nameManager  = new HashMap<>();
+	public final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgElement2nameManager  = new HashMap<>();	// XXX not public
 
 	//
 	//	Built-in special purpose names are dynamically reserved using a static value as the hint.
@@ -257,32 +256,6 @@ public class GlobalNameManager extends AbstractNameManager
 		assignNestedNames(nameManager2namedElements);
 	}
 
-	/**
-	 * Return the NestedNameManager is which cgNamedElement should be defined or null if global.
-	 */
-	public @Nullable NestedNameManager basicFindNestedNameManager(@NonNull CGNamedElement cgNamedElement) {
-		NameManager nameManager = cgElement2nameManager.get(cgNamedElement);
-		if (nameManager != null) {
-			return nameManager instanceof NestedNameManager ? (NestedNameManager)nameManager : null;
-		}
-		assert nameManager == null;				// Don't expect to search for globals
-		NestedNameManager nestedNameManager = null;
-		for (CGElement cgElement = cgNamedElement; cgElement != null; cgElement = cgElement.getParent()) {
-			nameManager = cgElement2nameManager.get(cgElement);
-			if (nameManager instanceof NestedNameManager) {
-				nestedNameManager = (NestedNameManager)nameManager;
-				cgElement2nameManager.put(cgNamedElement, nestedNameManager);		// ?? are lookups frequent enough to merit caching ??
-				return nestedNameManager;
-			}
-			nestedNameManager = cgScopingElement2nestedNameManager.get(cgElement);
-			if (nestedNameManager != null) {
-				cgElement2nameManager.put(cgNamedElement, nestedNameManager);		// ?? are lookups frequent enough to merit caching ??
-				return nestedNameManager;
-			}
-		}
-		return null;
-	}
-
 	public @Nullable NestedNameManager basicGetNestedNameManager(@NonNull CGNamedElement cgScopingElement) {
 		return cgScopingElement2nestedNameManager.get(cgScopingElement);
 	}
@@ -366,22 +339,6 @@ public class GlobalNameManager extends AbstractNameManager
 		assert NameManagerHelper.reservedJavaNames.contains(nameHint);
 		baseNameResolution.setResolvedName(nameHint);
 		return baseNameResolution;
-	}
-
-	/**
-	 * Return the NameManager in which cgNamedElement should be defined.
-	 */
-	public @NonNull NameManager findNameManager(@NonNull CGNamedElement cgNamedElement) {
-		NestedNameManager nestedNameManager = basicFindNestedNameManager(cgNamedElement);
-		return nestedNameManager != null ? nestedNameManager : this;
-	}
-
-	/**
-	 * Return the NestedNameManager in which cgNamedElement should be defined.
-	 * Throws an IllegalStateException if the GlobalNameManager should be used.
-	 */
-	public @NonNull FeatureNameManager findNestedNameManager(@NonNull CGNamedElement cgNamedElement) {
-		return (FeatureNameManager) ClassUtil.nonNullState(basicFindNestedNameManager(cgNamedElement));		// XXX fix single misguided usage
 	}
 
 	public @NonNull NameResolution getAnyNameResolution() {

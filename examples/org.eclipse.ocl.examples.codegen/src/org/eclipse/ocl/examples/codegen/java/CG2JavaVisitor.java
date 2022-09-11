@@ -297,7 +297,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		final List<@NonNull CGIterator> coIterators = CGUtil.getCoIteratorsList(cgIterationCallExp);
 		final CGValuedElement body = getExpression(cgIterationCallExp.getBody());
 		final CGTypeId resultType = cgIterationCallExp.getTypeId();
-		LoopExp asLoopExp = (LoopExp) CGUtil.getAST(cgIterationCallExp);
+		LoopExp asLoopExp = CGUtil.getAST(cgIterationCallExp);
 		final Iteration referredIteration = PivotUtil.getReferredIteration(asLoopExp);
 		final int arity = iterators.size();
 		Type sourceType = ((CallExp)asLoopExp).getOwnedSource().getType();
@@ -752,7 +752,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		NestedNameManager nameManager = getNameManager();
 		String variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 		if (variantResolvedName == null) {
-			nameManager = globalNameManager.findNestedNameManager(cgElement);
+			nameManager = getAnalyzer().findNestedNameManager(cgElement);
 			variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 			assert variantResolvedName != null;
 		}
