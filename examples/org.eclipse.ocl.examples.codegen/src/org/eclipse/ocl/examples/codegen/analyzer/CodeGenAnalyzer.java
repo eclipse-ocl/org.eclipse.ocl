@@ -80,6 +80,7 @@ import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.naming.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
@@ -204,7 +205,7 @@ public class CodeGenAnalyzer
 	/**
 	 * Mapping from each AS NamedElement to its corresponding CGNamedElement.
 	 */
-	private @NonNull Map<@NonNull NamedElement, @NonNull CGNamedElement> asElement2cgElement = new HashMap<>();
+	protected @NonNull Map<@NonNull NamedElement, @NonNull CGNamedElement> asElement2cgElement = new HashMap<>();
 
 	/**
 	 * Mapping from each AS Operation that has overrides to its corresponding virtual dispatching CG Operation.
@@ -1636,6 +1637,47 @@ public class CodeGenAnalyzer
 			}
 		}
 		throw new IllegalStateException("No FeatureNameManager for " + asElement.eClass().getName() + ": " + asElement);
+	}
+
+	/**
+	 * Return the NestedNameManager is which cgNamedElement should be defined or null if global.
+	 */
+	public @Nullable NestedNameManager basicFindNestedNameManager(@NonNull CGNamedElement cgNamedElement) {
+		NameManager nameManager = globalNameManager.cgElement2nameManager.get(cgNamedElement);
+		if (nameManager != null) {
+			return nameManager instanceof NestedNameManager ? (NestedNameManager)nameManager : null;
+		}
+		assert nameManager == null;				// Don't expect to search for globals
+		NestedNameManager nestedNameManager = null;
+		for (CGElement cgElement = cgNamedElement; cgElement != null; cgElement = cgElement.getParent()) {
+			nameManager = globalNameManager.cgElement2nameManager.get(cgElement);
+			if (nameManager instanceof NestedNameManager) {
+				nestedNameManager = (NestedNameManager)nameManager;
+				globalNameManager.cgElement2nameManager.put(cgNamedElement, nestedNameManager);		// ?? are lookups frequent enough to merit caching ??
+				return nestedNameManager;
+			}
+			nestedNameManager = globalNameManager.cgScopingElement2nestedNameManager.get(cgElement);
+			if (nestedNameManager != null) {
+				globalNameManager.cgElement2nameManager.put(cgNamedElement, nestedNameManager);		// ?? are lookups frequent enough to merit caching ??
+				return nestedNameManager;
+			}
+		}
+		return null;
+	}
+	/**
+	 * Return the NestedNameManager in which cgNamedElement should be defined.
+	 * Throws an IllegalStateException if the GlobalNameManager should be used.
+	 */
+	public @NonNull FeatureNameManager findNestedNameManager(@NonNull CGNamedElement cgNamedElement) {
+		return (FeatureNameManager) ClassUtil.nonNullState(basicFindNestedNameManager(cgNamedElement));		// XXX fix single misguided usage
+	}
+
+	/**
+	 * Return the NameManager in which cgNamedElement should be defined.
+	 */
+	public @NonNull NameManager findNameManager(@NonNull CGNamedElement cgNamedElement) {
+		NestedNameManager nestedNameManager = basicFindNestedNameManager(cgNamedElement);
+		return nestedNameManager != null ? nestedNameManager : globalNameManager;
 	}
 
 /*	protected @Nullable FeatureNameManager useFeatureNameManagerInternal(@NonNull EObject eObject) {

@@ -411,7 +411,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		TypeExp pTypeExp = (TypeExp) cgTemplateParameterExp.getAst();
 		Type referredType = pTypeExp.getReferredType();
 		if (referredType != null) {
-			NestedNameManager localNameManager = context.getGlobalNameManager().findNestedNameManager(cgTemplateParameterExp);
+			NestedNameManager localNameManager = context.findNestedNameManager(cgTemplateParameterExp);
 			if (localNameManager != null) {
 				CGValuedElement cgTemplateableElement = cgTemplateParameterExp.getTemplateableElement();
 				//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());
@@ -435,7 +435,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		TypeExp pTypeExp = (TypeExp) cgTypeExp.getAst();
 		Type referredType = pTypeExp.getReferredType();
 		if (referredType != null) {
-			NestedNameManager localNameManager = context.getGlobalNameManager().findNestedNameManager(cgTypeExp);
+			NestedNameManager localNameManager = context.findNestedNameManager(cgTypeExp);
 			if (localNameManager != null) {
 				CGExecutorType cgExecutorType = cgTypeExp.getExecutorType();
 				//				cgTypeExp.setTypeId(cgExecutorType.getUnderlyingTypeId());
