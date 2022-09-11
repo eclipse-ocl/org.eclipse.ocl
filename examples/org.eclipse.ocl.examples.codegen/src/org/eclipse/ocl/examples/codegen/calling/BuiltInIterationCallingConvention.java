@@ -111,8 +111,8 @@ public class BuiltInIterationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
 		Iteration asIteration = (Iteration)CGUtil.getAST(cgOperation);
-		FeatureNameManager nameManager = analyzer.useOperationNameManager(cgOperation);
-		CGParameter cgParameter = nameManager.getSelfParameter();
+		FeatureNameManager operationNameManager = analyzer.useOperationNameManager(cgOperation);
+		CGParameter cgParameter = operationNameManager.getSelfParameter();
 		//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 		//			cgParameter.setRequired(contextVariable.isIsRequired());
 		cgOperation.getParameters().add(cgParameter);

@@ -59,7 +59,7 @@ public abstract class NestedNameManager extends AbstractNameManager
 		this.parent = parent;
 		// XXX	assert at most one ancestral class
 		parent.addChild(this);
-		globalNameManager.addScopingElement2NameManager(cgScope, this);
+		globalNameManager.addChildNameManager(cgScope, this);
 	}
 
 	public void addNameVariant(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {

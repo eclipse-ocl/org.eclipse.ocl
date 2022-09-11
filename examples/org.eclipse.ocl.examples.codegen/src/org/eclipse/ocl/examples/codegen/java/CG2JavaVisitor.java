@@ -838,7 +838,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	}
 
 	protected @NonNull NestedNameManager pushNameManager(@NonNull CGNamedElement cgNamedElement) {
-		NestedNameManager nameManager = globalNameManager.getNestedNameManager(cgNamedElement);
+		NestedNameManager nameManager = globalNameManager.getChildNameManager(cgNamedElement);
 		currentNameManager = nameManager;
 		nameManagerStack.push(nameManager);
 		return nameManager;

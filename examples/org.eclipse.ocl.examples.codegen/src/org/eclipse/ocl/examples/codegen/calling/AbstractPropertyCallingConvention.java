@@ -59,7 +59,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	//		|| (this instanceof ConstrainedPropertyCallingConvention)
 	//		|| (this instanceof NativePropertyCallingConvention)
 	//		|| (this instanceof ForeignPropertyCallingConvention);
-		FeatureNameManager nameManager = analyzer.usePropertyNameManager(cgProperty);
+		FeatureNameManager propertyNameManager = analyzer.usePropertyNameManager(cgProperty);
 		Property asProperty = CGUtil.getAST(cgProperty);
 		cgProperty.setRequired(asProperty.isIsRequired());
 		LanguageExpression specification = asProperty.getOwnedExpression();
@@ -69,7 +69,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					nameManager.getSelfParameter(contextVariable);
+					propertyNameManager.getSelfParameter(contextVariable);
 				}
 				((CGBodiedProperty)cgProperty).setBody(analyzer.createCGElement(CGValuedElement.class, query.getOwnedBody()));
 			} catch (ParserException e) {

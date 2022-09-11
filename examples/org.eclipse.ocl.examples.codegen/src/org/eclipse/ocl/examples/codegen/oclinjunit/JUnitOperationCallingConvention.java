@@ -52,7 +52,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		FeatureNameManager nameManager = analyzer.useOperationNameManager(cgOperation);
+		FeatureNameManager operationNameManager = analyzer.useOperationNameManager(cgOperation);
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
 			contextVariable.setIsRequired(false); 				// May be null for test
@@ -61,13 +61,13 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		cgParameters.add(codeGenerator.createExecutorParameter());
 		cgParameters.add(codeGenerator.createTypeIdParameter());
 		if (contextVariable != null) {
-			CGParameter cgContext = nameManager.getParameter(contextVariable, (String)null);			// XXX getSelf ???
+			CGParameter cgContext = operationNameManager.getParameter(contextVariable, (String)null);			// XXX getSelf ???
 			cgContext.setIsSelf(true);
 			cgContext.setTypeId(codeGenerator.getAnalyzer().getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgParameters.add(cgContext);
 		}
 		for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
-			CGParameter cgParameter = nameManager.getParameter(parameterVariable, (String)null);
+			CGParameter cgParameter = operationNameManager.getParameter(parameterVariable, (String)null);
 			cgParameters.add(cgParameter);
 		}
 	}
