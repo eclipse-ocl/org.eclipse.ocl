@@ -877,7 +877,9 @@ public class CodeGenAnalyzer
 //			System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " : " + asOperation);
 			assert cgOperation.getAst() != null;
 			assert cgOperation.getCallingConvention() == callingConvention;
-			getOperationNameManager(cgOperation, asOperation);						// XXX too soon wrong currentNameManager ancestry defer to visit ... lazy could now be ok
+			FeatureNameManager operationNameManager = getOperationNameManager(cgOperation, asOperation);						// XXX too soon wrong currentNameManager ancestry defer to visit ... lazy could now be ok
+			ClassNameManager classNameManager = operationNameManager.getClassNameManager();
+			classNameManager.declareEagerName(cgOperation);			// Eager/lazy in CC
 			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asOperation.getBodyExpression();
 			if (asSpecification != null) {
