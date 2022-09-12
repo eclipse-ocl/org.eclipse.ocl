@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.TupleValue;
 
+@Deprecated /* @deprecated not used */
 public abstract class AbstractId2JavaClassVisitor implements CGIdVisitor<Class<?>>
 {
 	protected final @NonNull GenModelHelper genModelHelper;;
