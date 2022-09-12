@@ -753,7 +753,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		NestedNameManager nameManager = getNameManager();
 		String variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 		if (variantResolvedName == null) {
-			nameManager = getAnalyzer().findNestedNameManager(cgElement);
+			nameManager = getAnalyzer().getGlobalNameManager().useNestedNameManager(cgElement);
 			variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
 			assert variantResolvedName != null;
 		}

@@ -144,12 +144,12 @@ public class GlobalNameManager extends AbstractNameManager
 	 * The name manager introduced by each scope defining elements, such as CGClass, CGOperation or CGIteratorExp for use
 	 * by its hierarchically nested children. The name of the scope itself is defined in the parent name manager.
 	 */
-	public final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgElement2childNameManager = new HashMap<>();	// XXX not public
+	private final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgElement2childNameManager = new HashMap<>();	// XXX not public
 
 	/**
 	 * The name manager in which the name(s) of this element is managed.
 	 */
-	public final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgElement2selfNameManager  = new HashMap<>();	// XXX not public
+	private final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgElement2selfNameManager  = new HashMap<>();	// XXX not public
 
 	//
 	//	Built-in special purpose names are dynamically reserved using a static value as the hint.
@@ -259,6 +259,29 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public @Nullable NestedNameManager basicGetSelfNameManager(@NonNull CGNamedElement cgElement) {
 		return cgElement2selfNameManager.get(cgElement);
+	}
+
+	/**
+	 * Return the NestedNameManager in which cgNamedElement should be defined or null if global.
+	 */
+	public @Nullable NestedNameManager basicUseSelfNameManager(@NonNull CGNamedElement cgNamedElement) {
+		NestedNameManager nameManager = basicGetSelfNameManager(cgNamedElement);
+		if (nameManager != null) {
+			return nameManager;
+		}
+		for (CGNamedElement cgElement = cgNamedElement; (cgElement = (CGNamedElement)cgElement.getParent()) != null; ) {
+			nameManager = basicGetSelfNameManager(cgElement);
+			if (nameManager != null) {
+				addSelfNameManager(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
+				return nameManager;
+			}
+			nameManager = globalNameManager.basicGetChildNameManager(cgElement);
+			if (nameManager != null) {
+				addSelfNameManager(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
+				return nameManager;
+			}
+		}
+		return null;
 	}
 
 	public @NonNull ClassNameManager createClassNameManager(@NonNull ClassableNameManager outerNameManager, @NonNull CGClass cgClass) {
@@ -483,5 +506,43 @@ public class GlobalNameManager extends AbstractNameManager
 	@Override
 	public @NonNull String toString() {
 		return "globals";
+	}
+
+//	public @NonNull ClassNameManager useClassNameManager(@NonNull CGClass cgClass) {
+//		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetChildNameManager(cgClass);
+//		return ClassUtil.nonNullState(classNameManager);
+//	}
+
+//	public @NonNull FeatureNameManager useConstraintNameManager(@NonNull CGConstraint cgConstraint) {
+//		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgConstraint);
+//		return ClassUtil.nonNullState(featureNameManager);
+//	}
+
+	public @NonNull FeatureNameManager useFeatureNameManager(@NonNull CGNamedElement cgScopingElement) {
+		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgScopingElement);
+		return ClassUtil.nonNullState(featureNameManager);
+	}
+
+	public @NonNull FeatureNameManager useSelfFeatureNameManager(@NonNull CGNamedElement cgScopingElement) {
+		return (FeatureNameManager) ClassUtil.nonNullState(globalNameManager.basicUseSelfNameManager(cgScopingElement));
+	}
+
+	public @NonNull NestedNameManager useNestedNameManager(@NonNull CGNamedElement cgScopingElement) {
+		NestedNameManager nestedNameManager = globalNameManager.basicGetChildNameManager(cgScopingElement);
+		return ClassUtil.nonNullState(nestedNameManager);
+	}
+
+	public @NonNull NestedNameManager useSelfNestedNameManager(@NonNull CGNamedElement cgScopingElement) {
+		return ClassUtil.nonNullState(globalNameManager.basicUseSelfNameManager(cgScopingElement));
+	}
+
+	public @NonNull OperationNameManager useOperationNameManager(@NonNull CGOperation cgOperation) {
+		OperationNameManager operationNameManager = (OperationNameManager)globalNameManager.basicGetChildNameManager(cgOperation);
+		return ClassUtil.nonNullState(operationNameManager);
+	}
+
+	public @NonNull PropertyNameManager usePropertyNameManager(@NonNull CGProperty cgProperty) {
+		PropertyNameManager propertyNameManager = (PropertyNameManager)globalNameManager.basicGetChildNameManager(cgProperty);
+		return ClassUtil.nonNullState(propertyNameManager);
 	}
 }
