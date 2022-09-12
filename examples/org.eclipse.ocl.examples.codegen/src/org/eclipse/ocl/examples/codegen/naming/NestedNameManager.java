@@ -43,7 +43,7 @@ public abstract class NestedNameManager extends AbstractNameManager
 	 * Names that must be used within a nested namespace. Typically these are Ecore assigned property/operation/parameter
 	 * names whose spelling is not adjustable.
 	 */
-	private @Nullable List<NameResolution.@NonNull Reserved> reservedNameResolutions = null;
+	private @Nullable List<NameResolution.@NonNull EagerNested> eagerNameResolutions = null;
 
 	/**
 	 * The value name assignments.
@@ -79,6 +79,19 @@ public abstract class NestedNameManager extends AbstractNameManager
 	}
 
 	/**
+	 * Assign all the reserved names (first).
+	 */
+	protected void assignEagerNames(@NonNull Context context) {
+		if (eagerNameResolutions != null) {
+			for (@NonNull NameResolution nameResolution : eagerNameResolutions) {
+				String resolvedName = nameResolution.resolveIn(context, null);
+				CGNamedElement primaryElement = nameResolution.getPrimaryElement();
+				context.reserveName(resolvedName, primaryElement);
+			}
+		}
+	}
+
+	/**
 	 * Assign all the secondary names that prefix a primary name.
 	 */
 	protected void assignExtraNames(@NonNull Context context) {
@@ -103,7 +116,7 @@ public abstract class NestedNameManager extends AbstractNameManager
 					String name = entry2.getValue();
 					assert name == null;
 					String variantNameHint = nameVariant.getName(resolvedName);
-					String variantName = context.allocateUniqueName(variantNameHint, cgElement);
+					String variantName = context.allocateLazyName(variantNameHint, cgElement);
 					nameVariant2name.put(nameVariant, variantName);
 				}
 			}
@@ -114,24 +127,10 @@ public abstract class NestedNameManager extends AbstractNameManager
 		Context context2 = context;
 		assert context2 == null;
 		this.context = context2 = new Context(this);
-		assignReservedNames(context2);
+		assignEagerNames(context2);
 		assignLocalNames(context2, nameManager2namedElements);
 		assignExtraNames(context2);
 		assignNestedNames(nameManager2namedElements);
-	}
-
-	/**
-	 * Assign all the reserved names (first).
-	 */
-	protected void assignReservedNames(@NonNull Context context) {
-		if (reservedNameResolutions != null) {
-			for (@NonNull NameResolution nameResolution : reservedNameResolutions) {
-			//	String resolvedName = nameResolution.getResolvedName();
-				String resolvedName = nameResolution.resolveIn(context);
-				CGNamedElement primaryElement = nameResolution.getPrimaryElement();
-				context.reserveName(resolvedName, primaryElement);
-			}
-		}
 	}
 
 	public @Nullable String basicGetVariantResolvedName(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
@@ -147,18 +146,18 @@ public abstract class NestedNameManager extends AbstractNameManager
 	 * <br>
 	 * Valid usages are to force usage of the Ecore genmodel allocated name for a Property or Parameter.
 	 */
-	public @NonNull NameResolution declareLocalName(@NonNull CGNamedElement cgElement) {
+	public @NonNull NameResolution declareEagerName(@NonNull CGNamedElement cgElement) {
 		assert (cgElement instanceof CGProperty) || (cgElement instanceof CGParameter);
 		boolean savedInhibitNameResolution = NameResolution.inhibitNameResolution;
 		NameResolution.inhibitNameResolution = false;			// XXX do we still need this debug design enforcement
-		String reservedName = getNameHint(cgElement);
-		NameResolution.Reserved nameResolution = new NameResolution.Reserved(this, cgElement, reservedName);
+		String eagerName = getNameHint(cgElement);
+		NameResolution.EagerNested nameResolution = new NameResolution.EagerNested(this, cgElement, eagerName);
 	//	nameResolution.resolveIn(getContext());
-		List<NameResolution.@NonNull Reserved> reservedNameResolutions2 = reservedNameResolutions;
-		if (reservedNameResolutions2 == null) {
-			reservedNameResolutions = reservedNameResolutions2 = new ArrayList<>();
+		List<NameResolution.@NonNull EagerNested> eagerNameResolutions2 = eagerNameResolutions;
+		if (eagerNameResolutions2 == null) {
+			eagerNameResolutions = eagerNameResolutions2 = new ArrayList<>();
 		}
-		reservedNameResolutions2.add(nameResolution);
+		eagerNameResolutions2.add(nameResolution);
 		NameResolution.inhibitNameResolution = savedInhibitNameResolution;
 		return nameResolution;
 	}
@@ -211,7 +210,7 @@ public abstract class NestedNameManager extends AbstractNameManager
 	}
 
 	public boolean isReserved(@NonNull NameResolution nameResolution) {
-		return (reservedNameResolutions != null) && reservedNameResolutions.contains(nameResolution);
+		return (eagerNameResolutions != null) && eagerNameResolutions.contains(nameResolution);
 	}
 
 	public void setNameVariant(@NonNull CGValuedElement cgElement, @NonNull NameVariant nameVariant, @NonNull String variantName) {

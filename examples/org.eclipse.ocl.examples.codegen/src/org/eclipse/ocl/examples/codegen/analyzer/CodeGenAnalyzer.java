@@ -556,7 +556,7 @@ public class CodeGenAnalyzer
 		if (cgExternalClass == null) {
 			importNameManager.reserveLocalName(externalClassName);
 			cgExternalClass = generateClassDeclaration(asExternalClass, ExternalClassCallingConvention.INSTANCE);
-			globalNameManager.declareGlobalName(cgExternalClass, externalClassName);		// XXX nest in currentNameManager
+			globalNameManager.declareEagerName(cgExternalClass, externalClassName);		// XXX nest in currentNameManager
 		//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
 			cgExternalClasses.add(cgExternalClass);
 			name2cgNestedClass.put(externalClassName, cgExternalClass);
@@ -644,7 +644,7 @@ public class CodeGenAnalyzer
 				classableNameManager = classNameManager;
 			}
 			assert classableNameManager != null;
-			new NameResolution.Lazy(classableNameManager /*useClassNameManager(cgClass)*/, cgClass, name);
+			new NameResolution.EagerNested((NestedNameManager) classableNameManager /*useClassNameManager(cgClass)*/, cgClass, name);		// Eager
 		}
 		return cgClass;
 	}
@@ -919,13 +919,13 @@ public class CodeGenAnalyzer
 			String name = PivotUtil.getName(asPackage);
 			EObject eContainer = asPackage.eContainer();
 			if ((eContainer == null) || (eContainer instanceof Model)) {		// XXX why no Model ??
-				globalNameManager.declareGlobalName(cgPackage, name);
+				globalNameManager.declareEagerName(cgPackage, name);
 			}
 			else {
 			//	CGPackage cgParentPackage = generatePackageDeclaration((org.eclipse.ocl.pivot.Package)eContainer);
 				PackageNameManager parentPackageNameManager = getPackageNameManager(null, (org.eclipse.ocl.pivot.Package)eContainer);
 				parentPackageNameManager.getCGPackage().getPackages().add(cgPackage);
-				new NameResolution.Reserved(parentPackageNameManager, cgPackage, name);
+				new NameResolution.EagerNested(parentPackageNameManager, cgPackage, name);
 			}
 		//	pushClassNameManager(cgClass);
 		//	popClassNameManager();
@@ -965,8 +965,11 @@ public class CodeGenAnalyzer
 			assert cgProperty.getCallingConvention() == callingConvention;
 			assert cgProperty.getTypeId() == getCGTypeId(asProperty.getTypeId());
 			assert cgProperty.isRequired() == asProperty.isIsRequired();
-		//	if (!asProperty.isIsImplicit()) {
 			FeatureNameManager propertyNameManager = getPropertyNameManager(cgProperty, asProperty);
+			if (!asProperty.isIsImplicit()) {
+				ClassNameManager classNameManager = propertyNameManager.getClassNameManager();
+				classNameManager.declareEagerName(cgProperty);
+			}
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
 			if (specification != null) {

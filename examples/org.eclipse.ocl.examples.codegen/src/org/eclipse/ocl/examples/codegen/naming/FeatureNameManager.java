@@ -265,7 +265,7 @@ public class FeatureNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable createQualifiedThisVariable() {
-		NameResolution qualifiedThisNameResolution = globalNameManager.declareGlobalName(null, classNameManager.getASClass().getName() + "_" + JavaConstants.THIS_NAME);
+		NameResolution qualifiedThisNameResolution = globalNameManager.declareEagerName(null, classNameManager.getASClass().getName() + "_" + JavaConstants.THIS_NAME);
 		CGVariable qualifiedThisVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		qualifiedThisVariable.setTypeId(analyzer.getCGTypeId(classNameManager.getASClass().getTypeId()));
 		qualifiedThisVariable.setInit(getThisParameter());
@@ -499,7 +499,7 @@ public class FeatureNameManager extends NestedNameManager
 			}
 			else {
 				assert explicitName.equals(asParameter.getName());
-				declareLocalName(cgParameter);
+				declareEagerName(cgParameter);
 				Operation asOperation = PivotUtil.getContainingOperation(asParameter);
 				Constraint asConstraint = PivotUtil.getContainingConstraint(asParameter);
 				assert ((asOperation != null) && (asOperation.getESObject() instanceof EOperation)) || ((asConstraint != null) && (asConstraint.getESObject() instanceof EOperation));
