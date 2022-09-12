@@ -23,8 +23,11 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Variable;
@@ -42,17 +45,22 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		assert JavaConstants.EVALUATE_NAME.equals(asOperation.getName());
 		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		initOperation(analyzer, cgOperation, asOperation);
 		analyzer.addCGOperation(cgOperation);
+		FeatureNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
+		ClassNameManager classNameManager = operationNameManager.getClassNameManager();
+		classNameManager.declareEagerName(cgOperation);			// Eager enforcement of built-in "evaluate"
 		return cgOperation;
 	}
 
 	@Override
-	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
+	public void createCGParameters(@NonNull OperationNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
+		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		FeatureNameManager operationNameManager = analyzer.useOperationNameManager(cgOperation);
+		CGOperation cgOperation = operationNameManager.getCGOperation();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
 			contextVariable.setIsRequired(false); 				// May be null for test
@@ -63,7 +71,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		if (contextVariable != null) {
 			CGParameter cgContext = operationNameManager.getParameter(contextVariable, (String)null);			// XXX getSelf ???
 			cgContext.setIsSelf(true);
-			cgContext.setTypeId(codeGenerator.getAnalyzer().getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
+			cgContext.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgParameters.add(cgContext);
 		}
 		for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {

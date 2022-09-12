@@ -11,15 +11,23 @@
 package org.eclipse.ocl.examples.codegen.naming;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
+import org.eclipse.ocl.pivot.LoopExp;
 
 /**
- * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
- * named without collisions.
+ * A LoopNameManager supervises the variable names allocated within the scope of a loop.
  */
-public interface NameManager
+public class LoopNameManager extends FeatureNameManager
 {
-	@NonNull GlobalNameManager getGlobalNameManager();
-//	@NonNull NameManagerHelper getHelper();
-	@NonNull String getNameHint(@NonNull Object anObject);
-	boolean isGlobal();
+	public LoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager parentNameManager, @NonNull CGIterationCallExp cgLoop) {
+		super(classNameManager, parentNameManager, cgLoop);
+	}
+
+	public @NonNull LoopExp getASLoopExp() {
+		return (LoopExp)asScope;
+	}
+
+	public @NonNull CGIterationCallExp getCGIterationCallExp() {
+		return (CGIterationCallExp)cgScope;
+	}
 }

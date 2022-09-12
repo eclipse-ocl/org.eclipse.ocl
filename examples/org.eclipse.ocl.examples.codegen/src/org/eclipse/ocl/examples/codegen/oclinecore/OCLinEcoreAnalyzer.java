@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -54,7 +55,7 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 			//	OCLinEcoreLocalContext localContext = (OCLinEcoreLocalContext) globalContext.basicGetLocalContext(cgConstraint);
 				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
 				if (contextVariable != null) {
-					CGParameter cgParameter = nameManager.getSelfParameter(contextVariable);
+					CGParameter cgParameter = getSelfParameter(nameManager, contextVariable);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(asSynthesizedQuery)) {
@@ -67,5 +68,10 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 				throw new WrappedException(e);
 			}
 		}
+	}
+
+	@Override
+	public @NonNull CGParameter getSelfParameter(@NonNull FeatureNameManager featureNameManager, @NonNull VariableDeclaration asParameter) {
+		return featureNameManager.getThisParameter(asParameter);
 	}
 }

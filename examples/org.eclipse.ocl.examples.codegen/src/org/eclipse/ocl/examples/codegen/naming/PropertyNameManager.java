@@ -11,15 +11,23 @@
 package org.eclipse.ocl.examples.codegen.naming;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.pivot.Property;
 
 /**
- * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
- * named without collisions.
+ * A PropertyNameManager supervises the variable names allocated within the scope of a Property.
  */
-public interface NameManager
+public class PropertyNameManager extends FeatureNameManager
 {
-	@NonNull GlobalNameManager getGlobalNameManager();
-//	@NonNull NameManagerHelper getHelper();
-	@NonNull String getNameHint(@NonNull Object anObject);
-	boolean isGlobal();
+	public PropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
+		super(classNameManager, classNameManager, cgProperty);
+	}
+
+	public @NonNull Property getASProperty() {
+		return (Property)asScope;
+	}
+
+	public @NonNull CGProperty getCGProperty() {
+		return (CGProperty)cgScope;
+	}
 }

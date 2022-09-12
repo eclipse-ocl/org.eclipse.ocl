@@ -82,22 +82,23 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public void createCGParameters(@NonNull FeatureNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {
-		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
+	public void createCGParameters(@NonNull FeatureNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {
+		CGForeignProperty cgForeignProperty = (CGForeignProperty)propertyNameManager.getCGScope();
 		List<CGParameter> cgParameters = cgForeignProperty.getParameters();
-		cgParameters.add(nameManager.getExecutorParameter());
+		cgParameters.add(propertyNameManager.getExecutorParameter());
 		if (initExpression != null) {
 			Variable contextVariable = initExpression.getOwnedContext();
 			if (contextVariable != null) {
-				cgParameters.add(nameManager.getSelfParameter(contextVariable));
+				CodeGenAnalyzer analyzer = propertyNameManager.getAnalyzer();
+				cgParameters.add(analyzer.getSelfParameter(propertyNameManager, contextVariable));
 			}
 			else {
-				cgParameters.add(nameManager.getAnyParameter());
+				cgParameters.add(propertyNameManager.getAnyParameter());
 			}
 		}
 		else {	// default value
-			Property asProperty = CGUtil.getAST(cgProperty);
-			cgParameters.add(asProperty.isIsStatic() ?  nameManager.getAnyParameter() : nameManager.getSelfParameter());
+			Property asProperty = CGUtil.getAST(cgForeignProperty);
+			cgParameters.add(asProperty.isIsStatic() ?  propertyNameManager.getAnyParameter() : propertyNameManager.getSelfParameter());
 		}
 	}
 

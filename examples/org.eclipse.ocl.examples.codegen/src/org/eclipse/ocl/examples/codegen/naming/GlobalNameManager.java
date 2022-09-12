@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2022 CEA LIST and others.
+ * Copyright (c) 2022 Willink Transformation and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   E.D.Willink(CEA LIST) - Initial API and implementation
+ *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.naming;
 
@@ -269,36 +269,28 @@ public class GlobalNameManager extends AbstractNameManager
 		return nestedNameManager;
 	}
 
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
-		FeatureNameManager nestedNameManager = codeGenerator.createFeatureNameManager(classNameManager, cgConstraint);
-		assert cgElement2childNameManager.get(cgConstraint) == nestedNameManager;
+	public @NonNull ConstraintNameManager createConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
+		ConstraintNameManager constraintNameManager = codeGenerator.createConstraintNameManager(classNameManager, cgConstraint);
+		assert cgElement2childNameManager.get(cgConstraint) == constraintNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
-		return nestedNameManager;
+		return constraintNameManager;
 	}
 
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
-		FeatureNameManager nestedNameManager = codeGenerator.createFeatureNameManager(classNameManager, parentNameManager, cgIterationCallExp);
-		assert cgElement2childNameManager.get(cgIterationCallExp) == nestedNameManager;
+	public @NonNull LoopNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
+		LoopNameManager loopNameManager = codeGenerator.createLoopNameManager(classNameManager, parentNameManager, cgIterationCallExp);
+		assert cgElement2childNameManager.get(cgIterationCallExp) == loopNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
-		return nestedNameManager;
+		return loopNameManager;
 	}
 
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
-		FeatureNameManager nestedNameManager = codeGenerator.createFeatureNameManager(classNameManager, cgOperation);
-		assert cgElement2childNameManager.get(cgOperation) == nestedNameManager;
+	public @NonNull OperationNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
+		OperationNameManager operationNameManager = codeGenerator.createOperationNameManager(classNameManager, cgOperation);
+		assert cgElement2childNameManager.get(cgOperation) == operationNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
-		return nestedNameManager;
-	}
-
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
-		FeatureNameManager nestedNameManager = codeGenerator.createFeatureNameManager(classNameManager, cgProperty);
-		assert cgElement2childNameManager.get(cgProperty) == nestedNameManager;
-	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
-	//	addNameManager(cgScope, nestedNameManager.getParent());
-		return nestedNameManager;
+		return operationNameManager;
 	}
 
 	public @NonNull PackageNameManager createPackageNameManager(@Nullable PackageNameManager outerNameManager, @NonNull CGPackage cgPackage) {
@@ -307,6 +299,14 @@ public class GlobalNameManager extends AbstractNameManager
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
 		return packageNameManager;
+	}
+
+	public @NonNull PropertyNameManager createPropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
+		PropertyNameManager propertyNameManager = codeGenerator.createPropertyNameManager(classNameManager, cgProperty);
+		assert cgElement2childNameManager.get(cgProperty) == propertyNameManager;
+	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
+	//	addNameManager(cgScope, nestedNameManager.getParent());
+		return propertyNameManager;
 	}
 
 	/**

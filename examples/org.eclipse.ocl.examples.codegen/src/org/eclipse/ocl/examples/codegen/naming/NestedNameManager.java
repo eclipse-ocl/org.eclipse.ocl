@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2022 CEA LIST and others.
+ * Copyright (c) 2022 Willink Transformation and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   E.D.Willink(CEA LIST) - Initial API and implementation
+ *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.naming;
 
@@ -19,8 +19,8 @@ import java.util.Map.Entry;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -148,7 +148,7 @@ public abstract class NestedNameManager extends AbstractNameManager
 	 * Valid usages are to force usage of the Ecore genmodel allocated name for a Property or Parameter.
 	 */
 	public @NonNull NameResolution declareEagerName(@NonNull CGNamedElement cgElement) {
-		assert (cgElement instanceof CGOperation) || (cgElement instanceof CGProperty) || (cgElement instanceof CGParameter);
+		assert (cgElement instanceof CGLibraryOperation) || (cgElement instanceof CGProperty) || (cgElement instanceof CGParameter);
 		boolean savedInhibitNameResolution = NameResolution.inhibitNameResolution;
 		NameResolution.inhibitNameResolution = false;			// XXX do we still need this debug design enforcement
 		String eagerName = getNameHint(cgElement);

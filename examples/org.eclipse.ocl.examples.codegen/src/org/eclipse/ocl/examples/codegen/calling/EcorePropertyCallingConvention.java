@@ -30,9 +30,12 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
+import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
@@ -139,6 +142,17 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
+	}
+
+	@Override
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
+		Property asProperty = (Property)asTypedElement;
+		CGProperty cgProperty = super.createCGProperty(analyzer, asProperty);
+		FeatureNameManager propertyNameManager = analyzer.getPropertyNameManager(cgProperty, asProperty);
+		assert !asProperty.isIsImplicit();
+		ClassNameManager classNameManager = propertyNameManager.getClassNameManager();
+		classNameManager.declareEagerName(cgProperty);
+		return cgProperty;
 	}
 
 	@Override

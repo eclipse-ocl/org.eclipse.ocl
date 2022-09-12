@@ -76,14 +76,18 @@ import org.eclipse.ocl.examples.codegen.java.types.Id2BoxedDescriptorVisitor;
 import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ConstraintNameManager;
 import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager.NameVariant;
+import org.eclipse.ocl.examples.codegen.naming.LoopNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.naming.NestedNameManager;
+import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
+import org.eclipse.ocl.examples.codegen.naming.PropertyNameManager;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.examples.codegen.utilities.AbstractCGModelResourceFactory;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResource;
@@ -314,20 +318,20 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return executorParameter;
 	}
 
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
-		return new FeatureNameManager(classNameManager, cgConstraint);
+	public @NonNull ConstraintNameManager createConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
+		return new ConstraintNameManager(classNameManager, cgConstraint);
 	}
 
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager outerNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
-		return new FeatureNameManager(classNameManager, outerNameManager, cgIterationCallExp);
+	public @NonNull LoopNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
+		return new LoopNameManager(classNameManager, parentNameManager, cgIterationCallExp);
 	}
 
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
-		return new FeatureNameManager(classNameManager, cgOperation);
+	public @NonNull OperationNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
+		return new OperationNameManager(classNameManager, cgOperation);
 	}
 
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
-		return new FeatureNameManager(classNameManager, cgProperty);
+	public @NonNull PropertyNameManager createPropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
+		return new PropertyNameManager(classNameManager, cgProperty);
 	}
 
 	@Override
