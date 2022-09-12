@@ -82,6 +82,40 @@ public abstract class AbstractNameManager implements NameManager
 			}
 		}
 
+		private @NonNull String allocateFallBackName(@NonNull String validHint) {
+			Map<@NonNull String, @NonNull Integer> name2counter2 = name2counter;
+			if (name2counter2 == null) {
+				name2counter = name2counter2 = new HashMap<>();
+			}
+			Integer counter = name2counter2.get(validHint);
+			for (int count = counter != null ? counter : 0; true; count++) {
+				String attempt = validHint + "_" + Integer.toString(count);
+				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
+					name2counter2.put(validHint, ++count);
+					if ("self_0".equals(attempt)) {
+						getClass();			// XXX
+					}
+					assert debugAllocatedName(attempt);
+					return attempt;
+				}
+			}
+		}
+
+		protected @NonNull String allocateReservedName(@NonNull String reservedName, @NonNull Object anObject) {
+			assert reservedName != NameResolution.NOT_NEEDED;
+		//	assert reservedName.equals(NameManagerHelper.getValidJavaIdentifier(reservedName, false, null));
+		//	assert !reservedJavaNames.contains(reservedName);
+		//	assert anObject != NOT_AN_OBJECT;
+			Object oldElement = name2object.get(reservedName);
+			if (oldElement == null) {									// New allocation
+				name2object.put(reservedName, anObject);
+				assert debugAllocatedName(reservedName);
+				return reservedName;
+			}
+			System.err.println("Multiple reservation for global name \"" + reservedName + "\"");
+			return allocateFallBackName(reservedName);
+		}
+
 		protected @NonNull String allocateUniqueName(@NonNull String nameHint, @NonNull Object anObject) {
 			if (nameHint == NameResolution.NOT_NEEDED) {
 				assert debugAllocatedName(nameHint);
@@ -112,67 +146,8 @@ public abstract class AbstractNameManager implements NameManager
 						return validHint;
 					}
 				}
-				/*<<<<<<< Upstream, based on origin/master
 			}
-			String lastResort = null;
-			if (nameHints != null) {
-				boolean isNative = (anObject instanceof CGValuedElement) && isNative((CGValuedElement)anObject);
-				boolean hasRawNameHint = false;
-				for (int hintSuffix = 0; lastResort == null; hintSuffix++) {
-					for (String rawNameHint : nameHints) {
-						if (rawNameHint != null)  {
-							hasRawNameHint = true;
-							String nameHint = hintSuffix > 0 ? rawNameHint + hintSuffix : rawNameHint;
-							String validHint = getValidJavaIdentifier(nameHint, false, anObject);
-							if (!reservedJavaNames.contains(validHint) || isNative) {
-								if (anObject != null) {
-									Object oldElement = name2object.get(validHint);
-									if (oldElement == anObject) {
-										return validHint;
-									}
-									if ((oldElement == null) && !name2object.containsKey(validHint)) {
-										install(validHint, anObject);
-										return validHint;
-									}
-									else {
-										nameHint.toString();
-									}
-								}
-								else {
-									if (!name2object.containsKey(validHint)) {
-										install(validHint, anObject);
-										return validHint;
-									}
-								}
-								if (lastResort == null) {
-									lastResort = validHint;
-								}
-							}
-						}
-					}
-					if (!hasRawNameHint) {
-						break;
-					}
-				}
->>>>>>> 59e88ef [578443] Use disciplined NameResolution*/
-			}
-			Map<@NonNull String, @NonNull Integer> name2counter2 = name2counter;
-			if (name2counter2 == null) {
-				name2counter = name2counter2 = new HashMap<>();
-			}
-			Integer counter = name2counter2.get(validHint);
-			int count = counter != null ? counter : 0;
-			for ( ; true; count++) {
-				String attempt = validHint + "_" + Integer.toString(count);
-				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
-					name2counter2.put(validHint, ++count);
-					if ("self_0".equals(attempt)) {
-						getClass();			// XXX
-					}
-					assert debugAllocatedName(attempt);
-					return attempt;
-				}
-			}
+			return allocateFallBackName(validHint);
 		}
 
 		private boolean debugAllocatedName(@NonNull String name) {
@@ -201,7 +176,7 @@ public abstract class AbstractNameManager implements NameManager
 			return false;
 		}
 
-		public void reserveName(@NonNull String name, @NonNull Object object) {
+		public @NonNull String reserveName(@NonNull String name, @NonNull Object object) {
 			if ("diagnostics".equals(name)) {
 				getClass();			// XXX
 			}
@@ -210,6 +185,7 @@ public abstract class AbstractNameManager implements NameManager
 		//	if (old != null) {
 		//		System.out.println(object + " occludes " + old);	// Parameter can hide Property
 		//	}
+			return name;
 		}
 
 		@Override
