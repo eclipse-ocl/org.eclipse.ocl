@@ -18,6 +18,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -34,7 +35,7 @@ public abstract class AbstractNameManager implements NameManager
 	/**
 	 * name2object place holders for names with no real object.
 	 */
-	/*private*/ static final @NonNull Class<?> NOT_AN_OBJECT = AbstractNameManager.class;
+	protected static final @NonNull Class<?> NOT_AN_OBJECT = AbstractNameManager.class;
 
 	protected static void appendJavaCharacters(StringBuilder s, String string) {
 		for (int i = 0; i < string.length(); i++) {
@@ -82,6 +83,22 @@ public abstract class AbstractNameManager implements NameManager
 			}
 		}
 
+		protected @NonNull String allocateEagerName(@NonNull String eagerName, @Nullable CGNamedElement cgElement) {
+			Object anObject = cgElement != null ? cgElement : NOT_AN_OBJECT;
+			assert eagerName != NameResolution.NOT_NEEDED;
+		//	assert reservedName.equals(NameManagerHelper.getValidJavaIdentifier(eagerName, false, null));
+		//	assert !reservedJavaNames.contains(reservedName);
+		//	assert anObject != NOT_AN_OBJECT;
+			Object oldElement = name2object.get(eagerName);
+			if (oldElement == null) {									// New allocation
+				name2object.put(eagerName, anObject);
+				assert debugAllocatedName(eagerName);
+				return eagerName;
+			}
+			System.err.println("Multiple reservation for eager name \"" + eagerName + "\"");
+			return allocateFallBackName(eagerName);
+		}
+
 		private @NonNull String allocateFallBackName(@NonNull String validHint) {
 			Map<@NonNull String, @NonNull Integer> name2counter2 = name2counter;
 			if (name2counter2 == null) {
@@ -101,22 +118,8 @@ public abstract class AbstractNameManager implements NameManager
 			}
 		}
 
-		protected @NonNull String allocateReservedName(@NonNull String reservedName, @NonNull Object anObject) {
-			assert reservedName != NameResolution.NOT_NEEDED;
-		//	assert reservedName.equals(NameManagerHelper.getValidJavaIdentifier(reservedName, false, null));
-		//	assert !reservedJavaNames.contains(reservedName);
-		//	assert anObject != NOT_AN_OBJECT;
-			Object oldElement = name2object.get(reservedName);
-			if (oldElement == null) {									// New allocation
-				name2object.put(reservedName, anObject);
-				assert debugAllocatedName(reservedName);
-				return reservedName;
-			}
-			System.err.println("Multiple reservation for global name \"" + reservedName + "\"");
-			return allocateFallBackName(reservedName);
-		}
-
-		protected @NonNull String allocateUniqueName(@NonNull String nameHint, @NonNull Object anObject) {
+		protected @NonNull String allocateLazyName(@NonNull String nameHint, @Nullable CGNamedElement cgElement) {
+			Object anObject = cgElement != null ? cgElement : NOT_AN_OBJECT;
 			if (nameHint == NameResolution.NOT_NEEDED) {
 				assert debugAllocatedName(nameHint);
 				return nameHint;
