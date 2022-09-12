@@ -42,7 +42,7 @@ public interface PropertyCallingConvention extends CallingConvention
 	/**
 	 * Elaborate the CGProperty with the parameters appropriate to initExpression.
 	 */
-	void createCGParameters(@NonNull FeatureNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression);
+	void createCGParameters(@NonNull FeatureNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression);
 
 	@NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement);
 

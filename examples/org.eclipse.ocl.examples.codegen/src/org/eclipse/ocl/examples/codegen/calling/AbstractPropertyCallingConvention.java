@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public abstract class AbstractPropertyCallingConvention implements PropertyCallingConvention
 {
 	@Override
-	public void createCGParameters(@NonNull FeatureNameManager nameManager, @NonNull CGProperty cgProperty, @Nullable ExpressionInOCL initExpression) {}
+	public void createCGParameters(@NonNull FeatureNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {}
 
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
@@ -69,7 +69,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					propertyNameManager.getSelfParameter(contextVariable);
+					analyzer.getSelfParameter(propertyNameManager, contextVariable);
 				}
 				((CGBodiedProperty)cgProperty).setBody(analyzer.createCGElement(CGValuedElement.class, query.getOwnedBody()));
 			} catch (ParserException e) {

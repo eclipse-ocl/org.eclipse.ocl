@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
+import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -59,7 +60,8 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		initCallExp(analyzer, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getArguments();
-		CGVariable executorVariable = analyzer.useOperationNameManager(cgOperation).getExecutorVariable();
+		FeatureNameManager operationNameManager = analyzer.useOperationNameManager(cgOperation);
+		CGVariable executorVariable = analyzer.getExecutorVariable(operationNameManager);
 		cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 		if (cgSource != null) {
 			cgArguments.add(cgSource);

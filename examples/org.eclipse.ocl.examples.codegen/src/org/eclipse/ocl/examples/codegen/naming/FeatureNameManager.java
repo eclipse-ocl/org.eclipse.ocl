@@ -1,12 +1,12 @@
 /*******************************************************************************
- * Copyright (c) 2013, 2022 CEA LIST and others.
+ * Copyright (c) 2022 Willink Transformation and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   E.D.Willink(CEA LIST) - Initial API and implementation
+ *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.naming;
 
@@ -23,7 +23,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -31,7 +30,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -51,7 +49,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * A FeatureNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
  * named without collisions at some node in the name nesting hierarchy..
  */
-public class FeatureNameManager extends NestedNameManager
+public abstract class FeatureNameManager extends NestedNameManager
 {
 	protected final @NonNull ClassNameManager classNameManager;
 	protected final @NonNull CGNamedElement cgScope;
@@ -72,22 +70,6 @@ public class FeatureNameManager extends NestedNameManager
 	 * Mapping from an AS Variable to the CG Variable defined in this cgScope.
 	 */
 	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> asVariable2cgVariable = new HashMap<>();
-
-	public FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
-		this(classNameManager, classNameManager, cgConstraint);
-	}
-
-	public FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager parent, @NonNull CGIterationCallExp cgIterationCallExp) {
-		this(classNameManager, (NestedNameManager)parent, (CGNamedElement)cgIterationCallExp);		// XXX IterateNameManager
-	}
-
-	public FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
-		this(classNameManager, classNameManager, cgOperation);
-	}
-
-	public FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
-		this(classNameManager, classNameManager, cgProperty);
-	}
 
 	protected FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parent, @NonNull CGNamedElement cgScope) {
 		super(classNameManager.getCodeGenerator(), parent, cgScope);
@@ -235,7 +217,7 @@ public class FeatureNameManager extends NestedNameManager
 		NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
 		idResolverNameResolution.addCGElement(idResolverInit);
 		idResolverInit.setTypeId(analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID));
-		idResolverInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
+		idResolverInit.setCgThis(analyzer.createCGVariableExp(analyzer.getExecutorVariable(this)));
 		idResolverInit.setRequired(true);
 		idResolverInit.setInvalidating(false);
 		CGVariable idResolverVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -252,7 +234,7 @@ public class FeatureNameManager extends NestedNameManager
 		NameResolution modelManagerNameResolution = globalNameManager.getModelManagerNameResolution();
 		modelManagerNameResolution.addCGElement(modelManagerInit);
 		modelManagerInit.setTypeId(analyzer.getCGTypeId(JavaConstants.MODEL_MANAGER_TYPE_ID));
-		modelManagerInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
+		modelManagerInit.setCgThis(analyzer.createCGVariableExp(analyzer.getExecutorVariable(this)));
 		modelManagerInit.setRequired(true);
 		modelManagerInit.setInvalidating(false);
 		CGVariable modelManagerVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -309,7 +291,7 @@ public class FeatureNameManager extends NestedNameManager
 		NameResolution standardLibraryNameResolution = globalNameManager.getStandardLibraryVariableNameResolution();
 		standardLibraryNameResolution.addCGElement(standardLibraryInit);
 		standardLibraryInit.setTypeId(analyzer.getCGTypeId(JavaConstants.STANDARD_LIBRARY_TYPE_ID));
-		standardLibraryInit.setCgThis(analyzer.createCGVariableExp(getExecutorVariable()));
+		standardLibraryInit.setCgThis(analyzer.createCGVariableExp(analyzer.getExecutorVariable(this)));
 		standardLibraryInit.setRequired(true);
 		standardLibraryInit.setInvalidating(false);
 		CGVariable standardLibraryVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
@@ -423,9 +405,9 @@ public class FeatureNameManager extends NestedNameManager
 		return (CGParameter)executorVariable2;
 	}
 
-	public @NonNull CGVariable getExecutorVariable() {
+	public @NonNull CGVariable getExecutorVariableInternal() {	// Invoked from CodeGenAnalyzer that overrides for JUnit support
 		if (parent instanceof FeatureNameManager) {
-			return ((FeatureNameManager)parent).getExecutorVariable();
+			return ((FeatureNameManager)parent).getExecutorVariableInternal();
 		}
 	//	if (asScope instanceof CallExp) {
 	//		return ((FeatureNameManager)parent).getExecutorVariable();
@@ -567,23 +549,6 @@ public class FeatureNameManager extends NestedNameManager
 			selfParameter = selfParameter2 = createSelfParameter();
 		}
 		return selfParameter2;
-	}
-
-	public @NonNull CGParameter getSelfParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants
-		CGParameter cgParameter = basicGetParameter(asParameter);
-		if (cgParameter == null) {
-			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-			cgParameter.setAst(asParameter);
-			cgParameter.setTypeId(analyzer.getCGTypeId(asParameter.getTypeId()));
-			globalNameManager.getSelfNameResolution().addCGElement(cgParameter);
-			addVariable(asParameter, cgParameter);
-			boolean isRequired = asParameter.isIsRequired();
-			cgParameter.setRequired(isRequired);
-			if (isRequired) {
-				cgParameter.setNonNull();
-			}
-		}
-		return cgParameter;
 	}
 
 	public @NonNull CGVariable getStandardLibraryVariable() {

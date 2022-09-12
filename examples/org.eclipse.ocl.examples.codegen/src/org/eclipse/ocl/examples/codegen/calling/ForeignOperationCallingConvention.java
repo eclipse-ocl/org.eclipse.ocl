@@ -36,7 +36,9 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
+import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -122,7 +124,8 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		initCallExp(analyzer, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
-		CGVariable executorVariable = analyzer.useOperationNameManager(cgOperation).getExecutorVariable();
+		FeatureNameManager operationNameManager = analyzer.useOperationNameManager(cgOperation);
+		CGVariable executorVariable = analyzer.getExecutorVariable(operationNameManager);
 		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
 		addExpressionInOCLParameters(analyzer, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
@@ -131,11 +134,12 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
+	public void createCGParameters(@NonNull OperationNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
+		CGOperation cgOperation = operationNameManager.getCGOperation();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		cgParameters.add(analyzer.useOperationNameManager(cgOperation).getExecutorParameter());
-		super.createCGParameters(analyzer, cgOperation, expressionInOCL);
+		cgParameters.add(operationNameManager.getExecutorParameter());
+		super.createCGParameters(operationNameManager, expressionInOCL);
 	}
 
 	@Override

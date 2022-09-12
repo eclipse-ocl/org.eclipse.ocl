@@ -32,6 +32,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.operation.LibraryOperationHandler;
 import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -105,7 +106,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		for (int i = 0; i < syntheticArgumentSize; i++) {
 			Class<?> jParameterType = jParameterTypes[i];
 			if (jParameterType == Executor.class) {
-				CGVariable executorVariable = analyzer.useFeatureNameManager(asOperationCallExp).getExecutorVariable();
+				FeatureNameManager featureNameManager = analyzer.useFeatureNameManager(asOperationCallExp);
+				CGVariable executorVariable = analyzer.getExecutorVariable(featureNameManager);
 				cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 			}
 			else if (jParameterType == TypeId.class) {
@@ -140,7 +142,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 			List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 			for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 				if (jParameterType == Executor.class) {
-					CGVariable executorVariable = analyzer.useFeatureNameManager(asOperationCallExp).getExecutorVariable();
+					FeatureNameManager featureNameManager = analyzer.useFeatureNameManager(asOperationCallExp);
+					CGVariable executorVariable = analyzer.getExecutorVariable(featureNameManager);
 					cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 				}
 				else if (jParameterType == TypeId.class) {
@@ -160,10 +163,11 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL expressionInOCL) {
+	public void createCGParameters(@NonNull OperationNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
 	//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
+		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
+		CGOperation cgOperation = operationNameManager.getCGOperation();
 		Operation asOperation = CGUtil.getAST(cgOperation);
-		FeatureNameManager operationNameManager = analyzer.useOperationNameManager(cgOperation);
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)analyzer.getMetamodelManager().getImplementation(asOperation);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
@@ -184,7 +188,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				if (i < 0) {
 					CGParameter selfParameter;
 					if (expressionInOCL != null) {
-						selfParameter = operationNameManager.getSelfParameter(PivotUtil.getOwnedContext(expressionInOCL));
+						selfParameter = analyzer.getSelfParameter(operationNameManager, PivotUtil.getOwnedContext(expressionInOCL));
 					}
 					else {
 						selfParameter = operationNameManager.getSelfParameter();

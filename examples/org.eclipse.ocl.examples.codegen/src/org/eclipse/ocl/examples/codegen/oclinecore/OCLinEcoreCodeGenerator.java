@@ -34,9 +34,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -47,8 +45,6 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.AnyType;
@@ -555,26 +551,6 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	@Override
 	public @NonNull ImportNameManager createImportNameManager() {
 		return new OCLinEcoreImportNameManager();
-	}
-
-	@Override
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
-		return new OCLinEcoreFeatureNameManager(classNameManager, cgConstraint);
-	}
-
-	@Override
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager outerNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
-		return new OCLinEcoreFeatureNameManager(classNameManager, outerNameManager, cgIterationCallExp);
-	}
-
-	@Override
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
-		return new OCLinEcoreFeatureNameManager(classNameManager, cgOperation);
-	}
-
-	@Override
-	public @NonNull FeatureNameManager createFeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
-		return new OCLinEcoreFeatureNameManager(classNameManager, cgProperty);
 	}
 
 	protected void generate(@NonNull Map<@NonNull String, @NonNull FeatureBody> uri2body, @NonNull Map<GenPackage, String> constantsTexts, @NonNull Map<@NonNull Feature, @NonNull GenTypedElement> foreignFeatures) {

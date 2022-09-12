@@ -11,15 +11,23 @@
 package org.eclipse.ocl.examples.codegen.naming;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.pivot.Operation;
 
 /**
- * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
- * named without collisions.
+ * An OperationNameManager supervises the parameter and variable names allocated within the scope of an Operation.
  */
-public interface NameManager
+public class OperationNameManager extends FeatureNameManager
 {
-	@NonNull GlobalNameManager getGlobalNameManager();
-//	@NonNull NameManagerHelper getHelper();
-	@NonNull String getNameHint(@NonNull Object anObject);
-	boolean isGlobal();
+	public OperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
+		super(classNameManager, classNameManager, cgOperation);
+	}
+
+	public @NonNull Operation getASOperation() {
+		return (Operation)asScope;
+	}
+
+	public @NonNull CGOperation getCGOperation() {
+		return (CGOperation)cgScope;
+	}
 }

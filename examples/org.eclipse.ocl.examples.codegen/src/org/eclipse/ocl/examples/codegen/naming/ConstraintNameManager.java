@@ -11,15 +11,23 @@
 package org.eclipse.ocl.examples.codegen.naming;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
+import org.eclipse.ocl.pivot.Constraint;
 
 /**
- * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
- * named without collisions.
+ * A ConstraintNameManager supervises the variable names allocated within the scope of a Constraint.
  */
-public interface NameManager
+public class ConstraintNameManager extends FeatureNameManager
 {
-	@NonNull GlobalNameManager getGlobalNameManager();
-//	@NonNull NameManagerHelper getHelper();
-	@NonNull String getNameHint(@NonNull Object anObject);
-	boolean isGlobal();
+	public ConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
+		super(classNameManager, classNameManager, cgConstraint);
+	}
+
+	public @NonNull Constraint getASConstraint() {
+		return (Constraint)asScope;
+	}
+
+	public @NonNull CGConstraint getCGConstraint() {
+		return (CGConstraint)cgScope;
+	}
 }

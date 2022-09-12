@@ -22,8 +22,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
@@ -109,9 +108,9 @@ public class BuiltInIterationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public void createCGParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @Nullable ExpressionInOCL bodyExpression) {
-		Iteration asIteration = (Iteration)CGUtil.getAST(cgOperation);
-		FeatureNameManager operationNameManager = analyzer.useOperationNameManager(cgOperation);
+	public void createCGParameters(@NonNull OperationNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
+		CGOperation cgOperation = operationNameManager.getCGOperation();
+	//	Iteration asIteration = (Iteration)CGUtil.getAST(cgOperation);
 		CGParameter cgParameter = operationNameManager.getSelfParameter();
 		//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
 		//			cgParameter.setRequired(contextVariable.isIsRequired());
