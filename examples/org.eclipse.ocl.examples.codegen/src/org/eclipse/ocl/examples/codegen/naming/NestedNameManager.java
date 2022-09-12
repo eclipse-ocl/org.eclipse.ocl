@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -147,7 +148,7 @@ public abstract class NestedNameManager extends AbstractNameManager
 	 * Valid usages are to force usage of the Ecore genmodel allocated name for a Property or Parameter.
 	 */
 	public @NonNull NameResolution declareEagerName(@NonNull CGNamedElement cgElement) {
-		assert (cgElement instanceof CGProperty) || (cgElement instanceof CGParameter);
+		assert (cgElement instanceof CGOperation) || (cgElement instanceof CGProperty) || (cgElement instanceof CGParameter);
 		boolean savedInhibitNameResolution = NameResolution.inhibitNameResolution;
 		NameResolution.inhibitNameResolution = false;			// XXX do we still need this debug design enforcement
 		String eagerName = getNameHint(cgElement);
