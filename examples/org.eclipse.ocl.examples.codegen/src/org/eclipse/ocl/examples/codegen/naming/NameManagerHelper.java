@@ -36,6 +36,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqual2Exp;
@@ -594,6 +595,11 @@ public class NameManagerHelper
 		}
 
 		@Override
+		public @NonNull String visitCGIndexExp(@NonNull CGIndexExp object) {
+			return "INDEX_" + object.getIndex() + "_" + context.getNameHint(object.getSourceValue());
+		}
+
+		@Override
 		public @NonNull String visitCGIsEqualExp(@NonNull CGIsEqualExp object) {
 			return "IsEQ_";
 		}
@@ -868,7 +874,7 @@ public class NameManagerHelper
 
 		@Override
 		public @NonNull String visitJavaTypeId(@NonNull JavaTypeId id) {
-			return "JAVAid_" + id.getName();
+			return "JAVAid_" + id.getJavaClass().getSimpleName();
 		}
 
 		@Override

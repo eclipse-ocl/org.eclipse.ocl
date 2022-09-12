@@ -39,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqual2Exp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
@@ -459,6 +460,15 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		append(" else "); //$NON-NLS-1$
 		safeVisit(cgExp.getElseExpression());
 		append(" endif"); //$NON-NLS-1$
+		return null;
+	}
+
+	@Override
+	public @Nullable String visitCGIndexExp(@NonNull CGIndexExp cgIndexExp) {
+		safeVisit(cgIndexExp.getSource());
+		append("[");
+		safeVisit(cgIndexExp.getIndex());
+		append("]");
 		return null;
 	}
 
