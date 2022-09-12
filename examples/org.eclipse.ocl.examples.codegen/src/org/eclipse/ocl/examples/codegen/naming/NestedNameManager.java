@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.naming;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +20,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager.NameVariant;
@@ -40,7 +43,7 @@ public abstract class NestedNameManager extends AbstractNameManager
 	 * Names that must be used within a nested namespace. Typically these are Ecore assigned property/operation/parameter
 	 * names whose spelling is not adjustable.
 	 */
-	private @Nullable List<@NonNull NameResolution> reservedNameResolutions = null;
+	private @Nullable List<NameResolution.@NonNull Reserved> reservedNameResolutions = null;
 
 	/**
 	 * The value name assignments.
@@ -123,7 +126,8 @@ public abstract class NestedNameManager extends AbstractNameManager
 	protected void assignReservedNames(@NonNull Context context) {
 		if (reservedNameResolutions != null) {
 			for (@NonNull NameResolution nameResolution : reservedNameResolutions) {
-				String resolvedName = nameResolution.getResolvedName();
+			//	String resolvedName = nameResolution.getResolvedName();
+				String resolvedName = nameResolution.resolveIn(context);
 				CGNamedElement primaryElement = nameResolution.getPrimaryElement();
 				context.reserveName(resolvedName, primaryElement);
 			}
@@ -133,6 +137,30 @@ public abstract class NestedNameManager extends AbstractNameManager
 	public @Nullable String basicGetVariantResolvedName(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
 		Map<@NonNull NameVariant, @Nullable String> nameVariant2name = element2nameVariant2name.get(cgElement);
 		return nameVariant2name != null ? nameVariant2name.get(nameVariant) : null;
+	}
+
+	/**
+	 * Declare that cgElement has a name which should be distinct in this NameManager.
+	 * This is typically used to ensure that a local name is available for re-use.
+	 * <br>
+	 * This should be used sparingly. Most names will be lazily declared adequately.
+	 * <br>
+	 * Valid usages are to force usage of the Ecore genmodel allocated name for a Property or Parameter.
+	 */
+	public @NonNull NameResolution declareLocalName(@NonNull CGNamedElement cgElement) {
+		assert (cgElement instanceof CGProperty) || (cgElement instanceof CGParameter);
+		boolean savedInhibitNameResolution = NameResolution.inhibitNameResolution;
+		NameResolution.inhibitNameResolution = false;			// XXX do we still need this debug design enforcement
+		String reservedName = getNameHint(cgElement);
+		NameResolution.Reserved nameResolution = new NameResolution.Reserved(this, cgElement, reservedName);
+	//	nameResolution.resolveIn(getContext());
+		List<NameResolution.@NonNull Reserved> reservedNameResolutions2 = reservedNameResolutions;
+		if (reservedNameResolutions2 == null) {
+			reservedNameResolutions = reservedNameResolutions2 = new ArrayList<>();
+		}
+		reservedNameResolutions2.add(nameResolution);
+		NameResolution.inhibitNameResolution = savedInhibitNameResolution;
+		return nameResolution;
 	}
 
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
@@ -164,7 +192,7 @@ public abstract class NestedNameManager extends AbstractNameManager
 			CGValuedElement cgNamedValue = cgElement.getNamedValue();
 			nameResolution = cgNamedValue.basicGetNameResolution();
 			if (nameResolution == null) {
-				nameResolution = new NameResolution(this, cgNamedValue, null);
+				nameResolution = new NameResolution.Lazy(this, cgNamedValue, null);
 			}
 			if (cgElement != cgNamedValue) {
 				nameResolution.addCGElement(cgElement);

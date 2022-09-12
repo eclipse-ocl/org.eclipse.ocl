@@ -598,6 +598,10 @@ public class CodeGenAnalyzer
 			CGClass cgSuperClass = generateClassDeclaration(asSuperClass, null);
 			cgClass.getSuperTypes().add(cgSuperClass);
 		}
+		for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
+			CGProperty cgProperty = createCGElement(CGProperty.class, asProperty);
+			cgClass.getProperties().add(cgProperty);
+		}
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = createCGElement(CGConstraint.class, asConstraint);
 			cgClass.getInvariants().add(cgConstraint);
@@ -605,10 +609,6 @@ public class CodeGenAnalyzer
 		for (@NonNull Operation asOperation : ClassUtil.nullFree(asClass.getOwnedOperations())) {
 			CGOperation cgOperation = createCGElement(CGOperation.class, asOperation);
 			cgClass.getOperations().add(cgOperation);
-		}
-		for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
-			CGProperty cgProperty = createCGElement(CGProperty.class, asProperty);
-			cgClass.getProperties().add(cgProperty);
 		}
 		return cgClass;
 	}
@@ -644,7 +644,7 @@ public class CodeGenAnalyzer
 				classableNameManager = classNameManager;
 			}
 			assert classableNameManager != null;
-			new NameResolution(classableNameManager /*useClassNameManager(cgClass)*/, cgClass, name);
+			new NameResolution.Lazy(classableNameManager /*useClassNameManager(cgClass)*/, cgClass, name);
 		}
 		return cgClass;
 	}
@@ -925,7 +925,7 @@ public class CodeGenAnalyzer
 			//	CGPackage cgParentPackage = generatePackageDeclaration((org.eclipse.ocl.pivot.Package)eContainer);
 				PackageNameManager parentPackageNameManager = getPackageNameManager(null, (org.eclipse.ocl.pivot.Package)eContainer);
 				parentPackageNameManager.getCGPackage().getPackages().add(cgPackage);
-				new NameResolution(parentPackageNameManager, cgPackage, name);
+				new NameResolution.Reserved(parentPackageNameManager, cgPackage, name);
 			}
 		//	pushClassNameManager(cgClass);
 		//	popClassNameManager();
@@ -965,6 +965,7 @@ public class CodeGenAnalyzer
 			assert cgProperty.getCallingConvention() == callingConvention;
 			assert cgProperty.getTypeId() == getCGTypeId(asProperty.getTypeId());
 			assert cgProperty.isRequired() == asProperty.isIsRequired();
+		//	if (!asProperty.isIsImplicit()) {
 			FeatureNameManager propertyNameManager = getPropertyNameManager(cgProperty, asProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();

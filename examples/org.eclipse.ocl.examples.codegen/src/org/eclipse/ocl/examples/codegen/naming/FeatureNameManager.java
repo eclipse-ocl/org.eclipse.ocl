@@ -499,6 +499,7 @@ public class FeatureNameManager extends NestedNameManager
 			}
 			else {
 				assert explicitName.equals(asParameter.getName());
+				declareLocalName(cgParameter);
 				Operation asOperation = PivotUtil.getContainingOperation(asParameter);
 				Constraint asConstraint = PivotUtil.getContainingConstraint(asParameter);
 				assert ((asOperation != null) && (asOperation.getESObject() instanceof EOperation)) || ((asConstraint != null) && (asConstraint.getESObject() instanceof EOperation));
