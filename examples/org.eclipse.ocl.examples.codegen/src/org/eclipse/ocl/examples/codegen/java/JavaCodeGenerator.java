@@ -884,10 +884,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					CGVariable cgVariable = (@NonNull CGVariable)cgElement;
 					NameResolution nameResolution = cgVariable.basicGetNameResolution();
 					if (nameResolution == null) {
-						if (cgVariable.toString().contains("create('pkg'::A::bs)")) {
-							getClass();		// XXX
-						}
-						NestedNameManager nestedNameManager = analyzer.findNestedNameManager(cgVariable);
+						NestedNameManager nestedNameManager = globalNameManager.useSelfNestedNameManager(cgVariable);
 						nameResolution = nestedNameManager.getNameResolution(cgVariable);
 					}
 					propagateNameResolution(cgChild, nameResolution);
@@ -921,7 +918,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						parentNameResolution.addCGElement(cgValuedElement2);
 					}
 					else {
-						NestedNameManager nameManager = analyzer.basicFindNestedNameManager(cgValuedElement2);
+						NestedNameManager nameManager = globalNameManager.basicUseSelfNameManager(cgValuedElement2);
 						if (nameManager != null) {
 							nameResolution = nameManager.getNameResolution(cgValuedElement2);
 						}
@@ -940,7 +937,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-							NestedNameManager localNameManager = analyzer.findNestedNameManager(cgValuedElement);
+							NestedNameManager localNameManager = globalNameManager.useSelfFeatureNameManager(cgValuedElement);
 							localNameManager.getNameResolution(cgValuedElement);		// XXX redundant ??
 						}
 					}

@@ -115,7 +115,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	@Override
 	public void createImplementation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty) {
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
-		FeatureNameManager propertyNameManager = analyzer.usePropertyNameManager(cgProperty);
+		FeatureNameManager propertyNameManager = analyzer.getGlobalNameManager().usePropertyNameManager(cgProperty);
 		Property asProperty = CGUtil.getAST(cgForeignProperty);
 //		CGParameter cgParameter = asProperty.isIsStatic() ? localContext.getAnyParameter() : localContext.getSelfParameter();
 //		cgForeignProperty.getParameters().add(localContext.getExecutorParameter());

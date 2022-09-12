@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 
@@ -38,7 +39,9 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 		CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)cgProperty;
 		js.appendDeclaration(cgExecutorShadowPart);
 		js.append(" = ");
-		js.appendValueName(cg2javaVisitor.getCodeGenerator().getAnalyzer().findNestedNameManager(cgExecutorShadowPart).getIdResolverVariable());
+		CodeGenAnalyzer analyzer = cg2javaVisitor.getCodeGenerator().getAnalyzer();
+		FeatureNameManager selfNameManager = analyzer.getGlobalNameManager().useSelfFeatureNameManager(cgExecutorShadowPart);
+		js.appendValueName(selfNameManager.getIdResolverVariable());
 		js.append(".getProperty(");
 		js.appendIdReference(cgExecutorShadowPart.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");
