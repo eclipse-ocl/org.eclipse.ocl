@@ -117,6 +117,7 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.SpecializedId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
@@ -623,6 +624,8 @@ public class CodeGenAnalyzer
 	public @NonNull CGClass generateClassDeclaration(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable ClassCallingConvention callingConvention) {
 		CGClass cgClass = (CGClass)asElement2cgElement.get(asClass);
 		if (cgClass == null) {
+			CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(asClass);
+			asClass = completeClass.getPrimaryClass();
 			System.out.println("generateClassDeclaration " + NameUtil.debugSimpleName(asClass) + " " + asClass);
 			if (callingConvention == null) {
 				callingConvention = codeGenerator.getCallingConvention(asClass);
@@ -630,7 +633,9 @@ public class CodeGenAnalyzer
 			cgClass = callingConvention.createCGClass(asClass);
 			cgClass.setAst(asClass);
 			cgClass.setCallingConvention(callingConvention);
-			asElement2cgElement.put(asClass, cgClass);
+			for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : completeClass.getPartialClasses()) {
+				asElement2cgElement.put(asPartialClass, cgClass);
+			}
 			if (cgRootClass == null) {
 				cgRootClass = cgClass;				// XXX cgRootClass eliminate
 			}
@@ -1192,7 +1197,7 @@ public class CodeGenAnalyzer
 				cgClass = generateClassDeclaration(asClass, null);
 			}
 		}
-		assert cgClass.getAst() == asClass;
+		assert environmentFactory.getCompleteModel().getCompleteClass(asClass).getPrimaryClass() == cgClass.getAst();
 		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetChildNameManager(cgClass);
 		if (classNameManager == null) {
 			EObject eContainer = asClass.eContainer();
