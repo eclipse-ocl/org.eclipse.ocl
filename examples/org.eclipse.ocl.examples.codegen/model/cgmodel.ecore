@@ -328,6 +328,17 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="elseExpression" lowerBound="1"
         eType="#//CGValuedElement" containment="true" resolveProxies="false"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGIndexExp" eSuperTypes="#//CGSourcedCallExp">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="CGIndexExp returns the index'th value from a source array."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="index" lowerBound="1" eType="#//CGValuedElement"
+        containment="true" resolveProxies="false">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The this expression for the call when invoking a native or ecore implementation."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGInlinedOperation" eSuperTypes="#//CGOperation">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A native operation that must be called using the native calling convention. Source argument and result values are boxed."/>

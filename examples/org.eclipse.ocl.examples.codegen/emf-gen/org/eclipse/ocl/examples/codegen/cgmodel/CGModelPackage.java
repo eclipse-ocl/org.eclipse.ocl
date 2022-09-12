@@ -1548,6 +1548,27 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGIfExp_ElseExpression();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp <em>CG Index Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>CG Index Exp</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp
+	 * @generated
+	 */
+	EClass getCGIndexExp();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Index</em>'.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp#getIndex()
+	 * @see #getCGIndexExp()
+	 * @generated
+	 */
+	EReference getCGIndexExp_Index();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGInlinedOperation <em>CG Inlined Operation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3768,6 +3789,24 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_IF_EXP__ELSE_EXPRESSION = eINSTANCE.getCGIfExp_ElseExpression();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIndexExpImpl <em>CG Index Exp</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIndexExpImpl
+		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGIndexExp()
+		 * @generated
+		 */
+		EClass CG_INDEX_EXP = eINSTANCE.getCGIndexExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference CG_INDEX_EXP__INDEX = eINSTANCE.getCGIndexExp_Index();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGInlinedOperationImpl <em>CG Inlined Operation</em>}' class.
