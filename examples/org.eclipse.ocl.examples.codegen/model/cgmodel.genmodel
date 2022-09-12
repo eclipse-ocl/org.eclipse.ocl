@@ -158,6 +158,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGIfExp/thenExpression"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGIfExp/elseExpression"/>
     </genClasses>
+    <genClasses ecoreClass="cgmodel.ecore#//CGIndexExp">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGIndexExp/index"/>
+    </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGInlinedOperation"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGInteger"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGInvalid">

@@ -59,6 +59,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInlinedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInteger;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
@@ -195,46 +196,47 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 			case 39: return createCGForeignPropertyCallExp();
 			case 40: return createCGGuardExp();
 			case 41: return createCGIfExp();
-			case 42: return createCGInlinedOperation();
-			case 43: return createCGInteger();
-			case 44: return createCGInvalid();
-			case 45: return createCGIsEqualExp();
-			case 46: return createCGIsEqual2Exp();
-			case 47: return createCGIsInvalidExp();
-			case 48: return createCGIsKindOfExp();
-			case 49: return createCGIsUndefinedExp();
-			case 51: return createCGIterator();
-			case 52: return createCGLetExp();
-			case 53: return createCGLibraryIterateCallExp();
-			case 54: return createCGLibraryIterationCallExp();
-			case 55: return createCGLibraryOperation();
-			case 56: return createCGLibraryOperationCallExp();
-			case 57: return createCGLibraryPropertyCallExp();
-			case 58: return createCGLocalVariable();
-			case 59: return createCGMapExp();
-			case 60: return createCGMapPart();
-			case 61: return createCGModel();
-			case 63: return createCGNativeOperation();
-			case 64: return createCGNativeOperationCallExp();
-			case 65: return createCGNativeProperty();
-			case 66: return createCGNativePropertyCallExp();
-			case 68: return createCGNull();
-			case 73: return createCGPackage();
-			case 74: return createCGParameter();
-			case 77: return createCGReal();
-			case 78: return createCGSettableVariable();
-			case 80: return createCGShadowPart();
-			case 82: return createCGString();
-			case 83: return createCGTemplateParameterExp();
-			case 84: return createCGThrowExp();
-			case 85: return createCGTupleExp();
-			case 86: return createCGTuplePart();
-			case 87: return createCGTuplePartCallExp();
-			case 88: return createCGTypeId();
-			case 89: return createCGTypeExp();
-			case 91: return createCGUnboxExp();
-			case 92: return createCGUnlimited();
-			case 95: return createCGVariableExp();
+			case 42: return createCGIndexExp();
+			case 43: return createCGInlinedOperation();
+			case 44: return createCGInteger();
+			case 45: return createCGInvalid();
+			case 46: return createCGIsEqualExp();
+			case 47: return createCGIsEqual2Exp();
+			case 48: return createCGIsInvalidExp();
+			case 49: return createCGIsKindOfExp();
+			case 50: return createCGIsUndefinedExp();
+			case 52: return createCGIterator();
+			case 53: return createCGLetExp();
+			case 54: return createCGLibraryIterateCallExp();
+			case 55: return createCGLibraryIterationCallExp();
+			case 56: return createCGLibraryOperation();
+			case 57: return createCGLibraryOperationCallExp();
+			case 58: return createCGLibraryPropertyCallExp();
+			case 59: return createCGLocalVariable();
+			case 60: return createCGMapExp();
+			case 61: return createCGMapPart();
+			case 62: return createCGModel();
+			case 64: return createCGNativeOperation();
+			case 65: return createCGNativeOperationCallExp();
+			case 66: return createCGNativeProperty();
+			case 67: return createCGNativePropertyCallExp();
+			case 69: return createCGNull();
+			case 74: return createCGPackage();
+			case 75: return createCGParameter();
+			case 78: return createCGReal();
+			case 79: return createCGSettableVariable();
+			case 81: return createCGShadowPart();
+			case 83: return createCGString();
+			case 84: return createCGTemplateParameterExp();
+			case 85: return createCGThrowExp();
+			case 86: return createCGTupleExp();
+			case 87: return createCGTuplePart();
+			case 88: return createCGTuplePartCallExp();
+			case 89: return createCGTypeId();
+			case 90: return createCGTypeExp();
+			case 92: return createCGUnboxExp();
+			case 93: return createCGUnlimited();
+			case 96: return createCGVariableExp();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -248,43 +250,43 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case 97:
-				return createClassCallingConventionFromString(eDataType, initialValue);
 			case 98:
-				return createElementFromString(eDataType, initialValue);
+				return createClassCallingConventionFromString(eDataType, initialValue);
 			case 99:
-				return createElementIdFromString(eDataType, initialValue);
+				return createElementFromString(eDataType, initialValue);
 			case 100:
-				return createEnumerationLiteralIdFromString(eDataType, initialValue);
+				return createElementIdFromString(eDataType, initialValue);
 			case 101:
-				return createIterationFromString(eDataType, initialValue);
+				return createEnumerationLiteralIdFromString(eDataType, initialValue);
 			case 102:
-				return createFieldFromString(eDataType, initialValue);
+				return createIterationFromString(eDataType, initialValue);
 			case 103:
-				return createLibraryIterationFromString(eDataType, initialValue);
+				return createFieldFromString(eDataType, initialValue);
 			case 104:
-				return createLibraryOperationFromString(eDataType, initialValue);
+				return createLibraryIterationFromString(eDataType, initialValue);
 			case 105:
-				return createLibraryPropertyFromString(eDataType, initialValue);
+				return createLibraryOperationFromString(eDataType, initialValue);
 			case 106:
+				return createLibraryPropertyFromString(eDataType, initialValue);
+			case 107:
 				return createMethodFromString(eDataType, initialValue);
-			case 108:
-				return createNumberFromString(eDataType, initialValue);
 			case 109:
-				return createObjectFromString(eDataType, initialValue);
+				return createNumberFromString(eDataType, initialValue);
 			case 110:
-				return createOperationFromString(eDataType, initialValue);
+				return createObjectFromString(eDataType, initialValue);
 			case 111:
-				return createOperationCallingConventionFromString(eDataType, initialValue);
+				return createOperationFromString(eDataType, initialValue);
 			case 112:
-				return createPropertyFromString(eDataType, initialValue);
+				return createOperationCallingConventionFromString(eDataType, initialValue);
 			case 113:
-				return createPropertyCallingConventionFromString(eDataType, initialValue);
+				return createPropertyFromString(eDataType, initialValue);
 			case 114:
-				return createTuplePartIdFromString(eDataType, initialValue);
+				return createPropertyCallingConventionFromString(eDataType, initialValue);
 			case 115:
-				return createTypeFromString(eDataType, initialValue);
+				return createTuplePartIdFromString(eDataType, initialValue);
 			case 116:
+				return createTypeFromString(eDataType, initialValue);
+			case 117:
 				return createTypeIdFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
@@ -299,43 +301,43 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case 97:
-				return convertClassCallingConventionToString(eDataType, instanceValue);
 			case 98:
-				return convertElementToString(eDataType, instanceValue);
+				return convertClassCallingConventionToString(eDataType, instanceValue);
 			case 99:
-				return convertElementIdToString(eDataType, instanceValue);
+				return convertElementToString(eDataType, instanceValue);
 			case 100:
-				return convertEnumerationLiteralIdToString(eDataType, instanceValue);
+				return convertElementIdToString(eDataType, instanceValue);
 			case 101:
-				return convertIterationToString(eDataType, instanceValue);
+				return convertEnumerationLiteralIdToString(eDataType, instanceValue);
 			case 102:
-				return convertFieldToString(eDataType, instanceValue);
+				return convertIterationToString(eDataType, instanceValue);
 			case 103:
-				return convertLibraryIterationToString(eDataType, instanceValue);
+				return convertFieldToString(eDataType, instanceValue);
 			case 104:
-				return convertLibraryOperationToString(eDataType, instanceValue);
+				return convertLibraryIterationToString(eDataType, instanceValue);
 			case 105:
-				return convertLibraryPropertyToString(eDataType, instanceValue);
+				return convertLibraryOperationToString(eDataType, instanceValue);
 			case 106:
+				return convertLibraryPropertyToString(eDataType, instanceValue);
+			case 107:
 				return convertMethodToString(eDataType, instanceValue);
-			case 108:
-				return convertNumberToString(eDataType, instanceValue);
 			case 109:
-				return convertObjectToString(eDataType, instanceValue);
+				return convertNumberToString(eDataType, instanceValue);
 			case 110:
-				return convertOperationToString(eDataType, instanceValue);
+				return convertObjectToString(eDataType, instanceValue);
 			case 111:
-				return convertOperationCallingConventionToString(eDataType, instanceValue);
+				return convertOperationToString(eDataType, instanceValue);
 			case 112:
-				return convertPropertyToString(eDataType, instanceValue);
+				return convertOperationCallingConventionToString(eDataType, instanceValue);
 			case 113:
-				return convertPropertyCallingConventionToString(eDataType, instanceValue);
+				return convertPropertyToString(eDataType, instanceValue);
 			case 114:
-				return convertTuplePartIdToString(eDataType, instanceValue);
+				return convertPropertyCallingConventionToString(eDataType, instanceValue);
 			case 115:
-				return convertTypeToString(eDataType, instanceValue);
+				return convertTuplePartIdToString(eDataType, instanceValue);
 			case 116:
+				return convertTypeToString(eDataType, instanceValue);
+			case 117:
 				return convertTypeIdToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
@@ -747,6 +749,17 @@ public class CGModelFactoryImpl extends EFactoryImpl implements CGModelFactory {
 	public @NonNull CGIfExp createCGIfExp() {
 		CGIfExpImpl cgIfExp = new CGIfExpImpl();
 		return cgIfExp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull CGIndexExp createCGIndexExp() {
+		CGIndexExpImpl cgIndexExp = new CGIndexExpImpl();
+		return cgIndexExp;
 	}
 
 	/**
