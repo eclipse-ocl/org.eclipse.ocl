@@ -130,7 +130,6 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -696,7 +695,7 @@ public class CodeGenAnalyzer
 		if (cgClass == null) {
 			CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(asClass);
 			asClass = completeClass.getPrimaryClass();
-			System.out.println("generateClassDeclaration " + NameUtil.debugSimpleName(asClass) + " " + asClass);
+		//	System.out.println("generateClassDeclaration " + NameUtil.debugSimpleName(asClass) + " " + asClass);
 			if (callingConvention == null) {
 				callingConvention = codeGenerator.getCallingConvention(asClass);
 			}
@@ -1711,7 +1710,7 @@ public class CodeGenAnalyzer
 		throw new IllegalStateException("No ExecutableNameManager for " + asElement.eClass().getName() + ": " + asElement);
 	}
 
-	public @NonNull NameManager useSelfNameManager(@NonNull Element asElement) {
-		return ClassUtil.nonNullState(basicUseSelfNameManager(asElement));
-	}
+//	public @NonNull NameManager useSelfNameManager(@NonNull Element asElement) {
+//		return ClassUtil.nonNullState(basicUseSelfNameManager(asElement));
+//	}
 }

@@ -39,7 +39,6 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 
@@ -215,7 +214,7 @@ public class GlobalNameManager extends AbstractNameManager
 	 * (The name of cgScopingElement itself is maintained in the parent of childNameManager.)
 	 */
 	public void addChildNameManager(@NonNull CGNamedElement cgScopingElement, @NonNull NestedNameManager childNameManager) {
-		System.out.println("addChildNameManager " + NameUtil.debugSimpleName(cgScopingElement) + " => " + NameUtil.debugSimpleName(childNameManager)+ " : " + cgScopingElement);
+	//	System.out.println("addChildNameManager " + NameUtil.debugSimpleName(cgScopingElement) + " => " + NameUtil.debugSimpleName(childNameManager)+ " : " + cgScopingElement);
 		NestedNameManager old = cgElement2childNameManager.put(cgScopingElement, childNameManager);
 		assert old == null;
 	//	assert nestedNameManager.getCGScope() == cgScopingElement;		-- but still under construction
@@ -553,13 +552,17 @@ public class GlobalNameManager extends AbstractNameManager
 		return ClassUtil.nonNullState(executableNameManager);
 	}
 
-	public @NonNull ExecutableNameManager useSelfExecutableNameManager(@NonNull CGNamedElement cgScopingElement) {
-		return (ExecutableNameManager) ClassUtil.nonNullState(globalNameManager.basicUseSelfNameManager(cgScopingElement));
-	}
-
 	public @NonNull NestedNameManager useNestedNameManager(@NonNull CGNamedElement cgScopingElement) {
 		NestedNameManager nestedNameManager = globalNameManager.basicGetChildNameManager(cgScopingElement);
 		return ClassUtil.nonNullState(nestedNameManager);
+	}
+
+	public @NonNull ExecutableNameManager useRootExecutableNameManager(@NonNull CGNamedElement cgScopingElement) {
+		return ((ExecutableNameManager)ClassUtil.nonNullState(globalNameManager.basicUseSelfNameManager(cgScopingElement))).getRootExecutableNameManager();
+	}
+
+	public @NonNull ExecutableNameManager useSelfExecutableNameManager(@NonNull CGNamedElement cgScopingElement) {
+		return (ExecutableNameManager)ClassUtil.nonNullState(globalNameManager.basicUseSelfNameManager(cgScopingElement));
 	}
 
 	public @NonNull NestedNameManager useSelfNestedNameManager(@NonNull CGNamedElement cgScopingElement) {
