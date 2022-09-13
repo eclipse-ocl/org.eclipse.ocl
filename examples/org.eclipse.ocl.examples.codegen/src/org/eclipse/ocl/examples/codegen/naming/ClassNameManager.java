@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 
 /**
  * A ClassNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
- * named without collisions at some node in the name nesting hierarchy..
+ * named without collisions at some node in the name nesting hierarchy.
  */
 public class ClassNameManager extends NestedNameManager implements ClassableNameManager
 {

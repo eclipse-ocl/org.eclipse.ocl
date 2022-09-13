@@ -136,32 +136,26 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 				Element asElement = cgConstraint.getAst();
 				if ((cgBody != null) && (asElement instanceof Constraint)) {
 					Constraint asConstraint = (Constraint) asElement;
-					pushNameManager(cgConstraint);
 					String bodyText = generateValidatorBody(cgBody, asConstraint, asClass);
 					String fragmentURI = getFragmentURI(asClass) + "==" + getRuleName(asConstraint);
 					String externalPackageName = genPackage.getReflectionPackageName();//getGlobalContext().getTablesClassName();
 					assert externalPackageName != null;
 					String externalClassName = context.getExternalClassName(asClass);
 					bodies.put(fragmentURI, new FeatureBody(fragmentURI, asConstraint, FeatureLocality.ECORE_IMPL, externalPackageName, externalClassName, bodyText));
-					popNameManager();
 				}
 			}
 			for (@NonNull CGOperation cgOperation : ClassUtil.nullFree(cgClass.getOperations())) {
 				CGValuedElement cgBody = cgOperation.getBody();
 				if (cgBody != null) {
-					pushNameManager(cgOperation);
 					FeatureBody body = generateOperationBody(cgOperation, cgBody);
 					bodies.put(body.getURI(), body);
-					popNameManager();
 				}
 			}
 			for (CGProperty cgProperty : cgClass.getProperties()) {
 				CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
 				if (cgBody != null) {
-					pushNameManager(cgProperty);
 					FeatureBody body = generatePropertyBody(cgProperty, cgBody);
 					bodies.put(body.getURI(), body);
-					popNameManager();
 				}
 			}
 		}

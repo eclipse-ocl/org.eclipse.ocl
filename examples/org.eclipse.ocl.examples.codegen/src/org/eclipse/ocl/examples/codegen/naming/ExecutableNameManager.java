@@ -46,8 +46,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
- * A ExecutableNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
- * named without collisions at some node in the name nesting hierarchy..
+ * An ExecutableNameManager supervises the parameter and variable names allocated within the scope of an Element with an executable body.
  */
 public abstract class ExecutableNameManager extends NestedNameManager
 {
