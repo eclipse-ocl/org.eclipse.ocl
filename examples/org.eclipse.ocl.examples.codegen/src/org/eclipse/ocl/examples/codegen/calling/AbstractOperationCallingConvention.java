@@ -217,41 +217,33 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	//	System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
 	}
 
+	protected @NonNull CGParameter createCGParameter(@NonNull OperationNameManager operationNameManager, @NonNull Variable asParameterVariable) {
+		return operationNameManager.getParameter(asParameterVariable, (String)null);
+	}
+
 	@Override
 	public /*final*/ void createCGParameters(@NonNull OperationNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
+		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
 		CGOperation cgOperation = operationNameManager.getCGOperation();
 		if (bodyExpression != null) {
-			Variable contextVariable = bodyExpression.getOwnedContext();
-			if (contextVariable != null) {
-				CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
-				CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, contextVariable);
-				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
-				//			cgParameter.setRequired(contextVariable.isIsRequired());
+			Variable asContextVariable = bodyExpression.getOwnedContext();
+			if (asContextVariable != null) {
+				CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, asContextVariable);
 				cgOperation.getParameters().add(cgParameter);
 			}
-			for (@NonNull Variable parameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
-				CGParameter cgParameter;
-				if (cgOperation instanceof CGEcoreOperation) {		// XXX use CallingConvention
-					cgParameter = operationNameManager.getParameter(parameterVariable, parameterVariable.getName());
-				}
-				else {
-					cgParameter = operationNameManager.getParameter(parameterVariable, (String)null);
-				}
-				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
-				//			cgParameter.setRequired(parameterVariable.isIsRequired());
+			for (@NonNull Variable asParameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
+				CGParameter cgParameter = createCGParameter(operationNameManager, asParameterVariable);
 				cgOperation.getParameters().add(cgParameter);
 			}
 		}
 		else {
 			Operation asOperation = CGUtil.getAST(cgOperation);
-			if (!asOperation.isIsStatic()) {
+			if (!asOperation.isIsStatic()) {						// XXX Static is a derived CC
 				CGParameter cgParameter = operationNameManager.getSelfParameter();
-				//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
-				//			cgParameter.setRequired(contextVariable.isIsRequired());
 				cgOperation.getParameters().add(cgParameter);
 			}
-			for (@NonNull Parameter parameterVariable : ClassUtil.nullFree(asOperation.getOwnedParameters())) {
-				CGParameter cgParameter = operationNameManager.getParameter(parameterVariable, (String)null);
+			for (@NonNull Parameter asParameterVariable : ClassUtil.nullFree(asOperation.getOwnedParameters())) {
+				CGParameter cgParameter = operationNameManager.getParameter(asParameterVariable, (String)null);
 				cgOperation.getParameters().add(cgParameter);
 			}
 		}
