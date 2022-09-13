@@ -348,10 +348,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	@Override
-	public final @NonNull CGValuedElement visitLoopExp(@NonNull LoopExp element) {
-		CGValuedElement cgSource = context.createCGElement(CGValuedElement.class, element.getOwnedSource());
-		CGValuedElement cgSafeSource = element.isIsSafe() ? context.generateSafeExclusion(element, cgSource) : cgSource;
-		return context.generateLoopExp(cgSafeSource, element);
+	public final @NonNull CGValuedElement visitLoopExp(@NonNull LoopExp asLoopExp) {
+		return context.generateLoopExp(asLoopExp);
 	}
 
 	@Override
