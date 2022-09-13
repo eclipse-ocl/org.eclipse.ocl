@@ -698,25 +698,6 @@ public class CodeGenAnalyzer
 		}
 	}
 
-	protected @NonNull CGIterationCallExp generateIterateDeclaration(@NonNull LoopExp asLoopExp) {
-		CGIterationCallExp cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(asLoopExp);
-		if (cgIterationCallExp == null) {
-			Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
-			IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
-			if (iterationHelper != null) {
-				cgIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
-			}
-			else {
-				LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
-				CGLibraryIterationCallExp cgLibraryIterationCallExp = CGModelFactory.eINSTANCE.createCGLibraryIterationCallExp();
-				cgLibraryIterationCallExp.setLibraryIteration(libraryIteration);
-				cgIterationCallExp = cgLibraryIterationCallExp;
-			}
-			asElement2cgElement.put(asLoopExp, cgIterationCallExp);
-		}
-		return cgIterationCallExp;
-	}
-
 	/**
 	 * Generate / share the CG declaration for asOperation.
 	 */
@@ -743,10 +724,32 @@ public class CodeGenAnalyzer
 		return cgOperation;
 	}
 
-	protected @NonNull CGIterationCallExp generateLoopExp(@NonNull CGValuedElement cgSource, @NonNull LoopExp asLoopExp) {
+	protected @NonNull CGIterationCallExp generateLoopDeclaration(@NonNull LoopExp asLoopExp) {
+		CGIterationCallExp cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(asLoopExp);
+		if (cgIterationCallExp == null) {
+			Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
+			IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
+			if (iterationHelper != null) {
+				cgIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
+			}
+			else {
+				LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
+				CGLibraryIterationCallExp cgLibraryIterationCallExp = CGModelFactory.eINSTANCE.createCGLibraryIterationCallExp();
+				cgLibraryIterationCallExp.setLibraryIteration(libraryIteration);
+				cgIterationCallExp = cgLibraryIterationCallExp;
+			}
+			asElement2cgElement.put(asLoopExp, cgIterationCallExp);
+		}
+		return cgIterationCallExp;
+	}
+
+	protected @NonNull CGIterationCallExp generateLoopExp(@NonNull LoopExp asLoopExp) {
+		FeatureNameManager parentNameManager = useFeatureNameManager((NamedElement)asLoopExp.eContainer());
 		Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
-		CGIterationCallExp cgIterationCallExp = generateIterateDeclaration(asLoopExp);
+		CGIterationCallExp cgIterationCallExp = generateLoopDeclaration(asLoopExp);
+		CGValuedElement cgUnsafeSource = createCGElement(CGValuedElement.class, asLoopExp.getOwnedSource());
+		CGValuedElement cgSafeSource = asLoopExp.isIsSafe() ? generateSafeExclusion(asLoopExp, cgUnsafeSource) : cgUnsafeSource;
 		OCLExpression asSource = asLoopExp.getOwnedSource();
 		Type asSourceType = asSource != null ? asSource.getType() : null;
 		CGOperation cgOperation = generateIterationDeclaration(/*asSourceType,*/ asIteration);
@@ -755,26 +758,22 @@ public class CodeGenAnalyzer
 		cgIterationCallExp.setReferredIteration(cgOperation);
 		cgIterationCallExp.setInvalidating(asIteration.isIsInvalidating());
 		cgIterationCallExp.setValidating(asIteration.isIsValidating());
-		cgIterationCallExp.setSource(cgSource);
+		cgIterationCallExp.setSource(cgSafeSource);
+		globalNameManager.addSelfNameManager(cgSafeSource, parentNameManager);										// Source always evaluated in parent context
+		LoopNameManager childNameManager = getLoopNameManager(cgIterationCallExp, asLoopExp);
 		//
 		//	Iterators / co-iterators
 		//
-		FeatureNameManager nameManager;
-		if (iterationHelper == null) {			// No helper: iterators are arguments of a nested context
-			nameManager = getLoopNameManager(cgIterationCallExp, asLoopExp);
-		}
-		else {
-			nameManager = useFeatureNameManager((TypedElement)asLoopExp.eContainer());
-		}
+		FeatureNameManager iteratorNameManager = iterationHelper != null ? parentNameManager : childNameManager;	// Iterators conditionally in parent/child context
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
-			CGIterator cgIterator = nameManager.getIterator(iterator);
+			CGIterator cgIterator = iteratorNameManager.getIterator(iterator);
 			if (iterationHelper != null) {
 				setNullableIterator(cgIterator, iterator);
 			}
 			cgIterationCallExp.getIterators().add(cgIterator);
 		}
 		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(asLoopExp)) {
-			CGIterator cgCoIterator = nameManager.getIterator(coIterator);
+			CGIterator cgCoIterator = iteratorNameManager.getIterator(coIterator);
 			if (iterationHelper != null) {
 				setNullableIterator(cgCoIterator, coIterator);
 			}
@@ -782,7 +781,7 @@ public class CodeGenAnalyzer
 		}
 		if (asLoopExp instanceof IterateExp) {
 			Variable accumulator = PivotUtil.getOwnedResult((IterateExp)asLoopExp);
-			CGIterator cgAccumulator = nameManager.getIterator(accumulator);
+			CGIterator cgAccumulator = iteratorNameManager.getIterator(accumulator);
 			if (iterationHelper != null) {
 				//				cgBuiltInIterationCallExp.setNonNull();
 				setNullableIterator(cgAccumulator, accumulator);
@@ -808,14 +807,9 @@ public class CodeGenAnalyzer
 					if (!asIteration.isIsValidating()) {
 						cgAccumulator.setNonInvalid();
 					}
-//					nameManager.declarePreferredName(cgAccumulator);
 					cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
 				}
 			}
-		}
-		if (iterationHelper != null) {			// Helper: iterators are part of invocation context
-			initAst(cgIterationCallExp, asLoopExp);
-			getLoopNameManager(cgIterationCallExp, asLoopExp);
 		}
 		//
 		//	Body
@@ -831,7 +825,6 @@ public class CodeGenAnalyzer
 				((CGBuiltInIterationCallExp)cgIterationCallExp).setNonNull();
 			}
 		}
-		//			cgBuiltInIterationCallExp.setNonNull();
 		cgIterationCallExp.setRequired(isRequired);
 		return cgIterationCallExp;
 	}
@@ -1106,14 +1099,6 @@ public class CodeGenAnalyzer
 		return cgInvalid;
 	}
 
-//	public @NonNull CGIterationCallExp getCGIterationCallExp(@NonNull LoopExp asLoopExp) {
-//		return ClassUtil.nonNullState(asLoopExp2cgIterationCallExp.get(asLoopExp));
-//	}
-
-	//	public @NonNull NameManager getNameManager() {
-//		return ClassUtil.nonNullState(nameManager);
-//	}
-
 	public @NonNull CGNull getCGNull() {
 		return cgNull;
 	}
@@ -1301,32 +1286,14 @@ public class CodeGenAnalyzer
 		return (JavaLanguageSupport)ClassUtil.nonNullState(codeGenerator.getEnvironmentFactory().getLanguageSupport("java"));
 	}
 
-/*	public @NonNull FeatureNameManager getLoopNameManager(@NonNull CGIterationCallExp cgIterationCallExp) {
-		LoopExp asLoopExp = (LoopExp)CGUtil.getAST(cgIterationCallExp);
-		CGIterationCallExp cgIterationCallExp2 = asLoopExp2cgIterationCallExp.get(asLoopExp);
-		if (cgIterationCallExp2 == null) {
-			asLoopExp2cgIterationCallExp.put(asLoopExp, cgIterationCallExp);
-		}
-		else {
-			assert cgIterationCallExp2 == cgIterationCallExp;
-		}
-		FeatureNameManager nameManager = (FeatureNameManager)globalNameManager.basicGetNestedNameManager(cgIterationCallExp);
-		if (nameManager == null) {			//
-			FeatureNameManager featureNameManager = useFeatureNameManager((TypedElement)asLoopExp.eContainer());
-			ClassNameManager classNameManager = featureNameManager.getClassNameManager();
-			nameManager = globalNameManager.createFeatureNameManager(classNameManager, featureNameManager, cgIterationCallExp);
-		}
-		return nameManager;
-	} */
-
 	/**
-	 * Create or use the FeatureNameManager for asProperty exploiting an optionally already known cgProperty.
+	 * Create or use the FeatureNameManager for asLoopExp exploiting an optionally already known cgIterationCallExp.
 	 */
-	public @NonNull FeatureNameManager getLoopNameManager(@Nullable CGIterationCallExp cgIterationCallExp, @NonNull LoopExp asLoopExp) {
+	public @NonNull LoopNameManager getLoopNameManager(@Nullable CGIterationCallExp cgIterationCallExp, @NonNull LoopExp asLoopExp) {
 		if (cgIterationCallExp == null) {
 			cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(asLoopExp);
 			if (cgIterationCallExp == null) {
-				cgIterationCallExp = generateIterateDeclaration(asLoopExp);
+				cgIterationCallExp = generateLoopDeclaration(asLoopExp);
 			}
 		}
 		assert cgIterationCallExp.getAst() == asLoopExp;
@@ -1343,7 +1310,7 @@ public class CodeGenAnalyzer
 		return codeGenerator.getEnvironmentFactory().getMetamodelManager();
 	}
 
-	public @NonNull NestedNameManager getNameManager() {
+	public @NonNull NestedNameManager getNameManager() {			// XXX eliminate
 //		assert currentNameManager != null;
 //		return currentNameManager;
 		throw new UnsupportedOperationException();
