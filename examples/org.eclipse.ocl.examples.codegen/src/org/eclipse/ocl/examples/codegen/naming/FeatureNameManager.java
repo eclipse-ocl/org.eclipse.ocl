@@ -449,9 +449,6 @@ public abstract class FeatureNameManager extends NestedNameManager
 		if (parent instanceof FeatureNameManager) {
 			return ((FeatureNameManager)parent).getModelManagerVariable();
 		}
-	//	if (asScope instanceof CallExp) {
-	//		return ((FeatureNameManager)parent).getModelManagerVariable();
-	//	}
 		CGVariable modelManagerVariable2 = modelManagerVariable;
 		if (modelManagerVariable2 == null) {
 			modelManagerVariable = modelManagerVariable2 = createModelManagerVariable();
@@ -465,33 +462,12 @@ public abstract class FeatureNameManager extends NestedNameManager
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 			cgParameter.setAst(asParameter);
 			cgParameter.setTypeId(analyzer.getCGTypeId(asParameter.getTypeId()));
-			if (explicitName == null) {
-			//	analyzer.setNames(cgParameter, aParameter);
-
-			//	String name = analyzer.getGlobalNameManager().getNameHint(aParameter);
-				//	String name = globalNameManager.helper.getNameHint(anObject);
-				//	cgValue.setName(name);
-				//	cgValue.setValueName(name);
-//				declarePreferredName(cgParameter);
-
-
-			//	NameResolution nameResolution = cgParameter.getNameResolution();
-			//	nameResolution.setResolvedName(parameterVariable.getName());
-			//	getNameManager().addNameResolution(nameResolution);
-			}
-			else {
+			if (explicitName != null) {
 				assert explicitName.equals(asParameter.getName());
-				declareEagerName(cgParameter);
 				Operation asOperation = PivotUtil.getContainingOperation(asParameter);
 				Constraint asConstraint = PivotUtil.getContainingConstraint(asParameter);
 				assert ((asOperation != null) && (asOperation.getESObject() instanceof EOperation)) || ((asConstraint != null) && (asConstraint.getESObject() instanceof EOperation));
-			//	assert is-ecore-parameter
-			//	cgParameter.setName(explicitName);
-			//	cgParameter.setValueName(explicitName);
-//				/*NameResolution nameResolution =*/ declareReservedName(cgParameter, explicitName);
-			//	nameResolution.setResolvedName(explicitName);
 			}
-			//			cgParameter.setTypeId(analyzer.getTypeId(aParameter.getTypeId()));
 			addVariable(asParameter, cgParameter);
 			cgParameter.setRequired(asParameter.isIsRequired());
 			if (asParameter.isIsRequired()) {

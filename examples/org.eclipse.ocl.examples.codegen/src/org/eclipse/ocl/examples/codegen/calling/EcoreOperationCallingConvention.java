@@ -35,11 +35,14 @@ import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -129,6 +132,19 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 		} catch (GenModelException e) {
 			throw new IllegalStateException(e);
 		}
+	}
+
+	@Override
+	public void createCGParameters(@NonNull OperationNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
+		// TODO Auto-generated method stub
+		super.createCGParameters(operationNameManager, bodyExpression);
+	}
+
+	@Override
+	protected @NonNull CGParameter createCGParameter(@NonNull OperationNameManager operationNameManager, @NonNull Variable asParameterVariable) {
+		CGParameter cgParameter = operationNameManager.getParameter(asParameterVariable, PivotUtil.getName(asParameterVariable));
+		operationNameManager.declareEagerName(cgParameter);
+		return cgParameter;
 	}
 
 	@Override
