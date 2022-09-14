@@ -13,7 +13,7 @@ package org.eclipse.ocl.examples.codegen.oclinjunit;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 
 public class JUnitAnalyzer extends CodeGenAnalyzer
 {
@@ -22,7 +22,7 @@ public class JUnitAnalyzer extends CodeGenAnalyzer
 	}
 
 	@Override
-	public @NonNull CGVariable getExecutorVariable(@NonNull FeatureNameManager featureNameManager) {
-		return featureNameManager.getExecutorParameter();
+	public @NonNull CGVariable getExecutorVariable(@NonNull ExecutableNameManager executableNameManager) {
+		return executableNameManager.getExecutorParameter();
 	}
 }

@@ -37,7 +37,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -82,7 +82,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public void createCGParameters(@NonNull FeatureNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {
+	public void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)propertyNameManager.getCGScope();
 		List<CGParameter> cgParameters = cgForeignProperty.getParameters();
 		cgParameters.add(propertyNameManager.getExecutorParameter());
@@ -115,7 +115,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	@Override
 	public void createImplementation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty) {
 		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
-		FeatureNameManager propertyNameManager = analyzer.getGlobalNameManager().usePropertyNameManager(cgProperty);
+		ExecutableNameManager propertyNameManager = analyzer.getGlobalNameManager().usePropertyNameManager(cgProperty);
 		Property asProperty = CGUtil.getAST(cgForeignProperty);
 //		CGParameter cgParameter = asProperty.isIsStatic() ? localContext.getAnyParameter() : localContext.getSelfParameter();
 //		cgForeignProperty.getParameters().add(localContext.getExecutorParameter());

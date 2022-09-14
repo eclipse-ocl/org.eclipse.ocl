@@ -56,7 +56,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
@@ -152,24 +152,24 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return context;
 	}
 
-	protected @NonNull FeatureNameManager getTreeNameManager(@NonNull CGValuedElement cgElement) {
-		FeatureNameManager featureNameManager = analyzer.useFeatureNameManager(CGUtil.getAST(cgElement));
-		return featureNameManager.getRootFeatureNameManager();
+	protected @NonNull ExecutableNameManager getTreeNameManager(@NonNull CGValuedElement cgElement) {
+		ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(CGUtil.getAST(cgElement));
+		return executableNameManager.getRootExecutableNameManager();
 	}
 
 	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgElement) {
-		FeatureNameManager featureNameManager = getTreeNameManager(cgElement);
-		return analyzer.getExecutorVariable(featureNameManager);
+		ExecutableNameManager executableNameManager = getTreeNameManager(cgElement);
+		return analyzer.getExecutorVariable(executableNameManager);
 	}
 
 	protected @NonNull CGVariable installIdResolverVariable(@NonNull CGValuedElement cgElement) {
-		FeatureNameManager featureNameManager = getTreeNameManager(cgElement);
-		return featureNameManager.getIdResolverVariable();
+		ExecutableNameManager executableNameManager = getTreeNameManager(cgElement);
+		return executableNameManager.getIdResolverVariable();
 	}
 
 	protected @NonNull CGVariable installStandardLibraryVariable(@NonNull CGValuedElement cgElement) {
-		FeatureNameManager featureNameManager = getTreeNameManager(cgElement);
-		return featureNameManager.getStandardLibraryVariable();
+		ExecutableNameManager executableNameManager = getTreeNameManager(cgElement);
+		return executableNameManager.getStandardLibraryVariable();
 	}
 
 	@Override
@@ -507,11 +507,11 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	protected void wrapLetVariables(@NonNull CGNamedElement cgNamedlement) {
-		FeatureNameManager featureNameManager = analyzer.useFeatureNameManager(CGUtil.getAST(cgNamedlement));
-		assert featureNameManager == featureNameManager.getRootFeatureNameManager();
-		CGValuedElement cgTree = featureNameManager.getBody();
+		ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(CGUtil.getAST(cgNamedlement));
+		assert executableNameManager == executableNameManager.getRootExecutableNameManager();
+		CGValuedElement cgTree = executableNameManager.getBody();
 		if (cgTree != null) {
-			cgTree = featureNameManager.wrapLetVariables(cgTree);
+			cgTree = executableNameManager.wrapLetVariables(cgTree);
 		}
 	}
 }

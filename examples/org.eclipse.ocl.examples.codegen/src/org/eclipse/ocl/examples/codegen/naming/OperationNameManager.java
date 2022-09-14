@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.Operation;
 /**
  * An OperationNameManager supervises the parameter and variable names allocated within the scope of an Operation.
  */
-public class OperationNameManager extends FeatureNameManager
+public class OperationNameManager extends ExecutableNameManager
 {
 	public OperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
 		super(classNameManager, classNameManager, cgOperation);

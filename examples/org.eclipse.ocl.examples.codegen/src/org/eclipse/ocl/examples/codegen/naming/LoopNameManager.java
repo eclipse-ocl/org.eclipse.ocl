@@ -17,9 +17,9 @@ import org.eclipse.ocl.pivot.LoopExp;
 /**
  * A LoopNameManager supervises the variable names allocated within the scope of a loop.
  */
-public class LoopNameManager extends FeatureNameManager
+public class LoopNameManager extends ExecutableNameManager
 {
-	public LoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager parentNameManager, @NonNull CGIterationCallExp cgLoop) {
+	public LoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull ExecutableNameManager parentNameManager, @NonNull CGIterationCallExp cgLoop) {
 		super(classNameManager, parentNameManager, cgLoop);
 	}
 

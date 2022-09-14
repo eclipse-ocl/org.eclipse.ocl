@@ -80,7 +80,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ConstraintNameManager;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.LoopNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManager;
@@ -748,7 +748,7 @@ public class CodeGenAnalyzer
 		if (specification != null) {
 			assert cgConstraint.basicGetNameResolution() == null;
 		//	getNameManager().declarePreferredName(cgConstraint);
-			FeatureNameManager constraintNameManager = getConstraintNameManager(cgConstraint, asConstraint);
+			ExecutableNameManager constraintNameManager = getConstraintNameManager(cgConstraint, asConstraint);
 			try {
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
@@ -814,7 +814,7 @@ public class CodeGenAnalyzer
 	}
 
 	protected @NonNull CGIterationCallExp generateLoopExp(@NonNull LoopExp asLoopExp) {
-		FeatureNameManager parentNameManager = useFeatureNameManager((NamedElement)asLoopExp.eContainer());
+		ExecutableNameManager parentNameManager = useExecutableNameManager((NamedElement)asLoopExp.eContainer());
 		Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
 		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
 		CGIterationCallExp cgIterationCallExp = generateLoopDeclaration(asLoopExp);
@@ -834,7 +834,7 @@ public class CodeGenAnalyzer
 		//
 		//	Iterators / co-iterators
 		//
-		FeatureNameManager iteratorNameManager = iterationHelper != null ? parentNameManager : childNameManager;	// Iterators conditionally in parent/child context
+		ExecutableNameManager iteratorNameManager = iterationHelper != null ? parentNameManager : childNameManager;	// Iterators conditionally in parent/child context
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
 			CGIterator cgIterator = iteratorNameManager.getIterator(iterator);
 			if (iterationHelper != null) {
@@ -1041,7 +1041,7 @@ public class CodeGenAnalyzer
 			assert cgProperty.getCallingConvention() == callingConvention;
 			assert cgProperty.getTypeId() == getCGTypeId(asProperty.getTypeId());
 			assert cgProperty.isRequired() == asProperty.isIsRequired();
-			FeatureNameManager propertyNameManager = getPropertyNameManager(cgProperty, asProperty);
+			ExecutableNameManager propertyNameManager = getPropertyNameManager(cgProperty, asProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
 			if (specification != null) {
@@ -1288,8 +1288,8 @@ public class CodeGenAnalyzer
 		return constraintNameManager;
 	}
 
-	public @NonNull CGVariable getExecutorVariable(@NonNull FeatureNameManager featureNameManager) {		// Overridden for JUnit support
-		return featureNameManager.getExecutorVariableInternal();
+	public @NonNull CGVariable getExecutorVariable(@NonNull ExecutableNameManager executableNameManager) {		// Overridden for JUnit support
+		return executableNameManager.getExecutorVariableInternal();
 	}
 
 	public @Nullable UniqueList<@NonNull Feature> getExternalFeatures() {
@@ -1317,7 +1317,7 @@ public class CodeGenAnalyzer
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					useFeatureNameManager(asProperty).getParameter(contextVariable, (String)null);
+					useExecutableNameManager(asProperty).getParameter(contextVariable, (String)null);
 				}
 				initExpression = createCGElement(CGValuedElement.class, query.getOwnedBody());
 			} catch (ParserException e) {
@@ -1362,7 +1362,7 @@ public class CodeGenAnalyzer
 	}
 
 	/**
-	 * Create or use the FeatureNameManager for asLoopExp exploiting an optionally already known cgIterationCallExp.
+	 * Create or use the ExecutableNameManager for asLoopExp exploiting an optionally already known cgIterationCallExp.
 	 */
 	public @NonNull LoopNameManager getLoopNameManager(@Nullable CGIterationCallExp cgIterationCallExp, @NonNull LoopExp asLoopExp) {
 		if (cgIterationCallExp == null) {
@@ -1374,7 +1374,7 @@ public class CodeGenAnalyzer
 		assert cgIterationCallExp.getAst() == asLoopExp;
 		LoopNameManager loopNameManager = (LoopNameManager)globalNameManager.basicGetChildNameManager(cgIterationCallExp);
 		if (loopNameManager == null) {			//
-			FeatureNameManager parentNameManager = useFeatureNameManager((TypedElement)asLoopExp.eContainer());
+			ExecutableNameManager parentNameManager = useExecutableNameManager((TypedElement)asLoopExp.eContainer());
 			ClassNameManager classNameManager = parentNameManager.getClassNameManager();
 			loopNameManager = globalNameManager.createLoopNameManager(classNameManager, parentNameManager, cgIterationCallExp);
 		}
@@ -1534,14 +1534,14 @@ public class CodeGenAnalyzer
 		return propertyNameManager;
 	}
 
-	public @NonNull CGParameter getSelfParameter(@NonNull FeatureNameManager featureNameManager, @NonNull VariableDeclaration asParameter) {		// Overridden for OCLinEcore support
-		CGParameter cgParameter = featureNameManager.basicGetParameter(asParameter);
+	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {		// Overridden for OCLinEcore support
+		CGParameter cgParameter = executableNameManager.basicGetParameter(asParameter);
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 			cgParameter.setAst(asParameter);
 			cgParameter.setTypeId(getCGTypeId(asParameter.getTypeId()));
 			globalNameManager.getSelfNameResolution().addCGElement(cgParameter);
-			featureNameManager.addVariable(asParameter, cgParameter);
+			executableNameManager.addVariable(asParameter, cgParameter);
 			boolean isRequired = asParameter.isIsRequired();
 			cgParameter.setRequired(isRequired);
 			if (isRequired) {
@@ -1698,17 +1698,17 @@ public class CodeGenAnalyzer
 		cgIterator.setNonInvalid();
 	}
 
-	public @NonNull FeatureNameManager useFeatureNameManager(@NonNull Element asElement) {
+	public @NonNull ExecutableNameManager useExecutableNameManager(@NonNull Element asElement) {
 		for (EObject eObject = asElement; eObject != null; eObject = eObject.eContainer()) {
 			CGNamedElement cgElement = asElement2cgElement.get(eObject);
 			if (cgElement != null) {
-				FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgElement);
-				if (featureNameManager != null) {
-					return ClassUtil.nonNullState(featureNameManager);
+				ExecutableNameManager executableNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgElement);
+				if (executableNameManager != null) {
+					return ClassUtil.nonNullState(executableNameManager);
 				}
 			}
 		}
-		throw new IllegalStateException("No FeatureNameManager for " + asElement.eClass().getName() + ": " + asElement);
+		throw new IllegalStateException("No ExecutableNameManager for " + asElement.eClass().getName() + ": " + asElement);
 	}
 
 	public @NonNull NameManager useSelfNameManager(@NonNull Element asElement) {

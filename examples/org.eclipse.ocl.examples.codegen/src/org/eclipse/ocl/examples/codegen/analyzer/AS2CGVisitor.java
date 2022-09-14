@@ -56,7 +56,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -286,7 +286,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @Nullable CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL query) {
 		assert query.getOwnedBody() != null;
-		FeatureNameManager nameManager = context.useFeatureNameManager(query);
+		ExecutableNameManager nameManager = context.useExecutableNameManager(query);
 		Variable contextVariable = query.getOwnedContext();
 		if (contextVariable != null) {
 		//	CGVariable cgContext = nameManager.getParameter(contextVariable, null);
@@ -335,7 +335,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @Nullable CGLetExp visitLetExp(@NonNull LetExp asLetExp) {
 		Variable asVariable = PivotUtil.getOwnedVariable(asLetExp);
-		CGFinalVariable cgVariable = context.useFeatureNameManager(asLetExp).createCGVariable(asVariable);		// FIXME Lose cast
+		CGFinalVariable cgVariable = context.useExecutableNameManager(asLetExp).createCGVariable(asVariable);		// FIXME Lose cast
 		CGValuedElement cgInit = context.createCGElement(CGValuedElement.class, asVariable.getOwnedInit());
 		context.setCGVariableInit(cgVariable, cgInit);;
 		CGValuedElement cgIn = context.createCGElement(CGValuedElement.class, asLetExp.getOwnedIn());
@@ -413,7 +413,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return context.generateOperationCallExp(cgSource, asOperationCallExp);
 		}
 		boolean hasVariable = cgSource instanceof CGVariableExp;
-		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : context.useFeatureNameManager(asOperationCallExp).createCGVariable(cgSource);
+		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : context.useExecutableNameManager(asOperationCallExp).createCGVariable(cgSource);
 		CGVariableExp cgVariableExp1 = context.createCGVariableExp(cgVariable);
 		CGVariableExp cgVariableExp2 = context.createCGVariableExp(cgVariable);
 		CGValuedElement cgUnsafeExp = context.generateOperationCallExp(cgVariableExp1, asOperationCallExp);
@@ -429,7 +429,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return context.generateOppositePropertyCallExp(cgSource, asOppositePropertyCallExp);
 		}
 		boolean hasVariable = cgSource instanceof CGVariableExp;
-		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : context.useFeatureNameManager(asOppositePropertyCallExp).createCGVariable(cgSource);
+		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : context.useExecutableNameManager(asOppositePropertyCallExp).createCGVariable(cgSource);
 		CGVariableExp cgVariableExp1 = context.createCGVariableExp(cgVariable);
 		CGVariableExp cgVariableExp2 = context.createCGVariableExp(cgVariable);
 		CGValuedElement cgUnsafeExp = context.generateOppositePropertyCallExp(cgVariableExp1, asOppositePropertyCallExp);
@@ -473,7 +473,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return context.generatePropertyCallExp(cgSource, asPropertyCallExp);
 		}
 		boolean hasVariable = cgSource instanceof CGVariableExp;
-		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : context.useFeatureNameManager(asPropertyCallExp).createCGVariable(cgSource);
+		CGVariable cgVariable = hasVariable ? CGUtil.getReferredVariable((CGVariableExp)cgSource) : context.useExecutableNameManager(asPropertyCallExp).createCGVariable(cgSource);
 		CGVariableExp cgVariableExp1 = context.createCGVariableExp(cgVariable);
 		CGVariableExp cgVariableExp2 = context.createCGVariableExp(cgVariable);
 		CGValuedElement cgUnsafeExp = context.generatePropertyCallExp(cgVariableExp1, asPropertyCallExp);
@@ -516,8 +516,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 		}
 		if (cgShadowExp != null) {
-			FeatureNameManager featureNameManager = context.useFeatureNameManager(element);
-			CGExecutorType cgExecutorType = featureNameManager.getCGExecutorType(ClassUtil.nonNullState(element.getType()));
+			ExecutableNameManager executableNameManager = context.useExecutableNameManager(element);
+			CGExecutorType cgExecutorType = executableNameManager.getCGExecutorType(ClassUtil.nonNullState(element.getType()));
 			cgShadowExp.setExecutorType(cgExecutorType);
 			cgShadowExp.getOwns().add(cgExecutorType);
 			context.initAst(cgShadowExp, element);
@@ -598,14 +598,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGValuedElement visitTypeExp(@NonNull TypeExp asTypeExp) {
-		FeatureNameManager featureNameManager = context.useFeatureNameManager(asTypeExp);
+		ExecutableNameManager executableNameManager = context.useExecutableNameManager(asTypeExp);
 		Type referredType = PivotUtil.getReferredType(asTypeExp);
 		if (!(referredType instanceof TemplateParameter)) {
 			CGTypeExp cgTypeExp = CGModelFactory.eINSTANCE.createCGTypeExp();
 			context.initAst(cgTypeExp, asTypeExp);
-			CGExecutorType cgExecutorType = featureNameManager.getCGExecutorType(referredType);
+			CGExecutorType cgExecutorType = executableNameManager.getCGExecutorType(referredType);
 			cgTypeExp.setExecutorType(cgExecutorType);
-			cgTypeExp.getOwns().add(cgExecutorType);	// FIXME this ownership inhibits FeatureNameManager sharing
+			cgTypeExp.getOwns().add(cgExecutorType);	// FIXME this ownership inhibits ExecutableNameManager sharing
 			return cgTypeExp;
 		}
 		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;
@@ -613,7 +613,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		TemplateableElement asTemplateableElement = PivotUtil.getOwningElement(templateSignature);
 		CGValuedElement cgTemplateableElement;
 		if (asTemplateableElement instanceof Type) {
-			cgTemplateableElement = featureNameManager.getCGExecutorType((Type)asTemplateableElement);
+			cgTemplateableElement = executableNameManager.getCGExecutorType((Type)asTemplateableElement);
 		}
 	//	else if (asTemplateableElement instanceof Operation) {
 	//		cgTemplateableElement = context.createExecutorOperation((Operation)asTemplateableElement);
@@ -660,7 +660,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @Nullable CGValuedElement visitVariableExp(@NonNull VariableExp asVariableExp) {
 		VariableDeclaration asVariable = PivotUtil.getReferredVariable(asVariableExp);
-		CGVariable cgVariable = context.useFeatureNameManager(asVariableExp).getCGVariable(asVariable);
+		CGVariable cgVariable = context.useExecutableNameManager(asVariableExp).getCGVariable(asVariable);
 		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
 		cgVariableExp.setAst(asVariableExp);
 		cgVariableExp.setTypeId(context.getCGTypeId(asVariableExp.getTypeId()));

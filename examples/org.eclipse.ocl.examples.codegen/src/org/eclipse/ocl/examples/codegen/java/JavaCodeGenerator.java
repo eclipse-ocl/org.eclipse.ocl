@@ -78,7 +78,7 @@ import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ConstraintNameManager;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.naming.LoopNameManager;
@@ -323,7 +323,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new ConstraintNameManager(classNameManager, cgConstraint);
 	}
 
-	public @NonNull LoopNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
+	public @NonNull LoopNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull ExecutableNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
 		return new LoopNameManager(classNameManager, parentNameManager, cgIterationCallExp);
 	}
 
@@ -933,7 +933,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					if (eObject instanceof CGValuedElement) {
 						CGValuedElement cgValuedElement = (CGValuedElement)eObject;
 						if ((cgValuedElement.basicGetNameResolution() == null) && !cgValuedElement.isInlined()) {
-							NestedNameManager localNameManager = globalNameManager.useSelfFeatureNameManager(cgValuedElement);
+							NestedNameManager localNameManager = globalNameManager.useSelfExecutableNameManager(cgValuedElement);
 							localNameManager.getNameResolution(cgValuedElement);		// XXX redundant ??
 						}
 					}

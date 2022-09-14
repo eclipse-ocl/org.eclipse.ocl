@@ -46,10 +46,10 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
- * A FeatureNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
+ * A ExecutableNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
  * named without collisions at some node in the name nesting hierarchy..
  */
-public abstract class FeatureNameManager extends NestedNameManager
+public abstract class ExecutableNameManager extends NestedNameManager
 {
 	protected final @NonNull ClassNameManager classNameManager;
 	protected final @NonNull CGNamedElement cgScope;
@@ -71,14 +71,14 @@ public abstract class FeatureNameManager extends NestedNameManager
 	 */
 	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> asVariable2cgVariable = new HashMap<>();
 
-	protected FeatureNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parent, @NonNull CGNamedElement cgScope) {
+	protected ExecutableNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parent, @NonNull CGNamedElement cgScope) {
 		super(classNameManager.getCodeGenerator(), parent, cgScope);
 		this.classNameManager = classNameManager;
 		this.cgScope = cgScope;
 		this.asScope = CGUtil.getAST(cgScope);
 		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
 		this.isStatic = /*(asScope == null) ||*/ staticFeature;
-		assert !(parent instanceof FeatureNameManager) || (((FeatureNameManager)parent).cgScope != cgScope);		// XXX
+		assert !(parent instanceof ExecutableNameManager) || (((ExecutableNameManager)parent).cgScope != cgScope);		// XXX
 		assert !(cgScope instanceof CGClass) || (cgScope instanceof CGPackage);
 	}
 
@@ -107,7 +107,7 @@ public abstract class FeatureNameManager extends NestedNameManager
 		return modelManagerVariable;
 	}
 
-	public @Nullable CGParameter basicGetParameter(@NonNull VariableDeclaration asVariable) {		// XXX Migrate to FeatureNameManager
+	public @Nullable CGParameter basicGetParameter(@NonNull VariableDeclaration asVariable) {		// XXX Migrate to ExecutableNameManager
 		CGVariable cgVariable = asVariable2cgVariable.get(asVariable);
 		if (cgVariable instanceof CGParameter) {
 			return (CGParameter)cgVariable;
@@ -115,8 +115,8 @@ public abstract class FeatureNameManager extends NestedNameManager
 		else if (cgVariable != null) {
 			throw new IllegalStateException(cgVariable + " is not  a CGParameter");
 		}
-		else if (!(getASScope() instanceof Operation) && (parent instanceof FeatureNameManager)) {				// XXX polymorphize
-			return ((FeatureNameManager)parent).basicGetParameter(asVariable);
+		else if (!(getASScope() instanceof Operation) && (parent instanceof ExecutableNameManager)) {				// XXX polymorphize
+			return ((ExecutableNameManager)parent).basicGetParameter(asVariable);
 		}
 		else {
 			return null;
@@ -140,8 +140,8 @@ public abstract class FeatureNameManager extends NestedNameManager
 		if (cgVariable != null) {
 			return cgVariable;
 		}
-		else if (parent instanceof FeatureNameManager) {				// XXX polymorphize
-			return ((FeatureNameManager)parent).basicGetVariable(asVariable);
+		else if (parent instanceof ExecutableNameManager) {				// XXX polymorphize
+			return ((ExecutableNameManager)parent).basicGetVariable(asVariable);
 		}
 		else {
 			return null;
@@ -342,8 +342,8 @@ public abstract class FeatureNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGExecutorType getCGExecutorType(@NonNull Type asType) {
-		//	if (parent instanceof FeatureNameManager) {
-		//		return ((FeatureNameManager)parent).getCGExecutorType(asType);
+		//	if (parent instanceof ExecutableNameManager) {
+		//		return ((ExecutableNameManager)parent).getCGExecutorType(asType);
 		//	}
 		//
 		//	It would be better to share multi-uses, but that requires the ownership to move from the calling
@@ -394,7 +394,7 @@ public abstract class FeatureNameManager extends NestedNameManager
 	 */
 	@Override
 	public @NonNull ClassNameManager getClassParentNameManager() {
-		return getRootFeatureNameManager().getClassNameManager();
+		return getRootExecutableNameManager().getClassNameManager();
 	}
 
 	public @NonNull CGParameter getExecutorParameter() {
@@ -406,11 +406,11 @@ public abstract class FeatureNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable getExecutorVariableInternal() {	// Invoked from CodeGenAnalyzer that overrides for JUnit support
-		if (parent instanceof FeatureNameManager) {
-			return ((FeatureNameManager)parent).getExecutorVariableInternal();
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getExecutorVariableInternal();
 		}
 	//	if (asScope instanceof CallExp) {
-	//		return ((FeatureNameManager)parent).getExecutorVariable();
+	//		return ((ExecutableNameManager)parent).getExecutorVariable();
 	//	}
 		CGVariable executorVariable2 = executorVariable;
 		if (executorVariable2 == null) {
@@ -420,11 +420,11 @@ public abstract class FeatureNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable getIdResolverVariable() {
-		if (parent instanceof FeatureNameManager) {
-			return ((FeatureNameManager)parent).getIdResolverVariable();
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getIdResolverVariable();
 		}
 	//	if (asScope instanceof CallExp) {
-	//		return ((FeatureNameManager)parent).getIdResolverVariable();
+	//		return ((ExecutableNameManager)parent).getIdResolverVariable();
 	//	}
 		CGVariable idResolverVariable2 = idResolverVariable;
 		if (idResolverVariable2 == null) {
@@ -446,8 +446,8 @@ public abstract class FeatureNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable getModelManagerVariable() {
-		if (parent instanceof FeatureNameManager) {
-			return ((FeatureNameManager)parent).getModelManagerVariable();
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getModelManagerVariable();
 		}
 		CGVariable modelManagerVariable2 = modelManagerVariable;
 		if (modelManagerVariable2 == null) {
@@ -496,11 +496,11 @@ public abstract class FeatureNameManager extends NestedNameManager
 	} */
 
 	public @NonNull CGVariable getQualifiedThisVariable() {
-		if (parent instanceof FeatureNameManager) {
-			return ((FeatureNameManager)parent).getQualifiedThisVariable();
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getQualifiedThisVariable();
 		}
 	//	if (asScope != classNameManager.getASClass()) {				// XXX
-	//		return ((FeatureNameManager)parent).getQualifiedThisVariable();
+	//		return ((ExecutableNameManager)parent).getQualifiedThisVariable();
 	//	}
 		CGVariable qualifiedThisVariable2 = qualifiedThisVariable;
 		if (qualifiedThisVariable2 == null) {
@@ -509,9 +509,9 @@ public abstract class FeatureNameManager extends NestedNameManager
 		return qualifiedThisVariable2;
 	}
 
-	public @NonNull FeatureNameManager getRootFeatureNameManager() {
-		if (parent instanceof FeatureNameManager) {
-			return ((FeatureNameManager)parent).getRootFeatureNameManager();
+	public @NonNull ExecutableNameManager getRootExecutableNameManager() {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getRootExecutableNameManager();
 		}
 		else {
 			return this;
@@ -528,11 +528,11 @@ public abstract class FeatureNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable getStandardLibraryVariable() {
-		if (parent instanceof FeatureNameManager) {
-			return ((FeatureNameManager)parent).getStandardLibraryVariable();
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getStandardLibraryVariable();
 		}
 	//	if (asScope instanceof CallExp) {
-	//		return ((FeatureNameManager)parent).getStandardLibraryVariable();
+	//		return ((ExecutableNameManager)parent).getStandardLibraryVariable();
 	//	}
 		CGVariable standardLibraryVariable2 = standardLibraryVariable;
 		if (standardLibraryVariable2 == null) {

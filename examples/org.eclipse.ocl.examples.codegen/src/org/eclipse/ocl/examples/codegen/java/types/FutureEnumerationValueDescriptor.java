@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 
@@ -45,7 +45,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 	//	}
 
 	@Override
-	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager,
+	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		EClassifier eClassifier = cgEcoreExp.getEClassifier();
 		Class<?> ecoreClass = eClassifier != null ? eClassifier.getInstanceClass() : null;
@@ -69,7 +69,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager,
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 //		return super.appendEcore(js, localContext, cgEcoreExp, unboxedValue);
 		js.appendDeclaration(cgEcoreExp);

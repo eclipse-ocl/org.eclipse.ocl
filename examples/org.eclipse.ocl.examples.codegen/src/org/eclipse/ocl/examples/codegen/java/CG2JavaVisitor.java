@@ -103,7 +103,7 @@ import org.eclipse.ocl.examples.codegen.java.operation.OrOperation2Handler;
 import org.eclipse.ocl.examples.codegen.java.operation.OrOperationHandler;
 import org.eclipse.ocl.examples.codegen.java.operation.XorOperation2Handler;
 import org.eclipse.ocl.examples.codegen.java.operation.XorOperationHandler;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager.NameVariant;
 import org.eclipse.ocl.examples.codegen.naming.NameManager;
@@ -360,7 +360,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append(" " + implementationName + " = (");
 		js.appendClassReference(null, LibraryIteration.LibraryIterationExtension.class);
 		js.append( ")" + staticTypeName + ".lookupImplementation(");
-		js.appendReferenceTo(getFeatureNameManager().getStandardLibraryVariable());
+		js.appendReferenceTo(getExecutableNameManager().getStandardLibraryVariable());
 		js.append(", ");
 		js.appendQualifiedLiteralName(referredIteration);
 		js.append(");\n");
@@ -703,8 +703,8 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		return null;
 	}
 
-	protected @NonNull FeatureNameManager getFeatureNameManager() {
-		return (FeatureNameManager)ClassUtil.nonNullState(currentNameManager);
+	protected @NonNull ExecutableNameManager getExecutableNameManager() {
+		return (ExecutableNameManager)ClassUtil.nonNullState(currentNameManager);
 	}
 
 	public @NonNull ImportNameManager getImportNameManager() {
@@ -911,7 +911,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull Boolean visitCGBoxExp(@NonNull CGBoxExp cgBoxExp) {
 		CGValuedElement unboxedValue = getExpression(cgBoxExp.getSource());
 		TypeDescriptor unboxedTypeDescriptor = context.getTypeDescriptor(unboxedValue);
-		FeatureNameManager currentNameManager = getFeatureNameManager();
+		ExecutableNameManager currentNameManager = getExecutableNameManager();
 		//
 		if (!js.appendLocalStatements(unboxedValue)) {
 			return false;
@@ -1372,7 +1372,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull Boolean visitCGEcoreExp(@NonNull CGEcoreExp cgEcoreExp) {
 		CGValuedElement boxedValue = getExpression(cgEcoreExp.getSource());
 		TypeDescriptor boxedTypeDescriptor = context.getTypeDescriptor(boxedValue);
-		FeatureNameManager currentNameManager = getFeatureNameManager();
+		ExecutableNameManager currentNameManager = getExecutableNameManager();
 		//
 		if (!js.appendLocalStatements(boxedValue)) {
 			return false;
@@ -1565,7 +1565,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		SubStream castBody1 = new SubStream() {
 			@Override
 			public void append() {
-				js.appendValueName(getFeatureNameManager().getIdResolverVariable());
+				js.appendValueName(getExecutableNameManager().getIdResolverVariable());
 				js.append(".getClass(");
 				js.appendIdReference(cgExecutorType.getUnderlyingTypeId().getElementId());
 				js.append(", null)");
@@ -2420,7 +2420,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull Boolean visitCGUnboxExp(@NonNull CGUnboxExp cgUnboxExp) {
 		CGValuedElement boxedValue = getExpression(cgUnboxExp.getSource());
 		TypeDescriptor boxedTypeDescriptor = context.getTypeDescriptor(boxedValue);
-		FeatureNameManager currentNameManager = getFeatureNameManager();
+		ExecutableNameManager currentNameManager = getExecutableNameManager();
 		//
 		if (!js.appendLocalStatements(boxedValue)) {
 			return false;

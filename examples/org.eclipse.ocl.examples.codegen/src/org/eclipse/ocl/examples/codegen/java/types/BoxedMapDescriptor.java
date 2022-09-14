@@ -19,7 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 
 /**
@@ -37,7 +37,7 @@ public class BoxedMapDescriptor extends AbstractValueDescriptor implements Boxed
 	}
 
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 //		if (collectionDescriptor != null) {
 			js.append("final ");

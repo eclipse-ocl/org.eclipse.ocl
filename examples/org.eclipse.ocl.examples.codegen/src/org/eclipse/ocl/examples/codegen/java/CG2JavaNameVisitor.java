@@ -45,7 +45,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	@Override
 	public @Nullable Object visitCGCatchExp(@NonNull CGCatchExp cgCatchExp) {
-		NestedNameManager nameManager = globalNameManager.useSelfFeatureNameManager(cgCatchExp);
+		NestedNameManager nameManager = globalNameManager.useSelfExecutableNameManager(cgCatchExp);
 		nameManager.addNameVariant(cgCatchExp, context.getTHROWN_NameVariant());
 		return super.visitCGCatchExp(cgCatchExp);
 	}
@@ -64,7 +64,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 	@Override
 	public @Nullable Object visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
 		CGValuedElement cgSource = cgIterationCallExp.getSource();
-		NestedNameManager outerNameManager = globalNameManager.useSelfFeatureNameManager(cgIterationCallExp);
+		NestedNameManager outerNameManager = globalNameManager.useSelfExecutableNameManager(cgIterationCallExp);
 		if (cgSource != null) {
 			cgSource.accept(this);
 		}
@@ -73,7 +73,7 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getMGR_NameVariant());
 		outerNameManager.addNameVariant(cgIterationCallExp, context.getTYPE_NameVariant());
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
-			NestedNameManager innerNameManager = globalNameManager.useSelfFeatureNameManager(cgIterator);
+			NestedNameManager innerNameManager = globalNameManager.useSelfExecutableNameManager(cgIterator);
 			innerNameManager.addNameVariant(cgIterator, context.getITER_NameVariant());
 			cgIterator.accept(this);
 		}

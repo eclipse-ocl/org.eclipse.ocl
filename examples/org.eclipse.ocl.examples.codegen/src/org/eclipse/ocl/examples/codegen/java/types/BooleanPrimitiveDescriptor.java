@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.ids.ElementId;
 
 /**
@@ -30,7 +30,7 @@ public class BooleanPrimitiveDescriptor extends AbstractPrimitiveDescriptor
 	}
 
 	@Override
-	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendBox(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager, @NonNull CGBoxExp cgBoxExp, @NonNull CGValuedElement unboxedValue) {
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
 		js.appendReferenceTo(unboxedValue);
@@ -45,7 +45,7 @@ public class BooleanPrimitiveDescriptor extends AbstractPrimitiveDescriptor
 	}
 
 	@Override
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
 		assert unboxedValue.isNonNull();
