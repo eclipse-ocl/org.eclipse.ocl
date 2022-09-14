@@ -394,7 +394,7 @@ public abstract class FeatureNameManager extends NestedNameManager
 	 */
 	@Override
 	public @NonNull ClassNameManager getClassParentNameManager() {
-		return getRootFeatureNameVariable().getClassNameManager();
+		return getRootFeatureNameManager().getClassNameManager();
 	}
 
 	public @NonNull CGParameter getExecutorParameter() {
@@ -509,9 +509,9 @@ public abstract class FeatureNameManager extends NestedNameManager
 		return qualifiedThisVariable2;
 	}
 
-	public @NonNull FeatureNameManager getRootFeatureNameVariable() {
+	public @NonNull FeatureNameManager getRootFeatureNameManager() {
 		if (parent instanceof FeatureNameManager) {
-			return ((FeatureNameManager)parent).getRootFeatureNameVariable();
+			return ((FeatureNameManager)parent).getRootFeatureNameManager();
 		}
 		else {
 			return this;
@@ -590,23 +590,23 @@ public abstract class FeatureNameManager extends NestedNameManager
 	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
 		CGVariable qualifiedThisVariable = basicGetQualifiedThisVariable();
 		if (qualifiedThisVariable != null) {
-			cgTree = CGUtil.rewriteAsLet(cgTree, qualifiedThisVariable);
+			cgTree = globalNameManager.rewriteAsLet(cgTree, qualifiedThisVariable);
 		}
 		CGVariable standardLibraryVariable = basicGetStandardLibraryVariable();
 		if (standardLibraryVariable != null) {
-			cgTree = CGUtil.rewriteAsLet(cgTree, standardLibraryVariable);
+			cgTree = globalNameManager.rewriteAsLet(cgTree, standardLibraryVariable);
 		}
 		CGVariable modelManagerVariable = basicGetModelManagerVariable();
 		if (modelManagerVariable != null) {
-			cgTree = CGUtil.rewriteAsLet(cgTree, modelManagerVariable);
+			cgTree = globalNameManager.rewriteAsLet(cgTree, modelManagerVariable);
 		}
 		CGVariable idResolverVariable = basicGetIdResolverVariable();
 		if (idResolverVariable != null) {
-			cgTree = CGUtil.rewriteAsLet(cgTree, idResolverVariable);
+			cgTree = globalNameManager.rewriteAsLet(cgTree, idResolverVariable);
 		}
 		CGVariable executorVariable = basicGetExecutorVariable();
 		if (executorVariable != null) {
-			cgTree = CGUtil.rewriteAsLet(cgTree, executorVariable);
+			cgTree = globalNameManager.rewriteAsLet(cgTree, executorVariable);
 		}
 		return cgTree;
 	}

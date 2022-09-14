@@ -38,7 +38,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -633,23 +632,6 @@ public class CGUtil
 	}
 
 	/**
-	 * Insert and return a CGLetExp above cgIn for cgVariable.
-	 */
-	public static @NonNull CGLetExp rewriteAsLet(@NonNull CGValuedElement cgIn, @NonNull CGVariable cgVariable) {
-		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
-		cgLetExp.setTypeId(cgIn.getTypeId());
-		cgLetExp.setAst(cgIn.getAst());
-		CGUtil.replace(cgIn, cgLetExp);
-		cgLetExp.setIn(cgIn);
-		cgLetExp.setInit(cgVariable);
-//		System.out.println("re-let " + NameUtil.debugSimpleName(cgLetExp) + " : " + cgLetExp.toString());
-//		for (EObject eObject : new TreeIterable(cgLetExp, true)) {		// XXX
-//			System.out.println("\t" + NameUtil.debugSimpleName(eObject) + " : " + eObject.toString());
-//		}
-		return cgLetExp;
-	}
-
-	/**
 	 * Trim trailing spaces from lines.
 	 */
 	public static @NonNull String trimLines(@NonNull String classFileContent) {
@@ -671,15 +653,5 @@ public class CGUtil
 			e.printStackTrace();
 		}
 		return classFileContent;
-	}
-
-	/**
-	 * Use wrapExp to wrap wrappedExp.
-	 */
-	public static void wrap(@NonNull CGSourcedCallExp wrapExp, @NonNull CGValuedElement wrappedExp) {
-		wrapExp.setTypeId(wrappedExp.getTypeId());
-		wrapExp.setAst(wrappedExp.getAst());
-		replace(wrappedExp, wrapExp);
-		wrapExp.setSource(wrappedExp);
 	}
 }

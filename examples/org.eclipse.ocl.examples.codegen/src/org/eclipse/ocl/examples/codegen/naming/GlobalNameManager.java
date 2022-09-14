@@ -23,14 +23,19 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -149,7 +154,7 @@ public class GlobalNameManager extends AbstractNameManager
 	/**
 	 * The name manager in which the name(s) of this element is managed.
 	 */
-	private final @NonNull Map<@NonNull CGNamedElement, @NonNull NestedNameManager> cgElement2selfNameManager  = new HashMap<>();	// XXX not public
+	private final @NonNull Map<@NonNull CGNamedElement, @NonNull NameManager> cgElement2selfNameManager  = new HashMap<>();	// XXX not public
 
 	//
 	//	Built-in special purpose names are dynamically reserved using a static value as the hint.
@@ -243,7 +248,7 @@ public class GlobalNameManager extends AbstractNameManager
 	 * This must be used to impose the appropriate parent/child NameManager for an inline/out-of-line Loop.
 	 * It may be used to accelerate NameManager location.
 	 */
-	public void addSelfNameManager(@NonNull CGNamedElement cgElement, @NonNull NestedNameManager nameManager) {
+	public void addSelfNameManager(@NonNull CGNamedElement cgElement, @NonNull NameManager nameManager) {
 		NameManager old = cgElement2selfNameManager.put(cgElement, nameManager);
 		assert (old == null) || (old == nameManager);
 	}
@@ -257,27 +262,27 @@ public class GlobalNameManager extends AbstractNameManager
 		return cgElement2childNameManager.get(cgScopingElement);
 	}
 
-	public @Nullable NestedNameManager basicGetSelfNameManager(@NonNull CGNamedElement cgElement) {
+	public @Nullable NameManager basicGetSelfNameManager(@NonNull CGNamedElement cgElement) {
 		return cgElement2selfNameManager.get(cgElement);
 	}
 
 	/**
 	 * Return the NestedNameManager in which cgNamedElement should be defined or null if global.
 	 */
-	public @Nullable NestedNameManager basicUseSelfNameManager(@NonNull CGNamedElement cgNamedElement) {
-		NestedNameManager nameManager = basicGetSelfNameManager(cgNamedElement);
+	public @Nullable NameManager basicUseSelfNameManager(@NonNull CGNamedElement cgNamedElement) {
+		NameManager nameManager = basicGetSelfNameManager(cgNamedElement);
 		if (nameManager != null) {
 			return nameManager;
 		}
 		for (CGNamedElement cgElement = cgNamedElement; (cgElement = (CGNamedElement)cgElement.getParent()) != null; ) {
-			nameManager = basicGetSelfNameManager(cgElement);
-			if (nameManager != null) {
-				addSelfNameManager(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
-				return nameManager;
-			}
 			nameManager = globalNameManager.basicGetChildNameManager(cgElement);
 			if (nameManager != null) {
-				addSelfNameManager(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
+			//XXX	addSelfNameManager(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
+				return nameManager;
+			}
+			nameManager = basicGetSelfNameManager(cgElement);
+			if (nameManager != null) {
+			//XXX	addSelfNameManager(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
 				return nameManager;
 			}
 		}
@@ -503,6 +508,31 @@ public class GlobalNameManager extends AbstractNameManager
 		return true;
 	}
 
+	public void replace(@NonNull CGValuedElement oldElement, @NonNull CGValuedElement newElement) {
+		NameManager nameManager = globalNameManager.basicGetSelfNameManager(oldElement);
+		CGUtil.replace(oldElement, newElement);
+		if (nameManager != null) {
+			globalNameManager.addSelfNameManager(newElement, nameManager);
+		}
+	}
+
+	/**
+	 * Insert and return a CGLetExp above cgIn for cgVariable.
+	 */
+	public @NonNull CGLetExp rewriteAsLet(@NonNull CGValuedElement cgIn, @NonNull CGVariable cgVariable) {
+		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
+		cgLetExp.setTypeId(cgIn.getTypeId());
+		cgLetExp.setAst(cgIn.getAst());
+		replace(cgIn, cgLetExp);
+		cgLetExp.setIn(cgIn);
+		cgLetExp.setInit(cgVariable);
+//		System.out.println("re-let " + NameUtil.debugSimpleName(cgLetExp) + " : " + cgLetExp.toString());
+//		for (EObject eObject : new TreeIterable(cgLetExp, true)) {		// XXX
+//			System.out.println("\t" + NameUtil.debugSimpleName(eObject) + " : " + eObject.toString());
+//		}
+		return cgLetExp;
+	}
+
 	@Override
 	public @NonNull String toString() {
 		return "globals";
@@ -533,7 +563,7 @@ public class GlobalNameManager extends AbstractNameManager
 	}
 
 	public @NonNull NestedNameManager useSelfNestedNameManager(@NonNull CGNamedElement cgScopingElement) {
-		return ClassUtil.nonNullState(globalNameManager.basicUseSelfNameManager(cgScopingElement));
+		return (NestedNameManager)ClassUtil.nonNullState(globalNameManager.basicUseSelfNameManager(cgScopingElement));
 	}
 
 	public @NonNull OperationNameManager useOperationNameManager(@NonNull CGOperation cgOperation) {
@@ -544,5 +574,19 @@ public class GlobalNameManager extends AbstractNameManager
 	public @NonNull PropertyNameManager usePropertyNameManager(@NonNull CGProperty cgProperty) {
 		PropertyNameManager propertyNameManager = (PropertyNameManager)globalNameManager.basicGetChildNameManager(cgProperty);
 		return ClassUtil.nonNullState(propertyNameManager);
+	}
+
+	public @NonNull NameManager useSelfNameManager(@NonNull CGNamedElement cgNamedElement) {
+		return ClassUtil.nonNullState(basicUseSelfNameManager(cgNamedElement));
+	}
+
+	/**
+	 * Use wrapExp to wrap wrappedExp.
+	 */
+	public void wrap(@NonNull CGSourcedCallExp wrapExp, @NonNull CGValuedElement wrappedExp) {
+		wrapExp.setTypeId(wrappedExp.getTypeId());
+		wrapExp.setAst(wrappedExp.getAst());
+		replace(wrappedExp, wrapExp);
+		wrapExp.setSource(wrappedExp);
 	}
 }

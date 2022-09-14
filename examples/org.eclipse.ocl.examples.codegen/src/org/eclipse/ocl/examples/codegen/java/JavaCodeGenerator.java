@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
@@ -833,7 +834,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	protected void optimize(@NonNull CGPackage cgPackage) {
 		NameResolution.inhibitNameResolution = true;
 		CGModelResource resource = getCGResourceFactory().createResource(URI.createURI("cg.xmi"));
-		resource.getContents().add(cgPackage);
+		resource.getContents().add(EcoreUtil.getRootContainer(cgPackage));								// Nested GenModel has nested 'roots'
 		getAnalyzer().analyze(cgPackage);
 		CG2JavaPreVisitor cg2PreVisitor = createCG2JavaPreVisitor();
 		cgPackage.accept(cg2PreVisitor);
@@ -918,13 +919,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						parentNameResolution.addCGElement(cgValuedElement2);
 					}
 					else {
-						NestedNameManager nameManager = globalNameManager.basicUseSelfNameManager(cgValuedElement2);
-						if (nameManager != null) {
-							nameResolution = nameManager.getNameResolution(cgValuedElement2);
-						}
-						else {
-							nameResolution = globalNameManager.getNameResolution(cgValuedElement2);
-						}
+						NameManager nameManager = globalNameManager.useSelfNameManager(cgValuedElement2);
+						nameResolution = nameManager.getNameResolution(cgValuedElement2);
 					}
 				}
 				if (nameResolution != null) {

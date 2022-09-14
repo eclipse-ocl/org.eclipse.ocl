@@ -29,6 +29,7 @@ public class PackageNameManager extends NestedNameManager implements ClassableNa
 
 	public PackageNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull GlobalNameManager parent, @NonNull CGPackage cgPackage) {
 		this(codeGenerator, (AbstractNameManager)parent, cgPackage);
+		parent.addSelfNameManager(cgPackage, parent);
 	}
 
 	public PackageNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull PackageNameManager parent, @NonNull CGPackage cgPackage) {

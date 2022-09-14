@@ -154,7 +154,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	protected @NonNull FeatureNameManager getTreeNameManager(@NonNull CGValuedElement cgElement) {
 		FeatureNameManager featureNameManager = analyzer.useFeatureNameManager(CGUtil.getAST(cgElement));
-		return featureNameManager.getRootFeatureNameVariable();
+		return featureNameManager.getRootFeatureNameManager();
 	}
 
 	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgElement) {
@@ -508,7 +508,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	protected void wrapLetVariables(@NonNull CGNamedElement cgNamedlement) {
 		FeatureNameManager featureNameManager = analyzer.useFeatureNameManager(CGUtil.getAST(cgNamedlement));
-		assert featureNameManager == featureNameManager.getRootFeatureNameVariable();
+		assert featureNameManager == featureNameManager.getRootFeatureNameManager();
 		CGValuedElement cgTree = featureNameManager.getBody();
 		if (cgTree != null) {
 			cgTree = featureNameManager.wrapLetVariables(cgTree);

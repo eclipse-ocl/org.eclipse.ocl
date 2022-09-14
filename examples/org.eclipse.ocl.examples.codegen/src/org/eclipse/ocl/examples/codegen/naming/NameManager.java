@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.naming;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 
 /**
  * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
@@ -21,5 +22,6 @@ public interface NameManager
 	@NonNull GlobalNameManager getGlobalNameManager();
 //	@NonNull NameManagerHelper getHelper();
 	@NonNull String getNameHint(@NonNull Object anObject);
+@NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement);
 	boolean isGlobal();
 }
