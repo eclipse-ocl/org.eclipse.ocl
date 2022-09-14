@@ -48,7 +48,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  * An ExecutableNameManager supervises the parameter and variable names allocated within the scope of an Element with an executable body.
  */
-public abstract class ExecutableNameManager extends NestedNameManager
+public class ExecutableNameManager extends NestedNameManager
 {
 	protected final @NonNull ClassNameManager classNameManager;
 	protected final @NonNull CGNamedElement cgScope;
@@ -70,8 +70,8 @@ public abstract class ExecutableNameManager extends NestedNameManager
 	 */
 	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> asVariable2cgVariable = new HashMap<>();
 
-	protected ExecutableNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parent, @NonNull CGNamedElement cgScope) {
-		super(classNameManager.getCodeGenerator(), parent, cgScope);
+	public ExecutableNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parentNameManager, @NonNull CGNamedElement cgScope) {
+		super(classNameManager.getCodeGenerator(), parentNameManager, cgScope);
 		this.classNameManager = classNameManager;
 		this.cgScope = cgScope;
 		this.asScope = CGUtil.getAST(cgScope);

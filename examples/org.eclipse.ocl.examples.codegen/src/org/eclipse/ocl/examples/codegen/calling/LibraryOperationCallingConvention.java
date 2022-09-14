@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.operation.LibraryOperationHandler;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -163,10 +162,10 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public void createCGParameters(@NonNull OperationNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
+	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
 	//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
 		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
-		CGOperation cgOperation = operationNameManager.getCGOperation();
+		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)analyzer.getMetamodelManager().getImplementation(asOperation);

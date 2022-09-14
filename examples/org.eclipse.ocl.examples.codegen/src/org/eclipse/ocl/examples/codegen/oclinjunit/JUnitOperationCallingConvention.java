@@ -27,7 +27,6 @@ import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
-import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Variable;
@@ -56,11 +55,11 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	}
 
 	@Override
-	public void createCGParameters(@NonNull OperationNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
+	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
 		assert expressionInOCL != null;
 		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		CGOperation cgOperation = operationNameManager.getCGOperation();
+		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		if (contextVariable != null) {
 			contextVariable.setIsRequired(false); 				// May be null for test

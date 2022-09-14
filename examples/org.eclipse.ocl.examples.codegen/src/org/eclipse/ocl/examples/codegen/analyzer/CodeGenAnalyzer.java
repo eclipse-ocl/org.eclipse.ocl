@@ -79,16 +79,12 @@ import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
-import org.eclipse.ocl.examples.codegen.naming.ConstraintNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.naming.LoopNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.naming.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
-import org.eclipse.ocl.examples.codegen.naming.PropertyNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -777,7 +773,7 @@ public class CodeGenAnalyzer
 			cgOperation = callingConvention.createCGOperation(this, asIteration);
 			assert cgOperation.getAst() != null;
 			assert cgOperation.getCallingConvention() == callingConvention;
-			OperationNameManager operationNameManager = getOperationNameManager(cgOperation, asIteration);
+			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asIteration);
 			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asIteration.getBodyExpression();
 			if (asSpecification != null) {
@@ -829,7 +825,7 @@ public class CodeGenAnalyzer
 		cgIterationCallExp.setValidating(asIteration.isIsValidating());
 		cgIterationCallExp.setSource(cgSafeSource);
 		globalNameManager.addSelfNameManager(cgSafeSource, parentNameManager);										// Source always evaluated in parent context
-		LoopNameManager childNameManager = getLoopNameManager(cgIterationCallExp, asLoopExp);
+		ExecutableNameManager childNameManager = getLoopNameManager(cgIterationCallExp, asLoopExp);
 		//
 		//	Iterators / co-iterators
 		//
@@ -951,7 +947,7 @@ public class CodeGenAnalyzer
 //			System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " : " + asOperation);
 			assert cgOperation.getAst() != null;
 			assert cgOperation.getCallingConvention() == callingConvention;
-			OperationNameManager operationNameManager = getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asOperation.getBodyExpression();
 			if (asSpecification != null) {
@@ -1277,8 +1273,8 @@ public class CodeGenAnalyzer
 		return codeGenerator;
 	}
 
-	public @NonNull ConstraintNameManager getConstraintNameManager(@NonNull CGConstraint cgConstraint, @NonNull Constraint asConstraint) {
-		ConstraintNameManager constraintNameManager = (ConstraintNameManager)globalNameManager.basicGetChildNameManager(cgConstraint);
+	public @NonNull ExecutableNameManager getConstraintNameManager(@NonNull CGConstraint cgConstraint, @NonNull Constraint asConstraint) {
+		ExecutableNameManager constraintNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgConstraint);
 		if (constraintNameManager == null) {			//
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getContainingClass(asConstraint);
 			ClassNameManager classNameManager = getClassNameManager(null, asClass);
@@ -1363,7 +1359,7 @@ public class CodeGenAnalyzer
 	/**
 	 * Create or use the ExecutableNameManager for asLoopExp exploiting an optionally already known cgIterationCallExp.
 	 */
-	public @NonNull LoopNameManager getLoopNameManager(@Nullable CGIterationCallExp cgIterationCallExp, @NonNull LoopExp asLoopExp) {
+	public @NonNull ExecutableNameManager getLoopNameManager(@Nullable CGIterationCallExp cgIterationCallExp, @NonNull LoopExp asLoopExp) {
 		if (cgIterationCallExp == null) {
 			cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(asLoopExp);
 			if (cgIterationCallExp == null) {
@@ -1371,7 +1367,7 @@ public class CodeGenAnalyzer
 			}
 		}
 		assert cgIterationCallExp.getAst() == asLoopExp;
-		LoopNameManager loopNameManager = (LoopNameManager)globalNameManager.basicGetChildNameManager(cgIterationCallExp);
+		ExecutableNameManager loopNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgIterationCallExp);
 		if (loopNameManager == null) {			//
 			ExecutableNameManager parentNameManager = useExecutableNameManager((TypedElement)asLoopExp.eContainer());
 			ClassNameManager classNameManager = parentNameManager.getClassNameManager();
@@ -1471,7 +1467,7 @@ public class CodeGenAnalyzer
 	/**
 	 * Create or use the OperationNameManager for asOperation exploiting an optionally already known cgOperation.
 	 */
-	public @NonNull OperationNameManager getOperationNameManager(@Nullable CGOperation cgOperation, @NonNull Operation asOperation) {
+	public @NonNull ExecutableNameManager getOperationNameManager(@Nullable CGOperation cgOperation, @NonNull Operation asOperation) {
 		if (cgOperation == null) {
 			cgOperation = (CGOperation)asElement2cgElement.get(asOperation);
 			if (cgOperation == null) {
@@ -1479,7 +1475,7 @@ public class CodeGenAnalyzer
 			}
 		}
 		assert cgOperation.getAst() == asOperation;
-		OperationNameManager operationNameManager = (OperationNameManager)globalNameManager.basicGetChildNameManager(cgOperation);
+		ExecutableNameManager operationNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgOperation);
 		if (operationNameManager == null) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
 			ClassNameManager classNameManager = getClassNameManager(null, asClass);
@@ -1516,7 +1512,7 @@ public class CodeGenAnalyzer
 	/**
 	 * Create or use the PropertyNameManager for asProperty exploiting an optionally already known cgProperty.
 	 */
-	public @NonNull PropertyNameManager getPropertyNameManager(@Nullable CGProperty cgProperty, @NonNull Property asProperty) {
+	public @NonNull ExecutableNameManager getPropertyNameManager(@Nullable CGProperty cgProperty, @NonNull Property asProperty) {
 		if (cgProperty == null) {
 			cgProperty = (CGProperty)asElement2cgElement.get(asProperty);
 			if (cgProperty == null) {
@@ -1524,7 +1520,7 @@ public class CodeGenAnalyzer
 			}
 		}
 		assert cgProperty.getAst() == asProperty;
-		PropertyNameManager propertyNameManager = (PropertyNameManager)globalNameManager.basicGetChildNameManager(cgProperty);
+		ExecutableNameManager propertyNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgProperty);
 		if (propertyNameManager == null) {			//
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
 			ClassNameManager classNameManager = getClassNameManager(null, asClass);

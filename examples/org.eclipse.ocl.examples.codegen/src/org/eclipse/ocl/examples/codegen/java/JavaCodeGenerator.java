@@ -77,18 +77,14 @@ import org.eclipse.ocl.examples.codegen.java.types.Id2BoxedDescriptorVisitor;
 import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
-import org.eclipse.ocl.examples.codegen.naming.ConstraintNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager.NameVariant;
-import org.eclipse.ocl.examples.codegen.naming.LoopNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.naming.NestedNameManager;
-import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
-import org.eclipse.ocl.examples.codegen.naming.PropertyNameManager;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.examples.codegen.utilities.AbstractCGModelResourceFactory;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResource;
@@ -319,20 +315,20 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return executorParameter;
 	}
 
-	public @NonNull ConstraintNameManager createConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
-		return new ConstraintNameManager(classNameManager, cgConstraint);
+	public @NonNull ExecutableNameManager createConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
+		return new ExecutableNameManager(classNameManager, classNameManager, cgConstraint);
 	}
 
-	public @NonNull LoopNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull ExecutableNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
-		return new LoopNameManager(classNameManager, parentNameManager, cgIterationCallExp);
+	public @NonNull ExecutableNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull ExecutableNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
+		return new ExecutableNameManager(classNameManager, parentNameManager, cgIterationCallExp);
 	}
 
-	public @NonNull OperationNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
-		return new OperationNameManager(classNameManager, cgOperation);
+	public @NonNull ExecutableNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
+		return new ExecutableNameManager(classNameManager, classNameManager, cgOperation);
 	}
 
-	public @NonNull PropertyNameManager createPropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
-		return new PropertyNameManager(classNameManager, cgProperty);
+	public @NonNull ExecutableNameManager createPropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
+		return new ExecutableNameManager(classNameManager, classNameManager, cgProperty);
 	}
 
 	@Override

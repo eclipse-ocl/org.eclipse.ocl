@@ -21,7 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -93,7 +93,7 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 	}
 
 	@Override
-	public void createCGParameters(@NonNull OperationNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
+	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
 		super.createCGParameters(operationNameManager, bodyExpression);
 	}
 
