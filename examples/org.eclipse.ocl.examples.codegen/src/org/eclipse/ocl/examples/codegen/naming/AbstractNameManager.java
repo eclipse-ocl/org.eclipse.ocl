@@ -286,6 +286,4 @@ public abstract class AbstractNameManager implements NameManager
 	public @NonNull String getNameHint(@NonNull Object anObject) {
 		return ClassUtil.nonNullState(helper.getNameHint(anObject));
 	}
-
-	public abstract @NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement);
 }

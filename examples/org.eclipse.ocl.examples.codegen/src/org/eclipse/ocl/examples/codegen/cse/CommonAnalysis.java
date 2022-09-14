@@ -24,6 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 
@@ -150,7 +151,7 @@ public class CommonAnalysis extends AbstractAnalysis
 					rewriteAsVariableExp(commonElement, cgVariable);
 				}
 			}
-			CGUtil.rewriteAsLet(controlElement, cgVariable);
+			analyzer.getGlobalNameManager().rewriteAsLet(controlElement, cgVariable);
 			// resetContainer needed  if commonElement.getParent() was rewriteable (for e.g. a TypeExp where the containment is a helpful 'owns' rather than a necessary child.)
 			if (cgCSE.eResource() == null) {						// XXX FIXME surely !=
 				PivotUtilInternal.resetContainer(cgCSE);
@@ -179,6 +180,7 @@ public class CommonAnalysis extends AbstractAnalysis
 
 	public void rewriteGlobal(@NonNull CodeGenAnalyzer analyzer) {
 		if (simpleAnalyses.size() > 1) {
+			GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 			CGConstantExp primaryConstantExp;
 			CGValuedElement primaryElement = primaryAnalysis.getElement();
 			if (primaryElement instanceof CGConstantExp) {
@@ -195,7 +197,7 @@ public class CommonAnalysis extends AbstractAnalysis
 					primaryConstantExp.setAst(primaryElement.getAst());
 					primaryConstantExp.setTypeId(primaryElement.getTypeId());
 				//	primaryConstantExp.setName(primaryElement.getName());
-					CGUtil.replace(primaryElement, primaryConstantExp);
+					globalNameManager.replace(primaryElement, primaryConstantExp);
 				}
 			}
 			for (SimpleAnalysis secondaryAnalysis : simpleAnalyses) {
@@ -216,7 +218,7 @@ public class CommonAnalysis extends AbstractAnalysis
 							secondaryConstantExp.setAst(secondaryElement.getAst());
 							secondaryConstantExp.setTypeId(secondaryElement.getTypeId());
 						//	secondaryConstantExp.setName(secondaryElement.getName());
-							CGUtil.replace(secondaryElement, secondaryConstantExp);
+							globalNameManager.replace(secondaryElement, secondaryConstantExp);
 						}
 					}
 					CGValuedElement primaryConstant = primaryConstantExp.getReferredConstant();

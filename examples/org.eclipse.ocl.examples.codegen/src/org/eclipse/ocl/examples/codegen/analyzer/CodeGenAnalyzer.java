@@ -83,6 +83,7 @@ import org.eclipse.ocl.examples.codegen.naming.ConstraintNameManager;
 import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.LoopNameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.naming.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
@@ -132,6 +133,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
@@ -283,12 +285,14 @@ public class CodeGenAnalyzer
 	public void analyze(@NonNull CGElement cgRoot) {
 		AnalysisVisitor analysisVisitor = codeGenerator.createAnalysisVisitor();
 		cgRoot.accept(analysisVisitor);
+		assert checkNameManagers(cgRoot);
 		//
 		BoxingAnalyzer boxingAnalyzer = codeGenerator.createBoxingAnalyzer();
 		cgRoot.accept(boxingAnalyzer);
 		//
 		FieldingAnalyzer fieldingAnalyzer = codeGenerator.createFieldingAnalyzer();
 		fieldingAnalyzer.analyze(cgRoot, false);
+		assert checkNameManagers(cgRoot);
 	}
 
 	public @Nullable Iterable<@NonNull CGClass> analyzeExternalFeatures() {
@@ -355,6 +359,72 @@ public class CodeGenAnalyzer
 
 	public @Nullable CGOperation basicGetVirtualCGOperation(@NonNull Operation asOperation) {
 		return asVirtualOperation2cgOperation.get(asOperation);
+	}
+
+	public @Nullable NameManager basicUseSelfNameManager(@NonNull Element asElement) {
+		for (EObject eObject = asElement, eChild = null; eObject != null; eChild = eObject, eObject = eObject.eContainer()) {
+			CGNamedElement cgElement = asElement2cgElement.get(eObject);
+			if (cgElement != null) {
+				if (eChild != null) {
+					NameManager childNameManager = globalNameManager.basicGetChildNameManager(cgElement);
+					if (childNameManager != null) {
+						if (eObject instanceof LoopExp) {
+							LoopExp asLoopExp = (LoopExp)eObject;
+							Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
+							IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
+							if (iterationHelper != null) {
+//								assert false : "inline iteration should not have a child NameManager";
+								if (asLoopExp.getOwnedBody() == eChild) {
+									return childNameManager;
+								}
+							}
+							else {
+								if (asLoopExp.getOwnedIterators().contains(eChild)) {
+									return childNameManager;
+								}
+								if (asLoopExp.getOwnedCoIterators().contains(eChild)) {
+									return childNameManager;
+								}
+								if (asLoopExp.getOwnedBody() == eChild) {
+									return childNameManager;
+								}
+							}
+						}
+						else {
+							return childNameManager;
+						}
+					}
+				}
+				NameManager selfNameManager = globalNameManager.basicGetSelfNameManager(cgElement);
+				if (selfNameManager != null) {
+					return selfNameManager;
+				}
+			}
+		}
+		return null;
+	}
+
+	//
+	//	Assert merhod to verify the consistency of AS/CG NameManagers
+	//
+	protected boolean checkNameManagers(@NonNull CGElement cgRoot) {
+		for (@NonNull EObject eObject : new TreeIterable(cgRoot, true)) {
+			if ((eObject instanceof CGNamedElement) && !(eObject instanceof CGExecutorType) && !(eObject instanceof CGExecutorProperty)) {		// FIXME CGExecutorXXX.ast is a Class/Property
+				CGNamedElement cgElement = (CGNamedElement) eObject;
+				EObject asElement = cgElement.getAst();
+				if (asElement instanceof NamedElement) {
+					NameManager cgNameManager = globalNameManager.basicUseSelfNameManager(cgElement);
+					NameManager asNameManager = basicUseSelfNameManager((Element) asElement);
+					if ((asNameManager == null) || (cgNameManager == null) || (cgNameManager != asNameManager)) {
+						cgNameManager = globalNameManager.basicUseSelfNameManager(cgElement);
+						asNameManager = basicUseSelfNameManager((Element) asElement);
+					}
+					assert cgNameManager == asNameManager : "Mismatch for " + asElement.eClass().getName() + " : " + asElement;
+				//	assert cgNameManager != null;
+				}
+			}
+		}
+		return true;
 	}
 
 	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
@@ -771,6 +841,7 @@ public class CodeGenAnalyzer
 				setNullableIterator(cgIterator, iterator);
 			}
 			cgIterationCallExp.getIterators().add(cgIterator);
+			globalNameManager.addSelfNameManager(cgIterator, iteratorNameManager);
 		}
 		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(asLoopExp)) {
 			CGIterator cgCoIterator = iteratorNameManager.getIterator(coIterator);
@@ -778,6 +849,7 @@ public class CodeGenAnalyzer
 				setNullableIterator(cgCoIterator, coIterator);
 			}
 			cgIterationCallExp.getCoIterators().add(cgCoIterator);
+			globalNameManager.addSelfNameManager(cgCoIterator, iteratorNameManager);
 		}
 		if (asLoopExp instanceof IterateExp) {
 			Variable accumulator = PivotUtil.getOwnedResult((IterateExp)asLoopExp);
@@ -928,6 +1000,7 @@ public class CodeGenAnalyzer
 				parentPackageNameManager.getCGPackage().getPackages().add(cgPackage);
 				new NameResolution.EagerNested(parentPackageNameManager, cgPackage, name);
 			}
+			getPackageNameManager(cgPackage, asPackage);
 		//	pushClassNameManager(cgClass);
 		//	popClassNameManager();
 		}
@@ -1567,14 +1640,14 @@ public class CodeGenAnalyzer
 	/**
 	 * Replace oldElement by newElement and return oldElement which is orphaned by the replacement.
 	 */
-	public @NonNull CGValuedElement replace(@NonNull CGValuedElement oldElement, @NonNull CGValuedElement newElement,
+	public void replace(@NonNull CGValuedElement oldElement, @NonNull CGValuedElement newElement,
 			/*@NonNull*/ String messageTemplate, Object... bindings) {
 		assert oldElement.eContainer() != null;
 		if (oldElement.isRequired() && newElement.isNull()) {
 			newElement = getCGInvalid(messageTemplate, bindings);
 		}
 		assert newElement.eContainer() == null;			// Detect child stealing detector four calls sooner than eBasicSetContainer().
-		return CGUtil.replace(oldElement, newElement);
+		globalNameManager.replace(oldElement, newElement);
 	}
 
 	public void setCGConstant(@NonNull CGValuedElement oldElement, @NonNull CGValuedElement aConstant) {
@@ -1582,7 +1655,7 @@ public class CodeGenAnalyzer
 		newElement.setReferredConstant(aConstant);
 		newElement.setTypeId(oldElement.getTypeId());
 		newElement.setAst(oldElement.getAst());
-		CGUtil.replace(oldElement, newElement);
+		globalNameManager.replace(oldElement, newElement);
 	}
 
 	public void setCGRootClass(@NonNull CGClass cgClass) {
@@ -1634,5 +1707,9 @@ public class CodeGenAnalyzer
 			}
 		}
 		throw new IllegalStateException("No FeatureNameManager for " + asElement.eClass().getName() + ": " + asElement);
+	}
+
+	public @NonNull NameManager useSelfNameManager(@NonNull Element asElement) {
+		return ClassUtil.nonNullState(basicUseSelfNameManager(asElement));
 	}
 }

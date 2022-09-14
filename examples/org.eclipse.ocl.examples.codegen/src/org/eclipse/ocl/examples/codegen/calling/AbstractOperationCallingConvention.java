@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
@@ -343,7 +344,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 
 	// Default guards and boxes al terms. Derived implementations for unboxed/ecore/simple-boxed
 	@Override		// XXX review for all derived implementations
-	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer,@NonNull CGOperationCallExp cgOperationCallExp) {
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
 	//	Operation referredOperation = cgLibraryOperationCallExp.getReferredOperation();
@@ -353,6 +354,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 		OperationId operationId = asOperation.getOperationId();
 		CodeGenAnalyzer analyzer = boxingAnalyzer.getAnalyzer();
+		GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 		boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);
 
 		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
@@ -369,7 +371,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 //						CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
 						CGInvalid cgInvalid = analyzer.getCGInvalid("''" + asClass.getName() + "'' rather than ''OclVoid'' value required");
 						CGConstantExp cgLiteralExp = analyzer.createCGConstantExp(CGUtil.getAST(cgOperationCallExp), cgInvalid);
-						CGUtil.replace(cgOperationCallExp, cgLiteralExp);
+						globalNameManager.replace(cgOperationCallExp, cgLiteralExp);
 						return;
 					}
 				}
@@ -381,7 +383,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
 						CGInvalid cgInvalid = analyzer.getCGInvalid("''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
 						CGConstantExp cgLiteralExp = analyzer.createCGConstantExp(CGUtil.getAST(cgOperationCallExp), cgInvalid);
-						CGUtil.replace(cgOperationCallExp, cgLiteralExp);
+						globalNameManager.replace(cgOperationCallExp, cgLiteralExp);
 						return;
 					}
 				}

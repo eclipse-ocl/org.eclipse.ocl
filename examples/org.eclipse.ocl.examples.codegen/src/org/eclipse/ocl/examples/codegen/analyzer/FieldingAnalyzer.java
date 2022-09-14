@@ -110,23 +110,26 @@ public class FieldingAnalyzer
 	 * The MayBeThrown enforces the container's requirement that an invalid received value
 	 * may be thrown but may also be caught, so no wrapping is required.
 	 */
-	protected final @NonNull FieldingAnalysisVisitor mayBeThrown = createAnalysisVisitor(ReturnState.MAYBE_THROWN);
+	protected final @NonNull FieldingAnalysisVisitor mayBeThrown;
 
 	/**
 	 * The MustBeCaught visitor enforces the container's requirement that an invalid received value
 	 * must be caught by a CGCatchExp. CGVariableExp are redirected to a cached CGCatchExp. Other
 	 * terms are wrapped in a CGCatchExp.
 	 */
-	protected final @NonNull FieldingAnalysisVisitor mustBeCaught = createAnalysisVisitor(ReturnState.IS_CAUGHT);
+	protected final @NonNull FieldingAnalysisVisitor mustBeCaught;
 
 	/**
 	 * The MustBeThrown enforces the container's requirement that an invalid received value
 	 * may be thrown by a CGThrowExp.
 	 */
-	protected final @NonNull FieldingAnalysisVisitor mustBeThrown = createAnalysisVisitor(ReturnState.IS_THROWN);
+	protected final @NonNull FieldingAnalysisVisitor mustBeThrown;
 
 	public FieldingAnalyzer(@NonNull CodeGenAnalyzer analyzer) {
 		this.analyzer = analyzer;
+		this.mayBeThrown = createAnalysisVisitor(ReturnState.MAYBE_THROWN);
+		this.mustBeCaught = createAnalysisVisitor(ReturnState.IS_CAUGHT);
+		this.mustBeThrown = createAnalysisVisitor(ReturnState.IS_THROWN);
 	}
 
 	public void analyze(@NonNull CGElement cgTree, boolean requiredReturn) {		// XXX rationalize parameter
@@ -144,6 +147,10 @@ public class FieldingAnalyzer
 		cgCatchExp.setTypeId(cgValuedElement.getTypeId());
 		cgCatchExp.setCaught(true);
 		return cgCatchExp;
+	}
+
+	public @NonNull CodeGenAnalyzer getAnalyzer() {
+		return analyzer;
 	}
 
 /*	public @NonNull CGVariable getCaughtVariable(@NonNull CGVariable cgVariable) {
