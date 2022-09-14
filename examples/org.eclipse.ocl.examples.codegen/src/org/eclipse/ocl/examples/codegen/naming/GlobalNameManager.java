@@ -276,12 +276,12 @@ public class GlobalNameManager extends AbstractNameManager
 		for (CGNamedElement cgElement = cgNamedElement; (cgElement = (CGNamedElement)cgElement.getParent()) != null; ) {
 			nameManager = globalNameManager.basicGetChildNameManager(cgElement);
 			if (nameManager != null) {
-			//XXX	addSelfNameManager(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
+				addSelfNameManager(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
 				return nameManager;
 			}
 			nameManager = basicGetSelfNameManager(cgElement);
 			if (nameManager != null) {
-			//XXX	addSelfNameManager(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
+				addSelfNameManager(cgNamedElement, nameManager);		// ?? are lookups frequent enough to merit caching ??
 				return nameManager;
 			}
 		}
@@ -296,24 +296,24 @@ public class GlobalNameManager extends AbstractNameManager
 		return nestedNameManager;
 	}
 
-	public @NonNull ConstraintNameManager createConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
-		ConstraintNameManager constraintNameManager = codeGenerator.createConstraintNameManager(classNameManager, cgConstraint);
+	public @NonNull ExecutableNameManager createConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
+		ExecutableNameManager constraintNameManager = codeGenerator.createConstraintNameManager(classNameManager, cgConstraint);
 		assert cgElement2childNameManager.get(cgConstraint) == constraintNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
 		return constraintNameManager;
 	}
 
-	public @NonNull LoopNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull ExecutableNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
-		LoopNameManager loopNameManager = codeGenerator.createLoopNameManager(classNameManager, parentNameManager, cgIterationCallExp);
+	public @NonNull ExecutableNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull ExecutableNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
+		ExecutableNameManager loopNameManager = codeGenerator.createLoopNameManager(classNameManager, parentNameManager, cgIterationCallExp);
 		assert cgElement2childNameManager.get(cgIterationCallExp) == loopNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
 		return loopNameManager;
 	}
 
-	public @NonNull OperationNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
-		OperationNameManager operationNameManager = codeGenerator.createOperationNameManager(classNameManager, cgOperation);
+	public @NonNull ExecutableNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
+		ExecutableNameManager operationNameManager = codeGenerator.createOperationNameManager(classNameManager, cgOperation);
 		assert cgElement2childNameManager.get(cgOperation) == operationNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
@@ -328,8 +328,8 @@ public class GlobalNameManager extends AbstractNameManager
 		return packageNameManager;
 	}
 
-	public @NonNull PropertyNameManager createPropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
-		PropertyNameManager propertyNameManager = codeGenerator.createPropertyNameManager(classNameManager, cgProperty);
+	public @NonNull ExecutableNameManager createPropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
+		ExecutableNameManager propertyNameManager = codeGenerator.createPropertyNameManager(classNameManager, cgProperty);
 		assert cgElement2childNameManager.get(cgProperty) == propertyNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
@@ -569,13 +569,13 @@ public class GlobalNameManager extends AbstractNameManager
 		return (NestedNameManager)ClassUtil.nonNullState(globalNameManager.basicUseSelfNameManager(cgScopingElement));
 	}
 
-	public @NonNull OperationNameManager useOperationNameManager(@NonNull CGOperation cgOperation) {
-		OperationNameManager operationNameManager = (OperationNameManager)globalNameManager.basicGetChildNameManager(cgOperation);
+	public @NonNull ExecutableNameManager useOperationNameManager(@NonNull CGOperation cgOperation) {
+		ExecutableNameManager operationNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgOperation);
 		return ClassUtil.nonNullState(operationNameManager);
 	}
 
-	public @NonNull PropertyNameManager usePropertyNameManager(@NonNull CGProperty cgProperty) {
-		PropertyNameManager propertyNameManager = (PropertyNameManager)globalNameManager.basicGetChildNameManager(cgProperty);
+	public @NonNull ExecutableNameManager usePropertyNameManager(@NonNull CGProperty cgProperty) {
+		ExecutableNameManager propertyNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgProperty);
 		return ClassUtil.nonNullState(propertyNameManager);
 	}
 
