@@ -17,7 +17,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -39,7 +39,7 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 		LanguageExpression specification = asConstraint.getOwnedSpecification();
 		if (specification != null) {
 			assert cgConstraint.basicGetNameResolution() == null;
-			FeatureNameManager nameManager = getConstraintNameManager(cgConstraint, asConstraint);
+			ExecutableNameManager nameManager = getConstraintNameManager(cgConstraint, asConstraint);
 			try {
 				ExpressionInOCL oldQuery = environmentFactory.parseSpecification(specification);
 				String constraintName = PivotUtil.getName(asConstraint);
@@ -71,7 +71,7 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 	}
 
 	@Override
-	public @NonNull CGParameter getSelfParameter(@NonNull FeatureNameManager featureNameManager, @NonNull VariableDeclaration asParameter) {
-		return featureNameManager.getThisParameter(asParameter);
+	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {
+		return executableNameManager.getThisParameter(asParameter);
 	}
 }

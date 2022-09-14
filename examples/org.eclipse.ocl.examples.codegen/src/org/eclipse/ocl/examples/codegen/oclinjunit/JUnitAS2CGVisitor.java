@@ -15,7 +15,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -50,7 +50,7 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 
 	@Override
 	public @NonNull CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL element) {
-		FeatureNameManager nameManager = context.useFeatureNameManager(element);
+		ExecutableNameManager nameManager = context.useExecutableNameManager(element);
 		Variable contextVariable = element.getOwnedContext();
 		if (contextVariable != null) {
 			CGVariable cgContext = nameManager.getParameter(contextVariable, (String)null);

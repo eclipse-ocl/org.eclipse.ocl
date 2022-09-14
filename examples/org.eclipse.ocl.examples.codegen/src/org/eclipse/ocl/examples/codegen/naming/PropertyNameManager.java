@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.Property;
 /**
  * A PropertyNameManager supervises the variable names allocated within the scope of a Property.
  */
-public class PropertyNameManager extends FeatureNameManager
+public class PropertyNameManager extends ExecutableNameManager
 {
 	public PropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
 		super(classNameManager, classNameManager, cgProperty);

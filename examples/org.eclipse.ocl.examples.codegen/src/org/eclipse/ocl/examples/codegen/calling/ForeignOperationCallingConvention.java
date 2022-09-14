@@ -36,7 +36,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -124,7 +124,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		initCallExp(analyzer, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
-		FeatureNameManager operationNameManager = analyzer.getGlobalNameManager().useOperationNameManager(cgOperation);
+		ExecutableNameManager operationNameManager = analyzer.getGlobalNameManager().useOperationNameManager(cgOperation);
 		CGVariable executorVariable = analyzer.getExecutorVariable(operationNameManager);
 		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());

@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
@@ -35,7 +35,7 @@ public abstract class AbstractValueDescriptor extends AbstractDescriptor
 		this.javaClass = javaClass;
 	}
 
-	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
+	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		String functionName = null;
 		if (javaClass == BigDecimal.class) {
 			functionName = "bigDecimalValueOf";

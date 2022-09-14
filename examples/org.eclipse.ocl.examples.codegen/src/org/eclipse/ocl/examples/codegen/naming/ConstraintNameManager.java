@@ -17,7 +17,7 @@ import org.eclipse.ocl.pivot.Constraint;
 /**
  * A ConstraintNameManager supervises the variable names allocated within the scope of a Constraint.
  */
-public class ConstraintNameManager extends FeatureNameManager
+public class ConstraintNameManager extends ExecutableNameManager
 {
 	public ConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
 		super(classNameManager, classNameManager, cgConstraint);

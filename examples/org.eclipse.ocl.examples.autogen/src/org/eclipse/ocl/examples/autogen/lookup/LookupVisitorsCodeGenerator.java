@@ -34,7 +34,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaPreVisitor;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.RereferencingCopier;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
@@ -126,7 +126,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		this.asVisitorClass = createASClass(asVisitorPackage, visitorClassName);
 		this.asThisVariable = helper.createParameterVariable("this", asVisitorClass, true);
 		this.asContextVariable = helper.createParameterVariable(CONTEXT_NAME, asEnvironmentType, true);
-		CGVariable cgVariable = ((FeatureNameManager)getAnalyzer().getNameManager()).getCGVariable(asContextVariable);
+		CGVariable cgVariable = ((ExecutableNameManager)getAnalyzer().getNameManager()).getCGVariable(asContextVariable);
 		globalNameManager.declareEagerName(cgVariable, CONTEXT_NAME);
 
 		//

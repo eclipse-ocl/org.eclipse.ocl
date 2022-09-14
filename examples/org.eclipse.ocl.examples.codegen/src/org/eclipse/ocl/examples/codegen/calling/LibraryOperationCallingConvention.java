@@ -30,7 +30,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.operation.LibraryOperationHandler;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -106,8 +106,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		for (int i = 0; i < syntheticArgumentSize; i++) {
 			Class<?> jParameterType = jParameterTypes[i];
 			if (jParameterType == Executor.class) {
-				FeatureNameManager featureNameManager = analyzer.useFeatureNameManager(asOperationCallExp);
-				CGVariable executorVariable = analyzer.getExecutorVariable(featureNameManager);
+				ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(asOperationCallExp);
+				CGVariable executorVariable = analyzer.getExecutorVariable(executableNameManager);
 				cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 			}
 			else if (jParameterType == TypeId.class) {
@@ -142,8 +142,8 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 			List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 			for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 				if (jParameterType == Executor.class) {
-					FeatureNameManager featureNameManager = analyzer.useFeatureNameManager(asOperationCallExp);
-					CGVariable executorVariable = analyzer.getExecutorVariable(featureNameManager);
+					ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(asOperationCallExp);
+					CGVariable executorVariable = analyzer.getExecutorVariable(executableNameManager);
 					cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 				}
 				else if (jParameterType == TypeId.class) {

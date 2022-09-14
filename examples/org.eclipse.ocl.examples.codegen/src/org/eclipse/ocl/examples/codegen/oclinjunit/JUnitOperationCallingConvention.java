@@ -26,7 +26,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.OperationNameManager;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
@@ -49,7 +49,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		initOperation(analyzer, cgOperation, asOperation);
 		analyzer.addCGOperation(cgOperation);
-		FeatureNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
 		ClassNameManager classNameManager = operationNameManager.getClassNameManager();
 		classNameManager.declareEagerName(cgOperation);			// Eager enforcement of built-in "evaluate"
 		return cgOperation;

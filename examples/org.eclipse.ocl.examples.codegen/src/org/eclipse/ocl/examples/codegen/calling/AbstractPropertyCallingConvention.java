@@ -23,7 +23,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 public abstract class AbstractPropertyCallingConvention implements PropertyCallingConvention
 {
 	@Override
-	public void createCGParameters(@NonNull FeatureNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {}
+	public void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {}
 
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
@@ -59,7 +59,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	//		|| (this instanceof ConstrainedPropertyCallingConvention)
 	//		|| (this instanceof NativePropertyCallingConvention)
 	//		|| (this instanceof ForeignPropertyCallingConvention);
-		FeatureNameManager propertyNameManager = analyzer.getGlobalNameManager().usePropertyNameManager(cgProperty);
+		ExecutableNameManager propertyNameManager = analyzer.getGlobalNameManager().usePropertyNameManager(cgProperty);
 		Property asProperty = CGUtil.getAST(cgProperty);
 		cgProperty.setRequired(asProperty.isIsRequired());
 		LanguageExpression specification = asProperty.getOwnedExpression();

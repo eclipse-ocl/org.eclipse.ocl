@@ -22,7 +22,7 @@ import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -47,7 +47,7 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 	}
 
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 //		if (collectionDescriptor != null) {
 			js.append("final ");

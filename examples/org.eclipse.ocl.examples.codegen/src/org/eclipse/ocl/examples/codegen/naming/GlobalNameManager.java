@@ -305,7 +305,7 @@ public class GlobalNameManager extends AbstractNameManager
 		return constraintNameManager;
 	}
 
-	public @NonNull LoopNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull FeatureNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
+	public @NonNull LoopNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull ExecutableNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
 		LoopNameManager loopNameManager = codeGenerator.createLoopNameManager(classNameManager, parentNameManager, cgIterationCallExp);
 		assert cgElement2childNameManager.get(cgIterationCallExp) == loopNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
@@ -543,18 +543,18 @@ public class GlobalNameManager extends AbstractNameManager
 		return ClassUtil.nonNullState(classNameManager);
 	}
 
-//	public @NonNull FeatureNameManager useConstraintNameManager(@NonNull CGConstraint cgConstraint) {
-//		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgConstraint);
-//		return ClassUtil.nonNullState(featureNameManager);
+//	public @NonNull ExecutableNameManager useConstraintNameManager(@NonNull CGConstraint cgConstraint) {
+//		ExecutableNameManager executableNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgConstraint);
+//		return ClassUtil.nonNullState(executableNameManager);
 //	}
 
-	public @NonNull FeatureNameManager useFeatureNameManager(@NonNull CGNamedElement cgScopingElement) {
-		FeatureNameManager featureNameManager = (FeatureNameManager)globalNameManager.basicGetChildNameManager(cgScopingElement);
-		return ClassUtil.nonNullState(featureNameManager);
+	public @NonNull ExecutableNameManager useExecutableNameManager(@NonNull CGNamedElement cgScopingElement) {
+		ExecutableNameManager executableNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgScopingElement);
+		return ClassUtil.nonNullState(executableNameManager);
 	}
 
-	public @NonNull FeatureNameManager useSelfFeatureNameManager(@NonNull CGNamedElement cgScopingElement) {
-		return (FeatureNameManager) ClassUtil.nonNullState(globalNameManager.basicUseSelfNameManager(cgScopingElement));
+	public @NonNull ExecutableNameManager useSelfExecutableNameManager(@NonNull CGNamedElement cgScopingElement) {
+		return (ExecutableNameManager) ClassUtil.nonNullState(globalNameManager.basicUseSelfNameManager(cgScopingElement));
 	}
 
 	public @NonNull NestedNameManager useNestedNameManager(@NonNull CGNamedElement cgScopingElement) {

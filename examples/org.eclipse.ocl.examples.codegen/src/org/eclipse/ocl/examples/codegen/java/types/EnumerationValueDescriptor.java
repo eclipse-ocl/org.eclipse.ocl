@@ -19,7 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 
@@ -38,7 +38,7 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 	}
 
 	@Override
-	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager,
+	public @NonNull Boolean appendEcoreStatements(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager,
 			@NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement boxedValue) {
 		js.appendSuppressWarningsNull(true);
 		js.appendDeclaration(cgEcoreExp);
@@ -69,7 +69,7 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 	}
 
 	@Override
-	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull FeatureNameManager localNameManager,
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager,
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 		js.appendDeclaration(cgUnboxExp);
 		js.append(" = ");

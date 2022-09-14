@@ -56,7 +56,7 @@ import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.BoxedDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EcoreDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
-import org.eclipse.ocl.examples.codegen.naming.FeatureNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Element;
@@ -233,8 +233,8 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		globalNameManager.wrap(cgCastExp, cgChild);
 		cgCastExp.setAst(asChild);
 		if (asType != null) {
-			FeatureNameManager featureNameManager = context.useFeatureNameManager(asChild);
-			CGExecutorType cgExecutorType = featureNameManager.getCGExecutorType(asType);
+			ExecutableNameManager executableNameManager = context.useExecutableNameManager(asChild);
+			CGExecutorType cgExecutorType = executableNameManager.getCGExecutorType(asType);
 			cgCastExp.setExecutorType(cgExecutorType);
 		}
 		cgCastExp.setTypeId(codeGenerator.getAnalyzer().getCGTypeId(asChild.getTypeId()));
