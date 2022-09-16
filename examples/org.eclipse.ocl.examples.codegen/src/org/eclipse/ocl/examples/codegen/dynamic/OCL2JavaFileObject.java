@@ -35,7 +35,7 @@ public class OCL2JavaFileObject extends SimpleJavaFileObject
 	}
 	public static Class<?> loadExplicitClass(@NonNull File explicitClassPath, @NonNull String qualifiedClassName, @Nullable ClassLoader fallBackClassLoader) throws ClassNotFoundException, IOException {
 		int lastDot = qualifiedClassName.lastIndexOf(".");
-		String qualifiedClassPackage = lastDot >= 0 ? qualifiedClassName.substring(0, lastDot) : qualifiedClassName;
+		String qualifiedClassPackage = lastDot >= 0 ? qualifiedClassName.substring(0, lastDot) : "";
 		ExplicitClassLoader classLoader = new ExplicitClassLoader(explicitClassPath, qualifiedClassPackage, fallBackClassLoader);
 		return classLoader.loadClass(qualifiedClassName);
 	}

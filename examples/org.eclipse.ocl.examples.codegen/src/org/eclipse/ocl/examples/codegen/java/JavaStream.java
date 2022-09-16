@@ -475,11 +475,14 @@ public class JavaStream
 	public void appendClassHeader(@Nullable CGPackage cgPackage) {
 		appendCopyrightHeader();
 		if (cgPackage != null) {
-			append("package ");
-			appendClassHeaderInternal(cgPackage);
-			append(";\n");
+			String name = cgPackage.getName();
+			if ((cgPackage.eContainer() != null) || !((name == null) || (name.length() == 0))) {
+				append("package ");
+				appendClassHeaderInternal(cgPackage);
+				append(";\n");
+				append("\n");
+			}
 		}
-		append("\n");
 		append(ImportUtils.IMPORTS_MARKER + "\n");
 	}
 	private void appendClassHeaderInternal(@NonNull CGPackage cgPackage) {
