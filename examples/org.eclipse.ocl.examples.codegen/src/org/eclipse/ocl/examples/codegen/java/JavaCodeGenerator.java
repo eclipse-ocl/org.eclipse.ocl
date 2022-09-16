@@ -868,11 +868,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	/**
-	 * Propagate the parennt name hint down to the descendants of cgElement so that initializers for variables use a name
+	 * Propagate the parent name hint down to the descendants of cgElement so that initializers for variables use a name
 	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
 	 */
 	protected void propagateNameResolution(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
-		CodeGenAnalyzer analyzer = getAnalyzer();
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 			if (eObject instanceof CGElement) {
 				CGElement cgChild = (CGElement)eObject;

@@ -20,8 +20,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 public interface NameManager
 {
 	@NonNull GlobalNameManager getGlobalNameManager();
-//	@NonNull NameManagerHelper getHelper();
 	@NonNull String getNameHint(@NonNull Object anObject);
-@NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement);
+	@NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgElement);
 	boolean isGlobal();
 }
