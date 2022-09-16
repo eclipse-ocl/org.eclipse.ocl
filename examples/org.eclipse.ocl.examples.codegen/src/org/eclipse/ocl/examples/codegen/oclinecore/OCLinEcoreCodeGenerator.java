@@ -529,7 +529,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
-		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();
+		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();			// Regularize as tx from AS
 		analyzer.setCGRootClass(cgClass);
 	}
 

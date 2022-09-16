@@ -507,8 +507,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	protected void wrapLetVariables(@NonNull CGNamedElement cgNamedlement) {
-		ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(CGUtil.getAST(cgNamedlement));
-		assert executableNameManager == executableNameManager.getRootExecutableNameManager();
+		ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(CGUtil.getAST(cgNamedlement)).getRootExecutableNameManager();
+	//	assert executableNameManager == executableNameManager.getRootExecutableNameManager();
 		CGValuedElement cgTree = executableNameManager.getBody();
 		if (cgTree != null) {
 			cgTree = executableNameManager.wrapLetVariables(cgTree);
