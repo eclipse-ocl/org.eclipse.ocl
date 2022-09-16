@@ -408,18 +408,22 @@ public class CodeGenAnalyzer
 				CGNamedElement cgElement = (CGNamedElement) eObject;
 				EObject asElement = cgElement.getAst();
 				if (asElement instanceof NamedElement) {
-					NameManager cgNameManager = globalNameManager.basicUseSelfNameManager(cgElement);
-					NameManager asNameManager = basicUseSelfNameManager((Element) asElement);
-					if ((asNameManager == null) || (cgNameManager == null) || (cgNameManager != asNameManager)) {
-						cgNameManager = globalNameManager.basicUseSelfNameManager(cgElement);
-						asNameManager = basicUseSelfNameManager((Element) asElement);
-					}
-					assert cgNameManager == asNameManager : "Mismatch for " + asElement.eClass().getName() + " : " + asElement;
-				//	assert cgNameManager != null;
+					checkNameManager(cgElement, (NamedElement)asElement);
 				}
 			}
 		}
 		return true;
+	}
+
+	protected void checkNameManager(@NonNull CGNamedElement cgElement, @NonNull NamedElement asElement) {
+		NameManager cgNameManager = globalNameManager.basicUseSelfNameManager(cgElement);
+		NameManager asNameManager = basicUseSelfNameManager(asElement);
+		if ((asNameManager == null) || (cgNameManager == null) || (cgNameManager != asNameManager)) {
+			cgNameManager = globalNameManager.basicUseSelfNameManager(cgElement);
+			asNameManager = basicUseSelfNameManager(asElement);
+		}
+		assert cgNameManager == asNameManager : "Mismatch for " + asElement.eClass().getName() + " : " + asElement;
+		//	assert cgNameManager != null;
 	}
 
 	public @NonNull CGBoolean createCGBoolean(boolean booleanValue) {
@@ -658,10 +662,12 @@ public class CodeGenAnalyzer
 	/**
 	 * Generate the full CG declaration and implementation for asClass.
 	 */
-	public @NonNull CGClass generateClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		CGClass cgClass = basicGetCGClass(asClass);
+	public @NonNull CGClass generateClass(@Nullable CGClass cgClass, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		if (cgClass == null) {
-			cgClass = generateClassDeclaration(asClass, null);
+			cgClass = basicGetCGClass(asClass);
+			if (cgClass == null) {
+				cgClass = generateClassDeclaration(asClass, null);
+			}
 		}
 		getClassNameManager(cgClass, asClass);			// Nominally redundant here but needed downstream
 		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(asClass.getSuperClasses())) {
