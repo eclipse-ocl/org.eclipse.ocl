@@ -39,6 +39,11 @@ public class StandaloneTestCase extends PivotTestCaseWithAutoTearDown
 		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
 	}
 
+	protected @NonNull String getXMLLogFileName() {
+		String logFileName = "log_" + getTestName() + ".xml";
+		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
+	}
+
 	@Override
 	protected void setUp() throws Exception {
 		//		StandaloneProjectMap.PROJECT_MAP_ADD_EPACKAGE.setState(true);

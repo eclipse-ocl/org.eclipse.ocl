@@ -10,12 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.ui;
 
+import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
-
-import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly

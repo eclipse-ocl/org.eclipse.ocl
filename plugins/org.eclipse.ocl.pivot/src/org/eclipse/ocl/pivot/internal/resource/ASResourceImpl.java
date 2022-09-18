@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -236,7 +235,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	private @Nullable Map<@NonNull String, @NonNull EObject> legacyXMIId2eObject = null;
 
 	/**
-	 * An attempt to save an unsaveable ASResource is ignored, probably because it is immuatble..
+	 * An attempt to save an unsaveable ASResource is ignored, probably because it is immutable..
 	 */
 	private boolean isSaveable = true;
 
@@ -246,7 +245,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	private boolean isUnloading = false;
 
 	/**
-	 * Set true/false by setUpdating(). (See Bug 579109, we can aspire to elimiinating many usages of this.)
+	 * Set true/false by setUpdating(). (See Bug 579109, we can aspire to eliminating many usages of this.)
 	 */
 	private boolean isUpdating = false;
 
@@ -256,8 +255,8 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public ASResourceImpl(@NonNull URI uri, @NonNull ASResourceFactory asResourceFactory) {
 		super(uri);
 		this.asResourceFactory = asResourceFactory;
-		assert PivotUtilInternal.isASURI(uri);
-		//		PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " : " + uri);
+		//	assert PivotUtilInternal.isASURI(uri);
+		//	PivotUtilInternal.debugPrintln("Create " + NameUtil.debugSimpleName(this) + " : " + uri);
 	}
 
 	/**

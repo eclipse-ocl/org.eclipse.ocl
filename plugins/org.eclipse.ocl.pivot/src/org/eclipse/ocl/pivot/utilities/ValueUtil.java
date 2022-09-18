@@ -1296,16 +1296,21 @@ public abstract class ValueUtil
 	}
 
 	private static void toStringWithLimit(@NonNull StringBuilder s, String string, int sizeLimit) {
-		int length = string.length();
-		int available = sizeLimit - (length + 1);
-		if (length <= available) {
+		if (sizeLimit < 0) {
 			s.append(string);
 		}
 		else {
-			if (available > 0) {
-				s.append(string.substring(0, available));
+			int length = string.length();
+			int available = sizeLimit - (length + 1);
+			if (length <= available) {
+				s.append(string);
 			}
-			s.append("...");
+			else {
+				if (available > 0) {
+					s.append(string.substring(0, available));
+				}
+				s.append("...");
+			}
 		}
 	}
 

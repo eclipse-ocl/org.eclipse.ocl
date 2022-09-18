@@ -13,8 +13,8 @@ package org.eclipse.ocl.examples.standalone;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -24,15 +24,20 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeExp;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
+import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.queries.QueriesFactory;
 import org.eclipse.ocl.pivot.queries.QueryModel;
@@ -40,6 +45,7 @@ import org.eclipse.ocl.pivot.queries.QueryResult;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -52,84 +58,190 @@ public class ExecuteCommand extends StandaloneCommand
 
 	public static interface IResultExporter {
 		void close() throws IOException;
-		void export(@NonNull Appendable s, @NonNull String query, @Nullable ExpressionInOCL expression, @Nullable Object context, @Nullable Object result, @Nullable String error) throws IOException;
-		void open(@NonNull OCL ocl, @Nullable File exportedFile, boolean echoText, boolean echoModel, boolean showText, boolean showModel) throws IOException;
+		void export(@NonNull String query, @Nullable ExpressionInOCL expression, @Nullable Object context, @Nullable Object result, @Nullable List<@NonNull String> errors) throws IOException;
+		void open(@NonNull File exportedFile, boolean hideQuery, boolean hideResult, boolean hideASQuery, boolean hideASResult, boolean hideASTypes) throws IOException;
 	}
 
-	public static class TextResultExporter implements IResultExporter
+	public static abstract class AbstractResultExporter implements IResultExporter
 	{
-		private boolean echoText;
+		protected final @NonNull StandaloneApplication standaloneApplication;
+
+		protected AbstractResultExporter(@NonNull StandaloneApplication standaloneApplication) {
+			this.standaloneApplication = standaloneApplication;
+		}
+	}
+
+	public static class TextResultExporter extends AbstractResultExporter
+	{
+		private FileWriter s;
+		private boolean hideQuery;
+		private boolean hideResult;
+
+		protected TextResultExporter(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication);
+		}
 
 		@Override
-		public void close() throws IOException {}
+		public void close() throws IOException {
+			s.close();
+		}
 
 		@Override
-		public void export(@NonNull Appendable s, @NonNull String query, @Nullable ExpressionInOCL expression, @Nullable Object context, @Nullable Object result, @Nullable String error) throws IOException {
-			if (echoText) {
-				s.append("Query : " + query + "\nResult: ");
+		public void export(@NonNull String query, @Nullable ExpressionInOCL expression, @Nullable Object context, @Nullable Object result, @Nullable List<@NonNull String> errors) throws IOException {
+			if (errors == null) {
+				if (hideQuery) {
+					if (!hideResult) {
+						s.append(result + "\n");
+					}
+					else {
+						s.append(result + "\n");
+					}
+				}
+				else {
+					s.append("Query : " + query + "\n");
+					if (!hideResult) {
+						s.append("Result: " + result + "\n");
+					}
+				}
 			}
-			s.append(result + "\n");
-			if (error != null) {
-				s.append("Error : " + error + "\n");
+			else {
+				s.append("Query : " + query + "\n");
+				s.append("Result: " + result + "\n");
+				for (String error : errors) {
+					s.append("Error : " + error + "\n");
+				}
 			}
 		}
 
 		@Override
-		public void open(@NonNull OCL ocl, @Nullable File exportedFile, boolean echoText, boolean echoModel, boolean showText, boolean showModel) throws IOException {
-			this.echoText = echoText;
+		public void open(@NonNull File exportedFile, boolean hideQuery, boolean hideResult, boolean hideASQuery, boolean hideASResult, boolean hideASTypes) throws IOException {
+			this.hideQuery = hideQuery;
+			this.hideResult = hideResult;
+			s = new FileWriter(exportedFile);
 		}
 	}
 
-	public static class ModelResultExporter implements IResultExporter
+	public static class DefaultResultExporter extends AbstractResultExporter
 	{
-		private boolean echoText;
-		private boolean echoModel;
-		private boolean showText;
-		private boolean showModel;
+		private final @NonNull StringBuilder s = new StringBuilder();
+
+		protected DefaultResultExporter(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication);
+		}
+
+		@Override
+		public void close() {
+			if (!standaloneApplication.isTest()) {
+				System.out.println(s.toString());
+			}
+		}
+
+		@Override
+		public void export(@NonNull String query, @Nullable ExpressionInOCL expression, @Nullable Object context, @Nullable Object result, @Nullable List<@NonNull String> errors) throws IOException {
+			if (errors == null) {
+				s.append(result);
+			}
+			else {
+				for (String error : errors) {
+					s.append(error + "\n");
+				}
+			}
+			s.append("\n");
+		}
+
+		public @NonNull String getConsoleText() {
+			return s.toString();
+		}
+
+		@Override
+		public void open(@NonNull File exportedFile, boolean hideQuery, boolean hideResult, boolean hideASQuery, boolean hideASResult, boolean hideASTypes) {}
+	}
+
+	public static class ModelResultExporter extends AbstractResultExporter
+	{
+		private boolean hideQuery;
+		private boolean hideResult;
+		private boolean hideASQuery;
+		private boolean hideASResult;
+		private boolean hideASTypes;
 		private Resource resource;
 		private @NonNull QueryModel queryModel = QueriesFactory.eINSTANCE.createQueryModel();
+
+		public ModelResultExporter(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication);
+		}
 
 		@Override
 		public void close() throws IOException {
 			if (resource != null) {
+				if (hideASTypes) {
+					List<@NonNull EObject> contents = resource.getContents();
+					Collection<@NonNull EObject> newContents = EcoreUtil.copyAll(contents);
+					contents.clear();
+					contents.addAll(newContents);
+					for (EObject eObject : new TreeIterable(resource)) {
+						if (eObject instanceof TypedElement) {
+							((TypedElement)eObject).setType(null);
+						}
+						if (eObject instanceof TypeExp) {
+							((TypeExp)eObject).setReferredType(null);
+							((TypeExp)eObject).setTypeValue(null);
+						}
+					}
+				}
 				resource.save(null);
+				resource.getResourceSet().getResources().remove(resource);
 			}
 		}
 
 		@Override
-		public void export(@NonNull Appendable s, @NonNull String query, @Nullable ExpressionInOCL expression, @Nullable Object context, @Nullable Object result, @Nullable String error)throws IOException {
+		public void export(@NonNull String query, @Nullable ExpressionInOCL expression, @Nullable Object context, @Nullable Object result, @Nullable List<@NonNull String> errors)throws IOException {
 			QueryResult queryResult = QueriesFactory.eINSTANCE.createQueryResult();
-			if (echoText) {
+			if (context != null) {
+				queryResult.setSelf((EObject)context);
+			}
+			if (!hideQuery) {
 				queryResult.setQuery(query);
 			}
 			if (expression != null) {
 				expression.setBody(null);
-				if (echoModel) {
+				if (!hideASQuery) {
 					queryResult.setExpression(expression);
 				}
 			}
 			if (result != null) {
-				if (showText) {
-					queryResult.setResult(String.valueOf(result));
+				if (!hideResult) {
+				//	queryResult.setResult(String.valueOf(result));
+					StringBuilder s = new StringBuilder();
+					ValueUtil.toString(result, s, -1);
+					queryResult.setResult(s.toString());
 				}
-				if (showModel) {
+				if (!hideASResult) {
 					queryResult.setValue(ValueUtil.createLiteralExp(result));
 				}
 			}
-			if (error != null) {
-				queryResult.setError(error);
+			if (errors != null) {
+				List<String> errors2 = queryResult.getErrors();
+				for (String error : errors) {
+					errors2.add(error);
+				}
 			}
 			queryModel.getResults().add(queryResult);
 		}
 
 		@Override
-		public void open(@NonNull OCL ocl, @Nullable File exportedFile, boolean echoText, boolean echoModel, boolean showText, boolean showModel) throws IOException {
-			this.echoModel = echoModel;
-			this.echoText = echoText;
-			this.showModel = showModel;
-			this.showText = showText;
+		public void open(@Nullable File exportedFile, boolean hideQuery, boolean hideResult, boolean hideASQuery, boolean hideASResult, boolean hideASTypes) throws IOException {
+			this.hideResult = hideResult;
+			this.hideQuery = hideQuery;
+			this.hideASResult = hideASResult;
+			this.hideASQuery = hideASQuery;
+			this.hideASTypes = hideASTypes;
 			if (exportedFile != null) {
-				resource = ocl.getResourceSet().createResource(URI.createFileURI(exportedFile.getAbsolutePath()));
+				ResourceSet resourceSet = standaloneApplication.getOCL().getMetamodelManager().getASResourceSet();
+				URI uri = URI.createFileURI(exportedFile.getAbsolutePath());
+			//	resource = resourceSet.createResource(uri);
+				resource = OCLASResourceFactory.getInstance().createResource(uri);
+				resourceSet.getResources().add(resource);
 				resource.getContents().add(queryModel);
 			}
 			else {
@@ -147,17 +259,12 @@ public class ExecuteCommand extends StandaloneCommand
 	{
 		private @Nullable IResultExporter exporter;
 
-		public ExporterToken() {
-			super("-exporter", StandaloneMessages.ExecuteCommand_Exporter_Help, "none|text|model");
+		public ExporterToken(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication, "-exporter", StandaloneMessages.ExecuteCommand_Exporter_Help, "none|text|model");
 		}
 
 		public @Nullable IResultExporter getExporter() {
 			return exporter;
-		}
-
-		@Override
-		public boolean isRequired() {
-			return true;
 		}
 
 		@Override
@@ -166,10 +273,10 @@ public class ExecuteCommand extends StandaloneCommand
 				exporter = null;
 			}
 			else if ("text".equals(string) ) {
-				exporter = new TextResultExporter();
+				exporter = new TextResultExporter(standaloneApplication);
 			}
 			else if ("model".equals(string) ) {
-				exporter = new ModelResultExporter();
+				exporter = new ModelResultExporter(standaloneApplication);
 			}
 			else {
 				logger.error("Unrecognized 'exporter' " + string);
@@ -180,25 +287,30 @@ public class ExecuteCommand extends StandaloneCommand
 	}
 
 	/**
-	 * A mandatory argument key of the model file path. This argument key must
-	 * be followed by the model file path.
+	 * A mandatory argument to provide one or more queries to evaluate.
 	 */
 	public static class QueryToken extends StringToken
 	{
 		private @Nullable List<@NonNull String> queries = null;
 
-		public QueryToken() {
-			super("-query", StandaloneMessages.ExecuteCommand_Query_Help, "<ocl-query>");
+		public QueryToken(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication, "-query", StandaloneMessages.ExecuteCommand_Query_Help, "<ocl-query>");
+			setIsRequired();
 		}
 
 		@Override
-		protected @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
+		protected boolean analyze(@Nullable String string) {
 			List<@NonNull String> queries2 = queries;
 			if (queries2 == null) {
 				queries = queries2 = new ArrayList<>();
 			}
 			queries2.add(string);
-			return null;
+			return true;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return -1;
 		}
 
 		public @Nullable List<@NonNull String> getQueries() {
@@ -211,45 +323,102 @@ public class ExecuteCommand extends StandaloneCommand
 		}
 	}
 
-	public final @NonNull BooleanToken echoModelToken = new BooleanToken("-echoModel", "Echo each query as an AS model");
-	public final @NonNull BooleanToken echoTextToken = new BooleanToken("-echoText", "Echo each query as text");
-	public final @NonNull BooleanToken showModelToken = new BooleanToken("-showModel", "Show each result as an AS model");
-	public final @NonNull BooleanToken showTextToken = new BooleanToken("-showText", "Show each result as text");
-	public final @NonNull ExporterToken exporterToken = new ExporterToken();
-	public final @NonNull OutputToken outputToken = new OutputToken();
-	public final @NonNull QueryToken queryToken = new QueryToken();
+	/**
+	 * An optional argument to specify the self element
+	 */
+	public static class SelfToken extends StringToken
+	{
+		private @Nullable EObject self = null;
+
+		public SelfToken(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication, "-self", StandaloneMessages.ExecuteCommand_Self_Help, "<self-uri>");
+		}
+
+		@Override
+		protected boolean analyze(@Nullable String string) {
+			URI rawURI = URI.createURI(string);
+			String fragment = rawURI.fragment();
+			rawURI = rawURI.trimFragment();
+			if (rawURI.hasOpaquePart()) {
+				rawURI = URI.createFileURI(rawURI.toString());
+			}
+			else if (rawURI.isRelative()) {
+				File relative = new File(rawURI.toFileString());
+				File absolute = relative.getAbsoluteFile();
+				rawURI = URI.createFileURI(absolute.toString());
+			}
+			Resource selfResource = standaloneApplication.getResourceSet().getResource(rawURI, true);
+			if (selfResource == null) {
+				logger.error("Failed to load '" + rawURI.toString() + "'");
+				return false;
+			}
+			self = selfResource.getEObject(fragment);
+			if (self == null) {
+				logger.error("Failed to locate '" + fragment + "' within '" + rawURI.toString() + "'");
+			}
+			return self != null;
+		}
+
+		public @Nullable EObject getSelf() {
+			return self;
+		}
+	}
+
+	public final @NonNull BooleanToken hideResultToken = new BooleanToken(standaloneApplication, "-hideResult", "Omit the text representation of each result..");
+	public final @NonNull BooleanToken hideQueryToken = new BooleanToken(standaloneApplication, "-hideQuery", "Omit the text representation of each query.");
+	public final @NonNull BooleanToken hideASResultToken = new BooleanToken(standaloneApplication, "-hideASResult", "Omit the Abstract Syntax representation of each result.");
+	public final @NonNull BooleanToken hideASQueryToken = new BooleanToken(standaloneApplication, "-hideASQuery", "Omit the Abstract Syntax representation of each query.");
+	public final @NonNull BooleanToken hideASTypesToken = new BooleanToken(standaloneApplication, "-hideASTypes", "Omit type fields from Abstract Syntax; reduces file size by perhaps 75%");
+	public final @NonNull ExporterToken exporterToken = new ExporterToken(standaloneApplication);
+	public final @NonNull OutputToken outputToken = new OutputToken(standaloneApplication);
+	public final @NonNull QueryToken queryToken = new QueryToken(standaloneApplication);
+	public final @NonNull SelfToken selfToken = new SelfToken(standaloneApplication);
 
 	public ExecuteCommand(@NonNull StandaloneApplication standaloneApplication) {
 		super(standaloneApplication, "execute", StandaloneMessages.ExecuteCommand_Help);
 		queryToken.setIsRequired();
-		addToken(echoModelToken);
-		addToken(echoTextToken);
-		addToken(showModelToken);
-		addToken(showTextToken);
+		addToken(hideResultToken);
+		addToken(hideQueryToken);
+		addToken(hideASResultToken);
+		addToken(hideASQueryToken);
+		addToken(hideASTypesToken);
 		addToken(outputToken);
 		addToken(exporterToken);
 		addToken(queryToken);
+		addToken(selfToken);
+	}
+
+	protected void appendChildren(List<@NonNull String> errors, List<Diagnostic> children) {
+		for (Diagnostic child : children) {
+			errors.add(child.getMessage());
+			appendChildren(errors, child.getChildren());
+		}
 	}
 
 	@Override
 	public @NonNull StandaloneResponse execute() throws IOException {
-		standaloneApplication.doCompleteOCLSetup();
-		EObject context = null;
+		standaloneApplication.doEssentialOCLSetup();
+		EObject context = selfToken.getSelf();
 		OCL ocl = standaloneApplication.getOCL();
+		boolean hideResult = hideResultToken.isPresent();
+		boolean hideQuery = hideQueryToken.isPresent();
+		boolean hideASResult = hideASResultToken.isPresent();
+		boolean hideASQuery = hideASQueryToken.isPresent();
+		boolean hideASTypes = hideASTypesToken.isPresent();
 		File outputFile = outputToken.getOutputFile();
-		final @Nullable IResultExporter selectedExporter = exporterToken.getExporter();
-		if (selectedExporter != null) {
-			boolean echoModel = echoModelToken.isPresent();
-			boolean echoText = echoTextToken.isPresent();
-			boolean showModel = showModelToken.isPresent();
-			boolean showText = showTextToken.isPresent();
-			selectedExporter.open(ocl, outputFile, echoText, echoModel, showText, showModel);
+		IResultExporter selectedExporter = exporterToken.getExporter();
+		if ((outputFile == null) || (selectedExporter == null)) {
+			selectedExporter = new DefaultResultExporter(standaloneApplication);
+		}
+		else {
+			selectedExporter.open(outputFile, hideQuery, hideResult, hideASQuery, hideASResult, hideASTypes);
 		}
 		org.eclipse.ocl.pivot.Class classContext = ocl.getContextType(context);
+		boolean allOk = true;
 		for (@NonNull String queryString : queryToken.getQueries()) {
 			Object result = null;
 			ExpressionInOCL query = null;
-			String error = null;
+			List<@NonNull String> errors = new ArrayList<>();
 			ParserContext parserContext = new ClassContext(ocl.getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 			try {
 				query = parserContext.parse(classContext, queryString);
@@ -260,10 +429,17 @@ public class ExecuteCommand extends StandaloneCommand
 				//		Diagnostic diagnostic = Diagnostician.INSTANCE.validate(eObject, validationContext);
 				BasicDiagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(query, validationContext);
 				List<Diagnostic> children = diagnostics.getChildren();
-				if (children.size() <= 0) {
+				if (children.size() > 0) {
+					appendChildren(errors, children);
+					allOk = false;
+				}
+				if ((children.size() <= 0) && (!hideResult || !hideASResult)) {
 					EvaluationVisitor evaluationVisitor = ocl.createEvaluationVisitor(context, query);
 					try {
 						result = query.accept(evaluationVisitor);
+						if (result == null) {
+							result = ValueUtil.createLiteralExp(null);
+						}
 					}
 					catch (InvalidValueException e) {
 						if (e == ValueUtil.INVALID_VALUE) {
@@ -275,90 +451,20 @@ public class ExecuteCommand extends StandaloneCommand
 					}
 				}
 			} catch (Exception | AssertionError e) {
-				error = e.toString();
+				errors.add(e.toString());
+				allOk = false;
 			}
-			Appendable s = null;
 			try {
-				s = outputFile != null ? new FileWriter(outputFile) : DEFAULT_OUTPUT_STREAM;
-				selectedExporter.export(s, queryString, query, context, result, error);
+				selectedExporter.export(queryString, query, context, result, errors.size() > 0 ? errors : null);
 			} catch (IOException e) {
 				logger.error(StandaloneMessages.OCLValidatorApplication_ExportProblem, e);
-			} finally {
-				if ((s != DEFAULT_OUTPUT_STREAM) && (s instanceof OutputStreamWriter)) {
-					try {
-						((OutputStreamWriter)s).close();
-					} catch (IOException e) {}
-				}
+				allOk = false;
 			}
 		}
-
-/*		List<String> oclFileNames = rulesToken.getOCLFileNames(token2strings);
-		URI modelURI = URI.createURI(modelFileName, true);
-		if (!modelURI.isPlatform()) {
-			modelURI = getFileUri(modelFileName);
+		selectedExporter.close();
+		if (selectedExporter instanceof DefaultResultExporter) {
+			standaloneApplication.setConsoleOutput(((DefaultResultExporter)selectedExporter).getConsoleText());
 		}
-		// Load model resource
-		Resource modelResource = standaloneApplication.loadModelFile(modelURI);
-		if (modelResource == null) {
-			logger.error(MessageFormat.format(StandaloneMessages.OCLValidatorApplication_ModelLoadProblem, modelFileName));
-			return StandaloneResponse.FAIL;
-		}
-		if (!processResources(modelFileName, oclFileNames)) {
-			logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
-			return StandaloneResponse.FAIL;
-		}
-		if (ThreadLocalExecutor.basicGetEnvironmentFactory() == null) {
-			logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
-			return StandaloneResponse.FAIL;
-		}
-		StandaloneValidityManager validityManager = initiateValidityManager(standaloneApplication.getResourceSet(), token2strings);
-
-		if (validityManager != null) {
-			// run the validation
-			validate(validityManager);
-		} */
-
-		// export results
-			//			try {
-			//				exportValidationResults(getOutputWriter(), validityManager.getRootNode());
-			//			} catch (IOException e) {
-			//				// TODO Auto-generated catch block
-			//				e.printStackTrace();
-			//			}
-		if (selectedExporter != null) {
-			selectedExporter.close();
-		}
-		return StandaloneResponse.OK;
+		return allOk ? StandaloneResponse.OK : StandaloneResponse.FAIL;
 	}
-
-	/**
-	 * Exports Validation results.
-	 *
-	 * @param rootNode
-	 *            the validity model rootNode.
-	 * @param outputPath
-	 *            the exported file path.
-	 *
-	private void exportExecutionResults(@NonNull ExpressionInOCL query, @Nullable Object result, @Nullable File outputFile, @NonNull Map<@NonNull CommandToken, @NonNull List<@NonNull String>> token2strings) {
-		final @Nullable IResultExporter selectedExporter = exporterToken.getExporter(token2strings);
-		if (selectedExporter != null && query != null) {
-			//			logger.info(StandaloneMessages.OCLValidatorApplication_ExportStarting);
-			Appendable s = null;
-			try {
-				s = outputFile != null ? new FileWriter(outputFile) : DEFAULT_OUTPUT_STREAM;
-				selectedExporter.export(s, query, result, outputFile != null ? outputFile.toString() : null);
-			} catch (IOException e) {
-				logger.error(StandaloneMessages.OCLValidatorApplication_ExportProblem, e);
-			} finally {
-				if ((s != DEFAULT_OUTPUT_STREAM) && (s instanceof OutputStreamWriter)) {
-					try {
-						((OutputStreamWriter)s).close();
-					} catch (IOException e) {}
-				}
-			}
-			//			logger.info(StandaloneMessages.OCLValidatorApplication_ExportedFileGenerated);
-			//		} else {
-			//			logger.info(StandaloneMessages.OCLValidatorApplication_ExportProblem);
-		}
-	} */
 }

@@ -29,12 +29,13 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
-import org.eclipse.ocl.examples.standalone.StandaloneCommand;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystemHelper;
@@ -105,6 +106,18 @@ public class FileNewWizardTest extends TestCase
 		s.append("\t" + EXPECTED_FEATURE_NAME + " <> null\n\n");
 		s.append("endpackage\n");
 		return s.toString();
+	}
+
+	// Relocated from StandaloneCommand where late init of the global URIConvert had the undesirable
+	//	side effect of a late EcorePlugin.ExtensionProcessor.process wiping registrations.
+	//	?? use the thread local
+	private static @NonNull URIConverter getURIConverter() {
+		URIConverter uriConverter = URIConverter.INSTANCE;
+		if (!EcorePlugin.IS_ECLIPSE_RUNNING && uriConverter.getURIMap().isEmpty()) {
+			EcorePlugin.ExtensionProcessor.process(null);
+			uriConverter.getURIMap().putAll(EcorePlugin.computePlatformURIMap(true));
+		}
+		return uriConverter;
 	}
 
 	public FileNewWizardTest(String name) {
@@ -241,7 +254,7 @@ public class FileNewWizardTest extends TestCase
 		testIProject.setDescription(description, IResource.FORCE | IResource.KEEP_HISTORY, nullMonitor);
 		//
 		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/wizard/" + TEST_ECORE_NAME, true);
-		InputStream inputStream = StandaloneCommand.getURIConverter().createInputStream(inputURI);
+		InputStream inputStream = getURIConverter().createInputStream(inputURI);
 		assert inputStream != null;
 		testFile = getTestFile(TEST_ECORE_NAME, inputStream);
 		//

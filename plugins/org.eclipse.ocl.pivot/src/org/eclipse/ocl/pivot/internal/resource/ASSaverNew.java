@@ -275,9 +275,8 @@ public class ASSaverNew extends AbstractASSaver
 	public @Nullable EObject resolveOrphan(@NonNull EObject eObject) {
 		EObject localEObject = copier.get(eObject);
 		EObject eObject2 = localEObject != null ? localEObject : eObject;
-		Model containingModel = PivotUtil.getContainingModel(eObject2);
-		assert containingModel != null;
-		assert !Orphanage.isOrphanage(containingModel);
+	//	Model containingModel = PivotUtil.getContainingModel(eObject2);
+	//	assert (containingModel == null) || !Orphanage.isOrphanage(containingModel);		// ElementLiteralExp references may be anywhere.
 		return eObject2;
 	}
 }

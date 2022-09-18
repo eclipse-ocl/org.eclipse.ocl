@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
 
 public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
@@ -27,14 +28,27 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		if (newContainer != null) {
 			EObject oldContainer = eInternalContainer();
 			assert (oldContainer == null) || oldContainer.eIsProxy() || (newContainer == oldContainer) || (oldContainer.eResource() == null);
-		}		
+		}
 		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
-	
+
+	@Override
+	public EObject eObjectForURIFragmentSegment(String uriFragmentSegment) {
+		for (EObject eObject : eContents()) {
+			if (eObject instanceof Nameable) {
+				String name = ((Nameable)eObject).getName();
+				if ((name != null) && name.equals(uriFragmentSegment)) {
+					return eObject;
+				}
+			}
+		}
+		return super.eObjectForURIFragmentSegment(uriFragmentSegment);
+	}
+
 	public @Nullable EObject getESObject() {
 		return esObject;
 	}
-	
+
 	@Deprecated // Use getESObject()
 	public @Nullable EObject getETarget() {
 		return esObject;
@@ -44,21 +58,21 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	public Object getImage() {
 		return null;
 	}
-	
+
 	@Deprecated // Use getESObject()
 	public @Nullable EObject getTarget() {
 		return esObject;
 	}
-	
+
 	@Override
 	public String getText() {
 		return toString();
 	}
-	
+
 	public void setESObject(@Nullable EObject newTarget) {
 		esObject = newTarget;
 	}
-	
+
 	@Deprecated // Use setESObject()
 	public void setTarget(@Nullable EObject newTarget) {
 		esObject = newTarget;

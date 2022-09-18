@@ -22,9 +22,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IResource;
@@ -74,7 +72,14 @@ public class ValidateCommand extends StandaloneCommand
 	 */
 	public static class ExporterToken extends StringToken
 	{
-		private static @Nullable String getArgsHelp() {
+		private @Nullable IValidityExporter exporter;
+
+		public ExporterToken(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication, "-exporter", StandaloneMessages.ValidateCommand_Exporter_Help, "<later>");
+		}
+
+		@Override
+		public @Nullable String getArgumentsHelp() {
 			List<IValidityExporterDescriptor> exporters = new ArrayList<IValidityExporterDescriptor>(ValidityExporterRegistry.INSTANCE.getRegisteredExtensions());
 			Collections.sort(exporters, ExporterComparator.INSTANCE);
 			StringBuilder s = new StringBuilder();
@@ -87,19 +92,13 @@ public class ValidateCommand extends StandaloneCommand
 			return s.toString();
 		}
 
-		private @Nullable IValidityExporter exporter;
-
-		public ExporterToken() {
-			super("-exporter", StandaloneMessages.ValidateCommand_Exporter_Help, getArgsHelp());
-		}
-
 		public @Nullable IValidityExporter getExporter() {
 			return exporter;
 		}
 
 		@Override
-		public boolean isRequired() {
-			return true;
+		public int getMaxArguments() {
+			return 1;
 		}
 
 		@Override
@@ -121,20 +120,20 @@ public class ValidateCommand extends StandaloneCommand
 	{
 		private @Nullable String fileName;
 
-		public ModelToken() {
-			super("-model", StandaloneMessages.ValidateCommand_Model_Help, "<file-name>");
+		public ModelToken(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication, "-model", StandaloneMessages.ValidateCommand_Model_Help, "<file-name>");
 		}
 
 		@Override
-		public @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
-			standaloneApplication.getOCL();// Need class path
+		public boolean analyze(@Nullable String string) {
 			URI uri = URI.createURI(string);
 			fileName = uri.isFile() ? uri.toFileString() : string;
-			boolean exists = getURIConverter().exists(uri, null);
+			boolean exists = standaloneApplication.getURIConverter().exists(uri, null);
 			if (!exists) {
-				return StandaloneMessages.OCLArgumentAnalyzer_ModelFile + uri + StandaloneMessages.OCLArgumentAnalyzer_NotExist;
+				logger.error(StandaloneMessages.OCLArgumentAnalyzer_ModelFile + uri + StandaloneMessages.OCLArgumentAnalyzer_NotExist);
+				return false;
 			}
-			return null;
+			return true;
 		}
 
 		public @Nullable String getModelFileName() {
@@ -160,34 +159,22 @@ public class ValidateCommand extends StandaloneCommand
 
 		private @Nullable List<@NonNull String> oclFileNames;
 
-		public RulesToken() {
-			super("-rules", StandaloneMessages.ValidateCommand_Rules_Help, "<file-name>");
+		public RulesToken(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication, "-rules", StandaloneMessages.ValidateCommand_Rules_Help, "<file-name>");
 		}
 
 		@Override
-		public @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
-			standaloneApplication.getOCL();
-			// XXX checkOclFile
+		public boolean analyze(@Nullable String string) {
 			URI uri = URI.createURI(string);
-			String fileName = uri.isFile() ? uri.toFileString() : string;
-
+			URIConverter uriConverter = standaloneApplication.getURIConverter();
 			List<@NonNull String> strings = new ArrayList<>();
-			checkOclFile(strings, uri.toString());
-
-
-
-
-
-		//	boolean exists = getURIConverter().exists(uri, null);
-	//		if (!exists) {
-	//			return StandaloneMessages.OCLArgumentAnalyzer_ModelFile + uri + StandaloneMessages.OCLArgumentAnalyzer_NotExist;
-	//		}
+			checkOclFile(uriConverter, strings, uri.toString());
 			List<@NonNull String> oclFileNames2 = oclFileNames;
 			if (oclFileNames2 == null) {
 				oclFileNames = oclFileNames2 = new ArrayList<>();
 			}
 			oclFileNames2.addAll(strings);
-			return null;
+			return true;
 		}
 
 		/**
@@ -198,16 +185,15 @@ public class ValidateCommand extends StandaloneCommand
 		 * @return <code>true</code> if the model exists and is a file,
 		 *         <code>false</code> otherwise.
 		 */
-		private void checkOclFile(@NonNull List<String> strings, @NonNull String argument) {
+		private void checkOclFile(@NonNull URIConverter uriConverter, @NonNull List<String> strings, @NonNull String argument) {
 			URI uri = URI.createURI(argument);
 			argument = uri.isFile() ? uri.toFileString() : argument;
 			boolean ignored = false;
-			URIConverter uriConverter = getURIConverter();
 			boolean exists = uriConverter.exists(uri, null);
 			// a txt file may contain relative or absolute path to a set of OCL files.
 			String fileExtension = uri.fileExtension(); //path.getFileExtension();
 			if (TEXT_FILE_EXTENSION.equals(fileExtension.toLowerCase())) {
-				extractOCLUris(strings, uri);
+				extractOCLUris(uriConverter, strings, uri);
 			} else if (OCL_FILE_EXTENSION.equals(fileExtension.toLowerCase())) {
 				if (!exists) {
 					logger.warn(StandaloneMessages.OCLArgumentAnalyzer_OCLResource + " " + uri + StandaloneMessages.OCLArgumentAnalyzer_NotExist);
@@ -229,18 +215,19 @@ public class ValidateCommand extends StandaloneCommand
 
 		/**
 		 * Extracts information contained in the text file.
+		 * @param uriConverter
 		 *
 		 * @param txtFile
 		 *            The file containing relative path to OCL files.
 		 */
-		private void extractOCLUris(@NonNull List<@NonNull String> strings, @NonNull URI txtURI) {
+		private void extractOCLUris(@NonNull URIConverter uriConverter, @NonNull List<@NonNull String> strings, @NonNull URI txtURI) {
 			try {
-				InputStream inputStream = getURIConverter().createInputStream(txtURI);
+				InputStream inputStream = uriConverter.createInputStream(txtURI);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 				String line = reader.readLine();
 				while (line != null) {
 					URI childURI = URI.createURI(line).resolve(txtURI);
-					checkOclFile(strings, childURI.toString());
+					checkOclFile(uriConverter, strings, childURI.toString());
 					line = reader.readLine();
 				}
 				reader.close();
@@ -279,23 +266,12 @@ public class ValidateCommand extends StandaloneCommand
 		/** "-using" argument value to additionally run the UML constraints. */
 		private static final @NonNull String UML_LOCATOR = "uml"; //$NON-NLS-1$
 
-		private @Nullable Set<@NonNull String> locators = null;
 		private boolean doJava = false;
 		private boolean doOCL = false;
 		private boolean doUML = false;
 
-		public UsingToken() {
-			super("-using", StandaloneMessages.ValidateCommand_Using_Help, ALL_LOCATORS + "|" + JAVA_LOCATOR + "|" + OCL_LOCATOR + "|" + UML_LOCATOR);
-		}
-
-		@Override
-		public @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String locator) {
-			Set<@NonNull String> locators2 = locators;
-			if (locators2 == null) {
-				locators = locators2 = new HashSet<>();
-			}
-			locators2.add(locator);
-			return null;
+		public UsingToken(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication, "-using", StandaloneMessages.ValidateCommand_Using_Help, ALL_LOCATORS + "|" + JAVA_LOCATOR + "|" + OCL_LOCATOR + "|" + UML_LOCATOR);
 		}
 
 		public boolean doRunJavaConstraints() {
@@ -311,8 +287,8 @@ public class ValidateCommand extends StandaloneCommand
 		}
 
 		@Override
-		public boolean isRequired() {
-			return true;
+		public int getMaxArguments() {
+			return -1;
 		}
 
 		@Override
@@ -396,11 +372,11 @@ public class ValidateCommand extends StandaloneCommand
 		return (os != null) && os.startsWith("Windows");
 	}
 
-	public final @NonNull ExporterToken exporterToken = new ExporterToken();
-	public final @NonNull ModelToken modelToken = new ModelToken();
-	public final @NonNull OutputToken outputToken = new OutputToken();
-	public final @NonNull RulesToken rulesToken = new RulesToken();
-	public final @NonNull UsingToken usingToken = new UsingToken();
+	public final @NonNull ExporterToken exporterToken = new ExporterToken(standaloneApplication);
+	public final @NonNull ModelToken modelToken = new ModelToken(standaloneApplication);
+	public final @NonNull OutputToken outputToken = new OutputToken(standaloneApplication);
+	public final @NonNull RulesToken rulesToken = new RulesToken(standaloneApplication);
+	public final @NonNull UsingToken usingToken = new UsingToken(standaloneApplication);
 
 	public ValidateCommand(@NonNull StandaloneApplication standaloneApplication) {
 		super(standaloneApplication, "validate", StandaloneMessages.ValidateCommand_Help);

@@ -10,6 +10,8 @@
  */
 package org.eclipse.ocl.pivot.queries;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -27,11 +29,12 @@ import org.eclipse.ocl.pivot.OCLExpression;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.queries.QueryResult#getSelf <em>Self</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.queries.QueryResult#getQuery <em>Query</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.queries.QueryResult#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.queries.QueryResult#getExpression <em>Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.queries.QueryResult#getValue <em>Value</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.queries.QueryResult#getError <em>Error</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.queries.QueryResult#getErrors <em>Errors</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.queries.QueriesPackage#getQueryResult()
@@ -39,6 +42,32 @@ import org.eclipse.ocl.pivot.OCLExpression;
  * @generated
  */
 public interface QueryResult extends Element {
+	/**
+	 * Returns the value of the '<em><b>Self</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Self</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Self</em>' reference.
+	 * @see #setSelf(EObject)
+	 * @see org.eclipse.ocl.pivot.queries.QueriesPackage#getQueryResult_Self()
+	 * @model
+	 * @generated
+	 */
+	EObject getSelf();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.queries.QueryResult#getSelf <em>Self</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Self</em>' reference.
+	 * @see #getSelf()
+	 * @generated
+	 */
+	void setSelf(EObject value);
+
 	/**
 	 * Returns the value of the '<em><b>Query</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -118,6 +147,22 @@ public interface QueryResult extends Element {
 	void setValue(OCLExpression value);
 
 	/**
+	 * Returns the value of the '<em><b>Errors</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Errors</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Errors</em>' attribute list.
+	 * @see org.eclipse.ocl.pivot.queries.QueriesPackage#getQueryResult_Errors()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getErrors();
+
+	/**
 	 * Returns the value of the '<em><b>Result</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -142,31 +187,5 @@ public interface QueryResult extends Element {
 	 * @generated
 	 */
 	void setResult(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Error</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Error</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Error</em>' attribute.
-	 * @see #setError(String)
-	 * @see org.eclipse.ocl.pivot.queries.QueriesPackage#getQueryResult_Error()
-	 * @model
-	 * @generated
-	 */
-	String getError();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.queries.QueryResult#getError <em>Error</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Error</em>' attribute.
-	 * @see #getError()
-	 * @generated
-	 */
-	void setError(String value);
 
 } // QueryResult

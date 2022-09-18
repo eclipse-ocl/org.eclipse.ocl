@@ -10,13 +10,17 @@
  */
 package org.eclipse.ocl.pivot.queries.impl;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
@@ -31,11 +35,12 @@ import org.eclipse.ocl.pivot.queries.QueryResult;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.queries.impl.QueryResultImpl#getSelf <em>Self</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.queries.impl.QueryResultImpl#getQuery <em>Query</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.queries.impl.QueryResultImpl#getResult <em>Result</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.queries.impl.QueryResultImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.queries.impl.QueryResultImpl#getValue <em>Value</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.queries.impl.QueryResultImpl#getError <em>Error</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.queries.impl.QueryResultImpl#getErrors <em>Errors</em>}</li>
  * </ul>
  *
  * @generated
@@ -48,7 +53,7 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int QUERY_RESULT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 5;
+	public static final int QUERY_RESULT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>Query Result</em>' class.
@@ -59,6 +64,16 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 	 */
 	public static final int QUERY_RESULT_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
 
+
+	/**
+	 * The cached value of the '{@link #getSelf() <em>Self</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSelf()
+	 * @generated
+	 * @ordered
+	 */
+	protected EObject self;
 
 	/**
 	 * The default value of the '{@link #getQuery() <em>Query</em>}' attribute.
@@ -121,24 +136,14 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 	protected OCLExpression value;
 
 	/**
-	 * The default value of the '{@link #getError() <em>Error</em>}' attribute.
+	 * The cached value of the '{@link #getErrors() <em>Errors</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getError()
+	 * @see #getErrors()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ERROR_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getError() <em>Error</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getError()
-	 * @generated
-	 * @ordered
-	 */
-	protected String error = ERROR_EDEFAULT;
+	protected EList<String> errors;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -165,6 +170,46 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 	 * @generated
 	 */
 	@Override
+	public EObject getSelf() {
+		if (self != null && self.eIsProxy()) {
+			InternalEObject oldSelf = (InternalEObject)self;
+			self = eResolveProxy(oldSelf);
+			if (self != oldSelf) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldSelf, self));
+			}
+		}
+		return self;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EObject basicGetSelf() {
+		return self;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setSelf(EObject newSelf) {
+		EObject oldSelf = self;
+		self = newSelf;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldSelf, self));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String getQuery() {
 		return query;
 	}
@@ -179,7 +224,7 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 		String oldQuery = query;
 		query = newQuery;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 0, oldQuery, query));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldQuery, query));
 	}
 
 	/**
@@ -201,7 +246,7 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 		ExpressionInOCL oldExpression = expression;
 		expression = newExpression;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 2, oldExpression, newExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 3, oldExpression, newExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -217,14 +262,14 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 		if (newExpression != expression) {
 			NotificationChain msgs = null;
 			if (expression != null)
-				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 3), null, msgs);
 			if (newExpression != null)
-				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 3), null, msgs);
 			msgs = basicSetExpression(newExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 2, newExpression, newExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 3, newExpression, newExpression));
 	}
 
 	/**
@@ -246,7 +291,7 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 		OCLExpression oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 3, oldValue, newValue);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 4, oldValue, newValue);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -262,14 +307,27 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
-				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 3), null, msgs);
+				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 4), null, msgs);
 			if (newValue != null)
-				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 3), null, msgs);
+				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (ElementImpl.ELEMENT_FEATURE_COUNT + 4), null, msgs);
 			msgs = basicSetValue(newValue, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 3, newValue, newValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 4, newValue, newValue));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EList<String> getErrors() {
+		if (errors == null) {
+			errors = new EDataTypeUniqueEList<String>(String.class, this, ElementImpl.ELEMENT_FEATURE_COUNT + 5);
+		}
+		return errors;
 	}
 
 	/**
@@ -292,30 +350,7 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 		String oldResult = result;
 		result = newResult;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 1, oldResult, result));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String getError() {
-		return error;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setError(String newError) {
-		String oldError = error;
-		error = newError;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 4, oldError, error));
+			eNotify(new ENotificationImpl(this, Notification.SET, ElementImpl.ELEMENT_FEATURE_COUNT + 2, oldResult, result));
 	}
 
 	/**
@@ -326,9 +361,9 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
-				return basicSetExpression(null, msgs);
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 3:
+				return basicSetExpression(null, msgs);
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 4:
 				return basicSetValue(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -343,15 +378,18 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
-				return getQuery();
+				if (resolve) return getSelf();
+				return basicGetSelf();
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
-				return getResult();
+				return getQuery();
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
-				return getExpression();
+				return getResult();
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 3:
-				return getValue();
+				return getExpression();
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 4:
-				return getError();
+				return getValue();
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 5:
+				return getErrors();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -361,23 +399,28 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
-				setQuery((String)newValue);
+				setSelf((EObject)newValue);
 				return;
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
-				setResult((String)newValue);
+				setQuery((String)newValue);
 				return;
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
-				setExpression((ExpressionInOCL)newValue);
+				setResult((String)newValue);
 				return;
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 3:
-				setValue((OCLExpression)newValue);
+				setExpression((ExpressionInOCL)newValue);
 				return;
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 4:
-				setError((String)newValue);
+				setValue((OCLExpression)newValue);
+				return;
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 5:
+				getErrors().clear();
+				getErrors().addAll((Collection<? extends String>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -392,19 +435,22 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
-				setQuery(QUERY_EDEFAULT);
+				setSelf((EObject)null);
 				return;
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
-				setResult(RESULT_EDEFAULT);
+				setQuery(QUERY_EDEFAULT);
 				return;
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
-				setExpression((ExpressionInOCL)null);
+				setResult(RESULT_EDEFAULT);
 				return;
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 3:
-				setValue((OCLExpression)null);
+				setExpression((ExpressionInOCL)null);
 				return;
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 4:
-				setError(ERROR_EDEFAULT);
+				setValue((OCLExpression)null);
+				return;
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 5:
+				getErrors().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -419,15 +465,17 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 0:
-				return QUERY_EDEFAULT == null ? query != null : !QUERY_EDEFAULT.equals(query);
+				return self != null;
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 1:
-				return RESULT_EDEFAULT == null ? result != null : !RESULT_EDEFAULT.equals(result);
+				return QUERY_EDEFAULT == null ? query != null : !QUERY_EDEFAULT.equals(query);
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 2:
-				return expression != null;
+				return RESULT_EDEFAULT == null ? result != null : !RESULT_EDEFAULT.equals(result);
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 3:
-				return value != null;
+				return expression != null;
 			case ElementImpl.ELEMENT_FEATURE_COUNT + 4:
-				return ERROR_EDEFAULT == null ? error != null : !ERROR_EDEFAULT.equals(error);
+				return value != null;
+			case ElementImpl.ELEMENT_FEATURE_COUNT + 5:
+				return errors != null && !errors.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -446,8 +494,8 @@ public class QueryResultImpl extends ElementImpl implements QueryResult {
 		result.append(query);
 		result.append(", result: ");
 		result.append(result);
-		result.append(", error: ");
-		result.append(error);
+		result.append(", errors: ");
+		result.append(errors);
 		result.append(')');
 		return result.toString();
 	}

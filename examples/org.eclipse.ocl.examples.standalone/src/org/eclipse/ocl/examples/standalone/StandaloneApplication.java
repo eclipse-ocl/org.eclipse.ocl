@@ -22,14 +22,17 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.emf.validation.validity.export.ValidityExporterRegistry;
 import org.eclipse.ocl.examples.standalone.StandaloneCommand.CommandToken;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
+import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
 
 /**
  * This class executes an OCL evaluation of a model with one or several OCL
@@ -59,6 +62,7 @@ public class StandaloneApplication implements IApplication
 	//	private ResourceSet resourceSet = null;
 
 	private final @NonNull StandaloneCommandAnalyzer commandAnalyzer = new StandaloneCommandAnalyzer(this);
+	private @Nullable String consoleText = null;
 
 	public StandaloneApplication() {
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
@@ -81,6 +85,20 @@ public class StandaloneApplication implements IApplication
 	}
 
 	/**
+	 * Initializes all the needed resource factories to create ecore and ocl
+	 * resources in the global registry.
+	 */
+	public void doEssentialOCLSetup() {
+		getOCL();
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			EssentialOCLStandaloneSetup.doSetup();
+		}
+
+		// Plug the OCL validation mechanism.
+		//		OCLDelegateDomain.initialize(resourceSet);
+	}
+
+	/**
 	 * This launch the application using the entered arguments.
 	 *
 	 * @param args
@@ -94,6 +112,9 @@ public class StandaloneApplication implements IApplication
 			return StandaloneResponse.FAIL;
 		}
 		Map<@NonNull CommandToken, @NonNull List<@NonNull String>> token2strings = command.parse(args);
+		if (token2strings == null) {
+			return StandaloneResponse.FAIL;
+		}
 		if (!command.parseCheck(token2strings)) {
 			return StandaloneResponse.FAIL;
 		}
@@ -104,8 +125,16 @@ public class StandaloneApplication implements IApplication
 		return command.execute();
 	}
 
+	public boolean exists(String logFileName) {
+		return getURIConverter().exists(URI.createFileURI(logFileName), null);
+	}
+
 	public @NonNull Collection<StandaloneCommand> getCommands() {
 		return commandAnalyzer.getCommands();
+	}
+
+	public @Nullable String getConsoleText() {
+		return consoleText;
 	}
 
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
@@ -121,6 +150,17 @@ public class StandaloneApplication implements IApplication
 
 	public @NonNull ResourceSet getResourceSet() {
 		return getOCL().getResourceSet();
+	}
+
+	public @NonNull URIConverter getURIConverter() {
+		return getResourceSet().getURIConverter();
+	}
+
+	/**
+	 * Return true if console clutter is to be suppressed in a test context.
+	 */
+	public boolean isTest() {
+		return false;
 	}
 
 	/**
@@ -145,6 +185,10 @@ public class StandaloneApplication implements IApplication
 		}
 
 		return loadedResource;
+	}
+
+	public void setConsoleOutput(@NonNull String consoleText) {
+		this.consoleText  = consoleText;
 	}
 
 	/*

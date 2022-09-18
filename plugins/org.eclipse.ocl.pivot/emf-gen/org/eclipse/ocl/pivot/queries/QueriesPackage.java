@@ -98,6 +98,17 @@ public interface QueriesPackage extends EPackage {
 	EClass getQueryResult();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.queries.QueryResult#getSelf <em>Self</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Self</em>'.
+	 * @see org.eclipse.ocl.pivot.queries.QueryResult#getSelf()
+	 * @see #getQueryResult()
+	 * @generated
+	 */
+	EReference getQueryResult_Self();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.queries.QueryResult#getQuery <em>Query</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -131,6 +142,17 @@ public interface QueriesPackage extends EPackage {
 	EReference getQueryResult_Value();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipse.ocl.pivot.queries.QueryResult#getErrors <em>Errors</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Errors</em>'.
+	 * @see org.eclipse.ocl.pivot.queries.QueryResult#getErrors()
+	 * @see #getQueryResult()
+	 * @generated
+	 */
+	EAttribute getQueryResult_Errors();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.queries.QueryResult#getResult <em>Result</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -140,17 +162,6 @@ public interface QueriesPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getQueryResult_Result();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.queries.QueryResult#getError <em>Error</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Error</em>'.
-	 * @see org.eclipse.ocl.pivot.queries.QueryResult#getError()
-	 * @see #getQueryResult()
-	 * @generated
-	 */
-	EAttribute getQueryResult_Error();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -204,6 +215,14 @@ public interface QueriesPackage extends EPackage {
 		EClass QUERY_RESULT = eINSTANCE.getQueryResult();
 
 		/**
+		 * The meta object literal for the '<em><b>Self</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference QUERY_RESULT__SELF = eINSTANCE.getQueryResult_Self();
+
+		/**
 		 * The meta object literal for the '<em><b>Query</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -228,20 +247,20 @@ public interface QueriesPackage extends EPackage {
 		EReference QUERY_RESULT__VALUE = eINSTANCE.getQueryResult_Value();
 
 		/**
+		 * The meta object literal for the '<em><b>Errors</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute QUERY_RESULT__ERRORS = eINSTANCE.getQueryResult_Errors();
+
+		/**
 		 * The meta object literal for the '<em><b>Result</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute QUERY_RESULT__RESULT = eINSTANCE.getQueryResult_Result();
-
-		/**
-		 * The meta object literal for the '<em><b>Error</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute QUERY_RESULT__ERROR = eINSTANCE.getQueryResult_Error();
 
 	}
 

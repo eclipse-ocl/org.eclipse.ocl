@@ -594,10 +594,10 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 			if (!isFirst) {
 				s.append(",");
 			}
-			if (s.length() < lengthLimit) {
-				ValueUtil.toString(entry.getKey(), s, lengthLimit-1);
+			if ((lengthLimit < 0) || (s.length() < lengthLimit)) {
+				ValueUtil.toString(entry.getKey(), s, lengthLimit);
 				s.append(" with ");
-				ValueUtil.toString(entry.getValue(), s, lengthLimit-1);
+				ValueUtil.toString(entry.getValue(), s, lengthLimit);
 			}
 			else {
 				s.append("...");

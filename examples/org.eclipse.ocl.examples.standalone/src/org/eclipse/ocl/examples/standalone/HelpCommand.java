@@ -81,6 +81,37 @@ public class HelpCommand extends StandaloneCommand
 				if (argsHelp != null) {
 					s.append(" ");
 					s.append(argsHelp);
+					int max = token.getMaxArguments();
+					int min = token.getMinArguments();
+					if (min == 0) {
+						if (max == 1) {
+							s.append("?");
+						}
+						else if (max < 0) {
+							s.append("*");
+						}
+						else {
+							s.append("[" + max + "]");
+						}
+					}
+					else if (min == 1) {
+						if (max == 1) {
+						}
+						else if (max < 0) {
+							s.append("+");
+						}
+						else {
+							s.append("[1.." + max + "]");
+						}
+					}
+					else {
+						if (max < 0) {
+							s.append("[" + min + "..*]");
+						}
+						else {
+							s.append("[" + min + ".." + max + "]");
+						}
+					}
 				}
 				if (!token.isRequired()) {
 					s.append("]");

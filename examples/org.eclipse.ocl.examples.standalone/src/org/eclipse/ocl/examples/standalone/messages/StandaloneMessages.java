@@ -78,6 +78,7 @@ public final class StandaloneMessages
 	public static String ExecuteCommand_Help;
 	public static String ExecuteCommand_Exporter_Help;
 	public static String ExecuteCommand_Query_Help;
+	public static String ExecuteCommand_Self_Help;
 
 	public static String HelpCommand_Bad;
 	public static String HelpCommand_Help;

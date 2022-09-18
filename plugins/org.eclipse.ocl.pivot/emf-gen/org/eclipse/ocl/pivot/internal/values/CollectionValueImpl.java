@@ -717,8 +717,8 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 			if (!isFirst) {
 				s.append(",");
 			}
-			if (s.length() < lengthLimit) {
-				ValueUtil.toString(element, s, lengthLimit-1);
+			if ((lengthLimit < 0) || (s.length() < lengthLimit)) {
+				ValueUtil.toString(element, s, lengthLimit);
 			}
 			else {
 				s.append("...");

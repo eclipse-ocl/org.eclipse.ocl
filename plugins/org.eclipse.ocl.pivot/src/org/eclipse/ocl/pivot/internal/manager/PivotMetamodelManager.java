@@ -1953,10 +1953,19 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			}
 		}
 		Model asModel;
-		org.eclipse.ocl.pivot.Package asPackage;
+		org.eclipse.ocl.pivot.Package asPackage = null;
 		if ((asLibraryResource instanceof ASResourceImpl.ImmutableResource) && ((ASResourceImpl.ImmutableResource)asLibraryResource).isCompatibleWith(OCLmetamodel.PIVOT_URI)) {
 			asModel = OCLmetamodel.getDefaultModel();
-			asPackage = asModel.getOwnedPackages().get(0);
+			for (org.eclipse.ocl.pivot.Package asPartialPackage : PivotUtil.getOwnedPackages(asModel))	// Workaround the spurious implicit ecore package (fixed on a wip branch)
+			{
+				if (!PivotUtilInternal.isImplicitPackage(asPartialPackage)) {
+					asPackage = asPartialPackage;
+					break;
+				}
+			}
+			if (asPackage == null) {
+				asPackage = asModel.getOwnedPackages().get(0);
+			}
 		}
 		else {
 			String name = ClassUtil.nonNullState(asLibrary.getName());

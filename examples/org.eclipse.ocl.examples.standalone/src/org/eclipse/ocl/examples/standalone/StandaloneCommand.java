@@ -15,12 +15,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
@@ -34,15 +34,6 @@ public abstract class StandaloneCommand
 	private static final Logger logger = Logger.getLogger(StandaloneCommand.class);
 	protected static @NonNull Appendable DEFAULT_OUTPUT_STREAM = System.out;
 
-	public static @NonNull URIConverter getURIConverter() {
-		URIConverter uriConverter = URIConverter.INSTANCE;
-		if (!EcorePlugin.IS_ECLIPSE_RUNNING && uriConverter.getURIMap().isEmpty()) {
-			EcorePlugin.ExtensionProcessor.process(null);
-			uriConverter.getURIMap().putAll(EcorePlugin.computePlatformURIMap(true));
-		}
-		return uriConverter;
-	}
-
 	/**
 	 * Redirect the default stdout clutter for test purposes.
 	 */
@@ -54,22 +45,29 @@ public abstract class StandaloneCommand
 
 	public static abstract class CommandToken
 	{
+		protected final @NonNull StandaloneApplication standaloneApplication;
 		protected final @NonNull String name;
 		protected final @NonNull String commandHelp;
 		protected final @NonNull String argumentsHelp;
 		protected boolean isRequired = false;
 
-		protected CommandToken(@NonNull String name, @NonNull String commandHelp, @Nullable String argumentsHelp) {
+		protected CommandToken(@NonNull StandaloneApplication standaloneApplication, @NonNull String name, @NonNull String commandHelp, @Nullable String argumentsHelp) {
+			this.standaloneApplication = standaloneApplication;
 			this.name = name;
 			this.commandHelp = commandHelp;
 			this.argumentsHelp = argumentsHelp;
 		}
 
-		public final boolean analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull List<@NonNull String> strings) {
-			for (@NonNull String string : strings) {
-				String checkError = analyze(standaloneApplication, string);
-				if (checkError != null) {
-					logger.error(checkError);
+		public final boolean analyze(@NonNull List<@NonNull String> strings) {
+			if (strings.size() > 0) {
+				for (@NonNull String string : strings) {
+					if (!analyze(string)) {
+						return false;
+					}
+				}
+			}
+			else {
+				if (!analyze((String)null)) {
 					return false;
 				}
 			}
@@ -78,10 +76,11 @@ public abstract class StandaloneCommand
 
 		/**
 		 * Check that the string form a semantically consistent arguments for this token.
-		 * Returns an error message for inconsistent 'enumerated' options.
+		 * The string may be null to analyze the no-arguments for this token.
+		 * Returns true if ok, of false after logging an error message.
 		 */
-		protected @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
-			return null;
+		protected boolean analyze(@Nullable String string) {
+			return true;
 		}
 
 		public @Nullable String getArgumentsHelp() {
@@ -96,10 +95,30 @@ public abstract class StandaloneCommand
 			return name;
 		}
 
+		/**
+		 * Return the maximum number of arguments; -ve for unlimited.
+		 */
+		public int getMaxArguments() {
+			return -1;
+		}
+
+		/**
+		 * Return the minimum number of arguments.
+		 */
+		public int getMinArguments() {
+			return 0;
+		}
+
+		/**
+		 * Return true if this token must be present in the command.
+		 */
 		public boolean isRequired() {
 			return isRequired;
 		}
 
+		/**
+		 * Return true if this token may only be used once per command.
+		 */
 		public boolean isSingleton() {
 			return true;
 		}
@@ -109,19 +128,14 @@ public abstract class StandaloneCommand
 		 */
 		public boolean parseCheck(@NonNull List<@NonNull String> strings) {
 			int size = strings.size();
-			if (isRequired()) {
-				if (size <= 0) {
-					logger.error("Missing argument for '" + getName() + "'");
-					return false;
-				}
-
+			if (size < getMinArguments()) {
+				logger.error("Missing argument for '" + getName() + "'");
+				return false;
 			}
-			if (isSingleton()) {
-				if (size > 1) {
-					logger.error("Too many '" + getName() + "' tokens");
-					return false;
-				}
-
+			int maxArguments = getMaxArguments();
+			if ((maxArguments >= 0) && (size > maxArguments)) {
+				logger.error("Too many '" + getName() + "' tokens");
+				return false;
 			}
 			for (@NonNull String string : strings) {
 				if (!parseCheck(string)) {
@@ -157,19 +171,20 @@ public abstract class StandaloneCommand
 	{
 		private @Nullable File outputFile;
 
-			public OutputToken() {
-			super("-output", StandaloneMessages.StandaloneCommand_Output_Help, "<file-name>");
+			public OutputToken(@NonNull StandaloneApplication standaloneApplication) {
+			super(standaloneApplication, "-output", StandaloneMessages.StandaloneCommand_Output_Help, "<file-name>");
 		}
 
 		@Override
-		public @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
+		public boolean analyze(@Nullable String string) {
 			try {
 				File file = new File(string).getCanonicalFile();
 				if (file.exists()) {
 					if (file.isFile()) {
 						file.delete();
 					} else {
-						return StandaloneMessages.OCLArgumentAnalyzer_OutputFile + file.getAbsolutePath() + StandaloneMessages.OCLArgumentAnalyzer_NotFile;
+						logger.error(StandaloneMessages.OCLArgumentAnalyzer_OutputFile + file.getAbsolutePath() + StandaloneMessages.OCLArgumentAnalyzer_NotFile);
+						return false;
 					}
 				}
 				if (!file.exists()) {
@@ -177,24 +192,21 @@ public abstract class StandaloneCommand
 					//					outputFile = file;
 					File outputFolder = file.getParentFile();
 					if (!outputFolder.exists()) {
-						return StandaloneMessages.OCLArgumentAnalyzer_OutputDir + outputFolder.getAbsolutePath() + StandaloneMessages.OCLArgumentAnalyzer_NotExist;
+						logger.error(StandaloneMessages.OCLArgumentAnalyzer_OutputDir + outputFolder.getAbsolutePath() + StandaloneMessages.OCLArgumentAnalyzer_NotExist);
+						return false;
 					} else {
 						outputFile = file;
 					}
 				}
 			} catch (IOException e) {
-				return e.getMessage();
+				logger.error(e.getMessage());
+				return false;
 			}
-			return null;
+			return true;
 		}
 
 		public File getOutputFile() {
 			return outputFile;
-		}
-
-		@Override
-		public boolean isRequired() {
-			return true;
 		}
 	}
 
@@ -202,14 +214,19 @@ public abstract class StandaloneCommand
 	{
 		private boolean isPresent = false;
 
-		public BooleanToken(@NonNull String name, @NonNull String commandHelp) {
-			super(name, commandHelp, null);
+		public BooleanToken(@NonNull StandaloneApplication standaloneApplication, @NonNull String name, @NonNull String commandHelp) {
+			super(standaloneApplication, name, commandHelp, null);
 		}
 
 		@Override
-		protected @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
+		protected boolean analyze(@Nullable String string) {
 			isPresent = true;
-			return null;
+			return true;
+		}
+
+		@Override
+		public int getMaxArguments() {
+			return 0;
 		}
 
 		public boolean isPresent() {
@@ -219,22 +236,24 @@ public abstract class StandaloneCommand
 
 	public static class StringToken extends CommandToken
 	{
-		public StringToken(@NonNull String name, @NonNull String commandHelp, @Nullable String argumentsHelp) {
-			super(name, commandHelp, "<string-value>");
+		public StringToken(@NonNull StandaloneApplication standaloneApplication, @NonNull String name, @NonNull String commandHelp, @Nullable String argumentsHelp) {
+			super(standaloneApplication, name, commandHelp, argumentsHelp);
 		}
 
-	/*	@Override
-		public int parseArgument(@NonNull List<@NonNull String> strings, @NonNull String @NonNull [] arguments, int i) {
-			if (i < arguments.length){
-				String argument = arguments[i++];
-				strings.add(argument);
-				return i;
-			}
-			else {
-				logger.error("Missing argument for '" + name + "'");
-				return -1;
-			}
-		} */
+		@Override
+		public int getMaxArguments() {
+			return 1;
+		}
+
+		@Override
+		public int getMinArguments() {
+			return 1;
+		}
+
+		@Override
+		public boolean isSingleton() {
+			return true;
+		}
 	}
 
 	protected final @NonNull StandaloneApplication standaloneApplication;
@@ -259,7 +278,7 @@ public abstract class StandaloneCommand
 	public boolean analyze(@NonNull Map<@NonNull CommandToken, @NonNull List<@NonNull String>> token2strings) {
 		for (@NonNull CommandToken token : token2strings.keySet()) {
 			List<@NonNull String> strings = token2strings.get(token);
-			if (!token.analyze(standaloneApplication, strings)) {
+			if (!token.analyze(strings)) {
 				return false;
 			}
 		}
@@ -284,28 +303,43 @@ public abstract class StandaloneCommand
 	 * Parse the arguments by distinguishing keyword tokens from their suffix tokens and populating the
 	 * CommandToken to String map accordingly. No checking or validation is performed.
 	 */
-	public @NonNull Map<@NonNull CommandToken, @NonNull List<@NonNull String>> parse(@NonNull String @NonNull [] arguments) {
+	public @Nullable Map<@NonNull CommandToken, @NonNull List<@NonNull String>> parse(@NonNull String @NonNull [] arguments) {
 		Map<@NonNull CommandToken, @NonNull List<@NonNull String>> parsedTokens = new HashMap<>();
+		CommandToken nullToken = null;
+		CommandToken currentToken = null;
 		List<@NonNull String> currentStrings = null;
 		for (int i = 1; i < arguments.length;) {
 			String argument = arguments[i++];
 			CommandToken token = tokens.get(argument);
 			if (token != null) {
-				currentStrings = parsedTokens.get(token);
+				currentToken = token;
+				currentStrings = parsedTokens.get(currentToken);
 				if (currentStrings == null) {
 					currentStrings = new ArrayList<>();
-					parsedTokens.put(token, currentStrings);
+					parsedTokens.put(currentToken, currentStrings);
 				}
-				else if (token.isSingleton()) {
+				else if (currentToken.isSingleton()) {
 					logger.error("Token '" + token.getName() + "' may only be used once");
 					return null;
 				}
-
 			}
 			else {
+				if ((currentToken != null) && (currentStrings != null)) {
+					int maxArguments = currentToken.getMaxArguments();
+					if ((maxArguments >= 0) && (currentStrings.size() >= maxArguments)) {
+						currentToken = null;
+						currentStrings = null;
+					}
+				}
 				if (currentStrings == null) {
-					currentStrings = new ArrayList<>();
-					parsedTokens.put(new CommandToken("", "", null) {}, currentStrings);
+					if (nullToken == null) {
+						nullToken = new CommandToken(standaloneApplication, "", "", null) {};
+					}
+					currentStrings = parsedTokens.get(nullToken);
+					if (currentStrings == null) {
+						currentStrings = new ArrayList<>();
+						parsedTokens.put(nullToken, currentStrings);
+					}
 				}
 				currentStrings.add(argument);
 			}
@@ -318,20 +352,23 @@ public abstract class StandaloneCommand
 	 * if unsatisfactory. No functional validation such as file existence/readability is performed.
 	 */
 	public boolean parseCheck(@NonNull Map<@NonNull CommandToken, @NonNull List<@NonNull String>> token2strings) {
+		Set<@NonNull CommandToken> validTokens = new HashSet<>(tokens.values());
 		for (@NonNull CommandToken token : token2strings.keySet()) {
 			List<@NonNull String> strings = token2strings.get(token);
+			if (!validTokens.contains(token)) {
+				logger.error("Misplaced arguments '" + strings + "'");
+				return false;
+			}
 			if (!token.parseCheck(strings)) {
 				return false;
 			}
 		}
-	/*	for (CommandToken token : tokens.values()) {
-			if (token.isRequired()) {
-				if (!token2strings.containsKey(token)) {
-					logger.error("Missing argument for '" + token.getName() + "'");
-					return false;
-				}
+		for (CommandToken token : validTokens) {
+			if (token.isRequired() && !token2strings.containsKey(token)) {
+				logger.error("Missing token '" + token.getName() + "'");
+				return false;
 			}
-		} */
+		}
 		return true;
 	}
 

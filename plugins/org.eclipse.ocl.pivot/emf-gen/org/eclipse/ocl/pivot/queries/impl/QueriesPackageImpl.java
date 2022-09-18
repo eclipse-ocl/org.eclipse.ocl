@@ -144,37 +144,17 @@ public class QueriesPackageImpl extends EPackageImpl implements QueriesPackage {
 	 * @generated
 	 */
 	@Override
+	public EReference getQueryResult_Self() {
+		return (EReference)queryResultEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EAttribute getQueryResult_Query() {
-		return (EAttribute)queryResultEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getQueryResult_Expression() {
-		return (EReference)queryResultEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getQueryResult_Value() {
-		return (EReference)queryResultEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getQueryResult_Result() {
 		return (EAttribute)queryResultEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -184,8 +164,38 @@ public class QueriesPackageImpl extends EPackageImpl implements QueriesPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getQueryResult_Error() {
-		return (EAttribute)queryResultEClass.getEStructuralFeatures().get(4);
+	public EReference getQueryResult_Expression() {
+		return (EReference)queryResultEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getQueryResult_Value() {
+		return (EReference)queryResultEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getQueryResult_Errors() {
+		return (EAttribute)queryResultEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getQueryResult_Result() {
+		return (EAttribute)queryResultEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -221,11 +231,12 @@ public class QueriesPackageImpl extends EPackageImpl implements QueriesPackage {
 		createEReference(queryModelEClass, ModelImpl.MODEL_FEATURE_COUNT + 0);
 
 		queryResultEClass = createEClass(1);
-		createEAttribute(queryResultEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
+		createEReference(queryResultEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 0);
 		createEAttribute(queryResultEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 1);
-		createEReference(queryResultEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
+		createEAttribute(queryResultEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 2);
 		createEReference(queryResultEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 3);
-		createEAttribute(queryResultEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 4);
+		createEReference(queryResultEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 4);
+		createEAttribute(queryResultEClass, ElementImpl.ELEMENT_FEATURE_COUNT + 5);
 	}
 
 	/**
@@ -267,11 +278,12 @@ public class QueriesPackageImpl extends EPackageImpl implements QueriesPackage {
 		initEReference(getQueryModel_Results(), this.getQueryResult(), null, "results", null, 0, -1, QueryModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(queryResultEClass, QueryResult.class, "QueryResult", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getQueryResult_Self(), ecorePackage.getEObject(), null, "self", null, 0, 1, QueryResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getQueryResult_Query(), ecorePackage.getEString(), "query", null, 0, 1, QueryResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getQueryResult_Result(), ecorePackage.getEString(), "result", null, 0, 1, QueryResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getQueryResult_Expression(), thePivotPackage.getExpressionInOCL(), null, "expression", null, 1, 1, QueryResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getQueryResult_Value(), thePivotPackage.getOCLExpression(), null, "value", null, 0, 1, QueryResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getQueryResult_Error(), ecorePackage.getEString(), "error", null, 0, 1, QueryResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getQueryResult_Errors(), ecorePackage.getEString(), "errors", null, 0, -1, QueryResult.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

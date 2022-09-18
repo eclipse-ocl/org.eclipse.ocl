@@ -17,11 +17,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Queries.ecore#//QueryModel/results"/>
     </genClasses>
     <genClasses ecoreClass="Queries.ecore#//QueryResult">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Queries.ecore#//QueryResult/self"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Queries.ecore#//QueryResult/query"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute Queries.ecore#//QueryResult/result"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Queries.ecore#//QueryResult/expression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EReference Queries.ecore#//QueryResult/value"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Queries.ecore#//QueryResult/error"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Queries.ecore#//QueryResult/errors"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
