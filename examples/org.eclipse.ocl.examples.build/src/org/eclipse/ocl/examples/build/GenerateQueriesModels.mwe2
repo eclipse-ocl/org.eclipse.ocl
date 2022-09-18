@@ -1,0 +1,39 @@
+/*******************************************************************************
+ * Copyright (c) 2010, 2013 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ * 
+ * Run As->MWE2 Workflow to regenerate the Xtext CG models.
+ *******************************************************************************/
+module GenerateQueriesModels
+
+import org.eclipse.ocl.examples.build.modelspecs.*
+import org.eclipse.ocl.examples.build.utilities.*
+import org.eclipse.ocl.examples.build.xtend.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+/**
+ *	Generate the Models for the Queries model.
+ */
+Workflow {
+	bean = ResourceSetImpl : queriesResourceSet {}
+    bean = StandaloneSetup { resourceSet = queriesResourceSet
+    	platformUri = ".."
+    	scanClassPath = true
+    }
+    bean = EcoreGenModelSetup { resourceSet = queriesResourceSet }
+	component = GenerateModel { resourceSet = queriesResourceSet skipOnErrors = true
+		genModel = "/org.eclipse.ocl.pivot/model/Queries.genmodel"
+		clearResourceSet = false
+	}
+	component = ConvertToUnixLineEndings {
+		directory = "../../plugins/org.eclipse.ocl.pivot/emf-gen"
+	}
+}
+

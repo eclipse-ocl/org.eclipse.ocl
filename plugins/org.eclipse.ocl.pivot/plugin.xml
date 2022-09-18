@@ -196,4 +196,12 @@
       	class="org.eclipse.ocl.pivot.internal.validation.OCL_MetaAnnotation_AnnotationValidator"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated Queries -->
+      <package
+            uri="http://www.eclipse.org/ocl/2022/Queries"
+            class="org.eclipse.ocl.pivot.queries.QueriesPackage"
+            genModel="model/Queries.genmodel"/>
+   </extension>
+
 </plugin>

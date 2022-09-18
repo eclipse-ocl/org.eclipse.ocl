@@ -26,6 +26,7 @@ Workflow {
   component = @GenerateIdiomsModel {}
   component = @GenerateAllEditors {}
   component = @GenerateValuesModels {}
+  component = @GenerateQueriesModels {}
   component = @GenerateTestModels {}
   component = @GenerateOCLstdlibModel {}
 }
