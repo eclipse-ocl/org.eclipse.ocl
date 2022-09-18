@@ -35,6 +35,7 @@ public class StandaloneCommandAnalyzer
 
 	public StandaloneCommandAnalyzer(@NonNull StandaloneApplication standaloneApplication) {
 		addCommand(new HelpCommand(standaloneApplication));
+		addCommand(new ExecuteCommand(standaloneApplication));
 		addCommand(new ValidateCommand(standaloneApplication));
 	}
 
