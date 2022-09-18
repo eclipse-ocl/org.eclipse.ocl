@@ -15,6 +15,9 @@ import java.math.BigDecimal;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.IntegerLiteralExp;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -152,6 +155,13 @@ public abstract class IntegerValueImpl extends NumberValueImpl implements Intege
 		else {
 			return ValueUtil.throwUnsupportedCompareTo(this, right);
 		}
+	}
+
+	@Override
+	public @NonNull LiteralExp createLiteralExp() {
+		IntegerLiteralExp literalExp = PivotFactory.eINSTANCE.createIntegerLiteralExp();
+		literalExp.setIntegerSymbol(asNumber());
+		return literalExp;
 	}
 
 	@Override

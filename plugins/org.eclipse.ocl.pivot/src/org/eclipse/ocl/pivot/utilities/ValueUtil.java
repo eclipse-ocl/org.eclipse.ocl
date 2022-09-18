@@ -28,14 +28,22 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ElementLiteralExp;
+import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Stereotype;
+import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -587,6 +595,54 @@ public abstract class ValueUtil
 		}
 		else {
 			return new InvalidValueException(e);
+		}
+	}
+
+	/**
+	 * Return a LiteralExp whose evaluation is a value.
+	 */
+	public static @NonNull OCLExpression createLiteralExp(Object value) {	// FIXME TypeExp / ShadowExp are not LiteralExp
+		if (value == null) {
+			return PivotFactory.eINSTANCE.createNullLiteralExp();
+		}
+		else if (value instanceof Value) {
+			return ((Value)value).createLiteralExp();
+		}
+		else if (value instanceof Boolean) {
+			BooleanLiteralExp literalExp = PivotFactory.eINSTANCE.createBooleanLiteralExp();
+			literalExp.setBooleanSymbol(((Boolean)value).booleanValue());
+			return literalExp;
+		}
+		else if (value instanceof String) {
+			StringLiteralExp literalExp = PivotFactory.eINSTANCE.createStringLiteralExp();
+			literalExp.setStringSymbol((String)value);
+			return literalExp;
+		}
+		else if (value instanceof EnumerationLiteral) {
+			EnumLiteralExp literalExp = PivotFactory.eINSTANCE.createEnumLiteralExp();
+			literalExp.setReferredLiteral((EnumerationLiteral)value);
+			return literalExp;
+		}
+		else if (value instanceof Type) {
+			TypeExp literalExp = PivotFactory.eINSTANCE.createTypeExp();		// TypeExp is not a LiteralExp
+			literalExp.setReferredType((Type)value);
+			return literalExp;
+		}
+		else if (value instanceof EObject) {
+			EObject eObject = (EObject) value;
+			if (eObject.eResource() != null) {
+				ElementLiteralExp literalExp = PivotFactory.eINSTANCE.createElementLiteralExp();
+				literalExp.setReferredElement(eObject);
+				return literalExp;
+			}
+			else {
+				throw new UnsupportedOperationException("Missing createShadowExp support in ValueUtil.createLiteralExp");	// TODO FIXME
+			}
+		}
+		else {
+			InvalidLiteralExp literalExp = PivotFactory.eINSTANCE.createInvalidLiteralExp();
+			literalExp.setName("Unsupported createLiteralExp for " + value.getClass().getSimpleName());
+			return literalExp;
 		}
 	}
 

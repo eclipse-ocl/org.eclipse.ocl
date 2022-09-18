@@ -16,6 +16,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -76,6 +78,11 @@ public class NullValueImpl extends UndefinedValueImpl implements NullValue
 	@Override
 	public List<Object> asUnboxedObject(@NonNull IdResolver idResolver) {
 		return null;
+	}
+
+	@Override
+	public @NonNull LiteralExp createLiteralExp() {
+		return PivotFactory.eINSTANCE.createNullLiteralExp();
 	}
 
 	@Override

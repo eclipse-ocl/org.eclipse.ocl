@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
@@ -189,6 +190,11 @@ public interface Value
 	 * @generated NOT
 	 */
 	@NonNull UnlimitedNaturalValue asUnlimitedNaturalValue();
+
+	/**
+	 * @generated NOT
+	 */
+	@NonNull LiteralExp createLiteralExp();
 
 	/**
 	 * Return the type of this value determined from its content. In the case of collections

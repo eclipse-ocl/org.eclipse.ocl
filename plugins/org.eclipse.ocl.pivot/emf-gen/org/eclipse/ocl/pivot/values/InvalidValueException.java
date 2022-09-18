@@ -17,12 +17,16 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.InvalidLiteralExp;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * An InvalidValueException wraps an InvalidValue and is used to return the InvalidValue
@@ -167,6 +171,13 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	@Override
+	public @NonNull LiteralExp createLiteralExp() {
+		InvalidLiteralExp literalExp = PivotFactory.eINSTANCE.createInvalidLiteralExp();
+		literalExp.setName(getMessage());
+		return literalExp;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		throw this; //return obj instanceof InvalidValueException;
 	}
@@ -204,6 +215,14 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	@Override
 	public int oclHashCode() {
 		return hashCode();
+	}
+
+	@Override
+	public String toString() {
+		if (this == ValueUtil.INVALID_VALUE) {
+			return "invalid";
+		}
+		return super.toString();
 	}
 
 	//	@Override

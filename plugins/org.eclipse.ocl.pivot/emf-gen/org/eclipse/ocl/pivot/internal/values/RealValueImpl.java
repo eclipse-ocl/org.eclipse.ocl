@@ -17,6 +17,9 @@ import java.math.RoundingMode;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -238,6 +241,13 @@ public class RealValueImpl extends NumberValueImpl implements RealValue {
 		else {
 			return ValueUtil.throwUnsupportedCompareTo(this, right);
 		}
+	}
+
+	@Override
+	public @NonNull LiteralExp createLiteralExp() {
+		RealLiteralExp literalExp = PivotFactory.eINSTANCE.createRealLiteralExp();
+		literalExp.setRealSymbol(asNumber());
+		return literalExp;
 	}
 
 	@Override

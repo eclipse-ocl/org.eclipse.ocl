@@ -11,11 +11,16 @@
 
 package org.eclipse.ocl.pivot.internal.values;
 
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.TupleLiteralExp;
+import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -106,6 +111,21 @@ public class TupleValueImpl extends ValueImpl implements TupleValue {
 	@Override
 	public @NonNull TupleValue asTupleValue() {
 		return this;
+	}
+
+	@Override
+	public @NonNull LiteralExp createLiteralExp() {
+		TupleLiteralExp literalExp = PivotFactory.eINSTANCE.createTupleLiteralExp();
+		List<TupleLiteralPart> ownedParts = literalExp.getOwnedParts();
+		TuplePartId[] partIds = tupleTypeId.getPartIds();
+		for (int i = 0; i < partIds.length; i++) {
+			TuplePartId partId = partIds[i];
+			TupleLiteralPart part = PivotFactory.eINSTANCE.createTupleLiteralPart();
+			part.setName(partId.getDisplayName());
+			part.setOwnedInit(ValueUtil.createLiteralExp(partValues[i]));
+			ownedParts.add(part);
+		}
+		return literalExp;
 	}
 
 	// overrides the inherited implementation

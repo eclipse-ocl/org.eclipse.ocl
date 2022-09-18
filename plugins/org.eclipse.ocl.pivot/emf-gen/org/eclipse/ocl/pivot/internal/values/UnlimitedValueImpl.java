@@ -13,8 +13,11 @@ package org.eclipse.ocl.pivot.internal.values;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -116,6 +119,13 @@ public class UnlimitedValueImpl extends NumberValueImpl implements UnlimitedValu
 		else {
 			return ValueUtil.throwUnsupportedCompareTo(this, right);
 		}
+	}
+
+	@Override
+	public @NonNull LiteralExp createLiteralExp() {
+		UnlimitedNaturalLiteralExp literalExp = PivotFactory.eINSTANCE.createUnlimitedNaturalLiteralExp();
+		literalExp.setUnlimitedNaturalSymbol(-1);
+		return literalExp;
 	}
 
 	@Override

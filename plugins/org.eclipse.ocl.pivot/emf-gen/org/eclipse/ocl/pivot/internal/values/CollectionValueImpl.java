@@ -26,6 +26,12 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionItem;
+import org.eclipse.ocl.pivot.CollectionKind;
+import org.eclipse.ocl.pivot.CollectionLiteralExp;
+import org.eclipse.ocl.pivot.CollectionLiteralPart;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -378,6 +384,19 @@ public abstract class CollectionValueImpl extends ValueImpl implements Collectio
 			}
 		}
 		return ValueUtil.integerValueOf(count);
+	}
+
+	@Override
+	public @NonNull LiteralExp createLiteralExp() {
+		CollectionLiteralExp literalExp = PivotFactory.eINSTANCE.createCollectionLiteralExp();
+		literalExp.setKind(CollectionKind.getByName(getKind()));
+		List<CollectionLiteralPart> ownedParts = literalExp.getOwnedParts();
+		for (Object element : getElements()) {
+			CollectionItem part = PivotFactory.eINSTANCE.createCollectionItem();
+			part.setOwnedItem(ValueUtil.createLiteralExp(element));
+			ownedParts.add(part);
+		}
+		return literalExp;
 	}
 
 	/**

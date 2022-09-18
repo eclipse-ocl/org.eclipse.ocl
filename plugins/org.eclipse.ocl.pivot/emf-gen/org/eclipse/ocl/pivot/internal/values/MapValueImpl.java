@@ -20,6 +20,10 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.MapLiteralExp;
+import org.eclipse.ocl.pivot.MapLiteralPart;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
@@ -175,6 +179,19 @@ public class MapValueImpl extends ValueImpl implements MapValue {
 			throw new InvalidValueException(PivotMessages.IndexNotInUse, value);
 		}
 		return object;
+	}
+
+	@Override
+	public @NonNull LiteralExp createLiteralExp() {
+		MapLiteralExp literalExp = PivotFactory.eINSTANCE.createMapLiteralExp();
+		List<MapLiteralPart> ownedParts = literalExp.getOwnedParts();
+		for (Entry<Object, Object> entry : entrySet()) {
+			MapLiteralPart part = PivotFactory.eINSTANCE.createMapLiteralPart();
+			part.setOwnedKey(ValueUtil.createLiteralExp(entry.getKey()));
+			part.setOwnedValue(ValueUtil.createLiteralExp(entry.getValue()));
+			ownedParts.add(part);
+		}
+		return literalExp;
 	}
 
 	@Override

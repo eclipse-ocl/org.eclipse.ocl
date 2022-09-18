@@ -18,6 +18,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.InvalidLiteralExp;
+import org.eclipse.ocl.pivot.LiteralExp;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -245,6 +248,13 @@ public abstract class ValueImpl extends ValueUtil implements Value {
 	@Override
 	public @NonNull UnlimitedNaturalValue asUnlimitedNaturalValue() {
 		throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.UNLIMITED_NATURAL_NAME, getTypeName());
+	}
+
+	@Override
+	public @NonNull LiteralExp createLiteralExp() {
+		InvalidLiteralExp literalExp = PivotFactory.eINSTANCE.createInvalidLiteralExp();
+		literalExp.setName("Unsupported createLiteralExp() for " + getClass().getSimpleName());
+		return literalExp;
 	}
 
 	/**
