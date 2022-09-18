@@ -111,7 +111,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_help() throws Exception {
+	public void testStandaloneExecution_help() throws Exception {
 		StringWriter outputStream = new StringWriter();
 		Appendable savedDefaultOutputStream = StandaloneCommand.setDefaultOutputStream(outputStream);
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"help"};
@@ -124,7 +124,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_mandatoryArgumentsOnly() throws Exception {
+	public void testStandaloneExecution_validate_mandatoryArgumentsOnly() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI)};
@@ -133,7 +133,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_missingOutputArgument() throws Exception {
+	public void testStandaloneExecution_validate_missingOutputArgument() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
@@ -152,7 +152,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_missingExporterArgument() throws Exception {
+	public void testStandaloneExecution_validate_missingExporterArgument() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
@@ -171,7 +171,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_missingUsingArgument() throws Exception {
+	public void testStandaloneExecution_validate_missingUsingArgument() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
@@ -182,7 +182,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			doFailingTest(arguments);
 			assertNoLogFile(getTextLogFileName());
 			String logMessage = TestCaseLogger.INSTANCE.get();
-			assertTrue(logMessage.contains("No argument for"));
+			assertTrue(logMessage.contains("Missing argument for"));
 			assertTrue(logMessage.contains("-using"));
 		} finally {
 			TestCaseLogger.INSTANCE.uninstall(savedAppenders);
@@ -190,7 +190,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_textExportedFile() throws Exception {
+	public void testStandaloneExecution_validate_textExportedFile() throws Exception {
 		String textLogFileName = getTextLogFileName();
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
@@ -202,7 +202,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_modelExportedFile() throws Exception {
+	public void testStandaloneExecution_validate_modelExportedFile() throws Exception {
 		String modelLogFileName = getLogFileName(ModelExporter.INSTANCE);
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
@@ -223,9 +223,8 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			TestUtil.assertSameModel(refResource, newResource);
 	}
 
-
 	@Test
-	public void test_htmlExportedFile() throws Exception {
+	public void testStandaloneExecution_validate_htmlExportedFile() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -236,7 +235,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_unknownExporter() throws Exception {
+	public void testStandaloneExecution_validate_unknownExporter() throws Exception {
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
@@ -247,7 +246,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_nonExistentModelFile() throws Exception {
+	public void testStandaloneExecution_validate_nonExistentModelFile() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			String textLogFileName = getTextLogFileName();
@@ -266,7 +265,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_nonExistentOclFile() throws Exception {
+	public void testStandaloneExecution_validate_nonExistentOclFile() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			String textLogFileName = getTextLogFileName();
@@ -286,7 +285,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	/*	@Test
-	public void test_unexistingOutputFileTest() throws CoreException, IOException {
+	public void testStandaloneExecution_validate_unexistingOutputFileTest() throws CoreException, IOException {
 		@NonNull String @NonNull [] arguments = {"validate",
 			"-model", inputModelName,
 			"-rules", inputOCLFileName,
@@ -303,7 +302,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	} */
 
 	@Test
-	public void test_nonExistentOutputFolder() throws Exception {
+	public void testStandaloneExecution_validate_nonExistentOutputFolder() throws Exception {
 		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
 		try {
 			String nonExistentOutputFolderPath = "nonExistent" + "/" + "anotherName.txt"; //$NON-NLS-3$
@@ -322,7 +321,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_listOfOCLFiles() throws Exception {
+	public void testStandaloneExecution_validate_listOfOCLFiles() throws Exception {
 		String textLogFileName = getTextLogFileName();
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),
@@ -334,7 +333,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
-	public void test_listOfOCLFilesToStdout() throws Exception {
+	public void testStandaloneExecution_validate_listOfOCLFilesToStdout() throws Exception {
 		Appendable savedDefaultOutputStream = StandaloneCommand.setDefaultOutputStream(NullAppendable.INSTANCE);
 		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
 			"-model", String.valueOf(inputModelURI),

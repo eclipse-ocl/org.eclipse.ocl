@@ -19,7 +19,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
 
 /**
@@ -58,7 +57,7 @@ public class HelpCommand extends StandaloneCommand
 	}
 
 	@Override
-	public @NonNull StandaloneResponse execute(@NonNull Map<CommandToken, List<String>> token2strings) {
+	public @NonNull StandaloneResponse execute() {
 		List<StandaloneCommand> commands = new ArrayList<StandaloneCommand>(standaloneApplication.getCommands());
 		Collections.sort(commands, CommandComparator.INSTANCE);
 		StringBuilder s = new StringBuilder();
@@ -78,7 +77,7 @@ public class HelpCommand extends StandaloneCommand
 					s.append("[");
 				}
 				s.append(token.getName());
-				String argsHelp = token.getArgsHelp();
+				String argsHelp = token.getArgumentsHelp();
 				if (argsHelp != null) {
 					s.append(" ");
 					s.append(argsHelp);
@@ -102,7 +101,7 @@ public class HelpCommand extends StandaloneCommand
 				}
 				s.append(" " + StandaloneMessages.HelpText_token);
 				s.append(". ");
-				s.append(token.getHelp().replace("\n",  "\n        "));
+				s.append(token.getCommandHelp().replace("\n",  "\n        "));
 			}
 			s.append("\n");
 		}
@@ -114,12 +113,11 @@ public class HelpCommand extends StandaloneCommand
 	}
 
 	@Override
-	public @Nullable Map<CommandToken, List<String>> parse(@NonNull String @NonNull [] arguments) {
-		Map<CommandToken, List<String>> tokens = super.parse(arguments);
-		if (tokens.size() > 0) {
+	public boolean parseCheck(@NonNull Map<@NonNull CommandToken, @NonNull List<@NonNull String>> token2strings) {
+		if (token2strings.size() > 0) {
 			logger.error(StandaloneMessages.HelpCommand_Bad);
-			return null;
+			return false;
 		}
-		return tokens;
+		return super.parseCheck(token2strings);
 	}
 }

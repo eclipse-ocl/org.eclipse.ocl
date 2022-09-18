@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.standalone;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -43,10 +44,14 @@ public class StandaloneApplication implements IApplication
 	/** The arguments Constant. */
 	private static final String ARGS_KEY = "application.args"; //$NON-NLS-1$
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Logger.getRootLogger().addAppender(new ConsoleAppender(new SimpleLayout(), ConsoleAppender.SYSTEM_OUT));
 		StandaloneApplication standaloneApplication = new StandaloneApplication();
-		standaloneApplication.execute(args);
+		StandaloneResponse response = standaloneApplication.execute(args);
+		if (response != StandaloneResponse.OK) {
+			System.err.println("Standalone Application failed.");
+			System.exit(1);
+		}
 	}
 
 	/** The Resource Set */
@@ -81,21 +86,22 @@ public class StandaloneApplication implements IApplication
 	 * @param args
 	 *            the application arguments.
 	 * @return the application return code.
+	 * @throws IOException
 	 */
-	public @NonNull StandaloneResponse execute(@NonNull String @NonNull [] args) {
+	public @NonNull StandaloneResponse execute(@NonNull String @NonNull [] args) throws IOException {
 		StandaloneCommand command = commandAnalyzer.parse(args);
 		if (command == null) {
 			return StandaloneResponse.FAIL;
 		}
-		Map<CommandToken, List<String>> token2strings = command.parse(args);
-		if (token2strings == null) {
+		Map<@NonNull CommandToken, @NonNull List<@NonNull String>> token2strings = command.parse(args);
+		if (!command.parseCheck(token2strings)) {
 			return StandaloneResponse.FAIL;
 		}
-		boolean isOk = command.check(token2strings);
+		boolean isOk = command.analyze(token2strings);
 		if (!isOk) {
 			return StandaloneResponse.FAIL;
 		}
-		return command.execute(token2strings);
+		return command.execute();
 	}
 
 	public @NonNull Collection<StandaloneCommand> getCommands() {
@@ -108,7 +114,7 @@ public class StandaloneApplication implements IApplication
 
 	public @NonNull OCL getOCL() {
 		if (ocl == null) {
-			ocl = OCL.newInstance();
+			ocl = OCL.newInstance(OCL.CLASS_PATH);
 		}
 		return ocl;
 	}
@@ -148,7 +154,7 @@ public class StandaloneApplication implements IApplication
 	 * IApplicationContext)
 	 */
 	@Override
-	public Object start(IApplicationContext context) {
+	public Object start(IApplicationContext context) throws IOException {
 		String[] args = (String[]) context.getArguments().get(ARGS_KEY);
 		StandaloneResponse applicationCodeResponse = execute(args);
 		if (StandaloneResponse.OK.equals(applicationCodeResponse)) {

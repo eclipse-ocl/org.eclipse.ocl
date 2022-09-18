@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.standalone;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
 
 /**
  * A representation of the literals of the enumeration '<em><b>StandaloneResponse</b></em>',
@@ -52,24 +55,41 @@ public abstract class StandaloneCommand
 	public static abstract class CommandToken
 	{
 		protected final @NonNull String name;
-		protected final @NonNull String help;
+		protected final @NonNull String commandHelp;
+		protected final @NonNull String argumentsHelp;
 		protected boolean isRequired = false;
 
-		protected CommandToken(@NonNull String name, @NonNull String help) {
+		protected CommandToken(@NonNull String name, @NonNull String commandHelp, @Nullable String argumentsHelp) {
 			this.name = name;
-			this.help = help;
+			this.commandHelp = commandHelp;
+			this.argumentsHelp = argumentsHelp;
 		}
 
-		public boolean check(@NonNull List<String> strings) {
+		public final boolean analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull List<@NonNull String> strings) {
+			for (@NonNull String string : strings) {
+				String checkError = analyze(standaloneApplication, string);
+				if (checkError != null) {
+					logger.error(checkError);
+					return false;
+				}
+			}
 			return true;
 		}
 
-		public @Nullable String getArgsHelp() {
+		/**
+		 * Check that the string form a semantically consistent arguments for this token.
+		 * Returns an error message for inconsistent 'enumerated' options.
+		 */
+		protected @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
 			return null;
 		}
 
-		public @NonNull String getHelp() {
-			return help;
+		public @Nullable String getArgumentsHelp() {
+			return argumentsHelp;
+		}
+
+		public @NonNull String getCommandHelp() {
+			return commandHelp;
 		}
 
 		public @NonNull String getName() {
@@ -80,16 +100,47 @@ public abstract class StandaloneCommand
 			return isRequired;
 		}
 
-		public int parseArgument(@NonNull List<String> strings, @NonNull String @NonNull [] arguments, int i) {
-			return i;
+		public boolean isSingleton() {
+			return true;
+		}
+
+		/**
+		 * Check that the strings form a semantically consistent sequence of arguments for this token.
+		 */
+		public boolean parseCheck(@NonNull List<@NonNull String> strings) {
+			int size = strings.size();
+			if (isRequired()) {
+				if (size <= 0) {
+					logger.error("Missing argument for '" + getName() + "'");
+					return false;
+				}
+
+			}
+			if (isSingleton()) {
+				if (size > 1) {
+					logger.error("Too many '" + getName() + "' tokens");
+					return false;
+				}
+
+			}
+			for (@NonNull String string : strings) {
+				if (!parseCheck(string)) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		/**
+		 * Check that the string form a semantically consistent arguments for this token.
+		 * Returns true,if ok, or false after logging an error message for inconsistent 'enumerated' options.
+		 */
+		protected boolean parseCheck(@NonNull String string) {
+			return true;
 		}
 
 		public void setIsRequired() {
 			isRequired = true;
-		}
-
-		public boolean isSingleton() {
-			return true;
 		}
 
 		@Override
@@ -98,24 +149,82 @@ public abstract class StandaloneCommand
 		}
 	}
 
+	/**
+	 * An optional argument to define the output file path. The exporter will
+	 * create results within that target file.
+	 */
+	public static class OutputToken extends StringToken
+	{
+		private @Nullable File outputFile;
+
+			public OutputToken() {
+			super("-output", StandaloneMessages.StandaloneCommand_Output_Help, "<file-name>");
+		}
+
+		@Override
+		public @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
+			try {
+				File file = new File(string).getCanonicalFile();
+				if (file.exists()) {
+					if (file.isFile()) {
+						file.delete();
+					} else {
+						return StandaloneMessages.OCLArgumentAnalyzer_OutputFile + file.getAbsolutePath() + StandaloneMessages.OCLArgumentAnalyzer_NotFile;
+					}
+				}
+				if (!file.exists()) {
+					//					outputFilePath = new Path(file.getAbsolutePath());
+					//					outputFile = file;
+					File outputFolder = file.getParentFile();
+					if (!outputFolder.exists()) {
+						return StandaloneMessages.OCLArgumentAnalyzer_OutputDir + outputFolder.getAbsolutePath() + StandaloneMessages.OCLArgumentAnalyzer_NotExist;
+					} else {
+						outputFile = file;
+					}
+				}
+			} catch (IOException e) {
+				return e.getMessage();
+			}
+			return null;
+		}
+
+		public File getOutputFile() {
+			return outputFile;
+		}
+
+		@Override
+		public boolean isRequired() {
+			return true;
+		}
+	}
+
+	public static class BooleanToken extends CommandToken
+	{
+		private boolean isPresent = false;
+
+		public BooleanToken(@NonNull String name, @NonNull String commandHelp) {
+			super(name, commandHelp, null);
+		}
+
+		@Override
+		protected @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
+			isPresent = true;
+			return null;
+		}
+
+		public boolean isPresent() {
+			return isPresent;
+		}
+	}
+
 	public static class StringToken extends CommandToken
 	{
-		protected StringToken(@NonNull String name, @NonNull String help) {
-			super(name, help);
+		public StringToken(@NonNull String name, @NonNull String commandHelp, @Nullable String argumentsHelp) {
+			super(name, commandHelp, "<string-value>");
 		}
 
-		@Override
-		public boolean check(@NonNull List<String> strings) {
-			return strings.size() == 1;
-		}
-
-		@Override
-		public @Nullable String getArgsHelp() {
-			return "<string-value>";
-		}
-
-		@Override
-		public int parseArgument(@NonNull List<String> strings, @NonNull String @NonNull [] arguments, int i) {
+	/*	@Override
+		public int parseArgument(@NonNull List<@NonNull String> strings, @NonNull String @NonNull [] arguments, int i) {
 			if (i < arguments.length){
 				String argument = arguments[i++];
 				strings.add(argument);
@@ -125,7 +234,7 @@ public abstract class StandaloneCommand
 				logger.error("Missing argument for '" + name + "'");
 				return -1;
 			}
-		}
+		} */
 	}
 
 	protected final @NonNull StandaloneApplication standaloneApplication;
@@ -143,25 +252,21 @@ public abstract class StandaloneCommand
 		tokens.put(commandToken.getName(), commandToken);
 	}
 
-	public boolean check(@NonNull Map<CommandToken, List<String>> token2strings) {
-		for (CommandToken token : token2strings.keySet()) {
-			List<String> strings = token2strings.get(token);
-			if ((token != null) && !token.check(strings)) {
+	/**
+	 * Analyze each keyword tpken establishing functional correctness such as file existence and caching
+	 * and analyzed results. Returns true if ok to execute, else false after logging any errors or warnings.
+	 */
+	public boolean analyze(@NonNull Map<@NonNull CommandToken, @NonNull List<@NonNull String>> token2strings) {
+		for (@NonNull CommandToken token : token2strings.keySet()) {
+			List<@NonNull String> strings = token2strings.get(token);
+			if (!token.analyze(standaloneApplication, strings)) {
 				return false;
-			}
-		}
-		for (CommandToken token : tokens.values()) {
-			if (token.isRequired()) {
-				if (!token2strings.containsKey(token)) {
-					logger.error("Missing mandatory token '" + token.getName() + "'");
-					return false;
-				}
 			}
 		}
 		return true;
 	}
 
-	public abstract @NonNull StandaloneResponse execute(@NonNull Map<CommandToken, List<String>> tokens);
+	public abstract @NonNull StandaloneResponse execute() throws IOException;
 
 	public @NonNull String getHelp() {
 		return help;
@@ -171,35 +276,63 @@ public abstract class StandaloneCommand
 		return name;
 	}
 
-	public @NonNull Collection<CommandToken> getTokens() {
+	public @NonNull Collection<@NonNull CommandToken> getTokens() {
 		return tokens.values();
 	}
 
-	public @Nullable Map<CommandToken, List<String>> parse(@NonNull String @NonNull [] arguments) {
-		Map<CommandToken, List<String>> parsedTokens = new HashMap<CommandToken, List<String>>();
+	/**
+	 * Parse the arguments by distinguishing keyword tokens from their suffix tokens and populating the
+	 * CommandToken to String map accordingly. No checking or validation is performed.
+	 */
+	public @NonNull Map<@NonNull CommandToken, @NonNull List<@NonNull String>> parse(@NonNull String @NonNull [] arguments) {
+		Map<@NonNull CommandToken, @NonNull List<@NonNull String>> parsedTokens = new HashMap<>();
+		List<@NonNull String> currentStrings = null;
 		for (int i = 1; i < arguments.length;) {
 			String argument = arguments[i++];
 			CommandToken token = tokens.get(argument);
-			List<String> strings = parsedTokens.get(token);
-			if (strings == null) {
-				strings = new ArrayList<String>();
-				parsedTokens.put(token, strings);
-			}
-			else if (token.isSingleton()) {
-				logger.error("Token '" + token.getName() + "' may only be used once");
-				return null;
-			}
-			if (token == null) {
-				strings.add(argument);
-			}
-			else {
-				i = token.parseArgument(strings, arguments, i);
-				if (i < 0) {
+			if (token != null) {
+				currentStrings = parsedTokens.get(token);
+				if (currentStrings == null) {
+					currentStrings = new ArrayList<>();
+					parsedTokens.put(token, currentStrings);
+				}
+				else if (token.isSingleton()) {
+					logger.error("Token '" + token.getName() + "' may only be used once");
 					return null;
 				}
+
+			}
+			else {
+				if (currentStrings == null) {
+					currentStrings = new ArrayList<>();
+					parsedTokens.put(new CommandToken("", "", null) {}, currentStrings);
+				}
+				currentStrings.add(argument);
 			}
 		}
 		return parsedTokens;
+	}
+
+	/**
+	 * Check the semantic consistency, logging errors for any missing arguments, and returning false
+	 * if unsatisfactory. No functional validation such as file existence/readability is performed.
+	 */
+	public boolean parseCheck(@NonNull Map<@NonNull CommandToken, @NonNull List<@NonNull String>> token2strings) {
+		for (@NonNull CommandToken token : token2strings.keySet()) {
+			List<@NonNull String> strings = token2strings.get(token);
+			if (!token.parseCheck(strings)) {
+				return false;
+			}
+		}
+	/*	for (CommandToken token : tokens.values()) {
+			if (token.isRequired()) {
+				if (!token2strings.containsKey(token)) {
+					logger.error("Missing argument for '" + token.getName() + "'");
+					return false;
+				}
+			}
+		} */
+		return true;
 	}
 
 	@Override

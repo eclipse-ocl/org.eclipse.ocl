@@ -22,8 +22,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.resources.IResource;
@@ -68,22 +69,12 @@ public class ValidateCommand extends StandaloneCommand
 
 	/**
 	 * An optional argument to specify which exporter should be used. By
-	 * default, the �txt� exporter will be used, exporting a textual report of
+	 * default, the 'txt' exporter will be used, exporting a textual report of
 	 * the validation.
 	 */
 	public static class ExporterToken extends StringToken
 	{
-		public ExporterToken() {
-			super("-exporter", StandaloneMessages.ValidateCommand_Exporter_Help);
-		}
-
-		@Override
-		public boolean check(@NonNull List<String> strings) {
-			return getExporter(strings) != null;
-		}
-
-		@Override
-		public @Nullable String getArgsHelp() {
+		private static @Nullable String getArgsHelp() {
 			List<IValidityExporterDescriptor> exporters = new ArrayList<IValidityExporterDescriptor>(ValidityExporterRegistry.INSTANCE.getRegisteredExtensions());
 			Collections.sort(exporters, ExporterComparator.INSTANCE);
 			StringBuilder s = new StringBuilder();
@@ -96,32 +87,30 @@ public class ValidateCommand extends StandaloneCommand
 			return s.toString();
 		}
 
-		private @Nullable IValidityExporter getExporter(@NonNull List<String> strings) {
-			if (strings.size() <= 0) {
-				return null;
-			}
-			String string = strings.get(0);
-			return ValidityExporterRegistry.INSTANCE.getExporter(string);
+		private @Nullable IValidityExporter exporter;
+
+		public ExporterToken() {
+			super("-exporter", StandaloneMessages.ValidateCommand_Exporter_Help, getArgsHelp());
 		}
 
-		public @Nullable IValidityExporter getExporter(@NonNull Map<CommandToken, List<String>> token2strings) {
-			List<String> strings = token2strings.get(this);
-			if (strings == null) {
-				return null;
-			}
-			return getExporter(strings);
+		public @Nullable IValidityExporter getExporter() {
+			return exporter;
 		}
 
+		@Override
+		public boolean isRequired() {
+			return true;
+		}
 
-		/**
-		 * Gets the validation exporter corresponding to the argument read after the
-		 * <b>-report</b> argument.
-		 *
-		 * @return The validation exporter.
-		 */
-		//		public AbstractExporter getExporter() {
-		//			return exporter;
-		//		}
+		@Override
+		public boolean parseCheck(@NonNull String string) {
+			exporter = ValidityExporterRegistry.INSTANCE.getExporter(string);;
+			if (exporter == null) {
+				logger.error("Unrecognized 'exporter' " + string);
+				return false;
+			}
+			return true;
+		}
 	}
 
 	/**
@@ -130,107 +119,26 @@ public class ValidateCommand extends StandaloneCommand
 	 */
 	public static class ModelToken extends StringToken
 	{
+		private @Nullable String fileName;
+
 		public ModelToken() {
-			super("-model", StandaloneMessages.ValidateCommand_Model_Help);
+			super("-model", StandaloneMessages.ValidateCommand_Model_Help, "<file-name>");
 		}
 
 		@Override
-		public boolean check(@NonNull List<String> strings) {
-			return getModelFileName(strings) != null;
-		}
-
-		@Override
-		public @Nullable String getArgsHelp() {
-			return "<file-name>";
-		}
-
-		private @Nullable String getModelFileName(@NonNull List<String> strings) {
-			if (strings.size() <= 0) {
-				return null;
-			}
-			String string = strings.get(0);
-			return getCheckedFileName(string);
-		}
-
-		public @Nullable String getModelFileName(@NonNull Map<CommandToken, List<String>> token2strings) {
-			List<String> strings = token2strings.get(this);
-			if (strings == null) {
-				return null;
-			}
-			return getModelFileName(strings);
-		}
-
-		/**
-		 * Gets the absolute path to the model file deduced from the value specified
-		 * after the argument <b>-model</b>.
-		 *
-		 * @return the model path as a String.
-		 */
-		//		public IPath getModelFilePath() {
-		//			return modelPath;
-		//		}
-	}
-
-	/**
-	 * An optional argument to define the output file path. The exporter will
-	 * create results within that target file.
-	 */
-	public static class OutputToken extends StringToken
-	{
-		public OutputToken() {
-			super("-output", StandaloneMessages.ValidateCommand_Output_Help);
-		}
-
-		@Override
-		public boolean check(@NonNull List<String> strings) {
-			return getOutputFile(strings) != null;
-		}
-
-		@Override
-		public @Nullable String getArgsHelp() {
-			return "<file-name>";
-		}
-
-		private @Nullable File getOutputFile(@NonNull List<String> strings) {
-			if (strings.size() <= 0) {
-				return null;
-			}
-			String string = strings.get(0);
-			try {
-				File file = new File(string).getCanonicalFile();
-				if (file.exists()) {
-					if (file.isFile()) {
-						file.delete();
-					} else {
-						logger.error(StandaloneMessages.OCLArgumentAnalyzer_OutputFile
-								+ file.getAbsolutePath()
-								+ StandaloneMessages.OCLArgumentAnalyzer_NotFile);
-					}
-				}
-				if (!file.exists()) {
-					//					outputFilePath = new Path(file.getAbsolutePath());
-					//					outputFile = file;
-					File outputFolder = file.getParentFile();
-					if (!outputFolder.exists()) {
-						logger.error(StandaloneMessages.OCLArgumentAnalyzer_OutputDir
-								+ outputFolder.getAbsolutePath()
-								+ StandaloneMessages.OCLArgumentAnalyzer_NotExist);
-					} else {
-						return file;
-					}
-				}
-			} catch (IOException e) {
-				logger.error(e.getMessage());
+		public @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
+			standaloneApplication.getOCL();// Need class path
+			URI uri = URI.createURI(string);
+			fileName = uri.isFile() ? uri.toFileString() : string;
+			boolean exists = getURIConverter().exists(uri, null);
+			if (!exists) {
+				return StandaloneMessages.OCLArgumentAnalyzer_ModelFile + uri + StandaloneMessages.OCLArgumentAnalyzer_NotExist;
 			}
 			return null;
 		}
 
-		public File getOutputFile(@NonNull Map<CommandToken, List<String>> token2strings) {
-			List<String> strings = token2strings.get(this);
-			if (strings == null) {
-				return null;
-			}
-			return getOutputFile(strings);
+		public @Nullable String getModelFileName() {
+			return fileName;
 		}
 	}
 
@@ -250,35 +158,36 @@ public class ValidateCommand extends StandaloneCommand
 		/** Possible "ocl" extension file for the "-rules" argument entry. */
 		private static final Object OCL_FILE_EXTENSION = "ocl"; //$NON-NLS-1$
 
+		private @Nullable List<@NonNull String> oclFileNames;
+
 		public RulesToken() {
-			super("-rules", StandaloneMessages.ValidateCommand_Rules_Help);
+			super("-rules", StandaloneMessages.ValidateCommand_Rules_Help, "<file-name>");
 		}
 
 		@Override
-		public boolean check(@NonNull List<String> strings) {
-			if (strings.size() <= 0) {
-				//				return false;			-- all files might be ignored
-			}
-			for (String string : strings) {
-				String checkedName = getCheckedFileName(string);
-				if (checkedName == null) {
-					return false;
-				}
-			}
-			return true;
-		}
+		public @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String string) {
+			standaloneApplication.getOCL();
+			// XXX checkOclFile
+			URI uri = URI.createURI(string);
+			String fileName = uri.isFile() ? uri.toFileString() : string;
 
-		@Override
-		public int parseArgument(@NonNull List<String> strings, @NonNull String @NonNull [] arguments, int i) {
-			if (i < arguments.length){
-				String argument = arguments[i++];
-				checkOclFile(strings, argument);
-				return i;
+			List<@NonNull String> strings = new ArrayList<>();
+			checkOclFile(strings, uri.toString());
+
+
+
+
+
+		//	boolean exists = getURIConverter().exists(uri, null);
+	//		if (!exists) {
+	//			return StandaloneMessages.OCLArgumentAnalyzer_ModelFile + uri + StandaloneMessages.OCLArgumentAnalyzer_NotExist;
+	//		}
+			List<@NonNull String> oclFileNames2 = oclFileNames;
+			if (oclFileNames2 == null) {
+				oclFileNames = oclFileNames2 = new ArrayList<>();
 			}
-			else {
-				logger.error("No argument for '" + name + "'");
-				return -1;
-			}
+			oclFileNames2.addAll(strings);
+			return null;
 		}
 
 		/**
@@ -342,23 +251,14 @@ public class ValidateCommand extends StandaloneCommand
 			}
 		}
 
-		@Override
-		public @Nullable String getArgsHelp() {
-			return "<file-name>";
-		}
-
 		/**
 		 * Gets the collection of OCL resources deduced from values specified after
 		 * the <b>-rule</b> argument.
 		 *
 		 * @return A List of OCL Uris
 		 */
-		public @NonNull List<String> getOCLFileNames(@NonNull Map<CommandToken, List<String>> token2strings) {
-			List<String> strings = token2strings.get(this);
-			if (strings == null) {
-				return Collections.emptyList();
-			}
-			return strings;
+		public @NonNull List<String> getOCLFileNames() {
+			return oclFileNames != null ? oclFileNames : Collections.emptyList();
 		}
 	}
 
@@ -371,47 +271,48 @@ public class ValidateCommand extends StandaloneCommand
 	public static class UsingToken extends StringToken
 	{
 		/** "-using" argument value to run the all constraints (ocl, java and uml). */
-		private static final String ALL_LOCATORS = "all"; //$NON-NLS-1$
+		private static final @NonNull String ALL_LOCATORS = "all"; //$NON-NLS-1$
 		/** "-using" argument value to additionally run the OCL constraints. */
-		private static final String OCL_LOCATOR = "ocl"; //$NON-NLS-1$
+		private static final @NonNull String OCL_LOCATOR = "ocl"; //$NON-NLS-1$
 		/** "-using" argument value to additionally run the Java constraints. */
-		private static final String JAVA_LOCATOR = "java"; //$NON-NLS-1$
+		private static final @NonNull String JAVA_LOCATOR = "java"; //$NON-NLS-1$
 		/** "-using" argument value to additionally run the UML constraints. */
-		private static final String UML_LOCATOR = "uml"; //$NON-NLS-1$
+		private static final @NonNull String UML_LOCATOR = "uml"; //$NON-NLS-1$
+
+		private @Nullable Set<@NonNull String> locators = null;
+		private boolean doJava = false;
+		private boolean doOCL = false;
+		private boolean doUML = false;
 
 		public UsingToken() {
-			super("-using", StandaloneMessages.ValidateCommand_Using_Help);
+			super("-using", StandaloneMessages.ValidateCommand_Using_Help, ALL_LOCATORS + "|" + JAVA_LOCATOR + "|" + OCL_LOCATOR + "|" + UML_LOCATOR);
 		}
 
 		@Override
-		public boolean check(@NonNull List<String> locators) {
-			for (String locator : locators) {
-				if (!ALL_LOCATORS.equals(locator) && !JAVA_LOCATOR.equals(locator) && !OCL_LOCATOR.equals(locator) && !UML_LOCATOR.equals(locator)) {
-					logger.error("Unknown locator '" + locator + "'");
-					return false;
-				}
+		public @Nullable String analyze(@NonNull StandaloneApplication standaloneApplication, @NonNull String locator) {
+			Set<@NonNull String> locators2 = locators;
+			if (locators2 == null) {
+				locators = locators2 = new HashSet<>();
 			}
-			return true;
+			locators2.add(locator);
+			return null;
 		}
 
-		public boolean doRunJavaConstraints(@NonNull Map<CommandToken, List<String>> token2strings) {
-			List<String> strings = token2strings.get(this);
-			return (strings == null) || strings.contains(JAVA_LOCATOR) || strings.contains(ALL_LOCATORS);
+		public boolean doRunJavaConstraints() {
+			return doJava || (!doJava && !doOCL && !doUML);
 		}
 
-		public boolean doRunOCLConstraints(@NonNull Map<CommandToken, List<String>> token2strings) {
-			List<String> strings = token2strings.get(this);
-			return (strings == null) || strings.contains(OCL_LOCATOR) || strings.contains(ALL_LOCATORS);
+		public boolean doRunOCLConstraints() {
+			return doOCL || (!doJava && !doOCL && !doUML);
 		}
 
-		public boolean doRunUMLConstraints(@NonNull Map<CommandToken, List<String>> token2strings) {
-			List<String> strings = token2strings.get(this);
-			return (strings == null) || strings.contains(UML_LOCATOR) || strings.contains(ALL_LOCATORS);
+		public boolean doRunUMLConstraints() {
+			return doUML || (!doJava && !doOCL && !doUML);
 		}
 
 		@Override
-		public @Nullable String getArgsHelp() {
-			return ALL_LOCATORS + "|" + JAVA_LOCATOR + "|" + OCL_LOCATOR + "|" + UML_LOCATOR;
+		public boolean isRequired() {
+			return true;
 		}
 
 		@Override
@@ -420,40 +321,31 @@ public class ValidateCommand extends StandaloneCommand
 		}
 
 		@Override
-		public int parseArgument(@NonNull List<String> strings, @NonNull String @NonNull [] arguments, int i) {
-			if (i < arguments.length){
-				String argument = arguments[i++];
-				String[] locators = argument.split(",");
-				for (String locator : locators) {
-					if (!ALL_LOCATORS.equals(locator) && !JAVA_LOCATOR.equals(locator) && !OCL_LOCATOR.equals(locator) && !UML_LOCATOR.equals(locator)) {
-						logger.error("Unknown locator '" + locator + "'");
-						return -1;
-					}
+		public boolean parseCheck(@NonNull String string) {
+			boolean okLocators = true;
+			String[] locators = string.split(",");
+			for (String locator : locators) {
+				if (ALL_LOCATORS.equals(locator)) {
+					doJava = true;
+					doOCL = true;
+					doUML = true;
 				}
-				for (String locator : locators) {
-					strings.add(locator);
+				else if (JAVA_LOCATOR.equals(locator)) {
+					doJava = true;
 				}
-				return i;
+				else if (OCL_LOCATOR.equals(locator)) {
+					doOCL = true;
+				}
+				else if (UML_LOCATOR.equals(locator)) {
+					doUML = true;
+				}
+				else {
+					logger.error("Unknown locator '" + locator + "'");
+					okLocators = false;
+				}
 			}
-			else {
-				logger.error("No argument for '" + name + "'");
-				return -1;
-			}
+			return okLocators;
 		}
-	}
-
-	protected static String getCheckedFileName(@NonNull String string) {
-		URI uri = URI.createURI(string);
-		string = uri.isFile() ? uri.toFileString() : string;
-		boolean exists = getURIConverter().exists(uri, null);
-		if (!exists) {
-			logger.error(StandaloneMessages.OCLArgumentAnalyzer_ModelFile
-					+ uri
-					+ StandaloneMessages.OCLArgumentAnalyzer_NotExist);
-		} else {
-			return string;
-		}
-		return null;
 	}
 
 	/**
@@ -522,10 +414,10 @@ public class ValidateCommand extends StandaloneCommand
 	}
 
 	@Override
-	public @NonNull StandaloneResponse execute(@NonNull Map<CommandToken, List<String>> token2strings) {
+	public @NonNull StandaloneResponse execute() {
 		standaloneApplication.doCompleteOCLSetup();
-		String modelFileName = modelToken.getModelFileName(token2strings);
-		List<String> oclFileNames = rulesToken.getOCLFileNames(token2strings);
+		String modelFileName = modelToken.getModelFileName();
+		List<String> oclFileNames = rulesToken.getOCLFileNames();
 		URI modelURI = URI.createURI(modelFileName, true);
 		if (!modelURI.isPlatform()) {
 			modelURI = getFileUri(modelFileName);
@@ -544,15 +436,15 @@ public class ValidateCommand extends StandaloneCommand
 			logger.error(StandaloneMessages.OCLValidatorApplication_Aborted);
 			return StandaloneResponse.FAIL;
 		}
-		StandaloneValidityManager validityManager = initiateValidityManager(standaloneApplication.getResourceSet(), token2strings);
+		StandaloneValidityManager validityManager = initiateValidityManager(standaloneApplication.getResourceSet());
 
 		if (validityManager != null) {
 			// run the validation
 			validate(validityManager);
 
 			// export results
-			File outputFile = outputToken.getOutputFile(token2strings);
-			exportValidationResults(validityManager.getRootNode(), outputFile, token2strings);
+			File outputFile = outputToken.getOutputFile();
+			exportValidationResults(validityManager.getRootNode(), outputFile);
 			//			try {
 			//				exportValidationResults(getOutputWriter(), validityManager.getRootNode());
 			//			} catch (IOException e) {
@@ -571,8 +463,8 @@ public class ValidateCommand extends StandaloneCommand
 	 * @param outputPath
 	 *            the exported file path.
 	 */
-	private void exportValidationResults(@NonNull RootNode rootNode, @Nullable File outputFile, @NonNull Map<CommandToken, List<String>> token2strings) {
-		final IValidityExporter selectedExporter = exporterToken.getExporter(token2strings);
+	private void exportValidationResults(@NonNull RootNode rootNode, @Nullable File outputFile) {
+		final IValidityExporter selectedExporter = exporterToken.getExporter();
 		if (selectedExporter != null && rootNode != null) {
 			//			logger.info(StandaloneMessages.OCLValidatorApplication_ExportStarting);
 			Appendable s = null;
@@ -600,11 +492,11 @@ public class ValidateCommand extends StandaloneCommand
 	 * @param resourceSet
 	 *            the resource set.
 	 */
-	private @NonNull StandaloneValidityManager initiateValidityManager(@NonNull ResourceSet resourceSet, @NonNull Map<CommandToken, List<String>> token2strings) {
+	private @NonNull StandaloneValidityManager initiateValidityManager(@NonNull ResourceSet resourceSet) {
 		StandaloneValidityManager validityManager = new StandaloneValidityManager();
-		validityManager.setRunJavaConstraints(usingToken.doRunJavaConstraints(token2strings));
-		validityManager.setRunOCLConstraints(usingToken.doRunOCLConstraints(token2strings));
-		validityManager.setRunUMLConstraints(usingToken.doRunUMLConstraints(token2strings));
+		validityManager.setRunJavaConstraints(usingToken.doRunJavaConstraints());
+		validityManager.setRunOCLConstraints(usingToken.doRunOCLConstraints());
+		validityManager.setRunUMLConstraints(usingToken.doRunUMLConstraints());
 		validityManager.setInput(resourceSet);
 		return validityManager;
 	}

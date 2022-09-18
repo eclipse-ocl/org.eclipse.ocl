@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.standalone.messages;
 
@@ -34,7 +34,7 @@ public final class StandaloneMessages
 	// Analyzer
 	// Missing keyword
 	public static String OCLArgumentAnalyzer_NoDefinedKeyword;
-	
+
 	// Mandatory Arguments
 	public static String OCLArgumentAnalyzer_ModelArg;
 	public static String OCLArgumentAnalyzer_RulesArg;
@@ -72,18 +72,23 @@ public final class StandaloneMessages
 	public static String OCLArgumentAnalyzer_OCLResource;
 
 	public static String Standalone_Help;
-	
+	public static String StandaloneCommand_Output_Help;
+
+	public static String ExecuteCommand_Bad;
+	public static String ExecuteCommand_Help;
+	public static String ExecuteCommand_Exporter_Help;
+	public static String ExecuteCommand_Query_Help;
+
 	public static String HelpCommand_Bad;
 	public static String HelpCommand_Help;
 	public static String HelpText_Optional;
 	public static String HelpText_Required;
 	public static String HelpText_repeatable;
 	public static String HelpText_token;
-	
+
 	public static String ValidateCommand_Help;
 	public static String ValidateCommand_Model_Help;
 	public static String ValidateCommand_Rules_Help;
-	public static String ValidateCommand_Output_Help;
 	public static String ValidateCommand_Exporter_Help;
 	public static String ValidateCommand_Using_Help;
 }
