@@ -17,11 +17,11 @@ import org.eclipse.ocl.examples.build.xtend.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*
-import org.eclipse.uml2.uml.resource.XMI2UMLResource
+//import org.eclipse.uml2.uml.resource.XMI2UMLResource
 
-var buildProjectName = "org.eclipse.ocl.examples.build"
+//var buildProjectName = "org.eclipse.ocl.examples.build"
 var ecoreSlot = "ecore"
-var umlSlot = "uml"
+//var umlSlot = "uml"
 var pivotProjectName = "org.eclipse.ocl.pivot"
 var internalProjectName = "org.eclipse.ocl.pivot"
 var basePivotProject = "../../plugins/${pivotProjectName}"
@@ -33,7 +33,8 @@ var basePivotProject = "../../plugins/${pivotProjectName}"
  *  and finally generating the model code.
  */
 Workflow {
-	bean = ResourceSetImpl : pivotCreateResourceSet {}
+/*	Bug 580755 redesignates Pivot.ecore as the model master
+ 	bean = ResourceSetImpl : pivotCreateResourceSet {}
     bean = StandaloneSetup { resourceSet = pivotCreateResourceSet
     	uriMap = Mapping {
     		from = "http://www.omg.org/spec/UML/20131001/PrimitiveTypes.xmi"
@@ -132,11 +133,11 @@ Workflow {
     	modelSlot = "${ecoreSlot}"
     	uri = "/${buildProjectName}/model-gen/UML2AS.ecore"
     }
-/*    component = ConstraintMerger { resourceSet = pivotCreateResourceSet skipOnErrors = true
+/ *    component = ConstraintMerger { resourceSet = pivotCreateResourceSet skipOnErrors = true
     	projectName = "${buildProjectName}"
     	modelSlot = "${ecoreSlot}"
     	uri = "model/Pivot.ocl"
-    } */
+    } * /
     component = EPackageAlphabetizer { skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     }
@@ -192,18 +193,20 @@ Workflow {
     	modelSlot = "${umlSlot}"
     	uri = "/${buildProjectName}/model-gen/Pivot.uml"
     }
-
+*/
 
 	bean = ResourceSetImpl : pivotRenameResourceSet {}
     bean = ProjectMapSetup { resourceSet = pivotRenameResourceSet }
-    bean = UMLStandaloneSetup { resourceSet = pivotRenameResourceSet }
+//    bean = UMLStandaloneSetup { resourceSet = pivotRenameResourceSet }
     bean = OCLStandaloneSetup {}
     bean = EcoreGenModelSetup { resourceSet = pivotRenameResourceSet }
     component = ResourceRenamer { resourceSet = pivotRenameResourceSet skipOnErrors = true
-    	projectName = "${buildProjectName}"
+//    	projectName = "${buildProjectName}"
+    	projectName = "${internalProjectName}"
     	resourceRename = {
-    		from = "model-gen/RawPivot.ecore"
-    		to = "../${internalProjectName}/model/Pivot.ecore"
+//    		from = "model-gen/RawPivot.ecore"
+    		from = "model/PivotStructural.ecore"
+    		to = "model/Pivot.ecore"
     	}
     }
     //
@@ -211,7 +214,7 @@ Workflow {
     //
 	bean = ResourceSetImpl : pivotMergeResourceSet {}
     bean = ProjectMapSetup { resourceSet = pivotMergeResourceSet }
-    bean = UMLStandaloneSetup { resourceSet = pivotMergeResourceSet }
+//    bean = UMLStandaloneSetup { resourceSet = pivotMergeResourceSet }
     bean = OCLStandaloneSetup {}
     bean = EcoreGenModelSetup { resourceSet = pivotMergeResourceSet }
     component = ConstraintMerger { resourceSet = pivotMergeResourceSet skipOnErrors = true
@@ -246,7 +249,7 @@ Workflow {
     //
 	bean = ResourceSetImpl : pivotGenerateResourceSet {}
     bean = ProjectMapSetup { resourceSet = pivotGenerateResourceSet }
-    bean = UMLStandaloneSetup { resourceSet = pivotGenerateResourceSet }
+//    bean = UMLStandaloneSetup { resourceSet = pivotGenerateResourceSet }
     bean = OCLStandaloneSetup {}
     bean = EcoreGenModelSetup { resourceSet = pivotGenerateResourceSet }
      component = GenmodelReloader { resourceSet = pivotGenerateResourceSet skipOnErrors = true

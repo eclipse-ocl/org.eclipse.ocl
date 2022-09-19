@@ -1,3 +1,10 @@
+The model structure of the Pivot model is defined in PivotStuctural.ecore complemented by constraints in Pivot.ocl.
+The /org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/GeneratePivotModel.mwe2
+script supervises their merge to Pivot.ecore and the generation of the Java via Pivot.genmodel.
+
+Vintage UML-aligned content below...
+
+
 Sources:
 
 Infrastructure.cmof - from UML 2.2 specification
