@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.DynamicType;
 import org.eclipse.ocl.pivot.DynamicValueSpecification;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ElementLiteralExp;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -365,6 +366,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseElementExtension(ElementExtension object)
 			{
 				return createElementExtensionAdapter();
+			}
+			@Override
+			public Adapter caseElementLiteralExp(ElementLiteralExp object)
+			{
+				return createElementLiteralExpAdapter();
 			}
 			@Override
 			public Adapter caseEnumLiteralExp(EnumLiteralExp object)
@@ -934,6 +940,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createElementExtensionAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.ElementLiteralExp <em>Element Literal Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.ElementLiteralExp
+	 * @generated
+	 */
+	public Adapter createElementLiteralExpAdapter()
 	{
 		return null;
 	}

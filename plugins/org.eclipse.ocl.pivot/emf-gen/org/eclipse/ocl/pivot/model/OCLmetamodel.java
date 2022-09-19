@@ -320,8 +320,10 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _DynamicProperty = createClass(PivotPackage.Literals.DYNAMIC_PROPERTY);
 		private final @NonNull Class _DynamicType = createClass(PivotPackage.Literals.DYNAMIC_TYPE);
 		private final @NonNull Class _DynamicValueSpecification = createClass(PivotPackage.Literals.DYNAMIC_VALUE_SPECIFICATION);
+		private final @NonNull DataType _EcoreObject = createDataType(PivotPackage.Literals.ECORE_OBJECT);
 		private final @NonNull Class _Element = createClass(PivotPackage.Literals.ELEMENT);
 		private final @NonNull Class _ElementExtension = createClass(PivotPackage.Literals.ELEMENT_EXTENSION);
+		private final @NonNull Class _ElementLiteralExp = createClass(PivotPackage.Literals.ELEMENT_LITERAL_EXP);
 		private final @NonNull Class _EnumLiteralExp = createClass(PivotPackage.Literals.ENUM_LITERAL_EXP);
 		private final @NonNull Class _Enumeration = createClass(PivotPackage.Literals.ENUMERATION);
 		private final @NonNull Class _EnumerationLiteral = createClass(PivotPackage.Literals.ENUMERATION_LITERAL);
@@ -808,6 +810,10 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_ValueSpecification);
 			ownedClasses.add(type);
+			type = _EcoreObject;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type);
 			type = _Element;
 			type.setIsAbstract(true);
 			superClasses = type.getSuperClasses();
@@ -816,6 +822,10 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _ElementExtension;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Class);
+			ownedClasses.add(type);
+			type = _ElementLiteralExp;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_LiteralExp);
 			ownedClasses.add(type);
 			type = _EnumLiteralExp;
 			superClasses = type.getSuperClasses();
@@ -2488,6 +2498,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_ElementExtension_isApplied = createProperty(PivotPackage.Literals.ELEMENT_EXTENSION__IS_APPLIED, _Boolean);
 		private final @NonNull Property pr_ElementExtension_isRequired = createProperty(PivotPackage.Literals.ELEMENT_EXTENSION__IS_REQUIRED, _Boolean);
 		private final @NonNull Property pr_ElementExtension_stereotype = createProperty(PivotPackage.Literals.ELEMENT_EXTENSION__STEREOTYPE, _Stereotype);
+		private final @NonNull Property pr_ElementLiteralExp_referredElement = createProperty(PivotPackage.Literals.ELEMENT_LITERAL_EXP__REFERRED_ELEMENT, _EcoreObject);
 		private final @NonNull Property pr_EnumLiteralExp_referredLiteral = createProperty(PivotPackage.Literals.ENUM_LITERAL_EXP__REFERRED_LITERAL, _EnumerationLiteral);
 		private final @NonNull Property pr_Enumeration_ownedLiterals = createProperty(PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, _OrderedSet_EnumerationLiteral_T);
 		private final @NonNull Property pr_EnumerationLiteral_literal = createProperty(PivotPackage.Literals.ENUMERATION_LITERAL__LITERAL, _String);
@@ -3218,6 +3229,10 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_ElementExtension_stereotype);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Stereotype_ElementExtension_stereotype);
+
+			ownedProperties = _ElementLiteralExp.getOwnedProperties();
+			ownedProperties.add(property = pr_ElementLiteralExp_referredElement);
+			property.setIsResolveProxies(true);
 
 			ownedProperties = _EnumLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_EnumLiteralExp_referredLiteral);
@@ -4792,6 +4807,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(_Element, "An Element is a constituent of a model. As such, it has the capability of owning other Elements.");
 			installComment(op_Element_allOwnedElements, "The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element.");
 			installComment(pr_Element_ownedComments, "The Comments owned by this Element.");
+			installComment(pr_ElementLiteralExp_referredElement, "This is an Object to avoid injecting a confusing opposite into EObject");
 			installComment(_Enumeration, "An Enumeration is a DataType whose values are enumerated in the model as EnumerationLiterals.");
 			installComment(pr_Enumeration_ownedLiterals, "The ordered set of literals owned by this Enumeration.");
 			installComment(_EnumerationLiteral, "An EnumerationLiteral is a user-defined data value for an Enumeration.");

@@ -190,6 +190,11 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
+	public R visitElementLiteralExp(org.eclipse.ocl.pivot.@NonNull ElementLiteralExp object) {
+		return visiting(object);
+	}
+
+	@Override
 	public R visitEnumLiteralExp(org.eclipse.ocl.pivot.@NonNull EnumLiteralExp object) {
 		return visiting(object);
 	}

@@ -313,6 +313,15 @@ extends EFactory {
 	@NonNull ElementExtension createElementExtension();
 
 	/**
+	 * Returns a new object of class '<em>Element Literal Exp</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Element Literal Exp</em>'.
+	 * @generated
+	 */
+	@NonNull ElementLiteralExp createElementLiteralExp();
+
+	/**
 	 * Returns a new object of class '<em>Any Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

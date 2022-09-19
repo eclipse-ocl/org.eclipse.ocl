@@ -215,6 +215,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitElementLiteralExp(org.eclipse.ocl.pivot.@NonNull ElementLiteralExp object) {
+		return delegate.visitElementLiteralExp(object);
+	}
+
+	@Override
 	public R visitEnumLiteralExp(org.eclipse.ocl.pivot.@NonNull EnumLiteralExp object) {
 		return delegate.visitEnumLiteralExp(object);
 	}

@@ -17,10 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -86,6 +89,20 @@ public final class PivotSaveImpl extends XMISaveImpl
 	public PivotSaveImpl(@NonNull XMLHelper helper) {
 		super(helper);
 		this.asSaver = ((PivotXMIHelperImpl)helper).getSaver();
+	}
+
+	//
+	//	Special case. ElementLiteralExp::referredElement is an EObject-typed EAttribute to avoid all the
+	//	unpleasant corrolaries of injecting an opposite into the Ecore metamodel. Serialize it using the
+	//	regular EReference approach that includes entity handling.
+	//
+	@Override
+	protected String getDatatypeValue(Object value, EStructuralFeature f, boolean isAttribute) {
+		if (f == PivotPackage.Literals.ELEMENT_LITERAL_EXP__REFERRED_ELEMENT) {
+			URI uri = EcoreUtil.getURI((EObject)value);
+			return convertURI(uri.toString());					// Do not escape, URI ok, entity has legitimate &
+		}
+		return super.getDatatypeValue(value, f, isAttribute);
 	}
 
 	/**

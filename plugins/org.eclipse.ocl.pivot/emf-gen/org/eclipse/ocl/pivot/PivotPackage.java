@@ -238,6 +238,27 @@ extends EPackage
 	EReference getElementExtension_Stereotype();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.ElementLiteralExp <em>Element Literal Exp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Element Literal Exp</em>'.
+	 * @see org.eclipse.ocl.pivot.ElementLiteralExp
+	 * @generated
+	 */
+	EClass getElementLiteralExp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.ElementLiteralExp#getReferredElement <em>Referred Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Referred Element</em>'.
+	 * @see org.eclipse.ocl.pivot.ElementLiteralExp#getReferredElement()
+	 * @see #getElementLiteralExp()
+	 * @generated
+	 */
+	EAttribute getElementLiteralExp_ReferredElement();
+
+	/**
 	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.ElementExtension#getBase <em>Base</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5745,6 +5766,16 @@ extends EPackage
 	EDataType getBoolean();
 
 	/**
+	 * Returns the meta object for data type '{@link org.eclipse.emf.ecore.EObject <em>Ecore Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Ecore Object</em>'.
+	 * @see org.eclipse.emf.ecore.EObject
+	 * @generated
+	 */
+	EDataType getEcoreObject();
+
+	/**
 	 * Returns the meta object for data type '{@link java.lang.Number <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5979,6 +6010,24 @@ extends EPackage
 		 * @generated
 		 */
 		EReference ELEMENT_EXTENSION__STEREOTYPE = eINSTANCE.getElementExtension_Stereotype();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.ElementLiteralExpImpl <em>Element Literal Exp</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.ElementLiteralExpImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getElementLiteralExp()
+		 * @generated
+		 */
+		EClass ELEMENT_LITERAL_EXP = eINSTANCE.getElementLiteralExp();
+
+		/**
+		 * The meta object literal for the '<em><b>Referred Element</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ELEMENT_LITERAL_EXP__REFERRED_ELEMENT = eINSTANCE.getElementLiteralExp_ReferredElement();
 
 		/**
 		 * The meta object literal for the '<em><b>Base</b></em>' container reference feature.
@@ -10434,6 +10483,16 @@ extends EPackage
 		 * @generated
 		 */
 		EDataType BOOLEAN = eINSTANCE.getBoolean();
+
+		/**
+		 * The meta object literal for the '<em>Ecore Object</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.ecore.EObject
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getEcoreObject()
+		 * @generated
+		 */
+		EDataType ECORE_OBJECT = eINSTANCE.getEcoreObject();
 
 		/**
 		 * The meta object literal for the '<em>Integer</em>' data type.

@@ -265,6 +265,7 @@
       <ownedProperties xmi:id="nCwoy" isComposite="true" name="ownedDynamicProperties" opposite="#dtCip" type="#2ZLUM"/>
     </ownedClasses>
     <ownedClasses xmi:id="iExtD" name="DynamicValueSpecification" superClasses="#DLUxI"/>
+    <ownedClasses xsi:type="pivot:DataType" xmi:id="UFwwr" instanceClassName="org.eclipse.emf.ecore.EObject" name="EcoreObject" superClasses="&_0;#jbMkR"/>
     <ownedClasses xmi:id="t5rpa" isAbstract="true" name="Element" superClasses="&_0;#zfDWR">
       <ownedComments body="An Element is a constituent of a model. As such, it has the capability of owning other Elements."/>
       <ownedOperations xmi:id="J2A5u" name="allOwnedElements" type="#+7MeC">
@@ -292,6 +293,11 @@
       <ownedProperties xmi:id="POZR5" defaultValueString="false" name="isApplied" type="#ZuwnB"/>
       <ownedProperties xmi:id="F6OZE" defaultValueString="false" name="isRequired" type="#ZuwnB"/>
       <ownedProperties xmi:id="ObYJ0" name="stereotype" opposite="#QMG7c" type="#j7kZ6"/>
+    </ownedClasses>
+    <ownedClasses xmi:id="7ZzUP" name="ElementLiteralExp" superClasses="#fKWWp">
+      <ownedProperties xmi:id="Sbl4m" name="referredElement" type="#UFwwr">
+        <ownedComments body="This is an Object to avoid injecting a confusing opposite into EObject "/>
+      </ownedProperties>
     </ownedClasses>
     <ownedClasses xmi:id="Aaj,v" name="EnumLiteralExp" superClasses="#fKWWp">
       <ownedInvariants xmi:id="13IpA" isCallable="true" name="TypeIsEnumerationType">

@@ -73,6 +73,7 @@ public interface Visitor<R>
 	R visitDynamicValueSpecification(org.eclipse.ocl.pivot.@NonNull DynamicValueSpecification object);
 	R visitElement(org.eclipse.ocl.pivot.@NonNull Element object);
 	R visitElementExtension(org.eclipse.ocl.pivot.@NonNull ElementExtension object);
+	R visitElementLiteralExp(org.eclipse.ocl.pivot.@NonNull ElementLiteralExp object);
 	R visitEnumLiteralExp(org.eclipse.ocl.pivot.@NonNull EnumLiteralExp object);
 	R visitEnumeration(org.eclipse.ocl.pivot.@NonNull Enumeration object);
 	R visitEnumerationLiteral(org.eclipse.ocl.pivot.@NonNull EnumerationLiteral object);

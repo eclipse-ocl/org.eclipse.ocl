@@ -17,6 +17,8 @@
       <details key="documentation" value="Boolean is used for logical expressions, consisting of the predefined values true and false."/>
     </eAnnotations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-EcoreObject" name="EcoreObject"
+      instanceClassName="org.eclipse.emf.ecore.EObject"/>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-Integer" name="Integer"
       instanceClassName="java.lang.Number">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -724,6 +726,15 @@
         name="isRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-ElementExtension-stereotype"
         name="stereotype" lowerBound="1" eType="#T-pivot-Stereotype"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ElementLiteralExp" name="ElementLiteralExp"
+      eSuperTypes="#T-pivot-LiteralExp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-ElementLiteralExp-referredElement"
+        name="referredElement" lowerBound="1" eType="#T-pivot-EcoreObject">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="This is an Object to avoid injecting a confusing opposite into EObject "/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-EnumLiteralExp" name="EnumLiteralExp"
       eSuperTypes="#T-pivot-LiteralExp">
