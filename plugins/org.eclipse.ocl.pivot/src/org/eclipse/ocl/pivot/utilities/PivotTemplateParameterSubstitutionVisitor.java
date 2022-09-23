@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 public class PivotTemplateParameterSubstitutionVisitor extends TemplateParameterSubstitutionVisitor {
 
 	public PivotTemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
-		super(environmentFactory, selfType, selfTypeValue);
+		super(environmentFactory, selfType, null);
+		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 }

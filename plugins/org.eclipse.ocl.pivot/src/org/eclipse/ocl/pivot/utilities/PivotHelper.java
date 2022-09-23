@@ -719,21 +719,18 @@ public class PivotHelper
 	public void setOperationReturnType(@NonNull CallExp asCallExp, @NonNull Operation asOperation) {
 		OCLExpression asSourceExpression = asCallExp.getOwnedSource();
 		Type sourceType;
-		Type sourceTypeValue;
 		if (asSourceExpression != null) {
 			sourceType = asSourceExpression.getType();
-			sourceTypeValue = asSourceExpression.getTypeValue();
 		}
 		else {
 			sourceType = null;
-			sourceTypeValue = null;
 		}
 		Type returnType = null;
 		Type formalType = asOperation.getType();
 		boolean returnIsRequired = asOperation.isIsRequired();
 		Object returnValue = null;			// Currently always a Type - see Bug 577902
 		if ((formalType != null) && (sourceType != null)) {
-			returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, (EnvironmentFactoryInternal)environmentFactory, sourceType, sourceTypeValue);
+			returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, (EnvironmentFactoryInternal)environmentFactory, sourceType, null);
 		}
 		//
 		//	The flattening of collect() and consequently implicit-collect is not modelled accurately.

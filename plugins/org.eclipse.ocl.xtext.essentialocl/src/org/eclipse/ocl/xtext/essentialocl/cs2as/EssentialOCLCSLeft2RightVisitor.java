@@ -644,7 +644,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				explicitSourceType = invocations.getSourceType();
 			}
 			Operation asOperation = null;
-			OperationMatcher matcher = new OperationMatcher(environmentFactory, explicitSourceType, csNameExp.getSourceTypeValue());
+			OperationMatcher matcher = new OperationMatcher(environmentFactory, explicitSourceType, null);
 			boolean isMatchable = matcher.init(csRoundBracketedClause);
 			if (isMatchable) {
 				asOperation = matcher.getBestOperation(invocations, false);
@@ -1371,13 +1371,11 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			return;
 		}
 		Type sourceType = null;
-		Type sourceTypeValue = null;
 		OCLExpression source = callExp.getOwnedSource();
 		if (source != null) {
 			sourceType = source.getType();
-			sourceTypeValue = source.getTypeValue();
 		}
-		TemplateParameterSubstitutions templateSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, sourceTypeValue, operation);
+		TemplateParameterSubstitutions templateSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, null, operation);
 		@SuppressWarnings("unused")		// Should never happen; just for debugging
 		boolean isConformant = true;
 		if (callExp instanceof OperationCallExp) {
@@ -1447,7 +1445,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Type actualType;
 		Type sourceType = source != null ? source.getType() : null;
 		if (sourceType != null) {
-			actualType = metamodelManager.specializeType(formalType, callExp, sourceType, source != null ? source.getTypeValue() : null);
+			actualType = metamodelManager.specializeType(formalType, callExp, sourceType, null);
 		}
 		else {
 			actualType = formalType;

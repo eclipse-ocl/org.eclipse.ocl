@@ -2258,7 +2258,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	 * using selfType as the value of OclSelf.
 	 */
 	public @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp callExp, @NonNull Type selfType, @Nullable Type selfTypeValue) {
-		return TemplateParameterSubstitutionVisitor.specializeType(type, callExp, environmentFactory, selfType, selfTypeValue);
+		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
+		return TemplateParameterSubstitutionVisitor.specializeType(type, callExp, environmentFactory, selfType, null);
 	}
 
 	@Override

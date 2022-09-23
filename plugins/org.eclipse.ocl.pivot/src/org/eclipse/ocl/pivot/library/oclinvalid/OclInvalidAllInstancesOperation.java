@@ -12,7 +12,9 @@ package org.eclipse.ocl.pivot.library.oclinvalid;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.library.AbstractAllInstancesOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -20,7 +22,7 @@ import org.eclipse.ocl.pivot.values.SetValue;
 /**
  * OclInvalidAllInstancesOperation realises the OclInvalid::allInstances() library operation.
  */
-public class OclInvalidAllInstancesOperation extends AbstractSimpleUnaryOperation
+public class OclInvalidAllInstancesOperation extends AbstractAllInstancesOperation
 {
 	@Deprecated /* @deprecated invoke the polymorphic InvalidTypeImpl.allInstances() */
 	public static final @NonNull OclInvalidAllInstancesOperation INSTANCE = new OclInvalidAllInstancesOperation();
@@ -33,7 +35,7 @@ public class OclInvalidAllInstancesOperation extends AbstractSimpleUnaryOperatio
 	}
 
 	@Override
-	public @NonNull SetValue evaluate(@Nullable Object sourceVal) {
+	public @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
 		return allInstances();
 	}
 }

@@ -12,16 +12,17 @@ package org.eclipse.ocl.pivot.library.oclvoid;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.library.AbstractAllInstancesOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * OclVoidAllInstancesOperation realises the OclVoid::allInstances() library operation.
  */
-public class OclVoidAllInstancesOperation extends AbstractSimpleUnaryOperation
+public class OclVoidAllInstancesOperation extends AbstractAllInstancesOperation
 {
 	@Deprecated /* @deprecated invoke the polymorphic VoidTypeImpl.allInstances() */
 	public static final @NonNull OclVoidAllInstancesOperation INSTANCE = new OclVoidAllInstancesOperation();
@@ -38,7 +39,7 @@ public class OclVoidAllInstancesOperation extends AbstractSimpleUnaryOperation
 	 * @since 1.18
 	 */
 	@Override
-	public @NonNull SetValue evaluate(@Nullable Object sourceVal) {
+	public @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
 		return allInstances();
 	}
 }

@@ -25,8 +25,9 @@ public class BinaryOperationMatcher extends AbstractOperationMatcher
 	protected final @NonNull OCLExpression asArgument;
 
 	public BinaryOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue, @Nullable ExpCS csArgument) {
-		super(environmentFactory, sourceType, sourceTypeValue);
+		super(environmentFactory, sourceType, null);
 		this.asArgument = ClassUtil.nonNullState(PivotUtil.getPivot(OCLExpression.class, csArgument));
+		// assert sourceTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
 	@Override

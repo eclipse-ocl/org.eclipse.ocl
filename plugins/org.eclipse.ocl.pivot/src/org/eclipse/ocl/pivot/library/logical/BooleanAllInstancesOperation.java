@@ -12,18 +12,17 @@ package org.eclipse.ocl.pivot.library.logical;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
+import org.eclipse.ocl.pivot.library.AbstractAllInstancesOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * BooleanAllInstancesOperation realises the Boolean::allInstances() library operation.
  */
-public class BooleanAllInstancesOperation extends AbstractUntypedUnaryOperation
+public class BooleanAllInstancesOperation extends AbstractAllInstancesOperation
 {
 	@Deprecated /* @deprecated invoke the polymorphic BooleanTypeImpl.allInstances() */
 	public static final @NonNull BooleanAllInstancesOperation INSTANCE = new BooleanAllInstancesOperation();
@@ -36,18 +35,11 @@ public class BooleanAllInstancesOperation extends AbstractUntypedUnaryOperation
 		return ValueUtil.createSetOfEach(SET_BOOLEAN, Boolean.FALSE, Boolean.TRUE);
 	}
 
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @NonNull SetValue evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), sourceValue);
-	}
-
 	/**
 	 * @since 1.18
 	 */
 	@Override
-	public @NonNull SetValue evaluate(@NonNull Executor executor, @Nullable Object sourceVal) {
+	public @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
 		return allInstances();
 	}
 }

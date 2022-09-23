@@ -81,7 +81,8 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue, @NonNull Operation candidateOperation) {
-		TemplateParameterSubstitutionVisitor visitor = createVisitor(candidateOperation, environmentFactory, sourceType, sourceTypeValue);
+		// assert sourceTypeValue == null;			// Bug 580791  Enforcing redundant argument
+		TemplateParameterSubstitutionVisitor visitor = createVisitor(candidateOperation, environmentFactory, sourceType, null);
 		visitor.analyzeType(candidateOperation.getOwningClass(), sourceType);
 		for (EObject eObject = candidateOperation; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof TemplateableElement) {
@@ -99,15 +100,16 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	protected static @NonNull TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 		Resource resource = eObject.eResource();
 		if (environmentFactory instanceof EnvironmentFactoryInternalExtension) {
-			return ((EnvironmentFactoryInternalExtension)environmentFactory).createTemplateParameterSubstitutionVisitor(selfType, selfTypeValue);
+			return ((EnvironmentFactoryInternalExtension)environmentFactory).createTemplateParameterSubstitutionVisitor(selfType, null);
 		}
 		else if (resource instanceof ASResource) {				// This used to be thefirst choice; now it should never happen
-			return ((ASResource)resource).getASResourceFactory().createTemplateParameterSubstitutionVisitor(environmentFactory, selfType, selfTypeValue);
+			return ((ASResource)resource).getASResourceFactory().createTemplateParameterSubstitutionVisitor(environmentFactory, selfType, null);
 		}
 		else {													// This too should never happen
-			return new TemplateParameterSubstitutionVisitor(environmentFactory, selfType, selfTypeValue);
+			return new TemplateParameterSubstitutionVisitor(environmentFactory, selfType, null);
 		}
 	}
 
@@ -116,7 +118,8 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	 * supervision of a metamodelManager and using selfType as the value of OclSelf.
 	 */
 	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp callExp, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
-		TemplateParameterSubstitutionVisitor visitor = createVisitor(callExp, environmentFactory, selfType, selfTypeValue);
+		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
+		TemplateParameterSubstitutionVisitor visitor = createVisitor(callExp, environmentFactory, selfType, null);
 		visitor.exclude(callExp);
 		visitor.visit(callExp);
 		return visitor.specializeType(type);
@@ -124,7 +127,6 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 
 	private final @NonNull EnvironmentFactoryInternal environmentFactory;
 	private final @Nullable Type selfType;
-	private final @Nullable Type selfTypeValue;
 	private @Nullable TypedElement excludedTarget = null;
 
 	/**
@@ -136,7 +138,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		super(new HashMap<Integer, Type>());
 		this.environmentFactory = environmentFactory;
 		this.selfType = selfType;
-		this.selfTypeValue = selfTypeValue;
+		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
 	protected void analyzeFeature(@Nullable Feature formalFeature, @Nullable TypedElement actualElement) {
@@ -293,7 +295,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 			return actualType != null ? actualType : type;
 		}
 		if (type instanceof SelfType) {
-			return ClassUtil.nonNullState(selfTypeValue != null ? selfTypeValue : selfType != null ? selfType : type);
+			return ClassUtil.nonNullState(selfType != null ? selfType : type);
 		}
 		else if (type instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)type;

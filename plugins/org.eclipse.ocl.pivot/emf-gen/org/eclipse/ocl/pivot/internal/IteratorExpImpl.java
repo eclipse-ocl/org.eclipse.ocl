@@ -152,9 +152,8 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				OCLExpression source2 = this.getOwnedSource();
 				OCLExpression body2 = this.getOwnedBody();
 				Type sourceType = source2.getType();
-				Type sourceTypeValue = source2.getTypeValue();
 				Type bodyType = body2.getType();
-				Type specializedBodyType = bodyType != null ? TemplateParameterSubstitutionVisitor.specializeType(bodyType, this, environmentFactory, sourceType, sourceTypeValue) : null;
+				Type specializedBodyType = bodyType != null ? TemplateParameterSubstitutionVisitor.specializeType(bodyType, this, environmentFactory, sourceType, null) : null;
 				boolean isOk = false;
 				if (bodyType != null) {
 					PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();

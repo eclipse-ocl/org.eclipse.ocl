@@ -15,20 +15,19 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
+import org.eclipse.ocl.pivot.library.AbstractAllInstancesOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * ClassifierAllInstancesOperation realises the Classifier::allInstances() library operation.
  */
-public class ClassifierAllInstancesOperation extends AbstractUnaryOperation
+public class ClassifierAllInstancesOperation extends AbstractAllInstancesOperation
 {
 	public static final @NonNull ClassifierAllInstancesOperation INSTANCE = new ClassifierAllInstancesOperation();
 
@@ -46,13 +45,6 @@ public class ClassifierAllInstancesOperation extends AbstractUnaryOperation
 			}
 		}
 		return ValueUtil.createSetValue(returnTypeId, results);
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @NonNull SetValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceVal) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceVal);
 	}
 
 	/**

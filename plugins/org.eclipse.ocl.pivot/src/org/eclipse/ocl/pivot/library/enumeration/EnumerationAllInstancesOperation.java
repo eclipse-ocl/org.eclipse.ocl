@@ -17,18 +17,17 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.library.AbstractUnaryOperation;
+import org.eclipse.ocl.pivot.library.AbstractAllInstancesOperation;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * EnumerationAllInstancesOperation realises the Enumeration::allInstances() library operation.
  */
-public class EnumerationAllInstancesOperation extends AbstractUnaryOperation
+public class EnumerationAllInstancesOperation extends AbstractAllInstancesOperation
 {
 	@Deprecated /* @deprecated invoke the polymorphic EnumerationImpl.allInstances() */
 	public static final @NonNull EnumerationAllInstancesOperation INSTANCE = new EnumerationAllInstancesOperation();
@@ -44,13 +43,6 @@ public class EnumerationAllInstancesOperation extends AbstractUnaryOperation
 			}
 		}
 		return ValueUtil.createSetValue(returnTypeId, results);
-	}
-
-	/** @deprecated use Executor */
-	@Deprecated
-	@Override
-	public @NonNull SetValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
 	/**

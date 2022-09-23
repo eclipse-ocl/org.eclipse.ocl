@@ -20,7 +20,8 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 public class UnaryOperationMatcher extends AbstractOperationMatcher
 {
 	public UnaryOperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue) {
-		super(environmentFactory, sourceType, sourceTypeValue);
+		super(environmentFactory, sourceType, null);
+		// assert sourceTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
 	@Override

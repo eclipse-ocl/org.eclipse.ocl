@@ -29,7 +29,8 @@ public class OperationMatcher extends AbstractOperationMatcher
 	private @Nullable List<@NonNull OCLExpression> asArguments = null;
 
 	public OperationMatcher(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue) {
-		super(environmentFactory, sourceType, sourceTypeValue);
+		super(environmentFactory, sourceType, null);
+		// assert sourceTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
 	@Override
