@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.queries;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.ocl.pivot.Model;
 
 /**
@@ -21,6 +20,7 @@ import org.eclipse.ocl.pivot.Model;
  *
  * <!-- begin-model-doc -->
  * A QueryModel aggregates multiple QueryResults as a saveable model
+ * @since 1.18
  * <!-- end-model-doc -->
  *
  * <p>

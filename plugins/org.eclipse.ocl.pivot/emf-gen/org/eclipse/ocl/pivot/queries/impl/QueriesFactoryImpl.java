@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.queries.QueryResult;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
+ * @since 1.18
  * <!-- end-user-doc -->
  * @generated
  */

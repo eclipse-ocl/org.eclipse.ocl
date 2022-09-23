@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Element Literal Exp</b></em>'.
+ * @since 1.18
  * <!-- end-user-doc -->
  *
  * <p>

@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
  *
  * <!-- begin-model-doc -->
  * A QueryResult pairs a query with its self context and evaluation result
+ * @since 1.18
  * <!-- end-model-doc -->
  *
  * <p>

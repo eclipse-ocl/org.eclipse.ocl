@@ -24,6 +24,8 @@ import org.eclipse.ocl.pivot.values.SetValue;
 
 /**
  * AbstractAllInstancesOperation provides the common functionality for the allInstances() library operations.
+ *
+ * @since 1.18
  */
 public abstract class AbstractAllInstancesOperation extends AbstractUnaryOperation
 {

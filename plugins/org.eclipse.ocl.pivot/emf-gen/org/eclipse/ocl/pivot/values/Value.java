@@ -193,6 +193,8 @@ public interface Value
 
 	/**
 	 * @generated NOT
+	 *
+	 * @since 1.18
 	 */
 	@NonNull LiteralExp createLiteralExp();
 

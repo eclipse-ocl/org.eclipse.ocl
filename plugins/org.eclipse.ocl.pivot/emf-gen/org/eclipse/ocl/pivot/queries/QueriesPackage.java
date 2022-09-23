@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>each enum,</li>
  *   <li>and each data type</li>
  * </ul>
+ * @since 1.18
  * <!-- end-user-doc -->
  * @see org.eclipse.ocl.pivot.queries.QueriesFactory
  * @model kind="package"

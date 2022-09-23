@@ -13,15 +13,11 @@ package org.eclipse.ocl.pivot.queries.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.ocl.pivot.internal.ModelImpl;
 import org.eclipse.ocl.pivot.queries.QueriesPackage;
 import org.eclipse.ocl.pivot.queries.QueryModel;
@@ -30,6 +26,7 @@ import org.eclipse.ocl.pivot.queries.QueryResult;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Query Model</b></em>'.
+ * @since 1.18
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:

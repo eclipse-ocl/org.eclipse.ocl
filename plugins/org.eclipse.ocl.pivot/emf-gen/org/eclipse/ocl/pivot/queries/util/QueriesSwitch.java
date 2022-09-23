@@ -12,16 +12,15 @@ package org.eclipse.ocl.pivot.queries.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
 import org.eclipse.jdt.annotation.Nullable;
-
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.queries.*;
+import org.eclipse.ocl.pivot.queries.QueriesPackage;
+import org.eclipse.ocl.pivot.queries.QueryModel;
+import org.eclipse.ocl.pivot.queries.QueryResult;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,6 +31,7 @@ import org.eclipse.ocl.pivot.queries.*;
  * and proceeding up the inheritance hierarchy
  * until a non-null result is returned,
  * which is the result of the switch.
+ * @since 1.18
  * <!-- end-user-doc -->
  * @see org.eclipse.ocl.pivot.queries.QueriesPackage
  * @generated

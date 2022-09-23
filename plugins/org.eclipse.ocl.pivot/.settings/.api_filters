@@ -80,9 +80,20 @@
                 <message_argument value="createBooleanType()"/>
             </message_arguments>
         </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotFactory"/>
+                <message_argument value="createElementLiteralExp()"/>
+            </message_arguments>
+        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="createBooleanType()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="createElementLiteralExp()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -109,6 +120,24 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
                 <message_argument value="getDataType__ValidateBehavioralClassIsSuperClass__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getEcoreObject()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getElementLiteralExp()"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotPackage"/>
+                <message_argument value="getElementLiteralExp_ReferredElement()"/>
             </message_arguments>
         </filter>
         <filter id="403804204">
@@ -151,6 +180,21 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="getEcoreObject()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getElementLiteralExp()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getElementLiteralExp_ReferredElement()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="getLoopExp__ValidateMatchingOrderedCollectionCoIterators__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
@@ -185,6 +229,21 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="DATA_TYPE___VALIDATE_BEHAVIORAL_CLASS_IS_SUPER_CLASS__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ECORE_OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ELEMENT_LITERAL_EXP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ELEMENT_LITERAL_EXP__REFERRED_ELEMENT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -226,6 +285,12 @@
         <filter id="336658481">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
+                <message_argument value="DATAid_EcoreObject"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables"/>
                 <message_argument value="ORD_CLSSid_IteratorVariable"/>
             </message_arguments>
         </filter>
@@ -257,6 +322,11 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="DATAid_EcoreObject"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="ORD_CLSSid_IteratorVariable"/>
             </message_arguments>
         </filter>
@@ -273,11 +343,53 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Operations">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_BooleanType__allInstances"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_Class__allInstances"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_Enumeration__allInstances"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_InvalidType__allInstances"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_Stereotype__allInstances"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_VoidType__allInstances"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Properties">
         <filter id="338755678">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.PivotTables.Properties"/>
                 <message_argument value="_Variable__LoopExp__ownedCoIterators"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_ElementLiteralExp__referredElement"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_IteratorVariable__LoopExp__ownedCoIterators"/>
             </message_arguments>
         </filter>
     </resource>
@@ -288,9 +400,31 @@
                 <message_argument value="_BooleanType"/>
             </message_arguments>
         </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
+                <message_argument value="_EcoreObject"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.PivotTables.Types"/>
+                <message_argument value="_ElementLiteralExp"/>
+            </message_arguments>
+        </filter>
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="_BooleanType"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_EcoreObject"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_ElementLiteralExp"/>
             </message_arguments>
         </filter>
     </resource>
@@ -422,6 +556,18 @@
                 <message_argument value="org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl"/>
                 <message_argument value="ORDERED_SET_TYPE_OPERATION_COUNT"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/PivotFactoryImpl.java" type="org.eclipse.ocl.pivot.internal.PivotFactoryImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="convertEcoreObjectToString(EDataType, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createEcoreObjectFromString(EDataType, String)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -870,11 +1016,21 @@
                 <message_argument value="createBooleanTypeAdapter()"/>
             </message_arguments>
         </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createElementLiteralExpAdapter()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotSwitch.java" type="org.eclipse.ocl.pivot.util.PivotSwitch">
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="caseBooleanType(BooleanType)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseElementLiteralExp(ElementLiteralExp)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1563,6 +1719,16 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="validateEcoreObject(EObject, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateElementLiteralExp(ElementLiteralExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="validateLoopExp_validateMatchingOrderedCollectionCoIterators(LoopExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
@@ -1576,6 +1742,19 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="visitBooleanType(BooleanType)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="visitElementLiteralExp(ElementLiteralExp)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/values/Value.java" type="org.eclipse.ocl.pivot.values.Value">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.values.Value"/>
+                <message_argument value="createLiteralExp()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -1709,17 +1888,6 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/ids/IdVisitor.java" type="org.eclipse.ocl.pivot.ids.IdVisitor">
-        <filter id="403804204">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.ids.IdVisitor"/>
-                <message_argument value="visitWildcardId(WildcardId)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="visitWildcardId(WildcardId)"/>
-            </message_arguments>
-        </filter>
         <filter id="403804204">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.ids.IdVisitor"/>
@@ -2089,6 +2257,69 @@
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation"/>
                 <message_argument value="org.eclipse.ocl.pivot.library.LibraryIterationOrOperation"/>
                 <message_argument value="resolveBodyType(EnvironmentFactory, CallExp, Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/logical/BooleanAllInstancesOperation.java" type="org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedOperation,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation$LibraryUntypedUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation"/>
+                <message_argument value="evaluate(Evaluator, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation"/>
+                <message_argument value="evaluate(Executor, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/oclinvalid/OclInvalidAllInstancesOperation.java" type="org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation$LibrarySimpleUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation$LibraryUntypedUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibrarySimpleOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation"/>
+                <message_argument value="evaluate(Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/library/oclvoid/OclVoidAllInstancesOperation.java" type="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation"/>
+                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation$LibrarySimpleUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation$LibraryUntypedUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibrarySimpleOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation"/>
+                <message_argument value="evaluate(Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation"/>
             </message_arguments>
         </filter>
     </resource>

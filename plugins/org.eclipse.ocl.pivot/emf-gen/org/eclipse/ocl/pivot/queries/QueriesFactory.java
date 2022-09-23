@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * <!-- begin-user-doc -->
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
+ * @since 1.18
  * <!-- end-user-doc -->
  * @see org.eclipse.ocl.pivot.queries.QueriesPackage
  * @generated

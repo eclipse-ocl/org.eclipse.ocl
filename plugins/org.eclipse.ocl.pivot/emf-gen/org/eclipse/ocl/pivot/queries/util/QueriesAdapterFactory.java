@@ -12,23 +12,22 @@ package org.eclipse.ocl.pivot.queries.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.jdt.annotation.Nullable;
-
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.queries.*;
+import org.eclipse.ocl.pivot.queries.QueriesPackage;
+import org.eclipse.ocl.pivot.queries.QueryModel;
+import org.eclipse.ocl.pivot.queries.QueryResult;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
+ * @since 1.18
  * <!-- end-user-doc -->
  * @see org.eclipse.ocl.pivot.queries.QueriesPackage
  * @generated

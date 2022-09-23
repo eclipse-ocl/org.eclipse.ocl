@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Element Literal Exp</b></em>'.
+ * @since 1.18
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:

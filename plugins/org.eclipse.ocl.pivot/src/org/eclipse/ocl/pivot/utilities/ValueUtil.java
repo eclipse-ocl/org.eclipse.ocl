@@ -600,6 +600,8 @@ public abstract class ValueUtil
 
 	/**
 	 * Return a LiteralExp whose evaluation is a value.
+	 *
+	 * @since 1.18
 	 */
 	public static @NonNull OCLExpression createLiteralExp(Object value) {	// FIXME TypeExp / ShadowExp are not LiteralExp
 		if (value == null) {
