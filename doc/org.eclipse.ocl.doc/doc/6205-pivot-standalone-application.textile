@@ -1,0 +1,215 @@
+
+h2(#PivotStandaloneApplication). Pivot Standalone Application
+
+The functionality of Eclipse OCL is primarily available via the Eclipse IDE where functionality such as editors are readily supported.
+
+The underlying functionality is available to programmers who may use the API from IDE or standalone applications.
+
+Additionally the execution and validation sub-tools are useable via the standalone application described in this section.
+
+While the standalone application can be used as an interactive command line facility, the intended usage is to support automated usage from scripts or tools. Interactive users will generally find the IDE more apprpriate. 
+
+h3. Installation and Invocation
+
+After following the usual procedure for installing Eclipse OCL "Installation":#Installation, the plugins folder of your installation folder contains all the required JAR files so that you may use a verbose invocation such as:
+
+bc.. 
+"E:\Program Files\Java\jdk-11.0.13\bin"\java.exe -classpath "
+	%E%\com.google.guava_30.1.0.v20210127-2300.jar;
+	%E%\com.google.inject_5.0.1.v20210324-2015.jar;
+	%E%\javax.inject_1.0.0.v20091030.jar;
+	%E%\org.antlr.runtime_3.2.0.v201101311130.jar;
+	%E%\org.apache.log4j_1.2.15.v201012070815.jar;
+	%E%\org.eclipse.core.resources_3.15.0.v20210521-0722.jar;
+	%E%\org.eclipse.core.runtime_3.22.0.v20210506-1025.jar;
+	%E%\org.eclipse.emf.common_2.22.0.v20210319-0732.jar;
+	%E%\org.eclipse.emf.ecore_2.24.0.v20210405-0628.jar;
+	%E%\org.eclipse.emf.ecore.edit_2.13.0.v20190822-1451.jar;
+	%E%\org.eclipse.emf.ecore.xmi_2.16.0.v20190528-0725.jar;
+	%E%\org.eclipse.emf.edit_2.16.0.v20190920-0401.jar;
+	%E%\org.eclipse.equinox.app_1.5.100.v20210212-1143.jar;
+	%E%\org.eclipse.equinox.common_3.15.0.v20210518-0604.jar;
+	%E%\org.eclipse.equinox.preferences_3.8.200.v20210212-1143.jar;
+	%E%\org.eclipse.equinox.registry_3.10.200.v20210503-1606.jar;
+	%E%\org.eclipse.ocl_3.16.100.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.common_1.8.700.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.examples.emf.validation.validity_2.15.0.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.examples.standalone_2.7.400.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.pivot_1.15.0.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.uml_5.15.0.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.xtext.base_1.15.0.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.xtext.completeocl_1.15.0.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.xtext.essentialocl_1.15.0.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.xtext.markup_1.15.0.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.xtext.oclinecore_1.15.0.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.xtext.oclstdlib_1.15.0.v20210609-1442.jar;
+	%E%\org.eclipse.osgi_3.16.300.v20210525-1715.jar;
+	%E%\org.eclipse.osgi.services_3.10.100.v20210324-0936.jar;
+	%E%\org.eclipse.xtext_2.25.0.v20210301-0843.jar;
+	%E%\org.eclipse.xtext.util_2.25.0.v20210301-0843.jar"
+org.eclipse.ocl.examples.standalone.StandaloneApplication help
+p. 
+where @%E%@ is the path to the Eclipse plugins folder such as @E:\Tools\Eclipse\4.20\plugins@.
+
+Typing the path and version-corrected text above is pretty painfu,l so you may prefer to use the wildard capabilities introduced with Java 6.
+
+bc.. 
+"E:\Program Files\Java\jdk-11.0.13\bin"\java.exe
+	-classpath "E:\Tools\Eclipse\4.20\plugins\*"
+	org.eclipse.ocl.examples.standalone.StandaloneApplication help
+p. 
+The java preamble, as in the @help@ examples above, is shown as @ocl@ for further examples in this section.
+
+h3. Help command
+
+The @help@ command shown in the examples above prints out the syntax and some description for the available commands.
+
+bc.. 
+ocl help
+p. 
+
+h3. Execute command
+
+The @execute@ command supports execution of one or more OCL queries reporting parsed queries and/or results in textual or XML form.
+
+A default execution such as
+
+bc.. 
+ocl execute -query "2+3"
+p. 
+just returns a textual serialization of the result to the console.
+
+bc.. 
+5
+p. 
+
+This may be redirected to a file by the @-output@ option, or formatted more deterministically as text or XML by the @-exporter@ option and filtered by the @-hide@ options. A context (self) may be specified for the evaluation by the @-self@ option.
+
+NB. The @execute@ command has not been optimized to support performance testing. Consequently any attempts to instrument it will find that the measured time is dominated by JVM warm up time, classpath analysis and OCL environment initialization. The JVM costs can be reduced by specifying multiple queries per execute. The classpath costs can be reduced by pruning all unnecessary JARs from the classpath and avoiding all usage of files.
+
+h5. -query ocl-query
+
+The required and optionally repeatable @-query@ token specifies one or more OCL queries to be evaluated.
+
+h5. -self self-uri
+
+The optional @-self@ token specifies a model element to be used as the context for the OCL queries. The model element may be identified using a fragment URI with an absolute, relative or Eclipse platform resource.
+
+bc.. 
+-self E:\Development\Chital\Workspace\MyProject\MyFile.ecore#//MyClass
+-self ../git/mymodels/standalone/MyFile.ecore#//MyClass
+-self platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore#//Boolean
+-self platform:/resource/myproject/Pivot.oclas#/0/pivot/Class
+p. 
+If @-self@ is omitted, self evaluates to null.
+
+h5. -output file-name
+
+The optional @-output@ token redirects the command output to the specified file name. If omitted the output is directed to the console.
+
+h5. -exporter none|text|model
+
+The optional @-exporter@ token specifies whether there should be no, or textual or XML output. The textual output is suitable for simple values, but can be confusing for complex output such as collections of maps. The XML model output is appropriate for a precise intelligible but verbose output; it is an extension of the Pivot OCL Abstract Syntax comprising a literal expression that evaluates to the result value. An additional ElementLiteralExp with a referredElement property supports the representation of a value such as self. The verbosity of the output can be tamed by the @-hide@ tokens.
+
+The text output typically echoes the query and shows the result.
+
+bc.. 
+Query : 2+3
+Result: 5
+p. 
+
+The @Result:@ is replaced by an @Error:@ if parsing or execution fails.
+
+If @-hideQuery@ is specified, the @Result:@ is also hidden.
+
+The XML model output typically echoes the query and shows the result in both textual and XML forms.
+
+bc.. 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE queries:QueryModel [
+<!ENTITY _0 "http://www.eclipse.org/ocl/2015/Library.oclas">
+]>
+<queries:QueryModel xmi:version="2.0"
+	xmlns:xmi="http://www.omg.org/XMI"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot"
+   xmlns:queries="http://www.eclipse.org/ocl/2022/Queries"
+   xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot
+   		java://org.eclipse.ocl.pivot.PivotPackage
+   		http://www.eclipse.org/ocl/2022/Queries
+   		java://org.eclipse.ocl.pivot.queries.QueriesPackage"
+    xmi:id="AAAAA"
+    name="log_testStandaloneExecution_execute_model_echo_all.xml"
+    externalURI="file:/C:/Users/me/mypath/myfile.xml"
+    xmiidVersion="1">
+  <results query="2+3" result="5">
+    <expression type="pivot:PrimitiveType &_0;#tYtCd">
+      <ownedBody xsi:type="pivot:OperationCallExp" name="+"
+      		type="pivot:PrimitiveType &_0;#tYtCd" referredOperation="&_0;#iA+ir">
+        <ownedSource xsi:type="pivot:IntegerLiteralExp"
+        		type="pivot:PrimitiveType &_0;#tYtCd" integerSymbol="2"/>
+        <ownedArguments xsi:type="pivot:IntegerLiteralExp"
+        		type="pivot:PrimitiveType &_0;#tYtCd" integerSymbol="3"/>
+      </ownedBody>
+      <ownedContext xsi:type="pivot:ParameterVariable" name="self"
+      		type="pivot:VoidType &_0;#7u3MH"/>
+    </expression>
+    <value xsi:type="pivot:IntegerLiteralExp" integerSymbol="5"/>
+  </results>
+</queries:QueryModel>
+p. 
+Additional @value/errors@ explain parsing or execution failures.
+
+h5. -hideASQuery
+
+The @-hideASQuery@ token suppresses all @results/expression@ elements from the XML output.
+
+h5. -hideASResult
+
+The @-hideASResult@ token suppresses all @results/value@ elements from the XML output.
+
+h5. -hideASTypes
+
+The @-hideASTypes@ token suppresses all @type@ elements from the XML output, which may give an over 50% saving in file size.
+
+h5. -hideQuery
+
+The @-hideQuery@ token suppresses all @results/query@ attributes from the XML output, or the @Query@ line and @Result:@ prefix from the textual output.
+
+h5. -hideResult
+
+The @-hideResult@ token suppresses all @results/result@ elements from the XML output.
+
+If both @-hideASResult@ and @-hideResult@ are specified, the evaluation is suppressed so the results indicate just the success or failure of query parsing.
+
+h3. Validate command
+
+The @validate@ command supports validation of a model using OCL constraints defined in one or more OCL files.
+
+A minimal command requires a model to validate and some constraints to apply.
+
+bc.. 
+ocl validate -model Model.ecore -rules Rules.ocl
+p. 
+
+The validation results are sent to the console but may be redirected by the @-output@ token using a raw text, HTML or XML formatting according to the @-exporter@ selection.
+
+h5. -model file-name
+
+The required @-model@ token specifies the file name in which the model to be validate is stored.
+
+h5. -rules file-name
+
+The required @-rules@ token specifies one or more OCL documents that define constraints to be validated. A text file enumerating many OCL document files may also be specified.
+
+h5. -output file-name
+
+The optional @-output@ token redirects the command output to the specified file name. If omitted the output is directed to the console.
+
+h5. -exporter html|model|text
+
+The optional @-exporter@ token specifies whether there should be textual or HTML or XML output. The textual output is used as the default.
+
+h5. -using all|java|ocl|uml
+
+A sub-selection of the validation may be specified  by choosing just one or more of the embedded Java, OCL or UML constraints.

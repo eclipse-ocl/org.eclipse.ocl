@@ -39,7 +39,7 @@
                       <xsl:text>Eclipse OCL </xsl:text><xsl:value-of select="//releaseinfo"/>
               </xsl:when>
               <xsl:otherwise>
-                  Eclipse OCL 2021-06 (6.15.0)
+                  Eclipse OCL 2022-12 (6.18.0) Draft
               </xsl:otherwise>
           </xsl:choose>
       </xsl:variable>

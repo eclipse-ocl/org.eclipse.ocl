@@ -1,0 +1,462 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Pivot Standalone Application</title>
+<link href="book.css" rel="stylesheet" type="text/css">
+<meta content="DocBook XSL Stylesheets V1.75.1" name="generator">
+<link rel="home" href="index.html" title="OCL Documentation">
+<link rel="up" href="PivotProgrammersGuide.html" title="Unified or Pivot Programmers Guide">
+<link rel="prev" href="PivotEvaluator.html" title="The Pivot Evaluator">
+<link rel="next" href="PivotStandalone.html" title="Pivot Standalone API Configuration">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<h1 xmlns:l="http://docbook.sourceforge.net/xmlns/l10n/1.0">Pivot Standalone Application</h1>
+<div class="section" title="Pivot Standalone Application">
+<div class="titlepage">
+<div>
+<div>
+<h2 class="title" style="clear: both">
+<a name="PivotStandaloneApplication"></a>Pivot Standalone Application</h2>
+</div>
+</div>
+</div>
+<p>The functionality of Eclipse OCL is primarily available via the Eclipse IDE where functionality such as editors are readily supported.</p>
+<p>The underlying functionality is available to programmers who may use the API from IDE or standalone applications.</p>
+<p>Additionally the execution and validation sub-tools are useable via the standalone application described in this section.</p>
+<p>While the standalone application can be used as an interactive command line facility, the intended usage is to support automated usage from scripts or tools. Interactive users will generally find the IDE more apprpriate. </p>
+<div class="section" title="Installation and Invocation">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="InstallationandInvocation"></a>Installation and Invocation</h3>
+</div>
+</div>
+</div>
+<p>After following the usual procedure for installing Eclipse OCL 
+					<a class="link" href="Installation.html" title="Installing the Eclipse OCL Examples and Editors">Installation</a>, the plugins folder of your installation folder contains all the required JAR files so that you may use a verbose invocation such as:
+				</p>
+<div class="literallayout">
+<p>
+<code class="code">"E:\Program&nbsp;Files\Java\jdk-11.0.13\bin"\java.exe&nbsp;-classpath&nbsp;"<br>
+	%E%\com.google.guava_30.1.0.v20210127-2300.jar;<br>
+	%E%\com.google.inject_5.0.1.v20210324-2015.jar;<br>
+	%E%\javax.inject_1.0.0.v20091030.jar;<br>
+	%E%\org.antlr.runtime_3.2.0.v201101311130.jar;<br>
+	%E%\org.apache.log4j_1.2.15.v201012070815.jar;<br>
+	%E%\org.eclipse.core.resources_3.15.0.v20210521-0722.jar;<br>
+	%E%\org.eclipse.core.runtime_3.22.0.v20210506-1025.jar;<br>
+	%E%\org.eclipse.emf.common_2.22.0.v20210319-0732.jar;<br>
+	%E%\org.eclipse.emf.ecore_2.24.0.v20210405-0628.jar;<br>
+	%E%\org.eclipse.emf.ecore.edit_2.13.0.v20190822-1451.jar;<br>
+	%E%\org.eclipse.emf.ecore.xmi_2.16.0.v20190528-0725.jar;<br>
+	%E%\org.eclipse.emf.edit_2.16.0.v20190920-0401.jar;<br>
+	%E%\org.eclipse.equinox.app_1.5.100.v20210212-1143.jar;<br>
+	%E%\org.eclipse.equinox.common_3.15.0.v20210518-0604.jar;<br>
+	%E%\org.eclipse.equinox.preferences_3.8.200.v20210212-1143.jar;<br>
+	%E%\org.eclipse.equinox.registry_3.10.200.v20210503-1606.jar;<br>
+	%E%\org.eclipse.ocl_3.16.100.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.common_1.8.700.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.examples.emf.validation.validity_2.15.0.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.examples.standalone_2.7.400.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.pivot_1.15.0.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.uml_5.15.0.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.xtext.base_1.15.0.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.xtext.completeocl_1.15.0.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.xtext.essentialocl_1.15.0.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.xtext.markup_1.15.0.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.xtext.oclinecore_1.15.0.v20210609-1442.jar;<br>
+	%E%\org.eclipse.ocl.xtext.oclstdlib_1.15.0.v20210609-1442.jar;<br>
+	%E%\org.eclipse.osgi_3.16.300.v20210525-1715.jar;<br>
+	%E%\org.eclipse.osgi.services_3.10.100.v20210324-0936.jar;<br>
+	%E%\org.eclipse.xtext_2.25.0.v20210301-0843.jar;<br>
+	%E%\org.eclipse.xtext.util_2.25.0.v20210301-0843.jar"<br>
+org.eclipse.ocl.examples.standalone.StandaloneApplication&nbsp;help<br>
+
+</code>
+</p>
+</div>
+<p>
+					where 
+					<code class="code">%E%</code> is the path to the Eclipse plugins folder such as 
+					<code class="code">E:\Tools\Eclipse\4.20\plugins</code>.
+				</p>
+<p>Typing the path and version-corrected text above is pretty painfu,l so you may prefer to use the wildard capabilities introduced with Java 6.</p>
+<div class="literallayout">
+<p>
+<code class="code">"E:\Program&nbsp;Files\Java\jdk-11.0.13\bin"\java.exe<br>
+	-classpath&nbsp;"E:\Tools\Eclipse\4.20\plugins\*"<br>
+	org.eclipse.ocl.examples.standalone.StandaloneApplication&nbsp;help<br>
+
+</code>
+</p>
+</div>
+<p>
+					The java preamble, as in the 
+					<code class="code">help</code> examples above, is shown as 
+					<code class="code">ocl</code> for further examples in this section.
+				</p>
+</div>
+<div class="section" title="Help command">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="Helpcommand"></a>Help command</h3>
+</div>
+</div>
+</div>
+<p>The 
+					<code class="code">help</code> command shown in the examples above prints out the syntax and some description for the available commands.
+				</p>
+<div class="literallayout">
+<p>
+<code class="code">ocl&nbsp;help<br>
+
+</code>
+</p>
+</div>
+<p></p>
+</div>
+<div class="section" title="Execute command">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="Executecommand"></a>Execute command</h3>
+</div>
+</div>
+</div>
+<p>The 
+					<code class="code">execute</code> command supports execution of one or more OCL queries reporting parsed queries and/or results in textual or XML form.
+				</p>
+<p>A default execution such as</p>
+<div class="literallayout">
+<p>
+<code class="code">ocl&nbsp;execute&nbsp;-query&nbsp;"2+3"<br>
+
+</code>
+</p>
+</div>
+<p>
+					just returns a textual serialization of the result to the console.</p>
+<div class="literallayout">
+<p>
+<code class="code">5<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>This may be redirected to a file by the 
+					<code class="code">-output</code> option, or formatted more deterministically as text or XML by the 
+					<code class="code">-exporter</code> option and filtered by the 
+					<code class="code">-hide</code> options. A context (self) may be specified for the evaluation by the 
+					<code class="code">-self</code> option.
+				</p>
+<p>NB. The 
+					<code class="code">execute</code> command has not been optimized to support performance testing. Consequently any attempts to instrument it will find that the measured time is dominated by JVM warm up time, classpath analysis and OCL environment initialization. The JVM costs can be reduced by specifying multiple queries per execute. The classpath costs can be reduced by pruning all unnecessary JARs from the classpath and avoiding all usage of files.
+				</p>
+<div class="section">
+<div class="titlepage"></div>
+<div class="section" title="-query ocl-query">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="N158AF"></a>-query ocl-query</h5>
+</div>
+</div>
+</div>
+<p>The required and optionally repeatable 
+							<code class="code">-query</code> token specifies one or more OCL queries to be evaluated.
+						</p>
+</div>
+<div class="section" title="-self self-uri">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="selfselfuri"></a>-self self-uri</h5>
+</div>
+</div>
+</div>
+<p>The optional 
+							<code class="code">-self</code> token specifies a model element to be used as the context for the OCL queries. The model element may be identified using a fragment URI with an absolute, relative or Eclipse platform resource.
+						</p>
+<div class="literallayout">
+<p>
+<code class="code">-self&nbsp;E:\Development\Chital\Workspace\MyProject\MyFile.ecore#//MyClass<br>
+-self&nbsp;../git/mymodels/standalone/MyFile.ecore#//MyClass<br>
+-self&nbsp;platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore#//Boolean<br>
+-self&nbsp;platform:/resource/myproject/Pivot.oclas#/0/pivot/Class<br>
+
+</code>
+</p>
+</div>
+<p>
+							If 
+							<code class="code">-self</code> is omitted, self evaluates to null.
+						</p>
+</div>
+<div class="section" title="-output file-name">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="outputfilename"></a>-output file-name</h5>
+</div>
+</div>
+</div>
+<p>The optional 
+							<code class="code">-output</code> token redirects the command output to the specified file name. If omitted the output is directed to the console.
+						</p>
+</div>
+<div class="section" title="-exporter none|text|model">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="exporternonetextmodel"></a>-exporter none|text|model</h5>
+</div>
+</div>
+</div>
+<p>The optional 
+							<code class="code">-exporter</code> token specifies whether there should be no, or textual or XML output. The textual output is suitable for simple values, but can be confusing for complex output such as collections of maps. The XML model output is appropriate for a precise intelligible but verbose output; it is an extension of the Pivot OCL Abstract Syntax comprising a literal expression that evaluates to the result value. An additional ElementLiteralExp with a referredElement property supports the representation of a value such as self. The verbosity of the output can be tamed by the 
+							<code class="code">-hide</code> tokens.
+						</p>
+<p>The text output typically echoes the query and shows the result.</p>
+<div class="literallayout">
+<p>
+<code class="code">Query&nbsp;:&nbsp;2+3<br>
+Result:&nbsp;5<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>The 
+							<code class="code">Result:</code> is replaced by an 
+							<code class="code">Error:</code> if parsing or execution fails.
+						</p>
+<p>If 
+							<code class="code">-hideQuery</code> is specified, the 
+							<code class="code">Result:</code> is also hidden.
+						</p>
+<p>The XML model output typically echoes the query and shows the result in both textual and XML forms.</p>
+<div class="literallayout">
+<p>
+<code class="code">&lt;?xml&nbsp;version="1.0"&nbsp;encoding="UTF-8"?&gt;<br>
+&lt;!DOCTYPE&nbsp;queries:QueryModel&nbsp;[<br>
+&lt;!ENTITY&nbsp;_0&nbsp;"http://www.eclipse.org/ocl/2015/Library.oclas"&gt;<br>
+]&gt;<br>
+&lt;queries:QueryModel&nbsp;xmi:version="2.0"<br>
+	xmlns:xmi="http://www.omg.org/XMI"<br>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"<br>
+	xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot"<br>
+&nbsp;&nbsp;&nbsp;xmlns:queries="http://www.eclipse.org/ocl/2022/Queries"<br>
+&nbsp;&nbsp;&nbsp;xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot<br>
+&nbsp;&nbsp;&nbsp;		java://org.eclipse.ocl.pivot.PivotPackage<br>
+&nbsp;&nbsp;&nbsp;		http://www.eclipse.org/ocl/2022/Queries<br>
+&nbsp;&nbsp;&nbsp;		java://org.eclipse.ocl.pivot.queries.QueriesPackage"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xmi:id="AAAAA"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name="log_testStandaloneExecution_execute_model_echo_all.xml"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;externalURI="file:/C:/Users/me/mypath/myfile.xml"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;xmiidVersion="1"&gt;<br>
+&nbsp;&nbsp;&lt;results&nbsp;query="2+3"&nbsp;result="5"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;expression&nbsp;type="pivot:PrimitiveType&nbsp;&amp;_0;#tYtCd"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ownedBody&nbsp;xsi:type="pivot:OperationCallExp"&nbsp;name="+"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		type="pivot:PrimitiveType&nbsp;&amp;_0;#tYtCd"&nbsp;referredOperation="&amp;_0;#iA+ir"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ownedSource&nbsp;xsi:type="pivot:IntegerLiteralExp"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		type="pivot:PrimitiveType&nbsp;&amp;_0;#tYtCd"&nbsp;integerSymbol="2"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ownedArguments&nbsp;xsi:type="pivot:IntegerLiteralExp"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		type="pivot:PrimitiveType&nbsp;&amp;_0;#tYtCd"&nbsp;integerSymbol="3"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/ownedBody&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ownedContext&nbsp;xsi:type="pivot:ParameterVariable"&nbsp;name="self"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		type="pivot:VoidType&nbsp;&amp;_0;#7u3MH"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/expression&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;value&nbsp;xsi:type="pivot:IntegerLiteralExp"&nbsp;integerSymbol="5"/&gt;<br>
+&nbsp;&nbsp;&lt;/results&gt;<br>
+&lt;/queries:QueryModel&gt;<br>
+
+</code>
+</p>
+</div>
+<p>
+							Additional 
+							<code class="code">value/errors</code> explain parsing or execution failures.
+						</p>
+</div>
+<div class="section" title="-hideASQuery">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="hideASQuery"></a>-hideASQuery</h5>
+</div>
+</div>
+</div>
+<p>The 
+							<code class="code">-hideASQuery</code> token suppresses all 
+							<code class="code">results/expression</code> elements from the XML output.
+						</p>
+</div>
+<div class="section" title="-hideASResult">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="hideASResult"></a>-hideASResult</h5>
+</div>
+</div>
+</div>
+<p>The 
+							<code class="code">-hideASResult</code> token suppresses all 
+							<code class="code">results/value</code> elements from the XML output.
+						</p>
+</div>
+<div class="section" title="-hideASTypes">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="hideASTypes"></a>-hideASTypes</h5>
+</div>
+</div>
+</div>
+<p>The 
+							<code class="code">-hideASTypes</code> token suppresses all 
+							<code class="code">type</code> elements from the XML output, which may give an over 50% saving in file size.
+						</p>
+</div>
+<div class="section" title="-hideQuery">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="hideQuery"></a>-hideQuery</h5>
+</div>
+</div>
+</div>
+<p>The 
+							<code class="code">-hideQuery</code> token suppresses all 
+							<code class="code">results/query</code> attributes from the XML output, or the 
+							<code class="code">Query</code> line and 
+							<code class="code">Result:</code> prefix from the textual output.
+						</p>
+</div>
+<div class="section" title="-hideResult">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="hideResult"></a>-hideResult</h5>
+</div>
+</div>
+</div>
+<p>The 
+							<code class="code">-hideResult</code> token suppresses all 
+							<code class="code">results/result</code> elements from the XML output.
+						</p>
+<p>If both 
+							<code class="code">-hideASResult</code> and 
+							<code class="code">-hideResult</code> are specified, the evaluation is suppressed so the results indicate just the success or failure of query parsing.
+						</p>
+</div>
+</div>
+</div>
+<div class="section" title="Validate command">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="Validatecommand"></a>Validate command</h3>
+</div>
+</div>
+</div>
+<p>The 
+					<code class="code">validate</code> command supports validation of a model using OCL constraints defined in one or more OCL files.
+				</p>
+<p>A minimal command requires a model to validate and some constraints to apply.</p>
+<div class="literallayout">
+<p>
+<code class="code">ocl&nbsp;validate&nbsp;-model&nbsp;Model.ecore&nbsp;-rules&nbsp;Rules.ocl<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<p>The validation results are sent to the console but may be redirected by the 
+					<code class="code">-output</code> token using a raw text, HTML or XML formatting according to the 
+					<code class="code">-exporter</code> selection.
+				</p>
+<div class="section">
+<div class="titlepage"></div>
+<div class="section" title="-model file-name">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="N15968"></a>-model file-name</h5>
+</div>
+</div>
+</div>
+<p>The required 
+							<code class="code">-model</code> token specifies the file name in which the model to be validate is stored.
+						</p>
+</div>
+<div class="section" title="-rules file-name">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="rulesfilename"></a>-rules file-name</h5>
+</div>
+</div>
+</div>
+<p>The required 
+							<code class="code">-rules</code> token specifies one or more OCL documents that define constraints to be validated. A text file enumerating many OCL document files may also be specified.
+						</p>
+</div>
+<div class="section" title="-output file-name">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="outputfilename2"></a>-output file-name</h5>
+</div>
+</div>
+</div>
+<p>The optional 
+							<code class="code">-output</code> token redirects the command output to the specified file name. If omitted the output is directed to the console.
+						</p>
+</div>
+<div class="section" title="-exporter html|model|text">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="exporterhtmlmodeltext"></a>-exporter html|model|text</h5>
+</div>
+</div>
+</div>
+<p>The optional 
+							<code class="code">-exporter</code> token specifies whether there should be textual or HTML or XML output. The textual output is used as the default.
+						</p>
+</div>
+<div class="section" title="-using all|java|ocl|uml">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="usingalljavaocluml"></a>-using all|java|ocl|uml</h5>
+</div>
+</div>
+</div>
+<p>A sub-selection of the validation may be specified  by choosing just one or more of the embedded Java, OCL or UML constraints.</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

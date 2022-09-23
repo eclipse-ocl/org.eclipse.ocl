@@ -20,15 +20,15 @@
 </div>
 </div>
 </div>
-<p>This tutorial has been updated for Eclipse Mars: Eclipse 4.5, EMF 2.11, OCL 6.0.</p>
+<p>This tutorial has been refreshed for Eclipse 2021-06; Eclipse 4.20, EMF 2.26, OCL 6.15.0.</p>
 <div class="itemizedlist">
 <ul class="itemizedlist" type="disc">
 <li class="listitem">
-<p>Some screenshots may be slightly out of date.</p>
+<p>The graphical styling of some screenshots may be slightly out of date.</p>
 </li>
 </ul>
 </div>
-<p>The direct OCL to Java Code generator was a very experimental functionality for the Juno release. It has been substantially rewritten for Kepler. Some optimisations have been activated for Luna and Mars. </p>
+<p>The direct OCL to Java Code generator has matured significantly from its experimental functionality for the Juno release. It is now the recommended approach. </p>
 <p>In this tutorial we will continue the OCLinEcore tutorial and show how to get a direct Java representation of the Ecore model avoiding the need for run-time compilation.</p>
 <div class="section" title="Load OCLinEcore Tutorial Example Project">
 <div class="titlepage">
@@ -68,7 +68,8 @@
 					<span class="bold"><strong>Generate Java code in *Impl classes</strong></span>.
 				</p>
 <p>Now open 
-					<span class="bold"><strong>Tutorial.genmodel</strong></span>, select the root resource and invoke 
+					<span class="bold"><strong>Tutorial.genmodel</strong></span>, select the root 
+					<code class="code">Tutorial</code> resource and invoke 
 					<span class="bold"><strong>Generate Model Code</strong></span> to (re)generate the Java code. This will take somewhat longer as additional work items show that the OCL is being compiled and that Xtend templates are generating additional Java code.
 				</p>
 <div class="blockquote">
@@ -82,6 +83,13 @@
 </div>
 <p></p>
 <p>That is all there is to it. Your model code is now 100% Java; no OCL parsing is needed at run-time. </p>
+<div class="blockquote">
+<blockquote class="blockquote">
+<p>
+						If you see errors related to undefined ...__DIAGNOSTICCHAIN_MAP, you need tio edit your *.genmodel to make sure that the Model-&gt;Operation Reflection option on the overall GenModel is set true.</p>
+</blockquote>
+</div>
+<p></p>
 </div>
 <div class="section" title="Using a GenAnnotation">
 <div class="titlepage">
@@ -95,7 +103,7 @@
 <p>Changing the default genmodel setting is a little dangerous since the change will affect any other genmodel activities you perform. It is therefore advisable to reset the workspace preference setting to its default and use a GenAnnotation to embed the setting in the genmodel.</p>
 <p>The easiest way to create the GenAnnotation that ensure direct code generation regardless of workspace or project preferences, is to paste the following three lines into your genmodel just above the 
 					<code class="code">foreignModel</code> or 
-					<code class="code">genpackages</code> element.
+					<code class="code">genPackages</code> element.
 				</p>
 <div class="literallayout">
 <p>

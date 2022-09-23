@@ -1,5 +1,5 @@
 
-h2(#PivotStandalone). Pivot Standalone Configuration
+h2(#PivotStandalone). Pivot Standalone API Configuration
 
 If you use Eclipse OCL within Eclipse you should find that the appropriate registrations are provided for you automatically by the plugin registration mechanisms.
 
