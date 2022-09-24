@@ -10,14 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.codegen.tests;
 
-import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-
 public class CodegenTests extends org.eclipse.ocl.examples.test.xtext.AllEvaluationTests
 {
-	protected CodegenTests() {
-		super();
-		PivotUtilInternal.noDebug = false;
-		PivotTestCase.DEBUG_ID = true;
-	}
 }
