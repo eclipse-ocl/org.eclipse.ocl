@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
+import java.io.File;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -62,6 +64,44 @@ public class URIUtil
 			return URI.createPlatformResourceURI(uri.toString(), true);
 		}
 		return uri;
+	}
+
+	/**
+	 * Convert the naively created uri to that an implicit file: scheme is explicit to facilitate standalone usage.
+	 *
+	 * @since 1.18
+	 */
+	public static @NonNull URI getAbsoluteURI(@NonNull URI rawURI) {
+		assert !rawURI.hasFragment();
+	//	System.out.println("rawURI = " + rawURI);
+	//	System.out.println("rawURI.hasAbsolutePath() = " + rawURI.hasAbsolutePath());
+	//	System.out.println("rawURI.hasOpaquePart() = " + rawURI.hasOpaquePart());
+	//	System.out.println("rawURI.hasPath() = " + rawURI.hasPath());
+	//	System.out.println("rawURI.hasRelativePath() = " + rawURI.hasRelativePath());
+	//	System.out.println("rawURI.isHierarchical() = " + rawURI.isHierarchical());
+		URI absoluteURI;
+		if (rawURI.hasOpaquePart()) {							// Windows absolute path such as c:/xxx
+			String string2 = rawURI.toString();
+			absoluteURI = URI.createFileURI(string2);
+		}
+		else if (rawURI.isPlatform()) {							// platform: must be left unchnaged
+			absoluteURI = rawURI;
+		}
+		else if (rawURI.hasRelativePath()) {					// not-absolute
+			String fileString = rawURI.toFileString();
+			File relative = new File(fileString);
+			File absolute = relative.getAbsoluteFile();
+			absoluteURI = URI.createFileURI(absolute.toString());
+		}
+		else if (rawURI.hasAbsolutePath()) {					// Linux absolute path such as /xxx
+			String fileString = rawURI.toString();
+			absoluteURI = URI.createFileURI(fileString);
+		}
+		else {													// Perhaps file: already
+			absoluteURI = rawURI;
+		}
+	//	System.out.println("absoluteURI = " + absoluteURI);
+		return absoluteURI;
 	}
 
 	/**

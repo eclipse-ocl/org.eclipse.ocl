@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -338,23 +339,17 @@ public class ExecuteCommand extends StandaloneCommand
 		protected boolean analyze(@Nullable String string) {
 			URI rawURI = URI.createURI(string);
 			String fragment = rawURI.fragment();
-			rawURI = rawURI.trimFragment();
-			if (rawURI.hasOpaquePart()) {
-				rawURI = URI.createFileURI(rawURI.toString());
-			}
-			else if (rawURI.isRelative()) {
-				File relative = new File(rawURI.toFileString());
-				File absolute = relative.getAbsoluteFile();
-				rawURI = URI.createFileURI(absolute.toString());
-			}
+			rawURI = URIUtil.getAbsoluteURI(rawURI.trimFragment());
 			Resource selfResource = standaloneApplication.getResourceSet().getResource(rawURI, true);
 			if (selfResource == null) {
-				logger.error("Failed to load '" + rawURI.toString() + "'");
+				String string2 = rawURI.toString();
+				logger.error("Failed to load '" + string2 + "'");
 				return false;
 			}
 			self = selfResource.getEObject(fragment);
 			if (self == null) {
-				logger.error("Failed to locate '" + fragment + "' within '" + rawURI.toString() + "'");
+				String string2 = rawURI.toString();
+				logger.error("Failed to locate '" + fragment + "' within '" + string2 + "'");
 			}
 			return self != null;
 		}

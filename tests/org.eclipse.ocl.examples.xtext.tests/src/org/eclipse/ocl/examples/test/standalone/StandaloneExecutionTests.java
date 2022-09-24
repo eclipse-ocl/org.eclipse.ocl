@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
 import org.eclipse.ocl.examples.emf.validation.validity.export.HTMLExporter;
 import org.eclipse.ocl.examples.emf.validation.validity.export.ModelExporter;
@@ -40,6 +41,7 @@ import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
 import org.eclipse.ocl.examples.validity.locator.AbstractPivotConstraintLocator;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
+import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.junit.Test;
@@ -277,38 +279,66 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 
 	@Test
 	public void testStandaloneExecution_execute_model_self_file_absolute() throws Exception {
-		StandaloneApplication standaloneApplication = new StandaloneApplication();
-		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/EcoreTestFile.ecore", true);
-		InputStream inputStream = standaloneApplication.getURIConverter().createInputStream(inputURI);
-		assert inputStream != null;
-		TestFile testFile = getTestProject().getOutputFile("EcoreTestFile.ecore", inputStream);
-		String logFileName = getXMLLogFileName();
-		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"execute",
-			"-query", "self",
-			"-self", testFile.getFileString() + "#//BadClass",
-			"-output", logFileName,
-			"-exporter", "model"};
-		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
-		assertEquals(StandaloneResponse.OK, applicationResponse);
-		assertTrue(standaloneApplication.exists(logFileName));
-		checkExecuteResultFile(logFileName, new @NonNull String[] {"query=\"self\"", "referredElement=\"&_0;#//BadClass\""}, new @NonNull String[] {"<errors>"});
-		standaloneApplication.stop();
+		try {
+			StandaloneApplication standaloneApplication = new StandaloneApplication();
+			URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/EcoreTestFile.ecore", true);
+			InputStream inputStream = standaloneApplication.getURIConverter().createInputStream(inputURI);
+			assert inputStream != null;
+			TestFile testFile = getTestProject().getOutputFile("EcoreTestFile.ecore", inputStream);
+			String logFileName = getXMLLogFileName();
+			String testPath = testFile.getFileString() + "#//BadClass";
+			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"execute",
+				"-query", "self",
+				"-self", testPath,
+				"-output", logFileName,
+				"-exporter", "model"};
+			StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
+			assertEquals(StandaloneResponse.OK, applicationResponse);
+			assertTrue(standaloneApplication.exists(logFileName));
+			checkExecuteResultFile(logFileName, new @NonNull String[] {"query=\"self\"", "referredElement=\"&_0;#//BadClass\""}, new @NonNull String[] {"<errors>"});
+			standaloneApplication.stop();
+		}
+		catch (Exception e) {				// As of Tycho 2.1.0 the stack trace is missing and the residue confusing.
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Test
-	public void testStandaloneExecution_execute_model_self_relative() throws Exception {
-		StandaloneApplication standaloneApplication = new StandaloneApplication();
-		String logFileName = getXMLLogFileName();
-		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"execute",
-			"-query", "self",
-			"-self", "../git/org.eclipse.ocl/tests/org.eclipse.ocl.examples.xtext.tests/models/standalone/EcoreTestFile.ecore#//BadClass",
-			"-output", logFileName,
-			"-exporter", "model"};
-		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
-		assertEquals(StandaloneResponse.OK, applicationResponse);
-		assertTrue(standaloneApplication.exists(logFileName));
-		checkExecuteResultFile(logFileName, new @NonNull String[] {"query=\"self\"", "referredElement=\"&_0;#//BadClass\""}, new @NonNull String[] {"<errors>"});
-		standaloneApplication.stop();
+public void testStandaloneExecution_execute_model_self_relative() throws Exception {
+		try {
+			StandaloneApplication standaloneApplication = new StandaloneApplication();
+			URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/EcoreTestFile.ecore", true);
+			InputStream inputStream = standaloneApplication.getURIConverter().createInputStream(inputURI);
+			assert inputStream != null;
+			TestProject testProject = getTestProject();
+			testProject.getOutputFile("EcoreTestFile.ecore", inputStream);
+			String logFileName = getXMLLogFileName();
+			String testPath;
+			if (CGUtil.isMavenSurefire()) {
+				testPath = "../../models/standalone/EcoreTestFile.ecore#//BadClass";
+			}
+			else if (CGUtil.isTychoSurefire()) {
+				testPath = "models/standalone/EcoreTestFile.ecore#//BadClass";
+			}
+			else {
+				testPath = testProject.getName() + "/EcoreTestFile.ecore#//BadClass";
+			}
+			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"execute",
+				"-query", "self",
+				"-self", testPath,
+				"-output", logFileName,
+				"-exporter", "model"};
+			StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
+			assertEquals(StandaloneResponse.OK, applicationResponse);
+			assertTrue(standaloneApplication.exists(logFileName));
+			checkExecuteResultFile(logFileName, new @NonNull String[] {"query=\"self\"", "referredElement=\"&_0;#//BadClass\""}, new @NonNull String[] {"<errors>"});
+			standaloneApplication.stop();
+		}
+		catch (Exception e) {				// As of Tycho 2.1.0 the stack trace is missing and the residue confusing.
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Test

@@ -94,12 +94,13 @@ public final class PivotSaveImpl extends XMISaveImpl
 	//
 	//	Special case. ElementLiteralExp::referredElement is an EObject-typed EAttribute to avoid all the
 	//	unpleasant corrolaries of injecting an opposite into the Ecore metamodel. Serialize it using the
-	//	regular EReference approach that includes entity handling.
+	//	regular EReference approach that includes entity handling and deresolving.
 	//
 	@Override
 	protected String getDatatypeValue(Object value, EStructuralFeature f, boolean isAttribute) {
 		if (f == PivotPackage.Literals.ELEMENT_LITERAL_EXP__REFERRED_ELEMENT) {
 			URI uri = EcoreUtil.getURI((EObject)value);
+			uri = helper.deresolve(uri);
 			return convertURI(uri.toString());					// Do not escape, URI ok, entity has legitimate &
 		}
 		return super.getDatatypeValue(value, f, isAttribute);
