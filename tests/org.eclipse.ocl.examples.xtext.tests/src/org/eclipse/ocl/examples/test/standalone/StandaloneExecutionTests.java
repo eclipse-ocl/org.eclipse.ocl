@@ -316,10 +316,10 @@ public void testStandaloneExecution_execute_model_self_relative() throws Excepti
 			String logFileName = getXMLLogFileName();
 			String testPath;
 			if (CGUtil.isMavenSurefire()) {
-				testPath = "../../models/standalone/EcoreTestFile.ecore#//BadClass";
+				testPath = "../../../" + PivotTestCase.PLUGIN_ID + "/models/standalone/EcoreTestFile.ecore#//BadClass";
 			}
 			else if (CGUtil.isTychoSurefire()) {
-				testPath = "models/standalone/EcoreTestFile.ecore#//BadClass";
+				testPath = "../" + PivotTestCase.PLUGIN_ID + "/models/standalone/EcoreTestFile.ecore#//BadClass";
 			}
 			else {
 				testPath = testProject.getName() + "/EcoreTestFile.ecore#//BadClass";
