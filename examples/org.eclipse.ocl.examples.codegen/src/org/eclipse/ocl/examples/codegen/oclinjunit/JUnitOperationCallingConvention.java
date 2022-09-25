@@ -23,10 +23,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Variable;
@@ -44,13 +43,15 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		assert JavaConstants.EVALUATE_NAME.equals(asOperation.getName());
+		NameResolution evaluateNameResolution = analyzer.getGlobalNameManager().getEvaluateNameResolution();
+		assert evaluateNameResolution.getResolvedName().equals(asOperation.getName());
 		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		initOperation(analyzer, cgOperation, asOperation);
 		analyzer.addCGOperation(cgOperation);
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
-		ClassNameManager classNameManager = operationNameManager.getClassNameManager();
-		classNameManager.declareEagerName(cgOperation);			// Eager enforcement of built-in "evaluate"
+	//	ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
+	//	ClassNameManager classNameManager = operationNameManager.getClassNameManager();
+	//	classNameManager.declareEagerName(cgOperation);			// Eager enforcement of built-in "evaluate"
+		evaluateNameResolution.addCGElement(cgOperation);
 		return cgOperation;
 	}
 
