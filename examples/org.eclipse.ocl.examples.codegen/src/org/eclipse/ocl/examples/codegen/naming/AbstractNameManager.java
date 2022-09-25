@@ -35,7 +35,13 @@ public abstract class AbstractNameManager implements NameManager
 	/**
 	 * name2object place holders for names with no real object.
 	 */
-	protected static final @NonNull Class<?> NOT_AN_OBJECT = AbstractNameManager.class;
+	protected static final @NonNull Object NOT_AN_OBJECT = new Object()
+	{
+		@Override
+		public String toString() {
+			return "NOT_AN_OBJECT";
+		}
+	};
 
 	protected static void appendJavaCharacters(StringBuilder s, String string) {
 		for (int i = 0; i < string.length(); i++) {
