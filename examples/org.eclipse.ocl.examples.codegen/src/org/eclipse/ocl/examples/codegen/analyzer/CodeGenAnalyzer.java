@@ -401,12 +401,15 @@ public class CodeGenAnalyzer
 	}
 
 	//
-	//	Assert merhod to verify the consistency of AS/CG NameManagers
+	//	Assert method to verify the consistency of AS/CG NameManagers
 	//
 	protected boolean checkNameManagers(@NonNull CGElement cgRoot) {
 		for (@NonNull EObject eObject : new TreeIterable(cgRoot, true)) {
 			if ((eObject instanceof CGNamedElement) && !(eObject instanceof CGExecutorType) && !(eObject instanceof CGExecutorProperty)) {		// FIXME CGExecutorXXX.ast is a Class/Property
-				CGNamedElement cgElement = (CGNamedElement) eObject;
+				CGNamedElement cgElement = (CGNamedElement)eObject;
+				if (cgElement instanceof CGVariableExp) {
+					getClass();		// XXX
+				}
 				EObject asElement = cgElement.getAst();
 				if (asElement instanceof NamedElement) {
 					checkNameManager(cgElement, (NamedElement)asElement);
