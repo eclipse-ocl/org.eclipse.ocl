@@ -115,6 +115,7 @@ import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.SpecializedId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.cse.CSEElement;
 import org.eclipse.ocl.pivot.internal.cse.CommonSubExpressionAnalysis;
@@ -704,7 +705,7 @@ public class CodeGenAnalyzer
 			cgClass = callingConvention.createCGClass(asClass);
 			cgClass.setAst(asClass);
 			cgClass.setCallingConvention(callingConvention);
-			for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : completeClass.getPartialClasses()) {
+			for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : PivotUtil.getPartialClasses(completeClass)) {
 				asElement2cgElement.put(asPartialClass, cgClass);
 			}
 			if (cgRootClass == null) {
@@ -821,8 +822,8 @@ public class CodeGenAnalyzer
 		CGIterationCallExp cgIterationCallExp = generateLoopDeclaration(asLoopExp);
 		CGValuedElement cgUnsafeSource = createCGElement(CGValuedElement.class, asLoopExp.getOwnedSource());
 		CGValuedElement cgSafeSource = asLoopExp.isIsSafe() ? generateSafeExclusion(asLoopExp, cgUnsafeSource) : cgUnsafeSource;
-		OCLExpression asSource = asLoopExp.getOwnedSource();
-		Type asSourceType = asSource != null ? asSource.getType() : null;
+	//	OCLExpression asSource = asLoopExp.getOwnedSource();
+	//	Type asSourceType = asSource != null ? asSource.getType() : null;
 		CGOperation cgOperation = generateIterationDeclaration(/*asSourceType,*/ asIteration);
 		initAst(cgIterationCallExp, asLoopExp);
 		cgIterationCallExp.setAsIteration(asIteration);
@@ -984,11 +985,15 @@ public class CodeGenAnalyzer
 		CGPackage cgPackage = (CGPackage)asElement2cgElement.get(asPackage);
 		if (cgPackage == null) {
 			cgPackage = CGModelFactory.eINSTANCE.createCGPackage();
+			CompletePackageInternal completePackage = environmentFactory.getCompleteModel().getCompletePackage(asPackage);
+			asPackage = ClassUtil.nonNullState(completePackage.getPrimaryPackage());
 			cgPackage.setAst(asPackage);
 		//	cgPackage.setName(callingConvention.getName(this, asPackage));			// XXX defer via NameResolution
 		//	cgPackage.setTypeId(analyzer.getCGTypeId(asPackage.getTypeId()));
 		//	cgPackage.setRequired(asPackage.isIsRequired());
-			asElement2cgElement.put(asPackage, cgPackage);
+			for (org.eclipse.ocl.pivot.@NonNull Package asPartialPackage : PivotUtil.getPartialPackages(completePackage)) {
+				asElement2cgElement.put(asPartialPackage, cgPackage);
+			}
 			//	if (cgRootPackage == null) {
 			//		cgRootPackage = cgPackage;
 			//	}
@@ -1500,7 +1505,7 @@ public class CodeGenAnalyzer
 				cgPackage = generatePackageDeclaration(asPackage);
 			}
 		}
-		assert cgPackage.getAst() == asPackage;
+		assert cgPackage.getAst() == environmentFactory.getCompleteModel().getCompletePackage(asPackage).getPrimaryPackage();
 		PackageNameManager packageNameManager = (PackageNameManager)globalNameManager.basicGetChildNameManager(cgPackage);
 		if (packageNameManager == null) {
 			org.eclipse.ocl.pivot.Package asParentPackage = asPackage.getOwningPackage();
