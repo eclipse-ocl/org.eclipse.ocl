@@ -101,7 +101,7 @@ public abstract class AbstractNameManager implements NameManager
 				assert debugAllocatedName(eagerName);
 				return eagerName;
 			}
-			System.err.println("Multiple reservation for eager name \"" + eagerName + "\"");
+			System.err.println("Multiple reservation for eager name \"" + eagerName + "\"");		// XXX More accurate diagnosis of Parameter hides Property in SysML QUDV
 			return allocateFallBackName(eagerName);
 		}
 
