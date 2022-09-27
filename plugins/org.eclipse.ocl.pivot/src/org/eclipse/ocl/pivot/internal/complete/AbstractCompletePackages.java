@@ -128,7 +128,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 
 	public @NonNull CompletePackageInternal getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		CompletePackageInternal completePackage = null;
-		if (pivotPackage instanceof CompletePackageInternal) {
+		if (pivotPackage instanceof CompletePackageInternal) {			// Cannot be instance
 			((CompletePackageInternal)pivotPackage).assertSamePackage(pivotPackage);
 			completePackage = (CompletePackageInternal)pivotPackage;
 		}
