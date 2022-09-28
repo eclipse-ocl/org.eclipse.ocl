@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -86,10 +85,7 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 		assert analyzer.getMetamodelManager().getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
-		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		initOperation(analyzer, cgOperation, asOperation);
-		analyzer.addCGOperation(cgOperation);
-		return cgOperation;
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
 	@Override
@@ -156,7 +152,7 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 			CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, pArgument);
 			cgOperationCallExp.getArguments().add(cgArgument);
 		}
-		analyzer.initAst(cgOperationCallExp, element);
+		analyzer.initAst(cgOperationCallExp, element, true);
 	//	as2cgVisitor.declareLazyName(cgOperationCallExp);
 	//	cgOperationCallExp.setReferredOperation(finalOperation);
 		cgOperationCallExp.setReferredOperation(cgFinalOperation);

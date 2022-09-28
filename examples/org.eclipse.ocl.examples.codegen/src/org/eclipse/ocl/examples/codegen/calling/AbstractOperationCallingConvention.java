@@ -312,22 +312,10 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	//	}
 	//	assert isRequired == isRequired2;
 		cgOperationCallExp.setAsOperation(asOperation);
-		cgOperationCallExp.setAst(asOperationCallExp);
-		TypeId asTypeId = asOperationCallExp.getTypeId();
-		cgOperationCallExp.setTypeId(analyzer.getCGTypeId(asTypeId));
+		analyzer.initAst(cgOperationCallExp, asOperationCallExp, true);
 		cgOperationCallExp.setReferredOperation(cgOperation);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
-		cgOperationCallExp.setRequired(isRequired);
-	}
-
-	protected void initOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull Operation asOperation) {
-		TypeId asTypeId = asOperation.getTypeId();
-		CGTypeId cgTypeId = analyzer.getCGTypeId(asTypeId);
-		cgOperation.setAst(asOperation);
-		cgOperation.setTypeId(cgTypeId);
-		cgOperation.setRequired(asOperation.isIsRequired());
-		cgOperation.setCallingConvention(this);
 	}
 
 	@Override

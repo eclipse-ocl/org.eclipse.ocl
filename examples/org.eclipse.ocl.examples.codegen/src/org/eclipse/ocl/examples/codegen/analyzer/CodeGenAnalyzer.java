@@ -108,6 +108,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -229,25 +230,6 @@ public class CodeGenAnalyzer
 		this.cgFalse = createCGBoolean(false);
 		this.cgTrue = createCGBoolean(true);
 		this.cgNull = createCGNull();
-	}
-
-/*	private void addCGConstraint(@NonNull CGConstraint cgConstraint) {			// private
-		Constraint asConstraint = CGUtil.getAST(cgConstraint);
-		CGConstraint old = asConstraint2cgConstraint.put(asConstraint, cgConstraint);
-		assert old == null;
-	} */
-
-	public void addCGOperation(@NonNull CGOperation cgOperation) {			// private
-		assert cgOperation.getCallingConvention() != VirtualOperationCallingConvention.INSTANCE;
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		CGOperation old = (CGOperation)asElement2cgElement.put(asOperation, cgOperation);
-		assert old == null;
-	}
-
-	public void addCGProperty(@NonNull CGProperty cgProperty) {			// private
-		Property asProperty = CGUtil.getAST(cgProperty);
-		CGProperty old = (CGProperty)asElement2cgElement.put(asProperty, cgProperty);
-		assert old == null;
 	}
 
 	public void addExternalFeature(@NonNull Feature asFeature) {
@@ -781,8 +763,8 @@ public class CodeGenAnalyzer
 		if (cgOperation == null) {
 			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asIteration, true);
 			cgOperation = callingConvention.createCGOperation(this, asIteration);
-			assert cgOperation.getAst() != null;
-			assert cgOperation.getCallingConvention() == callingConvention;
+			cgOperation.setCallingConvention(callingConvention);
+			initAst(cgOperation, asIteration, true);
 			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asIteration);
 			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asIteration.getBodyExpression();
@@ -813,7 +795,7 @@ public class CodeGenAnalyzer
 				cgLibraryIterationCallExp.setLibraryIteration(libraryIteration);
 				cgIterationCallExp = cgLibraryIterationCallExp;
 			}
-			asElement2cgElement.put(asLoopExp, cgIterationCallExp);
+			initAst(cgIterationCallExp, asLoopExp, true);
 		}
 		return cgIterationCallExp;
 	}
@@ -828,7 +810,6 @@ public class CodeGenAnalyzer
 	//	OCLExpression asSource = asLoopExp.getOwnedSource();
 	//	Type asSourceType = asSource != null ? asSource.getType() : null;
 		CGOperation cgOperation = generateIterationDeclaration(/*asSourceType,*/ asIteration);
-		initAst(cgIterationCallExp, asLoopExp);
 		cgIterationCallExp.setAsIteration(asIteration);
 		cgIterationCallExp.setReferredIteration(cgOperation);
 		cgIterationCallExp.setInvalidating(asIteration.isIsInvalidating());
@@ -935,13 +916,13 @@ public class CodeGenAnalyzer
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		CGValuedElement cgOperationCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
-		asElement2cgElement.put(asOperationCallExp,cgOperationCallExp);
+		CGNamedElement old = asElement2cgElement.put(asOperationCallExp, cgOperationCallExp);
+		assert old == cgOperationCallExp;			// XXX demonstrates that put is redundant
 		return cgOperationCallExp;
 	}
 
 	/**
 	 * Generate / share the CG declaration for asOperation.
-	 * @param asSourceType
 	 */
 	public @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation, @Nullable OperationCallingConvention callingConvention, boolean requireFinal) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
 		if (!requireFinal) {
@@ -956,9 +937,9 @@ public class CodeGenAnalyzer
 				callingConvention = codeGenerator.getCallingConvention(asOperation, requireFinal);
 			}
 			cgOperation = callingConvention.createCGOperation(this, asOperation);
+			cgOperation.setCallingConvention(callingConvention);
+			initAst(cgOperation, asOperation, true);
 //			System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " : " + asOperation);
-			assert cgOperation.getAst() != null;
-			assert cgOperation.getCallingConvention() == callingConvention;
 			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asOperation.getBodyExpression();
@@ -981,7 +962,8 @@ public class CodeGenAnalyzer
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		CGValuedElement cgNavigationCallExp = callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asOppositePropertyCallExp);
-		asElement2cgElement.put(asOppositePropertyCallExp, cgNavigationCallExp);
+		CGNamedElement old = asElement2cgElement.put(asOppositePropertyCallExp, cgNavigationCallExp);
+		assert old == cgNavigationCallExp;			// XXX demonstrates that put is redundant
 		return cgNavigationCallExp;
 	}
 
@@ -996,28 +978,20 @@ public class CodeGenAnalyzer
 			asPackage = ClassUtil.nonNullState(completePackage.getPrimaryPackage());
 			cgPackage.setAst(asPackage);
 		//	cgPackage.setName(callingConvention.getName(this, asPackage));			// XXX defer via NameResolution
-		//	cgPackage.setTypeId(analyzer.getCGTypeId(asPackage.getTypeId()));
-		//	cgPackage.setRequired(asPackage.isIsRequired());
 			for (org.eclipse.ocl.pivot.@NonNull Package asPartialPackage : PivotUtil.getPartialPackages(completePackage)) {
 				asElement2cgElement.put(asPartialPackage, cgPackage);
 			}
-			//	if (cgRootPackage == null) {
-			//		cgRootPackage = cgPackage;
-			//	}
 			String name = PivotUtil.getName(asPackage);
 			EObject eContainer = asPackage.eContainer();
 			if ((eContainer == null) || (eContainer instanceof Model)) {		// XXX why no Model ??
 				globalNameManager.declareEagerName(cgPackage, name);
 			}
 			else {
-			//	CGPackage cgParentPackage = generatePackageDeclaration((org.eclipse.ocl.pivot.Package)eContainer);
 				PackageNameManager parentPackageNameManager = getPackageNameManager(null, (org.eclipse.ocl.pivot.Package)eContainer);
 				parentPackageNameManager.getCGPackage().getPackages().add(cgPackage);
 				new NameResolution.EagerNested(parentPackageNameManager, cgPackage, name);
 			}
 			getPackageNameManager(cgPackage, asPackage);
-		//	pushClassNameManager(cgClass);
-		//	popClassNameManager();
 		}
 		return cgPackage;
 	}
@@ -1037,7 +1011,8 @@ public class CodeGenAnalyzer
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		CGValuedElement cgNavigationCallExp = callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asPropertyCallExp);
-		asElement2cgElement.put(asPropertyCallExp, cgNavigationCallExp);
+		CGNamedElement old = asElement2cgElement.put(asPropertyCallExp, cgNavigationCallExp);
+		assert old == cgNavigationCallExp;			// XXX demonstrates that put is redundant
 		return cgNavigationCallExp;
 	}
 
@@ -1052,10 +1027,8 @@ public class CodeGenAnalyzer
 				callingConvention = codeGenerator.getCallingConvention(asProperty);
 			}
 			cgProperty = callingConvention.createCGProperty(this, asProperty);
-			assert cgProperty.getAst() != null;
-			assert cgProperty.getCallingConvention() == callingConvention;
-			assert cgProperty.getTypeId() == getCGTypeId(asProperty.getTypeId());
-			assert cgProperty.isRequired() == asProperty.isIsRequired();
+			cgProperty.setCallingConvention(callingConvention);
+			initAst(cgProperty, asProperty, true);
 			ExecutableNameManager propertyNameManager = getPropertyNameManager(cgProperty, asProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression specification = asProperty.getOwnedExpression();
@@ -1094,8 +1067,9 @@ public class CodeGenAnalyzer
 		CGConstantExp cgNullExpression = createCGConstantExp(callExp, getCGNull());
 		//
 		CGIsEqual2Exp cgCondition = CGModelFactory.eINSTANCE.createCGIsEqual2Exp();
-		cgCondition.setAst(callExp);
-		cgCondition.setTypeId(getCGTypeId(TypeId.BOOLEAN));
+	//	cgCondition.setAst(callExp);
+	//	cgCondition.setTypeId(getCGTypeId(TypeId.BOOLEAN));
+		initAst(cgCondition, callExp, TypeId.BOOLEAN, false); // Guard has different type.
 		cgCondition.setSource(cgVariableExp);
 		cgCondition.setArgument(cgNullExpression);
 		cgCondition.setInvalidating(false);
@@ -1104,9 +1078,19 @@ public class CodeGenAnalyzer
 		CGConstantExp cgThenExpression = createCGConstantExp(callExp, getCGNull());
 		//
 		CGIfExp cgIfExp = createCGIfExp(cgCondition, cgThenExpression, cgUnsafeExp);
-		initAst(cgIfExp, callExp);
+		initAst(cgIfExp, callExp, false);
+	//	assert assertInitAst(cgIfExp, callExp, true);
 		//
 		return cgIfExp;
+	}
+
+	public @NonNull CGValuedElement generateVariableExp(@NonNull VariableExp asVariableExp) {
+		VariableDeclaration asVariable = PivotUtil.getReferredVariable(asVariableExp);
+		CGVariable cgVariable = useExecutableNameManager(asVariableExp).getCGVariable(asVariable);
+		CGVariableExp cgVariableExp = CGModelFactory.eINSTANCE.createCGVariableExp();
+		cgVariableExp.setReferredVariable(cgVariable);
+		initAst(cgVariableExp, asVariableExp, true);
+		return cgVariableExp;
 	}
 
 //	public @NonNull AS2CGVisitor getAS2CGVisitor() {
@@ -1584,10 +1568,29 @@ public class CodeGenAnalyzer
 		return completeClass == owningCompleteClass;
 	}
 
-	public void initAst(@NonNull CGValuedElement cgElement, @NonNull TypedElement asElement) {
-		cgElement.setAst(asElement);
+	/**
+	 * Establish the cgElement.ast to asElement mapping and the corresponding cgElement.typeId. If isSymmetric, install
+	 * the reverse asElement2cgElement mapping.
+	 */
+	public void initAst(@NonNull CGValuedElement cgElement, @NonNull TypedElement asElement, boolean isSymmetric) {
 		TypeId asTypeId = asElement.getTypeId();
-		cgElement.setTypeId(getCGTypeId(asTypeId));
+		initAst(cgElement, asElement, asTypeId, isSymmetric);
+	}
+
+	/**
+	 * Establish the cgElement.ast to asElement and the cgElement.typeId to asTypeId mappings. If isSymmetric, install
+	 * the reverse asElement2cgElement mapping.
+	 */
+	public void initAst(@NonNull CGValuedElement cgElement, @NonNull TypedElement asElement, @NonNull TypeId asTypeId, boolean isSymmetric) {
+		cgElement.setAst(asElement);
+		CGTypeId cgTypeId = getCGTypeId(asTypeId);
+		cgElement.setTypeId(cgTypeId);
+		cgElement.setRequired(asElement.isIsRequired());
+	//	assert cgElement.isIsRequired() == asElement.isIsRequired();		// XXX next optimization
+		if (isSymmetric) {
+			CGNamedElement old = asElement2cgElement.put(asElement, cgElement);
+			assert old == null;
+		}
 	}
 
 	public @Nullable CGValuedElement inlineOperationCall(@NonNull OperationCallExp callExp, @NonNull LanguageExpression specification) {

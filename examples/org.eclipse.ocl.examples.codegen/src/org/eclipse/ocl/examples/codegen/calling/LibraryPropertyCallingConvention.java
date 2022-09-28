@@ -118,7 +118,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setLibraryProperty(libraryProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
-		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp);
+		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;

@@ -75,7 +75,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		cgPropertyCallExp.getOwns().add(cgPropertyId);
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
-		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp);
+		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
@@ -106,10 +106,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
 		Property asProperty = (Property)asTypedElement;
 		analyzer.addExternalFeature(asProperty);
-		CGForeignProperty cgProperty = CGModelFactory.eINSTANCE.createCGForeignProperty();
-		initProperty(analyzer, cgProperty, asTypedElement);
-		analyzer.addCGProperty(cgProperty);
-		return cgProperty;
+		return CGModelFactory.eINSTANCE.createCGForeignProperty();
 	}
 
 	@Override

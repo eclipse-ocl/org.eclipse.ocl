@@ -102,8 +102,6 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 			System.out.println("Fallback overload for " + this);		// XXX
 			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		}
-		initOperation(analyzer, cgOperation, asOperation);
-		analyzer.addCGOperation(cgOperation);
 		return cgOperation;
 	}
 

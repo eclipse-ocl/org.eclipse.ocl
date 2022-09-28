@@ -50,7 +50,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 		CGNativePropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
-		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp);
+		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
@@ -66,8 +66,6 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 		else {
 			cgProperty.setNonNull();
 		}
-		initProperty(analyzer, cgProperty, asTypedElement);
-		analyzer.addCGProperty(cgProperty);
 		return cgProperty;
 	}
 
