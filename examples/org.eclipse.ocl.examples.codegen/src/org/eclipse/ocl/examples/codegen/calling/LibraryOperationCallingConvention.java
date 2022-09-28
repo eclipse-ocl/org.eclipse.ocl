@@ -76,10 +76,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		assert !(libraryOperation instanceof EObjectOperation);
 		assert !(libraryOperation instanceof ForeignOperation);
 		assert !(libraryOperation instanceof ConstrainedOperation);
-		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		initOperation(analyzer, cgOperation, asOperation);
-		analyzer.addCGOperation(cgOperation);
-		return cgOperation;
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
 	@Override

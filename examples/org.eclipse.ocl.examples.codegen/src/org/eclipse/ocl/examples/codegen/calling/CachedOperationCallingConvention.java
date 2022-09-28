@@ -82,8 +82,6 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 
 	//	CGOperation cgOperation2 = analyzer.basicGetFinalCGOperation(asOperation);
 	//	assert cgOperation2 == cgOperation;
-		initOperation(analyzer, cgOperation, asOperation);
-		analyzer.addCGOperation(cgOperation);
 		return cgOperation;
 
 
@@ -121,7 +119,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 				CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, asArgument);
 				cgArguments.add(cgArgument);
 			}
-			analyzer.initAst(cgOperationCallExp, asOperationCallExp);
+			analyzer.initAst(cgOperationCallExp, asOperationCallExp, true);
 	//	} else {
 	//		Iterable<@NonNull Operation> overrides = as2cgVisitor.getMetamodelManager().getFinalAnalysis().getOverrides(asOperation);
 	//		cgCallExp = cachedOperationCall(as2cgVisitor, asOperationCallExp, currentClass, cgSource, asOperation, overrides);

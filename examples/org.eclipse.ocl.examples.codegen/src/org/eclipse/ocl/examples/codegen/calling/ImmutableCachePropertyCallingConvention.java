@@ -47,7 +47,7 @@ public class ImmutableCachePropertyCallingConvention extends AbstractCacheProper
 	//	cgPropertyCallExp.setAstTuplePartId(IdManager.getTuplePartId(asProperty));
 	//	cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
-		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp);
+		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 	//	cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 	//	cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;

@@ -108,8 +108,6 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		}
 		analyzer.addExternalFeature(asOperation);
-		initOperation(analyzer, cgOperation, asOperation);
-		analyzer.addCGOperation(cgOperation);
 		return cgOperation;
 	}
 

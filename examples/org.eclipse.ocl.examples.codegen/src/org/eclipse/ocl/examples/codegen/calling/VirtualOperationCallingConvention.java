@@ -129,7 +129,9 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	//		}
 	//	}
 		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();		// XXX ??? cache post rather than pre-dispatch
-		initOperation(analyzer, cgOperation, asOperation);
+		cgOperation.setRequired(asOperation.isIsRequired());
+		cgOperation.setCallingConvention(this);
+		analyzer.initAst(cgOperation, asOperation, true);
 		analyzer.addVirtualCGOperation(asOperation, cgOperation);
 		cgOperation.getFinalOperations().addAll(cgOverrideOperations);
 		return cgOperation;

@@ -72,7 +72,7 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 		cgPropertyCallExp.setExecutorProperty(cgExecutorProperty);
 		cgPropertyCallExp.getOwns().add(cgExecutorProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
-		analyzer.initAst(cgPropertyCallExp, asOppositePropertyCallExp);
+		analyzer.initAst(cgPropertyCallExp, asOppositePropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired);
 		cgPropertyCallExp.setSource(cgSource);
 		cgPropertyCallExp.setReferredProperty(cgProperty);

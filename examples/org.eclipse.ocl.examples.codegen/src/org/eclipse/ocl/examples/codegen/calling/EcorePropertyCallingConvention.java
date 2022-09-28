@@ -33,9 +33,9 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedProperty;
 import org.eclipse.ocl.pivot.internal.library.ExplicitNavigationProperty;
@@ -137,22 +137,20 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		} */
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
-		cgPropertyCallExp.setAst(asPropertyCallExp);
-		cgPropertyCallExp.setTypeId(analyzer.getCGTypeId(asPropertyCallExp.getTypeId()));
+		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
 	}
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
-		Property asProperty = (Property)asTypedElement;
-		CGProperty cgProperty = super.createCGProperty(analyzer, asProperty);
-		ExecutableNameManager propertyNameManager = analyzer.getPropertyNameManager(cgProperty, asProperty);
+	public void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {
+		Property asProperty = (Property)propertyNameManager.getASScope();
+		CGProperty cgProperty = (CGProperty)propertyNameManager.getCGScope();
 		assert !asProperty.isIsImplicit();
 		ClassNameManager classNameManager = propertyNameManager.getClassNameManager();
 		classNameManager.declareEagerName(cgProperty);
-		return cgProperty;
+		super.createCGParameters(propertyNameManager, initExpression);
 	}
 
 	@Override
