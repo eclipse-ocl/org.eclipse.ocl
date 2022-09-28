@@ -54,7 +54,7 @@ public interface CodeGenerator
 	 * Determine the calling convention appropriate to asOperation. If requireFinal is false and asOperation has overrides
 	 * a dynamic dispatching calling convention is returned. ... inline ... Otherwise a direct calling convention.
 	 */
-	@NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal);
+	@NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean maybeVirtual);
 
 	/**
 	 * Determine the calling convention appropriate to asProperty.

@@ -11,8 +11,8 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -27,17 +27,26 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 {
 	public static final @NonNull JUnitClassCallingConvention INSTANCE = new JUnitClassCallingConvention();
 
+	@Override
+	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CGClass cgClass = createCGClass();
+		installCGDefaultClassParent(analyzer, cgClass, asClass);
+		return cgClass;
+	}
+
 	/**
 	 * Generate the Java code for a Class declaration.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	//	if (isEmpty(cgClass)) {
+	//		return true;
+	//	}
+		js.append("\n");
 		String className = CGUtil.getName(cgClass);
-		CGPackage cgContainingPackage = cgClass.getContainingPackage();
-		assert cgContainingPackage != null;
-		js.appendClassHeader(cgContainingPackage);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
+		js.appendClassHeader(asClass);
 		Operation asOperation = asClass.getOwnedOperations().get(0);
 		ExpressionInOCL expInOcl = (ExpressionInOCL)asOperation.getBodyExpression();
 		Class<?> baseClass = cg2javaVisitor.getGenModelHelper().getAbstractOperationClass(expInOcl.getOwnedParameters().size());
@@ -49,6 +58,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.appendClassReference(null, baseClass);
 	//	appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
+		js.append("\n");					// XXX delete me
 		Iterable<@NonNull CGValuedElement> sortedGlobals = cg2javaVisitor.getAnalyzer().getGlobals();
 		if (sortedGlobals != null) {
 			cg2javaVisitor.generateGlobals(sortedGlobals);

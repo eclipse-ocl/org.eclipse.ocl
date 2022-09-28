@@ -143,34 +143,39 @@ import org.eclipse.ocl.pivot.values.UnlimitedValue;
  */
 public class NameManagerHelper
 {
-	public static final String BAG_NAME_HINT_PREFIX = "BAG";
-	public static final String COLLECTION_NAME_HINT_PREFIX = "COL";
-	public static final String CONSTRAINT_NAME_HINT_PREFIX = "";
-	public static final String DEFAULT_GLOBAL_NAME_PREFIX = "global";
-	public static final String DEFAULT_LOCAL_NAME_PREFIX = "symbol";
-	//	public static final String ID_NAME_HINT_PREFIX = "TID";
-	public static final String EXPRESSION_IN_OCL_NAME_HINT_PREFIX = PivotConstants.RESULT_NAME;
-	public static final String IF_NAME_HINT_PREFIX = "IF_";
-	public static final String INTEGER_NAME_HINT_PREFIX = "INT_";
-	public static final String INVALID_NAME_HINT_PREFIX = "IVE_";
-	public static final String ITERATION_NAME_HINT_PREFIX = "";
-	public static final String LET_NAME_HINT_PREFIX = "WITH_";
-	public static final String MAP_PART_HINT_PREFIX = "MAP_PART_";
-	public static final String OPERATION_NAME_HINT_PREFIX = "OP_";
-	public static final String OPERATION_CALL_EXP_NAME_HINT_PREFIX = ""; //"RES_";
-	public static final String ORDERED_SET_NAME_HINT_PREFIX = "ORD";
-	public static final String PROPERTY_NAME_HINT_PREFIX = "";
-	public static final String REAL_NAME_HINT_PREFIX = "REA_";
-	public static final String RANGE_NAME_HINT_PREFIX = "RNG";
-	public static final String SEQUENCE_NAME_HINT_PREFIX = "SEQ";
-	public static final String SET_NAME_HINT_PREFIX = "SET";
-	public static final String SHADOW_NAME_HINT_PREFIX = "SHAD_";
-	public static final String STRING_NAME_HINT_PREFIX = "STR_";
+	public static final @NonNull String BAG_NAME_HINT_PREFIX = "BAG";
+	public static final @NonNull String CACHE_CLASS_NAME_PREFIX = "CACHE_";
+	public static final @NonNull String COLLECTION_NAME_HINT_PREFIX = "COL";
+	public static final @NonNull String CONSTRAINT_NAME_HINT_PREFIX = "";
+	public static final @NonNull String DEFAULT_GLOBAL_NAME_PREFIX = "global";
+	public static final @NonNull String DEFAULT_LOCAL_NAME_PREFIX = "symbol";
+	public static final @NonNull String DISPATCH_CLASS_NAME_PREFIX = "DISPATCH_";
+	public static final @NonNull String ENTRY_CLASS_NAME_PREFIX = "ENTRY_";
+	public static final @NonNull String EXPRESSION_IN_OCL_NAME_HINT_PREFIX = PivotConstants.RESULT_NAME;
+	//	public static final @NonNull String ID_NAME_HINT_PREFIX = "TID";
+	public static final @NonNull String IF_NAME_HINT_PREFIX = "IF_";
+	public static final @NonNull String INSTANCE_PROPERTY_NAME_PREFIX = "INSTANCE_";
+	public static final @NonNull String INTEGER_NAME_HINT_PREFIX = "INT_";
+	public static final @NonNull String INVALID_NAME_HINT_PREFIX = "IVE_";
+	public static final @NonNull String ITERATION_NAME_HINT_PREFIX = "";
+	public static final @NonNull String LET_NAME_HINT_PREFIX = "WITH_";
+	public static final @NonNull String MAP_PART_HINT_PREFIX = "MAP_PART_";
+	public static final @NonNull String OPERATION_NAME_HINT_PREFIX = "OP_";
+	public static final @NonNull String OPERATION_CALL_EXP_NAME_HINT_PREFIX = ""; //"RES_";
+	public static final @NonNull String ORDERED_SET_NAME_HINT_PREFIX = "ORD";
+	public static final @NonNull String PROPERTY_NAME_HINT_PREFIX = "";
+	public static final @NonNull String REAL_NAME_HINT_PREFIX = "REA_";
+	public static final @NonNull String RANGE_NAME_HINT_PREFIX = "RNG";
+	public static final @NonNull String RULE_CACHE_CLASS_NAME_PREFIX = "RULE_CACHE_";
+	public static final @NonNull String SEQUENCE_NAME_HINT_PREFIX = "SEQ";
+	public static final @NonNull String SET_NAME_HINT_PREFIX = "SET";
+	public static final @NonNull String SHADOW_NAME_HINT_PREFIX = "SHAD_";
+	public static final @NonNull String STRING_NAME_HINT_PREFIX = "STR_";
 	public static final int STRING_NAME_HINT_LIMIT = 64;
-	public static final String TUPLE_NAME_HINT_PREFIX = "TUP_";
-	public static final String TYPE_NAME_HINT_PREFIX = "TYP_";
-	public static final String UNLIMITED_NAME_HINT_PREFIX = "UNL_";
-	public static final String VARIABLE_DECLARATION_NAME_HINT_PREFIX = "";
+	public static final @NonNull String TUPLE_NAME_HINT_PREFIX = "TUP_";
+	public static final @NonNull String TYPE_NAME_HINT_PREFIX = "TYP_";
+	public static final @NonNull String UNLIMITED_NAME_HINT_PREFIX = "UNL_";
+	public static final @NonNull String VARIABLE_DECLARATION_NAME_HINT_PREFIX = "";
 
 	/**
 	 * Names that will not be allocated to temporary variables.
@@ -179,7 +184,7 @@ public class NameManagerHelper
 	 * <p>
 	 * It is strongly recommended that clients do no more than add additional names.
 	 */
-	public static final Set<@NonNull String> reservedJavaNames = new HashSet<>();
+	public static final @NonNull Set<@NonNull String> reservedJavaNames = new HashSet<>();
 	{
 		reservedJavaNames.add("Boolean");
 		reservedJavaNames.add("Character");

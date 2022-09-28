@@ -54,6 +54,7 @@ import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
@@ -103,6 +104,21 @@ public class ElementUtil
 			s.append("null");
 		}
 		s.append(isSignificant ? "]" : ")");
+	}
+
+	public static @Nullable Operation basicGetContainingOperation(@NonNull ElementCS csElement) {
+		for (EObject eObject = csElement; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof Pivotable) {
+				Element asElement = ((Pivotable)eObject).getPivot();
+				if (asElement != null) {
+					Operation asOperation = PivotUtil.basicGetContainingOperation(asElement);
+					if (asOperation != null) {
+						return asOperation;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	public static @Nullable ParserContext basicGetParserContext(@NonNull EObject csElement) {

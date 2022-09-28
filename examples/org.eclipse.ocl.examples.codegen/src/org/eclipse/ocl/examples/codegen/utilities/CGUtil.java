@@ -111,6 +111,15 @@ public class CGUtil
 		return null;
 	}
 
+	public static @Nullable CGClass basicGetContextCGClass(@NonNull CGElement cgElement) {
+		for (EObject eObject = cgElement, eContainer; (eContainer = eObject.eContainer()) != null; eObject = eContainer) {
+			if (eContainer instanceof CGPackage) {
+				return (CGClass)eObject;
+			}
+		}
+		return null;
+	}
+
 	public static @Nullable Parameter basicGetParameter(@NonNull CGParameter cgParameter) {
 		Element ast1 = cgParameter.getAst();
 		Element ast2 = ast1 instanceof ParameterVariable ? ((ParameterVariable)ast1).getRepresentedParameter() : ast1;
@@ -118,7 +127,7 @@ public class CGUtil
 	}
 
 	/**
-	 * Simplify org.eclipse.jdt.annotation references that unnecessarily use long firm within a long firm.
+	 * Simplify org.eclipse.jdt.annotation references that unnecessarily use long form within a long form.
 	 * e.g. replace
 	 *
 	 * "X.Y.@org.eclipse.jdt.annotation.NonNull Z" by "@NonNull Z" if "X.Y.Z" is an import.
@@ -393,16 +402,29 @@ public class CGUtil
 		return null;
 	} */
 
-	public static @NonNull CGValuedElement getContainingFeature(@Nullable CGElement cgElement) {
-		for ( ; cgElement != null; cgElement = cgElement.getParent()) {
-			if (cgElement instanceof CGOperation) {
-				return (CGOperation) cgElement;
+	public static @NonNull CGValuedElement getContainingFeature(final @Nullable CGElement cgElement) {
+		for (CGElement cgElement2 = cgElement; cgElement2 != null; cgElement2 = cgElement2.getParent()) {
+			if (cgElement2 instanceof CGOperation) {
+				return (CGOperation) cgElement2;
 			}
-			if (cgElement instanceof CGProperty) {
-				return (CGProperty) cgElement;
+			if (cgElement2 instanceof CGProperty) {
+				return (CGProperty) cgElement2;
 			}
 		}
 		throw new IllegalStateException("No containing Feature for " + cgElement);
+	}
+
+	public static @NonNull CGPackage getContainingPackage(final @NonNull CGElement cgElement) {
+		for (CGElement cgElement2 = cgElement; cgElement2 != null; cgElement2 = cgElement2.getParent()) {
+			if (cgElement2 instanceof CGPackage) {
+				return (CGPackage) cgElement2;
+			}
+		}
+		throw new IllegalStateException("No containing Package for " + cgElement);
+	}
+
+	public static @NonNull CGClass getContextCGClass(@NonNull CGElement cgElement) {
+		return ClassUtil.nonNullState(basicGetContextCGClass(cgElement));
 	}
 
 	public static @NonNull CGExecutorType getExecutorType(@NonNull CGShadowExp object) {
@@ -572,7 +594,7 @@ public class CGUtil
 	}
 
 	public static @Nullable Boolean isKindOf(@NonNull CGValuedElement cgValue, @NonNull CGExecutorType executorType) {
-		CGTypeId referenceTypeId = executorType.getUnderlyingTypeId();
+		CGTypeId referenceTypeId = executorType.getTypeId();
 		CGTypeId actualTypeId = cgValue.getTypeId();
 	//	return referenceTypeId == actualTypeId ? Boolean.TRUE : null;		// FIXME support conformance somehow
 		if (referenceTypeId == actualTypeId) {

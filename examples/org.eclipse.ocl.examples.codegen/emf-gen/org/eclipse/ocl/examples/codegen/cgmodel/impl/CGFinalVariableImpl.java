@@ -79,5 +79,4 @@ public class CGFinalVariableImpl extends CGVariableImpl implements CGFinalVariab
 	public @NonNull CGValuedElement getTypedValue() {
 		return init != null ? init.getTypedValue() : this;
 	}
-
 } //CGFinalVariableImpl

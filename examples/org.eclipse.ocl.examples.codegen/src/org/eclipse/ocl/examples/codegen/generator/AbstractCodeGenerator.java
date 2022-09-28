@@ -102,7 +102,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	public static final @NonNull String ORG_ECLIPSE_JDT_ANNOTATION_NULLABLE = "org.eclipse.jdt.annotation.Nullable";
 
 	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
-	protected final @NonNull  PivotHelper asHelper;
+	protected final @NonNull PivotHelper asHelper;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
@@ -191,18 +191,24 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		return new CodeGenOptions();
 	}
 
-//	public @NonNull ClassCallingConvention getCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-//		return JUnitClassCallingConvention.INSTANCE;		// XXX
-//	}
-
 	public abstract @NonNull AS2CGVisitor createAS2CGVisitor(@NonNull CodeGenAnalyzer codeGenAnalyzer);
+
+	public @NonNull PivotHelper getASHelper() {
+		return asHelper;
+	}
 
 	public @NonNull ClassCallingConvention getCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ContextClassCallingConvention.INSTANCE;
 	}
 
 	@Override
-	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal) {
+	public final @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean maybeVirtual) {
+		OperationCallingConvention callingConvention = getCallingConventionInternal(asOperation, maybeVirtual);
+	//	NameUtil.errPrintln(callingConvention + " for " + asOperation + ":" + maybeVirtual);
+		return callingConvention;
+	}
+
+	protected @NonNull OperationCallingConvention getCallingConventionInternal(@NonNull Operation asOperation, boolean maybeVirtual) {
 		if (asOperation instanceof Iteration) {
 			return BuiltInIterationCallingConvention.INSTANCE;
 		}
@@ -247,7 +253,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			}
 			else {
 				FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
-				if (!requireFinal) {
+				if (maybeVirtual) {
 					Iterable<@NonNull Operation> asOverrides = finalAnalysis.getOverrides(asOperation);
 					if (Iterables.size(asOverrides) > 1) {
 						return VirtualOperationCallingConvention.INSTANCE;		// Need a polymorphic dispatcher
@@ -259,7 +265,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 						if (!referencedFinalOperations.contains(asOperation)) {
 							Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, bodyExpression);
 							if (referencedNonFinalOperations == null) {
-								// a simple heavy heuristic might avoid some unpleasant bloat
+								// FIXME a simple heavy wrt call count heuristic might avoid some unpleasant bloat
 								return InlinedOperationCallingConvention.INSTANCE;
 							}
 						}

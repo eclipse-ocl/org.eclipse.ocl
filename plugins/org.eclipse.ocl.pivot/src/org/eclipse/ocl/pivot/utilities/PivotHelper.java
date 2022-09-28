@@ -402,7 +402,7 @@ public class PivotHelper
 		return PivotUtil.createParameter(name, asType, isRequired);
 	}
 
-	@Deprecated /* supply a representedParameter */
+	@Deprecated /* Discouraged: supply a representedParameter except that Constraint has no Parameters to represent */
 	public @NonNull ParameterVariable createParameterVariable(@NonNull String name, @NonNull Type asType, boolean isRequired) {
 		ParameterVariable asVariable = PivotFactory.eINSTANCE.createParameterVariable();
 		asVariable.setName(name);

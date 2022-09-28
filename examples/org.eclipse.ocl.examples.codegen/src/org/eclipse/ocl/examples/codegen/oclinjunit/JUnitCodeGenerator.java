@@ -114,9 +114,9 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		asOperation.setBodyExpression(expInOcl);
 		asHelper.setType(asOperation, expInOcl.getType(), expInOcl.isIsRequired());
 
-		CodeGenAnalyzer analyzer2 = getAnalyzer();
-		CGPackage cgPackage = analyzer2.createCGElement(CGPackage.class, asRootPackage);
-		analyzer2.analyzeExternalFeatures();
+		analyzer.setRootClass(asClass);				// Identify the host for synthesized nested classes
+		CGPackage cgPackage = analyzer.createCGElement(CGPackage.class, asRootPackage);
+		analyzer.analyzeExternalFeatures(analyzer.getCGClass(asClass));
 		return cgPackage;
 	}
 
@@ -157,12 +157,12 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal) {
+	protected @NonNull OperationCallingConvention getCallingConventionInternal(@NonNull Operation asOperation, boolean maybeVirtual) {
 		assert asTestOperation != null;
 		if (asOperation == asTestOperation)  {
 			return JUnitOperationCallingConvention.INSTANCE;
 		}
-		return super.getCallingConvention(asOperation, requireFinal);
+		return super.getCallingConventionInternal(asOperation, maybeVirtual);
 	}
 
 	@Override

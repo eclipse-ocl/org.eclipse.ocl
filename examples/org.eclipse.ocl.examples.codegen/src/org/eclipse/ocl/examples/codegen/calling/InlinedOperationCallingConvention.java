@@ -10,34 +10,36 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGInlinedOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.examples.codegen.utilities.RereferencingCopier;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -45,16 +47,26 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *
  *  -- only used by QVTd
  */
-public class InlinedOperationCallingConvention extends ConstrainedOperationCallingConvention	// CF ConstrainedOperationCallingConvention
+public class InlinedOperationCallingConvention extends AbstractOperationCallingConvention
 {
 	public static final @NonNull InlinedOperationCallingConvention INSTANCE = new InlinedOperationCallingConvention();
 
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
+		Operation asReferredOperation = CGUtil.getAsOperation(cgOperationCallExp);
+		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
+		CGClass cgReferringClass = CGUtil.getContainingClass(cgOperationCallExp);
+		assert cgReferringClass != null;
+		String flattenedClassName = codeGenerator.getQualifiedForeignClassName(asReferredClass);
+		js.append(flattenedClassName);
+		js.append(".");
+		js.appendValueName(cgOperation);
+	}
+
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		CGInlinedOperation cgOperation = CGModelFactory.eINSTANCE.createCGInlinedOperation();
-		initOperation(analyzer, cgOperation, asOperation);
-		analyzer.addCGOperation(cgOperation);
-		return cgOperation;
+		return CGModelFactory.eINSTANCE.createCGInlinedOperation();
 	}
 
 	@Override
@@ -69,14 +81,50 @@ public class InlinedOperationCallingConvention extends ConstrainedOperationCalli
 			finalOperation = analyzer.getCodeGenerator().isFinal(asOperation, (org.eclipse.ocl.pivot.Class)sourceType);	// FIXME cast
 		}
 		assert (finalOperation != null);
-		LanguageExpression bodyExpression = asOperation.getBodyExpression();
-		assert (bodyExpression != null);
+		ExpressionInOCL originalExpression = PivotUtil.getBodyExpression(asOperation);
 		//
-		// The AS clone is presumably to ensaure a unique AS2CG mapping. Now the CGOperationCallExp etc have
-		// CGOperation/CGParameter the AS2CG mapping could well be a redundant concern.
+		// The AS clone provides the kit of parts from which the ParameterVariables of the original body are replaced with
+		// a let variable tree to which source and arguments are assigned. The resulting tree replaces the call exp.
 		//
-		ExpressionInOCL asClone = createCopy((ExpressionInOCL)bodyExpression);
-		OCLExpression asExpression = ClassUtil.nonNullState(asClone.getOwnedBody());
+		PivotHelper asHelper = analyzer.getCodeGenerator().getASHelper();
+		Map<@NonNull Variable, @NonNull LetVariable> parameter2let = new HashMap<>();
+		if (asSource != null) {
+			Variable parameterVariable = originalExpression.getOwnedContext();
+		//	PivotUtilInternal.resetContainer(asSource);
+			LetVariable letVariable = asHelper.createLetVariable(parameterVariable.getName(), parameterVariable.getType(), parameterVariable.isIsRequired(), EcoreUtil.copy(asSource));
+			parameter2let.put(parameterVariable, letVariable);
+		}
+		List<@NonNull OCLExpression> asArguments = ClassUtil.nullFree(asOperationCallExp.getOwnedArguments());
+		List<@NonNull Variable> asParameterVariables = ClassUtil.nullFree(originalExpression.getOwnedParameters());
+		int argumentsSize = asArguments.size();
+		assert asParameterVariables.size() == argumentsSize;
+		for (int i = 0; i < argumentsSize; i++) {
+			Variable parameterVariable = asParameterVariables.get(i);
+			OCLExpression asExpression = EcoreUtil.copy(asArguments.get(i));
+		//	PivotUtilInternal.resetContainer(asExpression);
+			LetVariable letVariable = asHelper.createLetVariable(parameterVariable.getName(), parameterVariable.getType(), parameterVariable.isIsRequired(), asExpression);
+			parameter2let.put(parameterVariable, letVariable);
+		}
+		ExpressionInOCL asClone = RereferencingCopier.copy(originalExpression, parameter2let);
+		OCLExpression asExpression = PivotUtil.getOwnedBody(asClone);
+		PivotUtilInternal.resetContainer(asExpression);
+		for (int i = argumentsSize; --i >= 0; ) {
+			Variable parameterVariable = asParameterVariables.get(i);
+			LetVariable letVariable = parameter2let.get(parameterVariable);
+			assert letVariable != null;
+			PivotUtilInternal.resetContainer(letVariable);
+			asExpression = asHelper.createLetExp(letVariable, asExpression);
+		}
+		if (asSource != null) {
+			Variable parameterVariable = originalExpression.getOwnedContext();
+			LetVariable letVariable = parameter2let.get(parameterVariable);
+			assert letVariable != null;
+			PivotUtilInternal.resetContainer(letVariable);
+			asExpression = asHelper.createLetExp(letVariable, asExpression);
+		}
+		PivotUtil.replaceChild(asOperationCallExp, asExpression);
+
+	/*	analyzer.getCG
 		PivotUtilInternal.resetContainer(asExpression);
 		List<@NonNull OCLExpression> asArguments = ClassUtil.nullFree(asOperationCallExp.getOwnedArguments());
 		int argumentsSize = asArguments.size();
@@ -101,19 +149,19 @@ public class InlinedOperationCallingConvention extends ConstrainedOperationCalli
 		PivotUtilInternal.resetContainer(ownedSource);	// Defeat child-stealing detector
 		PivotUtilInternal.resetContainer(asVariable);	// Defeat child-stealing detector
 		PivotUtilInternal.resetContainer(asExpression);	// Defeat child-stealing detector
-		asExpression = createLetExp(asVariable, ownedSource, asExpression);
-		ASResource asResource = (ASResource) bodyExpression.eResource();
-		try {
-			boolean wasUpdating = asResource.setUpdating(true);			// FIXME Avoid immutable change
-			asResource.getContents().add(asExpression);					// Ensure that asExpression is not a Resource-less orphan; needed for FlowAnalysis
-			asResource.setUpdating(wasUpdating);
+		asExpression = createLetExp(asVariable, ownedSource, asExpression); */
+	//	ASResource asResource = (ASResource) originalExpression.eResource();
+	//	try {
+		//	boolean wasUpdating = asResource.setUpdating(true);			// FIXME Avoid immutable change
+		//	asResource.getContents().add(asExpression);					// Ensure that asExpression is not a Resource-less orphan; needed for FlowAnalysis
+		//	asResource.setUpdating(wasUpdating);
 			return analyzer.createCGElement(CGValuedElement.class, asExpression);
-		}
-		finally {
-			boolean wasUpdating = asResource.setUpdating(true);			// FIXME Avoid immutable change
-			asResource.getContents().remove(asExpression);
-			asResource.setUpdating(wasUpdating);
-		}
+	//	}
+	//	finally {
+		//	boolean wasUpdating = asResource.setUpdating(true);			// FIXME Avoid immutable change
+		//	asResource.getContents().remove(asExpression);
+		//	asResource.setUpdating(wasUpdating);
+	//	}
 	}
 
 	@Override
@@ -121,14 +169,14 @@ public class InlinedOperationCallingConvention extends ConstrainedOperationCalli
 		//	InlinedOperation never actually used so doesn't need parameters
 	}
 
-	protected <T extends EObject> @NonNull T createCopy(@NonNull T anEObject) {
-		return EcoreUtil.copy(anEObject);
-	}
+//	protected <T extends EObject> @NonNull T createCopy(@NonNull T anEObject) {
+//		return EcoreUtil.copy(anEObject);
+//	}
 
 	/**
 	 * Wrap asIn in a LetExp in which a clone of asInit is assigned to asVariable.
 	 * @since 1.3
-	 */
+	 *
 	protected @NonNull OCLExpression createLetExp(@Nullable Variable asVariable, @Nullable OCLExpression asInit, @NonNull OCLExpression asIn) {
 		if ((asVariable == null) || (asInit == null)) {
 			return asIn;
@@ -136,7 +184,7 @@ public class InlinedOperationCallingConvention extends ConstrainedOperationCalli
 		OCLExpression asInitClone = createCopy(asInit);
 		asVariable.setOwnedInit(asInitClone);
 		return PivotUtil.createLetExp(asVariable, asIn);
-	}
+	} */
 
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {

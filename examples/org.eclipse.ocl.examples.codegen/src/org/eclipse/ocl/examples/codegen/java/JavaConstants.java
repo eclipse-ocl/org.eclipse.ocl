@@ -38,6 +38,9 @@ public class JavaConstants {
 	 */
 	private static @NonNull JavaTypeIdSingletonScope javaTypes = new JavaTypeIdSingletonScope();
 
+	// XXX workaound lack of org.eclipse.ocl.runtime
+	public static final @NonNull String ABSTRACT_COMPUTATION_CONSTRUCTOR_CLASS_NAME = "org.eclipse.qvtd.runtime.internal.evaluation.AbstractComputationConstructor";
+
 	public static final @NonNull String CONSTRAINT_NAME_NAME = "constraintName";
 	public static final @NonNull String CONSTRAINT_CONTEXT_NAME = "context";
 	public static final @NonNull String CONSTRAINT_DIAGNOSTICS_NAME = "diagnostics";
@@ -45,14 +48,18 @@ public class JavaConstants {
 	public static final @NonNull String E_CONTAINER_NAME = "eContainer";
 
 	public static final @NonNull String ANY_NAME = "any";
+	public static final @NonNull String BASIC_EVALUATE_NAME = "basicEvaluate";
+	public static final @NonNull String BOXED_VALUES_NAME = "boxedValues";
+	public static final @NonNull String CACHED_RESULT_NAME = "cachedResult";
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
 	public static final @NonNull String EVALUATION_CACHE_NAME = "evaluationCache";
 	public static final @NonNull String EXECUTOR_NAME = "executor";
-//	public static final @NonNull String GET_CACHED_EVALUATION_RESULT_NAME = "getCachedEvaluationResult";
+	public static final @NonNull String GET_CACHED_EVALUATION_RESULT_NAME = "getCachedEvaluationResult";
 	public static final @NonNull String GET_RESULT_NAME = "getResult";
 	public static final @NonNull String ID_RESOLVER_NAME = "idResolver";
 	public static final @NonNull String INSTANCE_NAME = "INSTANCE";
 	public static final @NonNull String MODEL_MANAGER_NAME = "modelManager";
+	public static final @NonNull String NEW_INSTANCE_NAME = "newInstance";
 	public static final @NonNull String SELF_NAME = "self";
 	public static final @NonNull String SOURCE_AND_ARGUMENT_VALUES_NAME = "sourceAndArgumentValues";
 	public static final @NonNull String STANDARD_LIBRARY_NAME = "standardLibrary";

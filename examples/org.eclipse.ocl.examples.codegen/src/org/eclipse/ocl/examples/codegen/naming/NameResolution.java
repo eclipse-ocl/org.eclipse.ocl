@@ -255,7 +255,7 @@ public abstract class NameResolution
 	/**
 	 * A non-null placeholder for a nameHint whose resolution is deferred until the CG containment tree is sound.
 	 */
-	private static final @NonNull String UNRESOLVED = "«UNRESOLVED»";
+	public static final @NonNull String UNRESOLVED = "«UNRESOLVED»";
 
 	/**
 	 * A non-null placeholder for a nameHint whose resolution will not be used.
@@ -288,7 +288,7 @@ public abstract class NameResolution
 			getClass();		// XXX)
 		}
 //		this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
-		assert (primaryElement == null) || nameManager.isGlobal() || !primaryElement.isGlobal();		// XXX derived
+		assert (primaryElement == null) || nameManager.isGlobal() || !primaryElement.isGlobal();		// XXX derived -- nested CGClass is ?? not global
 	//	if (primaryElement == null) {
 	//		assert nameHint != null : "Expected NameResolution for null";
 	//	}
@@ -343,7 +343,7 @@ public abstract class NameResolution
 	public abstract @Nullable String basicGetResolvedName();
 
 	protected boolean debugNameHint(@NonNull String newName) {
-		if (newName.startsWith("eColor")) {
+		if (newName.contains("AbstractComputation")) {
 			getClass();		// XXX
 		}
 		if ("IMPPROPid_d3atlExpression".equals(newName)) {

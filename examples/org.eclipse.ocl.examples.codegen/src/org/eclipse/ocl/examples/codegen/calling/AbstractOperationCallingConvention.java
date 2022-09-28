@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -28,8 +29,10 @@ import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -39,10 +42,13 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -50,6 +56,15 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractOperationCallingConvention implements OperationCallingConvention
 {
+	protected @NonNull Parameter createBoxedValuesParameter(@NonNull JavaCodeGenerator codeGenerator) {
+		NameResolution boxedValuesResolution = codeGenerator.getGlobalNameManager().getBoxedValuesNameResolution();
+		String boxedValuesName = boxedValuesResolution.getResolvedName();
+		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+		org.eclipse.ocl.pivot.Class boxedValueType = jLanguageSupport.getNativeClass(Object[].class);
+		Parameter asConstructorParameter = PivotUtil.createParameter(boxedValuesName, boxedValueType, true);
+		return asConstructorParameter;
+	}
+
 	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
 		ExecutableNameManager operationNameManager = analyzer.getGlobalNameManager().useOperationNameManager(cgOperation);
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
@@ -61,7 +76,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		boolean hasExternalNames = cgOperation instanceof CGEcoreOperation;		// Ecore has genmodel-defined names
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {
 			String name = hasExternalNames ? parameterVariable.getName() : null;
-			CGParameter cgParameter = operationNameManager.getParameter(parameterVariable, name);
+			CGParameter cgParameter = operationNameManager.getCGParameter(parameterVariable, name);
 			cgParameters.add(cgParameter);
 		}
 	}
@@ -207,7 +222,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+	public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {  // XXX perhaps always override
 		Element asOperation = cgOperation.getAst();
 		ExpressionInOCL asSpecification = (ExpressionInOCL) (asOperation instanceof ExpressionInOCL ? asOperation : ((Operation)asOperation).getBodyExpression());
 		assert (asSpecification != null);
@@ -218,7 +233,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
-		return operationNameManager.getParameter(asParameterVariable, (String)null);
+		return operationNameManager.getCGParameter(asParameterVariable, (String)null);
 	}
 
 	@Override
@@ -243,7 +258,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 				cgOperation.getParameters().add(cgParameter);
 			}
 			for (@NonNull Parameter asParameterVariable : ClassUtil.nullFree(asOperation.getOwnedParameters())) {
-				CGParameter cgParameter = operationNameManager.getParameter(asParameterVariable, (String)null);
+				CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, (String)null);
 				cgOperation.getParameters().add(cgParameter);
 			}
 		}
@@ -294,11 +309,12 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	protected void initCallArguments(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		OperationCallExp asOperationCallExp = CGUtil.getAST(cgOperationCallExp);
 		Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
-		assert asOperationCallExp.getOwnedArguments().size() == asOperation.getOwnedParameters().size();
+		List<@NonNull OCLExpression> asArguments = PivotUtilInternal.getOwnedArgumentsList(asOperationCallExp);
+		List<@NonNull OCLExpression> asArgumentsCopy = new ArrayList<>(asArguments);		// XXX inlining can wrap a LetExp
+		assert asArguments.size() == asOperation.getOwnedParameters().size();
 		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
-		for (@NonNull OCLExpression asArgument : PivotUtil.getOwnedArguments(asOperationCallExp)) {
-			CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, asArgument);
-			cgArguments.add(cgArgument);
+		for (@NonNull OCLExpression asArgument : asArgumentsCopy) {
+			cgArguments.add(analyzer.createCGElement(CGValuedElement.class, asArgument));
 		}
 	}
 
@@ -312,22 +328,10 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	//	}
 	//	assert isRequired == isRequired2;
 		cgOperationCallExp.setAsOperation(asOperation);
-		cgOperationCallExp.setAst(asOperationCallExp);
-		TypeId asTypeId = asOperationCallExp.getTypeId();
-		cgOperationCallExp.setTypeId(analyzer.getCGTypeId(asTypeId));
+		analyzer.initAst(cgOperationCallExp, asOperationCallExp, true);
 		cgOperationCallExp.setReferredOperation(cgOperation);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
-		cgOperationCallExp.setRequired(isRequired);
-	}
-
-	protected void initOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull Operation asOperation) {
-		TypeId asTypeId = asOperation.getTypeId();
-		CGTypeId cgTypeId = analyzer.getCGTypeId(asTypeId);
-		cgOperation.setAst(asOperation);
-		cgOperation.setTypeId(cgTypeId);
-		cgOperation.setRequired(asOperation.isIsRequired());
-		cgOperation.setCallingConvention(this);
 	}
 
 	@Override
@@ -341,7 +345,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 	}
 
-	// Default guards and boxes al terms. Derived implementations for unboxed/ecore/simple-boxed
+	// Default guards and boxes all terms. Derived implementations for unboxed/ecore/simple-boxed
 	@Override		// XXX review for all derived implementations
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
@@ -356,12 +360,26 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 		boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);
 
+		Operation asBaseOperation = analyzer.basicGetOriginalOperation(cgOperation);
+		if (asBaseOperation != null) {
+			getClass();	// XXX
+		}
 		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		int iMax = cgArguments.size();
-		assert iMax == cgParameters.size();
-		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-			CGParameter cgParameter = cgParameters.get(i);
+		int maxArgument = cgArguments.size();
+		int maxParameter = cgParameters.size();
+		assert (maxArgument == maxParameter) || (maxParameter > 0);	// Correct or may be varargs
+		CGParameter cgParameter = null;
+		for (int i = 0; i < maxArgument; i++) {			// Avoid CME from rewrite
+			if (i < maxParameter) {
+				cgParameter = cgParameters.get(i);
+			}
+			else {
+				assert cgParameter != null;
+				ElementId elementId = cgParameter.getTypeId().getElementId();
+				boolean isArray = ((JavaTypeId)elementId).getJavaClass().getComponentType() != null;
+				assert isArray;
+			}
 			CGValuedElement cgArgument = cgArguments.get(i);
 			if (i == 0) {
 				CGValuedElement cgSource = cgArgument;
@@ -389,8 +407,12 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			}
 		}
 
-		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-			CGParameter cgParameter = cgParameters.get(i);
+		cgParameter = null;
+		for (int i = 0; i < maxArgument; i++) {			// Avoid CME from rewrite
+			if (i < maxParameter) {
+				cgParameter = cgParameters.get(i);
+			}
+			assert cgParameter != null;
 			CGValuedElement cgArgument = cgArguments.get(i);
 			boxingAnalyzer.rewriteAsBoxed(cgArgument);
 			if (i == 0) {
@@ -404,7 +426,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			//	if ((asParameter != null) && asParameter.isIsRequired() && !cgArgument.isNonNull()) {
 				if (cgParameter.isRequired() && !cgArgument.isNonNull()) {
 //					rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
-					boxingAnalyzer.rewriteAsGuarded(cgArgument, false, "''" + cgParameter.getTypeId() + "'' rather than ''OclVoid'' value required");
+					boxingAnalyzer.rewriteAsGuarded(cgArgument, false, "''" + cgParameter.getTypeId() + "'' rather than ''OclVoid'' elementId");
 				}
 			}
 		}

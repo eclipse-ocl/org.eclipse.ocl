@@ -31,16 +31,18 @@ public class SimpleDataTypeDescriptor extends AbstractDescriptor implements Simp
 {
 	private static class NamedFuture {}
 
-	protected final @NonNull String className;
+	protected final @NonNull String fullyQualifiedClassName;
 
-	public SimpleDataTypeDescriptor(@NonNull ElementId elementId, @NonNull String className) {
+	public SimpleDataTypeDescriptor(@NonNull ElementId elementId, @NonNull String fullyQualifiedClassName) {
 		super(elementId);
-		this.className = className;
+		this.fullyQualifiedClassName = fullyQualifiedClassName;
+	//	assert fullyQualifiedClassName.contains(".");		-- may all be in default package
+		assert !fullyQualifiedClassName.startsWith(".");
 	}
 
 	@Override
 	public void append(@NonNull JavaStream javaStream, @Nullable Boolean isRequired) {
-		javaStream.appendClassReference(isRequired, className);
+		javaStream.appendClassReference(isRequired, fullyQualifiedClassName);
 	}
 
 	@Override
@@ -51,7 +53,7 @@ public class SimpleDataTypeDescriptor extends AbstractDescriptor implements Simp
 	@Override
 	@NonNull
 	public String getClassName() {
-		return className;
+		return fullyQualifiedClassName;
 	}
 
 	@Override

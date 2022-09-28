@@ -1076,7 +1076,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 		@Nullable String generateIsGlobal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 
 		public static final @NonNull Glo CLS = new Glo() { @Override public @NonNull String generateIsGlobal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return ast.eContainer() instanceof " + classRef(org.eclipse.ocl.pivot.Package.class) + ";";
+			return "return eContainer() instanceof " + classRef(CGPackage.class) + ";";
 		}};
 		public static final @NonNull Glo CPART = new Glo() { @Override public @NonNull String generateIsGlobal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return first.isGlobal() && ((last == null) || last.isGlobal());";

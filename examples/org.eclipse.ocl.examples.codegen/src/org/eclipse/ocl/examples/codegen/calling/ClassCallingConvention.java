@@ -15,6 +15,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.pivot.NamedElement;
 
 /**
@@ -25,7 +26,7 @@ public interface ClassCallingConvention extends CallingConvention
 	/**
 	 * Create the appropriate CGClass less properties and operation to support a class/cached-operation/cached-property.
 	 */
-	@NonNull CGClass createCGClass(@NonNull NamedElement asNamedElement);
+	@NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass);
 
 	/**
 	 * Generate the Java code for a Class declaration.
@@ -34,4 +35,6 @@ public interface ClassCallingConvention extends CallingConvention
 	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass);
 
 	@NonNull String getName(@NonNull CodeGenAnalyzer analyzer, @NonNull NamedElement asNamedElement);
+
+	@NonNull ClassableNameManager getClassableNameManager(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass);
 }

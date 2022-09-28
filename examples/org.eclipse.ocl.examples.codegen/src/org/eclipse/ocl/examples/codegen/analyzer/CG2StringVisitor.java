@@ -77,9 +77,11 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.AbstractExtendingCGModelVisitor;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResource;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResourceFactory;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -219,14 +221,22 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		if (cgNamedElement == null) {
 			result.append(NULL_PLACEHOLDER);
 		}
-		else if (cgNamedElement.getName() != null) {
-			result.append(cgNamedElement.getName());
-		}
-		else if (cgNamedElement.getAst() instanceof NamedElement) {
-			appendName((NamedElement)cgNamedElement.getAst());
-		}
 		else {
-			result.append(NULL_PLACEHOLDER);
+			Element ast = cgNamedElement.getAst();
+			String name = cgNamedElement.getName();
+			if (name != null) {
+				result.append(name);
+				if ((NameResolution.UNRESOLVED == name) && (ast instanceof NamedElement)) {
+					appendName((NamedElement)ast);
+				}
+			} else {
+				if (ast instanceof NamedElement) {
+					appendName((NamedElement)ast);
+				}
+				else {
+					result.append(NULL_PLACEHOLDER);
+				}
+			}
 		}
 	}
 

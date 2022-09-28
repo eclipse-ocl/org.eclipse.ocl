@@ -298,12 +298,16 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGCachedOperation(@NonNull CGCachedOperation cgCachedOperation) {
 		super.visitCGCachedOperation(cgCachedOperation);
-		rewriteAsBoxed(cgCachedOperation.getBody());
+	//	if (cgCachedOperation.getASTypeId() != TypeId.OCL_VOID) {		// Not constructor -- XXX move to CallingConvention
+			CGValuedElement cgBody = cgCachedOperation.getBody();
+			rewriteAsBoxed(cgBody);
+			assert cgCachedOperation.getBody() == cgBody;				// XXX check that rewriteAsBoxed is redundant
+	//	}
 		return null;
 	}
 
 	@Override
-	public @Nullable Object visitCGCachedOperationCallExp(@NonNull CGCachedOperationCallExp cgElement) {
+	public @Nullable Object visitCGCachedOperationCallExp(@NonNull CGCachedOperationCallExp cgElement) {	// XXX move to CallingConvention
 		super.visitCGCachedOperationCallExp(cgElement);
 		assert cgElement.getCgThis() == null;
 		List<CGValuedElement> cgArguments = cgElement.getArguments();

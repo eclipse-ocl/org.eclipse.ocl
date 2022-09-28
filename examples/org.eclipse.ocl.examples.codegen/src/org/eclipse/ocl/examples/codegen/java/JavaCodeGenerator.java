@@ -106,6 +106,7 @@ import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
 import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
+import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -495,6 +496,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return null;
 	}
 
+	public org.eclipse.ocl.pivot.@NonNull Class getContextClass() {
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public @NonNull EcoreDescriptor getEcoreDescriptor(@NonNull ElementId elementId, @Nullable Class<?> instanceClass) {
 		BoxedDescriptor boxedDescriptor = getBoxedDescriptor(elementId);
@@ -681,6 +686,14 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return PivotUtil.getName(asClass);
 	}
 
+	public @NonNull String getRequalifiedClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return AbstractLanguageSupport.getQualifiedName(asClass);
+	}
+
+	public @NonNull String getRequalifiedClassName(@NonNull String qualifiedClassName) {
+		return qualifiedClassName;
+	}
+
 	public @NonNull NameVariant getTHROWN_NameVariant() {
 		return THROWN_NameVariant;
 	}
@@ -772,31 +785,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		TypeDescriptor typeDescriptor = getTypeDescriptor(cgValue);
 		Class<?> javaClass = typeDescriptor.getJavaClass();		// FIXME Rationalize with TypeDescriptor.isPrimitive()
-		if ((javaClass == boolean.class) || ((javaClass == Boolean.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == byte.class) || ((javaClass == Byte.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == char.class) || ((javaClass == Character.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == double.class) || ((javaClass == Double.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == float.class) || ((javaClass == Float.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == int.class) || ((javaClass == Integer.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == long.class) || ((javaClass == Long.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == short.class) || ((javaClass == Short.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		return false;
+		boolean isNonNull = cgValue.isNonNull();
+		return JavaLanguageSupport.isPrimitive(isNonNull, javaClass);
 	}
 
 	/**
@@ -816,6 +806,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	public boolean maybePrimitive(@NonNull CGValuedElement cgValue) {
+		if (cgValue instanceof CGOperation) {
+			if (!((CGOperation)cgValue).maybePrimitive()) {
+				return false;
+			}
+		}
 		if (cgValue.getNamedValue().isCaught()) {
 			return false;
 		}
@@ -867,36 +862,45 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return sortedGlobals;
 	}
 
+	protected void propagateChildNameResolution(@NonNull CGElement cgElement, @NonNull CGElement cgChild, @NonNull EReference eContainmentFeature, @Nullable NameResolution parentNameResolution) {
+		if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
+			CGVariable cgVariable = (@NonNull CGVariable)cgElement;
+			NameResolution nameResolution = cgVariable.basicGetNameResolution();
+			if (nameResolution == null) {
+				NestedNameManager nestedNameManager = globalNameManager.useSelfNestedNameManager(cgVariable);
+				nameResolution = nestedNameManager.getNameResolution(cgVariable);
+			}
+			propagateNameResolution(cgChild, nameResolution);
+		}
+		else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__INIT) {
+			propagateNameResolution(cgChild, null);
+		}
+		else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__IN) {
+			propagateNameResolution(cgChild, parentNameResolution);
+		}
+		else if ((eContainmentFeature == CGModelPackage.Literals.CG_SOURCED_CALL_EXP__SOURCE) && (cgElement instanceof CGGuardExp)) {
+			propagateNameResolution(cgChild, parentNameResolution);	// Guard is an if predicate name re-use
+		}
+		else {
+			propagateNameResolution(cgChild, null);
+		}
+	}
+
 	/**
 	 * Propagate the parent name hint down to the descendants of cgElement so that initializers for variables use a name
 	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
+	 *
+	 * If parentNameResolution is null no hint is available.
+	 *
+	 * If the child already has an eager name such as an Ecore parameter, then that name must be preferred.
 	 */
 	protected void propagateNameResolution(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 			if (eObject instanceof CGElement) {
 				CGElement cgChild = (CGElement)eObject;
 				EReference eContainmentFeature = cgChild.eContainmentFeature();
-				if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
-					CGVariable cgVariable = (@NonNull CGVariable)cgElement;
-					NameResolution nameResolution = cgVariable.basicGetNameResolution();
-					if (nameResolution == null) {
-						NestedNameManager nestedNameManager = globalNameManager.useSelfNestedNameManager(cgVariable);
-						nameResolution = nestedNameManager.getNameResolution(cgVariable);
-					}
-					propagateNameResolution(cgChild, nameResolution);
-				}
-				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__INIT) {
-					propagateNameResolution(cgChild, null);
-				}
-				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__IN) {
-					propagateNameResolution(cgChild, parentNameResolution);
-				}
-				else if ((eContainmentFeature == CGModelPackage.Literals.CG_SOURCED_CALL_EXP__SOURCE) && (cgElement instanceof CGGuardExp)) {
-					propagateNameResolution(cgChild, parentNameResolution);	// Guard is an if predicate name re-use
-				}
-				else {
-					propagateNameResolution(cgChild, null);
-				}
+				assert eContainmentFeature != null;
+				propagateChildNameResolution(cgElement, cgChild, eContainmentFeature, parentNameResolution);
 			}
 		}
 		if (cgElement instanceof CGValuedElement) {
@@ -938,7 +942,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	/**
-	 * Propagate name hints down the cgElement hierarchy  that initializers for variables use a name
+	 * Propagate name hints down the cgElement hierarchy so that initializers for variables use a name
 	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
 	 */
 	protected void propagateNames(@NonNull CGElement cgElement) {
@@ -987,6 +991,24 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			}
 		}
 		globalNameManager.assignNames(nameManager2namedElements);
+		for (EObject eObject : new TreeIterable(cgPackage, true)) {		// XXX debugging
+			if (eObject instanceof CGValuedElement) {
+				CGValuedElement cgElement = (CGValuedElement)eObject;
+				if (!cgElement.isInlined()) {
+					if (cgElement.basicGetNameResolution() == null) {
+						System.out.println("Missing NameResolution for " + cgElement.eClass().getName() + " : " + cgElement);
+					}
+				}
+			/*	if (cgElement instanceof CGLetExp) {
+					if (!cgElement.isInlined()) {
+				//		assert !cgElement.isInlined();
+					}
+					CGValuedElement cgIn = CGUtil.getIn((CGLetExp)cgElement);
+					System.out.println("NameResolution for " + NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(cgElement.basicGetNameResolution()));
+					System.out.println(" in " + NameUtil.debugSimpleName(cgIn) + " : " + NameUtil.debugSimpleName(cgIn.basicGetNameResolution()));
+				} */
+			}
+		}
 		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
 		NameResolution.inhibitNameResolution = true;
 	}

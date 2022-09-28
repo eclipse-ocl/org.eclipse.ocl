@@ -142,6 +142,26 @@ public class NameUtil
 		}
 	}
 
+	/**
+	 * Optional context for subsequent errPrintln messages. Test harnesses may set the test name.
+	 *
+	 * @since 1.18
+	 */
+	public static @Nullable String contextLine = null;
+
+	/**
+	 * Print string on System.err preceded by a contextLine if one has been defined. The contextLine is undefined after the call.
+	 *
+	 * @since 1.18
+	 */
+	public static void errPrintln(@Nullable String string) {
+		if (contextLine != null) {
+			System.err.println(contextLine);
+			contextLine = null;
+		}
+		System.err.println(String.valueOf(string));
+	}
+
 	public static @Nullable <T extends ENamedElement> T getENamedElement(@Nullable Iterable<T> elements, @Nullable String name) {
 		if (elements == null)
 			return null;

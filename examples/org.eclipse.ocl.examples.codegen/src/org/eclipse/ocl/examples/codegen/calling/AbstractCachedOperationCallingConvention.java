@@ -10,12 +10,17 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -24,27 +29,58 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  */
-public abstract class AbstractCachedOperationCallingConvention extends ConstrainedOperationCallingConvention	// CF ConstrainedOperationCallingConvention
+public abstract class AbstractCachedOperationCallingConvention extends AbstractOperationCallingConvention	// CF ConstrainedOperationCallingConvention
 {
 	public static @NonNull String getNativeOperationDirectInstanceName(@NonNull Operation asOperation) {	// FIXME unique
-		return "INST_" + getNativeOperationName(asOperation);
+//		return "INST_" + getNativeOperationName(asOperation);
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	public static @NonNull String getNativeOperationInstanceName(@NonNull Operation asOperation) {	// FIXME unique
-		return "INSTANCE_" + getNativeOperationName(asOperation);
+//		return "INSTANCE_" + getNativeOperationName(asOperation);
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	public static @NonNull String getNativeOperationName(@NonNull Operation asOperation) {	// FIXME unique
-		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
+//		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
+		throw new UnsupportedOperationException();		// XXX
+	}
+
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
+		Operation asReferredOperation = CGUtil.getAsOperation(cgOperationCallExp);
+		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
+		CGClass cgReferringClass = CGUtil.getContainingClass(cgOperationCallExp);
+		assert cgReferringClass != null;
+		String flattenedClassName = codeGenerator.getQualifiedForeignClassName(asReferredClass);
+		js.append(flattenedClassName);
+		js.append(".");
+		js.appendValueName(cgOperation);
+	}
+
+	@Override
+	public @NonNull CGCachedOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		return CGModelFactory.eINSTANCE.createCGCachedOperation();
+	}
+
+	@Override
+	public @NonNull CGValuedElement createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
+			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
+		throw new UnsupportedOperationException();
 	}
 
 	protected void doCachedOperationClassInstance(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
@@ -98,7 +134,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 		js.append(")");
 		js.append(globalNameManager.getEvaluationCacheName());
 		js.append(".");
-		js.append(globalNameManager.getGetResultName());
+		js.append(globalNameManager.getGetCachedEvaluationResultName());
 		js.append("(this, caller, new ");
 		js.appendClassReference(false, Object.class);
 		js.append("[]{");
@@ -178,7 +214,34 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 		return true;
 	}
 
-	protected abstract @NonNull String getNativeOperationClassName(@NonNull CGOperation cgOperation);
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(asOperation);
+		if (jMethod != null) {
+			js.append("@Override\n");
+		}
+		js.append("public ");
+		js.appendTypeDeclaration(cgOperation);
+		js.append(" ");
+		js.appendValueName(cgOperation);
+		appendParameterList(js, cgOperation);
+		js.append(" {\n");
+		js.pushIndentation(null);
+		generateJavaOperationBody(cg2javaVisitor, js, cgOperation);
+		js.popIndentation();
+		js.append("}\n");
+		return true;
+	}
+
+	protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
+		cg2javaVisitor.appendReturn(body);
+	}
+
+	protected @NonNull String getNativeOperationClassName(@NonNull CGOperation cgOperation) {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public boolean needsNestedClass() {

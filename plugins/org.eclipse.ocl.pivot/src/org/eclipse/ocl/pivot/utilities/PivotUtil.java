@@ -69,6 +69,7 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
@@ -84,6 +85,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -218,6 +220,7 @@ public class PivotUtil
 	 * @since 1.18
 	 */
 	public static org.eclipse.ocl.pivot.@Nullable Class basicGetContainingClass(@NonNull Element asElement) {
+		assert !(asElement instanceof Pivotable);
 		for (EObject eObject = asElement; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof org.eclipse.ocl.pivot.Class) {
 				return (org.eclipse.ocl.pivot.Class)eObject;
@@ -230,6 +233,7 @@ public class PivotUtil
 	 * @since 1.18
 	 */
 	public static @Nullable Operation basicGetContainingOperation(@Nullable EObject element) {
+		assert !(element instanceof Pivotable);
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Operation) {
 				return (Operation)eObject;
@@ -242,6 +246,7 @@ public class PivotUtil
 	 * @since 1.18
 	 */
 	public static @Nullable Type basicGetContainingType(@Nullable EObject element) {
+		assert !(element instanceof Pivotable);
 		if (element != null) {
 			EObject eObject = element;
 			while (true) {
@@ -315,6 +320,23 @@ public class PivotUtil
 				return pivotType;
 			}
 			templateParameter = (TemplateParameter) pivotType;
+		}
+		return null;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @Nullable ShadowExp basicGetShadowExp(@NonNull Operation asOperation) {
+		LanguageExpression asBodyExpression = asOperation.getBodyExpression();
+		if (asBodyExpression != null) {
+			OCLExpression asElement = ((ExpressionInOCL)asBodyExpression).getOwnedBody();
+			while (asElement instanceof LetExp) {				// Redundant since now using Function AS context
+				asElement = ((LetExp)asElement).getOwnedIn();
+			}
+			if (asElement instanceof ShadowExp) {			// QVTr Key
+				return (ShadowExp)asElement;		// FIXME replace with clearer strategy
+			}
 		}
 		return null;
 	}
@@ -711,6 +733,18 @@ public class PivotUtil
 		asParameter.setType(asType);
 		asParameter.setIsRequired(isRequired);
 		return asParameter;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @NonNull ParameterVariable createParameterVariable(@NonNull Parameter asParameter) {
+		ParameterVariable asParameterVariable = PivotFactory.eINSTANCE.createParameterVariable();
+		asParameterVariable.setName(asParameter.getName());
+		asParameterVariable.setType(asParameter.getType());
+		asParameterVariable.setIsRequired(asParameter.isIsRequired());
+		asParameterVariable.setRepresentedParameter(asParameter);
+		return asParameterVariable;
 	}
 
 	public static @NonNull Precedence createPrecedence(@NonNull String name, /*@NonNull*/ AssociativityKind kind) {
@@ -1153,6 +1187,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	public static @NonNull ExpressionInOCL getBodyExpression(@NonNull Operation asOperation) {
+		return (ExpressionInOCL) ClassUtil.nonNullState(asOperation.getBodyExpression());
+	}
+
+	/**
 	 * @since 1.7
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull Type type, @NonNull StandardLibrary standardLibrary) {
@@ -1184,6 +1225,7 @@ public class PivotUtil
 	}
 
 	public static @Nullable Constraint getContainingConstraint(@Nullable Element element) {
+		assert !(element instanceof Pivotable);
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Constraint) {
 				return (Constraint)eObject;
@@ -1193,6 +1235,7 @@ public class PivotUtil
 	}
 
 	public static @Nullable ExpressionInOCL getContainingExpressionInOCL(@Nullable Element element) {
+		assert !(element instanceof Pivotable);
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof ExpressionInOCL) {
 				return (ExpressionInOCL)eObject;
@@ -1202,6 +1245,7 @@ public class PivotUtil
 	}
 
 	public static @Nullable Model getContainingModel(@Nullable EObject element) {
+		assert !(element instanceof Pivotable);
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Model) {
 				return (Model)eObject;
@@ -1211,6 +1255,7 @@ public class PivotUtil
 	}
 
 	public static @Nullable Namespace getContainingNamespace(@Nullable EObject element) {
+		assert !(element instanceof Pivotable);
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Namespace) {
 				return (Namespace)eObject;
@@ -1221,6 +1266,7 @@ public class PivotUtil
 
 	// WIP evolving to @NonNull use basicGetContainingOperation
 	public static @Nullable Operation getContainingOperation(@Nullable EObject element) {
+		assert !(element instanceof Pivotable);
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Operation) {
 				return (Operation)eObject;
@@ -1230,6 +1276,7 @@ public class PivotUtil
 	}
 
 	public static org.eclipse.ocl.pivot.@Nullable Package getContainingPackage(@Nullable EObject element) {
+		assert !(element instanceof Pivotable);
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
 				return (org.eclipse.ocl.pivot.Package)eObject;
@@ -1248,6 +1295,7 @@ public class PivotUtil
 
 	// WIP evolving to @NonNull use basicGetContainingType
 	public static @Nullable Type getContainingType(@Nullable EObject element) {
+		assert !(element instanceof Pivotable);
 		if (element != null) {
 			EObject eObject = element;
 			while (true) {

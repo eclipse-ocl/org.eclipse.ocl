@@ -47,7 +47,7 @@ public class ImmutableCachePropertyCallingConvention extends AbstractCacheProper
 	//	cgPropertyCallExp.setAstTuplePartId(IdManager.getTuplePartId(asProperty));
 	//	cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
-		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp);
+		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 	//	cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 	//	cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
@@ -58,5 +58,10 @@ public class ImmutableCachePropertyCallingConvention extends AbstractCacheProper
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
 		js.append("protected final");
 		return super.generateJavaDeclaration(cg2javaVisitor, js, cgProperty);
+	}
+
+	@Override
+	public boolean isInlined() {
+		return true;
 	}
 }

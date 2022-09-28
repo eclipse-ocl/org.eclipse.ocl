@@ -39,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
@@ -72,6 +73,18 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
+	public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+		Element asOperation = cgOperation.getAst();
+		ExpressionInOCL asSpecification = (ExpressionInOCL) (asOperation instanceof ExpressionInOCL ? asOperation : ((Operation)asOperation).getBodyExpression());
+		if (asSpecification != null) {
+			OCLExpression asExpression = PivotUtil.getOwnedBody(asSpecification);
+			CGValuedElement cgBody = analyzer.createCGElement(CGValuedElement.class, asExpression);
+			cgOperation.setBody(cgBody);
+		//	System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
+		}
+	}
+
+	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
 		GenModelHelper genModelHelper = analyzer.getGenModelHelper();
@@ -102,8 +115,6 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 			System.out.println("Fallback overload for " + this);		// XXX
 			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		}
-		initOperation(analyzer, cgOperation, asOperation);
-		analyzer.addCGOperation(cgOperation);
 		return cgOperation;
 	}
 
@@ -142,7 +153,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 
 	@Override
 	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
-		CGParameter cgParameter = operationNameManager.getParameter(asParameterVariable, PivotUtil.getName(asParameterVariable));
+		CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, PivotUtil.getName(asParameterVariable));
 		operationNameManager.declareEagerName(cgParameter);
 		return cgParameter;
 	}

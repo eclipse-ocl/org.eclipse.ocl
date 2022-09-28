@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -49,6 +50,7 @@ import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
@@ -146,8 +148,9 @@ public class Id2BoxedDescriptorVisitor implements CGIdVisitor<BoxedDescriptor>
 		} */
 		//		if (type instanceof org.eclipse.ocl.pivot.Class) {
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
-		if ((asPackage != null) && (asPackage.eContainer() instanceof Orphanage)) {
-			return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
+		if ((asPackage != null) && ((asPackage.eContainer() instanceof Orphanage) || JavaLanguageSupport.isNative(asPackage) || AbstractLanguageSupport.isNestingClass(asPackage))) {
+			String qualifiedName = AbstractLanguageSupport.getQualifiedName(type);
+			return new SimpleDataTypeDescriptor(id, qualifiedName);
 		}
 		//		}
 		return new RootObjectDescriptor(id);

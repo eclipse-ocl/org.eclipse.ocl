@@ -15,11 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -32,7 +30,6 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.PropertyId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -47,10 +44,7 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
-		CGConstrainedProperty cgProperty = CGModelFactory.eINSTANCE.createCGConstrainedProperty();
-		initProperty(analyzer, cgProperty, asTypedElement);
-		analyzer.addCGProperty(cgProperty);
-		return cgProperty;  // XXX Overrides may add state
+		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();
 	}
 
 	@Override
@@ -112,13 +106,9 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 		return ContextClassCallingConvention.INSTANCE;
 	}
 
-	protected void initProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty, @NonNull TypedElement asProperty) {
- 		TypeId asTypeId = asProperty.getTypeId();
-		CGTypeId cgTypeId = analyzer.getCGTypeId(asTypeId);
-		cgProperty.setAst(asProperty);
-		cgProperty.setTypeId(cgTypeId);
-		cgProperty.setRequired(asProperty.isIsRequired());
-		cgProperty.setCallingConvention(this);
+	@Override
+	public boolean isInlined() {
+		return false;
 	}
 
 	@Override

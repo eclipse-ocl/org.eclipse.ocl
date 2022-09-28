@@ -21,7 +21,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
-import org.eclipse.ocl.pivot.Element;
 
 /**
  * <!-- begin-user-doc -->
@@ -262,11 +261,4 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	public boolean isUnboxed() {
 		return (referredVariable != null) && referredVariable.isUnboxed();
 	}
-
-	@Override
-	public void setAst(Element newAst) {
-		System.out.println(eClass().getName() + " => " + newAst.eClass().getName() + " : " + newAst);		// XXX
-		super.setAst(newAst);
-	}
-
 } //CGVariableExpImpl

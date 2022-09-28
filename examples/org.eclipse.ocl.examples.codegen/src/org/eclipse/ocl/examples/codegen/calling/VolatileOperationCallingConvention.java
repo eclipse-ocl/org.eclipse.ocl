@@ -13,13 +13,14 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -44,9 +45,21 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *
  *  -- only used by QVTd
  */
-public class VolatileOperationCallingConvention extends ConstrainedOperationCallingConvention	// CF ForeignOperationCallingConvention
+public class VolatileOperationCallingConvention extends AbstractOperationCallingConvention
 {
 	public static final @NonNull VolatileOperationCallingConvention INSTANCE = new VolatileOperationCallingConvention();
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
+		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
+		Operation asReferredOperation = CGUtil.getAsOperation(cgOperationCallExp);
+		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);
+		CGClass cgReferringClass = CGUtil.getContainingClass(cgOperationCallExp);
+		assert cgReferringClass != null;
+		String flattenedClassName = codeGenerator.getQualifiedForeignClassName(asReferredClass);
+		js.append(flattenedClassName);
+		js.append(".");
+		js.appendValueName(cgOperation);
+	}
 
 	@Override
 	public @NonNull CGValuedElement createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
@@ -86,10 +99,7 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 		assert analyzer.getMetamodelManager().getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
-		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		initOperation(analyzer, cgOperation, asOperation);
-		analyzer.addCGOperation(cgOperation);
-		return cgOperation;
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
 	@Override
@@ -156,7 +166,7 @@ public class VolatileOperationCallingConvention extends ConstrainedOperationCall
 			CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, pArgument);
 			cgOperationCallExp.getArguments().add(cgArgument);
 		}
-		analyzer.initAst(cgOperationCallExp, element);
+		analyzer.initAst(cgOperationCallExp, element, true);
 	//	as2cgVisitor.declareLazyName(cgOperationCallExp);
 	//	cgOperationCallExp.setReferredOperation(finalOperation);
 		cgOperationCallExp.setReferredOperation(cgFinalOperation);

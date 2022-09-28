@@ -56,13 +56,14 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 	@Override
 	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js,
 			@NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue) {
+		assert !initValue.isInvalid();
 		js.appendValueName(slotValue);			// Always "this"
 		js.append(".");
 		js.appendReferenceTo(cgProperty);
 		js.append(" = ");
 		js.appendValueName(initValue);
 		js.append(";\n");
-		return false;
+		return true;
 	}
 
 	@Override

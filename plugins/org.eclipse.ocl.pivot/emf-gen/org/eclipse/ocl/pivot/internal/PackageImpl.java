@@ -652,7 +652,6 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	@Override
-
 	public org.eclipse.ocl.pivot.@Nullable Class getOwnedClass(String className) {
 		return NameUtil.getNameable(getOwnedClasses(), className);
 	}
@@ -754,6 +753,9 @@ implements org.eclipse.ocl.pivot.Package {
 
 	@Override
 	public void setName(String newName) {
+		if ("cg".equals(newName)) {
+			getClass();		// XXX
+		}
 		String oldName = name;
 		EObject eContainer = eContainer();
 		if ((oldName != null) && !oldName.equals(newName)) {

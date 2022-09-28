@@ -1916,16 +1916,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getCGExecutorType_UnderlyingTypeId() {
-		return (EReference)cgExecutorTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getCGFinalVariable() {
 		return cgFinalVariableEClass;
 	}
@@ -3499,7 +3489,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		cgExecutorShadowPartEClass = createEClass(34);
 
 		cgExecutorTypeEClass = createEClass(35);
-		createEReference(cgExecutorTypeEClass, 6);
 
 		cgFinalVariableEClass = createEClass(36);
 
@@ -3959,7 +3948,6 @@ public class CGModelPackageImpl extends EPackageImpl implements CGModelPackage {
 		initEClass(cgExecutorShadowPartEClass, CGExecutorShadowPart.class, "CGExecutorShadowPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(cgExecutorTypeEClass, CGExecutorType.class, "CGExecutorType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getCGExecutorType_UnderlyingTypeId(), this.getCGTypeId(), null, "underlyingTypeId", null, 0, 1, CGExecutorType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(cgFinalVariableEClass, CGFinalVariable.class, "CGFinalVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

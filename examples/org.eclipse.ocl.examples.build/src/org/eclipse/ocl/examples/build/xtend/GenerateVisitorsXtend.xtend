@@ -124,6 +124,54 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 	}
 
 	/*
+	 * Abstract«projectPrefix»«generic»Visitor
+	 */
+	protected def void generateAbstractGenericVisitor3(/*@NonNull*/ EPackage ePackage, /*@NonNull*/ Iterable</*@NonNull*/ Class<?>> importClasses,
+		/*@NonNull*/ String abstractVisitorName, /*@NonNull*/ String baseVisitorName, /*@NonNull*/ String returnType, /*@NonNull*/ String ctorTypes, /*@NonNull*/ String ctorArgs) {
+		var boolean isDerived = isDerived();
+		var boolean needsOverride = needsOverride();
+		var MergeWriter writer = new MergeWriter(outputFolder + abstractVisitorName + ".java");
+		writer.append('''
+			«ePackage.generateHeader(visitorPackageName)»
+
+			«FOR importClass : importClasses»
+			import «importClass.getName().replace("$", ".")»;
+			«ENDFOR»
+
+			/**
+			 * An «abstractVisitorName» provides a default implementation for each
+			 * visitXxx method that delegates to the visitYyy method of the first
+			 * super class, (or transitively its first super class' first super class
+			 * until a non-interface super-class is found). In the absence of any
+			 * suitable first super class, the method delegates to visiting().
+			 */
+			public abstract class «abstractVisitorName»
+				«IF isDerived»extends «baseVisitorName»«ENDIF»
+				implements «visitorClassName»<«returnType»>
+			{
+				protected «abstractVisitorName»(«ctorTypes») {
+					super(«ctorArgs»);
+				}
+				«FOR eClass : getSortedEClasses(ePackage)»
+				«var EClass firstSuperClass = eClass.firstSuperClass(eClass)»
+
+				«IF needsOverride»
+				@Override
+				«ENDIF»
+				public «returnType» visit«eClass.name»(«emitNonNull(modelPackageName + "." + getTemplatedName(eClass))» object) {
+					«IF firstSuperClass == eClass»
+					return visiting(object);
+					«ELSE»
+					return visit«firstSuperClass.name»(object);
+					«ENDIF»
+				}
+				«ENDFOR»
+			}
+		''');
+		writer.close();
+	}
+
+	/*
 	 * AbstractDelegatingVisitor
 	 */
 	protected def void generateAbstractDelegatingVisitor(/*@NonNull*/ EPackage ePackage) {

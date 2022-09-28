@@ -2,3 +2,6 @@ class java/lang/reflect/Method
 getName
  ()Ljava/lang/String;
  ()L1java/lang/String;
+getParameterTypes
+ ()[Ljava/lang/Class<*>;
+ ()[1L1java/lang/Class<*>;

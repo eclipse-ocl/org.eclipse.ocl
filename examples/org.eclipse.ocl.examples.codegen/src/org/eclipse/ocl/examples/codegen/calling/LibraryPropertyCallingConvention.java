@@ -118,7 +118,23 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setLibraryProperty(libraryProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
-		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp);
+		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
+		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
+		cgPropertyCallExp.setSource(cgSource);
+		return cgPropertyCallExp;
+	}
+
+	public @NonNull CGValuedElement createCGNavigationCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
+			@Nullable CGValuedElement cgSource) {
+		CodeGenerator codeGenerator = analyzer.getCodeGenerator();
+		Property asProperty = CGUtil.getAST(cgProperty);
+		LibraryProperty libraryProperty = (LibraryProperty) asProperty.getImplementation();
+		boolean isRequired = asProperty.isIsRequired();
+		CGLibraryPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGLibraryPropertyCallExp();
+		cgPropertyCallExp.setReferredProperty(cgProperty);
+		cgPropertyCallExp.setLibraryProperty(libraryProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
+		analyzer.initAst(cgPropertyCallExp, asProperty, false);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;

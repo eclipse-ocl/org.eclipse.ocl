@@ -1,5 +1,4 @@
 /*******************************************************************************
- * Copyright (c) 2022 Willink Transformation and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -54,10 +53,7 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
 		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
 		assert (libraryOperation instanceof NativeOperation) || (libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation);
-		CGNativeOperation cgOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
-		initOperation(analyzer, cgOperation, asOperation);
-		analyzer.addCGOperation(cgOperation);
-		return cgOperation;
+		return CGModelFactory.eINSTANCE.createCGNativeOperation();
 	}
 
 	@Override

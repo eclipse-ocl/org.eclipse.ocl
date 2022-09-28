@@ -529,8 +529,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//		CommonSubexpressionEliminator.CSE_PULL_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_PUSH_UP.setState(true);
 		//		CommonSubexpressionEliminator.CSE_REWRITE.setState(true);
-		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();			// Regularize as tx from AS
-		analyzer.setCGRootClass(cgClass);
+		CGClass cgClass = CGModelFactory.eINSTANCE.createCGClass();			// XXX Regularize as tx from AS
+	//	analyzer.setRootClass(cgClass.getAst());									// Ensure that there is a context for the virtual dispatchers
 	}
 
 	@Override
@@ -664,8 +664,9 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 		Variable asSelfVariable = ClassUtil.nonNullState(asSynthesizedQuery.getOwnedContext());
 		Variable asDiagnosticsVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_DIAGNOSTICS_NAME, oclAnyType, false);
-		Variable asConstraintNameNameVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_NAME_NAME, stringType, true);
 		asSynthesizedQuery.getOwnedParameters().add(asDiagnosticsVariable);
+		Variable asConstraintNameNameVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_NAME_NAME, stringType, true);
+		asSynthesizedQuery.getOwnedParameters().add(asConstraintNameNameVariable);
 		Variable asContextVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_CONTEXT_NAME, oclAnyType, false);
 		asSynthesizedQuery.getOwnedParameters().add(asContextVariable);
 		//

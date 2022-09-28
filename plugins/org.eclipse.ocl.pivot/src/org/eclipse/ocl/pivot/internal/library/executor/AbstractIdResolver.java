@@ -1372,7 +1372,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		boolean thisIsOCLValue = thisObject instanceof OCLValue;
 		boolean thatIsOCLValue = thatObject instanceof OCLValue;
-		if (thisIsOCLValue || thatIsOCLValue) {
+		if (thisIsOCLValue && thatIsOCLValue) {
 			OCLValue thisOCLValue = (OCLValue)(thisIsOCLValue ? thisObject : boxedValueOf(thisObject));
 			OCLValue thatOCLValue = (OCLValue)(thatIsOCLValue ? thatObject : boxedValueOf(thatObject));
 			assert thisOCLValue != null;
@@ -1425,11 +1425,16 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				}
 			}
 		}
+		boolean thisIsCharacter = thisObject instanceof Character;
 		boolean thisIsNumber = thisObject instanceof Number;
+		boolean thatIsCharacter = thatObject instanceof Character;
 		boolean thatIsNumber = thatObject instanceof Number;
-		if (thisIsNumber || thatIsNumber) {
+		if ((thisIsCharacter || thisIsNumber) && (thatIsCharacter || thatIsNumber)) {
 			Value thisValue;
-			if (thisIsNumber) {
+			if (thisIsCharacter) {
+				thisValue = ValueUtil.integerValueOf(thisObject);
+			}
+			else if (thisIsNumber) {
 				thisValue = ValueUtil.numberValueOf((Number)thisObject);
 			}
 			else if (thisObject instanceof Value) {
@@ -1439,7 +1444,10 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				return false;
 			}
 			Value thatValue;
-			if (thatIsNumber) {
+			if (thatIsCharacter) {
+				thatValue = ValueUtil.integerValueOf(thatObject);
+			}
+			else if (thatIsNumber) {
 				thatValue = ValueUtil.numberValueOf((Number)thatObject);
 			}
 			else if (thatObject instanceof Value) {

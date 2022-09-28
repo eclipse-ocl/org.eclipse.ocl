@@ -142,6 +142,11 @@ public interface PivotConstants
 	static final @NonNull String INVARIANT_NAME = "invariant"; //$NON-NLS-1$
 
 	/**
+	 * The name of the dispatch source variable 'object'.
+	 */
+	static final @NonNull String OBJECT_NAME = "object"; //$NON-NLS-1$
+
+	/**
 	 * Stereotype applied to operation postcondition constraints.
 	 */
 	static final @NonNull String POSTCONDITION_NAME = "postcondition"; //$NON-NLS-1$

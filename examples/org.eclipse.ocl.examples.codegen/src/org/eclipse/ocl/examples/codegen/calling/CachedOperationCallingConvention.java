@@ -54,14 +54,14 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 	public static final @NonNull CachedOperationCallingConvention INSTANCE = new CachedOperationCallingConvention();
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+	public @NonNull CGCachedOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
 		assert metamodelManager.getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
 	//	return CGModelFactory.eINSTANCE.createCGCachedOperation();
 
-		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
+		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
 	//	analyzer.installOperation(asOperation, cgOperation, this);
 	//	asNewOperations.add(asOperation);
 	//	cgOperations.add((CGCachedOperation) cgOperation);
@@ -82,8 +82,6 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 
 	//	CGOperation cgOperation2 = analyzer.basicGetFinalCGOperation(asOperation);
 	//	assert cgOperation2 == cgOperation;
-		initOperation(analyzer, cgOperation, asOperation);
-		analyzer.addCGOperation(cgOperation);
 		return cgOperation;
 
 
@@ -121,7 +119,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 				CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, asArgument);
 				cgArguments.add(cgArgument);
 			}
-			analyzer.initAst(cgOperationCallExp, asOperationCallExp);
+			analyzer.initAst(cgOperationCallExp, asOperationCallExp, true);
 	//	} else {
 	//		Iterable<@NonNull Operation> overrides = as2cgVisitor.getMetamodelManager().getFinalAnalysis().getOverrides(asOperation);
 	//		cgCallExp = cachedOperationCall(as2cgVisitor, asOperationCallExp, currentClass, cgSource, asOperation, overrides);
@@ -327,6 +325,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		js.append(" extends ");
 		js.appendClassReference(null, AbstractEvaluationOperation.class);
 		js.pushClassBody(operationClassName);
+		js.append("\n");					// XXX delete me
 		doCachedOperationBasicEvaluate(cg2javaVisitor, js, cgCachedOperation);
 		js.append("\n");
 		doCachedOperationEvaluate(cg2javaVisitor, js, cgCachedOperation);
@@ -347,6 +346,6 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 	protected @NonNull String getNativeOperationClassName(@NonNull CGOperation cgOperation) {	// FIXME unique
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
-		return "CACHE_" + getNativeOperationName(asOperation);
+		return "zzCACHE_" + getNativeOperationName(asOperation);
 	}
 }

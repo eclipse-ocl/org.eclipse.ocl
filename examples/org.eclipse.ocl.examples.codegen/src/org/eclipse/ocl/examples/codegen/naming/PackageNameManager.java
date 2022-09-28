@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.naming;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -17,6 +19,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * A PackageNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
@@ -61,13 +66,35 @@ public class PackageNameManager extends NestedNameManager implements ClassableNa
 	 */
 	@Override
 	public @Nullable PackageNameManager getClassParentNameManager() {
-	/*	for (PackageNameManager nameManager = this; nameManager != null; nameManager = nameManager.parent instanceof PackageNameManager ? (PackageNameManager)nameManager.parent : null) {
-			CGNamedElement cgClass = nameManager.cgClass;
-			if (cgClass instanceof CGClass) {
-				return nameManager.parent instanceof PackageNameManager ? (PackageNameManager)nameManager.parent : null;
-			}
-		} */
 		return null;
+	}
+
+	public @NonNull String getUniqueClassName(@NonNull String namePrefix, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		String name = namePrefix + PivotUtil.getName(asClass);
+		List<org.eclipse.ocl.pivot.Class> ownedClasses = asPackage.getOwnedClasses();
+		if (NameUtil.getNameable(ownedClasses, name) == null) {
+			return name;
+		}
+		for (int i = 1; true; i++) {
+			String name2 = name + "_" + i;
+			if (NameUtil.getNameable(ownedClasses, name2) == null) {
+				return name2;
+			}
+		}
+	}
+
+	public @NonNull String getUniqueClassName(@NonNull String namePrefix, @NonNull Operation asOperation) {
+		String name = namePrefix + PivotUtil.getName(PivotUtil.getOwningClass(asOperation)) + "_" + PivotUtil.getName(asOperation);
+		List<org.eclipse.ocl.pivot.Class> ownedClasses = asPackage.getOwnedClasses();
+		if (NameUtil.getNameable(ownedClasses, name) == null) {
+			return name;
+		}
+		for (int i = 1; true; i++) {
+			String name2 = name + "_" + i;
+			if (NameUtil.getNameable(ownedClasses, name2) == null) {
+				return name2;
+			}
+		}
 	}
 
 	@Override

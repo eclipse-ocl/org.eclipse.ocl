@@ -28,9 +28,9 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  *  CacheClassCallingConvention defines the style of a nested Class whose instance caches a feature computation.
  */
-public class CacheClassCallingConvention extends AbstractClassCallingConvention
+public class ConstructorClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static final @NonNull CacheClassCallingConvention INSTANCE = new CacheClassCallingConvention();
+	public static final @NonNull ConstructorClassCallingConvention INSTANCE = new ConstructorClassCallingConvention();
 
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -42,19 +42,19 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
 		assert cgClass.getContainingPackage() == null;			// container is a cgClass
-		if (isEmpty(cgClass)) {
-			return true;
-		}
+		assert !isEmpty(cgClass);
+	//		return true;
+	//	}
 		js.append("\n");
 		String className = CGUtil.getName(cgClass);
-		String title = getTitle(cgClass);
+		String title = "The instance of " + cgClass.getName() + " caches all known evaluations of\n";
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
-		Operation asOperation = cg2javaVisitor.getAnalyzer().basicGetCachedOperation(asClass);
+		Operation asOperation = cg2javaVisitor.getAnalyzer().getCachedOperation(asClass);
 		js.appendCommentWithOCL(title, asOperation);
-		js.append("protected class " + className);
+		js.append("private class " + className);
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
-		generateProperties(cg2javaVisitor, js, cgClass);
+	//	generateProperties(cg2javaVisitor, js, cgClass);
 		generateOperations(cg2javaVisitor, js, cgClass);
 		js.popClassBody(false);
 		return true;
@@ -86,9 +86,5 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 		else {
 			return /*"CACHE_" +*/ asNamedElement.getName();
 		}
-	}
-
-	protected @NonNull String getTitle(@NonNull CGClass cgClass) {
-		return "Each " + cgClass.getName() + " instance caches a distinct evaluation of\n";
 	}
 }

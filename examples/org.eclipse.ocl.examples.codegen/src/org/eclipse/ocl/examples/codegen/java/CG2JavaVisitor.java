@@ -189,6 +189,11 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	protected final @NonNull JavaStream js;
 	protected final @NonNull Map<@NonNull Class<? extends LibraryOperation>, @NonNull LibraryOperationHandler> libraryOperation2handler = new HashMap<>();;
 
+	@Deprecated /* obsolete auto-generated signature */
+	public CG2JavaVisitor(@NonNull JavaCodeGenerator codeGenerator, @NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
+		this(codeGenerator);
+	}
+
 	public CG2JavaVisitor(@NonNull JavaCodeGenerator codeGenerator) {
 		super(codeGenerator);
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
@@ -401,6 +406,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.appendClassReference(null, operationClass);
 		js.append("()");
 		js.pushClassBody(String.valueOf(operationClass));
+		js.append("\n");					// XXX delete me
 		js.appendCommentWithOCL(null, body.getAst());
 		js.append("@Override\n");
 		js.append("public ");
@@ -690,6 +696,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		return null;
 	}
 
+	public @NonNull GlobalNameManager getGlobalNameManager() {
+		return globalNameManager;
+	}
+
 	public @NonNull ImportNameManager getImportNameManager() {
 		return context.getImportNameManager();
 	}
@@ -783,30 +793,6 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		Type oclTypeType = environmentFactory.getStandardLibrary().getOclTypeType();
 		return metamodelManager.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
 	}
-
-	@Deprecated // mocing to ClassCallingConvention
-	protected boolean isEmpty(@NonNull CGClass cgClass) {
-		for (CGOperation cgOperation : cgClass.getOperations()) {
-			if (cgOperation.getCallingConvention().needsGeneration()) {
-				return false;
-			}
-		}
-		for (CGProperty cgProperty : cgClass.getProperties()) {
-			if (cgProperty.getCallingConvention().needsGeneration()) {
-				return false;
-			}
-		}
-		List<@NonNull CGClass> cgClasses = CGUtil.getClassesList(cgClass);
-		if (cgClasses.size() > 0) {
-			for (CGClass cgNestedClass : cgClasses) {
-				if (!isEmpty(cgNestedClass)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
 
 	protected boolean isEnumerationLiteral(@NonNull CGValuedElement cgValue) {
 		Element ast = cgValue.getAst();
@@ -1456,7 +1442,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			public void append() {
 				js.appendValueName(globalNameManager.useRootExecutableNameManager(cgExecutorType).getIdResolverVariable());
 				js.append(".getClass(");
-				js.appendIdReference(cgExecutorType.getUnderlyingTypeId().getElementId());
+				js.appendIdReference(CGUtil.getAST(cgExecutorType).getTypeId());
 				js.append(", null)");
 			}
 		};
@@ -1472,7 +1458,8 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (cgSource.isNull()) {
 			js.append("throw new ");
 			js.appendClassReference(null, InvalidValueException.class);
-			js.append("();\n");
+			js.append("(\"Unconditionally null\")");
+		//	js.append("();\n");
 		}
 		else {
 			if (!js.appendLocalStatements(cgSource)) {
@@ -1844,15 +1831,22 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (!js.appendLocalStatements(cgIn)) {
 			return false;
 		}
+		if (cgIn.isInlined()) {
+			return cgIn.accept(this);
+		}
+	//	System.out.println("Fallback for " + NameUtil.debugSimpleName(cgLetExp) + " : " + NameUtil.debugSimpleName(cgLetExp.basicGetNameResolution()));
+	//	System.out.println(" in " + NameUtil.debugSimpleName(cgIn) + " : " + NameUtil.debugSimpleName(cgIn.basicGetNameResolution()));
 		// The following fallback would not be required if the inner name propagated better, see testBug458724
 		// (a rewrite of an in might fail to re-down-propagate the let name).
-		NameResolution inNameResolution = cgIn.getNameResolution();
-		NameResolution letNameResolution = cgLetExp.getNameResolution();
-		if (inNameResolution != letNameResolution) {
-			js.appendDeclaration(cgLetExp);
-			js.append(" = ");
-			js.appendValueName(cgIn);
-			js.append(";\n");
+		if (!cgIn.isInlined()) {
+			NameResolution inNameResolution = cgIn.getNameResolution();
+			NameResolution letNameResolution = cgLetExp.getNameResolution();
+			if (inNameResolution != letNameResolution) {
+				js.appendDeclaration(cgLetExp);
+				js.append(" = ");
+				js.appendValueName(cgIn);
+				js.append(";\n");
+			}
 		}
 		return true;
 	}
@@ -2045,7 +2039,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
-		System.out.println("visitCGOperation " + NameUtil.debugSimpleName(cgOperation) + " : " + cgOperation.getAst());
+	//	System.out.println("visitCGOperation " + NameUtil.debugSimpleName(cgOperation) + " : " + cgOperation.getAst());
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		callingConvention.generateJavaDeclaration(this, js, cgOperation);
 		return true;

@@ -629,7 +629,15 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 
 	@Override
 	public @Nullable String visitCompletePackage(@NonNull CompletePackage object) {
-		appendName(object);
+	//	appendName(object);
+		List<org.eclipse.ocl.pivot.@NonNull Package> partialPackages = ClassUtil.nullFree(object.getPartialPackages());
+		int size = partialPackages.size();
+		if (size > 0) {
+			append(ToStringVisitor.toString(partialPackages.get(0)));
+		}
+		else {
+			appendName(object);
+		}
 		append("*");
 		append(object.getPartialPackages().size());
 		append(" : ");

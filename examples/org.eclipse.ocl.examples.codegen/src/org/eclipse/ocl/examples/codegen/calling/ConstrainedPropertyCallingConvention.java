@@ -76,7 +76,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		cgPropertyCallExp.getOwns().add(cgPropertyId);
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
-		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp);
+		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
@@ -105,11 +105,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
-	//	analyzer.addForeignFeature(asProperty);
-		CGConstrainedProperty cgProperty = CGModelFactory.eINSTANCE.createCGConstrainedProperty();
-		initProperty(analyzer, cgProperty, asTypedElement);
-		analyzer.addCGProperty(cgProperty);
-		return cgProperty;
+		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();
 	}
 
 /*	@Override
