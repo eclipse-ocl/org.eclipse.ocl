@@ -934,7 +934,9 @@ public class CodeGenAnalyzer
 		CGOperation cgOperation = generateOperationDeclaration(asOperation, null, false);
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
-		return callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
+		CGValuedElement cgOperationCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
+		asElement2cgElement.put(asOperationCallExp,cgOperationCallExp);
+		return cgOperationCallExp;
 	}
 
 	/**
@@ -978,7 +980,9 @@ public class CodeGenAnalyzer
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
-		return callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asOppositePropertyCallExp);
+		CGValuedElement cgNavigationCallExp = callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asOppositePropertyCallExp);
+		asElement2cgElement.put(asOppositePropertyCallExp, cgNavigationCallExp);
+		return cgNavigationCallExp;
 	}
 
 	/**
@@ -1032,7 +1036,9 @@ public class CodeGenAnalyzer
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
-		return callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asPropertyCallExp);
+		CGValuedElement cgNavigationCallExp = callingConvention.createCGNavigationCallExp(this, cgProperty, libraryProperty, cgSource, asPropertyCallExp);
+		asElement2cgElement.put(asPropertyCallExp, cgNavigationCallExp);
+		return cgNavigationCallExp;
 	}
 
 	/**
