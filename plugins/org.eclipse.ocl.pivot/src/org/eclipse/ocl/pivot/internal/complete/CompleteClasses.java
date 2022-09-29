@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
@@ -383,6 +384,10 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 				completeClass = primitiveCompletePackage.getCompleteClass(partialClass);
 			}
 			else if ((partialClass instanceof MapType) && (partialClass.getUnspecializedElement() != null)) {
+				CompletePackageInternal orphanCompletePackage = completeModel.getOrphanCompletePackage();
+				completeClass = orphanCompletePackage.getCompleteClass(partialClass);
+			}
+			else if (partialClass instanceof TupleType) {
 				CompletePackageInternal orphanCompletePackage = completeModel.getOrphanCompletePackage();
 				completeClass = orphanCompletePackage.getCompleteClass(partialClass);
 			}
