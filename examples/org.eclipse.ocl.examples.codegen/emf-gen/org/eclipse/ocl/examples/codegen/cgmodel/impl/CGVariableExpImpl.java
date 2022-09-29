@@ -268,7 +268,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	public void setAst(Element newAst) {
 		if (newAst != null) {
 			System.out.println(eClass().getName() + " => " + newAst.eClass().getName() + " : " + newAst);		// XXX
-			assert !(newAst instanceof VariableDeclaration);		// Variable has distinct ancestry to VariableExp and so wrong NameManager
+			assert !(newAst instanceof VariableDeclaration) || "DeclareStatement".equals(newAst.eClass().getName());		// Variable has distinct ancestry to VariableExp and so wrong NameManager
 		}
 		else {
 			System.out.println(eClass().getName() + " => null");		// XXX
