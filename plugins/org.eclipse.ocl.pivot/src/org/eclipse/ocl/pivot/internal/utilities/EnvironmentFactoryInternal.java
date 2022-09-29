@@ -163,6 +163,21 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@Override
 	@NonNull PivotMetamodelManager getMetamodelManager();
 
+	/**
+	 * @since 1.18
+	 */
+	default org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
+			if (partialClass.getESObject() != null) {
+				return partialClass;
+			}
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
+			return partialClass;
+		}
+		throw new IllegalStateException();
+	}
+
 	@Override
 	@NonNull StandardLibraryInternal getStandardLibrary();
 
