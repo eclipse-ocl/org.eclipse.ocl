@@ -67,6 +67,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGUnlimited;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -208,9 +209,9 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> externalFeatures = null;
 
 	/**
-	 * Mapping from each AS NamedElement to its corresponding CGNamedElement.
+	 * Mapping from each AS Element to its corresponding CGNamedElement.
 	 */
-	protected @NonNull Map<@NonNull NamedElement, @NonNull CGNamedElement> asElement2cgElement = new HashMap<>();
+	protected @NonNull Map<@NonNull Element, @NonNull CGNamedElement> asElement2cgElement = new HashMap<>();
 
 	/**
 	 * Mapping from each AS Operation that has overrides to its corresponding virtual dispatching CG Operation.
@@ -242,6 +243,11 @@ public class CodeGenAnalyzer
 
 	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
 		globalNameManager.addGlobal(cgGlobal);
+	}
+
+	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
+		CGNamedElement old = asElement2cgElement.put(asVariable, cgVariable);
+		assert old == null;
 	}
 
 	public void addVirtualCGOperation(@NonNull Operation asOperation, @NonNull CGCachedOperation cgOperation) {
@@ -328,6 +334,10 @@ public class CodeGenAnalyzer
 
 	public @Nullable CGProperty basicGetCGProperty(@NonNull Property asProperty) {
 		return (CGProperty)asElement2cgElement.get(asProperty);
+	}
+
+	public @Nullable CGVariable basicGetCGVariable(@NonNull VariableDeclaration asVariable) {
+		return (CGVariable)asElement2cgElement.get(asVariable);
 	}
 
 	public @Nullable NestedNameManager basicGetNameManager() {
@@ -1373,7 +1383,7 @@ public class CodeGenAnalyzer
 		assert cgIterationCallExp.getAst() == asLoopExp;
 		ExecutableNameManager loopNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgIterationCallExp);
 		if (loopNameManager == null) {			//
-			ExecutableNameManager parentNameManager = useExecutableNameManager((TypedElement)asLoopExp.eContainer());
+			ExecutableNameManager parentNameManager = useExecutableNameManager((Element)asLoopExp.eContainer());
 			ClassNameManager classNameManager = parentNameManager.getClassNameManager();
 			loopNameManager = globalNameManager.createLoopNameManager(classNameManager, parentNameManager, cgIterationCallExp);
 		}
@@ -1572,9 +1582,14 @@ public class CodeGenAnalyzer
 	 * Establish the cgElement.ast to asElement mapping and the corresponding cgElement.typeId. If isSymmetric, install
 	 * the reverse asElement2cgElement mapping.
 	 */
-	public void initAst(@NonNull CGValuedElement cgElement, @NonNull TypedElement asElement, boolean isSymmetric) {
-		TypeId asTypeId = asElement.getTypeId();
-		initAst(cgElement, asElement, asTypeId, isSymmetric);
+	public void initAst(@NonNull CGValuedElement cgElement, @NonNull TypedElement asTypedElement, boolean isSymmetric) {
+	//	TypeId asTypeId = asElement.getTypeId();
+	//	initAst(cgElement, asElement, asTypeId, isSymmetric);
+	//	CGTypeId cgTypeId = getCGTypeId(asTypeId);
+	//	cgElement.setTypeId(cgTypeId);
+	//	cgElement.setRequired(asElement.isIsRequired());
+		initTypeId(cgElement, asTypedElement.getTypeId(), asTypedElement.isIsRequired());
+		initCG2AS(cgElement, asTypedElement, isSymmetric);
 	}
 
 	/**
@@ -1582,15 +1597,29 @@ public class CodeGenAnalyzer
 	 * the reverse asElement2cgElement mapping.
 	 */
 	public void initAst(@NonNull CGValuedElement cgElement, @NonNull TypedElement asElement, @NonNull TypeId asTypeId, boolean isSymmetric) {
-		cgElement.setAst(asElement);
 		CGTypeId cgTypeId = getCGTypeId(asTypeId);
 		cgElement.setTypeId(cgTypeId);
 		cgElement.setRequired(asElement.isIsRequired());
-	//	assert cgElement.isIsRequired() == asElement.isIsRequired();		// XXX next optimization
+		initCG2AS(cgElement, asElement, isSymmetric);
+	}
+	// Variant for AS reference to AS
+	public void initAst(@NonNull CGTypedElement cgElement, @NonNull Element asElement, @NonNull TypedElement asTypedElement, boolean isSymmetric) {
+		initTypeId(cgElement, asTypedElement.getTypeId(), asTypedElement.isIsRequired());
+		initCG2AS(cgElement, asElement, isSymmetric);
+	}
+
+	private void initCG2AS(@NonNull CGTypedElement cgElement, @NonNull Element asElement, boolean isSymmetric) {
+		cgElement.setAst(asElement);
 		if (isSymmetric) {
 			CGNamedElement old = asElement2cgElement.put(asElement, cgElement);
 			assert old == null;
 		}
+	}
+
+	private void initTypeId(@NonNull CGTypedElement cgElement, @NonNull TypeId asTypeId, boolean isRequired) {
+		CGTypeId cgTypeId = getCGTypeId(asTypeId);
+		cgElement.setTypeId(cgTypeId);
+		cgElement.setRequired(isRequired);
 	}
 
 	public @Nullable CGValuedElement inlineOperationCall(@NonNull OperationCallExp callExp, @NonNull LanguageExpression specification) {
