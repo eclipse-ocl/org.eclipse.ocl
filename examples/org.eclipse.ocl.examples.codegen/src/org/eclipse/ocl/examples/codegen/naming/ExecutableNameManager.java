@@ -68,7 +68,7 @@ public class ExecutableNameManager extends NestedNameManager
 	/**
 	 * Mapping from an AS Variable to the CG Variable defined in this cgScope.
 	 */
-	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> asVariable2cgVariable = new HashMap<>();
+	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> asVariable2cgVariable = new HashMap<>();	// XXX Eliminate use CGA.as2cg
 
 	public ExecutableNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parentNameManager, @NonNull CGNamedElement cgScope) {
 		super(classNameManager.getCodeGenerator(), parentNameManager, cgScope);
@@ -84,6 +84,7 @@ public class ExecutableNameManager extends NestedNameManager
 	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
 		CGVariable old = asVariable2cgVariable.put(asVariable, cgVariable);
 		assert old == null;
+		codeGenerator.getAnalyzer().addVariable(asVariable, cgVariable);
 	}
 
 	public @Nullable CGParameter basicGetAnyParameter() {
@@ -373,12 +374,15 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable getCGVariable(@NonNull VariableDeclaration asVariable) {
-		CGVariable cgVariable = basicGetVariable(asVariable);
+		CGVariable cgVariable = analyzer.basicGetCGVariable(asVariable);
 		if (cgVariable == null) {
-			cgVariable = createCGVariable(asVariable);
-			if (asVariable.isIsRequired()) {
-				cgVariable.setNonInvalid();
-				cgVariable.setNonNull();
+			cgVariable = basicGetVariable(asVariable);		// ?? redundant
+			if (cgVariable == null) {
+				cgVariable = createCGVariable(asVariable);
+				if (asVariable.isIsRequired()) {
+					cgVariable.setNonInvalid();
+					cgVariable.setNonNull();
+				}
 			}
 		}
 		return cgVariable;
