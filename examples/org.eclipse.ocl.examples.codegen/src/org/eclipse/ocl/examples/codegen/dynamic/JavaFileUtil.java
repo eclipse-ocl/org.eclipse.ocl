@@ -431,6 +431,7 @@ public abstract class JavaFileUtil
 
 	public static @NonNull List<@NonNull String> gatherPackageNames(@NonNull File binFolder, @Nullable String packagePath) {
 		List<@NonNull String> packagePaths = new ArrayList<>();
+		packagePaths.add("");
 		gatherPackageNames(packagePaths, binFolder, packagePath);
 		return packagePaths;
 	}

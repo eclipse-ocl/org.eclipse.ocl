@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -18,6 +19,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
+import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -84,6 +88,23 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 	@Override
 	public @NonNull ClassCallingConvention getClassCallingConvention() {
 		return this;
+	}
+
+	@Override
+	public @NonNull ClassableNameManager getClassableNameManager(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass) {
+		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
+		EObject eContainer = asClass.eContainer();
+		if (eContainer instanceof org.eclipse.ocl.pivot.Package) {
+			PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, (org.eclipse.ocl.pivot.Package)eContainer);
+			packageNameManager.getCGPackage().getClasses().add(cgClass);
+			return packageNameManager;
+		}
+		else if (eContainer instanceof org.eclipse.ocl.pivot.Class) {
+			ClassNameManager classNameManager = analyzer.getClassNameManager(null, (org.eclipse.ocl.pivot.Class)eContainer);
+			classNameManager.getCGClass().getClasses().add(cgClass);
+			return classNameManager;
+		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
