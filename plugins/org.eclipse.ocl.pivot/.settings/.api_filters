@@ -2465,6 +2465,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
+                <message_argument value="getPrimaryClass(Iterable&lt;Class&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/library/AbstractFeature.java" type="org.eclipse.ocl.pivot.library.AbstractFeature">
         <filter id="336658481">
             <message_arguments>
