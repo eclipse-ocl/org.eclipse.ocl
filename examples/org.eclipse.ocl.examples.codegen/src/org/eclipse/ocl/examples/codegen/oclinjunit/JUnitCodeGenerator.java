@@ -115,6 +115,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		asHelper.setType(asOperation, expInOcl.getType(), expInOcl.isIsRequired());
 
 		CodeGenAnalyzer analyzer2 = getAnalyzer();
+		analyzer2.setRootClass(asClass);				// Identify the host for synthesized nested classes
 		CGPackage cgPackage = analyzer2.createCGElement(CGPackage.class, asRootPackage);
 		analyzer2.analyzeExternalFeatures();
 		return cgPackage;

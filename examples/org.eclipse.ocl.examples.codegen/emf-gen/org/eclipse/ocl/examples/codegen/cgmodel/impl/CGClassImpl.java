@@ -652,7 +652,7 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 	 */
 	@Override
 	public boolean isGlobal() {
-		return ast.eContainer() instanceof org.eclipse.ocl.pivot.Package;
+		return eContainer() instanceof CGPackage;
 	}
 
 } //CGClassImpl

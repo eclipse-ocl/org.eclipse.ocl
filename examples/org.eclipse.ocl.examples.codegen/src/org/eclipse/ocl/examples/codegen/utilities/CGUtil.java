@@ -393,16 +393,25 @@ public class CGUtil
 		return null;
 	} */
 
-	public static @NonNull CGValuedElement getContainingFeature(@Nullable CGElement cgElement) {
-		for ( ; cgElement != null; cgElement = cgElement.getParent()) {
-			if (cgElement instanceof CGOperation) {
-				return (CGOperation) cgElement;
+	public static @NonNull CGValuedElement getContainingFeature(final @Nullable CGElement cgElement) {
+		for (CGElement cgElement2 = cgElement; cgElement2 != null; cgElement2 = cgElement2.getParent()) {
+			if (cgElement2 instanceof CGOperation) {
+				return (CGOperation) cgElement2;
 			}
-			if (cgElement instanceof CGProperty) {
-				return (CGProperty) cgElement;
+			if (cgElement2 instanceof CGProperty) {
+				return (CGProperty) cgElement2;
 			}
 		}
 		throw new IllegalStateException("No containing Feature for " + cgElement);
+	}
+
+	public static @NonNull CGPackage getContainingPackage(final @NonNull CGElement cgElement) {
+		for (CGElement cgElement2 = cgElement; cgElement2 != null; cgElement2 = cgElement2.getParent()) {
+			if (cgElement2 instanceof CGPackage) {
+				return (CGPackage) cgElement2;
+			}
+		}
+		throw new IllegalStateException("No containing Package for " + cgElement);
 	}
 
 	public static @NonNull CGExecutorType getExecutorType(@NonNull CGShadowExp object) {

@@ -10,11 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
+import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -43,8 +47,30 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 	}
 
 	@Override
+	public @NonNull ClassableNameManager getClassableNameManager(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass) {
+		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
+		EObject eContainer = asClass.eContainer();
+		if (eContainer instanceof org.eclipse.ocl.pivot.Package) {
+			PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, (org.eclipse.ocl.pivot.Package)eContainer);
+			packageNameManager.getCGPackage().getClasses().add(cgClass);
+			return packageNameManager;
+		}
+		else if (eContainer instanceof org.eclipse.ocl.pivot.Class) {
+			ClassNameManager classNameManager = analyzer.getClassNameManager(null, (org.eclipse.ocl.pivot.Class)eContainer);
+			classNameManager.getCGClass().getClasses().add(cgClass);
+			return classNameManager;
+		}
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull String getName(@NonNull CodeGenAnalyzer analyzer, @NonNull NamedElement asNamedElement) {
-		Feature asFeature = (Feature)asNamedElement;
-		return "CACHE_" + ClassUtil.nonNullState(asFeature.getOwningClass()).getName() + "_" + asFeature.getName();
+		if (asNamedElement instanceof Feature) {
+			Feature asFeature = (Feature)asNamedElement;
+			return "CACHE_" + ClassUtil.nonNullState(asFeature.getOwningClass()).getName() + "_" + asFeature.getName();
+		}
+		else {
+			return "CACHE_" + asNamedElement.getName();
+		}
 	}
 }

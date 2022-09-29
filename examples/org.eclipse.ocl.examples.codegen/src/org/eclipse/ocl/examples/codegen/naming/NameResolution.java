@@ -288,7 +288,7 @@ public abstract class NameResolution
 			getClass();		// XXX)
 		}
 //		this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
-		assert (primaryElement == null) || nameManager.isGlobal() || !primaryElement.isGlobal();		// XXX derived
+		assert (primaryElement == null) || nameManager.isGlobal() || !primaryElement.isGlobal();		// XXX derived -- nested CGClass is ?? not global
 	//	if (primaryElement == null) {
 	//		assert nameHint != null : "Expected NameResolution for null";
 	//	}
