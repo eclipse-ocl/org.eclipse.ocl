@@ -307,18 +307,23 @@ public class JavaLanguageSupport extends LanguageSupport
 		}
 		assert jPackage != null;
 		org.eclipse.ocl.pivot.@NonNull Package asPackage = getNativePackage(jPackage);
-		String verboseName = jClass.getName();
-		int iStart = 0;
-		for (int iDot; (iDot = verboseName.indexOf('.', iStart)) >= 0; ) {
-			iStart = iDot+1;
+		String packageName = jPackage.getName();
+		int packageNameLength = packageName.length();
+		String fullClassName = jClass.getName();
+		String trimmedName = fullClassName;
+		if (packageNameLength > 0) {
+			int iStart = fullClassName.indexOf(packageName);
+			if (iStart > 0) {
+				trimmedName = fullClassName.substring(0, iStart) + fullClassName.substring(iStart + packageNameLength + 1);
+			}
 		}
-		String trimmedName = verboseName.substring(iStart);
 		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = PivotUtilInternal.getOwnedClassesList(asPackage);
 		org.eclipse.ocl.pivot.Class asClass = NameUtil.getNameable(asClasses, trimmedName);
 		if (asClass == null) {
 		//	asClass = PivotFactory.eINSTANCE.createClass();
 			asClass = new ClassImpl(JavaConstants.getJavaTypeId(jClass));
 			asClass.setName(trimmedName);
+			asClass.setInstanceClassName(fullClassName);
 		//	asClass.setTypeId(JavaConstants.getJavaTypeId(jClass));
 			asClasses.add(asClass);
 		}

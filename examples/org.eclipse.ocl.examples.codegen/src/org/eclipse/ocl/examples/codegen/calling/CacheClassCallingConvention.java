@@ -37,7 +37,7 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 		String className = CGUtil.getName(cgClass);
 		String title = cgClass.getName() + " provides the Java implementation to cache evaluations of\n";
 		js.appendCommentWithOCL(title, cgClass.getAst());
-		js.append("protected static class " + className);
+		js.append("protected class " + className);
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
 		generateProperties(cg2javaVisitor, js, cgClass);
