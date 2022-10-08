@@ -749,12 +749,8 @@ public class CodeGenAnalyzer
 			for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : PivotUtil.getPartialClasses(completeClass)) {
 				asElement2cgElement.put(asPartialClass, cgClass);
 			}
-		//	if (cgRootClass == null) {
-		//		cgRootClass = cgClass;				// XXX cgRootClass eliminate
-		//		throw new UnsupportedOperationException();
-		//	}
 			String name = callingConvention.getName(this, asClass);
-			ClassableNameManager classableNameManager = null;
+			NestedNameManager classableNameManager = null;
 			org.eclipse.ocl.pivot.Class asRootClass = basicGetRootClass(asClass);
 			if ((asRootClass != asClass) && (asRootClass != null)) {					// AS class whose CG class that needs nesting below the CG Class for the AS Class's Package
 				CGClass cgRootClass2 = getCGClass(asRootClass);
@@ -768,8 +764,7 @@ public class CodeGenAnalyzer
 				packageNameManager.getCGPackage().getClasses().add(cgClass);
 				classableNameManager = packageNameManager;
 			}
-		//	assert classableNameManager != null;
-			new NameResolution.EagerNested((NestedNameManager) classableNameManager /*useClassNameManager(cgClass)*/, cgClass, name);		// Eager
+			new NameResolution.EagerNested(classableNameManager, cgClass, name);
 		}
 		return cgClass;
 	}
@@ -1826,6 +1821,12 @@ public class CodeGenAnalyzer
 				if (executableNameManager != null) {
 					return ClassUtil.nonNullState(executableNameManager);
 				}
+			}
+			else {
+				assert !(eObject instanceof Operation) : "Missing NameManager for " + asElement.eClass().getName() + ": " + asElement;
+				assert !(eObject instanceof Package) : "Missing NameManager for " + asElement.eClass().getName() + ": " + asElement;
+				assert !(eObject instanceof Property) : "Missing NameManager for " + asElement.eClass().getName() + ": " + asElement;
+				assert !(eObject instanceof Type) : "Missing NameManager for " + asElement.eClass().getName() + ": " + asElement;
 			}
 		}
 		throw new IllegalStateException("No ExecutableNameManager for " + asElement.eClass().getName() + ": " + asElement);

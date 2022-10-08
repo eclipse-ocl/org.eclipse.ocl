@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("NOT_NEEDED")) {
+				if (string.contains("boundValues")) {
 					getClass();		// XXX
 				}
 				if (string.contains("IF_CAUGHT_isEmpty")) {
@@ -547,6 +547,16 @@ public class JavaStream
 						append("?");
 					}
 					append(">");
+				}
+				for (Class<?> jClass = javaClass; true; jClass = jClass.getComponentType()) {
+					if (jClass.getComponentType() == null)  {
+						break;
+					}
+					if (useNullAnnotations) {
+						append(" ");
+					}
+					appendIsRequired(true);
+					append(" []");
 				}
 			}
 		}

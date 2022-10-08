@@ -40,7 +40,7 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 			else {
 				js.append(", ");
 			}
-			js.append(cgSuperClass.getName());
+			js.appendClassReference(cgSuperClass);
 			isFirst = false;
 		}
 //			}

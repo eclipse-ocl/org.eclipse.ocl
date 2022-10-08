@@ -1844,15 +1844,19 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (!js.appendLocalStatements(cgIn)) {
 			return false;
 		}
+		System.out.println("Fallback for " + NameUtil.debugSimpleName(cgLetExp) + " : " + NameUtil.debugSimpleName(cgLetExp.basicGetNameResolution()));
+		System.out.println(" in " + NameUtil.debugSimpleName(cgIn) + " : " + NameUtil.debugSimpleName(cgIn.basicGetNameResolution()));
 		// The following fallback would not be required if the inner name propagated better, see testBug458724
 		// (a rewrite of an in might fail to re-down-propagate the let name).
-		NameResolution inNameResolution = cgIn.getNameResolution();
-		NameResolution letNameResolution = cgLetExp.getNameResolution();
-		if (inNameResolution != letNameResolution) {
-			js.appendDeclaration(cgLetExp);
-			js.append(" = ");
-			js.appendValueName(cgIn);
-			js.append(";\n");
+		if (!cgIn.isInlined()) {
+			NameResolution inNameResolution = cgIn.getNameResolution();
+			NameResolution letNameResolution = cgLetExp.getNameResolution();
+			if (inNameResolution != letNameResolution) {
+				js.appendDeclaration(cgLetExp);
+				js.append(" = ");
+				js.appendValueName(cgIn);
+				js.append(";\n");
+			}
 		}
 		return true;
 	}
