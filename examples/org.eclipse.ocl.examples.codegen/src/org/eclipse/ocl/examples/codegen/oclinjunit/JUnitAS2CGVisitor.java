@@ -53,13 +53,13 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 		ExecutableNameManager nameManager = context.useExecutableNameManager(element);
 		Variable contextVariable = element.getOwnedContext();
 		if (contextVariable != null) {
-			CGVariable cgContext = nameManager.getParameter(contextVariable, (String)null);
+			CGVariable cgContext = nameManager.getCGParameter(contextVariable, (String)null);
 			cgContext.setTypeId(context.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgContext.setNonInvalid();
 //			cgContext.setNonNull();
 		}
 		for (@SuppressWarnings("null")@NonNull Variable parameterVariable : element.getOwnedParameters()) {
-			@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, (String)null);
+			@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getCGParameter(parameterVariable, (String)null);
 		}
 		CGValuedElement cgBody = context.createCGElement(CGValuedElement.class, element.getOwnedBody());
 //		cgOperation.getDependsOn().add(cgBody);

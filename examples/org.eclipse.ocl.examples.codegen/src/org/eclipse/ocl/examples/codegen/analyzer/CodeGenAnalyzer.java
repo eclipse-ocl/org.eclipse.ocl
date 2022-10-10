@@ -215,7 +215,8 @@ public class CodeGenAnalyzer
 	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> externalFeatures = null;
 
 	/**
-	 * Mapping from each AS Element to its corresponding CGNamedElement.
+	 * Mapping from each AS Element to its corresponding CGNamedElement. (Variables are mapped by the prevailing
+	 * ExecutablenManager since variables can be multiple syntheized.)
 	 */
 	protected @NonNull Map<@NonNull Element, @NonNull CGNamedElement> asElement2cgElement = new HashMap<>();
 
@@ -252,10 +253,10 @@ public class CodeGenAnalyzer
 		globalNameManager.addGlobal(cgGlobal);
 	}
 
-	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
-		CGNamedElement old = asElement2cgElement.put(asVariable, cgVariable);
-		assert old == null;
-	}
+//	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
+//		CGNamedElement old = asElement2cgElement.put(asVariable, cgVariable);
+//		assert old == null;
+//	}
 
 	public void addVirtualCGOperation(@NonNull Operation asOperation, @NonNull CGCachedOperation cgOperation) {
 	//	assert cgOperation.getAst() == asOperation;
@@ -372,9 +373,9 @@ public class CodeGenAnalyzer
 		return asClass;
 	} */
 
-	public @Nullable CGVariable basicGetCGVariable(@NonNull VariableDeclaration asVariable) {
-		return (CGVariable)asElement2cgElement.get(asVariable);
-	}
+//	public @Nullable CGVariable basicGetCGVariable(@NonNull VariableDeclaration asVariable) {
+//		return (CGVariable)asElement2cgElement.get(asVariable);
+//	}
 
 	public @Nullable NestedNameManager basicGetNameManager() {
 //		return currentNameManager;
@@ -807,11 +808,11 @@ public class CodeGenAnalyzer
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					CGParameter cgParameter = constraintNameManager.getParameter(contextVariable, null);
+					CGParameter cgParameter = constraintNameManager.getCGParameter(contextVariable, null);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@NonNull Variable parameterVariable : ClassUtil.nullFree(query.getOwnedParameters())) {
-					CGParameter cgParameter = constraintNameManager.getParameter(parameterVariable, null);
+					CGParameter cgParameter = constraintNameManager.getCGParameter(parameterVariable, null);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				cgConstraint.setBody(createCGElement(CGValuedElement.class, query.getOwnedBody()));
@@ -1399,7 +1400,7 @@ public class CodeGenAnalyzer
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					useExecutableNameManager(asProperty).getParameter(contextVariable, (String)null);
+					useExecutableNameManager(asProperty).getCGParameter(contextVariable, (String)null);
 				}
 				initExpression = createCGElement(CGValuedElement.class, query.getOwnedBody());
 			} catch (ParserException e) {
@@ -1617,7 +1618,7 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {		// Overridden for OCLinEcore support
-		CGParameter cgParameter = executableNameManager.basicGetParameter(asParameter);
+		CGParameter cgParameter = executableNameManager.basicGetCGParameter(asParameter);
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 			cgParameter.setAst(asParameter);

@@ -59,7 +59,7 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(asSynthesizedQuery)) {
-					CGParameter cgParameter = nameManager.getParameter(parameterVariable, parameterVariable.getName());
+					CGParameter cgParameter = nameManager.getCGParameter(parameterVariable, parameterVariable.getName());
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				cgConstraint.setBody(createCGElement(CGValuedElement.class, asSynthesizedExpression));

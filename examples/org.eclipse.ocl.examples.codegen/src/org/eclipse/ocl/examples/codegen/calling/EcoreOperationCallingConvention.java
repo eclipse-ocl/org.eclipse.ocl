@@ -140,7 +140,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 
 	@Override
 	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
-		CGParameter cgParameter = operationNameManager.getParameter(asParameterVariable, PivotUtil.getName(asParameterVariable));
+		CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, PivotUtil.getName(asParameterVariable));
 		operationNameManager.declareEagerName(cgParameter);
 		return cgParameter;
 	}

@@ -265,7 +265,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				}
 				else {
 					Parameter aParameter = asParameters.get(i++);
-					CGParameter cgParameter = operationNameManager.getParameter(aParameter, (String)null);
+					CGParameter cgParameter = operationNameManager.getCGParameter(aParameter, (String)null);
 					cgParameters.add(cgParameter);
 				}
 			}

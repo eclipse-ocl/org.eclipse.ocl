@@ -82,6 +82,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
@@ -293,10 +294,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgContext.setNonInvalid();
 			//			cgContext.setNonNull();
 		}
-		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(query.getOwnedParameters())) {
-			CGVariable cgParameterVariable = nameManager.basicGetParameter(parameterVariable);
-			if (cgParameterVariable == null) {				// May be pre-mapped to a CG let variable
-				@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, null);
+		Iterable<@NonNull ParameterVariable> asParameters = (Iterable<@NonNull ParameterVariable>)(Object)PivotUtil.getOwnedParameters(query);
+		for (@NonNull Variable parameterVariable : asParameters) {
+			CGVariable cgParameterVariable = nameManager.basicGetCGParameterVariable(parameterVariable);
+			if (cgParameterVariable == null) {				// XXX May be pre-mapped to a CG let variable
+				@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getCGParameter(parameterVariable, null);
 			}
 		//	@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, null);
 		}
