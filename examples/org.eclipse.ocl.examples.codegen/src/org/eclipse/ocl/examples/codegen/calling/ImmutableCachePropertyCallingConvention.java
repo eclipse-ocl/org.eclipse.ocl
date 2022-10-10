@@ -59,4 +59,9 @@ public class ImmutableCachePropertyCallingConvention extends AbstractCacheProper
 		js.append("protected final");
 		return super.generateJavaDeclaration(cg2javaVisitor, js, cgProperty);
 	}
+
+	@Override
+	public boolean isInlined() {
+		return true;
+	}
 }
