@@ -343,7 +343,7 @@ public abstract class NameResolution
 	public abstract @Nullable String basicGetResolvedName();
 
 	protected boolean debugNameHint(@NonNull String newName) {
-		if (newName.startsWith("eColor")) {
+		if (newName.contains("AbstractComputation")) {
 			getClass();		// XXX
 		}
 		if ("IMPPROPid_d3atlExpression".equals(newName)) {

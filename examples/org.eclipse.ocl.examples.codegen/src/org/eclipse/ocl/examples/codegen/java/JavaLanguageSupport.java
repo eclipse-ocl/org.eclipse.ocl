@@ -313,7 +313,7 @@ public class JavaLanguageSupport extends LanguageSupport
 		String trimmedName = fullClassName;
 		if (packageNameLength > 0) {
 			int iStart = fullClassName.indexOf(packageName);
-			if (iStart > 0) {
+			if (iStart >= 0) {
 				trimmedName = fullClassName.substring(0, iStart) + fullClassName.substring(iStart + packageNameLength + 1);
 			}
 		}

@@ -78,6 +78,7 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -523,12 +524,24 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGIndexExp createCGIndexExp(@NonNull CGValuedElement cgValue, int index) {
+		ElementId elementTypeId = cgValue.getTypeId().getElementId();
+		TypeId asTypeId = null;
+		if (elementTypeId instanceof JavaTypeId) {
+			Class<?> jArrayClass = ((JavaTypeId)elementTypeId).getJavaClass();
+			Class<?> jClass = jArrayClass.getComponentType();
+			if (jClass != null) {
+				asTypeId = JavaConstants.getJavaTypeId(jClass);
+			}
+		}
+		if (asTypeId == null) {
+			asTypeId = TypeId.OCL_ANY;				// Never happens
+		}
 		CGIndexExp cgIndexExp = CGModelFactory.eINSTANCE.createCGIndexExp();
-	//	setAst(cgVariableExp, asVariableExp);
+	//	setAst(cgVariableExp, asVariableExp);			// Set by caller
 		cgIndexExp.setSource(cgValue);
 		cgIndexExp.setIndex(createCGConstantExp(getCGInteger(index)));
-		cgIndexExp.setTypeId(getCGTypeId(TypeId.OCL_ANY));
-		cgIndexExp.setRequired(cgValue.isRequired());
+		cgIndexExp.setTypeId(getCGTypeId(asTypeId));
+		cgIndexExp.setRequired(false/*cgValue.isRequired()*/);		// FIXME maintain and use inner @NonNull annotation
 		return cgIndexExp;
 	}
 
