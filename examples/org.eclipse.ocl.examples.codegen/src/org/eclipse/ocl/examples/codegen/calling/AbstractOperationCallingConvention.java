@@ -61,7 +61,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		boolean hasExternalNames = cgOperation instanceof CGEcoreOperation;		// Ecore has genmodel-defined names
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {
 			String name = hasExternalNames ? parameterVariable.getName() : null;
-			CGParameter cgParameter = operationNameManager.getParameter(parameterVariable, name);
+			CGParameter cgParameter = operationNameManager.getCGParameter(parameterVariable, name);
 			cgParameters.add(cgParameter);
 		}
 	}
@@ -218,7 +218,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
-		return operationNameManager.getParameter(asParameterVariable, (String)null);
+		return operationNameManager.getCGParameter(asParameterVariable, (String)null);
 	}
 
 	@Override
@@ -243,7 +243,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 				cgOperation.getParameters().add(cgParameter);
 			}
 			for (@NonNull Parameter asParameterVariable : ClassUtil.nullFree(asOperation.getOwnedParameters())) {
-				CGParameter cgParameter = operationNameManager.getParameter(asParameterVariable, (String)null);
+				CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, (String)null);
 				cgOperation.getParameters().add(cgParameter);
 			}
 		}

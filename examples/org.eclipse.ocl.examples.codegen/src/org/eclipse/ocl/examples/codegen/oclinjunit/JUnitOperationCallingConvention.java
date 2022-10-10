@@ -64,13 +64,13 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		cgParameters.add(codeGenerator.createExecutorParameter());
 		cgParameters.add(codeGenerator.createTypeIdParameter());
 		if (contextVariable != null) {
-			CGParameter cgContext = operationNameManager.getParameter(contextVariable, (String)null);			// XXX getSelf ???
+			CGParameter cgContext = operationNameManager.getCGParameter(contextVariable, (String)null);			// XXX getSelf ???
 			cgContext.setIsSelf(true);
 			cgContext.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgParameters.add(cgContext);
 		}
 		for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
-			CGParameter cgParameter = operationNameManager.getParameter(parameterVariable, (String)null);
+			CGParameter cgParameter = operationNameManager.getCGParameter(parameterVariable, (String)null);
 			cgParameters.add(cgParameter);
 		}
 	}
