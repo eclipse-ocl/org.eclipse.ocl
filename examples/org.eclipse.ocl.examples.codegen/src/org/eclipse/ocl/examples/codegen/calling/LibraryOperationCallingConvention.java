@@ -127,6 +127,74 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		return cgOperationCallExp;
 	}
 
+	public @NonNull CGCallExp createCGOperationCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation,
+			@Nullable CGValuedElement cgSource, @NonNull CGValuedElement @Nullable ... cgArguments) {
+		@NonNull Operation asOperation = CGUtil.getAST(cgOperation);
+		@NonNull LibraryOperation libraryOperation = (LibraryOperation) asOperation.getImplementation();
+		//	Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
+	//	System.out.println("createCGOperationCallExp: to " + asOperation);
+		assert (cgSource == null) == asOperation.isIsStatic();
+		boolean isRequired = cgOperation.isRequired();
+	//	Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
+		//	assert (cgSource == null) == Modifier.isStatic(jMethod.getModifiers());
+		CGLibraryOperationCallExp cgOperationCallExp = CGModelFactory.eINSTANCE.createCGLibraryOperationCallExp();
+		cgOperationCallExp.setLibraryOperation(libraryOperation);
+		initCallExp2(analyzer, cgOperationCallExp, cgOperation, isRequired);
+
+	//	List<@NonNull OCLExpression> asArguments = PivotUtilInternal.getOwnedArgumentsList(asOperationCallExp);
+	//	int asArgumentSize = asArguments.size();
+	//	assert asArgumentSize == asOperation.getOwnedParameters().size();
+
+	//	List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
+	/*	Class<?>[] jParameterTypes = jMethod.getParameterTypes();
+		int syntheticArgumentSize = jParameterTypes.length - asArgumentSize;
+		for (int i = 0; i < syntheticArgumentSize; i++) {
+			Class<?> jParameterType = jParameterTypes[i];
+			if (jParameterType == Executor.class) {
+				ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(asOperationCallExp);
+				CGVariable executorVariable = analyzer.getExecutorVariable(executableNameManager);
+				cgArguments.add(analyzer.createCGVariableExp(executorVariable));
+			}
+			else if (jParameterType == TypeId.class) {
+				addTypeIdArgument(analyzer, cgOperationCallExp, asOperation.getTypeId());
+			}
+			else if (jParameterType == Object.class) {
+				if (cgSource != null) {
+					cgArguments.add(cgSource);
+				}
+				break;
+			}
+			else {
+				throw new UnsupportedOperationException();
+			}
+		} */
+		if (cgArguments != null) {
+			for (@NonNull CGValuedElement cgArgument : cgArguments) {
+			//	CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, asArgument);
+				cgOperationCallExp.getArguments().add(cgArgument);
+			}
+		}
+	//	initCallArguments(as2cgVisitor, cgOperationCallExp);
+		return cgOperationCallExp;
+	}
+
+	private void initCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp,
+			@NonNull CGOperation cgOperation, boolean isRequired) {		// XXX wip eliminate isRequired
+	//	Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
+		Operation asOperation = CGUtil.getAST(cgOperation);
+	//	boolean isRequired2 = asOperation.isIsRequired();
+	//	Boolean ecoreIsRequired = as2cgVisitor.getCodeGenerator().isNonNull(asOperationCallExp);
+	//	if (ecoreIsRequired != null) {
+	//		isRequired2 = ecoreIsRequired;
+	//	}
+	//	assert isRequired == isRequired2;
+		cgOperationCallExp.setAsOperation(asOperation);
+		analyzer.initAst(cgOperationCallExp, asOperation, false);
+		cgOperationCallExp.setReferredOperation(cgOperation);
+		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
+		cgOperationCallExp.setValidating(asOperation.isIsValidating());
+	}
+
 	public @NonNull CGLibraryOperationCallExp createCGMethodOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull LibraryOperation libraryOperation,
 	//		CGValuedElement cgSource, @NonNull Operation asOperation) {
 			CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
