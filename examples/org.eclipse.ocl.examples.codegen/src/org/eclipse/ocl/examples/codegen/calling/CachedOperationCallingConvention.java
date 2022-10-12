@@ -325,6 +325,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		js.append(" extends ");
 		js.appendClassReference(null, AbstractEvaluationOperation.class);
 		js.pushClassBody(operationClassName);
+		js.append("\n");					// XXX delete me
 		doCachedOperationBasicEvaluate(cg2javaVisitor, js, cgCachedOperation);
 		js.append("\n");
 		doCachedOperationEvaluate(cg2javaVisitor, js, cgCachedOperation);

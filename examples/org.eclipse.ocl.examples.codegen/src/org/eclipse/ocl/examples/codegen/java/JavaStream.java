@@ -1284,7 +1284,7 @@ public class JavaStream
 	public void pushClassBody(@NonNull String className) {
 		classNameStack.push(className);
 		append("\n");
-		append("{\n");
+		append("{");
 		pushIndentation(null);
 	}
 

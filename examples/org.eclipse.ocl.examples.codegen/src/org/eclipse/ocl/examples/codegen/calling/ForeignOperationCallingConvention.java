@@ -177,6 +177,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.append(" extends ");
 		js.appendClassReference(null, AbstractOperation.class);
 		js.pushClassBody(operationName);
+		js.append("\n");
 		js.append("public static final ");
 		js.appendIsRequired(true);
 		js.append(" ");

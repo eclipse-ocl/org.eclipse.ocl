@@ -49,6 +49,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.appendClassReference(null, baseClass);
 	//	appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
+		js.append("\n");					// XXX delete me
 		Iterable<@NonNull CGValuedElement> sortedGlobals = cg2javaVisitor.getAnalyzer().getGlobals();
 		if (sortedGlobals != null) {
 			cg2javaVisitor.generateGlobals(sortedGlobals);
