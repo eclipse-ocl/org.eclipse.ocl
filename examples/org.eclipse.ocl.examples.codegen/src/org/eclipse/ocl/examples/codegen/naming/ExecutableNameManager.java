@@ -59,7 +59,7 @@ public class ExecutableNameManager extends NestedNameManager
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / caached local thread lookup
 	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// A convenience cache of execitpr.getIdResolver()
 	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;		// A convenience cache of execitpr.getModelManager()
-	private /*@LazyNonNull*/ CGVariable qualifiedThisVariable = null;		// An unambiguous spelling of this for external access.
+	private /*@LazyNonNull*/ CGFinalVariable qualifiedThisVariable = null;	// An unambiguous spelling of this for external access.
 	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of execitpr.getStandardVariable()
 	private /*@LazyNonNull*/ CGParameter selfParameter = null;				// A local parameter spelled "self" to be added to the signature
 	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// A local orphan parameter spelled "this"
@@ -250,9 +250,9 @@ public class ExecutableNameManager extends NestedNameManager
 		return modelManagerVariable;
 	}
 
-	public @NonNull CGVariable createQualifiedThisVariable() {
+	public @NonNull CGFinalVariable createQualifiedThisVariable() {
 		NameResolution qualifiedThisNameResolution = globalNameManager.declareEagerName(null, classNameManager.getASClass().getName() + "_" + JavaConstants.THIS_NAME);
-		CGVariable qualifiedThisVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
+		CGFinalVariable qualifiedThisVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		qualifiedThisVariable.setTypeId(analyzer.getCGTypeId(classNameManager.getASClass().getTypeId()));
 		qualifiedThisVariable.setInit(getThisParameter());
 		qualifiedThisVariable.setNonInvalid();
@@ -501,14 +501,14 @@ public class ExecutableNameManager extends NestedNameManager
 		return cgParameter;
 	} */
 
-	public @NonNull CGVariable getQualifiedThisVariable() {
+	public @NonNull CGFinalVariable getQualifiedThisVariable() {
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).getQualifiedThisVariable();
 		}
 	//	if (asScope != classNameManager.getASClass()) {				// XXX
 	//		return ((ExecutableNameManager)parent).getQualifiedThisVariable();
 	//	}
-		CGVariable qualifiedThisVariable2 = qualifiedThisVariable;
+		CGFinalVariable qualifiedThisVariable2 = qualifiedThisVariable;
 		if (qualifiedThisVariable2 == null) {
 			qualifiedThisVariable = qualifiedThisVariable2 = createQualifiedThisVariable();
 		}
