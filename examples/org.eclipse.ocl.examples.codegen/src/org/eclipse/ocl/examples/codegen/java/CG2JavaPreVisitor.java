@@ -339,7 +339,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGIsEqualExp(@NonNull CGIsEqualExp cgIsEqualExp) {
-		installIdResolverVariable(cgIsEqualExp);
+		ExecutableNameManager executableNameManager = analyzer.getGlobalNameManager().useSelfExecutableNameManager(cgIsEqualExp);
+		if (executableNameManager.basicGetIdResolverVariable() == null) {
+			installIdResolverVariable(cgIsEqualExp);
+		}
 		return super.visitCGIsEqualExp(cgIsEqualExp);
 	}
 
