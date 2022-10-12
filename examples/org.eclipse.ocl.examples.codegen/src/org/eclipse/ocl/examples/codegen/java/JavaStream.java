@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("equals")) {
+				if (string.contains("getResult")) {
 					getClass();		// XXX
 				}
 				if (string.contains("IF_CAUGHT_isEmpty")) {
