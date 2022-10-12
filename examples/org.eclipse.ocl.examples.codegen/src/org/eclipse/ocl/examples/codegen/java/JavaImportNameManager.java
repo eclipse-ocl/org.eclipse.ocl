@@ -45,7 +45,7 @@ public class JavaImportNameManager extends AbstractImportNameManager
 	 */
 	@Override
 	public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String fullyQualifiedClassName) {
-		if (fullyQualifiedClassName.contains("FOREIGN")) {
+		if (fullyQualifiedClassName.contains("CACHE")) {
 			getClass();		// XXX
 		}
 		String dollarPrefix = fullyQualifiedClassName;
