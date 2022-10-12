@@ -13,9 +13,12 @@ package org.eclipse.ocl.examples.codegen.calling;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -28,7 +31,9 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -45,6 +50,17 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 
 	public static @NonNull String getNativeOperationName(@NonNull Operation asOperation) {	// FIXME unique
 		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
+	}
+
+	@Override
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		return CGModelFactory.eINSTANCE.createCGCachedOperation();
+	}
+
+	@Override
+	public @NonNull CGValuedElement createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
+			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
+		throw new UnsupportedOperationException();
 	}
 
 	protected void doCachedOperationClassInstance(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
@@ -178,7 +194,30 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 		return true;
 	}
 
-	protected abstract @NonNull String getNativeOperationClassName(@NonNull CGOperation cgOperation);
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		js.append("@Override\n");
+		js.append("public ");
+		js.appendTypeDeclaration(cgOperation);
+		js.append(" ");
+		js.appendValueName(cgOperation);
+		appendParameterList(js, cgOperation);
+		js.append(" {\n");
+		js.pushIndentation(null);
+		generateJavaOperationBody(cg2javaVisitor, js, cgOperation);
+		js.popIndentation();
+		js.append("}\n");
+		return true;
+	}
+
+	protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
+		cg2javaVisitor.appendReturn(body);
+	}
+
+	protected @NonNull String getNativeOperationClassName(@NonNull CGOperation cgOperation) {
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public boolean needsNestedClass() {

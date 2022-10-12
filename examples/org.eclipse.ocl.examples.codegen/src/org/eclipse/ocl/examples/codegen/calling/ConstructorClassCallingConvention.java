@@ -27,20 +27,20 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  *  CacheClassCallingConvention defines the style of a nested Class whose instance caches a feature computation.
  */
-public class CacheClassCallingConvention extends AbstractClassCallingConvention
+public class ConstructorClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static final @NonNull CacheClassCallingConvention INSTANCE = new CacheClassCallingConvention();
+	public static final @NonNull ConstructorClassCallingConvention INSTANCE = new ConstructorClassCallingConvention();
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
 		assert cgClass.getContainingPackage() == null;			// container is a cgClass
 		String className = CGUtil.getName(cgClass);
-		String title = cgClass.getName() + " provides the Java implementation to cache evaluations of\n";
+		String title = cgClass.getName() + " provides the Java implementation to construct the singleton to cache an evaluation of\n";
 		js.appendCommentWithOCL(title, cgClass.getAst());
 		js.append("protected class " + className);
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
-		generateProperties(cg2javaVisitor, js, cgClass);
+	//	generateProperties(cg2javaVisitor, js, cgClass);
 		generateOperations(cg2javaVisitor, js, cgClass);
 		js.popClassBody(false);
 		return true;

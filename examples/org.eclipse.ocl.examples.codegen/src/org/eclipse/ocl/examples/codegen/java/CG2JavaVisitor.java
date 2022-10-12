@@ -690,6 +690,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		return null;
 	}
 
+	public @NonNull GlobalNameManager getGlobalNameManager() {
+		return globalNameManager;
+	}
+
 	public @NonNull ImportNameManager getImportNameManager() {
 		return context.getImportNameManager();
 	}

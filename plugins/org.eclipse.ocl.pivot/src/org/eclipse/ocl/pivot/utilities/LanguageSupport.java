@@ -89,8 +89,24 @@ public abstract class LanguageSupport
 		return null;
 	}
 
+	/**
+	 * Return the AS cache class for asClass.
+	 */
 	public abstract org.eclipse.ocl.pivot.@NonNull Class getCacheClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name);
+
+	/**
+	 * Return the AS cache class for asFeature.
+	 */
 	public abstract org.eclipse.ocl.pivot.@NonNull Class getCacheClass(@NonNull Feature asFeature);
+
+	/**
+	 * Return the AS cache constructor class for asFeature.
+	 */
+	public abstract org.eclipse.ocl.pivot.@NonNull Class getConstructorClass(@NonNull Feature asFeature);
+
+	/**
+	 * Return the AS class for a Java Class.
+	 */
 	public abstract org.eclipse.ocl.pivot.@NonNull Class getNativeClass(/*@NonNull */Class<?> jClass);
 	public abstract @Nullable Invocations resolveInvocations(@NonNull Type requiredSourceType, boolean hasExplicitSourceExp, @NonNull String qualifiedOperationName);
 }

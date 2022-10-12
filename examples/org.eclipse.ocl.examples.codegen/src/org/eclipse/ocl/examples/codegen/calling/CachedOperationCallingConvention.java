@@ -345,6 +345,6 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 	protected @NonNull String getNativeOperationClassName(@NonNull CGOperation cgOperation) {	// FIXME unique
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
-		return "CACHE_" + getNativeOperationName(asOperation);
+		return "zzCACHE_" + getNativeOperationName(asOperation);
 	}
 }

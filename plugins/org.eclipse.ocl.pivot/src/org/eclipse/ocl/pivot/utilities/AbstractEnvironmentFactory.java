@@ -169,6 +169,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 
 		@Override
+		public org.eclipse.ocl.pivot.@NonNull Class getConstructorClass(@NonNull Feature asFeature) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
 		public org.eclipse.ocl.pivot.@NonNull Class getNativeClass(Class<?> jClass) {
 			throw new UnsupportedOperationException();
 		}

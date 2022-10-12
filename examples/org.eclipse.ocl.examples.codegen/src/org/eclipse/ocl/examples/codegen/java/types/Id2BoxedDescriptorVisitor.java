@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -146,8 +147,14 @@ public class Id2BoxedDescriptorVisitor implements CGIdVisitor<BoxedDescriptor>
 		} */
 		//		if (type instanceof org.eclipse.ocl.pivot.Class) {
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
-		if ((asPackage != null) && (asPackage.eContainer() instanceof Orphanage)) {
-			return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
+		if ((asPackage != null) && ((asPackage.eContainer() instanceof Orphanage) || JavaLanguageSupport.isNative(asPackage))) {
+			String name = asPackage.getName();
+			if ("".equals(name)) {
+				return new SimpleDataTypeDescriptor(id, type.getName());
+			}
+			else {
+				return new SimpleDataTypeDescriptor(id, name + "." + type.getName());
+			}
 		}
 		//		}
 		return new RootObjectDescriptor(id);
