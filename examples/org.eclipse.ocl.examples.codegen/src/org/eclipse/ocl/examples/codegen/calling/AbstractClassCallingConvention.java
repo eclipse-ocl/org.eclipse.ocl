@@ -43,7 +43,6 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 			js.appendClassReference(cgSuperClass);
 			isFirst = false;
 		}
-//			}
 	}
 
 	@Override
@@ -52,36 +51,27 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 	}
 
 	protected void generateClasses(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
-	//	boolean first = true;
 		for (CGClass cgNestedClass : cgClass.getClasses()) {
-		//	boolean first = true;
-		//	if (!first) {
-				js.append("\n");
-		//	}
-				cgNestedClass.accept(cg2javaVisitor);
-		//	first = false;
+			js.append("\n");
+			cgNestedClass.accept(cg2javaVisitor);
 		}
 	}
 
 	protected void generateOperations(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
-	//	boolean first = true;
 		for (CGOperation cgOperation : cgClass.getOperations()) {
-	//		if (!first) {
-				js.append("\n");
-	//		}
+			js.append("\n");
 			cgOperation.accept(cg2javaVisitor);
-	//		first = false;
 		}
 	}
 
 	protected void generateProperties(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
-	//	boolean first = true;
+		boolean isFirst = true;
 		for (CGProperty cgProperty : cgClass.getProperties()) {
-	//		if (!first) {
-	//			js.append("\n");
-	//		}
+			if (isFirst) {
+				js.append("\n");
+			}
 			cgProperty.accept(cg2javaVisitor);
-	//		first = false;
+			isFirst = false;
 		}
 	}
 

@@ -401,6 +401,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.appendClassReference(null, operationClass);
 		js.append("()");
 		js.pushClassBody(String.valueOf(operationClass));
+		js.append("\n");					// XXX delete me
 		js.appendCommentWithOCL(null, body.getAst());
 		js.append("@Override\n");
 		js.append("public ");

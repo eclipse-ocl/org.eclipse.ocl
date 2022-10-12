@@ -189,6 +189,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		js.append(" extends ");
 		js.appendClassReference(null, AbstractDispatchOperation.class);
 		js.pushClassBody(operationClassName);
+		js.append("\n");					// XXX delete me
 		doCachedOperationDispatchInstaller(cg2javaVisitor, js, cgCachedOperation);
 		js.append("\n");
 		doCachedOperationEvaluate(cg2javaVisitor, js, cgCachedOperation);
