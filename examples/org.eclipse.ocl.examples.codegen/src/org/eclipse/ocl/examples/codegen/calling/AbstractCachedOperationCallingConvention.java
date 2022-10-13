@@ -52,6 +52,10 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
 	}
 
+	protected void appendOverride(JavaStream js) {
+		js.append("@Override\n");
+	}
+
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		return CGModelFactory.eINSTANCE.createCGCachedOperation();
@@ -196,7 +200,7 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		js.append("@Override\n");
+		appendOverride(js);
 		js.append("public ");
 		js.appendTypeDeclaration(cgOperation);
 		js.append(" ");
