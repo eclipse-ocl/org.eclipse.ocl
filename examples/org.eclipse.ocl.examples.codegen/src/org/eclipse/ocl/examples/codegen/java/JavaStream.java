@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("FUN_rgb2hsl")) {
+				if (string.contains("FUN_getAllForwards")) {
 					getClass();		// XXX
 				}
 				if (string.contains("IF_CAUGHT_isEmpty")) {

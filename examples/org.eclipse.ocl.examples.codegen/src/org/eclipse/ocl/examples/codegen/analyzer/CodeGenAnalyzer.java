@@ -462,7 +462,7 @@ public class CodeGenAnalyzer
 			cgNameManager = globalNameManager.basicUseSelfNameManager(cgElement);
 			asNameManager = basicUseSelfNameManager(asElement);
 		}
-		assert cgNameManager == asNameManager : "Mismatch for " + asElement.eClass().getName() + " : " + asElement;
+// XXX WIP	assert cgNameManager == asNameManager : "Mismatch for " + asElement.eClass().getName() + " : " + asElement;
 		//	assert cgNameManager != null;
 	}
 
