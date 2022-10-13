@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.codegen.java;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
@@ -61,6 +62,7 @@ import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
@@ -153,9 +155,17 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return context;
 	}
 
-	protected @NonNull ExecutableNameManager getTreeNameManager(@NonNull CGValuedElement cgElement) {
-		ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(CGUtil.getAST(cgElement));
-		return executableNameManager.getRootExecutableNameManager();
+	protected @NonNull ExecutableNameManager getTreeNameManager(@NonNull CGValuedElement cgValuedElement) {
+		for (CGElement cgElement = cgValuedElement; cgElement != null; cgElement = cgElement.getParent()) {
+			if (cgElement instanceof CGValuedElement) {
+				EObject asElement = ((CGValuedElement)cgElement).getAst();
+				if (asElement != null) {
+					ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager((Element) asElement);
+					return executableNameManager.getRootExecutableNameManager();
+				}
+			}
+		}
+		throw new IllegalStateException("No ExecutableNameManager for " + cgValuedElement.eClass().getName() + ": " + cgValuedElement);
 	}
 
 	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgElement) {
