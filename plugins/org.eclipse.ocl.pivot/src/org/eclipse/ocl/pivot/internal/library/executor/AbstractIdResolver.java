@@ -1372,7 +1372,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		boolean thisIsOCLValue = thisObject instanceof OCLValue;
 		boolean thatIsOCLValue = thatObject instanceof OCLValue;
-		if (thisIsOCLValue || thatIsOCLValue) {
+		if (thisIsOCLValue && thatIsOCLValue) {
 			OCLValue thisOCLValue = (OCLValue)(thisIsOCLValue ? thisObject : boxedValueOf(thisObject));
 			OCLValue thatOCLValue = (OCLValue)(thatIsOCLValue ? thatObject : boxedValueOf(thatObject));
 			assert thisOCLValue != null;
@@ -1427,7 +1427,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		boolean thisIsNumber = thisObject instanceof Number;
 		boolean thatIsNumber = thatObject instanceof Number;
-		if (thisIsNumber || thatIsNumber) {
+		if (thisIsNumber && thatIsNumber) {
 			Value thisValue;
 			if (thisIsNumber) {
 				thisValue = ValueUtil.numberValueOf((Number)thisObject);
