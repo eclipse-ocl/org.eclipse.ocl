@@ -102,7 +102,7 @@ public abstract class AbstractNameManager implements NameManager
 				return eagerName;
 			}
 			System.err.println("Multiple reservation for eager name \"" + eagerName + "\"");		// XXX More accurate diagnosis of Parameter hides Property in SysML QUDV
-			return allocateFallBackName(eagerName);
+			return allocateFallBackName(eagerName);// testQVTcCompiler_Forward2Reverse_CG has list2list Property occluding  a Package
 		}
 
 		private @NonNull String allocateFallBackName(@NonNull String validHint) {
