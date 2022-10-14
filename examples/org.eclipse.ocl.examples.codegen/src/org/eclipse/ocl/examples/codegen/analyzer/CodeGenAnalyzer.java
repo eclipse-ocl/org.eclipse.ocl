@@ -774,9 +774,24 @@ public class CodeGenAnalyzer
 			}
 			else {																		// Regular AS Class whose CG Class is a child of the AS Class's Package
 				org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
-				PackageNameManager packageNameManager = getPackageNameManager(null, asPackage);
-				packageNameManager.getCGPackage().getClasses().add(cgClass);
-				classableNameManager = packageNameManager;
+				CompletePackage completePackage = completeModel.getCompletePackage(asPackage);
+				CompletePackage completeParentPackage = completePackage.getOwningCompletePackage();
+				List<CGClass> siblingClasses = null;
+				if (completeParentPackage != null) {
+					CompleteClass ownedCompleteClass = completeParentPackage.getOwnedCompleteClass(asPackage.getName());
+					if (ownedCompleteClass != null) {
+						ClassNameManager classNameManager = getClassNameManager(null, ownedCompleteClass.getPrimaryClass());
+						siblingClasses = classNameManager.getCGClass().getClasses();
+						classableNameManager = classNameManager;
+					}
+				}
+				if (siblingClasses == null) {
+					PackageNameManager packageNameManager = getPackageNameManager(null, asPackage);
+					siblingClasses = packageNameManager.getCGPackage().getClasses();
+					classableNameManager = packageNameManager;
+				}
+				siblingClasses.add(cgClass);
+				assert classableNameManager != null;
 			}
 			new NameResolution.EagerNested(classableNameManager, cgClass, name);
 		}
