@@ -50,6 +50,7 @@ import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
@@ -148,12 +149,13 @@ public class Id2BoxedDescriptorVisitor implements CGIdVisitor<BoxedDescriptor>
 		//		if (type instanceof org.eclipse.ocl.pivot.Class) {
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
 		if ((asPackage != null) && ((asPackage.eContainer() instanceof Orphanage) || JavaLanguageSupport.isNative(asPackage))) {
-			String name = asPackage.getName();
-			if ("".equals(name)) {
-				return new SimpleDataTypeDescriptor(id, type.getName());
+			String packagePath = asPackage.toString();
+			String className = PivotUtil.getName(type);
+			if ("".equals(packagePath)) {								// Java default package
+				return new SimpleDataTypeDescriptor(id, className);
 			}
 			else {
-				return new SimpleDataTypeDescriptor(id, name + "." + type.getName());
+				return new SimpleDataTypeDescriptor(id, packagePath.replace("::",  ".") + "." + className);
 			}
 		}
 		//		}

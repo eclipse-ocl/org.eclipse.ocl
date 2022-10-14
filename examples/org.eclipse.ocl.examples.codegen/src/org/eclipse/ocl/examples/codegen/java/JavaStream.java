@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("CTOR_Families2Persons_familyName")) {
+				if (string.contains("families2persons.")) {
 					getClass();		// XXX
 				}
 				if (string.contains("IF_CAUGHT_isEmpty")) {

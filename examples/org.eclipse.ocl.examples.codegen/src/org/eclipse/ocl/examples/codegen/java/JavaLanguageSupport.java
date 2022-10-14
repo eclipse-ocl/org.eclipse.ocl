@@ -238,14 +238,22 @@ public class JavaLanguageSupport extends LanguageSupport
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
+	public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String leafClassName) {
 		org.eclipse.ocl.pivot.@NonNull Package asPackage = PivotUtil.getOwningPackage(asClass);
 		org.eclipse.ocl.pivot.@NonNull Package asCachePackage = getCachePackage(asPackage);
-		List<org.eclipse.ocl.pivot.@NonNull Class> asCacheClasses = PivotUtilInternal.getOwnedClassesList(asCachePackage);
-		org.eclipse.ocl.pivot.Class asCacheClass = NameUtil.getNameable(asCacheClasses, name);
+		List<org.eclipse.ocl.pivot.@NonNull Package> asCachePackages = PivotUtilInternal.getOwnedPackagesList(asCachePackage);
+		String packageClassName = asClass.getName();
+		org.eclipse.ocl.pivot.Package asCacheClassPackage = NameUtil.getNameable(asCachePackages, packageClassName);
+		if (asCacheClassPackage == null) {
+			asCacheClassPackage = PivotFactory.eINSTANCE.createPackage();
+			asCacheClassPackage.setName(packageClassName);
+			asCachePackages.add(asCacheClassPackage);
+		}
+		List<org.eclipse.ocl.pivot.@NonNull Class> asCacheClasses = PivotUtilInternal.getOwnedClassesList(asCacheClassPackage);
+		org.eclipse.ocl.pivot.Class asCacheClass = NameUtil.getNameable(asCacheClasses, leafClassName);
 		if (asCacheClass == null) {
 			asCacheClass = PivotFactory.eINSTANCE.createClass();
-			asCacheClass.setName(name);
+			asCacheClass.setName(leafClassName);
 			asCacheClasses.add(asCacheClass);
 		}
 		return asCacheClass;
@@ -266,17 +274,23 @@ public class JavaLanguageSupport extends LanguageSupport
 	}
 
 	/*
-	 * Return a native package for jPackage flattening nested packages.
+	 * Return a native package for asPackage without flattening nested packages.
 	 */
 	private org.eclipse.ocl.pivot.@NonNull Package getCachePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		Model asModel = getNativeModel();
-		String qualifiedName = asPackage.toString().replaceAll("::", "_");
-		List<org.eclipse.ocl.pivot.@NonNull Package> asCachePackages = PivotUtilInternal.getOwnedPackagesList(asModel);
-		org.eclipse.ocl.pivot.Package asCachePackage = NameUtil.getNameable(asCachePackages, qualifiedName);
+		List<org.eclipse.ocl.pivot.Package> asSiblingPackages;
+		org.eclipse.ocl.pivot.Package asParentPackage = asPackage.getOwningPackage();
+		if (asParentPackage != null) {
+			asSiblingPackages = getCachePackage(asParentPackage).getOwnedPackages();
+		}
+		else {
+			asSiblingPackages = getNativeModel().getOwnedPackages();
+		}
+		String name = asPackage.getName();
+		org.eclipse.ocl.pivot.Package asCachePackage = NameUtil.getNameable(asSiblingPackages, name);
 		if (asCachePackage == null) {
 			asCachePackage = PivotFactory.eINSTANCE.createPackage();
-			asCachePackage.setName(qualifiedName);
-			asCachePackages.add(asCachePackage);
+			asCachePackage.setName(name);
+			asSiblingPackages.add(asCachePackage);
 		}
 		return asCachePackage;
 	}
