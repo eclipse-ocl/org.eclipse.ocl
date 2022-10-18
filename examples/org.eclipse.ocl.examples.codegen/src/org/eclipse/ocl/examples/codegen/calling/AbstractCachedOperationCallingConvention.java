@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -27,6 +28,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -50,10 +52,6 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 
 	public static @NonNull String getNativeOperationName(@NonNull Operation asOperation) {	// FIXME unique
 		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
-	}
-
-	protected void appendOverride(JavaStream js) {
-		js.append("@Override\n");
 	}
 
 	@Override
@@ -200,7 +198,11 @@ public abstract class AbstractCachedOperationCallingConvention extends Constrain
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		appendOverride(js);
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(asOperation);
+		if (jMethod != null) {
+			js.append("@Override\n");
+		}
 		js.append("public ");
 		js.appendTypeDeclaration(cgOperation);
 		js.append(" ");

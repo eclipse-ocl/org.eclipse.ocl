@@ -774,31 +774,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		TypeDescriptor typeDescriptor = getTypeDescriptor(cgValue);
 		Class<?> javaClass = typeDescriptor.getJavaClass();		// FIXME Rationalize with TypeDescriptor.isPrimitive()
-		if ((javaClass == boolean.class) || ((javaClass == Boolean.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == byte.class) || ((javaClass == Byte.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == char.class) || ((javaClass == Character.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == double.class) || ((javaClass == Double.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == float.class) || ((javaClass == Float.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == int.class) || ((javaClass == Integer.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == long.class) || ((javaClass == Long.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		if ((javaClass == short.class) || ((javaClass == Short.class) && cgValue.isNonNull())) {
-			return true;
-		}
-		return false;
+		boolean isNonNull = cgValue.isNonNull();
+		return JavaLanguageSupport.isPrimitive(isNonNull, javaClass);
 	}
 
 	/**
@@ -818,6 +795,11 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	@Override
 	public boolean maybePrimitive(@NonNull CGValuedElement cgValue) {
+		if (cgValue instanceof CGOperation) {
+			if (!((CGOperation)cgValue).maybePrimitive()) {
+				return false;
+			}
+		}
 		if (cgValue.getNamedValue().isCaught()) {
 			return false;
 		}

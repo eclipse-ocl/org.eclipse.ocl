@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.library.AbstractNativeProperty;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Model;
@@ -174,9 +175,72 @@ public class JavaLanguageSupport extends LanguageSupport
 		}
 	}
 
+	public static @Nullable Method getOverriddenMethod(@NonNull Operation asOperation) {
+		String name = PivotUtil.getName(asOperation);
+		List<org.eclipse.ocl.pivot.@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
+		for (org.eclipse.ocl.pivot.Class asSuperClass : asClass.getSuperClasses()) {
+			TypeId asSuperTypeId = asSuperClass.getTypeId();
+			if (asSuperTypeId instanceof JavaTypeId) {
+				Class<?> jSuperClass = ((JavaTypeId)asSuperTypeId).getJavaClass();
+				for (Method jMethod : jSuperClass.getMethods()) {
+					if (name.equals(jMethod.getName())) {
+						@NonNull Class<?> @NonNull [] jParameterTypes = jMethod.getParameterTypes();
+						if (jParameterTypes.length != asParameters.size()) {
+							break;
+						}
+						boolean allMatching = true;
+						for (int i = 0; i < jParameterTypes.length; i++) {
+							@NonNull Class<?> jParameterType = jParameterTypes[i];
+							org.eclipse.ocl.pivot.@NonNull Parameter asParameter = asParameters.get(i);
+							TypeId jTypeId = JavaConstants.getJavaTypeId(jParameterType);
+							TypeId asTypeId = asParameter.getTypeId();
+							if (jTypeId != asTypeId) {		// FIXME is this sound?
+								allMatching = false;
+								break;
+							}
+						}
+						if (allMatching) {
+							return jMethod;
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 	public static boolean isNative(org.eclipse.ocl.pivot.@NonNull Package asPackage) {	// FIXME generalize to all LanguageSupport
 		Model asModel = PivotUtil.getContainingModel(asPackage);
 		return (asModel != null) && NATIVE_JAVA.equals(asModel.getExternalURI());
+	}
+
+	public static boolean isPrimitive(boolean isNonNull, @NonNull Class<?> javaClass) {
+		if ((javaClass == boolean.class) || ((javaClass == Boolean.class) && isNonNull)) {
+			return true;
+		}
+		if ((javaClass == byte.class) || ((javaClass == Byte.class) && isNonNull)) {
+			return true;
+		}
+		if ((javaClass == char.class) || ((javaClass == Character.class) && isNonNull)) {
+			return true;
+		}
+		if ((javaClass == double.class) || ((javaClass == Double.class) && isNonNull)) {
+			return true;
+		}
+		if ((javaClass == float.class) || ((javaClass == Float.class) && isNonNull)) {
+			return true;
+		}
+		if ((javaClass == int.class) || ((javaClass == Integer.class) && isNonNull)) {
+			return true;
+		}
+		if ((javaClass == long.class) || ((javaClass == Long.class) && isNonNull)) {
+			return true;
+		}
+		if ((javaClass == short.class) || ((javaClass == Short.class) && isNonNull)) {
+			return true;
+		}
+		return false;
 	}
 
 	protected @NonNull EnvironmentFactory environmentFactory;

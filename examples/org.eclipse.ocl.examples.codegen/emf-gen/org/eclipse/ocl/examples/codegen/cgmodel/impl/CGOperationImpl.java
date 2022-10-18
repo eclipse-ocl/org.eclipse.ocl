@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,11 +24,15 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Operation;
 
 /**
  * <!-- begin-user-doc -->
@@ -345,6 +350,21 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 				return CALLING_CONVENTION_EDEFAULT == null ? callingConvention != null : !CALLING_CONVENTION_EDEFAULT.equals(callingConvention);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	@Override
+	public boolean maybePrimitive() {
+		Method jMethod = getOverriddenMethod();
+		if (jMethod == null) {
+			return true;
+		}
+		Class<?> jReturnClass = jMethod.getReturnType();
+		return (jReturnClass != null) && JavaLanguageSupport.isPrimitive(false, jReturnClass);
+	}
+
+	public @Nullable Method getOverriddenMethod() {
+		Operation asOperation = CGUtil.getAST(this);
+		return JavaLanguageSupport.getOverriddenMethod(asOperation);
 	}
 
 	/**
