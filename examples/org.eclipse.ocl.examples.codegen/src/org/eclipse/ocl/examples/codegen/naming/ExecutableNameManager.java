@@ -353,6 +353,8 @@ public class ExecutableNameManager extends NestedNameManager
 		//	It would be better to share multi-uses, but that requires the ownership to move from the calling
 		//	context to a dependency-sequenced list of let-variables to wrap the whole usage.
 		//
+		//	No. There is no ownership so local cache should be easier.
+		//
 		//	Map<@NonNull Type, @NonNull CGExecutorType> asType2cgType2 = asType2cgType;
 		//	if (asType2cgType2 == null) {
 		//		asType2cgType = asType2cgType2 = new HashMap<>();
@@ -400,7 +402,8 @@ public class ExecutableNameManager extends NestedNameManager
 
 	public @NonNull CGVariable getCGVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = basicGetCGVariable(asVariable);
-		if (cgVariable == null) {
+		if (cgVariable == null) {			// XXX should never happen ?? lazyGet
+			assert false;				// XXX
 			cgVariable = createCGVariable(asVariable);
 			if (asVariable.isIsRequired()) {
 				cgVariable.setNonInvalid();
@@ -592,6 +595,17 @@ public class ExecutableNameManager extends NestedNameManager
 		addVariable(CGUtil.getAST(typeIdParameter2), typeIdParameter2);
 		return typeIdParameter2;
 	} */
+
+	public @NonNull CGVariable lazyGetCGVariable(@NonNull VariableDeclaration asVariable) {
+		CGVariable cgVariable = basicGetCGVariable(asVariable);
+		assert cgVariable == null;
+		cgVariable = createCGVariable(asVariable);
+		if (asVariable.isIsRequired()) {
+			cgVariable.setNonInvalid();
+			cgVariable.setNonNull();
+		}
+		return cgVariable;
+	}
 
 	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
 		CGVariable qualifiedThisVariable = basicGetQualifiedThisVariable();

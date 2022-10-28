@@ -141,7 +141,7 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	 */
 	private Operation createASMatchesOperation(@NonNull Operation filteringOp, org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull Variable thisVariable){
 
-		Map<Element,Element> redefinitions = new HashMap<Element,Element>();
+		Map<@NonNull Element, @NonNull Element> redefinitions = new HashMap<>();
 		ExpressionInOCL oldExpressionInOCL = getExpressionInOCL(filteringOp);
 		ExpressionInOCL newExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
 
