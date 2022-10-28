@@ -345,7 +345,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 	/**
 	 * Copy all the visitXXX operation bodies from the _env bodies replacing references to redefined parameters.
 	 */
-	protected void rewriteVisitOperationBodies(@NonNull Map<Element, Element> reDefinitions, @NonNull Map<Operation, @NonNull Operation> envOperation2asOperation) throws ParserException {
+	protected void rewriteVisitOperationBodies(@NonNull Map<@NonNull Element, @NonNull Element> reDefinitions, @NonNull Map<Operation, @NonNull Operation> envOperation2asOperation) throws ParserException {
 		for (@SuppressWarnings("null")@NonNull Operation envOperation : envOperation2asOperation.keySet()) {
 			Operation asOperation = envOperation2asOperation.get(envOperation);
 			assert asOperation != null;

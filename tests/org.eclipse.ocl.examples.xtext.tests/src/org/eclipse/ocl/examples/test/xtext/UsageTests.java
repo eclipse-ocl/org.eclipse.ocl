@@ -948,7 +948,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		});
 	}
 
-	public void testBug458724() throws Throwable {
+	public void testBug458724() throws Throwable {				// FIXME REname to 458774
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {

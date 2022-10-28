@@ -851,6 +851,30 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return sortedGlobals;
 	}
 
+	protected void propagateChildNameResolution(@NonNull CGElement cgElement, @NonNull CGElement cgChild, @NonNull EReference eContainmentFeature, @Nullable NameResolution parentNameResolution) {
+		if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
+			CGVariable cgVariable = (@NonNull CGVariable)cgElement;
+			NameResolution nameResolution = cgVariable.basicGetNameResolution();
+			if (nameResolution == null) {
+				NestedNameManager nestedNameManager = globalNameManager.useSelfNestedNameManager(cgVariable);
+				nameResolution = nestedNameManager.getNameResolution(cgVariable);
+			}
+			propagateNameResolution(cgChild, nameResolution);
+		}
+		else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__INIT) {
+			propagateNameResolution(cgChild, null);
+		}
+		else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__IN) {
+			propagateNameResolution(cgChild, parentNameResolution);
+		}
+		else if ((eContainmentFeature == CGModelPackage.Literals.CG_SOURCED_CALL_EXP__SOURCE) && (cgElement instanceof CGGuardExp)) {
+			propagateNameResolution(cgChild, parentNameResolution);	// Guard is an if predicate name re-use
+		}
+		else {
+			propagateNameResolution(cgChild, null);
+		}
+	}
+
 	/**
 	 * Propagate the parent name hint down to the descendants of cgElement so that initializers for variables use a name
 	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
@@ -860,27 +884,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			if (eObject instanceof CGElement) {
 				CGElement cgChild = (CGElement)eObject;
 				EReference eContainmentFeature = cgChild.eContainmentFeature();
-				if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
-					CGVariable cgVariable = (@NonNull CGVariable)cgElement;
-					NameResolution nameResolution = cgVariable.basicGetNameResolution();
-					if (nameResolution == null) {
-						NestedNameManager nestedNameManager = globalNameManager.useSelfNestedNameManager(cgVariable);
-						nameResolution = nestedNameManager.getNameResolution(cgVariable);
-					}
-					propagateNameResolution(cgChild, nameResolution);
-				}
-				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__INIT) {
-					propagateNameResolution(cgChild, null);
-				}
-				else if (eContainmentFeature == CGModelPackage.Literals.CG_LET_EXP__IN) {
-					propagateNameResolution(cgChild, parentNameResolution);
-				}
-				else if ((eContainmentFeature == CGModelPackage.Literals.CG_SOURCED_CALL_EXP__SOURCE) && (cgElement instanceof CGGuardExp)) {
-					propagateNameResolution(cgChild, parentNameResolution);	// Guard is an if predicate name re-use
-				}
-				else {
-					propagateNameResolution(cgChild, null);
-				}
+				assert eContainmentFeature != null;
+				propagateChildNameResolution(cgElement, cgChild, eContainmentFeature, parentNameResolution);
 			}
 		}
 		if (cgElement instanceof CGValuedElement) {
