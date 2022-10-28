@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
@@ -471,6 +472,7 @@ public class EnvironmentView
 		}
 	}
 
+	@Deprecated /* @deprecated not used; use addAllParameterVariables */
 	public void addAllParameters(@NonNull Operation pivot) {
 		if (accepts(PivotPackage.Literals.PARAMETER)) {
 			String name2 = name;
@@ -486,6 +488,45 @@ public class EnvironmentView
 					if (parameter != null) {
 						addNamedElement(parameter);
 					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public void addAllParameterVariables(@NonNull ExpressionInOCL pivot) {
+		if (accepts(PivotPackage.Literals.PARAMETER_VARIABLE)) {
+			String name2 = name;
+			if (name2 != null) {
+				for (Variable parameter : pivot.getOwnedParameters()) {
+					if (name2.equals(parameter.getName())) {
+						addElement(name2, parameter);
+					}
+				}
+				Variable selfVariable = pivot.getOwnedContext();
+				if ((selfVariable != null) && name2.equals(selfVariable.getName())) {
+					addElement(name2, selfVariable);
+				}
+				Variable resultVariable = pivot.getOwnedResult();
+				if ((resultVariable != null) && name2.equals(resultVariable.getName())) {
+					addElement(name2, resultVariable);
+				}
+			}
+			else {
+				for (Variable parameter : pivot.getOwnedParameters()) {
+					if (parameter != null) {
+						addNamedElement(parameter);
+					}
+				}
+				Variable selfVariable = pivot.getOwnedContext();
+				if (selfVariable != null) {
+					addNamedElement(selfVariable);
+				}
+				Variable resultVariable = pivot.getOwnedResult();
+				if (resultVariable != null) {
+					addNamedElement(resultVariable);
 				}
 			}
 		}

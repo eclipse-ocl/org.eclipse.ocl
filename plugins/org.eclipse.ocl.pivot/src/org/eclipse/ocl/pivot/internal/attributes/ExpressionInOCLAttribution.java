@@ -36,25 +36,15 @@ public class ExpressionInOCLAttribution extends AbstractAttribution
 	@Override
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 		ExpressionInOCL targetExpression = (ExpressionInOCL) target;
-		Variable contextVariable = targetExpression.getOwnedContext();
-		for (Variable parameterVariable : targetExpression.getOwnedParameters()) {
-			assert parameterVariable != null;
-			environmentView.addNamedElement(parameterVariable);
-		}
-		Variable resultVariable = targetExpression.getOwnedResult();
-		if (resultVariable != null) {
-			environmentView.addNamedElement(resultVariable);
-		}
-		if (contextVariable != null) {
-			Type type = contextVariable.getType();
+		environmentView.addAllParameterVariables(targetExpression);
+		if (!environmentView.hasFinalResult()) {
 			EnvironmentFactoryInternal environmentFactory = environmentView.getEnvironmentFactory();
-			if (type != null) {
-				environmentView.addNamedElement(contextVariable);
-			}
-			else {
+			Variable contextVariable = targetExpression.getOwnedContext();
+			Type type = contextVariable != null ? contextVariable.getType() : null;
+			if (type == null) {
 				type = environmentFactory.getStandardLibrary().getOclVoidType();
 			}
-			if (!environmentView.hasFinalResult()) {
+			if (contextVariable != null) {
 				Type userType = /*type instanceof Metaclass<?> ? ((Metaclass<?>)type).getInstanceType() :*/ type;// FIXME is this really right - needed by test_stereotypeM2Navigation for implicit self of an base_xxx
 				if (userType instanceof org.eclipse.ocl.pivot.Class) {
 					Package contextPackage = ((org.eclipse.ocl.pivot.Class)userType).getOwningPackage();
