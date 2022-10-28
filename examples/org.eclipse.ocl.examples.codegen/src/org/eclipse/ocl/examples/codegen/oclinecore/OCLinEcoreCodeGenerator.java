@@ -664,8 +664,9 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		}
 		Variable asSelfVariable = ClassUtil.nonNullState(asSynthesizedQuery.getOwnedContext());
 		Variable asDiagnosticsVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_DIAGNOSTICS_NAME, oclAnyType, false);
-		Variable asConstraintNameNameVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_NAME_NAME, stringType, true);
 		asSynthesizedQuery.getOwnedParameters().add(asDiagnosticsVariable);
+		Variable asConstraintNameNameVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_NAME_NAME, stringType, true);
+		asSynthesizedQuery.getOwnedParameters().add(asConstraintNameNameVariable);
 		Variable asContextVariable = asHelper.createParameterVariable(JavaConstants.CONSTRAINT_CONTEXT_NAME, oclAnyType, false);
 		asSynthesizedQuery.getOwnedParameters().add(asContextVariable);
 		//

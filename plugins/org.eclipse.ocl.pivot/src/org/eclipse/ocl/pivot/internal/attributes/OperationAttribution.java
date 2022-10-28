@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.attributes;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
@@ -27,12 +28,12 @@ public class OperationAttribution extends AbstractAttribution
 	public ScopeView computeLookup(@NonNull EObject target, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 		Operation targetOperation = (Operation)target;
 		EStructuralFeature containmentFeature = scopeView.getContainmentFeature();
-//		TypeBindingsCS bindings = scopeView.getBindings();
-//		Operation target = getTarget();
 		if (containmentFeature == PivotPackage.Literals.OPERATION__OWNED_PARAMETERS) {
 		}
-		else {
-			environmentView.addAllParameters(targetOperation);
+		else if (environmentView.accepts(PivotPackage.Literals.PARAMETER_VARIABLE)) {
+			ExpressionInOCL bodyExpression = (ExpressionInOCL)targetOperation.getBodyExpression();
+			assert bodyExpression != null;
+			environmentView.addAllParameterVariables(bodyExpression);
 		}
 		environmentView.addAllTemplateParameters(targetOperation);
 		return scopeView.getParent();
