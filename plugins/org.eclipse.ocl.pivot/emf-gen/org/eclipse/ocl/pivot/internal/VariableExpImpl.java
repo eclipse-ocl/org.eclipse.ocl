@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.ReferringElement;
@@ -172,7 +173,7 @@ implements VariableExp {
 	 */
 	@Override
 	public void setReferredVariable(VariableDeclaration newReferredVariable) {
-		// assert !(newReferredVariable instanceof Parameter);				// XXX legacy AS has Parameter references
+	 assert !(newReferredVariable instanceof Parameter);				// XXX legacy AS has Parameter references
 		VariableDeclaration oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
