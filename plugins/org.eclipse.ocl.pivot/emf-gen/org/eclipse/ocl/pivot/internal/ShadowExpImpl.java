@@ -69,7 +69,6 @@ import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 import org.eclipse.ocl.pivot.values.SequenceValue.Accumulator;
 import org.eclipse.ocl.pivot.values.SetValue;
-import org.eclipse.ocl.pivot.values.TupleValue;
 
 /**
  * <!-- begin-user-doc -->
