@@ -36,7 +36,8 @@ public class SimpleDataTypeDescriptor extends AbstractDescriptor implements Simp
 	public SimpleDataTypeDescriptor(@NonNull ElementId elementId, @NonNull String fullyQualifiedClassName) {
 		super(elementId);
 		this.fullyQualifiedClassName = fullyQualifiedClassName;
-		assert fullyQualifiedClassName.contains(".");
+	//	assert fullyQualifiedClassName.contains(".");		-- may all be in default package
+		assert !fullyQualifiedClassName.startsWith(".");
 	}
 
 	@Override

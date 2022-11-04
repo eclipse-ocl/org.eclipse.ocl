@@ -878,6 +878,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	/**
 	 * Propagate the parent name hint down to the descendants of cgElement so that initializers for variables use a name
 	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
+	 *
+	 * If parentNameResolution is null no hint is available.
+	 *
+	 * If the child already has an eager name such as an Ecore parameter, then that name must be preferred.
 	 */
 	protected void propagateNameResolution(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
@@ -927,7 +931,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	/**
-	 * Propagate name hints down the cgElement hierarchy  that initializers for variables use a name
+	 * Propagate name hints down the cgElement hierarchy so that initializers for variables use a name
 	 * based on the user's name for the variable rather than a totally synthetic name for the functionality.
 	 */
 	protected void propagateNames(@NonNull CGElement cgElement) {

@@ -25,7 +25,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.ReferringElement;
@@ -153,6 +156,15 @@ implements VariableExp {
 					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 10, oldReferredVariable, referredVariable));
 			}
 		}
+		if (referredVariable != null) {		// XXX
+			ExpressionInOCL asExpressionInOCL = PivotUtil.getContainingExpressionInOCL(this);
+			if (asExpressionInOCL != null) {
+				assert !(referredVariable instanceof Parameter);
+			}
+			else {
+				assert !(referredVariable instanceof ParameterVariable);
+			}
+		}
 		return referredVariable;
 	}
 
@@ -162,19 +174,30 @@ implements VariableExp {
 	 * @generated
 	 */
 	public VariableDeclaration basicGetReferredVariable() {
+		if (referredVariable != null) {					// XXX
+			ExpressionInOCL asExpressionInOCL = PivotUtil.getContainingExpressionInOCL(this);
+			if (asExpressionInOCL != null) {
+				assert !(referredVariable instanceof Parameter);
+			}
+			else {
+				assert !(referredVariable instanceof ParameterVariable);
+			}
+		}
 		return referredVariable;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated XXX
+	 * @generated
 	 */
 	@Override
 	public void setReferredVariable(VariableDeclaration newReferredVariable) {
-	// assert !(newReferredVariable instanceof Parameter);				// XXX legacy AS has Parameter references
 		VariableDeclaration oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
+		if ((newReferredVariable != null) && "this".equals(newReferredVariable.getName())) {
+			getClass();		// XXX
+		}
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldReferredVariable, referredVariable));
 	}
