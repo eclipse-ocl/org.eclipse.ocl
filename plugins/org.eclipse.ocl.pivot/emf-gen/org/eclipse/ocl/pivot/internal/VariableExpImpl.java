@@ -161,7 +161,7 @@ implements VariableExp {
 			if (asExpressionInOCL != null) {
 				assert !(referredVariable instanceof Parameter);
 			}
-			else {
+			else if (eResource() != null) {				// FIXME OCL2QVTm.doReplacements has missing eResource()
 				assert !(referredVariable instanceof ParameterVariable);
 			}
 		}
@@ -193,6 +193,9 @@ implements VariableExp {
 	 */
 	@Override
 	public void setReferredVariable(VariableDeclaration newReferredVariable) {
+		if (newReferredVariable instanceof ParameterVariable) {
+			getClass();		// XXX
+		}
 		VariableDeclaration oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if ((newReferredVariable != null) && "this".equals(newReferredVariable.getName())) {
