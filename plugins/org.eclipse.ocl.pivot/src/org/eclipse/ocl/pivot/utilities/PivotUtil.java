@@ -1169,6 +1169,13 @@ public class PivotUtil
 	}
 
 	/**
+	 * @since 1.18
+	 */
+	public static @NonNull ExpressionInOCL getBodyExpression(@NonNull Operation asOperation) {
+		return (ExpressionInOCL) ClassUtil.nonNullState(asOperation.getBodyExpression());
+	}
+
+	/**
 	 * @since 1.7
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull Type type, @NonNull StandardLibrary standardLibrary) {
