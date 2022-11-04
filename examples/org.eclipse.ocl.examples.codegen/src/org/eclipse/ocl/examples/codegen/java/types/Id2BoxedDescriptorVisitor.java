@@ -155,6 +155,9 @@ public class Id2BoxedDescriptorVisitor implements CGIdVisitor<BoxedDescriptor>
 				return new SimpleDataTypeDescriptor(id, className);
 			}
 			else {
+				if (packagePath.startsWith("::")) {
+					packagePath = packagePath.substring(2);
+				}
 				return new SimpleDataTypeDescriptor(id, packagePath.replace("::",  ".") + "." + className);
 			}
 		}
