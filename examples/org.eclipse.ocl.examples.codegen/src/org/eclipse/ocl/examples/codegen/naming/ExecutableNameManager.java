@@ -598,7 +598,7 @@ public class ExecutableNameManager extends NestedNameManager
 
 	public @NonNull CGVariable lazyGetCGVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = basicGetCGVariable(asVariable);
-		assert cgVariable == null;
+		assert cgVariable == null;			 // caller must knowingly create to establish ownership
 		cgVariable = createCGVariable(asVariable);
 		if (asVariable.isIsRequired()) {
 			cgVariable.setNonInvalid();

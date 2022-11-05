@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("families2persons.")) {
+				if (string.contains("models")) {
 					getClass();		// XXX
 				}
 				if (string.contains("IF_CAUGHT_isEmpty")) {
