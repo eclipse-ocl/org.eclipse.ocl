@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("INSTANCE_CTOR_Families2Persons_familyName")) {
+				if (string.contains("CACHE_Families2Persons_familyName")) {
 					getClass();		// XXX
 				}
 				if (string.contains("package")) {
