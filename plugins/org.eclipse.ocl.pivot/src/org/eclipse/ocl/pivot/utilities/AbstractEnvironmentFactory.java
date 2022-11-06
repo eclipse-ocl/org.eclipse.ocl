@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -151,26 +150,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	/**
 	 * Private non-null object used to denote a missing language2support value.
 	 */
-	private static @NonNull LanguageSupport NO_SUCH_LANGUAGE = new LanguageSupport()
+	private static @NonNull LanguageSupport NO_SUCH_LANGUAGE = new AbstractLanguageSupport()
 	{
 		@Override
 		public @Nullable Invocations resolveInvocations(@NonNull Type requiredSourceType, boolean hasExplicitSourceExp, @NonNull String qualifiedOperationName) {
 			throw new IllegalStateException();
-		}
-
-		@Override
-		public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(@NonNull Feature asFeature) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public org.eclipse.ocl.pivot.@NonNull Class getConstructorClass(@NonNull Feature asFeature) {
-			throw new UnsupportedOperationException();
 		}
 
 		@Override
@@ -918,7 +902,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		}
 		LanguageSupport languageSupport = language2support2.get(language);
 		if (languageSupport == null) {
-			languageSupport = LanguageSupport.getLanguageSupport(language, this);
+			languageSupport = AbstractLanguageSupport.getLanguageSupport(language, this);
 			language2support2.put(language, languageSupport != null ? languageSupport : NO_SUCH_LANGUAGE);
 		}
 		return languageSupport != NO_SUCH_LANGUAGE ? languageSupport : null;
