@@ -108,6 +108,7 @@ import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
 import org.eclipse.ocl.pivot.library.iterator.OneIteration;
 import org.eclipse.ocl.pivot.library.iterator.RejectIteration;
 import org.eclipse.ocl.pivot.library.iterator.SelectIteration;
+import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -681,6 +682,14 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert false : "Unsupported getQualifiedForeignClassName";
 		return PivotUtil.getName(asClass);
+	}
+
+	public @NonNull String getRequalifiedClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return AbstractLanguageSupport.getQualifiedName(asClass);
+	}
+
+	public @NonNull String getRequalifiedClassName(@NonNull String qualifiedClassName) {
+		return qualifiedClassName;
 	}
 
 	public @NonNull NameVariant getTHROWN_NameVariant() {

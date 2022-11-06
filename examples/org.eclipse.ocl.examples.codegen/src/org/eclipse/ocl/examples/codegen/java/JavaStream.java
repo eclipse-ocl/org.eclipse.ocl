@@ -265,10 +265,10 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("newInstance")) {
+				if (string.contains("INSTANCE_CTOR_Families2Persons_familyName")) {
 					getClass();		// XXX
 				}
-				if (string.contains("IF_CAUGHT_isEmpty")) {
+				if (string.contains("package")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
@@ -472,26 +472,17 @@ public class JavaStream
 		}
 	}
 
-	public void appendClassHeader(@Nullable CGPackage cgPackage) {
+	public void appendClassHeader(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		appendCopyrightHeader();
-		if (cgPackage != null) {
-			String name = cgPackage.getName();
-			if ((cgPackage.eContainer() != null) || !((name == null) || (name.length() == 0))) {
-				append("package ");
-				appendClassHeaderInternal(cgPackage);
-				append(";\n");
-				append("\n");
-			}
+		String className = codeGenerator.getRequalifiedClassName(asClass);
+		int lastDot = className.lastIndexOf('.');
+		if (lastDot > 0) {
+			append("package ");
+			append(className.substring(0, lastDot));
+			append(";\n");
+			append("\n");
 		}
 		append(ImportUtils.IMPORTS_MARKER + "\n");
-	}
-	private void appendClassHeaderInternal(@NonNull CGPackage cgPackage) {
-		CGPackage cgParentPackage = cgPackage.getContainingPackage();
-		if (cgParentPackage != null) {
-			appendClassHeaderInternal(cgParentPackage);
-			append(".");
-		}
-		append(String.valueOf(cgPackage.getName()));
 	}
 
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable CGValuedElement cgValue) {
@@ -659,6 +650,7 @@ public class JavaStream
 	}
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable String className) {
 		assert className != null;
+		className = codeGenerator.getRequalifiedClassName(className);
 		append(cg2java.addImport(useNullAnnotations ? isRequired : null, className));
 	}
 
