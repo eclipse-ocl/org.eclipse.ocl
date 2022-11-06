@@ -81,7 +81,7 @@ public class JavaImportNameManager extends AbstractImportNameManager
 	}
 
 	/**
-	 * Reserve and return the short class name for the oot-separate newLongName.
+	 * Reserve and return the short class name for the dot-separated newLongName.
 	 * Returns null if no short name can be allocated - reserved for a primitive/important class or another user class.
 	 */
 	public @Nullable String addImport(@NonNull String newLongName) {

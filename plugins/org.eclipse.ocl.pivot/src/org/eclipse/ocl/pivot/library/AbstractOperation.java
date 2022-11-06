@@ -95,7 +95,7 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 		return dispatch(getExecutor(evaluator), callExp, sourceValue);
 	}
 
-	@Override
+	@Override		// FIXME no JUnit test uses this
 	public @Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue) {
 		ExecutorInternalExtension castExecutor = (ExecutorInternalExtension)executor;
 		Operation apparentOperation = callExp.getReferredOperation();
