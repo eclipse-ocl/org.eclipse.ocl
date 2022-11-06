@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -34,10 +33,8 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
 		String className = CGUtil.getName(cgClass);
-		CGPackage cgContainingPackage = cgClass.getContainingPackage();
-		assert cgContainingPackage != null;
-		js.appendClassHeader(cgContainingPackage);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
+		js.appendClassHeader(asClass);
 		Operation asOperation = asClass.getOwnedOperations().get(0);
 		ExpressionInOCL expInOcl = (ExpressionInOCL)asOperation.getBodyExpression();
 		Class<?> baseClass = cg2javaVisitor.getGenModelHelper().getAbstractOperationClass(expInOcl.getOwnedParameters().size());

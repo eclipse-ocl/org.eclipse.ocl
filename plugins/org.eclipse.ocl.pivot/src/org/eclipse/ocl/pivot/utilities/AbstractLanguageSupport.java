@@ -19,10 +19,12 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -56,6 +58,38 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 	}
 
 	/**
+	 * Append name normally as is, but if name has weird characters encode to normal.
+	 */
+	private static void appendAndEncodeName(@NonNull StringBuilder s, @NonNull String name) {
+		for (int i = 0; i < name.length(); i++) {
+			char ch = name.charAt(i);
+			if (!Character.isJavaIdentifierPart(ch)) {
+				s.append("_" + Integer.toString(ch) + "_");
+			}
+			else {
+				s.append(ch);
+			}
+		}
+	}
+
+	public static void appendQualification(@NonNull StringBuilder s, @Nullable EObject asNamedElement) {
+		if ((asNamedElement instanceof NamedElement) && !(asNamedElement instanceof Model)) {
+			appendQualification(s, asNamedElement.eContainer());
+			String name = ((NamedElement)asNamedElement).getName();
+			if (name.length() > 0) {			// Hide the default Java package
+				appendAndEncodeName(s, name);
+				s.append(".");
+			}
+		}
+	}
+
+	public static org.eclipse.ocl.pivot.@Nullable Package basicGetCachePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		org.eclipse.ocl.pivot.@NonNull Package asPackage = PivotUtil.getOwningPackage(asClass);
+		List<org.eclipse.ocl.pivot.@NonNull Package> asSiblingPackages = PivotUtilInternal.getOwnedPackagesList(asPackage);
+		return NameUtil.getNameable(asSiblingPackages, PivotUtil.getName(asClass));
+	}
+
+	/**
 	 * Return the package in which a cache class to support asFeature may be created.
 	 *
 	 * Since The Pivot does not support nested classes, they are simulated by nesting within a Package
@@ -63,6 +97,9 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Package getCachePackage(@NonNull Feature asFeature) {
 		org.eclipse.ocl.pivot.@NonNull Class asClass = PivotUtil.getOwningClass(asFeature);
+		return getCachePackage(asClass);
+	}
+	public static org.eclipse.ocl.pivot.@NonNull Package getCachePackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		org.eclipse.ocl.pivot.@NonNull Package asPackage = PivotUtil.getOwningPackage(asClass);
 		return getPackage(asPackage, PivotUtil.getName(asClass));
 	}
@@ -106,6 +143,13 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 			asSiblingPackages.add(asPackage);
 		}
 		return asPackage;
+	}
+
+	public static @NonNull String getQualifiedName(@NonNull NamedElement asNamedElement) {
+		StringBuilder s = new StringBuilder();
+		appendQualification(s, asNamedElement.eContainer());
+		appendAndEncodeName(s, PivotUtil.getName(asNamedElement));
+		return s.toString();
 	}
 
 	/**
