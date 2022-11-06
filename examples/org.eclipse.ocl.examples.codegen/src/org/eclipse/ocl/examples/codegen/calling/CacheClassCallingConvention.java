@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
@@ -29,6 +31,29 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class CacheClassCallingConvention extends AbstractClassCallingConvention
 {
+	public static class CachedFeatureAdapter extends AdapterImpl
+	{
+		public static @NonNull Feature getFeature(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			for (Adapter eAdapter : asClass.eAdapters()) {
+				if (eAdapter instanceof CachedFeatureAdapter) {
+					return ((CachedFeatureAdapter)eAdapter).feature;
+				}
+			}
+			throw new IllegalStateException("Missing CachedFeatureAdapter for " + asClass);
+		}
+
+		private @NonNull Feature feature;
+
+		public CachedFeatureAdapter(@NonNull Feature feature) {
+			this.feature = feature;
+		}
+
+		@Override
+		public boolean isAdapterForType(Object type) {
+			return type == CachedFeatureAdapter.class;
+		}
+	}
+
 	public static final @NonNull CacheClassCallingConvention INSTANCE = new CacheClassCallingConvention();
 
 	@Override
@@ -36,7 +61,9 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 		assert cgClass.getContainingPackage() == null;			// container is a cgClass
 		String className = CGUtil.getName(cgClass);
 		String title = cgClass.getName() + " provides the Java implementation to cache evaluations of\n";
-		js.appendCommentWithOCL(title, cgClass.getAst());
+		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
+		Feature asFeature = CachedFeatureAdapter.getFeature(asClass);
+		js.appendCommentWithOCL(title, asFeature);
 		js.append("protected class " + className);
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
