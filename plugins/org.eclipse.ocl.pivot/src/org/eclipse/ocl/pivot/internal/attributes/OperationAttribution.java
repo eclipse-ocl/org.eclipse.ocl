@@ -32,7 +32,7 @@ public class OperationAttribution extends AbstractAttribution
 		}
 		else if (environmentView.accepts(PivotPackage.Literals.PARAMETER_VARIABLE)) {
 			ExpressionInOCL bodyExpression = (ExpressionInOCL)targetOperation.getBodyExpression();
-			assert bodyExpression != null;
+			assert bodyExpression != null;			// ExpressionInOCL ctor should have called e.g. getFunctionBody().
 			environmentView.addAllParameterVariables(bodyExpression);
 		}
 		environmentView.addAllTemplateParameters(targetOperation);
