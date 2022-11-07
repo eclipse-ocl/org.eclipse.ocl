@@ -299,18 +299,18 @@ public class CodeGenAnalyzer
 		List<@NonNull CGClass> cgExternalClasses = new ArrayList<>();
 		for (int i = 0; i < externalFeatures.size(); i++) {
 			@NonNull Feature asExternalFeature = externalFeatures.get(i);
-			CGClass cgRootClass = getCGRootClass(asExternalFeature);
+		//	CGClass cgRootClass = getCGRootClass(asExternalFeature);
 			CGNamedElement cgExternalFeature = asExternalFeature.accept(as2cgVisitor);
 			if (cgExternalFeature instanceof CGOperation) {
 				CGOperation cgOperation = (CGOperation)cgExternalFeature;
 				OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
-				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : cgRootClass;
+				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : getCGRootClass(asExternalFeature);
 				cgParentClass.getOperations().add(cgOperation);
 			}
 			else if (cgExternalFeature instanceof CGProperty) {
 				CGProperty cgProperty = (CGProperty)cgExternalFeature;
 				PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : cgRootClass;
+				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : getCGRootClass(asExternalFeature);
 				cgParentClass.getProperties().add(cgProperty);
 			}
 			else if (cgExternalFeature != null) {
