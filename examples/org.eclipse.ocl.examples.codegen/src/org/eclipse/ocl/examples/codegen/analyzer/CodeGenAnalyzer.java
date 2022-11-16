@@ -723,6 +723,7 @@ public class CodeGenAnalyzer
 //				if (!asPackage2asRootClass.containsKey(asPackage)) {
 //					setCGRootClass(cgClass);
 //				}
+				assert cgClass.eContainer() != null;			// XXX
 			}
 		}
 		getClassNameManager(cgClass, asClass);			// Nominally redundant here but needed downstream
@@ -732,15 +733,15 @@ public class CodeGenAnalyzer
 		}
 		for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
 			CGProperty cgProperty = createCGElement(CGProperty.class, asProperty);
-			cgClass.getProperties().add(cgProperty);
+			assert cgClass.getProperties().contains(cgProperty);
 		}
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = createCGElement(CGConstraint.class, asConstraint);
-			cgClass.getInvariants().add(cgConstraint);
+			assert cgClass.getInvariants().contains(cgConstraint);
 		}
 		for (@NonNull Operation asOperation : ClassUtil.nullFree(asClass.getOwnedOperations())) {
 			CGOperation cgOperation = createCGElement(CGOperation.class, asOperation);
-			cgClass.getOperations().add(cgOperation);
+			assert cgClass.getOperations().contains(cgOperation);			// XXX
 		}
 		return cgClass;
 	}
@@ -809,6 +810,8 @@ public class CodeGenAnalyzer
 		//	cgConstraint.setTypeId(getCGTypeId(asConstraint.getTypeId()));
 			asElement2cgElement.put(asConstraint, cgConstraint);
 			generateConstraintBody(cgConstraint, asConstraint);
+			CGClass cgClass = getCGClass(PivotUtil.getContainingClass(asConstraint));		// XXX
+			cgClass.getInvariants().add(cgConstraint);
 		}
 		return cgConstraint;
 	}
@@ -996,6 +999,8 @@ public class CodeGenAnalyzer
 	public @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		CGOperation cgOperation = generateOperationDeclaration(asOperation, null, false);
+
+		assert cgOperation.eContainer() != null;		// XXX
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		CGValuedElement cgOperationCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
@@ -1035,6 +1040,8 @@ public class CodeGenAnalyzer
 				}
 			}
 			callingConvention.createCGParameters(operationNameManager, asExpressionInOCL);
+			CGClass cgClass = getCGClass(PivotUtil.getOwningClass(asOperation));		// XXX
+			cgClass.getOperations().add(cgOperation);
 		}
 		return cgOperation;
 	}
@@ -1130,6 +1137,8 @@ public class CodeGenAnalyzer
 				}
 			}
 			callingConvention.createCGParameters(propertyNameManager, query);
+			CGClass cgClass = getCGClass(PivotUtil.getOwningClass(asProperty));		// XXX
+			cgClass.getProperties().add(cgProperty);
 		}
 		return cgProperty;
 	}
