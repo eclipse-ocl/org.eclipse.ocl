@@ -77,6 +77,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.DebugTimestamp;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
@@ -883,6 +884,9 @@ public class PivotTestCase extends TestCase
 			XMLNamespacePackage.eINSTANCE.getClass();
 			makeCopyOfGlobalState = new GlobalStateMemento();
 		}
+		if (!TEST_START.isActive()) {
+			NameUtil.contextLine = "-----Starting " + getClass().getSimpleName() + "." + getName() + "-----";
+		}
 		super.setUp();
 		if (DEBUG_ID) {
 			PivotUtilInternal.debugPrintln("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
@@ -927,6 +931,7 @@ public class PivotTestCase extends TestCase
 			}
 		}
 		super.tearDown();
+		NameUtil.contextLine = null;
 	}
 
 	protected void uninstall() {

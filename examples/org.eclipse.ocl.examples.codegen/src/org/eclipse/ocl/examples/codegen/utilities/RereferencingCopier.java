@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.Element;
 @SuppressWarnings("serial")
 public class RereferencingCopier extends EcoreUtil.Copier
 {
-	public static @NonNull <T extends EObject> T copy(@NonNull T eObject, @NonNull Map<@NonNull Element, @NonNull Element> rereferences) {
+	public static @NonNull <T extends EObject> T copy(@NonNull T eObject, @NonNull Map<@NonNull ? extends Element, @NonNull ? extends Element> rereferences) {
 		RereferencingCopier copier = new RereferencingCopier(rereferences);
 		@SuppressWarnings("null")@NonNull EObject result = copier.copy(eObject);
 		copier.copyReferences();
@@ -31,9 +31,9 @@ public class RereferencingCopier extends EcoreUtil.Copier
 		return t;
 	}
 
-	private final @NonNull Map<@NonNull Element, @NonNull Element> reDefinitions;
+	private final @NonNull Map<@NonNull ? extends Element, @NonNull ? extends Element> reDefinitions;
 
-	public RereferencingCopier(@NonNull Map<@NonNull Element, @NonNull Element> reDefinitions) {
+	public RereferencingCopier(@NonNull Map<@NonNull ? extends Element, @NonNull ? extends Element> reDefinitions) {
 		this.reDefinitions = reDefinitions;					// FIXME Surely we should set useOriginalReferences to be false ?
 	}
 

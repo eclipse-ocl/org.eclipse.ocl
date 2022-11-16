@@ -2781,6 +2781,17 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/NameUtil.java">
+        <filter id="0"/>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/utilities/NameUtil.java" type="org.eclipse.ocl.pivot.utilities.NameUtil">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.NameUtil"/>
+                <message_argument value="contextLine"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/utilities/PivotUtil.java" type="org.eclipse.ocl.pivot.utilities.PivotUtil">
         <filter id="338792546">
             <message_arguments>

@@ -287,7 +287,7 @@ public class CodeGenAnalyzer
 		assert checkNameManagers(cgRoot);
 	}
 
-	public @Nullable Iterable<@NonNull CGClass> analyzeExternalFeatures() {
+	public @Nullable Iterable<@NonNull CGClass> analyzeExternalFeatures(@NonNull CGClass cgRootClass) {
 	//	Collection<@NonNull CGClass> cgRootClasses = cgPackage2cgRootClass.values();
 	//	assert cgRootClasses.size() == 1 : "Missing support for multiple root CGClass";			// XXX
 	//	CGClass cgRootClass = cgRootClasses.iterator().next();
@@ -304,24 +304,24 @@ public class CodeGenAnalyzer
 			if (cgExternalFeature instanceof CGOperation) {
 				CGOperation cgOperation = (CGOperation)cgExternalFeature;
 				OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
-				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : getCGRootClass(asExternalFeature);
+				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : cgRootClass;
 				cgParentClass.getOperations().add(cgOperation);
 			}
 			else if (cgExternalFeature instanceof CGProperty) {
 				CGProperty cgProperty = (CGProperty)cgExternalFeature;
 				PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : getCGRootClass(asExternalFeature);
+				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : cgRootClass;
 				cgParentClass.getProperties().add(cgProperty);
 			}
 			else if (cgExternalFeature != null) {
 				throw new UnsupportedOperationException("Expected an external feature rather than a " + cgExternalFeature.getClass().getSimpleName());
 			}
-			throw new UnsupportedOperationException();			// XXX cgRootClass
+		//	throw new UnsupportedOperationException();			// XXX cgRootClass
 		}
 //		List<CGClass> cgNestedClasses = cgRootClass.getClasses();
 		for (@NonNull CGClass cgExternalClass : cgExternalClasses) {
 			org.eclipse.ocl.pivot.Class asExternalClass = CGUtil.getAST(cgExternalClass);
-			CGClass cgRootClass = getCGRootClass(asExternalClass);
+		//	CGClass cgRootClass = getCGRootClass(asExternalClass);
 			cgRootClass.getClasses().add(cgExternalClass);
 		}
 		return cgExternalClasses;
@@ -1000,7 +1000,7 @@ public class CodeGenAnalyzer
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		CGValuedElement cgOperationCallExp = callingConvention.createCGOperationCallExp(this, cgOperation, libraryOperation, cgSource, asOperationCallExp);
 		CGNamedElement old = asElement2cgElement.put(asOperationCallExp, cgOperationCallExp);
-		assert old == cgOperationCallExp;			// XXX demonstrates that put is redundant
+	//	assert old == cgOperationCallExp;			// XXX demonstrates that put is redundant
 		return cgOperationCallExp;
 	}
 

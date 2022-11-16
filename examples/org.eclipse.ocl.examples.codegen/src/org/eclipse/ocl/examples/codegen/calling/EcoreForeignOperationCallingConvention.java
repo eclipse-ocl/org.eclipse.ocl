@@ -28,8 +28,8 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
- *  EcoreForeignOperationCallingConvention defines the support for the call of an operation for which an EOPeration is
- *  defined but for which there is no genmodelled implementation. THe implementation must therefore be realized
+ *  EcoreForeignOperationCallingConvention defines the support for the call of an operation for which an EOperation is
+ *  defined but for which there is no genmodelled implementation. The implementation must therefore be realized
  *  in the *Tables class.
  *
  *  ???

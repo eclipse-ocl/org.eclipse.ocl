@@ -42,7 +42,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -90,7 +89,6 @@ import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGen
 import org.eclipse.ocl.examples.codegen.utilities.AbstractCGModelResourceFactory;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResource;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResourceFactory;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -997,14 +995,14 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						System.out.println("Missing NameResolution for " + cgElement.eClass().getName() + " : " + cgElement);
 					}
 				}
-				if (cgElement instanceof CGLetExp) {
+			/*	if (cgElement instanceof CGLetExp) {
 					if (!cgElement.isInlined()) {
 				//		assert !cgElement.isInlined();
 					}
 					CGValuedElement cgIn = CGUtil.getIn((CGLetExp)cgElement);
 					System.out.println("NameResolution for " + NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(cgElement.basicGetNameResolution()));
 					System.out.println(" in " + NameUtil.debugSimpleName(cgIn) + " : " + NameUtil.debugSimpleName(cgIn.basicGetNameResolution()));
-				}
+				} */
 			}
 		}
 		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;

@@ -265,10 +265,10 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("CACHE_Families2Persons_familyName")) {
+				if (string.contains("CTOR_MiToSiSimple_isClass")) {
 					getClass();		// XXX
 				}
-				if (string.contains("package")) {
+				if (string.contains("TxMiToSiSimple")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

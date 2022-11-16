@@ -91,6 +91,7 @@ import org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty;
 import org.eclipse.ocl.pivot.library.map.MapValueTypeProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 
@@ -102,7 +103,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	public static final @NonNull String ORG_ECLIPSE_JDT_ANNOTATION_NULLABLE = "org.eclipse.jdt.annotation.Nullable";
 
 	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
-	protected final @NonNull  PivotHelper asHelper;
+	protected final @NonNull PivotHelper asHelper;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
@@ -191,18 +192,24 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 		return new CodeGenOptions();
 	}
 
-//	public @NonNull ClassCallingConvention getCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-//		return JUnitClassCallingConvention.INSTANCE;		// XXX
-//	}
-
 	public abstract @NonNull AS2CGVisitor createAS2CGVisitor(@NonNull CodeGenAnalyzer codeGenAnalyzer);
+
+	public @NonNull PivotHelper getASHelper() {
+		return asHelper;
+	}
 
 	public @NonNull ClassCallingConvention getCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return ContextClassCallingConvention.INSTANCE;
 	}
 
 	@Override
-	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal) {
+	public final @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal) {
+		OperationCallingConvention callingConvention = getCallingConventionInternal(asOperation, requireFinal);
+		NameUtil.errPrintln(callingConvention + " for " + asOperation + ":" + requireFinal);
+		return callingConvention;
+	}
+
+	protected @NonNull OperationCallingConvention getCallingConventionInternal(@NonNull Operation asOperation, boolean requireFinal) {
 		if (asOperation instanceof Iteration) {
 			return BuiltInIterationCallingConvention.INSTANCE;
 		}
@@ -259,7 +266,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 						if (!referencedFinalOperations.contains(asOperation)) {
 							Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, bodyExpression);
 							if (referencedNonFinalOperations == null) {
-								// a simple heavy heuristic might avoid some unpleasant bloat
+								// FIXME a simple heavy wrt call count heuristic might avoid some unpleasant bloat
 								return InlinedOperationCallingConvention.INSTANCE;
 							}
 						}
