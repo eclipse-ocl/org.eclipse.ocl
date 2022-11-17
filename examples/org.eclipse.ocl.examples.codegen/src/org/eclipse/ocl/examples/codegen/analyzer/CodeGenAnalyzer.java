@@ -383,7 +383,7 @@ public class CodeGenAnalyzer
 		throw new UnsupportedOperationException();
 	}
 
-	protected org.eclipse.ocl.pivot.@Nullable Class basicGetRootClass(@NonNull Element asElement) {
+	protected org.eclipse.ocl.pivot.@Nullable Class basicGetRootClass(@NonNull Element asElement) {	// XXX
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getContainingPackage(asElement);
 		assert asPackage != null;
 		CompletePackage completePackage = completeModel.getCompletePackage(asPackage);
@@ -759,43 +759,25 @@ public class CodeGenAnalyzer
 			if (callingConvention == null) {
 				callingConvention = codeGenerator.getCallingConvention(asClass);
 			}
-			cgClass = callingConvention.createCGClass(asClass);
+			cgClass = callingConvention.createCGClass(this, asClass);
+			EObject eContainer = cgClass.eContainer();
+			assert eContainer != null;
 			cgClass.setAst(asClass);
 			cgClass.setCallingConvention(callingConvention);
 			for (org.eclipse.ocl.pivot.@NonNull Class asPartialClass : PivotUtil.getPartialClasses(completeClass)) {
 				asElement2cgElement.put(asPartialClass, cgClass);
 			}
 			String name = callingConvention.getName(this, asClass);
-			NestedNameManager classableNameManager = null;
-			org.eclipse.ocl.pivot.Class asRootClass = basicGetRootClass(asClass);
-			if ((asRootClass != asClass) && (asRootClass != null)) {					// AS class whose CG class that needs nesting below the CG Class for the AS Class's Package
-				CGClass cgRootClass2 = getCGClass(asRootClass);
-				ClassNameManager classNameManager = getClassNameManager(null, asRootClass);
-				cgRootClass2.getClasses().add(cgClass);
-				classableNameManager = classNameManager;
+			if (eContainer instanceof CGClass) {
+				CGClass cgParentClass = (CGClass)eContainer;
+				ClassNameManager classNameManager = getClassNameManager(cgParentClass, CGUtil.getAST(cgParentClass));
+				new NameResolution.EagerNested(classNameManager, cgClass, name);
 			}
-			else {																		// Regular AS Class whose CG Class is a child of the AS Class's Package
-				org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
-				CompletePackage completePackage = completeModel.getCompletePackage(asPackage);
-				CompletePackage completeParentPackage = completePackage.getOwningCompletePackage();
-				List<CGClass> siblingClasses = null;
-				if (completeParentPackage != null) {
-					CompleteClass ownedCompleteClass = completeParentPackage.getOwnedCompleteClass(asPackage.getName());
-					if (ownedCompleteClass != null) {
-						ClassNameManager classNameManager = getClassNameManager(null, ownedCompleteClass.getPrimaryClass());
-						siblingClasses = classNameManager.getCGClass().getClasses();
-						classableNameManager = classNameManager;
-					}
-				}
-				if (siblingClasses == null) {
-					PackageNameManager packageNameManager = getPackageNameManager(null, asPackage);
-					siblingClasses = packageNameManager.getCGPackage().getClasses();
-					classableNameManager = packageNameManager;
-				}
-				siblingClasses.add(cgClass);
-				assert classableNameManager != null;
+			else {
+				CGPackage cgParentPackage = (CGPackage)eContainer;
+				PackageNameManager packageNameManager = getPackageNameManager(cgParentPackage, CGUtil.getAST(cgParentPackage));
+				new NameResolution.EagerNested(packageNameManager, cgClass, name);
 			}
-			new NameResolution.EagerNested(classableNameManager, cgClass, name);
 		}
 		return cgClass;
 	}

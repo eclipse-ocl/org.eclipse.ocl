@@ -23,7 +23,10 @@ import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -45,8 +48,7 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 		}
 	}
 
-	@Override
-	public @NonNull CGClass createCGClass(@NonNull NamedElement asNamedElement) {
+	protected @NonNull CGClass createCGClass() {
 		return CGModelFactory.eINSTANCE.createCGClass();
 	}
 
@@ -100,5 +102,30 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 	@Override
 	public @NonNull String getName(@NonNull CodeGenAnalyzer analyzer, @NonNull NamedElement asNamedElement) {
 		return PivotUtil.getName(asNamedElement);
+	}
+
+	/**
+	 * Determine the parent of cgClass as the CGClass of the logocal parent of the 'nested' asClass. The Pivot does not support
+	 * nested AS Classes, so the 'nested' AS Class is contained by an AS Package that is a 'sibling' of the same-named AS Class.
+	 */
+	protected void installCGCacheClassParent(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CompleteModelInternal completeModel = analyzer.getCodeGenerator().getEnvironmentFactory().getCompleteModel();
+		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
+		CompletePackage completePackage = completeModel.getCompletePackage(asPackage);
+		CompletePackage completeParentPackage = completePackage.getOwningCompletePackage();
+		assert completeParentPackage != null;
+		CompleteClass ownedCompleteClass = completeParentPackage.getOwnedCompleteClass(asPackage.getName());
+		assert ownedCompleteClass != null;
+		ClassNameManager classNameManager = analyzer.getClassNameManager(null, ownedCompleteClass.getPrimaryClass());
+		classNameManager.getCGClass().getClasses().add(cgClass);
+	}
+
+	/**
+	 * Determine the parent of cgClass as the CGClass of the parent of asClass.
+	 */
+	protected void installCGDefaultClassParent(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
+		PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, asPackage);
+		packageNameManager.getCGPackage().getClasses().add(cgClass);
 	}
 }

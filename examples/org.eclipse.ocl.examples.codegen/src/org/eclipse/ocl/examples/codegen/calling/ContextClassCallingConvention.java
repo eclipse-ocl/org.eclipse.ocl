@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
@@ -27,6 +28,13 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 public class ContextClassCallingConvention extends AbstractClassCallingConvention
 {
 	public static final @NonNull ContextClassCallingConvention INSTANCE = new ContextClassCallingConvention();
+
+	@Override
+	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CGClass cgClass = createCGClass();
+		installCGDefaultClassParent(analyzer, cgClass, asClass);
+		return cgClass;
+	}
 
 	/**
 	 * Generate the Java code for a Class declaration.

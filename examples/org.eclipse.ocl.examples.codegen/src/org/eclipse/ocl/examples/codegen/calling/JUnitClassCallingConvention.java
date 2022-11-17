@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -25,6 +26,13 @@ import org.eclipse.ocl.pivot.Operation;
 public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 {
 	public static final @NonNull JUnitClassCallingConvention INSTANCE = new JUnitClassCallingConvention();
+
+	@Override
+	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CGClass cgClass = createCGClass();
+		installCGDefaultClassParent(analyzer, cgClass, asClass);
+		return cgClass;
+	}
 
 	/**
 	 * Generate the Java code for a Class declaration.

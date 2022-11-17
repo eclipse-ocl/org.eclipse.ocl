@@ -57,6 +57,13 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 	public static final @NonNull CacheClassCallingConvention INSTANCE = new CacheClassCallingConvention();
 
 	@Override
+	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CGClass cgClass = createCGClass();
+		installCGCacheClassParent(analyzer, cgClass, asClass);
+		return cgClass;
+	}
+
+	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
 		assert cgClass.getContainingPackage() == null;			// container is a cgClass
 		String className = CGUtil.getName(cgClass);

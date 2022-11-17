@@ -25,6 +25,13 @@ public class ExternalClassCallingConvention extends AbstractClassCallingConventi
 {
 	public static final @NonNull ExternalClassCallingConvention INSTANCE = new ExternalClassCallingConvention();
 
+	@Override
+	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CGClass cgClass = createCGClass();
+		installCGDefaultClassParent(analyzer, cgClass, asClass);
+		return cgClass;
+	}
+
 	/**
 	 * Generate the Java code for a Class declaration.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.

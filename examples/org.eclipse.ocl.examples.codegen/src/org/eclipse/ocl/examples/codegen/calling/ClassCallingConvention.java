@@ -26,7 +26,7 @@ public interface ClassCallingConvention extends CallingConvention
 	/**
 	 * Create the appropriate CGClass less properties and operation to support a class/cached-operation/cached-property.
 	 */
-	@NonNull CGClass createCGClass(@NonNull NamedElement asNamedElement);
+	@NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass);
 
 	/**
 	 * Generate the Java code for a Class declaration.
