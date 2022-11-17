@@ -199,6 +199,7 @@ public class CodeGenAnalyzer
 	 * siblings which makes it difficult to automatically nested them during AS2CG. A non-null asRootClass resolves this.
 	 */
 	private @NonNull Map<@NonNull CompletePackage, org.eclipse.ocl.pivot.@NonNull Class> completePackage2asRootClass = new HashMap<>();
+	private org.eclipse.ocl.pivot.@Nullable Class asCurrentRootClass = null;
 
 	/**
 	 * Map of the directly nested classes of cgRootClass.
@@ -1040,8 +1041,10 @@ public class CodeGenAnalyzer
 				}
 			}
 			callingConvention.createCGParameters(operationNameManager, asExpressionInOCL);
-			CGClass cgClass = getCGClass(PivotUtil.getOwningClass(asOperation));		// XXX
-			cgClass.getOperations().add(cgOperation);
+			if (cgOperation.eContainer() == null) {			// Unless createCGOperation defined an alternative
+				CGClass cgClass = getCGClass(PivotUtil.getOwningClass(asOperation));
+				cgClass.getOperations().add(cgOperation);
+			}
 		}
 		return cgOperation;
 	}
@@ -1303,10 +1306,13 @@ public class CodeGenAnalyzer
 		return ClassUtil.nonNullState(basicGetCGRootClass(cgElement));
 	} */
 
-	protected @NonNull CGClass getCGRootClass(@NonNull Element asElement) {
+	public @NonNull CGClass getCGRootClass(@NonNull Element asElement) {
 		org.eclipse.ocl.pivot.Class asRootClass = basicGetRootClass(asElement);
-		assert asRootClass != null;
-		return getCGClass(asRootClass);
+		if (asRootClass != null) {
+			return getCGClass(asRootClass);
+		}
+		assert asCurrentRootClass != null;
+		return getCGClass(asCurrentRootClass);
 	}
 
 	public @NonNull CGString getCGString(@NonNull String aString) {
@@ -1845,6 +1851,7 @@ public class CodeGenAnalyzer
 	}
 
 	public void setRootClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		asCurrentRootClass = asClass;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
 		CompletePackage completePackage = completeModel.getCompletePackage(asPackage);
 		org.eclipse.ocl.pivot.Class old = completePackage2asRootClass.put(completePackage, asClass);

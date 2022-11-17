@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -42,6 +43,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -294,11 +296,12 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	protected void initCallArguments(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		OperationCallExp asOperationCallExp = CGUtil.getAST(cgOperationCallExp);
 		Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
-		assert asOperationCallExp.getOwnedArguments().size() == asOperation.getOwnedParameters().size();
+		List<@NonNull OCLExpression> asArguments = PivotUtilInternal.getOwnedArgumentsList(asOperationCallExp);
+		List<@NonNull OCLExpression> asArgumentsCopy = new ArrayList<>(asArguments);		// XXX inlining can wrap a LetExp
+		assert asArguments.size() == asOperation.getOwnedParameters().size();
 		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
-		for (@NonNull OCLExpression asArgument : PivotUtil.getOwnedArguments(asOperationCallExp)) {
-			CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, asArgument);
-			cgArguments.add(cgArgument);
+		for (@NonNull OCLExpression asArgument : asArgumentsCopy) {
+			cgArguments.add(analyzer.createCGElement(CGValuedElement.class, asArgument));
 		}
 	}
 
