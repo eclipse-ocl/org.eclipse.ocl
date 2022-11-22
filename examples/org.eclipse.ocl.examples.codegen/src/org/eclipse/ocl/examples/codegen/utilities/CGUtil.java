@@ -118,7 +118,7 @@ public class CGUtil
 	}
 
 	/**
-	 * Simplify org.eclipse.jdt.annotation references that unnecessarily use long firm within a long firm.
+	 * Simplify org.eclipse.jdt.annotation references that unnecessarily use long form within a long form.
 	 * e.g. replace
 	 *
 	 * "X.Y.@org.eclipse.jdt.annotation.NonNull Z" by "@NonNull Z" if "X.Y.Z" is an import.

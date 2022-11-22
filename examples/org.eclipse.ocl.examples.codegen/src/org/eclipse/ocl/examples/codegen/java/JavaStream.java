@@ -265,7 +265,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("CTOR_MiToSiSimple_isClass")) {
+				if (string.contains("getUniqueComputation")) {
 					getClass();		// XXX
 				}
 				if (string.contains("TxMiToSiSimple")) {

@@ -59,7 +59,9 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgClass = createCGClass();
-		installCGCacheClassParent(analyzer, cgClass, asClass);
+	//	installCGCacheClassParent(analyzer, cgClass, asClass);
+		CGClass cgRootClass = analyzer.getCGRootClass(asClass);
+		cgRootClass.getClasses().add(cgClass);
 		return cgClass;
 	}
 
