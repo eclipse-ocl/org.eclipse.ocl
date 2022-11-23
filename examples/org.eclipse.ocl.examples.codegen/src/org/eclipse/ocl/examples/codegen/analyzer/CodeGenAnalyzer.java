@@ -1022,11 +1022,11 @@ public class CodeGenAnalyzer
 					e.printStackTrace();
 				}
 			}
-			callingConvention.createCGParameters(operationNameManager, asExpressionInOCL);
 			if (cgOperation.eContainer() == null) {			// Unless createCGOperation defined an alternative
 				CGClass cgClass = getCGClass(PivotUtil.getOwningClass(asOperation));
 				cgClass.getOperations().add(cgOperation);
 			}
+			callingConvention.createCGParameters(operationNameManager, asExpressionInOCL);
 		}
 		return cgOperation;
 	}
