@@ -746,15 +746,8 @@ public class CodeGenAnalyzer
 		}
 		for (@NonNull Operation asOperation : ClassUtil.nullFree(asClass.getOwnedOperations())) {
 			CGOperation cgOperation = createCGElement(CGOperation.class, asOperation);
-			assert cgClass.getOperations().contains(cgOperation);			// XXX
+			assert cgClass.getOperations().contains(cgOperation);
 		}
-	/*	org.eclipse.ocl.pivot.Package asCachePackage = AbstractLanguageSupport.basicGetCachePackage(asClass);
-		if (asCachePackage != null) {
-			for (org.eclipse.ocl.pivot.@NonNull Class asCacheClass : PivotUtil.getOwnedClasses(asCachePackage)) {
-				CGClass cgCacheClass = generateClassDeclaration(asCacheClass, null);
-				assert cgClass.getClasses().contains(cgCacheClass);
-			}
-		} */
 		return cgClass;
 	}
 
@@ -973,14 +966,14 @@ public class CodeGenAnalyzer
 	//	asOperation2cgOperation.get(asOperation);
 		LanguageExpression specification = asOperation.getBodyExpression();
 		CGOperation cgFinalOperation = generateOperationDeclaration(asOperation, null, true);
-//		assert cgFinalOperation.getBody() == null;
+		assert cgFinalOperation.getBody() == null;
 //		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 //			cgFinalOperation.getCallingConvention().createCGBody(this, cgFinalOperation);
 		}
 		CGOperation cgVirtualOperation = generateOperationDeclaration(asOperation, null, false);
 		if (cgVirtualOperation != cgFinalOperation) {
-//			assert cgVirtualOperation.getBody() == null;
+			assert cgVirtualOperation.getBody() == null;
 //			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
 			getOperationNameManager(cgVirtualOperation, asOperation);
 			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
@@ -993,7 +986,6 @@ public class CodeGenAnalyzer
 	public @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		CGOperation cgOperation = generateOperationDeclaration(asOperation, null, false);
-
 		assert cgOperation.eContainer() != null;		// XXX
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);

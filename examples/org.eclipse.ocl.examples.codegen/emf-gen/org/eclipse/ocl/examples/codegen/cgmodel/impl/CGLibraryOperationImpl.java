@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 
 /**
@@ -87,11 +86,5 @@ public class CGLibraryOperationImpl extends CGOperationImpl implements CGLibrary
 	@Override
 	public boolean isUnboxed() {
 		return false;
-	}
-
-	@Override
-	public void setBody(CGValuedElement newBody) {
-		// TODO Auto-generated method stub
-		super.setBody(newBody);
 	}
 } //CGLibraryOperationImpl
