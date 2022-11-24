@@ -162,6 +162,7 @@ public class GlobalNameManager extends AbstractNameManager
 	//	to minimize eiting if a new Java reserved word interferes.
 	//
 	protected final @NonNull NameResolution anyName;
+	protected final @NonNull NameResolution boxedValuesName;
 //	protected final @NonNull NameResolution eName;
 	protected final @NonNull NameResolution evaluateName;
 	protected final @NonNull NameResolution evaluationCacheName;
@@ -191,6 +192,7 @@ public class GlobalNameManager extends AbstractNameManager
 		this.thisName = declareEagerName(null, JavaConstants.THIS_NAME);
 		//
 		this.anyName = declareEagerName(null, JavaConstants.ANY_NAME);
+		this.boxedValuesName = declareEagerName(null, JavaConstants.BOXED_VALUES_NAME);
 //		this.eName = declareEagerName(null, JavaConstants.E_NAME);
 		this.evaluateName = declareEagerName(null, JavaConstants.EVALUATE_NAME);
 		this.evaluationCacheName = declareEagerName(null, JavaConstants.EVALUATION_CACHE_NAME);
@@ -349,6 +351,10 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public @NonNull NameResolution getAnyNameResolution() {
 		return anyName;
+	}
+
+	public @NonNull NameResolution getBoxedValuesNameResolution() {
+		return boxedValuesName;
 	}
 
 	public @NonNull NestedNameManager getChildNameManager(@NonNull CGNamedElement cgScopingElement) {

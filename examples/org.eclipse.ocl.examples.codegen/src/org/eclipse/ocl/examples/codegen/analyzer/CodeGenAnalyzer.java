@@ -748,6 +748,13 @@ public class CodeGenAnalyzer
 			CGOperation cgOperation = createCGElement(CGOperation.class, asOperation);
 			assert cgClass.getOperations().contains(cgOperation);			// XXX
 		}
+	/*	org.eclipse.ocl.pivot.Package asCachePackage = AbstractLanguageSupport.basicGetCachePackage(asClass);
+		if (asCachePackage != null) {
+			for (org.eclipse.ocl.pivot.@NonNull Class asCacheClass : PivotUtil.getOwnedClasses(asCachePackage)) {
+				CGClass cgCacheClass = generateClassDeclaration(asCacheClass, null);
+				assert cgClass.getClasses().contains(cgCacheClass);
+			}
+		} */
 		return cgClass;
 	}
 
