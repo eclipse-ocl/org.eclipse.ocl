@@ -107,6 +107,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -238,13 +239,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgClass = context.generateClass(null, asClass);
-	/*	XXX org.eclipse.ocl.pivot.Package asCachePackage = AbstractLanguageSupport.basicGetCachePackage(asClass);
+		org.eclipse.ocl.pivot.Package asCachePackage = AbstractLanguageSupport.basicGetCachePackage(asClass);
 		if (asCachePackage != null) {
 			for (org.eclipse.ocl.pivot.@NonNull Class asCacheClass : PivotUtil.getOwnedClasses(asCachePackage)) {
 				CGClass cgCacheClass = context.createCGElement(CGClass.class, asCacheClass); //visitClass(asCacheClass);
 				assert cgClass.getClasses().contains(cgCacheClass);
 			}
-		} */
+		}
 		return cgClass;
 	}
 
@@ -401,7 +402,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (asOperation.toString().contains("_unqualified_env_Class")) {
 			getClass();		// XXX
 		}
-		return context.generateOperation(asOperation);
+		CGOperation cgOperation = context.generateOperation(asOperation);
+		cgOperation.getCallingConvention().createCGBody(context, cgOperation);
+		return cgOperation;
 	}
 
 	@Override

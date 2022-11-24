@@ -973,18 +973,18 @@ public class CodeGenAnalyzer
 	//	asOperation2cgOperation.get(asOperation);
 		LanguageExpression specification = asOperation.getBodyExpression();
 		CGOperation cgFinalOperation = generateOperationDeclaration(asOperation, null, true);
-		assert cgFinalOperation.getBody() == null;
+//		assert cgFinalOperation.getBody() == null;
 //		System.out.println("visitOperation " + NameUtil.debugSimpleName(cgFinalOperation) + " : " + asOperation);
 		if (specification instanceof ExpressionInOCL) {			// Should already be parsed
-			cgFinalOperation.getCallingConvention().createCGBody(this, cgFinalOperation);
+//			cgFinalOperation.getCallingConvention().createCGBody(this, cgFinalOperation);
 		}
 		CGOperation cgVirtualOperation = generateOperationDeclaration(asOperation, null, false);
 		if (cgVirtualOperation != cgFinalOperation) {
-			assert cgVirtualOperation.getBody() == null;
+//			assert cgVirtualOperation.getBody() == null;
 //			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
 			getOperationNameManager(cgVirtualOperation, asOperation);
 			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
-				cgVirtualOperation.getCallingConvention().createCGBody(this, cgVirtualOperation);
+//				cgVirtualOperation.getCallingConvention().createCGBody(this, cgVirtualOperation);
 			}
 		}
 		return cgFinalOperation;
