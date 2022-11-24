@@ -35,8 +35,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import com.google.common.collect.Iterables;
 
 /**
- *  VirtualOperationCallingConvention defines the support for the call of a Complete OCL-defined operation
- *  that requires dynamic redirection to the appropriate overload.
+ *  VirtualOperationCallingConvention defines the support for the virtual dispatcher of a Complete OCL-defined operation
+ *  that requires dynamic redirection to the appropriate overload. Creation of the dispatcher creates the full overload hierrachy.
  */
 public class VirtualOperationCallingConvention extends AbstractCachedOperationCallingConvention
 {
@@ -128,13 +128,15 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	//			currentClass.getOperations().add(cgOperation);
 	//		}
 	//	}
-		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();		// XXX ??? cache post rather than pre-dispatch
-		cgOperation.setRequired(asOperation.isIsRequired());
-		cgOperation.setCallingConvention(this);
-		analyzer.initAst(cgOperation, asOperation, true);
-		analyzer.addVirtualCGOperation(asOperation, cgOperation);
-		cgOperation.getFinalOperations().addAll(cgOverrideOperations);
-		return cgOperation;
+		CGCachedOperation cgDispatchOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();		// XXX ??? cache post rather than pre-dispatch
+		cgDispatchOperation.setRequired(asOperation.isIsRequired());
+		cgDispatchOperation.setCallingConvention(this);
+		analyzer.initAst(cgDispatchOperation, asOperation, false);				// XXX redundant wrt caller
+		for (@NonNull Operation asOverrideOperation : asOverrideOperations) {
+			analyzer.addVirtualCGOperation(asOverrideOperation, cgDispatchOperation);
+		}
+		cgDispatchOperation.getFinalOperations().addAll(cgOverrideOperations);
+		return cgDispatchOperation;
 	}
 
 	/*protected public @NonNull CGOperation createVirtualCGOperationWithoutBody(@NonNull Operation asOperation, @NonNull List<@NonNull CGCachedOperation> cgOperations) {

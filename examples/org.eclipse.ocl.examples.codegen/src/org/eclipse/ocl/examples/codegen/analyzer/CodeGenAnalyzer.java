@@ -217,7 +217,8 @@ public class CodeGenAnalyzer
 
 	/**
 	 * Mapping from each AS Element to its corresponding CGNamedElement. (Variables are mapped by the prevailing
-	 * ExecutablenManager since variables can be multiple syntheized.)
+	 * ExecutablenManager since variables can be multiple synthesized.) For overloaded operations, this mapping is
+	 * from the AS operation to its CG implementation; the mapping to the virtual dispatcher is in asVirtualOperation2cgOperation.
 	 */
 	protected @NonNull Map<@NonNull Element, @NonNull CGNamedElement> asElement2cgElement = new HashMap<>();
 
@@ -259,19 +260,22 @@ public class CodeGenAnalyzer
 //		assert old == null;
 //	}
 
-	public void addVirtualCGOperation(@NonNull Operation asOperation, @NonNull CGCachedOperation cgOperation) {
+	public void addVirtualCGOperation(@NonNull Operation asOperation, @NonNull CGCachedOperation cgDispatchOperation) {
+		if (asOperation.toString().contains("::_unqualified_env_Class(")) {
+			getClass();		// XXX
+		}
 	//	assert cgOperation.getAst() == asOperation;
-		assert cgOperation.getCallingConvention() == VirtualOperationCallingConvention.INSTANCE;
+		assert cgDispatchOperation.getCallingConvention() == VirtualOperationCallingConvention.INSTANCE;
 		CGOperation oldCGOperation = basicGetCGOperation(asOperation);
-		assert (oldCGOperation != null) && (oldCGOperation != cgOperation);
-		oldCGOperation = asVirtualOperation2cgOperation.put(asOperation, cgOperation);
+		assert (oldCGOperation != null) && (oldCGOperation != cgDispatchOperation);
+		oldCGOperation = asVirtualOperation2cgOperation.put(asOperation, cgDispatchOperation);
 		assert oldCGOperation == null;
 	//	addCGOperation(cgOperation);
-		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
+		OperationCallingConvention callingConvention = cgDispatchOperation.getCallingConvention();
 		if (callingConvention.needsGeneration()) {
 			CGClass cgRootClass = getCGRootClass(asOperation);
-			cgRootClass.getOperations().add(cgOperation);
-			throw new UnsupportedOperationException();			// XXX cgRootClass
+			cgRootClass.getOperations().add(cgDispatchOperation);
+			// throw new UnsupportedOperationException();			// XXX cgRootClass
 		}
 	}
 
@@ -996,11 +1000,8 @@ public class CodeGenAnalyzer
 	 * Generate / share the CG declaration for asOperation.
 	 */
 	public @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation, @Nullable OperationCallingConvention callingConvention, boolean requireFinal) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
-		if (!requireFinal) {
-			CGOperation cgVirtualOperation = basicGetVirtualCGOperation(asOperation);
-			if (cgVirtualOperation != null) {
-				return cgVirtualOperation;
-			}
+		if (asOperation.toString().contains("::_unqualified_env_Class(")) {
+			getClass();		// XXX
 		}
 		CGOperation cgOperation = basicGetCGOperation(asOperation);
 		if (cgOperation == null) {
@@ -1009,14 +1010,22 @@ public class CodeGenAnalyzer
 			}
 			cgOperation = callingConvention.createCGOperation(this, asOperation);
 			cgOperation.setCallingConvention(callingConvention);
-			initAst(cgOperation, asOperation, true);
+			if (cgOperation.getAst() != null) {
+				assert cgOperation.getAst() == asOperation;
+				assert callingConvention instanceof VirtualOperationCallingConvention;
+				assert asElement2cgElement.containsKey(asOperation);
+			}
+			else {
+				assert !asElement2cgElement.containsKey(asOperation);
+				initAst(cgOperation, asOperation, true);
+			}
 //			System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " : " + asOperation);
 			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asOperation.getBodyExpression();
 			if (asSpecification != null) {
 				try {
-					asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);
+					asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);			// XXX Not appropriate for virtual dispatcher
 				} catch (ParserException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1027,6 +1036,12 @@ public class CodeGenAnalyzer
 				cgClass.getOperations().add(cgOperation);
 			}
 			callingConvention.createCGParameters(operationNameManager, asExpressionInOCL);
+		}
+		if (!requireFinal) {
+			CGOperation cgVirtualOperation = basicGetVirtualCGOperation(asOperation);
+			if (cgVirtualOperation != null) {
+				return cgVirtualOperation;
+			}
 		}
 		return cgOperation;
 	}
@@ -1695,6 +1710,9 @@ public class CodeGenAnalyzer
 	}
 
 	private void initCG2AS(@NonNull CGTypedElement cgElement, @NonNull Element asElement, boolean isSymmetric) {
+		if ((asElement instanceof Operation) && asElement.toString().contains("::_unqualified_env_Package(")) {
+			getClass();		// XXX
+		}
 		cgElement.setAst(asElement);
 		if (isSymmetric) {
 			CGNamedElement old = asElement2cgElement.put(asElement, cgElement);
