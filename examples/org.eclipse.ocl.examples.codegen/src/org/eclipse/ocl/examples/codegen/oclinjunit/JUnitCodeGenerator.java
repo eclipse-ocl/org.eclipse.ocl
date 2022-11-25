@@ -157,12 +157,12 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	}
 
 	@Override
-	protected @NonNull OperationCallingConvention getCallingConventionInternal(@NonNull Operation asOperation, boolean requireFinal) {
+	protected @NonNull OperationCallingConvention getCallingConventionInternal(@NonNull Operation asOperation, boolean maybeVirtual) {
 		assert asTestOperation != null;
 		if (asOperation == asTestOperation)  {
 			return JUnitOperationCallingConvention.INSTANCE;
 		}
-		return super.getCallingConventionInternal(asOperation, requireFinal);
+		return super.getCallingConventionInternal(asOperation, maybeVirtual);
 	}
 
 	@Override

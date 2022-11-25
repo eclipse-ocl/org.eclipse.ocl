@@ -114,6 +114,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 
+import com.google.common.collect.Lists;
+
 /**
  * The stateless AS2CGVisitor performs the first stage of code generation by converting the Pivot AST to the CG AST.
  */
@@ -241,6 +243,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGClass cgClass = context.generateClass(null, asClass);
 		org.eclipse.ocl.pivot.Package asCachePackage = AbstractLanguageSupport.basicGetCachePackage(asClass);
 		if (asCachePackage != null) {
+			List<org.eclipse.ocl.pivot.@NonNull Class> saved = Lists.newArrayList(PivotUtil.getOwnedClasses(asCachePackage));	// XXX
 			for (org.eclipse.ocl.pivot.@NonNull Class asCacheClass : PivotUtil.getOwnedClasses(asCachePackage)) {
 				CGClass cgCacheClass = context.createCGElement(CGClass.class, asCacheClass);
 				assert cgClass.getClasses().contains(cgCacheClass);

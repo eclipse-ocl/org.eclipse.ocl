@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 import com.google.common.collect.Iterables;
 
@@ -89,12 +90,21 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		assert analyzer.basicGetCGOperation(asOperation) == null;		// XXX
+		CGCachedOperation cgDispatchOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();		// XXX ??? cache post rather than pre-dispatch
+		System.out.println("createCGOperation " + NameUtil.debugSimpleName(cgDispatchOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
+		cgDispatchOperation.setRequired(asOperation.isIsRequired());
+		cgDispatchOperation.setCallingConvention(this);
+		analyzer.initAst(cgDispatchOperation, asOperation, false);				// XXX redundant wrt caller
 		FinalAnalysis finalAnalysis = analyzer .getMetamodelManager().getFinalAnalysis();
 		Iterable<@NonNull Operation> asOverrideOperations = finalAnalysis.getOverrides(asOperation);
 		assert Iterables.contains(asOverrideOperations, asOperation);
+		for (@NonNull Operation asOverrideOperation : asOverrideOperations) {
+			analyzer.addVirtualCGOperation(asOverrideOperation, cgDispatchOperation);
+		}
 		List<@NonNull CGCachedOperation> cgOverrideOperations = new ArrayList<>();
 		for (@NonNull Operation asOverrideOperation : asOverrideOperations) {
-			CGOperation cgOverrideOperation = analyzer.generateOperationDeclaration(asOverrideOperation, null, true);
+			CGOperation cgOverrideOperation = analyzer.generateNonVirtualOperationDeclaration(asOverrideOperation);
 		/*	CGOperation cgOperation = asFinalOperation2cgOperation.get(asOverride);
 			if (cgOperation == null) {
 				cgOperation = createFinalCGOperationWithoutBody(asOverride);
@@ -128,13 +138,6 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	//			currentClass.getOperations().add(cgOperation);
 	//		}
 	//	}
-		CGCachedOperation cgDispatchOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();		// XXX ??? cache post rather than pre-dispatch
-		cgDispatchOperation.setRequired(asOperation.isIsRequired());
-		cgDispatchOperation.setCallingConvention(this);
-		analyzer.initAst(cgDispatchOperation, asOperation, false);				// XXX redundant wrt caller
-		for (@NonNull Operation asOverrideOperation : asOverrideOperations) {
-			analyzer.addVirtualCGOperation(asOverrideOperation, cgDispatchOperation);
-		}
 		cgDispatchOperation.getFinalOperations().addAll(cgOverrideOperations);
 		return cgDispatchOperation;
 	}

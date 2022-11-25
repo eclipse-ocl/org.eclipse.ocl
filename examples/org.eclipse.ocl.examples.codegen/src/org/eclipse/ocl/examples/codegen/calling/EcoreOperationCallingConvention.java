@@ -39,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
@@ -69,6 +70,18 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 			codeGenerator.addProblem(e);
 		}
 		return false;
+	}
+
+	@Override
+	public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+		Element asOperation = cgOperation.getAst();
+		ExpressionInOCL asSpecification = (ExpressionInOCL) (asOperation instanceof ExpressionInOCL ? asOperation : ((Operation)asOperation).getBodyExpression());
+		if (asSpecification != null) {
+			OCLExpression asExpression = PivotUtil.getOwnedBody(asSpecification);
+			CGValuedElement cgBody = analyzer.createCGElement(CGValuedElement.class, asExpression);
+			cgOperation.setBody(cgBody);
+		//	System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
+		}
 	}
 
 	@Override

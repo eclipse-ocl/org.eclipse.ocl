@@ -203,13 +203,13 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public final @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean requireFinal) {
-		OperationCallingConvention callingConvention = getCallingConventionInternal(asOperation, requireFinal);
-		NameUtil.errPrintln(callingConvention + " for " + asOperation + ":" + requireFinal);
+	public final @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean maybeVirtual) {
+		OperationCallingConvention callingConvention = getCallingConventionInternal(asOperation, maybeVirtual);
+		NameUtil.errPrintln(callingConvention + " for " + asOperation + ":" + maybeVirtual);
 		return callingConvention;
 	}
 
-	protected @NonNull OperationCallingConvention getCallingConventionInternal(@NonNull Operation asOperation, boolean requireFinal) {
+	protected @NonNull OperationCallingConvention getCallingConventionInternal(@NonNull Operation asOperation, boolean maybeVirtual) {
 		if (asOperation instanceof Iteration) {
 			return BuiltInIterationCallingConvention.INSTANCE;
 		}
@@ -254,7 +254,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			}
 			else {
 				FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
-				if (!requireFinal) {
+				if (maybeVirtual) {
 					Iterable<@NonNull Operation> asOverrides = finalAnalysis.getOverrides(asOperation);
 					if (Iterables.size(asOverrides) > 1) {
 						return VirtualOperationCallingConvention.INSTANCE;		// Need a polymorphic dispatcher
