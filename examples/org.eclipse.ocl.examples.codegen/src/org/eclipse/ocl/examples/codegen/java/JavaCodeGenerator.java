@@ -496,6 +496,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return null;
 	}
 
+	public org.eclipse.ocl.pivot.@NonNull Class getContextClass() {
+		throw new UnsupportedOperationException();
+	}
+
 	@Override
 	public @NonNull EcoreDescriptor getEcoreDescriptor(@NonNull ElementId elementId, @Nullable Class<?> instanceClass) {
 		BoxedDescriptor boxedDescriptor = getBoxedDescriptor(elementId);

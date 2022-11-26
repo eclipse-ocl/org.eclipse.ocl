@@ -163,17 +163,19 @@ public class GlobalNameManager extends AbstractNameManager
 	//
 	protected final @NonNull NameResolution anyName;
 	protected final @NonNull NameResolution boxedValuesName;
+	protected final @NonNull NameResolution cachedResultName;
 //	protected final @NonNull NameResolution eName;
 	protected final @NonNull NameResolution evaluateName;
 	protected final @NonNull NameResolution evaluationCacheName;
 	protected final @NonNull NameResolution executorName;
-//	protected final @NonNull NameResolution getCachedEvaluationResultName;
+	protected final @NonNull NameResolution getCachedEvaluationResultName;
 	protected final @NonNull NameResolution getResultName;
 	protected final @NonNull NameResolution idResolverName;
 	protected final @NonNull NameResolution initValueName;
 	protected final @NonNull NameResolution instanceName;
 	protected final @NonNull NameResolution isEqualName;
 	protected final @NonNull NameResolution modelManagerName;
+	protected final @NonNull NameResolution newInstanceName;
 	protected final @NonNull NameResolution selfName;
 	protected final @NonNull NameResolution sourceAndArgumentValuesName;
 	protected final @NonNull NameResolution standardLibraryVariableName;
@@ -193,17 +195,19 @@ public class GlobalNameManager extends AbstractNameManager
 		//
 		this.anyName = declareEagerName(null, JavaConstants.ANY_NAME);
 		this.boxedValuesName = declareEagerName(null, JavaConstants.BOXED_VALUES_NAME);
+		this.cachedResultName = globalNameManager.declareEagerName(null, JavaConstants.CACHED_RESULT_NAME);
 //		this.eName = declareEagerName(null, JavaConstants.E_NAME);
 		this.evaluateName = declareEagerName(null, JavaConstants.EVALUATE_NAME);
 		this.evaluationCacheName = declareEagerName(null, JavaConstants.EVALUATION_CACHE_NAME);
 		this.executorName = declareEagerName(null, JavaConstants.EXECUTOR_NAME);
-//		this.getCachedEvaluationResultName = declareEagerName(null, JavaConstants.GET_CACHED_EVALUATION_RESULT_NAME);
+		this.getCachedEvaluationResultName = declareEagerName(null, JavaConstants.GET_CACHED_EVALUATION_RESULT_NAME);
 		this.getResultName = declareEagerName(null, JavaConstants.GET_RESULT_NAME);
 		this.idResolverName = declareEagerName(null, JavaConstants.ID_RESOLVER_NAME);
 		this.initValueName = declareEagerName(null, "initValue");
 		this.instanceName = declareEagerName(null, JavaConstants.INSTANCE_NAME);
 		this.isEqualName = declareEagerName(null, "isEqual");
 		this.modelManagerName = declareEagerName(null, JavaConstants.MODEL_MANAGER_NAME);
+		this.newInstanceName = globalNameManager.declareEagerName(null, JavaConstants.NEW_INSTANCE_NAME);
 		this.selfName = declareEagerName(null, PivotConstants.SELF_NAME);
 		this.sourceAndArgumentValuesName = declareEagerName(null, JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
 		this.standardLibraryVariableName = declareEagerName(null, JavaConstants.STANDARD_LIBRARY_NAME);
@@ -357,6 +361,15 @@ public class GlobalNameManager extends AbstractNameManager
 		return boxedValuesName;
 	}
 
+	@Deprecated
+	public @NonNull String getCachedResultName() {
+		return cachedResultName.getResolvedName();
+	}
+
+	public @NonNull NameResolution getCachedResultNameResolution() {
+		return cachedResultName;
+	}
+
 	public @NonNull NestedNameManager getChildNameManager(@NonNull CGNamedElement cgScopingElement) {
 		return ClassUtil.nonNullState(basicGetChildNameManager(cgScopingElement));
 	}
@@ -403,9 +416,9 @@ public class GlobalNameManager extends AbstractNameManager
 //		return getCachedEvaluationResultName;
 //	}
 
-//	public @NonNull String getGetCachedEvaluationResultName() {
-//		return getCachedEvaluationResultName.getResolvedName();
-//	}
+	public @NonNull String getGetCachedEvaluationResultName() {
+		return getCachedEvaluationResultName.getResolvedName();
+	}
 
 	public @NonNull NameResolution getGetResultNameResolution() {
 		return getResultName;
@@ -476,6 +489,10 @@ public class GlobalNameManager extends AbstractNameManager
 		return nameResolution;
 	}
 
+	public @NonNull NameResolution getNewInstanceResolution() {
+		return newInstanceName;
+	}
+
 	public @NonNull String getReservedName(@NonNull String name) {
 		return ClassUtil.nonNullState(name2reservedNameResolutions.get(name)).getResolvedName();
 	}
@@ -498,6 +515,10 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public @NonNull NameResolution getThisNameResolution() {
 		return thisName;
+	}
+
+	public @NonNull NameResolution getThisTransformerNameResolution() {
+		throw new UnsupportedOperationException();			// XXX
 	}
 
 	public @NonNull NameResolution getTypeIdNameResolution() {

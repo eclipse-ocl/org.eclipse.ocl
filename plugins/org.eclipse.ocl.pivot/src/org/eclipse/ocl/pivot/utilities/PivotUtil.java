@@ -69,6 +69,7 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
@@ -319,6 +320,23 @@ public class PivotUtil
 				return pivotType;
 			}
 			templateParameter = (TemplateParameter) pivotType;
+		}
+		return null;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	public static @Nullable ShadowExp basicGetShadowExp(@NonNull Operation asOperation) {
+		LanguageExpression asBodyExpression = asOperation.getBodyExpression();
+		if (asBodyExpression != null) {
+			OCLExpression asElement = ((ExpressionInOCL)asBodyExpression).getOwnedBody();
+			while (asElement instanceof LetExp) {				// Redundant since now using Function AS context
+				asElement = ((LetExp)asElement).getOwnedIn();
+			}
+			if (asElement instanceof ShadowExp) {			// QVTr Key
+				return (ShadowExp)asElement;		// FIXME replace with clearer strategy
+			}
 		}
 		return null;
 	}

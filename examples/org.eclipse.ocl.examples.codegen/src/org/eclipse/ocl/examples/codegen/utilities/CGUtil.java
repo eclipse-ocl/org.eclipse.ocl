@@ -111,6 +111,15 @@ public class CGUtil
 		return null;
 	}
 
+	public static @Nullable CGClass basicGetContextCGClass(@NonNull CGElement cgElement) {
+		for (EObject eObject = cgElement, eContainer; (eContainer = eObject.eContainer()) != null; eObject = eContainer) {
+			if (eContainer instanceof CGPackage) {
+				return (CGClass)eObject;
+			}
+		}
+		return null;
+	}
+
 	public static @Nullable Parameter basicGetParameter(@NonNull CGParameter cgParameter) {
 		Element ast1 = cgParameter.getAst();
 		Element ast2 = ast1 instanceof ParameterVariable ? ((ParameterVariable)ast1).getRepresentedParameter() : ast1;
@@ -412,6 +421,10 @@ public class CGUtil
 			}
 		}
 		throw new IllegalStateException("No containing Package for " + cgElement);
+	}
+
+	public static @NonNull CGClass getContextCGClass(@NonNull CGElement cgElement) {
+		return ClassUtil.nonNullState(basicGetContextCGClass(cgElement));
 	}
 
 	public static @NonNull CGExecutorType getExecutorType(@NonNull CGShadowExp object) {

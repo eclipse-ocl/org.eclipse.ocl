@@ -350,7 +350,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Variable asVariable = PivotUtil.getOwnedVariable(asLetExp);
 		CGFinalVariable cgVariable = context.useExecutableNameManager(asLetExp).createCGVariable(asVariable);		// FIXME Lose cast
 		CGValuedElement cgInit = context.createCGElement(CGValuedElement.class, asVariable.getOwnedInit());
-		context.setCGVariableInit(cgVariable, cgInit);;
+		context.setCGVariableInit(cgVariable, cgInit);
 		CGValuedElement cgIn = context.createCGElement(CGValuedElement.class, asLetExp.getOwnedIn());
 		CGLetExp cgLetExp = context.createCGLetExp(asLetExp, cgVariable, cgIn);
 		NameResolution inNameResolution = cgIn.basicGetNameResolution();

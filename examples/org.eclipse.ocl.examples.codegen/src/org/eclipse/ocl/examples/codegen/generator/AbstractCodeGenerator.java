@@ -91,7 +91,6 @@ import org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty;
 import org.eclipse.ocl.pivot.library.map.MapValueTypeProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 
@@ -205,7 +204,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	@Override
 	public final @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean maybeVirtual) {
 		OperationCallingConvention callingConvention = getCallingConventionInternal(asOperation, maybeVirtual);
-		NameUtil.errPrintln(callingConvention + " for " + asOperation + ":" + maybeVirtual);
+	//	NameUtil.errPrintln(callingConvention + " for " + asOperation + ":" + maybeVirtual);
 		return callingConvention;
 	}
 

@@ -265,10 +265,10 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("getUniqueComputation")) {
+				if (string.contains("CACHE_Root__unqualified_env_Package")) {
 					getClass();		// XXX
 				}
-				if (string.contains("TxMiToSiSimple")) {
+				if (string.contains("INSTANCE_")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

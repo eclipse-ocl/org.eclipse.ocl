@@ -447,6 +447,10 @@ public class ExecutableNameManager extends NestedNameManager
 		return executorVariable2;
 	}
 
+	public @NonNull CGParameter getIdResolverParameter() {
+		throw new UnsupportedOperationException();		// XXX
+	}
+
 	public @NonNull CGVariable getIdResolverVariable() {
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).getIdResolverVariable();

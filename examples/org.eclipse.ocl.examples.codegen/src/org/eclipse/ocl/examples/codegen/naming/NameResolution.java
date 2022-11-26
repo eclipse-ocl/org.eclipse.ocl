@@ -255,7 +255,7 @@ public abstract class NameResolution
 	/**
 	 * A non-null placeholder for a nameHint whose resolution is deferred until the CG containment tree is sound.
 	 */
-	private static final @NonNull String UNRESOLVED = "«UNRESOLVED»";
+	public static final @NonNull String UNRESOLVED = "«UNRESOLVED»";
 
 	/**
 	 * A non-null placeholder for a nameHint whose resolution will not be used.

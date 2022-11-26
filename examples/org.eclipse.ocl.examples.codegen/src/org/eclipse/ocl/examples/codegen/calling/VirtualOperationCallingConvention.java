@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.AbstractDispatchOperation
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 import com.google.common.collect.Iterables;
 
@@ -92,7 +91,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		assert analyzer.basicGetCGOperation(asOperation) == null;		// XXX
 		CGCachedOperation cgDispatchOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();		// XXX ??? cache post rather than pre-dispatch
-		System.out.println("createCGOperation " + NameUtil.debugSimpleName(cgDispatchOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
+	//	System.out.println("createCGOperation " + NameUtil.debugSimpleName(cgDispatchOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
 		cgDispatchOperation.setRequired(asOperation.isIsRequired());
 		cgDispatchOperation.setCallingConvention(this);
 		analyzer.initAst(cgDispatchOperation, asOperation, false);				// XXX redundant wrt caller

@@ -130,7 +130,6 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -228,6 +227,9 @@ public class CodeGenAnalyzer
 	 */
 	private final @NonNull Map<@NonNull Operation, @NonNull CGOperation> asVirtualOperation2cgOperation = new HashMap<>();
 
+	private @NonNull Map<@NonNull Operation, @NonNull Property> asOperation2asCacheInstance = new HashMap<>();
+	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> asConstructorClass2asCacheClass = new HashMap<>();
+
 	private @Nullable Iterable<@NonNull CGValuedElement> cgGlobals = null;
 
 	public CodeGenAnalyzer(@NonNull JavaCodeGenerator codeGenerator) {
@@ -242,6 +244,14 @@ public class CodeGenAnalyzer
 		this.cgFalse = createCGBoolean(false);
 		this.cgTrue = createCGBoolean(true);
 		this.cgNull = createCGNull();
+	}
+
+	public void addCacheConstructorInstance(@NonNull Operation asOperation, @NonNull Property asProperty, org.eclipse.ocl.pivot.@NonNull Class asCacheClass) {
+		Property old1 = asOperation2asCacheInstance.put(asOperation, asProperty);
+		assert old1 == null;
+		org.eclipse.ocl.pivot.@NonNull Class asConstructorClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getType(asProperty);
+		org.eclipse.ocl.pivot.Class old2 = asConstructorClass2asCacheClass.put(asConstructorClass, asCacheClass);
+		assert old2 == null;
 	}
 
 	public void addExternalFeature(@NonNull Feature asFeature) {
@@ -262,7 +272,7 @@ public class CodeGenAnalyzer
 //	}
 
 	public void addVirtualCGOperation(@NonNull Operation asOperation, @NonNull CGCachedOperation cgDispatchOperation) {
-		System.out.println("addVirtualCGOperation " + NameUtil.debugSimpleName(cgDispatchOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
+	//	System.out.println("addVirtualCGOperation " + NameUtil.debugSimpleName(cgDispatchOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
 		if (asOperation.toString().contains("::_unqualified_env_Class(O")) {
 			getClass();		// XXX
 		}
@@ -1048,7 +1058,7 @@ public class CodeGenAnalyzer
 				assert !asElement2cgElement.containsKey(asOperation);
 				initAst(cgOperation, asOperation, true);
 			}
-			System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
+		//	System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
 			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asOperation.getBodyExpression();
@@ -1387,6 +1397,14 @@ public class CodeGenAnalyzer
 			cgUnlimited = cgUnlimited2;
 		}
 		return cgUnlimited2;
+	}
+
+	public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(org.eclipse.ocl.pivot.@NonNull Class asConstructorClass) {
+		return ClassUtil.nonNullState(asConstructorClass2asCacheClass.get(asConstructorClass));
+	}
+
+	public @NonNull Property getCacheConstructorInstance(@NonNull Operation asOperation) {
+		return ClassUtil.nonNullState(asOperation2asCacheInstance.get(asOperation));
 	}
 
 	/**
@@ -1747,9 +1765,9 @@ public class CodeGenAnalyzer
 		}
 		cgElement.setAst(asElement);
 		if (isSymmetric) {
-			if (asElement instanceof Operation) {
-				System.out.println("initCG2AS " + NameUtil.debugSimpleName(cgElement) + " => " +  NameUtil.debugSimpleName(asElement) + " : " + asElement);	// XXX debugging
-			}
+	//		if (asElement instanceof Operation) {
+	//			System.out.println("initCG2AS " + NameUtil.debugSimpleName(cgElement) + " => " +  NameUtil.debugSimpleName(asElement) + " : " + asElement);	// XXX debugging
+	//		}
 			CGNamedElement old = asElement2cgElement.put(asElement, cgElement);
 			assert old == null;
 		}
