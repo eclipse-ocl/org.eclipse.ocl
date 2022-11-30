@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
@@ -41,6 +42,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
@@ -343,7 +345,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		}
 	}
 
-	// Default guards and boxes al terms. Derived implementations for unboxed/ecore/simple-boxed
+	// Default guards and boxes all terms. Derived implementations for unboxed/ecore/simple-boxed
 	@Override		// XXX review for all derived implementations
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
@@ -358,12 +360,26 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 		GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 		boolean sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);
 
+		Operation asBaseOperation = analyzer.basicGetOriginalOperation(cgOperation);
+		if (asBaseOperation != null) {
+			getClass();	// XXX
+		}
 		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		int iMax = cgArguments.size();
-		assert iMax == cgParameters.size();
-		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-			CGParameter cgParameter = cgParameters.get(i);
+		int maxArgument = cgArguments.size();
+		int maxParameter = cgParameters.size();
+		assert (maxArgument == maxParameter) || (maxParameter > 0);	// Correct or may be varargs
+		CGParameter cgParameter = null;
+		for (int i = 0; i < maxArgument; i++) {			// Avoid CME from rewrite
+			if (i < maxParameter) {
+				cgParameter = cgParameters.get(i);
+			}
+			else {
+				assert cgParameter != null;
+				ElementId elementId = cgParameter.getTypeId().getElementId();
+				boolean isArray = ((JavaTypeId)elementId).getJavaClass().getComponentType() != null;
+				assert isArray;
+			}
 			CGValuedElement cgArgument = cgArguments.get(i);
 			if (i == 0) {
 				CGValuedElement cgSource = cgArgument;
@@ -391,8 +407,12 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			}
 		}
 
-		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
-			CGParameter cgParameter = cgParameters.get(i);
+		cgParameter = null;
+		for (int i = 0; i < maxArgument; i++) {			// Avoid CME from rewrite
+			if (i < maxParameter) {
+				cgParameter = cgParameters.get(i);
+			}
+			assert cgParameter != null;
 			CGValuedElement cgArgument = cgArguments.get(i);
 			boxingAnalyzer.rewriteAsBoxed(cgArgument);
 			if (i == 0) {
@@ -406,7 +426,7 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 			//	if ((asParameter != null) && asParameter.isIsRequired() && !cgArgument.isNonNull()) {
 				if (cgParameter.isRequired() && !cgArgument.isNonNull()) {
 //					rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
-					boxingAnalyzer.rewriteAsGuarded(cgArgument, false, "''" + cgParameter.getTypeId() + "'' rather than ''OclVoid'' value required");
+					boxingAnalyzer.rewriteAsGuarded(cgArgument, false, "''" + cgParameter.getTypeId() + "'' rather than ''OclVoid'' elementId");
 				}
 			}
 		}

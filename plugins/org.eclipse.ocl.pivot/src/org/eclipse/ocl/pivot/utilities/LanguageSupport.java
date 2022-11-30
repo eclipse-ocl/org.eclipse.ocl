@@ -39,5 +39,6 @@ public interface LanguageSupport
 	 * Return the AS class for a Java Class.
 	 */
 	public abstract org.eclipse.ocl.pivot.@NonNull Class getNativeClass(/*@NonNull */Class<?> jClass);
+	public abstract org.eclipse.ocl.pivot.@NonNull Class getNativeClass(@NonNull String qualifiedClassName);
 	public abstract @Nullable Invocations resolveInvocations(@NonNull Type requiredSourceType, boolean hasExplicitSourceExp, @NonNull String qualifiedOperationName);
 }

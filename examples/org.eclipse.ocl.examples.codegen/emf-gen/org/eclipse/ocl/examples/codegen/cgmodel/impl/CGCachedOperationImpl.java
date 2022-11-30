@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
+import org.eclipse.ocl.pivot.Element;
 
 /**
  * <!-- begin-user-doc -->
@@ -260,6 +261,14 @@ public class CGCachedOperationImpl extends CGOperationImpl implements CGCachedOp
 	@Override
 	public boolean isNonNull() {			// XXX why this irregularity ?
 		return isRequired();
+	}
+
+	@Override
+	public void setAst(Element newAst) {
+		if (String.valueOf(newAst).contains(":_unqualified_env_Package(O") || String.valueOf(newAst).contains("DISPATCH_OclElement__unqualified_env_Package")) {
+			getClass();		// XXX
+		}
+		super.setAst(newAst);
 	}
 
 } //CGCachedOperationImpl

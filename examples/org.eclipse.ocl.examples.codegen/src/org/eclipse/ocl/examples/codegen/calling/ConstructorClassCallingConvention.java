@@ -22,6 +22,7 @@ import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -44,9 +45,11 @@ public class ConstructorClassCallingConvention extends AbstractClassCallingConve
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
 		assert cgClass.getContainingPackage() == null;			// container is a cgClass
 		String className = CGUtil.getName(cgClass);
-		String title = cgClass.getName() + " provides the Java implementation to construct the singleton to cache an evaluation of\n";
-		js.appendCommentWithOCL(title, cgClass.getAst());
-		js.append("protected class " + className);
+		String title = "The instance of " + cgClass.getName() + " caches all known evaluations of\n";
+		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
+		Operation asOperation = cg2javaVisitor.getAnalyzer().getCachedOperation(asClass);
+		js.appendCommentWithOCL(title, asOperation);
+		js.append("private class " + className);
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
 	//	generateProperties(cg2javaVisitor, js, cgClass);

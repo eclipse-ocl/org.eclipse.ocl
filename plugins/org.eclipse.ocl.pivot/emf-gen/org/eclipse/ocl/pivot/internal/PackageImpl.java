@@ -652,7 +652,6 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	@Override
-
 	public org.eclipse.ocl.pivot.@Nullable Class getOwnedClass(String className) {
 		return NameUtil.getNameable(getOwnedClasses(), className);
 	}

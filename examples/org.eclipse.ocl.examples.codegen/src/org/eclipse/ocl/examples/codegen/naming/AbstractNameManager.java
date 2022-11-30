@@ -160,7 +160,7 @@ public abstract class AbstractNameManager implements NameManager
 		}
 
 		private boolean debugAllocatedName(@NonNull String name) {
-			if (name.contains("member_0")) {
+			if (name.contains("xxobject")) {
 				getClass();			// XXX
 			}
 			return true;

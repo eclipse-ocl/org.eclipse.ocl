@@ -265,10 +265,10 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("CACHE_Root__unqualified_env_Package")) {
+				if (string.contains("INSTANCE_DISPATCH_OclElement__unqualified_env_Package")) {
 					getClass();		// XXX
 				}
-				if (string.contains("INSTANCE_")) {
+				if (string.contains("InvalidValueException")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

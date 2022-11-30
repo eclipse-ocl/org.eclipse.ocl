@@ -348,4 +348,10 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 		return (source != null) && source.isUnboxed();
 	}
 
+	@Override
+	public void setSource(CGValuedElement newSource) {
+		// TODO Auto-generated method stub
+		super.setSource(newSource);		// XXX
+	}
+
 } //CGGuardExpImpl

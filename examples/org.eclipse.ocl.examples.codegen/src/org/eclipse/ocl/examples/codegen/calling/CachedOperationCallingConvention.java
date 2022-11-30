@@ -54,14 +54,14 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 	public static final @NonNull CachedOperationCallingConvention INSTANCE = new CachedOperationCallingConvention();
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+	public @NonNull CGCachedOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
 		assert metamodelManager.getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
 	//	return CGModelFactory.eINSTANCE.createCGCachedOperation();
 
-		CGOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
+		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
 	//	analyzer.installOperation(asOperation, cgOperation, this);
 	//	asNewOperations.add(asOperation);
 	//	cgOperations.add((CGCachedOperation) cgOperation);

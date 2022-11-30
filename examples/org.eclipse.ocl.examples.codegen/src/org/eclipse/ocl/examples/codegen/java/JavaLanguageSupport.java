@@ -364,6 +364,19 @@ public class JavaLanguageSupport extends AbstractLanguageSupport
 		return asClass;
 	}
 
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getNativeClass(@NonNull String qualifiedClassName) {
+		int dot = qualifiedClassName.lastIndexOf('.');
+		if (dot >= 0) {
+			org.eclipse.ocl.pivot.@NonNull Package parentPackage = getNativePackage(qualifiedClassName.substring(0, dot));
+			return getClass(parentPackage, qualifiedClassName.substring(dot+1));
+		}
+		else {
+			org.eclipse.ocl.pivot.@NonNull Package parentPackage = getNativePackage("");
+			return getClass(parentPackage, qualifiedClassName);
+		}
+	}
+
 	public @NonNull Model getNativeModel() {
 		Model asModel = nativeModel;
 		if (asModel == null) {
@@ -459,6 +472,17 @@ public class JavaLanguageSupport extends AbstractLanguageSupport
 		if (qualifiedName == null) { qualifiedName = ""; }
 		List<org.eclipse.ocl.pivot.@NonNull Package> asPackages = PivotUtilInternal.getOwnedPackagesList(asModel);
 		return getPackage(asPackages, qualifiedName);
+	}
+
+	public org.eclipse.ocl.pivot.@NonNull Package getNativePackage(@NonNull String qualifiedPackageName) {
+		int dot = qualifiedPackageName.lastIndexOf('.');
+		if (dot >= 0) {
+			org.eclipse.ocl.pivot.@NonNull Package parentPackage = getNativePackage(qualifiedPackageName.substring(0, dot));
+			return getPackage(PivotUtilInternal.getOwnedPackagesList(parentPackage), qualifiedPackageName.substring(dot+1));
+		}
+		else {
+			return getPackage(PivotUtilInternal.getOwnedPackagesList(getNativeModel()), qualifiedPackageName);
+		}
 	}
 
 	// Java classes are distinct singletons so we can have a distinct orphanage

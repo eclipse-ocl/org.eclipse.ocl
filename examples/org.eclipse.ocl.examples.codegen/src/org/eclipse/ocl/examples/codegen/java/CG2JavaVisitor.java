@@ -1477,7 +1477,8 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (cgSource.isNull()) {
 			js.append("throw new ");
 			js.appendClassReference(null, InvalidValueException.class);
-			js.append("();\n");
+			js.append("(\"Unconditionally null\")");
+		//	js.append("();\n");
 		}
 		else {
 			if (!js.appendLocalStatements(cgSource)) {

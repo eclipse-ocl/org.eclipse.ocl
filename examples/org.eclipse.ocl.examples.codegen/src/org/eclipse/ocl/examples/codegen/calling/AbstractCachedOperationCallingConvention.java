@@ -45,15 +45,18 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public abstract class AbstractCachedOperationCallingConvention extends AbstractOperationCallingConvention	// CF ConstrainedOperationCallingConvention
 {
 	public static @NonNull String getNativeOperationDirectInstanceName(@NonNull Operation asOperation) {	// FIXME unique
-		return "INST_" + getNativeOperationName(asOperation);
+//		return "INST_" + getNativeOperationName(asOperation);
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	public static @NonNull String getNativeOperationInstanceName(@NonNull Operation asOperation) {	// FIXME unique
-		return "INSTANCE_" + getNativeOperationName(asOperation);
+//		return "INSTANCE_" + getNativeOperationName(asOperation);
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	public static @NonNull String getNativeOperationName(@NonNull Operation asOperation) {	// FIXME unique
-		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
+//		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
@@ -70,7 +73,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+	public @NonNull CGCachedOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		return CGModelFactory.eINSTANCE.createCGCachedOperation();
 	}
 

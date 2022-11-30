@@ -10,13 +10,19 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.naming;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * A ClassNameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
@@ -68,5 +74,19 @@ public class ClassNameManager extends NestedNameManager implements ClassableName
 			}
 		}
 		return null;
+	}
+
+	public @NonNull String getUniquePropertyName(@NonNull String namePrefix, @NonNull Class asNestedClass) {
+		String name = namePrefix + PivotUtil.getName(asNestedClass);
+		List<Property> ownedProperties = asClass.getOwnedProperties();
+		if (NameUtil.getNameable(ownedProperties, name) == null) {
+			return name;
+		}
+		for (int i = 1; true; i++) {
+			String name2 = name + "_" + i;
+			if (NameUtil.getNameable(ownedProperties, name2) == null) {
+				return name2;
+			}
+		}
 	}
 }
