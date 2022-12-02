@@ -1684,6 +1684,10 @@ public void analyze(@NonNull CGElement cgRoot) {
 		return operationNameManager;
 	}
 
+	public @NonNull Operation getOriginalOperation(@NonNull CGOperation cgOperation) {
+		return ClassUtil.nonNullState(cgOperation2asOriginalOperation.get(cgOperation));
+	}
+
 	/**
 	 * Create or use the PackageNameManager for asPackage exploiting an optionally already known cgPackage.
 	 */
