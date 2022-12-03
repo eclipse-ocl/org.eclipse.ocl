@@ -258,9 +258,9 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 		}
 	}
 
-	public static class ConstructorInstancePropertyCallingConvention extends ImmutableCachePropertyCallingConvention
+	public static class CacheInstancePropertyCallingConvention extends ImmutableCachePropertyCallingConvention
 	{
-		public static final @NonNull PropertyCallingConvention INSTANCE = new ConstructorInstancePropertyCallingConvention();
+		public static final @NonNull CacheInstancePropertyCallingConvention INSTANCE = new CacheInstancePropertyCallingConvention();
 
 		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
@@ -647,7 +647,7 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 		//
 		//	CGClass cgClass = qvtiOperationNameManager.getClassNameManager().getCGClass();
 		CGProperty cgProperty = analyzer.createCGElement(CGProperty.class, asProperty);
-		cgProperty.setCallingConvention(ConstructorInstancePropertyCallingConvention.INSTANCE);
+		cgProperty.setCallingConvention(CacheInstancePropertyCallingConvention.INSTANCE);
 		//	cgClass.getProperties().add(cgProperty);
 		assert cgProperty.eContainer() != null;
 		return asProperty;
