@@ -277,11 +277,12 @@ public class CodeGenAnalyzer
 	}
 
 	public void addExternalFeature(@NonNull Feature asFeature) {
+	// XXX	assert false;			// XXX obsolete
 		UniqueList<@NonNull Feature> externalFeatures2 = externalFeatures;
 		if (externalFeatures2 == null) {
 			externalFeatures = externalFeatures2 = new UniqueList<>();
 		}
-		externalFeatures2.add(asFeature);
+	// XXX	externalFeatures2.add(asFeature);
 	}
 
 	public void addGlobal(@NonNull CGValuedElement cgGlobal) {

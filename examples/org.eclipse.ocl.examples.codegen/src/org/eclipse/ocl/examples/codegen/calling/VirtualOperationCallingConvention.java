@@ -163,7 +163,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		Operation asDispatchOperation = CGUtil.getAST(cgDispatchOperation);
 		org.eclipse.ocl.pivot.Class asDispatchClass = PivotUtil.getOwningClass(asDispatchOperation);
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgDispatchOperation, asDispatchOperation);	// Needed to support downstream useOperationNameManager()
-		/*Property asConstructorInstance =*/ createConstructorInstance(operationNameManager, asDispatchClass, asDispatchClass);
+		/*Property asConstructorInstance =*/ createCacheInstance(operationNameManager, asDispatchClass, asDispatchClass);
 		return cgDispatchOperation;
 	}
 

@@ -166,6 +166,7 @@ public class NameManagerHelper
 	public static final @NonNull String PROPERTY_NAME_HINT_PREFIX = "";
 	public static final @NonNull String REAL_NAME_HINT_PREFIX = "REA_";
 	public static final @NonNull String RANGE_NAME_HINT_PREFIX = "RNG";
+	public static final @NonNull String RULE_CACHE_CLASS_NAME_PREFIX = "RULE_CACHE_";
 	public static final @NonNull String SEQUENCE_NAME_HINT_PREFIX = "SEQ";
 	public static final @NonNull String SET_NAME_HINT_PREFIX = "SET";
 	public static final @NonNull String SHADOW_NAME_HINT_PREFIX = "SHAD_";

@@ -789,30 +789,6 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		return metamodelManager.conformsTo(type, TemplateParameterSubstitutions.EMPTY, oclTypeType, TemplateParameterSubstitutions.EMPTY);
 	}
 
-	@Deprecated // mocing to ClassCallingConvention
-	protected boolean isEmpty(@NonNull CGClass cgClass) {
-		for (CGOperation cgOperation : cgClass.getOperations()) {
-			if (cgOperation.getCallingConvention().needsGeneration()) {
-				return false;
-			}
-		}
-		for (CGProperty cgProperty : cgClass.getProperties()) {
-			if (cgProperty.getCallingConvention().needsGeneration()) {
-				return false;
-			}
-		}
-		List<@NonNull CGClass> cgClasses = CGUtil.getClassesList(cgClass);
-		if (cgClasses.size() > 0) {
-			for (CGClass cgNestedClass : cgClasses) {
-				if (!isEmpty(cgNestedClass)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
-
 	protected boolean isEnumerationLiteral(@NonNull CGValuedElement cgValue) {
 		Element ast = cgValue.getAst();
 		if (!(ast instanceof TypedElement)) {

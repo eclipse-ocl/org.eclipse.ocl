@@ -69,6 +69,20 @@ public class PackageNameManager extends NestedNameManager implements ClassableNa
 		return null;
 	}
 
+	public @NonNull String getUniqueClassName(@NonNull String namePrefix, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		String name = namePrefix + PivotUtil.getName(asClass);
+		List<org.eclipse.ocl.pivot.Class> ownedClasses = asPackage.getOwnedClasses();
+		if (NameUtil.getNameable(ownedClasses, name) == null) {
+			return name;
+		}
+		for (int i = 1; true; i++) {
+			String name2 = name + "_" + i;
+			if (NameUtil.getNameable(ownedClasses, name2) == null) {
+				return name2;
+			}
+		}
+	}
+
 	public @NonNull String getUniqueClassName(@NonNull String namePrefix, @NonNull Operation asOperation) {
 		String name = namePrefix + PivotUtil.getName(PivotUtil.getOwningClass(asOperation)) + "_" + PivotUtil.getName(asOperation);
 		List<org.eclipse.ocl.pivot.Class> ownedClasses = asPackage.getOwnedClasses();
