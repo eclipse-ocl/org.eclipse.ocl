@@ -266,7 +266,7 @@ public class CodeGenAnalyzer
 	public void addCacheInstance(@NonNull Operation asOperation, @NonNull Property asCacheInstance, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
 		Property old1 = asOperation2asCacheInstance.put(asOperation, asCacheInstance);
 		assert old1 == null;
-		org.eclipse.ocl.pivot.@NonNull Class asCacheClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getType(asCacheInstance);
+		org.eclipse.ocl.pivot.Class asCacheClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getType(asCacheInstance);
 		org.eclipse.ocl.pivot.Class old2 = asCacheClass2asEntryClass.put(asCacheClass, asEntryClass);
 		assert old2 == null;
 		org.eclipse.ocl.pivot.Class asContextClass = getCodeGenerator().getContextClass();
