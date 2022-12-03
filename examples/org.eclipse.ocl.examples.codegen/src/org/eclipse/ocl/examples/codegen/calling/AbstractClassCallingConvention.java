@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
@@ -126,5 +128,36 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
 		PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, asPackage);
 		packageNameManager.getCGPackage().getClasses().add(cgClass);
+	}
+
+	/**
+	 * Determine the parent of cgClass as the root CGClass of the parent of asClass.
+	 */
+	protected void installCGRootClassParent(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CGClass cgRootClass = analyzer.getCGRootClass(asClass);
+		cgRootClass.getClasses().add(cgClass);
+	}
+
+	@Deprecated // moving to ClassCallingConvention
+	protected boolean isEmpty(@NonNull CGClass cgClass) {
+		for (CGOperation cgOperation : cgClass.getOperations()) {
+			if (cgOperation.getCallingConvention().needsGeneration()) {
+				return false;
+			}
+		}
+		for (CGProperty cgProperty : cgClass.getProperties()) {
+			if (cgProperty.getCallingConvention().needsGeneration()) {
+				return false;
+			}
+		}
+		List<@NonNull CGClass> cgClasses = CGUtil.getClassesList(cgClass);
+		if (cgClasses.size() > 0) {
+			for (CGClass cgNestedClass : cgClasses) {
+				if (!isEmpty(cgNestedClass)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 }

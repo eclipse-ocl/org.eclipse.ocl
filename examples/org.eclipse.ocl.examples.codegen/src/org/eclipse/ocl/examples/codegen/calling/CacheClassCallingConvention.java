@@ -35,15 +35,17 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgClass = createCGClass();
-	//	installCGCacheClassParent(analyzer, cgClass, asClass);
-		CGClass cgRootClass = analyzer.getCGRootClass(asClass);
-		cgRootClass.getClasses().add(cgClass);
+		installCGRootClassParent(analyzer, cgClass, asClass);
 		return cgClass;
 	}
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
 		assert cgClass.getContainingPackage() == null;			// container is a cgClass
+		if (isEmpty(cgClass)) {
+			return true;
+		}
+		js.append("\n");
 		String className = CGUtil.getName(cgClass);
 		String title = getTitle(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);

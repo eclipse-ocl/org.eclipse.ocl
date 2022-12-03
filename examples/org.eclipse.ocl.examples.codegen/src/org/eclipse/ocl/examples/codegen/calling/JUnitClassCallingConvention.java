@@ -40,6 +40,10 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 	 */
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	//	if (isEmpty(cgClass)) {
+	//		return true;
+	//	}
+		js.append("\n");
 		String className = CGUtil.getName(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		js.appendClassHeader(asClass);

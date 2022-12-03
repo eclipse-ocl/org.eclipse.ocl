@@ -42,24 +42,27 @@ public class ContextClassCallingConvention extends AbstractClassCallingConventio
 	 */
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
-		if (!isEmpty(cgClass)) {
-			String className = CGUtil.getName(cgClass);
-			CGPackage cgContainingPackage = cgClass.getContainingPackage();
-			assert cgContainingPackage != null;
-			String title = cgClass.getName() + " provides the Java implementation for the additional non-Ecore features of\n";
-			js.appendCommentWithOCL(title, cgClass.getAst());
-			js.append("public static class " + className);
-//			Iterable<@NonNull CGClass> cgSuperTypes = CGUtil.getSuperTypes(cgClass);
-//			if (!Iterables.isEmpty(cgSuperTypes)) {
-			appendSuperTypes(js, cgClass);
-			js.pushClassBody(className);
-			generateProperties(cg2javaVisitor, js, cgClass);
-			generateOperations(cg2javaVisitor, js, cgClass);
-			js.popClassBody(false);
+		if (isEmpty(cgClass)) {
+			return true;
 		}
+		js.append("\n");
+		String className = CGUtil.getName(cgClass);
+		CGPackage cgContainingPackage = cgClass.getContainingPackage();
+		assert cgContainingPackage != null;
+		String title = cgClass.getName() + " provides the Java implementation for the additional non-Ecore features of\n";
+		js.appendCommentWithOCL(title, cgClass.getAst());
+		js.append("public static class " + className);
+//		Iterable<@NonNull CGClass> cgSuperTypes = CGUtil.getSuperTypes(cgClass);
+//		if (!Iterables.isEmpty(cgSuperTypes)) {
+		appendSuperTypes(js, cgClass);
+		js.pushClassBody(className);
+		generateProperties(cg2javaVisitor, js, cgClass);
+		generateOperations(cg2javaVisitor, js, cgClass);
+		js.popClassBody(false);
 		return true;
 	}
 
+	@Override
 	protected boolean isEmpty(@NonNull CGClass cgClass) {
 		for (CGOperation cgOperation : cgClass.getOperations()) {
 			if (cgOperation.getCallingConvention().needsGeneration()) {

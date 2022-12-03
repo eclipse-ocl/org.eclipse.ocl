@@ -38,6 +38,10 @@ public class ExternalClassCallingConvention extends AbstractClassCallingConventi
 	 */
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+		if (isEmpty(cgClass)) {
+			return true;
+		}
+		js.append("\n");
 		String className = CGUtil.getName(cgClass);
 		CGPackage cgContainingPackage = cgClass.getContainingPackage();
 		assert cgContainingPackage == null;
