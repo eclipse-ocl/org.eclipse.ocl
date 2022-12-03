@@ -607,7 +607,7 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 		}
 	}
 
-	protected final org.eclipse.ocl.pivot.@NonNull Class createCacheClass(@NonNull ExecutableNameManager operationNameManager, org.eclipse.ocl.pivot.@NonNull Class asCacheClass) {
+	protected final org.eclipse.ocl.pivot.@NonNull Class createCacheClass(@NonNull ExecutableNameManager operationNameManager, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
 		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
@@ -618,21 +618,21 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 		org.eclipse.ocl.pivot.@NonNull Package asPackage = getCachePackage(analyzer, asOperation);
 		PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, asPackage);
 		String cacheClassName = packageNameManager.getUniqueClassName(NameManagerHelper.CACHE_CLASS_NAME_PREFIX, asOperation);
-		org.eclipse.ocl.pivot.Class asConstructorClass = AbstractLanguageSupport.getClass(asPackage, cacheClassName);
-		org.eclipse.ocl.pivot.Class asConstructorSuperClass = jLanguageSupport.getNativeClass(JavaConstants.ABSTRACT_COMPUTATION_CONSTRUCTOR_CLASS_NAME);		// XXX workaround missing org.eclipse.ocl.runtime
-		asConstructorClass.getSuperClasses().add(asConstructorSuperClass);
-		importNameManager.reserveLocalName(PivotUtil.getName(asConstructorClass));
-		analyzer.addCachedOperation(asConstructorClass, asOperation);
+		org.eclipse.ocl.pivot.Class asCacheClass = AbstractLanguageSupport.getClass(asPackage, cacheClassName);
+		org.eclipse.ocl.pivot.Class asCacheSuperClass = jLanguageSupport.getNativeClass(JavaConstants.ABSTRACT_COMPUTATION_CONSTRUCTOR_CLASS_NAME);		// XXX workaround missing org.eclipse.ocl.runtime
+		asCacheClass.getSuperClasses().add(asCacheSuperClass);
+		importNameManager.reserveLocalName(PivotUtil.getName(asCacheClass));
+		analyzer.addCachedOperation(asCacheClass, asOperation);
 		//
-		CGClass cgConstructorClass = analyzer.generateClassDeclaration(asConstructorClass, ConstructorClassCallingConvention.INSTANCE);
-		CGClass cgConstructorSuperClass = analyzer.generateClassDeclaration(asConstructorSuperClass, getClassCallingConvention());
-		cgConstructorClass.getSuperTypes().add(cgConstructorSuperClass);
+		CGClass cgCacheClass = analyzer.generateClassDeclaration(asCacheClass, ConstructorClassCallingConvention.INSTANCE);
+		CGClass cgCacheSuperClass = analyzer.generateClassDeclaration(asCacheSuperClass, getClassCallingConvention());
+		cgCacheClass.getSuperTypes().add(cgCacheSuperClass);
 		//
-		CacheConstructorCallingConvention.INSTANCE.createConstructor(analyzer, cgConstructorClass);
-		getEvaluateOperationCallingConvention().createOperation(analyzer, cgConstructorClass, asOperation, asCacheClass);
-		NewInstanceOperationCallingConvention.INSTANCE.createOperation(analyzer, cgConstructorClass, asCacheClass);
+		CacheConstructorCallingConvention.INSTANCE.createConstructor(analyzer, cgCacheClass);
+		getEvaluateOperationCallingConvention().createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
+		NewInstanceOperationCallingConvention.INSTANCE.createOperation(analyzer, cgCacheClass, asEntryClass);
 		//
-		return asConstructorClass;
+		return asCacheClass;
 	}
 
 	protected final @NonNull Property createCacheInstance(@NonNull ExecutableNameManager operationNameManager, org.eclipse.ocl.pivot.@NonNull Class asCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
