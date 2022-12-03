@@ -287,7 +287,7 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 			GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 			Operation asOperation = CGUtil.getAST(cgOperation);
 			org.eclipse.ocl.pivot.Class asConstructorClass = PivotUtil.getOwningClass(asOperation);
-			org.eclipse.ocl.pivot.Class asCacheClass = analyzer.getCacheClass(asConstructorClass);
+			org.eclipse.ocl.pivot.Class asCacheClass = analyzer.getEntryClass(asConstructorClass);
 			CGClass cgCacheClass = analyzer.getCGClass(asCacheClass);
 			js.append("return ((");
 			js.appendClassReference(cgCacheClass);
@@ -782,7 +782,7 @@ protected final void createCacheProperty(@NonNull CodeGenAnalyzer analyzer, @Non
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		Iterable<@NonNull CGValuedElement> cgArguments = CGUtil.getArguments(cgOperationCallExp);
-		Property asCacheInstance = analyzer.getCacheConstructorInstance(asOperation);
+		Property asCacheInstance = analyzer.getCacheInstance(asOperation);
 		CGProperty cgCacheInstance = analyzer.getCGProperty(asCacheInstance);
 		//
 		for (@NonNull CGValuedElement cgArgument : cgArguments) {

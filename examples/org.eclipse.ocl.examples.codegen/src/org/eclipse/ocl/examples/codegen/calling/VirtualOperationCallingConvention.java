@@ -273,7 +273,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		js.pushIndentation(null);
 		for (@NonNull CGCachedOperation cgFinalOperation : ClassUtil.nullFree(((CGCachedOperation)cgOperation).getFinalOperations())) {
 			Operation asFinalOperation = CGUtil.getAST(cgFinalOperation);
-			Property asCacheConstructorInstance = analyzer.getCacheConstructorInstance(asFinalOperation);
+			Property asCacheConstructorInstance = analyzer.getCacheInstance(asFinalOperation);
 			CGProperty cgCacheConstructorInstance = analyzer.getCGProperty(asCacheConstructorInstance);
 			js.append("install(");
 			js.appendClassReference(null, cgFinalOperation.getParameters().get(0));
