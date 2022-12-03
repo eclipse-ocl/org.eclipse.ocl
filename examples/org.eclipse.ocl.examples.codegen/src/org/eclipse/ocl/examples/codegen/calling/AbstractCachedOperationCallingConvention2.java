@@ -640,14 +640,6 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 		}
 	}
 
-	protected void createCacheSelfProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass) {
-		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		org.eclipse.ocl.pivot.Class asTransformation = codeGenerator.getContextClass();
-		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-		NameResolution thisTransformerNameResolution = globalNameManager.getThisTransformerNameResolution();
-		createCacheProperty(analyzer, cgCacheClass, thisTransformerNameResolution, asTransformation);
-	}
-
 	protected final org.eclipse.ocl.pivot.@NonNull Class createConstructorClass(@NonNull ExecutableNameManager operationNameManager, org.eclipse.ocl.pivot.@NonNull Class asCacheClass) {
 		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
