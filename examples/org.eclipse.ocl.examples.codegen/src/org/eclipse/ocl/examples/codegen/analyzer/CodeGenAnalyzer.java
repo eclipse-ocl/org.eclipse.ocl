@@ -235,7 +235,7 @@ public class CodeGenAnalyzer
 	private final @NonNull Map<@NonNull CGOperation, @NonNull Operation> cgOperation2asOriginalOperation = new HashMap<>();
 
 	private @NonNull Map<@NonNull Operation, @NonNull Property> asOperation2asCacheInstance = new HashMap<>();
-	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> asConstructorClass2asCacheClass = new HashMap<>();
+	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> asCacheClass2asEntryClass = new HashMap<>();
 
 	private @Nullable Iterable<@NonNull CGValuedElement> cgGlobals = null;
 
@@ -263,17 +263,19 @@ public class CodeGenAnalyzer
 		assert oldOperation == null;
 	}
 
+	public void addCacheInstance(@NonNull Operation asOperation, @NonNull Property asCacheInstance, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
+		Property old1 = asOperation2asCacheInstance.put(asOperation, asCacheInstance);
+		assert old1 == null;
+		org.eclipse.ocl.pivot.@NonNull Class asCacheClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getType(asCacheInstance);
+		org.eclipse.ocl.pivot.Class old2 = asCacheClass2asEntryClass.put(asCacheClass, asEntryClass);
+		assert old2 == null;
+		org.eclipse.ocl.pivot.Class asContextClass = getCodeGenerator().getContextClass();
+		asContextClass.getOwnedProperties().add(asCacheInstance);
+	}
+
 	public void addCachedOperation(org.eclipse.ocl.pivot.@NonNull Class asCacheClass, @NonNull Operation asOperation) {
 		Operation oldOperation = asCacheClass2asOperation.put(asCacheClass, asOperation);
 		assert oldOperation == null;
-	}
-
-	public void addCacheConstructorInstance(@NonNull Operation asOperation, @NonNull Property asProperty, org.eclipse.ocl.pivot.@NonNull Class asCacheClass) {
-		Property old1 = asOperation2asCacheInstance.put(asOperation, asProperty);
-		assert old1 == null;
-		org.eclipse.ocl.pivot.@NonNull Class asConstructorClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getType(asProperty);
-		org.eclipse.ocl.pivot.Class old2 = asConstructorClass2asCacheClass.put(asConstructorClass, asCacheClass);
-		assert old2 == null;
 	}
 
 	public void addExternalFeature(@NonNull Feature asFeature) {
@@ -1432,7 +1434,7 @@ public void analyze(@NonNull CGElement cgRoot) {
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(org.eclipse.ocl.pivot.@NonNull Class asConstructorClass) {
-		return ClassUtil.nonNullState(asConstructorClass2asCacheClass.get(asConstructorClass));
+		return ClassUtil.nonNullState(asCacheClass2asEntryClass.get(asConstructorClass));
 	}
 
 	public @NonNull Operation getCachedOperation(org.eclipse.ocl.pivot.@NonNull Class asClass) {

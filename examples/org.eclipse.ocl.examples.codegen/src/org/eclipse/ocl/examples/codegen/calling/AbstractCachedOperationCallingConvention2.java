@@ -643,7 +643,7 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 		String propertyName = classNameManager.getUniquePropertyName(NameManagerHelper.INSTANCE_PROPERTY_NAME_PREFIX, asCacheClass);
 		Property asProperty = PivotUtil.createProperty(propertyName, asCacheClass);
 		Operation asOperation = (Operation)operationNameManager.getASScope();
-		analyzer.addCacheConstructorInstance(asOperation, asProperty, asEntryClass);
+		analyzer.addCacheInstance(asOperation, asProperty, asEntryClass);
 		//
 		//	CGClass cgClass = qvtiOperationNameManager.getClassNameManager().getCGClass();
 		CGProperty cgProperty = analyzer.createCGElement(CGProperty.class, asProperty);
