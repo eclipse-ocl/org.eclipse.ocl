@@ -162,6 +162,7 @@ public class GlobalNameManager extends AbstractNameManager
 	//	to minimize eiting if a new Java reserved word interferes.
 	//
 	protected final @NonNull NameResolution anyName;
+	protected final @NonNull NameResolution basicEvaluateName;
 	protected final @NonNull NameResolution boxedValuesName;
 	protected final @NonNull NameResolution cachedResultName;
 //	protected final @NonNull NameResolution eName;
@@ -195,6 +196,7 @@ public class GlobalNameManager extends AbstractNameManager
 		this.thisName = declareEagerName(null, JavaConstants.THIS_NAME);
 		//
 		this.anyName = declareEagerName(null, JavaConstants.ANY_NAME);
+		this.basicEvaluateName = declareEagerName(null, JavaConstants.BASIC_EVALUATE_NAME);
 		this.boxedValuesName = declareEagerName(null, JavaConstants.BOXED_VALUES_NAME);
 		this.cachedResultName = globalNameManager.declareEagerName(null, JavaConstants.CACHED_RESULT_NAME);
 //		this.eName = declareEagerName(null, JavaConstants.E_NAME);
@@ -357,6 +359,10 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public @NonNull NameResolution getAnyNameResolution() {
 		return anyName;
+	}
+
+	public @NonNull NameResolution getBasicEvaluateNameResolution() {
+		return basicEvaluateName;
 	}
 
 	public @NonNull NameResolution getBoxedValuesNameResolution() {

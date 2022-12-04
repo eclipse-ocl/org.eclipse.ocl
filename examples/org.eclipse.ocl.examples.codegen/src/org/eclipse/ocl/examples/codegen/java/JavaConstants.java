@@ -48,6 +48,7 @@ public class JavaConstants {
 	public static final @NonNull String E_CONTAINER_NAME = "eContainer";
 
 	public static final @NonNull String ANY_NAME = "any";
+	public static final @NonNull String BASIC_EVALUATE_NAME = "basicEvaluate";
 	public static final @NonNull String BOXED_VALUES_NAME = "boxedValues";
 	public static final @NonNull String CACHED_RESULT_NAME = "cachedResult";
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
