@@ -234,23 +234,21 @@ public class CodeGenAnalyzer
 	 */
 	private final @NonNull Map<@NonNull CGOperation, @NonNull Operation> cgOperation2asOriginalOperation = new HashMap<>();
 
-	private @NonNull Map<@NonNull Operation, @NonNull CacheClassData> asOperation2cacheClassData = new HashMap<>();
-	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CacheClassData> asCacheClass2cacheClassData = new HashMap<>();
+	private @NonNull Map<@NonNull Operation, @NonNull OperationCache> asOperation2operationCache = new HashMap<>();
+	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull AbstractCache> asCacheClass2abstractCache = new HashMap<>();
 
 	private @Nullable Iterable<@NonNull CGValuedElement> cgGlobals = null;
 
 	/**
-	 * CacheClassData aggegates aspects of an AS Cache Class
+	 * AbstractCache describes the AS class and instance that cache distinct evaluations of a derived capability.
 	 */
-	protected static class CacheClassData
+	protected static abstract class AbstractCache
 	{
-		private @NonNull NamedElement asOrigin;		// Operation of Class or NewStatement
 		private org.eclipse.ocl.pivot.@NonNull Class asCacheClass;
 		private @NonNull Property asCacheInstance;
 		private org.eclipse.ocl.pivot.@NonNull Class asEntryClass;
 
-		protected CacheClassData(@NonNull NamedElement asOrigin, @NonNull Property asCacheInstance, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
-			this.asOrigin = asOrigin;
+		protected AbstractCache(@NonNull Property asCacheInstance, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
 			this.asCacheClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getType(asCacheInstance);
 			this.asCacheInstance = asCacheInstance;
 			this.asEntryClass = asEntryClass;
@@ -267,9 +265,22 @@ public class CodeGenAnalyzer
 		public org.eclipse.ocl.pivot.@NonNull Class getASEntryClass() {
 			return asEntryClass;
 		}
+	}
 
-		public @NonNull NamedElement getOrigin() {
-			return asOrigin;
+	/**
+	 * OperationCache describes the AS class and instance that caches distinct evaluations of an operation.
+	 */
+	protected static class OperationCache extends AbstractCache
+	{
+		private @NonNull Operation asOperation;
+
+		protected OperationCache(@NonNull Operation asOperation, @NonNull Property asCacheInstance, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
+			super(asCacheInstance, asEntryClass);
+			this.asOperation = asOperation;
+		}
+
+		public @NonNull Operation getOperation() {
+			return asOperation;
 		}
 	}
 
@@ -298,26 +309,24 @@ public class CodeGenAnalyzer
 	}
 
 	public void addCacheInstance(@NonNull Operation asOperation, @NonNull Property asCacheInstance, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
-		CacheClassData cacheClassData = addCacheInstanceInternal(asOperation, asCacheInstance, asEntryClass);
-		CacheClassData old = asOperation2cacheClassData.put(asOperation, cacheClassData);
+		OperationCache operationCache = new OperationCache(asOperation, asCacheInstance, asEntryClass);
+		addCacheInstanceInternal(operationCache);
+		AbstractCache old = asOperation2operationCache.put(asOperation, operationCache);
 		assert old == null;
 	}
 
-	public void addCacheInstance(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull Property asCacheInstance, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
-		CacheClassData cacheClassData = addCacheInstanceInternal(asClass, asCacheInstance, asEntryClass);
-	//	CacheClassData old = asOperation2cacheClassData.put(asOperation, cacheClassData);
+/*	public void addCacheInstance(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull Property asCacheInstance, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
+		AbstractCache cacheClassData = addCacheInstanceInternal(asClass, asCacheInstance, asEntryClass);
+	//	AbstractCache old = asOperation2cacheClassData.put(asOperation, cacheClassData);
 	//	assert old == null;
-	}
+	} */
 
-	protected @NonNull CacheClassData addCacheInstanceInternal(@NonNull NamedElement asTypeOrTypedElement, @NonNull Property asCacheInstance, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
-		CacheClassData cacheClassData = new CacheClassData(asTypeOrTypedElement, asCacheInstance, asEntryClass);
-		org.eclipse.ocl.pivot.Class asCacheClass = (org.eclipse.ocl.pivot.Class)PivotUtil.getType(asCacheInstance);
-		assert asCacheClass == cacheClassData.getASCacheClass();
-		CacheClassData old = asCacheClass2cacheClassData.put(asCacheClass, cacheClassData);
+	protected void addCacheInstanceInternal(@NonNull AbstractCache abstractCache) {
+		org.eclipse.ocl.pivot.Class asCacheClass = abstractCache.getASCacheClass();
+		AbstractCache old = asCacheClass2abstractCache.put(asCacheClass, abstractCache);
 		assert old == null;
-		org.eclipse.ocl.pivot.Class asContextClass = getCodeGenerator().getContextClass();
-		asContextClass.getOwnedProperties().add(asCacheInstance);
-		return cacheClassData;
+		org.eclipse.ocl.pivot.Class asContextClass = codeGenerator.getContextClass();
+		asContextClass.getOwnedProperties().add(abstractCache.getASCacheInstance());
 	}
 
 	public void addCachedOperation(org.eclipse.ocl.pivot.@NonNull Class asCacheClass, @NonNull Operation asOperation) {
@@ -373,7 +382,7 @@ public class CodeGenAnalyzer
 		return asOverrideOperations;
 	}
 
-public void analyze(@NonNull CGElement cgRoot) {
+	public void analyze(@NonNull CGElement cgRoot) {
 		AnalysisVisitor analysisVisitor = codeGenerator.createAnalysisVisitor();
 		cgRoot.accept(analysisVisitor);
 		assert checkNameManagers(cgRoot);
@@ -1481,21 +1490,21 @@ public void analyze(@NonNull CGElement cgRoot) {
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getCacheClass(@NonNull Operation asOperation) {
-		CacheClassData cacheClassData = asOperation2cacheClassData.get(asOperation);
-		assert cacheClassData != null;
-		return cacheClassData.getASCacheClass();
+		OperationCache operationCache = asOperation2operationCache.get(asOperation);
+		assert operationCache != null;
+		return operationCache.getASCacheClass();
 	}
 
 	public @NonNull Property getCacheInstance(org.eclipse.ocl.pivot.@NonNull Class asCacheClass) {
-		CacheClassData cacheClassData = asCacheClass2cacheClassData.get(asCacheClass);
+		AbstractCache cacheClassData = asCacheClass2abstractCache.get(asCacheClass);
 		assert cacheClassData != null;
 		return cacheClassData.getASCacheInstance();
 	}
 
 	public @NonNull Property getCacheInstance(@NonNull Operation asOperation) {
-		CacheClassData cacheClassData = asOperation2cacheClassData.get(asOperation);
-		assert cacheClassData != null;
-		return cacheClassData.getASCacheInstance();
+		OperationCache operationCache = asOperation2operationCache.get(asOperation);
+		assert operationCache != null;
+		return operationCache.getASCacheInstance();
 	}
 
 	public @NonNull Operation getCachedOperation(org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -1544,7 +1553,7 @@ public void analyze(@NonNull CGElement cgRoot) {
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getEntryClass(org.eclipse.ocl.pivot.@NonNull Class asCacheClass) {
-		CacheClassData cacheClassData = asCacheClass2cacheClassData.get(asCacheClass);
+		AbstractCache cacheClassData = asCacheClass2abstractCache.get(asCacheClass);
 		assert cacheClassData != null;
 		return cacheClassData.getASEntryClass();
 	}
@@ -1750,10 +1759,10 @@ public void analyze(@NonNull CGElement cgRoot) {
 		return operationNameManager;
 	}
 
-	public @NonNull NamedElement getOrigin(org.eclipse.ocl.pivot.Class asCacheClass) {
-		CacheClassData cacheClassData = asCacheClass2cacheClassData.get(asCacheClass);
-		assert cacheClassData != null;
-		return cacheClassData.getOrigin();
+	public @NonNull Operation getOperation(org.eclipse.ocl.pivot.Class asCacheClass) {
+		OperationCache operationCache = (OperationCache)asCacheClass2abstractCache.get(asCacheClass);		// XXX basicGet ??
+		assert operationCache != null;
+		return operationCache.getOperation();
 	}
 
 	public @NonNull Operation getOriginalOperation(@NonNull CGOperation cgOperation) {
