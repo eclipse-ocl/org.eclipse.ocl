@@ -1873,6 +1873,12 @@ public class CodeGenAnalyzer
 		cgElement.setRequired(asElement.isIsRequired());
 		initCG2AS(cgElement, asElement, isSymmetric);
 	}
+	public void initAst(@NonNull CGValuedElement cgElement, @NonNull Element asElement, @NonNull TypeId asTypeId, boolean isSymmetric) {		// FIXME Only used for non-TypedElement NewStatementPart
+		CGTypeId cgTypeId = getCGTypeId(asTypeId);
+		cgElement.setTypeId(cgTypeId);
+		cgElement.setRequired(true);
+		initCG2AS(cgElement, asElement, isSymmetric);
+	}
 	// Variant for AS reference to AS
 	public void initAst(@NonNull CGTypedElement cgElement, @NonNull Element asElement, @NonNull TypedElement asTypedElement, boolean isSymmetric) {
 		initTypeId(cgElement, asTypedElement.getTypeId(), asTypedElement.isIsRequired());
