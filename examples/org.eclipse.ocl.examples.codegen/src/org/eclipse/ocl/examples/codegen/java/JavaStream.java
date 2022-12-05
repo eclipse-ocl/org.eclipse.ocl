@@ -268,7 +268,7 @@ public class JavaStream
 				if (string.contains("getResult")) {
 					getClass();		// XXX
 				}
-				if (string.contains("INSTANCE_ICACHE_TlistHead2listHead")) {
+				if (string.contains("getIdResolver")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

@@ -329,7 +329,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	@Override
 	public @Nullable Object visitCGExecutorType(@NonNull CGExecutorType cgExecutorType) {
 	//	installIdResolverVariable(cgExecutorType);		-- in visitCGTypeExp
-		CGTypeId cgTypeId = cgExecutorType.getUnderlyingTypeId();
+		CGTypeId cgTypeId = cgExecutorType.getTypeId();
 		if (cgTypeId != null) {
 			cgTypeId.accept(this);
 		}

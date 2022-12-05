@@ -1494,17 +1494,6 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGExecutorType();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType#getUnderlyingTypeId <em>Underlying Type Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Underlying Type Id</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType#getUnderlyingTypeId()
-	 * @see #getCGExecutorType()
-	 * @generated
-	 */
-	EReference getCGExecutorType_UnderlyingTypeId();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp <em>CG If Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3747,14 +3736,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CG_EXECUTOR_TYPE = eINSTANCE.getCGExecutorType();
-
-		/**
-		 * The meta object literal for the '<em><b>Underlying Type Id</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_EXECUTOR_TYPE__UNDERLYING_TYPE_ID = eINSTANCE.getCGExecutorType_UnderlyingTypeId();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGIfExpImpl <em>CG If Exp</em>}' class.

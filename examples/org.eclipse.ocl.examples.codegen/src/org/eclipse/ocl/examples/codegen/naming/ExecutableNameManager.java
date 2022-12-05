@@ -30,7 +30,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
@@ -361,14 +360,15 @@ public class ExecutableNameManager extends NestedNameManager
 		//	}
 		//	CGExecutorType cgExecutorType = asType2cgType2.get(asType);
 		//	if (cgExecutorType == null) {
-		TypeId typeId = asType.getTypeId();
+	//	TypeId typeId = asType.getTypeId();
 		CGExecutorType cgExecutorType = CGModelFactory.eINSTANCE.createCGExecutorType();
-		CGTypeId cgTypeId = analyzer.getCGTypeId(typeId);
-		cgExecutorType.setUnderlyingTypeId(cgTypeId);
-		cgExecutorType.setAst(asType);
+		analyzer.initAst(cgExecutorType, asType);
+	//	CGTypeId cgTypeId = analyzer.getCGTypeId(typeId);
+	//	cgExecutorType.setAst(asType);
 		getNameResolution(cgExecutorType);		// Needs idResolver so cannot be global
-		cgExecutorType.setTypeId(analyzer.getCGTypeId(JavaConstants.CLASS_TYPE_ID));
-		cgExecutorType.getDependsOn().add(cgTypeId);
+		//	cgExecutorType.setTypeId(analyzer.getCGTypeId(JavaConstants.CLASS_TYPE_ID));
+	//	cgExecutorType.setTypeId(cgTypeId);
+		cgExecutorType.getDependsOn().add(cgExecutorType.getTypeId());
 		//	asType2cgType2.put(asType, cgExecutorType);
 		//	}
 		return cgExecutorType;

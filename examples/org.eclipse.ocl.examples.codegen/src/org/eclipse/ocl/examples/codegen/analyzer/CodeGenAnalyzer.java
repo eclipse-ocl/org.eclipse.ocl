@@ -1122,9 +1122,9 @@ public class CodeGenAnalyzer
 	 * Generate / share the CG declaration for asOperation.
 	 */
 	private @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation, @Nullable OperationCallingConvention callingConvention, boolean maybeVirtual) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
-		if (asOperation.toString().contains("::_unqualified_env_Class(")) {
-			getClass();		// XXX
-		}
+	//	if (asOperation.toString().contains("::_unqualified_env_Class(")) {
+	//		getClass();		// XXX
+	//	}
 		if (maybeVirtual) {			// If virtual dispatch already known.
 			CGOperation cgVirtualOperation = basicGetCGDispatchOperation(asOperation);
 			if (cgVirtualOperation != null) {
@@ -1141,7 +1141,7 @@ public class CodeGenAnalyzer
 			if (cgOperation.getAst() != null) {
 			//	assert cgOperation.getAst() == asOperation;
 				asOperation = (Operation) cgOperation.getAst();
-				assert callingConvention instanceof VirtualOperationCallingConvention;
+			//	assert callingConvention instanceof VirtualOperationCallingConvention;
 				assert asElement2cgElement.containsKey(asOperation);
 			}
 			else {
@@ -1883,6 +1883,10 @@ public class CodeGenAnalyzer
 	public void initAst(@NonNull CGTypedElement cgElement, @NonNull Element asElement, @NonNull TypedElement asTypedElement, boolean isSymmetric) {
 		initTypeId(cgElement, asTypedElement.getTypeId(), asTypedElement.isIsRequired());
 		initCG2AS(cgElement, asElement, isSymmetric);
+	}
+	public void initAst(@NonNull CGTypedElement cgElement, @NonNull Type asType) {
+		initTypeId(cgElement, asType.getTypeId(), true);
+		initCG2AS(cgElement, asType, false);
 	}
 
 	private void initCG2AS(@NonNull CGTypedElement cgElement, @NonNull Element asElement, boolean isSymmetric) {

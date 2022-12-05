@@ -594,7 +594,7 @@ public class CGUtil
 	}
 
 	public static @Nullable Boolean isKindOf(@NonNull CGValuedElement cgValue, @NonNull CGExecutorType executorType) {
-		CGTypeId referenceTypeId = executorType.getUnderlyingTypeId();
+		CGTypeId referenceTypeId = executorType.getTypeId();
 		CGTypeId actualTypeId = cgValue.getTypeId();
 	//	return referenceTypeId == actualTypeId ? Boolean.TRUE : null;		// FIXME support conformance somehow
 		if (referenceTypeId == actualTypeId) {

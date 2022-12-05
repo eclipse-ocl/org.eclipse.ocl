@@ -1437,7 +1437,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			public void append() {
 				js.appendValueName(globalNameManager.useRootExecutableNameManager(cgExecutorType).getIdResolverVariable());
 				js.append(".getClass(");
-				js.appendIdReference(cgExecutorType.getUnderlyingTypeId().getElementId());
+				js.appendIdReference(CGUtil.getAST(cgExecutorType).getTypeId());
 				js.append(", null)");
 			}
 		};

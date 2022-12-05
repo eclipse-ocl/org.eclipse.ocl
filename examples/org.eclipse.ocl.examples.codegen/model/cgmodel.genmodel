@@ -140,9 +140,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGExecutorPropertyCallExp/cgArgument"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGExecutorShadowPart"/>
-    <genClasses ecoreClass="cgmodel.ecore#//CGExecutorType">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGExecutorType/underlyingTypeId"/>
-    </genClasses>
+    <genClasses ecoreClass="cgmodel.ecore#//CGExecutorType"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGFinalVariable"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGForeignOperationCallExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGForeignProperty">

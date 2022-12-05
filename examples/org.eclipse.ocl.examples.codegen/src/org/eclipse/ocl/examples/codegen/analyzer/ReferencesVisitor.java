@@ -114,7 +114,7 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGExecutorType(@NonNull CGExecutorType cgElement) {
-		return append(super.visitCGExecutorType(cgElement), cgElement.getUnderlyingTypeId());
+		return append(super.visitCGExecutorType(cgElement), cgElement.getTypeId());
 	}
 
 	@Override
