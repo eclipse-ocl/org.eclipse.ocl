@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.qvtd.runtime.evaluation.AbstractComputation;
 
 /**
  *  EntryClassCallingConvention defines the style of a nested Class whose instance caches a feature computation.
@@ -108,7 +109,7 @@ public class EntryClassCallingConvention extends AbstractClassCallingConvention
 		String entryClassName = packageNameManager.getUniqueClassName(NameManagerHelper.ENTRY_CLASS_NAME_PREFIX, asOperation);
 		org.eclipse.ocl.pivot.Class asEntryClass = AbstractLanguageSupport.getClass(asParentPackage, entryClassName);
 		analyzer.addCachedOperation(asEntryClass, asOperation);
-		org.eclipse.ocl.pivot.Class asEntrySuperClass = jLanguageSupport.getNativeClass(isIncremental ? "org.eclipse.qvtd.runtime.evaluation.AbstractComputation.Incremental" : "org.eclipse.qvtd.runtime.evaluation.AbstractComputation");
+		org.eclipse.ocl.pivot.Class asEntrySuperClass = jLanguageSupport.getNativeClass(isIncremental ? AbstractComputation.Incremental.class : AbstractComputation.class);
 		asEntryClass.getSuperClasses().add(asEntrySuperClass);
 		importNameManager.reserveLocalName(PivotUtil.getName(asEntryClass));
 		//

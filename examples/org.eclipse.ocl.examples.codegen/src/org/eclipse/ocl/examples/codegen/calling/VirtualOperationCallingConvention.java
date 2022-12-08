@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.qvtd.runtime.evaluation.AbstractDispatchOperation2;
 
 /**
  *  VirtualOperationCallingConvention defines the constructor for a virtual dispatch table for a Complete OCL-defined operation.
@@ -243,7 +244,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		String dispatchClassName = packageNameManager.getUniqueClassName(NameManagerHelper.DISPATCH_CLASS_NAME_PREFIX, asOperation);
 		org.eclipse.ocl.pivot.Class asDispatchClass = AbstractLanguageSupport.getClass(asPackage, dispatchClassName);
 		analyzer.addCachedOperation(asDispatchClass, asOperation);
-		org.eclipse.ocl.pivot.Class asCacheSuperClass = jLanguageSupport.getNativeClass("org.eclipse.qvtd.runtime.evaluation.AbstractDispatchOperation2");
+		org.eclipse.ocl.pivot.Class asCacheSuperClass = jLanguageSupport.getNativeClass(AbstractDispatchOperation2.class);
 		asDispatchClass.getSuperClasses().add(asCacheSuperClass);
 		importNameManager.reserveLocalName(PivotUtil.getName(asDispatchClass));
 		//

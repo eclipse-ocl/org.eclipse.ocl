@@ -28,7 +28,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.TypeRepresentation;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
@@ -65,6 +64,7 @@ import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.qvtd.runtime.internal.evaluation.AbstractComputationConstructor;
 
 /**
  * AbstractCachedOperationCallingConvention2 provides a temporary husing for functionality promoted from QVTd's FunctionOperationCallingConvention
@@ -619,7 +619,7 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 		PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, asPackage);
 		String cacheClassName = packageNameManager.getUniqueClassName(NameManagerHelper.CACHE_CLASS_NAME_PREFIX, asOperation);
 		org.eclipse.ocl.pivot.Class asCacheClass = AbstractLanguageSupport.getClass(asPackage, cacheClassName);
-		org.eclipse.ocl.pivot.Class asCacheSuperClass = jLanguageSupport.getNativeClass(JavaConstants.ABSTRACT_COMPUTATION_CONSTRUCTOR_CLASS_NAME);		// XXX workaround missing org.eclipse.ocl.runtime
+		org.eclipse.ocl.pivot.Class asCacheSuperClass = jLanguageSupport.getNativeClass(AbstractComputationConstructor.class);
 		asCacheClass.getSuperClasses().add(asCacheSuperClass);
 		importNameManager.reserveLocalName(PivotUtil.getName(asCacheClass));
 		analyzer.addCachedOperation(asCacheClass, asOperation);

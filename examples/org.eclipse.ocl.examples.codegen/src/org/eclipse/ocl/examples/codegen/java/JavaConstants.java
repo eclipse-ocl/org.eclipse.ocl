@@ -38,9 +38,6 @@ public class JavaConstants {
 	 */
 	private static @NonNull JavaTypeIdSingletonScope javaTypes = new JavaTypeIdSingletonScope();
 
-	// XXX workaound lack of org.eclipse.ocl.runtime
-	public static final @NonNull String ABSTRACT_COMPUTATION_CONSTRUCTOR_CLASS_NAME = "org.eclipse.qvtd.runtime.internal.evaluation.AbstractComputationConstructor";
-
 	public static final @NonNull String CONSTRAINT_NAME_NAME = "constraintName";
 	public static final @NonNull String CONSTRAINT_CONTEXT_NAME = "context";
 	public static final @NonNull String CONSTRAINT_DIAGNOSTICS_NAME = "diagnostics";
