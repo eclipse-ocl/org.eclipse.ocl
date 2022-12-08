@@ -72,7 +72,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSequence;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
@@ -2088,6 +2090,33 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.append("\"" + valueString + "\"");
 		}
 		js.append(");\n");
+		return true;
+	}
+
+	@Override
+	public @NonNull Boolean visitCGPropertyAssignment(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		CGProperty cgProperty = cgPropertyAssignment.getReferredProperty();
+		CGValuedElement slotValue = CGUtil.getOwnedSlotValue(cgPropertyAssignment);
+		CGValuedElement initValue = CGUtil.getOwnedInitValue(cgPropertyAssignment);
+		if (initValue.isInvalid()) {
+			js.appendValueName(initValue);
+			return false;
+		}
+		if (!js.appendLocalStatements(slotValue)) {
+			return false;
+		}
+		if (!js.appendLocalStatements(initValue)) {
+			return false;
+		}
+		cgProperty.getCallingConvention().generateJavaAssign(this, js, slotValue, cgProperty, initValue);
+		return true;
+	}
+
+	@Override
+	public @NonNull Boolean visitCGSequence(@NonNull CGSequence cgSequence) {
+		for (@NonNull CGValuedElement cgStatement : ClassUtil.nullFree(cgSequence.getOwnedStatements())) {
+			cgStatement.accept(this);
+		}
 		return true;
 	}
 

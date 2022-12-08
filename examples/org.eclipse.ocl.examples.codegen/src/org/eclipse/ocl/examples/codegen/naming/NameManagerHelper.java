@@ -28,7 +28,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
@@ -53,6 +55,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSequence;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGString;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
@@ -554,6 +557,11 @@ public class NameManagerHelper
 		}
 
 		@Override
+		public @NonNull String visitCGEcoreContainerAssignment(@NonNull CGEcoreContainerAssignment object) {
+			return NameResolution.NOT_NEEDED; // "XXX" + context.getNameableHint(object);		// Never used
+		}
+
+		@Override
 		public @NonNull String visitCGConstraint(@NonNull CGConstraint object) {
 			Constraint asConstraint = CGUtil.getAST(object);
 			return context.getConstraintNameHint(asConstraint);
@@ -562,6 +570,11 @@ public class NameManagerHelper
 		@Override
 		public @NonNull String visitCGEcoreExp(@NonNull CGEcoreExp object) {
 			return "ECORE_" + context.getNameHint(object.getSourceValue());
+		}
+
+		@Override
+		public @NonNull String visitCGEcorePropertyAssignment(@NonNull CGEcorePropertyAssignment object) {
+			return NameResolution.NOT_NEEDED; // "XXX" + context.getNameableHint(object);		// Never used
 		}
 
 		@Override
@@ -731,6 +744,11 @@ public class NameManagerHelper
 		public @NonNull String visitCGReal(@NonNull CGReal object) {
 			Number numericValue = object.getNumericValue();
 			return context.getNumericNameHint(numericValue);
+		}
+
+		@Override
+		public @NonNull String visitCGSequence(@NonNull CGSequence object) {
+			return NameResolution.NOT_NEEDED; // "XXX-SEQ"; // Never used
 		}
 
 		@Override
