@@ -29,6 +29,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -37,6 +38,7 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -47,6 +49,7 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
@@ -736,6 +739,15 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public @NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
 			@Nullable TemplateParameterSubstitutions bindings) {
 		return completeEnvironment.getTupleType(typeName, parts, bindings);
+	}
+
+	@Override
+	public boolean hasOclVoidOverload(@NonNull OperationId operationId)
+	{
+		org.eclipse.ocl.pivot.Class oclVoidType = getStandardLibrary().getOclVoidType();
+		CompleteClass oclVoidCompleteClass = getCompleteClass(oclVoidType);
+		Operation oclVoidOperation = oclVoidCompleteClass.getOperation(operationId);
+		return oclVoidOperation != null;
 	}
 
 	@Override

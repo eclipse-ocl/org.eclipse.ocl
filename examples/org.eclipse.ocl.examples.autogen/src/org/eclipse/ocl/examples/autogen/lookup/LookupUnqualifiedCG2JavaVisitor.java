@@ -12,25 +12,19 @@ package org.eclipse.ocl.examples.autogen.lookup;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 
 public class LookupUnqualifiedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor {
 
-	public LookupUnqualifiedCG2JavaVisitor(
-			@NonNull LookupUnqualifiedCodeGenerator codeGenerator,
-			@NonNull CGPackage cgPackage,
-			@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
-		super(codeGenerator, cgPackage, sortedGlobals);
+	public LookupUnqualifiedCG2JavaVisitor(@NonNull LookupUnqualifiedCodeGenerator codeGenerator) {
+		super(codeGenerator);
 	}
 
 	@Override
 	protected void doInternalVisiting(@NonNull CGClass cgClass) {
 		// We call parentEnv;
 		LookupUnqualifiedCodeGenerator codeGenerator = getCodeGenerator();
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("@Override\n");
 		js.append("protected ");
 		js.appendClassReference(false, codeGenerator.getVisitorResultClass());
@@ -66,7 +60,7 @@ public class LookupUnqualifiedCG2JavaVisitor extends LookupVisitorsCG2JavaVisito
 	 */
 	protected void doParentEnv(@NonNull CGClass cgClass) {
 		LookupUnqualifiedCodeGenerator codeGenerator = getCodeGenerator();
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("/**\n");
 		js.append(" * Continue the search for matches in the parent of " + LookupVisitorsCodeGenerator.ELEMENT_NAME + ".\n");
 		js.append(" */\n");

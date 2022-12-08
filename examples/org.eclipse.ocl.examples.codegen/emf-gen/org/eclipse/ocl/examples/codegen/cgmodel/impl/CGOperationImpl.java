@@ -24,14 +24,12 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
 
 /**
@@ -353,8 +351,13 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	}
 
 	@Override
+	public boolean isNonInvalid() {
+		return (ast == null) || !((Operation)ast).isIsInvalidating();
+	}
+
+	@Override
 	public boolean maybePrimitive() {
-		Method jMethod = getOverriddenMethod();
+		Method jMethod = JavaLanguageSupport.getOverriddenMethod(this);
 		if (jMethod == null) {
 			return true;
 		}
@@ -362,10 +365,10 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 		return (jReturnClass != null) && JavaLanguageSupport.isPrimitive(false, jReturnClass);
 	}
 
-	public @Nullable Method getOverriddenMethod() {
-		Operation asOperation = CGUtil.getAST(this);
-		return JavaLanguageSupport.getOverriddenMethod(asOperation);
-	}
+//	public @Nullable Method getOverriddenMethod() {
+//		Operation asOperation = CGUtil.getAST(this);
+//		return JavaLanguageSupport.getOverriddenMethod(this);
+//	}
 
 	/**
 	 * <!-- begin-user-doc -->

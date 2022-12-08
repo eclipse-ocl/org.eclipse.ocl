@@ -16,16 +16,24 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  JUnitClassCallingConvention defines the style of a JUnit root Class declaration.
  */
 public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static final @NonNull JUnitClassCallingConvention INSTANCE = new JUnitClassCallingConvention();
+	private static final @NonNull JUnitClassCallingConvention INSTANCE = new JUnitClassCallingConvention();
+
+	public static @NonNull JUnitClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		INSTANCE.logInstance(asClass);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -39,11 +47,14 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
 	//	if (isEmpty(cgClass)) {
 	//		return true;
 	//	}
-		js.append("\n");
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		js.appendOptionalBlankLine();;
+		GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
+		String rootObjectName = globalNameManager.getRootObjectNameResolution().getResolvedName();
 		String className = CGUtil.getName(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		js.appendClassHeader(asClass);
@@ -58,21 +69,42 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.appendClassReference(null, baseClass);
 	//	appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
-		js.append("\n");					// XXX delete me
+		js.appendOptionalBlankLine();;
 		Iterable<@NonNull CGValuedElement> sortedGlobals = cg2javaVisitor.getAnalyzer().getGlobals();
 		if (sortedGlobals != null) {
 			cg2javaVisitor.generateGlobals(sortedGlobals);
-			js.append("\n");
+	//		js.appendOptionalBlankLine();
 		}
+		//
+		js.appendOptionalBlankLine();
+		if (globalNameManager.needsExecutor()) {
+			js.append("protected final ");
+			js.appendClassReference(true, Executor.class);
+			js.append(" ");
+			js.append("executor");
+			js.append(" = ");
+			js.appendClassReference(null, PivotUtil.class);
+			js.append(".getExecutor(null);\n");
+		}
+		//
+		js.append("protected final ");
+		js.appendIsRequired(true);
+		js.append(" ");
+		js.append(className);
+		js.append(" ");
+		js.append(rootObjectName);
+		js.append(" = this;\n");
+		//
 		if (expInOcl.getOwnedContext() != null) {
-			generateOperations(cg2javaVisitor, js, cgClass);
+			generateProperties(cg2javaVisitor, cgClass);
+			generateOperations(cg2javaVisitor, cgClass);
 		}
 		else {
 			js.append("/*\n");
 			js.append("«IF expInOcl.messageExpression != null»«(expInOcl.messageExpression as StringLiteralExp).stringSymbol»«ENDIF»\n");
 			js.append("* /\n");
 		}
-		generateClasses(cg2javaVisitor, js, cgClass);
+		generateClasses(cg2javaVisitor, cgClass);
 		js.popClassBody(false);
 		assert js.peekClassNameStack() == null;
 		return true;

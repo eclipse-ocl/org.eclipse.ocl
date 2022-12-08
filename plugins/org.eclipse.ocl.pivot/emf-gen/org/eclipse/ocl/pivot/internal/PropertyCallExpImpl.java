@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PivotTables;
+import org.eclipse.ocl.pivot.PivotSupport;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.ReferringElement;
@@ -544,27 +544,27 @@ implements PropertyCallExp {
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IntegerValue getSeverity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_NON_STATIC_SOURCE_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotSupport.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_implies;
 				try {
 					/*@Caught*/ @Nullable Object CAUGHT_not;
 					try {
-						final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
-						final /*@NonInvalid*/ boolean IsEQ2_ = referredProperty == null;
+						final /*@NonInvalid*/ @Nullable Property referredProperty_0 = this.getReferredProperty();
+						final /*@NonInvalid*/ Boolean IsEQ2_ = referredProperty_0 == null;
 						/*@Caught*/ @Nullable Object IF_IsEQ2_;
 						if (IsEQ2_) {
 							IF_IsEQ2_ = null;
 						}
 						else {
-							/*@Caught*/ @NonNull Object CAUGHT_isStatic;
+							/*@Caught*/ @Nullable Object CAUGHT_isStatic;
 							try {
-								assert referredProperty != null;
-								final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
+								assert referredProperty_0 != null;
+								final /*@Thrown*/ boolean isStatic = referredProperty_0.isIsStatic();
 								CAUGHT_isStatic = isStatic;
 							}
 							catch (Exception THROWN_CAUGHT_isStatic) {
@@ -598,7 +598,7 @@ implements PropertyCallExp {
 					}
 					else {
 						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-						final /*@NonInvalid*/ boolean IsEQ2__0 = ownedSource == null;
+						final /*@NonInvalid*/ Boolean IsEQ2__0 = ownedSource == null;
 						/*@Caught*/ @Nullable Object IF_IsEQ2__1;
 						if (IsEQ2__0) {
 							IF_IsEQ2__1 = null;
@@ -619,20 +619,20 @@ implements PropertyCallExp {
 							throw (InvalidValueException)IF_IsEQ2__1;
 						}
 						final /*@Thrown*/ @Nullable Type THROWN_IF_IsEQ2_ = (@Nullable Type)IF_IsEQ2__1;
-						final /*@NonInvalid*/ boolean IsEQ2__1 = THROWN_IF_IsEQ2_ == null;
+						final /*@NonInvalid*/ Boolean IsEQ2__1 = THROWN_IF_IsEQ2_ == null;
 						/*@Caught*/ @Nullable Object IF_IsEQ2__0;
 						if (IsEQ2__1) {
 							IF_IsEQ2__0 = null;
 						}
 						else {
-							/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
+							/*@Caught*/ @Nullable Object CAUGHT_conformsTo;
 							try {
 								if (THROWN_IF_IsEQ2_ == null) {
-									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' elementId");
 								}
 								@SuppressWarnings("null")
-								final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
-								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, THROWN_IF_IsEQ2_, getSpecializedReferredPropertyOwningType).booleanValue();
+								final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType_0 = this.getSpecializedReferredPropertyOwningType();
+								final /*@Thrown*/ Boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, THROWN_IF_IsEQ2_, getSpecializedReferredPropertyOwningType_0).booleanValue();
 								CAUGHT_conformsTo = conformsTo;
 							}
 							catch (Exception THROWN_CAUGHT_conformsTo) {
@@ -663,7 +663,7 @@ implements PropertyCallExp {
 				catch (Exception THROWN_CAUGHT_implies) {
 					CAUGHT_implies = ValueUtil.createInvalidValue(THROWN_CAUGHT_implies);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -671,6 +671,7 @@ implements PropertyCallExp {
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+
 	}
 
 	/**
@@ -698,11 +699,12 @@ implements PropertyCallExp {
 			 *     endif
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue getSeverity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotSupport.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_implies;
@@ -729,7 +731,7 @@ implements PropertyCallExp {
 					else {
 						/*@Caught*/ @Nullable Object CAUGHT_not;
 						try {
-							/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
+							/*@Caught*/ @Nullable Object CAUGHT_isNonNull;
 							try {
 								if (ownedSource == null) {
 									throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
@@ -780,7 +782,7 @@ implements PropertyCallExp {
 				catch (Exception THROWN_CAUGHT_implies) {
 					CAUGHT_implies = ValueUtil.createInvalidValue(THROWN_CAUGHT_implies);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -788,6 +790,7 @@ implements PropertyCallExp {
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+
 	}
 
 	/**
@@ -815,66 +818,59 @@ implements PropertyCallExp {
 			 *     endif
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue getSeverity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotSupport.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_implies;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_and;
-					try {
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-						final /*@NonInvalid*/ boolean IsEQ_ = ownedSource != null;
-						final /*@Thrown*/ @Nullable Boolean and;
-						if (!IsEQ_) {
+					final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+					final /*@NonInvalid*/ boolean IsEQ_ = ownedSource != null;
+					final /*@NonInvalid*/ @Nullable Boolean and;
+					if (!IsEQ_) {
+						and = ValueUtil.FALSE_VALUE;
+					}
+					else {
+						final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+						final /*@NonInvalid*/ @Nullable Boolean not;
+						if (!isSafe) {
+							not = ValueUtil.TRUE_VALUE;
+						}
+						else {
+							if (isSafe) {
+								not = ValueUtil.FALSE_VALUE;
+							}
+							else {
+								not = null;
+							}
+						}
+						if (not == ValueUtil.FALSE_VALUE) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-							final /*@NonInvalid*/ @Nullable Boolean not;
-							if (!isSafe) {
-								not = ValueUtil.TRUE_VALUE;
+							if (not == null) {
+								and = null;
 							}
 							else {
-								if (isSafe) {
-									not = ValueUtil.FALSE_VALUE;
-								}
-								else {
-									not = null;
-								}
-							}
-							if (not == ValueUtil.FALSE_VALUE) {
-								and = ValueUtil.FALSE_VALUE;
-							}
-							else {
-								if (not == null) {
-									and = null;
-								}
-								else {
-									and = ValueUtil.TRUE_VALUE;
-								}
+								and = ValueUtil.TRUE_VALUE;
 							}
 						}
-						CAUGHT_and = and;
-					}
-					catch (Exception THROWN_CAUGHT_and) {
-						CAUGHT_and = ValueUtil.createInvalidValue(THROWN_CAUGHT_and);
 					}
 					final /*@Thrown*/ @Nullable Boolean implies;
-					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
+					if (and == ValueUtil.FALSE_VALUE) {
 						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
+						/*@Caught*/ @Nullable Object CAUGHT_isNonNull;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-							if (ownedSource_0 == null) {
+							if (ownedSource == null) {
 								throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 							}
-							final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
+							final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
 							CAUGHT_isNonNull = isNonNull;
 						}
 						catch (Exception THROWN_CAUGHT_isNonNull) {
@@ -884,13 +880,10 @@ implements PropertyCallExp {
 							implies = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_and instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_and;
-							}
 							if (CAUGHT_isNonNull instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_isNonNull;
 							}
-							if (CAUGHT_and == null) {
+							if (and == null) {
 								implies = null;
 							}
 							else {
@@ -903,7 +896,7 @@ implements PropertyCallExp {
 				catch (Exception THROWN_CAUGHT_implies) {
 					CAUGHT_implies = ValueUtil.createInvalidValue(THROWN_CAUGHT_implies);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -911,6 +904,7 @@ implements PropertyCallExp {
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+
 	}
 
 	/**
@@ -937,18 +931,19 @@ implements PropertyCallExp {
 			 *     endif
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue getSeverity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.PROPERTY_CALL_EXP___VALIDATE_COMPATIBLE_RESULT_TYPE__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotSupport.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				@SuppressWarnings("null")
-				final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyType = this.getSpecializedReferredPropertyType();
-				final /*@NonInvalid*/ boolean IsEQ_ = (type != null) ? (type.getTypeId() == getSpecializedReferredPropertyType.getTypeId()) : false;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, IsEQ_, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyType_0 = this.getSpecializedReferredPropertyType();
+				final /*@NonInvalid*/ boolean IsEQ_ = (type != null) ? (type.getTypeId() == getSpecializedReferredPropertyType_0.getTypeId()) : false;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, IsEQ_, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -956,5 +951,6 @@ implements PropertyCallExp {
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+
 	}
 } //PropertyCallExpImpl

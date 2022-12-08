@@ -34,7 +34,7 @@ public class EnumerationObjectDescriptor extends UnboxedValueDescriptor
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
-		if (!unboxedValue.isNonNull()) {
+		if (!unboxedValue.isRequiredOrNonNull()) {
 			js.appendReferenceTo(unboxedValue);
 			js.append(" == null ? null : ");
 		}
@@ -53,7 +53,7 @@ public class EnumerationObjectDescriptor extends UnboxedValueDescriptor
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
-		if (!unboxedValue.isNonNull()) {
+		if (!unboxedValue.isRequiredOrNonNull()) {
 			js.appendReferenceTo(unboxedValue);
 			js.append(" == null ? null : ");
 		}

@@ -12,6 +12,7 @@ package org.eclipse.ocl.xtext.essentialocl.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -21,13 +22,13 @@ import org.eclipse.ocl.xtext.basecs.ElementCS;
  */
 public class ImplicitSourceTypeIterator extends AbstractImplicitSourceNamedElementIterator<Type>
 {
-	protected @Nullable Type nextValue;
+	protected @Nullable Element nextValue;
 
 	public ImplicitSourceTypeIterator(@NonNull ElementCS csElement) {
 		super(csElement);
 	}
 
-	public @Nullable Type nextValue() {
+	public @Nullable Element nextValue() {
 		return nextValue;
 	}
 

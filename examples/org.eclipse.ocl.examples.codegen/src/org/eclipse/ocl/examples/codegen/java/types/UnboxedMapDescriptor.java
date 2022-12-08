@@ -61,7 +61,7 @@ public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/Abstra
 		}
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
-		if (!unboxedValue.isNonNull()) {
+		if (!unboxedValue.isRequiredOrNonNull()) {
 			js.appendReferenceTo(unboxedValue);
 			js.append(" == null ? null : ");
 		}

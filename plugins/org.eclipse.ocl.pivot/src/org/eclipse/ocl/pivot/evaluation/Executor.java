@@ -35,6 +35,7 @@ public interface Executor extends Evaluator
 	 */
 	public interface ExecutorExtension extends Executor
 	{
+		<T extends ExecutionSupport> @NonNull T getExecutionSupport(@NonNull Class<T> executionSupportClass) throws RuntimeException;
 		@NonNull EvaluationEnvironment pushEvaluationEnvironment(@NonNull NamedElement executableObject, @Nullable Object caller);
 		void resetCaches();
 	}

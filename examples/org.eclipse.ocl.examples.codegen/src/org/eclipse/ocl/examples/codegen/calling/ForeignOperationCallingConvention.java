@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.AbstractEntryClassCallingConvention.EntryIsEqualOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
@@ -38,15 +39,22 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -58,12 +66,221 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *   *  </br>
  *  e.g. as XXXTables.FOREIGN_qualified_class.FC_class.INSTANCE.evaluate(executor, arguments)
  */
-public class ForeignOperationCallingConvention extends AbstractOperationCallingConvention	// cf ConstrainedOperationCallingConvention
+public class ForeignOperationCallingConvention extends AbstractCachedOperationCallingConvention
 {
-	public static final @NonNull ForeignOperationCallingConvention INSTANCE = new ForeignOperationCallingConvention();
+	private static final @NonNull ForeignOperationCallingConvention INSTANCE = new ForeignOperationCallingConvention();
+
+	public static @NonNull ForeignOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
+
+	public static class ForeignCacheClassCallingConvention extends AbstractCacheClassCallingConvention
+	{
+		private static final @NonNull ForeignCacheClassCallingConvention INSTANCE = new ForeignCacheClassCallingConvention();
+
+		public static @NonNull ForeignCacheClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Operation asOperation, boolean maybeVirtual) {
+			INSTANCE.logInstance(asOperation, maybeVirtual);
+			return INSTANCE;
+		}
+
+		public static class ForeignEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
+		{
+			private static final @NonNull ForeignEvaluateOperationCallingConvention INSTANCE = new ForeignEvaluateOperationCallingConvention();
+
+			@Override
+			protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
+				if (!asOperation.isIsStatic()) {
+					GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+					String contextObjectName = globalNameManager.getContextObjectNameResolution().getResolvedName();
+					Parameter asEvaluateParameter = PivotUtil.createParameter(contextObjectName, PivotUtil.getOwningClass(asOperation), true);
+					List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
+					asCacheEvaluateParameters.add(asEvaluateParameter);
+				}
+				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
+			}
+
+			@Override
+			protected void generateUniqueComputationArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
+				CGClass cgCacheClass = CGUtil.getContainingClass(cgOperation);
+				org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
+				Operation asOperation = cg2javaVisitor.getAnalyzer().getCachedOperation(asCacheClass);
+				if (asOperation.isIsStatic()) {
+					cg2javaVisitor.getJavaStream().append(globalNameManager.getRootObjectNameResolution().getResolvedName());
+					isFirst = false;
+				}
+				super.generateUniqueComputationArguments(cg2javaVisitor, isFirst, globalNameManager, cgOperation);
+			}
+
+		//	@Override
+		//	protected void generateUniqueComputationArguments(@NonNull JavaStream js, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
+		//		js.append(globalNameManager.getRootObjectNameResolution().getResolvedName());
+		//		super.generateUniqueComputationArguments(js, false, globalNameManager, cgOperation);
+		//	}
+
+			public static @NonNull ForeignEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+				INSTANCE.logInstance(asClass);
+				return INSTANCE;
+			}
+
+	/*		@Override
+			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
+				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+				Operation asOperation = CGUtil.getAST(cgOperation);
+				org.eclipse.ocl.pivot.Class asConstructorClass = PivotUtil.getOwningClass(asOperation);
+				org.eclipse.ocl.pivot.Class asCacheClass = analyzer.getEntryClass(asConstructorClass);
+				CGClass cgCacheClass = analyzer.getCGClass(asCacheClass);
+				js.append("return ((");
+				js.appendClassReference(cgCacheClass);
+				js.append(")getUniqueComputation(");
+				//	js.append(QVTiCGUtil.getContainingCGTransformation(cgOperation).getName());
+				Operation asOriginalOperation = analyzer.getCachedOperation(asCacheClass);
+				NameResolution contextObjectNameResolution = asOriginalOperation.isIsStatic() ? globalNameManager.getRootObjectNameResolution() : globalNameManager.getContextObjectNameResolution();
+				js.append(contextObjectNameResolution.getResolvedName());
+				//	js.append(globalNameManager.getIdResolverName());
+				for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
+					js.append(", ");
+					js.appendValueName(cgParameter);
+				}
+				js.append(")).");
+				js.append(globalNameManager.getCachedResultNameResolution().getResolvedName());
+				js.append(";\n");
+			} */
+		}
+
+		@Override
+		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+			return analyzer.getRootClassParentPackage(asOperation);
+		}
+
+		@Override
+		protected void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Class asEntryClass, @NonNull Operation asOperation) {
+			org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
+			ForeignEvaluateOperationCallingConvention callingConvention = ForeignEvaluateOperationCallingConvention.getInstance(asCacheClass);
+			callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
+		}
+	}
+
+	public static class ForeignConstructorOperationCallingConvention extends AbstractConstructorOperationCallingConvention
+	{
+		private static final @NonNull ForeignConstructorOperationCallingConvention INSTANCE = new ForeignConstructorOperationCallingConvention();
+
+		public static @NonNull ForeignConstructorOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
+
+/*		@Override		/// super was final // XXX promote this - just defines lazy ownedContext
+		protected final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
+			//
+			// AS Class - yyy2zzz
+			// AS Properties -
+			// AS Operation - yyy2zzz
+			// AS Operation.ownedParameters - x1, x2
+			// AS Cache Operation - newInstance
+			// AS Cache Operation.parameters - boxedValues
+			// AS Cache ExpressionInOCL.ownedContext - this
+			// AS Cache ExpressionInOCL.ownedParameters - x1, x2
+			// CG Cache Operation - newInstance
+			// CG Cache Operation.lets -
+			//
+			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
+			//
+			NameResolution ctorNameResolution = cgEntryClass.getNameResolution();
+			String ctorName = ctorNameResolution.getResolvedName();
+			Type asDummyType = environmentFactory.getStandardLibrary().getOclVoidType();
+			Operation asEntryConstructor = PivotUtil.createOperation(ctorName, asDummyType, null, null);
+			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOperation));
+			asEntryConstructor.getOwnedParameters().add(asBoxedValuesParameter);
+			asEntryClass.getOwnedOperations().add(asEntryConstructor);
+			//
+			//	Wrap a copy of the original constructor bodies in a let expression per constructor parameter.
+			//
+			ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
+			if (asExpressionInOCL != null) {
+				ExpressionInOCL asEntryExpressionInOCL = EcoreUtil.copy(asExpressionInOCL);
+				Variable asContextVariable = asEntryExpressionInOCL.getOwnedContext();
+				if (asContextVariable == null) {			// QVTi FunctionBody has eager ownedContext, OCL ExpressionInOCL is lazy
+					PivotHelper asHelper = codeGenerator.getASHelper();
+					GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+					String thisName = globalNameManager.getThisNameResolution().getResolvedName();
+					asContextVariable = asHelper.createParameterVariable(thisName, asEntryClass, true);
+					asEntryExpressionInOCL.setOwnedContext(asContextVariable);
+				}
+				else {
+					asContextVariable.setType(asEntryClass);		// Change copied context from context class to entry class
+				}
+				assert asContextVariable.isIsRequired();
+				assert asContextVariable.getTypeValue() == null;
+				asEntryConstructor.setBodyExpression(asEntryExpressionInOCL);
+			}
+			else {
+				assert asOperation.getImplementationClass() != null;
+			}
+			//
+			CGOperation cgConstructor = createCGOperation(analyzer, asEntryConstructor);
+			cgConstructor.setCallingConvention(this);
+			analyzer.initAst(cgConstructor, asEntryConstructor, true);
+			ctorNameResolution.addCGElement(cgConstructor);
+			analyzer.getOperationNameManager(cgConstructor, asEntryConstructor);
+			//
+			cgEntryClass.getOperations().add(cgConstructor);
+			return cgConstructor;
+		} */
+	}
+
+	public static class ForeignEntryClassCallingConvention extends AbstractEntryClassCallingConvention
+	{
+		private static final @NonNull ForeignEntryClassCallingConvention INSTANCE = new ForeignEntryClassCallingConvention();
+
+		public static @NonNull ForeignEntryClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Operation asOperation, boolean maybeVirtual) {
+			INSTANCE.logInstance(asOperation, maybeVirtual);
+			return INSTANCE;
+		}
+
+//		@Override
+//		protected @NonNull NameResolution getContextNameResolution(@NonNull GlobalNameManager globalNameManager) {
+//			return globalNameManager.getSelfNameResolution();
+//		}
+
+		/**
+		 * Return the Package within which the cache class support for asOperation shuld be supported.
+		 */
+		@Override
+		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {	// XXX Regularly overridden
+			return analyzer.getRootClassParentPackage(asFeature);
+		}
+
+		@Override
+		protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
+			org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+			ForeignConstructorOperationCallingConvention callingConvention = ForeignConstructorOperationCallingConvention.getInstance(asEntryClass);
+			callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
+		}
+
+		@Override
+		protected void installIsEqualOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
+			org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+			ForeignIsEqualOperationCallingConvention callingConvention = ForeignIsEqualOperationCallingConvention.getInstance(asEntryClass);
+			callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
+		}
+	}
+
+	public static class ForeignIsEqualOperationCallingConvention extends EntryIsEqualOperationCallingConvention
+	{
+		private static final @NonNull ForeignIsEqualOperationCallingConvention INSTANCE = new ForeignIsEqualOperationCallingConvention();
+
+		public static @NonNull ForeignIsEqualOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
+	}
 
 /*	@Override
-	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		appendCommentWithOCL(js, cgOperation);
 		//
 		js.append("public static ");
@@ -75,7 +292,8 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.appendValueName(cgOperation);
 	} */
 
-	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asReferredOperation = CGUtil.getAsOperation(cgOperationCallExp);
@@ -89,8 +307,11 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
+	public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+	}
+
+	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		CGOperation cgOperation = null;
 		EOperation eOperation = (EOperation) asOperation.getESObject();
 		if ((eOperation != null) && !PivotUtil.isStatic(eOperation)) {
 			try {
@@ -98,17 +319,13 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 				genModelHelper.getGenOperation(eOperation);
 				CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
 				cgEcoreOperation.setEOperation(eOperation);
-				cgOperation = cgEcoreOperation;
+				return cgEcoreOperation;
 			}
 			catch (GenModelException e) {
 				// No genmodel so fallback
 			}
 		}
-		if (cgOperation == null) {
-			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		}
-		analyzer.addExternalFeature(asOperation);
-		return cgOperation;
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
 	@Override
@@ -118,14 +335,15 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		boolean isRequired = asOperation.isIsRequired();
 		assert cgSource == null;
 		assert asOperation.isIsStatic();
-		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		initCallExp(analyzer, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		ExecutableNameManager operationNameManager = analyzer.getGlobalNameManager().useOperationNameManager(cgOperation);
-		CGVariable executorVariable = analyzer.getExecutorVariable(operationNameManager);
-		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
+	//	CGVariable executorVariable = analyzer.getExecutorVariable(operationNameManager);
+	//	cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
 		addExpressionInOCLParameters(analyzer, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
+		CGVariable executorVariable = analyzer.getExecutorVariable(operationNameManager);
+		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		initCallArguments(analyzer, cgForeignOperationCallExp);
 		return cgForeignOperationCallExp;
 	}
@@ -136,35 +354,121 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		cgParameters.add(operationNameManager.getExecutorParameter());
-		super.createCGParameters(operationNameManager, expressionInOCL);
+		super.createCGParametersDefault(operationNameManager, expressionInOCL);
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
+		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
+		assert cgOperation.getCallingConvention() == null;
+		cgOperation.setCallingConvention(this);
+		assert cgOperation.getAst() == null;
+		assert analyzer.basicGetCGElement(asOperation) == null;
+		analyzer.initAst(cgOperation, asOperation, true);
+		assert analyzer.basicGetCGElement(asOperation) != null;
+		createCachingClassesAndInstance(analyzer, cgOperation);
+		assert cgOperation.eContainer() == null;
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
+		cgClass.getOperations().add(cgOperation);
+		createCGParameters(operationNameManager, asExpressionInOCL);
+		return cgOperation;
+	}
+
+	@Override
+	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		CGValuedElement cgBody = cgOperation.getBody();
+		assert cgBody == null;
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		OCLinEcoreCodeGenerator codeGenerator = (OCLinEcoreCodeGenerator)cg2javaVisitor.getCodeGenerator();
+		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		Property asProperty = analyzer.getCacheInstance(asOperation);
+		String qualifiedSupportClassName = codeGenerator.getQualifiedSupportClassName();
+		String returnClassName = cg2javaVisitor.getGenModelHelper().getOperationReturnType(asOperation);
+		//
+		js.appendClassReference(null, ExecutorExtension.class);
+		js.append(" executor = (");
+		js.appendClassReference(null, ExecutorExtension.class);
+		js.append(")");
+		js.appendClassReference(null, PivotUtil.class);
+		js.append(".getExecutor(null);\n");
+		//
+		js.appendClassReference(null, qualifiedSupportClassName);
+		js.append(" support = executor.getExecutionSupport(");
+		js.appendClassReference(null, qualifiedSupportClassName);
+		js.append(".class);\n");
+		//
+		js.appendClassReference(null, Object.class);
+		js.append(" value = support.");
+		js.append(asProperty.getName());
+		js.append(".evaluate(");
+		boolean isFirst = true;
+		for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+			if (!isFirst) {
+				js.append(", ");
+			}
+			js.append(asParameter.getName());
+			isFirst = false;
+		}
+		js.append(");\n");
+		//
+		js.appendClassReference(null, Object.class);
+		js.append(" ecoreValue = executor.getIdResolver().ecoreValueOf(");			// XXX Collection
+		js.appendClassReference(null, returnClassName);
+		js.append(".class, value);\n");
+		//
+		js.append("return (");
+		js.appendClassReference(null, returnClassName);
+		js.append(")ecoreValue;\n");
+		return true;
+	}
+
+
+/*	@Override
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		appendForeignOperationName(cg2javaVisitor, js, cgOperationCallExp);
+		js.append("appendForeignOperationName(cg2javaVisitor, cgOperationCallExp)");		// XXX
 		js.append("(");
-		generateArgumentList(cg2javaVisitor, js, cgOperationCallExp);
+		generateArgumentList(cg2javaVisitor, cgOperationCallExp);
 		js.append(");\n");
 		return true;
+	} */
+
+	@Override
+	protected void generateJavaCallArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull Iterable<@NonNull CGValuedElement> cgArguments) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		int i = 0;
+		for (@NonNull CGValuedElement cgArgument : cgArguments) {		// Skip first argument
+			if (i >= 1) {
+				if (i >= 2) {
+					js.append(", ");
+				}
+				CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
+				js.appendValueName(argument);
+			}
+			i++;
+		}
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		generateJavaClass(cg2javaVisitor, js, cgOperation);
-		js.append("\n");
-		generateJavaFunction(cg2javaVisitor, js, cgOperation);
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		generateJavaClass(cg2javaVisitor, cgOperation);
+		js.appendOptionalBlankLine();
+		generateJavaFunction(cg2javaVisitor, cgOperation);
 		return true;
 	}
 
 	/**
 	 * Generate a nested class to provide the polymorphic invocation interface.
 	 */
-	protected void generateJavaClass(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void generateJavaClass(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters(cgOperation);
@@ -177,7 +481,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.append(" extends ");
 		js.appendClassReference(null, AbstractOperation.class);
 		js.pushClassBody(operationName);
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("public static final ");
 		js.appendIsRequired(true);
 		js.append(" ");
@@ -187,7 +491,7 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 		js.append(" = new ");
 		js.append(operationName);
 		js.append("();\n");
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		//
 		js.append("@Override\n");
 		js.append("public ");
@@ -261,7 +565,8 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	/**
 	 * Generate a static function to implement the foreign operation.
 	 */
-	protected void generateJavaFunction(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void generateJavaFunction(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
@@ -296,8 +601,13 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public @NonNull ClassCallingConvention getClassCallingConvention() {
-		return ExternalClassCallingConvention.INSTANCE;
+	protected @NonNull AbstractCacheClassCallingConvention getCacheClassCallingConvention(@NonNull Operation asOperation) {
+		return ForeignCacheClassCallingConvention.getInstance(asOperation, false);
+	}
+
+	@Override
+	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {
+		return ForeignEntryClassCallingConvention.getInstance(asOperation, false);
 	}
 
 	@Override

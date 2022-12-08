@@ -137,7 +137,7 @@ public class TestOCL extends OCLInternal
 			@NonNull String expression, /*@NonNull*/ String messageTemplate, Object... bindings) {
 		CSResource resource = null;
 		try {
-			ParserContext semanticContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+			ParserContext semanticContext = new ClassContext(getEnvironmentFactory(), null, contextType, null, null);
 			resource = semanticContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), resource);
 			TestCase.fail("Should not have parsed \"" + expression + "\"");
@@ -170,7 +170,7 @@ public class TestOCL extends OCLInternal
 	public void assertBadQuery(@NonNull Class<?> exception, int severity, org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression, /*@NonNull*/ String messageTemplate, Object... bindings) {
 		BaseCSResource csResource = null;
 		try {
-			ClassContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+			ClassContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null, null);
 			if (PivotMessages.UnspecifiedSelfContext.equals(messageTemplate)) {
 				classContext.setSelfName("SELF");
 			}
@@ -644,7 +644,7 @@ public class TestOCL extends OCLInternal
 	public void assertSemanticWarningQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression, String messageTemplate, Object... bindings) {
 		BaseCSResource csResource = null;
 		try {
-			ClassContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+			ClassContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null, null);
 			if (PivotMessages.UnspecifiedSelfContext.equals(messageTemplate)) {
 				classContext.setSelfName("SELF");
 			}
@@ -685,14 +685,17 @@ public class TestOCL extends OCLInternal
 	 * with a diagnostic of severity containing a message that is the result of messageTemplate
 	 * resolved by bindings.
 	 *
+	 * contextType defines the type of self for which validation is performed. isRequired may
+	 * enforce non-null self.
+	 *
 	 * A 'this' in the bindings is replaced by the 'expression'.
 	 * @throws IOException
 	 */
-	public void assertValidationErrorQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression,
+	public void assertValidationErrorQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, boolean isRequired, @NonNull String expression,
 			String messageTemplate, Object... bindings) {
 		BaseCSResource csResource = null;
 		try {
-			ParserContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null);
+			ParserContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, isRequired, null);
 			csResource = (BaseCSResource) classContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), csResource);
 			Resource asResource = csResource.getASResource();
@@ -802,7 +805,8 @@ public class TestOCL extends OCLInternal
 
 	public @Nullable Object evaluate(Object unusedHelper, @Nullable Object context, @NonNull String expression) throws Exception {
 		org.eclipse.ocl.pivot.Class classContext = getContextType(context);
-		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
+//		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, context); //(context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
+		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, context !=  null, (context instanceof Element) && !(context instanceof ElementExtension) ? (Element)context : null);
 		ExpressionInOCL query = parserContext.parse(classContext, expression);
 		PivotTestSuite.assertNoValidationErrors(expression, query);
 		try {

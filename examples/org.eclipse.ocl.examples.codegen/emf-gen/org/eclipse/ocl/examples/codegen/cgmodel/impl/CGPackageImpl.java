@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -311,6 +311,13 @@ public class CGPackageImpl extends CGNamedElementImpl implements CGPackage {
 	@Override
 	public boolean isGlobal() {
 		return true;
+	}
+
+	@Override
+	protected void eBasicSetContainer(InternalEObject newContainer) {
+		assert newContainer != this;			// XXX happens for testBug570717_uml's duplicate GenPackage basePackage
+		// XXX Auto-generated method stub
+		super.eBasicSetContainer(newContainer);
 	}
 
 } //CGPackageImpl

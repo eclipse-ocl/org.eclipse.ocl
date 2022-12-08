@@ -125,6 +125,7 @@ public abstract class NestedNameManager extends AbstractNameManager
 	}
 
 	public void assignNames(@NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
+	//	System.out.println("assignNames: " + NameUtil.debugSimpleName(this) + " : " + this);
 		Context context2 = context;
 		assert context2 == null;
 		this.context = context2 = new Context(this);

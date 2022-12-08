@@ -18,11 +18,9 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
-import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 
 /**
@@ -42,29 +40,38 @@ public interface PropertyCallingConvention extends CallingConvention
 	/**
 	 * Elaborate the CGProperty with the parameters appropriate to initExpression.
 	 */
-	void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression);
+//	void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression);
 
-	@NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement);
+//	@NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement);
 
 	void createImplementation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty);
+
+	@NonNull CGProperty createProperty(@NonNull CodeGenAnalyzer codeGenAnalyzer, @NonNull Property asProperty, @Nullable ExpressionInOCL query);
+
+	/**
+	 * Generate the body text of an Ecore StructuralFeature to the vistor's JavaStream.
+	 *
+	 * Return null if no body required or available.
+	 */
+	boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
 
 	/**
 	 * Generate the Java code for a Property assign.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue);
+	boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue);
 
 	/**
 	 * Generate the Java code for a Property call.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp);
+	boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp);
 
 	/**
 	 * Generate the Java code for a Property declaration.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty);
+	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
 
 	boolean isInlined();
 

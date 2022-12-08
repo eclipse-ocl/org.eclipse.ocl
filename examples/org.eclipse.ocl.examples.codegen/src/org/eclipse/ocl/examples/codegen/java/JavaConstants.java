@@ -38,9 +38,6 @@ public class JavaConstants {
 	 */
 	private static @NonNull JavaTypeIdSingletonScope javaTypes = new JavaTypeIdSingletonScope();
 
-	// XXX workaound lack of org.eclipse.ocl.runtime
-	public static final @NonNull String ABSTRACT_COMPUTATION_CONSTRUCTOR_CLASS_NAME = "org.eclipse.qvtd.runtime.internal.evaluation.AbstractComputationConstructor";
-
 	public static final @NonNull String CONSTRAINT_NAME_NAME = "constraintName";
 	public static final @NonNull String CONSTRAINT_CONTEXT_NAME = "context";
 	public static final @NonNull String CONSTRAINT_DIAGNOSTICS_NAME = "diagnostics";
@@ -51,6 +48,7 @@ public class JavaConstants {
 	public static final @NonNull String BASIC_EVALUATE_NAME = "basicEvaluate";
 	public static final @NonNull String BOXED_VALUES_NAME = "boxedValues";
 	public static final @NonNull String CACHED_RESULT_NAME = "cachedResult";
+	public static final @NonNull String CONTEXT_OBJECT_NAME = "contextObject";
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
 	public static final @NonNull String EVALUATION_CACHE_NAME = "evaluationCache";
 	public static final @NonNull String EXECUTOR_NAME = "executor";
@@ -66,9 +64,13 @@ public class JavaConstants {
 	public static final @NonNull String THIS_NAME = "this";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 
+	@Deprecated /* @deprecated obsolete approach */
 	public static final @NonNull String EXTERNAL_CLASS_PREFIX = "EC_";
+	@Deprecated /* @deprecated obsolete approach */
 	public static final @NonNull String EXTERNAL_OPERATION_PREFIX = "EO_";
+	@Deprecated /* @deprecated obsolete approach */
 	public static final @NonNull String EXTERNAL_PROPERTY_PREFIX = "EP_";
+	@Deprecated /* @deprecated obsolete approach */
 	public static final @NonNull String NESTED_CLASS_PREFIX = "NC_";
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);

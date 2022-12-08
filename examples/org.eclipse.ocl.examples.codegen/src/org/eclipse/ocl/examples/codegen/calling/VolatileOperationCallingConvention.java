@@ -22,9 +22,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -45,10 +43,17 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *
  *  -- only used by QVTd
  */
-public class VolatileOperationCallingConvention extends AbstractOperationCallingConvention
+public class VolatileOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
-	public static final @NonNull VolatileOperationCallingConvention INSTANCE = new VolatileOperationCallingConvention();
-	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	private static final @NonNull VolatileOperationCallingConvention INSTANCE = new VolatileOperationCallingConvention();
+
+	public static @NonNull VolatileOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
+
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asReferredOperation = CGUtil.getAsOperation(cgOperationCallExp);
@@ -103,14 +108,10 @@ public class VolatileOperationCallingConvention extends AbstractOperationCalling
 	}
 
 	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		super.createCGParameters(operationNameManager, bodyExpression);
-	}
-
-	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		// XXX should have been ForeignOperationCallingConvention
-		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
 
@@ -136,21 +137,21 @@ public class VolatileOperationCallingConvention extends AbstractOperationCalling
 
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		appendForeignOperationName(cg2javaVisitor, js, cgOperationCallExp);
+		appendForeignOperationName(cg2javaVisitor, cgOperationCallExp);
 		js.append("(");
-		generateArgumentList(cg2javaVisitor, js, cgOperationCallExp);
+		generateArgumentList(cg2javaVisitor, cgOperationCallExp);
 		js.append(");\n");
 		return true;
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();
 /*		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
-		appendDeclaration(cg2javaVisitor, js, cgOperation);
+		appendDeclaration(cg2javaVisitor, cgOperation);
 		appendParameterList(js, cgOperation);
-		appendBody(cg2javaVisitor, js, body);
+		appendBody(cg2javaVisitor, body);
 		return true; */
 	}
 

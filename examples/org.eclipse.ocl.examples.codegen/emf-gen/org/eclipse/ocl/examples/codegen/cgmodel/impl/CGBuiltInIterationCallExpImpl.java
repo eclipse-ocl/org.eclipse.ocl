@@ -231,7 +231,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	 */
 	@Override
 	public boolean isNonNull() {
-		return nonNull || ((asIteration != null) && asIteration.isIsRequired());
+		return required || ((asIteration != null) && asIteration.isIsRequired());
 	}
 
 	/**
@@ -259,20 +259,6 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void setCaught(boolean isCaught) {
 	//	assert !isCaught;		// test_cg_tuple_access uses a invalitating any()
-	}
-
-	/**
-	 * @generated
-	 */
-	protected boolean nonNull = false;
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public void setNonNull() {
-		nonNull = true;
 	}
 
 } //CGBuiltInIterationCallExpImpl

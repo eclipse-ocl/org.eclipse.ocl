@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
@@ -27,6 +28,7 @@ import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class ExpressionInOCLAttribution extends AbstractAttribution
@@ -74,9 +76,9 @@ public class ExpressionInOCLAttribution extends AbstractAttribution
 								environmentView.addElementsOfScope(contextPackage, scopeView);
 								PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 								if (environmentView.accepts(PivotPackage.Literals.TYPE)) {
-									Type typeValue = contextVariable.getTypeValue();
-									if (typeValue != null) {
-										environmentView.addNamedElement(typeValue);
+									Element typeValue = contextVariable.getTypeValue();
+									if (typeValue instanceof Nameable) {
+										environmentView.addNamedElement((Nameable) typeValue);
 									}
 									for (Type gType : metamodelManager.getGlobalTypes()) {
 										if (gType != null) {

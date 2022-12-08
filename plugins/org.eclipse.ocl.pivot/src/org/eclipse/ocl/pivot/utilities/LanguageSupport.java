@@ -40,5 +40,6 @@ public interface LanguageSupport
 	 */
 	public abstract org.eclipse.ocl.pivot.@NonNull Class getNativeClass(/*@NonNull */Class<?> jClass);
 	public abstract org.eclipse.ocl.pivot.@NonNull Class getNativeClass(@NonNull String qualifiedClassName);
+	public abstract org.eclipse.ocl.pivot.@NonNull Package getNativePackage(@NonNull String qualifiedPackageName);
 	public abstract @Nullable Invocations resolveInvocations(@NonNull Type requiredSourceType, boolean hasExplicitSourceExp, @NonNull String qualifiedOperationName);
 }

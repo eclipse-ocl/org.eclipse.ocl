@@ -104,6 +104,12 @@
     <genClasses ecoreClass="cgmodel.ecore#//CGEcoreClassShadowExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreClassShadowExp/eClass"/>
     </genClasses>
+    <genClasses ecoreClass="cgmodel.ecore#//CGEcoreContainerAssignment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreContainerAssignment/eStructuralFeature"/>
+    </genClasses>
+    <genClasses ecoreClass="cgmodel.ecore#//CGEcorePropertyAssignment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcorePropertyAssignment/eStructuralFeature"/>
+    </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGEcoreDataTypeShadowExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreDataTypeShadowExp/eDataType"/>
     </genClasses>
@@ -264,8 +270,17 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGProperty/callingConvention"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference cgmodel.ecore#//CGProperty/containingClass"/>
     </genClasses>
+    <genClasses ecoreClass="cgmodel.ecore#//CGPropertyAssignment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGPropertyAssignment/referredProperty"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGPropertyAssignment/ownedInitValue"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGPropertyAssignment/ownedSlotValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGPropertyAssignment/asProperty"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGPropertyCallExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGReal"/>
+    <genClasses ecoreClass="cgmodel.ecore#//CGSequence">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGSequence/ownedStatements"/>
+    </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGSettableVariable"/>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGShadowExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGShadowExp/parts"/>

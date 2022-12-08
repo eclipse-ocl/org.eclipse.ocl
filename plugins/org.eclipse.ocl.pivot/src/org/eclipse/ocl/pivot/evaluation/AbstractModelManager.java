@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.ids.PropertyId;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
@@ -130,6 +131,7 @@ public abstract class AbstractModelManager implements ModelManager.ModelManagerE
 				if (value == null) {
 					value = ValueUtil.NULL_VALUE;
 				}
+				assert ValueUtil.isBoxed(value) : "Boxed value expected for " + NameUtil.debugClassName(value) + " " + value;
 				object2value.put(object, value);
 			}
 			return value;
@@ -162,6 +164,7 @@ public abstract class AbstractModelManager implements ModelManager.ModelManagerE
 	 */
 	@Override
 	public @Nullable Object getForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @Nullable Object initValue) {
+		assert ValueUtil.isBoxed(initValue) : "Boxed value expected for " + NameUtil.debugClassName(initValue) + " " + initValue;
 		if (object != null) {
 			Map<@NonNull PropertyId, @NonNull Map<@NonNull Object, @NonNull Object>> foreignPropertyId2object2value2 = foreignPropertyId2object2value;
 			if (foreignPropertyId2object2value2 == null) {
@@ -192,6 +195,7 @@ public abstract class AbstractModelManager implements ModelManager.ModelManagerE
 	 */
 	@Override
 	public @Nullable Object setForeignPropertyValue(@Nullable Object object, @NonNull PropertyId propertyId, @NonNull Object value) {
+		assert ValueUtil.isBoxed(value) : "Boxed value expected for " + NameUtil.debugClassName(value) + " " + value;
 		if (object != null) {
 			Map<@NonNull PropertyId, @NonNull Map<@NonNull Object, @NonNull Object>> foreignPropertyId2object2value2 = foreignPropertyId2object2value;
 			if (foreignPropertyId2object2value2 == null) {

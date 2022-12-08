@@ -149,11 +149,11 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 			else if (isEqual == Boolean.FALSE) {
 				context.setCGConstant(cgIsEqualExp, context.getCGBoolean(cgIsEqualExp.isNotEquals()));
 			}
-			else if (cgSource.isTrue() && cgArgument.isNonNull() && (cgArgument.getASTypeId() == TypeId.BOOLEAN)) {
+			else if (cgSource.isTrue() && cgArgument.isRequiredOrNonNull() && (cgArgument.getASTypeId() == TypeId.BOOLEAN)) {
 				PivotUtilInternal.resetContainer(cgSource);
 				context.replace(cgIsEqualExp, cgArgument, "Null term");
 			}
-			else if (cgArgument.isTrue() && cgSource.isNonNull() && (cgSource.getASTypeId() == TypeId.BOOLEAN)) {
+			else if (cgArgument.isTrue() && cgSource.isRequiredOrNonNull() && (cgSource.getASTypeId() == TypeId.BOOLEAN)) {
 				PivotUtilInternal.resetContainer(cgSource);
 				context.replace(cgIsEqualExp, cgSource, "Null term");
 			}
@@ -192,11 +192,11 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 			context.setCGConstant(cgIsEqual2Exp, context.getCGBoolean(true));
 			return null;
 		}
-		if (isNull1 && cgArgument.isNonNull()) {
+		if (isNull1 && cgArgument.isRequiredOrNonNull()) {
 			context.setCGConstant(cgIsEqual2Exp, context.getCGBoolean(false));
 			return null;
 		}
-		if (isNull2 && cgSource.isNonNull()) {
+		if (isNull2 && cgSource.isRequiredOrNonNull()) {
 			context.setCGConstant(cgIsEqual2Exp, context.getCGBoolean(false));
 			return null;
 		}
@@ -209,11 +209,11 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		else if (isEqual == Boolean.FALSE) {
 			context.setCGConstant(cgIsEqual2Exp, context.getCGBoolean(false));
 		}
-		else if (cgSource.isTrue() && cgArgument.isNonNull() && (cgArgument.getASTypeId() == TypeId.BOOLEAN)) {
+		else if (cgSource.isTrue() && cgArgument.isRequiredOrNonNull() && (cgArgument.getASTypeId() == TypeId.BOOLEAN)) {
 			PivotUtilInternal.resetContainer(cgArgument);
 			context.replace(cgIsEqual2Exp, cgArgument, "Null term");
 		}
-		else if (cgArgument.isTrue() && cgSource.isNonNull() && (cgSource.getASTypeId() == TypeId.BOOLEAN)) {
+		else if (cgArgument.isTrue() && cgSource.isRequiredOrNonNull() && (cgSource.getASTypeId() == TypeId.BOOLEAN)) {
 			PivotUtilInternal.resetContainer(cgSource);
 			context.replace(cgIsEqual2Exp, cgSource, "Null term");
 		}
@@ -247,7 +247,7 @@ public class AnalysisVisitor extends AbstractExtendingCGModelVisitor<@Nullable O
 		if (cgSource.isInvalid() || cgSource.isNull()) {
 			context.setCGConstant(cgIsUndefinedExp, context.getCGBoolean(true));
 		}
-		else if (cgSource.isNonInvalid() && cgSource.isNonNull()) {
+		else if (cgSource.isNonInvalid() && cgSource.isRequiredOrNonNull()) {
 			context.setCGConstant(cgIsUndefinedExp, context.getCGBoolean(false));
 		}
 		return null;

@@ -136,14 +136,6 @@ public interface CGValuedElement extends CGTypedElement {
 	@NonNull CGValuedElement getTypedValue();
 
 	/**
-	 * Return true if this value is not null, possibly with the aid of an assertion.
-	 *
-	 * @generated
-	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$12
-	boolean isAssertedNonNull();
-
-	/**
 	 * Return true if this value is a boxed value.
 	 *
 	 * @generated
@@ -233,11 +225,12 @@ public interface CGValuedElement extends CGTypedElement {
 	boolean isNonInvalid();
 
 	/**
-	 * Return true if this value is not null.
+	 * Return true if this value is not null in so far as symbolic evalation can determine this.
+	 * Use isRequired() to exploit the declared not-nullness. May be invalid
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$11
+	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$15
 	boolean isNonNull();
 
 	/**
@@ -247,6 +240,14 @@ public interface CGValuedElement extends CGTypedElement {
 	 */
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$12
 	boolean isNull();
+
+	/**
+	 * Return true if this value is declared to be not-null or determined to be not null in so far as symbolic evalation can do do. May be invalid
+	 *
+	 * @generated
+	 */
+	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$17
+	boolean isRequiredOrNonNull();
 
 	/**
 	 * Return true if this value can be inlined as an expression term.

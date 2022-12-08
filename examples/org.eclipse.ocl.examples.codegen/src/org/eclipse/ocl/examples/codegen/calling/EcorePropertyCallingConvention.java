@@ -17,7 +17,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -53,9 +55,15 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class EcorePropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull EcorePropertyCallingConvention INSTANCE = new EcorePropertyCallingConvention();
+	private static final @NonNull EcorePropertyCallingConvention INSTANCE = new EcorePropertyCallingConvention();
 
-	protected void appendEcoreGet(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+	public static @NonNull EcorePropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
+
+	protected void appendEcoreGet(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGTypeId cgTypeId = cg2javaVisitor.getAnalyzer().getCGTypeId(asProperty.getOwningClass().getTypeId());
 		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
@@ -154,7 +162,18 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
+		if (cgBody == null) {
+			return false;
+		}
+		cgProperty.accept(cg2javaVisitor);
+		return true;
+	}
+
+	@Override
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgPropertyCallExp;
 		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getAsProperty());
 		assert cg2javaVisitor.getESObject(asProperty) == ClassUtil.nonNullState(cgEcorePropertyCallExp.getEStructuralFeature());
@@ -170,17 +189,41 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		//		js.append("/* " + ecoreIsRequired + " " + isRequired + " */\n");
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
-		appendEcoreGet(cg2javaVisitor, js, source, asProperty);
+		appendEcoreGet(cg2javaVisitor, source, asProperty);
 		js.append(";\n");
 		return true;
 	}
 
+
 	@Override
-	public boolean generateJavaDeclaration(
-			@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js,
-			@NonNull CGProperty cgProperty) {
-		// TODO Auto-generated method stub
-		return super.generateJavaDeclaration(cg2javaVisitor, js, cgProperty);
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		Property asProperty = CGUtil.getAST(cgProperty);
+		CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
+		if (cgBody == null) {
+			return false;
+		}
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		String returnClassName = cg2javaVisitor.getGenModelHelper().getPropertyResultType(asProperty);
+		js.appendCommentWithOCL(null, cgBody.getAst());
+		js.appendLocalStatements(cgBody);
+		CGInvalid cgInvalidValue = cgBody.getInvalidValue();
+		if (cgInvalidValue  != null) {
+			js.append("throw ");
+			js.appendValueName(cgInvalidValue);
+		}
+		else {
+			TypeDescriptor typeDescriptor = cg2javaVisitor.getCodeGenerator().getTypeDescriptor(cgBody);
+			//			String className = typeDescriptor.getClassName();
+			//			Class<?> javaClass = typeDescriptor.getJavaClass();
+			js.append("return ");
+			//			if (returnClassName.contains("<")) {
+			//				js.append("(" + returnClassName + ")");
+			//			}
+			//			js.appendValueName(cgBody);
+			typeDescriptor.appendEcoreValue(js, returnClassName, cgBody);
+		}
+		js.append(";");
+		return true;
 	}
 
 	@Override

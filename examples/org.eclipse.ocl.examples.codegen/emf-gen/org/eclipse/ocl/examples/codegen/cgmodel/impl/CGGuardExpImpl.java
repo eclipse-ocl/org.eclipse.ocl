@@ -318,7 +318,7 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	 */
 	@Override
 	public boolean isNonInvalid() {
-		return super.isNonInvalid() && (source != null) && source.isNonNull();
+		return super.isNonInvalid() && (source != null) && source.isRequired();
 	}
 
 	/**

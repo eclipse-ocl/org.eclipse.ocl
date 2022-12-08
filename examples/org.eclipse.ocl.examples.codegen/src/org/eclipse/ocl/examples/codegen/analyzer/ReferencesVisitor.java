@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
@@ -196,6 +197,13 @@ public class ReferencesVisitor extends AbstractExtendingCGModelVisitor<@NonNull 
 	@Override
 	public @NonNull List<@Nullable Object> visitCGOppositePropertyCallExp(@NonNull CGOppositePropertyCallExp cgElement) {
 		return append(super.visitCGOppositePropertyCallExp(cgElement), cgElement.getAsProperty());
+	}
+
+	@Override
+	public @NonNull List<@Nullable Object> visitCGPropertyAssignment(@NonNull CGPropertyAssignment cgElement) {
+		List<@Nullable Object> elements = super.visitCGPropertyAssignment(cgElement);
+		elements.add(cgElement.getReferredProperty());
+		return elements;
 	}
 
 	@Override

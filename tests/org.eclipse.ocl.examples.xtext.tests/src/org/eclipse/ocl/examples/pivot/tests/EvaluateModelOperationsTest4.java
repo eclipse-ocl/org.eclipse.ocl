@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.AbstractCallingConvention;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
@@ -69,6 +70,7 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -90,6 +92,16 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	public EvaluateModelOperationsTest4(boolean useCodeGen) {
 		super(useCodeGen);
+	}
+
+	@AfterClass
+	public static void afterClass() {
+		AbstractCallingConvention.printAllUsages();
+	}
+
+	@BeforeClass
+	public static void beforeClass() {
+		AbstractCallingConvention.resetAllUsages();
 	}
 
 	protected @NonNull TestOCL createOCLWithProjectMap() {
@@ -575,12 +587,12 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		ocl.assertQueryTrue(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
 		ocl.assertQueryTrue(null, "let x : Type[*] = Bag{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)");
-		ocl.assertValidationErrorQuery(null, "let x : Type[*] = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)",
+		ocl.assertValidationErrorQuery(null, false, "let x : Type[*] = Set{Integer,Real} in x?->forAll(x : Type | x.name.indexOf('e') > 0)",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleTypeForInitializer", "x : Bag(Type[*|?]) = Set{Integer, Real}");
 		ocl.assertQueryTrue(null, "let x : Collection(Collection(Type[*])) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Collection(Type[*]) | x->size() > 0)");
-		ocl.assertValidationErrorQuery(null, "let x : Collection(Collection(Type[*])) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Type | x->size() > 0)",
+		ocl.assertValidationErrorQuery(null, false, "let x : Collection(Collection(Type[*])) = Set{Bag{Integer,Real},Bag{Boolean}} in x?->forAll(x : Type | x->size() > 0)",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::IteratorTypeIsSourceElementType", "x?->forAll(x : Type[1] | x.oclAsSet()->size().>(0))");
-		ocl.assertValidationErrorQuery(null, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type[*] | x->size() > 0)",
+		ocl.assertValidationErrorQuery(null, false, "let x : Collection(Type) = Set{Integer,Real} in x?->forAll(x : Type[*] | x->size() > 0)",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::IteratorTypeIsSourceElementType", "x?->forAll(x : Bag(Type[*|?]) | x->size().>(0))");
 		ocl.dispose();
 	}
@@ -640,14 +652,23 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 		TestOCL ocl = createOCL();
 		//
+		NameUtil.contextLine = "Byte.valueOf((byte)255)";
 		ocl.assertQueryOCLEquals(null, Byte.valueOf((byte)255), "-1");
+		NameUtil.contextLine = "Character.valueOf((char)255)";
 		ocl.assertQueryOCLEquals(null, Character.valueOf((char)255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, Short.valueOf((short)255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, Integer.valueOf(255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, Long.valueOf(255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, BigInteger.valueOf(255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, Float.valueOf(255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, Double.valueOf(255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, BigDecimal.valueOf(255), "255");
 		if (useCodeGen) {
 			assertEquals(0, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);

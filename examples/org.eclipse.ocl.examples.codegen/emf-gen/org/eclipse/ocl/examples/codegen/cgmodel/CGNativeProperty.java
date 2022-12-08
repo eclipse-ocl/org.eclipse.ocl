@@ -26,14 +26,6 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
 public interface CGNativeProperty extends CGBodiedProperty {
 
 	/**
-	 * Set the non-null status.
-	 *
-	 * @generated
-	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$19
-	void setNonNull();
-
-	/**
 	 * Set the settable status.
 	 *
 	 * @generated

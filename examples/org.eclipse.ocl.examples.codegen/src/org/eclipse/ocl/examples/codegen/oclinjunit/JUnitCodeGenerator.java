@@ -16,7 +16,6 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.JUnitClassCallingConvention;
@@ -27,7 +26,6 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -68,20 +66,15 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		getOptions().setUseNullAnnotations(useNullAnnotations);
 	}
 
-	@Override
-	public @NonNull AS2CGVisitor createAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
-		return new JUnitAS2CGVisitor(analyzer);
-	}
-
 	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,			// XXX Change to createASPackage then regular AS2CG
 			@NonNull String qualifiedPackageName, @NonNull String className) {
 		assert expInOcl.eContainer() == null;
 		assert asTestOperation == null;
 		//
 		Variable contextVariable = expInOcl.getOwnedContext();
-		if (contextVariable != null) {
-			contextVariable.setIsRequired(false); // May be null for test
-		}
+	//	if (contextVariable != null) {
+	//		contextVariable.setIsRequired(false); // May be null for test		// XXX this is after a VariableExp has referenced
+	//	}
 		Resource eResource = expInOcl.eResource();
 		NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
 		@NonNull String packageNames[] = qualifiedPackageName.split("\\.");
@@ -115,9 +108,9 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		asHelper.setType(asOperation, expInOcl.getType(), expInOcl.isIsRequired());
 
 		analyzer.setRootClass(asClass);				// Identify the host for synthesized nested classes
-		CGPackage cgPackage = analyzer.createCGElement(CGPackage.class, asRootPackage);
-		analyzer.analyzeExternalFeatures(analyzer.getCGClass(asClass));
-		return cgPackage;
+		CGPackage cgRootPackage = analyzer.generatePackage(null, asRootPackage);
+		analyzer.generateQueuedClassesContents();
+		return cgRootPackage;
 	}
 
 	@Override
@@ -151,25 +144,26 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	public @NonNull ClassCallingConvention getCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert asTestClass != null;
 		if (asClass == asTestClass)  {
-			return JUnitClassCallingConvention.INSTANCE;
+			return JUnitClassCallingConvention.getInstance(asClass);
 		}
 		return super.getCallingConvention(asClass);
 	}
 
 	@Override
-	protected @NonNull OperationCallingConvention getCallingConventionInternal(@NonNull Operation asOperation, boolean maybeVirtual) {
+	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean maybeVirtual) {
 		assert asTestOperation != null;
 		if (asOperation == asTestOperation)  {
-			return JUnitOperationCallingConvention.INSTANCE;
+			return JUnitOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 		}
-		return super.getCallingConventionInternal(asOperation, maybeVirtual);
+		return super.getCallingConvention(asOperation, maybeVirtual);
 	}
 
-	@Override
-	public @NonNull JavaImportNameManager getImportNameManager() {
-		return (JavaImportNameManager) super.getImportNameManager();
-	}
+//	@Override
+//	public @NonNull JavaImportNameManager getImportNameManager() {
+//		return (JavaImportNameManager) super.getImportNameManager();
+//	}
 
+	@Deprecated /* @deprecated obsolete approach */
 	@Override
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
@@ -178,5 +172,11 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		s.append(JavaConstants.EXTERNAL_CLASS_PREFIX);
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getContextClass() {
+		assert asTestClass != null;
+		return asTestClass;
 	}
 }

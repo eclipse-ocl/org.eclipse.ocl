@@ -19,11 +19,15 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -101,8 +105,12 @@ public abstract class AbstractNameManager implements NameManager
 				assert debugAllocatedName(eagerName);
 				return eagerName;
 			}
-			System.err.println("Multiple reservation for eager name \"" + eagerName + "\"");		// XXX More accurate diagnosis of Parameter hides Property in SysML QUDV
-			return allocateFallBackName(eagerName);// testQVTcCompiler_Forward2Reverse_CG has list2list Property occluding  a Package
+			Element occludedElement = (oldElement instanceof CGNamedElement) ? ((CGNamedElement)oldElement).getAst() : null;
+			Element occludingElement = cgElement != null ? cgElement.getAst() : null;
+			String occludedName = occludedElement instanceof NamedElement ? (((NamedElement)occludedElement).eClass().getName() + " \"" + AbstractLanguageSupport.getQualifiedName((NamedElement)occludedElement) + "\"") : String.valueOf(oldElement);
+			String occludingName = occludingElement instanceof NamedElement ? (((NamedElement)occludingElement).eClass().getName() + " \"" + AbstractLanguageSupport.getQualifiedName((NamedElement)occludingElement) + "\"") : String.valueOf(cgElement);
+			System.out.println("NameManager: " + occludedName + " is occluded by " + occludingName + ".");
+			return allocateFallBackName(eagerName);		// testQVTcCompiler_Forward2Reverse_CG has list2list Property occluding  a Package
 		}
 
 		private @NonNull String allocateFallBackName(@NonNull String validHint) {
@@ -115,7 +123,8 @@ public abstract class AbstractNameManager implements NameManager
 				String attempt = validHint + "_" + Integer.toString(count);
 				if (!name2object.containsKey(attempt)) {		// Assumes that reserved names do not end in _ count
 					name2counter2.put(validHint, ++count);
-					if ("self_0".equals(attempt)) {
+					if ("context_0".equals(attempt)) {
+						@SuppressWarnings("unused") Object firstUsage = name2object.get(validHint);
 						getClass();			// XXX
 					}
 					assert debugAllocatedName(attempt);
@@ -125,6 +134,9 @@ public abstract class AbstractNameManager implements NameManager
 		}
 
 		protected @NonNull String allocateLazyName(@NonNull String nameHint, @Nullable CGNamedElement cgElement) {
+			if (nameHint.equals("context") && (cgElement instanceof CGParameter)) {
+				getClass();			// XXX
+			}
 			Object anObject = cgElement != null ? cgElement : NOT_AN_OBJECT;
 			if (nameHint == NameResolution.NOT_NEEDED) {
 				assert debugAllocatedName(nameHint);
@@ -160,7 +172,7 @@ public abstract class AbstractNameManager implements NameManager
 		}
 
 		private boolean debugAllocatedName(@NonNull String name) {
-			if (name.contains("xxobject")) {
+			if (name.contains("context")) {
 				getClass();			// XXX
 			}
 			return true;

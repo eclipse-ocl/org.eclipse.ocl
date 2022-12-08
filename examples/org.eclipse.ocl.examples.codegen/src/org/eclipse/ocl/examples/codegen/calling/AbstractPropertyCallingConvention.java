@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -27,23 +28,21 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TupleType;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  *  AbstractPropertyCallingConvention defines the default support for a property declaration or call.
  */
-public abstract class AbstractPropertyCallingConvention implements PropertyCallingConvention
+public abstract class AbstractPropertyCallingConvention extends AbstractCallingConvention implements PropertyCallingConvention
 {
-	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {}
+	protected void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {}
 
-	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
+	protected @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
 		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();
 	}
 
@@ -74,8 +73,31 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	}
 
 	@Override
-	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js,
+	public @NonNull CGProperty createProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty, @Nullable ExpressionInOCL asExpressionInOCL) {
+		CGProperty cgProperty = createCGProperty(analyzer, asProperty);
+		assert cgProperty.getCallingConvention() == null;
+		cgProperty.setCallingConvention(this);
+		assert cgProperty.getAst() == null;
+		analyzer.initAst(cgProperty, asProperty, true);
+		ExecutableNameManager propertyNameManager = analyzer.getPropertyNameManager(cgProperty, asProperty);
+		createCGParameters(propertyNameManager, asExpressionInOCL);
+		assert cgProperty.eContainer() == null;
+		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asProperty));
+		cgClass.getProperties().add(cgProperty);
+		return cgProperty;
+	}
+
+	@Override
+	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		// throw new UnsupportedOperationException("Unexpected " + this + " for an Ecore Property " + cgProperty);
+		// cg2javaVisitor.getJavaStream().append("Unexpected " + this + " for the Ecore Property for " + cgProperty);
+		return false;		// requires manual implementation
+	}
+
+	@Override
+	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor,
 			@NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendReferenceTo(cgProperty);
 		js.append(".initValue(");
 		js.appendValueName(slotValue);
@@ -86,11 +108,14 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public abstract boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
+
+	protected boolean generateJavaDeclarationUnimplemented(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		js.append("«");
 		js.append(getClass().getSimpleName());
-		js.append(".generateJavaDeclaration ");
+		js.append(".generateJavaDeclaration ");		// XXX debugging - change to abstract
 		js.append(asProperty.getOwningClass().getOwningPackage().getName());
 		js.append("::");
 		js.append(asProperty.getOwningClass().getName());
@@ -99,11 +124,6 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 		js.append("»\n");
 		return true;
 	//	throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".generateJavaDeclaration");	// A number of Property Calling Conventions are call-only
-	}
-
-	@Override
-	public @NonNull ClassCallingConvention getClassCallingConvention() {
-		return ContextClassCallingConvention.INSTANCE;
 	}
 
 	@Override
@@ -140,10 +160,5 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 
 	protected void rewriteWithSourceBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
 		// XXX change to abstract to mandate handling
-	}
-
-	@Override
-	public @NonNull String toString() {
-		return getClass().getSimpleName();
 	}
 }

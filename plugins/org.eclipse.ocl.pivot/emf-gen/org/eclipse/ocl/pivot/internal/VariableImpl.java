@@ -244,6 +244,7 @@ implements Variable {
 		 * inv CompatibleInitialiserType: true
 		 */
 		return ValueUtil.TRUE_VALUE;
+
 	}
 
 	/**

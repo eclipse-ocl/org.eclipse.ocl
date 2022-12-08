@@ -32,7 +32,7 @@ public class BooleanObjectDescriptor extends SimpleValueDescriptor implements Si
 
 	@Override
 	public void appendCast(@NonNull JavaStream js, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @Nullable SubStream subStream) {
-		if (actualJavaClass != boolean.class) {
+		if ((actualJavaClass != boolean.class) && (actualJavaClass != Boolean.class)) {
 			assert (actualJavaClass == null) || (actualJavaClass == Object.class);
 			js.append("(");
 			append(js, null);
@@ -64,8 +64,8 @@ public class BooleanObjectDescriptor extends SimpleValueDescriptor implements Si
 	@Override
 	public void appendEqualsValue(@NonNull JavaStream js, @NonNull CGValuedElement thisValue,
 			@NonNull CGValuedElement thatValue, boolean notEquals) {
-		boolean thisIsNonNull = thisValue.isNonNull();
-		boolean thatIsNonNull = thatValue.isNonNull();
+		boolean thisIsNonNull = thisValue.isRequiredOrNonNull();
+		boolean thatIsNonNull = thatValue.isRequiredOrNonNull();
 		if (thisIsNonNull || !thatIsNonNull) {
 			js.appendValueName(thisValue);
 		}

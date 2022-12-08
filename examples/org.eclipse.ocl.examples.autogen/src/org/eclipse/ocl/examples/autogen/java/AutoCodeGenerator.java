@@ -37,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.library.AbstractNativeProperty;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
@@ -117,7 +118,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 	@Override
 	public abstract @NonNull CG2JavaPreVisitor createCG2JavaPreVisitor();
 
-	protected abstract @NonNull AutoCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals);
+	protected abstract @NonNull AutoCG2JavaVisitor createCG2JavaVisitor();
 
 	protected abstract @NonNull List<CGPackage> createCGPackages() throws ParserException;
 
@@ -141,12 +142,14 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		return new AutoCodeGenOptions();
 	}
 
-	public @NonNull String generateClassFile(@NonNull CGPackage cgPackage) {
+	public @NonNull String generateClassFile(@NonNull CGClass cgClass) {
+		CGPackage cgPackage = CGUtil.getContainingPackage(cgClass);
 		optimize(cgPackage);
 		Iterable<@NonNull CGValuedElement> sortedGlobals = pregenerate(cgPackage);
-		AutoCG2JavaVisitor generator = createCG2JavaVisitor(cgPackage, sortedGlobals);
-		generator.safeVisit(cgPackage);
+		AutoCG2JavaVisitor generator = createCG2JavaVisitor();
 		ImportNameManager importNameManager = generator.getImportNameManager();
+		importNameManager.reserveNestedClassNames(cgClass);
+		generator.safeVisit(cgPackage);
 		Map<@NonNull String, @Nullable String> long2ShortImportNames = importNameManager.getLong2ShortImportNames();
 		return ImportUtils.resolveImports(generator.toString(), long2ShortImportNames, false);
 	}
@@ -223,10 +226,11 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 			@NonNull
 			List<CGPackage> allCGPackages = createCGPackages();
 			for (CGPackage cgPackage : allCGPackages){
-				String className = cgPackage.getClasses().get(0).getName();
+				CGClass cgClass = cgPackage.getClasses().get(0);
+				String className = cgClass.getName();
 				URI uri = URI.createPlatformResourceURI(getSourceFileName(className+".java"), true);
 				System.out.println("Creating " + uri);
-				String javaCodeSource = generateClassFile(cgPackage);;
+				String javaCodeSource = generateClassFile(cgClass);;
 				try {
 
 					System.out.println("Saving " + uri);

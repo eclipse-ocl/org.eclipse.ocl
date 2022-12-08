@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 
 /**
@@ -31,11 +32,17 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  */
 public class ExecutorShadowPartCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull ExecutorShadowPartCallingConvention INSTANCE = new ExecutorShadowPartCallingConvention();
+	private static final @NonNull ExecutorShadowPartCallingConvention INSTANCE = new ExecutorShadowPartCallingConvention();
+
+	public static @NonNull ExecutorShadowPartCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 		assert cgProperty instanceof CGExecutorShadowPart;
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)cgProperty;
 		js.appendDeclaration(cgExecutorShadowPart);
 		js.append(" = ");
@@ -56,9 +63,7 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor,
-			@NonNull JavaStream js,
-			@NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException();
 	}

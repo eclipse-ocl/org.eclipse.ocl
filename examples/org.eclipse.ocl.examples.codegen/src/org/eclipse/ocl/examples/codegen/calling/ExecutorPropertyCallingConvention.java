@@ -28,7 +28,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
-import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
@@ -37,7 +36,6 @@ import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -50,10 +48,15 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  */
 public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull ExecutorPropertyCallingConvention INSTANCE = new ExecutorPropertyCallingConvention();
+	private static final @NonNull ExecutorPropertyCallingConvention INSTANCE = new ExecutorPropertyCallingConvention();
+
+	public static @NonNull ExecutorPropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
 		return CGModelFactory.eINSTANCE.createCGExecutorNavigationProperty();
 	}
 
@@ -67,7 +70,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		analyzer.addGlobal(cgPropertyId);
 		boolean isRequired = asProperty.isIsRequired();
 		Method jMethod = UnboxedExplicitNavigationProperty.CREATE_METHOD;
-		OperationCallingConvention supportOperationCallingConvention = SupportOperationCallingConvention.INSTANCE;
+		OperationCallingConvention supportOperationCallingConvention = SupportOperationCallingConvention.getInstance(jMethod);
 		CGNativeOperationCallExp cgNativeOperationCallExp = analyzer.createCGNativeOperationCallExp(jMethod, supportOperationCallingConvention);
 //		cgNativeOperationCallExp.setAst(asPropertyCallExp);
 		cgNativeOperationCallExp.getArguments().add(analyzer.createCGConstantExp(cgPropertyId));
@@ -86,40 +89,30 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		assert cgPropertyCallExp instanceof CGExecutorPropertyCallExp;
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = (CGExecutorPropertyCallExp)cgPropertyCallExp;
-		CGValuedElement asSource = cgExecutorPropertyCallExp.getSource();
-		CGValuedElement cgSource = asSource != null ? cg2javaVisitor.getExpression(asSource) : null;
+		CGValuedElement cgRawSource = cgPropertyCallExp.getSource();
+		CGValuedElement cgSource = cgRawSource != null ? cg2javaVisitor.getExpression(cgRawSource) : null;
 		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {
 			return false;
 		}
-		//
-		//	CGExecutorProperty cgExecutorProperty = ClassUtil.nonNullState(cgPropertyCallExp.getExecutorProperty());
-		Boolean ecoreIsRequired = Boolean.FALSE;						// CP properties evaluate is nullable -- FIXME compute rather than assume
-		//	boolean isPrimitive = js.isPrimitive(cgPropertyCallExp);
-		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
-		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-		Boolean isRequired = codeGenerator.isRequired(cgExecutorPropertyCallExp);
-		if ((isRequired == Boolean.TRUE) && (ecoreIsRequired != Boolean.TRUE)) {
-			js.appendSuppressWarningsNull(true);
-		}
-		js.appendDeclaration(cgExecutorPropertyCallExp);
-		js.append(" = ");
-		TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgExecutorPropertyCallExp);
-		JavaStream.SubStream castBody = new JavaStream.SubStream() {
+		JavaStream.SubStream sourceStream = new JavaStream.SubStream() {
 			@Override
 			public void append() {
+				JavaCodeGenerator codeGenerator = js.getCodeGenerator();
+				GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 				if (cgExecutorPropertyCallExp.getCgArgument() != null) {
 					js.appendValueName(cgExecutorPropertyCallExp.getCgArgument());
 				}
 				else {
-					js.appendReferenceTo(cgExecutorPropertyCallExp.getReferredProperty());
+					js.appendReferenceTo(CGUtil.getReferredProperty(cgPropertyCallExp));
 				}
 				js.append(".");
-				js.append(globalNameManager.getEvaluateName());
+				js.append(globalNameManager.getEvaluateNameResolution().getResolvedName());
 				js.append("(");
-				js.append(globalNameManager.getExecutorName());
+				js.append(globalNameManager.getExecutorNameResolution().getResolvedName());
 				js.append(", ");
 				js.appendIdReference(cgExecutorPropertyCallExp.getASTypeId());
 				js.append(", ");
@@ -127,14 +120,16 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 				js.append(")");
 			}
 		};
-		typeDescriptor.appendCast(js, isRequired, null, castBody);
-		js.append(";\n");
+		Boolean evaluateIsRequired = Boolean.FALSE;
+		Class<?> evaluateClass = Object.class;
+		js.appendAssignWithCast(cgPropertyCallExp, evaluateIsRequired, evaluateClass, sourceStream);
 		return true;
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(	@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 		assert cgProperty instanceof CGExecutorNavigationProperty;
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGExecutorNavigationProperty cgExecutorNavigationProperty = (CGExecutorNavigationProperty)cgProperty;
 		js.appendDeclaration(cgExecutorNavigationProperty);
 		js.append(" = new ");

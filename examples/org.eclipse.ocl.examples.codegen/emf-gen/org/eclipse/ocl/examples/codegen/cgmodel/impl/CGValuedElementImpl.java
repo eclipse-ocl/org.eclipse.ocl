@@ -30,6 +30,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.ControlPlace;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -299,15 +300,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 * @generated
 	 */
 	@Override
-	public boolean isAssertedNonNull() {
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public boolean isBoxed() {
 		CGValuedElement referredValue = getReferredValue();
 		assert referredValue != this : "isBoxed must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
@@ -422,17 +414,23 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isNonInvalid() {
 		CGValuedElement referredValue = getReferredValue();
-		return (referredValue != this) && referredValue.isNonInvalid();
+		boolean mayBeInvalid = (referredValue != this) && !referredValue.isNonInvalid();
+		return !mayBeInvalid;
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * @generated
+	 * @generated XXX
 	 */
 	@Override
 	public boolean isNonNull() {
 		CGValuedElement referredValue = getReferredValue();
-		return (referredValue != this) && referredValue.isNonNull();
+		boolean isNonNull = referredValue != this ? referredValue.isRequiredOrNonNull() : required;
+		if (required && !isNonNull) {		// To avoid false diagnostics prefix the isNonNull() call by isRequired() or more likely change the call to isRequired() or isRequiredOrNonNull().
+			isNonNull = (referredValue != this) && referredValue.isRequiredOrNonNull();
+			NameUtil.errPrintln("Required value may be null for " + NameUtil.debugSimpleName(this) + " : " + this);
+		}
+		return isNonNull;
 	}
 
 	/**
@@ -443,6 +441,15 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public boolean isNull() {
 		CGValuedElement referredValue = getReferredValue();
 		return (referredValue != this) && referredValue.isNull();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isRequiredOrNonNull() {
+		return required || isNonNull();
 	}
 
 	/**

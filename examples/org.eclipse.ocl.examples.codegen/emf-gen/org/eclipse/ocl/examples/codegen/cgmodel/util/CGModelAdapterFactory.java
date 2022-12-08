@@ -253,6 +253,14 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGEcoreClassShadowExpAdapter();
 			}
 			@Override
+			public Adapter caseCGEcoreContainerAssignment(CGEcoreContainerAssignment object) {
+				return createCGEcoreContainerAssignmentAdapter();
+			}
+			@Override
+			public Adapter caseCGEcorePropertyAssignment(CGEcorePropertyAssignment object) {
+				return createCGEcorePropertyAssignmentAdapter();
+			}
+			@Override
 			public Adapter caseCGEcoreDataTypeShadowExp(CGEcoreDataTypeShadowExp object) {
 				return createCGEcoreDataTypeShadowExpAdapter();
 			}
@@ -481,12 +489,20 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGPropertyAdapter();
 			}
 			@Override
+			public Adapter caseCGPropertyAssignment(CGPropertyAssignment object) {
+				return createCGPropertyAssignmentAdapter();
+			}
+			@Override
 			public Adapter caseCGPropertyCallExp(CGPropertyCallExp object) {
 				return createCGPropertyCallExpAdapter();
 			}
 			@Override
 			public Adapter caseCGReal(CGReal object) {
 				return createCGRealAdapter();
+			}
+			@Override
+			public Adapter caseCGSequence(CGSequence object) {
+				return createCGSequenceAdapter();
 			}
 			@Override
 			public Adapter caseCGSettableVariable(CGSettableVariable object) {
@@ -1173,6 +1189,34 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment <em>CG Ecore Container Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment
+	 * @generated
+	 */
+	public Adapter createCGEcoreContainerAssignmentAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyAssignment <em>CG Ecore Property Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyAssignment
+	 * @generated
+	 */
+	public Adapter createCGEcorePropertyAssignmentAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreDataTypeShadowExp <em>CG Ecore Data Type Shadow Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1705,6 +1749,20 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment <em>CG Property Assignment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment
+	 * @generated
+	 */
+	public Adapter createCGPropertyAssignmentAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp <em>CG Property Call Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1729,6 +1787,20 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGRealAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGSequence <em>CG Sequence</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGSequence
+	 * @generated
+	 */
+	public Adapter createCGSequenceAdapter() {
 		return null;
 	}
 

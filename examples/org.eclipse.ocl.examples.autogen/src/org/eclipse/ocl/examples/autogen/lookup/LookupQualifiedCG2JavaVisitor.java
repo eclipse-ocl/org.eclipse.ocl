@@ -11,25 +11,19 @@
 package org.eclipse.ocl.examples.autogen.lookup;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 
 public class LookupQualifiedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor {
 
-	public LookupQualifiedCG2JavaVisitor(
-			@NonNull LookupQualifiedCodeGenerator codeGenerator,
-			@NonNull CGPackage cgPackage,
-			@Nullable Iterable<CGValuedElement> sortedGlobals) {
-		super(codeGenerator, cgPackage, sortedGlobals);
+	public LookupQualifiedCG2JavaVisitor(@NonNull LookupQualifiedCodeGenerator codeGenerator) {
+		super(codeGenerator);
 	}
 
 	@Override
 	protected void doInternalVisiting(@NonNull CGClass cgClass) {
 		// We we return the context
 		LookupQualifiedCodeGenerator codeGenerator = getCodeGenerator();
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("@Override\n");
 		js.append("protected ");
 		js.appendClassReference(false, codeGenerator.getVisitorResultClass());

@@ -27,8 +27,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.asm5.ASM5JavaAnnotationReader;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.library.AbstractNativeProperty;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -38,6 +41,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
@@ -174,36 +178,58 @@ public class JavaLanguageSupport extends AbstractLanguageSupport
 		}
 	}
 
-	public static @Nullable Method getOverriddenMethod(@NonNull Operation asOperation) {
+	public static @Nullable Method getOverriddenMethod(@NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
 		String name = PivotUtil.getName(asOperation);
-		List<org.eclipse.ocl.pivot.@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
 		for (org.eclipse.ocl.pivot.Class asSuperClass : asClass.getSuperClasses()) {
 			TypeId asSuperTypeId = asSuperClass.getTypeId();
 			if (asSuperTypeId instanceof JavaTypeId) {
 				Class<?> jSuperClass = ((JavaTypeId)asSuperTypeId).getJavaClass();
-				for (Method jMethod : jSuperClass.getMethods()) {
-					if (name.equals(jMethod.getName())) {
-						@NonNull Class<?> @NonNull [] jParameterTypes = jMethod.getParameterTypes();
-						if (jParameterTypes.length != asParameters.size()) {
-							break;
-						}
-						boolean allMatching = true;
-						for (int i = 0; i < jParameterTypes.length; i++) {
-							@NonNull Class<?> jParameterType = jParameterTypes[i];
-							org.eclipse.ocl.pivot.@NonNull Parameter asParameter = asParameters.get(i);
-							TypeId jTypeId = JavaConstants.getJavaTypeId(jParameterType);
-							TypeId asTypeId = asParameter.getTypeId();
-							if (jTypeId != asTypeId) {		// FIXME is this sound?
-								allMatching = false;
-								break;
-							}
-						}
-						if (allMatching) {
-							return jMethod;
-						}
+				Method jMethod = getOverriddenMethod(jSuperClass, name, cgParameters);
+				if (jMethod != null) {
+					return jMethod;
+				}
+			}
+		}
+		return null;
+	}
+
+	private static @Nullable Method getOverriddenMethod(/*@NonNull*/ Class<?> jClass, @NonNull String name, @NonNull List<@NonNull CGParameter> cgParameters) {
+		for (Method jMethod : jClass.getDeclaredMethods()) {										// Need to see protected
+			if (name.equals(jMethod.getName()) && !Modifier.isPrivate(jMethod.getModifiers())) {	//  but not private
+				@NonNull Class<?> @NonNull [] jParameterTypes = jMethod.getParameterTypes();
+				if (jParameterTypes.length != cgParameters.size()) {
+					break;
+				}
+				boolean allMatching = true;
+				for (int i = 0; i < jParameterTypes.length; i++) {
+					@NonNull Class<?> jParameterType = jParameterTypes[i];
+					@NonNull CGParameter cgParameter = cgParameters.get(i);
+					TypeId jTypeId = JavaConstants.getJavaTypeId(jParameterType);
+					ElementId asTypeId = cgParameter.getTypeId().getElementId();
+					if (jTypeId != asTypeId) {		// FIXME is this sound?
+						allMatching = false;
+						break;
 					}
 				}
+				if (allMatching) {
+					return jMethod;
+				}
+			}
+		}
+		Class<?> jSuperClass = jClass.getSuperclass();
+		if (jSuperClass != null) {
+			Method jMethod = getOverriddenMethod(jSuperClass, name, cgParameters);
+			if (jMethod != null) {
+				return jMethod;
+			}
+		}
+		for (Class<?> jSuperInterface : jClass.getInterfaces()) {
+			Method jMethod = getOverriddenMethod(jSuperInterface, name, cgParameters);
+			if (jMethod != null) {
+				return jMethod;
 			}
 		}
 		return null;
@@ -317,8 +343,8 @@ public class JavaLanguageSupport extends AbstractLanguageSupport
 
 	/*
 	 * Return a native package for asPackage without flattening nested packages.
-	 */
-	private org.eclipse.ocl.pivot.@NonNull Package zzgetCachePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	 *
+	private org.eclipse.ocl.pivot.@NonNull Package getCachePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		String name = PivotUtil.getName(asPackage);
 		org.eclipse.ocl.pivot.Package asParentPackage = asPackage.getOwningPackage();
 		if (asParentPackage != null) {
@@ -327,7 +353,7 @@ public class JavaLanguageSupport extends AbstractLanguageSupport
 		else {
 			return getPackage(getNativeModel(), name);
 		}
-	}
+	} */
 
 	/*
 	 * Return a native class for jClass flattening nested classes.

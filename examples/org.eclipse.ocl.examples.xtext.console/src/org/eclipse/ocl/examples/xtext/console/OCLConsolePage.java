@@ -828,7 +828,7 @@ public class OCLConsolePage extends Page //implements MetamodelManagerListener
 					if ((instanceContext != null) && !(instanceContext instanceof Element)) {
 						instanceContext = ((EnvironmentFactoryInternalExtension)environmentFactory).getASOf(Element.class, instanceContext);
 					}
-					parserContext = new ClassContext(environmentFactory, null, contextType, (instanceContext instanceof Type) && !(instanceContext instanceof ElementExtension) ? (Type)instanceContext : null);
+					parserContext = new ClassContext(environmentFactory, null, contextType, instanceContext != null, (instanceContext instanceof Type) && !(instanceContext instanceof ElementExtension) ? (Type)instanceContext : null);
 					EssentialOCLCSResource csResource = (EssentialOCLCSResource) resource;
 					if (csResource != null) {
 						if (contextObject != null) {

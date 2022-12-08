@@ -180,9 +180,9 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	//	NameResolution.NAMES_RESOLVE.setState(true);
 		TestOCL ocl = createOCL();
 		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-// XXX		ocl.assertValidationErrorQuery(ocl.getContextType(standardLibrary.getPackage()), "let parent : OclElement[1] = oclContainer()?.oclAsType(OclElement) in parent", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleNullityForInitializer", "parent : OclElement[1] = self.oclContainer()?.oclAsType(OclElement)");
+		ocl.assertValidationErrorQuery(ocl.getContextType(standardLibrary.getPackage()), true, "let parent : OclElement[1] = oclContainer()?.oclAsType(OclElement) in parent", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleNullityForInitializer", "parent : OclElement[1] = self.oclContainer()?.oclAsType(OclElement)");
 		ocl.assertQueryEquals(standardLibrary.getPackage(), standardLibrary.getPackage().eContainer(), "let parent : OclElement[?] = oclContainer()?.oclAsType(OclElement) in parent");
-// XXX		ocl.assertQueryNull(standardLibrary.getPackage(), "let grandparent : OclElement[?] = oclContainer()?.oclContainer()?.oclAsType(OclElement) in grandparent");
+		ocl.assertQueryNull(standardLibrary.getPackage(), "let grandparent : OclElement[?] = oclContainer()?.oclContainer()?.oclAsType(OclElement) in grandparent");
 		ocl.dispose();
 	}
 
@@ -589,8 +589,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
-		ocl.assertValidationErrorQuery(ocl.getContextType(context), "Apple{stem=null}.label", "Missing initializers: color");
-		ocl.assertValidationErrorQuery(ocl.getContextType(context), "Apple{name=null}.label", "Unexpected initializers: name");
+		ocl.assertValidationErrorQuery(ocl.getContextType(context), false, "Apple{stem=null}.label", "Missing initializers: color");
+		ocl.assertValidationErrorQuery(ocl.getContextType(context), false, "Apple{name=null}.label", "Unexpected initializers: name");
 		ocl.assertQueryEquals(context, null, "Apple{color=null,label=null,stem=null}.label");
 		ocl.assertQueryEquals(context, "RedApple", "Apple{color=Color::red,label='RedApple',stem=null}.label");
 		ocl.assertQueryEquals(context, color_red, "Apple{color=Color::red,label='RedApple',stem=null}.color");

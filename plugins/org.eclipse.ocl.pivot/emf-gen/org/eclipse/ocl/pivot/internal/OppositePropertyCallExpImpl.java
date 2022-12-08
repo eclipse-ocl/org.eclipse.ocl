@@ -29,11 +29,12 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PivotTables;
+import org.eclipse.ocl.pivot.PivotSupport;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -176,11 +177,12 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			 *     endif
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue getSeverity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotSupport.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_implies;
@@ -207,7 +209,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 					else {
 						/*@Caught*/ @Nullable Object CAUGHT_not;
 						try {
-							/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
+							/*@Caught*/ @Nullable Object CAUGHT_isNonNull;
 							try {
 								if (ownedSource == null) {
 									throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
@@ -258,7 +260,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				catch (Exception THROWN_CAUGHT_implies) {
 					CAUGHT_implies = ValueUtil.createInvalidValue(THROWN_CAUGHT_implies);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -266,6 +268,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+
 	}
 
 	/**
@@ -293,66 +296,59 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 			 *     endif
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue getSeverity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotSupport.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_implies;
 				try {
-					/*@Caught*/ @Nullable Object CAUGHT_and;
-					try {
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-						final /*@NonInvalid*/ boolean IsEQ_ = ownedSource != null;
-						final /*@Thrown*/ @Nullable Boolean and;
-						if (!IsEQ_) {
+					final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
+					final /*@NonInvalid*/ boolean IsEQ_ = ownedSource != null;
+					final /*@NonInvalid*/ @Nullable Boolean and;
+					if (!IsEQ_) {
+						and = ValueUtil.FALSE_VALUE;
+					}
+					else {
+						final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+						final /*@NonInvalid*/ @Nullable Boolean not;
+						if (!isSafe) {
+							not = ValueUtil.TRUE_VALUE;
+						}
+						else {
+							if (isSafe) {
+								not = ValueUtil.FALSE_VALUE;
+							}
+							else {
+								not = null;
+							}
+						}
+						if (not == ValueUtil.FALSE_VALUE) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-							final /*@NonInvalid*/ @Nullable Boolean not;
-							if (!isSafe) {
-								not = ValueUtil.TRUE_VALUE;
+							if (not == null) {
+								and = null;
 							}
 							else {
-								if (isSafe) {
-									not = ValueUtil.FALSE_VALUE;
-								}
-								else {
-									not = null;
-								}
-							}
-							if (not == ValueUtil.FALSE_VALUE) {
-								and = ValueUtil.FALSE_VALUE;
-							}
-							else {
-								if (not == null) {
-									and = null;
-								}
-								else {
-									and = ValueUtil.TRUE_VALUE;
-								}
+								and = ValueUtil.TRUE_VALUE;
 							}
 						}
-						CAUGHT_and = and;
-					}
-					catch (Exception THROWN_CAUGHT_and) {
-						CAUGHT_and = ValueUtil.createInvalidValue(THROWN_CAUGHT_and);
 					}
 					final /*@Thrown*/ @Nullable Boolean implies;
-					if (CAUGHT_and == ValueUtil.FALSE_VALUE) {
+					if (and == ValueUtil.FALSE_VALUE) {
 						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
+						/*@Caught*/ @Nullable Object CAUGHT_isNonNull;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
-							if (ownedSource_0 == null) {
+							if (ownedSource == null) {
 								throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
 							}
-							final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
+							final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
 							CAUGHT_isNonNull = isNonNull;
 						}
 						catch (Exception THROWN_CAUGHT_isNonNull) {
@@ -362,13 +358,10 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 							implies = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (CAUGHT_and instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_and;
-							}
 							if (CAUGHT_isNonNull instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_isNonNull;
 							}
-							if (CAUGHT_and == null) {
+							if (and == null) {
 								implies = null;
 							}
 							else {
@@ -381,7 +374,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				catch (Exception THROWN_CAUGHT_implies) {
 					CAUGHT_implies = ValueUtil.createInvalidValue(THROWN_CAUGHT_implies);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -389,6 +382,7 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+
 	}
 
 	/**

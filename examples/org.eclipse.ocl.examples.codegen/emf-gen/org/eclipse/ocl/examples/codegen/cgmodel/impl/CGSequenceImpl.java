@@ -12,33 +12,23 @@ package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
 import java.util.Collection;
 import java.util.List;
-
 import java.util.Map;
+
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSequence;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
-
 import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
-import org.eclipse.ocl.examples.codegen.cse.ControlPlace;
-import org.eclipse.qvtd.codegen.qvti.cse.SequencePlaces;
-import org.eclipse.qvtd.codegen.qvticgmodel.QVTiCGModelPackage;
-
-import org.eclipse.qvtd.codegen.qvticgmodel.util.QVTiCGModelVisitor;
+import org.eclipse.ocl.examples.codegen.cse.SequencePlaces;
 
 /**
  * <!-- begin-user-doc -->
@@ -181,7 +171,6 @@ public class CGSequenceImpl extends CGValuedElementImpl implements CGSequence {
 	 * {@inheritDoc}
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull CGModelVisitor<R> visitor) {
 		return visitor.visitCGSequence(this);
@@ -193,13 +182,14 @@ public class CGSequenceImpl extends CGValuedElementImpl implements CGSequence {
 	 */
 	@Override
 	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
-		return org.eclipse.ocl.examples.codegen.cse.SequencePlaces.createSequencePlaces(element2place, this);
+		return SequencePlaces.createSequencePlaces(element2place, this);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * @generated
 	 */
+	@Override
 	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
 		if (this == thatValue) {
 			return Boolean.TRUE;

@@ -22,12 +22,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
@@ -155,6 +157,7 @@ public class JavaStream
 				js.append("<<null->>");
 			}
 			else if (cgValue.getNamedValue().isCaught()) {
+				assert !cgValue.isNonInvalid();
 				js.appendClassReference(isRequired, Object.class);
 			}
 			else {
@@ -180,7 +183,7 @@ public class JavaStream
 			}
 			appendTypeDeclaration(cgElement);
 			js.append(" ");
-			String valueName = js.cg2java.getResolvedName(cgElement);
+			String valueName = cgElement.getResolvedName();
 			js.append(valueName);
 		}
 
@@ -232,14 +235,16 @@ public class JavaStream
 		}
 	}
 
-	protected @NonNull JavaCodeGenerator codeGenerator;
-	protected @NonNull CG2JavaVisitor cg2java;
-	protected @NonNull CodeGenAnalyzer analyzer;
+	protected final @NonNull JavaCodeGenerator codeGenerator;
+	protected final @NonNull CG2JavaVisitor cg2java;
+	protected final @NonNull ImportNameManager importNameManager;
+	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull Id2JavaExpressionVisitor id2JavaExpressionVisitor;
 	protected final boolean useNullAnnotations;
 	protected final boolean suppressNullWarnings;
 
 	private @NonNull StringBuilder s = new StringBuilder();
+	private int tailNewLines = 2;
 	private @NonNull Stack<@NonNull String> indentationStack = new Stack<>();
 	private @NonNull String defaultIndentationString = "\t";
 	private @NonNull Stack<@NonNull String> classNameStack = new Stack<>();
@@ -247,9 +252,10 @@ public class JavaStream
 	private final @NonNull TypeRepresentation boxedTypeRepresentation;
 	private final @NonNull TypeRepresentation unboxedTypeRepresentation;
 
-	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor cg2java) {
+	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor cg2java, @NonNull ImportNameManager importNameManager) {
 		this.codeGenerator = codeGenerator;
 		this.cg2java = cg2java;
+		this.importNameManager = importNameManager;
 		this.analyzer = codeGenerator.getAnalyzer();
 		this.id2JavaExpressionVisitor = cg2java.createId2JavaExpressionVisitor(this);
 		CodeGenOptions options = codeGenerator.getOptions();
@@ -261,16 +267,19 @@ public class JavaStream
 
 	public void append(@Nullable String string) {
 		if (string != null) {
+			if ("\n".equals(string)) {
+				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
+			}
+			if (string.contains("context_0")) {
+				getClass();		// XXX
+			}
+			if (string.contains("InvalidValueException")) {
+				getClass();		// XXX
+			}
 			if (indentationStack.isEmpty()) {
 				s.append(string);
 			}
 			else {
-				if (string.contains("getResult")) {
-					getClass();		// XXX
-				}
-				if (string.contains("getIdResolver")) {
-					getClass();		// XXX
-				}
 				int sLength = s.length();
 				boolean atStartOfLine = (sLength == 0) || (s.charAt(sLength-1) == '\n');
 				for (int i = 0; i < string.length(); i++) {
@@ -298,6 +307,12 @@ public class JavaStream
 					}
 				}
 			}
+			if (string.equals("\n")) {
+				tailNewLines++;
+			}
+			else {
+				tailNewLines = string.endsWith("\n") ? 1 : 0;
+			}
 		}
 	}
 
@@ -309,13 +324,85 @@ public class JavaStream
 			appendValueName(cgValue);
 		}
 		append(" = ");
-		if (cgValue.isNonNull()) {
+		if (cgValue.isRequiredOrNonNull()) {
 			appendBooleanString(value);
 		}
 		else {
 			appendClassReference(null, ValueUtil.class);
 			append(".");
 			append(value ? "TRUE_VALUE" : "FALSE_VALUE");
+		}
+		append(";\n");
+	}
+
+	/**
+	 * Append a complete assignment statement to cgTargetValue including any necessary cast of cSourceValue.
+	 */
+	public void appendAssignWithCast(@NonNull CGCastExp cgTargetValue, @NonNull CGValuedElement cgSourceValue) {
+		JavaStream.SubStream sourceStream = new JavaStream.SubStream() {
+			@Override
+			public void append() {
+				appendReferenceTo(cgSourceValue);
+			}
+		};
+		TypeDescriptor sourceTypeDescriptor;
+		if (cgSourceValue instanceof CGVariableExp) {
+			CGVariable cgVariable = CGUtil.getReferredVariable((CGVariableExp)cgSourceValue);	// A CGParameter may be just OclVoid
+			sourceTypeDescriptor = codeGenerator.getTypeDescriptor(cgVariable);
+		}
+		else {
+			sourceTypeDescriptor = codeGenerator.getTypeDescriptor(cgSourceValue);
+		}
+		Class<?> sourceClass = sourceTypeDescriptor.hasJavaClass();
+		if (sourceClass != null) {
+			Boolean sourceIsRequired = cgSourceValue.isRequired();
+			appendAssignWithCast(cgTargetValue, sourceIsRequired, sourceClass, sourceStream);
+		}
+		else {
+			TypeDescriptor targetTypeDescriptor = codeGenerator.getTypeDescriptor(cgTargetValue);
+			appendDeclaration(cgTargetValue);
+			append(" = ");				// XXX integrate better
+			targetTypeDescriptor.appendCastTerm(this, null, cgSourceValue);
+			append(";\n");
+		}
+	}
+
+	/**
+	 * Append a complete assignment statement to cgTargetValue, by wrapping the sourceStream in a cast if necessary
+	 * to make the sourceClass return and sourceIsRequired nullity compatible with cgTargetValue.
+	 */
+	public void appendAssignWithCast(@NonNull CGValuedElement cgTargetValue, @Nullable Boolean sourceIsRequired,
+			@NonNull Class<?> sourceClass, JavaStream.@NonNull SubStream sourceStream) {
+		boolean targetIsRequired = cgTargetValue.isRequired();
+		TypeDescriptor targetTypeDescriptor = codeGenerator.getTypeDescriptor(cgTargetValue);
+		Class<?> targetClass = targetTypeDescriptor.hasJavaClass();
+		Boolean nullCast;
+		if (targetIsRequired) {
+			if (sourceIsRequired == Boolean.TRUE) {
+				nullCast = null;
+			}
+			else {
+				if (sourceIsRequired == Boolean.FALSE) {
+					appendSuppressWarningsNull(true);
+				}
+				nullCast = Boolean.TRUE;
+			}
+		}
+		else {
+			if (sourceIsRequired == Boolean.TRUE) {
+				nullCast = null;//Boolean.FALSE;
+			}
+			else {
+				nullCast = null;
+			}
+		}
+		appendDeclaration(cgTargetValue);
+		append(" = ");
+		if ((nullCast != null) || (targetClass == null) || !targetClass.isAssignableFrom(sourceClass)) {
+			targetTypeDescriptor.appendCast(this, nullCast, sourceClass, sourceStream);
+		}
+		else {
+			sourceStream.append();
 		}
 		append(";\n");
 	}
@@ -436,7 +523,7 @@ public class JavaStream
 
 	public void appendBooleanValueName(@NonNull CGValuedElement cgValue, boolean isTrue) {
 		@NonNull TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
-		if (!cgValue.isNonNull() || cgValue.isCaught() || cgValue.getNamedValue().isCaught() || (typeDescriptor.getJavaClass() == Object.class)) {
+		if (!cgValue.isRequiredOrNonNull() || cgValue.isCaught() || cgValue.getNamedValue().isCaught() || (typeDescriptor.getJavaClass() == Object.class)) {
 			appendValueName(cgValue);
 			append(" == ");
 			append(isTrue ? "Boolean.TRUE" : "Boolean.FALSE");
@@ -464,7 +551,7 @@ public class JavaStream
 	public void appendClassCast(@NonNull CGValuedElement cgValue, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream) {
 		@NonNull TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 		Class<?> requiredJavaClass = typeDescriptor.getJavaClass();
-		if ((actualJavaClass == null) || !requiredJavaClass.isAssignableFrom(actualJavaClass)) {
+		if ((isRequired != null) || (actualJavaClass == null) || !requiredJavaClass.isAssignableFrom(actualJavaClass)) {
 			typeDescriptor.appendCast(this, isRequired, actualJavaClass, subStream);
 		}
 		else {
@@ -520,13 +607,11 @@ public class JavaStream
 				append(javaClass.getName());
 			}
 			else {
-				Boolean componentIsRequired = isRequired;
 				for (Class<?> jClass = javaClass; true; jClass = jClass.getComponentType()) {
 					if (jClass.getComponentType() == null)  {
-						appendClassReference(componentIsRequired, jClass.getName());
+						appendClassReference(isRequired, jClass.getName());
 						break;
 					}
-					componentIsRequired = Boolean.FALSE;
 				}
 				TypeVariable<?>[] typeParameters = javaClass.getTypeParameters();
 				if (typeParameters.length > 0) {
@@ -651,7 +736,7 @@ public class JavaStream
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable String className) {
 		assert className != null;
 		className = codeGenerator.getRequalifiedClassName(className);
-		append(cg2java.addImport(useNullAnnotations ? isRequired : null, className));
+		append(importNameManager.addImport(useNullAnnotations ? isRequired : null, className));
 	}
 
 	public void appendClassReference(@NonNull CGClass cgClass) {
@@ -689,7 +774,11 @@ public class JavaStream
 		append("/**\n");
 		pushIndentation(" * ");
 		if (title != null) {
-			append(title + "\n");
+			append(title);
+			append("\n");
+			if (element != null) {
+				appendOptionalBlankLine();
+			}
 		}
 		if (element != null) {
 			PrettyPrintOptions.Global createOptions = createOptions(element);
@@ -896,7 +985,7 @@ public class JavaStream
 	}
 
 	public void appendEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {
-		if (cgValue.isNonNull() && cgValue.isNonInvalid()) {
+		if (cgValue.isRequiredOrNonNull() && cgValue.isNonInvalid()) {
 			if (!value) {
 				append("!");
 			}
@@ -969,7 +1058,7 @@ public class JavaStream
 	}
 
 	public void appendNotEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {
-		if (cgValue.isNonNull() && cgValue.isNonInvalid()) {
+		if (cgValue.isRequiredOrNonNull() && cgValue.isNonInvalid()) {
 			if (value) {
 				append("!");
 			}
@@ -981,6 +1070,16 @@ public class JavaStream
 			appendClassReference(null, ValueUtil.class);
 			append(".");
 			append(value ? "TRUE_VALUE" : "FALSE_VALUE");
+		}
+	}
+
+	/**
+	 * Append a blank line unless there prevailing text already ends in a blank line.
+	 */
+	public void appendOptionalBlankLine() {
+		if (tailNewLines <= 1) {
+			append("\n");
+		//	tailNewLines++;
 		}
 	}
 
@@ -1031,7 +1130,7 @@ public class JavaStream
 		}
 		else {
 			TypeDescriptor actualTypeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
-			if (!cgValue.isNull() && !cgValue.getNamedValue().isCaught()) {
+			if (!cgValue.isNull() && !cgValue.isNonInvalid() && !cgValue.getNamedValue().isCaught()) {
 				if (!requiredTypeDescriptor.isAssignableFrom(actualTypeDescriptor)) {
 					Boolean isRequired = null;
 					SubStream castBody = new SubStream() {
@@ -1187,9 +1286,9 @@ public class JavaStream
 		}
 		else {
 			if (cgElement.isGlobal()) {
-				cg2java.appendGlobalPrefix();
+				cg2java.appendSupportPrefix();
 			}
-			String valueName = cg2java.getResolvedName(cgElement);
+			String valueName = cgElement.getResolvedName();
 			append(valueName);
 		}
 	}
@@ -1208,6 +1307,10 @@ public class JavaStream
 
 	public @Nullable GenPackage getGenPackage() {
 		return cg2java.getGenPackage();
+	}
+
+	public @NonNull ImportNameManager getImportNameManager() {
+		return importNameManager;
 	}
 
 	public @NonNull TypeRepresentation getUnboxedTypeRepresentation() {
@@ -1235,7 +1338,7 @@ public class JavaStream
 		else {
 			TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 			Class<?> javaClass = typeDescriptor.getJavaClass();
-			return (javaClass == boolean.class) || ((javaClass == Boolean.class) && cgValue.isNonNull());
+			return (javaClass == boolean.class) || ((javaClass == Boolean.class) && cgValue.isRequiredOrNonNull());
 		}
 	}
 
@@ -1278,6 +1381,7 @@ public class JavaStream
 		append("\n");
 		append("{");
 		pushIndentation(null);
+		tailNewLines = 1;		// Avoid gratuitous blank line
 	}
 
 	public void pushIndentation(@Nullable String extraIndentation) {

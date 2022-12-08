@@ -20,8 +20,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -37,13 +39,16 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -57,9 +62,14 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *  </br>
  *  e.g. as eObject.eOperation(eArguments)
  */
-public class EcoreOperationCallingConvention extends AbstractOperationCallingConvention
+public class EcoreOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
-	public static final @NonNull EcoreOperationCallingConvention INSTANCE = new EcoreOperationCallingConvention();
+	private static final @NonNull EcoreOperationCallingConvention INSTANCE = new EcoreOperationCallingConvention();
+
+	public static @NonNull EcoreOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	public boolean canHandle(@NonNull CodeGenerator codeGenerator, @NonNull Operation asOperation) {
 		GenModelHelper genModelHelper = codeGenerator.getGenModelHelper();
@@ -85,37 +95,8 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
-		GenModelHelper genModelHelper = analyzer.getGenModelHelper();
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		EOperation eOperation;
-		if (libraryOperation instanceof EInvokeOperation) {
-			eOperation = ((EInvokeOperation)libraryOperation).getEOperation();
-		}
-		else {
-			assert (libraryOperation instanceof EObjectOperation);
-		// System.out.println("Non EInvokeOperation overload for " + this);		// XXX
-			eOperation = (EOperation) asOperation.getESObject();
-		}
-		assert (eOperation != null);
-		assert !PivotUtil.isStatic(eOperation);
-		CGOperation cgOperation = null;
-		try {
-			genModelHelper.getGenOperation(eOperation);
-			CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-			cgEcoreOperation.setEOperation(eOperation);
-			cgOperation = cgEcoreOperation;
-		}
-		catch (GenModelException e) {
-			// No genmodel so fallback
-		}
-		if (cgOperation == null) {
-			//	assert false : "Fallback overload for " + this;		// XXX
-			System.out.println("Fallback overload for " + this);		// XXX
-			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		}
-		return cgOperation;
+	public @NonNull CGEcoreOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		return CGModelFactory.eINSTANCE.createCGEcoreOperation();
 	}
 
 	@Override
@@ -146,12 +127,6 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		// TODO Auto-generated method stub
-		super.createCGParameters(operationNameManager, bodyExpression);
-	}
-
-	@Override
 	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
 		CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, PivotUtil.getName(asParameterVariable));
 		operationNameManager.declareEagerName(cgParameter);
@@ -159,7 +134,63 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
+		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
+		GenModelHelper genModelHelper = analyzer.getGenModelHelper();
+		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+		EOperation eOperation;
+		if (libraryOperation instanceof EInvokeOperation) {
+			eOperation = ((EInvokeOperation)libraryOperation).getEOperation();
+		}
+		else {
+			assert (libraryOperation instanceof EObjectOperation);
+		// System.out.println("Non EInvokeOperation overload for " + this);		// XXX
+			eOperation = (EOperation) asOperation.getESObject();
+		}
+		assert (eOperation != null);
+		assert !PivotUtil.isStatic(eOperation);
+		CGOperation cgOperation = null;
+		try {
+			genModelHelper.getGenOperation(eOperation);
+			CGEcoreOperation cgEcoreOperation = createCGOperation(analyzer, asOperation);
+			cgEcoreOperation.setEOperation(eOperation);
+			cgOperation = cgEcoreOperation;
+		}
+		catch (GenModelException e) {
+			// No genmodel so fallback
+		}
+		if (cgOperation == null) {
+			//	assert false : "Fallback overload for " + this;		// XXX
+			System.out.println("Fallback overload for " + this);		// XXX
+			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		}
+
+		assert cgOperation.getCallingConvention() == null;
+		cgOperation.setCallingConvention(this);
+		Element asOperation2 = cgOperation.getAst();
+		assert asOperation2 == null;
+		assert analyzer.basicGetCGElement(asOperation) == null;
+		analyzer.initAst(cgOperation, asOperation, true);
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+		assert cgOperation.eContainer() == null;
+		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
+		cgClass.getOperations().add(cgOperation);
+		createCGParameters(operationNameManager, asExpressionInOCL);
+		return cgOperation;
+	}
+
+	@Override
+	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		if (cgOperation.getBody() == null) {
+			return false;
+		}
+		cgOperation.accept(cg2javaVisitor);
+		return true;
+	}
+
+	@Override
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 	//	Operation asOperation = cgOperationCallExp.getReferredOperation();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
@@ -177,7 +208,7 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	//	if (!js.appendLocalStatements(cgThis)) {
 	//		return false;
 	//	}
-		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
 		//
@@ -231,8 +262,44 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		throw new UnsupportedOperationException();		// Ecore operations are declared by genmodel
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		List<CGParameter> cgParameters = cgOperation.getParameters();
+		CGValuedElement cgBody = cgOperation.getBody();
+		if (cgBody == null) {
+			return false;
+		}
+		String returnClassName = cg2javaVisitor.getGenModelHelper().getOperationReturnType(asOperation);
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		js.appendCommentWithOCL(null, cgBody.getAst());
+		for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
+			VariableDeclaration asParameter = CGUtil.getAST(cgParameter);
+			Type asType = PivotUtil.getType(asParameter);
+			if (asType instanceof CollectionType) {
+				js.append("assert ");
+				js.appendValueName(cgParameter);
+				js.append(" != null;\n");
+			}
+		}
+		js.appendLocalStatements(cgBody);
+		CGInvalid cgInvalidValue = cgBody.getInvalidValue();
+		if (cgInvalidValue  != null) {
+			js.append("throw ");
+			js.appendValueName(cgInvalidValue);
+		}
+		else {
+			TypeDescriptor typeDescriptor = cg2javaVisitor.getCodeGenerator().getTypeDescriptor(cgBody);
+			//			String className = typeDescriptor.getClassName();
+			//			Class<?> javaClass = typeDescriptor.getJavaClass();
+			js.append("return ");
+			//			if (returnClassName.contains("<")) {
+			//				js.append("(" + returnClassName + ")");
+			//			}
+			//			js.appendValueName(cgBody);
+			typeDescriptor.appendEcoreValue(js, returnClassName, cgBody);
+		}
+		js.append(";");
+		return true;
 	}
 
 	@Override

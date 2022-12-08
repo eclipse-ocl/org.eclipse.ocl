@@ -166,4 +166,12 @@ public class CGIteratorImpl extends CGParameterImpl implements CGIterator {
 		return true;
 	}
 
+	@Override
+	public void setRequired(boolean newRequired) {
+		if (!newRequired) {
+			getClass();		// XXX
+		}
+		super.setRequired(newRequired);
+	}
+
 } //CGIteratorImpl

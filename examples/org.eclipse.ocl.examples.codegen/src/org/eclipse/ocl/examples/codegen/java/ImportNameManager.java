@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 
 /**
  * Manage the mapping from long fully qualified class names to the short class names that may be used once an import has been provided.
@@ -31,5 +32,5 @@ public interface ImportNameManager
 
 	@NonNull Map<@NonNull String, @Nullable String> getLong2ShortImportNames();
 
-	void reserveLocalName(@NonNull String foreignClassName);
+	void reserveNestedClassNames(@NonNull CGClass cgClass);
 }

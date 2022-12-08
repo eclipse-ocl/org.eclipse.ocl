@@ -87,6 +87,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		assert !(cgChild instanceof CGVariableExp) : "must catch variable not its access";
 		boolean mayBeInvalid = !cgChild.isNonInvalid();
 		if (mayBeInvalid) {
+			mayBeInvalid = !cgChild.isNonInvalid();
 			CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
 			cgCatchExp.setCaught(true);
 			globalNameManager.wrap(cgCatchExp, cgChild);

@@ -25,13 +25,15 @@ import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  ClassCallingConvention defines a particular style of Class declaration.
  */
-public abstract class AbstractClassCallingConvention implements ClassCallingConvention
+public abstract class AbstractClassCallingConvention extends AbstractCallingConvention implements ClassCallingConvention
 {
 	protected void appendSuperTypes(@NonNull JavaStream js, @NonNull CGClass cgClass) {
 		boolean isFirst = true;
@@ -51,34 +53,28 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 		return CGModelFactory.eINSTANCE.createCGClass();
 	}
 
-	protected void generateClasses(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	protected void generateClasses(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		for (CGClass cgNestedClass : cgClass.getClasses()) {
-			js.append("\n");
+			js.appendOptionalBlankLine();
 			cgNestedClass.accept(cg2javaVisitor);
 		}
 	}
 
-	protected void generateOperations(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	protected void generateOperations(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		for (CGOperation cgOperation : cgClass.getOperations()) {
-			js.append("\n");
+			js.appendOptionalBlankLine();
 			cgOperation.accept(cg2javaVisitor);
 		}
 	}
 
-	protected void generateProperties(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
-		boolean isFirst = true;
+	protected void generateProperties(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		js.appendOptionalBlankLine();
 		for (CGProperty cgProperty : cgClass.getProperties()) {
-			if (isFirst) {
-				js.append("\n");
-			}
 			cgProperty.accept(cg2javaVisitor);
-			isFirst = false;
 		}
-	}
-
-	@Override
-	public @NonNull ClassCallingConvention getClassCallingConvention() {
-		return this;
 	}
 
 	@Override
@@ -98,9 +94,20 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 		throw new UnsupportedOperationException();
 	}
 
+	protected org.eclipse.ocl.pivot.@NonNull Package getDefaultParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {
+		return AbstractLanguageSupport.getCachePackage(asFeature);
+	}
+
 	@Override
 	public @NonNull String getName(@NonNull CodeGenAnalyzer analyzer, @NonNull NamedElement asNamedElement) {
 		return PivotUtil.getName(asNamedElement);
+	}
+
+	/**
+	 * Return the Package within which the cache class support for which asFeature shuld be supported.
+	 */
+	protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {	// XXX Regularly overridden
+		return getDefaultParentPackage(analyzer, asFeature);
 	}
 
 	/**
@@ -136,6 +143,7 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 	protected void installCGRootClassParent(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgRootClass = analyzer.getCGRootClass(asClass);
 		cgRootClass.getClasses().add(cgClass);
+		analyzer.queueCGClassDeclaration(cgClass);
 	}
 
 	@Deprecated // moving to ClassCallingConvention

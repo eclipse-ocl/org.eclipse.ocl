@@ -49,9 +49,15 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class InlinedOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	public static final @NonNull InlinedOperationCallingConvention INSTANCE = new InlinedOperationCallingConvention();
+	private static final @NonNull InlinedOperationCallingConvention INSTANCE = new InlinedOperationCallingConvention();
 
-	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public static @NonNull InlinedOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
+
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asReferredOperation = CGUtil.getAsOperation(cgOperationCallExp);
@@ -187,12 +193,12 @@ public class InlinedOperationCallingConvention extends AbstractOperationCallingC
 	} */
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		throw new IllegalStateException("Inlined operation cannot be called");
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new IllegalStateException("Inlined operation cannot be declared");
 	}
 

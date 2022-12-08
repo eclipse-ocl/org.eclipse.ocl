@@ -277,7 +277,7 @@ public class MarkupToHTML extends MarkupSwitch<@Nullable HTMLBuffer>
 			}
 			else if (context instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class classContext = (org.eclipse.ocl.pivot.Class)context;
-				ParserContext parserContext = new ClassContext(ocl.getEnvironmentFactory(), null, classContext, null);
+				ParserContext parserContext = new ClassContext(ocl.getEnvironmentFactory(), null, classContext, null, null);
 				return parserContext.parse(classContext, oclString);
 			}
 			else if (context instanceof EObject) {			// Legacy code probably obsolete

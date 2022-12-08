@@ -27,10 +27,10 @@ import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.CachedOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ContextClassCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.DefaultOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOppositePropertyCallingConvention;
@@ -41,6 +41,8 @@ import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConventio
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.InlinedOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.IterationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.LibraryIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
@@ -198,46 +200,49 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	public @NonNull ClassCallingConvention getCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return ContextClassCallingConvention.INSTANCE;
+		return ContextClassCallingConvention.getInstance(asClass);
 	}
 
 	@Override
-	public final @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean maybeVirtual) {
-		OperationCallingConvention callingConvention = getCallingConventionInternal(asOperation, maybeVirtual);
-	//	NameUtil.errPrintln(callingConvention + " for " + asOperation + ":" + maybeVirtual);
-		return callingConvention;
+	public @NonNull IterationCallingConvention getCallingConvention(@NonNull Iteration asIteration) {
+		IterationHelper iterationHelper = getIterationHelper(asIteration);
+		if (iterationHelper != null) {
+			return BuiltInIterationCallingConvention.getInstance(asIteration);
+		}
+		else {
+			return LibraryIterationCallingConvention.getInstance(asIteration);
+		}
 	}
 
-	protected @NonNull OperationCallingConvention getCallingConventionInternal(@NonNull Operation asOperation, boolean maybeVirtual) {
-		if (asOperation instanceof Iteration) {
-			return BuiltInIterationCallingConvention.INSTANCE;
-		}
+	@Override
+	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean maybeVirtual) {
+		assert !(asOperation instanceof Iteration) : "Expected a non-Iteration Operation";
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
-		if (BuiltInOperationCallingConvention.INSTANCE.canHandle(libraryOperation)) {
-			return BuiltInOperationCallingConvention.INSTANCE;
+		if (BuiltInOperationCallingConvention.getInstance(asOperation, maybeVirtual).canHandle(libraryOperation)) {
+			return BuiltInOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 		}
 		if (libraryOperation instanceof AbstractStaticOperation) {
-			return ForeignOperationCallingConvention.INSTANCE;
+			return ForeignOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 		}
 		if (libraryOperation instanceof NativeOperation) {
 			if (libraryOperation instanceof JavaNativeOperation) {
 				Method jMethod = ((JavaNativeOperation)libraryOperation).getMethod();
-				if (SupportOperationCallingConvention.INSTANCE.canHandle(jMethod)) {
-					return SupportOperationCallingConvention.INSTANCE;
+				if (SupportOperationCallingConvention.getInstance(jMethod).canHandle(jMethod)) {
+					return SupportOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 				}
 			}
-			return NativeOperationCallingConvention.INSTANCE;
+			return NativeOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 		}
 		if (libraryOperation instanceof NativeVisitorOperation) {		// XXX this might be obsolete
 			LanguageExpression bodyExpression = asOperation.getBodyExpression();
 			if (bodyExpression == null) {
-				return NativeOperationCallingConvention.INSTANCE;
+				return NativeOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 			}
 		//	CGValuedElement cgOperationCallExp2 = inlineOperationCall(element, bodyExpression);
 		//	if (cgOperationCallExp2 != null) {
 		//		return cgOperationCallExp2;
 		//	}
-		//	return NativeOperationCallingConvention.INSTANCE;
+		//	return NativeOperationCallingConvention.getInstance();
 			throw new UnsupportedOperationException();
 		}
 		if (libraryOperation instanceof ConstrainedOperation) {
@@ -249,14 +254,14 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			}
 			org.eclipse.ocl.pivot.Package asPackage = asOperation.getOwningClass().getOwningPackage();
 			if (asPackage instanceof Library) {
-				return VolatileOperationCallingConvention.INSTANCE;			// Library operations handle polymorphism internally
+				return VolatileOperationCallingConvention.getInstance(asOperation, maybeVirtual);			// Library operations handle polymorphism internally
 			}
 			else {
 				FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
 				if (maybeVirtual) {
 					Iterable<@NonNull Operation> asOverrides = finalAnalysis.getOverrides(asOperation);
 					if (Iterables.size(asOverrides) > 1) {
-						return VirtualOperationCallingConvention.INSTANCE;		// Need a polymorphic dispatcher
+						return VirtualOperationCallingConvention.getInstance(asOperation, maybeVirtual);		// Need a polymorphic dispatcher
 					}
 					LanguageExpression bodyExpression = asOperation.getBodyExpression();
 					if (bodyExpression != null) {
@@ -266,99 +271,99 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 							Iterable<@NonNull Operation> referencedNonFinalOperations = getReferencedNonFinalOperations(finalAnalysis, bodyExpression);
 							if (referencedNonFinalOperations == null) {
 								// FIXME a simple heavy wrt call count heuristic might avoid some unpleasant bloat
-								return InlinedOperationCallingConvention.INSTANCE;
+								return InlinedOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 							}
 						}
 					}
 				}
-				return CachedOperationCallingConvention.INSTANCE;
+				return DefaultOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 			}
 		}
 		if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {
-			if (EcoreOperationCallingConvention.INSTANCE.canHandle(this, asOperation)) {
-				return EcoreOperationCallingConvention.INSTANCE;
+			if (EcoreOperationCallingConvention.getInstance(asOperation, maybeVirtual).canHandle(this, asOperation)) {
+				return EcoreOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 			}
 			org.eclipse.ocl.pivot.Class asType = asOperation.getOwningClass();
 			String className = asType.getInstanceClassName();
 			if (className != null) {
-				return NativeOperationCallingConvention.INSTANCE;
+				return NativeOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 			}
 			else {
-				return EcoreForeignOperationCallingConvention.INSTANCE;
+				return EcoreForeignOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 			}
 		}
-		return LibraryOperationCallingConvention.INSTANCE;
+		return LibraryOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 	}
 
 	@Override
 	public @NonNull PropertyCallingConvention getCallingConvention(@NonNull Property asProperty) {
 		LibraryProperty libraryProperty = metamodelManager.getImplementation(null, null, asProperty);
 		if (libraryProperty instanceof NativeProperty) {
-			return NativePropertyCallingConvention.INSTANCE;
+			return NativePropertyCallingConvention.getInstance(asProperty);
 		}
 		else if (libraryProperty instanceof OclElementOclContainerProperty) {
-			return EcorePropertyCallingConvention.INSTANCE;
+			return EcorePropertyCallingConvention.getInstance(asProperty);
 		}
 		else if (libraryProperty instanceof CompositionProperty) {
 		/*	EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
 			if (eStructuralFeature != null) {
 				try {
 					getGenModelHelper().getGetAccessor(eStructuralFeature);
-					return EcoreOppositePropertyCallingConvention.INSTANCE;
+					return EcoreOppositePropertyCallingConvention.getInstance();
 				} catch (GenModelException e) {
 					addProblem(e);		// FIXME drop through to better default
 				}
 			} */
-			return ExecutorCompositionPropertyCallingConvention.INSTANCE;
+			return ExecutorCompositionPropertyCallingConvention.getInstance(asProperty);
 		}
 		else if (/*(libraryProperty instanceof CompositionProperty) ||*/ (libraryProperty instanceof ImplicitNonCompositionProperty)) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
 			if (eStructuralFeature != null) {
 				try {
 					getGenModelHelper().getGetAccessor(eStructuralFeature);
-					return EcoreOppositePropertyCallingConvention.INSTANCE;
+					return EcoreOppositePropertyCallingConvention.getInstance(asProperty);
 				} catch (GenModelException e) {
 					addProblem(e);		// FIXME drop through to better default
 				}
 			}
-			return ExecutorOppositePropertyCallingConvention.INSTANCE;
+			return ExecutorOppositePropertyCallingConvention.getInstance(asProperty);
 		}
 		if (libraryProperty instanceof ExtensionProperty) {
-			return ExecutorOppositePropertyCallingConvention.INSTANCE;	// opposite
+			return ExecutorOppositePropertyCallingConvention.getInstance(asProperty);	// opposite
 		}
 		else if (libraryProperty instanceof StaticProperty) {
-			return ForeignPropertyCallingConvention.INSTANCE;
+			return ForeignPropertyCallingConvention.getInstance(asProperty);
 		}
 		else if (libraryProperty instanceof TuplePartProperty) {
-			return TuplePropertyCallingConvention.INSTANCE;
+			return TuplePropertyCallingConvention.getInstance(asProperty);
 		}
 		else if (libraryProperty instanceof ForeignProperty) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature)asProperty.getESObject();
 			assert eStructuralFeature == null;
-			return ForeignPropertyCallingConvention.INSTANCE;
+			return ForeignPropertyCallingConvention.getInstance(asProperty);
 		}
 		else if (libraryProperty instanceof StereotypeProperty) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature)asProperty.getESObject();
 			if (eStructuralFeature != null) {
 				try {
 					getGenModelHelper().getGetAccessor(eStructuralFeature);
-					return EcorePropertyCallingConvention.INSTANCE;
+					return EcorePropertyCallingConvention.getInstance(asProperty);
 				} catch (GenModelException e) {
 					addProblem(e);		// FIXME drop through to better default
 				}
 			}
-			return ConstrainedPropertyCallingConvention.INSTANCE;
+			return ConstrainedPropertyCallingConvention.getInstance(asProperty);
 		}
 		else if (libraryProperty instanceof ConstrainedProperty) {
 			EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
 			assert eStructuralFeature != null;
 			try {
 				getGenModelHelper().getGetAccessor(eStructuralFeature);
-				return EcorePropertyCallingConvention.INSTANCE;
+				return EcorePropertyCallingConvention.getInstance(asProperty);
 			} catch (GenModelException e) {
 				addProblem(e);		// FIXME drop through to better default
 			}
-			return ForeignPropertyCallingConvention.INSTANCE;
+			return ForeignPropertyCallingConvention.getInstance(asProperty);
 		}
 		else if (libraryProperty instanceof ExplicitNavigationProperty) {
 				//	|| (libraryProperty instanceof CompositionProperty)
@@ -369,12 +374,12 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			if (eStructuralFeature != null) {
 				try {
 					getGenModelHelper().getGetAccessor(eStructuralFeature);
-					return EcorePropertyCallingConvention.INSTANCE;
+					return EcorePropertyCallingConvention.getInstance(asProperty);
 				} catch (GenModelException e) {
 					addProblem(e);		// FIXME drop through to better default
 				}
 			}
-			return ExecutorPropertyCallingConvention.INSTANCE;		// Used by e.g. test_oclAsSet_351512 - JUnit of dynamic Ecore
+			return ExecutorPropertyCallingConvention.getInstance(asProperty);		// Used by e.g. test_oclAsSet_351512 - JUnit of dynamic Ecore
 		}
 		else if ((libraryProperty instanceof OclElementOclContentsProperty)
 				  || (libraryProperty instanceof CollectionElementTypeProperty)
@@ -382,9 +387,9 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 				  || (libraryProperty instanceof CollectionUpperProperty)
 				  || (libraryProperty instanceof MapKeyTypeProperty)
 				  || (libraryProperty instanceof MapValueTypeProperty)) {
-			return LibraryPropertyCallingConvention.INSTANCE;
+			return LibraryPropertyCallingConvention.getInstance(asProperty);
 		}
-		return LibraryPropertyCallingConvention.INSTANCE;
+		return LibraryPropertyCallingConvention.getInstance(asProperty);
 	}
 
 	protected @Nullable Iterable<@NonNull Operation> getConstrainedOperations() {
@@ -410,16 +415,6 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	public @NonNull GlobalNameManager getGlobalNameManager() {
 		return globalNameManager;
 	}
-
-	@Override
-	public @NonNull ImportNameManager getImportNameManager() {
-		return globalNameManager.getImportNameManager();
-	}
-
-/*	@Override
-	public @NonNull NameManager getNameManager() {
-		return nameManager;
-	} */
 
 	@Override
 	public @NonNull CodeGenOptions getOptions() {

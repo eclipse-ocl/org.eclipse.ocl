@@ -140,6 +140,11 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitCGEcoreContainerAssignment(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreContainerAssignment object) {
+		return null;
+	}
+
+	@Override
 	public R visitCGEcoreDataTypeShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreDataTypeShadowExp object) {
 		return null;
 	}
@@ -161,6 +166,11 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 
 	@Override
 	public R visitCGEcoreOppositePropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreOppositePropertyCallExp object) {
+		return null;
+	}
+
+	@Override
+	public R visitCGEcorePropertyAssignment(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcorePropertyAssignment object) {
 		return null;
 	}
 
@@ -425,12 +435,22 @@ public abstract class AbstractNullCGModelVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitCGPropertyAssignment(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGPropertyAssignment object) {
+		return null;
+	}
+
+	@Override
 	public R visitCGPropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGPropertyCallExp object) {
 		return null;
 	}
 
 	@Override
 	public R visitCGReal(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGReal object) {
+		return null;
+	}
+
+	@Override
+	public R visitCGSequence(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGSequence object) {
 		return null;
 	}
 

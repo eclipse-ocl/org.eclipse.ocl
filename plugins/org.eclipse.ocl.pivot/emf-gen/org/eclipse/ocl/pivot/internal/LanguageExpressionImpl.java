@@ -146,9 +146,7 @@ public abstract class LanguageExpressionImpl extends ValueSpecificationImpl impl
 	@Override
 	public String getLanguage()
 	{
-		// TODO: implement this method to return the 'Language' attribute
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!LanguageExpression!language
 	}
 
 	/**

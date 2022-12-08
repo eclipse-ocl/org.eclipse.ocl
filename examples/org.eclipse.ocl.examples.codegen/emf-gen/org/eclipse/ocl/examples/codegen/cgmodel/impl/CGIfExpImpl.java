@@ -414,7 +414,7 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 
 	/**
 	 * {@inheritDoc}
-	 * @generated
+	 * @generated XXX
 	 */
 	@Override
 	public boolean isNonInvalid() {
@@ -425,7 +425,7 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 			return elseExpression.isNonInvalid();
 		}
 		else {
-			return thenExpression.isNonInvalid() && elseExpression.isNonInvalid();
+			return condition.isNonInvalid() && thenExpression.isNonInvalid() && elseExpression.isNonInvalid();
 		}
 	}
 
@@ -435,7 +435,7 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	 */
 	@Override
 	public boolean isNonNull() {
-		return condition.isTrue() ? thenExpression.isNonNull() : condition.isFalse() ? elseExpression.isNonNull() : thenExpression.isNonNull() && elseExpression.isNonNull();
+		return condition.isTrue() ? thenExpression.isRequiredOrNonNull() : condition.isFalse() ? elseExpression.isRequiredOrNonNull() : thenExpression.isRequiredOrNonNull() && elseExpression.isRequiredOrNonNull();
 	}
 
 	/**
@@ -464,5 +464,4 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	public boolean isUnboxed() {
 		return thenExpression.isUnboxed() && elseExpression.isUnboxed();
 	}
-
 } //CGIfExpImpl

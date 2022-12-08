@@ -45,7 +45,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 			if (cgContainingPackage != null) {
 				js.appendClassHeader(cgContainingPackage);
 				Class<?> baseClass = genModelHelper.getAbstractOperationClass(expInOcl.getOwnedParameters().size());
-				String title = cgClass.getName() + " provides the Java implementation for\n";
+				String title = cgClass.getName() + " provides the Java implementation for";
 				js.appendCommentWithOCL(title, expInOcl);
 				assert className != null;
 				//	js.append("@SuppressWarnings(\"nls\")\n");
@@ -54,13 +54,13 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 				js.pushClassBody(className);
 				if (sortedGlobals != null) {
 					generateGlobals(sortedGlobals);
-					js.append("\n");
+					js.appendOptionalBlankLine();
 				}
 				if (expInOcl.getOwnedContext() != null) {
 					boolean first = true;
 					for (CGOperation cgOperation : cgClass.getOperations()) {
 						if (!first) {
-							js.append("\n");
+							js.appendOptionalBlankLine();
 						}
 						cgOperation.accept(this);
 						first = false;
@@ -74,7 +74,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 				for (CGClass cgNestedClass : cgClass.getClasses()) {
 				//	boolean first = true;
 				//	if (!first) {
-						js.append("\n");
+						js.appendOptionalBlankLine();
 				//	}
 						cgNestedClass.accept(this);
 				//	first = false;
@@ -83,21 +83,21 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 				assert js.peekClassNameStack() == null;
 			}
 			else {
-				String title = cgClass.getName() + " provides the Java implementation for the additional non-Ecore features of\n";
+				String title = cgClass.getName() + " provides the Java implementation for the additional non-Ecore features of";
 				js.appendCommentWithOCL(title, cgClass.getAst());
 				js.append("public static class " + className);
 				js.pushClassBody(className);
 				boolean first = true;
 				for (CGProperty cgProperty : cgClass.getProperties()) {
 					if (!first) {
-						js.append("\n");
+						js.appendOptionalBlankLine();
 					}
 					cgProperty.accept(this);
 					first = false;
 				}
 				for (CGOperation cgOperation : cgClass.getOperations()) {
 					if (!first) {
-						js.append("\n");
+						js.appendOptionalBlankLine();
 					}
 					cgOperation.accept(this);
 					first = false;

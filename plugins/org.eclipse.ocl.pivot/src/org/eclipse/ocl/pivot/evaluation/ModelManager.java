@@ -170,7 +170,7 @@ public interface ModelManager
 	}
 
 	/**
-	 * Specify the boxed value of the not-read-only foreign propertyId of object, which should be null for a static properyId.
+	 * Specify the boxed value of the not-read-only foreign propertyId of object, which should be null for a static propertyId.
 	 * Returns the previous value. Returns Invalid if read-only.
 	 *
 	 * @since 1.18

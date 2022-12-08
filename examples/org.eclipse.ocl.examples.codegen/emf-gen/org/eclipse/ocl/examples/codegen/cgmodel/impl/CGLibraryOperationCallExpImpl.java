@@ -10,15 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -220,6 +223,10 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 		if (asOperation == null) {
 			return false;
 		}
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(CGUtil.getReferredOperation(this));
+		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(this);
+		int iMax = cgArguments.size();
+		assert cgParameters.size() == iMax;
 		if (asOperation.isIsValidating()) {
 			if (asOperation.isIsInvalidating()) {
 				// e.g AND, forAll - nonInvalid if all inputs nonInvalid
@@ -236,10 +243,18 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 				// normal use case - nonInvalid if all inputs nonInvalid
 			}
 		}
-		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {		// Need to redirect to operation implementation for e.g. not() on a constant
-			if (!argument.isNonNull() || !argument.isNonInvalid()) {
+		for (int i = 0; i < iMax; i++) {		// Need to redirect to operation implementation for e.g. not() on a constant
+			CGParameter cgParameter = cgParameters.get(i);
+			CGValuedElement cgArgument = cgArguments.get(i);
+			if (!cgArgument.isNonInvalid()) {
 				return false;
 			}
+			if (cgParameter.isRequired() && !cgArgument.isRequiredOrNonNull()) {
+				return false;
+			}
+		//	if (!argument.isNonNull() || !argument.isNonInvalid()) {			// XXX nullable parameter
+		//		return false;
+		//	}
 		}
 		return true;
 	}
@@ -255,9 +270,8 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	}
 
 	@Override
-	public void setReferredOperation(CGOperation newReferredOperation) {
-	//	assert (newReferredOperation == null) || !newReferredOperation.eClass().getName().equals("CGFunction");		// XXX
-		super.setReferredOperation(newReferredOperation);
+	public void setRequired(boolean newRequired) {
+		// XXX Auto-generated method stub
+		super.setRequired(newRequired);
 	}
-
 } //CGLibraryOperationCallExpImpl

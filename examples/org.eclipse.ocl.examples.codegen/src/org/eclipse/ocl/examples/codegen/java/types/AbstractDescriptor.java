@@ -73,7 +73,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
-		if (!unboxedValue.isNonNull() && !js.isPrimitive(unboxedValue)) {
+		if (!unboxedValue.isRequiredOrNonNull() && !js.isPrimitive(unboxedValue)) {
 			js.appendReferenceTo(unboxedValue);
 			js.append(" == null ? null : ");
 		}
@@ -147,9 +147,9 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Override
-	public void appendCastTerm(@NonNull JavaStream js, @NonNull CGValuedElement cgElement) {
+	public void appendCastTerm(@NonNull JavaStream js, @Nullable Boolean isRequired, @NonNull CGValuedElement cgElement) {
 		js.append("(");
-		append(js, null);
+		append(js, isRequired);
 		js.append(")");
 		js.appendReferenceTo(cgElement);
 	}
@@ -160,7 +160,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
-		if (!unboxedValue.isNonNull()) {
+		if (!unboxedValue.isRequiredOrNonNull()) {
 			js.appendReferenceTo(unboxedValue);
 			js.append(" == null ? null : ");
 		}
@@ -269,16 +269,16 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	public void appendEqualsValue(@NonNull JavaStream js, @NonNull CGValuedElement thisValue, @NonNull CGValuedElement thatValue, boolean notEquals) {
 		PivotMetamodelManager metamodelManager = js.getCodeGenerator().getEnvironmentFactory().getMetamodelManager();
 		if (isBoxedType(metamodelManager, thisValue) && isBoxedType(metamodelManager, thatValue)) {
-			boolean nullSafe = thisValue.isNonNull() && thatValue.isNonNull();
+			boolean nullSafe = thisValue.isRequiredOrNonNull() && thatValue.isRequiredOrNonNull();
 			if (!nullSafe) {
 				String prefix = "";
-				if (!thisValue.isNonNull()) {
+				if (!thisValue.isRequiredOrNonNull()) {
 					js.append("(");
 					js.appendValueName(thisValue);
 					js.append(" != null)");
 					prefix = " && ";
 				}
-				if (!thatValue.isNonNull()) {
+				if (!thatValue.isRequiredOrNonNull()) {
 					js.append(prefix);
 					js.append("(");
 					js.appendValueName(thatValue);
@@ -303,7 +303,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			js.append(notEquals ? " != " : " == ");
 			js.appendValueName(thatValue);
 		} */
-		else if (thisValue.isNonNull()) {
+		else if (thisValue.isRequiredOrNonNull()) {
 			if (notEquals) {
 				js.append("!");
 			}
@@ -314,7 +314,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			js.appendValueName(thatValue);
 			js.append(")");
 		}
-		else if (thatValue.isNonNull()) {
+		else if (thatValue.isRequiredOrNonNull()) {
 			if (notEquals) {
 				js.append("!");
 			}

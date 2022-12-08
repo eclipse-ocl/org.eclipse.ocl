@@ -14,10 +14,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLocalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -81,12 +79,4 @@ public class CGLocalVariableImpl extends CGVariableImpl implements CGLocalVariab
 	public @NonNull CGValuedElement getTypedValue() {
 		return init != null ? init.getTypedValue() : this;
 	}
-
-	@Override
-	public void setTypeId(CGTypeId newTypeId) {
-		// XXX Auto-generated method stub
-		super.setTypeId(newTypeId);
-		NameUtil.errPrintln("setTypeId: " + NameUtil.debugSimpleName(this) + " = " + newTypeId);		// XXX
-	}
-
 } //CGLocalVariableImpl

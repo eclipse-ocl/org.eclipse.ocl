@@ -12,11 +12,8 @@
 package org.eclipse.ocl.examples.autogen.lookup;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoVisitorsCG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -28,9 +25,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public abstract class LookupVisitorsCG2JavaVisitor extends AutoVisitorsCG2JavaVisitor
 {
 
-	public LookupVisitorsCG2JavaVisitor(@NonNull LookupVisitorsCodeGenerator codeGenerator, @NonNull CGPackage cgPackage,
-			@Nullable Iterable<CGValuedElement> sortedGlobals) {
-		super(codeGenerator, cgPackage, sortedGlobals);
+	public LookupVisitorsCG2JavaVisitor(@NonNull LookupVisitorsCodeGenerator codeGenerator) {
+		super(codeGenerator);
 	}
 
 	@Override

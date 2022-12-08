@@ -216,7 +216,7 @@ public abstract class NameResolution
 
 		protected void setResolvedName(@NonNull String resolvedName) {
 			assert !inhibitNameResolution;
-			if ("eColor_0".equals(resolvedName)) {
+			if ("context_0".equals(resolvedName)) {
 				getClass();		// XXX
 			}
 			if (resolvedName.contains("eColor")) {
@@ -349,7 +349,7 @@ public abstract class NameResolution
 		if ("IMPPROPid_d3atlExpression".equals(newName)) {
 			getClass();			// XXX
 		}
-		if ("create".equals(newName)) {
+		if ("context".equals(newName)) {
 			getClass();			// XXX
 		}
 		return true;

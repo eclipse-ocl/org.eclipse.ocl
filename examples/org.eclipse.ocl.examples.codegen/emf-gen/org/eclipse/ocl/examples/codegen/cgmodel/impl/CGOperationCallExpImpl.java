@@ -294,7 +294,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 			}
 		}
 		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {
-			if (!argument.isNonNull() || !argument.isNonInvalid()) {
+			if (!argument.isRequiredOrNonNull() || !argument.isNonInvalid()) {
 				return false;
 			}
 		}
@@ -307,7 +307,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	 */
 	@Override
 	public boolean isNonNull() {
-		return referredOperation != null ? referredOperation.isRequired() : asOperation != null ? asOperation.isIsRequired() : isRequired();
+		return ((referredOperation != null) && referredOperation.isRequired()) || ((asOperation != null) && asOperation.isIsRequired());
 	}
 
 	/**

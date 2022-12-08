@@ -1,32 +1,27 @@
 /**
  * <copyright>
- * 
+ *
  * Copyright (c) 2015, 2019 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
- * 
+ *
  * </copyright>
  */
 package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
-import org.eclipse.qvtd.codegen.qvticgmodel.QVTiCGModelPackage;
-
-import org.eclipse.qvtd.codegen.qvticgmodel.util.QVTiCGModelVisitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -76,7 +71,7 @@ public class CGEcoreContainerAssignmentImpl extends CGPropertyAssignmentImpl imp
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QVTiCGModelPackage.Literals.CG_ECORE_CONTAINER_ASSIGNMENT;
+		return CGModelPackage.Literals.CG_ECORE_CONTAINER_ASSIGNMENT;
 	}
 
 	/**
@@ -99,7 +94,7 @@ public class CGEcoreContainerAssignmentImpl extends CGPropertyAssignmentImpl imp
 		EStructuralFeature oldEStructuralFeature = eStructuralFeature;
 		eStructuralFeature = newEStructuralFeature;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 4, oldEStructuralFeature, eStructuralFeature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldEStructuralFeature, eStructuralFeature));
 	}
 
 	/**
@@ -110,7 +105,7 @@ public class CGEcoreContainerAssignmentImpl extends CGPropertyAssignmentImpl imp
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 4:
+			case 10:
 				return getEStructuralFeature();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -124,7 +119,7 @@ public class CGEcoreContainerAssignmentImpl extends CGPropertyAssignmentImpl imp
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 4:
+			case 10:
 				setEStructuralFeature((EStructuralFeature)newValue);
 				return;
 		}
@@ -139,7 +134,7 @@ public class CGEcoreContainerAssignmentImpl extends CGPropertyAssignmentImpl imp
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 4:
+			case 10:
 				setEStructuralFeature((EStructuralFeature)null);
 				return;
 		}
@@ -154,7 +149,7 @@ public class CGEcoreContainerAssignmentImpl extends CGPropertyAssignmentImpl imp
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 4:
+			case 10:
 				return eStructuralFeature != null;
 		}
 		return super.eIsSet(featureID);
@@ -167,12 +162,7 @@ public class CGEcoreContainerAssignmentImpl extends CGPropertyAssignmentImpl imp
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull CGModelVisitor<R> visitor) {
-		if (visitor instanceof QVTiCGModelVisitor) {
-			return (R) ((QVTiCGModelVisitor<?>)visitor).visitCGEcoreContainerAssignment(this);
-		}
-		else {
-			return super.accept(visitor);
-		}
+		return visitor.visitCGEcoreContainerAssignment(this);
 	}
 
 } //CGEcoreContainerAssignmentImpl

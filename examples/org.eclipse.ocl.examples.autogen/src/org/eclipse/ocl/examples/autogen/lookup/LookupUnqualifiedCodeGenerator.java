@@ -24,9 +24,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.library.NativeStaticOperation;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -108,10 +106,8 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 	}
 
 	@Override
-	protected @NonNull AutoCG2JavaVisitor createCG2JavaVisitor(
-			@NonNull CGPackage cgPackage,
-			@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
-		return new LookupUnqualifiedCG2JavaVisitor(this, cgPackage, sortedGlobals);
+	protected @NonNull AutoCG2JavaVisitor createCG2JavaVisitor() {
+		return new LookupUnqualifiedCG2JavaVisitor(this);
 	}
 
 	@Override

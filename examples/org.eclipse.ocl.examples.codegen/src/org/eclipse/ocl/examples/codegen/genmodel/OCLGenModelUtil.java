@@ -28,6 +28,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenJDKLevel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
+import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenRuntimeVersion;
 import org.eclipse.emf.codegen.ecore.genmodel.util.GenModelUtil;
 import org.eclipse.emf.common.util.ECollections;
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGeneratorAdapterFactory;
@@ -65,6 +67,7 @@ public abstract class OCLGenModelUtil
 	public static final @NonNull String OCL_GENMODEL_COPY_AND_PASTE_URI = OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI + "/CopyAndPaste";
 	public static final @NonNull String USE_NULL_ANNOTATIONS = "Use Null Annotations";
 	public static final @NonNull String GENERATE_CLASSIFIER_INTS = "Generate Classifier ints";
+	public static final @NonNull String SUPPORT_CLASS_NAME = "Support class name";
 
 	public static final @NonNull String OCL_GENMODEL_TO_STRING_URI = OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI + "/ToString";
 
@@ -271,6 +274,20 @@ public abstract class OCLGenModelUtil
 
 	public static String getQualifiedOperationValue(GenClass genClass, GenOperation genOperation, boolean diagnosticCode) {
 		return getQualifiedOperationValue(genClass, genOperation);
+	}
+
+	public static @NonNull String getQualifiedSupportClassName(@NonNull GenModel genModel) {
+		GenAnnotation genAnnotation = genModel.getGenAnnotation(OCLinEcoreGenModelGeneratorAdapter.OCL_GENMODEL_URI);
+		if (genAnnotation != null) {
+			String value = genAnnotation.getDetails().get(SUPPORT_CLASS_NAME);
+			if (value != null) {
+				return value;
+			}
+		}
+		for (GenPackage genPackage : genModel.getGenPackages()) {
+			return genPackage.getReflectionPackageName() + "." + genPackage.getPrefix() + AbstractGenModelHelper.SUPPORT_CLASS_SUFFIX;
+		}
+		return "OCLinEcore" + AbstractGenModelHelper.SUPPORT_CLASS_SUFFIX;				// Never happens
 	}
 
 	public static List<GenFeature> getToStringGenFeatures(GenClass genClass) {

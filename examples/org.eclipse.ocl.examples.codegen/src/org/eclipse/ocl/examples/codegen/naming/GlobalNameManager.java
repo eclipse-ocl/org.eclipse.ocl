@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -125,7 +124,6 @@ public class GlobalNameManager extends AbstractNameManager
 	}
 
 	protected final @NonNull JavaCodeGenerator codeGenerator;
-	protected final @NonNull ImportNameManager importNameManager;
 
 	private @NonNull Set<@NonNull CGValuedElement> globals = new HashSet<>();
 
@@ -165,6 +163,7 @@ public class GlobalNameManager extends AbstractNameManager
 	protected final @NonNull NameResolution basicEvaluateName;
 	protected final @NonNull NameResolution boxedValuesName;
 	protected final @NonNull NameResolution cachedResultName;
+	protected final @NonNull NameResolution contextObjectName;
 //	protected final @NonNull NameResolution eName;
 	protected final @NonNull NameResolution evaluateName;
 	protected final @NonNull NameResolution evaluationCacheName;
@@ -178,27 +177,30 @@ public class GlobalNameManager extends AbstractNameManager
 	protected final @NonNull NameResolution modelManagerName;
 	protected final @NonNull NameResolution newInstanceName;
 	protected final @NonNull NameResolution objectName;
+	protected final @NonNull NameResolution rootObjectName ;
 	protected final @NonNull NameResolution selfName;
 	protected final @NonNull NameResolution sourceAndArgumentValuesName;
 	protected final @NonNull NameResolution standardLibraryVariableName;
 	protected final @NonNull NameResolution thisName;
 	protected final @NonNull NameResolution typeIdName;
-	protected final @NonNull NameResolution valueName;
+	private boolean needsExecutor = false;
 
 	public GlobalNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManagerHelper helper) {
 		super(null, helper);
 		this.context = new Context(this);			// Global can allocate names straightawy
 		this.codeGenerator = codeGenerator;
-		this.importNameManager = codeGenerator.createImportNameManager();
 		//
 		//	Java reserved words first
 		//
 		this.thisName = declareEagerName(null, JavaConstants.THIS_NAME);
 		//
+		//	XXX FIXME any name reserved here provokes a name occlusion diagnostic for user usage
+		//
 		this.anyName = declareEagerName(null, JavaConstants.ANY_NAME);
 		this.basicEvaluateName = declareEagerName(null, JavaConstants.BASIC_EVALUATE_NAME);
 		this.boxedValuesName = declareEagerName(null, JavaConstants.BOXED_VALUES_NAME);
 		this.cachedResultName = globalNameManager.declareEagerName(null, JavaConstants.CACHED_RESULT_NAME);
+		this.contextObjectName = declareEagerName(null, JavaConstants.CONTEXT_OBJECT_NAME);
 //		this.eName = declareEagerName(null, JavaConstants.E_NAME);
 		this.evaluateName = declareEagerName(null, JavaConstants.EVALUATE_NAME);
 		this.evaluationCacheName = declareEagerName(null, JavaConstants.EVALUATION_CACHE_NAME);
@@ -212,11 +214,11 @@ public class GlobalNameManager extends AbstractNameManager
 		this.modelManagerName = declareEagerName(null, JavaConstants.MODEL_MANAGER_NAME);
 		this.newInstanceName = globalNameManager.declareEagerName(null, JavaConstants.NEW_INSTANCE_NAME);
 		this.objectName = declareEagerName(null, PivotConstants.OBJECT_NAME);
+		this.rootObjectName = declareEagerName(null, PivotConstants.ROOT_OBJECT_NAME);
 		this.selfName = declareEagerName(null, PivotConstants.SELF_NAME);
 		this.sourceAndArgumentValuesName = declareEagerName(null, JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
 		this.standardLibraryVariableName = declareEagerName(null, JavaConstants.STANDARD_LIBRARY_NAME);
 		this.typeIdName = declareEagerName(null, JavaConstants.TYPE_ID_NAME);
-		this.valueName = declareEagerName(null, "value");
 	}
 
 	/**
@@ -234,10 +236,6 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
 		globals.add(cgGlobal);
-	}
-
-	public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String className) {
-		return importNameManager.addImport(isRequired, className);
 	}
 
 	public @NonNull NameVariant addNameVariantPreferred(@NonNull String name) {
@@ -395,6 +393,10 @@ public class GlobalNameManager extends AbstractNameManager
 		return context;
 	}
 
+	public @NonNull NameResolution getContextObjectNameResolution() {
+		return contextObjectName;
+	}
+
 	public @Nullable EClass getEClass(@NonNull ElementId elementId) {
 		IdVisitor<@Nullable EClass> id2EClassVisitor = codeGenerator.getId2EClassVisitor();
 		return elementId.accept(id2EClassVisitor);
@@ -446,10 +448,6 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public @NonNull NameResolution getIdResolverNameResolution() {
 		return idResolverName;
-	}
-
-	public @NonNull ImportNameManager getImportNameManager() {
-		return importNameManager;
 	}
 
 	public @NonNull String getInitValueName() {
@@ -513,6 +511,10 @@ public class GlobalNameManager extends AbstractNameManager
 		return ClassUtil.nonNullState(name2reservedNameResolutions.get(name)).getResolvedName();
 	}
 
+	public @NonNull NameResolution getRootObjectNameResolution() {
+		return rootObjectName;
+	}
+
 	public @NonNull String getSelfName() {
 		return selfName.getResolvedName();
 	}
@@ -533,21 +535,17 @@ public class GlobalNameManager extends AbstractNameManager
 		return thisName;
 	}
 
-	public @NonNull NameResolution getThisTransformerNameResolution() {
-		throw new UnsupportedOperationException();			// XXX
-	}
-
 	public @NonNull NameResolution getTypeIdNameResolution() {
 		return typeIdName;
-	}
-
-	public @NonNull String getValueName() {
-		return valueName.getResolvedName();
 	}
 
 	@Override
 	public boolean isGlobal() {
 		return true;
+	}
+
+	public boolean needsExecutor() {
+		return needsExecutor;
 	}
 
 	public void replace(@NonNull CGValuedElement oldElement, @NonNull CGValuedElement newElement) {
@@ -568,11 +566,16 @@ public class GlobalNameManager extends AbstractNameManager
 		replace(cgIn, cgLetExp);
 		cgLetExp.setIn(cgIn);
 		cgLetExp.setInit(cgVariable);
+		cgLetExp.setRequired(cgIn.isRequired());
 //		System.out.println("re-let " + NameUtil.debugSimpleName(cgLetExp) + " : " + cgLetExp.toString());
 //		for (EObject eObject : new TreeIterable(cgLetExp, true)) {		// XXX
 //			System.out.println("\t" + NameUtil.debugSimpleName(eObject) + " : " + eObject.toString());
 //		}
 		return cgLetExp;
+	}
+
+	public void setNeedsExecutor() {
+		this.needsExecutor = true;
 	}
 
 	@Override

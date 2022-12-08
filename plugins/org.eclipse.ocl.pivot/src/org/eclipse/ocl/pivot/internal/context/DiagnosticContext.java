@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.context;
 
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Constraint;
 
 /**
@@ -17,7 +18,7 @@ import org.eclipse.ocl.pivot.Constraint;
  */
 public class DiagnosticContext extends ClassContext
 {
-	public DiagnosticContext(ClassContext parserContext, Constraint constraint) {
-		super(parserContext.getEnvironmentFactory(), null, parserContext.getClassContext(), parserContext.getInstanceContext());
+	public DiagnosticContext(@NonNull ClassContext parserContext, Constraint constraint) {
+		super(parserContext.getEnvironmentFactory(), null, parserContext.getClassContext(), parserContext.isRequired(), parserContext.getInstanceContext());
 	}
 }

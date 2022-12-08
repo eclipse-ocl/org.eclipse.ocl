@@ -91,14 +91,14 @@ public class ImpliesOperationHandler extends AbstractLibraryOperationHandler
 					appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 					appendElse();
 				}
-				if (!appendThrowIfInvalid(cgSource, "implies source") && !appendThrowIfInvalid(cgSource, "implies argument")) {
+				if (!appendThrowIfInvalid(cgSource, "implies source") && !appendThrowIfInvalid(cgArgument, "implies argument")) {
 					appendThrowIfMayBeInvalid(cgSource);
 					appendThrowIfMayBeInvalid(cgArgument);
 					if (cgSource.isNull() || cgArgument.isNull()) {
 						appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
 					}
-					else if (cgSource.isNonNull()){
-						if (cgArgument.isNonNull()){
+					else if (cgSource.isRequiredOrNonNull()){
+						if (cgArgument.isRequiredOrNonNull()){
 							appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
 						}
 						else {
@@ -110,7 +110,7 @@ public class ImpliesOperationHandler extends AbstractLibraryOperationHandler
 						}
 					}
 					else {
-						if (cgArgument.isNonNull()){
+						if (cgArgument.isRequiredOrNonNull()){
 							appendIfEqualsNull(cgSource);
 							appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
 							appendElse();

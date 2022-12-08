@@ -61,11 +61,16 @@ public class NotOperationHandler extends AbstractLibraryOperationHandler
 			appendIfEqualsBoolean0(cgSource, false);
 			appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 			appendElse();
-			appendIfEqualsBoolean0(cgSource, true);
-			appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
-			appendElse();
-			appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
-			appendEndIf();
+			if (cgOperationCallExp.isRequiredOrNonNull()) {
+				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
+			}
+			else {
+				appendIfEqualsBoolean0(cgSource, true);
+				appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
+				appendElse();
+				appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
+				appendEndIf();
+			}
 			appendEndIf();
 			return true;
 		}

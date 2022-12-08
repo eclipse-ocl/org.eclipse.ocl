@@ -35,12 +35,11 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
  */
 public abstract class AbstractLanguageSupport implements LanguageSupport
 {
-	public static interface Factory {
+	public static interface Factory
+	{
 		@NonNull AbstractLanguageSupport createLanguageSupport(@NonNull EnvironmentFactory environmentFactory);
-
-		void install();
-
 		@NonNull String getName();
+		void install();
 	}
 	private static final @NonNull String TAG_LANGUAGE = "language";
 	private static final @NonNull String ATT_CLASS = "class";
@@ -51,8 +50,7 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 	public static void addLanguageSupport(AbstractLanguageSupport.@NonNull Factory support) {
 		Map<@NonNull String, AbstractLanguageSupport.@NonNull Factory> supportRegistry2 = supportRegistry;
 		if (supportRegistry2 == null) {
-			supportRegistry = supportRegistry2 = new HashMap<>();
-			readExtension();
+			supportRegistry2 = createSupportRegistry();
 		}
 		supportRegistry2.put(support.getName(), support);
 	}
@@ -76,6 +74,9 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 		if ((asNamedElement instanceof NamedElement) && !(asNamedElement instanceof Model)) {
 			appendQualification(s, asNamedElement.eContainer());
 			String name = ((NamedElement)asNamedElement).getName();
+			if (name == null) {
+				name = "_anon_";
+			}
 			if (name.length() > 0) {			// Hide the default Java package
 				appendAndEncodeName(s, name);
 				s.append(".");
@@ -87,6 +88,12 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 		org.eclipse.ocl.pivot.@NonNull Package asPackage = PivotUtil.getOwningPackage(asClass);
 		List<org.eclipse.ocl.pivot.@NonNull Package> asSiblingPackages = PivotUtilInternal.getOwnedPackagesList(asPackage);
 		return NameUtil.getNameable(asSiblingPackages, PivotUtil.getName(asClass));
+	}
+
+	protected static @NonNull Map<@NonNull String, AbstractLanguageSupport.@NonNull Factory> createSupportRegistry() {
+		Map<@NonNull String, AbstractLanguageSupport.@NonNull Factory> supportRegistry2 = supportRegistry = new HashMap<>(4);
+		readExtension();
+		return supportRegistry2;
 	}
 
 	/**
@@ -118,8 +125,7 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 	public static @Nullable AbstractLanguageSupport getLanguageSupport(@NonNull String name, @NonNull EnvironmentFactory environmentFactory) {
 		Map<@NonNull String, AbstractLanguageSupport.@NonNull Factory> supportRegistry2 = supportRegistry;
 		if (supportRegistry2 == null) {
-			supportRegistry = supportRegistry2 = new HashMap<>();
-			readExtension();
+			supportRegistry2 = createSupportRegistry();
 		}
 		Factory factory = supportRegistry2.get(name);
 		return factory != null ? factory.createLanguageSupport(environmentFactory) : null;

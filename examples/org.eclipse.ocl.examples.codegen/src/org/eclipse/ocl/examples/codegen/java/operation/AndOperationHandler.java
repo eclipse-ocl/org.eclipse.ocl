@@ -90,14 +90,14 @@ public class AndOperationHandler extends AbstractLibraryOperationHandler
 					appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
 					appendElse();
 				}
-				if (!appendThrowIfInvalid(cgSource, "and source") && !appendThrowIfInvalid(cgSource, "and argument")) {
+				if (!appendThrowIfInvalid(cgSource, "and source") && !appendThrowIfInvalid(cgArgument, "and argument")) {
 					appendThrowIfMayBeInvalid(cgSource);
 					appendThrowIfMayBeInvalid(cgArgument);
 					if (cgSource.isNull() || cgArgument.isNull()) {
 						appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
 					}
-					else if (cgSource.isNonNull()){
-						if (cgArgument.isNonNull()){
+					else if (cgSource.isRequiredOrNonNull()){
+						if (cgArgument.isRequiredOrNonNull()){
 							appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 						}
 						else {
@@ -109,7 +109,7 @@ public class AndOperationHandler extends AbstractLibraryOperationHandler
 						}
 					}
 					else {
-						if (cgArgument.isNonNull()){
+						if (cgArgument.isRequiredOrNonNull()){
 							appendIfEqualsNull(cgSource);
 							appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
 							appendElse();

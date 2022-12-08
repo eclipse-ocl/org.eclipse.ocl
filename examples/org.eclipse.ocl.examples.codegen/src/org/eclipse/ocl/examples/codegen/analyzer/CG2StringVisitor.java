@@ -63,6 +63,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
@@ -213,6 +214,9 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			safeVisit(cgTypedElement.getTypeId());
 			if (!cgTypedElement.isRequired()) {			// FIXME use CGVariable isNonNull too
 				append("[?]");
+			}
+			else {
+				append("[1]");
 			}
 		}
 	}
@@ -770,6 +774,16 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 	@Override
 	public @Nullable String visitCGPackage(@NonNull CGPackage cgPackage) {
 		appendQualifiedName(cgPackage);
+		return null;
+	}
+
+	@Override
+	public @Nullable String visitCGPropertyAssignment(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		safeVisit(cgPropertyAssignment.getOwnedSlotValue());
+		append(".");
+		appendName(cgPropertyAssignment.getReferredProperty());
+		append(" := ");
+		safeVisit(cgPropertyAssignment.getOwnedInitValue());
 		return null;
 	}
 

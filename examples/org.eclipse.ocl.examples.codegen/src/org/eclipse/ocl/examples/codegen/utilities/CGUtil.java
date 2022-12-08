@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.utilities;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -35,16 +37,21 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSequence;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
@@ -78,6 +85,7 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Pair;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -275,6 +283,10 @@ public class CGUtil
 		return ClassUtil.nonNullState((Type)cgExecutorType.getAst());
 	}
 
+	public static @NonNull TypedElement getAST(@NonNull CGIndexExp cgIndexExp) {
+		return ClassUtil.nonNullState((TypedElement)cgIndexExp.getAst());
+	}
+
 	public static @NonNull LoopExp getAST(@NonNull CGIterationCallExp cgIterationCallExp) {
 		return ClassUtil.nonNullState((LoopExp)cgIterationCallExp.getAst());
 	}
@@ -329,6 +341,10 @@ public class CGUtil
 
 	public static  @NonNull Property getAsProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
 		return ClassUtil.nonNullState(cgNavigationCallExp.getAsProperty());
+	}
+
+	public static @NonNull Property getAsProperty(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		return ClassUtil.nonNullState(cgPropertyAssignment.getAsProperty());
 	}
 
 	public static @NonNull CGValuedElement getBody(@NonNull CGBodiedProperty cgProperty) {
@@ -427,8 +443,12 @@ public class CGUtil
 		return ClassUtil.nonNullState(basicGetContextCGClass(cgElement));
 	}
 
-	public static @NonNull CGExecutorType getExecutorType(@NonNull CGShadowExp object) {
-		return ClassUtil.nonNullState(object.getExecutorType());
+	public static @NonNull CGExecutorType getExecutorType(@NonNull CGCastExp cgCastExp) {
+		return ClassUtil.nonNullState(cgCastExp.getExecutorType());
+	}
+
+	public static @NonNull CGExecutorType getExecutorType(@NonNull CGShadowExp cgShadowExp) {
+		return ClassUtil.nonNullState(cgShadowExp.getExecutorType());
 	}
 
 	public static @NonNull CGValuedElement getIn(@NonNull CGLetExp cgLetExp) {
@@ -463,6 +483,14 @@ public class CGUtil
 		return ClassUtil.nullFree(cgIterationCallExp.getIterators());
 	}
 
+	public static @NonNull LibraryOperation getLibraryOperation(@NonNull CGLibraryOperationCallExp cgLibraryOperationCallExp) {
+		return ClassUtil.nonNullState(cgLibraryOperationCallExp.getLibraryOperation());
+	}
+
+	public static @NonNull Method getMethod(@NonNull CGNativeOperationCallExp cgNativeOperationCallExp) {
+		return ClassUtil.nonNullState(cgNativeOperationCallExp.getMethod());
+	}
+
 	public static @NonNull String getName(@NonNull CGNamedElement cgNamedElement) {
 		return ClassUtil.nonNullState(cgNamedElement.getName());
 	}
@@ -471,8 +499,28 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgOperationCallExp.getReferredOperation());
 	}
 
+	public static @NonNull Iterable<@NonNull CGOperation> getOperations(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getOperations());
+	}
+
 	public static @NonNull List<@NonNull CGOperation> getOperationsList(@NonNull CGClass cgClass) {
 		return ClassUtil.nullFree(cgClass.getOperations());
+	}
+
+	public static @NonNull CGValuedElement getOwnedInitValue(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		return ClassUtil.nonNullState(cgPropertyAssignment.getOwnedInitValue());
+	}
+
+	public static @NonNull CGValuedElement getOwnedSlotValue(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		return ClassUtil.nonNullState(cgPropertyAssignment.getOwnedSlotValue());
+	}
+
+	public static @NonNull Iterable<@NonNull CGValuedElement> getOwnedStatements(@NonNull CGSequence cgSequence) {
+		return ClassUtil.nullFree(cgSequence.getOwnedStatements());
+	}
+
+	public static @NonNull List<@NonNull CGValuedElement> getOwnedStatementsList(@NonNull CGSequence cgSequence) {
+		return ClassUtil.nullFree(cgSequence.getOwnedStatements());
 	}
 
 	public static @NonNull Parameter getParameter(@NonNull CGParameter cgParameter) {
@@ -561,6 +609,10 @@ public class CGUtil
 
 	public static  @NonNull CGProperty getReferredProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
 		return ClassUtil.nonNullState(cgNavigationCallExp.getReferredProperty());
+	}
+
+	public static @NonNull CGProperty getReferredProperty(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		return ClassUtil.nonNullState(cgPropertyAssignment.getReferredProperty());
 	}
 
 	public static @NonNull CGVariable getReferredVariable(@NonNull CGVariableExp cgVariableExp) {

@@ -39,7 +39,7 @@ public class BytePrimitiveDescriptor extends AbstractPrimitiveDescriptor
 	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
-		assert unboxedValue.isNonNull();
+		assert unboxedValue.isRequiredOrNonNull();
 		js.appendClassReference(null, ValueUtil.class);
 		js.append(".byteValueOf(");
 		js.appendReferenceTo(unboxedValue);

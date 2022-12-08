@@ -39,7 +39,12 @@ import org.eclipse.ocl.pivot.values.TupleValue;
  */
 public class TuplePropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull TuplePropertyCallingConvention INSTANCE = new TuplePropertyCallingConvention();
+	private static final @NonNull TuplePropertyCallingConvention INSTANCE = new TuplePropertyCallingConvention();
+
+	public static @NonNull TuplePropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
@@ -59,7 +64,8 @@ public class TuplePropertyCallingConvention extends AbstractPropertyCallingConve
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGTuplePartCallExp cgTuplePartCallExp = (CGTuplePartCallExp) cgPropertyCallExp;
 		CGValuedElement source = cg2javaVisitor.getExpression(cgTuplePartCallExp.getSource());
 		//		CGTypeId resultType = cgTuplePartCallExp.getTypeId();
@@ -70,7 +76,7 @@ public class TuplePropertyCallingConvention extends AbstractPropertyCallingConve
 			return false;
 		}
 		//
-		boolean isRequired = cgTuplePartCallExp.isNonNull();
+		boolean isRequired = cgTuplePartCallExp.isRequiredOrNonNull();
 		boolean isPrimitive = js.isPrimitive(cgTuplePartCallExp);
 		if (!isPrimitive && isRequired /*&& (ecoreIsRequired == Boolean.FALSE)*/) {
 			js.appendSuppressWarningsNull(true);
@@ -90,5 +96,10 @@ public class TuplePropertyCallingConvention extends AbstractPropertyCallingConve
 		//		js.append(")");
 		js.append(";\n");
 		return true;
+	}
+
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		return generateJavaDeclarationUnimplemented(cg2javaVisitor, cgProperty);		// XXX
 	}
 }

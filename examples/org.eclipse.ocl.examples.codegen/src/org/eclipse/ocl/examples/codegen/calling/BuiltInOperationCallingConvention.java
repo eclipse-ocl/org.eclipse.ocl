@@ -22,7 +22,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -41,9 +40,14 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  *  BuiltInOperationCallingConvention defines the support for the call of an operation realized by inline code.
  */
-public class BuiltInOperationCallingConvention extends AbstractOperationCallingConvention
+public class BuiltInOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
-	public static final @NonNull BuiltInOperationCallingConvention INSTANCE = new BuiltInOperationCallingConvention();
+	private static final @NonNull BuiltInOperationCallingConvention INSTANCE = new BuiltInOperationCallingConvention();
+
+	public static @NonNull BuiltInOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	public boolean canHandle(@NonNull LibraryOperation libraryOperation) {
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {
@@ -107,12 +111,12 @@ public class BuiltInOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		throw new UnsupportedOperationException();		// XXX
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Built-in operations are declared inline
 	}
 

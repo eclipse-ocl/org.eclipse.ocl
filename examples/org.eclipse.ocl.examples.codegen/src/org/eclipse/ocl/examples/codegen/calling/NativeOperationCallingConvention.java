@@ -11,6 +11,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -30,9 +31,11 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.library.NativeStaticOperation;
 import org.eclipse.ocl.examples.codegen.library.NativeVisitorOperation;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.NativeOperation;
@@ -44,9 +47,14 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  *  </br>
  *  e.g. as anObject.anOperation(arguments)
  */
-public class NativeOperationCallingConvention extends AbstractOperationCallingConvention
+public class NativeOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
-	public static final @NonNull NativeOperationCallingConvention INSTANCE = new NativeOperationCallingConvention();
+	private static final @NonNull NativeOperationCallingConvention INSTANCE = new NativeOperationCallingConvention();
+
+	public static @NonNull NativeOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
@@ -59,22 +67,30 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 	@Override
 	public @NonNull CGCallExp createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
-	//	throw new UnsupportedOperationException();		// FIXME construction is irregular
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
 		Method method = ((JavaLanguageSupport.JavaNativeOperation)asOperation.getImplementation()).getMethod();
 		CGNativeOperationCallExp cgNativeOperationCallExp = analyzer.createCGNativeOperationCallExp(method, this);
 	//	cgNativeOperationCallExp.setThisIsSelf(true);
 		initCallExp(analyzer, cgNativeOperationCallExp, asOperationCallExp, cgOperation, isRequired);
-		initCallArguments(analyzer, cgNativeOperationCallExp);
+		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgNativeOperationCallExp);
+	//	initCallArguments(analyzer, cgNativeOperationCallExp);			// FIXME is cgThis irregulaity necessary
+		List<@NonNull OCLExpression> asArguments = PivotUtilInternal.getOwnedArgumentsList(asOperationCallExp);
+		List<@NonNull OCLExpression> asArgumentsCopy = new ArrayList<>(asArguments);		// XXX inlining can wrap a LetExp
+		assert asArguments.size() == asOperation.getOwnedParameters().size();
+		for (@NonNull OCLExpression asArgument : asArgumentsCopy) {
+			cgArguments.add(analyzer.createCGElement(CGValuedElement.class, asArgument));
+		}
 		if ((cgSource != null) && !Modifier.isStatic(method.getModifiers())) {
 			cgNativeOperationCallExp.setCgThis(cgSource);
 		}
+		assert (cgArguments.size()+(cgSource != null ? 1 : 0)) == CGUtil.getParametersList(CGUtil.getReferredOperation(cgNativeOperationCallExp)).size();
 		return cgNativeOperationCallExp;
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
 		CGValuedElement cgThis = cgNativeOperationCallExp.getCgThis();
 		CGValuedElement cgThis2 = cgThis != null ? cg2javaVisitor.getExpression(cgThis) :  null;
@@ -82,46 +98,58 @@ public class NativeOperationCallingConvention extends AbstractOperationCallingCo
 		if ((cgThis2 != null) && !js.appendLocalStatements(cgThis2)) {
 			return false;
 		}
-		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
 		//
-		Method jMethod = cgNativeOperationCallExp.getMethod();
-		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getArguments();
-		Class<?>[] jParameterTypes = jMethod.getParameterTypes();
-		js.appendDeclaration(cgNativeOperationCallExp);
-		js.append(" = ");
-		if (cgThis2 != null) {
-			js.appendValueName(cgThis2);
-		}
-		else {
-			js.appendClassReference(null, jMethod.getDeclaringClass());
-		}
-		js.append(".");
-		js.append(jMethod.getName());
-		js.append("(");
-		int iMax = Math.min(jParameterTypes.length, cgArguments.size());
-		for (int i = 0; i < iMax; i++) {
-			if (i > 0) {
-				js.append(", ");
+		Method jMethod = CGUtil.getMethod(cgNativeOperationCallExp);
+		JavaStream.SubStream sourceStream = new JavaStream.SubStream() {
+			@Override
+			public void append() {
+				List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getArguments();
+				Class<?>[] jParameterTypes = jMethod.getParameterTypes();
+				if (cgThis2 != null) {
+					js.appendValueName(cgThis2);
+				}
+				else {
+					js.appendClassReference(null, jMethod.getDeclaringClass());
+				}
+				js.append(".");
+				js.append(jMethod.getName());
+				js.append("(");
+				int iMax = Math.min(jParameterTypes.length, cgArguments.size());
+				for (int i = 0; i < iMax; i++) {
+					if (i > 0) {
+						js.append(", ");
+					}
+					Class<?> jParameterType = jParameterTypes[i];
+					CGValuedElement cgArgument = cgArguments.get(i);
+					CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
+					js.appendValueName(argument);
+					if (jParameterType == Object[].class) {
+						js.append(".toArray(new Object[");
+						js.appendValueName(argument);
+						js.append(".size()])");
+					}
+				}
+				js.append(")");
 			}
-			Class<?> jParameterType = jParameterTypes[i];
-			CGValuedElement cgArgument = cgArguments.get(i);
-			CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
-			js.appendValueName(argument);
-			if (jParameterType == Object[].class) {
-				js.append(".toArray(new Object[");
-				js.appendValueName(argument);
-				js.append(".size()])");
-			}
-		}
-		js.append(");\n");
+		};
+		Boolean sourceIsRequired = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
+		Class<?> sourceClass = jMethod.getReturnType();
+		assert sourceClass != null;
+		js.appendAssignWithCast(cgOperationCallExp, sourceIsRequired, sourceClass, sourceStream);
 		return true;
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Native operations are declared natively
+	}
+
+	@Override
+	protected void initCallArguments(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
+		throw new UnsupportedOperationException();		// FIXME Use regular overridden functionality
 	}
 
 	@Override

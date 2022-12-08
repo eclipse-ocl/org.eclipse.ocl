@@ -13,18 +13,17 @@ package org.eclipse.ocl.examples.codegen.java;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
@@ -50,7 +49,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
@@ -87,7 +85,6 @@ import org.eclipse.ocl.examples.codegen.naming.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.examples.codegen.utilities.AbstractCGModelResourceFactory;
-import org.eclipse.ocl.examples.codegen.utilities.CGModelResource;
 import org.eclipse.ocl.examples.codegen.utilities.CGModelResourceFactory;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
@@ -112,7 +109,9 @@ import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 /**
@@ -234,7 +233,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	private /*@LazyNonNull*/ GlobalPlace globalPlace = null;
 	private @NonNull Map<ElementId, BoxedDescriptor> boxedDescriptors = new HashMap<ElementId, BoxedDescriptor>();
 	private /*@LazyNonNull*/ ASM5JavaAnnotationReader annotationReader = null;
-	private/* @LazyNonNull*/ JavaLanguageSupport javaLanguageSupport = null;
+	private /*@LazyNonNull*/ JavaLanguageSupport javaLanguageSupport = null;
 
 	private final @NonNull NameVariant BODY_NameVariant;
 	private final @NonNull NameVariant IMPL_NameVariant;
@@ -312,7 +311,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		CGParameter executorParameter = getAnalyzer().createCGParameter(executorName, getAnalyzer().getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
 	//	executorParameter.setValueName(executorName);
 		executorParameter.setNonInvalid();
-		executorParameter.setNonNull();
+		executorParameter.setRequired(true);
 		return executorParameter;
 	}
 
@@ -360,8 +359,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new JavaImportNameManager();
 	}
 
-	public @NonNull JavaStream createJavaStream(@NonNull CG2JavaVisitor cg2javaVisitor) {
-		return new JavaStream(this, cg2javaVisitor);
+	public @NonNull JavaStream createJavaStream(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull ImportNameManager importNameManager) {
+		return new JavaStream(this, cg2javaVisitor, importNameManager);
 	}
 
 	protected @NonNull NameManagerHelper createNameManagerHelper() {
@@ -388,7 +387,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		CGParameter typeIdParameter = getAnalyzer().createCGParameter(typeIdNameResolution, getAnalyzer().getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
 	//	typeIdParameter.setValueName(typeIdName);
 		typeIdParameter.setNonInvalid();
-		typeIdParameter.setNonNull();
+		typeIdParameter.setRequired(true);
 		return typeIdParameter;
 	}
 
@@ -496,7 +495,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return null;
 	}
 
-	public org.eclipse.ocl.pivot.@NonNull Class getContextClass() {
+	public org.eclipse.ocl.pivot.@NonNull Class getContextClass() {				// XXX ?? use analyzer support
 		throw new UnsupportedOperationException();
 	}
 
@@ -506,13 +505,13 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return boxedDescriptor.getEcoreDescriptor(this, instanceClass);
 	}
 
-	@Override
+/*	@Override
 	public @NonNull String getExternalClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);
 		s.append(JavaConstants.EXTERNAL_CLASS_PREFIX);
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
-	}
+	} */
 
 	@Override
 	public @NonNull GlobalPlace getGlobalPlace() {
@@ -681,6 +680,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return s.toString();
 	}
 
+	@Deprecated /* @deprecated obsolete approach */
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert false : "Unsupported getQualifiedForeignClassName";
 		return PivotUtil.getName(asClass);
@@ -785,7 +785,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		TypeDescriptor typeDescriptor = getTypeDescriptor(cgValue);
 		Class<?> javaClass = typeDescriptor.getJavaClass();		// FIXME Rationalize with TypeDescriptor.isPrimitive()
-		boolean isNonNull = cgValue.isNonNull();
+		boolean isNonNull = cgValue.isRequiredOrNonNull();
 		return JavaLanguageSupport.isPrimitive(isNonNull, javaClass);
 	}
 
@@ -796,12 +796,19 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	 * - null for neither
 	 */
 	public @Nullable Boolean isRequired(@NonNull CGValuedElement cgElement) {
-		//		boolean isPrimitive = isPrimitive(cgElement);
-		//		boolean isRequired = !isPrimitive && !cgElement.isAssertedNonNull() && cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
-		//		Boolean isJavaRequired = isPrimitive ? null : isRequired;			// FIXME migrate isPrimitove to recipients
-		//		return isJavaRequired;
-		boolean isRequired = !cgElement.isAssertedNonNull() && cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
-		return isRequired;
+	//	invalid has no effect on declared requiredness
+/*		if (cgElement.isNull()) {				// definitely null
+			assert !cgElement.isRequired() : "null for isRequired";
+			return Boolean.FALSE;
+		}
+		else if (cgElement.isNonNullUnchecked()) {		// definitely not null
+			return Boolean.TRUE;
+		}
+		else {
+		//	assert !cgElement.isRequired();
+			return null;
+		} */
+		return cgElement.isRequired();
 	}
 
 	@Override
@@ -815,7 +822,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			return false;
 		}
 		else {
-			return cgValue.isNonNull();
+			return cgValue.isRequiredOrNonNull(); // need to see whether Java uses e.g boolean // Required();
 		}
 	}
 
@@ -823,29 +830,53 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	 * Perform the overall optimization of the CG tree culminating in CSE rewrites.
 	 */
 	protected void optimize(@NonNull CGPackage cgPackage) {
+		optimize(Collections.singletonList(cgPackage));
+	}
+
+	/**
+	 * Perform the overall optimization of the CG tree culminating in CSE rewrites.
+	 */
+	protected void optimize(@NonNull Iterable<@NonNull CGPackage> cgPackages) {
 		NameResolution.inhibitNameResolution = true;
-		CGModelResource resource = getCGResourceFactory().createResource(URI.createURI("cg.xmi"));
-		resource.getContents().add(EcoreUtil.getRootContainer(cgPackage));								// Nested GenModel has nested 'roots'
-		getAnalyzer().analyze(cgPackage);
+	//	CGModelResource resource = getCGResourceFactory().createResource(URI.createURI("cg.xmi"));
+	//	for (@NonNull CGPackage cgPackage : cgPackages) {
+	//		resource.getContents().add(EcoreUtil.getRootContainer(cgPackage));								// Nested GenModel has nested 'roots'
+	//	}
+		CodeGenAnalyzer analyzer = getAnalyzer();
+		analyzer.analyze(cgPackages);
 		CG2JavaPreVisitor cg2PreVisitor = createCG2JavaPreVisitor();
-		cgPackage.accept(cg2PreVisitor);
-		for (CGElementId cgElementId : Lists.newArrayList(getAnalyzer().getCGElementIds())) {			// FIXME Avoid test_allInstances CME
+		cg2PreVisitor.prepare(cgPackages);
+		for (CGElementId cgElementId : Lists.newArrayList(analyzer.getCGElementIds())) {			// FIXME Avoid test_allInstances CME
 			cgElementId.accept(cg2PreVisitor);
 		}
 		CommonSubexpressionEliminator cseEliminator = createCommonSubexpressionEliminator();
-		cseEliminator.optimize(cgPackage);
+		for (@NonNull CGPackage cgPackage : cgPackages) {
+			cseEliminator.optimize(cgPackage);
+		}
 	}
 
 	/**
 	 * Perform additional analysis of the final optimized CG tree; no rewrites occur.
 	 * Globals are identified and a hierarchy of name spaces is established to ensure that hierarchy unique names can be resolved.
 	 */
-	protected @Nullable Iterable<@NonNull CGValuedElement> pregenerate(@NonNull CGPackage cgPackage) {
+	protected @Nullable Iterable<@NonNull CGValuedElement> pregenerate(@NonNull Iterable<@NonNull CGPackage> cgRootPackages) {
 		CG2JavaNameVisitor cg2nameVisitor = createCG2JavaNameVisitor();
-		cgPackage.accept(cg2nameVisitor);
+		UniqueList<@NonNull CGValuedElement> cgGlobals = null;
+		for (@NonNull CGPackage cgRootPackage : cgRootPackages) {
+			cgRootPackage.accept(cg2nameVisitor);
+		}
 		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
-		resolveUniqueNames(sortedGlobals, cgPackage);
-		return sortedGlobals;
+		resolveUniqueNames(sortedGlobals, cgRootPackages);		// XXX cgRootPackages
+		if (sortedGlobals != null) {
+			if (cgGlobals == null) {
+				cgGlobals = new UniqueList<>();
+			}
+			Iterables.addAll(cgGlobals, sortedGlobals);
+		}
+		return cgGlobals;
+	}
+	protected @Nullable Iterable<@NonNull CGValuedElement> pregenerate(@NonNull CGPackage cgPackage) {
+		return pregenerate(Collections.singletonList(cgPackage));
 	}
 
 	/**
@@ -958,7 +989,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	/**
 	 * Resolve the name hints as hierarchically unique names throughout the sortedGlobals and cgPackage hierarchy.
 	 */
-	private void resolveUniqueNames(@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals, @NonNull CGPackage cgPackage) {
+	private void resolveUniqueNames(@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals, @NonNull Iterable<@NonNull CGPackage> cgRootPackages) {
 		NameResolution.inhibitNameResolution = false;
 		if (sortedGlobals != null) {
 			for (@NonNull CGValuedElement global : sortedGlobals) {
@@ -970,7 +1001,9 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			}
 		}
 	//	System.out.println("-----------------resolveNames--------------------");
-		propagateNames(cgPackage);
+		for (@NonNull CGPackage cgRootPackage : cgRootPackages) {
+			propagateNames(cgRootPackage);
+		}
 		Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements = new HashMap<>();
 		if (sortedGlobals != null) {
 			for (@NonNull CGNamedElement cgNamedElement : sortedGlobals) {
@@ -982,31 +1015,35 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				}
 			}
 		}
-		for (EObject eObject : new TreeIterable(cgPackage, true)) {		// XXX debugging
-			if (eObject instanceof CGValuedElement) {
-				CGValuedElement cgElement = (CGValuedElement)eObject;
-				if (!cgElement.isInlined()) {
-					gatherNames(cgElement, nameManager2namedElements);
+		for (@NonNull CGPackage cgRootPackage : cgRootPackages) {
+			for (EObject eObject : new TreeIterable(cgRootPackage, true)) {		// XXX debugging
+				if (eObject instanceof CGValuedElement) {
+					CGValuedElement cgElement = (CGValuedElement)eObject;
+					if (!cgElement.isInlined()) {
+						gatherNames(cgElement, nameManager2namedElements);
+					}
 				}
 			}
 		}
 		globalNameManager.assignNames(nameManager2namedElements);
-		for (EObject eObject : new TreeIterable(cgPackage, true)) {		// XXX debugging
-			if (eObject instanceof CGValuedElement) {
-				CGValuedElement cgElement = (CGValuedElement)eObject;
-				if (!cgElement.isInlined()) {
-					if (cgElement.basicGetNameResolution() == null) {
-						System.out.println("Missing NameResolution for " + cgElement.eClass().getName() + " : " + cgElement);
-					}
-				}
-			/*	if (cgElement instanceof CGLetExp) {
+		for (@NonNull CGPackage cgRootPackage : cgRootPackages) {
+			for (EObject eObject : new TreeIterable(cgRootPackage, true)) {		// XXX debugging
+				if (eObject instanceof CGValuedElement) {
+					CGValuedElement cgElement = (CGValuedElement)eObject;
 					if (!cgElement.isInlined()) {
-				//		assert !cgElement.isInlined();
+						if (cgElement.basicGetNameResolution() == null) {
+							System.out.println("Missing NameResolution for " + cgElement.eClass().getName() + " : " + cgElement);
+						}
 					}
-					CGValuedElement cgIn = CGUtil.getIn((CGLetExp)cgElement);
-					System.out.println("NameResolution for " + NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(cgElement.basicGetNameResolution()));
-					System.out.println(" in " + NameUtil.debugSimpleName(cgIn) + " : " + NameUtil.debugSimpleName(cgIn.basicGetNameResolution()));
-				} */
+				/*	if (cgElement instanceof CGLetExp) {
+						if (!cgElement.isInlined()) {
+					//		assert !cgElement.isInlined();
+						}
+						CGValuedElement cgIn = CGUtil.getIn((CGLetExp)cgElement);
+						System.out.println("NameResolution for " + NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(cgElement.basicGetNameResolution()));
+						System.out.println(" in " + NameUtil.debugSimpleName(cgIn) + " : " + NameUtil.debugSimpleName(cgIn.basicGetNameResolution()));
+					} */
+				}
 			}
 		}
 		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;

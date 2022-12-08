@@ -162,6 +162,11 @@ public interface PivotConstants
 	static final @NonNull String RESULT_NAME = "result"; //$NON-NLS-1$
 
 	/**
+	 * The name of the root object of the execution (perhaps a transformation).
+	 */
+	static final @NonNull String ROOT_OBJECT_NAME = "rootObject"; //$NON-NLS-1$
+
+	/**
 	 * The name of the context variable 'self'.
 	 */
 	static final @NonNull String SELF_NAME = "self"; //$NON-NLS-1$

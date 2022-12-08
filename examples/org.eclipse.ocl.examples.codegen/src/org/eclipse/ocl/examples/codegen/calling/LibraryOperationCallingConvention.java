@@ -65,9 +65,14 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  *  </br> Subsequent Object parameters are passed the argument values in order
  *  </br> An Object[] parameter is passed source and argument values
  */
-public class LibraryOperationCallingConvention extends AbstractOperationCallingConvention
+public class LibraryOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
-	public static final @NonNull LibraryOperationCallingConvention INSTANCE = new LibraryOperationCallingConvention();
+	private static final @NonNull LibraryOperationCallingConvention INSTANCE = new LibraryOperationCallingConvention();
+
+	public static @NonNull LibraryOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
@@ -127,7 +132,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		return cgOperationCallExp;
 	}
 
-	public @NonNull CGCallExp createCGOperationCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation,
+/*	public @NonNull CGCallExp createCGOperationCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation,
 			@Nullable CGValuedElement cgSource, @NonNull CGValuedElement @Nullable ... cgArguments) {
 		@NonNull Operation asOperation = CGUtil.getAST(cgOperation);
 		@NonNull LibraryOperation libraryOperation = (LibraryOperation) asOperation.getImplementation();
@@ -167,7 +172,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 			else {
 				throw new UnsupportedOperationException();
 			}
-		} */
+		} * /
 		if (cgArguments != null) {
 			for (@NonNull CGValuedElement cgArgument : cgArguments) {
 			//	CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, asArgument);
@@ -176,9 +181,9 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		}
 	//	initCallArguments(as2cgVisitor, cgOperationCallExp);
 		return cgOperationCallExp;
-	}
+	} */
 
-	private void initCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp,
+/*	private void initCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp,
 			@NonNull CGOperation cgOperation, boolean isRequired) {		// XXX wip eliminate isRequired
 	//	Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
@@ -193,7 +198,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		cgOperationCallExp.setReferredOperation(cgOperation);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
-	}
+	} */
 
 	public @NonNull CGLibraryOperationCallExp createCGMethodOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull LibraryOperation libraryOperation,
 	//		CGValuedElement cgSource, @NonNull Operation asOperation) {
@@ -235,7 +240,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)analyzer.getMetamodelManager().getImplementation(asOperation);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-		cgOperation.setRequired(analyzer.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);
+	//	cgOperation.setRequired(analyzer.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);			-- CG follows OCL declaration; Java compatibility is resolved in generateJavaCall
 		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
 		int i = asOperation.isIsStatic() ? 0 : -1;
 		if (Modifier.isStatic(jMethod.getModifiers())) {
@@ -277,26 +282,21 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)cgOperationCallExp;
 		assert cgOperationCallExp.getCgThis() == null;
-		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgLibraryOperationCallExp.getLibraryOperation());
+		final LibraryOperation libraryOperation = CGUtil.getLibraryOperation(cgLibraryOperationCallExp);
 		LibraryOperationHandler libraryOperationHandler = cg2javaVisitor.basicGetLibraryOperationHandler(libraryOperation.getClass());
 		if (libraryOperationHandler != null) {
 			return libraryOperationHandler.generate(cgLibraryOperationCallExp);		// XXX BuiltIn ??
 		}
 		final List<@NonNull CGValuedElement> cgArguments = ClassUtil.nullFree(cgOperationCallExp.getArguments());
 		int iMax = cgArguments.size();
-		CGOperation cgOperation = cgOperationCallExp.getReferredOperation();
-		Method jMethod = libraryOperation.getEvaluateMethod(CGUtil.getAST(cgOperation));
-		Class<?> actualReturnClass = jMethod.getReturnType();
-		Boolean actualNullity = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
-		boolean actualIsNonNull = actualNullity == Boolean.TRUE;
-	//	boolean actualIsNullable = actualNullity == Boolean.FALSE;
-		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
-		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+		CGOperation cgOperation = CGUtil.getReferredOperation(cgOperationCallExp);
+		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		assert cgParameters.size() == iMax;
 		for (int i = 0; i < iMax; i++) {
@@ -316,7 +316,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 					return false;
 				}
 				else {
-					boolean mayBeNull = !cgArgument.isNonNull();
+					boolean mayBeNull = !cgArgument.isRequiredOrNonNull();
 					if (mayBeNull) {
 						js.append("if (");
 						js.appendValueName(cgArgument);
@@ -347,19 +347,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				}
 			}
 		}
-	//	Boolean returnNullity = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
-		if (expectedIsNonNull && !actualIsNonNull) {
-			js.appendSuppressWarningsNull(true);
-		}
-		js.appendDeclaration(cgOperationCallExp);
-		js.append(" = ");
-		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
-		//		if (expectedIsNonNull && !actualIsNonNull) {
-		//			js.appendClassReference(null, ClassUtil.class);
-		//			js.append(".nonNullState(");
-		//		}
-		js.appendClassCast(cgOperationCallExp, isRequiredNullCast, actualReturnClass, new JavaStream.SubStream()
-		{
+		JavaStream.SubStream sourceStream = new JavaStream.SubStream() {
 			@Override
 			public void append() {
 				GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
@@ -382,16 +370,40 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 				}
 				js.append(")");
 			}
+		};
+		Method jMethod = libraryOperation.getEvaluateMethod(CGUtil.getAST(cgOperation));
+		Boolean sourceIsRequired = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
+		Class<?> sourceClass = jMethod.getReturnType();
+		assert sourceClass != null;
+		js.appendAssignWithCast(cgOperationCallExp, sourceIsRequired, sourceClass, sourceStream);
+		return true;
+/*
+
+
+
+	//	Boolean returnNullity = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
+		if (expectedIsNonNull && !actualIsNonNull) {
+			js.appendSuppressWarningsNull(true);
+		}
+		js.appendDeclaration(cgOperationCallExp);
+		js.append(" = ");
+		boolean isRequiredNullCast = expectedIsNonNull;// && !actualIsNonNull;
+		//		if (expectedIsNonNull && !actualIsNonNull) {
+		//			js.appendClassReference(null, ClassUtil.class);
+		//			js.append(".nonNullState(");
+		//		}
+		js.appendClassCast(cgOperationCallExp, isRequiredNullCast, actualReturnClass, new JavaStream.SubStream()
+		{
 		});
 		//		if (expectedIsNonNull && !actualIsNonNull) {
 		//			js.append(")");
 		//		}
 		js.append(";\n");
-		return true;
+		return true; */
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Library operations are declared natively
 	}
 

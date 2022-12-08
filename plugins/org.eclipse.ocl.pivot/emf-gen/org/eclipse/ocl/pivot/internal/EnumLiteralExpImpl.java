@@ -29,10 +29,11 @@ import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PivotTables;
+import org.eclipse.ocl.pivot.PivotSupport;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
@@ -170,26 +171,27 @@ public class EnumLiteralExpImpl
 			 *     endif
 			 */
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue getSeverity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.ENUM_LITERAL_EXP___VALIDATE_TYPE_IS_ENUMERATION_TYPE__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotSupport.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_IsEQ_;
+				/*@Caught*/ @Nullable Object CAUGHT_IsEQ_;
 				try {
 					final /*@NonInvalid*/ @Nullable Type type = this.getType();
-					final /*@NonInvalid*/ @Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
-					final /*@NonInvalid*/ boolean IsEQ2_ = referredLiteral == null;
+					final /*@NonInvalid*/ @Nullable EnumerationLiteral referredLiteral_0 = this.getReferredLiteral();
+					final /*@NonInvalid*/ Boolean IsEQ2_ = referredLiteral_0 == null;
 					/*@Thrown*/ @Nullable Enumeration IF_IsEQ2_;
 					if (IsEQ2_) {
 						IF_IsEQ2_ = null;
 					}
 					else {
-						assert referredLiteral != null;
+						assert referredLiteral_0 != null;
 						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull Enumeration owningEnumeration = referredLiteral.getOwningEnumeration();
+						final /*@Thrown*/ @NonNull Enumeration owningEnumeration = referredLiteral_0.getOwningEnumeration();
 						IF_IsEQ2_ = owningEnumeration;
 					}
 					final /*@Thrown*/ boolean IsEQ_ = (type != null) && (IF_IsEQ2_ != null) ? (type.getTypeId() == IF_IsEQ2_.getTypeId()) : false;
@@ -198,7 +200,7 @@ public class EnumLiteralExpImpl
 				catch (Exception THROWN_CAUGHT_IsEQ_) {
 					CAUGHT_IsEQ_ = ValueUtil.createInvalidValue(THROWN_CAUGHT_IsEQ_);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_IsEQ_, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_IsEQ_, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -206,6 +208,7 @@ public class EnumLiteralExpImpl
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+
 	}
 
 	/**

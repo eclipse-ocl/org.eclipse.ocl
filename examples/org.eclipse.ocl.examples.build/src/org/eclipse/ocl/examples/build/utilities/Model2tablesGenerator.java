@@ -143,7 +143,7 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 				OCLinEcoreTables generateTables = new OCLinEcoreTables(genPackage);
 				String tablesClass = generateTables.getTablesClassName();
 				String dir = genPackage.getQualifiedPackageName().replace(".", "/");
-				generateTables.generateTablesClass(null, null, null);
+				generateTables.generateTablesClass();
 				String str = generateTables.toString();
 				FileWriter testFile = new FileWriter(new File(targetFolder, dir + "/" + tablesClass + ".java"));
 				testFile.append(str);

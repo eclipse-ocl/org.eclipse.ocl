@@ -46,7 +46,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class LibraryPropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull LibraryPropertyCallingConvention INSTANCE = new LibraryPropertyCallingConvention();
+	private static final @NonNull LibraryPropertyCallingConvention INSTANCE = new LibraryPropertyCallingConvention();
+
+	public static @NonNull LibraryPropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 /*	@Override
 	public @NonNull CGValuedElement createCGOppositePropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,
@@ -141,7 +146,8 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		CGLibraryPropertyCallExp cgLibraryPropertyCallExp = (CGLibraryPropertyCallExp) cgPropertyCallExp;
@@ -150,7 +156,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		Method actualMethod = libraryProperty.getEvaluateMethod(CGUtil.getAsProperty(cgPropertyCallExp));
 		Class<?> actualReturnClass = actualMethod.getReturnType();
 		boolean actualIsNonNull = codeGenerator.getIsNonNull(actualMethod) == Boolean.TRUE;
-		boolean expectedIsNonNull = cgPropertyCallExp.isNonNull();
+		boolean expectedIsNonNull = cgPropertyCallExp.isRequiredOrNonNull();
 		//		Class<?> actualBoxedReturnClass = getBoxedReturnClass(libraryProperty);
 		//		CGValuedElement resultVariable = cgOperationCallExp; //.getValue();
 		CGTypeId resultType = cgPropertyCallExp.getTypeId();
@@ -195,5 +201,10 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		js.appendClassCast(cgPropertyCallExp, isRequiredNullCast, actualReturnClass, castBody);
 		js.append(";\n");
 		return true;
+	}
+
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		return generateJavaDeclarationUnimplemented(cg2javaVisitor, cgProperty);		// XXX
 	}
 }

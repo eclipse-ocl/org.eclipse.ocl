@@ -45,6 +45,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
@@ -168,9 +169,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		throw new IllegalStateException("No ExecutableNameManager for " + cgValuedElement.eClass().getName() + ": " + cgValuedElement);
 	}
 
-	protected @Nullable CGVariable installExecutorVariable(@NonNull CGValuedElement cgElement) {
+	protected boolean hasExecutorVariable(@NonNull CGValuedElement cgElement) {
 		ExecutableNameManager executableNameManager = getTreeNameManager(cgElement);
-		return analyzer.getExecutorVariable(executableNameManager);
+		return executableNameManager.basicGetExecutorVariable() != null;
+	//	return analyzer.getExecutorVariable(executableNameManager);
 	}
 
 	protected @NonNull CGVariable installIdResolverVariable(@NonNull CGValuedElement cgElement) {
@@ -181,6 +183,12 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	protected @NonNull CGVariable installStandardLibraryVariable(@NonNull CGValuedElement cgElement) {
 		ExecutableNameManager executableNameManager = getTreeNameManager(cgElement);
 		return executableNameManager.getStandardLibraryVariable();
+	}
+
+	public void prepare(@NonNull Iterable<@NonNull CGPackage> cgPackages) {
+		for (@NonNull CGPackage cgPackage : cgPackages) {
+			cgPackage.accept(this);
+		}
 	}
 
 	@Override
@@ -233,6 +241,9 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
+		if (cgProperty.toString().contains("animal")) {
+			getClass();		// XXX
+		}
 		super.visitCGConstrainedProperty(cgProperty);
 		wrapLetVariables(cgProperty);
 		return null;
@@ -341,13 +352,13 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
-		installExecutorVariable(cgForeignProperty);
+	//	installExecutorVariable(cgForeignProperty);
 		super.visitCGProperty(cgForeignProperty);
-		wrapLetVariables(cgForeignProperty);
+	//	wrapLetVariables(cgForeignProperty);
 		return null;
 	}
 
-	@Override
+	@Override		// not needed: idResolver is a regular CG parameter
 	public @Nullable Object visitCGIsEqualExp(@NonNull CGIsEqualExp cgIsEqualExp) {
 		ExecutableNameManager executableNameManager = analyzer.getGlobalNameManager().useSelfExecutableNameManager(cgIsEqualExp);
 		if (executableNameManager.basicGetIdResolverVariable() == null) {
@@ -396,7 +407,10 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGLibraryOperationCallExp(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
 		LibraryOperation libraryOperation = cgOperationCallExp.getLibraryOperation();
 		if (!(libraryOperation instanceof LibrarySimpleOperation)) {
-			installExecutorVariable(cgOperationCallExp);
+		//	NameUtil.errPrintln("hasExecutorVariable for " + cgOperationCallExp.getReferredOperation().getCallingConvention() + " : " + cgOperationCallExp.getReferredOperation());
+			if (!hasExecutorVariable(cgOperationCallExp)) {
+				assert hasExecutorVariable(cgOperationCallExp);		// XXX
+			}
 			if (!(libraryOperation instanceof LibraryUntypedOperation)) {
 				TypeId asTypeId = cgOperationCallExp.getASTypeId();
 				if (asTypeId != null) {
@@ -411,7 +425,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGLibraryPropertyCallExp(@NonNull CGLibraryPropertyCallExp cgPropertyCallExp) {
 		//		LibraryProperty libraryProperty = cgPropertyCallExp.getLibraryProperty();
 		try {
-			installExecutorVariable(cgPropertyCallExp);
+		//	NameUtil.errPrintln("hasExecutorVariable for " + cgPropertyCallExp.getReferredProperty().getCallingConvention() + " : " + cgPropertyCallExp.getReferredProperty());
+		//	assert hasExecutorVariable(cgPropertyCallExp);
 			return super.visitCGLibraryPropertyCallExp(cgPropertyCallExp);
 		}
 		finally {
@@ -527,6 +542,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	}
 
 	protected void wrapLetVariables(@NonNull CGNamedElement cgNamedlement) {
+	//	System.out.println("wrapLetVariables " + NameUtil.debugSimpleName(cgNamedlement) + " " + cgNamedlement);
 		ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(CGUtil.getAST(cgNamedlement)).getRootExecutableNameManager();
 	//	assert executableNameManager == executableNameManager.getRootExecutableNameManager();
 		CGValuedElement cgTree = executableNameManager.getBody();
