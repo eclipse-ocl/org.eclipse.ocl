@@ -183,6 +183,16 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="eClass" lowerBound="1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EClass" resolveProxies="false"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGEcoreContainerAssignment" eSuperTypes="#//CGPropertyAssignment">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eStructuralFeature" lowerBound="1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"
+        resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGEcorePropertyAssignment" eSuperTypes="#//CGPropertyAssignment">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eStructuralFeature" lowerBound="1"
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"
+        resolveProxies="false"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGEcoreDataTypeShadowExp" eSuperTypes="#//CGShadowExp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="eDataType" lowerBound="1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EDataType" resolveProxies="false"/>
@@ -624,11 +634,25 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="containingClass" lowerBound="1"
         eType="#//CGClass" resolveProxies="false" eOpposite="#//CGClass/properties"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGPropertyAssignment" eSuperTypes="#//CGValuedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" lowerBound="1"
+        eType="#//CGProperty" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInitValue" lowerBound="1"
+        eType="#//CGValuedElement" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSlotValue" lowerBound="1"
+        eType="#//CGValuedElement" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="asProperty" lowerBound="1"
+        eType="#//Property"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGPropertyCallExp" abstract="true" eSuperTypes="#//CGNavigationCallExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="CGReal" eSuperTypes="#//CGNumber">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="CGReal represents a real value."/>
     </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGSequence" eSuperTypes="#//CGValuedElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedStatements" upperBound="-1"
+        eType="#//CGValuedElement" containment="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGSettableVariable" eSuperTypes="#//CGVariable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
