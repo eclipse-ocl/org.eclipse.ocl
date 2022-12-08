@@ -140,6 +140,11 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
+	public R visitCGEcoreContainerAssignment(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreContainerAssignment object) {
+		return visitCGPropertyAssignment(object);
+	}
+
+	@Override
 	public R visitCGEcoreDataTypeShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreDataTypeShadowExp object) {
 		return visitCGShadowExp(object);
 	}
@@ -162,6 +167,11 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 	@Override
 	public R visitCGEcoreOppositePropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreOppositePropertyCallExp object) {
 		return visitCGOppositePropertyCallExp(object);
+	}
+
+	@Override
+	public R visitCGEcorePropertyAssignment(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcorePropertyAssignment object) {
+		return visitCGPropertyAssignment(object);
 	}
 
 	@Override
@@ -425,6 +435,11 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
+	public R visitCGPropertyAssignment(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGPropertyAssignment object) {
+		return visitCGValuedElement(object);
+	}
+
+	@Override
 	public R visitCGPropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGPropertyCallExp object) {
 		return visitCGNavigationCallExp(object);
 	}
@@ -432,6 +447,11 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 	@Override
 	public R visitCGReal(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGReal object) {
 		return visitCGNumber(object);
+	}
+
+	@Override
+	public R visitCGSequence(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGSequence object) {
+		return visitCGValuedElement(object);
 	}
 
 	@Override

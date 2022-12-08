@@ -24,8 +24,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyAssignment#getEStructuralFeature <em>EStructural Feature</em>}</li>
  * </ul>
  *
- * @see org.eclipse.qvtd.codegen.qvticgmodel.QVTiCGModelPackage#getCGEcorePropertyAssignment()
- * @model
+ * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGEcorePropertyAssignment()
  * @generated
  */
 public interface CGEcorePropertyAssignment extends CGPropertyAssignment {
@@ -39,8 +38,7 @@ public interface CGEcorePropertyAssignment extends CGPropertyAssignment {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>EStructural Feature</em>' reference.
 	 * @see #setEStructuralFeature(EStructuralFeature)
-	 * @see org.eclipse.qvtd.codegen.qvticgmodel.QVTiCGModelPackage#getCGEcorePropertyAssignment_EStructuralFeature()
-	 * @model resolveProxies="false" required="true"
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGEcorePropertyAssignment_EStructuralFeature()
 	 * @generated
 	 */
 	EStructuralFeature getEStructuralFeature();

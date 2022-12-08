@@ -187,26 +187,4 @@ public class CGSequenceImpl extends CGValuedElementImpl implements CGSequence {
 		return visitor.visitCGSequence(this);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
-		return org.eclipse.ocl.examples.codegen.cse.SequencePlaces.createSequencePlaces(element2place, this);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
-		if (this == thatValue) {
-			return Boolean.TRUE;
-		}
-		else {
-			return Boolean.FALSE;
-		}
-	}
-
 } //CGSequenceImpl

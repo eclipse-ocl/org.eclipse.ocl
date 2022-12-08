@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -121,7 +122,7 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return QVTiCGModelPackage.Literals.CG_PROPERTY_ASSIGNMENT;
+		return CGModelPackage.Literals.CG_PROPERTY_ASSIGNMENT;
 	}
 
 	/**
@@ -144,7 +145,7 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 		CGProperty oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -167,7 +168,7 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 		Property oldAsProperty = asProperty;
 		asProperty = newAsProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3, oldAsProperty, asProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldAsProperty, asProperty));
 	}
 
 	/**
@@ -189,7 +190,7 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 		CGValuedElement oldOwnedInitValue = ownedInitValue;
 		ownedInitValue = newOwnedInitValue;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, oldOwnedInitValue, newOwnedInitValue);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedInitValue, newOwnedInitValue);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -205,14 +206,14 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 		if (newOwnedInitValue != ownedInitValue) {
 			NotificationChain msgs = null;
 			if (ownedInitValue != null)
-				msgs = ((InternalEObject)ownedInitValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)ownedInitValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			if (newOwnedInitValue != null)
-				msgs = ((InternalEObject)newOwnedInitValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1), null, msgs);
+				msgs = ((InternalEObject)newOwnedInitValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			msgs = basicSetOwnedInitValue(newOwnedInitValue, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1, newOwnedInitValue, newOwnedInitValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedInitValue, newOwnedInitValue));
 	}
 
 	/**
@@ -234,7 +235,7 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 		CGValuedElement oldOwnedSlotValue = ownedSlotValue;
 		ownedSlotValue = newOwnedSlotValue;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, oldOwnedSlotValue, newOwnedSlotValue);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldOwnedSlotValue, newOwnedSlotValue);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -250,14 +251,14 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 		if (newOwnedSlotValue != ownedSlotValue) {
 			NotificationChain msgs = null;
 			if (ownedSlotValue != null)
-				msgs = ((InternalEObject)ownedSlotValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)ownedSlotValue).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newOwnedSlotValue != null)
-				msgs = ((InternalEObject)newOwnedSlotValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2), null, msgs);
+				msgs = ((InternalEObject)newOwnedSlotValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetOwnedSlotValue(newOwnedSlotValue, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2, newOwnedSlotValue, newOwnedSlotValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwnedSlotValue, newOwnedSlotValue));
 	}
 
 	/**
@@ -268,9 +269,9 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return basicSetOwnedInitValue(null, msgs);
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+			case 8:
 				return basicSetOwnedSlotValue(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -284,13 +285,13 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return getReferredProperty();
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return getOwnedInitValue();
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+			case 8:
 				return getOwnedSlotValue();
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3:
+			case 9:
 				return getAsProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -304,16 +305,16 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setReferredProperty((CGProperty)newValue);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				setOwnedInitValue((CGValuedElement)newValue);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+			case 8:
 				setOwnedSlotValue((CGValuedElement)newValue);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3:
+			case 9:
 				setAsProperty((Property)newValue);
 				return;
 		}
@@ -328,16 +329,16 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				setReferredProperty((CGProperty)null);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				setOwnedInitValue((CGValuedElement)null);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+			case 8:
 				setOwnedSlotValue((CGValuedElement)null);
 				return;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3:
+			case 9:
 				setAsProperty(AS_PROPERTY_EDEFAULT);
 				return;
 		}
@@ -352,13 +353,13 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 0:
+			case 6:
 				return referredProperty != null;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 1:
+			case 7:
 				return ownedInitValue != null;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 2:
+			case 8:
 				return ownedSlotValue != null;
-			case CGValuedElementImpl.CG_VALUED_ELEMENT_FEATURE_COUNT + 3:
+			case 9:
 				return AS_PROPERTY_EDEFAULT == null ? asProperty != null : !AS_PROPERTY_EDEFAULT.equals(asProperty);
 		}
 		return super.eIsSet(featureID);
@@ -371,66 +372,7 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull CGModelVisitor<R> visitor) {
-		if (visitor instanceof QVTiCGModelVisitor) {
-			return (R) ((QVTiCGModelVisitor<?>)visitor).visitCGPropertyAssignment(this);
-		}
-		else {
-			return super.accept(visitor);
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable EClassifier getEcoreClassifier() {
-		return ownedInitValue != null ? ownedInitValue.getEcoreClassifier() : null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isBoxed() {
-		return (ownedInitValue != null) && ownedInitValue.isBoxed();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isEcore() {
-		return (ownedInitValue != null) && ownedInitValue.isEcore();
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
-		return (getClass() == thatValue.getClass()) ? QVTiEquivalenceUtil.isEquivalent(this, (CGPropertyAssignment)thatValue) : null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isGlobal() {
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public boolean isUnboxed() {
-		return (ownedInitValue != null) && ownedInitValue.isUnboxed();
+		return visitor.visitCGPropertyAssignment(this);
 	}
 
 	/**

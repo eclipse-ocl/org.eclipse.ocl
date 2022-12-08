@@ -27,8 +27,7 @@ import org.eclipse.ocl.pivot.Property;
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment#getAsProperty <em>As Property</em>}</li>
  * </ul>
  *
- * @see org.eclipse.qvtd.codegen.qvticgmodel.QVTiCGModelPackage#getCGPropertyAssignment()
- * @model
+ * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGPropertyAssignment()
  * @generated
  */
 public interface CGPropertyAssignment extends CGValuedElement {
@@ -48,8 +47,7 @@ public interface CGPropertyAssignment extends CGValuedElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>As Property</em>' attribute.
 	 * @see #setAsProperty(Property)
-	 * @see org.eclipse.qvtd.codegen.qvticgmodel.QVTiCGModelPackage#getCGPropertyAssignment_AsProperty()
-	 * @model dataType="org.eclipse.ocl.examples.codegen.cgmodel.Property" required="true"
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGPropertyAssignment_AsProperty()
 	 * @generated
 	 */
 	Property getAsProperty();
@@ -74,8 +72,7 @@ public interface CGPropertyAssignment extends CGValuedElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Referred Property</em>' reference.
 	 * @see #setReferredProperty(CGProperty)
-	 * @see org.eclipse.qvtd.codegen.qvticgmodel.QVTiCGModelPackage#getCGPropertyAssignment_ReferredProperty()
-	 * @model resolveProxies="false" required="true"
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGPropertyAssignment_ReferredProperty()
 	 * @generated
 	 */
 	CGProperty getReferredProperty();
@@ -90,8 +87,7 @@ public interface CGPropertyAssignment extends CGValuedElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owned Init Value</em>' containment reference.
 	 * @see #setOwnedInitValue(CGValuedElement)
-	 * @see org.eclipse.qvtd.codegen.qvticgmodel.QVTiCGModelPackage#getCGPropertyAssignment_OwnedInitValue()
-	 * @model containment="true" required="true"
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGPropertyAssignment_OwnedInitValue()
 	 * @generated
 	 */
 	CGValuedElement getOwnedInitValue();
@@ -116,8 +112,7 @@ public interface CGPropertyAssignment extends CGValuedElement {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Owned Slot Value</em>' containment reference.
 	 * @see #setOwnedSlotValue(CGValuedElement)
-	 * @see org.eclipse.qvtd.codegen.qvticgmodel.QVTiCGModelPackage#getCGPropertyAssignment_OwnedSlotValue()
-	 * @model containment="true" required="true"
+	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGPropertyAssignment_OwnedSlotValue()
 	 * @generated
 	 */
 	CGValuedElement getOwnedSlotValue();

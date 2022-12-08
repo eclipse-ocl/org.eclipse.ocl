@@ -63,11 +63,13 @@ public interface CGModelVisitor<R>
 	R visitCGConstrainedProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstrainedProperty object);
 	R visitCGConstraint(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGConstraint object);
 	R visitCGEcoreClassShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreClassShadowExp object);
+	R visitCGEcoreContainerAssignment(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreContainerAssignment object);
 	R visitCGEcoreDataTypeShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreDataTypeShadowExp object);
 	R visitCGEcoreExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreExp object);
 	R visitCGEcoreOperation(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreOperation object);
 	R visitCGEcoreOperationCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreOperationCallExp object);
 	R visitCGEcoreOppositePropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreOppositePropertyCallExp object);
+	R visitCGEcorePropertyAssignment(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcorePropertyAssignment object);
 	R visitCGEcorePropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcorePropertyCallExp object);
 	R visitCGElement(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGElement object);
 	R visitCGElementId(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGElementId object);
@@ -120,8 +122,10 @@ public interface CGModelVisitor<R>
 	R visitCGPackage(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGPackage object);
 	R visitCGParameter(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGParameter object);
 	R visitCGProperty(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGProperty object);
+	R visitCGPropertyAssignment(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGPropertyAssignment object);
 	R visitCGPropertyCallExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGPropertyCallExp object);
 	R visitCGReal(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGReal object);
+	R visitCGSequence(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGSequence object);
 	R visitCGSettableVariable(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGSettableVariable object);
 	R visitCGShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGShadowExp object);
 	R visitCGShadowPart(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGShadowPart object);
