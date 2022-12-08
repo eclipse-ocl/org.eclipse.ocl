@@ -13,14 +13,17 @@ package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
+import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
 import org.eclipse.ocl.pivot.Property;
 
 /**
@@ -366,6 +369,60 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	@Override
 	public <R> R accept(@NonNull CGModelVisitor<R> visitor) {
 		return visitor.visitCGPropertyAssignment(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable EClassifier getEcoreClassifier() {
+		return ownedInitValue != null ? ownedInitValue.getEcoreClassifier() : null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isBoxed() {
+		return (ownedInitValue != null) && ownedInitValue.isBoxed();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isEcore() {
+		return (ownedInitValue != null) && ownedInitValue.isEcore();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
+		return (getClass() == thatValue.getClass()) ? EquivalenceUtil.isEquivalent(this, (CGPropertyAssignment)thatValue) : null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isGlobal() {
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isUnboxed() {
+		return (ownedInitValue != null) && ownedInitValue.isUnboxed();
 	}
 
 	/**
