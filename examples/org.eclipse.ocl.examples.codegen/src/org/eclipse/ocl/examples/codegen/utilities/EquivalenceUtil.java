@@ -25,6 +25,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNumber;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
@@ -430,6 +431,13 @@ public class EquivalenceUtil
 			}
 		}
 		return Boolean.TRUE;
+	}
+
+	public static @Nullable Boolean isEquivalent(@NonNull CGPropertyAssignment thisValue, @NonNull CGPropertyAssignment thatValue) {
+		if (thisValue == thatValue) {
+			return Boolean.TRUE;
+		}
+		return null;
 	}
 
 	public static @Nullable Boolean isEquivalent(@NonNull CGShadowExp thisValue, @NonNull CGShadowExp thatValue) {

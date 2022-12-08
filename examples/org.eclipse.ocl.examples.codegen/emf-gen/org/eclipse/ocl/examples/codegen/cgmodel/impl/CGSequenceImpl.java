@@ -181,7 +181,6 @@ public class CGSequenceImpl extends CGValuedElementImpl implements CGSequence {
 	 * {@inheritDoc}
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull CGModelVisitor<R> visitor) {
 		return visitor.visitCGSequence(this);

@@ -45,6 +45,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSequence;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
@@ -331,6 +333,10 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgNavigationCallExp.getAsProperty());
 	}
 
+	public static @NonNull Property getAsProperty(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		return ClassUtil.nonNullState(cgPropertyAssignment.getAsProperty());
+	}
+
 	public static @NonNull CGValuedElement getBody(@NonNull CGBodiedProperty cgProperty) {
 		return ClassUtil.nonNullState(cgProperty.getBody());
 	}
@@ -475,6 +481,22 @@ public class CGUtil
 		return ClassUtil.nullFree(cgClass.getOperations());
 	}
 
+	public static @NonNull CGValuedElement getOwnedInitValue(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		return ClassUtil.nonNullState(cgPropertyAssignment.getOwnedInitValue());
+	}
+
+	public static @NonNull CGValuedElement getOwnedSlotValue(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		return ClassUtil.nonNullState(cgPropertyAssignment.getOwnedSlotValue());
+	}
+
+	public static @NonNull Iterable<@NonNull CGValuedElement> getOwnedStatements(@NonNull CGSequence cgSequence) {
+		return ClassUtil.nullFree(cgSequence.getOwnedStatements());
+	}
+
+	public static @NonNull List<@NonNull CGValuedElement> getOwnedStatementsList(@NonNull CGSequence cgSequence) {
+		return ClassUtil.nullFree(cgSequence.getOwnedStatements());
+	}
+
 	public static @NonNull Parameter getParameter(@NonNull CGParameter cgParameter) {
 		Element ast1 = cgParameter.getAst();
 		Element ast2 = ast1 instanceof ParameterVariable ? ((ParameterVariable)ast1).getRepresentedParameter() : ast1;
@@ -561,6 +583,10 @@ public class CGUtil
 
 	public static  @NonNull CGProperty getReferredProperty(@NonNull CGNavigationCallExp cgNavigationCallExp) {
 		return ClassUtil.nonNullState(cgNavigationCallExp.getReferredProperty());
+	}
+
+	public static @NonNull CGProperty getReferredProperty(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		return ClassUtil.nonNullState(cgPropertyAssignment.getReferredProperty());
 	}
 
 	public static @NonNull CGVariable getReferredVariable(@NonNull CGVariableExp cgVariableExp) {

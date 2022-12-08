@@ -89,6 +89,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGSequence;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSettableVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
@@ -115,6 +117,7 @@ import org.eclipse.ocl.examples.codegen.cse.InnerStackPlace;
 import org.eclipse.ocl.examples.codegen.cse.LetPlaces;
 import org.eclipse.ocl.examples.codegen.cse.LocalPlace;
 import org.eclipse.ocl.examples.codegen.cse.OuterStackPlace;
+import org.eclipse.ocl.examples.codegen.cse.SequencePlaces;
 import org.eclipse.ocl.examples.codegen.cse.StackPlace;
 import org.eclipse.ocl.examples.codegen.cse.ThrowPlace;
 import org.eclipse.ocl.examples.codegen.genmodel.MethodSpec;
@@ -649,6 +652,10 @@ public class CGValuedElementModelSpec extends ModelSpec
 		public static final @NonNull Ctl LORG = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return " + classRef(LocalPlace.class) + ".createLocalPlace(element2place, this);";
 		}};
+		public static final @NonNull Ctl SEQ = new Ctl() { @Override
+			public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+			return "return " + classRef(SequencePlaces.class) + ".createSequencePlaces(element2place, this);";
+		}};
 		public static final @NonNull Ctl PARAM = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return " + classRef(StackPlace.class) + ".createStackPlace(element2place, this);";
 		}};
@@ -827,6 +834,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "return (getClass() == thatValue.getClass()) ? "+ equivalenceUtilImport + ".isEquivalent(this, (" + cgModelSpec.cgClass.getSimpleName() + ")thatValue) : null;";
 			}
 		};
+
 		public static final @NonNull Eq INVLD = new Eq() {
 			@Override public @Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return null;
@@ -2318,6 +2326,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGIsEqual2Exp.class, null,						Box.ALL  , null     , Log.EQUL2, Nul.NEVER, Inv.NEVER, null     , Inl.FALSE, null     , Ct.ROOT , Con.EQUAL, null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGIsKindOfExp.class, null,						Box.ALL  , null     , Log.ISKND, Nul.NEVER, Inv.NEVER, null     , Inl.FALSE, null     , Ct.ROOT , Con.ISKND, null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGThrowExp.class, "source",					Box.DELEG, null     , null     , null     , null     , null     , null     , null     , Ct.FALSE, null     , Val.DELNM, null     , null     , Ctl.THROW, null     , null     , null    );
+			new CGValuedElementModelSpec(CGSequence.class, null,						null,      null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , Ctl.SEQ  , null     , null     , Eq.SELF );
 			new CGValuedElementModelSpec(CGUnboxExp.class, "source",					Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , Con.FALSE, Val.DELVL, null     , null     , null     , null     , null     , null    );
 
 			new CGValuedElementModelSpec(CGIterationCallExp.class, "asIteration",		null     , null     , null     , Nul.DELEG, Inv.ITRTN, null     , null     , null     , null    , null     , null     , null     , null     , Ctl.INNER, null     , null     , Eq.EQUIV);
@@ -2384,6 +2393,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGTemplateParameterExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.TPARM);
 			new CGValuedElementModelSpec(CGTypeExp.class, "executorType",				Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , Val.DELEG, null     , null     , null     , null     , Rew.TYPE , Eq.DELEG);
 			new CGValuedElementModelSpec(CGVariableExp.class, "referredVariable",		Box.DELEG, null     , null     , null     , null     , null     , null     , null     , null    , null     , Val.DELEG, null     , null     , null     , Com.FALSE, null     , Eq.DELEG);
+
+			new CGValuedElementModelSpec(CGPropertyAssignment.class, "ownedInitValue",	Box.DELEG, null     , null     , null     , null     , Glo.FALSE, null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.EQUIV);
 		}
 	}
 
