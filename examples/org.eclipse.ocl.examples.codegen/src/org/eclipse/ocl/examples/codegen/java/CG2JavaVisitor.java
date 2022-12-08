@@ -189,6 +189,11 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	protected final @NonNull JavaStream js;
 	protected final @NonNull Map<@NonNull Class<? extends LibraryOperation>, @NonNull LibraryOperationHandler> libraryOperation2handler = new HashMap<>();;
 
+	@Deprecated /* obsolete auto-generated signature */
+	public CG2JavaVisitor(@NonNull JavaCodeGenerator codeGenerator, @NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
+		this(codeGenerator);
+	}
+
 	public CG2JavaVisitor(@NonNull JavaCodeGenerator codeGenerator) {
 		super(codeGenerator);
 		this.globalNameManager = codeGenerator.getGlobalNameManager();
