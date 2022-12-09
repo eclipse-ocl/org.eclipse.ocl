@@ -37,7 +37,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 /**
  *  AbstractPropertyCallingConvention defines the default support for a property declaration or call.
  */
-public abstract class AbstractPropertyCallingConvention implements PropertyCallingConvention
+public abstract class AbstractPropertyCallingConvention extends AbstractCallingConvention implements PropertyCallingConvention
 {
 	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {}
@@ -102,8 +102,8 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 	}
 
 	@Override
-	public @NonNull ClassCallingConvention getClassCallingConvention() {
-		return ContextClassCallingConvention.INSTANCE;
+	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ContextClassCallingConvention.getInstance(asClass);
 	}
 
 	@Override
@@ -140,10 +140,5 @@ public abstract class AbstractPropertyCallingConvention implements PropertyCalli
 
 	protected void rewriteWithSourceBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {
 		// XXX change to abstract to mandate handling
-	}
-
-	@Override
-	public @NonNull String toString() {
-		return getClass().getSimpleName();
 	}
 }

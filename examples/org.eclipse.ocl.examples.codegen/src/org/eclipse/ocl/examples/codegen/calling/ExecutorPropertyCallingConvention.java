@@ -50,7 +50,12 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  */
 public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull ExecutorPropertyCallingConvention INSTANCE = new ExecutorPropertyCallingConvention();
+	private static final @NonNull ExecutorPropertyCallingConvention INSTANCE = new ExecutorPropertyCallingConvention();
+
+	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
@@ -67,7 +72,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		analyzer.addGlobal(cgPropertyId);
 		boolean isRequired = asProperty.isIsRequired();
 		Method jMethod = UnboxedExplicitNavigationProperty.CREATE_METHOD;
-		OperationCallingConvention supportOperationCallingConvention = SupportOperationCallingConvention.INSTANCE;
+		OperationCallingConvention supportOperationCallingConvention = SupportOperationCallingConvention.getInstance(jMethod);
 		CGNativeOperationCallExp cgNativeOperationCallExp = analyzer.createCGNativeOperationCallExp(jMethod, supportOperationCallingConvention);
 //		cgNativeOperationCallExp.setAst(asPropertyCallExp);
 		cgNativeOperationCallExp.getArguments().add(analyzer.createCGConstantExp(cgPropertyId));

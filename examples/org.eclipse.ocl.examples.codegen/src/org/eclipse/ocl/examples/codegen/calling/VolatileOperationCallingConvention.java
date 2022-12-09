@@ -47,7 +47,13 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class VolatileOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	public static final @NonNull VolatileOperationCallingConvention INSTANCE = new VolatileOperationCallingConvention();
+	private static final @NonNull VolatileOperationCallingConvention INSTANCE = new VolatileOperationCallingConvention();
+
+	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
+
 	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);

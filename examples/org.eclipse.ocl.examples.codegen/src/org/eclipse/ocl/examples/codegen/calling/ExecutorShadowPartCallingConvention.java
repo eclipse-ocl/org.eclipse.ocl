@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 
 /**
@@ -31,7 +32,12 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  */
 public class ExecutorShadowPartCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull ExecutorShadowPartCallingConvention INSTANCE = new ExecutorShadowPartCallingConvention();
+	private static final @NonNull ExecutorShadowPartCallingConvention INSTANCE = new ExecutorShadowPartCallingConvention();
+
+	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {

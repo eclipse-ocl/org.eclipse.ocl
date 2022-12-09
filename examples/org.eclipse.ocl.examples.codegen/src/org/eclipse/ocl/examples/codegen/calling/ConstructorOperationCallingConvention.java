@@ -73,7 +73,16 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class ConstructorOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	public static final @NonNull ConstructorOperationCallingConvention INSTANCE = new ConstructorOperationCallingConvention();
+	private static final @NonNull ConstructorOperationCallingConvention INSTANCE = new ConstructorOperationCallingConvention();
+
+//	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+//		INSTANCE.logInstance(asOperation, maybeVirtual);
+//	}
+
+	public static @NonNull ConstructorOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		INSTANCE.logInstance(asClass);
+		return INSTANCE;
+	}
 
 	@Override
 	protected void appendBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement body) {

@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  *  ClassCallingConvention defines a particular style of Class declaration.
  */
-public abstract class AbstractClassCallingConvention implements ClassCallingConvention
+public abstract class AbstractClassCallingConvention extends AbstractCallingConvention implements ClassCallingConvention
 {
 	protected void appendSuperTypes(@NonNull JavaStream js, @NonNull CGClass cgClass) {
 		boolean isFirst = true;
@@ -77,7 +77,7 @@ public abstract class AbstractClassCallingConvention implements ClassCallingConv
 	}
 
 	@Override
-	public @NonNull ClassCallingConvention getClassCallingConvention() {
+	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return this;
 	}
 

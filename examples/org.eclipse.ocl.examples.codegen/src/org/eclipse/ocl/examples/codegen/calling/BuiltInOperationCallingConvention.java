@@ -43,7 +43,12 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class BuiltInOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	public static final @NonNull BuiltInOperationCallingConvention INSTANCE = new BuiltInOperationCallingConvention();
+	private static final @NonNull BuiltInOperationCallingConvention INSTANCE = new BuiltInOperationCallingConvention();
+
+	public static @NonNull BuiltInOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	public boolean canHandle(@NonNull LibraryOperation libraryOperation) {
 		if (libraryOperation instanceof OclAnyOclIsInvalidOperation) {

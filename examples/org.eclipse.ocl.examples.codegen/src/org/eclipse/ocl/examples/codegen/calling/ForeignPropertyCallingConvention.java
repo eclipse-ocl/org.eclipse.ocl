@@ -59,7 +59,12 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class ForeignPropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull ForeignPropertyCallingConvention INSTANCE = new ForeignPropertyCallingConvention();
+	private static final @NonNull ForeignPropertyCallingConvention INSTANCE = new ForeignPropertyCallingConvention();
+
+	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
@@ -149,7 +154,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	private @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @Nullable CGValuedElement cgThis, @NonNull Method jMethod, @NonNull CGValuedElement... cgArguments) {
-		CGNativeOperationCallExp cgCallExp = analyzer.createCGNativeOperationCallExp(jMethod, SupportOperationCallingConvention.INSTANCE);
+		CGNativeOperationCallExp cgCallExp = analyzer.createCGNativeOperationCallExp(jMethod, SupportOperationCallingConvention.getInstance(jMethod));
 		cgCallExp.setCgThis(cgThis);
 		if (cgArguments != null) {
 			List<CGValuedElement> cgArguments2 = cgCallExp.getArguments();

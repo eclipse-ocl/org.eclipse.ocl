@@ -51,7 +51,12 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class CachedOperationCallingConvention extends AbstractCachedOperationCallingConvention
 {
-	public static final @NonNull CachedOperationCallingConvention INSTANCE = new CachedOperationCallingConvention();
+	private static final @NonNull CachedOperationCallingConvention INSTANCE = new CachedOperationCallingConvention();
+
+	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGCachedOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {

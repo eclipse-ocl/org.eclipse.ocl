@@ -353,7 +353,7 @@ public class CodeGenAnalyzer
 //	}
 
 	public @NonNull Iterable<@NonNull Operation> addVirtualCGOperations(@NonNull Operation asBaseOperation, @NonNull CGCachedOperation cgDispatchOperation) {
-		assert cgDispatchOperation.getCallingConvention() == VirtualOperationCallingConvention.INSTANCE;
+		assert cgDispatchOperation.getCallingConvention() == VirtualOperationCallingConvention.getInstance(asBaseOperation, true);
 		addCGCachedOperation(cgDispatchOperation, asBaseOperation);
 		FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
 		Iterable<@NonNull Operation> asOverrideOperations = finalAnalysis.getOverrides(asBaseOperation);
@@ -797,7 +797,7 @@ public class CodeGenAnalyzer
 		CGClass cgExternalClass = name2cgNestedClass.get(externalClassName);
 		if (cgExternalClass == null) {
 			importNameManager.reserveLocalName(externalClassName);
-			cgExternalClass = generateClassDeclaration(asExternalClass, ExternalClassCallingConvention.INSTANCE);
+			cgExternalClass = generateClassDeclaration(asExternalClass, ExternalClassCallingConvention.getInstance(asExternalClass));
 			globalNameManager.declareEagerName(cgExternalClass, externalClassName);		// XXX nest in currentNameManager
 		//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
 			cgExternalClasses.add(cgExternalClass);

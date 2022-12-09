@@ -61,14 +61,24 @@ import org.eclipse.qvtd.runtime.evaluation.AbstractDispatchOperation2;
  */
 public class VirtualOperationCallingConvention extends AbstractCachedOperationCallingConvention2
 {
-	public static final @NonNull VirtualOperationCallingConvention INSTANCE = new VirtualOperationCallingConvention();
+	private static final @NonNull VirtualOperationCallingConvention INSTANCE = new VirtualOperationCallingConvention();
+
+	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	/**
 	 *  DispatchClassCallingConvention defines the nested Class whose instance realizes a virtual dispatch table.
 	 */
 	public static class DispatchClassCallingConvention extends CacheClassCallingConvention		// XXX ??? less inheritance
 	{
-		public static final @NonNull DispatchClassCallingConvention INSTANCE = new DispatchClassCallingConvention();
+		private static final @NonNull DispatchClassCallingConvention INSTANCE = new DispatchClassCallingConvention();
+
+		public static @NonNull ClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
 
 		@Override
 		protected @NonNull String getTitle(@NonNull CGClass cgClass) {
@@ -81,7 +91,16 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	 */
 	public static class DispatchEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
 	{
-		public static final @NonNull DispatchEvaluateOperationCallingConvention INSTANCE = new DispatchEvaluateOperationCallingConvention();
+		private static final @NonNull DispatchEvaluateOperationCallingConvention INSTANCE = new DispatchEvaluateOperationCallingConvention();
+
+//		public static @NonNull DispatchEvaluateOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+//			INSTANCE.logInstance(asOperation, maybeVirtual);
+//		}
+
+		public static @NonNull DispatchEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
 
 		@Override
 		protected @Nullable Parameter createConstructorEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
@@ -248,14 +267,14 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		asDispatchClass.getSuperClasses().add(asCacheSuperClass);
 		importNameManager.reserveLocalName(PivotUtil.getName(asDispatchClass));
 		//
-		CGClass cgDispatchClass = analyzer.generateClassDeclaration(asDispatchClass, DispatchClassCallingConvention.INSTANCE);
-		CGClass cgSuperClass = analyzer.generateClassDeclaration(asCacheSuperClass, getClassCallingConvention());
+		CGClass cgDispatchClass = analyzer.generateClassDeclaration(asDispatchClass, DispatchClassCallingConvention.getInstance(asDispatchClass));
+		CGClass cgSuperClass = analyzer.generateClassDeclaration(asCacheSuperClass, getClassCallingConvention(asCacheSuperClass));
 		cgDispatchClass.getSuperTypes().add(cgSuperClass);
 		//
 		CGCachedOperation cgDispatchOperation = createDispatchConstructor(analyzer, cgDispatchClass);
-	//	GetResultOperationCallingConvention.INSTANCE.createCacheGetResultOperation(analyzer, cgDispatchClass, asOperation);
-		getEvaluateOperationCallingConvention().createOperation(analyzer, cgDispatchClass, asOperation, asDispatchClass);
-	//	IsEqualOperationCallingConvention.INSTANCE.createCacheIsEqualOperation(analyzer, cgCacheClass, asOperation);
+	//	GetResultOperationCallingConvention.getInstance().createCacheGetResultOperation(analyzer, cgDispatchClass, asOperation);
+		getEvaluateOperationCallingConvention(asDispatchClass).createOperation(analyzer, cgDispatchClass, asOperation, asDispatchClass);
+	//	IsEqualOperationCallingConvention.getInstance().createCacheIsEqualOperation(analyzer, cgCacheClass, asOperation);
 		return cgDispatchOperation;
 	}
 
@@ -296,8 +315,8 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
-	protected @NonNull AbstractEvaluateOperationCallingConvention getEvaluateOperationCallingConvention() {
-		return DispatchEvaluateOperationCallingConvention.INSTANCE;
+	protected @NonNull AbstractEvaluateOperationCallingConvention getEvaluateOperationCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return DispatchEvaluateOperationCallingConvention.getInstance(asClass);
 	}
 
 	// Default guards and boxes all terms. Derived implementations for unboxed/ecore/simple-boxed

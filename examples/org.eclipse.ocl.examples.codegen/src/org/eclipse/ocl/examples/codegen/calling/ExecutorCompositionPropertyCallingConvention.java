@@ -40,7 +40,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class ExecutorCompositionPropertyCallingConvention extends AbstractPropertyCallingConvention // cf ExecutorOppositePropertyCallingConvention
 {
-	public static final @NonNull ExecutorCompositionPropertyCallingConvention INSTANCE = new ExecutorCompositionPropertyCallingConvention();
+	private static final @NonNull ExecutorCompositionPropertyCallingConvention INSTANCE = new ExecutorCompositionPropertyCallingConvention();
+
+	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {

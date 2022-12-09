@@ -46,7 +46,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class NativeOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	public static final @NonNull NativeOperationCallingConvention INSTANCE = new NativeOperationCallingConvention();
+	private static final @NonNull NativeOperationCallingConvention INSTANCE = new NativeOperationCallingConvention();
+
+	public static @NonNull NativeOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {

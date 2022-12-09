@@ -23,7 +23,12 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
  */
 public class ExternalClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static final @NonNull ExternalClassCallingConvention INSTANCE = new ExternalClassCallingConvention();
+	private static final @NonNull ExternalClassCallingConvention INSTANCE = new ExternalClassCallingConvention();
+
+	public static @NonNull ClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		INSTANCE.logInstance(asClass);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {

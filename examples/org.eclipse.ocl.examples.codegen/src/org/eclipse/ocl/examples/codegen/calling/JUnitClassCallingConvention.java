@@ -25,7 +25,12 @@ import org.eclipse.ocl.pivot.Operation;
  */
 public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static final @NonNull JUnitClassCallingConvention INSTANCE = new JUnitClassCallingConvention();
+	private static final @NonNull JUnitClassCallingConvention INSTANCE = new JUnitClassCallingConvention();
+
+	public static @NonNull ClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		INSTANCE.logInstance(asClass);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {

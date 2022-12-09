@@ -39,7 +39,12 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  */
 public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallingConvention		// XXX cf ForeignPropertyCallingConvention
 {
-	public static final @NonNull ConstrainedPropertyCallingConvention INSTANCE = new ConstrainedPropertyCallingConvention();
+	private static final @NonNull ConstrainedPropertyCallingConvention INSTANCE = new ConstrainedPropertyCallingConvention();
+
+	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 /*	@Override
 	public @NonNull CGValuedElement createCGOppositePropertyCallExp(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGProperty cgProperty,

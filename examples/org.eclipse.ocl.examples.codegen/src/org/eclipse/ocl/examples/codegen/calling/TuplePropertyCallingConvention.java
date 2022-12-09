@@ -39,7 +39,12 @@ import org.eclipse.ocl.pivot.values.TupleValue;
  */
 public class TuplePropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull TuplePropertyCallingConvention INSTANCE = new TuplePropertyCallingConvention();
+	private static final @NonNull TuplePropertyCallingConvention INSTANCE = new TuplePropertyCallingConvention();
+
+	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,

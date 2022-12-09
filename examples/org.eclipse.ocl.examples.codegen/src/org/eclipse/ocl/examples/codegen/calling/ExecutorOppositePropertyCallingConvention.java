@@ -46,7 +46,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull ExecutorOppositePropertyCallingConvention INSTANCE = new ExecutorOppositePropertyCallingConvention();
+	private static final @NonNull ExecutorOppositePropertyCallingConvention INSTANCE = new ExecutorOppositePropertyCallingConvention();
+
+	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,

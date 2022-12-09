@@ -59,7 +59,12 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class EcoreOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	public static final @NonNull EcoreOperationCallingConvention INSTANCE = new EcoreOperationCallingConvention();
+	private static final @NonNull EcoreOperationCallingConvention INSTANCE = new EcoreOperationCallingConvention();
+
+	public static @NonNull EcoreOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	public boolean canHandle(@NonNull CodeGenerator codeGenerator, @NonNull Operation asOperation) {
 		GenModelHelper genModelHelper = codeGenerator.getGenModelHelper();

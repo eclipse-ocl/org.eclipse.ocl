@@ -148,6 +148,7 @@ public class NameUtil
 	 * @since 1.18
 	 */
 	public static @Nullable String contextLine = null;
+	public static @Nullable String contextText = null;
 
 	/**
 	 * Print string on System.err preceded by a contextLine if one has been defined. The contextLine is undefined after the call.

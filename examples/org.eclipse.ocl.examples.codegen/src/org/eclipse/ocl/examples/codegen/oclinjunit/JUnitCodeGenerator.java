@@ -151,18 +151,18 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	public @NonNull ClassCallingConvention getCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert asTestClass != null;
 		if (asClass == asTestClass)  {
-			return JUnitClassCallingConvention.INSTANCE;
+			return JUnitClassCallingConvention.getInstance(asClass);
 		}
 		return super.getCallingConvention(asClass);
 	}
 
 	@Override
-	protected @NonNull OperationCallingConvention getCallingConventionInternal(@NonNull Operation asOperation, boolean maybeVirtual) {
+	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean maybeVirtual) {
 		assert asTestOperation != null;
 		if (asOperation == asTestOperation)  {
-			return JUnitOperationCallingConvention.INSTANCE;
+			return JUnitOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 		}
-		return super.getCallingConventionInternal(asOperation, maybeVirtual);
+		return super.getCallingConvention(asOperation, maybeVirtual);
 	}
 
 	@Override

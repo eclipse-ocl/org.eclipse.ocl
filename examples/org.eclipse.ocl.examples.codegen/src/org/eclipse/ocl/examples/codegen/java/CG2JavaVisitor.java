@@ -2010,25 +2010,25 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull Boolean visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgGNavigationCallExp) {
 		return cgGNavigationCallExp.getReferredProperty().getCallingConvention().generateJavaCall(this, js, cgGNavigationCallExp);
 	/*	if (cgGNavigationCallExp instanceof CGEcorePropertyCallExp) {
-			return EcorePropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+			return EcorePropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
 		}
 		if (cgGNavigationCallExp instanceof CGExecutorOppositePropertyCallExp) {
-			return ExecutorPropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+			return ExecutorPropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
 		}
 		if (cgGNavigationCallExp instanceof CGExecutorPropertyCallExp) {
-			return ExecutorPropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+			return ExecutorPropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
 		}
 		if (cgGNavigationCallExp instanceof CGForeignPropertyCallExp) {
-			return ForeignPropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+			return ForeignPropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
 		}
 		if (cgGNavigationCallExp instanceof CGLibraryPropertyCallExp) {
-			return LibraryPropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+			return LibraryPropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
 		}
 		if (cgGNavigationCallExp instanceof CGNativePropertyCallExp) {
-			return NativePropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+			return NativePropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
 		}
 		if (cgGNavigationCallExp instanceof CGTuplePartCallExp) {
-			return TuplePropertyCallingConvention.INSTANCE.generateJavaCall(this, js, cgGNavigationCallExp);
+			return TuplePropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
 		}
 		return super.visitCGNavigationCallExp(cgGNavigationCallExp); */
 	}

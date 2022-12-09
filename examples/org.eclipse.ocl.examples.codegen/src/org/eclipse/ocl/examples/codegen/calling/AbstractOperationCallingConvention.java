@@ -54,7 +54,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  *  AbstractOperationCallingConvention defines the default support for an operation declaration or call.
  */
-public abstract class AbstractOperationCallingConvention implements OperationCallingConvention
+public abstract class AbstractOperationCallingConvention extends AbstractCallingConvention implements OperationCallingConvention
 {
 	protected @NonNull Parameter createBoxedValuesParameter(@NonNull JavaCodeGenerator codeGenerator) {
 		NameResolution boxedValuesResolution = codeGenerator.getGlobalNameManager().getBoxedValuesNameResolution();
@@ -302,8 +302,8 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 	}
 
 	@Override
-	public @NonNull ClassCallingConvention getClassCallingConvention() {
-		return ContextClassCallingConvention.INSTANCE;
+	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ContextClassCallingConvention.getInstance(asClass);
 	}
 
 	protected void initCallArguments(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
@@ -430,11 +430,5 @@ public abstract class AbstractOperationCallingConvention implements OperationCal
 				}
 			}
 		}
-	}
-
-
-	@Override
-	public @NonNull String toString() {
-		return getClass().getSimpleName();
 	}
 }

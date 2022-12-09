@@ -67,7 +67,12 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  */
 public class LibraryOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	public static final @NonNull LibraryOperationCallingConvention INSTANCE = new LibraryOperationCallingConvention();
+	private static final @NonNull LibraryOperationCallingConvention INSTANCE = new LibraryOperationCallingConvention();
+
+	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {

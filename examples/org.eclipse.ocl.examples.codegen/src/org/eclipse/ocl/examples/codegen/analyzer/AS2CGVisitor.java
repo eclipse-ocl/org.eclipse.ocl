@@ -555,8 +555,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Property asProperty = element.getReferredProperty();
 		if (asProperty != null) {
 		//	CGExecutorShadowPart cgExecutorShadowPart = createExecutorShadowPart(asProperty);
-		//	cgExecutorShadowPart.setCallingConvention(ExecutorShadowPartCallingConvention.INSTANCE);
-		//	CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)generatePropertyDeclaration(asProperty, ExecutorShadowPartCallingConvention.INSTANCE);
+		//	cgExecutorShadowPart.setCallingConvention(ExecutorShadowPartCallingConvention.getInstance());
+		//	CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)generatePropertyDeclaration(asProperty, ExecutorShadowPartCallingConvention.getInstance());
 			PropertyId propertyId = asProperty.getPropertyId();
 			CGExecutorShadowPart cgExecutorShadowPart = CGModelFactory.eINSTANCE.createCGExecutorShadowPart();
 			CGElementId cgPropertyId = context.getCGElementId(propertyId);
@@ -564,7 +564,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgExecutorShadowPart.setAst(asProperty);
 			globalNameManager.getNameResolution(cgExecutorShadowPart);
 			cgExecutorShadowPart.setTypeId(context.getCGTypeId(JavaConstants.PROPERTY_TYPE_ID));
-			cgExecutorShadowPart.setCallingConvention(ExecutorShadowPartCallingConvention.INSTANCE);
+			cgExecutorShadowPart.setCallingConvention(ExecutorShadowPartCallingConvention.getInstance(asProperty));
 			cgExecutorShadowPart.getDependsOn().add(cgPropertyId);
 			cgShadowPart.setExecutorPart(cgExecutorShadowPart);
 		}

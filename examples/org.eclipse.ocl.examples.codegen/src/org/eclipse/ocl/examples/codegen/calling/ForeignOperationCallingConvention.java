@@ -60,7 +60,12 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class ForeignOperationCallingConvention extends AbstractOperationCallingConvention	// cf ConstrainedOperationCallingConvention
 {
-	public static final @NonNull ForeignOperationCallingConvention INSTANCE = new ForeignOperationCallingConvention();
+	private static final @NonNull ForeignOperationCallingConvention INSTANCE = new ForeignOperationCallingConvention();
+
+	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 /*	@Override
 	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
@@ -296,8 +301,8 @@ public class ForeignOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public @NonNull ClassCallingConvention getClassCallingConvention() {
-		return ExternalClassCallingConvention.INSTANCE;
+	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ExternalClassCallingConvention.getInstance(asClass);
 	}
 
 	@Override

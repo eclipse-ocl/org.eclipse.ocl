@@ -53,7 +53,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class EcorePropertyCallingConvention extends AbstractPropertyCallingConvention
 {
-	public static final @NonNull EcorePropertyCallingConvention INSTANCE = new EcorePropertyCallingConvention();
+	private static final @NonNull EcorePropertyCallingConvention INSTANCE = new EcorePropertyCallingConvention();
+
+	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	protected void appendEcoreGet(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
 		CGTypeId cgTypeId = cg2javaVisitor.getAnalyzer().getCGTypeId(asProperty.getOwningClass().getTypeId());

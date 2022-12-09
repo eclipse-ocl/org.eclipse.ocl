@@ -52,7 +52,17 @@ import org.eclipse.qvtd.runtime.evaluation.AbstractComputation;
  */
 public class EntryClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static final @NonNull EntryClassCallingConvention INSTANCE = new EntryClassCallingConvention();
+	private static final @NonNull EntryClassCallingConvention INSTANCE = new EntryClassCallingConvention();
+
+	public static @NonNull EntryClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		INSTANCE.logInstance(asClass);
+		return INSTANCE;
+	}
+
+	public static @NonNull EntryClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -82,7 +92,7 @@ public class EntryClassCallingConvention extends AbstractClassCallingConvention
 		asCacheClass.getOwnedProperties().add(asCacheProperty);
 		asCacheProperty.setImplementation(new CacheProperty(asCacheProperty.getPropertyId(), null, null));
 		//
-		CGProperty cgCacheProperty = analyzer.generatePropertyDeclaration(asCacheProperty, ImmutableCachePropertyCallingConvention.INSTANCE);
+		CGProperty cgCacheProperty = analyzer.generatePropertyDeclaration(asCacheProperty, ImmutableCachePropertyCallingConvention.getInstance(asCacheProperty));
 		if (nameResolution != null) {
 			nameResolution.addCGElement(cgCacheProperty);
 		}
@@ -127,9 +137,9 @@ public class EntryClassCallingConvention extends AbstractClassCallingConvention
 		NameResolution cachedResultNameResolution = globalNameManager.getCachedResultNameResolution();
 		createCacheProperty(analyzer, cgEntryClass, cachedResultNameResolution, asOperation);
 		//
-		getConstructorOperationCallingConvention().createCacheConstructor(analyzer, cgEntryClass, asOperation);
-		GetResultOperationCallingConvention.INSTANCE.createCacheGetResultOperation(analyzer, cgEntryClass, asOperation);
-		IsEqualOperationCallingConvention.INSTANCE.createCacheIsEqualOperation(analyzer, cgEntryClass, asOperation);
+		getConstructorOperationCallingConvention(asEntryClass).createCacheConstructor(analyzer, cgEntryClass, asOperation);
+		GetResultOperationCallingConvention.getInstance(asEntryClass).createCacheGetResultOperation(analyzer, cgEntryClass, asOperation);
+		IsEqualOperationCallingConvention.getInstance(asEntryClass).createCacheIsEqualOperation(analyzer, cgEntryClass, asOperation);
 		return asEntryClass;
 	}
 
@@ -168,8 +178,8 @@ public class EntryClassCallingConvention extends AbstractClassCallingConvention
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NonNull ConstructorOperationCallingConvention getConstructorOperationCallingConvention() {
-		return ConstructorOperationCallingConvention.INSTANCE;
+	protected @NonNull ConstructorOperationCallingConvention getConstructorOperationCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return ConstructorOperationCallingConvention.getInstance(asClass);
 	}
 
 	protected @NonNull Class getContextClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass) {

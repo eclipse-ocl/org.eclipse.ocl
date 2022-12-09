@@ -29,7 +29,12 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  */
 public class ImmutableCachePropertyCallingConvention extends AbstractCachePropertyCallingConvention
 {
-	public static final @NonNull ImmutableCachePropertyCallingConvention INSTANCE = new ImmutableCachePropertyCallingConvention();
+	private static final @NonNull ImmutableCachePropertyCallingConvention INSTANCE = new ImmutableCachePropertyCallingConvention();
+
+	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		INSTANCE.logInstance(asProperty);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,

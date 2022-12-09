@@ -30,7 +30,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class CacheClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static final @NonNull CacheClassCallingConvention INSTANCE = new CacheClassCallingConvention();
+	private static final @NonNull CacheClassCallingConvention INSTANCE = new CacheClassCallingConvention();
+
+	public static @NonNull ClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		INSTANCE.logInstance(asClass);
+		return INSTANCE;
+	}
 
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {

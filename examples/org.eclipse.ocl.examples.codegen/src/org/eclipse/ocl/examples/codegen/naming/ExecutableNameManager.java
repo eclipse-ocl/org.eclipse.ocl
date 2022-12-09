@@ -180,7 +180,7 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	protected @NonNull CGVariable createExecutorVariable() {
-		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.INSTANCE);
+		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD));
 		NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
 	//	executorNameResolution.addCGElement(executorInit);
 		executorInit.setTypeId(analyzer.getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID));
@@ -216,7 +216,7 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable createIdResolverVariable() {
-		CGNativeOperationCallExp idResolverInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD, SupportOperationCallingConvention.INSTANCE);
+		CGNativeOperationCallExp idResolverInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD));
 		NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
 		idResolverNameResolution.addCGElement(idResolverInit);
 		idResolverInit.setTypeId(analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID));
@@ -233,7 +233,7 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable createModelManagerVariable() {
-		CGNativeOperationCallExp modelManagerInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD, SupportOperationCallingConvention.INSTANCE);
+		CGNativeOperationCallExp modelManagerInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD));
 		NameResolution modelManagerNameResolution = globalNameManager.getModelManagerNameResolution();
 		modelManagerNameResolution.addCGElement(modelManagerInit);
 		modelManagerInit.setTypeId(analyzer.getCGTypeId(JavaConstants.MODEL_MANAGER_TYPE_ID));
@@ -290,7 +290,7 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable createStandardLibraryVariable() {
-		CGNativeOperationCallExp standardLibraryInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_STANDARD_LIBRARY_METHOD, SupportOperationCallingConvention.INSTANCE);
+		CGNativeOperationCallExp standardLibraryInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_STANDARD_LIBRARY_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.EXECUTOR_GET_STANDARD_LIBRARY_METHOD));
 		NameResolution standardLibraryNameResolution = globalNameManager.getStandardLibraryVariableNameResolution();
 		standardLibraryNameResolution.addCGElement(standardLibraryInit);
 		standardLibraryInit.setTypeId(analyzer.getCGTypeId(JavaConstants.STANDARD_LIBRARY_TYPE_ID));

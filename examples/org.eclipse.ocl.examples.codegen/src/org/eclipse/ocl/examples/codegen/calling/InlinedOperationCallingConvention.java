@@ -49,7 +49,12 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class InlinedOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	public static final @NonNull InlinedOperationCallingConvention INSTANCE = new InlinedOperationCallingConvention();
+	private static final @NonNull InlinedOperationCallingConvention INSTANCE = new InlinedOperationCallingConvention();
+
+	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+		INSTANCE.logInstance(asOperation, maybeVirtual);
+		return INSTANCE;
+	}
 
 	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();

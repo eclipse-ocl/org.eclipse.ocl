@@ -31,10 +31,23 @@ import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
  */
 public class SupportOperationCallingConvention extends NativeOperationCallingConvention
 {
-	public static final @NonNull SupportOperationCallingConvention INSTANCE = new SupportOperationCallingConvention();
+	private static final @NonNull SupportOperationCallingConvention INSTANCE = new SupportOperationCallingConvention();
+
+//	public static @NonNull SupportOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+//		INSTANCE.logInstance(asOperation, maybeVirtual);
+//	}
+
+//	public static @NonNull SupportOperationCallingConvention getInstance(@NonNull Property asProperty) {
+//		INSTANCE.logInstance(asProperty);
+//	}
+
+	public static @NonNull SupportOperationCallingConvention getInstance(@NonNull Method jMethod) {
+		INSTANCE.logInstance(jMethod);
+		return INSTANCE;
+	}
 
 	/**
-	 * Java methods used by the code generator support that must use the SupportOperationCallingConvention.INSTANCE
+	 * Java methods used by the code generator support that must use the SupportOperationCallingConvention.getInstance()
 	 * to avoid inappropriate boxing / type conversion.
 	 */
 	private static final @NonNull Set<@NonNull Method> supportMethods = new HashSet<>();
