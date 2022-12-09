@@ -32,7 +32,7 @@ public class CacheClassCallingConvention extends AbstractClassCallingConvention
 {
 	private static final @NonNull CacheClassCallingConvention INSTANCE = new CacheClassCallingConvention();
 
-	public static @NonNull ClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public static @NonNull CacheClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		INSTANCE.logInstance(asClass);
 		return INSTANCE;
 	}

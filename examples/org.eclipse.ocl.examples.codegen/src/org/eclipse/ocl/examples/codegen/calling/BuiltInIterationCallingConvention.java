@@ -40,7 +40,7 @@ public class BuiltInIterationCallingConvention extends AbstractOperationCallingC
 {
 	private static final @NonNull BuiltInIterationCallingConvention INSTANCE = new BuiltInIterationCallingConvention();
 
-	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+	public static @NonNull BuiltInIterationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
 		INSTANCE.logInstance(asOperation, maybeVirtual);
 		return INSTANCE;
 	}

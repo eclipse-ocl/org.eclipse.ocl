@@ -32,7 +32,7 @@ public class ConstructorClassCallingConvention extends AbstractClassCallingConve
 {
 	private static final @NonNull ConstructorClassCallingConvention INSTANCE = new ConstructorClassCallingConvention();
 
-	public static @NonNull ClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public static @NonNull ConstructorClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		INSTANCE.logInstance(asClass);
 		return INSTANCE;
 	}

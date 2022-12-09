@@ -40,7 +40,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 {
 	private static final @NonNull NativePropertyCallingConvention INSTANCE = new NativePropertyCallingConvention();
 
-	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull NativePropertyCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

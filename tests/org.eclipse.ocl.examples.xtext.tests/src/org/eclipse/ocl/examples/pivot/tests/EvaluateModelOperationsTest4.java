@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.AbstractCallingConvention;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
@@ -69,6 +70,7 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
 import org.eclipse.ocl.pivot.values.Value;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -90,6 +92,16 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 
 	public EvaluateModelOperationsTest4(boolean useCodeGen) {
 		super(useCodeGen);
+	}
+
+	@AfterClass
+	public static void afterClass() {
+		AbstractCallingConvention.printAllUsages();
+	}
+
+	@BeforeClass
+	public static void beforeClass() {
+		AbstractCallingConvention.resetAllUsages();
 	}
 
 	protected @NonNull TestOCL createOCLWithProjectMap() {

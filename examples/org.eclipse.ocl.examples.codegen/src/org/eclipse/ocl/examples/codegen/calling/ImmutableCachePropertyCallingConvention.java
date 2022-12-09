@@ -31,7 +31,7 @@ public class ImmutableCachePropertyCallingConvention extends AbstractCacheProper
 {
 	private static final @NonNull ImmutableCachePropertyCallingConvention INSTANCE = new ImmutableCachePropertyCallingConvention();
 
-	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull ImmutableCachePropertyCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

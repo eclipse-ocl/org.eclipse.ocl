@@ -54,7 +54,7 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 {
 	private static final @NonNull EcoreOppositePropertyCallingConvention INSTANCE = new EcoreOppositePropertyCallingConvention();
 
-	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull EcoreOppositePropertyCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

@@ -25,7 +25,7 @@ public class ExternalClassCallingConvention extends AbstractClassCallingConventi
 {
 	private static final @NonNull ExternalClassCallingConvention INSTANCE = new ExternalClassCallingConvention();
 
-	public static @NonNull ClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public static @NonNull ExternalClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		INSTANCE.logInstance(asClass);
 		return INSTANCE;
 	}

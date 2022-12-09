@@ -48,7 +48,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 {
 	private static final @NonNull ExecutorOppositePropertyCallingConvention INSTANCE = new ExecutorOppositePropertyCallingConvention();
 
-	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull ExecutorOppositePropertyCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

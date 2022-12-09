@@ -40,6 +40,13 @@ public abstract class AbstractCallingConvention implements CallingConvention, Na
 		}
 	}
 
+	public static void resetAllUsages() {
+		for (@NonNull AbstractCallingConvention callingConvention : callingConventions) {
+			callingConvention.resetUsages();
+		}
+		callingConventions.clear();
+	}
+
 	private @NonNull Map<@NonNull String, @NonNull List<@NonNull String>> testName2usages = new HashMap<>();
 
 	private void addInstance(@Nullable String testName, @NonNull String usage) {
@@ -86,6 +93,10 @@ public abstract class AbstractCallingConvention implements CallingConvention, Na
 				System.out.println("\t\t" + distinctUsages.get(usage) + " * " + usage);
 			}
 		}
+	}
+
+	private void resetUsages() {
+		testName2usages.clear();
 	}
 
 	@Override

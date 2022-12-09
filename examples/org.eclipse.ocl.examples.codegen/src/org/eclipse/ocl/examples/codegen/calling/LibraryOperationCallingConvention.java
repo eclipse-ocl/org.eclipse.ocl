@@ -69,7 +69,7 @@ public class LibraryOperationCallingConvention extends AbstractOperationCallingC
 {
 	private static final @NonNull LibraryOperationCallingConvention INSTANCE = new LibraryOperationCallingConvention();
 
-	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+	public static @NonNull LibraryOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
 		INSTANCE.logInstance(asOperation, maybeVirtual);
 		return INSTANCE;
 	}

@@ -53,7 +53,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 {
 	private static final @NonNull CachedOperationCallingConvention INSTANCE = new CachedOperationCallingConvention();
 
-	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+	public static @NonNull CachedOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
 		INSTANCE.logInstance(asOperation, maybeVirtual);
 		return INSTANCE;
 	}

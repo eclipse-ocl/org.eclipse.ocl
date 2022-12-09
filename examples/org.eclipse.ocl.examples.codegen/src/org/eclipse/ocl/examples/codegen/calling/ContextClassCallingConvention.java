@@ -29,7 +29,7 @@ public class ContextClassCallingConvention extends AbstractClassCallingConventio
 {
 	private static final @NonNull ContextClassCallingConvention INSTANCE = new ContextClassCallingConvention();
 
-	public static @NonNull ClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public static @NonNull ContextClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		INSTANCE.logInstance(asClass);
 		return INSTANCE;
 	}

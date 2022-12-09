@@ -41,7 +41,7 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 {
 	private static final @NonNull ConstrainedPropertyCallingConvention INSTANCE = new ConstrainedPropertyCallingConvention();
 
-	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull ConstrainedPropertyCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

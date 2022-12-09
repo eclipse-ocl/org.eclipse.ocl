@@ -27,7 +27,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 {
 	private static final @NonNull JUnitClassCallingConvention INSTANCE = new JUnitClassCallingConvention();
 
-	public static @NonNull ClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public static @NonNull JUnitClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		INSTANCE.logInstance(asClass);
 		return INSTANCE;
 	}

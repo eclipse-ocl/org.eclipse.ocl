@@ -61,7 +61,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 {
 	private static final @NonNull ForeignPropertyCallingConvention INSTANCE = new ForeignPropertyCallingConvention();
 
-	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull ForeignPropertyCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

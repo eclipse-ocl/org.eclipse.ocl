@@ -149,6 +149,7 @@ extends TestCase {
 		// if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 		// 	result.addTestSuite(FinalTests.class);
 		// }
+		result.addTestSuite(LastTest.class);
 		return result;
 	}
 

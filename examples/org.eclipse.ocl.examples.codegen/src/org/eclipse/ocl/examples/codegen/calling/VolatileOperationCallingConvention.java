@@ -49,7 +49,7 @@ public class VolatileOperationCallingConvention extends AbstractOperationCalling
 {
 	private static final @NonNull VolatileOperationCallingConvention INSTANCE = new VolatileOperationCallingConvention();
 
-	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+	public static @NonNull VolatileOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
 		INSTANCE.logInstance(asOperation, maybeVirtual);
 		return INSTANCE;
 	}

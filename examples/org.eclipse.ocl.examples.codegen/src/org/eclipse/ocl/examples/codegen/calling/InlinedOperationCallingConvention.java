@@ -51,7 +51,7 @@ public class InlinedOperationCallingConvention extends AbstractOperationCallingC
 {
 	private static final @NonNull InlinedOperationCallingConvention INSTANCE = new InlinedOperationCallingConvention();
 
-	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+	public static @NonNull InlinedOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
 		INSTANCE.logInstance(asOperation, maybeVirtual);
 		return INSTANCE;
 	}

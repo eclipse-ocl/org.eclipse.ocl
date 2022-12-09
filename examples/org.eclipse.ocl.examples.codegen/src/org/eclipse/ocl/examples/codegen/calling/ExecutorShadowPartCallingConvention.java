@@ -34,7 +34,7 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 {
 	private static final @NonNull ExecutorShadowPartCallingConvention INSTANCE = new ExecutorShadowPartCallingConvention();
 
-	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull ExecutorShadowPartCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

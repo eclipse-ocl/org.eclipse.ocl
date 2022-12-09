@@ -41,7 +41,7 @@ public class TuplePropertyCallingConvention extends AbstractPropertyCallingConve
 {
 	private static final @NonNull TuplePropertyCallingConvention INSTANCE = new TuplePropertyCallingConvention();
 
-	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull TuplePropertyCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

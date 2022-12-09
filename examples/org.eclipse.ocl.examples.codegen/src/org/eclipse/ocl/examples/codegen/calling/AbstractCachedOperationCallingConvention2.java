@@ -271,7 +271,7 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 	{
 		private static final @NonNull CacheInstancePropertyCallingConvention INSTANCE = new CacheInstancePropertyCallingConvention();
 
-		public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+		public static @NonNull CacheInstancePropertyCallingConvention getInstance(@NonNull Property asProperty) {
 			INSTANCE.logInstance(asProperty);
 			return INSTANCE;
 		}

@@ -55,7 +55,7 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 {
 	private static final @NonNull EcorePropertyCallingConvention INSTANCE = new EcorePropertyCallingConvention();
 
-	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull EcorePropertyCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

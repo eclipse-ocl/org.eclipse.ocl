@@ -48,7 +48,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 {
 	private static final @NonNull LibraryPropertyCallingConvention INSTANCE = new LibraryPropertyCallingConvention();
 
-	public static @NonNull PropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull LibraryPropertyCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

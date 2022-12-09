@@ -63,7 +63,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 {
 	private static final @NonNull VirtualOperationCallingConvention INSTANCE = new VirtualOperationCallingConvention();
 
-	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+	public static @NonNull VirtualOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
 		INSTANCE.logInstance(asOperation, maybeVirtual);
 		return INSTANCE;
 	}
@@ -75,7 +75,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	{
 		private static final @NonNull DispatchClassCallingConvention INSTANCE = new DispatchClassCallingConvention();
 
-		public static @NonNull ClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		public static @NonNull DispatchClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}

@@ -886,6 +886,7 @@ public class PivotTestCase extends TestCase
 		}
 		if (!TEST_START.isActive()) {
 			NameUtil.contextLine = "-----Starting " + getClass().getSimpleName() + "." + getName() + "-----";
+			NameUtil.contextText = getClass().getSimpleName() + "." + getName();
 		}
 		super.setUp();
 		if (DEBUG_ID) {
@@ -932,6 +933,7 @@ public class PivotTestCase extends TestCase
 		}
 		super.tearDown();
 		NameUtil.contextLine = null;
+		NameUtil.contextText = null;
 	}
 
 	protected void uninstall() {
