@@ -26,7 +26,6 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
-import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
@@ -50,20 +49,8 @@ import org.eclipse.qvtd.runtime.evaluation.AbstractComputation;
 /**
  *  EntryClassCallingConvention defines the style of a nested Class whose instance caches a feature computation.
  */
-public class EntryClassCallingConvention extends AbstractClassCallingConvention
+public abstract class AbstractEntryClassCallingConvention extends AbstractClassCallingConvention
 {
-	private static final @NonNull EntryClassCallingConvention INSTANCE = new EntryClassCallingConvention();
-
-	public static @NonNull EntryClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		INSTANCE.logInstance(asClass);
-		return INSTANCE;
-	}
-
-	public static @NonNull EntryClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Operation asOperation, boolean maybeVirtual) {
-		INSTANCE.logInstance(asOperation, maybeVirtual);
-		return INSTANCE;
-	}
-
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgClass = createCGClass();
@@ -104,14 +91,12 @@ public class EntryClassCallingConvention extends AbstractClassCallingConvention
 		}
 	}
 
-	public org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull ExecutableNameManager operationNameManager) {
-		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
+	public org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		boolean isIncremental = codeGenerator.getOptions().isIncremental();
 		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
 		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		org.eclipse.ocl.pivot.@NonNull Package asParentPackage = getParentPackage(analyzer, asOperation);
 		//
@@ -205,7 +190,7 @@ public class EntryClassCallingConvention extends AbstractClassCallingConvention
 	 * Return the Package within which the caache claass support for asOperation shuld be supported.
 	 */
 	protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {	// XXX Regularly overridden
-		return AbstractLanguageSupport.getCachePackage(asOperation);
+		return getDefaultParentPackage(analyzer, asOperation);
 	}
 
 	protected @NonNull String getTitle(@NonNull CGClass cgClass) {

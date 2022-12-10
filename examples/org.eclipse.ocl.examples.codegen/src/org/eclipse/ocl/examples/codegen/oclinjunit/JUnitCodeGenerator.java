@@ -179,4 +179,10 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		s.appendAndEncodeQualifiedName(asClass);
 		return s.toString();
 	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getContextClass() {
+		assert asTestClass != null;
+		return asTestClass;
+	}
 }

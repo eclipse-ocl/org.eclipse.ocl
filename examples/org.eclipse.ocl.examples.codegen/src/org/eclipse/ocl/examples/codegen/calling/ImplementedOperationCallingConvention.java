@@ -77,30 +77,15 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 	{
 		private static final @NonNull ImplementedEntryClassCallingConvention INSTANCE = new ImplementedEntryClassCallingConvention();
 
+		public static @NonNull ImplementedEntryClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
+
 		@Override
 		protected @NonNull ConstructorOperationCallingConvention getConstructorOperationCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			return ImplementedConstructorOperationCallingConvention.getInstance(asClass);
 		}
-
-		/*	@Override
-		protected @NonNull Class getContextClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass) {
-			org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-			Operation asOperation = analyzer.getCachedOperation(asCacheClass);
-			return PivotUtil.getOwningClass(asOperation);
-		}
-
-		@Override
-		protected @NonNull NameResolution getContextNameResolution(@NonNull GlobalNameManager globalNameManager) {
-			return globalNameManager.getSelfNameResolution();
-		}
-
-		@Override
-		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
-			CGClass cgClass = analyzer.getCGRootClass(asClass);
-			org.eclipse.ocl.pivot.Class asRootClass = CGUtil.getAST(cgClass);
-			return AbstractLanguageSupport.getCachePackage(asRootClass);
-		} */
 	}
 
 	@Override
@@ -116,10 +101,10 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 		analyzer.initAst(cgOperation, asOperation, true);
 		CGClass cgRootClass = analyzer.getCGRootClass(asOperation);
 		cgRootClass.getOperations().add(cgOperation);
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
-		org.eclipse.ocl.pivot.Class asEntryClass = createEntryClass(operationNameManager, asOperation);
-		org.eclipse.ocl.pivot.Class asCacheClass = createCacheClass(operationNameManager, asEntryClass);
-		createCacheInstance(operationNameManager, asCacheClass, asEntryClass);
+	//	ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
+		org.eclipse.ocl.pivot.Class asEntryClass = createEntryClass(analyzer, cgOperation);
+		org.eclipse.ocl.pivot.Class asCacheClass = createCacheClass(analyzer, cgOperation, asEntryClass);
+		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);
 		return cgOperation;
 	}
 
@@ -135,10 +120,10 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 		//	}
 	}
 
-	@Override
-	protected @NonNull EntryClassCallingConvention getEntryClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return ImplementedEntryClassCallingConvention.getInstance(asClass);
-	}
+//	@Override
+//	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+//		return ImplementedEntryClassCallingConvention.getInstance(asClass);
+//	}
 
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {

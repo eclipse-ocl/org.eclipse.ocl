@@ -266,7 +266,7 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 		}
 	}
 
-	protected final @NonNull CGOperation createCacheConstructor(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
+	protected /*final*/ @NonNull CGOperation createCacheConstructor(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
 		//
 		// AS Class - yyy2zzz
 		// AS Properties -

@@ -26,6 +26,8 @@ import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -98,9 +100,20 @@ public abstract class AbstractClassCallingConvention extends AbstractCallingConv
 		throw new UnsupportedOperationException();
 	}
 
+	protected org.eclipse.ocl.pivot.@NonNull Package getDefaultParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		return AbstractLanguageSupport.getCachePackage(asOperation);
+	}
+
 	@Override
 	public @NonNull String getName(@NonNull CodeGenAnalyzer analyzer, @NonNull NamedElement asNamedElement) {
 		return PivotUtil.getName(asNamedElement);
+	}
+
+	protected org.eclipse.ocl.pivot.@NonNull Package getRootClassParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
+		CGClass cgClass = analyzer.getCGRootClass(asClass);
+		org.eclipse.ocl.pivot.Class asRootClass = CGUtil.getAST(cgClass);
+		return AbstractLanguageSupport.getCachePackage(asRootClass);
 	}
 
 	/**

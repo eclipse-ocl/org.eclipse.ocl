@@ -11,7 +11,9 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
 
 /**
@@ -19,19 +21,35 @@ import org.eclipse.ocl.pivot.Operation;
  */
 public abstract class FunctionOperationCallingConvention extends AbstractCachedOperationCallingConvention2	// cf ConstrainedOperationCallingConvention
 {
-	protected final org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull ExecutableNameManager operationNameManager, @NonNull Operation asOperation) {
-		return getEntryClassCallingConvention(asOperation).createEntryClass(operationNameManager);
+	public static class FunctionEntryClassCallingConvention extends AbstractEntryClassCallingConvention
+	{
+		private static final @NonNull FunctionEntryClassCallingConvention INSTANCE = new FunctionEntryClassCallingConvention();
+
+//		public static @NonNull FunctionEntryClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+//			INSTANCE.logInstance(asClass);
+//			return INSTANCE;
+//		}
+
+		public static @NonNull FunctionEntryClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Operation asOperation, boolean maybeVirtual) {
+			INSTANCE.logInstance(asOperation, maybeVirtual);
+			return INSTANCE;
+		}
 	}
 
-	protected final org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull ExecutableNameManager operationNameManager, org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return getEntryClassCallingConvention(asClass).createEntryClass(operationNameManager);
+	protected final org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		return getEntryClassCallingConvention(asOperation).createEntryClass(analyzer, cgOperation);
 	}
 
-	protected @NonNull EntryClassCallingConvention getEntryClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return EntryClassCallingConvention.getInstance(asClass);
-	}
+//	protected final org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull ExecutableNameManager operationNameManager, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+//		return getEntryClassCallingConvention(asClass).createEntryClass(operationNameManager);
+//	}
 
-	protected @NonNull EntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {
-		return EntryClassCallingConvention.getInstance(asOperation, false);
+//	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+//		return FunctionEntryClassCallingConvention.getInstance(asClass);
+//	}
+
+	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {
+		return FunctionEntryClassCallingConvention.getInstance(asOperation, false);
 	}
 }
