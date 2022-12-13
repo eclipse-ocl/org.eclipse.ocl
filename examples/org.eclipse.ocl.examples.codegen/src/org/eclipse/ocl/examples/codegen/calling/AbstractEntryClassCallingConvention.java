@@ -122,9 +122,12 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		NameResolution cachedResultNameResolution = globalNameManager.getCachedResultNameResolution();
 		createCacheProperty(analyzer, cgEntryClass, cachedResultNameResolution, asOperation);
 		//
-		getConstructorOperationCallingConvention(asEntryClass).createCacheConstructor(analyzer, cgEntryClass, asOperation);
-		GetResultOperationCallingConvention.getInstance(asEntryClass).createCacheGetResultOperation(analyzer, cgEntryClass, asOperation);
-		IsEqualOperationCallingConvention.getInstance(asEntryClass).createCacheIsEqualOperation(analyzer, cgEntryClass, asOperation);
+//		getConstructorOperationCallingConvention(asEntryClass).createCacheConstructor(analyzer, cgEntryClass, asOperation);
+		installConstructorOperation(analyzer, cgEntryClass, asOperation);
+//		GetResultOperationCallingConvention.getInstance(asEntryClass).createCacheGetResultOperation(analyzer, cgEntryClass, asOperation);
+		installGetResultOperation(analyzer, cgEntryClass, asOperation);
+//		IsEqualOperationCallingConvention.getInstance(asEntryClass).createCacheIsEqualOperation(analyzer, cgEntryClass, asOperation);
+		installIsEqualOperation(analyzer, cgEntryClass, asOperation);
 		return asEntryClass;
 	}
 
@@ -195,5 +198,20 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 
 	protected @NonNull String getTitle(@NonNull CGClass cgClass) {
 		return "Each " + cgClass.getName() + " instance caches a distinct evaluation of\n";
+	}
+
+	protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
+		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+		ConstructorOperationCallingConvention.getInstance(asEntryClass).createCacheConstructor(analyzer, cgEntryClass, asOperation);
+	}
+
+	protected void installGetResultOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
+		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+		GetResultOperationCallingConvention.getInstance(asEntryClass).createCacheGetResultOperation(analyzer, cgEntryClass, asOperation);
+	}
+
+	protected void installIsEqualOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
+		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+		IsEqualOperationCallingConvention.getInstance(asEntryClass).createCacheIsEqualOperation(analyzer, cgEntryClass, asOperation);
 	}
 }
