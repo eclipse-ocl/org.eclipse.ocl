@@ -140,8 +140,8 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 		//
 		//	Unpack boxedValues and assign properties.
 		//
-		ParameterVariable asThisParameterVariable = (ParameterVariable)asEntryExpressionInOCL.getOwnedContext();
-		assert asThisParameterVariable != null;		// Must have a Java 'this' to initialize its properties
+		ParameterVariable asThisObjectParameterVariable = (ParameterVariable)asEntryExpressionInOCL.getOwnedContext();
+		assert asThisObjectParameterVariable != null;		// Must have a Java 'this' to initialize its properties
 		// FIXME wrong type
 		int iInclusiveMax = cgProperties.size()-1;
 		for (int i = 0; i <= iInclusiveMax; i++) {
@@ -155,7 +155,7 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 			else {
 				ParameterVariable asEntryParameterVariable;
 				if (i == 0) {
-					asEntryParameterVariable = asThisParameterVariable;
+					asEntryParameterVariable = asThisObjectParameterVariable;
 				}
 				else {
 					asEntryParameterVariable = (ParameterVariable)asEntryParameterVariables.get(i-1);
@@ -269,6 +269,9 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 		}
 	}
 
+	/**
+	 * Create the AS entry operation, AS body and CG operation declaration for the AS operation within cgEntryClass.
+	 */
 	protected /*final*/ @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		//
 		// AS Class - yyy2zzz
@@ -299,16 +302,12 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 		ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
 		if (asExpressionInOCL != null) {
 			ExpressionInOCL asEntryExpressionInOCL = EcoreUtil.copy(asExpressionInOCL);
-			OCLExpression asEntryResult = asEntryExpressionInOCL.getOwnedBody();
-			assert asEntryResult != null;
-			PivotUtilInternal.resetContainer(asEntryResult);
-			asEntryExpressionInOCL.setOwnedBody(asEntryResult);
+			Variable asContextVariable = asEntryExpressionInOCL.getOwnedContext();
+			assert asContextVariable != null;
+			assert asContextVariable.isIsRequired();
+			assert asContextVariable.getTypeValue() == null;
+			asContextVariable.setType(asEntryClass);		// Change context from context class to entry class
 			asEntryConstructor.setBodyExpression(asEntryExpressionInOCL);
-			Variable asVariableVariable = asEntryExpressionInOCL.getOwnedContext();
-			assert asVariableVariable != null;
-			assert asVariableVariable.isIsRequired();
-			assert asVariableVariable.getTypeValue() == null;
-			asVariableVariable.setType(asEntryClass);		// Move from Transformation to Entry class
 		}
 		else {
 			assert asOperation.getImplementationClass() != null;

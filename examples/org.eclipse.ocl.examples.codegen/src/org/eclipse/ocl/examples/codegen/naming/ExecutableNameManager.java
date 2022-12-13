@@ -61,9 +61,9 @@ public class ExecutableNameManager extends NestedNameManager
 	private /*@LazyNonNull*/ CGParameter idResolverParameter = null;		// A local orphan parameter spelled "idResolver" -- XXX probably doesn't need caching
 	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;		// A convenience cache of execitpr.getModelManager()
 	private /*@LazyNonNull*/ CGFinalVariable qualifiedThisVariable = null;	// An unambiguous spelling of this for external access.
-	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of execitpr.getStandardVariable()
+	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of executor.getStandardVariable()
 	private /*@LazyNonNull*/ CGParameter selfParameter = null;				// A local parameter spelled "self" to be added to the signature
-	private /*@LazyNonNull*/ CGParameter thisObjectParameter = null;		// A local orphan parameter spelled "thisObject"
+	private /*@LazyNonNull*/ CGParameter thisObjectParameter = null;		// A local parameter spelled "thisObject" to distinguish unique evaluations
 	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// A local orphan parameter spelled "this"
 	private /*@LazyNonNull*/ CGParameter typeIdParameter = null;			// A local orphan parameter spelled "typeId"
 
@@ -321,21 +321,23 @@ public class ExecutableNameManager extends NestedNameManager
 
 	protected @NonNull CGParameter createThisObjectParameter() {
 		assert !isStatic;
-		org.eclipse.ocl.pivot.Class asContextClass = codeGenerator.getContextClass();
-		NameResolution thisObjectName = getGlobalNameManager().getThisObjectNameResolution();
+		org.eclipse.ocl.pivot.Class asContextClass = classNameManager.getASClass(); //codeGenerator.getContextClass();
+		NameResolution thisObjectName = globalNameManager.getThisObjectNameResolution();
 		CGTypeId cgTypeId = analyzer.getCGTypeId(asContextClass.getTypeId());
-		CGParameter thisTransformerParameter = analyzer.createCGParameter(thisObjectName, cgTypeId, true);
-		//	thisTransformerParameter.setIsThis(true);
-		thisTransformerParameter.setNonInvalid();
-		thisTransformerParameter.setNonNull();
-		return thisTransformerParameter;
+		CGParameter thisObjectParameter = analyzer.createCGParameter(thisObjectName, cgTypeId, true);
+		thisObjectParameter.setIsThis(false);		// Do not use Java's 'this' spelling
+		thisObjectParameter.setNonInvalid();
+		thisObjectParameter.setNonNull();
+		return thisObjectParameter;
 	}
 
 	protected @NonNull CGParameter createThisParameter() {
 		assert !isStatic;
+		org.eclipse.ocl.pivot.Class asThisClass = classNameManager.getASClass();
 		NameResolution thisName = globalNameManager.getThisNameResolution();
-		CGParameter thisParameter = analyzer.createCGParameter(thisName, analyzer.getCGTypeId(classNameManager.getASClass().getTypeId()), true);
-		thisParameter.setIsThis(true);
+		CGTypeId cgTypeId = analyzer.getCGTypeId(asThisClass.getTypeId());
+		CGParameter thisParameter = analyzer.createCGParameter(thisName, cgTypeId, true);
+		thisParameter.setIsThis(true);		// Use Java's 'this' spelling
 		thisParameter.setNonInvalid();
 		thisParameter.setNonNull();
 		return thisParameter;

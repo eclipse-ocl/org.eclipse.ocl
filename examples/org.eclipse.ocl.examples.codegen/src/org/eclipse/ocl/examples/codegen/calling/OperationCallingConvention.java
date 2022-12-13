@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 public interface OperationCallingConvention extends CallingConvention
 {
 	/**
-	 * Create the body for an CGOperation.
+	 * Elaborate the CGOperation declaration with its body.
 	 */
 	void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation);
 
