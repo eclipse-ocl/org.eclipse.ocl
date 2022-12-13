@@ -61,6 +61,7 @@ public class JavaConstants {
 	public static final @NonNull String SOURCE_AND_ARGUMENT_VALUES_NAME = "sourceAndArgumentValues";
 	public static final @NonNull String STANDARD_LIBRARY_NAME = "standardLibrary";
 	public static final @NonNull String THIS_NAME = "this";
+	public static final @NonNull String THIS_OBJECT_NAME = "thisObject";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 
 	public static final @NonNull String EXTERNAL_CLASS_PREFIX = "EC_";

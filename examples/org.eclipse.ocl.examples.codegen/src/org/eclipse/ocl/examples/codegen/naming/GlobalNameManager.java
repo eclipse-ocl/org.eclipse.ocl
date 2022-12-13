@@ -182,6 +182,7 @@ public class GlobalNameManager extends AbstractNameManager
 	protected final @NonNull NameResolution sourceAndArgumentValuesName;
 	protected final @NonNull NameResolution standardLibraryVariableName;
 	protected final @NonNull NameResolution thisName;
+	protected final @NonNull NameResolution thisObjectName;
 	protected final @NonNull NameResolution typeIdName;
 	protected final @NonNull NameResolution valueName;
 
@@ -215,6 +216,7 @@ public class GlobalNameManager extends AbstractNameManager
 		this.selfName = declareEagerName(null, PivotConstants.SELF_NAME);
 		this.sourceAndArgumentValuesName = declareEagerName(null, JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
 		this.standardLibraryVariableName = declareEagerName(null, JavaConstants.STANDARD_LIBRARY_NAME);
+		this.thisObjectName = declareEagerName(null, JavaConstants.THIS_OBJECT_NAME);
 		this.typeIdName = declareEagerName(null, JavaConstants.TYPE_ID_NAME);
 		this.valueName = declareEagerName(null, "value");
 	}
@@ -533,8 +535,8 @@ public class GlobalNameManager extends AbstractNameManager
 		return thisName;
 	}
 
-	public @NonNull NameResolution getThisTransformerNameResolution() {
-		throw new UnsupportedOperationException();			// XXX
+	public @NonNull NameResolution getThisObjectNameResolution() {
+		return thisObjectName;
 	}
 
 	public @NonNull NameResolution getTypeIdNameResolution() {

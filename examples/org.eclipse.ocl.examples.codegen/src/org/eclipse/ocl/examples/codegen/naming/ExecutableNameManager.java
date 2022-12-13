@@ -58,11 +58,12 @@ public class ExecutableNameManager extends NestedNameManager
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / caached local thread lookup
 	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// A convenience cache of execitpr.getIdResolver()
-	private /*@LazyNonNull*/ CGParameter zzidResolverParameter = null;		// A local orphan parameter spelled "idResolver" -- XXX probably doesn't need caching
+	private /*@LazyNonNull*/ CGParameter idResolverParameter = null;		// A local orphan parameter spelled "idResolver" -- XXX probably doesn't need caching
 	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;		// A convenience cache of execitpr.getModelManager()
 	private /*@LazyNonNull*/ CGFinalVariable qualifiedThisVariable = null;	// An unambiguous spelling of this for external access.
 	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of execitpr.getStandardVariable()
 	private /*@LazyNonNull*/ CGParameter selfParameter = null;				// A local parameter spelled "self" to be added to the signature
+	private /*@LazyNonNull*/ CGParameter thisObjectParameter = null;		// A local orphan parameter spelled "thisObject"
 	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// A local orphan parameter spelled "this"
 	private /*@LazyNonNull*/ CGParameter typeIdParameter = null;			// A local orphan parameter spelled "typeId"
 
@@ -217,12 +218,11 @@ public class ExecutableNameManager extends NestedNameManager
 		return executorVariable;
 	}
 
-	protected @NonNull CGParameter zzcreateIdResolverParameter() {
+	protected @NonNull CGParameter createIdResolverParameter() {
 		assert !isStatic;
 		NameResolution idResolverNameResolution = getGlobalNameManager().getIdResolverNameResolution();
 		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
 		CGParameter idResolverParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
-		//	thisTransformerParameter.setIsThis(true);
 		idResolverParameter.setNonInvalid();
 		idResolverParameter.setNonNull();
 		return idResolverParameter;
@@ -317,6 +317,18 @@ public class ExecutableNameManager extends NestedNameManager
 		standardLibraryVariable.setNonNull();
 		standardLibraryNameResolution.addCGElement(standardLibraryVariable);
 		return standardLibraryVariable;
+	}
+
+	protected @NonNull CGParameter createThisObjectParameter() {
+		assert !isStatic;
+		org.eclipse.ocl.pivot.Class asContextClass = codeGenerator.getContextClass();
+		NameResolution thisObjectName = getGlobalNameManager().getThisObjectNameResolution();
+		CGTypeId cgTypeId = analyzer.getCGTypeId(asContextClass.getTypeId());
+		CGParameter thisTransformerParameter = analyzer.createCGParameter(thisObjectName, cgTypeId, true);
+		//	thisTransformerParameter.setIsThis(true);
+		thisTransformerParameter.setNonInvalid();
+		thisTransformerParameter.setNonNull();
+		return thisTransformerParameter;
 	}
 
 	protected @NonNull CGParameter createThisParameter() {
@@ -460,16 +472,11 @@ public class ExecutableNameManager extends NestedNameManager
 		return executorVariable2;
 	}
 
-//	public @NonNull CGParameter getIdResolverParameter() {
-//		throw new UnsupportedOperationException();		// XXX
-//	}
-
-//	@Override
 	public @NonNull CGParameter getIdResolverParameter() {
 		assert !isStatic;
-		CGParameter idResolverParameter2 = zzidResolverParameter;
+		CGParameter idResolverParameter2 = idResolverParameter;
 		if (idResolverParameter2 == null) {
-			zzidResolverParameter = idResolverParameter2 = zzcreateIdResolverParameter();
+			idResolverParameter = idResolverParameter2 = createIdResolverParameter();
 		}
 		return idResolverParameter2;
 	}
@@ -575,6 +582,15 @@ public class ExecutableNameManager extends NestedNameManager
 			standardLibraryVariable = standardLibraryVariable2 = createStandardLibraryVariable();
 		}
 		return standardLibraryVariable2;
+	}
+
+	public @NonNull CGParameter getThisObjectParameter() {
+		assert !isStatic;
+		CGParameter thisObjectParameter2 = thisObjectParameter;
+		if (thisObjectParameter2 == null) {
+			thisObjectParameter = thisObjectParameter2 = createThisObjectParameter();
+		}
+		return thisObjectParameter2;
 	}
 
 	public @NonNull CGParameter getThisParameter() {
