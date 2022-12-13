@@ -358,7 +358,7 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 			cgOperation.setBody(cgResult);
 		}
 
-		public @NonNull CGOperation createCacheGetResultOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
+		public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
 			//
 			// AS Class - yyy2zzz
 			// AS Properties - thisTransformer, x1, x2, cachedResult
@@ -461,7 +461,7 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 			cgCacheOperation.setBody(cgResult);
 		}
 
-		public final @NonNull CGOperation createCacheIsEqualOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
+		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
 			//
 			// AS Class - yyy2zzz
 			// AS Properties - thisTransformer, x1, x2, cachedResult

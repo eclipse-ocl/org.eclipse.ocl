@@ -100,7 +100,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		}
 
 		@Override		/// super was final
-		protected final @NonNull CGOperation createCacheConstructor(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
+		protected final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
 			//
 			// AS Class - yyy2zzz
 			// AS Properties -
@@ -167,21 +167,38 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		}
 
 		@Override
-		protected @NonNull ConstructorOperationCallingConvention getConstructorOperationCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			return ForeignConstructorOperationCallingConvention.getInstance(asClass);
-		}
-
-		@Override
 		protected @NonNull NameResolution getContextNameResolution(@NonNull GlobalNameManager globalNameManager) {
 			return globalNameManager.getSelfNameResolution();
 		}
 
 		/**
-		 * Return the Package within which the caache claass support for asOperation shuld be supported.
+		 * Return the Package within which the caache class support for asOperation shuld be supported.
 		 */
 		@Override
 		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {	// XXX Regularly overridden
 			return getRootClassParentPackage(analyzer, asOperation);
+		}
+
+		@Override
+		protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
+			org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+			ForeignConstructorOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
+		}
+
+		@Override
+		protected void installIsEqualOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
+			org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+			ForeignIsEqualOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
+		}
+	}
+
+	public static class ForeignIsEqualOperationCallingConvention extends IsEqualOperationCallingConvention
+	{
+		private static final @NonNull ForeignIsEqualOperationCallingConvention INSTANCE = new ForeignIsEqualOperationCallingConvention();
+
+		public static @NonNull ForeignIsEqualOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
 		}
 	}
 

@@ -166,10 +166,6 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NonNull ConstructorOperationCallingConvention getConstructorOperationCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return ConstructorOperationCallingConvention.getInstance(asClass);
-	}
-
 	protected @NonNull Class getContextClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass) {
 		return analyzer.getCodeGenerator().getContextClass();
 	}
@@ -202,16 +198,16 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 
 	protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		ConstructorOperationCallingConvention.getInstance(asEntryClass).createCacheConstructor(analyzer, cgEntryClass, asOperation);
+		ConstructorOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
 	}
 
 	protected void installGetResultOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		GetResultOperationCallingConvention.getInstance(asEntryClass).createCacheGetResultOperation(analyzer, cgEntryClass, asOperation);
+		GetResultOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
 	}
 
 	protected void installIsEqualOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		IsEqualOperationCallingConvention.getInstance(asEntryClass).createCacheIsEqualOperation(analyzer, cgEntryClass, asOperation);
+		IsEqualOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
 	}
 }
