@@ -56,7 +56,47 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		return cgClass;
 	}
 
-	private void createCacheProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass,
+	public org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+			boolean isIncremental = codeGenerator.getOptions().isIncremental();
+			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
+			ImportNameManager importNameManager = codeGenerator.getImportNameManager();
+			LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+			Operation asOperation = CGUtil.getAST(cgOperation);
+			org.eclipse.ocl.pivot.@NonNull Package asParentPackage = getParentPackage(analyzer, asOperation);
+			//
+			PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, asParentPackage);
+			String entryClassName = packageNameManager.getUniqueClassName(NameManagerHelper.ENTRY_CLASS_NAME_PREFIX, asOperation);
+			org.eclipse.ocl.pivot.Class asEntryClass = AbstractLanguageSupport.getClass(asParentPackage, entryClassName);
+			analyzer.addCachedOperation(asEntryClass, asOperation);
+			org.eclipse.ocl.pivot.Class asEntrySuperClass = jLanguageSupport.getNativeClass(isIncremental ? AbstractComputation.Incremental.class : AbstractComputation.class);
+			asEntryClass.getSuperClasses().add(asEntrySuperClass);
+			importNameManager.reserveLocalName(PivotUtil.getName(asEntryClass));
+			//
+			CGClass cgEntryClass = analyzer.generateClassDeclaration(asEntryClass, this);
+			CGClass cgEntrySuperClass = analyzer.generateClassDeclaration(asEntrySuperClass, null);
+			cgEntryClass.getSuperTypes().add(cgEntrySuperClass);
+			//
+			NameResolution contextNameResolution = getContextNameResolution(globalNameManager);
+			org.eclipse.ocl.pivot.Class asContextClass = getContextClass(analyzer, cgEntryClass);
+			createEntryProperty(analyzer, cgEntryClass, contextNameResolution, asContextClass);
+			for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+				createEntryProperty(analyzer, cgEntryClass, null, asParameter);
+				// XXX need to support a cached invalid
+			}
+			NameResolution cachedResultNameResolution = globalNameManager.getCachedResultNameResolution();
+			createEntryProperty(analyzer, cgEntryClass, cachedResultNameResolution, asOperation);
+			//
+	//		getConstructorOperationCallingConvention(asEntryClass).createCacheConstructor(analyzer, cgEntryClass, asOperation);
+			installConstructorOperation(analyzer, cgEntryClass, asOperation);
+	//		GetResultOperationCallingConvention.getInstance(asEntryClass).createCacheGetResultOperation(analyzer, cgEntryClass, asOperation);
+			installGetResultOperation(analyzer, cgEntryClass, asOperation);
+	//		IsEqualOperationCallingConvention.getInstance(asEntryClass).createCacheIsEqualOperation(analyzer, cgEntryClass, asOperation);
+			installIsEqualOperation(analyzer, cgEntryClass, asOperation);
+			return asEntryClass;
+		}
+
+	private void createEntryProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass,
 			@Nullable NameResolution nameResolution, @NonNull NamedElement asTypeOrTypedElement) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
 		//
@@ -87,46 +127,6 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//			nameManager.declareEagerName(cgEntryProperty)
 			nameResolution = nameManager.getNameResolution(cgEntryProperty);
 		}
-	}
-
-	public org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
-		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		boolean isIncremental = codeGenerator.getOptions().isIncremental();
-		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
-		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		org.eclipse.ocl.pivot.@NonNull Package asParentPackage = getParentPackage(analyzer, asOperation);
-		//
-		PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, asParentPackage);
-		String entryClassName = packageNameManager.getUniqueClassName(NameManagerHelper.ENTRY_CLASS_NAME_PREFIX, asOperation);
-		org.eclipse.ocl.pivot.Class asEntryClass = AbstractLanguageSupport.getClass(asParentPackage, entryClassName);
-		analyzer.addCachedOperation(asEntryClass, asOperation);
-		org.eclipse.ocl.pivot.Class asEntrySuperClass = jLanguageSupport.getNativeClass(isIncremental ? AbstractComputation.Incremental.class : AbstractComputation.class);
-		asEntryClass.getSuperClasses().add(asEntrySuperClass);
-		importNameManager.reserveLocalName(PivotUtil.getName(asEntryClass));
-		//
-		CGClass cgEntryClass = analyzer.generateClassDeclaration(asEntryClass, this);
-		CGClass cgEntrySuperClass = analyzer.generateClassDeclaration(asEntrySuperClass, null);
-		cgEntryClass.getSuperTypes().add(cgEntrySuperClass);
-		//
-		NameResolution contextNameResolution = getContextNameResolution(globalNameManager);
-		org.eclipse.ocl.pivot.Class asContextClass = getContextClass(analyzer, cgEntryClass);
-		createCacheProperty(analyzer, cgEntryClass, contextNameResolution, asContextClass);
-		for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
-			createCacheProperty(analyzer, cgEntryClass, null, asParameter);
-			// XXX need to support a cached invalid
-		}
-		NameResolution cachedResultNameResolution = globalNameManager.getCachedResultNameResolution();
-		createCacheProperty(analyzer, cgEntryClass, cachedResultNameResolution, asOperation);
-		//
-//		getConstructorOperationCallingConvention(asEntryClass).createCacheConstructor(analyzer, cgEntryClass, asOperation);
-		installConstructorOperation(analyzer, cgEntryClass, asOperation);
-//		GetResultOperationCallingConvention.getInstance(asEntryClass).createCacheGetResultOperation(analyzer, cgEntryClass, asOperation);
-		installGetResultOperation(analyzer, cgEntryClass, asOperation);
-//		IsEqualOperationCallingConvention.getInstance(asEntryClass).createCacheIsEqualOperation(analyzer, cgEntryClass, asOperation);
-		installIsEqualOperation(analyzer, cgEntryClass, asOperation);
-		return asEntryClass;
 	}
 
 	@Override

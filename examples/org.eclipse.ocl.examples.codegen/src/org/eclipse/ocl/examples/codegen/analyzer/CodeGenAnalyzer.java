@@ -1133,6 +1133,16 @@ public class CodeGenAnalyzer
 		}
 		CGOperation cgOperation = basicGetCGOperation(asOperation);
 		if (cgOperation == null) {
+			ExpressionInOCL asExpressionInOCL = null;
+			LanguageExpression asSpecification = asOperation.getBodyExpression();
+			if (asSpecification != null) {
+				try {
+					asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);			// XXX Not appropriate for virtual dispatcher
+				} catch (ParserException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			if (callingConvention == null) {
 				callingConvention = codeGenerator.getCallingConvention(asOperation, maybeVirtual);
 			}
@@ -1150,16 +1160,6 @@ public class CodeGenAnalyzer
 			}
 		//	System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
 			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
-			ExpressionInOCL asExpressionInOCL = null;
-			LanguageExpression asSpecification = asOperation.getBodyExpression();
-			if (asSpecification != null) {
-				try {
-					asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);			// XXX Not appropriate for virtual dispatcher
-				} catch (ParserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 			if (cgOperation.eContainer() == null) {			// Unless createCGOperation defined an alternative
 				CGClass cgClass = getCGClass(PivotUtil.getOwningClass(asOperation));
 				cgClass.getOperations().add(cgOperation);

@@ -141,7 +141,7 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 		//	Unpack boxedValues and assign properties.
 		//
 		ParameterVariable asThisParameterVariable = (ParameterVariable)asEntryExpressionInOCL.getOwnedContext();
-		assert asThisParameterVariable != null;		// Have a Java 'this' to initialize its properties
+		assert asThisParameterVariable != null;		// Must have a Java 'this' to initialize its properties
 		// FIXME wrong type
 		int iInclusiveMax = cgProperties.size()-1;
 		for (int i = 0; i <= iInclusiveMax; i++) {

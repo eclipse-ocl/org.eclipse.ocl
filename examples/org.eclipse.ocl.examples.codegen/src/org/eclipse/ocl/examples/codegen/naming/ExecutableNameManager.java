@@ -30,6 +30,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
@@ -57,6 +58,7 @@ public class ExecutableNameManager extends NestedNameManager
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / caached local thread lookup
 	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// A convenience cache of execitpr.getIdResolver()
+	private /*@LazyNonNull*/ CGParameter zzidResolverParameter = null;		// A local orphan parameter spelled "idResolver" -- XXX probably doesn't need caching
 	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;		// A convenience cache of execitpr.getModelManager()
 	private /*@LazyNonNull*/ CGFinalVariable qualifiedThisVariable = null;	// An unambiguous spelling of this for external access.
 	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of execitpr.getStandardVariable()
@@ -96,7 +98,7 @@ public class ExecutableNameManager extends NestedNameManager
 			return (CGParameter)cgVariable;
 		}
 		else if (cgVariable != null) {
-			throw new IllegalStateException(cgVariable + " is not  a CGParameter");
+			throw new IllegalStateException(cgVariable + " is not a CGParameter");
 		}
 		else if (!(getASScope() instanceof Operation) && (parent instanceof ExecutableNameManager)) {				// XXX polymorphize
 			return ((ExecutableNameManager)parent).basicGetCGParameter(asVariable);
@@ -213,6 +215,17 @@ public class ExecutableNameManager extends NestedNameManager
 		executorVariable.setNonNull();
 		executorNameResolution.addCGElement(executorVariable);
 		return executorVariable;
+	}
+
+	protected @NonNull CGParameter zzcreateIdResolverParameter() {
+		assert !isStatic;
+		NameResolution idResolverNameResolution = getGlobalNameManager().getIdResolverNameResolution();
+		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
+		CGParameter idResolverParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
+		//	thisTransformerParameter.setIsThis(true);
+		idResolverParameter.setNonInvalid();
+		idResolverParameter.setNonNull();
+		return idResolverParameter;
 	}
 
 	public @NonNull CGVariable createIdResolverVariable() {
@@ -447,8 +460,18 @@ public class ExecutableNameManager extends NestedNameManager
 		return executorVariable2;
 	}
 
+//	public @NonNull CGParameter getIdResolverParameter() {
+//		throw new UnsupportedOperationException();		// XXX
+//	}
+
+//	@Override
 	public @NonNull CGParameter getIdResolverParameter() {
-		throw new UnsupportedOperationException();		// XXX
+		assert !isStatic;
+		CGParameter idResolverParameter2 = zzidResolverParameter;
+		if (idResolverParameter2 == null) {
+			zzidResolverParameter = idResolverParameter2 = zzcreateIdResolverParameter();
+		}
+		return idResolverParameter2;
 	}
 
 	public @NonNull CGVariable getIdResolverVariable() {
