@@ -120,18 +120,18 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgConstructor);
-		CGClass cgCacheClass = CGUtil.getContainingClass(cgConstructor);
-		List<@NonNull CGProperty> cgProperties = CGUtil.getPropertiesList(cgCacheClass);
-		Operation asCacheOperation = CGUtil.getAST(cgConstructor);
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructor, asCacheOperation);
-		ExpressionInOCL asCacheExpressionInOCL = (ExpressionInOCL)asCacheOperation.getBodyExpression();
-		assert (asCacheExpressionInOCL != null);
-		List<@NonNull Variable> asCacheParameterVariables = PivotUtilInternal.getOwnedParametersList(asCacheExpressionInOCL);
+		CGClass cgEntryClass = CGUtil.getContainingClass(cgConstructor);
+		List<@NonNull CGProperty> cgProperties = CGUtil.getPropertiesList(cgEntryClass);
+		Operation asEntryOperation = CGUtil.getAST(cgConstructor);
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructor, asEntryOperation);
+		ExpressionInOCL asEntryExpressionInOCL = (ExpressionInOCL)asEntryOperation.getBodyExpression();
+		assert (asEntryExpressionInOCL != null);
+		List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
 		//
-		Parameter asBoxedValuesParameter = PivotUtilInternal.getOwnedParametersList(asCacheOperation).get(0);
-		CGParameter cgCacheBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
-		globalNameManager.getBoxedValuesNameResolution().addCGElement(cgCacheBoxedValuesParameter);
-		cgParameters.add(cgCacheBoxedValuesParameter);
+		Parameter asBoxedValuesParameter = PivotUtilInternal.getOwnedParametersList(asEntryOperation).get(0);
+		CGParameter cgEntryBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
+		globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
+		cgParameters.add(cgEntryBoxedValuesParameter);
 		CGTypeId cgTypeId = analyzer.getCGTypeId(TypeId.OCL_VOID);
 		CGParameter cgThisParameter = operationNameManager.getThisParameter();
 		CGSequence cgSequence = CGModelFactory.eINSTANCE.createCGSequence();
@@ -140,35 +140,38 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 		//
 		//	Unpack boxedValues and assign properties.
 		//
+		ParameterVariable asThisParameterVariable = (ParameterVariable)asEntryExpressionInOCL.getOwnedContext();
+		assert asThisParameterVariable != null;		// Have a Java 'this' to initialize its properties
+		// FIXME wrong type
 		int iInclusiveMax = cgProperties.size()-1;
 		for (int i = 0; i <= iInclusiveMax; i++) {
 			CGProperty cgProperty = cgProperties.get(i);
 			Property asProperty = CGUtil.getAST(cgProperty);
 			CGValuedElement cgInitValue;
 			if (i >= iInclusiveMax) {
-				OCLExpression asCacheResult = asCacheExpressionInOCL.getOwnedBody();
-				cgInitValue = analyzer.createCGElement(CGValuedElement.class, asCacheResult);
+				OCLExpression asEntryResult = asEntryExpressionInOCL.getOwnedBody();
+				cgInitValue = analyzer.createCGElement(CGValuedElement.class, asEntryResult);
 			}
 			else {
-				ParameterVariable asCacheParameterVariable;
+				ParameterVariable asEntryParameterVariable;
 				if (i == 0) {
-					asCacheParameterVariable = (ParameterVariable)asCacheExpressionInOCL.getOwnedContext();
+					asEntryParameterVariable = asThisParameterVariable;
 				}
 				else {
-					asCacheParameterVariable = (ParameterVariable)asCacheParameterVariables.get(i-1);
+					asEntryParameterVariable = (ParameterVariable)asEntryParameterVariables.get(i-1);
 				}
-				assert asCacheParameterVariable != null;
+				assert asEntryParameterVariable != null;
 				Type asType = PivotUtil.getType(asProperty);
 				CGExecutorType cgExecutorType = operationNameManager.getCGExecutorType(asType);
 				//
 				//	Unpack boxedValues[i] to a let-variable
 				//
-				CGVariableExp cgVariableExp = analyzer.createCGVariableExp(cgCacheBoxedValuesParameter);
+				CGVariableExp cgVariableExp = analyzer.createCGVariableExp(cgEntryBoxedValuesParameter);
 				CGIndexExp cgIndexExp = analyzer.createCGIndexExp(cgVariableExp, i);
 				cgIndexExp.setAst(asProperty);
 				CGCastExp cgCastExp = analyzer.createCGCastExp(cgExecutorType, cgIndexExp);
 				cgCastExp.setAst(asProperty);
-				CGFinalVariable cgLetVariable = (CGFinalVariable)operationNameManager.lazyGetCGVariable(asCacheParameterVariable);
+				CGFinalVariable cgLetVariable = (CGFinalVariable)operationNameManager.lazyGetCGVariable(asEntryParameterVariable);
 				analyzer.setCGVariableInit(cgLetVariable, cgCastExp);
 				cgProperty.getNameResolution().addCGElement(cgLetVariable);
 				cgLetVariables.push(cgLetVariable);
@@ -266,55 +269,60 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 		}
 	}
 
-	protected /*final*/ @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
+	protected /*final*/ @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		//
 		// AS Class - yyy2zzz
 		// AS Properties -
 		// AS Operation - yyy2zzz
 		// AS Operation.ownedParameters - x1, x2
-		// AS Cache Operation - newInstance
-		// AS Cache Operation.parameters - boxedValues
-		// AS Cache ExpressionInOCL.ownedContext - this
-		// AS Cache ExpressionInOCL.ownedParameters - x1, x2
-		// CG Cache Operation - newInstance
-		// CG Cache Operation.lets -
+		// AS Entry Operation - newInstance
+		// AS Entry Operation.parameters - boxedValues
+		// AS Entry ExpressionInOCL.ownedContext - this
+		// AS Entry ExpressionInOCL.ownedParameters - x1, x2
+		// CG Entry Operation - newInstance
+		// CG Entry Operation.lets -
 		//
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
-		org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
+		org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 		//
-		NameResolution ctorNameResolution = cgCacheClass.getNameResolution();
+		NameResolution ctorNameResolution = cgEntryClass.getNameResolution();
 		String ctorName = ctorNameResolution.getResolvedName();
-		Type asCacheType = environmentFactory.getStandardLibrary().getOclVoidType();
-		Operation asCacheOperation = PivotUtil.createOperation(ctorName, asCacheType, null, null);
+		Type asDummyType = environmentFactory.getStandardLibrary().getOclVoidType();
+		Operation asEntryConstructor = PivotUtil.createOperation(ctorName, asDummyType, null, null);
 		Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator);
-		asCacheOperation.getOwnedParameters().add(asBoxedValuesParameter);
-		asCacheClass.getOwnedOperations().add(asCacheOperation);
+		asEntryConstructor.getOwnedParameters().add(asBoxedValuesParameter);
+		asEntryClass.getOwnedOperations().add(asEntryConstructor);
 		//
 		//	Wrap a copy of the original constructor bodies in a let expression per constructor parameter.
 		//
 		ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
 		if (asExpressionInOCL != null) {
-			ExpressionInOCL asCacheExpressionInOCL = EcoreUtil.copy(asExpressionInOCL);
-			OCLExpression asCacheResult = asCacheExpressionInOCL.getOwnedBody();
-			assert asCacheResult != null;
-			PivotUtilInternal.resetContainer(asCacheResult);
-			asCacheExpressionInOCL.setOwnedBody(asCacheResult);
-			asCacheOperation.setBodyExpression(asCacheExpressionInOCL);
+			ExpressionInOCL asEntryExpressionInOCL = EcoreUtil.copy(asExpressionInOCL);
+			OCLExpression asEntryResult = asEntryExpressionInOCL.getOwnedBody();
+			assert asEntryResult != null;
+			PivotUtilInternal.resetContainer(asEntryResult);
+			asEntryExpressionInOCL.setOwnedBody(asEntryResult);
+			asEntryConstructor.setBodyExpression(asEntryExpressionInOCL);
+			Variable asVariableVariable = asEntryExpressionInOCL.getOwnedContext();
+			assert asVariableVariable != null;
+			assert asVariableVariable.isIsRequired();
+			assert asVariableVariable.getTypeValue() == null;
+			asVariableVariable.setType(asEntryClass);		// Move from Transformation to Entry class
 		}
 		else {
 			assert asOperation.getImplementationClass() != null;
 		}
 		//
-		CGOperation cgConstructor = createCGOperation(analyzer, asCacheOperation);
+		CGOperation cgConstructor = createCGOperation(analyzer, asEntryConstructor);
 		cgConstructor.setCallingConvention(this);
-		analyzer.initAst(cgConstructor, asCacheOperation, true);
+		analyzer.initAst(cgConstructor, asEntryConstructor, true);
 		ctorNameResolution.addCGElement(cgConstructor);
-		analyzer.getOperationNameManager(cgConstructor, asCacheOperation);
-		cgCacheClass.getOperations().add(cgConstructor);
+		analyzer.getOperationNameManager(cgConstructor, asEntryConstructor);
+		cgEntryClass.getOperations().add(cgConstructor);
 		//
 		//	createCGBody(analyzer, cgConstructor);
-		//	analyzer.scanBody(asCacheResult);
+		//	analyzer.scanBody(asEntryResult);
 		return cgConstructor;
 	}
 
@@ -325,9 +333,9 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		CGClass cgCacheClass = CGUtil.getContainingClass(cgOperation);
-		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-		Operation asOperation = cg2javaVisitor.getAnalyzer().getCachedOperation(asCacheClass);
+		CGClass cgEntryClass = CGUtil.getContainingClass(cgOperation);
+		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+		Operation asOperation = cg2javaVisitor.getAnalyzer().getCachedOperation(asEntryClass);
 		LanguageExpression asExpression = asOperation.getBodyExpression();
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention2.CacheConstructorCallingConvention;
@@ -21,8 +20,6 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
-import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -95,23 +92,6 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 
 	protected @NonNull String getClassNamePrefix() {
 		return NameManagerHelper.CACHE_CLASS_NAME_PREFIX;
-	}
-
-	@Override
-	public @NonNull ClassableNameManager getClassableNameManager(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass) {
-		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
-		EObject eContainer = asClass.eContainer();
-		if (eContainer instanceof org.eclipse.ocl.pivot.Package) {
-			PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, (org.eclipse.ocl.pivot.Package)eContainer);
-			packageNameManager.getCGPackage().getClasses().add(cgClass);
-			return packageNameManager;
-		}
-		else if (eContainer instanceof org.eclipse.ocl.pivot.Class) {
-			ClassNameManager classNameManager = analyzer.getClassNameManager(null, (org.eclipse.ocl.pivot.Class)eContainer);
-			classNameManager.getCGClass().getClasses().add(cgClass);
-			return classNameManager;
-		}
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
@@ -25,7 +24,6 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
-import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
@@ -58,36 +56,36 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		return cgClass;
 	}
 
-	private void createCacheProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass,
+	private void createCacheProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass,
 			@Nullable NameResolution nameResolution, @NonNull NamedElement asTypeOrTypedElement) {
-		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
+		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
 		//
-		Property asCacheProperty = PivotFactory.eINSTANCE.createProperty();
-		asCacheProperty.setName(nameResolution != null ? nameResolution.getResolvedName() : asTypeOrTypedElement.getName());
+		Property asEntryProperty = PivotFactory.eINSTANCE.createProperty();
+		asEntryProperty.setName(nameResolution != null ? nameResolution.getResolvedName() : asTypeOrTypedElement.getName());
 		if (asTypeOrTypedElement instanceof Type) {
-			asCacheProperty.setType((Type)asTypeOrTypedElement);
-			asCacheProperty.setIsRequired(true);
+			asEntryProperty.setType((Type)asTypeOrTypedElement);
+			asEntryProperty.setIsRequired(true);
 		}
 		else if (asTypeOrTypedElement instanceof TypedElement) {
 			TypedElement asTypedElement = (TypedElement)asTypeOrTypedElement;
-			asCacheProperty.setType(PivotUtil.getType(asTypedElement));
-			asCacheProperty.setIsRequired(asTypedElement.isIsRequired());
+			asEntryProperty.setType(PivotUtil.getType(asTypedElement));
+			asEntryProperty.setIsRequired(asTypedElement.isIsRequired());
 		}
 		else {
 			throw new IllegalStateException();
 		}
-		asCacheClass.getOwnedProperties().add(asCacheProperty);
-		asCacheProperty.setImplementation(new CacheProperty(asCacheProperty.getPropertyId(), null, null));
+		asEntryClass.getOwnedProperties().add(asEntryProperty);
+		asEntryProperty.setImplementation(new CacheProperty(asEntryProperty.getPropertyId(), null, null));
 		//
-		CGProperty cgCacheProperty = analyzer.generatePropertyDeclaration(asCacheProperty, ImmutableCachePropertyCallingConvention.getInstance(asCacheProperty));
+		CGProperty cgEntryProperty = analyzer.generatePropertyDeclaration(asEntryProperty, ImmutableCachePropertyCallingConvention.getInstance(asEntryProperty));
 		if (nameResolution != null) {
-			nameResolution.addCGElement(cgCacheProperty);
+			nameResolution.addCGElement(cgEntryProperty);
 		}
-		cgCacheClass.getProperties().add(cgCacheProperty);
+		cgEntryClass.getProperties().add(cgEntryProperty);
 		if (nameResolution == null) {
-			ClassNameManager nameManager = analyzer.getClassNameManager(cgCacheClass, asCacheClass);
-			//			nameManager.declareEagerName(cgCacheProperty)
-			nameResolution = nameManager.getNameResolution(cgCacheProperty);
+			ClassNameManager nameManager = analyzer.getClassNameManager(cgEntryClass, asEntryClass);
+			//			nameManager.declareEagerName(cgEntryProperty)
+			nameResolution = nameManager.getNameResolution(cgEntryProperty);
 		}
 	}
 
@@ -147,23 +145,6 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		generateOperations(cg2javaVisitor, js, cgClass);
 		js.popClassBody(false);
 		return true;
-	}
-
-	@Override
-	public @NonNull ClassableNameManager getClassableNameManager(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass) {
-		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
-		EObject eContainer = asClass.eContainer();
-		if (eContainer instanceof org.eclipse.ocl.pivot.Package) {
-			PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, (org.eclipse.ocl.pivot.Package)eContainer);
-			packageNameManager.getCGPackage().getClasses().add(cgClass);
-			return packageNameManager;
-		}
-		else if (eContainer instanceof org.eclipse.ocl.pivot.Class) {
-			ClassNameManager classNameManager = analyzer.getClassNameManager(null, (org.eclipse.ocl.pivot.Class)eContainer);
-			classNameManager.getCGClass().getClasses().add(cgClass);
-			return classNameManager;
-		}
-		throw new UnsupportedOperationException();
 	}
 
 	protected @NonNull Class getContextClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass) {
