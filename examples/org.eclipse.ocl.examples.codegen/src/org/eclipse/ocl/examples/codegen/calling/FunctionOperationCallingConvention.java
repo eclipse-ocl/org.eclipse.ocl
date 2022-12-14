@@ -25,11 +25,6 @@ public abstract class FunctionOperationCallingConvention extends AbstractCachedO
 	{
 		private static final @NonNull FunctionEntryClassCallingConvention INSTANCE = new FunctionEntryClassCallingConvention();
 
-//		public static @NonNull FunctionEntryClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-//			INSTANCE.logInstance(asClass);
-//			return INSTANCE;
-//		}
-
 		public static @NonNull FunctionEntryClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Operation asOperation, boolean maybeVirtual) {
 			INSTANCE.logInstance(asOperation, maybeVirtual);
 			return INSTANCE;
@@ -38,16 +33,9 @@ public abstract class FunctionOperationCallingConvention extends AbstractCachedO
 
 	protected final org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
 		Operation asOperation = CGUtil.getAST(cgOperation);
-		return getEntryClassCallingConvention(asOperation).createEntryClass(analyzer, cgOperation);
+		AbstractEntryClassCallingConvention callingConvention = getEntryClassCallingConvention(asOperation);
+		return callingConvention.createEntryClass(analyzer, cgOperation);
 	}
-
-//	protected final org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull ExecutableNameManager operationNameManager, org.eclipse.ocl.pivot.@NonNull Class asClass) {
-//		return getEntryClassCallingConvention(asClass).createEntryClass(operationNameManager);
-//	}
-
-//	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-//		return FunctionEntryClassCallingConvention.getInstance(asClass);
-//	}
 
 	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {
 		return FunctionEntryClassCallingConvention.getInstance(asOperation, false);

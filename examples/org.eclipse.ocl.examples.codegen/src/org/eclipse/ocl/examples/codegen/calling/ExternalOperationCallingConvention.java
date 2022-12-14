@@ -71,7 +71,7 @@ public class ExternalOperationCallingConvention extends FunctionOperationCalling
 			}
 
 			@Override
-			protected @Nullable Parameter createConstructorEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+			protected @Nullable Parameter createCacheEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 				CodeGenerator codeGenerator = analyzer.getCodeGenerator();
 				GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 				NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
@@ -151,7 +151,6 @@ public class ExternalOperationCallingConvention extends FunctionOperationCalling
 		analyzer.initAst(cgOperation, asOperation, true);
 		CGClass cgRootClass = analyzer.getCGRootClass(asOperation);
 		cgRootClass.getOperations().add(cgOperation);
-	//	ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
 		org.eclipse.ocl.pivot.Class asEntryClass = createEntryClass(analyzer, cgOperation);
 		org.eclipse.ocl.pivot.Class asCacheClass = createCacheClass(analyzer, cgOperation, asEntryClass);
 		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);

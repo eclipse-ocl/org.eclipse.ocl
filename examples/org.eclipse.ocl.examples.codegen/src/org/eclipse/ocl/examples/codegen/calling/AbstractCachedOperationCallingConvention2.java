@@ -90,6 +90,10 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 			//	Implemented as direct synthesis
 		}
 
+		protected @Nullable Parameter createCacheEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+			return null;
+		}
+
 		public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
 			//
 			// AS Class - yyy2zzz
@@ -105,27 +109,27 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-			org.eclipse.ocl.pivot.@NonNull Class asConstructorClass = CGUtil.getAST(cgCacheClass);
+			org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
 			//
 			//	Create AS declaration for newInstance
 			//
 			NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
 			String newInstanceName = evaluateNameResolution.getResolvedName();
-			Operation asEvaluateOperation = PivotUtil.createOperation(newInstanceName, asEntryClass, null, null);
-			asEvaluateOperation.setType(asOperation.getType());
-			asEvaluateOperation.setIsRequired(asOperation.isIsRequired());
+			Operation asCacheEvaluateOperation = PivotUtil.createOperation(newInstanceName, asEntryClass, null, null);
+			asCacheEvaluateOperation.setType(asOperation.getType());
+			asCacheEvaluateOperation.setIsRequired(asOperation.isIsRequired());
 
 			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-			List<@NonNull Parameter> asEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asEvaluateOperation);
-			Parameter asEvaluateSelfParameter = createConstructorEvaluateOperationSelfParameter(analyzer, asOperation);
-			if (asEvaluateSelfParameter != null) {
-				asEvaluateParameters.add(asEvaluateSelfParameter);
+			List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
+			Parameter asCacheEvaluateSelfParameter = createCacheEvaluateOperationSelfParameter(analyzer, asOperation);
+			if (asCacheEvaluateSelfParameter != null) {
+				asCacheEvaluateParameters.add(asCacheEvaluateSelfParameter);
 			}
 			for (@NonNull Parameter asParameter : asParameters) {
-				Parameter asEvaluateParameter = PivotUtil.createParameter(asParameter.getName(), asParameter.getType(), asParameter.isIsRequired());
-				asEvaluateParameters.add(asEvaluateParameter);
+				Parameter asEvaluateParameter = PivotUtil.createParameter(PivotUtil.getName(asParameter), PivotUtil.getType(asParameter), asParameter.isIsRequired());
+				asCacheEvaluateParameters.add(asEvaluateParameter);
 			}
-			asConstructorClass.getOwnedOperations().add(asEvaluateOperation);
+			asCacheClass.getOwnedOperations().add(asCacheEvaluateOperation);
 			//
 			//	Create AS body for newInstance
 			//
@@ -133,29 +137,29 @@ public abstract class AbstractCachedOperationCallingConvention2 extends Abstract
 			//
 			//	Create CG declaration for newInstance
 			//
-			CGOperation cgEvaluateOperation = createCGOperation(analyzer, asEvaluateOperation);
-			analyzer.initAst(cgEvaluateOperation, asEvaluateOperation, true);
-			cgEvaluateOperation.setCallingConvention(this);
-			evaluateNameResolution.addCGElement(cgEvaluateOperation);
-			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgEvaluateOperation, asEvaluateOperation);
-			List<@NonNull CGParameter> cgEvaluateParameters = CGUtil.getParametersList(cgEvaluateOperation);
-			for (@NonNull Parameter asEvaluateParameter : asEvaluateParameters) {
-				CGParameter cgParameter = operationNameManager.getCGParameter(asEvaluateParameter, null);
-				String name = asEvaluateParameter.getName();
-				if (globalNameManager.getSelfName().equals(name)) {
-					globalNameManager.getSelfNameResolution().addCGElement(cgParameter);
+			CGOperation cgCacheEvaluateOperation = createCGOperation(analyzer, asCacheEvaluateOperation);
+			analyzer.initAst(cgCacheEvaluateOperation, asCacheEvaluateOperation, true);
+			cgCacheEvaluateOperation.setCallingConvention(this);
+			evaluateNameResolution.addCGElement(cgCacheEvaluateOperation);
+			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgCacheEvaluateOperation, asCacheEvaluateOperation);
+			List<@NonNull CGParameter> cgEvaluateParameters = CGUtil.getParametersList(cgCacheEvaluateOperation);
+			for (@NonNull Parameter asCacheEvaluateParameter : asCacheEvaluateParameters) {
+				CGParameter cgParameter = operationNameManager.getCGParameter(asCacheEvaluateParameter, null);
+				String name = asCacheEvaluateParameter.getName();
+				NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
+				if (selfNameResolution.getResolvedName().equals(name)) {
+					selfNameResolution.addCGElement(cgParameter);
 				}
-				else if (globalNameManager.getObjectName().equals(name)) {
-					globalNameManager.getObjectNameResolution().addCGElement(cgParameter);
+				else {
+					NameResolution objectNameResolution = globalNameManager.getObjectNameResolution();
+					if (objectNameResolution.getResolvedName().equals(name)) {
+						objectNameResolution.addCGElement(cgParameter);
+					}
 				}
 				cgEvaluateParameters.add(cgParameter);
 			}
-			cgCacheClass.getOperations().add(cgEvaluateOperation);
-			return cgEvaluateOperation;
-		}
-
-		protected @Nullable Parameter createConstructorEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			return null;
+			cgCacheClass.getOperations().add(cgCacheEvaluateOperation);
+			return cgCacheEvaluateOperation;
 		}
 	}
 

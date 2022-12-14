@@ -89,7 +89,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			}
 
 			@Override
-			protected @Nullable Parameter createConstructorEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+			protected @Nullable Parameter createCacheEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 				CodeGenerator codeGenerator = analyzer.getCodeGenerator();
 				GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 				String objectName = globalNameManager.getObjectName();
