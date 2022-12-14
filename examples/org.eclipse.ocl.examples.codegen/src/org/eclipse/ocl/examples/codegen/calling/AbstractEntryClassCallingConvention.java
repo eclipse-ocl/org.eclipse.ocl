@@ -220,7 +220,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			OCLExpression asBody = null;
 			ExpressionInOCL asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
 			ParameterVariable asEntryThisVariable = PivotFactory.eINSTANCE.createParameterVariable();
-			asEntryThisVariable.setName(PivotConstants.SELF_NAME);		// XXX ??
+			asEntryThisVariable.setName(globalNameManager.getThisNameResolution().getResolvedName());
 			asEntryThisVariable.setType(codeGenerator.getContextClass());
 			asEntryThisVariable.setIsRequired(true);
 			asExpressionInOCL.setOwnedContext(asEntryThisVariable);
@@ -248,7 +248,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 				VariableExp asInit = helper.createVariableExp(asEntryParameterVariable);
 				LetVariable asLetVariable = helper.createLetVariable(name, asInit);
 				asLetVariables.push(asLetVariable);
-
+				//
 				OCLExpression asEntryThisVariableExp = helper.createVariableExp(asEntryThisVariable);
 				OCLExpression asEntryParameterVariableExp = helper.createVariableExp(asEntryParameterVariable);
 				OCLExpression asEntryPropertyCallExp = helper.createPropertyCallExp(asEntryThisVariableExp, asEntryProperty);

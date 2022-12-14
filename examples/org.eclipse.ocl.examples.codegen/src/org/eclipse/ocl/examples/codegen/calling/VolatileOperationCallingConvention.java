@@ -22,9 +22,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -106,11 +104,6 @@ public class VolatileOperationCallingConvention extends AbstractOperationCalling
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
 		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
-	}
-
-	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		super.createCGParameters(operationNameManager, bodyExpression);
 	}
 
 	@Override

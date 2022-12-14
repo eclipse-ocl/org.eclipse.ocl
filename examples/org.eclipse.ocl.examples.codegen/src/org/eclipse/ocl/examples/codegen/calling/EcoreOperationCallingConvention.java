@@ -151,12 +151,6 @@ public class EcoreOperationCallingConvention extends AbstractOperationCallingCon
 	}
 
 	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		// TODO Auto-generated method stub
-		super.createCGParameters(operationNameManager, bodyExpression);
-	}
-
-	@Override
 	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
 		CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, PivotUtil.getName(asParameterVariable));
 		operationNameManager.declareEagerName(cgParameter);

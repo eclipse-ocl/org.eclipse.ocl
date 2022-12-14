@@ -1148,15 +1148,17 @@ public class CodeGenAnalyzer
 			}
 			cgOperation = callingConvention.createCGOperation(this, asOperation);
 			cgOperation.setCallingConvention(callingConvention);
-			if (cgOperation.getAst() != null) {
-			//	assert cgOperation.getAst() == asOperation;
-				asOperation = (Operation) cgOperation.getAst();
-			//	assert callingConvention instanceof VirtualOperationCallingConvention;
-				assert asElement2cgElement.containsKey(asOperation);
-			}
-			else {
+			Element asOperation2 = cgOperation.getAst();
+			if (asOperation2 == null) {						// Lightweight createCGOperation just creates
 				assert !asElement2cgElement.containsKey(asOperation);
 				initAst(cgOperation, asOperation, true);
+			}
+			else {
+				if (asOperation2 != asOperation) {			// Virtual creates base
+					assert callingConvention instanceof VirtualOperationCallingConvention;
+					asOperation = (Operation)asOperation2;
+				}
+				assert asElement2cgElement.containsKey(asOperation);
 			}
 		//	System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
 			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
