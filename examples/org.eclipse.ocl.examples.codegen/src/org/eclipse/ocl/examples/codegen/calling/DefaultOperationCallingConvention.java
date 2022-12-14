@@ -24,6 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
@@ -49,13 +50,29 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *
  *  -- only used by QVTd
  */
-public class CachedOperationCallingConvention extends AbstractCachedOperationCallingConvention
+@Deprecated /* @deprecated a more appropriate calls shuld be used */
+public class DefaultOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
-	private static final @NonNull CachedOperationCallingConvention INSTANCE = new CachedOperationCallingConvention();
+	private static final @NonNull DefaultOperationCallingConvention INSTANCE = new DefaultOperationCallingConvention();
 
-	public static @NonNull CachedOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+	public static @NonNull DefaultOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
 		INSTANCE.logInstance(asOperation, maybeVirtual);
 		return INSTANCE;
+	}
+
+	private static @NonNull String getNativeOperationDirectInstanceName(@NonNull Operation asOperation) {	// FIXME unique
+//		return "INST_" + getNativeOperationName(asOperation);
+		throw new UnsupportedOperationException();		// XXX
+	}
+
+	public static @NonNull String getNativeOperationInstanceName(@NonNull Operation asOperation) {	// FIXME unique
+//		return "INSTANCE_" + getNativeOperationName(asOperation);
+		throw new UnsupportedOperationException();		// XXX
+	}
+
+	private static @NonNull String getNativeOperationName(@NonNull Operation asOperation) {	// FIXME unique
+//		return ClassUtil.nonNullState(asOperation.getOwningClass()).getName() + "_" + asOperation.getName();
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 	@Override
@@ -258,6 +275,74 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		js.append("();\n");
 	}
 
+	protected void doCachedOperationClassInstance(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		Operation asOperation = (Operation) cgOperation.getAst();
+		assert asOperation != null;
+		String name = getNativeOperationClassName(cgOperation);
+		js.append("protected final ");
+		js.appendIsRequired(true);
+		js.append(" ");
+		js.append(name);
+		js.append(" ");
+		js.append(getNativeOperationInstanceName(asOperation));
+		js.append(" = new ");
+		js.append(name);
+		js.append("();\n");
+	}
+
+	protected void doCachedOperationEvaluate(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		if ("_classescs2as_qvtm_qvtcas::classescs2as_qvtm_qvtcas.CACHED_OP_OclElement_c_c_unqualified_env_Class_o_e_32_c_32_lookup_c_c_LookupEnvironment_91_1_93($metamodel$::OclElement) : 'http://cs2as/tests/example2/env/1.0'::LookupEnvironment".equals(cgOperation.toString())) {
+			getClass();		// XXX
+		}
+		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
+		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
+		Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
+		if (cgOperation.isEcore() && (cgOperation.getASTypeId() instanceof CollectionTypeId)) {
+			js.append("@SuppressWarnings(\"unchecked\")\n");
+		}
+		else if ((isRequiredReturn == Boolean.TRUE)) {
+			js.appendSuppressWarningsNull(true);
+		}
+		js.append("public ");
+		//				boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
+		//				js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
+		//				js.append(" ");
+		js.appendClassReference(isRequiredReturn, cgOperation);
+		js.append(" ");
+		js.append(globalNameManager.getEvaluateName());
+		js.append("(");
+		boolean isFirst = true;
+		for (@NonNull CGParameter cgParameter : cgParameters) {
+			if (!isFirst) {
+				js.append(", ");
+			}
+			js.appendDeclaration(cgParameter);
+			isFirst = false;
+		}
+		js.append(") {\n");
+		js.pushIndentation(null);
+		js.append("return (");
+		js.appendClassReference(isRequiredReturn, cgOperation);
+		js.append(")");
+		js.append(globalNameManager.getEvaluationCacheName());
+		js.append(".");
+		js.append(globalNameManager.getGetCachedEvaluationResultName());
+		js.append("(this, caller, new ");
+		js.appendClassReference(false, Object.class);
+		js.append("[]{");
+		isFirst = true;
+		for (@NonNull CGParameter cgParameter : cgParameters) {
+			if (!isFirst) {
+				js.append(", ");
+			}
+			js.appendValueName(cgParameter);
+			isFirst = false;
+		}
+		js.append("});\n");
+		js.popIndentation();
+		js.append("}\n");
+	}
+
 /*	@Override
 	public @NonNull CGOperation generateDeclarationHierarchy(@NonNull AS2CGVisitor as2cgVisitor, @Nullable Type sourceType, @NonNull Operation asOperation) {		// XXX obsoleted by VirtualOperationCallingConvention
 		CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
@@ -347,7 +432,7 @@ public class CachedOperationCallingConvention extends AbstractCachedOperationCal
 		return true;
 	}
 
-	@Override
+//	@Override
 	protected @NonNull String getNativeOperationClassName(@NonNull CGOperation cgOperation) {	// FIXME unique
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;

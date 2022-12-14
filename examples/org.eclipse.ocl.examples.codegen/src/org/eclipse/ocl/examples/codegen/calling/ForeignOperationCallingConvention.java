@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.calling.AbstractEntryClassCallingConvention.IsEqualOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.AbstractEntryClassCallingConvention.EntryIsEqualOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
@@ -60,7 +60,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *   *  </br>
  *  e.g. as XXXTables.FOREIGN_qualified_class.FC_class.INSTANCE.evaluate(executor, arguments)
  */
-public class ForeignOperationCallingConvention extends AbstractCachedOperationCallingConvention2
+public class ForeignOperationCallingConvention extends AbstractCachedOperationCallingConvention
 {
 	private static final @NonNull ForeignOperationCallingConvention INSTANCE = new ForeignOperationCallingConvention();
 
@@ -188,7 +188,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		}
 	}
 
-	public static class ForeignIsEqualOperationCallingConvention extends IsEqualOperationCallingConvention
+	public static class ForeignIsEqualOperationCallingConvention extends EntryIsEqualOperationCallingConvention
 	{
 		private static final @NonNull ForeignIsEqualOperationCallingConvention INSTANCE = new ForeignIsEqualOperationCallingConvention();
 

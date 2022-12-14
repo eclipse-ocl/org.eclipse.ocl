@@ -16,7 +16,7 @@ import java.util.Stack;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention2.CacheProperty;
+import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention.CacheProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
@@ -68,11 +68,11 @@ import org.eclipse.qvtd.runtime.evaluation.AbstractComputation;
  */
 public abstract class AbstractEntryClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static class GetResultOperationCallingConvention extends AbstractCachedOperationCallingConvention
+	public static class EntryGetResultOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 	{
-		private static final @NonNull GetResultOperationCallingConvention INSTANCE = new GetResultOperationCallingConvention();
+		private static final @NonNull EntryGetResultOperationCallingConvention INSTANCE = new EntryGetResultOperationCallingConvention();
 
-		public static @NonNull GetResultOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		public static @NonNull EntryGetResultOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
@@ -145,11 +145,11 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		}
 	}
 
-	public static class IsEqualOperationCallingConvention extends AbstractCachedOperationCallingConvention
+	public static class EntryIsEqualOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 	{
-		private static final @NonNull IsEqualOperationCallingConvention INSTANCE = new IsEqualOperationCallingConvention();
+		private static final @NonNull EntryIsEqualOperationCallingConvention INSTANCE = new EntryIsEqualOperationCallingConvention();
 
-		public static @NonNull IsEqualOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		public static @NonNull EntryIsEqualOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
@@ -425,13 +425,13 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 
 	protected void installGetResultOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		GetResultOperationCallingConvention callingConvention = GetResultOperationCallingConvention.getInstance(asEntryClass);
+		EntryGetResultOperationCallingConvention callingConvention = EntryGetResultOperationCallingConvention.getInstance(asEntryClass);
 		callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 	}
 
 	protected void installIsEqualOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		IsEqualOperationCallingConvention callingConvention = IsEqualOperationCallingConvention.getInstance(asEntryClass);
+		EntryIsEqualOperationCallingConvention callingConvention = EntryIsEqualOperationCallingConvention.getInstance(asEntryClass);
 		callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 	}
 }

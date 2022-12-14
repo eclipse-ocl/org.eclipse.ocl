@@ -55,7 +55,7 @@ import org.eclipse.qvtd.runtime.evaluation.AbstractDispatchOperation2;
  *  VirtualOperationCallingConvention defines the constructor for a virtual dispatch table for a Complete OCL-defined operation.
  *  Creation of the operation also creates a parent class fpr the table and ans a sibling evaluate() operation.
  */
-public class VirtualOperationCallingConvention extends AbstractCachedOperationCallingConvention2
+public class VirtualOperationCallingConvention extends AbstractCachedOperationCallingConvention
 {
 	private static final @NonNull VirtualOperationCallingConvention INSTANCE = new VirtualOperationCallingConvention();
 
@@ -146,7 +146,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		}
 
 		@Override
-		protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation, @NonNull AbstractCachedOperationCallingConvention2 operationCallingConvention) {
+		protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation, @NonNull AbstractCachedOperationCallingConvention operationCallingConvention) {
 			//
 			// AS Class - yyy2zzz
 			// AS Properties -

@@ -14,7 +14,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention2.AbstractEvaluateOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention.AbstractEvaluateOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -45,13 +45,9 @@ import org.eclipse.qvtd.runtime.internal.evaluation.AbstractComputationConstruct
  */
 public abstract class AbstractCacheClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static class CacheConstructorCallingConvention extends AbstractCachedOperationCallingConvention
+	public static class CacheConstructorCallingConvention extends AbstractUncachedOperationCallingConvention
 	{
 		private static final @NonNull CacheConstructorCallingConvention INSTANCE = new CacheConstructorCallingConvention();
-
-//		public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
-//			INSTANCE.logInstance(asOperation, maybeVirtual);
-//		}
 
 		public static @NonNull CacheConstructorCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			INSTANCE.logInstance(asClass);
@@ -129,11 +125,11 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		}
 	}
 
-	public static class EvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
+	public static class DefaultEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
 	{
-		private static final @NonNull EvaluateOperationCallingConvention INSTANCE = new EvaluateOperationCallingConvention();
+		private static final @NonNull DefaultEvaluateOperationCallingConvention INSTANCE = new DefaultEvaluateOperationCallingConvention();
 
-		public static @NonNull EvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		public static @NonNull DefaultEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
@@ -162,15 +158,11 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		}
 	}
 
-	public static class NewInstanceOperationCallingConvention extends AbstractCachedOperationCallingConvention
+	public static class CacheNewInstanceOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 	{
-		private static final @NonNull NewInstanceOperationCallingConvention INSTANCE = new NewInstanceOperationCallingConvention();
+		private static final @NonNull CacheNewInstanceOperationCallingConvention INSTANCE = new CacheNewInstanceOperationCallingConvention();
 
-//		public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
-//			INSTANCE.logInstance(asOperation, maybeVirtual);
-//		}
-
-		public static @NonNull NewInstanceOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		public static @NonNull CacheNewInstanceOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
@@ -256,7 +248,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		return cgClass;
 	}
 
-	public @NonNull CGClass createCacheClass(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull AbstractCachedOperationCallingConvention2 operationCallingConvention) {
+	public @NonNull CGClass createCacheClass(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull AbstractCachedOperationCallingConvention operationCallingConvention) {
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
 		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
@@ -331,7 +323,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		return "The instance of " + cgClass.getName() + " caches all known evaluations of\n";
 	}
 
-	protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation, @NonNull AbstractCachedOperationCallingConvention2 operationCallingConvention) {
+	protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation, @NonNull AbstractCachedOperationCallingConvention operationCallingConvention) {
 		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
 		CacheConstructorCallingConvention callingConvention = CacheConstructorCallingConvention.getInstance(asCacheClass);
 		callingConvention.createConstructor(analyzer, cgCacheClass);
@@ -339,13 +331,13 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 
 	protected void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-		EvaluateOperationCallingConvention callingConvention = EvaluateOperationCallingConvention.getInstance(asCacheClass);
+		DefaultEvaluateOperationCallingConvention callingConvention = DefaultEvaluateOperationCallingConvention.getInstance(asCacheClass);
 		callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
 	}
 
 	protected void installNewInstanceOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-		NewInstanceOperationCallingConvention callingConvention = NewInstanceOperationCallingConvention.getInstance(asCacheClass);
+		CacheNewInstanceOperationCallingConvention callingConvention = CacheNewInstanceOperationCallingConvention.getInstance(asCacheClass);
 		callingConvention.createOperation(analyzer, cgCacheClass, asEntryClass);
 	}
 }

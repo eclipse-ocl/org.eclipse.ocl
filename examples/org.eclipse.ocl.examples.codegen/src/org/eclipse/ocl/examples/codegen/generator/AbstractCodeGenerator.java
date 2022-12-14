@@ -27,7 +27,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.CachedOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.DefaultOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ContextClassCallingConvention;
@@ -265,7 +265,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 						}
 					}
 				}
-				return CachedOperationCallingConvention.getInstance(asOperation, maybeVirtual);
+				return DefaultOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 			}
 		}
 		if ((libraryOperation instanceof EObjectOperation) || (libraryOperation instanceof EInvokeOperation)) {

@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  *  ExternalOperationCallingConvention defines the support for the call of a Complete OCL operation implemented by a Java class.
  */
-public class ExternalOperationCallingConvention extends AbstractCachedOperationCallingConvention2
+public class ExternalOperationCallingConvention extends AbstractCachedOperationCallingConvention
 {
 	private static final @NonNull ExternalOperationCallingConvention INSTANCE = new ExternalOperationCallingConvention();
 
