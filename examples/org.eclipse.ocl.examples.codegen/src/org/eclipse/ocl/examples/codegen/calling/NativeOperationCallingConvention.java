@@ -44,7 +44,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  *  </br>
  *  e.g. as anObject.anOperation(arguments)
  */
-public class NativeOperationCallingConvention extends AbstractOperationCallingConvention
+public class NativeOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
 	private static final @NonNull NativeOperationCallingConvention INSTANCE = new NativeOperationCallingConvention();
 

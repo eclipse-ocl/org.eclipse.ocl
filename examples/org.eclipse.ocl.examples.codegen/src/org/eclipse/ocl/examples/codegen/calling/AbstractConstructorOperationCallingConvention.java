@@ -71,17 +71,16 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  *  ConstructorOperationCallingConvention defines the support for the call of a cache constructor.
  */
-public class ConstructorOperationCallingConvention extends AbstractOperationCallingConvention
+public abstract class AbstractConstructorOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
-	private static final @NonNull ConstructorOperationCallingConvention INSTANCE = new ConstructorOperationCallingConvention();
+	public static class DefaultConstructorOperationCallingConvention extends AbstractConstructorOperationCallingConvention
+	{
+		private static final @NonNull DefaultConstructorOperationCallingConvention INSTANCE = new DefaultConstructorOperationCallingConvention();
 
-//	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
-//		INSTANCE.logInstance(asOperation, maybeVirtual);
-//	}
-
-	public static @NonNull ConstructorOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		INSTANCE.logInstance(asClass);
-		return INSTANCE;
+		public static @NonNull DefaultConstructorOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
 	}
 
 	@Override

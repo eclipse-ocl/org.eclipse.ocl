@@ -316,77 +316,6 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		return true;
 	}
 
-	@Deprecated /* @deprecated use generateJavaEvaluateCall always */
-	protected boolean generateDeprecatedJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		//	Operation pOperation = cgFunctionCallExp.getReferredOperation();
-		//	CGFunction cgFunction = ClassUtil.nonNullState(cgFunctionCallExp.getFunction());
-		boolean useClassToCreateObject = PivotUtil.basicGetShadowExp(asOperation) != null;
-		boolean useCache = !asOperation.isIsTransient();
-		boolean isIdentifiedInstance = useCache;
-		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
-		List<Parameter> asParameters = asOperation.getOwnedParameters();
-		List<CGParameter> cgParameters = cgOperation.getParameters();
-		//
-		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
-			CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
-			if (!js.appendLocalStatements(argument)) {
-				return false;
-			}
-		}
-		//
-		js.appendDeclaration(cgOperationCallExp);
-		js.append(" = ");
-		boolean needComma = false;
-		if (isIdentifiedInstance) {
-			js.append("((");
-			js.appendValueName(cgOperation);
-			js.append(")");
-			js.append(getFunctionCtorName(cgOperation));
-			js.append(".getUniqueComputation(");
-			//			if (useCache && !useClassToCreateObject) {
-			//				CGClass cgClass = ClassUtil.nonNullState(cgFunction.getContainingClass());
-			//				//				js.appendClassReference(cgClass);
-			//				//				js.append(".this");
-			//				qvticg2javaVisitor.appendThis(cgClass);
-			//				needComma = true;
-			//			}
-		}
-		else {
-			//	js.append(asFunction.getName());
-			js.appendValueName(cgOperation);
-			js.append("(");
-		}
-		//	int iMax = cgParameters.size();
-		//	assert iMax == cgArguments.size();
-		for (int i = 0; i < cgArguments.size(); i++) {
-			if (needComma) {
-				js.append(", ");
-			}
-			//	CGParameter cgParameter = cgParameters.get(i);
-			CGValuedElement cgArgument = cgArguments.get(i);
-			CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
-			//	TypeId asTypeId = cgParameter.getTypeId().getASTypeId();
-			//	assert asTypeId != null;
-			//	TypeDescriptor parameterTypeDescriptor = codeGenerator.getUnboxedDescriptor(asTypeId);
-			//	js.appendReferenceTo(parameterTypeDescriptor, argument);
-			js.appendValueName(argument);
-			needComma = true;
-		}
-		js.append(")");
-		if (isIdentifiedInstance) {
-			js.append(")");
-			//	String cachedResultName = qvticg2javaVisitor.getVariantResolvedName(cgFunction, codeGenerator.getCACHED_RESULT_NameVariant());
-			GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
-			String cachedResultName = globalNameManager.getCachedResultNameResolution().getResolvedName();
-			js.append(".");
-			js.append(cachedResultName);
-		}
-		js.append(";\n");
-		return true;
-	}
-
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		return true;		 // functionality realized by finer-grained CG elements
@@ -412,9 +341,5 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 
 	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {
 		return DefaultEntryClassCallingConvention.getInstance(asOperation, false);
-	}
-
-	private @NonNull String getFunctionCtorName(@NonNull CGOperation cgOperation) {
-		return JavaStream.convertToJavaIdentifier("FTOR_" + cgOperation.getName());
 	}
 }

@@ -36,7 +36,7 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 /**
  *  BuiltInIterationCallingConvention defines the support for the call of an iteration optionally realized by inline code.
  */
-public class BuiltInIterationCallingConvention extends AbstractOperationCallingConvention
+public class BuiltInIterationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
 	private static final @NonNull BuiltInIterationCallingConvention INSTANCE = new BuiltInIterationCallingConvention();
 

@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *
  *  -- only used by QVTd
  */
-public class VolatileOperationCallingConvention extends AbstractOperationCallingConvention
+public class VolatileOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
 	private static final @NonNull VolatileOperationCallingConvention INSTANCE = new VolatileOperationCallingConvention();
 

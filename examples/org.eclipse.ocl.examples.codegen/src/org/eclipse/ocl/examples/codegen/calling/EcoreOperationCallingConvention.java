@@ -57,7 +57,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *  </br>
  *  e.g. as eObject.eOperation(eArguments)
  */
-public class EcoreOperationCallingConvention extends AbstractOperationCallingConvention
+public class EcoreOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
 	private static final @NonNull EcoreOperationCallingConvention INSTANCE = new EcoreOperationCallingConvention();
 

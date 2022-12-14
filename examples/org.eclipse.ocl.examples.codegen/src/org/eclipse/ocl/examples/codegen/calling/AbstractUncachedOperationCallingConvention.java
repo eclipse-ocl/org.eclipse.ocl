@@ -15,7 +15,6 @@ import java.lang.reflect.Method;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -35,7 +34,7 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 public abstract class AbstractUncachedOperationCallingConvention extends AbstractOperationCallingConvention
 {
 	@Override
-	public @NonNull CGCachedOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		return CGModelFactory.eINSTANCE.createCGCachedOperation();
 	}
 

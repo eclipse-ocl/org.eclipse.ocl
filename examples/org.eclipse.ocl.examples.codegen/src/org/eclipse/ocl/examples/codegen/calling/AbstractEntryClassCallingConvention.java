@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention.CacheProperty;
+import org.eclipse.ocl.examples.codegen.calling.AbstractConstructorOperationCallingConvention.DefaultConstructorOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
@@ -419,7 +420,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 
 	protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		ConstructorOperationCallingConvention callingConvention = ConstructorOperationCallingConvention.getInstance(asEntryClass);
+		DefaultConstructorOperationCallingConvention callingConvention = DefaultConstructorOperationCallingConvention.getInstance(asEntryClass);
 		callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 	}
 

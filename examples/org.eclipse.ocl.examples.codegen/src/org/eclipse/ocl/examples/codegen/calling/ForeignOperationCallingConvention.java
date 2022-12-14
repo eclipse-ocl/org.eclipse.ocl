@@ -84,7 +84,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		}
 	}
 
-	public static class ForeignConstructorOperationCallingConvention extends ConstructorOperationCallingConvention
+	public static class ForeignConstructorOperationCallingConvention extends AbstractConstructorOperationCallingConvention
 	{
 		private static final @NonNull ForeignConstructorOperationCallingConvention INSTANCE = new ForeignConstructorOperationCallingConvention();
 

@@ -65,7 +65,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
  *  </br> Subsequent Object parameters are passed the argument values in order
  *  </br> An Object[] parameter is passed source and argument values
  */
-public class LibraryOperationCallingConvention extends AbstractOperationCallingConvention
+public class LibraryOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
 	private static final @NonNull LibraryOperationCallingConvention INSTANCE = new LibraryOperationCallingConvention();
 

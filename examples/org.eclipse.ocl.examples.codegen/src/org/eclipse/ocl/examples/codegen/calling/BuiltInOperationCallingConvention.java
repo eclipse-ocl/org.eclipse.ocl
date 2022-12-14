@@ -41,7 +41,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 /**
  *  BuiltInOperationCallingConvention defines the support for the call of an operation realized by inline code.
  */
-public class BuiltInOperationCallingConvention extends AbstractOperationCallingConvention
+public class BuiltInOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
 	private static final @NonNull BuiltInOperationCallingConvention INSTANCE = new BuiltInOperationCallingConvention();
 

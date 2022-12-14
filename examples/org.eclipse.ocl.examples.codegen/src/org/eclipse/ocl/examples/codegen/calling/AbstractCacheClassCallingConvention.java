@@ -45,11 +45,11 @@ import org.eclipse.qvtd.runtime.internal.evaluation.AbstractComputationConstruct
  */
 public abstract class AbstractCacheClassCallingConvention extends AbstractClassCallingConvention
 {
-	public static class CacheConstructorCallingConvention extends AbstractUncachedOperationCallingConvention
+	public static class CacheConstructorOperationCallingConvention extends AbstractConstructorOperationCallingConvention
 	{
-		private static final @NonNull CacheConstructorCallingConvention INSTANCE = new CacheConstructorCallingConvention();
+		private static final @NonNull CacheConstructorOperationCallingConvention INSTANCE = new CacheConstructorOperationCallingConvention();
 
-		public static @NonNull CacheConstructorCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		public static @NonNull CacheConstructorOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
@@ -325,7 +325,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 
 	protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation, @NonNull AbstractCachedOperationCallingConvention operationCallingConvention) {
 		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-		CacheConstructorCallingConvention callingConvention = CacheConstructorCallingConvention.getInstance(asCacheClass);
+		CacheConstructorOperationCallingConvention callingConvention = CacheConstructorOperationCallingConvention.getInstance(asCacheClass);
 		callingConvention.createConstructor(analyzer, cgCacheClass);
 	}
 

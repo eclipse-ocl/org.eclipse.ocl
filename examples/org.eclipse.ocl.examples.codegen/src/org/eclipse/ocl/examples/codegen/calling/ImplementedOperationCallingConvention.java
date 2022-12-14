@@ -39,14 +39,19 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 		return INSTANCE;
 	}
 
-	public static class ImplementedConstructorOperationCallingConvention extends ConstructorOperationCallingConvention
+	public static class ImplementedConstructorOperationCallingConvention extends AbstractConstructorOperationCallingConvention
 	{
 		private static final @NonNull ImplementedConstructorOperationCallingConvention INSTANCE = new ImplementedConstructorOperationCallingConvention();
 
-		public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
-			INSTANCE.logInstance(asOperation, maybeVirtual);
+		public static @NonNull ImplementedConstructorOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
+
+	//	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+	//		INSTANCE.logInstance(asOperation, maybeVirtual);
+	//		return INSTANCE;
+	//	}
 
 		@Override
 		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgConstructor) {	// merge with super
@@ -85,7 +90,7 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 		@Override
 		protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 			org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-			ConstructorOperationCallingConvention callingConvention = ImplementedConstructorOperationCallingConvention.getInstance(asEntryClass);
+			AbstractConstructorOperationCallingConvention callingConvention = ImplementedConstructorOperationCallingConvention.getInstance(asEntryClass);
 			callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 		}
 	}
