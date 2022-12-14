@@ -56,6 +56,7 @@ public class ExecutableNameManager extends NestedNameManager
 	protected final boolean isStatic;
 
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
+	private /*@LazyNonNull*/ CGParameter contextObjectParameter = null;		// A local parameter spelled "contextObject" to distinguish unique evaluations
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / caached local thread lookup
 	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// A convenience cache of execitpr.getIdResolver()
 	private /*@LazyNonNull*/ CGParameter idResolverParameter = null;		// A local orphan parameter spelled "idResolver" -- XXX probably doesn't need caching
@@ -63,7 +64,6 @@ public class ExecutableNameManager extends NestedNameManager
 	private /*@LazyNonNull*/ CGFinalVariable qualifiedThisVariable = null;	// An unambiguous spelling of this for external access.
 	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of executor.getStandardVariable()
 	private /*@LazyNonNull*/ CGParameter selfParameter = null;				// A local parameter spelled "self" to be added to the signature
-	private /*@LazyNonNull*/ CGParameter thisObjectParameter = null;		// A local parameter spelled "thisObject" to distinguish unique evaluations
 	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// A local orphan parameter spelled "this"
 	private /*@LazyNonNull*/ CGParameter typeIdParameter = null;			// A local orphan parameter spelled "typeId"
 
@@ -180,6 +180,18 @@ public class ExecutableNameManager extends NestedNameManager
 		cgVariable.setInit(cgInit);
 //		nameResolution.addCGElement(cgVariable);
 		return cgVariable;
+	}
+
+	protected @NonNull CGParameter createContextObjectParameter() {
+		assert !isStatic;
+		org.eclipse.ocl.pivot.Class asContextClass = classNameManager.getASClass(); //codeGenerator.getContextClass();
+		NameResolution thisObjectName = globalNameManager.getContextObjectNameResolution();
+		CGTypeId cgTypeId = analyzer.getCGTypeId(asContextClass.getTypeId());
+		CGParameter thisObjectParameter = analyzer.createCGParameter(thisObjectName, cgTypeId, true);
+		thisObjectParameter.setIsThis(false);		// Do not use Java's 'this' spelling
+		thisObjectParameter.setNonInvalid();
+		thisObjectParameter.setNonNull();
+		return thisObjectParameter;
 	}
 
 	protected @NonNull CGVariable createExecutorVariable() {
@@ -319,18 +331,6 @@ public class ExecutableNameManager extends NestedNameManager
 		return standardLibraryVariable;
 	}
 
-	protected @NonNull CGParameter createThisObjectParameter() {
-		assert !isStatic;
-		org.eclipse.ocl.pivot.Class asContextClass = classNameManager.getASClass(); //codeGenerator.getContextClass();
-		NameResolution thisObjectName = globalNameManager.getThisObjectNameResolution();
-		CGTypeId cgTypeId = analyzer.getCGTypeId(asContextClass.getTypeId());
-		CGParameter thisObjectParameter = analyzer.createCGParameter(thisObjectName, cgTypeId, true);
-		thisObjectParameter.setIsThis(false);		// Do not use Java's 'this' spelling
-		thisObjectParameter.setNonInvalid();
-		thisObjectParameter.setNonNull();
-		return thisObjectParameter;
-	}
-
 	protected @NonNull CGParameter createThisParameter() {
 		assert !isStatic;
 		org.eclipse.ocl.pivot.Class asThisClass = classNameManager.getASClass();
@@ -450,6 +450,15 @@ public class ExecutableNameManager extends NestedNameManager
 	@Override
 	public @NonNull ClassNameManager getClassParentNameManager() {
 		return getRootExecutableNameManager().getClassNameManager();
+	}
+
+	public @NonNull CGParameter getContextObjectParameter() {
+		assert !isStatic;
+		CGParameter contextObjectParameter2 = contextObjectParameter;
+		if (contextObjectParameter2 == null) {
+			contextObjectParameter = contextObjectParameter2 = createContextObjectParameter();
+		}
+		return contextObjectParameter2;
 	}
 
 	public @NonNull CGParameter getExecutorParameter() {
@@ -584,15 +593,6 @@ public class ExecutableNameManager extends NestedNameManager
 			standardLibraryVariable = standardLibraryVariable2 = createStandardLibraryVariable();
 		}
 		return standardLibraryVariable2;
-	}
-
-	public @NonNull CGParameter getThisObjectParameter() {
-		assert !isStatic;
-		CGParameter thisObjectParameter2 = thisObjectParameter;
-		if (thisObjectParameter2 == null) {
-			thisObjectParameter = thisObjectParameter2 = createThisObjectParameter();
-		}
-		return thisObjectParameter2;
 	}
 
 	public @NonNull CGParameter getThisParameter() {

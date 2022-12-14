@@ -48,6 +48,7 @@ public class JavaConstants {
 	public static final @NonNull String BASIC_EVALUATE_NAME = "basicEvaluate";
 	public static final @NonNull String BOXED_VALUES_NAME = "boxedValues";
 	public static final @NonNull String CACHED_RESULT_NAME = "cachedResult";
+	public static final @NonNull String CONTEXT_OBJECT_NAME = "contextObject";
 	public static final @NonNull String EVALUATE_NAME = "evaluate";
 	public static final @NonNull String EVALUATION_CACHE_NAME = "evaluationCache";
 	public static final @NonNull String EXECUTOR_NAME = "executor";
@@ -61,7 +62,6 @@ public class JavaConstants {
 	public static final @NonNull String SOURCE_AND_ARGUMENT_VALUES_NAME = "sourceAndArgumentValues";
 	public static final @NonNull String STANDARD_LIBRARY_NAME = "standardLibrary";
 	public static final @NonNull String THIS_NAME = "this";
-	public static final @NonNull String THIS_OBJECT_NAME = "thisObject";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 
 	public static final @NonNull String EXTERNAL_CLASS_PREFIX = "EC_";

@@ -165,6 +165,7 @@ public class GlobalNameManager extends AbstractNameManager
 	protected final @NonNull NameResolution basicEvaluateName;
 	protected final @NonNull NameResolution boxedValuesName;
 	protected final @NonNull NameResolution cachedResultName;
+	protected final @NonNull NameResolution contextObjectName;
 //	protected final @NonNull NameResolution eName;
 	protected final @NonNull NameResolution evaluateName;
 	protected final @NonNull NameResolution evaluationCacheName;
@@ -182,7 +183,6 @@ public class GlobalNameManager extends AbstractNameManager
 	protected final @NonNull NameResolution sourceAndArgumentValuesName;
 	protected final @NonNull NameResolution standardLibraryVariableName;
 	protected final @NonNull NameResolution thisName;
-	protected final @NonNull NameResolution thisObjectName;
 	protected final @NonNull NameResolution typeIdName;
 	protected final @NonNull NameResolution valueName;
 
@@ -200,6 +200,7 @@ public class GlobalNameManager extends AbstractNameManager
 		this.basicEvaluateName = declareEagerName(null, JavaConstants.BASIC_EVALUATE_NAME);
 		this.boxedValuesName = declareEagerName(null, JavaConstants.BOXED_VALUES_NAME);
 		this.cachedResultName = globalNameManager.declareEagerName(null, JavaConstants.CACHED_RESULT_NAME);
+		this.contextObjectName = declareEagerName(null, JavaConstants.CONTEXT_OBJECT_NAME);
 //		this.eName = declareEagerName(null, JavaConstants.E_NAME);
 		this.evaluateName = declareEagerName(null, JavaConstants.EVALUATE_NAME);
 		this.evaluationCacheName = declareEagerName(null, JavaConstants.EVALUATION_CACHE_NAME);
@@ -216,7 +217,6 @@ public class GlobalNameManager extends AbstractNameManager
 		this.selfName = declareEagerName(null, PivotConstants.SELF_NAME);
 		this.sourceAndArgumentValuesName = declareEagerName(null, JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
 		this.standardLibraryVariableName = declareEagerName(null, JavaConstants.STANDARD_LIBRARY_NAME);
-		this.thisObjectName = declareEagerName(null, JavaConstants.THIS_OBJECT_NAME);
 		this.typeIdName = declareEagerName(null, JavaConstants.TYPE_ID_NAME);
 		this.valueName = declareEagerName(null, "value");
 	}
@@ -397,6 +397,10 @@ public class GlobalNameManager extends AbstractNameManager
 		return context;
 	}
 
+	public @NonNull NameResolution getContextObjectNameResolution() {
+		return contextObjectName;
+	}
+
 	public @Nullable EClass getEClass(@NonNull ElementId elementId) {
 		IdVisitor<@Nullable EClass> id2EClassVisitor = codeGenerator.getId2EClassVisitor();
 		return elementId.accept(id2EClassVisitor);
@@ -533,10 +537,6 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public @NonNull NameResolution getThisNameResolution() {
 		return thisName;
-	}
-
-	public @NonNull NameResolution getThisObjectNameResolution() {
-		return thisObjectName;
 	}
 
 	public @NonNull NameResolution getTypeIdNameResolution() {

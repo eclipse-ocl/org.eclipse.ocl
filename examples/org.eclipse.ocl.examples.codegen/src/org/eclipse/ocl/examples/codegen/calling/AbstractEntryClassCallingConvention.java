@@ -392,7 +392,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 	}
 
 	protected @NonNull NameResolution getContextNameResolution(@NonNull GlobalNameManager globalNameManager) {
-		return globalNameManager.getThisObjectNameResolution();
+		return globalNameManager.getContextObjectNameResolution();
 	}
 
 	@Override
