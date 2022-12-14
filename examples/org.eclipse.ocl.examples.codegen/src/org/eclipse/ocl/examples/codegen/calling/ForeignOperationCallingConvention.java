@@ -245,9 +245,10 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		}
 		analyzer.initAst(cgOperation, asOperation, true);
 		analyzer.addExternalFeature(asOperation);
-//		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
-		org.eclipse.ocl.pivot.Class asEntryClass = createEntryClass(analyzer, cgOperation);
-		org.eclipse.ocl.pivot.Class asCacheClass = createCacheClass(analyzer, cgOperation, asEntryClass);
+		CGClass cgEntryClass = createEntryClass(analyzer, cgOperation);
+		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+		CGClass cgCacheClass = createCacheClass(analyzer, cgOperation, asEntryClass);
+		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
 		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);
 		return cgOperation;
 	}
@@ -280,7 +281,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		super.createCGParameters(operationNameManager, expressionInOCL);
 	}
 
-	protected final org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+	protected final @NonNull CGClass createEntryClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		AbstractEntryClassCallingConvention entryClassCallingConvention = ForeignEntryClassCallingConvention.getInstance(asOperation, true);
 		return entryClassCallingConvention.createEntryClass(analyzer, cgOperation);

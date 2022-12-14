@@ -299,7 +299,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		return cgClass;
 	}
 
-	public org.eclipse.ocl.pivot.@NonNull Class createEntryClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+	public @NonNull CGClass createEntryClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			boolean isIncremental = codeGenerator.getOptions().isIncremental();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
@@ -333,7 +333,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			installConstructorOperation(analyzer, cgEntryClass, asOperation);
 			installGetResultOperation(analyzer, cgEntryClass, asOperation);
 			installIsEqualOperation(analyzer, cgEntryClass, asOperation);
-			return asEntryClass;
+			return cgEntryClass;
 		}
 
 	private void createEntryProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass,

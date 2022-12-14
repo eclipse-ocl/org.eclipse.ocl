@@ -103,10 +103,7 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 		analyzer.initAst(cgOperation, asOperation, true);
 		CGClass cgRootClass = analyzer.getCGRootClass(asOperation);
 		cgRootClass.getOperations().add(cgOperation);
-	//	ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
-		org.eclipse.ocl.pivot.Class asEntryClass = createEntryClass(analyzer, cgOperation);
-		org.eclipse.ocl.pivot.Class asCacheClass = createCacheClass(analyzer, cgOperation, asEntryClass);
-		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);
+		createCachingClassesAndInstance(analyzer, cgOperation);
 		return cgOperation;
 	}
 
