@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.AbstractEntryClassCallingConvention.IsEqualOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
@@ -175,13 +176,15 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		@Override
 		protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 			org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-			ForeignConstructorOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
+			ForeignConstructorOperationCallingConvention callingConvention = ForeignConstructorOperationCallingConvention.getInstance(asEntryClass);
+			callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 		}
 
 		@Override
 		protected void installIsEqualOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 			org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-			ForeignIsEqualOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
+			ForeignIsEqualOperationCallingConvention callingConvention = ForeignIsEqualOperationCallingConvention.getInstance(asEntryClass);
+			callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 		}
 	}
 

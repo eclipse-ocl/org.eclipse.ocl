@@ -85,7 +85,8 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 		@Override
 		protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 			org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-			ImplementedConstructorOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
+			ConstructorOperationCallingConvention callingConvention = ImplementedConstructorOperationCallingConvention.getInstance(asEntryClass);
+			callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 		}
 	}
 

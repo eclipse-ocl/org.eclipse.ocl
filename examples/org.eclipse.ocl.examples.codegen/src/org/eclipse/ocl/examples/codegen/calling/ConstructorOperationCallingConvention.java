@@ -276,13 +276,13 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 		//
 		// AS Class - yyy2zzz
 		// AS Properties -
-		// AS Operation - yyy2zzz
+		// AS Operation - f
 		// AS Operation.ownedParameters - x1, x2
 		// AS Entry Operation - newInstance
 		// AS Entry Operation.parameters - boxedValues
-		// AS Entry ExpressionInOCL.ownedContext - this
+		// AS Entry ExpressionInOCL.ownedContext - this for AS Entry class
 		// AS Entry ExpressionInOCL.ownedParameters - x1, x2
-		// CG Entry Operation - newInstance
+		// CG Entry Operation - AS Entry class name
 		// CG Entry Operation.lets -
 		//
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
@@ -306,7 +306,7 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 			assert asContextVariable != null;
 			assert asContextVariable.isIsRequired();
 			assert asContextVariable.getTypeValue() == null;
-			asContextVariable.setType(asEntryClass);		// Change context from context class to entry class
+			asContextVariable.setType(asEntryClass);		// Change copied context from context class to entry class
 			asEntryConstructor.setBodyExpression(asEntryExpressionInOCL);
 		}
 		else {
@@ -318,10 +318,8 @@ public class ConstructorOperationCallingConvention extends AbstractOperationCall
 		analyzer.initAst(cgConstructor, asEntryConstructor, true);
 		ctorNameResolution.addCGElement(cgConstructor);
 		analyzer.getOperationNameManager(cgConstructor, asEntryConstructor);
-		cgEntryClass.getOperations().add(cgConstructor);
 		//
-		//	createCGBody(analyzer, cgConstructor);
-		//	analyzer.scanBody(asEntryResult);
+		cgEntryClass.getOperations().add(cgConstructor);
 		return cgConstructor;
 	}
 

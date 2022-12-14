@@ -604,7 +604,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return thisParameter2;
 	}
 
-	public @NonNull CGParameter getThisParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants
+	public @NonNull CGParameter getThisParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants, never exercised
 		CGParameter cgParameter = basicGetCGParameter(asParameter);
 		if (cgParameter == null) {
 			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();

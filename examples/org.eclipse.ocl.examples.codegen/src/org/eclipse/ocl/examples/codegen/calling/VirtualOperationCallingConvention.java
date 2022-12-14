@@ -76,6 +76,55 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			return INSTANCE;
 		}
 
+		/**
+		 *  DispatchEvaluateOperationCallingConvention provides the type-safe evaluate() interface for a virtual operation dispatch.
+		 */
+		public static class DispatchEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
+		{
+			private static final @NonNull DispatchEvaluateOperationCallingConvention INSTANCE = new DispatchEvaluateOperationCallingConvention();
+
+			public static @NonNull DispatchEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+				INSTANCE.logInstance(asClass);
+				return INSTANCE;
+			}
+
+			@Override
+			protected @Nullable Parameter createConstructorEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+				CodeGenerator codeGenerator = analyzer.getCodeGenerator();
+				GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
+				String objectName = globalNameManager.getObjectName();
+				Parameter asEvaluateParameter = PivotUtil.createParameter(objectName, PivotUtil.getOwningClass(asOperation), true);
+				return asEvaluateParameter;
+			}
+
+			@Override
+			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
+				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+				List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
+				Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
+				js.append("return (");
+				js.appendClassReference(isRequiredReturn, cgOperation);
+				js.append(")");
+				js.append(globalNameManager.getEvaluationCacheName());
+				js.append(".");
+				js.append(globalNameManager.getGetCachedEvaluationResultName());
+				js.append("(this, caller, new ");
+				js.appendClassReference(false, Object.class);
+				js.append("[]{");
+				boolean isFirst = true;
+				for (@NonNull CGParameter cgParameter : cgParameters) {
+					if (!isFirst) {
+						js.append(", ");
+					}
+					js.appendValueName(cgParameter);
+					isFirst = false;
+				}
+				js.append("}");
+				js.append(");\n");
+			}
+		}
+
 		@Override
 		protected @NonNull String getClassNamePrefix() {
 			return NameManagerHelper.DISPATCH_CLASS_NAME_PREFIX;
@@ -152,7 +201,8 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		@Override
 		protected void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
 			org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-			DispatchEvaluateOperationCallingConvention.getInstance(asCacheClass).createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
+			DispatchEvaluateOperationCallingConvention callingConvention = DispatchEvaluateOperationCallingConvention.getInstance(asCacheClass);
+			callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
 		}
 
 		@Override
@@ -160,55 +210,6 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			// dispatch delegates rather than creates an entry instance
 		}
 
-	}
-
-	/**
-	 *  DispatchEvaluateOperationCallingConvention provides the type-safe evaluate() interface for a virtual operation dispatch.
-	 */
-	public static class DispatchEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
-	{
-		private static final @NonNull DispatchEvaluateOperationCallingConvention INSTANCE = new DispatchEvaluateOperationCallingConvention();
-
-		public static @NonNull DispatchEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			INSTANCE.logInstance(asClass);
-			return INSTANCE;
-		}
-
-		@Override
-		protected @Nullable Parameter createConstructorEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			CodeGenerator codeGenerator = analyzer.getCodeGenerator();
-			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-			String objectName = globalNameManager.getObjectName();
-			Parameter asEvaluateParameter = PivotUtil.createParameter(objectName, PivotUtil.getOwningClass(asOperation), true);
-			return asEvaluateParameter;
-		}
-
-		@Override
-		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-			CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
-			GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-			List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
-			Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
-			js.append("return (");
-			js.appendClassReference(isRequiredReturn, cgOperation);
-			js.append(")");
-			js.append(globalNameManager.getEvaluationCacheName());
-			js.append(".");
-			js.append(globalNameManager.getGetCachedEvaluationResultName());
-			js.append("(this, caller, new ");
-			js.appendClassReference(false, Object.class);
-			js.append("[]{");
-			boolean isFirst = true;
-			for (@NonNull CGParameter cgParameter : cgParameters) {
-				if (!isFirst) {
-					js.append(", ");
-				}
-				js.appendValueName(cgParameter);
-				isFirst = false;
-			}
-			js.append("}");
-			js.append(");\n");
-		}
 	}
 
 	@Override

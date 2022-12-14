@@ -71,7 +71,7 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 	}
 
 	@Override
-	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {
+	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {	// XXX never exercised
 		return executableNameManager.getThisParameter(asParameter);
 	}
 }

@@ -61,6 +61,49 @@ public class ExternalOperationCallingConvention extends FunctionOperationCalling
 			return INSTANCE;
 		}
 
+		public static class ExternalEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
+		{
+			private static final @NonNull ExternalEvaluateOperationCallingConvention INSTANCE = new ExternalEvaluateOperationCallingConvention();
+
+			public static @NonNull ExternalEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+				INSTANCE.logInstance(asClass);
+				return INSTANCE;
+			}
+
+			@Override
+			protected @Nullable Parameter createConstructorEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+				CodeGenerator codeGenerator = analyzer.getCodeGenerator();
+				GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
+				NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
+				Parameter asEvaluateParameter = PivotUtil.createParameter(selfNameResolution.getResolvedName(), PivotUtil.getOwningClass(asOperation), true);
+				return asEvaluateParameter;
+			}
+
+			@Override
+			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
+				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+				Operation asOperation = CGUtil.getAST(cgOperation);
+				org.eclipse.ocl.pivot.Class asConstructorClass = PivotUtil.getOwningClass(asOperation);
+				org.eclipse.ocl.pivot.Class asCacheClass = analyzer.getEntryClass(asConstructorClass);
+				CGClass cgCacheClass = analyzer.getCGClass(asCacheClass);
+				js.append("return ((");
+				js.appendClassReference(cgCacheClass);
+				js.append(")getUniqueComputation(");
+				boolean isFirst = true;
+				for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
+					if (!isFirst) {
+						js.append(", ");
+					}
+					js.appendValueName(cgParameter);
+					isFirst = false;
+				}
+				js.append(")).");
+				js.append(globalNameManager.getCachedResultNameResolution().getResolvedName());
+				js.append(";\n");
+			}
+		}
+
 		@Override
 		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 			return getRootClassParentPackage(analyzer, asOperation);
@@ -69,7 +112,8 @@ public class ExternalOperationCallingConvention extends FunctionOperationCalling
 		@Override
 		protected void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
 			org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-			ExternalEvaluateOperationCallingConvention.getInstance(asCacheClass).createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
+			ExternalEvaluateOperationCallingConvention callingConvention = ExternalEvaluateOperationCallingConvention.getInstance(asCacheClass);
+			callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
 		}
 	}
 
@@ -97,49 +141,6 @@ public class ExternalOperationCallingConvention extends FunctionOperationCalling
 		@Override
 		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 			return getRootClassParentPackage(analyzer, asOperation);
-		}
-	}
-
-	public static class ExternalEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
-	{
-		private static final @NonNull ExternalEvaluateOperationCallingConvention INSTANCE = new ExternalEvaluateOperationCallingConvention();
-
-		public static @NonNull ExternalEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			INSTANCE.logInstance(asClass);
-			return INSTANCE;
-		}
-
-		@Override
-		protected @Nullable Parameter createConstructorEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			CodeGenerator codeGenerator = analyzer.getCodeGenerator();
-			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-			NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
-			Parameter asEvaluateParameter = PivotUtil.createParameter(selfNameResolution.getResolvedName(), PivotUtil.getOwningClass(asOperation), true);
-			return asEvaluateParameter;
-		}
-
-		@Override
-		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-			CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
-			GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-			Operation asOperation = CGUtil.getAST(cgOperation);
-			org.eclipse.ocl.pivot.Class asConstructorClass = PivotUtil.getOwningClass(asOperation);
-			org.eclipse.ocl.pivot.Class asCacheClass = analyzer.getEntryClass(asConstructorClass);
-			CGClass cgCacheClass = analyzer.getCGClass(asCacheClass);
-			js.append("return ((");
-			js.appendClassReference(cgCacheClass);
-			js.append(")getUniqueComputation(");
-			boolean isFirst = true;
-			for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
-				if (!isFirst) {
-					js.append(", ");
-				}
-				js.appendValueName(cgParameter);
-				isFirst = false;
-			}
-			js.append(")).");
-			js.append(globalNameManager.getCachedResultNameResolution().getResolvedName());
-			js.append(";\n");
 		}
 	}
 

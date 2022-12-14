@@ -10,37 +10,56 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.util.List;
+import java.util.Stack;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention2.CacheProperty;
-import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention2.GetResultOperationCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention2.IsEqualOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.qvtd.runtime.evaluation.AbstractComputation;
 
@@ -49,6 +68,230 @@ import org.eclipse.qvtd.runtime.evaluation.AbstractComputation;
  */
 public abstract class AbstractEntryClassCallingConvention extends AbstractClassCallingConvention
 {
+	public static class GetResultOperationCallingConvention extends AbstractCachedOperationCallingConvention
+	{
+		private static final @NonNull GetResultOperationCallingConvention INSTANCE = new GetResultOperationCallingConvention();
+
+		public static @NonNull GetResultOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
+
+		@Override
+		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+			//	super.createCGBody(analyzer, cgOperation);
+			Element asOperation = cgOperation.getAst();
+			ExpressionInOCL asExpressionInOCL = (ExpressionInOCL) (asOperation instanceof ExpressionInOCL ? asOperation : ((Operation)asOperation).getBodyExpression());
+			assert (asExpressionInOCL != null);
+			CGValuedElement cgResult = analyzer.createCGElement(CGValuedElement.class, asExpressionInOCL);
+			cgOperation.setBody(cgResult);
+		}
+
+		public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
+			//
+			// AS Class - yyy2zzz
+			// AS Properties - thisTransformer, x1, x2, cachedResult
+			// AS Operation - yyy2zzz
+			// AS Operation.ownedParameters - x1, x2
+			// AS Cache Operation - isEqual
+			// AS Cache Operation.parameters - boxedValues
+			// AS Cache ExpressionInOCL.ownedContext - this
+			// AS Cache ExpressionInOCL.ownedParameters - thisTransformer, x1, x2
+			// CG Cache Operation - isEqual
+			// CG Cache Operation.parameters - idResolver, boxedValues
+			// CG Cache Operation.lets - thisTransformer, x1, x2
+			//
+			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
+			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+			PivotHelper helper = new PivotHelper(environmentFactory);
+			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
+			//
+			//	Create AS declaration
+			//
+			NameResolution getResultNameResolution = globalNameManager.getGetResultNameResolution();
+			String getResultName = getResultNameResolution.getResolvedName();
+			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
+			Property asEntryResultProperty = asEntryProperties.get(asEntryProperties.size()-1);
+			Type asEntryResultType = PivotUtil.getType(asEntryResultProperty);
+			Operation asEntryOperation = PivotUtil.createOperation(getResultName, asEntryResultType, null, null);
+			asEntryOperation.setIsRequired(asEntryResultProperty.isIsRequired());
+			asEntryClass.getOwnedOperations().add(asEntryOperation);
+			//
+			//	Create AS body - self.cachedResult for AS => this.cachedResult for CG
+			//
+			ExpressionInOCL asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
+			ParameterVariable asSelfVariable = PivotFactory.eINSTANCE.createParameterVariable();
+			asSelfVariable.setName(PivotConstants.SELF_NAME);
+			asSelfVariable.setType(asEntryClass);
+			asSelfVariable.setIsRequired(true);
+			asExpressionInOCL.setOwnedContext(asSelfVariable);
+			OCLExpression asSelfVariableExp = helper.createVariableExp(asSelfVariable);
+			OCLExpression asBody = helper.createPropertyCallExp(asSelfVariableExp, asEntryResultProperty);
+			asExpressionInOCL.setOwnedBody(asBody);
+			asExpressionInOCL.setType(asBody.getType());
+			asEntryOperation.setBodyExpression(asExpressionInOCL);
+			//
+			//	Create CG declaration
+			//
+			CGOperation cgEntryOperation = createCGOperation(analyzer, asEntryOperation);
+			analyzer.initAst(cgEntryOperation, asEntryOperation, true);
+			cgEntryOperation.setCallingConvention(this);
+			getResultNameResolution.addCGElement(cgEntryOperation);
+			analyzer.getOperationNameManager(cgEntryOperation, asEntryOperation);
+			//
+			cgEntryClass.getOperations().add(cgEntryOperation);
+			return cgEntryOperation;
+		}
+	}
+
+	public static class IsEqualOperationCallingConvention extends AbstractCachedOperationCallingConvention
+	{
+		private static final @NonNull IsEqualOperationCallingConvention INSTANCE = new IsEqualOperationCallingConvention();
+
+		public static @NonNull IsEqualOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
+
+		@Override
+		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgCacheOperation) {
+			Operation asCacheOperation = CGUtil.getAST(cgCacheOperation);
+			org.eclipse.ocl.pivot.Class asCacheClass = PivotUtil.getOwningClass(asCacheOperation);
+			ExpressionInOCL asExpressionInOCL = (ExpressionInOCL) asCacheOperation.getBodyExpression();
+			assert (asExpressionInOCL != null);
+			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgCacheOperation, asCacheOperation);
+			Parameter asBoxedValuesParameter = PivotUtilInternal.getOwnedParametersList(asCacheOperation).get(0);
+			CGParameter cgCacheBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
+			List<@NonNull Property> asCacheProperties = PivotUtilInternal.getOwnedPropertiesList(asCacheClass);
+			List<@NonNull Variable> asCacheParameterVariables = PivotUtilInternal.getOwnedParametersList(asExpressionInOCL);
+			Stack<@NonNull CGFinalVariable> cgLetVariables = new Stack<>();
+			for (int i = 0; i < asCacheProperties.size()-1; i++) {		// not cachedResult
+				ParameterVariable asParameterVariable = (ParameterVariable)asCacheParameterVariables.get(i);
+				CGVariableExp cgVariableExp = analyzer.createCGVariableExp(cgCacheBoxedValuesParameter);
+				CGIndexExp cgIndexExp = analyzer.createCGIndexExp(cgVariableExp, i);
+				cgIndexExp.setAst(asParameterVariable);
+				CGFinalVariable cgParameterVariable = operationNameManager.createCGVariable(cgIndexExp);
+				operationNameManager.addVariable(asParameterVariable, cgParameterVariable);
+				cgLetVariables.push(cgParameterVariable);
+			}
+			//
+			CGValuedElement cgResult = analyzer.createCGElement(CGValuedElement.class, asExpressionInOCL);
+			while (!cgLetVariables.isEmpty()) {
+				CGFinalVariable cgLetVariable = cgLetVariables.pop();
+				cgResult = analyzer.createCGLetExp(cgLetVariable, cgResult);
+			}
+			cgCacheOperation.setBody(cgResult);
+		}
+
+		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
+			//
+			// AS Class - yyy2zzz
+			// AS Properties - thisTransformer, x1, x2, cachedResult
+			// AS Operation - yyy2zzz
+			// AS Operation.ownedParameters - x1, x2
+			// AS Cache Operation - isEqual
+			// AS Cache Operation.parameters - boxedValues
+			// AS Cache ExpressionInOCL.ownedContext - this
+			// AS Cache ExpressionInOCL.ownedParameters - thisTransformer, x1, x2
+			// CG Cache Operation - isEqual
+			// CG Cache Operation.parameters - idResolver, boxedValues
+			// CG Cache Operation.lets - thisTransformer, x1, x2
+			//
+			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
+			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+			PivotHelper helper = new PivotHelper(environmentFactory);
+			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
+			//
+			//	Create AS declaration for isEqual
+			//
+			NameResolution isEqualNameResolution = globalNameManager.getIsEqualNameResolution();
+			String isEqualName = isEqualNameResolution.getResolvedName();
+			Type asReturnType = environmentFactory.getStandardLibrary().getBooleanType();
+			Operation asEntryOperation = PivotUtil.createOperation(isEqualName, asReturnType, null, null);
+			asEntryOperation.setIsRequired(true);
+			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator);
+			asEntryOperation.getOwnedParameters().add(asBoxedValuesParameter);
+			asEntryClass.getOwnedOperations().add(asEntryOperation);
+			//
+			//	Create AS body for isEqual
+			//
+			OCLExpression asBody = null;
+			ExpressionInOCL asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
+			ParameterVariable asEntryThisVariable = PivotFactory.eINSTANCE.createParameterVariable();
+			asEntryThisVariable.setName(PivotConstants.SELF_NAME);		// XXX ??
+			asEntryThisVariable.setType(codeGenerator.getContextClass());
+			asEntryThisVariable.setIsRequired(true);
+			asExpressionInOCL.setOwnedContext(asEntryThisVariable);
+			ParameterVariable asEntrySelfVariable = PivotFactory.eINSTANCE.createParameterVariable();
+			asEntrySelfVariable.setName(PivotConstants.SELF_NAME);
+			asEntrySelfVariable.setType(asEntryClass);
+			asEntrySelfVariable.setIsRequired(true);
+			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asExpressionInOCL);
+			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
+			Stack<@NonNull LetVariable> asLetVariables = new Stack<>();
+			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
+			for (int i = 0; i < asEntryProperties.size()-1; i++) {		// not cachedResult
+				Property asEntryProperty = asEntryProperties.get(i);
+				@NonNull ParameterVariable asEntryParameterVariable;
+				if (i == 0) {
+					asEntryParameterVariable = asEntrySelfVariable;
+				}
+				else {
+					Parameter asParameter = asParameters.get(i-1);
+					asEntryParameterVariable = helper.createParameterVariable(asParameter);
+					asEntryParameterVariable.setRepresentedParameter(asParameter);
+				}
+				asEntryParameterVariables.add(asEntryParameterVariable);
+				String name = PivotUtil.getName(asEntryParameterVariable);
+				VariableExp asInit = helper.createVariableExp(asEntryParameterVariable);
+				LetVariable asLetVariable = helper.createLetVariable(name, asInit);
+				asLetVariables.push(asLetVariable);
+
+				OCLExpression asEntryThisVariableExp = helper.createVariableExp(asEntryThisVariable);
+				OCLExpression asEntryParameterVariableExp = helper.createVariableExp(asEntryParameterVariable);
+				OCLExpression asEntryPropertyCallExp = helper.createPropertyCallExp(asEntryThisVariableExp, asEntryProperty);
+				OCLExpression asEquals = helper.createOperationCallExp(asEntryParameterVariableExp, "=", asEntryPropertyCallExp);
+				asBody = asBody != null ? helper.createOperationCallExp(asBody, LibraryConstants.AND2, asEquals) : asEquals;
+			}
+			assert asBody != null;
+			while (!asLetVariables.isEmpty()) {
+				LetVariable asVariable = asLetVariables.pop();
+				asBody = helper.createLetExp(asVariable, asBody);
+			}
+			asExpressionInOCL.setOwnedBody(asBody);
+			asExpressionInOCL.setType(asBody.getType());
+			asEntryOperation.setBodyExpression(asExpressionInOCL);
+			//
+			//	Create CG declaration for isEqual
+			//
+			CGOperation cgEntryOperation = createCGOperation(analyzer, asEntryOperation);
+			analyzer.initAst(cgEntryOperation, asEntryOperation, true);
+			cgEntryOperation.setCallingConvention(this);
+			isEqualNameResolution.addCGElement(cgEntryOperation);
+			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgEntryOperation, asEntryOperation);
+			List<@NonNull CGParameter> cgCacheParameters = CGUtil.getParametersList(cgEntryOperation);
+			CGParameter cgIdResolverParameter = operationNameManager.getIdResolverParameter();
+			cgCacheParameters.add(cgIdResolverParameter);
+			CGParameter cgEntryBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
+			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
+			cgCacheParameters.add(cgEntryBoxedValuesParameter);
+			//
+			cgEntryClass.getOperations().add(cgEntryOperation);
+			return cgEntryOperation;
+		}
+
+		@Override
+		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+			js.append("/**\n");
+			js.append(" * Return true if the boxedValues exactly match OCL-wise the values from which this entry was constructed.\n");
+			js.append(" * If so, the cachedResult can be re-used and no further ENTRY needs construction.\n");
+			js.append(" */\n");
+			return super.generateJavaDeclaration(cg2javaVisitor, js, cgOperation);
+		}
+	}
+
 	@Override
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgClass = createCGClass();
@@ -87,11 +330,8 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			NameResolution cachedResultNameResolution = globalNameManager.getCachedResultNameResolution();
 			createEntryProperty(analyzer, cgEntryClass, cachedResultNameResolution, asOperation);
 			//
-	//		getConstructorOperationCallingConvention(asEntryClass).createCacheConstructor(analyzer, cgEntryClass, asOperation);
 			installConstructorOperation(analyzer, cgEntryClass, asOperation);
-	//		GetResultOperationCallingConvention.getInstance(asEntryClass).createCacheGetResultOperation(analyzer, cgEntryClass, asOperation);
 			installGetResultOperation(analyzer, cgEntryClass, asOperation);
-	//		IsEqualOperationCallingConvention.getInstance(asEntryClass).createCacheIsEqualOperation(analyzer, cgEntryClass, asOperation);
 			installIsEqualOperation(analyzer, cgEntryClass, asOperation);
 			return asEntryClass;
 		}
@@ -179,16 +419,19 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 
 	protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		ConstructorOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
+		ConstructorOperationCallingConvention callingConvention = ConstructorOperationCallingConvention.getInstance(asEntryClass);
+		callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 	}
 
 	protected void installGetResultOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		GetResultOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
+		GetResultOperationCallingConvention callingConvention = GetResultOperationCallingConvention.getInstance(asEntryClass);
+		callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 	}
 
 	protected void installIsEqualOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		IsEqualOperationCallingConvention.getInstance(asEntryClass).createOperation(analyzer, cgEntryClass, asOperation);
+		IsEqualOperationCallingConvention callingConvention = IsEqualOperationCallingConvention.getInstance(asEntryClass);
+		callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 	}
 }
