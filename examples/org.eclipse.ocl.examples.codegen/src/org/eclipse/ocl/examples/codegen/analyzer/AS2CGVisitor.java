@@ -296,7 +296,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	@Override
-	public @Nullable CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL query) {
+	public @Nullable CGValuedElement visitExpressionInOCL(@NonNull ExpressionInOCL query) {		// XXX Is this override necessary or even appropriate for nested ExpressionInOCL ?
 		assert query.getOwnedBody() != null;
 		ExecutableNameManager nameManager = context.useExecutableNameManager(query);
 		Variable contextVariable = query.getOwnedContext();
@@ -405,7 +405,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (asOperation.toString().contains("_unqualified_env_Class")) {
 			getClass();		// XXX
 		}
-		CGOperation cgOperation = context.generateOperation(asOperation);
+		CGOperation cgOperation = context.basicGetCGOperation(asOperation);
+		if (cgOperation == null) {
+			cgOperation = context.generateOperation(asOperation);
+		}
 		cgOperation.getCallingConvention().createCGBody(context, cgOperation);
 		return cgOperation;
 	}
@@ -455,11 +458,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	@Override
 	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		CGPackage cgPackage = context.basicGetCGPackage(asPackage);
-		assert cgPackage == null;
 		if (cgPackage == null) {
 			cgPackage = context.generatePackageDeclaration(asPackage);
-		//	cgPackage.setAst(asPackage);
-		//	globalNameManager.declareGlobalName(cgPackage, PivotUtil.getName(asPackage));
 		}
 		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
 			CGClass cgClass = context.createCGElement(CGClass.class, asType);
@@ -474,7 +474,11 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
-		return context.generateProperty(asProperty);
+		CGProperty cgProperty = context.basicGetCGProperty(asProperty);
+		if (cgProperty == null) {
+			cgProperty = context.generateProperty(asProperty);
+		}
+		return cgProperty;
 	}
 
 	@Override

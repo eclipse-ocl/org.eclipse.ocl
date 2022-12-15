@@ -59,7 +59,13 @@ public final class JUnitAS2CGVisitor extends AS2CGVisitor
 //			cgContext.setNonNull();
 		}
 		for (@SuppressWarnings("null")@NonNull Variable parameterVariable : element.getOwnedParameters()) {
-			@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getCGParameter(parameterVariable, (String)null);
+			@SuppressWarnings("unused") CGVariable cgVariable = nameManager.basicGetCGVariable(parameterVariable);
+			if (cgVariable != null) {
+				assert cgVariable.getAst() == parameterVariable;
+			}
+			else {
+				@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getCGParameter(parameterVariable, (String)null);
+			}
 		}
 		CGValuedElement cgBody = context.createCGElement(CGValuedElement.class, element.getOwnedBody());
 //		cgOperation.getDependsOn().add(cgBody);

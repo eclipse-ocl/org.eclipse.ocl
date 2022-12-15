@@ -105,7 +105,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
-			PivotHelper helper = new PivotHelper(environmentFactory);
+			PivotHelper asHelper = codeGenerator.getASHelper();
 			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 			//
 			//	Create AS declaration
@@ -122,13 +122,10 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//	Create AS body - self.cachedResult for AS => this.cachedResult for CG
 			//
 			ExpressionInOCL asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
-			ParameterVariable asSelfVariable = PivotFactory.eINSTANCE.createParameterVariable();
-			asSelfVariable.setName(PivotConstants.SELF_NAME);
-			asSelfVariable.setType(asEntryClass);
-			asSelfVariable.setIsRequired(true);
+			ParameterVariable asSelfVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asEntryClass, true);
 			asExpressionInOCL.setOwnedContext(asSelfVariable);
-			OCLExpression asSelfVariableExp = helper.createVariableExp(asSelfVariable);
-			OCLExpression asBody = helper.createPropertyCallExp(asSelfVariableExp, asEntryResultProperty);
+			OCLExpression asSelfVariableExp = asHelper.createVariableExp(asSelfVariable);
+			OCLExpression asBody = asHelper.createPropertyCallExp(asSelfVariableExp, asEntryResultProperty);
 			asExpressionInOCL.setOwnedBody(asBody);
 			asExpressionInOCL.setType(asBody.getType());
 			asEntryOperation.setBodyExpression(asExpressionInOCL);
@@ -202,7 +199,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
-			PivotHelper helper = new PivotHelper(environmentFactory);
+			PivotHelper asHelper = codeGenerator.getASHelper();
 			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 			//
 			//	Create AS declaration for isEqual
@@ -220,15 +217,9 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			OCLExpression asBody = null;
 			ExpressionInOCL asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
-			ParameterVariable asEntryThisVariable = PivotFactory.eINSTANCE.createParameterVariable();
-			asEntryThisVariable.setName(globalNameManager.getThisNameResolution().getResolvedName());
-			asEntryThisVariable.setType(codeGenerator.getContextClass());
-			asEntryThisVariable.setIsRequired(true);
+			ParameterVariable asEntryThisVariable = asHelper.createParameterVariable(globalNameManager.getThisNameResolution().getResolvedName(), codeGenerator.getContextClass(), true);
 			asExpressionInOCL.setOwnedContext(asEntryThisVariable);
-			ParameterVariable asEntrySelfVariable = PivotFactory.eINSTANCE.createParameterVariable();
-			asEntrySelfVariable.setName(PivotConstants.SELF_NAME);
-			asEntrySelfVariable.setType(asEntryClass);
-			asEntrySelfVariable.setIsRequired(true);
+			ParameterVariable asEntrySelfVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asEntryClass, true);
 			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asExpressionInOCL);
 			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
 			Stack<@NonNull LetVariable> asLetVariables = new Stack<>();
@@ -241,25 +232,25 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 				}
 				else {
 					Parameter asParameter = asParameters.get(i-1);
-					asEntryParameterVariable = helper.createParameterVariable(asParameter);
+					asEntryParameterVariable = asHelper.createParameterVariable(asParameter);
 					asEntryParameterVariable.setRepresentedParameter(asParameter);
 				}
 				asEntryParameterVariables.add(asEntryParameterVariable);
 				String name = PivotUtil.getName(asEntryParameterVariable);
-				VariableExp asInit = helper.createVariableExp(asEntryParameterVariable);
-				LetVariable asLetVariable = helper.createLetVariable(name, asInit);
+				VariableExp asInit = asHelper.createVariableExp(asEntryParameterVariable);
+				LetVariable asLetVariable = asHelper.createLetVariable(name, asInit);
 				asLetVariables.push(asLetVariable);
 				//
-				OCLExpression asEntryThisVariableExp = helper.createVariableExp(asEntryThisVariable);
-				OCLExpression asEntryParameterVariableExp = helper.createVariableExp(asEntryParameterVariable);
-				OCLExpression asEntryPropertyCallExp = helper.createPropertyCallExp(asEntryThisVariableExp, asEntryProperty);
-				OCLExpression asEquals = helper.createOperationCallExp(asEntryParameterVariableExp, "=", asEntryPropertyCallExp);
-				asBody = asBody != null ? helper.createOperationCallExp(asBody, LibraryConstants.AND2, asEquals) : asEquals;
+				OCLExpression asEntryThisVariableExp = asHelper.createVariableExp(asEntryThisVariable);
+				OCLExpression asEntryParameterVariableExp = asHelper.createVariableExp(asEntryParameterVariable);
+				OCLExpression asEntryPropertyCallExp = asHelper.createPropertyCallExp(asEntryThisVariableExp, asEntryProperty);
+				OCLExpression asEquals = asHelper.createOperationCallExp(asEntryParameterVariableExp, "=", asEntryPropertyCallExp);
+				asBody = asBody != null ? asHelper.createOperationCallExp(asBody, LibraryConstants.AND2, asEquals) : asEquals;
 			}
 			assert asBody != null;
 			while (!asLetVariables.isEmpty()) {
 				LetVariable asVariable = asLetVariables.pop();
-				asBody = helper.createLetExp(asVariable, asBody);
+				asBody = asHelper.createLetExp(asVariable, asBody);
 			}
 			asExpressionInOCL.setOwnedBody(asBody);
 			asExpressionInOCL.setType(asBody.getType());

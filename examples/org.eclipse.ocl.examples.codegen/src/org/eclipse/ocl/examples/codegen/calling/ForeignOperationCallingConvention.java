@@ -45,21 +45,20 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  *  ForeignOperationCallingConvention defines the support for the call of an operation realized by an
@@ -100,8 +99,8 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			return INSTANCE;
 		}
 
-		@Override		/// super was final
-		protected final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
+		@Override		/// super was final // XXX promote this - just defines lazy ownedContext
+		protected final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 			//
 			// AS Class - yyy2zzz
 			// AS Properties -
@@ -116,44 +115,47 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
-			org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
+			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 			//
-			NameResolution ctorNameResolution = cgCacheClass.getNameResolution();
+			NameResolution ctorNameResolution = cgEntryClass.getNameResolution();
 			String ctorName = ctorNameResolution.getResolvedName();
-			Type asCacheType = environmentFactory.getStandardLibrary().getOclVoidType();
-			Operation asCacheOperation = PivotUtil.createOperation(ctorName, asCacheType, null, null);
+			Type asDummyType = environmentFactory.getStandardLibrary().getOclVoidType();
+			Operation asEntryConstructor = PivotUtil.createOperation(ctorName, asDummyType, null, null);
 			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator);
-			asCacheOperation.getOwnedParameters().add(asBoxedValuesParameter);
-			asCacheClass.getOwnedOperations().add(asCacheOperation);
+			asEntryConstructor.getOwnedParameters().add(asBoxedValuesParameter);
+			asEntryClass.getOwnedOperations().add(asEntryConstructor);
 			//
 			//	Wrap a copy of the original constructor bodies in a let expression per constructor parameter.
 			//
 			ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
 			if (asExpressionInOCL != null) {
-				ExpressionInOCL asCacheExpressionInOCL = EcoreUtil.copy(asExpressionInOCL);
-				OCLExpression asCacheResult = asCacheExpressionInOCL.getOwnedBody();
-				if (asCacheResult == null) {
-					asCacheResult = ValueUtil.createLiteralExp(asCacheExpressionInOCL.getBody());		// test_static_operation55 should be int bit String
-				//	asCacheExpressionInOCL.setOwnedBody(asCacheResult);		// XXX ?? should be done earlier ??
+				ExpressionInOCL asEntryExpressionInOCL = EcoreUtil.copy(asExpressionInOCL);
+				Variable asContextVariable = asEntryExpressionInOCL.getOwnedContext();
+				if (asContextVariable == null) {			// QVTi FunctionBody has eager ownedContext, OCL ExpressionInOCL is lazy
+					PivotHelper asHelper = codeGenerator.getASHelper();
+					GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+					String thisName = globalNameManager.getThisNameResolution().getResolvedName();
+					asContextVariable = asHelper.createParameterVariable(thisName, asEntryClass, true);
+					asEntryExpressionInOCL.setOwnedContext(asContextVariable);
 				}
-				assert asCacheResult != null;
-				PivotUtilInternal.resetContainer(asCacheResult);
-				asCacheExpressionInOCL.setOwnedBody(asCacheResult);
-				asCacheOperation.setBodyExpression(asCacheExpressionInOCL);
+				else {
+					asContextVariable.setType(asEntryClass);		// Change copied context from context class to entry class
+				}
+				assert asContextVariable.isIsRequired();
+				assert asContextVariable.getTypeValue() == null;
+				asEntryConstructor.setBodyExpression(asEntryExpressionInOCL);
 			}
 			else {
 				assert asOperation.getImplementationClass() != null;
 			}
 			//
-			CGOperation cgConstructor = createCGOperation(analyzer, asCacheOperation);
+			CGOperation cgConstructor = createCGOperation(analyzer, asEntryConstructor);
 			cgConstructor.setCallingConvention(this);
-			analyzer.initAst(cgConstructor, asCacheOperation, true);
+			analyzer.initAst(cgConstructor, asEntryConstructor, true);
 			ctorNameResolution.addCGElement(cgConstructor);
-			analyzer.getOperationNameManager(cgConstructor, asCacheOperation);
-			cgCacheClass.getOperations().add(cgConstructor);
+			analyzer.getOperationNameManager(cgConstructor, asEntryConstructor);
 			//
-			//	createCGBody(analyzer, cgConstructor);
-			//	analyzer.scanBody(asCacheResult);
+			cgEntryClass.getOperations().add(cgConstructor);
 			return cgConstructor;
 		}
 	}

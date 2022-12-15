@@ -131,6 +131,7 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -1328,6 +1329,10 @@ public class CodeGenAnalyzer
 //	public @NonNull AS2CGVisitor getAS2CGVisitor() {
 //		return as2cgVisitor;
 //	}
+
+	public @NonNull PivotHelper getASHelper() {
+		return codeGenerator.getASHelper();
+	}
 
 	public @NonNull CGBoolean getCGBoolean(boolean aBoolean) {
 		return aBoolean ? cgTrue : cgFalse;

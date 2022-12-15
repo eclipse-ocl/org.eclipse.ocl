@@ -99,7 +99,8 @@ public class ExecutableNameManager extends NestedNameManager
 			return (CGParameter)cgVariable;
 		}
 		else if (cgVariable != null) {
-			throw new IllegalStateException(cgVariable + " is not a CGParameter");
+			// throw new IllegalStateException(cgVariable + " is not a CGParameter");		-- might ber a let variable unboxing a parameter
+			return null;
 		}
 		else if (!(getASScope() instanceof Operation) && (parent instanceof ExecutableNameManager)) {				// XXX polymorphize
 			return ((ExecutableNameManager)parent).basicGetCGParameter(asVariable);
