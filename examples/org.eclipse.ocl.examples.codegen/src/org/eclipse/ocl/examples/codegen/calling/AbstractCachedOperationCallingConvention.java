@@ -219,13 +219,6 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		}
 	}
 
-	protected final @NonNull CGClass createCacheClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		AbstractCacheClassCallingConvention cacheClassCallingConvention = getCacheClassCallingConvention(asOperation);
-		CGClass cgCacheClass = cacheClassCallingConvention.createCacheClass(analyzer, asOperation, asEntryClass, this);
-		return cgCacheClass;
-	}
-
 	protected final @NonNull Property createCacheInstance(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, org.eclipse.ocl.pivot.@NonNull Class asCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
 		CGClass cgRootClass = analyzer.getCGRootClass(asEntryClass);
 		ClassNameManager classNameManager = analyzer.getGlobalNameManager().getClassNameManager(cgRootClass);
@@ -277,7 +270,8 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		AbstractEntryClassCallingConvention entryClassCallingConvention = getEntryClassCallingConvention(asOperation);
 		CGClass cgEntryClass = entryClassCallingConvention.createEntryClass(analyzer, cgOperation);
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		CGClass cgCacheClass = createCacheClass(analyzer, cgOperation, asEntryClass);
+		AbstractCacheClassCallingConvention cacheClassCallingConvention = getCacheClassCallingConvention(asOperation);
+		CGClass cgCacheClass = cacheClassCallingConvention.createCacheClass(analyzer, asOperation, asEntryClass, this);
 		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
 		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);
 	}

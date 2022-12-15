@@ -240,8 +240,11 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		assert analyzer.basicGetCGOperation(asOperation) == null;		// XXX
-		CGCachedOperation cgDispatchOperation = createDispatchOperation(analyzer, asOperation);
-	//	cgDispatchOperation.setRequired(asOperation.isIsRequired());
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getClass(asOperation);
+		DispatchClassCallingConvention dispatchClassCallingConvention = DispatchClassCallingConvention.getInstance(asOperation);
+		CGClass cgDispatchClass = dispatchClassCallingConvention.createCacheClass(analyzer, asOperation, asClass, this);
+		CGCachedOperation cgDispatchOperation = (CGCachedOperation)CGUtil.getOperationsList(cgDispatchClass).get(0);
+		//	cgDispatchOperation.setRequired(asOperation.isIsRequired());
 	//	cgDispatchOperation.setCallingConvention(this);
 	//	analyzer.initAst(cgDispatchOperation, asOperation, false);				// XXX redundant wrt caller
 		Iterable<@NonNull Operation> asOverrideOperations = analyzer.addVirtualCGOperations(asOperation, cgDispatchOperation);
@@ -262,13 +265,6 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager,@Nullable ExpressionInOCL bodyExpression) {
 		// TODO Auto-generated method stub
 		//super.createCGParameters(operationNameManager, bodyExpression); in createDispatchConstructor
-	}
-
-	protected final @NonNull CGCachedOperation createDispatchOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		DispatchClassCallingConvention dispatchClassCallingConvention = DispatchClassCallingConvention.getInstance(asOperation);
-		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getClass(asOperation);
-		CGClass cgDispatchClass = dispatchClassCallingConvention.createCacheClass(analyzer, asOperation, asClass, this);
-		return (CGCachedOperation)CGUtil.getOperationsList(cgDispatchClass).get(0);
 	}
 
 	@Override

@@ -60,7 +60,8 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//	Needs an ability to specify a super() invocation and no return type.
 		}
 
-		public @NonNull CGOperation createConstructor(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass) {
+		@Override
+		public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
 			//
 			// AS Class - yyy2zzz
 			// AS Properties -
@@ -326,7 +327,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 	protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation, @NonNull AbstractCachedOperationCallingConvention operationCallingConvention) {
 		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
 		CacheConstructorOperationCallingConvention callingConvention = CacheConstructorOperationCallingConvention.getInstance(asCacheClass);
-		callingConvention.createConstructor(analyzer, cgCacheClass);
+		callingConvention.createOperation(analyzer, cgCacheClass, asOperation);
 	}
 
 	protected void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {

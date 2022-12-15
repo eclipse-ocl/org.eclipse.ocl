@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
@@ -44,15 +45,21 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  *  ForeignOperationCallingConvention defines the support for the call of an operation realized by an
@@ -93,7 +100,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			return INSTANCE;
 		}
 
-/*		@Override		/// super was final
+		@Override		/// super was final
 		protected final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
 			//
 			// AS Class - yyy2zzz
@@ -148,7 +155,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			//	createCGBody(analyzer, cgConstructor);
 			//	analyzer.scanBody(asCacheResult);
 			return cgConstructor;
-		} */
+		}
 	}
 
 	public static class ForeignEntryClassCallingConvention extends AbstractEntryClassCallingConvention
@@ -245,11 +252,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		}
 		analyzer.initAst(cgOperation, asOperation, true);
 		analyzer.addExternalFeature(asOperation);
-		CGClass cgEntryClass = createEntryClass(analyzer, cgOperation);
-		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		CGClass cgCacheClass = createCacheClass(analyzer, cgOperation, asEntryClass);
-		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);
+		createCachingClassesAndInstance(analyzer, cgOperation);
 		return cgOperation;
 	}
 
@@ -279,12 +282,6 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		cgParameters.add(operationNameManager.getExecutorParameter());
 		super.createCGParameters(operationNameManager, expressionInOCL);
-	}
-
-	protected final @NonNull CGClass createEntryClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		AbstractEntryClassCallingConvention entryClassCallingConvention = ForeignEntryClassCallingConvention.getInstance(asOperation, true);
-		return entryClassCallingConvention.createEntryClass(analyzer, cgOperation);
 	}
 
 	@Override
@@ -448,9 +445,10 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		return ExternalClassCallingConvention.getInstance(asClass);
 	}
 
-//	protected @NonNull EntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation, boolean mayBeVirtual) {
-//		return ForeignEntryClassCallingConvention.getInstance(asOperation, mayBeVirtual);
-//	}
+	@Override
+	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {
+		return ForeignEntryClassCallingConvention.getInstance(asOperation, false);
+	}
 
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation) {
