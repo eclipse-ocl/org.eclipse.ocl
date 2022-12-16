@@ -16,7 +16,6 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.JUnitClassCallingConvention;
@@ -66,11 +65,6 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		super(environmentFactory, genModel);
 		this.analyzer = createCodeGenAnalyzer();
 		getOptions().setUseNullAnnotations(useNullAnnotations);
-	}
-
-	@Override
-	public @NonNull AS2CGVisitor createAS2CGVisitor(@NonNull CodeGenAnalyzer analyzer) {
-		return new JUnitAS2CGVisitor(analyzer);
 	}
 
 	protected @NonNull CGPackage createCGPackage(@NonNull ExpressionInOCL expInOcl,			// XXX Change to createASPackage then regular AS2CG

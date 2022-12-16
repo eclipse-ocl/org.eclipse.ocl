@@ -286,7 +286,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		super.createCGParameters(operationNameManager, expressionInOCL);
 	}
 
-	@Override
+/*	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
 			return false;
@@ -298,7 +298,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		generateArgumentList(cg2javaVisitor, js, cgOperationCallExp);
 		js.append(");\n");
 		return true;
-	}
+	} */
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
