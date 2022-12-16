@@ -237,7 +237,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		System.out.println("visitClass " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
 		CGClass cgClass = context.generateClass(null, asClass);
 	/*	org.eclipse.ocl.pivot.Package asCachePackage = AbstractLanguageSupport.basicGetCachePackage(asClass);
 		if (asCachePackage != null) {
@@ -248,7 +247,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				assert cgClass.getClasses().contains(cgCacheClass);
 			}
 		} */
-		System.out.println("visitedClass " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
 		return cgClass;
 	}
 
@@ -402,7 +400,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGOperation visitOperation(@NonNull Operation asOperation) {
-		System.out.println("visitOperation " + NameUtil.debugSimpleName(asOperation) + " : " + asOperation);
 		if (asOperation.toString().contains("ENTRY_Parent_static_count(")) {
 			getClass();		// XXX
 		}
@@ -411,7 +408,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgOperation = context.generateOperation(asOperation);
 		}
 		cgOperation.getCallingConvention().createCGBody(context, cgOperation);
-		System.out.println("visitedOperation " + NameUtil.debugSimpleName(asOperation) + " : " + asOperation);
 		return cgOperation;
 	}
 
@@ -459,7 +455,6 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		System.out.println("visitPackage " + NameUtil.debugSimpleName(asPackage) + " : " + asPackage);
 		CGPackage cgPackage = context.basicGetCGPackage(asPackage);
 		if (cgPackage == null) {
 			cgPackage = context.generatePackageDeclaration(asPackage);
@@ -473,18 +468,15 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			CGPackage cgNestedPackage = context.createCGElement(CGPackage.class, asNestedPackage);
 			assert cgPackage.getPackages().contains(cgNestedPackage);
 		}
-		System.out.println("visitedPackage " + NameUtil.debugSimpleName(asPackage) + " : " + asPackage);
 		return cgPackage;
 	}
 
 	@Override
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
-		System.out.println("visitProperty " + NameUtil.debugSimpleName(asProperty) + " : " + asProperty);
 		CGProperty cgProperty = context.basicGetCGProperty(asProperty);
 		if (cgProperty == null) {
 			cgProperty = context.generateProperty(asProperty);
 		}
-		System.out.println("visitedProperty " + NameUtil.debugSimpleName(asProperty) + " : " + asProperty);
 		return cgProperty;
 	}
 
