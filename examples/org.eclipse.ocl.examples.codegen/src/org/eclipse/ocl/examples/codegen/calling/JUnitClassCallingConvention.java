@@ -67,9 +67,10 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		Iterable<@NonNull CGValuedElement> sortedGlobals = cg2javaVisitor.getAnalyzer().getGlobals();
 		if (sortedGlobals != null) {
 			cg2javaVisitor.generateGlobals(sortedGlobals);
-			js.append("\n");
+	//		js.append("\n");
 		}
 		if (expInOcl.getOwnedContext() != null) {
+			generateProperties(cg2javaVisitor, js, cgClass);
 			generateOperations(cg2javaVisitor, js, cgClass);
 		}
 		else {

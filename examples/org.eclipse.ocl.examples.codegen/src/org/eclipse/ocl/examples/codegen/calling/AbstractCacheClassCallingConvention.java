@@ -280,7 +280,6 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		if (isEmpty(cgClass)) {
 			return true;
 		}
-		js.append("\n");
 		String className = CGUtil.getName(cgClass);
 		String title = getTitle(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);

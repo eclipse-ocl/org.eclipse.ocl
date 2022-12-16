@@ -79,14 +79,14 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	{
 		private static final @NonNull ForeignCacheClassCallingConvention INSTANCE = new ForeignCacheClassCallingConvention();
 
-		public static @NonNull ForeignCacheClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			INSTANCE.logInstance(asClass);
+		public static @NonNull ForeignCacheClassCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Operation asOperation, boolean maybeVirtual) {
+			INSTANCE.logInstance(asOperation, maybeVirtual);
 			return INSTANCE;
 		}
 
 		@Override
 		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			return getDefaultParentPackage(analyzer, asOperation);
+			return getRootClassParentPackage(analyzer, asOperation);
 		}
 	}
 
@@ -293,7 +293,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		}
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		appendForeignOperationName(cg2javaVisitor, js, cgOperationCallExp);
+		js.append("appendForeignOperationName(cg2javaVisitor, js, cgOperationCallExp)");		// XXX
 		js.append("(");
 		generateArgumentList(cg2javaVisitor, js, cgOperationCallExp);
 		js.append(");\n");
@@ -440,6 +440,11 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		cg2javaVisitor.appendReturn(body);
 		js.popIndentation();
 		js.append("}\n");
+	}
+
+	@Override
+	protected @NonNull AbstractCacheClassCallingConvention getCacheClassCallingConvention(@NonNull Operation asOperation) {
+		return ForeignCacheClassCallingConvention.getInstance(asOperation, false);
 	}
 
 	@Override

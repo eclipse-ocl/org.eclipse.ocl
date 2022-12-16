@@ -364,7 +364,6 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
 		assert cgClass.getContainingPackage() == null;			// container is a cgClass
-		js.append("\n");
 		String className = CGUtil.getName(cgClass);
 		String title = getTitle(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);

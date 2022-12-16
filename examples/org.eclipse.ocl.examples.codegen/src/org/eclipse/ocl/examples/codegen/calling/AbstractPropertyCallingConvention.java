@@ -90,7 +90,7 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 		Property asProperty = CGUtil.getAST(cgProperty);
 		js.append("«");
 		js.append(getClass().getSimpleName());
-		js.append(".generateJavaDeclaration ");
+		js.append(".generateJavaDeclaration ");		// XXX debugging - change to absttract
 		js.append(asProperty.getOwningClass().getOwningPackage().getName());
 		js.append("::");
 		js.append(asProperty.getOwningClass().getName());

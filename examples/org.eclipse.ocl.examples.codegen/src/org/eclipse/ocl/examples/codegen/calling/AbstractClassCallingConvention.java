@@ -55,26 +55,22 @@ public abstract class AbstractClassCallingConvention extends AbstractCallingConv
 
 	protected void generateClasses(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
 		for (CGClass cgNestedClass : cgClass.getClasses()) {
-			js.append("\n");
+			js.appendOptionalBlankLine();
 			cgNestedClass.accept(cg2javaVisitor);
 		}
 	}
 
 	protected void generateOperations(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
 		for (CGOperation cgOperation : cgClass.getOperations()) {
-			js.append("\n");
+			js.appendOptionalBlankLine();
 			cgOperation.accept(cg2javaVisitor);
 		}
 	}
 
 	protected void generateProperties(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
-		boolean isFirst = true;
+		js.appendOptionalBlankLine();
 		for (CGProperty cgProperty : cgClass.getProperties()) {
-			if (isFirst) {
-				js.append("\n");
-			}
 			cgProperty.accept(cg2javaVisitor);
-			isFirst = false;
 		}
 	}
 

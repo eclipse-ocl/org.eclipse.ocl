@@ -257,7 +257,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		js.append("public static ");
 		js.appendTypeDeclaration(cgProperty);
 		js.append(" " + JavaConstants.EXTERNAL_PROPERTY_PREFIX);
-		js.append(asProperty.getName());		// FIXME valid Java name
+		js.append(asProperty.getName());		// XXX FIXME valid Java name
 		js.append("(");
 		boolean isFirst = true;
 		for (@NonNull CGParameter cgParameter : cgParameters) {

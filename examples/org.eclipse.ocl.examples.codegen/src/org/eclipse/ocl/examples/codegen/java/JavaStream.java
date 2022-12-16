@@ -261,6 +261,10 @@ public class JavaStream
 
 	public void append(@Nullable String string) {
 		if (string != null) {
+			if ("\n".equals(string)) {
+				int length = s.length();
+				assert (length <= 2) || (s.charAt(length-2) != '\n') || (s.charAt(length-1) != '\n') : "Use appendOptionalBlankLine";
+			}
 			if (indentationStack.isEmpty()) {
 				s.append(string);
 			}
@@ -981,6 +985,16 @@ public class JavaStream
 			appendClassReference(null, ValueUtil.class);
 			append(".");
 			append(value ? "TRUE_VALUE" : "FALSE_VALUE");
+		}
+	}
+
+	/**
+	 * Append a blank line unless there prevailing text already ends in a blank line.
+	 */
+	public void appendOptionalBlankLine() {
+		int length = s.length();
+		if ((length < 2) || (s.charAt(length-2) != '\n') || (s.charAt(length-1) != '\n')) {
+			s.append("\n");
 		}
 	}
 
