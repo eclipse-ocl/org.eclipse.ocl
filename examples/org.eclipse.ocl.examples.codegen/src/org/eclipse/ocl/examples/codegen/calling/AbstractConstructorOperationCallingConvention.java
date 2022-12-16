@@ -139,8 +139,8 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		//
 		//	Unpack boxedValues and assign properties.
 		//
-		ParameterVariable asThisObjectParameterVariable = (ParameterVariable)asEntryExpressionInOCL.getOwnedContext();
-		assert asThisObjectParameterVariable != null;		// Must have a Java 'this' to initialize its properties
+		ParameterVariable asThisParameterVariable = (ParameterVariable)asEntryExpressionInOCL.getOwnedContext();
+		assert asThisParameterVariable != null;		// Must have a Java 'this' to initialize its properties
 		// FIXME wrong type
 		int iInclusiveMax = cgProperties.size()-1;
 		for (int i = 0; i <= iInclusiveMax; i++) {
@@ -154,7 +154,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 			else {
 				ParameterVariable asEntryParameterVariable;
 				if (i == 0) {
-					asEntryParameterVariable = asThisObjectParameterVariable;
+					asEntryParameterVariable = asThisParameterVariable;
 				}
 				else {
 					asEntryParameterVariable = (ParameterVariable)asEntryParameterVariables.get(i-1);

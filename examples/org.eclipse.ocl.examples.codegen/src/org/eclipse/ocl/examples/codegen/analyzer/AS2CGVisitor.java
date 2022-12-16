@@ -107,14 +107,11 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
-import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
-
-import com.google.common.collect.Lists;
 
 /**
  * The stateless AS2CGVisitor performs the first stage of code generation by converting the Pivot AST to the CG AST.
@@ -240,15 +237,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		System.out.println("visitClass " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
 		CGClass cgClass = context.generateClass(null, asClass);
-		org.eclipse.ocl.pivot.Package asCachePackage = AbstractLanguageSupport.basicGetCachePackage(asClass);
+	/*	org.eclipse.ocl.pivot.Package asCachePackage = AbstractLanguageSupport.basicGetCachePackage(asClass);
 		if (asCachePackage != null) {
 			List<org.eclipse.ocl.pivot.@NonNull Class> saved = Lists.newArrayList(PivotUtil.getOwnedClasses(asCachePackage));	// XXX
 			for (org.eclipse.ocl.pivot.@NonNull Class asCacheClass : PivotUtil.getOwnedClasses(asCachePackage)) {
+				System.out.println("visitClass-sub " + NameUtil.debugSimpleName(asClass) + " : " + asCacheClass);
 				CGClass cgCacheClass = context.createCGElement(CGClass.class, asCacheClass);
 				assert cgClass.getClasses().contains(cgCacheClass);
 			}
-		}
+		} */
+		System.out.println("visitedClass " + NameUtil.debugSimpleName(asClass) + " : " + asClass);
 		return cgClass;
 	}
 
@@ -402,7 +402,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGOperation visitOperation(@NonNull Operation asOperation) {
-		if (asOperation.toString().contains("_unqualified_env_Class")) {
+		System.out.println("visitOperation " + NameUtil.debugSimpleName(asOperation) + " : " + asOperation);
+		if (asOperation.toString().contains("ENTRY_Parent_static_count(")) {
 			getClass();		// XXX
 		}
 		CGOperation cgOperation = context.basicGetCGOperation(asOperation);
@@ -410,6 +411,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			cgOperation = context.generateOperation(asOperation);
 		}
 		cgOperation.getCallingConvention().createCGBody(context, cgOperation);
+		System.out.println("visitedOperation " + NameUtil.debugSimpleName(asOperation) + " : " + asOperation);
 		return cgOperation;
 	}
 
@@ -457,27 +459,32 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		System.out.println("visitPackage " + NameUtil.debugSimpleName(asPackage) + " : " + asPackage);
 		CGPackage cgPackage = context.basicGetCGPackage(asPackage);
 		if (cgPackage == null) {
 			cgPackage = context.generatePackageDeclaration(asPackage);
 		}
 		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
 			CGClass cgClass = context.createCGElement(CGClass.class, asType);
-			assert cgPackage.getClasses().contains(cgClass);
+		//	assert cgPackage.getClasses().contains(cgClass);		// asClass may be a sibling
+			assert cgClass.eContainer() != null;
 		}
 		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : ClassUtil.nullFree(asPackage.getOwnedPackages())) {
 			CGPackage cgNestedPackage = context.createCGElement(CGPackage.class, asNestedPackage);
 			assert cgPackage.getPackages().contains(cgNestedPackage);
 		}
+		System.out.println("visitedPackage " + NameUtil.debugSimpleName(asPackage) + " : " + asPackage);
 		return cgPackage;
 	}
 
 	@Override
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
+		System.out.println("visitProperty " + NameUtil.debugSimpleName(asProperty) + " : " + asProperty);
 		CGProperty cgProperty = context.basicGetCGProperty(asProperty);
 		if (cgProperty == null) {
 			cgProperty = context.generateProperty(asProperty);
 		}
+		System.out.println("visitedProperty " + NameUtil.debugSimpleName(asProperty) + " : " + asProperty);
 		return cgProperty;
 	}
 
