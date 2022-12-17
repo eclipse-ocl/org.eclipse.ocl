@@ -269,10 +269,10 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("getResult")) {
+				if (string.contains("oclEquals")) {
 					getClass();		// XXX
 				}
-				if (string.contains("getIdResolver")) {
+				if (string.contains("ENTRY_hsv2hsl_hsv2rgb")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

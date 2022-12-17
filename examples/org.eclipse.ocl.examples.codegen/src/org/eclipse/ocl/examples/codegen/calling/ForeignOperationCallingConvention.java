@@ -169,10 +169,10 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			return INSTANCE;
 		}
 
-		@Override
-		protected @NonNull NameResolution getContextNameResolution(@NonNull GlobalNameManager globalNameManager) {
-			return globalNameManager.getSelfNameResolution();
-		}
+//		@Override
+//		protected @NonNull NameResolution getContextNameResolution(@NonNull GlobalNameManager globalNameManager) {
+//			return globalNameManager.getSelfNameResolution();
+//		}
 
 		/**
 		 * Return the Package within which the caache class support for asOperation shuld be supported.

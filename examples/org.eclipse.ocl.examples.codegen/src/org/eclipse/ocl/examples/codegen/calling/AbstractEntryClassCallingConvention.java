@@ -153,48 +153,49 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		}
 
 		@Override
-		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgCacheOperation) {
-			Operation asCacheOperation = CGUtil.getAST(cgCacheOperation);
-			org.eclipse.ocl.pivot.Class asCacheClass = PivotUtil.getOwningClass(asCacheOperation);
-			ExpressionInOCL asExpressionInOCL = (ExpressionInOCL) asCacheOperation.getBodyExpression();
-			assert (asExpressionInOCL != null);
-			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgCacheOperation, asCacheOperation);
-			Parameter asBoxedValuesParameter = PivotUtilInternal.getOwnedParametersList(asCacheOperation).get(0);
-			CGParameter cgCacheBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
-			List<@NonNull Property> asCacheProperties = PivotUtilInternal.getOwnedPropertiesList(asCacheClass);
-			List<@NonNull Variable> asCacheParameterVariables = PivotUtilInternal.getOwnedParametersList(asExpressionInOCL);
+		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgEntryOperation) {
+			Operation asEntryOperation = CGUtil.getAST(cgEntryOperation);
+			org.eclipse.ocl.pivot.Class asEntryClass = PivotUtil.getOwningClass(asEntryOperation);
+			ExpressionInOCL asEntryExpressionInOCL = (ExpressionInOCL) asEntryOperation.getBodyExpression();
+			assert (asEntryExpressionInOCL != null);
+			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgEntryOperation, asEntryOperation);
+			Parameter asEntryBoxedValuesParameter = PivotUtilInternal.getOwnedParametersList(asEntryOperation).get(0);
+			CGParameter cgEntryBoxedValuesParameter = operationNameManager.getCGParameter(asEntryBoxedValuesParameter, (String)null);
+			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
+			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
 			Stack<@NonNull CGFinalVariable> cgLetVariables = new Stack<>();
-			for (int i = 0; i < asCacheProperties.size()-1; i++) {		// not cachedResult
-				ParameterVariable asParameterVariable = (ParameterVariable)asCacheParameterVariables.get(i);
-				CGVariableExp cgVariableExp = analyzer.createCGVariableExp(cgCacheBoxedValuesParameter);
+			// idResolver then boxedValues
+			for (int i = 0; i < asEntryProperties.size()-1; i++) {		// not cachedResult
+				ParameterVariable asEntryParameterVariable = (ParameterVariable)asEntryParameterVariables.get(i+1);		// skip idResolver
+				CGVariableExp cgVariableExp = analyzer.createCGVariableExp(cgEntryBoxedValuesParameter);
 				CGIndexExp cgIndexExp = analyzer.createCGIndexExp(cgVariableExp, i);
-				cgIndexExp.setAst(asParameterVariable);
-				CGFinalVariable cgParameterVariable = operationNameManager.createCGVariable(cgIndexExp);
-				operationNameManager.addVariable(asParameterVariable, cgParameterVariable);
-				cgLetVariables.push(cgParameterVariable);
+				cgIndexExp.setAst(asEntryParameterVariable);
+				CGFinalVariable cgEntryParameterVariable = operationNameManager.createCGVariable(cgIndexExp);
+				operationNameManager.addVariable(asEntryParameterVariable, cgEntryParameterVariable);
+				cgLetVariables.push(cgEntryParameterVariable);
 			}
 			//
-			CGValuedElement cgResult = analyzer.createCGElement(CGValuedElement.class, asExpressionInOCL);
+			CGValuedElement cgResult = analyzer.createCGElement(CGValuedElement.class, asEntryExpressionInOCL);
 			while (!cgLetVariables.isEmpty()) {
 				CGFinalVariable cgLetVariable = cgLetVariables.pop();
 				cgResult = analyzer.createCGLetExp(cgLetVariable, cgResult);
 			}
-			cgCacheOperation.setBody(cgResult);
+			cgEntryOperation.setBody(cgResult);
 		}
 
 		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 			//
 			// AS Class - yyy2zzz
-			// AS Properties - thisTransformer, x1, x2, cachedResult
+			// AS Properties - contextObject, x1, x2, cachedResult
 			// AS Operation - yyy2zzz
 			// AS Operation.ownedParameters - x1, x2
-			// AS Cache Operation - isEqual
-			// AS Cache Operation.parameters - boxedValues
-			// AS Cache ExpressionInOCL.ownedContext - this
-			// AS Cache ExpressionInOCL.ownedParameters - thisTransformer, x1, x2
-			// CG Cache Operation - isEqual
-			// CG Cache Operation.parameters - idResolver, boxedValues
-			// CG Cache Operation.lets - thisTransformer, x1, x2
+			// AS Entry Operation - isEqual
+			// AS Entry Operation.parameters - boxedValues{x1, x2}
+			// AS Entry ExpressionInOCL.ownedContext - this
+			// AS Entry ExpressionInOCL.ownedParameter(Variable)s - idResolver, self, x1, x2
+			// CG Entry Operation - isEqual
+			// CG Entry Operation.parameters - idResolver, boxedValues{x1, x2}
+			// CG Entry Operation.lets - x1, x2
 			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
@@ -216,33 +217,36 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//	Create AS body for isEqual
 			//
 			OCLExpression asBody = null;
-			ExpressionInOCL asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
+			ExpressionInOCL asEntryExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
 			ParameterVariable asEntryThisVariable = asHelper.createParameterVariable(globalNameManager.getThisNameResolution().getResolvedName(), codeGenerator.getContextClass(), true);
-			asExpressionInOCL.setOwnedContext(asEntryThisVariable);
+			asEntryExpressionInOCL.setOwnedContext(asEntryThisVariable);
 			ParameterVariable asEntrySelfVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asEntryClass, true);
-			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asExpressionInOCL);
+			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
 			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
 			Stack<@NonNull LetVariable> asLetVariables = new Stack<>();
 			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
+			ParameterVariable asEntryIdResolverParameterVariable = asHelper.createParameterVariable(globalNameManager.getIdResolverNameResolution().getResolvedName(), codeGenerator.getContextClass(), true);
+			asEntryParameterVariables.add(asEntryIdResolverParameterVariable);
 			for (int i = 0; i < asEntryProperties.size()-1; i++) {		// not cachedResult
-				Property asEntryProperty = asEntryProperties.get(i);
 				@NonNull ParameterVariable asEntryParameterVariable;
 				if (i == 0) {
 					asEntryParameterVariable = asEntrySelfVariable;
 				}
 				else {
-					Parameter asParameter = asParameters.get(i-1);
+					Parameter asParameter = asParameters.get(i-1);		// skip no-self
 					asEntryParameterVariable = asHelper.createParameterVariable(asParameter);
 					asEntryParameterVariable.setRepresentedParameter(asParameter);
 				}
 				asEntryParameterVariables.add(asEntryParameterVariable);
-				String name = PivotUtil.getName(asEntryParameterVariable);
+				//
+				Property asEntryProperty = asEntryProperties.get(i);
+				String name = PivotUtil.getName(asEntryProperty);
 				VariableExp asInit = asHelper.createVariableExp(asEntryParameterVariable);
 				LetVariable asLetVariable = asHelper.createLetVariable(name, asInit);
 				asLetVariables.push(asLetVariable);
 				//
 				OCLExpression asEntryThisVariableExp = asHelper.createVariableExp(asEntryThisVariable);
-				OCLExpression asEntryParameterVariableExp = asHelper.createVariableExp(asEntryParameterVariable);
+				OCLExpression asEntryParameterVariableExp = asHelper.createVariableExp(asLetVariable);
 				OCLExpression asEntryPropertyCallExp = asHelper.createPropertyCallExp(asEntryThisVariableExp, asEntryProperty);
 				OCLExpression asEquals = asHelper.createOperationCallExp(asEntryParameterVariableExp, "=", asEntryPropertyCallExp);
 				asBody = asBody != null ? asHelper.createOperationCallExp(asBody, LibraryConstants.AND2, asEquals) : asEquals;
@@ -252,9 +256,9 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 				LetVariable asVariable = asLetVariables.pop();
 				asBody = asHelper.createLetExp(asVariable, asBody);
 			}
-			asExpressionInOCL.setOwnedBody(asBody);
-			asExpressionInOCL.setType(asBody.getType());
-			asEntryOperation.setBodyExpression(asExpressionInOCL);
+			asEntryExpressionInOCL.setOwnedBody(asBody);
+			asEntryExpressionInOCL.setType(asBody.getType());
+			asEntryOperation.setBodyExpression(asEntryExpressionInOCL);
 			//
 			//	Create CG declaration for isEqual
 			//
@@ -263,12 +267,12 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			cgEntryOperation.setCallingConvention(this);
 			isEqualNameResolution.addCGElement(cgEntryOperation);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgEntryOperation, asEntryOperation);
-			List<@NonNull CGParameter> cgCacheParameters = CGUtil.getParametersList(cgEntryOperation);
+			List<@NonNull CGParameter> cgEntryParameters = CGUtil.getParametersList(cgEntryOperation);
 			CGParameter cgIdResolverParameter = operationNameManager.getIdResolverParameter();
-			cgCacheParameters.add(cgIdResolverParameter);
+			cgEntryParameters.add(cgIdResolverParameter);
 			CGParameter cgEntryBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
 			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
-			cgCacheParameters.add(cgEntryBoxedValuesParameter);
+			cgEntryParameters.add(cgEntryBoxedValuesParameter);
 			//
 			cgEntryClass.getOperations().add(cgEntryOperation);
 			return cgEntryOperation;
