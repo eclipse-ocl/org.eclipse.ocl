@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
@@ -347,14 +346,14 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		return null;
 	}
 
-	@Override
-	public @Nullable Object visitCGIsEqualExp(@NonNull CGIsEqualExp cgIsEqualExp) {
-		ExecutableNameManager executableNameManager = analyzer.getGlobalNameManager().useSelfExecutableNameManager(cgIsEqualExp);
-		if (executableNameManager.basicGetIdResolverVariable() == null) {
-			installIdResolverVariable(cgIsEqualExp);
-		}
-		return super.visitCGIsEqualExp(cgIsEqualExp);
-	}
+//	@Override		// not needed: idResolver is a regular CG parameter
+//	public @Nullable Object visitCGIsEqualExp(@NonNull CGIsEqualExp cgIsEqualExp) {
+//		ExecutableNameManager executableNameManager = analyzer.getGlobalNameManager().useSelfExecutableNameManager(cgIsEqualExp);
+//		if (executableNameManager.basicGetIdResolverVariable() == null) {
+//			installIdResolverVariable(cgIsEqualExp);
+//		}
+//		return super.visitCGIsEqualExp(cgIsEqualExp);
+//	}
 
 	@Override
 	public @Nullable Object visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {

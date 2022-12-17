@@ -24,11 +24,13 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -53,6 +55,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
@@ -200,6 +203,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+			LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
 			PivotHelper asHelper = codeGenerator.getASHelper();
 			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 			//
@@ -225,7 +229,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
 			Stack<@NonNull LetVariable> asLetVariables = new Stack<>();
 			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-			ParameterVariable asEntryIdResolverParameterVariable = asHelper.createParameterVariable(globalNameManager.getIdResolverNameResolution().getResolvedName(), codeGenerator.getContextClass(), true);
+			ParameterVariable asEntryIdResolverParameterVariable = asHelper.createParameterVariable(globalNameManager.getIdResolverNameResolution().getResolvedName(), jLanguageSupport.getNativeClass(IdResolver.class), true);
 			asEntryParameterVariables.add(asEntryIdResolverParameterVariable);
 			for (int i = 0; i < asEntryProperties.size()-1; i++) {		// not cachedResult
 				@NonNull ParameterVariable asEntryParameterVariable;
@@ -268,7 +272,12 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			isEqualNameResolution.addCGElement(cgEntryOperation);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgEntryOperation, asEntryOperation);
 			List<@NonNull CGParameter> cgEntryParameters = CGUtil.getParametersList(cgEntryOperation);
-			CGParameter cgIdResolverParameter = operationNameManager.getIdResolverParameter();
+	//		CGParameter cgIdResolverParameter = operationNameManager.getIdResolverParameter();	// FIXME notify operationNameManager that we need a regular idResolver parameter
+			NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
+			CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
+			CGParameter cgIdResolverParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
+			cgIdResolverParameter.setNonInvalid();
+			cgIdResolverParameter.setNonNull();
 			cgEntryParameters.add(cgIdResolverParameter);
 			CGParameter cgEntryBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
 			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);

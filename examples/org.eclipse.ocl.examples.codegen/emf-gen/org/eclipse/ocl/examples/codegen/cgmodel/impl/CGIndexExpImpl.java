@@ -1,34 +1,30 @@
 /**
  * <copyright>
- * 
+ *
  * Copyright (c) 2015, 2022 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
- * 
+ *
  * </copyright>
  */
 package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.jdt.annotation.NonNull;
-
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
+import org.eclipse.ocl.pivot.TypedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -220,7 +216,7 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 
 	/**
 	 * {@inheritDoc}
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public @NonNull CGValuedElement getReferredValue() {
@@ -261,6 +257,15 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 	@Override
 	public boolean isEcore() {
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated XXX
+	 */
+	@Override
+	public boolean isNonNull() {
+		return (ast != null) && ((TypedElement)ast).isIsRequired();
 	}
 
 	/**

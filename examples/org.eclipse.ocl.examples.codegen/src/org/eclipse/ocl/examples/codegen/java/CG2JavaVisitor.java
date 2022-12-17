@@ -1532,8 +1532,23 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		}
 		js.appendDeclaration(cgIndexExp);
 		js.append(" = ");
-		js.appendValueName(cgSource);
-		js.append("[" + cgIndexExp.getIndex() + "];\n");
+//		TypeDescriptor requiredTypeDescriptor = context.getTypeDescriptor(cgIndexExp);
+//		requiredTypeDescriptor.appendCastTerm(js, cgSource);
+
+
+//		JavaStream.SubStream castBody = new JavaStream.SubStream() {
+//			@Override
+//			public void append() {
+				js.appendValueName(cgSource);
+				js.append("[" + cgIndexExp.getIndex() + "];\n");
+//			}
+//		};
+//		boolean isRequired = cgIndexExp.isRequired();
+//		requiredTypeDescriptor.appendCast(js, isRequired, null, castBody);
+
+
+
+
 		return true;
 	}
 

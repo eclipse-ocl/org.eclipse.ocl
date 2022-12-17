@@ -242,15 +242,16 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable createIdResolverVariable() {
+		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
 		CGNativeOperationCallExp idResolverInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD));
 		NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
 		idResolverNameResolution.addCGElement(idResolverInit);
-		idResolverInit.setTypeId(analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID));
+		idResolverInit.setTypeId(cgTypeId);
 		idResolverInit.setCgThis(analyzer.createCGVariableExp(analyzer.getExecutorVariable(this)));
 		idResolverInit.setRequired(true);
 		idResolverInit.setInvalidating(false);
 		CGVariable idResolverVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-		idResolverVariable.setTypeId(analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID));
+		idResolverVariable.setTypeId(cgTypeId);
 		idResolverVariable.setInit(idResolverInit);
 		idResolverVariable.setNonInvalid();
 		idResolverVariable.setNonNull();
@@ -259,15 +260,16 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGVariable createModelManagerVariable() {
+		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.MODEL_MANAGER_TYPE_ID);
 		CGNativeOperationCallExp modelManagerInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD));
 		NameResolution modelManagerNameResolution = globalNameManager.getModelManagerNameResolution();
 		modelManagerNameResolution.addCGElement(modelManagerInit);
-		modelManagerInit.setTypeId(analyzer.getCGTypeId(JavaConstants.MODEL_MANAGER_TYPE_ID));
+		modelManagerInit.setTypeId(cgTypeId);
 		modelManagerInit.setCgThis(analyzer.createCGVariableExp(analyzer.getExecutorVariable(this)));
 		modelManagerInit.setRequired(true);
 		modelManagerInit.setInvalidating(false);
 		CGVariable modelManagerVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-		modelManagerVariable.setTypeId(analyzer.getCGTypeId(JavaConstants.MODEL_MANAGER_TYPE_ID));
+		modelManagerVariable.setTypeId(cgTypeId);
 		modelManagerVariable.setInit(modelManagerInit);
 		modelManagerVariable.setNonInvalid();
 		modelManagerVariable.setNonNull();
