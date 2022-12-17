@@ -240,6 +240,7 @@ public class JavaStream
 	protected final boolean suppressNullWarnings;
 
 	private @NonNull StringBuilder s = new StringBuilder();
+	private int tailNewLines = 2;
 	private @NonNull Stack<@NonNull String> indentationStack = new Stack<>();
 	private @NonNull String defaultIndentationString = "\t";
 	private @NonNull Stack<@NonNull String> classNameStack = new Stack<>();
@@ -272,7 +273,7 @@ public class JavaStream
 				if (string.contains("oclEquals")) {
 					getClass();		// XXX
 				}
-				if (string.contains("ENTRY_hsv2hsl_hsv2rgb")) {
+				if (string.contains("ENTRY_Parent_static_count")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
@@ -301,6 +302,12 @@ public class JavaStream
 						atStartOfLine = newLine;
 					}
 				}
+			}
+			if (string.equals("\n")) {
+				tailNewLines++;
+			}
+			else {
+				tailNewLines = string.endsWith("\n") ? 1 : 0;
 			}
 		}
 	}
@@ -992,9 +999,9 @@ public class JavaStream
 	 * Append a blank line unless there prevailing text already ends in a blank line.
 	 */
 	public void appendOptionalBlankLine() {
-		int length = s.length();
-		if ((length < 2) || (s.charAt(length-2) != '\n') || (s.charAt(length-1) != '\n')) {
+		if (tailNewLines <= 1) {
 			s.append("\n");
+			tailNewLines++;
 		}
 	}
 
@@ -1292,6 +1299,7 @@ public class JavaStream
 		append("\n");
 		append("{");
 		pushIndentation(null);
+		tailNewLines = 1;		// Avoid gratuitous blank line
 	}
 
 	public void pushIndentation(@Nullable String extraIndentation) {
