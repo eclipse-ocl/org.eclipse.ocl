@@ -270,7 +270,7 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("oclEquals")) {
+				if (string.contains("evaluate")) {
 					getClass();		// XXX
 				}
 				if (string.contains("ENTRY_Parent_static_count")) {

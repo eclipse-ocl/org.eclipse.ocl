@@ -16,9 +16,12 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  JUnitClassCallingConvention defines the style of a JUnit root Class declaration.
@@ -48,7 +51,9 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 	//	if (isEmpty(cgClass)) {
 	//		return true;
 	//	}
-		js.append("\n");
+		js.appendOptionalBlankLine();;
+		GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
+		String rootObjectName = globalNameManager.getRootObjectNameResolution().getResolvedName();
 		String className = CGUtil.getName(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		js.appendClassHeader(asClass);
@@ -63,12 +68,30 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.appendClassReference(null, baseClass);
 	//	appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
-		js.append("\n");					// XXX delete me
+		js.appendOptionalBlankLine();;
 		Iterable<@NonNull CGValuedElement> sortedGlobals = cg2javaVisitor.getAnalyzer().getGlobals();
 		if (sortedGlobals != null) {
 			cg2javaVisitor.generateGlobals(sortedGlobals);
 	//		js.append("\n");
 		}
+
+		js.appendOptionalBlankLine();;
+		js.append("protected final ");
+		js.appendIsRequired(true);
+		js.append(" ");
+		js.append(className);
+		js.append(" ");
+		js.append(rootObjectName);
+		js.append(" = this;\n");
+		//
+		js.append("protected final ");
+		js.appendClassReference(true, IdResolver.class);
+		js.append(" ");
+		js.append(globalNameManager.getIdResolverNameResolution().getResolvedName());
+		js.append(" = ");
+		js.appendClassReference(null, PivotUtil.class);
+		js.append(".getExecutor(null).getIdResolver();\n");
+		//
 		if (expInOcl.getOwnedContext() != null) {
 			generateProperties(cg2javaVisitor, js, cgClass);
 			generateOperations(cg2javaVisitor, js, cgClass);
