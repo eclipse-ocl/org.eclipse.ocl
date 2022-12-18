@@ -170,7 +170,7 @@ public abstract class ExecutorManager implements ExecutorExtension
 		CONSTRUCTION_COUNT++;
 		this.environment = environment;
 		this.standardLibrary = environment.getOwnedStandardLibrary();
-//		System.out.println("Create " + NameUtil.debugSimpleName(this));
+	//	NameUtil.errPrintln("Create " + NameUtil.debugSimpleName(this));
 	}
 
 	/**

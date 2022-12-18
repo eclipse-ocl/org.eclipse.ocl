@@ -215,6 +215,9 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			if (!cgTypedElement.isRequired()) {			// FIXME use CGVariable isNonNull too
 				append("[?]");
 			}
+			else {
+				append("[1]");
+			}
 		}
 	}
 

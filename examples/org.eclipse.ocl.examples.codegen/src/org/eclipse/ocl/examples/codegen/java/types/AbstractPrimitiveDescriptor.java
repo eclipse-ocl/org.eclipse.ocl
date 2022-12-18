@@ -32,7 +32,7 @@ public abstract class AbstractPrimitiveDescriptor extends SimpleValueDescriptor 
 
 	@Override
 	public void append(@NonNull JavaStream js, @Nullable Boolean isRequired) {
-		if (isRequired == Boolean.TRUE) {
+		if (isRequired != Boolean.TRUE) {
 			js.appendClassReference(false, nonPrimitiveJavaClass);
 		}
 		else {

@@ -652,14 +652,23 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		int oldAbstractModelManager_CONSTRUCTION_COUNT = AbstractModelManager.CONSTRUCTION_COUNT;
 		TestOCL ocl = createOCL();
 		//
+		NameUtil.contextLine = "Byte.valueOf((byte)255)";
 		ocl.assertQueryOCLEquals(null, Byte.valueOf((byte)255), "-1");
+		NameUtil.contextLine = "Character.valueOf((char)255)";
 		ocl.assertQueryOCLEquals(null, Character.valueOf((char)255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, Short.valueOf((short)255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, Integer.valueOf(255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, Long.valueOf(255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, BigInteger.valueOf(255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, Float.valueOf(255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, Double.valueOf(255), "255");
+		NameUtil.contextLine = "xxx";
 		ocl.assertQueryOCLEquals(null, BigDecimal.valueOf(255), "255");
 		if (useCodeGen) {
 			assertEquals(0, AbstractExecutor.CONSTRUCTION_COUNT - oldAbstractExecutor_CONSTRUCTION_COUNT);

@@ -20,8 +20,6 @@ import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  JUnitClassCallingConvention defines the style of a JUnit root Class declaration.
@@ -74,7 +72,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 			cg2javaVisitor.generateGlobals(sortedGlobals);
 	//		js.append("\n");
 		}
-
+		//
 		js.appendOptionalBlankLine();;
 		js.append("protected final ");
 		js.appendIsRequired(true);
@@ -83,14 +81,6 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.append(" ");
 		js.append(rootObjectName);
 		js.append(" = this;\n");
-		//
-		js.append("protected final ");
-		js.appendClassReference(true, IdResolver.class);
-		js.append(" ");
-		js.append(globalNameManager.getIdResolverNameResolution().getResolvedName());
-		js.append(" = ");
-		js.appendClassReference(null, PivotUtil.class);
-		js.append(".getExecutor(null).getIdResolver();\n");
 		//
 		if (expInOcl.getOwnedContext() != null) {
 			generateProperties(cg2javaVisitor, js, cgClass);
