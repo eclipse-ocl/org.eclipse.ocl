@@ -504,7 +504,19 @@ public class ExecutableNameManager extends NestedNameManager
 	//	}
 		CGVariable idResolverVariable2 = idResolverVariable;
 		if (idResolverVariable2 == null) {
-			idResolverVariable = idResolverVariable2 = createIdResolverVariable();
+			if (cgScope instanceof CGOperation) {
+				NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
+				for (@NonNull CGParameter cgParameter : CGUtil.getParameters((CGOperation)cgScope)) {
+					if (cgParameter.basicGetNameResolution() == idResolverNameResolution) {
+						idResolverVariable2 = cgParameter;
+						break;
+					}
+				}
+			}
+			if (idResolverVariable2 == null) {
+				idResolverVariable2 = createIdResolverVariable();
+			}
+			idResolverVariable = idResolverVariable2;
 		}
 		return idResolverVariable2;
 	}
@@ -659,23 +671,23 @@ public class ExecutableNameManager extends NestedNameManager
 
 	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
 		CGVariable qualifiedThisVariable = basicGetQualifiedThisVariable();
-		if (qualifiedThisVariable != null) {
+		if ((qualifiedThisVariable != null) && !(qualifiedThisVariable instanceof CGParameter)) {
 			cgTree = globalNameManager.rewriteAsLet(cgTree, qualifiedThisVariable);
 		}
 		CGVariable standardLibraryVariable = basicGetStandardLibraryVariable();
-		if (standardLibraryVariable != null) {
+		if ((standardLibraryVariable != null) && !(standardLibraryVariable instanceof CGParameter)) {
 			cgTree = globalNameManager.rewriteAsLet(cgTree, standardLibraryVariable);
 		}
 		CGVariable modelManagerVariable = basicGetModelManagerVariable();
-		if (modelManagerVariable != null) {
+		if ((modelManagerVariable != null) && !(modelManagerVariable instanceof CGParameter)) {
 			cgTree = globalNameManager.rewriteAsLet(cgTree, modelManagerVariable);
 		}
 		CGVariable idResolverVariable = basicGetIdResolverVariable();
-		if (idResolverVariable != null) {
+		if ((idResolverVariable != null) && !(idResolverVariable instanceof CGParameter)) {
 			cgTree = globalNameManager.rewriteAsLet(cgTree, idResolverVariable);
 		}
 		CGVariable executorVariable = basicGetExecutorVariable();
-		if (executorVariable != null) {
+		if ((executorVariable != null) && !(executorVariable instanceof CGParameter)) {
 			cgTree = globalNameManager.rewriteAsLet(cgTree, executorVariable);
 		}
 		return cgTree;

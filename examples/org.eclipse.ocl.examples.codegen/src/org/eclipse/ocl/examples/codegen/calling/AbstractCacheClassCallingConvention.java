@@ -298,7 +298,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		Operation asOperation = cg2javaVisitor.getAnalyzer().basicGetCachedOperation(asClass);
 		js.appendCommentWithOCL(title, asOperation);
-		js.append("protected class " + className);
+		js.append("protected class " + className);		// Could be static if dynamic INSTANCE_CACHE accessible statically
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
 		generateProperties(cg2javaVisitor, js, cgClass);
