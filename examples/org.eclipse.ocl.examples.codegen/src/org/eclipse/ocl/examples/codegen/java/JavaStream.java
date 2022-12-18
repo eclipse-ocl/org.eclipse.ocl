@@ -269,10 +269,10 @@ public class JavaStream
 				s.append(string);
 			}
 			else {
-				if (string.contains("isEqual")) {
+				if (string.contains("evaluate")) {
 					getClass();		// XXX
 				}
-				if (string.contains("newInstance")) {
+				if (string.contains("TYP_containment_c_c_Parent")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();

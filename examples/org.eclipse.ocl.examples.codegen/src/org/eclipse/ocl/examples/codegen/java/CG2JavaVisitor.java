@@ -1446,7 +1446,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.append(", null)");
 			}
 		};
-		js.appendClassCast(cgExecutorType, Boolean.TRUE, org.eclipse.ocl.pivot.Class.class, castBody1);
+		js.appendClassCast(cgExecutorType, null, org.eclipse.ocl.pivot.Class.class, castBody1);
 		js.append(";\n");
 		return true;
 	}
@@ -1545,8 +1545,8 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.append("[" + cgIndexExp.getIndex() + "];\n");
 			}
 		};
-		boolean isRequired = cgIndexExp.isRequired();	// context.isRequired(cgIndexExp)
-		boolean wasNonNull = cgSource.isNonNull();	// context.isRequired(cgSource)
+		boolean isRequired = cgIndexExp.isRequired();
+		boolean wasNonNull = cgSource.isNonNull();
 		js.appendClassCast(cgIndexExp, isRequired == wasNonNull ? null : isRequired, jClass, castBody);
 		return true;
 	}

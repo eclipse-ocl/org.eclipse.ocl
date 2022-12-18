@@ -132,7 +132,11 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 				js.append(")");
 			}
 		};
-		typeDescriptor.appendCast(js, isRequired, null, castBody);
+		boolean isRequired2 = cgPropertyCallExp.isRequired();
+		boolean wasNonNull2 = false; //cgSource.isNonNull();
+		js.appendClassCast(cgExecutorPropertyCallExp, isRequired2== wasNonNull2? null : isRequired, Object.class, castBody);
+	//ypeDescriptor.appendCast(js, isRequired2 == wasNonNull2 ? null : isRequired2, Object.class, castBody);
+	//	typeDescriptor.appendCast(js, isRequired, null, castBody);
 		js.append(";\n");
 		return true;
 	}
