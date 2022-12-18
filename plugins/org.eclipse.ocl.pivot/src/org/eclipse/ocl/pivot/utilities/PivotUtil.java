@@ -216,6 +216,15 @@ public class PivotUtil
 		}
 	}
 
+	public static boolean allParametersRequired(@NonNull Operation asOperation) {
+		for (Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+			if (!asParameter.isIsRequired()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * @since 1.18
 	 */

@@ -26,6 +26,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
@@ -433,8 +434,12 @@ public class CGUtil
 		return ClassUtil.nonNullState(basicGetContextCGClass(cgElement));
 	}
 
-	public static @NonNull CGExecutorType getExecutorType(@NonNull CGShadowExp object) {
-		return ClassUtil.nonNullState(object.getExecutorType());
+	public static @NonNull CGExecutorType getExecutorType(@NonNull CGCastExp cgCastExp) {
+		return ClassUtil.nonNullState(cgCastExp.getExecutorType());
+	}
+
+	public static @NonNull CGExecutorType getExecutorType(@NonNull CGShadowExp cgShadowExp) {
+		return ClassUtil.nonNullState(cgShadowExp.getExecutorType());
 	}
 
 	public static @NonNull CGValuedElement getIn(@NonNull CGLetExp cgLetExp) {

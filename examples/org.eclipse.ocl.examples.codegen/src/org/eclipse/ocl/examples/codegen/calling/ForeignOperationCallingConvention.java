@@ -120,7 +120,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			String ctorName = ctorNameResolution.getResolvedName();
 			Type asDummyType = environmentFactory.getStandardLibrary().getOclVoidType();
 			Operation asEntryConstructor = PivotUtil.createOperation(ctorName, asDummyType, null, null);
-			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator);
+			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOperation));
 			asEntryConstructor.getOwnedParameters().add(asBoxedValuesParameter);
 			asEntryClass.getOwnedOperations().add(asEntryConstructor);
 			//

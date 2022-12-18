@@ -24,7 +24,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
-import org.eclipse.ocl.pivot.TypedElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -257,15 +256,6 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 	@Override
 	public boolean isEcore() {
 		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated XXX
-	 */
-	@Override
-	public boolean isNonNull() {
-		return (ast != null) && ((TypedElement)ast).isIsRequired();
 	}
 
 	/**

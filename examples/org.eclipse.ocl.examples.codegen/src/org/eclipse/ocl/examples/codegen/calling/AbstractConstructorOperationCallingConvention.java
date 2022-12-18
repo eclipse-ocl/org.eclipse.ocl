@@ -19,9 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
@@ -160,16 +158,11 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 					asEntryParameterVariable = (ParameterVariable)asEntryParameterVariables.get(i-1);
 				}
 				assert asEntryParameterVariable != null;
-				Type asType = PivotUtil.getType(asProperty);
-				CGExecutorType cgExecutorType = operationNameManager.getCGExecutorType(asType);
 				//
 				//	Unpack boxedValues[i] to a let-variable
 				//
 				CGVariableExp cgVariableExp = analyzer.createCGVariableExp(cgEntryBoxedValuesParameter);
-				CGIndexExp cgIndexExp = analyzer.createCGIndexExp(cgVariableExp, i);
-				cgIndexExp.setAst(asProperty);
-				CGCastExp cgCastExp = analyzer.createCGCastExp(cgExecutorType, cgIndexExp);
-				cgCastExp.setAst(asProperty);
+				CGIndexExp cgCastExp = analyzer.createCGIndexExp(cgVariableExp, i, asProperty);
 				CGFinalVariable cgLetVariable = (CGFinalVariable)operationNameManager.lazyGetCGVariable(asEntryParameterVariable);
 				analyzer.setCGVariableInit(cgLetVariable, cgCastExp);
 				cgProperty.getNameResolution().addCGElement(cgLetVariable);
@@ -292,7 +285,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		String ctorName = ctorNameResolution.getResolvedName();
 		Type asDummyType = environmentFactory.getStandardLibrary().getOclVoidType();
 		Operation asEntryConstructor = PivotUtil.createOperation(ctorName, asDummyType, null, null);
-		Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator);
+		Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOperation));
 		asEntryConstructor.getOwnedParameters().add(asBoxedValuesParameter);
 		asEntryClass.getOwnedOperations().add(asEntryConstructor);
 		//

@@ -78,7 +78,6 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
-import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -595,7 +594,7 @@ public class CodeGenAnalyzer
 		CGCastExp cgCastExp = CGModelFactory.eINSTANCE.createCGCastExp();
 		cgCastExp.setSource(cgValue);
 		cgCastExp.setExecutorType(cgExecutorType);
-		cgCastExp.setTypeId(codeGenerator.getAnalyzer().getCGTypeId(CGUtil.getAST(cgExecutorType).getTypeId()));
+		cgCastExp.setTypeId(getCGTypeId(CGUtil.getAST(cgExecutorType).getTypeId()));
 		return cgCastExp;
 	}
 
@@ -641,25 +640,11 @@ public class CodeGenAnalyzer
 		return cgIfExp;
 	}
 
-	public @NonNull CGIndexExp createCGIndexExp(@NonNull CGValuedElement cgValue, int index) {
-		ElementId elementTypeId = cgValue.getTypeId().getElementId();
-		TypeId asTypeId = null;
-		if (elementTypeId instanceof JavaTypeId) {
-			Class<?> jArrayClass = ((JavaTypeId)elementTypeId).getJavaClass();
-			Class<?> jClass = jArrayClass.getComponentType();
-			if (jClass != null) {
-				asTypeId = JavaConstants.getJavaTypeId(jClass);
-			}
-		}
-		if (asTypeId == null) {
-			asTypeId = TypeId.OCL_ANY;				// Never happens
-		}
+	public @NonNull CGIndexExp createCGIndexExp(@NonNull CGValuedElement cgValue, int index, @NonNull TypedElement asTypedElement) {
 		CGIndexExp cgIndexExp = CGModelFactory.eINSTANCE.createCGIndexExp();
-	//	setAst(cgVariableExp, asVariableExp);			// Set by caller
+		initAst(cgIndexExp, asTypedElement, false);
 		cgIndexExp.setSource(cgValue);
 		cgIndexExp.setIndex(createCGConstantExp(getCGInteger(index)));
-		cgIndexExp.setTypeId(getCGTypeId(asTypeId));
-		cgIndexExp.setRequired(false/*cgValue.isRequired()*/);		// FIXME maintain and use inner @NonNull annotation
 		return cgIndexExp;
 	}
 
@@ -1861,12 +1846,9 @@ public class CodeGenAnalyzer
 	 * the reverse asElement2cgElement mapping.
 	 */
 	public void initAst(@NonNull CGValuedElement cgElement, @NonNull TypedElement asTypedElement, boolean isSymmetric) {
-	//	TypeId asTypeId = asElement.getTypeId();
-	//	initAst(cgElement, asElement, asTypeId, isSymmetric);
-	//	CGTypeId cgTypeId = getCGTypeId(asTypeId);
-	//	cgElement.setTypeId(cgTypeId);
-	//	cgElement.setRequired(asElement.isIsRequired());
-		initTypeId(cgElement, asTypedElement.getTypeId(), asTypedElement.isIsRequired());
+		TypeId typeId = asTypedElement.getTypeId();
+		boolean isRequired = asTypedElement.isIsRequired();
+		initTypeId(cgElement, typeId, isRequired);
 		initCG2AS(cgElement, asTypedElement, isSymmetric);
 	}
 

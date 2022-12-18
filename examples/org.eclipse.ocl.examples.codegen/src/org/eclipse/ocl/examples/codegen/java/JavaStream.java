@@ -263,17 +263,16 @@ public class JavaStream
 	public void append(@Nullable String string) {
 		if (string != null) {
 			if ("\n".equals(string)) {
-				int length = s.length();
-				assert (length <= 2) || (s.charAt(length-2) != '\n') || (s.charAt(length-1) != '\n') : "Use appendOptionalBlankLine";
+				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
 			if (indentationStack.isEmpty()) {
 				s.append(string);
 			}
 			else {
-				if (string.contains("evaluate")) {
+				if (string.contains("isEqual")) {
 					getClass();		// XXX
 				}
-				if (string.contains("ENTRY_Parent_static_count")) {
+				if (string.contains("newInstance")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
@@ -475,7 +474,7 @@ public class JavaStream
 	public void appendClassCast(@NonNull CGValuedElement cgValue, @Nullable Boolean isRequired, @Nullable Class<?> actualJavaClass, @NonNull SubStream subStream) {
 		@NonNull TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 		Class<?> requiredJavaClass = typeDescriptor.getJavaClass();
-		if ((actualJavaClass == null) || !requiredJavaClass.isAssignableFrom(actualJavaClass)) {
+		if ((isRequired != null) || (actualJavaClass == null) || !requiredJavaClass.isAssignableFrom(actualJavaClass)) {
 			typeDescriptor.appendCast(this, isRequired, actualJavaClass, subStream);
 		}
 		else {
@@ -531,13 +530,11 @@ public class JavaStream
 				append(javaClass.getName());
 			}
 			else {
-				Boolean componentIsRequired = isRequired;
 				for (Class<?> jClass = javaClass; true; jClass = jClass.getComponentType()) {
 					if (jClass.getComponentType() == null)  {
-						appendClassReference(componentIsRequired, jClass.getName());
+						appendClassReference(isRequired, jClass.getName());
 						break;
 					}
-					componentIsRequired = Boolean.FALSE;
 				}
 				TypeVariable<?>[] typeParameters = javaClass.getTypeParameters();
 				if (typeParameters.length > 0) {

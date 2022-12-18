@@ -425,7 +425,7 @@ public interface CGModelFactory extends EFactory {
 	 * @return a new object of class '<em>CG Ecore Container Assignment</em>'.
 	 * @generated
 	 */
-	CGEcoreContainerAssignment createCGEcoreContainerAssignment();
+	@NonNull CGEcoreContainerAssignment createCGEcoreContainerAssignment();
 
 	/**
 	 * Returns a new object of class '<em>CG Ecore Property Assignment</em>'.
@@ -434,7 +434,7 @@ public interface CGModelFactory extends EFactory {
 	 * @return a new object of class '<em>CG Ecore Property Assignment</em>'.
 	 * @generated
 	 */
-	CGEcorePropertyAssignment createCGEcorePropertyAssignment();
+	@NonNull CGEcorePropertyAssignment createCGEcorePropertyAssignment();
 
 	/**
 	 * Returns a new object of class '<em>CG Ecore Data Type Shadow Exp</em>'.
@@ -632,7 +632,7 @@ public interface CGModelFactory extends EFactory {
 	 * @return a new object of class '<em>CG Property Assignment</em>'.
 	 * @generated
 	 */
-	CGPropertyAssignment createCGPropertyAssignment();
+	@NonNull CGPropertyAssignment createCGPropertyAssignment();
 
 	/**
 	 * Returns a new object of class '<em>CG Real</em>'.
@@ -650,7 +650,7 @@ public interface CGModelFactory extends EFactory {
 	 * @return a new object of class '<em>CG Sequence</em>'.
 	 * @generated
 	 */
-	CGSequence createCGSequence();
+	@NonNull CGSequence createCGSequence();
 
 	/**
 	 * Returns a new object of class '<em>CG Settable Variable</em>'.

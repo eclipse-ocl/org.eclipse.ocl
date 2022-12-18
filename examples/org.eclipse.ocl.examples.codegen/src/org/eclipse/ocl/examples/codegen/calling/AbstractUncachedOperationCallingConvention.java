@@ -21,7 +21,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -46,8 +45,7 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(asOperation);
+		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(cgOperation);
 		if (jMethod != null) {
 			js.append("@Override\n");
 		}

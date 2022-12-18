@@ -169,10 +169,12 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			Stack<@NonNull CGFinalVariable> cgLetVariables = new Stack<>();
 			// idResolver then boxedValues
 			for (int i = 0; i < asEntryProperties.size()-1; i++) {		// not cachedResult
+				Property asEntryProperty = asEntryProperties.get(i);
 				ParameterVariable asEntryParameterVariable = (ParameterVariable)asEntryParameterVariables.get(i+1);		// skip idResolver
 				CGVariableExp cgVariableExp = analyzer.createCGVariableExp(cgEntryBoxedValuesParameter);
-				CGIndexExp cgIndexExp = analyzer.createCGIndexExp(cgVariableExp, i);
+				CGIndexExp cgIndexExp = analyzer.createCGIndexExp(cgVariableExp, i, asEntryProperty);
 				cgIndexExp.setAst(asEntryParameterVariable);
+				cgIndexExp.setRequired(asEntryProperty.isIsRequired());
 				CGFinalVariable cgEntryParameterVariable = operationNameManager.createCGVariable(cgIndexExp);
 				operationNameManager.addVariable(asEntryParameterVariable, cgEntryParameterVariable);
 				cgLetVariables.push(cgEntryParameterVariable);
@@ -214,7 +216,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			Type asReturnType = environmentFactory.getStandardLibrary().getBooleanType();
 			Operation asEntryOperation = PivotUtil.createOperation(isEqualName, asReturnType, null, null);
 			asEntryOperation.setIsRequired(true);
-			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator);
+			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, false);
 			asEntryOperation.getOwnedParameters().add(asBoxedValuesParameter);
 			asEntryClass.getOwnedOperations().add(asEntryOperation);
 			//

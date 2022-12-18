@@ -431,6 +431,9 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 */
 	@Override
 	public boolean isNonNull() {
+		if (required) {
+			return true;
+		}
 		CGValuedElement referredValue = getReferredValue();
 		return (referredValue != this) && referredValue.isNonNull();
 	}

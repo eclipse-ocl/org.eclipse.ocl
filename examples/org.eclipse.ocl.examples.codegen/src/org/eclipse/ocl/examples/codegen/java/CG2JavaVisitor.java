@@ -1003,9 +1003,8 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (!js.appendLocalStatements(cgSource)) {
 			return false;
 		}
-		CGExecutorType cgType = cgCastExp.getExecutorType();
-		if (cgType != null) {
-			TypeDescriptor requiredTypeDescriptor = context.getTypeDescriptor(cgCastExp);
+		CGExecutorType cgType = CGUtil.getExecutorType(cgCastExp);
+		TypeDescriptor requiredTypeDescriptor = context.getTypeDescriptor(cgCastExp);
 		//	TypeDescriptor actualTypeDescriptor;
 		//	if (cgSource instanceof CGVariableExp) {	// CAST self has a distinct OclVoid type
 		//		actualTypeDescriptor = context.getTypeDescriptor(CGUtil.getReferredVariable((CGVariableExp)cgSource));
@@ -1013,16 +1012,15 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		//	else {
 		//		actualTypeDescriptor = context.getTypeDescriptor(cgSource);
 		//	}
-			js.appendDeclaration(cgCastExp);
-			js.append(" = ");
+		js.appendDeclaration(cgCastExp);
+		js.append(" = ");
 		//	if (requiredTypeDescriptor != actualTypeDescriptor) {
 				requiredTypeDescriptor.appendCastTerm(js, cgSource);
 		//	}
 		//	else {
 		//		js.appendReferenceTo(cgSource);
 		//	}
-			js.append(";\n");
-		}
+		js.append(";\n");
 		return true;
 	}
 
@@ -1530,25 +1528,26 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (!js.appendLocalStatements(cgSource)) {
 			return false;
 		}
+		TypeDescriptor actualTypeDescriptor;
+		//	if (cgSource instanceof CGVariableExp) {	// CAST self has a distinct OclVoid type
+		//		actualTypeDescriptor = context.getTypeDescriptor(CGUtil.getReferredVariable((CGVariableExp)cgSource));
+		//	}
+		//	else {
+				actualTypeDescriptor = context.getTypeDescriptor(cgSource);
+		//	}
+		Class<?> jClass = actualTypeDescriptor.getJavaClass().getComponentType();
 		js.appendDeclaration(cgIndexExp);
 		js.append(" = ");
-//		TypeDescriptor requiredTypeDescriptor = context.getTypeDescriptor(cgIndexExp);
-//		requiredTypeDescriptor.appendCastTerm(js, cgSource);
-
-
-//		JavaStream.SubStream castBody = new JavaStream.SubStream() {
-//			@Override
-//			public void append() {
+		SubStream castBody = new SubStream() {
+			@Override
+			public void append() {
 				js.appendValueName(cgSource);
 				js.append("[" + cgIndexExp.getIndex() + "];\n");
-//			}
-//		};
-//		boolean isRequired = cgIndexExp.isRequired();
-//		requiredTypeDescriptor.appendCast(js, isRequired, null, castBody);
-
-
-
-
+			}
+		};
+		boolean isRequired = cgIndexExp.isRequired();	// context.isRequired(cgIndexExp)
+		boolean wasNonNull = cgSource.isNonNull();	// context.isRequired(cgSource)
+		js.appendClassCast(cgIndexExp, isRequired == wasNonNull ? null : isRequired, jClass, castBody);
 		return true;
 	}
 
@@ -2165,7 +2164,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 //				text.appendClassReference(null, ObjectValue.class);
 //				text.append(")");
 		 */
-		CGExecutorType cgExecutorType = cgShadowExp.getExecutorType();
+		CGExecutorType cgExecutorType = CGUtil.getExecutorType(cgShadowExp);
 		//
 		js.appendDeclaration(cgShadowExp);
 		js.append(" = ");

@@ -56,13 +56,12 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractOperationCallingConvention extends AbstractCallingConvention implements OperationCallingConvention
 {
-	protected @NonNull Parameter createBoxedValuesParameter(@NonNull JavaCodeGenerator codeGenerator) {
+	protected @NonNull Parameter createBoxedValuesParameter(@NonNull JavaCodeGenerator codeGenerator, boolean isRequired) {
 		NameResolution boxedValuesResolution = codeGenerator.getGlobalNameManager().getBoxedValuesNameResolution();
 		String boxedValuesName = boxedValuesResolution.getResolvedName();
 		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
 		org.eclipse.ocl.pivot.Class boxedValueType = jLanguageSupport.getNativeClass(Object[].class);
-		Parameter asConstructorParameter = PivotUtil.createParameter(boxedValuesName, boxedValueType, true);
-		return asConstructorParameter;
+		return PivotUtil.createParameter(boxedValuesName, boxedValueType, isRequired);
 	}
 
 	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {

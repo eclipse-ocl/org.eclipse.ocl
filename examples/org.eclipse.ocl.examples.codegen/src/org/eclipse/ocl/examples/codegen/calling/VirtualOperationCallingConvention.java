@@ -170,7 +170,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			Type asReturnType = environmentFactory.getStandardLibrary().getOclVoidType();
 			Operation asConstructorOperation = PivotUtil.createOperation(constructorName, asReturnType, null, null);
 			asConstructorOperation.setIsRequired(true);
-			Parameter asBoxedValuesParameter = operationCallingConvention.createBoxedValuesParameter(codeGenerator);
+			Parameter asBoxedValuesParameter = operationCallingConvention.createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOperation));
 			asConstructorOperation.getOwnedParameters().add(asBoxedValuesParameter);
 			asCacheClass.getOwnedOperations().add(asConstructorOperation);
 			//

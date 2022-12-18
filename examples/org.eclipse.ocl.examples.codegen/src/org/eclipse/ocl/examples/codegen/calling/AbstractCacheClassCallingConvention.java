@@ -85,7 +85,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			Type asReturnType = environmentFactory.getStandardLibrary().getOclVoidType();
 			Operation asConstructorOperation = PivotUtil.createOperation(constructorName, asReturnType, null, null);
 			asConstructorOperation.setIsRequired(true);
-			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator);
+			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOperation));
 			asConstructorOperation.getOwnedParameters().add(asBoxedValuesParameter);
 			asCacheClass.getOwnedOperations().add(asConstructorOperation);
 			//
@@ -174,7 +174,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//	Needs an ability to specify a new T invocation.
 		}
 
-		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgConstructorClass, org.eclipse.ocl.pivot.@NonNull Class asCacheClass) {
+		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgConstructorClass, org.eclipse.ocl.pivot.@NonNull Class asCacheClass, @NonNull Operation asOperation) {
 			//
 			// AS Class - yyy2zzz
 			// AS Properties -
@@ -197,7 +197,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			String newInstanceName = newInstanceNameResolution.getResolvedName();
 			Operation asConstructorOperation = PivotUtil.createOperation(newInstanceName, asCacheClass, null, null);
 			asConstructorOperation.setIsRequired(true);
-			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator);
+			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, false);
 			asConstructorOperation.getOwnedParameters().add(asBoxedValuesParameter);
 			asConstructorClass.getOwnedOperations().add(asConstructorOperation);
 			//
@@ -338,6 +338,6 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 	protected void installNewInstanceOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
 		CacheNewInstanceOperationCallingConvention callingConvention = CacheNewInstanceOperationCallingConvention.getInstance(asCacheClass);
-		callingConvention.createOperation(analyzer, cgCacheClass, asEntryClass);
+		callingConvention.createOperation(analyzer, cgCacheClass, asEntryClass, asOperation);
 	}
 }

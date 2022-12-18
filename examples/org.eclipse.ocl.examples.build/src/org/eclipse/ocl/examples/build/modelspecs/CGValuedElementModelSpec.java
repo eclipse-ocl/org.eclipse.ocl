@@ -1846,7 +1846,10 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "return false;";
 			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
+				return  "if (required) {\n" +
+						"			return true;\n" +
+						"		}\n" +
+						"		" + classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
 						"		return (referredValue != this) && referredValue.isNonNull();";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
