@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -110,15 +111,25 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 
 		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-			//	js.appendCommentWithOCL(title, asFeature);
+			GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
+			String executorName = globalNameManager.getExecutorNameResolution().getResolvedName();
+			String rootObjectName = globalNameManager.getRootObjectNameResolution().getResolvedName();
 			js.append("public ");
 			js.appendValueName(cgOperation);
-			js.append("() {\n");
+			js.append("(");
+			js.appendClassReference(true, Executor.class);
+			js.append(" ");
+			js.append(executorName);
+			js.append(", ");
+			js.appendClassReference(true, Object.class);
+			js.append(" ");
+			js.append(rootObjectName);
+			js.append(") {\n");
 			js.pushIndentation(null);
 			js.append("super(");
-			js.append(CGUtil.getContextCGClass(cgOperation).getName());
-			js.append(".this.");
-			js.append(cg2javaVisitor.getGlobalNameManager().getIdResolverName());
+			js.append(executorName);
+			js.append(", ");
+			js.append(rootObjectName);
 			js.append(");\n");
 			js.popIndentation();
 			js.append("}\n");
@@ -197,6 +208,8 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			String newInstanceName = newInstanceNameResolution.getResolvedName();
 			Operation asConstructorOperation = PivotUtil.createOperation(newInstanceName, asCacheClass, null, null);
 			asConstructorOperation.setIsRequired(true);
+			Parameter asExecutorParameter = createExecutorParameter(codeGenerator);
+			asConstructorOperation.getOwnedParameters().add(asExecutorParameter);
 			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, false);
 			asConstructorOperation.getOwnedParameters().add(asBoxedValuesParameter);
 			asConstructorClass.getOwnedOperations().add(asConstructorOperation);
@@ -213,6 +226,9 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			newInstanceNameResolution.addCGElement(cgConstructorOperation);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructorOperation, asConstructorOperation);
 			List<@NonNull CGParameter> cgCacheParameters = CGUtil.getParametersList(cgConstructorOperation);
+		//	CGParameter cgConstructorExecutorParameter = operationNameManager.getCGParameter(asExecutorParameter, (String)null);
+		//	globalNameManager.getExecutorNameResolution().addCGElement(cgConstructorExecutorParameter);
+		//	cgCacheParameters.add(cgConstructorExecutorParameter);
 			CGParameter cgConstructorBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
 			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgConstructorBoxedValuesParameter);
 			cgCacheParameters.add(cgConstructorBoxedValuesParameter);
@@ -230,13 +246,10 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			js.append("return new ");
 			js.appendClassReference(null, cgOperation);
 			js.append("(");
-			boolean isFirst = true;
+			js.append(cg2javaVisitor.getGlobalNameManager().getExecutorNameResolution().getResolvedName());
 			for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
-				if (!isFirst) {
-					js.append(", ");
-				}
+				js.append(", ");
 				js.appendValueName(cgParameter);
-				isFirst = false;
 			}
 			js.append(");\n");
 		}

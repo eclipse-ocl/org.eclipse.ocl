@@ -125,7 +125,12 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		assert (asEntryExpressionInOCL != null);
 		List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
 		//
-		Parameter asBoxedValuesParameter = PivotUtilInternal.getOwnedParametersList(asEntryOperation).get(0);
+		List<@NonNull Parameter> asEntryParameters = PivotUtilInternal.getOwnedParametersList(asEntryOperation);
+		Parameter asExecutorParameter = asEntryParameters.get(0);
+		CGParameter cgEntryExecutorParameter = operationNameManager.getCGParameter(asExecutorParameter, (String)null);
+		globalNameManager.getExecutorNameResolution().addCGElement(cgEntryExecutorParameter);
+		cgParameters.add(cgEntryExecutorParameter);
+		Parameter asBoxedValuesParameter = asEntryParameters.get(1);
 		CGParameter cgEntryBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
 		globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
 		cgParameters.add(cgEntryBoxedValuesParameter);
@@ -285,6 +290,8 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		String ctorName = ctorNameResolution.getResolvedName();
 		Type asDummyType = environmentFactory.getStandardLibrary().getOclVoidType();
 		Operation asEntryConstructor = PivotUtil.createOperation(ctorName, asDummyType, null, null);
+		Parameter asExecutorParameter = createExecutorParameter(codeGenerator);
+		asEntryConstructor.getOwnedParameters().add(asExecutorParameter);
 		Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOperation));
 		asEntryConstructor.getOwnedParameters().add(asBoxedValuesParameter);
 		asEntryClass.getOwnedOperations().add(asEntryConstructor);

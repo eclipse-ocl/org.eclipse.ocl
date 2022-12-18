@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.ImmutableCachePropertyCallingConvention.DefaultInstancePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -209,7 +210,6 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		protected void installNewInstanceOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
 			// dispatch delegates rather than creates an entry instance
 		}
-
 	}
 
 	@Override
@@ -288,6 +288,11 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		js.popIndentation();
 		js.append("}\n");
 		return true;
+	}
+
+	@Override
+	protected @NonNull ImmutableCachePropertyCallingConvention getCacheInstancePropertyCallingConvention(@NonNull Property asProperty) {
+		return DefaultInstancePropertyCallingConvention.getInstance(asProperty);
 	}
 
 	// Default guards and boxes all terms. Derived implementations for unboxed/ecore/simple-boxed

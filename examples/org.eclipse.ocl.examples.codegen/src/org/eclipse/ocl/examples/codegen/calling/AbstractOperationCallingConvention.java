@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -56,14 +57,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractOperationCallingConvention extends AbstractCallingConvention implements OperationCallingConvention
 {
-	protected @NonNull Parameter createBoxedValuesParameter(@NonNull JavaCodeGenerator codeGenerator, boolean isRequired) {
-		NameResolution boxedValuesResolution = codeGenerator.getGlobalNameManager().getBoxedValuesNameResolution();
-		String boxedValuesName = boxedValuesResolution.getResolvedName();
-		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
-		org.eclipse.ocl.pivot.Class boxedValueType = jLanguageSupport.getNativeClass(Object[].class);
-		return PivotUtil.createParameter(boxedValuesName, boxedValueType, isRequired);
-	}
-
 	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
 		ExecutableNameManager operationNameManager = analyzer.getGlobalNameManager().useOperationNameManager(cgOperation);
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
@@ -262,6 +255,23 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			}
 		}
 	}
+
+	protected @NonNull Parameter createBoxedValuesParameter(@NonNull JavaCodeGenerator codeGenerator, boolean isRequired) {
+		NameResolution boxedValuesResolution = codeGenerator.getGlobalNameManager().getBoxedValuesNameResolution();
+		String boxedValuesName = boxedValuesResolution.getResolvedName();
+		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+		org.eclipse.ocl.pivot.Class boxedValueType = jLanguageSupport.getNativeClass(Object[].class);
+		return PivotUtil.createParameter(boxedValuesName, boxedValueType, isRequired);
+	}
+
+	protected @NonNull Parameter createExecutorParameter(@NonNull JavaCodeGenerator codeGenerator) {
+		NameResolution executorResolution = codeGenerator.getGlobalNameManager().getExecutorNameResolution();
+		String executorName = executorResolution.getResolvedName();
+		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+		org.eclipse.ocl.pivot.Class executorType = jLanguageSupport.getNativeClass(Executor.class);
+		return PivotUtil.createParameter(executorName, executorType, true);
+	}
+
 
 	protected void generateArgumentList(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);

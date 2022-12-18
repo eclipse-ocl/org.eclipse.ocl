@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention.CacheProperty;
-import org.eclipse.ocl.examples.codegen.calling.AbstractConstructorOperationCallingConvention.DefaultConstructorOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
@@ -72,6 +71,16 @@ import org.eclipse.qvtd.runtime.evaluation.AbstractComputation;
  */
 public abstract class AbstractEntryClassCallingConvention extends AbstractClassCallingConvention
 {
+	public static class EntryConstructorOperationCallingConvention extends AbstractConstructorOperationCallingConvention
+	{
+		private static final @NonNull EntryConstructorOperationCallingConvention INSTANCE = new EntryConstructorOperationCallingConvention();
+
+		public static @NonNull EntryConstructorOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
+	}
+
 	public static class EntryGetResultOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 	{
 		private static final @NonNull EntryGetResultOperationCallingConvention INSTANCE = new EntryGetResultOperationCallingConvention();
@@ -425,7 +434,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 
 	protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		DefaultConstructorOperationCallingConvention callingConvention = DefaultConstructorOperationCallingConvention.getInstance(asEntryClass);
+		EntryConstructorOperationCallingConvention callingConvention = EntryConstructorOperationCallingConvention.getInstance(asEntryClass);
 		callingConvention.createOperation(analyzer, cgEntryClass, asOperation);
 	}
 

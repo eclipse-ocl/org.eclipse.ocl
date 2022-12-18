@@ -184,7 +184,11 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			js.appendValueName(cgProperty);
 			js.append(" = new ");
 			boxedTypeRepresentation.appendClassReference(null, cgProperty);
-			js.append("();\n");
+			js.append("(");
+			js.append(cg2javaVisitor.getGlobalNameManager().getExecutorNameResolution().getResolvedName());
+			js.append(", ");
+			js.append(cg2javaVisitor.getGlobalNameManager().getRootObjectNameResolution().getResolvedName());
+			js.append(");\n");
 			return true;
 		}
 	}
@@ -227,7 +231,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		analyzer.addCacheInstance(asOperation, asProperty, asEntryClass);
 		//
 		CGProperty cgProperty = analyzer.createCGElement(CGProperty.class, asProperty);
-		cgProperty.setCallingConvention(CacheInstancePropertyCallingConvention.getInstance(asProperty));
+		cgProperty.setCallingConvention(getCacheInstancePropertyCallingConvention(asProperty));
 		assert cgProperty.eContainer() != null;
 		return asProperty;
 	}
@@ -329,9 +333,9 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		return DefaultCacheClassCallingConvention.getInstance(asOperation, false);
 	}
 
-//	protected org.eclipse.ocl.pivot.@NonNull Package getCachePackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {	// XXX Regularly overridden
-//		return AbstractLanguageSupport.getCachePackage(asOperation);
-//	}
+	protected @NonNull ImmutableCachePropertyCallingConvention getCacheInstancePropertyCallingConvention(@NonNull Property asProperty) {
+		return CacheInstancePropertyCallingConvention.getInstance(asProperty);
+	}
 
 	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {
 		return DefaultEntryClassCallingConvention.getInstance(asOperation, false);

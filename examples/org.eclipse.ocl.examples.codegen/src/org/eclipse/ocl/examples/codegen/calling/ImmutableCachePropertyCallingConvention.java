@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.java.JavaStream.TypeRepresentation;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
@@ -34,6 +35,30 @@ public class ImmutableCachePropertyCallingConvention extends AbstractCacheProper
 	public static @NonNull ImmutableCachePropertyCallingConvention getInstance(@NonNull Property asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
+	}
+
+	public static class DefaultInstancePropertyCallingConvention extends ImmutableCachePropertyCallingConvention
+	{
+		private static final @NonNull DefaultInstancePropertyCallingConvention INSTANCE = new DefaultInstancePropertyCallingConvention();
+
+		public static @NonNull DefaultInstancePropertyCallingConvention getInstance(@NonNull Property asProperty) {
+			INSTANCE.logInstance(asProperty);
+			return INSTANCE;
+		}
+
+		@Override
+		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
+			js.append("protected final");
+			js.append(" /*@NonInvalid*/ ");
+			boxedTypeRepresentation.appendClassReference(cgProperty.isRequired(), cgProperty);
+			js.append(" ");
+			js.appendValueName(cgProperty);
+			js.append(" = new ");
+			boxedTypeRepresentation.appendClassReference(null, cgProperty);
+			js.append("();\n");
+			return true;
+		}
 	}
 
 	@Override

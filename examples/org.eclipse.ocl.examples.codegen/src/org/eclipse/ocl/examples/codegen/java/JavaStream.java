@@ -272,7 +272,7 @@ public class JavaStream
 				if (string.contains("evaluate")) {
 					getClass();		// XXX
 				}
-				if (string.contains("TYP_containment_c_c_Parent")) {
+				if (string.contains("AbstractComputationConstructor")) {
 					getClass();		// XXX
 				}
 				int sLength = s.length();
