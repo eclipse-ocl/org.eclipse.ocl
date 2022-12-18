@@ -265,16 +265,16 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
+			if (string.contains("ecoreValueOfAll")) {
+				getClass();		// XXX
+			}
+			if (string.contains("intValue")) {
+				getClass();		// XXX
+			}
 			if (indentationStack.isEmpty()) {
 				s.append(string);
 			}
 			else {
-				if (string.contains("evaluate")) {
-					getClass();		// XXX
-				}
-				if (string.contains("AbstractComputationConstructor")) {
-					getClass();		// XXX
-				}
 				int sLength = s.length();
 				boolean atStartOfLine = (sLength == 0) || (s.charAt(sLength-1) == '\n');
 				for (int i = 0; i < string.length(); i++) {

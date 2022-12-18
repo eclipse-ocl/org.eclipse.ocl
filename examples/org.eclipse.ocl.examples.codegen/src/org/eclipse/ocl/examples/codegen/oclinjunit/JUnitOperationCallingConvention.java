@@ -89,7 +89,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
 		js.append(" ");
-		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+		js.appendClassReference(Boolean.FALSE, cgOperation);			// Overrides @Nullable Boolean
 		js.append(" ");
 		js.appendValueName(cgOperation);
 		appendParameterList(js, cgOperation);
