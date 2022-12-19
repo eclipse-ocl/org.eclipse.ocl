@@ -79,7 +79,8 @@ public class NativeOperationCallingConvention extends AbstractUncachedOperationC
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)cgOperationCallExp;
 		CGValuedElement cgThis = cgNativeOperationCallExp.getCgThis();
 		CGValuedElement cgThis2 = cgThis != null ? cg2javaVisitor.getExpression(cgThis) :  null;
@@ -87,7 +88,7 @@ public class NativeOperationCallingConvention extends AbstractUncachedOperationC
 		if ((cgThis2 != null) && !js.appendLocalStatements(cgThis2)) {
 			return false;
 		}
-		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
 		//
@@ -125,7 +126,7 @@ public class NativeOperationCallingConvention extends AbstractUncachedOperationC
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Native operations are declared natively
 	}
 

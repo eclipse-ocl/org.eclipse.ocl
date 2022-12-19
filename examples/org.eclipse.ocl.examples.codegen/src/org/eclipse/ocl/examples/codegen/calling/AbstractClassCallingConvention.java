@@ -53,21 +53,24 @@ public abstract class AbstractClassCallingConvention extends AbstractCallingConv
 		return CGModelFactory.eINSTANCE.createCGClass();
 	}
 
-	protected void generateClasses(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	protected void generateClasses(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		for (CGClass cgNestedClass : cgClass.getClasses()) {
 			js.appendOptionalBlankLine();
 			cgNestedClass.accept(cg2javaVisitor);
 		}
 	}
 
-	protected void generateOperations(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	protected void generateOperations(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		for (CGOperation cgOperation : cgClass.getOperations()) {
 			js.appendOptionalBlankLine();
 			cgOperation.accept(cg2javaVisitor);
 		}
 	}
 
-	protected void generateProperties(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	protected void generateProperties(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendOptionalBlankLine();
 		for (CGProperty cgProperty : cgClass.getProperties()) {
 			cgProperty.accept(cg2javaVisitor);

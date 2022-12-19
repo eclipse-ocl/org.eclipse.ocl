@@ -59,7 +59,8 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 		return INSTANCE;
 	}
 
-	protected void appendEcoreGet(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+	protected void appendEcoreGet(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGTypeId cgTypeId = cg2javaVisitor.getAnalyzer().getCGTypeId(asProperty.getOwningClass().getTypeId());
 		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
@@ -139,7 +140,8 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgPropertyCallExp;
 		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getAsProperty());
 		assert cg2javaVisitor.getESObject(asProperty) == ClassUtil.nonNullState(cgEcorePropertyCallExp.getEStructuralFeature());
@@ -155,7 +157,7 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 		//		js.append("/* " + ecoreIsRequired + " " + isRequired + " */\n");
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
-		appendEcoreGet(cg2javaVisitor, js, source, asProperty);
+		appendEcoreGet(cg2javaVisitor, source, asProperty);
 		js.append(";\n");
 		return true;
 	}

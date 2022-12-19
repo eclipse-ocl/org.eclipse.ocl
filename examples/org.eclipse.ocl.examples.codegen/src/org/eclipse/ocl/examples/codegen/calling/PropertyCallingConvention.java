@@ -52,19 +52,19 @@ public interface PropertyCallingConvention extends CallingConvention
 	 * Generate the Java code for a Property assign.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue);
+	boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue);
 
 	/**
 	 * Generate the Java code for a Property call.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp);
+	boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp);
 
 	/**
 	 * Generate the Java code for a Property declaration.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty);
+	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
 
 	boolean isInlined();
 

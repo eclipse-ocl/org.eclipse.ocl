@@ -54,9 +54,10 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 	}
 
 	@Override
-	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js,
+	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor,
 			@NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue) {
 		assert !initValue.isInvalid();
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendValueName(slotValue);			// Always "this"
 		js.append(".");
 		js.appendReferenceTo(cgProperty);
@@ -67,7 +68,8 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.append(" /*@NonInvalid*/ ");
 		js.getBoxedTypeRepresentation().appendClassReference(cgProperty.isRequired(), cgProperty);
 		js.append(" ");
@@ -77,7 +79,8 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 	//	js.appendDeclaration(cgPropertyCallExp);
 	//	js.append(" = ");
 		js.appendValueName(cgPropertyCallExp.getSource());			// Always "this"

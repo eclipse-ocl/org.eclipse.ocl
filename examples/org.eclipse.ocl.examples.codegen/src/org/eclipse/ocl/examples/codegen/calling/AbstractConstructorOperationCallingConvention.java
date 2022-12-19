@@ -83,7 +83,8 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 	}
 
 	@Override
-	protected void appendBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement body) {
+	protected void appendBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGValuedElement body) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.append(" {\n");
 		js.pushIndentation(null);
 		if (cg2javaVisitor.getCodeGenerator().getOptions().isIncremental()) {
@@ -333,12 +334,13 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		throw new UnsupportedOperationException();		// XXX
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGClass cgEntryClass = CGUtil.getContainingClass(cgOperation);
 		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
 		Operation asOperation = cg2javaVisitor.getAnalyzer().getCachedOperation(asEntryClass);
@@ -349,7 +351,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		js.append("protected ");
 		js.appendValueName(cgOperation);
 		appendParameterList(js, cgOperation);
-		appendBody(cg2javaVisitor, js, body);
+		appendBody(cg2javaVisitor, body);
 		return true;
 	}
 

@@ -171,7 +171,8 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 		CGForeignPropertyCallExp cgForeignPropertyCallExp = (CGForeignPropertyCallExp) cgPropertyCallExp;		// XXX never happens
 		CGForeignProperty cgProperty = (CGForeignProperty)CGUtil.getProperty(cgPropertyCallExp);
@@ -250,7 +251,8 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters((CGForeignProperty)cgProperty);
 		CGValuedElement cgInitExpression = cg2javaVisitor.getExpression(((CGForeignProperty)cgProperty).getBody());

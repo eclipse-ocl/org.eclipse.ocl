@@ -81,7 +81,8 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
 		js.append("@Override\n");
@@ -93,7 +94,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		js.append(" ");
 		js.appendValueName(cgOperation);
 		appendParameterList(js, cgOperation);
-		appendBody(cg2javaVisitor, js, body);
+		appendBody(cg2javaVisitor, body);
 		return true;
 	}
 

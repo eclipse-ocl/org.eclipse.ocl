@@ -64,7 +64,8 @@ public class TuplePropertyCallingConvention extends AbstractPropertyCallingConve
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGTuplePartCallExp cgTuplePartCallExp = (CGTuplePartCallExp) cgPropertyCallExp;
 		CGValuedElement source = cg2javaVisitor.getExpression(cgTuplePartCallExp.getSource());
 		//		CGTypeId resultType = cgTuplePartCallExp.getTypeId();

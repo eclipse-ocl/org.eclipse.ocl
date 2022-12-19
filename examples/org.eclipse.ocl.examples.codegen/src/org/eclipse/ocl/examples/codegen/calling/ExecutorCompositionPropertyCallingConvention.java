@@ -48,8 +48,9 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 		assert cgProperty instanceof CGExecutorCompositionProperty;
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGExecutorCompositionProperty cgExecutorCompositionProperty = (CGExecutorCompositionProperty)cgProperty;
 		js.appendDeclaration(cgExecutorCompositionProperty);
 		js.append(" = new ");
@@ -85,7 +86,8 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 		CGExecutorOppositePropertyCallExp cgExecutorOppositePropertyCallExp = (CGExecutorOppositePropertyCallExp)cgPropertyCallExp;
 		CGValuedElement source = cg2javaVisitor.getExpression(cgExecutorOppositePropertyCallExp.getSource());

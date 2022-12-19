@@ -844,7 +844,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGBodiedProperty(@NonNull CGBodiedProperty cgProperty) {
-		return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
+		return cgProperty.getCallingConvention().generateJavaDeclaration(this, cgProperty);
 	}
 
 	@Override
@@ -1093,7 +1093,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull Boolean visitCGClass(@NonNull CGClass cgClass) {
 		ClassCallingConvention callingConvention = cgClass.getCallingConvention();
-		callingConvention.generateJavaDeclaration(this, js, cgClass);
+		callingConvention.generateJavaDeclaration(this, cgClass);
 		return true;
 	}
 
@@ -2026,7 +2026,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgGNavigationCallExp) {
-		return cgGNavigationCallExp.getReferredProperty().getCallingConvention().generateJavaCall(this, js, cgGNavigationCallExp);
+		return cgGNavigationCallExp.getReferredProperty().getCallingConvention().generateJavaCall(this, cgGNavigationCallExp);
 	/*	if (cgGNavigationCallExp instanceof CGEcorePropertyCallExp) {
 			return EcorePropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
 		}
@@ -2061,7 +2061,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull Boolean visitCGOperation(@NonNull CGOperation cgOperation) {
 	//	System.out.println("visitCGOperation " + NameUtil.debugSimpleName(cgOperation) + " : " + cgOperation.getAst());
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
-		callingConvention.generateJavaDeclaration(this, js, cgOperation);
+		callingConvention.generateJavaDeclaration(this, cgOperation);
 		return true;
 	}
 
@@ -2069,7 +2069,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull Boolean visitCGOperationCallExp(@NonNull CGOperationCallExp cgOperationCallExp) {
 		CGOperation cgOperation = cgOperationCallExp.getReferredOperation();
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
-		return callingConvention.generateJavaCall(this, js, cgOperationCallExp);
+		return callingConvention.generateJavaCall(this, cgOperationCallExp);
 	}
 
 	@Override
@@ -2090,7 +2090,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGProperty(@NonNull CGProperty cgProperty) {
-		return cgProperty.getCallingConvention().generateJavaDeclaration(this, js, cgProperty);
+		return cgProperty.getCallingConvention().generateJavaDeclaration(this, cgProperty);
 	}
 
 	@Override
@@ -2126,7 +2126,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (!js.appendLocalStatements(initValue)) {
 			return false;
 		}
-		cgProperty.getCallingConvention().generateJavaAssign(this, js, slotValue, cgProperty, initValue);
+		cgProperty.getCallingConvention().generateJavaAssign(this, slotValue, cgProperty, initValue);
 		return true;
 	}
 

@@ -179,9 +179,9 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 
 
 /*	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		// XXX should have been ForeignOperationCallingConvention
-		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
 
@@ -207,14 +207,15 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		appendForeignOperationName(cg2javaVisitor, js, cgOperationCallExp);
+		appendForeignOperationName(cg2javaVisitor, cgOperationCallExp);
 		js.append("(");
-		generateArgumentList(cg2javaVisitor, js, cgOperationCallExp);
+		generateArgumentList(cg2javaVisitor, cgOperationCallExp);
 		js.append(");\n");
 		return true;
 	} */
 
-	protected void doCachedOperationBasicEvaluate(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void doCachedOperationBasicEvaluate(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		js.append("@Override\n");
@@ -260,7 +261,8 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		js.append("}\n");
 	}
 
-	protected void doCachedOperationClassDirectInstance(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void doCachedOperationClassDirectInstance(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
 		String name = getNativeOperationClassName(cgOperation);
@@ -275,7 +277,8 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		js.append("();\n");
 	}
 
-	protected void doCachedOperationClassInstance(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void doCachedOperationClassInstance(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		Operation asOperation = (Operation) cgOperation.getAst();
 		assert asOperation != null;
 		String name = getNativeOperationClassName(cgOperation);
@@ -290,7 +293,8 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		js.append("();\n");
 	}
 
-	protected void doCachedOperationEvaluate(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void doCachedOperationEvaluate(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		if ("_classescs2as_qvtm_qvtcas::classescs2as_qvtm_qvtcas.CACHED_OP_OclElement_c_c_unqualified_env_Class_o_e_32_c_32_lookup_c_c_LookupEnvironment_91_1_93($metamodel$::OclElement) : 'http://cs2as/tests/example2/env/1.0'::LookupEnvironment".equals(cgOperation.toString())) {
 			getClass();		// XXX
 		}
@@ -401,7 +405,8 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 	} */
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGCachedOperation cgCachedOperation = (CGCachedOperation)cgOperation;
 		Operation asOperation = CGUtil.getAST(cgCachedOperation);
 		assert cgCachedOperation.getFinalOperations().size() <= 0;
@@ -416,18 +421,18 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		js.appendClassReference(null, AbstractEvaluationOperation.class);
 		js.pushClassBody(operationClassName);
 		js.append("\n");					// XXX delete me
-		doCachedOperationBasicEvaluate(cg2javaVisitor, js, cgCachedOperation);
+		doCachedOperationBasicEvaluate(cg2javaVisitor, cgCachedOperation);
 		js.append("\n");
-		doCachedOperationEvaluate(cg2javaVisitor, js, cgCachedOperation);
+		doCachedOperationEvaluate(cg2javaVisitor, cgCachedOperation);
 		js.popClassBody(false);
 		//
 		if (cgCachedOperation.getVirtualOperations().size() <= 0) {
 			js.append("\n");
-			doCachedOperationClassInstance(cg2javaVisitor, js, cgCachedOperation);
+			doCachedOperationClassInstance(cg2javaVisitor, cgCachedOperation);
 		}
 		else {
 			js.append("\n");
-			doCachedOperationClassDirectInstance(cg2javaVisitor, js, cgCachedOperation);
+			doCachedOperationClassDirectInstance(cg2javaVisitor, cgCachedOperation);
 		}
 		return true;
 	}

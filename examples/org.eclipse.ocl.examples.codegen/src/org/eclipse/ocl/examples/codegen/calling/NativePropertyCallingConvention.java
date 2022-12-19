@@ -75,7 +75,8 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGValuedElement cgSource = cgPropertyCallExp.getSource();
 		Property asProperty = cgPropertyCallExp.getAsProperty();
 		if (cgSource == null) {
@@ -108,7 +109,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 	}
 
 //	@Override
-//	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+//	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 //		js.append("protected ");
 //		js.appendDeclaration(cgProperty);
 //		js.append(";\n");
@@ -116,7 +117,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 //	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 		throw new UnsupportedOperationException();		// Native operations are declared natively
 	}
 

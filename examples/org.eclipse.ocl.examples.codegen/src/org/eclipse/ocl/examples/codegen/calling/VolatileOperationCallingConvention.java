@@ -52,7 +52,8 @@ public class VolatileOperationCallingConvention extends AbstractUncachedOperatio
 		return INSTANCE;
 	}
 
-	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asReferredOperation = CGUtil.getAsOperation(cgOperationCallExp);
@@ -107,9 +108,10 @@ public class VolatileOperationCallingConvention extends AbstractUncachedOperatio
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		// XXX should have been ForeignOperationCallingConvention
-		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
 
@@ -135,21 +137,21 @@ public class VolatileOperationCallingConvention extends AbstractUncachedOperatio
 
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		appendForeignOperationName(cg2javaVisitor, js, cgOperationCallExp);
+		appendForeignOperationName(cg2javaVisitor, cgOperationCallExp);
 		js.append("(");
-		generateArgumentList(cg2javaVisitor, js, cgOperationCallExp);
+		generateArgumentList(cg2javaVisitor, cgOperationCallExp);
 		js.append(");\n");
 		return true;
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();
 /*		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
-		appendDeclaration(cg2javaVisitor, js, cgOperation);
+		appendDeclaration(cg2javaVisitor, cgOperation);
 		appendParameterList(js, cgOperation);
-		appendBody(cg2javaVisitor, js, body);
+		appendBody(cg2javaVisitor, body);
 		return true; */
 	}
 

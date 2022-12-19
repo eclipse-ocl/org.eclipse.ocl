@@ -46,10 +46,11 @@ public class ContextClassCallingConvention extends AbstractClassCallingConventio
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
 		if (isEmpty(cgClass)) {
 			return true;
 		}
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.append("\n");
 		String className = CGUtil.getName(cgClass);
 		CGPackage cgContainingPackage = cgClass.getContainingPackage();
@@ -61,8 +62,8 @@ public class ContextClassCallingConvention extends AbstractClassCallingConventio
 //		if (!Iterables.isEmpty(cgSuperTypes)) {
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
-		generateProperties(cg2javaVisitor, js, cgClass);
-		generateOperations(cg2javaVisitor, js, cgClass);
+		generateProperties(cg2javaVisitor, cgClass);
+		generateOperations(cg2javaVisitor, cgClass);
 		js.popClassBody(false);
 		return true;
 	}

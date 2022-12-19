@@ -44,7 +44,8 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(cgOperation);
 		if (jMethod != null) {
 			js.append("@Override\n");
@@ -56,13 +57,13 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 		appendParameterList(js, cgOperation);
 		js.append(" {\n");
 		js.pushIndentation(null);
-		generateJavaOperationBody(cg2javaVisitor, js, cgOperation);
+		generateJavaOperationBody(cg2javaVisitor, cgOperation);
 		js.popIndentation();
 		js.append("}\n");
 		return true;
 	}
 
-	protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		cg2javaVisitor.appendReturn(body);
 	}

@@ -119,7 +119,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			}
 
 	/*		@Override
-			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 				Operation asOperation = CGUtil.getAST(cgOperation);
@@ -275,7 +275,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 /*	@Override
-	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		appendCommentWithOCL(js, cgOperation);
 		//
 		js.append("public static ");
@@ -287,7 +287,8 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		js.appendValueName(cgOperation);
 	} */
 
-	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asReferredOperation = CGUtil.getAsOperation(cgOperationCallExp);
@@ -354,31 +355,33 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 /*	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
-		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		js.append("appendForeignOperationName(cg2javaVisitor, js, cgOperationCallExp)");		// XXX
+		js.append("appendForeignOperationName(cg2javaVisitor, cgOperationCallExp)");		// XXX
 		js.append("(");
-		generateArgumentList(cg2javaVisitor, js, cgOperationCallExp);
+		generateArgumentList(cg2javaVisitor, cgOperationCallExp);
 		js.append(");\n");
 		return true;
 	} */
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-		generateJavaClass(cg2javaVisitor, js, cgOperation);
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		generateJavaClass(cg2javaVisitor, cgOperation);
 		js.append("\n");
-		generateJavaFunction(cg2javaVisitor, js, cgOperation);
+		generateJavaFunction(cg2javaVisitor, cgOperation);
 		return true;
 	}
 
 	/**
 	 * Generate a nested class to provide the polymorphic invocation interface.
 	 */
-	protected void generateJavaClass(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void generateJavaClass(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters(cgOperation);
@@ -475,7 +478,8 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	/**
 	 * Generate a static function to implement the foreign operation.
 	 */
-	protected void generateJavaFunction(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	protected void generateJavaFunction(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//

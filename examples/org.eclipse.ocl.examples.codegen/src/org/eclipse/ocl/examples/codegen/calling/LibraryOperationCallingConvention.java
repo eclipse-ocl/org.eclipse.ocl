@@ -282,7 +282,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)cgOperationCallExp;
 		assert cgOperationCallExp.getCgThis() == null;
 		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgLibraryOperationCallExp.getLibraryOperation());
@@ -299,9 +299,10 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 		boolean actualIsNonNull = actualNullity == Boolean.TRUE;
 	//	boolean actualIsNullable = actualNullity == Boolean.FALSE;
 		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
-		if (!generateLocals(cg2javaVisitor, js, cgOperationCallExp)) {
+		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		assert cgParameters.size() == iMax;
 		for (int i = 0; i < iMax; i++) {
@@ -396,7 +397,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Library operations are declared natively
 	}
 

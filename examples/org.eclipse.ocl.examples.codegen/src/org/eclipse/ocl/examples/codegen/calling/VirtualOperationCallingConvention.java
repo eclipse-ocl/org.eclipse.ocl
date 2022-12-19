@@ -99,7 +99,8 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			}
 
 			@Override
-			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+				JavaStream js = cg2javaVisitor.getJavaStream();
 				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 				List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
@@ -268,7 +269,8 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 		//	js.appendCommentWithOCL(title, asFeature);
 		js.append("private ");

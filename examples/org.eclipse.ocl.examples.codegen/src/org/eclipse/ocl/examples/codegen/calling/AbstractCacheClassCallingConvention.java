@@ -110,7 +110,8 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		}
 
 		@Override
-		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
 			GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
 			String executorName = globalNameManager.getExecutorNameResolution().getResolvedName();
 			String rootObjectName = globalNameManager.getRootObjectNameResolution().getResolvedName();
@@ -225,7 +226,8 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		}
 
 		@Override
-		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
 			js.append("return new ");
 			js.appendClassReference(null, cgOperation);
 			js.append("(");
@@ -272,11 +274,12 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
 		assert cgClass.getContainingPackage() == null;			// container is a cgClass
 		if (isEmpty(cgClass)) {
 			return true;
 		}
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		String className = CGUtil.getName(cgClass);
 		String title = getTitle(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
@@ -285,8 +288,8 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		js.append("protected class " + className);		// Could be static if dynamic INSTANCE_CACHE accessible statically
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
-		generateProperties(cg2javaVisitor, js, cgClass);
-		generateOperations(cg2javaVisitor, js, cgClass);
+		generateProperties(cg2javaVisitor, cgClass);
+		generateOperations(cg2javaVisitor, cgClass);
 		js.popClassBody(false);
 		return true;
 	}

@@ -60,7 +60,8 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		return INSTANCE;
 	}
 
-	protected void appendEcoreGet(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+	protected void appendEcoreGet(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGTypeId cgTypeId = cg2javaVisitor.getAnalyzer().getCGTypeId(asProperty.getOwningClass().getTypeId());
 		ElementId elementId = ClassUtil.nonNullState(cgTypeId.getElementId());
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
@@ -159,7 +160,8 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp) cgPropertyCallExp;
 		Property asProperty = ClassUtil.nonNullState(cgPropertyCallExp.getAsProperty());
 		assert cg2javaVisitor.getESObject(asProperty) == ClassUtil.nonNullState(cgEcorePropertyCallExp.getEStructuralFeature());
@@ -175,17 +177,17 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		//		js.append("/* " + ecoreIsRequired + " " + isRequired + " */\n");
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
-		appendEcoreGet(cg2javaVisitor, js, source, asProperty);
+		appendEcoreGet(cg2javaVisitor, source, asProperty);
 		js.append(";\n");
 		return true;
 	}
 
 	@Override
 	public boolean generateJavaDeclaration(
-			@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js,
+			@NonNull CG2JavaVisitor cg2javaVisitor,
 			@NonNull CGProperty cgProperty) {
 		// TODO Auto-generated method stub
-		return super.generateJavaDeclaration(cg2javaVisitor, js, cgProperty);
+		return super.generateJavaDeclaration(cg2javaVisitor, cgProperty);
 	}
 
 	@Override

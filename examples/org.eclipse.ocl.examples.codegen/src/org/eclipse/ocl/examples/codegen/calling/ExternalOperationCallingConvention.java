@@ -79,7 +79,7 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 			}
 
 		/*	@Override
-			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 				Operation asOperation = CGUtil.getAST(cgOperation);

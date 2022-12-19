@@ -299,12 +299,13 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		}
 
 		@Override
-		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
 			js.append("/**\n");
 			js.append(" * Return true if the boxedValues exactly match OCL-wise the values from which this entry was constructed.\n");
 			js.append(" * If so, the cachedResult can be re-used and no further ENTRY needs construction.\n");
 			js.append(" */\n");
-			return super.generateJavaDeclaration(cg2javaVisitor, js, cgOperation);
+			return super.generateJavaDeclaration(cg2javaVisitor, cgOperation);
 		}
 	}
 
@@ -386,8 +387,9 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
 		assert cgClass.getContainingPackage() == null;			// container is a cgClass
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		String className = CGUtil.getName(cgClass);
 		String title = getTitle(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
@@ -396,8 +398,8 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		js.append("protected class " + className);		// Could be static if dynamic INSTANCE_CACHE accessible statically
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
-		generateProperties(cg2javaVisitor, js, cgClass);
-		generateOperations(cg2javaVisitor, js, cgClass);
+		generateProperties(cg2javaVisitor, cgClass);
+		generateOperations(cg2javaVisitor, cgClass);
 		js.popClassBody(false);
 		return true;
 	}

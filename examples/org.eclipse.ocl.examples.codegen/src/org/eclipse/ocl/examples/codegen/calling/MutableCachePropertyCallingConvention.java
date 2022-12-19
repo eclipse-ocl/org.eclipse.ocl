@@ -24,8 +24,9 @@ public class MutableCachePropertyCallingConvention extends AbstractCacheProperty
 //	public static final @NonNull MutableCachePropertyCallingConvention INSTANCE = new MutableCachePropertyCallingConvention();
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.append("private");
-		return super.generateJavaDeclaration(cg2javaVisitor, js, cgProperty);
+		return super.generateJavaDeclaration(cg2javaVisitor, cgProperty);
 	}
 }

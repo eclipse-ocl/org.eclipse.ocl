@@ -44,7 +44,7 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 	}
 
 /*	@Override
-	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected void appendForeignOperationName(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		Operation asReferredOperation = CGUtil.getReferredOperation(cgOperationCallExp);
 		org.eclipse.ocl.pivot.Class asReferredClass = PivotUtil.getOwningClass(asReferredOperation);

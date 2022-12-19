@@ -58,13 +58,13 @@ public interface OperationCallingConvention extends CallingConvention
 	 * Generate the Java code for an Operation call.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp);
+	boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp);
 
 	/**
 	 * Generate the Java code for an Operation declaration.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation);
+	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation);
 
 //	FieldingAnalyzer.@NonNull ReturnState getRequiredReturn(@NonNull CGOperation cgOperation);
 

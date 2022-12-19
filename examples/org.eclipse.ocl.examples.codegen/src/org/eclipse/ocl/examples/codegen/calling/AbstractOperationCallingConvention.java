@@ -85,7 +85,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		cgArguments.add(analyzer.createCGConstantExp(cgTypeId));
 	}
 
-	protected void appendBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGValuedElement body) {
+	protected void appendBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGValuedElement body) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.append(" {\n");
 		js.pushIndentation(null);
 		cg2javaVisitor.appendReturn(body);
@@ -100,7 +101,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		js.appendCommentWithOCL(title + "\n", expressionInOCL);
 	}
 
-/*	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+/*	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		js.append("generateJavaDeclaration " + this);
 	//	return true;
 	//	assert false : "Missing overload for " + cgOperation.getCallingConvention().getClass().getSimpleName();
@@ -273,7 +274,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 
-	protected void generateArgumentList(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected void generateArgumentList(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
@@ -294,7 +296,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	@Deprecated /* @deprecated use generateJavaEvaluateCall always */
-	protected boolean generateDeprecatedJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected boolean generateDeprecatedJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		//	Operation pOperation = cgFunctionCallExp.getReferredOperation();
@@ -365,12 +368,13 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	protected boolean generateLocals(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	protected boolean generateLocals(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		Iterable<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgOperationCallExp);
 		for (@NonNull CGValuedElement cgArgument : cgArguments) {
 			CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);

@@ -47,10 +47,11 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGClass cgClass) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
 	//	if (isEmpty(cgClass)) {
 	//		return true;
 	//	}
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendOptionalBlankLine();;
 		GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
 		String rootObjectName = globalNameManager.getRootObjectNameResolution().getResolvedName();
@@ -93,15 +94,15 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.append(" = this;\n");
 		//
 		if (expInOcl.getOwnedContext() != null) {
-			generateProperties(cg2javaVisitor, js, cgClass);
-			generateOperations(cg2javaVisitor, js, cgClass);
+			generateProperties(cg2javaVisitor, cgClass);
+			generateOperations(cg2javaVisitor, cgClass);
 		}
 		else {
 			js.append("/*\n");
 			js.append("«IF expInOcl.messageExpression != null»«(expInOcl.messageExpression as StringLiteralExp).stringSymbol»«ENDIF»\n");
 			js.append("* /\n");
 		}
-		generateClasses(cg2javaVisitor, js, cgClass);
+		generateClasses(cg2javaVisitor, cgClass);
 		js.popClassBody(false);
 		assert js.peekClassNameStack() == null;
 		return true;

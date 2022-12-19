@@ -179,7 +179,8 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		}
 
 		@Override
-		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
 			CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 			GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 			Operation asOperation = CGUtil.getAST(cgOperation);
@@ -217,7 +218,8 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		}
 
 		@Override
-		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGProperty cgProperty) {
+		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
 			js.append("protected final");
 			js.append(" /*@NonInvalid*/ ");
@@ -323,8 +325,9 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 	}
 
 	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperationCallExp cgOperationCallExp) {
+	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		// FIXME could be a regular CG call if CG and AS separately created by generateDeclaration
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 		CGOperation cgOperation = CGUtil.getOperation(cgOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
@@ -357,7 +360,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		return true;		 // functionality realized by finer-grained CG elements
 	}
 
