@@ -706,6 +706,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		return context.getImportNameManager();
 	}
 
+	public @NonNull JavaStream getJavaStream() {
+		return js;
+	}
+
 	protected @Nullable Class<?> getLeastDerivedClass(Class<?> requiredClass, @NonNull String getAccessor) {
 		Class<?> superClass = requiredClass.getSuperclass();
 		if (superClass != null) {

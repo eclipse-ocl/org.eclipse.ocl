@@ -95,6 +95,24 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
 			}
 
+			@Override
+			protected void generateUniqueComputationArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
+				CGClass cgCacheClass = CGUtil.getContainingClass(cgOperation);
+				org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
+				Operation asOperation = cg2javaVisitor.getAnalyzer().getCachedOperation(asCacheClass);
+				if (asOperation.isIsStatic()) {
+					cg2javaVisitor.getJavaStream().append(globalNameManager.getRootObjectNameResolution().getResolvedName());
+					isFirst = false;
+				}
+				super.generateUniqueComputationArguments(cg2javaVisitor, isFirst, globalNameManager, cgOperation);
+			}
+
+		//	@Override
+		//	protected void generateUniqueComputationArguments(@NonNull JavaStream js, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
+		//		js.append(globalNameManager.getRootObjectNameResolution().getResolvedName());
+		//		super.generateUniqueComputationArguments(js, false, globalNameManager, cgOperation);
+		//	}
+
 			public static @NonNull ForeignEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 				INSTANCE.logInstance(asClass);
 				return INSTANCE;

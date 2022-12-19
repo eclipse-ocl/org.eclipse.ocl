@@ -23,8 +23,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
@@ -80,7 +78,7 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
 			}
 
-			@Override
+		/*	@Override
 			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
@@ -102,7 +100,7 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 				js.append(")).");
 				js.append(globalNameManager.getCachedResultNameResolution().getResolvedName());
 				js.append(";\n");
-			}
+			} */
 		}
 
 		@Override

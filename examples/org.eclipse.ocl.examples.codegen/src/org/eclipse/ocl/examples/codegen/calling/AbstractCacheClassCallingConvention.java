@@ -145,6 +145,12 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
+
+		@Override
+		protected void generateUniqueComputationArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
+			cg2javaVisitor.getJavaStream().append(globalNameManager.getRootObjectNameResolution().getResolvedName());
+			super.generateUniqueComputationArguments(cg2javaVisitor, false, globalNameManager, cgOperation);
+		}
 	}
 
 	public static class CacheNewInstanceOperationCallingConvention extends AbstractUncachedOperationCallingConvention

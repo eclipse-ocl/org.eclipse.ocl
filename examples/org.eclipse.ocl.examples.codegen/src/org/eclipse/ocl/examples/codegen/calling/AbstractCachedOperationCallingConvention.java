@@ -189,16 +189,21 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			js.append("return ((");
 			js.appendClassReference(cgCacheClass);
 			js.append(")getUniqueComputation(");
-			//	js.append(QVTiCGUtil.getContainingCGTransformation(cgOperation).getName());
-			js.append(globalNameManager.getRootObjectNameResolution().getResolvedName());
-			//	js.append(globalNameManager.getIdResolverName());
-			for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
-				js.append(", ");
-				js.appendValueName(cgParameter);
-			}
+			generateUniqueComputationArguments(cg2javaVisitor, true, globalNameManager, cgOperation);
 			js.append(")).");
 			js.append(globalNameManager.getCachedResultNameResolution().getResolvedName());
 			js.append(";\n");
+		}
+
+		protected void generateUniqueComputationArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
+			for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
+				if (!isFirst) {
+					js.append(", ");
+				}
+				js.appendValueName(cgParameter);
+				isFirst = false;
+			}
 		}
 	}
 
