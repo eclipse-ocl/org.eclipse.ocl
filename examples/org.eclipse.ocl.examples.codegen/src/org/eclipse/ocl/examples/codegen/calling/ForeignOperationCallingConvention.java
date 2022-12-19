@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
@@ -39,24 +38,21 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
-import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -83,9 +79,74 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			return INSTANCE;
 		}
 
+		public static class ForeignEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
+		{
+			private static final @NonNull ForeignEvaluateOperationCallingConvention INSTANCE = new ForeignEvaluateOperationCallingConvention();
+
+			@Override
+			protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
+				if (!asOperation.isIsStatic()) {
+					GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+					String contextObjectName = globalNameManager.getContextObjectNameResolution().getResolvedName();
+					Parameter asEvaluateParameter = PivotUtil.createParameter(contextObjectName, PivotUtil.getOwningClass(asOperation), true);
+					List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
+					asCacheEvaluateParameters.add(asEvaluateParameter);
+				}
+				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
+			}
+
+		/*	@Override
+			protected @Nullable Parameter createCacheEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+				if (asOperation.isIsStatic()) {
+					return null;
+				}
+				CodeGenerator codeGenerator = analyzer.getCodeGenerator();
+				GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
+				NameResolution contextObjectNameResolution = globalNameManager.getContextObjectNameResolution();
+				return PivotUtil.createParameter(contextObjectNameResolution.getResolvedName(), PivotUtil.getOwningClass(asOperation), true);
+			} */
+
+			public static @NonNull ForeignEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+				INSTANCE.logInstance(asClass);
+				return INSTANCE;
+			}
+
+	/*		@Override
+			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
+				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+				Operation asOperation = CGUtil.getAST(cgOperation);
+				org.eclipse.ocl.pivot.Class asConstructorClass = PivotUtil.getOwningClass(asOperation);
+				org.eclipse.ocl.pivot.Class asCacheClass = analyzer.getEntryClass(asConstructorClass);
+				CGClass cgCacheClass = analyzer.getCGClass(asCacheClass);
+				js.append("return ((");
+				js.appendClassReference(cgCacheClass);
+				js.append(")getUniqueComputation(");
+				//	js.append(QVTiCGUtil.getContainingCGTransformation(cgOperation).getName());
+				Operation asOriginalOperation = analyzer.getCachedOperation(asCacheClass);
+				NameResolution contextObjectNameResolution = asOriginalOperation.isIsStatic() ? globalNameManager.getRootObjectNameResolution() : globalNameManager.getContextObjectNameResolution();
+				js.append(contextObjectNameResolution.getResolvedName());
+				//	js.append(globalNameManager.getIdResolverName());
+				for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
+					js.append(", ");
+					js.appendValueName(cgParameter);
+				}
+				js.append(")).");
+				js.append(globalNameManager.getCachedResultNameResolution().getResolvedName());
+				js.append(";\n");
+			} */
+		}
+
 		@Override
 		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 			return getRootClassParentPackage(analyzer, asOperation);
+		}
+
+		@Override
+		protected void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Class asEntryClass, @NonNull Operation asOperation) {
+			org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
+			ForeignEvaluateOperationCallingConvention callingConvention = ForeignEvaluateOperationCallingConvention.getInstance(asCacheClass);
+			callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
 		}
 	}
 
@@ -98,7 +159,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			return INSTANCE;
 		}
 
-		@Override		/// super was final // XXX promote this - just defines lazy ownedContext
+/*		@Override		/// super was final // XXX promote this - just defines lazy ownedContext
 		protected final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
 			//
 			// AS Class - yyy2zzz
@@ -156,7 +217,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			//
 			cgEntryClass.getOperations().add(cgConstructor);
 			return cgConstructor;
-		}
+		} */
 	}
 
 	public static class ForeignEntryClassCallingConvention extends AbstractEntryClassCallingConvention

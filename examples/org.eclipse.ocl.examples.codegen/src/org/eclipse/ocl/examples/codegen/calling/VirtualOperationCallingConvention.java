@@ -29,7 +29,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -90,13 +89,23 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			}
 
 			@Override
+			protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
+				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+				String objectName = globalNameManager.getObjectNameResolution().getResolvedName();
+				Parameter asEvaluateParameter = PivotUtil.createParameter(objectName, PivotUtil.getOwningClass(asOperation), true);
+				List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
+				asCacheEvaluateParameters.add(asEvaluateParameter);
+				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
+			}
+
+		/*	@Override
 			protected @Nullable Parameter createCacheEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 				CodeGenerator codeGenerator = analyzer.getCodeGenerator();
 				GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 				String objectName = globalNameManager.getObjectName();
 				Parameter asEvaluateParameter = PivotUtil.createParameter(objectName, PivotUtil.getOwningClass(asOperation), true);
 				return asEvaluateParameter;
-			}
+			} */
 
 			@Override
 			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {

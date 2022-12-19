@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -302,7 +303,16 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		if (asExpressionInOCL != null) {
 			ExpressionInOCL asEntryExpressionInOCL = EcoreUtil.copy(asExpressionInOCL);
 			Variable asContextVariable = asEntryExpressionInOCL.getOwnedContext();
-			assert asContextVariable != null;
+			if (asContextVariable == null) {			// QVTi FunctionBody has eager ownedContext, OCL ExpressionInOCL is lazy
+				PivotHelper asHelper = codeGenerator.getASHelper();
+				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+				String thisName = globalNameManager.getThisNameResolution().getResolvedName();
+				asContextVariable = asHelper.createParameterVariable(thisName, asEntryClass, true);
+				asEntryExpressionInOCL.setOwnedContext(asContextVariable);
+			}
+			else {
+				asContextVariable.setType(asEntryClass);		// Change copied context from context class to entry class
+			}
 			assert asContextVariable.isIsRequired();
 			assert asContextVariable.getTypeValue() == null;
 			asContextVariable.setType(asEntryClass);		// Change copied context from context class to entry class

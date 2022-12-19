@@ -285,7 +285,7 @@ public class CodeGenAnalyzer
 	}
 
 	/**
-	 * Mapping from loriginal AS Operation to the AS Class that caches the operations evaluation.
+	 * Mapping from original AS Operation to the AS Class that caches the operations evaluation.
 	 */
 	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Operation> asCacheClass2asOperation = new HashMap<>();
 

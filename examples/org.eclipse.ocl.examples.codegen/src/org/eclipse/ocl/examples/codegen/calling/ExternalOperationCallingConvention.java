@@ -23,7 +23,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -36,6 +35,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -71,13 +71,23 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 			}
 
 			@Override
+			protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
+				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+				String selfName = globalNameManager.getSelfNameResolution().getResolvedName();
+				Parameter asEvaluateParameter = PivotUtil.createParameter(selfName, PivotUtil.getOwningClass(asOperation), true);
+				List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
+				asCacheEvaluateParameters.add(asEvaluateParameter);
+				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
+			}
+
+		/*	@Override
 			protected @Nullable Parameter createCacheEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 				CodeGenerator codeGenerator = analyzer.getCodeGenerator();
 				GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 				NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
 				Parameter asEvaluateParameter = PivotUtil.createParameter(selfNameResolution.getResolvedName(), PivotUtil.getOwningClass(asOperation), true);
 				return asEvaluateParameter;
-			}
+			} */
 
 			@Override
 			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {

@@ -187,28 +187,49 @@ public class JavaLanguageSupport extends AbstractLanguageSupport
 			TypeId asSuperTypeId = asSuperClass.getTypeId();
 			if (asSuperTypeId instanceof JavaTypeId) {
 				Class<?> jSuperClass = ((JavaTypeId)asSuperTypeId).getJavaClass();
-				for (Method jMethod : jSuperClass.getMethods()) {
-					if (name.equals(jMethod.getName())) {
-						@NonNull Class<?> @NonNull [] jParameterTypes = jMethod.getParameterTypes();
-						if (jParameterTypes.length != cgParameters.size()) {
-							break;
-						}
-						boolean allMatching = true;
-						for (int i = 0; i < jParameterTypes.length; i++) {
-							@NonNull Class<?> jParameterType = jParameterTypes[i];
-							@NonNull CGParameter cgParameter = cgParameters.get(i);
-							TypeId jTypeId = JavaConstants.getJavaTypeId(jParameterType);
-							ElementId asTypeId = cgParameter.getTypeId().getElementId();
-							if (jTypeId != asTypeId) {		// FIXME is this sound?
-								allMatching = false;
-								break;
-							}
-						}
-						if (allMatching) {
-							return jMethod;
-						}
+				Method jMethod = getOverriddenMethod(jSuperClass, name, cgParameters);
+				if (jMethod != null) {
+					return jMethod;
+				}
+			}
+		}
+		return null;
+	}
+
+	private static @Nullable Method getOverriddenMethod(/*@NonNull*/ Class<?> jClass, @NonNull String name, @NonNull List<@NonNull CGParameter> cgParameters) {
+		for (Method jMethod : jClass.getDeclaredMethods()) {										// Need to see protected
+			if (name.equals(jMethod.getName()) && !Modifier.isPrivate(jMethod.getModifiers())) {	//  but not private
+				@NonNull Class<?> @NonNull [] jParameterTypes = jMethod.getParameterTypes();
+				if (jParameterTypes.length != cgParameters.size()) {
+					break;
+				}
+				boolean allMatching = true;
+				for (int i = 0; i < jParameterTypes.length; i++) {
+					@NonNull Class<?> jParameterType = jParameterTypes[i];
+					@NonNull CGParameter cgParameter = cgParameters.get(i);
+					TypeId jTypeId = JavaConstants.getJavaTypeId(jParameterType);
+					ElementId asTypeId = cgParameter.getTypeId().getElementId();
+					if (jTypeId != asTypeId) {		// FIXME is this sound?
+						allMatching = false;
+						break;
 					}
 				}
+				if (allMatching) {
+					return jMethod;
+				}
+			}
+		}
+		Class<?> jSuperClass = jClass.getSuperclass();
+		if (jSuperClass != null) {
+			Method jMethod = getOverriddenMethod(jSuperClass, name, cgParameters);
+			if (jMethod != null) {
+				return jMethod;
+			}
+		}
+		for (Class<?> jSuperInterface : jClass.getInterfaces()) {
+			Method jMethod = getOverriddenMethod(jSuperInterface, name, cgParameters);
+			if (jMethod != null) {
+				return jMethod;
 			}
 		}
 		return null;
@@ -322,8 +343,8 @@ public class JavaLanguageSupport extends AbstractLanguageSupport
 
 	/*
 	 * Return a native package for asPackage without flattening nested packages.
-	 */
-	private org.eclipse.ocl.pivot.@NonNull Package zzgetCachePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	 *
+	private org.eclipse.ocl.pivot.@NonNull Package getCachePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		String name = PivotUtil.getName(asPackage);
 		org.eclipse.ocl.pivot.Package asParentPackage = asPackage.getOwningPackage();
 		if (asParentPackage != null) {
@@ -332,7 +353,7 @@ public class JavaLanguageSupport extends AbstractLanguageSupport
 		else {
 			return getPackage(getNativeModel(), name);
 		}
-	}
+	} */
 
 	/*
 	 * Return a native class for jClass flattening nested classes.

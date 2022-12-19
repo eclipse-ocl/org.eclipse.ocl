@@ -145,29 +145,6 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
-
-		@Override
-		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
-			CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
-			GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-			Operation asOperation = CGUtil.getAST(cgOperation);
-			org.eclipse.ocl.pivot.Class asConstructorClass = PivotUtil.getOwningClass(asOperation);
-			org.eclipse.ocl.pivot.Class asCacheClass = analyzer.getEntryClass(asConstructorClass);
-			CGClass cgCacheClass = analyzer.getCGClass(asCacheClass);
-			js.append("return ((");
-			js.appendClassReference(cgCacheClass);
-			js.append(")getUniqueComputation(");
-			//	js.append(QVTiCGUtil.getContainingCGTransformation(cgOperation).getName());
-			js.append(globalNameManager.getRootObjectNameResolution().getResolvedName());
-			//	js.append(globalNameManager.getIdResolverName());
-			for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
-				js.append(", ");
-				js.appendValueName(cgParameter);
-			}
-			js.append(")).");
-			js.append(globalNameManager.getCachedResultNameResolution().getResolvedName());
-			js.append(";\n");
-		}
 	}
 
 	public static class CacheNewInstanceOperationCallingConvention extends AbstractUncachedOperationCallingConvention
@@ -249,6 +226,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			js.append(cg2javaVisitor.getGlobalNameManager().getExecutorNameResolution().getResolvedName());
 			for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
 				js.append(", ");
+				js.append("(@NonNull Object @NonNull [])");		// XXX conditionalize / parameterize
 				js.appendValueName(cgParameter);
 			}
 			js.append(");\n");
