@@ -369,6 +369,22 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	} */
 
 	@Override
+	protected void generateJavaCallArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull Iterable<@NonNull CGValuedElement> cgArguments) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		int i = 0;
+		for (@NonNull CGValuedElement cgArgument : cgArguments) {		// Skip first argument
+			if (i >= 1) {
+				if (i >= 2) {
+					js.append(", ");
+				}
+				CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
+				js.appendValueName(argument);
+			}
+			i++;
+		}
+	}
+
+	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		generateJavaClass(cg2javaVisitor, cgOperation);

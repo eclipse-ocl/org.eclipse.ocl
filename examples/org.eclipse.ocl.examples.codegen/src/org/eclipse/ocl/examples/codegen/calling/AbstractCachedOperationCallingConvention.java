@@ -346,7 +346,13 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		js.append(" = ");
 		js.appendValueName(cgCacheInstance);
 		js.append(".evaluate(");
-		boolean isFirst = true;
+		generateJavaCallArguments(cg2javaVisitor, true, cgArguments);
+		js.append(");\n");
+		return true;
+	}
+
+	protected void generateJavaCallArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull Iterable<@NonNull CGValuedElement> cgArguments) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
 		for (@NonNull CGValuedElement cgArgument : cgArguments) {
 			if (!isFirst) {
 				js.append(", ");
@@ -355,8 +361,6 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			js.appendValueName(argument);
 			isFirst = false;
 		}
-		js.append(");\n");
-		return true;
 	}
 
 	@Override
