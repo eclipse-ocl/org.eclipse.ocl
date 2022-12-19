@@ -98,15 +98,6 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
 			}
 
-		/*	@Override
-			protected @Nullable Parameter createCacheEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-				CodeGenerator codeGenerator = analyzer.getCodeGenerator();
-				GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-				String objectName = globalNameManager.getObjectName();
-				Parameter asEvaluateParameter = PivotUtil.createParameter(objectName, PivotUtil.getOwningClass(asOperation), true);
-				return asEvaluateParameter;
-			} */
-
 			@Override
 			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();

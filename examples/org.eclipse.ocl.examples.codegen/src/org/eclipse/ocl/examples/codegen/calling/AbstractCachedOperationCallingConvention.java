@@ -88,13 +88,12 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 
 	public static abstract class AbstractEvaluateOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 	{
+		/**
+		 * Prepare the parameter list of the AS Cache Evalute operation for the invoked AS Operation.
+		 * The default implementation copies the parameters. Derived implementations may prefix a self/context object.
+		 */
 		protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
-	//		List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
 			List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
-	//		Parameter asCacheEvaluateSelfParameter = createCacheEvaluateOperationSelfParameter(analyzer, asOperation);
-	//		if (asCacheEvaluateSelfParameter != null) {
-	//			asCacheEvaluateParameters.add(asCacheEvaluateSelfParameter);
-	//		}
 			for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
 				Parameter asEvaluateParameter = PivotUtil.createParameter(PivotUtil.getName(asParameter), PivotUtil.getType(asParameter), asParameter.isIsRequired());
 				asCacheEvaluateParameters.add(asEvaluateParameter);
@@ -135,10 +134,6 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 				cgEvaluateParameters.add(cgParameter);
 			}
 		}
-
-	//	protected @Nullable Parameter createCacheEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-	//		return null;
-	//	}
 
 		public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
 			//

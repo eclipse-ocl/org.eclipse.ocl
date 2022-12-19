@@ -95,17 +95,6 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
 			}
 
-		/*	@Override
-			protected @Nullable Parameter createCacheEvaluateOperationSelfParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-				if (asOperation.isIsStatic()) {
-					return null;
-				}
-				CodeGenerator codeGenerator = analyzer.getCodeGenerator();
-				GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-				NameResolution contextObjectNameResolution = globalNameManager.getContextObjectNameResolution();
-				return PivotUtil.createParameter(contextObjectNameResolution.getResolvedName(), PivotUtil.getOwningClass(asOperation), true);
-			} */
-
 			public static @NonNull ForeignEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 				INSTANCE.logInstance(asClass);
 				return INSTANCE;
