@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.calling.ImmutableCachePropertyCallingConvention.DefaultInstancePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.AbstractCachePropertyCallingConvention.DefaultInstancePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -293,7 +293,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
-	protected @NonNull ImmutableCachePropertyCallingConvention getCacheInstancePropertyCallingConvention(@NonNull Property asProperty) {
+	protected @NonNull AbstractCachePropertyCallingConvention getCacheInstancePropertyCallingConvention(@NonNull Property asProperty) {
 		return DefaultInstancePropertyCallingConvention.getInstance(asProperty);
 	}
 

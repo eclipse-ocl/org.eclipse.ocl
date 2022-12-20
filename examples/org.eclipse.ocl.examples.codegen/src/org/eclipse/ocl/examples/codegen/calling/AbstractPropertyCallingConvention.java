@@ -87,12 +87,14 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+	public abstract boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
+
+	protected boolean generateJavaDeclarationUnimplemented(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		js.append("«");
 		js.append(getClass().getSimpleName());
-		js.append(".generateJavaDeclaration ");		// XXX debugging - change to absttract
+		js.append(".generateJavaDeclaration ");		// XXX debugging - change to abstract
 		js.append(asProperty.getOwningClass().getOwningPackage().getName());
 		js.append("::");
 		js.append(asProperty.getOwningClass().getName());

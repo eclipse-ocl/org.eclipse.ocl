@@ -23,7 +23,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
@@ -177,6 +176,11 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		js.appendClassCast(cgForeignPropertyCallExp, castBody);
 		js.append(";\n");
 		return true; */
+	}
+
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		return generateJavaDeclarationUnimplemented(cg2javaVisitor, cgProperty);		// XXX
 	}
 
 	@Override

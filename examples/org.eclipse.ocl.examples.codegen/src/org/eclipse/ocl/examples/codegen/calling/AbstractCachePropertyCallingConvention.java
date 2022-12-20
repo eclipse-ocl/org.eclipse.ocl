@@ -13,12 +13,17 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.java.JavaStream.TypeRepresentation;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 
@@ -29,22 +34,76 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
  */
 public abstract class AbstractCachePropertyCallingConvention extends AbstractPropertyCallingConvention
 {
+	public static class DefaultInstancePropertyCallingConvention extends AbstractCachePropertyCallingConvention
+	{
+		private static final @NonNull DefaultInstancePropertyCallingConvention INSTANCE = new DefaultInstancePropertyCallingConvention();
+
+		public static @NonNull DefaultInstancePropertyCallingConvention getInstance(@NonNull Property asProperty) {
+			INSTANCE.logInstance(asProperty);
+			return INSTANCE;
+		}
+
+		@Override
+		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
+			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
+			js.append("protected final");
+			js.append(" /*@NonInvalid*/ ");
+			boxedTypeRepresentation.appendClassReference(cgProperty.isRequired(), cgProperty);
+			js.append(" ");
+			js.appendValueName(cgProperty);
+			js.append(" = new ");
+			boxedTypeRepresentation.appendClassReference(null, cgProperty);
+			js.append("();\n");
+			return true;
+		}
+	}
+
+	/**
+	 *  ImmutableCachePropertyCallingConvention defines the support for an immutable input property of a chahe realizing an operation call.
+	 */
+	public static class ImmutableCachePropertyCallingConvention extends AbstractCachePropertyCallingConvention
+	{
+		private static final @NonNull ImmutableCachePropertyCallingConvention INSTANCE = new ImmutableCachePropertyCallingConvention();
+
+		public static @NonNull ImmutableCachePropertyCallingConvention getInstance(@NonNull Property asProperty) {
+			INSTANCE.logInstance(asProperty);
+			return INSTANCE;
+		}
+
+		@Override
+		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
+			js.append("protected final");
+			js.append(" /*@NonInvalid*/ ");
+			js.getBoxedTypeRepresentation().appendClassReference(cgProperty.isRequired(), cgProperty);
+			js.append(" ");
+			js.appendValueName(cgProperty);
+			js.append(";\n");
+			return true;
+		}
+	}
+
 	@Override
 	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
-	/*	CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
+	//	CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
 		Property asProperty = CGUtil.getAST(cgProperty);
-		boolean isRequired = asProperty.isIsRequired();
-		assert libraryProperty instanceof TuplePartProperty;
-		CGTuplePartCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGTuplePartCallExp();
-		cgPropertyCallExp.setAstTuplePartId(IdManager.getTuplePartId(asProperty));
-		cgPropertyCallExp.setReferredProperty(cgProperty);
-		cgPropertyCallExp.setAsProperty(asProperty);
-		as2cgVisitor.initAst(cgPropertyCallExp, asPropertyCallExp);
-		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
+	//	boolean isRequired = asProperty.isIsRequired();
+	//	assert libraryProperty instanceof CacheProperty;
+		CGPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGLibraryPropertyCallExp();
 		cgPropertyCallExp.setSource(cgSource);
-		return cgPropertyCallExp; */
-		throw new UnsupportedOperationException();
+		cgPropertyCallExp.setReferredProperty(cgProperty);
+		cgPropertyCallExp.setTypeId(cgProperty.getTypeId());
+		cgPropertyCallExp.setRequired(cgProperty.isRequired());
+	//	CGTuplePartCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGNaCallExp();
+	//	cgPropertyCallExp.setAstTuplePartId(IdManager.getTuplePartId(asProperty));
+	//	cgPropertyCallExp.setReferredProperty(cgProperty);
+		cgPropertyCallExp.setAsProperty(asProperty);
+		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
+	//	cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
+	//	cgPropertyCallExp.setSource(cgSource);
+		return cgPropertyCallExp;
 	}
 
 	@Override
@@ -68,17 +127,6 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
-		JavaStream js = cg2javaVisitor.getJavaStream();
-		js.append(" /*@NonInvalid*/ ");
-		js.getBoxedTypeRepresentation().appendClassReference(cgProperty.isRequired(), cgProperty);
-		js.append(" ");
-		js.appendValueName(cgProperty);
-		js.append(";\n");
-		return true;
-	}
-
-	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
 	//	js.appendDeclaration(cgPropertyCallExp);
@@ -87,6 +135,11 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 		js.append(".");
 		js.appendReferenceTo(cgPropertyCallExp.getReferredProperty());
 	//	js.append(";\n");
+		return true;
+	}
+
+	@Override
+	public boolean isInlined() {
 		return true;
 	}
 }

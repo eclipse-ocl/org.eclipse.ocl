@@ -265,7 +265,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("INSTANCE_CACHE_Parent_count")) {
+			if (string.contains("CACHE_Parent_static_count")) {
 				getClass();		// XXX
 			}
 			if (string.contains("intValue")) {

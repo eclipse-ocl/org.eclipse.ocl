@@ -16,6 +16,7 @@ import java.util.Stack;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.AbstractCachePropertyCallingConvention.ImmutableCachePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention.CacheProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;

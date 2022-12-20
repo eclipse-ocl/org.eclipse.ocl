@@ -32,12 +32,12 @@ public abstract class AbstractCallingConvention implements CallingConvention, Na
 	private static @NonNull Set<@NonNull AbstractCallingConvention> callingConventions = new HashSet<>();
 
 	public static void printAllUsages() {
-		List<@NonNull AbstractCallingConvention> callingConventions = new ArrayList<>(AbstractCallingConvention.callingConventions);
+	/*	List<@NonNull AbstractCallingConvention> callingConventions = new ArrayList<>(AbstractCallingConvention.callingConventions);
 		Collections.sort(callingConventions, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull AbstractCallingConvention callingConvention : callingConventions) {
 			System.out.println(callingConvention);
 			callingConvention.printUsages();
-		}
+		} */
 	}
 
 	public static void resetAllUsages() {

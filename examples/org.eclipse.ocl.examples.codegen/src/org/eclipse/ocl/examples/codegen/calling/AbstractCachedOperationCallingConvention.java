@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.AbstractCachePropertyCallingConvention.ImmutableCachePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -208,13 +209,21 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		}
 	}
 
-	public static class CacheInstancePropertyCallingConvention extends ImmutableCachePropertyCallingConvention
+	public static class CacheInstancePropertyCallingConvention extends AbstractCachePropertyCallingConvention
 	{
 		private static final @NonNull CacheInstancePropertyCallingConvention INSTANCE = new CacheInstancePropertyCallingConvention();
 
 		public static @NonNull CacheInstancePropertyCallingConvention getInstance(@NonNull Property asProperty) {
 			INSTANCE.logInstance(asProperty);
 			return INSTANCE;
+		}
+
+		@Override
+		public @NonNull CGProperty createCGProperty(
+				@NonNull CodeGenAnalyzer analyzer,
+				@NonNull TypedElement asTypedElement) {
+			// XXX Auto-generated method stub
+			return super.createCGProperty(analyzer, asTypedElement);
 		}
 
 		@Override
@@ -274,8 +283,9 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		Property asProperty = PivotUtil.createProperty(propertyName, asCacheClass);
 		analyzer.addCacheInstance(asOperation, asProperty, asEntryClass);
 		//
-		CGProperty cgProperty = analyzer.createCGElement(CGProperty.class, asProperty);
-		cgProperty.setCallingConvention(getCacheInstancePropertyCallingConvention(asProperty));
+		AbstractCachePropertyCallingConvention propertyCallingConvention = getCacheInstancePropertyCallingConvention(asProperty);
+		CGProperty cgProperty = analyzer.generatePropertyDeclaration(asProperty, propertyCallingConvention);
+		cgProperty.setCallingConvention(propertyCallingConvention);
 		assert cgProperty.eContainer() != null;
 		return asProperty;
 	}
@@ -382,7 +392,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		return DefaultCacheClassCallingConvention.getInstance(asOperation, false);
 	}
 
-	protected @NonNull ImmutableCachePropertyCallingConvention getCacheInstancePropertyCallingConvention(@NonNull Property asProperty) {
+	protected @NonNull AbstractCachePropertyCallingConvention getCacheInstancePropertyCallingConvention(@NonNull Property asProperty) {
 		return CacheInstancePropertyCallingConvention.getInstance(asProperty);
 	}
 

@@ -69,6 +69,8 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 
 	@Test public void testConstruct_if() throws Exception {
 		TestOCL ocl = createOCL();
+		ocl.assertQueryTrue(null, "if self.oclIsUndefined() then true else false endif");
+			// XXX
 		ocl.assertValidationErrorQuery(null, "if null then 1 else 2 endif",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif");
 		//

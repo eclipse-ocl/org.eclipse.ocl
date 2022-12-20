@@ -182,12 +182,10 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		return true;
 	}
 
+
 	@Override
-	public boolean generateJavaDeclaration(
-			@NonNull CG2JavaVisitor cg2javaVisitor,
-			@NonNull CGProperty cgProperty) {
-		// TODO Auto-generated method stub
-		return super.generateJavaDeclaration(cg2javaVisitor, cgProperty);
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		return generateJavaDeclarationUnimplemented(cg2javaVisitor, cgProperty);		// XXX
 	}
 
 	@Override
