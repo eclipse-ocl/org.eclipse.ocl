@@ -303,7 +303,6 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		CGOperation cgOperation = null;
 		EOperation eOperation = (EOperation) asOperation.getESObject();
 		if ((eOperation != null) && !PivotUtil.isStatic(eOperation)) {
 			try {
@@ -311,19 +310,13 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 				genModelHelper.getGenOperation(eOperation);
 				CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
 				cgEcoreOperation.setEOperation(eOperation);
-				cgOperation = cgEcoreOperation;
+				return cgEcoreOperation;
 			}
 			catch (GenModelException e) {
 				// No genmodel so fallback
 			}
 		}
-		if (cgOperation == null) {
-			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		}
-		analyzer.initAst(cgOperation, asOperation, true);
-		analyzer.addExternalFeature(asOperation);
-		createCachingClassesAndInstance(analyzer, cgOperation);
-		return cgOperation;
+		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
 	}
 
 	@Override
@@ -352,6 +345,25 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		cgParameters.add(operationNameManager.getExecutorParameter());
 		super.createCGParameters(operationNameManager, expressionInOCL);
+	}
+
+	@Override
+	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
+		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
+		assert cgOperation.getCallingConvention() == null;
+		cgOperation.setCallingConvention(this);
+		assert cgOperation.getAst() == null;
+		assert analyzer.basicGetCGElement(asOperation) == null;
+		analyzer.initAst(cgOperation, asOperation, true);
+		assert analyzer.basicGetCGElement(asOperation) != null;
+		analyzer.addExternalFeature(asOperation);
+		createCachingClassesAndInstance(analyzer, cgOperation);
+		assert cgOperation.eContainer() == null;
+		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
+		cgClass.getOperations().add(cgOperation);
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+		createCGParameters(operationNameManager, asExpressionInOCL);
+		return cgOperation;
 	}
 
 /*	@Override

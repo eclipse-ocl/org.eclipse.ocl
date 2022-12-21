@@ -16,9 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -101,18 +99,6 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		assert asOperation.getImplementationClass() != null;
-		assert asOperation.getBodyExpression() == null;
-		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
-		analyzer.initAst(cgOperation, asOperation, true);
-		CGClass cgRootClass = analyzer.getCGRootClass(asOperation);
-		cgRootClass.getOperations().add(cgOperation);
-		createCachingClassesAndInstance(analyzer, cgOperation);
-		return cgOperation;
-	}
-
-	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
 		assert bodyExpression == null;
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
@@ -123,11 +109,6 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 		//		cgParameters.add(cgParameter);
 		//	}
 	}
-
-//	@Override
-//	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-//		return ImplementedEntryClassCallingConvention.getInstance(asClass);
-//	}
 
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {

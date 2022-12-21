@@ -240,14 +240,22 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		assert analyzer.basicGetCGOperation(asOperation) == null;		// XXX
+		throw new UnsupportedOperationException();		// created directly
+	}
+
+	@Override
+	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager,@Nullable ExpressionInOCL bodyExpression) {
+		// TODO Auto-generated method stub
+		//super.createCGParameters(operationNameManager, bodyExpression); in createDispatchConstructor
+	}
+
+	@Override
+	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
+		assert analyzer.basicGetCGOperation(asOperation) == null;
 		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getClass(asOperation);
 		DispatchClassCallingConvention dispatchClassCallingConvention = DispatchClassCallingConvention.getInstance(asOperation);
 		CGClass cgDispatchClass = dispatchClassCallingConvention.createCacheClass(analyzer, asOperation, asClass, this);
 		CGCachedOperation cgDispatchOperation = (CGCachedOperation)CGUtil.getOperationsList(cgDispatchClass).get(0);
-		//	cgDispatchOperation.setRequired(asOperation.isIsRequired());
-	//	cgDispatchOperation.setCallingConvention(this);
-	//	analyzer.initAst(cgDispatchOperation, asOperation, false);				// XXX redundant wrt caller
 		Iterable<@NonNull Operation> asOverrideOperations = analyzer.addVirtualCGOperations(asOperation, cgDispatchOperation);
 		List<@NonNull CGCachedOperation> cgOverrideOperations = new ArrayList<>();
 		for (@NonNull Operation asOverrideOperation : asOverrideOperations) {
@@ -257,15 +265,13 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		cgDispatchOperation.getFinalOperations().addAll(cgOverrideOperations);
 		Operation asDispatchOperation = CGUtil.getAST(cgDispatchOperation);
 		org.eclipse.ocl.pivot.Class asDispatchClass = PivotUtil.getOwningClass(asDispatchOperation);
-	//	ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgDispatchOperation, asDispatchOperation);	// Needed to support downstream useOperationNameManager()
-		/*Property asConstructorInstance =*/ createCacheInstance(analyzer, asDispatchOperation, asDispatchClass, asDispatchClass);
+		createCacheInstance(analyzer, asDispatchOperation, asDispatchClass, asDispatchClass);
+		assert cgDispatchOperation.getCallingConvention() == this;
+		assert analyzer.basicGetCGElement(asDispatchOperation) != null;
+		assert cgDispatchOperation.eContainer() != null;
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgDispatchOperation, asDispatchOperation);	// Needed to support downstream useOperationNameManager()
+		createCGParameters(operationNameManager, asExpressionInOCL);
 		return cgDispatchOperation;
-	}
-
-	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager,@Nullable ExpressionInOCL bodyExpression) {
-		// TODO Auto-generated method stub
-		//super.createCGParameters(operationNameManager, bodyExpression); in createDispatchConstructor
 	}
 
 	@Override

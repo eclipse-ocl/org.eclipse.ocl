@@ -92,37 +92,9 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		assert metamodelManager.getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
-	//	return CGModelFactory.eINSTANCE.createCGCachedOperation();
-
 		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
-	//	analyzer.installOperation(asOperation, cgOperation, this);
-	//	asNewOperations.add(asOperation);
-	//	cgOperations.add((CGCachedOperation) cgOperation);
 		analyzer.addExternalFeature(asOperation);
-
-
-
-
-	//	generateDeclarationHierarchy(as2cgVisitor, asSourceType, asOperation);
-	//	Iterable<@NonNull Operation> asOverrideOperations = null;
-	//	CGClass currentClass = as2cgVisitor.getCurrentClass();
-	//	generateDeclarationHierarchy(as2cgVisitor, currentClass, asOperation, asOverrideOperations);
-
-	//	if (currentClass != null) {
-	//		Iterable<@NonNull Operation> overrides = metamodelManager.getFinalAnalysis().getOverrides(asOperation);
-	//		return cachedOperationCall(element, currentClass2, cgSource, asOperation, overrides);
-	//	}
-
-	//	CGOperation cgOperation2 = analyzer.basicGetFinalCGOperation(asOperation);
-	//	assert cgOperation2 == cgOperation;
 		return cgOperation;
-
-
-
-	//	assert as2cgVisitor.getMetamodelManager().getImplementation(asOperation) instanceof ConstrainedOperation;
-	//	org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
-	//	assert !(asPackage instanceof Library);
-	//	return CGModelFactory.eINSTANCE.createCGCachedOperation();
 	}
 
 	@Override

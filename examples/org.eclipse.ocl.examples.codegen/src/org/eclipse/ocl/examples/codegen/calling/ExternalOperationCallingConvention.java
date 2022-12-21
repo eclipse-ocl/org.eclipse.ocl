@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
@@ -77,30 +76,6 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 				asCacheEvaluateParameters.add(asEvaluateParameter);
 				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
 			}
-
-		/*	@Override
-			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
-				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
-				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-				Operation asOperation = CGUtil.getAST(cgOperation);
-				org.eclipse.ocl.pivot.Class asConstructorClass = PivotUtil.getOwningClass(asOperation);
-				org.eclipse.ocl.pivot.Class asCacheClass = analyzer.getEntryClass(asConstructorClass);
-				CGClass cgCacheClass = analyzer.getCGClass(asCacheClass);
-				js.append("return ((");
-				js.appendClassReference(cgCacheClass);
-				js.append(")getUniqueComputation(");
-				boolean isFirst = true;
-				for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
-					if (!isFirst) {
-						js.append(", ");
-					}
-					js.appendValueName(cgParameter);
-					isFirst = false;
-				}
-				js.append(")).");
-				js.append(globalNameManager.getCachedResultNameResolution().getResolvedName());
-				js.append(";\n");
-			} */
 		}
 
 		@Override
@@ -145,13 +120,7 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		assert asOperation.getImplementationClass() == null;
-		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
-		analyzer.initAst(cgOperation, asOperation, true);
-		CGClass cgRootClass = analyzer.getCGRootClass(asOperation);
-		cgRootClass.getOperations().add(cgOperation);
-		createCachingClassesAndInstance(analyzer, cgOperation);
-		return cgOperation;
+		return CGModelFactory.eINSTANCE.createCGCachedOperation();
 	}
 
 	@Override
@@ -177,6 +146,23 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 			CGParameter cgParameter = createCGParameter(operationNameManager, asParameterVariable);
 			cgParameters.add(cgParameter);
 		}
+	}
+
+	@Override
+	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
+		assert asOperation.getImplementationClass() == null;
+		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
+		analyzer.initAst(cgOperation, asOperation, true);
+		CGClass cgRootClass = analyzer.getCGRootClass(asOperation);
+		cgRootClass.getOperations().add(cgOperation);
+		createCachingClassesAndInstance(analyzer, cgOperation);
+		cgOperation.setCallingConvention(this);
+		assert asOperation == cgOperation.getAst();
+		assert analyzer.basicGetCGElement(asOperation) != null;
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+		assert cgOperation.eContainer() != null;
+		createCGParameters(operationNameManager, asExpressionInOCL);
+		return cgOperation;
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -90,37 +91,8 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 	}
 
 	@Override
-	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
-		GenModelHelper genModelHelper = analyzer.getGenModelHelper();
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		EOperation eOperation;
-		if (libraryOperation instanceof EInvokeOperation) {
-			eOperation = ((EInvokeOperation)libraryOperation).getEOperation();
-		}
-		else {
-			assert (libraryOperation instanceof EObjectOperation);
-		// System.out.println("Non EInvokeOperation overload for " + this);		// XXX
-			eOperation = (EOperation) asOperation.getESObject();
-		}
-		assert (eOperation != null);
-		assert !PivotUtil.isStatic(eOperation);
-		CGOperation cgOperation = null;
-		try {
-			genModelHelper.getGenOperation(eOperation);
-			CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-			cgEcoreOperation.setEOperation(eOperation);
-			cgOperation = cgEcoreOperation;
-		}
-		catch (GenModelException e) {
-			// No genmodel so fallback
-		}
-		if (cgOperation == null) {
-			//	assert false : "Fallback overload for " + this;		// XXX
-			System.out.println("Fallback overload for " + this);		// XXX
-			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		}
-		return cgOperation;
+	public @NonNull CGEcoreOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		return CGModelFactory.eINSTANCE.createCGEcoreOperation();
 	}
 
 	@Override
@@ -155,6 +127,54 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, PivotUtil.getName(asParameterVariable));
 		operationNameManager.declareEagerName(cgParameter);
 		return cgParameter;
+	}
+
+	@Override
+	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
+		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
+		GenModelHelper genModelHelper = analyzer.getGenModelHelper();
+		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
+		EOperation eOperation;
+		if (libraryOperation instanceof EInvokeOperation) {
+			eOperation = ((EInvokeOperation)libraryOperation).getEOperation();
+		}
+		else {
+			assert (libraryOperation instanceof EObjectOperation);
+		// System.out.println("Non EInvokeOperation overload for " + this);		// XXX
+			eOperation = (EOperation) asOperation.getESObject();
+		}
+		assert (eOperation != null);
+		assert !PivotUtil.isStatic(eOperation);
+		CGOperation cgOperation = null;
+		try {
+			genModelHelper.getGenOperation(eOperation);
+			CGEcoreOperation cgEcoreOperation = createCGOperation(analyzer, asOperation);
+			cgEcoreOperation.setEOperation(eOperation);
+			cgOperation = cgEcoreOperation;
+		}
+		catch (GenModelException e) {
+			// No genmodel so fallback
+		}
+		if (cgOperation == null) {
+			//	assert false : "Fallback overload for " + this;		// XXX
+			System.out.println("Fallback overload for " + this);		// XXX
+			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
+		}
+
+		assert cgOperation.getCallingConvention() == null;
+		cgOperation.setCallingConvention(this);
+		Element asOperation2 = cgOperation.getAst();
+		assert asOperation2 == null;
+		assert analyzer.basicGetCGElement(asOperation) == null;
+		analyzer.initAst(cgOperation, asOperation, true);
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+		assert cgOperation.eContainer() == null;
+		if (cgOperation.eContainer() == null) {			// Unless createCGOperation defined an alternative
+			CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
+			cgClass.getOperations().add(cgOperation);
+		}
+		createCGParameters(operationNameManager, asExpressionInOCL);
+		return cgOperation;
 	}
 
 	@Override

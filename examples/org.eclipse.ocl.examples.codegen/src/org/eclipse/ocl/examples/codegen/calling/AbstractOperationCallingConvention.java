@@ -276,28 +276,17 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 
 	@Override
 	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
-		CGOperation cgOperation;
-		cgOperation = createCGOperation(analyzer, asOperation);
-		if (cgOperation.getCallingConvention() == null) {
-			cgOperation.setCallingConvention(this);
-			Element asOperation2 = cgOperation.getAst();
-			if (asOperation2 == null) {						// Lightweight createCGOperation just creates
-				assert analyzer.basicGetCGElement(asOperation) == null;
-				analyzer.initAst(cgOperation, asOperation, true);
-			}
-			else {
-				if (asOperation2 != asOperation) {			// Virtual creates base
-					assert this instanceof VirtualOperationCallingConvention;
-					asOperation = (Operation)asOperation2;
-				}
-				assert analyzer.basicGetCGElement(asOperation) != null;
-			}
-		}
+		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
+		assert cgOperation.getCallingConvention() == null;
+		cgOperation.setCallingConvention(this);
+		assert cgOperation.getAst() == null;						// Lightweight createCGOperation just creates
+		assert analyzer.basicGetCGElement(asOperation) == null;
+		analyzer.initAst(cgOperation, asOperation, true);
+		assert analyzer.basicGetCGElement(asOperation) != null;
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
-		if (cgOperation.eContainer() == null) {			// Unless createCGOperation defined an alternative
-			CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
-			cgClass.getOperations().add(cgOperation);
-		}
+		assert cgOperation.eContainer() == null;
+		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
+		cgClass.getOperations().add(cgOperation);
 		createCGParameters(operationNameManager, asExpressionInOCL);
 		return cgOperation;
 	}
