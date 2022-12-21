@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
@@ -42,6 +43,7 @@ import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
@@ -112,6 +114,28 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		Property asProperty = (Property)asTypedElement;
 		analyzer.addExternalFeature(asProperty);
 		return CGModelFactory.eINSTANCE.createCGForeignProperty();
+	}
+
+	protected final void createForeignClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		AbstractEntryClassCallingConvention entryClassCallingConvention = getEntryClassCallingConvention(asOperation);
+		CGClass cgEntryClass = entryClassCallingConvention.createEntryClass(analyzer, cgOperation);
+		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+		AbstractCacheClassCallingConvention cacheClassCallingConvention = getCacheClassCallingConvention(asOperation);
+		CGClass cgCacheClass = cacheClassCallingConvention.createCacheClass(analyzer, asOperation, asEntryClass, this);
+		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
+		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);
+	}
+
+	protected final void createForeignProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		AbstractEntryClassCallingConvention entryClassCallingConvention = getEntryClassCallingConvention(asOperation);
+		CGClass cgEntryClass = entryClassCallingConvention.createEntryClass(analyzer, cgOperation);
+		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
+		AbstractCacheClassCallingConvention cacheClassCallingConvention = getCacheClassCallingConvention(asOperation);
+		CGClass cgCacheClass = cacheClassCallingConvention.createCacheClass(analyzer, asOperation, asEntryClass, this);
+		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
+		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);
 	}
 
 	@Override
