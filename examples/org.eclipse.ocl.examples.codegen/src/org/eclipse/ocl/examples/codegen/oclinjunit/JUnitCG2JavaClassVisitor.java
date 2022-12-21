@@ -54,13 +54,13 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 				js.pushClassBody(className);
 				if (sortedGlobals != null) {
 					generateGlobals(sortedGlobals);
-					js.append("\n");
+					js.appendOptionalBlankLine();
 				}
 				if (expInOcl.getOwnedContext() != null) {
 					boolean first = true;
 					for (CGOperation cgOperation : cgClass.getOperations()) {
 						if (!first) {
-							js.append("\n");
+							js.appendOptionalBlankLine();
 						}
 						cgOperation.accept(this);
 						first = false;
@@ -74,7 +74,7 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 				for (CGClass cgNestedClass : cgClass.getClasses()) {
 				//	boolean first = true;
 				//	if (!first) {
-						js.append("\n");
+						js.appendOptionalBlankLine();
 				//	}
 						cgNestedClass.accept(this);
 				//	first = false;
@@ -90,14 +90,14 @@ public class JUnitCG2JavaClassVisitor extends CG2JavaVisitor
 				boolean first = true;
 				for (CGProperty cgProperty : cgClass.getProperties()) {
 					if (!first) {
-						js.append("\n");
+						js.appendOptionalBlankLine();
 					}
 					cgProperty.accept(this);
 					first = false;
 				}
 				for (CGOperation cgOperation : cgClass.getOperations()) {
 					if (!first) {
-						js.append("\n");
+						js.appendOptionalBlankLine();
 					}
 					cgOperation.accept(this);
 					first = false;

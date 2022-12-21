@@ -408,7 +408,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.appendClassReference(null, operationClass);
 		js.append("()");
 		js.pushClassBody(String.valueOf(operationClass));
-		js.append("\n");					// XXX delete me
+		js.appendOptionalBlankLine();					// XXX delete me
 		js.appendCommentWithOCL(null, body.getAst());
 		js.append("@Override\n");
 		js.append("public ");
@@ -606,7 +606,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	protected boolean doClassFields(@NonNull CGClass cgClass, boolean needsBlankLine) {
 		if (cgClass.getProperties().size() > 0) {
 			if (needsBlankLine) {
-				js.append("\n");
+				js.appendOptionalBlankLine();
 			}
 			List<CGProperty> cgProperties = new ArrayList<>(cgClass.getProperties());
 			Collections.sort(cgProperties, NameUtil.NAMEABLE_COMPARATOR);
@@ -622,9 +622,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		List<CGOperation> cgOperations = new ArrayList<>(cgClass.getOperations());
 		Collections.sort(cgOperations, NameUtil.NAMEABLE_COMPARATOR);
 		for (CGOperation cgOperation : cgOperations) {
-			if (needsBlankLine) {
-				js.append("\n");
-			}
+			js.appendOptionalBlankLine();
 			cgOperation.accept(this);
 			needsBlankLine = true;
 		}
@@ -640,7 +638,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		Collections.sort(cgClasses, NameUtil.NAMEABLE_COMPARATOR);
 		for (CGClass cgNestedClass : cgClasses) {
 			if (needsBlankLine) {
-				js.append("\n");
+				js.appendOptionalBlankLine();
 			}
 			cgNestedClass.accept(this);
 			needsBlankLine = true;
@@ -1904,7 +1902,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.append(" = new ");
 			js.append(operationName);
 			js.append("();\n");
-			js.append("\n");
+			js.appendOptionalBlankLine();
 			//				js.append("public static final ");
 			//				CGValuedElement evaluatorParameter = currentNameManager2.getEvaluatorParameter(cgOperation);
 			//				CGParameter typeIdParameter = currentNameManager2.getTypeIdParameter(cgOperation);
@@ -2011,11 +2009,11 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.appendClassReference(null, AbstractEvaluationOperation.class);
 			js.pushClassBody(operationClassName);
 			doCachedOperationBasicEvaluate(cgOperation);
-			js.append("\n");
+			js.appendOptionalBlankLine();
 			doCachedOperationEvaluate(cgOperation);
 			js.popClassBody(false);
 			//
-			js.append("\n");
+			js.appendOptionalBlankLine();
 			doCachedOperationClassInstance(cgOperation);
 		}
 		finally {

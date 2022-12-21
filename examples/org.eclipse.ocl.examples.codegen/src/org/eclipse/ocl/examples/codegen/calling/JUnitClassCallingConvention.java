@@ -20,6 +20,8 @@ import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  JUnitClassCallingConvention defines the style of a JUnit root Class declaration.
@@ -71,17 +73,19 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		Iterable<@NonNull CGValuedElement> sortedGlobals = cg2javaVisitor.getAnalyzer().getGlobals();
 		if (sortedGlobals != null) {
 			cg2javaVisitor.generateGlobals(sortedGlobals);
-	//		js.append("\n");
+	//		js.appendOptionalBlankLine();
 		}
 		//
-	/*	js.appendOptionalBlankLine();;
-		js.append("protected final ");
-		js.appendClassReference(true, Executor.class);
-		js.append(" ");
-		js.append("executor");
-		js.append(" = ");
-		js.appendClassReference(null, PivotUtil.class);
-		js.append(".getExecutor(null);\n"); */
+		js.appendOptionalBlankLine();
+		if (globalNameManager.needsExecutor()) {
+			js.append("protected final ");
+			js.appendClassReference(true, Executor.class);
+			js.append(" ");
+			js.append("executor");
+			js.append(" = ");
+			js.appendClassReference(null, PivotUtil.class);
+			js.append(".getExecutor(null);\n");
+		}
 		//
 		js.append("protected final ");
 		js.appendIsRequired(true);

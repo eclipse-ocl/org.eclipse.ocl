@@ -47,7 +47,7 @@ public abstract class AutoVisitorsCG2JavaVisitor extends AutoCG2JavaVisitor
 	 * @param cgClass
 	 */
 	protected void doVisiting(@NonNull CGClass cgClass) {
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("@Override\n");
 		js.append("public ");
 		js.appendClassReference(false, getCodeGenerator().getVisitorResultClass());

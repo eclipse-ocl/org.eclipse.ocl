@@ -29,7 +29,7 @@ public class LookupQualifiedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor 
 	protected void doInternalVisiting(@NonNull CGClass cgClass) {
 		// We we return the context
 		LookupQualifiedCodeGenerator codeGenerator = getCodeGenerator();
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("@Override\n");
 		js.append("protected ");
 		js.appendClassReference(false, codeGenerator.getVisitorResultClass());

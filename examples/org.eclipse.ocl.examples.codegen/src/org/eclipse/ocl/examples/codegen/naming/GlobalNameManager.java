@@ -186,6 +186,7 @@ public class GlobalNameManager extends AbstractNameManager
 	protected final @NonNull NameResolution thisName;
 	protected final @NonNull NameResolution typeIdName;
 	protected final @NonNull NameResolution valueName;
+	private boolean needsExecutor = false;
 
 	public GlobalNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManagerHelper helper) {
 		super(null, helper);
@@ -558,6 +559,10 @@ public class GlobalNameManager extends AbstractNameManager
 		return true;
 	}
 
+	public boolean needsExecutor() {
+		return needsExecutor;
+	}
+
 	public void replace(@NonNull CGValuedElement oldElement, @NonNull CGValuedElement newElement) {
 		NameManager nameManager = globalNameManager.basicGetSelfNameManager(oldElement);
 		CGUtil.replace(oldElement, newElement);
@@ -581,6 +586,10 @@ public class GlobalNameManager extends AbstractNameManager
 //			System.out.println("\t" + NameUtil.debugSimpleName(eObject) + " : " + eObject.toString());
 //		}
 		return cgLetExp;
+	}
+
+	public void setNeedsExecutor() {
+		this.needsExecutor = true;
 	}
 
 	@Override

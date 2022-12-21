@@ -219,6 +219,11 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		}
 
 		@Override
+		public void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {
+			propertyNameManager.getGlobalNameManager().setNeedsExecutor();
+		}
+
+		@Override
 		public @NonNull CGProperty createCGProperty(
 				@NonNull CodeGenAnalyzer analyzer,
 				@NonNull TypedElement asTypedElement) {

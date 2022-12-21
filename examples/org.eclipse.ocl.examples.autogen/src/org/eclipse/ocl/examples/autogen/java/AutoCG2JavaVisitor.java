@@ -40,7 +40,7 @@ public abstract class AutoCG2JavaVisitor extends CG2JavaVisitor
 	@Override
 	final protected boolean doClassMethods(@NonNull CGClass cgClass, boolean needsBlankLine) {
 		if (needsBlankLine) {
-			js.append("\n");
+			js.appendOptionalBlankLine();
 		}
 		doConstructor(cgClass);
 		doMoreClassMethods(cgClass);
@@ -57,7 +57,7 @@ public abstract class AutoCG2JavaVisitor extends CG2JavaVisitor
 		Iterable<CGValuedElement> sortedGlobals2 = sortedGlobals;
 		if (sortedGlobals2 != null) {
 			if (needsBlankLine) {
-				js.append("\n");
+				js.appendOptionalBlankLine();
 			}
 			for (CGValuedElement cgElement : sortedGlobals2) {
 				assert cgElement.isGlobal();

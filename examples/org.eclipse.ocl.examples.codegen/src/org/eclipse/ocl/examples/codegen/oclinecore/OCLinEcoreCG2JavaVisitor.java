@@ -310,11 +310,11 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 		CGValuedElement cgBody = cgOperation.getBody();
 		assert cgBody != null;
 		String title = PrettyPrinter.printName(asOperation);
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("/**\n");
 		js.append(" *\t");
 		js.append(title);
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append(" * /\n");
 		js.append("public static class " + className + " extends ");
 		js.appendClassReference(null, AbstractStaticOperation.class);
@@ -329,7 +329,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 		js.append(" = new ");
 		js.append(className);
 		js.append("();\n");
-		js.append("\n");
+		js.appendOptionalBlankLine();
 
 		js.appendCommentWithOCL(null, expressionInOCL);
 	//	js.append("@Override\n");
@@ -374,11 +374,11 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 		CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
 		assert cgBody != null;
 		String title = PrettyPrinter.printName(asProperty);
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("/**\n");
 		js.append(" *\t");
 		js.append(title);
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append(" * /\n");
 		js.append("public static class " + className + " extends ");
 		js.appendClassReference(null, AbstractStaticProperty.class);
@@ -395,7 +395,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 		js.append("(");
 		appendIdPath(asProperty);
 		js.append(");\n");
-		js.append("\n");
+		js.appendOptionalBlankLine();
 
 		js.append("private ");
 		js.append(className);
@@ -406,7 +406,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 		js.append(");\n");
 		js.popIndentation();
 		js.append("}\n");
-		js.append("\n");
+		js.appendOptionalBlankLine();
 
 		js.appendCommentWithOCL(null, expressionInOCL);
 		js.append("@Override\n");

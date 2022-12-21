@@ -47,7 +47,7 @@ public class ExternalClassCallingConvention extends AbstractClassCallingConventi
 			return true;
 		}
 		JavaStream js = cg2javaVisitor.getJavaStream();
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		String className = CGUtil.getName(cgClass);
 		CGPackage cgContainingPackage = cgClass.getContainingPackage();
 		assert cgContainingPackage == null;

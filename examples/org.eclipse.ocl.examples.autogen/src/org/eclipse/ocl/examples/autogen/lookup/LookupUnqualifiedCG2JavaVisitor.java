@@ -30,7 +30,7 @@ public class LookupUnqualifiedCG2JavaVisitor extends LookupVisitorsCG2JavaVisito
 	protected void doInternalVisiting(@NonNull CGClass cgClass) {
 		// We call parentEnv;
 		LookupUnqualifiedCodeGenerator codeGenerator = getCodeGenerator();
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("@Override\n");
 		js.append("protected ");
 		js.appendClassReference(false, codeGenerator.getVisitorResultClass());
@@ -66,7 +66,7 @@ public class LookupUnqualifiedCG2JavaVisitor extends LookupVisitorsCG2JavaVisito
 	 */
 	protected void doParentEnv(@NonNull CGClass cgClass) {
 		LookupUnqualifiedCodeGenerator codeGenerator = getCodeGenerator();
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("/**\n");
 		js.append(" * Continue the search for matches in the parent of " + LookupVisitorsCodeGenerator.ELEMENT_NAME + ".\n");
 		js.append(" */\n");

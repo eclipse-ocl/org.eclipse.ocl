@@ -420,18 +420,18 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		js.append(" extends ");
 		js.appendClassReference(null, AbstractEvaluationOperation.class);
 		js.pushClassBody(operationClassName);
-		js.append("\n");					// XXX delete me
+		js.appendOptionalBlankLine();					// XXX delete me
 		doCachedOperationBasicEvaluate(cg2javaVisitor, cgCachedOperation);
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		doCachedOperationEvaluate(cg2javaVisitor, cgCachedOperation);
 		js.popClassBody(false);
 		//
 		if (cgCachedOperation.getVirtualOperations().size() <= 0) {
-			js.append("\n");
+			js.appendOptionalBlankLine();
 			doCachedOperationClassInstance(cg2javaVisitor, cgCachedOperation);
 		}
 		else {
-			js.append("\n");
+			js.appendOptionalBlankLine();
 			doCachedOperationClassDirectInstance(cg2javaVisitor, cgCachedOperation);
 		}
 		return true;

@@ -41,9 +41,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor
 
 	@Override
 	protected boolean doClassFields(@NonNull CGClass cgClass, boolean needsBlankLine) {
-		if (needsBlankLine) {
-			js.append("\n");
-		}
+		js.appendOptionalBlankLine();
 		js.append("protected final ");
 		js.appendClassReference(true, EvaluationCache.class);
 		js.append(" ");
@@ -59,7 +57,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor
 				Operation asOperation = ClassUtil.nonNullState((Operation) cgOperation.getAst());
 				Iterable<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 				Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
-				js.append("\n");
+				js.appendOptionalBlankLine();
 				js.append("@Override\n");
 				js.append("protected ");
 				js.appendClassReference(isRequiredReturn, cgOperation);

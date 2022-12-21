@@ -101,6 +101,7 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -1097,10 +1098,10 @@ public class CodeGenAnalyzer
 	/**
 	 * Generate / share the CG declaration for asOperation.
 	 */
-	public @NonNull CGOperation generateMaybeVirtualOperationDeclaration(@NonNull Operation asOperation) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
+	public @NonNull CGOperation generateMaybeVirtualOperationDeclaration(@NonNull Operation asOperation) {
 		return generateOperationDeclaration(asOperation, null, true);
 	}
-	public @NonNull CGOperation generateNonVirtualOperationDeclaration(@NonNull Operation asOperation) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
+	public @NonNull CGOperation generateNonVirtualOperationDeclaration(@NonNull Operation asOperation) {
 		return generateOperationDeclaration(asOperation, null, false);
 	}
 
@@ -1247,10 +1248,10 @@ public class CodeGenAnalyzer
 			initAst(cgProperty, asProperty, true);
 			ExecutableNameManager propertyNameManager = getPropertyNameManager(cgProperty, asProperty);
 			ExpressionInOCL query = null;
-			LanguageExpression specification = asProperty.getOwnedExpression();
-			if (specification != null) {
+			LanguageExpression asSpecification = asProperty.getOwnedExpression();
+			if (asSpecification != null) {
 				try {
-					query = environmentFactory.parseSpecification(specification);		// Redundant already parsed
+					query = environmentFactory.parseSpecification(asSpecification);		// Redundant already parsed
 				} catch (ParserException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1259,6 +1260,9 @@ public class CodeGenAnalyzer
 			callingConvention.createCGParameters(propertyNameManager, query);
 			CGClass cgClass = getCGClass(PivotUtil.getOwningClass(asProperty));		// XXX
 			cgClass.getProperties().add(cgProperty);
+			if (asSpecification != null) {
+				scanBody(asSpecification);
+			}
 		}
 		return cgProperty;
 	}
@@ -1979,6 +1983,9 @@ public class CodeGenAnalyzer
 		for (@NonNull EObject eObject : new TreeIterable(specification, false)) {
 			if (eObject instanceof OperationCallExp) {
 				generateMaybeVirtualOperationDeclaration(PivotUtil.getReferredOperation((OperationCallExp)eObject));
+			}
+			else if (eObject instanceof NavigationCallExp) {
+				generatePropertyDeclaration(PivotUtil.getReferredProperty((NavigationCallExp)eObject), null);
 			}
 		}
 	}

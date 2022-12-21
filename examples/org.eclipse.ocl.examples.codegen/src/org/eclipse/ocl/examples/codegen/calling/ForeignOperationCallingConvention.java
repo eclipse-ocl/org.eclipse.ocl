@@ -388,7 +388,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		generateJavaClass(cg2javaVisitor, cgOperation);
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		generateJavaFunction(cg2javaVisitor, cgOperation);
 		return true;
 	}
@@ -410,7 +410,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		js.append(" extends ");
 		js.appendClassReference(null, AbstractOperation.class);
 		js.pushClassBody(operationName);
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		js.append("public static final ");
 		js.appendIsRequired(true);
 		js.append(" ");
@@ -420,7 +420,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		js.append(" = new ");
 		js.append(operationName);
 		js.append("();\n");
-		js.append("\n");
+		js.appendOptionalBlankLine();
 		//
 		js.append("@Override\n");
 		js.append("public ");
