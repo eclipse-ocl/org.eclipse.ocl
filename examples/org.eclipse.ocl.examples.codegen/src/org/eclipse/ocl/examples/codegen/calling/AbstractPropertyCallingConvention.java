@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
@@ -32,6 +33,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -39,11 +41,9 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
  */
 public abstract class AbstractPropertyCallingConvention extends AbstractCallingConvention implements PropertyCallingConvention
 {
-	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {}
+	protected void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {}
 
-	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
+	protected @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
 		return CGModelFactory.eINSTANCE.createCGConstrainedProperty();
 	}
 
@@ -71,6 +71,21 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 				e.printStackTrace();		// XXX
 			}
 		}
+	}
+
+	@Override
+	public @NonNull CGProperty createProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty, @Nullable ExpressionInOCL query) {
+		CGProperty cgProperty = createCGProperty(analyzer, asProperty);
+		assert cgProperty.getCallingConvention() == null;
+		cgProperty.setCallingConvention(this);
+		assert cgProperty.getAst() == null;
+		analyzer.initAst(cgProperty, asProperty, true);
+		ExecutableNameManager propertyNameManager = analyzer.getPropertyNameManager(cgProperty, asProperty);
+		createCGParameters(propertyNameManager, query);
+		assert cgProperty.eContainer() == null;
+		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asProperty));
+		cgClass.getProperties().add(cgProperty);
+		return cgProperty;
 	}
 
 	@Override
@@ -105,10 +120,10 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 	//	throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".generateJavaDeclaration");	// A number of Property Calling Conventions are call-only
 	}
 
-	@Override
-	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return ContextClassCallingConvention.getInstance(asClass);
-	}
+//	@Override
+//	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+//		return ContextClassCallingConvention.getInstance(asClass);
+//	}
 
 	@Override
 	public boolean isInlined() {

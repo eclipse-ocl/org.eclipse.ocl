@@ -359,9 +359,9 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		analyzer.addExternalFeature(asOperation);
 		createCachingClassesAndInstance(analyzer, cgOperation);
 		assert cgOperation.eContainer() == null;
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
 		cgClass.getOperations().add(cgOperation);
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 		createCGParameters(operationNameManager, asExpressionInOCL);
 		return cgOperation;
 	}
@@ -546,10 +546,10 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		return ForeignCacheClassCallingConvention.getInstance(asOperation, false);
 	}
 
-	@Override
-	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return ExternalClassCallingConvention.getInstance(asClass);
-	}
+//	@Override
+//	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+//		return ExternalClassCallingConvention.getInstance(asClass);
+//	}
 
 	@Override
 	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {

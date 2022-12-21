@@ -226,12 +226,13 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	//	System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
 	}
 
+	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
+
 	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
 		return operationNameManager.getCGParameter(asParameterVariable, (String)null);
 	}
 
-	@Override
-	public /*final*/ void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
+	protected /*final*/ void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
 		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		if (bodyExpression != null) {
@@ -402,10 +403,10 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		return true;
 	}
 
-	@Override
-	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		return ContextClassCallingConvention.getInstance(asClass);
-	}
+//	@Override
+//	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+//		return ContextClassCallingConvention.getInstance(asClass);
+//	}
 
 	private @NonNull String getFunctionCtorName(@NonNull CGOperation cgOperation) {
 		return JavaStream.convertToJavaIdentifier("FTOR_" + cgOperation.getName());

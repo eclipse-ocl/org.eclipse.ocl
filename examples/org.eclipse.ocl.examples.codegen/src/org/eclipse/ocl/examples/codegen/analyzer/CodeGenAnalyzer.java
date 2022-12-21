@@ -936,11 +936,6 @@ public class CodeGenAnalyzer
 	public @NonNull CGOperation generateIterationDeclaration(@NonNull Iteration asIteration) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
 		CGOperation cgOperation = basicGetCGOperation(asIteration);
 		if (cgOperation == null) {
-			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asIteration, false);
-			cgOperation = callingConvention.createCGOperation(this, asIteration);
-			cgOperation.setCallingConvention(callingConvention);
-			initAst(cgOperation, asIteration, true);
-			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asIteration);
 			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asIteration.getBodyExpression();
 			if (asSpecification != null) {
@@ -951,7 +946,12 @@ public class CodeGenAnalyzer
 					e.printStackTrace();
 				}
 			}
-			callingConvention.createCGParameters(operationNameManager, asExpressionInOCL);
+			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asIteration, false);
+			cgOperation = callingConvention.createOperation(this, asIteration, asExpressionInOCL);
+		//	cgOperation.setCallingConvention(callingConvention);
+		//	initAst(cgOperation, asIteration, true);
+		//	ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asIteration);
+		//	callingConvention.createCGParameters(operationNameManager, asExpressionInOCL);
 		}
 		return cgOperation;
 	}
@@ -1225,13 +1225,6 @@ public class CodeGenAnalyzer
 	public final @NonNull CGProperty generatePropertyDeclaration(@NonNull Property asProperty, @Nullable PropertyCallingConvention callingConvention) {
 		CGProperty cgProperty = basicGetCGProperty(asProperty);
 		if (cgProperty == null) {
-			if (callingConvention == null) {
-				callingConvention = codeGenerator.getCallingConvention(asProperty);
-			}
-			cgProperty = callingConvention.createCGProperty(this, asProperty);
-			cgProperty.setCallingConvention(callingConvention);
-			initAst(cgProperty, asProperty, true);
-			ExecutableNameManager propertyNameManager = getPropertyNameManager(cgProperty, asProperty);
 			ExpressionInOCL query = null;
 			LanguageExpression asSpecification = asProperty.getOwnedExpression();
 			if (asSpecification != null) {
@@ -1242,9 +1235,10 @@ public class CodeGenAnalyzer
 					e.printStackTrace();
 				}
 			}
-			callingConvention.createCGParameters(propertyNameManager, query);
-			CGClass cgClass = getCGClass(PivotUtil.getOwningClass(asProperty));		// XXX
-			cgClass.getProperties().add(cgProperty);
+			if (callingConvention == null) {
+				callingConvention = codeGenerator.getCallingConvention(asProperty);
+			}
+			cgProperty = callingConvention.createProperty(this, asProperty, query);
 			if (asSpecification != null) {
 				scanBody(asSpecification);
 			}

@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 /**
  *  CallingConvention defines a particular style of Operation or Property call with support for
  *  generation of a declaration or invocation.
@@ -21,7 +19,7 @@ public interface CallingConvention
 	/**
 	 * Return the calling convention for the containing class.
 	 */
-	@NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass);
+//	@NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass);
 
 	/**
 	 * Return true if this feature needs generation as part of user code (rather than being referenced from built-in functionality).
