@@ -452,6 +452,10 @@ public class CodeGenAnalyzer
 		return asVirtualOperation2cgDispatchOperation.get(asOperation);
 	}
 
+	public @Nullable CGElement basicGetCGElement(@NonNull Operation asOperation) {
+		return asElement2cgElement.get(asOperation);
+	}
+
 	public @Nullable CGOperation basicGetCGOperation(@NonNull Operation asOperation) {
 		return (CGOperation)asElement2cgElement.get(asOperation);
 	}
@@ -1060,6 +1064,17 @@ public class CodeGenAnalyzer
 		return cgIterationCallExp;
 	}
 
+	/**
+	 * Generate / share the CG declaration for asOperation.
+	 */
+	public @NonNull CGOperation generateMaybeVirtualOperationDeclaration(@NonNull Operation asOperation) {
+		return generateOperationDeclaration(asOperation, null, true);
+	}
+
+	public @NonNull CGOperation generateNonVirtualOperationDeclaration(@NonNull Operation asOperation) {
+		return generateOperationDeclaration(asOperation, null, false);
+	}
+
 	public @NonNull CGOperation generateOperation(@NonNull Operation asOperation) {
 	//	asOperation2cgOperation.get(asOperation);
 		LanguageExpression specification = asOperation.getBodyExpression();
@@ -1098,16 +1113,6 @@ public class CodeGenAnalyzer
 	/**
 	 * Generate / share the CG declaration for asOperation.
 	 */
-	public @NonNull CGOperation generateMaybeVirtualOperationDeclaration(@NonNull Operation asOperation) {
-		return generateOperationDeclaration(asOperation, null, true);
-	}
-	public @NonNull CGOperation generateNonVirtualOperationDeclaration(@NonNull Operation asOperation) {
-		return generateOperationDeclaration(asOperation, null, false);
-	}
-
-	/**
-	 * Generate / share the CG declaration for asOperation.
-	 */
 	private @NonNull CGOperation generateOperationDeclaration(@NonNull Operation asOperation, @Nullable OperationCallingConvention callingConvention, boolean maybeVirtual) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
 	//	if (asOperation.toString().contains("::_unqualified_env_Class(")) {
 	//		getClass();		// XXX
@@ -1133,29 +1138,7 @@ public class CodeGenAnalyzer
 			if (callingConvention == null) {
 				callingConvention = codeGenerator.getCallingConvention(asOperation, maybeVirtual);
 			}
-			cgOperation = callingConvention.createCGOperation(this, asOperation);
-			if (cgOperation.getCallingConvention() == null) {
-				cgOperation.setCallingConvention(callingConvention);
-				Element asOperation2 = cgOperation.getAst();
-				if (asOperation2 == null) {						// Lightweight createCGOperation just creates
-					assert !asElement2cgElement.containsKey(asOperation);
-					initAst(cgOperation, asOperation, true);
-				}
-				else {
-					if (asOperation2 != asOperation) {			// Virtual creates base
-						assert callingConvention instanceof VirtualOperationCallingConvention;
-						asOperation = (Operation)asOperation2;
-					}
-					assert asElement2cgElement.containsKey(asOperation);
-				}
-			}
-		//	System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
-			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
-			if (cgOperation.eContainer() == null) {			// Unless createCGOperation defined an alternative
-				CGClass cgClass = getCGClass(PivotUtil.getOwningClass(asOperation));
-				cgClass.getOperations().add(cgOperation);
-			}
-			callingConvention.createCGParameters(operationNameManager, asExpressionInOCL);
+			cgOperation = callingConvention.createOperation(this, asOperation, asExpressionInOCL);
 			if (asSpecification != null) {
 				scanBody(asSpecification);
 			}
