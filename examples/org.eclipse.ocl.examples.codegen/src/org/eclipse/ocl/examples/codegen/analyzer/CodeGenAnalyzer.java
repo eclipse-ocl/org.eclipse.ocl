@@ -1134,18 +1134,20 @@ public class CodeGenAnalyzer
 				callingConvention = codeGenerator.getCallingConvention(asOperation, maybeVirtual);
 			}
 			cgOperation = callingConvention.createCGOperation(this, asOperation);
-			cgOperation.setCallingConvention(callingConvention);
-			Element asOperation2 = cgOperation.getAst();
-			if (asOperation2 == null) {						// Lightweight createCGOperation just creates
-				assert !asElement2cgElement.containsKey(asOperation);
-				initAst(cgOperation, asOperation, true);
-			}
-			else {
-				if (asOperation2 != asOperation) {			// Virtual creates base
-					assert callingConvention instanceof VirtualOperationCallingConvention;
-					asOperation = (Operation)asOperation2;
+			if (cgOperation.getCallingConvention() == null) {
+				cgOperation.setCallingConvention(callingConvention);
+				Element asOperation2 = cgOperation.getAst();
+				if (asOperation2 == null) {						// Lightweight createCGOperation just creates
+					assert !asElement2cgElement.containsKey(asOperation);
+					initAst(cgOperation, asOperation, true);
 				}
-				assert asElement2cgElement.containsKey(asOperation);
+				else {
+					if (asOperation2 != asOperation) {			// Virtual creates base
+						assert callingConvention instanceof VirtualOperationCallingConvention;
+						asOperation = (Operation)asOperation2;
+					}
+					assert asElement2cgElement.containsKey(asOperation);
+				}
 			}
 		//	System.out.println("generateOperationDeclaration " + NameUtil.debugSimpleName(cgOperation) + " => " +  NameUtil.debugSimpleName(asOperation) + " : " + asOperation);	// XXX debugging
 			ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
@@ -1745,7 +1747,7 @@ public class CodeGenAnalyzer
 				cgOperation = generateMaybeVirtualOperationDeclaration(asOperation);
 			}
 		}
-		assert cgOperation.getAst() == asOperation;
+		assert (cgOperation.getAst() == asOperation) || (cgOperation.getCallingConvention() instanceof VirtualOperationCallingConvention);
 		ExecutableNameManager operationNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgOperation);
 		if (operationNameManager == null) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);

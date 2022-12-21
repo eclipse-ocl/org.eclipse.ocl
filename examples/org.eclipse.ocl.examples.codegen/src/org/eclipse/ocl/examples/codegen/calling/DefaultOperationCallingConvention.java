@@ -75,6 +75,17 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		throw new UnsupportedOperationException();		// XXX
 	}
 
+	@Deprecated /* @deprecated temporary signal for null CGOperaion */
+	public static class NullOperationCallingConvention extends DefaultOperationCallingConvention
+	{
+		private static final @NonNull NullOperationCallingConvention INSTANCE = new NullOperationCallingConvention();
+
+		public static @NonNull NullOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
+			INSTANCE.logInstance(asOperation, maybeVirtual);
+			return INSTANCE;
+		}
+	}
+
 	@Override
 	public @NonNull CGCachedOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		PivotMetamodelManager metamodelManager = analyzer.getMetamodelManager();
