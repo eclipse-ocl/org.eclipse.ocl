@@ -25,9 +25,9 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.NativeProperty;
 
@@ -62,9 +62,20 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 	}
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
-		Property asProperty = (Property)asTypedElement;
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
 		CGNativeProperty cgProperty = CGModelFactory.eINSTANCE.createCGNativeProperty();
+	/*	if (!asProperty.isIsReadOnly()) {
+			cgProperty.setSettable();
+		}
+		else {
+			cgProperty.setNonNull();
+		} */
+		return cgProperty;
+	}
+
+	@Override
+	public @NonNull CGProperty createProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty, @Nullable ExpressionInOCL asExpressionInOCL) {
+		CGNativeProperty cgProperty = (CGNativeProperty)super.createProperty(analyzer, asProperty, asExpressionInOCL);
 		if (!asProperty.isIsReadOnly()) {
 			cgProperty.setSettable();
 		}

@@ -43,7 +43,6 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
@@ -108,9 +107,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	}
 
 	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
-		Property asProperty = (Property)asTypedElement;
-		analyzer.addExternalFeature(asProperty);
+	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
 		return CGModelFactory.eINSTANCE.createCGForeignProperty();
 	}
 
@@ -190,6 +187,13 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		assert jReturnType != null;
 		cgCallExp.setTypeId(analyzer.getCGTypeId(new JavaTypeId(jReturnType)));		// XXX cache
 		return cgCallExp;
+	}
+
+	@Override
+	public @NonNull CGProperty createProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty, @Nullable ExpressionInOCL asExpressionInOCL) {
+		analyzer.addExternalFeature(asProperty);
+		CGProperty cgProperty = super.createProperty(analyzer, asProperty, asExpressionInOCL);
+		return cgProperty;
 	}
 
 	@Override

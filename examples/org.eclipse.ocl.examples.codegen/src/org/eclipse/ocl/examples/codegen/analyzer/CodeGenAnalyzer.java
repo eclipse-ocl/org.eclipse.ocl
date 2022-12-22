@@ -1225,11 +1225,11 @@ public class CodeGenAnalyzer
 	public final @NonNull CGProperty generatePropertyDeclaration(@NonNull Property asProperty, @Nullable PropertyCallingConvention callingConvention) {
 		CGProperty cgProperty = basicGetCGProperty(asProperty);
 		if (cgProperty == null) {
-			ExpressionInOCL query = null;
+			ExpressionInOCL asExpressionInOCL = null;
 			LanguageExpression asSpecification = asProperty.getOwnedExpression();
 			if (asSpecification != null) {
 				try {
-					query = environmentFactory.parseSpecification(asSpecification);		// Redundant already parsed
+					asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);		// Redundant already parsed
 				} catch (ParserException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1238,7 +1238,7 @@ public class CodeGenAnalyzer
 			if (callingConvention == null) {
 				callingConvention = codeGenerator.getCallingConvention(asProperty);
 			}
-			cgProperty = callingConvention.createProperty(this, asProperty, query);
+			cgProperty = callingConvention.createProperty(this, asProperty, asExpressionInOCL);
 			if (asSpecification != null) {
 				scanBody(asSpecification);
 			}
