@@ -237,11 +237,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-	//	CGClass cgClass = context.basicGetCGClass(asClass);
-	//	if (cgClass == null) {
-		CGClass cgClass = context.generateClass(null, asClass);
-	//	}
-		return cgClass;
+		return context.generateClass(null, asClass);
 	}
 
 	@Override

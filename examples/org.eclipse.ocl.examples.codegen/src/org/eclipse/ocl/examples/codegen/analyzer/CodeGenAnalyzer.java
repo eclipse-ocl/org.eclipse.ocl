@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.ExternalClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConvention;
@@ -75,7 +74,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.IterationHelper;
-import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
@@ -207,20 +205,11 @@ public class CodeGenAnalyzer
 	private org.eclipse.ocl.pivot.@Nullable Class asCurrentRootClass = null;
 
 	/**
-	 * Map of the directly nested classes of cgRootClass.
-	 */
-	@Deprecated /* surely there is now a full regular CGPackage hierarchy  */
-	private final @NonNull Map <@NonNull String, @NonNull CGClass> name2cgNestedClass = new HashMap<>();
-
-	/**
 	 * The referenced AS Features that are not part of the source hierarchy. Their CG representations are folded into
 	 * the CG hierarchy.
 	 * </br>
 	 * A UniqueList allows recursive discovery of more external Features
 	 */
-//	@Deprecated	// XXX this should be redundant
-//	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> externalFeatures = null;
-
 	private /*@LazyNonNull*/ UniqueList<@NonNull CGClass> injectedCGClasses = null;
 	private /*@LazyNonNull*/ UniqueList<@NonNull CGPackage> injectedCGPackages = null;
 
@@ -341,15 +330,6 @@ public class CodeGenAnalyzer
 		assert oldOperation == null;
 	}
 
-	public void addExternalFeature(@NonNull Feature asFeature) {
-	// XXX	assert false;			// XXX obsolete
-//		UniqueList<@NonNull Feature> externalFeatures2 = externalFeatures;
-//		if (externalFeatures2 == null) {
-//			externalFeatures = externalFeatures2 = new UniqueList<>();
-//		}
-	// XXX	externalFeatures2.add(asFeature);
-	}
-
 	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
 		globalNameManager.addGlobal(cgGlobal);
 	}
@@ -414,48 +394,6 @@ public class CodeGenAnalyzer
 		FieldingAnalyzer fieldingAnalyzer = codeGenerator.createFieldingAnalyzer();
 		fieldingAnalyzer.analyze(cgRoot, false);
 		assert checkNameManagers(cgRoot);
-	}
-
-	@Deprecated	// XXX this should be redundant
-	public @Nullable Iterable<@NonNull CGClass> analyzeExternalFeatures(@NonNull CGClass cgRootClass) {
-/*	//	Collection<@NonNull CGClass> cgRootClasses = cgPackage2cgRootClass.values();
-	//	assert cgRootClasses.size() == 1 : "Missing support for multiple root CGClass";			// XXX
-	//	CGClass cgRootClass = cgRootClasses.iterator().next();
-	//	assert cgRootClass != null;
-		UniqueList<@NonNull Feature> externalFeatures = getExternalFeatures();
-		if (externalFeatures == null) {
-			return null;
-		}
-		List<@NonNull CGClass> cgExternalClasses = new ArrayList<>();
-		for (int i = 0; i < externalFeatures.size(); i++) {
-			@NonNull Feature asExternalFeature = externalFeatures.get(i);
-		//	CGClass cgRootClass = getCGRootClass(asExternalFeature);
-			CGNamedElement cgExternalFeature = asExternalFeature.accept(as2cgVisitor);
-			if (cgExternalFeature instanceof CGOperation) {
-				CGOperation cgOperation = (CGOperation)cgExternalFeature;
-				OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
-				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : cgRootClass;
-				cgParentClass.getOperations().add(cgOperation);
-			}
-			else if (cgExternalFeature instanceof CGProperty) {
-				CGProperty cgProperty = (CGProperty)cgExternalFeature;
-				PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-				CGClass cgParentClass = callingConvention.needsNestedClass() ? createExternalCGClass(as2cgVisitor, cgExternalClasses, asExternalFeature) : cgRootClass;
-				cgParentClass.getProperties().add(cgProperty);
-			}
-			else if (cgExternalFeature != null) {
-				throw new UnsupportedOperationException("Expected an external feature rather than a " + cgExternalFeature.getClass().getSimpleName());
-			}
-		//	throw new UnsupportedOperationException();			// XXX cgRootClass
-		}
-//		List<CGClass> cgNestedClasses = cgRootClass.getClasses();
-		for (@NonNull CGClass cgExternalClass : cgExternalClasses) {
-			org.eclipse.ocl.pivot.Class asExternalClass = CGUtil.getAST(cgExternalClass);
-		//	CGClass cgRootClass = getCGRootClass(asExternalClass);
-			cgRootClass.getClasses().add(cgExternalClass);
-		}
-		return cgExternalClasses; */
-		return null;
 	}
 
 	public @Nullable CGClass basicGetCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -803,22 +741,6 @@ public class CodeGenAnalyzer
 		return cgProperty;
 	} */
 
-	@Deprecated	// XXX this should be redundant
-	protected @NonNull CGClass createExternalCGClass(@NonNull AS2CGVisitor as2cgVisitor, @NonNull List<@NonNull CGClass> cgExternalClasses, @NonNull Feature asExternalFeature) {
-		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
-		org.eclipse.ocl.pivot.Class asExternalClass = PivotUtil.getOwningClass(asExternalFeature);
-		String externalClassName = codeGenerator.getExternalClassName(asExternalClass);
-		CGClass cgExternalClass = name2cgNestedClass.get(externalClassName);
-		if (cgExternalClass == null) {
-			importNameManager.reserveLocalName(externalClassName);
-			cgExternalClass = generateClassDeclaration(asExternalClass, ExternalClassCallingConvention.getInstance(asExternalClass));
-			globalNameManager.declareEagerName(cgExternalClass, externalClassName);		// XXX nest in currentNameManager
-		//	cgStaticClass.setAst(foreignClass);  -- the real class has the AS element
-			cgExternalClasses.add(cgExternalClass);
-			name2cgNestedClass.put(externalClassName, cgExternalClass);
-		}
-		return cgExternalClass;
-	}
 
 	public boolean equals(@NonNull Element asElement1, @NonNull Element asElement2) {
 		ExpressionInOCL asExpressionInOCL1 = PivotUtil.getContainingExpressionInOCL(asElement1);
@@ -849,7 +771,7 @@ public class CodeGenAnalyzer
 			cgClass = basicGetCGClass(asClass);
 			if (cgClass == null) {
 				cgClass = generateClassDeclaration(asClass, null);
-				org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
+//				org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
 //				if (!asPackage2asRootClass.containsKey(asPackage)) {
 //					setCGRootClass(cgClass);
 //				}
@@ -1187,15 +1109,21 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGPackage generatePackage(@Nullable CGPackage cgPackage, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-	//	CGPackage cgPackage = basicGetCGPackage(asPackage);
 		if (cgPackage == null) {
-			cgPackage = generatePackageDeclaration(asPackage);
+			cgPackage = basicGetCGPackage(asPackage);
+			if (cgPackage == null) {
+				cgPackage = generatePackageDeclaration(asPackage);
+			}
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
-			CGClass cgClass = createCGElement(CGClass.class, asType);
+		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = new ArrayList<>(ClassUtil.nullFree(asPackage.getOwnedClasses()));
+		Collections.sort(asClasses, NameUtil.NAMEABLE_COMPARATOR);
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
+			CGClass cgClass = createCGElement(CGClass.class, asClass);
 			assert cgClass.eContainer().eContainer() == cgPackage.eContainer();			// asClass may be a psuedo-nested class
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : ClassUtil.nullFree(asPackage.getOwnedPackages())) {
+		List<org.eclipse.ocl.pivot.@NonNull Package> asPackages = new ArrayList<>(ClassUtil.nullFree(asPackage.getOwnedPackages()));
+		Collections.sort(asPackages, NameUtil.NAMEABLE_COMPARATOR);
+		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : asPackages) {
 			CGPackage cgNestedPackage = createCGElement(CGPackage.class, asNestedPackage);
 			assert cgPackage.getPackages().contains(cgNestedPackage);
 		}
