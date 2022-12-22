@@ -205,13 +205,10 @@ public class CodeGenAnalyzer
 	private org.eclipse.ocl.pivot.@Nullable Class asCurrentRootClass = null;
 
 	/**
-	 * The referenced AS Features that are not part of the source hierarchy. Their CG representations are folded into
-	 * the CG hierarchy.
-	 * </br>
-	 * A UniqueList allows recursive discovery of more external Features
+	 * The additional CGClasses that have no counterpart in the original AS hierarchy. These may implement caches or
+	 * may reify functionality locally for which no external implementation is available.
 	 */
-	private /*@LazyNonNull*/ UniqueList<@NonNull CGClass> injectedCGClasses = null;
-	private /*@LazyNonNull*/ UniqueList<@NonNull CGPackage> injectedCGPackages = null;
+	private /*@LazyNonNull*/ Set<@NonNull CGClass> injectedCGClasses = null;
 
 	/**
 	 * Mapping from each AS Element to its corresponding CGNamedElement. (Variables are mapped by the prevailing
@@ -336,17 +333,11 @@ public class CodeGenAnalyzer
 
 	public void addInjectedCGClass(@NonNull CGClass cgClass) {
 		if (injectedCGClasses == null) {
-			injectedCGClasses = new UniqueList<>();
+			injectedCGClasses = new HashSet<>();
 		}
 		injectedCGClasses.add(cgClass);
 	}
 
-	public void addInjectedCGPackage(@NonNull CGPackage cgPackage) {
-		if (injectedCGPackages == null) {
-			injectedCGPackages = new UniqueList<>();
-		}
-		injectedCGPackages.add(cgPackage);
-	}
 
 //	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
 //		CGNamedElement old = asElement2cgElement.put(asVariable, cgVariable);
@@ -771,11 +762,7 @@ public class CodeGenAnalyzer
 			cgClass = basicGetCGClass(asClass);
 			if (cgClass == null) {
 				cgClass = generateClassDeclaration(asClass, null);
-//				org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(asClass);
-//				if (!asPackage2asRootClass.containsKey(asPackage)) {
-//					setCGRootClass(cgClass);
-//				}
-				assert cgClass.eContainer() != null;			// XXX
+				assert cgClass.eContainer() != null;
 			}
 		}
 		getClassNameManager(cgClass, asClass);			// Nominally redundant here but needed downstream
@@ -1113,13 +1100,15 @@ public class CodeGenAnalyzer
 			cgPackage = basicGetCGPackage(asPackage);
 			if (cgPackage == null) {
 				cgPackage = generatePackageDeclaration(asPackage);
+			//	assert cgPackage.eContainer() != null;
 			}
 		}
 		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = new ArrayList<>(ClassUtil.nullFree(asPackage.getOwnedClasses()));
 		Collections.sort(asClasses, NameUtil.NAMEABLE_COMPARATOR);
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
 			CGClass cgClass = createCGElement(CGClass.class, asClass);
-			assert cgClass.eContainer().eContainer() == cgPackage.eContainer();			// asClass may be a psuedo-nested class
+			assert cgPackage.getClasses().contains(cgClass);
+		//	assert cgClass.eContainer().eContainer() == cgPackage.eContainer();			// asClass may be a psuedo-nested class
 		}
 		List<org.eclipse.ocl.pivot.@NonNull Package> asPackages = new ArrayList<>(ClassUtil.nullFree(asPackage.getOwnedPackages()));
 		Collections.sort(asPackages, NameUtil.NAMEABLE_COMPARATOR);
@@ -1215,13 +1204,13 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGPackage generateRootPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		CGPackage cgRootPackage = generatePackage(null, asPackage);
-		if (injectedCGPackages != null) {
+	/*	if (injectedCGPackages != null) {
 			List<@NonNull CGPackage> cgPackages = new ArrayList<>(injectedCGPackages);
 			Collections.sort(cgPackages, NameUtil.NAMEABLE_COMPARATOR);
 			for (@NonNull CGPackage cgPackage : cgPackages) {
 				generatePackage(cgPackage, CGUtil.getAST(cgPackage));
 			}
-		}
+		} */
 		if (injectedCGClasses != null) {
 			List<@NonNull CGClass> cgClasses = new ArrayList<>(injectedCGClasses);
 			Collections.sort(cgClasses, NameUtil.NAMEABLE_COMPARATOR);
