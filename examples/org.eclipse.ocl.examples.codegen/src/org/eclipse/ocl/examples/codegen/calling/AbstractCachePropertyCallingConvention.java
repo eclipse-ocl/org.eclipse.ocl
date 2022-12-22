@@ -24,7 +24,6 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream.TypeRepresentation;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 
 /**
@@ -104,12 +103,6 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 	//	cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 	//	cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
-	}
-
-	@Override
-	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
-		// TODO Auto-generated method stub
-		return super.createCGProperty(analyzer, asTypedElement);
 	}
 
 	@Override

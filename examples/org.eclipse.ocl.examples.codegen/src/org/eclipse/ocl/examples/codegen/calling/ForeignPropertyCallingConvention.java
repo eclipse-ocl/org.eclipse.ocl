@@ -111,8 +111,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 	public @NonNull CGProperty createCGProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull TypedElement asTypedElement) {
 		Property asProperty = (Property)asTypedElement;
 		analyzer.addExternalFeature(asProperty);
-		CGForeignProperty cgForeignProperty = CGModelFactory.eINSTANCE.createCGForeignProperty();
-		return cgForeignProperty;
+		return CGModelFactory.eINSTANCE.createCGForeignProperty();
 	}
 
 /*	protected final void createForeignClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {

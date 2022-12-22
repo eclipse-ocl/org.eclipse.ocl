@@ -403,11 +403,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		return true;
 	}
 
-//	@Override
-//	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-//		return ContextClassCallingConvention.getInstance(asClass);
-//	}
-
 	private @NonNull String getFunctionCtorName(@NonNull CGOperation cgOperation) {
 		return JavaStream.convertToJavaIdentifier("FTOR_" + cgOperation.getName());
 	}

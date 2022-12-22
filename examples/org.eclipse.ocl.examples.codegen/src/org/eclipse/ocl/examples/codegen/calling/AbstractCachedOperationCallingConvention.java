@@ -224,14 +224,6 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		}
 
 		@Override
-		public @NonNull CGProperty createCGProperty(
-				@NonNull CodeGenAnalyzer analyzer,
-				@NonNull TypedElement asTypedElement) {
-			// XXX Auto-generated method stub
-			return super.createCGProperty(analyzer, asTypedElement);
-		}
-
-		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();

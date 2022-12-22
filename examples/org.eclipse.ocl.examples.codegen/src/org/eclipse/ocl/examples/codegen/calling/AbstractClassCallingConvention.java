@@ -77,11 +77,6 @@ public abstract class AbstractClassCallingConvention extends AbstractCallingConv
 		}
 	}
 
-//	@Override
-//	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-//		return this;
-//	}
-
 	@Override
 	public @NonNull ClassableNameManager getClassableNameManager(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass) {
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);

@@ -120,11 +120,6 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 	//	throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".generateJavaDeclaration");	// A number of Property Calling Conventions are call-only
 	}
 
-//	@Override
-//	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-//		return ContextClassCallingConvention.getInstance(asClass);
-//	}
-
 	@Override
 	public boolean isInlined() {
 		return false;

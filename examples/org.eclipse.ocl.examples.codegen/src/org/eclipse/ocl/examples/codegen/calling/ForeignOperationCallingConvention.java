@@ -546,11 +546,6 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		return ForeignCacheClassCallingConvention.getInstance(asOperation, false);
 	}
 
-//	@Override
-//	public @NonNull ClassCallingConvention getClassCallingConvention(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-//		return ExternalClassCallingConvention.getInstance(asClass);
-//	}
-
 	@Override
 	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {
 		return ForeignEntryClassCallingConvention.getInstance(asOperation, false);
