@@ -28,6 +28,7 @@ import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
@@ -113,8 +114,8 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		}
 
 		@Override
-		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			return getRootClassParentPackage(analyzer, asOperation);
+		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {
+			return getRootClassParentPackage(analyzer, asFeature);
 		}
 	}
 

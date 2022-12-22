@@ -42,6 +42,7 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -242,11 +243,11 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 //		}
 
 		/**
-		 * Return the Package within which the caache class support for asOperation shuld be supported.
+		 * Return the Package within which the cache class support for asOperation shuld be supported.
 		 */
 		@Override
-		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {	// XXX Regularly overridden
-			return getRootClassParentPackage(analyzer, asOperation);
+		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {	// XXX Regularly overridden
+			return getRootClassParentPackage(analyzer, asFeature);
 		}
 
 		@Override

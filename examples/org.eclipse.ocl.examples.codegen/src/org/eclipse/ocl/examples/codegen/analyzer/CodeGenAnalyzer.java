@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.analyzer;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -130,6 +131,7 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -218,6 +220,8 @@ public class CodeGenAnalyzer
 	 */
 	@Deprecated	// XXX this should be redundant
 	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> externalFeatures = null;
+
+	private /*@LazyNonNull*/ UniqueList<@NonNull CGClass> injectedCGClasses = null;
 
 	/**
 	 * Mapping from each AS Element to its corresponding CGNamedElement. (Variables are mapped by the prevailing
@@ -347,6 +351,13 @@ public class CodeGenAnalyzer
 
 	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
 		globalNameManager.addGlobal(cgGlobal);
+	}
+
+	public void addInjectedCGClass(@NonNull CGClass cgClass) {
+		if (injectedCGClasses == null) {
+			injectedCGClasses = new UniqueList<>();
+		}
+		injectedCGClasses.add(cgClass);
 	}
 
 //	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
@@ -1263,6 +1274,18 @@ public class CodeGenAnalyzer
 			}
 		}
 		return cgProperty;
+	}
+
+	public @NonNull CGPackage generateRootPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		CGPackage cgPackage = generatePackage(asPackage);
+		if (injectedCGClasses != null) {
+			List<@NonNull CGClass> cgClasses = new ArrayList<>(injectedCGClasses);
+			Collections.sort(cgClasses, NameUtil.NAMEABLE_COMPARATOR);
+			for (@NonNull CGClass cgClass : cgClasses) {
+				generateClass(cgClass, CGUtil.getAST(cgClass));
+			}
+		}
+		return cgPackage;
 	}
 
 	protected @NonNull CGValuedElement generateSafeExclusion(@NonNull CallExp callExp, @NonNull CGValuedElement cgSource) {

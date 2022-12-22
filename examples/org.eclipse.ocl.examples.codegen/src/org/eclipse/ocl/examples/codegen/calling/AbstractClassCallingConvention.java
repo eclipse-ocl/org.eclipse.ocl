@@ -25,8 +25,8 @@ import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ClassableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -94,8 +94,8 @@ public abstract class AbstractClassCallingConvention extends AbstractCallingConv
 		throw new UnsupportedOperationException();
 	}
 
-	protected org.eclipse.ocl.pivot.@NonNull Package getDefaultParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		return AbstractLanguageSupport.getCachePackage(asOperation);
+	protected org.eclipse.ocl.pivot.@NonNull Package getDefaultParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {
+		return AbstractLanguageSupport.getCachePackage(asFeature);
 	}
 
 	@Override
@@ -103,8 +103,15 @@ public abstract class AbstractClassCallingConvention extends AbstractCallingConv
 		return PivotUtil.getName(asNamedElement);
 	}
 
-	protected org.eclipse.ocl.pivot.@NonNull Package getRootClassParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
+	/**
+	 * Return the Package within which the cache class support for which asFeature shuld be supported.
+	 */
+	protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {	// XXX Regularly overridden
+		return getDefaultParentPackage(analyzer, asFeature);
+	}
+
+	protected org.eclipse.ocl.pivot.@NonNull Package getRootClassParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asFeature);
 		CGClass cgClass = analyzer.getCGRootClass(asClass);
 		org.eclipse.ocl.pivot.Class asRootClass = CGUtil.getAST(cgClass);
 		return AbstractLanguageSupport.getCachePackage(asRootClass);
@@ -143,6 +150,7 @@ public abstract class AbstractClassCallingConvention extends AbstractCallingConv
 	protected void installCGRootClassParent(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgRootClass = analyzer.getCGRootClass(asClass);
 		cgRootClass.getClasses().add(cgClass);
+		analyzer.addInjectedCGClass(cgClass);
 	}
 
 	@Deprecated // moving to ClassCallingConvention

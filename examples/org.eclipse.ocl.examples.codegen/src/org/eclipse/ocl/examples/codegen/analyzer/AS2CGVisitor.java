@@ -449,10 +449,22 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-	//	CGPackage cgPackage = context.basicGetCGPackage(asPackage);
-	//	if (cgPackage == null) {
-		CGPackage cgPackage = context.generatePackage(asPackage);
-	//	}
+		CGPackage cgPackage = context.basicGetCGPackage(asPackage);
+		if (cgPackage == null) {
+			cgPackage = context.generatePackage(asPackage);
+		}
+	/*	else {
+			for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
+				System.out.println("visitPackage: " + NameUtil.debugSimpleName(asType) + " : " + asType);
+				CGClass cgClass = context.createCGElement(CGClass.class, asType);
+				assert cgClass.eContainer().eContainer() == cgPackage.eContainer();			// asClass may be a psuedo-nested class
+			}
+			for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : ClassUtil.nullFree(asPackage.getOwnedPackages())) {
+				System.out.println("visitPackage: " + NameUtil.debugSimpleName(asNestedPackage) + " : " + asNestedPackage);
+				CGPackage cgNestedPackage = context.createCGElement(CGPackage.class, asNestedPackage);
+				assert cgPackage.getPackages().contains(cgNestedPackage);
+			}
+		} */
 		return cgPackage;
 	}
 

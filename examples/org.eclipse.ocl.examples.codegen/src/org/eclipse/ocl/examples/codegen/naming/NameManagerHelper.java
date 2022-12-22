@@ -155,6 +155,7 @@ public class NameManagerHelper
 	public static final @NonNull String DISPATCH_CLASS_NAME_PREFIX = "DISPATCH_";
 	public static final @NonNull String ENTRY_CLASS_NAME_PREFIX = "ENTRY_";
 	public static final @NonNull String EXPRESSION_IN_OCL_NAME_HINT_PREFIX = PivotConstants.RESULT_NAME;
+	public static final @NonNull String FOREIGN_CLASS_NAME_PREFIX = "FOREIGN_";
 	//	public static final @NonNull String ID_NAME_HINT_PREFIX = "TID";
 	public static final @NonNull String IF_NAME_HINT_PREFIX = "IF_";
 	public static final @NonNull String INSTANCE_PROPERTY_NAME_PREFIX = "INSTANCE_";

@@ -57,7 +57,7 @@ public class ExecutableNameManager extends NestedNameManager
 
 	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 	private /*@LazyNonNull*/ CGParameter contextObjectParameter = null;		// A local parameter spelled "contextObject" to distinguish unique evaluations
-	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / caached local thread lookup
+	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / cached local thread lookup
 	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// A convenience cache of execitpr.getIdResolver()
 	private /*@LazyNonNull*/ CGParameter idResolverParameter = null;		// A local orphan parameter spelled "idResolver" -- XXX probably doesn't need caching
 	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;		// A convenience cache of execitpr.getModelManager()

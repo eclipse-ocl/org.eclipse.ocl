@@ -73,14 +73,14 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 	}
 
 	@Override
-	public @NonNull CGProperty createProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty, @Nullable ExpressionInOCL query) {
+	public @NonNull CGProperty createProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty, @Nullable ExpressionInOCL asExpressionInOCL) {
 		CGProperty cgProperty = createCGProperty(analyzer, asProperty);
 		assert cgProperty.getCallingConvention() == null;
 		cgProperty.setCallingConvention(this);
 		assert cgProperty.getAst() == null;
 		analyzer.initAst(cgProperty, asProperty, true);
 		ExecutableNameManager propertyNameManager = analyzer.getPropertyNameManager(cgProperty, asProperty);
-		createCGParameters(propertyNameManager, query);
+		createCGParameters(propertyNameManager, asExpressionInOCL);
 		assert cgProperty.eContainer() == null;
 		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asProperty));
 		cgClass.getProperties().add(cgProperty);

@@ -27,6 +27,7 @@ public interface CallingConvention
 	 * Return true if this feature needs generation with a distinct nested class or false if the generation of this
 	 * feature produces a nested class directly..
 	 */
+	@Deprecated	// XXX this should be redundant
 	default boolean needsNestedClass() {
 		return true;
 	}
