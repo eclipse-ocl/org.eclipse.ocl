@@ -327,7 +327,6 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		boolean isRequired = asOperation.isIsRequired();
 		assert cgSource == null;
 		assert asOperation.isIsStatic();
-		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		initCallExp(analyzer, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		ExecutableNameManager operationNameManager = analyzer.getGlobalNameManager().useOperationNameManager(cgOperation);
@@ -357,7 +356,6 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		assert analyzer.basicGetCGElement(asOperation) == null;
 		analyzer.initAst(cgOperation, asOperation, true);
 		assert analyzer.basicGetCGElement(asOperation) != null;
-		analyzer.addExternalFeature(asOperation);
 		createCachingClassesAndInstance(analyzer, cgOperation);
 		assert cgOperation.eContainer() == null;
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()

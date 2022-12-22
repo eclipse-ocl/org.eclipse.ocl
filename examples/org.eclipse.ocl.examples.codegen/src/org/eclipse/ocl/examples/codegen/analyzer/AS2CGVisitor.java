@@ -451,7 +451,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		CGPackage cgPackage = context.basicGetCGPackage(asPackage);
 		if (cgPackage == null) {
-			cgPackage = context.generatePackage(asPackage);
+			cgPackage = context.generatePackage(null, asPackage);
 		}
 	/*	else {
 			for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {

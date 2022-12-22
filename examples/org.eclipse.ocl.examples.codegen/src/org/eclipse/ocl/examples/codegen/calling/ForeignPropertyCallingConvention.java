@@ -192,7 +192,6 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 
 	@Override
 	public @NonNull CGProperty createProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty, @Nullable ExpressionInOCL asExpressionInOCL) {
-		analyzer.addExternalFeature(asProperty);
 //		CGProperty cgProperty = super.createProperty(analyzer, asProperty, asExpressionInOCL);
 		CGProperty cgProperty = createCGProperty(analyzer, asProperty);
 		assert cgProperty.getCallingConvention() == null;

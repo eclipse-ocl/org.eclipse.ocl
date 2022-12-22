@@ -218,10 +218,11 @@ public class CodeGenAnalyzer
 	 * </br>
 	 * A UniqueList allows recursive discovery of more external Features
 	 */
-	@Deprecated	// XXX this should be redundant
-	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> externalFeatures = null;
+//	@Deprecated	// XXX this should be redundant
+//	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> externalFeatures = null;
 
 	private /*@LazyNonNull*/ UniqueList<@NonNull CGClass> injectedCGClasses = null;
+	private /*@LazyNonNull*/ UniqueList<@NonNull CGPackage> injectedCGPackages = null;
 
 	/**
 	 * Mapping from each AS Element to its corresponding CGNamedElement. (Variables are mapped by the prevailing
@@ -342,10 +343,10 @@ public class CodeGenAnalyzer
 
 	public void addExternalFeature(@NonNull Feature asFeature) {
 	// XXX	assert false;			// XXX obsolete
-		UniqueList<@NonNull Feature> externalFeatures2 = externalFeatures;
-		if (externalFeatures2 == null) {
-			externalFeatures = externalFeatures2 = new UniqueList<>();
-		}
+//		UniqueList<@NonNull Feature> externalFeatures2 = externalFeatures;
+//		if (externalFeatures2 == null) {
+//			externalFeatures = externalFeatures2 = new UniqueList<>();
+//		}
 	// XXX	externalFeatures2.add(asFeature);
 	}
 
@@ -358,6 +359,13 @@ public class CodeGenAnalyzer
 			injectedCGClasses = new UniqueList<>();
 		}
 		injectedCGClasses.add(cgClass);
+	}
+
+	public void addInjectedCGPackage(@NonNull CGPackage cgPackage) {
+		if (injectedCGPackages == null) {
+			injectedCGPackages = new UniqueList<>();
+		}
+		injectedCGPackages.add(cgPackage);
 	}
 
 //	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
@@ -410,7 +418,7 @@ public class CodeGenAnalyzer
 
 	@Deprecated	// XXX this should be redundant
 	public @Nullable Iterable<@NonNull CGClass> analyzeExternalFeatures(@NonNull CGClass cgRootClass) {
-	//	Collection<@NonNull CGClass> cgRootClasses = cgPackage2cgRootClass.values();
+/*	//	Collection<@NonNull CGClass> cgRootClasses = cgPackage2cgRootClass.values();
 	//	assert cgRootClasses.size() == 1 : "Missing support for multiple root CGClass";			// XXX
 	//	CGClass cgRootClass = cgRootClasses.iterator().next();
 	//	assert cgRootClass != null;
@@ -446,7 +454,8 @@ public class CodeGenAnalyzer
 		//	CGClass cgRootClass = getCGRootClass(asExternalClass);
 			cgRootClass.getClasses().add(cgExternalClass);
 		}
-		return cgExternalClasses;
+		return cgExternalClasses; */
+		return null;
 	}
 
 	public @Nullable CGClass basicGetCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -1177,8 +1186,8 @@ public class CodeGenAnalyzer
 		return cgNavigationCallExp;
 	}
 
-	public @NonNull CGPackage generatePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		CGPackage cgPackage = basicGetCGPackage(asPackage);
+	public @NonNull CGPackage generatePackage(@Nullable CGPackage cgPackage, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	//	CGPackage cgPackage = basicGetCGPackage(asPackage);
 		if (cgPackage == null) {
 			cgPackage = generatePackageDeclaration(asPackage);
 		}
@@ -1277,7 +1286,14 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGPackage generateRootPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		CGPackage cgPackage = generatePackage(asPackage);
+		CGPackage cgRootPackage = generatePackage(null, asPackage);
+		if (injectedCGPackages != null) {
+			List<@NonNull CGPackage> cgPackages = new ArrayList<>(injectedCGPackages);
+			Collections.sort(cgPackages, NameUtil.NAMEABLE_COMPARATOR);
+			for (@NonNull CGPackage cgPackage : cgPackages) {
+				generatePackage(cgPackage, CGUtil.getAST(cgPackage));
+			}
+		}
 		if (injectedCGClasses != null) {
 			List<@NonNull CGClass> cgClasses = new ArrayList<>(injectedCGClasses);
 			Collections.sort(cgClasses, NameUtil.NAMEABLE_COMPARATOR);
@@ -1285,7 +1301,7 @@ public class CodeGenAnalyzer
 				generateClass(cgClass, CGUtil.getAST(cgClass));
 			}
 		}
-		return cgPackage;
+		return cgRootPackage;
 	}
 
 	protected @NonNull CGValuedElement generateSafeExclusion(@NonNull CallExp callExp, @NonNull CGValuedElement cgSource) {
@@ -1581,7 +1597,7 @@ public class CodeGenAnalyzer
 
 	@Deprecated	// XXX this should be redundant
 	public @Nullable UniqueList<@NonNull Feature> getExternalFeatures() {
-		return externalFeatures;
+		return null; // externalFeatures;
 	}
 
 	public @NonNull GenModelHelper getGenModelHelper() {
@@ -1984,9 +2000,9 @@ public class CodeGenAnalyzer
 		} */
 	}
 
-	public boolean isExternal(@NonNull Feature asFeature) {
-		return (externalFeatures != null) && externalFeatures.contains(asFeature);
-	}
+//	public boolean isExternal(@NonNull Feature asFeature) {
+//		return (externalFeatures != null) && externalFeatures.contains(asFeature);
+//	}
 
 	/**
 	 * Replace oldElement by newElement and return oldElement which is orphaned by the replacement.

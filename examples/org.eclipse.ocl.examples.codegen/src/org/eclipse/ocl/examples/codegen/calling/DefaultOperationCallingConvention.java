@@ -92,9 +92,7 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		assert metamodelManager.getImplementation(asOperation) instanceof ConstrainedOperation;
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.getOwningPackage(PivotUtil.getOwningClass(asOperation));
 		assert !(asPackage instanceof Library);
-		CGCachedOperation cgOperation = CGModelFactory.eINSTANCE.createCGCachedOperation();
-		analyzer.addExternalFeature(asOperation);
-		return cgOperation;
+		return CGModelFactory.eINSTANCE.createCGCachedOperation();
 	}
 
 	@Override

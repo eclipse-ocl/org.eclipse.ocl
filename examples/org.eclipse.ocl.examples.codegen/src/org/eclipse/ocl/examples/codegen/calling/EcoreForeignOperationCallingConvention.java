@@ -61,7 +61,6 @@ public class EcoreForeignOperationCallingConvention extends ForeignOperationCall
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
-		analyzer.addExternalFeature(asOperation);
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		initCallExp(analyzer, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		List<CGValuedElement> cgArguments = cgForeignOperationCallExp.getArguments();
