@@ -216,6 +216,7 @@ public class CodeGenAnalyzer
 	 * </br>
 	 * A UniqueList allows recursive discovery of more external Features
 	 */
+	@Deprecated	// XXX this should be redundant
 	private /*@LazyNonNull*/ UniqueList<@NonNull Feature> externalFeatures = null;
 
 	/**
@@ -396,6 +397,7 @@ public class CodeGenAnalyzer
 		assert checkNameManagers(cgRoot);
 	}
 
+	@Deprecated	// XXX this should be redundant
 	public @Nullable Iterable<@NonNull CGClass> analyzeExternalFeatures(@NonNull CGClass cgRootClass) {
 	//	Collection<@NonNull CGClass> cgRootClasses = cgPackage2cgRootClass.values();
 	//	assert cgRootClasses.size() == 1 : "Missing support for multiple root CGClass";			// XXX
@@ -781,6 +783,7 @@ public class CodeGenAnalyzer
 		return cgProperty;
 	} */
 
+	@Deprecated	// XXX this should be redundant
 	protected @NonNull CGClass createExternalCGClass(@NonNull AS2CGVisitor as2cgVisitor, @NonNull List<@NonNull CGClass> cgExternalClasses, @NonNull Feature asExternalFeature) {
 		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
 		org.eclipse.ocl.pivot.Class asExternalClass = PivotUtil.getOwningClass(asExternalFeature);
@@ -1163,6 +1166,22 @@ public class CodeGenAnalyzer
 		return cgNavigationCallExp;
 	}
 
+	public @NonNull CGPackage generatePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		CGPackage cgPackage = basicGetCGPackage(asPackage);
+		if (cgPackage == null) {
+			cgPackage = generatePackageDeclaration(asPackage);
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
+			CGClass cgClass = createCGElement(CGClass.class, asType);
+			assert cgClass.eContainer().eContainer() == cgPackage.eContainer();			// asClass may be a psuedo-nested class
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : ClassUtil.nullFree(asPackage.getOwnedPackages())) {
+			CGPackage cgNestedPackage = createCGElement(CGPackage.class, asNestedPackage);
+			assert cgPackage.getPackages().contains(cgNestedPackage);
+		}
+		return cgPackage;
+	}
+
 	/**
 	 * Generate / share the CG declaration for asPackage.
 	 */
@@ -1537,6 +1556,7 @@ public class CodeGenAnalyzer
 		return executableNameManager.getExecutorVariableInternal();
 	}
 
+	@Deprecated	// XXX this should be redundant
 	public @Nullable UniqueList<@NonNull Feature> getExternalFeatures() {
 		return externalFeatures;
 	}

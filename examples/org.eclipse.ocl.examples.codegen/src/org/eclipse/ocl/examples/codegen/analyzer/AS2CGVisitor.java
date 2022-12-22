@@ -237,16 +237,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	 */
 	@Override
 	public @NonNull CGClass visitClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	//	CGClass cgClass = context.basicGetCGClass(asClass);
+	//	if (cgClass == null) {
 		CGClass cgClass = context.generateClass(null, asClass);
-	/*	org.eclipse.ocl.pivot.Package asCachePackage = AbstractLanguageSupport.basicGetCachePackage(asClass);
-		if (asCachePackage != null) {
-			List<org.eclipse.ocl.pivot.@NonNull Class> saved = Lists.newArrayList(PivotUtil.getOwnedClasses(asCachePackage));	// XXX
-			for (org.eclipse.ocl.pivot.@NonNull Class asCacheClass : PivotUtil.getOwnedClasses(asCachePackage)) {
-				System.out.println("visitClass-sub " + NameUtil.debugSimpleName(asClass) + " : " + asCacheClass);
-				CGClass cgCacheClass = context.createCGElement(CGClass.class, asCacheClass);
-				assert cgClass.getClasses().contains(cgCacheClass);
-			}
-		} */
+	//	}
 		return cgClass;
 	}
 
@@ -455,18 +449,10 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		CGPackage cgPackage = context.basicGetCGPackage(asPackage);
-		if (cgPackage == null) {
-			cgPackage = context.generatePackageDeclaration(asPackage);
-		}
-		for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
-			CGClass cgClass = context.createCGElement(CGClass.class, asType);
-			assert cgClass.eContainer().eContainer() == cgPackage.eContainer();			// asClass may be a psuedo-nested class
-		}
-		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : ClassUtil.nullFree(asPackage.getOwnedPackages())) {
-			CGPackage cgNestedPackage = context.createCGElement(CGPackage.class, asNestedPackage);
-			assert cgPackage.getPackages().contains(cgNestedPackage);
-		}
+	//	CGPackage cgPackage = context.basicGetCGPackage(asPackage);
+	//	if (cgPackage == null) {
+		CGPackage cgPackage = context.generatePackage(asPackage);
+	//	}
 		return cgPackage;
 	}
 
