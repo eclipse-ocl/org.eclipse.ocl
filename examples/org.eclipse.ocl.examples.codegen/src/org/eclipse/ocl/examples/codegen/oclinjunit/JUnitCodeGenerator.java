@@ -109,8 +109,8 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		asHelper.setType(asOperation, expInOcl.getType(), expInOcl.isIsRequired());
 
 		analyzer.setRootClass(asClass);				// Identify the host for synthesized nested classes
-		CGPackage cgPackage = analyzer.createCGElement(CGPackage.class, asRootPackage);
-	//	CGPackage cgPackage = analyzer.generatePackage(asRootPackage);
+	//	CGPackage cgPackage = analyzer.createCGElement(CGPackage.class, asRootPackage);
+		CGPackage cgPackage = analyzer.generateRootPackage(asRootPackage);
 		analyzer.analyzeExternalFeatures(analyzer.getCGClass(asClass));
 		return cgPackage;
 	}
