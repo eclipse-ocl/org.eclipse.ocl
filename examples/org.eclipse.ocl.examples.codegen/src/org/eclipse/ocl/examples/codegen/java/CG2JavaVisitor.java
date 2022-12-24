@@ -1540,6 +1540,11 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				actualTypeDescriptor = context.getTypeDescriptor(cgSource);
 		//	}
 		Class<?> jClass = actualTypeDescriptor.getJavaClass().getComponentType();
+		boolean isRequired = cgIndexExp.isRequired();
+		boolean wasNonNull = cgSource.isNonNull();
+		if (isRequired) {
+			appendSuppressWarningsNull(cgSource, isRequired);
+		}
 		js.appendDeclaration(cgIndexExp);
 		js.append(" = ");
 		SubStream castBody = new SubStream() {
@@ -1549,8 +1554,6 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.append("[" + cgIndexExp.getIndex() + "];\n");
 			}
 		};
-		boolean isRequired = cgIndexExp.isRequired();
-		boolean wasNonNull = cgSource.isNonNull();
 		js.appendClassCast(cgIndexExp, isRequired == wasNonNull ? null : isRequired, jClass, castBody);
 		return true;
 	}

@@ -265,10 +265,10 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("CACHE_Parent_static_count")) {
+			if (string.contains("INDEX_0_boxedValues")) {
 				getClass();		// XXX
 			}
-			if (string.contains("intValue")) {
+			if (string.contains("55")) {
 				getClass();		// XXX
 			}
 			if (indentationStack.isEmpty()) {
@@ -699,9 +699,11 @@ public class JavaStream
 		if (title != null) {
 			append(title);
 			append("\n");
+			if (element != null) {
+				appendOptionalBlankLine();
+			}
 		}
 		if (element != null) {
-			appendOptionalBlankLine();
 			PrettyPrintOptions.Global createOptions = createOptions(element);
 			append(PrettyPrinter.print(element, createOptions).replace("*/",  "* /") + "\n");
 			//			append("«IF expInOcl.messageExpression != null»«(expInOcl.messageExpression as StringLiteralExp).stringSymbol»«ENDIF»\n");
@@ -999,8 +1001,8 @@ public class JavaStream
 	 */
 	public void appendOptionalBlankLine() {
 		if (tailNewLines <= 1) {
-			s.append("\n");
-			tailNewLines++;
+			append("\n");
+		//	tailNewLines++;
 		}
 	}
 

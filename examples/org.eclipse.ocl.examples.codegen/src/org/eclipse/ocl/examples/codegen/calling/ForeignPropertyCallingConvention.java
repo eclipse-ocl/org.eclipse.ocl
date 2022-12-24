@@ -116,10 +116,10 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 				getValue.setRequired(true);
 			}
 			CGValuedElement ifValue = analyzer.createCGIfExp(cgCondition, castGetValue, analyzer.createCGVariableExp(basicGetValueVariable));
-			if (asProperty.isIsRequired() && !ifValue.isNonNull()) {			// XXX propagate isRequired cast to copy-paste origins
-				ifValue = analyzer.createCGCastExp(cgCastType, ifValue);
-				ifValue.setRequired(true);
-			}
+		//	if (asProperty.isIsRequired() && !ifValue.isNonNull()) {
+		//		ifValue = analyzer.createCGCastExp(cgCastType, ifValue);
+		//		ifValue.setRequired(true);
+		//	}
 			CGValuedElement withBasicGetValue = analyzer.createCGLetExp(basicGetValueVariable, ifValue);
 			cgForeignOperation.setBody(withBasicGetValue);
 		}
@@ -188,7 +188,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			//	Create AS body for property access operation
 			//
 			asProperty.getOwnedExpression();
-			OCLExpression asBody = null;
+			OCLExpression asBody;
 			if (asExpressionInOCL != null) {
 				asBody = EcoreUtil.copy(asExpressionInOCL.getOwnedBody());
 			}
@@ -203,44 +203,9 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 				ParameterVariable asForeignSelfVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asClass, true);
 				asEntryParameterVariables.add(asForeignSelfVariable);
 			}
-	/*		List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asForeignClass);
-			Stack<@NonNull LetVariable> asLetVariables = new Stack<>();
-			List<@NonNull Parameter> asParameters = Collections.EMPTY_LIST; // PivotUtilInternal.getOwnedParametersList(asProperty);
-			ParameterVariable asEntryIdResolverParameterVariable = asHelper.createParameterVariable(globalNameManager.getIdResolverNameResolution().getResolvedName(), jLanguageSupport.getNativeClass(IdResolver.class), true);
-			asEntryParameterVariables.add(asEntryIdResolverParameterVariable);
-			for (int i = 0; i < asEntryProperties.size()-1; i++) {		// not cachedResult
-				@NonNull ParameterVariable asEntryParameterVariable;
-				if (i == 0) {
-					asEntryParameterVariable = asEntrySelfVariable;
-				}
-				else {
-					Parameter asParameter = asParameters.get(i-1);		// skip no-self
-					asEntryParameterVariable = asHelper.createParameterVariable(asParameter);
-					asEntryParameterVariable.setRepresentedParameter(asParameter);
-				}
-				asEntryParameterVariables.add(asEntryParameterVariable);
-				//
-				Property asEntryProperty = asEntryProperties.get(i);
-				String name = PivotUtil.getName(asEntryProperty);
-				VariableExp asInit = asHelper.createVariableExp(asEntryParameterVariable);
-				LetVariable asLetVariable = asHelper.createLetVariable(name, asInit);
-				asLetVariables.push(asLetVariable);
-				//
-				OCLExpression asEntryThisVariableExp = asHelper.createVariableExp(asEntryThisVariable);
-				OCLExpression asEntryParameterVariableExp = asHelper.createVariableExp(asLetVariable);
-				OCLExpression asEntryPropertyCallExp = asHelper.createPropertyCallExp(asEntryThisVariableExp, asEntryProperty);
-				OCLExpression asEquals = asHelper.createOperationCallExp(asEntryParameterVariableExp, "=", asEntryPropertyCallExp);
-				asBody = asBody != null ? asHelper.createOperationCallExp(asBody, LibraryConstants.AND2, asEquals) : asEquals;
-			} */
-		//	assert asBody != null;
-			if (asBody != null) {
-			//	while (!asLetVariables.isEmpty()) {
-			//		LetVariable asVariable = asLetVariables.pop();
-			//		asBody = asHelper.createLetExp(asVariable, asBody);
-			//	}
-				asForeignExpressionInOCL.setOwnedBody(asBody);
-		//	//	asEntryExpressionInOCL.setType(asBody.getType());
-			}
+			asForeignExpressionInOCL.setOwnedBody(asBody);
+			asForeignExpressionInOCL.setType(asBody.getType());
+			asForeignExpressionInOCL.setIsRequired(asBody.isIsRequired());
 			asForeignOperation.setBodyExpression(asForeignExpressionInOCL);
 			//
 			//	Create CG declaration
@@ -248,16 +213,8 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			CGOperation cgForeignOperation = createCGOperation(analyzer, asForeignOperation);
 			analyzer.initAst(cgForeignOperation, asForeignOperation, true);
 			cgForeignOperation.setCallingConvention(this);
-	//		isEqualNameResolution.addCGElement(cgForeignOperation);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgForeignOperation, asForeignOperation);
 			List<@NonNull CGParameter> cgForeignParameters = CGUtil.getParametersList(cgForeignOperation);
-	//		CGParameter cgIdResolverParameter = operationNameManager.getIdResolverParameter();	// FIXME notify operationNameManager that we need a regular idResolver parameter
-	//		NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
-	//		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
-	//		CGParameter cgIdResolverParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
-	//		cgIdResolverParameter.setNonInvalid();
-	//		cgIdResolverParameter.setNonNull();
-	//		cgEntryParameters.add(cgIdResolverParameter);
 			CGParameter cgExecutorParameter = operationNameManager.getCGParameter(asExecutorParameter, (String)null);
 			globalNameManager.getExecutorNameResolution().addCGElement(cgExecutorParameter);
 			cgForeignParameters.add(cgExecutorParameter);
@@ -274,8 +231,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 
 		@Override
 		protected void generateUniqueComputationArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
-			cg2javaVisitor.getJavaStream().append(globalNameManager.getRootObjectNameResolution().getResolvedName());
-			super.generateUniqueComputationArguments(cg2javaVisitor, false, globalNameManager, cgOperation);
+			throw new IllegalStateException();		// not callable; generateJavaOperationBody overrides
 		}
 
 		@Override
