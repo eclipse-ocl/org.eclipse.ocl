@@ -147,7 +147,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 
 		@Override
 		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			return getRootClassParentPackage(analyzer, asOperation);
+			return analyzer.getRootClassParentPackage(asOperation);
 		}
 
 		@Override
@@ -247,7 +247,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		 */
 		@Override
 		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {	// XXX Regularly overridden
-			return getRootClassParentPackage(analyzer, asFeature);
+			return analyzer.getRootClassParentPackage(asFeature);
 		}
 
 		@Override

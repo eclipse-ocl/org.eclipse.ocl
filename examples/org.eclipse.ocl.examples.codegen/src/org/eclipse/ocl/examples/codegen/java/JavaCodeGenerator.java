@@ -681,6 +681,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return s.toString();
 	}
 
+	@Deprecated /* @deprecated obsolete approach */
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		assert false : "Unsupported getQualifiedForeignClassName";
 		return PivotUtil.getName(asClass);

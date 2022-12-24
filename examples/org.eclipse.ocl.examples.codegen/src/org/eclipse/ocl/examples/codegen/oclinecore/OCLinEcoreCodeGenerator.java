@@ -15,9 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
-import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.ecore.genmodel.GenTypedElement;
 import org.eclipse.emf.codegen.util.ImportManager;
@@ -571,9 +569,9 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	//		Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();
 			String constantsText = cg2java.generateConstants(sortedGlobals);
 			constantsTexts.put(genPackage, constantsText);
-			Iterable<@NonNull Feature> foreignFeatures2 = analyzer.getExternalFeatures();
+			Iterable<@NonNull Feature> foreignFeatures2 = null; //analyzer.getExternalFeatures();
 			if (foreignFeatures2 != null) {
-				for (@NonNull Feature foreignFeature : foreignFeatures2) {
+			/*	for (@NonNull Feature foreignFeature : foreignFeatures2) {
 					if (foreignFeature instanceof Operation) {
 						GenOperation genOperation = genModelHelper.getGenOperation((Operation)foreignFeature);
 						assert genOperation != null;
@@ -586,7 +584,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 					else {
 						assert false;
 					}
-				}
+				}  */
 			}
 		}
 		finally {

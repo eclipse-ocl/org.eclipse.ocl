@@ -110,13 +110,6 @@ public abstract class AbstractClassCallingConvention extends AbstractCallingConv
 		return getDefaultParentPackage(analyzer, asFeature);
 	}
 
-	protected org.eclipse.ocl.pivot.@NonNull Package getRootClassParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {
-		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asFeature);
-		CGClass cgClass = analyzer.getCGRootClass(asClass);
-		org.eclipse.ocl.pivot.Class asRootClass = CGUtil.getAST(cgClass);
-		return AbstractLanguageSupport.getCachePackage(asRootClass);
-	}
-
 	/**
 	 * Determine the parent of cgClass as the CGClass of the logical parent of the 'nested' asClass. The Pivot does not support
 	 * nested AS Classes, so the 'nested' AS Class is contained by an AS Package that is a 'sibling' of the same-named AS Class.

@@ -13,10 +13,12 @@ package org.eclipse.ocl.examples.codegen.calling;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention.AbstractEvaluateOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElementId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
@@ -27,29 +29,40 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
 import org.eclipse.ocl.pivot.internal.library.StaticProperty;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.LanguageSupport;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  *  ForeignPropertyCallingConvention defines the support for the call of a property realized by an
@@ -66,6 +79,235 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		return INSTANCE;
 	}
 
+	public static class ForeignGetterOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
+	{
+		private static final @NonNull ForeignGetterOperationCallingConvention INSTANCE = new ForeignGetterOperationCallingConvention();
+
+		public static @NonNull ForeignGetterOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
+
+		@Override
+		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgForeignOperation) {
+			Property asProperty = analyzer.getOriginalProperty(cgForeignOperation);
+			Operation asForeignOperation = CGUtil.getAST(cgForeignOperation);
+			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgForeignOperation, asForeignOperation);
+			List<@NonNull CGParameter> cgForeignParametersList = CGUtil.getParametersList(cgForeignOperation);
+			CGParameter cgSelfParameter = cgForeignParametersList.size() > 1 ? cgForeignParametersList.get(1) : null;
+			CGValuedElement cgInitValue = analyzer.getInitExpression(/*cgParameter,*/ asProperty);
+			assert cgInitValue != null;
+			CGVariable modelManagerVariable = operationNameManager.getModelManagerVariable();
+			CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
+			CGExecutorType cgCastType = operationNameManager.getCGExecutorType(PivotUtil.getType(asProperty));
+			CGNativeOperationCallExp basicGetValueInit = createCGBoxedNativeOperationCallExp(analyzer, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
+				cgSelfParameter != null ? analyzer.createCGVariableExp(cgSelfParameter) : analyzer.createCGConstantExp(analyzer.createCGNull()), analyzer.createCGConstantExp(cgPropertyId));
+		//	basicGetValueInit.setTypeId(cacheTypeId);
+			basicGetValueInit.setValueIsBoxed(true);
+			CGValuedElement castBasicGetValueInit = analyzer.createCGCastExp(cgCastType, basicGetValueInit);
+			CGFinalVariable basicGetValueVariable = operationNameManager.createCGVariable(castBasicGetValueInit);
+			CGValuedElement cgCondition = analyzer.createCGIsEqual2(analyzer.createCGVariableExp(basicGetValueVariable), analyzer.createCGNull());
+			CGNativeOperationCallExp getValue = createCGBoxedNativeOperationCallExp(analyzer, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
+				cgSelfParameter != null ? analyzer.createCGVariableExp(cgSelfParameter) : analyzer.createCGConstantExp(analyzer.createCGNull()), analyzer.createCGConstantExp(cgPropertyId), cgInitValue);
+		//	getValue.setTypeId(cacheTypeId);
+			getValue.setValueIsBoxed(true);
+			CGValuedElement castGetValue = analyzer.createCGCastExp(cgCastType, getValue);
+			if (asProperty.isIsRequired()) {
+				getValue.setRequired(true);
+			}
+			CGValuedElement ifValue = analyzer.createCGIfExp(cgCondition, castGetValue, analyzer.createCGVariableExp(basicGetValueVariable));
+			if (asProperty.isIsRequired() && !ifValue.isNonNull()) {			// XXX propagate isRequired cast to copy-paste origins
+				ifValue = analyzer.createCGCastExp(cgCastType, ifValue);
+				ifValue.setRequired(true);
+			}
+			CGValuedElement withBasicGetValue = analyzer.createCGLetExp(basicGetValueVariable, ifValue);
+			cgForeignOperation.setBody(withBasicGetValue);
+		}
+
+		private @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @Nullable CGValuedElement cgThis, @NonNull Method jMethod, @NonNull CGValuedElement... cgArguments) {
+			CGNativeOperationCallExp cgCallExp = analyzer.createCGNativeOperationCallExp(jMethod, SupportOperationCallingConvention.getInstance(jMethod));
+			cgCallExp.setCgThis(cgThis);
+			if (cgArguments != null) {
+				List<CGValuedElement> cgArguments2 = cgCallExp.getArguments();
+				for (@NonNull CGValuedElement cgArgument : cgArguments) {
+					cgArguments2.add(cgArgument);
+				}
+			}
+			cgCallExp.setRequired(analyzer.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);
+		//	cgCallExp.setInvalidating(false));
+			Class<?> jReturnType = jMethod.getReturnType();
+			assert jReturnType != null;
+			cgCallExp.setTypeId(analyzer.getCGTypeId(new JavaTypeId(jReturnType)));		// XXX cache
+			return cgCallExp;
+		}
+
+		public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty) {
+			return CGModelFactory.eINSTANCE.createCGCachedOperation();
+		}
+
+		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgForeignClass, @NonNull Property asProperty, @Nullable ExpressionInOCL asExpressionInOCL) {
+			//
+			// AS Class - yyy2zzz
+			// AS Properties - contextObject, x1, x2, cachedResult
+			// AS Operation - yyy2zzz
+			// AS Operation.ownedParameters - x1, x2
+			// AS Entry Operation - isEqual
+			// AS Entry Operation.parameters - boxedValues{x1, x2}
+			// AS Entry ExpressionInOCL.ownedContext - this
+			// AS Entry ExpressionInOCL.ownedParameter(Variable)s - idResolver, self, x1, x2
+			// CG Entry Operation - isEqual
+			// CG Entry Operation.parameters - idResolver, boxedValues{x1, x2}
+			// CG Entry Operation.lets - x1, x2
+			//
+			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
+			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+			LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+			PivotHelper asHelper = codeGenerator.getASHelper();
+			org.eclipse.ocl.pivot.@NonNull Class asForeignClass = CGUtil.getAST(cgForeignClass);
+			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
+			boolean isStatic = asProperty.isIsStatic();
+			//
+			//	Create AS declaration for property access operation
+			//
+			String qualifiedPropertyName = asProperty.toString().replace("::", "_");
+			Type asReturnType = asProperty.getType();
+			Operation asForeignOperation = PivotUtil.createOperation(qualifiedPropertyName, asReturnType, null, null);
+			asForeignOperation.setIsRequired(asProperty.isIsRequired());
+			asForeignOperation.setIsStatic(true);
+			List<@NonNull Parameter> asForeignParameters = PivotUtilInternal.getOwnedParametersList(asForeignOperation);
+			Parameter asExecutorParameter = createExecutorParameter(codeGenerator);
+			asForeignParameters.add(asExecutorParameter);
+			if (!isStatic) {
+				String contextObjectName = globalNameManager.getContextObjectNameResolution().getResolvedName();
+				Parameter asContextObjectParameter = PivotUtil.createParameter(contextObjectName, asClass, true);
+				asForeignParameters.add(asContextObjectParameter);
+			}
+			asForeignClass.getOwnedOperations().add(asForeignOperation);
+			//
+			//	Create AS body for property access operation
+			//
+			asProperty.getOwnedExpression();
+			OCLExpression asBody = null;
+			if (asExpressionInOCL != null) {
+				asBody = EcoreUtil.copy(asExpressionInOCL.getOwnedBody());
+			}
+			else {
+				asBody = ValueUtil.createLiteralExp(asProperty.getDefaultValue());
+			}
+			ExpressionInOCL asForeignExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
+			ParameterVariable asForeignThisVariable = asHelper.createParameterVariable(globalNameManager.getThisNameResolution().getResolvedName(), asForeignClass, true);
+			asForeignExpressionInOCL.setOwnedContext(asForeignThisVariable);
+			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asForeignExpressionInOCL);
+			if (!isStatic) {
+				ParameterVariable asForeignSelfVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asClass, true);
+				asEntryParameterVariables.add(asForeignSelfVariable);
+			}
+	/*		List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asForeignClass);
+			Stack<@NonNull LetVariable> asLetVariables = new Stack<>();
+			List<@NonNull Parameter> asParameters = Collections.EMPTY_LIST; // PivotUtilInternal.getOwnedParametersList(asProperty);
+			ParameterVariable asEntryIdResolverParameterVariable = asHelper.createParameterVariable(globalNameManager.getIdResolverNameResolution().getResolvedName(), jLanguageSupport.getNativeClass(IdResolver.class), true);
+			asEntryParameterVariables.add(asEntryIdResolverParameterVariable);
+			for (int i = 0; i < asEntryProperties.size()-1; i++) {		// not cachedResult
+				@NonNull ParameterVariable asEntryParameterVariable;
+				if (i == 0) {
+					asEntryParameterVariable = asEntrySelfVariable;
+				}
+				else {
+					Parameter asParameter = asParameters.get(i-1);		// skip no-self
+					asEntryParameterVariable = asHelper.createParameterVariable(asParameter);
+					asEntryParameterVariable.setRepresentedParameter(asParameter);
+				}
+				asEntryParameterVariables.add(asEntryParameterVariable);
+				//
+				Property asEntryProperty = asEntryProperties.get(i);
+				String name = PivotUtil.getName(asEntryProperty);
+				VariableExp asInit = asHelper.createVariableExp(asEntryParameterVariable);
+				LetVariable asLetVariable = asHelper.createLetVariable(name, asInit);
+				asLetVariables.push(asLetVariable);
+				//
+				OCLExpression asEntryThisVariableExp = asHelper.createVariableExp(asEntryThisVariable);
+				OCLExpression asEntryParameterVariableExp = asHelper.createVariableExp(asLetVariable);
+				OCLExpression asEntryPropertyCallExp = asHelper.createPropertyCallExp(asEntryThisVariableExp, asEntryProperty);
+				OCLExpression asEquals = asHelper.createOperationCallExp(asEntryParameterVariableExp, "=", asEntryPropertyCallExp);
+				asBody = asBody != null ? asHelper.createOperationCallExp(asBody, LibraryConstants.AND2, asEquals) : asEquals;
+			} */
+		//	assert asBody != null;
+			if (asBody != null) {
+			//	while (!asLetVariables.isEmpty()) {
+			//		LetVariable asVariable = asLetVariables.pop();
+			//		asBody = asHelper.createLetExp(asVariable, asBody);
+			//	}
+				asForeignExpressionInOCL.setOwnedBody(asBody);
+		//	//	asEntryExpressionInOCL.setType(asBody.getType());
+			}
+			asForeignOperation.setBodyExpression(asForeignExpressionInOCL);
+			//
+			//	Create CG declaration
+			//
+			CGOperation cgForeignOperation = createCGOperation(analyzer, asForeignOperation);
+			analyzer.initAst(cgForeignOperation, asForeignOperation, true);
+			cgForeignOperation.setCallingConvention(this);
+	//		isEqualNameResolution.addCGElement(cgForeignOperation);
+			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgForeignOperation, asForeignOperation);
+			List<@NonNull CGParameter> cgForeignParameters = CGUtil.getParametersList(cgForeignOperation);
+	//		CGParameter cgIdResolverParameter = operationNameManager.getIdResolverParameter();	// FIXME notify operationNameManager that we need a regular idResolver parameter
+	//		NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
+	//		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
+	//		CGParameter cgIdResolverParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
+	//		cgIdResolverParameter.setNonInvalid();
+	//		cgIdResolverParameter.setNonNull();
+	//		cgEntryParameters.add(cgIdResolverParameter);
+			CGParameter cgExecutorParameter = operationNameManager.getCGParameter(asExecutorParameter, (String)null);
+			globalNameManager.getExecutorNameResolution().addCGElement(cgExecutorParameter);
+			cgForeignParameters.add(cgExecutorParameter);
+			//
+			cgForeignClass.getOperations().add(cgForeignOperation);
+			return cgForeignOperation;
+		}
+
+		@Override
+		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+			CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
+			cg2javaVisitor.appendReturn(body);
+		}
+
+		@Override
+		protected void generateUniqueComputationArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
+			cg2javaVisitor.getJavaStream().append(globalNameManager.getRootObjectNameResolution().getResolvedName());
+			super.generateUniqueComputationArguments(cg2javaVisitor, false, globalNameManager, cgOperation);
+		}
+
+		@Override
+		public void rewriteWithBoxingAndGuards(
+				@NonNull BoxingAnalyzer boxingAnalyzer,
+				@NonNull CGOperation cgOperation) {
+			// TODO Auto-generated method stub
+			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperation);
+		}
+
+		@Override
+		public void rewriteWithBoxingAndGuards(
+				@NonNull BoxingAnalyzer boxingAnalyzer,
+				@NonNull CGOperationCallExp cgOperationCallExp) {
+			// TODO Auto-generated method stub
+			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperationCallExp);
+		}
+
+	/*	@Override
+		public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGProperty cgProperty) {
+			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgProperty);
+			CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
+			boxingAnalyzer.rewriteAsBoxed(cgForeignProperty.getBody());
+			if (cgForeignProperty.isRequired()) {
+				CGValuedElement body = cgForeignProperty.getBody();
+				if (body != null) {
+					boxingAnalyzer.rewriteAsGuarded(body, false, "body for '" + cgForeignProperty.getAst() + "'");
+				}
+			}
+		} */
+	}
+
 	@Override
 	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
@@ -75,6 +317,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		assert (libraryProperty instanceof StaticProperty)			// test_static_property
 			|| (libraryProperty instanceof ForeignProperty);		// test_static_id
 	//	assert cgSource == null;
+//		CGForeignOperationCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		CGForeignPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignPropertyCallExp();
 		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 		cgPropertyCallExp.getOwns().add(cgPropertyId);
@@ -88,23 +331,6 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 
 	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager propertyNameManager, @Nullable ExpressionInOCL initExpression) {
-		CGForeignProperty cgForeignProperty = (CGForeignProperty)propertyNameManager.getCGScope();
-		List<CGParameter> cgParameters = cgForeignProperty.getParameters();
-		cgParameters.add(propertyNameManager.getExecutorParameter());
-		if (initExpression != null) {
-			Variable contextVariable = initExpression.getOwnedContext();
-			if (contextVariable != null) {
-				CodeGenAnalyzer analyzer = propertyNameManager.getAnalyzer();
-				cgParameters.add(analyzer.getSelfParameter(propertyNameManager, contextVariable));
-			}
-			else {
-				cgParameters.add(propertyNameManager.getAnyParameter());
-			}
-		}
-		else {	// default value
-			Property asProperty = CGUtil.getAST(cgForeignProperty);
-			cgParameters.add(asProperty.isIsStatic() ?  propertyNameManager.getAnyParameter() : propertyNameManager.getSelfParameter());
-		}
 	}
 
 	@Override
@@ -112,254 +338,65 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		return CGModelFactory.eINSTANCE.createCGForeignProperty();
 	}
 
-/*	protected final void createForeignClass(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		AbstractEntryClassCallingConvention entryClassCallingConvention = getEntryClassCallingConvention(asOperation);
-		CGClass cgEntryClass = entryClassCallingConvention.createEntryClass(analyzer, cgOperation);
-		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		AbstractCacheClassCallingConvention cacheClassCallingConvention = getCacheClassCallingConvention(asOperation);
-		CGClass cgCacheClass = cacheClassCallingConvention.createCacheClass(analyzer, asOperation, asEntryClass, this);
-		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);
-	}
-
-	protected final void createForeignProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		AbstractEntryClassCallingConvention entryClassCallingConvention = getEntryClassCallingConvention(asOperation);
-		CGClass cgEntryClass = entryClassCallingConvention.createEntryClass(analyzer, cgOperation);
-		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		AbstractCacheClassCallingConvention cacheClassCallingConvention = getCacheClassCallingConvention(asOperation);
-		CGClass cgCacheClass = cacheClassCallingConvention.createCacheClass(analyzer, asOperation, asEntryClass, this);
-		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);
-	} */
-
-	@Override
-	public void createImplementation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty) {
-		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
-		ExecutableNameManager propertyNameManager = analyzer.getGlobalNameManager().usePropertyNameManager(cgProperty);
-		Property asProperty = CGUtil.getAST(cgForeignProperty);
-//		CGParameter cgParameter = asProperty.isIsStatic() ? localContext.getAnyParameter() : localContext.getSelfParameter();
-//		cgForeignProperty.getParameters().add(localContext.getExecutorParameter());
-//		cgForeignProperty.getParameters().add(cgParameter);
-		CGParameter cgSelfParameter = CGUtil.getParametersList(cgForeignProperty).get(1);
-		CGValuedElement cgInitValue = analyzer.getInitExpression(/*cgParameter,*/ asProperty);
-		assert cgInitValue != null;
-		CGVariable modelManagerVariable = propertyNameManager.getModelManagerVariable();
-		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
-	//	CGTypeId cacheTypeId = context.getTypeId(asProperty.getTypeId());
-		CGExecutorType cgCastType = propertyNameManager.getCGExecutorType(PivotUtil.getType(asProperty));
-		CGNativeOperationCallExp basicGetValueInit = createCGBoxedNativeOperationCallExp(analyzer, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_BASIC_GET_FOREIGN_PROPERTY_VALUE_METHOD,
-			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId));
-	//	basicGetValueInit.setTypeId(cacheTypeId);
-		basicGetValueInit.setValueIsBoxed(true);
-		CGValuedElement castBasicGetValueInit = analyzer.createCGCastExp(cgCastType, basicGetValueInit);
-		CGFinalVariable basicGetValueVariable = propertyNameManager.createCGVariable(castBasicGetValueInit);
-//		nameManager.declareLazyName(basicGetValueVariable);
-		CGValuedElement cgCondition = analyzer.createCGIsEqual(analyzer.createCGVariableExp(basicGetValueVariable), analyzer.createCGNull());
-		CGNativeOperationCallExp getValue = createCGBoxedNativeOperationCallExp(analyzer, analyzer.createCGVariableExp(modelManagerVariable), JavaConstants.MODEL_MANAGER_GET_FOREIGN_PROPERTY_VALUE_METHOD,
-			asProperty.isIsStatic() ? analyzer.createCGConstantExp(analyzer.createCGNull()) : analyzer.createCGVariableExp(cgSelfParameter), analyzer.createCGConstantExp(cgPropertyId), cgInitValue);
-	//	getValue.setTypeId(cacheTypeId);
-		getValue.setValueIsBoxed(true);
-		CGValuedElement castGetValue = analyzer.createCGCastExp(cgCastType, getValue);
-		if (asProperty.isIsRequired()) {
-			getValue.setRequired(true);
+		@Override
+		public void createImplementation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty) {
+			// Implemented as a Foreign operation
 		}
-		CGValuedElement ifValue = analyzer.createCGIfExp(cgCondition, castGetValue, analyzer.createCGVariableExp(basicGetValueVariable));
-		if (asProperty.isIsRequired()) {
-			ifValue.setRequired(true);
-		}
-		CGValuedElement withBasicGetValue = analyzer.createCGLetExp(basicGetValueVariable, ifValue);
-		cgForeignProperty.setBody(withBasicGetValue);
-	}
-
-	private @NonNull CGNativeOperationCallExp createCGBoxedNativeOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @Nullable CGValuedElement cgThis, @NonNull Method jMethod, @NonNull CGValuedElement... cgArguments) {
-		CGNativeOperationCallExp cgCallExp = analyzer.createCGNativeOperationCallExp(jMethod, SupportOperationCallingConvention.getInstance(jMethod));
-		cgCallExp.setCgThis(cgThis);
-		if (cgArguments != null) {
-			List<CGValuedElement> cgArguments2 = cgCallExp.getArguments();
-			for (@NonNull CGValuedElement cgArgument : cgArguments) {
-				cgArguments2.add(cgArgument);
-			}
-		}
-		cgCallExp.setRequired(analyzer.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);
-	//	cgCallExp.setInvalidating(false));
-		Class<?> jReturnType = jMethod.getReturnType();
-		assert jReturnType != null;
-		cgCallExp.setTypeId(analyzer.getCGTypeId(new JavaTypeId(jReturnType)));		// XXX cache
-		return cgCallExp;
-	}
 
 	@Override
 	public @NonNull CGProperty createProperty(@NonNull CodeGenAnalyzer analyzer, @NonNull Property asProperty, @Nullable ExpressionInOCL asExpressionInOCL) {
-//		CGProperty cgProperty = super.createProperty(analyzer, asProperty, asExpressionInOCL);
 		CGProperty cgProperty = createCGProperty(analyzer, asProperty);
-		assert cgProperty.getCallingConvention() == null;
 		cgProperty.setCallingConvention(this);
-		assert cgProperty.getAst() == null;
 		analyzer.initAst(cgProperty, asProperty, true);
-		ExecutableNameManager propertyNameManager = analyzer.getPropertyNameManager(cgProperty, asProperty);
-		createCGParameters(propertyNameManager, asExpressionInOCL);
-		assert cgProperty.eContainer() == null;
-		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asProperty));
-		cgClass.getProperties().add(cgProperty);
-
-
-	//	ForeignClassCallingConvention classCallingConvention = ForeignClassCallingConvention.getInstance(asProperty);
-	//	CGClass cgForeignClass = classCallingConvention.createForeignClass(analyzer, cgProperty);
-	//	org.eclipse.ocl.pivot.Class asForeignClass = CGUtil.getAST(cgForeignClass);
-
-
-
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
+		org.eclipse.ocl.pivot.@NonNull Package asParentPackage = analyzer.getRootClassParentPackage(asClass);
+		CGClass cgForeignClass = analyzer.getForeignCGClass(asParentPackage);
+		cgForeignClass.getProperties().add(cgProperty);
+		installGetterOperation(analyzer, cgForeignClass, asProperty, asExpressionInOCL);
 		return cgProperty;
 	}
-
-/*	protected final void createCachingClassesAndInstance(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		AbstractEntryClassCallingConvention entryClassCallingConvention = getEntryClassCallingConvention(asOperation);
-		CGClass cgEntryClass = entryClassCallingConvention.createEntryClass(analyzer, cgOperation);
-		org.eclipse.ocl.pivot.Class asEntryClass = CGUtil.getAST(cgEntryClass);
-		AbstractCacheClassCallingConvention cacheClassCallingConvention = getCacheClassCallingConvention(asOperation);
-		CGClass cgCacheClass = cacheClassCallingConvention.createCacheClass(analyzer, asOperation, asEntryClass, this);
-		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-		createCacheInstance(analyzer, asOperation, asCacheClass, asEntryClass);
-	} */
 
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
-		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
-		CGForeignPropertyCallExp cgForeignPropertyCallExp = (CGForeignPropertyCallExp) cgPropertyCallExp;		// XXX never happens
+		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 		CGForeignProperty cgProperty = (CGForeignProperty)CGUtil.getProperty(cgPropertyCallExp);
-		Property asProperty = CGUtil.getAsProperty(cgPropertyCallExp);
-		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
-		String foreignClassName = cg2javaVisitor.getCodeGenerator().getQualifiedForeignClassName(asClass);
-		String propertyName = PivotUtil.getName(asProperty);
-		CGValuedElement cgSource = cgForeignPropertyCallExp.getSource();
+		Property asProperty = CGUtil.getAST(cgProperty);
+		CGOperation cgForeignOperation = analyzer.getForeignCGOperation(asProperty);
+		CGValuedElement cgSource = cgPropertyCallExp.getSource();
+		//
 		if (cgSource != null) {
 			CGValuedElement source = cg2javaVisitor.getExpression(cgSource);
-			//
 			if (!js.appendLocalStatements(source)) {
 				return false;
 			}
 		}
 		//
-		js.appendDeclaration(cgForeignPropertyCallExp);
+		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
-		SubStream castBody = new SubStream() {
-			@Override
-			public void append() {
-				CGOperation cgContainingOperation = CGUtil.basicGetContainingOperation(cgPropertyCallExp);
-				Iterable<@NonNull CGParameter> cgContainingParameters = null;
-				if (cgContainingOperation != null) {
-					cgContainingParameters = CGUtil.getParameters(cgContainingOperation);
-				}
-				else {
-					CGProperty cgContainingProperty = CGUtil.basicGetContainingProperty(cgPropertyCallExp);
-					if (cgContainingProperty instanceof CGForeignProperty) {
-						cgContainingParameters = CGUtil.getParameters((CGForeignProperty)cgContainingProperty);
-					}
-				}
-				js.appendClassReference(null, foreignClassName);
-				js.append("." + JavaConstants.EXTERNAL_PROPERTY_PREFIX);
-				js.append(propertyName);
-				js.append("(");
-				boolean isFirst = true;
-				for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgProperty)) {
-					if (!isFirst) {
-						js.append(", ");
-					}
-					CGTypeId cgTypeId = cgParameter.getTypeId();
-					TypeId asTypeId = cgTypeId.getASTypeId();
-					if (asTypeId == JavaConstants.EXECUTOR_TYPE_ID) {
-						CGParameter cgContainingParameter = getContainingParameter(cgContainingParameters, JavaConstants.EXECUTOR_TYPE_ID);
-						if (cgContainingParameter != null) {
-							js.appendValueName(cgContainingParameter);
-						}
-						else {
-							js.append(globalNameManager.getExecutorName());
-						}
-					}
-					else if (asTypeId == TypeId.OCL_ANY) {
-						CGParameter cgContainingParameter = getContainingParameter(cgContainingParameters, TypeId.OCL_ANY);
-						if (cgContainingParameter == null) {
-							cgContainingParameter = getContainingParameter(cgContainingParameters, TypeId.OCL_VOID);
-						}
-						if (cgContainingParameter != null) {
-							js.appendValueName(cgContainingParameter);
-						}
-						else {
-							js.append(globalNameManager.getSelfName());
-						}
-					}
-					else {
-						js.appendValueName(cgParameter);
-					}
-					isFirst = false;
-				}
-				js.append(")");
-			}
-		};
-		js.appendClassCast(cgForeignPropertyCallExp, castBody);
-		js.append(";\n");
+		CGClass cgForeignClass = CGUtil.getContainingClass(cgProperty);
+		js.appendClassReference(cgForeignClass);
+		js.append(".");
+		js.appendValueName(cgForeignOperation);
+		js.append("(");
+		js.append(analyzer.getGlobalNameManager().getExecutorNameResolution().getResolvedName());
+		if (cgSource != null) {
+			js.append(", ");
+			js.appendValueName(cgSource);
+		}
+		js.append(");\n");
 		return true;
 	}
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
-		JavaStream js = cg2javaVisitor.getJavaStream();
-		Property asProperty = CGUtil.getAST(cgProperty);
-		Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters((CGForeignProperty)cgProperty);
-		CGValuedElement cgInitExpression = cg2javaVisitor.getExpression(((CGForeignProperty)cgProperty).getBody());
-		js.append("public static ");
-		js.appendTypeDeclaration(cgProperty);
-		js.append(" " + JavaConstants.EXTERNAL_PROPERTY_PREFIX);
-		js.append(asProperty.getName());		// XXX FIXME valid Java name
-		js.append("(");
-		boolean isFirst = true;
-		for (@NonNull CGParameter cgParameter : cgParameters) {
-			if (!isFirst) {
-				js.append(", ");
-			}
-			js.appendDeclaration(cgParameter);
-			isFirst = false;
-		}
-		js.append(") {\n");
-		js.pushIndentation(null);
-		if (!js.appendLocalStatements(cgInitExpression)) {
-			return false;
-		}
-		js.append("return ");
-		js.appendValueName(cgInitExpression);
-		js.append(";\n");
-		js.popIndentation();
-		js.append("}\n");
-		return true;
+		return true;		// The property is reified as an operation; the PropertyCallExp is reified as an operation call
 	}
 
-	private @Nullable CGParameter getContainingParameter(@Nullable Iterable<@NonNull CGParameter> cgParameters, @NonNull TypeId requiredTypeId) {
-		if (cgParameters != null) {
-			for (@NonNull CGParameter cgParameter : cgParameters) {
-				CGTypeId cgTypeId = cgParameter.getTypeId();
-				TypeId asTypeId = cgTypeId.getASTypeId();
-				if (asTypeId == requiredTypeId) {
-					return cgParameter;
-				}
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGProperty cgProperty) {
-		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgProperty);
-		CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
-		boxingAnalyzer.rewriteAsBoxed(cgForeignProperty.getBody());
-		if (cgForeignProperty.isRequired()) {
-			CGValuedElement body = cgForeignProperty.getBody();
-			if (body != null) {
-				boxingAnalyzer.rewriteAsGuarded(body, false, "body for '" + cgForeignProperty.getAst() + "'");
-			}
-		}
+	private void installGetterOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgForeignClass, @NonNull Property asProperty, @Nullable ExpressionInOCL asExpressionInOCL) {
+		org.eclipse.ocl.pivot.Class asForeignClass = CGUtil.getAST(cgForeignClass);
+		ForeignGetterOperationCallingConvention callingConvention = ForeignGetterOperationCallingConvention.getInstance(asForeignClass);
+		CGOperation cgForeignOperation = callingConvention.createOperation(analyzer, cgForeignClass, asProperty, asExpressionInOCL);
+		analyzer.addForeignCGOperation(asProperty, cgForeignOperation);
 	}
 }

@@ -68,7 +68,7 @@ public abstract class AbstractCallingConvention implements CallingConvention, Na
 		return getClass().getSimpleName();
 	}
 
-	protected void logInstance(@NonNull Object usage) {
+	protected void logInstance(@Nullable Object usage) {
 		addInstance(NameUtil.contextText, String.valueOf(usage));
 	}
 

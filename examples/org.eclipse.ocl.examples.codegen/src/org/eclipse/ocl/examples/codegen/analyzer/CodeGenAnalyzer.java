@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.ForeignClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConvention;
@@ -128,13 +129,13 @@ import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
+import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
-import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 
@@ -227,6 +228,11 @@ public class CodeGenAnalyzer
 	 */
 	private final @NonNull Map<@NonNull CGOperation, @NonNull Operation> cgOperation2asOriginalOperation = new HashMap<>();
 
+	/**
+	 * Mapping from each cached CG Operation to its original AS Operation when ditinct from the cached AS Operation.
+	 */
+	private final @NonNull Map<@NonNull CGOperation, @NonNull Property> cgOperation2asOriginalProperty = new HashMap<>();
+
 	private @NonNull Map<@NonNull Operation, @NonNull OperationCache> asOperation2operationCache = new HashMap<>();
 	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull AbstractCache> asCacheClass2abstractCache = new HashMap<>();
 
@@ -282,6 +288,13 @@ public class CodeGenAnalyzer
 	 */
 	private @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Operation> asCacheClass2asOperation = new HashMap<>();
 
+	/**
+	 * The injected class within which the stubsfor fforeign properties are realized.
+	 */
+	private /*@LazyNonNull*/ CGClass cgForeignClass = null;
+
+	private /*@LazyNonNull*/ Map<@NonNull Property, @NonNull CGOperation> asProperty2foreignCGOperation = null;
+
 	public CodeGenAnalyzer(@NonNull JavaCodeGenerator codeGenerator) {
 		this.codeGenerator = codeGenerator;
 		this.environmentFactory = (EnvironmentFactoryInternalExtension) codeGenerator.getEnvironmentFactory();
@@ -325,6 +338,16 @@ public class CodeGenAnalyzer
 	public void addCachedOperation(org.eclipse.ocl.pivot.@NonNull Class asCacheClass, @NonNull Operation asOperation) {
 		Operation oldOperation = asCacheClass2asOperation.put(asCacheClass, asOperation);		// XXX redundant wrt cacheData
 		assert oldOperation == null;
+	}
+
+	public void addForeignCGOperation(@NonNull Property asProperty, @NonNull CGOperation cgForeignOperation) {
+		if (asProperty2foreignCGOperation == null) {
+			asProperty2foreignCGOperation = new HashMap<>();
+		}
+		CGOperation old1 = asProperty2foreignCGOperation.put(asProperty, cgForeignOperation);
+		assert old1 == null;
+		Property old2 = cgOperation2asOriginalProperty.put(cgForeignOperation, asProperty);
+		assert old2 == null;
 	}
 
 	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
@@ -613,6 +636,15 @@ public class CodeGenAnalyzer
 		return cgIsEqual;
 	}
 
+	public @NonNull CGValuedElement createCGIsEqual2(@NonNull CGValuedElement cgLeft, @NonNull CGValuedElement cgRight) {
+		CGIsEqual2Exp cgIsEqual = CGModelFactory.eINSTANCE.createCGIsEqual2Exp();
+		cgIsEqual.setSource(cgLeft);
+		cgIsEqual.setArgument(cgRight);
+		cgIsEqual.setTypeId(getCGTypeId(TypeId.BOOLEAN));
+		cgIsEqual.setRequired(true);
+		return cgIsEqual;
+	}
+
 	public @NonNull CGLetExp createCGLetExp(@NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgIn) {
 		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
 		cgLetExp.setInit(cgVariable);
@@ -631,16 +663,16 @@ public class CodeGenAnalyzer
 		return cgLetExp;
 	}
 
-	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {		// XXX @NonNull
+	public @NonNull CGNativeOperationCallExp createCGNativeOperationCallExp(@NonNull Method method, @NonNull OperationCallingConvention callingConvention) {
 		Operation asOperation = getNativeOperation(method);
-		CGOperation cgOperation = generateMaybeVirtualOperationDeclaration(asOperation);
+		CGOperation cgOperation = generateOperationDeclaration(asOperation, callingConvention, true);
 		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
 		cgNativeOperationCallExp.setMethod(method);		// Use cc
 		cgNativeOperationCallExp.setReferredOperation(cgOperation);
 		return cgNativeOperationCallExp;
 	}
 
-	public @NonNull CGNativePropertyCallExp createCGNativePropertyCallExp(@NonNull Field field, @NonNull PropertyCallingConvention callingConvention) {		// XXX @NonNull
+	public @NonNull CGNativePropertyCallExp createCGNativePropertyCallExp(@NonNull Field field, @NonNull PropertyCallingConvention callingConvention) {
 		Property asProperty = getNativeProperty(field, callingConvention);
 		CGProperty cgProperty = getCGProperty(asProperty);
 		CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
@@ -1204,13 +1236,6 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGPackage generateRootPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		CGPackage cgRootPackage = generatePackage(null, asPackage);
-	/*	if (injectedCGPackages != null) {
-			List<@NonNull CGPackage> cgPackages = new ArrayList<>(injectedCGPackages);
-			Collections.sort(cgPackages, NameUtil.NAMEABLE_COMPARATOR);
-			for (@NonNull CGPackage cgPackage : cgPackages) {
-				generatePackage(cgPackage, CGUtil.getAST(cgPackage));
-			}
-		} */
 		if (injectedCGClasses != null) {
 			List<@NonNull CGClass> cgClasses = new ArrayList<>(injectedCGClasses);
 			Collections.sort(cgClasses, NameUtil.NAMEABLE_COMPARATOR);
@@ -1512,9 +1537,19 @@ public class CodeGenAnalyzer
 		return executableNameManager.getExecutorVariableInternal();
 	}
 
-	@Deprecated	// XXX this should be redundant
-	public @Nullable UniqueList<@NonNull Feature> getExternalFeatures() {
-		return null; // externalFeatures;
+	public @NonNull CGClass getForeignCGClass(org.eclipse.ocl.pivot.@NonNull Package asParentPackage) {
+		CGClass cgForeignClass2 = cgForeignClass;
+		if (cgForeignClass2 == null) {
+			ForeignClassCallingConvention callingConvention = ForeignClassCallingConvention.getInstance();
+			cgForeignClass2 = cgForeignClass = callingConvention.createForeignClass(this, asParentPackage);
+			addInjectedCGClass(cgForeignClass2);
+		}
+		return cgForeignClass2;
+	}
+
+	public @NonNull CGOperation getForeignCGOperation(@NonNull Property asProperty) {
+		assert asProperty2foreignCGOperation != null;
+		return ClassUtil.nonNullState(asProperty2foreignCGOperation.get(asProperty));
 	}
 
 	public @NonNull GenModelHelper getGenModelHelper() {
@@ -1720,6 +1755,10 @@ public class CodeGenAnalyzer
 		return ClassUtil.nonNullState(cgOperation2asOriginalOperation.get(cgOperation));
 	}
 
+	public @NonNull Property getOriginalProperty(@NonNull CGOperation cgOperation) {
+		return ClassUtil.nonNullState(cgOperation2asOriginalProperty.get(cgOperation));
+	}
+
 	/**
 	 * Create or use the PackageNameManager for asPackage exploiting an optionally already known cgPackage.
 	 */
@@ -1763,6 +1802,17 @@ public class CodeGenAnalyzer
 			propertyNameManager = globalNameManager.createPropertyNameManager(classNameManager, cgProperty);
 		}
 		return propertyNameManager;
+	}
+
+	public org.eclipse.ocl.pivot.@NonNull Package getRootClassParentPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		CGClass cgClass = getCGRootClass(asClass);
+		org.eclipse.ocl.pivot.Class asRootClass = CGUtil.getAST(cgClass);
+		return AbstractLanguageSupport.getCachePackage(asRootClass);
+	}
+
+	public org.eclipse.ocl.pivot.@NonNull Package getRootClassParentPackage(@NonNull Feature asFeature) {
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asFeature);
+		return getRootClassParentPackage(asClass);
 	}
 
 	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {		// Overridden for OCLinEcore support

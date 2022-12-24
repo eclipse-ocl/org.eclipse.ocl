@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -51,6 +52,9 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 			js.append("@Override\n");
 		}
 		js.append("public ");
+		if (CGUtil.getAST(cgOperation).isIsStatic()) {
+			js.append("static ");
+		}
 		js.appendTypeDeclaration(cgOperation);
 		js.append(" ");
 		js.appendValueName(cgOperation);

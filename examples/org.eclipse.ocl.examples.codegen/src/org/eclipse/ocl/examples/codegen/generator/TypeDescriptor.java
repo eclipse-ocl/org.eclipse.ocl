@@ -50,7 +50,7 @@ public interface TypeDescriptor
 	/**
 	 * Append a cgElement to js wrapped in a cast to this type
 	 */
-	void appendCastTerm(@NonNull JavaStream js, @NonNull CGValuedElement cgElement);
+	void appendCastTerm(@NonNull JavaStream js, @Nullable Boolean isRequired, @NonNull CGValuedElement cgElement);
 
 	/**
 	 * Append the appropriate statements to js to create the ecore value for cgEcoreExp from its boxedValue.

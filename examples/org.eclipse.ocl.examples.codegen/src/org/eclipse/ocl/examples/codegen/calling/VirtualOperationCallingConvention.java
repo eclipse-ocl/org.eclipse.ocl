@@ -134,7 +134,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 
 		@Override
 		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			return getRootClassParentPackage(analyzer, asOperation);
+			return analyzer.getRootClassParentPackage(asOperation);
 		}
 
 		@Override

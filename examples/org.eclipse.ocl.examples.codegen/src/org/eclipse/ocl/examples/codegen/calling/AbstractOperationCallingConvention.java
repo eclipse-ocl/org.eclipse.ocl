@@ -387,7 +387,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
-		// TODO Auto-generated method stub
+		// XXX abstract
 		return false;
 	}
 

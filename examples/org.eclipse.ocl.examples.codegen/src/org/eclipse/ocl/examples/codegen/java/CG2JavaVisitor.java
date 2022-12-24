@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
@@ -1017,7 +1018,8 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.appendDeclaration(cgCastExp);
 		js.append(" = ");
 		//	if (requiredTypeDescriptor != actualTypeDescriptor) {
-				requiredTypeDescriptor.appendCastTerm(js, cgSource);
+		Boolean isRequired = (cgCastExp.isNonNull() && !cgSource.isNonNull()) ? Boolean.TRUE : null;
+				requiredTypeDescriptor.appendCastTerm(js, isRequired, cgSource);
 		//	}
 		//	else {
 		//		js.appendReferenceTo(cgSource);
@@ -2023,30 +2025,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	} */
 
 	@Override
-	public @NonNull Boolean visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgGNavigationCallExp) {
-		return cgGNavigationCallExp.getReferredProperty().getCallingConvention().generateJavaCall(this, cgGNavigationCallExp);
-	/*	if (cgGNavigationCallExp instanceof CGEcorePropertyCallExp) {
-			return EcorePropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
-		}
-		if (cgGNavigationCallExp instanceof CGExecutorOppositePropertyCallExp) {
-			return ExecutorPropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
-		}
-		if (cgGNavigationCallExp instanceof CGExecutorPropertyCallExp) {
-			return ExecutorPropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
-		}
-		if (cgGNavigationCallExp instanceof CGForeignPropertyCallExp) {
-			return ForeignPropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
-		}
-		if (cgGNavigationCallExp instanceof CGLibraryPropertyCallExp) {
-			return LibraryPropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
-		}
-		if (cgGNavigationCallExp instanceof CGNativePropertyCallExp) {
-			return NativePropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
-		}
-		if (cgGNavigationCallExp instanceof CGTuplePartCallExp) {
-			return TuplePropertyCallingConvention.getInstance().generateJavaCall(this, js, cgGNavigationCallExp);
-		}
-		return super.visitCGNavigationCallExp(cgGNavigationCallExp); */
+	public @NonNull Boolean visitCGNavigationCallExp(@NonNull CGNavigationCallExp cgNavigationCallExp) {
+		CGProperty cgProperty = cgNavigationCallExp.getReferredProperty();
+		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
+		return callingConvention.generateJavaCall(this, cgNavigationCallExp);
 	}
 
 	@Override

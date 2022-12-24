@@ -162,6 +162,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		return (JavaImportNameManager) super.getImportNameManager();
 	}
 
+	@Deprecated /* @deprecated obsolete approach */
 	@Override
 	public @NonNull String getQualifiedForeignClassName(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CodeGenString s = new CodeGenString(environmentFactory.getMetamodelManager(), false);

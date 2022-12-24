@@ -64,9 +64,13 @@ public class JavaConstants {
 	public static final @NonNull String THIS_NAME = "this";
 	public static final @NonNull String TYPE_ID_NAME = "typeId";
 
+	@Deprecated /* @deprecated obsolete approach */
 	public static final @NonNull String EXTERNAL_CLASS_PREFIX = "EC_";
+	@Deprecated /* @deprecated obsolete approach */
 	public static final @NonNull String EXTERNAL_OPERATION_PREFIX = "EO_";
+	@Deprecated /* @deprecated obsolete approach */
 	public static final @NonNull String EXTERNAL_PROPERTY_PREFIX = "EP_";
+	@Deprecated /* @deprecated obsolete approach */
 	public static final @NonNull String NESTED_CLASS_PREFIX = "NC_";
 
 	public static final @NonNull TypeId CLASS_TYPE_ID = getJavaTypeId(org.eclipse.ocl.pivot.Class.class);

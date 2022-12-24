@@ -64,6 +64,7 @@ public interface CodeGenerator
 	@NonNull String getDefaultIndent();
 	@NonNull EcoreDescriptor getEcoreDescriptor(@NonNull ElementId elementId, @Nullable Class<?> instanceClass);
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+	@Deprecated /* @deprecated obsolete approach */
 	@NonNull String getExternalClassName(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	@NonNull GenModelHelper getGenModelHelper();
 //	@NonNull GlobalContext getGlobalContext();

@@ -341,9 +341,9 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGForeignProperty(@NonNull CGForeignProperty cgForeignProperty) {
-		installExecutorVariable(cgForeignProperty);
+	//	installExecutorVariable(cgForeignProperty);
 		super.visitCGProperty(cgForeignProperty);
-		wrapLetVariables(cgForeignProperty);
+	//	wrapLetVariables(cgForeignProperty);
 		return null;
 	}
 

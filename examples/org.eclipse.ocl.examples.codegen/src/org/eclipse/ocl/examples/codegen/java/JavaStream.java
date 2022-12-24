@@ -697,9 +697,11 @@ public class JavaStream
 		append("/**\n");
 		pushIndentation(" * ");
 		if (title != null) {
-			append(title + "\n");
+			append(title);
+			append("\n");
 		}
 		if (element != null) {
+			appendOptionalBlankLine();
 			PrettyPrintOptions.Global createOptions = createOptions(element);
 			append(PrettyPrinter.print(element, createOptions).replace("*/",  "* /") + "\n");
 			//			append("«IF expInOcl.messageExpression != null»«(expInOcl.messageExpression as StringLiteralExp).stringSymbol»«ENDIF»\n");

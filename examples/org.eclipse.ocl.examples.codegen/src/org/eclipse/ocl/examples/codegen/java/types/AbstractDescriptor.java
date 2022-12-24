@@ -147,9 +147,9 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 	}
 
 	@Override
-	public void appendCastTerm(@NonNull JavaStream js, @NonNull CGValuedElement cgElement) {
+	public void appendCastTerm(@NonNull JavaStream js, @Nullable Boolean isRequired, @NonNull CGValuedElement cgElement) {
 		js.append("(");
-		append(js, null);
+		append(js, isRequired);
 		js.append(")");
 		js.appendReferenceTo(cgElement);
 	}
