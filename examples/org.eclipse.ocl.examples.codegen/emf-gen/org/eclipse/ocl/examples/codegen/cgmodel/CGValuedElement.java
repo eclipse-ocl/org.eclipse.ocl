@@ -136,14 +136,6 @@ public interface CGValuedElement extends CGTypedElement {
 	@NonNull CGValuedElement getTypedValue();
 
 	/**
-	 * Return true if this value is not null, possibly with the aid of an assertion.
-	 *
-	 * @generated
-	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$12
-	boolean isAssertedNonNull();
-
-	/**
 	 * Return true if this value is a boxed value.
 	 *
 	 * @generated

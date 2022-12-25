@@ -798,10 +798,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	 */
 	public @Nullable Boolean isRequired(@NonNull CGValuedElement cgElement) {
 		//		boolean isPrimitive = isPrimitive(cgElement);
-		//		boolean isRequired = !isPrimitive && !cgElement.isAssertedNonNull() && cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
+		//		boolean isRequired = !isPrimitive && cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
 		//		Boolean isJavaRequired = isPrimitive ? null : isRequired;			// FIXME migrate isPrimitove to recipients
 		//		return isJavaRequired;
-		boolean isRequired = !cgElement.isAssertedNonNull() && cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
+		boolean isRequired = cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
 		return isRequired;
 	}
 

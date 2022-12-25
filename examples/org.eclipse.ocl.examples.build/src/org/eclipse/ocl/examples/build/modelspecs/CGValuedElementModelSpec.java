@@ -1702,17 +1702,13 @@ public class CGValuedElementModelSpec extends ModelSpec
 	}
 
 	/**
-	 * The algorithm options for isAssertedNonNull()/isNonNull()/isNull()/isUndeclaredNonNull()/setNonNull1()/setNonNull2()/setNonNull3()
+	 * The algorithm options for isNonNull()/isNull()/isUndeclaredNonNull()/setNonNull1()/setNonNull2()/setNonNull3()
 	 */
 	public interface Nul {
-		@NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 		@NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 		@NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 
 		public static final @NonNull Nul ALWAY = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return false;";
 			}
@@ -1722,9 +1718,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul ASSRT = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return true;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return true;";
 			}
@@ -1734,9 +1727,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul CPART = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return first.isNonNull() || ((last != null) && last.isNonNull());";
 			}
@@ -1746,9 +1736,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul DELEG = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return (" + cgModelSpec.delegate + " != null) && " + cgModelSpec.delegate + ".isIsRequired();";
 			}
@@ -1758,9 +1745,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul ECORE = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return isRequired();";
 			}
@@ -1770,9 +1754,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul FEAT = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return (" + cgModelSpec.delegate + " != null) && " + cgModelSpec.delegate + ".isIsRequired();";
 			}
@@ -1782,9 +1763,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul IF = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return condition.isTrue() ? thenExpression.isNonNull() : condition.isFalse() ? elseExpression.isNonNull() : thenExpression.isNonNull() && elseExpression.isNonNull();";
 			}
@@ -1794,9 +1772,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul ITER = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return nonNull || ((asIteration != null) && asIteration.isIsRequired());";
 			}
@@ -1806,9 +1781,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul MAYBE = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return nonNull;";
 			}
@@ -1818,9 +1790,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul NEVER = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return true;";
 			}
@@ -1830,9 +1799,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul OPRTN = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return referredOperation != null ? referredOperation.isRequired() : asOperation != null ? asOperation.isIsRequired() : isRequired();";
 			}
@@ -1842,9 +1808,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul ROOT = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return  "if (required) {\n" +
 						"			return true;\n" +
@@ -1859,9 +1822,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul VAL = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return nonNull;";
 			}
@@ -1871,9 +1831,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static final @NonNull Nul VAR = new Nul() {
-			@Override public @NonNull String generateIsAssertedNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return nonNull || super.isNonNull();";
 			}
@@ -1882,18 +1839,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 			}
 		};
 
-		public static MethodSpec isAssertedNonNull = new MyMethodSpec(CGValuedElement.class, "boolean isAssertedNonNull()", null,
-				"Return true if this value is not null, possibly with the aid of an assertion.")
-		{
-			@Override
-			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				Nul nul = cgModelSpec.nul;
-				return nul != null ? nul.generateIsAssertedNonNull(cgModelSpec, genModel) : null;
-			}
-		};
-
 		public static MethodSpec isNonNull = new MyMethodSpec(CGValuedElement.class, "boolean isNonNull()", null,
-				"Return true if this value is not null.")
+				"Return true if this value is not null when accessed. Computation of the value must be appropriately guarded.")
 		{
 			@Override
 			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
@@ -2461,7 +2408,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		Val.getSourceValue.generate(s, this, genModel, isImplementation);
 		Ths.getThisValue.generate(s, this, genModel, isImplementation);
 		Val.getTypedValue.generate(s, this, genModel, isImplementation);
-		Nul.isAssertedNonNull.generate(s, this, genModel, isImplementation);
 		Box.isBoxed.generate(s, this, genModel, isImplementation);
 		Ct.isCaught.generate(s, this, genModel, isImplementation);
 		Com.isCommonable.generate(s, this, genModel, isImplementation);

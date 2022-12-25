@@ -299,15 +299,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 * @generated
 	 */
 	@Override
-	public boolean isAssertedNonNull() {
-		return false;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public boolean isBoxed() {
 		CGValuedElement referredValue = getReferredValue();
 		assert referredValue != this : "isBoxed must be overridden for a " + getClass().getSimpleName() + " since referredValue returns this";
