@@ -803,7 +803,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 //		boolean isRequired = cgElement.isNonNull() && !(cgElement instanceof CGUnboxExp)/*|| cgElement.isRequired()*/;	// FIXME Ugh!
 		boolean isRequired = cgElement.isRequired();
 		if (!cgElement.isNonInvalid()) {		// may be invalid
-//			assert !cgElement.isRequired();
+		//	if (!(!cgElement.isRequired() || ((cgElement instanceof CGCallExp) && ((CGCallExp)cgElement).isInvalidating()))) {
+		//		cgElement.isNonInvalid();
+				assert !(isRequired && cgElement.isCaught()) : "potentially invalid value cannot be caught and also required"; //((cgElement instanceof CGCallExp) && ((CGCallExp)cgElement).isInvalidating());
+		//	}
 			return isRequired; //null;
 		}
 		if (!cgElement.isNull()) {				// may not be null

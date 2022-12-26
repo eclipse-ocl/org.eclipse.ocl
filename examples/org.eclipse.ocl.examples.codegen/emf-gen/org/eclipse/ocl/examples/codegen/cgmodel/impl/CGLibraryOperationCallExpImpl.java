@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -17,8 +19,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -236,10 +240,22 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 				// normal use case - nonInvalid if all inputs nonInvalid
 			}
 		}
-		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {		// Need to redirect to operation implementation for e.g. not() on a constant
-			if (!argument.isNonNull() || !argument.isNonInvalid()) {
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(getReferredOperation());
+		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(this);
+		int iMax = cgParameters.size();
+		assert cgArguments.size() == iMax;
+		for (int i = 0; i < iMax; i++) {		// Need to redirect to operation implementation for e.g. not() on a constant
+			CGParameter cgParameter = cgParameters.get(i);
+			CGValuedElement cgArgument = cgArguments.get(i);
+			if (!cgArgument.isNonInvalid()) {
 				return false;
 			}
+			if (cgParameter.isRequired() && !cgArgument.isNonNull()) {
+				return false;
+			}
+		//	if (!argument.isNonNull() || !argument.isNonInvalid()) {			// XXX nullable parameter
+		//		return false;
+		//	}
 		}
 		return true;
 	}

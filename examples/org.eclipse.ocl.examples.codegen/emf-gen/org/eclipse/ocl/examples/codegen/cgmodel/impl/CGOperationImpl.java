@@ -30,6 +30,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
+import org.eclipse.ocl.pivot.Operation;
 
 /**
  * <!-- begin-user-doc -->
@@ -347,6 +348,11 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 				return CALLING_CONVENTION_EDEFAULT == null ? callingConvention != null : !CALLING_CONVENTION_EDEFAULT.equals(callingConvention);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	@Override
+	public boolean isNonInvalid() {
+		return (ast == null) || !((Operation)ast).isIsInvalidating();
 	}
 
 	@Override
