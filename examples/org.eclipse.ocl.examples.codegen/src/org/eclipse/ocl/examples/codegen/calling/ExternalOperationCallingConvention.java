@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -141,12 +140,14 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
 		assert bodyExpression != null;
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		List<CGParameter> cgParameters = cgOperation.getParameters();
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		cgParameters.add(operationNameManager.getSelfParameter());
-		for (@NonNull Variable asParameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
-			CGParameter cgParameter = createCGParameter(operationNameManager, asParameterVariable);
-			cgParameters.add(cgParameter);
-		}
+	//	for (@NonNull Variable asParameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
+	//		CGParameter cgParameter = createCGParameter(operationNameManager, asParameterVariable);
+	//		cgParameters.add(cgParameter);
+	//	}
+		Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(bodyExpression);
+		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
 	}
 
 	@Override

@@ -62,7 +62,6 @@ import org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -262,10 +261,12 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 			//			cgParameter.setRequired(contextVariable.isIsRequired());
 			//			cgParameters.add(cgParameter);
 		}
-		for (@NonNull Parameter parameterVariable : ClassUtil.nullFree(asOperation.getOwnedParameters())) {
-			CGParameter cgParameter = operationNameManager.getCGParameter(parameterVariable, (String)null);
-			cgParameters.add(cgParameter);
-		}
+	//	for (@NonNull Parameter parameterVariable : ClassUtil.nullFree(asOperation.getOwnedParameters())) {
+	//		CGParameter cgParameter = operationNameManager.getCGParameter(parameterVariable, (String)null);
+	//		cgParameters.add(cgParameter);
+	//	}
+		List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
+		createCGParameters4asParameters(operationNameManager, cgParameters, asParameters);
 	}
 
 	/**

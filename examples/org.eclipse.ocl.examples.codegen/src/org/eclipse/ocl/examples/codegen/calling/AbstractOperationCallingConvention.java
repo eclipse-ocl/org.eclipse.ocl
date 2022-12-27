@@ -232,30 +232,44 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		return operationNameManager.getCGParameter(asParameterVariable, (String)null);
 	}
 
-	protected /*final*/ void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
+	protected abstract void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression);
+
+	@Deprecated /* @deprecated this legacy functionality is needlessly generic for most derivations */
+	protected /*final*/ void createCGParametersDefault(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
 		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		if (bodyExpression != null) {
 			Variable asContextVariable = bodyExpression.getOwnedContext();
 			if (asContextVariable != null) {
 				CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, asContextVariable);
-				cgOperation.getParameters().add(cgParameter);
+				cgParameters.add(cgParameter);
 			}
-			for (@NonNull Variable asParameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
-				CGParameter cgParameter = createCGParameter(operationNameManager, asParameterVariable);
-				cgOperation.getParameters().add(cgParameter);
-			}
+			Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(bodyExpression);
+			createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
 		}
 		else {
 			Operation asOperation = CGUtil.getAST(cgOperation);
 			if (!asOperation.isIsStatic()) {						// XXX Static is a derived CC
 				CGParameter cgParameter = operationNameManager.getSelfParameter();
-				cgOperation.getParameters().add(cgParameter);
+				cgParameters.add(cgParameter);
 			}
-			for (@NonNull Parameter asParameterVariable : ClassUtil.nullFree(asOperation.getOwnedParameters())) {
-				CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, (String)null);
-				cgOperation.getParameters().add(cgParameter);
-			}
+			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
+			createCGParameters4asParameters(operationNameManager, cgParameters, asParameters);
+		}
+	}
+
+	protected void createCGParameters4asParameters(@NonNull ExecutableNameManager operationNameManager, @NonNull List<@NonNull CGParameter> cgParameters, @NonNull Iterable<@NonNull Parameter> asParameters) {
+		for (@NonNull Parameter asParameterVariable : asParameters) {
+			CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, (String)null);
+			cgParameters.add(cgParameter);
+		}
+	}
+
+	protected void createCGParameters4asParameterVariables(@NonNull ExecutableNameManager operationNameManager, @NonNull List<@NonNull CGParameter> cgParameters, @NonNull Iterable<@NonNull Variable> asParameterVariables) {
+		for (@NonNull Variable asParameterVariable : asParameterVariables) {
+			CGParameter cgParameter = createCGParameter(operationNameManager, asParameterVariable);
+			cgParameters.add(cgParameter);
 		}
 	}
 

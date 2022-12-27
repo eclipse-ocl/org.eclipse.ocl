@@ -265,7 +265,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("INDEX_0_boxedValues")) {
+			if (string.contains("INSTANCE_CACHE_ManualUML2RDBMS_getAllSupers")) {
 				getClass();		// XXX
 			}
 			if (string.contains("55")) {

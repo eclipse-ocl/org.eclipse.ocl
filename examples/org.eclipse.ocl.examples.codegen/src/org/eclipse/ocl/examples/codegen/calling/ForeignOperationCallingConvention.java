@@ -344,7 +344,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		cgParameters.add(operationNameManager.getExecutorParameter());
-		super.createCGParameters(operationNameManager, expressionInOCL);
+		super.createCGParametersDefault(operationNameManager, expressionInOCL);
 	}
 
 	@Override
