@@ -417,6 +417,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		for (@NonNull OCLExpression asArgument : asArgumentsCopy) {
 			cgArguments.add(analyzer.createCGElement(CGValuedElement.class, asArgument));
 		}
+		assert cgArguments.size() == CGUtil.getParametersList(CGUtil.getReferredOperation(cgOperationCallExp)).size();
 	}
 
 	protected void initCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull OperationCallExp asOperationCallExp,

@@ -224,6 +224,10 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 		if (asOperation == null) {
 			return false;
 		}
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(CGUtil.getReferredOperation(this));
+		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(this);
+		int iMax = cgArguments.size();
+		assert cgParameters.size() == iMax;
 		if (asOperation.isIsValidating()) {
 			if (asOperation.isIsInvalidating()) {
 				// e.g AND, forAll - nonInvalid if all inputs nonInvalid
@@ -240,10 +244,6 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 				// normal use case - nonInvalid if all inputs nonInvalid
 			}
 		}
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(getReferredOperation());
-		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(this);
-		int iMax = cgParameters.size();
-		assert cgArguments.size() == iMax;
 		for (int i = 0; i < iMax; i++) {		// Need to redirect to operation implementation for e.g. not() on a constant
 			CGParameter cgParameter = cgParameters.get(i);
 			CGValuedElement cgArgument = cgArguments.get(i);
@@ -273,6 +273,9 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public void setReferredOperation(CGOperation newReferredOperation) {
 	//	assert (newReferredOperation == null) || !newReferredOperation.eClass().getName().equals("CGFunction");		// XXX
+		if (String.valueOf(newReferredOperation).contains("isFemale")) {
+			getClass();		// XXX
+		}
 		super.setReferredOperation(newReferredOperation);
 	}
 
