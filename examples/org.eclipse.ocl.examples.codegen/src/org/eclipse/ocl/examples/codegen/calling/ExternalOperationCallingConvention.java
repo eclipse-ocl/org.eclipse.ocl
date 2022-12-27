@@ -142,10 +142,6 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		cgParameters.add(operationNameManager.getSelfParameter());
-	//	for (@NonNull Variable asParameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
-	//		CGParameter cgParameter = createCGParameter(operationNameManager, asParameterVariable);
-	//		cgParameters.add(cgParameter);
-	//	}
 		Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(bodyExpression);
 		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
 	}

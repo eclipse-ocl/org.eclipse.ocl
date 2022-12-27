@@ -75,10 +75,6 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 			cgContext.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
 			cgParameters.add(cgContext);
 		}
-	//	for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(expressionInOCL)) {
-	//		CGParameter cgParameter = operationNameManager.getCGParameter(parameterVariable, (String)null);
-	//		cgParameters.add(cgParameter);
-	//	}
 		Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(expressionInOCL);
 		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
 	}

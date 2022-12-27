@@ -261,10 +261,6 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 			//			cgParameter.setRequired(contextVariable.isIsRequired());
 			//			cgParameters.add(cgParameter);
 		}
-	//	for (@NonNull Parameter parameterVariable : ClassUtil.nullFree(asOperation.getOwnedParameters())) {
-	//		CGParameter cgParameter = operationNameManager.getCGParameter(parameterVariable, (String)null);
-	//		cgParameters.add(cgParameter);
-	//	}
 		List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
 		createCGParameters4asParameters(operationNameManager, cgParameters, asParameters);
 	}
