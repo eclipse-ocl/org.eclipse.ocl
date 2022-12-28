@@ -202,7 +202,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	 * Insert a CGGuardExp around cgChild.
 	 */
 	public @Nullable CGValuedElement rewriteAsGuarded(@Nullable CGValuedElement cgChild, boolean isSafe, @NonNull String message) {
-		if ((cgChild == null) || cgChild.isNonNull() /*|| (cgParent instanceof CGGuardExp)*/) {
+		if ((cgChild == null) || cgChild.isNonNullUnchecked() /*|| (cgParent instanceof CGGuardExp)*/) {
 			return cgChild;
 		}
 		CGGuardExp cgGuardExp = CGModelFactory.eINSTANCE.createCGGuardExp();

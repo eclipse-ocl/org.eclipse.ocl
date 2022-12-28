@@ -1474,7 +1474,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.appendValueName(cgSource);
 				js.append(" != null;\n");
 			}
-			else if (!cgSource.isNonNull()) {
+			else if (!cgSource.isNonNullUnchecked()) {
 				js.append("if (");
 				js.appendValueName(cgSource);
 				js.append(" == null) {\n");

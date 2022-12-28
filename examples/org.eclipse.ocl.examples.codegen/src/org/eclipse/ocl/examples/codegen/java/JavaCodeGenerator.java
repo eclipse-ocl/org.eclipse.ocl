@@ -801,7 +801,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			assert !cgElement.isRequired() : "null for isRequired";
 			return Boolean.FALSE;
 		}
-		else if (cgElement.isNonNull()) {		// definitely not null
+		else if (cgElement.isNonNullUnchecked()) {		// definitely not null
 			return Boolean.TRUE;
 		}
 		else {
@@ -821,7 +821,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			return false;
 		}
 		else {
-			return cgValue.isNonNull();
+			return cgValue.isRequired();
 		}
 	}
 

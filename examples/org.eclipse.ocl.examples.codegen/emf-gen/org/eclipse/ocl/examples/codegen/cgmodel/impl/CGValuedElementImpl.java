@@ -417,9 +417,11 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 		return (referredValue != this) && referredValue.isNonInvalid();
 	}
 
+	private static boolean suppressRequiredNonNullCheck = false;
+
 	/**
 	 * {@inheritDoc}
-	 * @generated
+	 * @generated XXX
 	 */
 	@Override
 	public boolean isNonNull() {
@@ -429,10 +431,26 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 		CGValuedElement referredValue = getReferredValue();
 		boolean isNonNull = (referredValue != this) && referredValue.isNonNull();
 	//	assert !required || isNonNull;
-		if (required && !isNonNull) {
+		if (!suppressRequiredNonNullCheck && required && !isNonNull) {
 			NameUtil.errPrintln("isNonNull: required but !isNonNull for " + NameUtil.debugSimpleName(this) + " : " + this);
 		}
 		return isNonNull;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated NOT
+	 */
+	@Override
+	public final boolean isNonNullUnchecked() {
+		boolean saved = suppressRequiredNonNullCheck;
+		try {
+			suppressRequiredNonNullCheck = true;
+			return isNonNull();
+		}
+		finally {
+			suppressRequiredNonNullCheck = saved;
+		}
 	}
 
 	/**
