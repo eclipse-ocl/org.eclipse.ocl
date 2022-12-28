@@ -30,6 +30,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.ControlPlace;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -422,11 +423,16 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 */
 	@Override
 	public boolean isNonNull() {
-		if (required) {
-			return true;
-		}
+	//	if (required) {
+	//		return true;
+	//	}
 		CGValuedElement referredValue = getReferredValue();
-		return (referredValue != this) && referredValue.isNonNull();
+		boolean isNonNull = (referredValue != this) && referredValue.isNonNull();
+	//	assert !required || isNonNull;
+		if (required && !isNonNull) {
+			NameUtil.errPrintln("isNonNull: required but !isNonNull for " + NameUtil.debugSimpleName(this) + " : " + this);
+		}
+		return isNonNull;
 	}
 
 	/**
