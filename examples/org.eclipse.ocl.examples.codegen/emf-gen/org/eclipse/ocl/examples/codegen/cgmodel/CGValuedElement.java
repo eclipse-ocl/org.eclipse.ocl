@@ -281,6 +281,16 @@ public interface CGValuedElement extends CGTypedElement {
 	void setCaught(boolean isCaught);
 
 	/**
+	 * Return true if symbolic evaluation guarantees that this value is non-null and check
+	 * that the value is declared to be required.
+	 * <br>
+	 * This method is an evplution aid while migrating to isRequired rather than isNonNull.
+	 *
+	 * @generated NOT
+	 */
+	boolean isNonNullChecked();
+
+	/**
 	 * Return true if symbolic evaluation guarantees that this value is non-null, without checking
 	 * whether the value is declared to be required.
 	 * <br>

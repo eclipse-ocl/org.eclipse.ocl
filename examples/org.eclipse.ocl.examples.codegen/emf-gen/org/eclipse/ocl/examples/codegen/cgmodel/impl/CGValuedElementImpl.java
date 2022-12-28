@@ -429,12 +429,28 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	//		return true;
 	//	}
 		CGValuedElement referredValue = getReferredValue();
-		boolean isNonNull = (referredValue != this) && referredValue.isNonNull();
+		boolean isNonNull = (referredValue != this) && referredValue.isNonNullChecked();
 	//	assert !required || isNonNull;
 		if (!suppressRequiredNonNullCheck && required && !isNonNull) {
 			NameUtil.errPrintln("isNonNull: required but !isNonNull for " + NameUtil.debugSimpleName(this) + " : " + this);
 		}
 		return isNonNull;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated NOT
+	 */
+	@Override
+	public final boolean isNonNullChecked() {
+		boolean saved = suppressRequiredNonNullCheck;
+		try {
+			suppressRequiredNonNullCheck = false;
+			return isNonNull();
+		}
+		finally {
+			suppressRequiredNonNullCheck = saved;
+		}
 	}
 
 	/**

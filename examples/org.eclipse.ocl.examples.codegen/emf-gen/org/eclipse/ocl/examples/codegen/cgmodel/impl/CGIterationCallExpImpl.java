@@ -432,15 +432,15 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 				// normal use case - nonInvalid if all inputs nonInvalid
 			}
 		}
-		if (!source.isNonNull() || !source.isNonInvalid()) {
+		if (!source.isNonNullChecked() || !source.isNonInvalid()) {
 			return false;
 		}
 		for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
-			if (!iterator.isNonNull() || !iterator.isNonInvalid()) {
+			if (!iterator.isNonNullChecked() || !iterator.isNonInvalid()) {
 				return false;
 			}
 		}
-		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {
+		if ((body == null) || !body.isNonNullChecked() || !body.isNonInvalid()) {
 			return false;
 		}
 		return true;

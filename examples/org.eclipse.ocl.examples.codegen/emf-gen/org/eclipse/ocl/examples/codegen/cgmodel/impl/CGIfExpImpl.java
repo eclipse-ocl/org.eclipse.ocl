@@ -435,7 +435,7 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	 */
 	@Override
 	public boolean isNonNull() {
-		return condition.isTrue() ? thenExpression.isNonNull() : condition.isFalse() ? elseExpression.isNonNull() : thenExpression.isNonNull() && elseExpression.isNonNull();
+		return condition.isTrue() ? thenExpression.isNonNullChecked() : condition.isFalse() ? elseExpression.isNonNullChecked() : thenExpression.isNonNullChecked() && elseExpression.isNonNullChecked();
 	}
 
 	/**

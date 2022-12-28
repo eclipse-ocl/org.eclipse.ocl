@@ -225,18 +225,18 @@ public class CGLibraryIterateCallExpImpl extends CGLibraryIterationCallExpImpl i
 				// normal use case - nonInvalid if all inputs nonInvalid
 			}
 		}
-		if (!source.isNonNull() || !source.isNonInvalid()) {
+		if (!source.isNonNullChecked() || !source.isNonInvalid()) {
 			return false;
 		}
 		for (@NonNull CGValuedElement iterator : ClassUtil.nullFree(getIterators())) {
-			if (!iterator.isNonNull() || !iterator.isNonInvalid()) {
+			if (!iterator.isNonNullChecked() || !iterator.isNonInvalid()) {
 				return false;
 			}
 		}
-		if ((result == null) || !result.isNonNull() || !result.isNonInvalid()) {
+		if ((result == null) || !result.isNonNullChecked() || !result.isNonInvalid()) {
 			return false;
 		}
-		if ((body == null) || !body.isNonNull() || !body.isNonInvalid()) {
+		if ((body == null) || !body.isNonNullChecked() || !body.isNonInvalid()) {
 			return false;
 		}
 		return true;
