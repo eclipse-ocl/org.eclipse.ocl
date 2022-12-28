@@ -526,7 +526,8 @@ public class ExecutableNameManager extends NestedNameManager
 		CGIterator cgIterator = (CGIterator)basicGetCGVariable(asVariable);
 		if (cgIterator == null) {
 			cgIterator = CGModelFactory.eINSTANCE.createCGIterator();
-			cgIterator.setAst(asVariable);
+			analyzer.initAst(cgIterator, asVariable, true);
+//			cgIterator.setAst(asVariable);
 			cgIterator.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific type of polymorphic operation parameter
 //			declarePreferredName(cgIterator);
 			addVariable(asVariable, cgIterator);

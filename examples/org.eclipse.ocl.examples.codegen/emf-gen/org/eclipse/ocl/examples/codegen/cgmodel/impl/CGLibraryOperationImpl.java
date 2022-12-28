@@ -87,4 +87,22 @@ public class CGLibraryOperationImpl extends CGOperationImpl implements CGLibrary
 	public boolean isUnboxed() {
 		return false;
 	}
+
+	@Override
+	public boolean isRequired() {
+		// XXX Auto-generated method stub
+		if (String.valueOf(ast).contains("oclAsType")) {
+			getClass();	// XXX
+		}
+		return super.isRequired();
+	}
+
+	@Override
+	public void setRequired(boolean newRequired) {
+		// XXX Auto-generated method stub
+		if (String.valueOf(ast).contains("oclAsType")) {
+			getClass();	// XXX
+		}
+		super.setRequired(newRequired);
+	}
 } //CGLibraryOperationImpl
