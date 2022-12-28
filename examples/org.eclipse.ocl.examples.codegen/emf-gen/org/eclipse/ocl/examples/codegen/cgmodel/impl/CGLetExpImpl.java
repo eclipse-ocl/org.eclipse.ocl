@@ -375,4 +375,11 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 		return (in != null) && in.isUnboxed();
 	}
 
+	@Override
+	public void setRequired(boolean newRequired) {
+		// XXX Auto-generated method stub
+		super.setRequired(newRequired);
+	}
+
+
 } //CGLetExpImpl

@@ -166,8 +166,9 @@ public class ExecutableNameManager extends NestedNameManager
 	public @NonNull CGFinalVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
 		assert basicGetCGVariable(asVariable) == null;
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
-		cgVariable.setAst(asVariable);
-		cgVariable.setTypeId(analyzer.getCGTypeId(asVariable.getTypeId()));
+		analyzer.initAst(cgVariable, asVariable, false);
+//		cgVariable.setAst(asVariable);
+//		cgVariable.setTypeId(analyzer.getCGTypeId(asVariable.getTypeId()));
 //		declarePreferredName(cgVariable);
 		addVariable(asVariable, cgVariable);
 		return cgVariable;

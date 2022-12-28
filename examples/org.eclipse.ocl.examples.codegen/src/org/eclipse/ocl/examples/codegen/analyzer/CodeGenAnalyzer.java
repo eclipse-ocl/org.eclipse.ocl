@@ -656,10 +656,12 @@ public class CodeGenAnalyzer
 
 	protected @NonNull CGLetExp createCGLetExp(@NonNull TypedElement asElement, @NonNull CGFinalVariable cgVariable, @NonNull CGValuedElement cgIn) {
 		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
+//		cgLetExp.setAst(asElement);
+//		cgLetExp.setTypeId(getCGTypeId(asElement.getTypeId()));
+		initAst(cgLetExp, asElement, true);
 		cgLetExp.setInit(cgVariable);
 		cgLetExp.setIn(cgIn);
-		cgLetExp.setAst(asElement);
-		cgLetExp.setTypeId(getCGTypeId(asElement.getTypeId()));
+		assert cgLetExp.isRequired() == cgIn.isRequired();
 		return cgLetExp;
 	}
 
