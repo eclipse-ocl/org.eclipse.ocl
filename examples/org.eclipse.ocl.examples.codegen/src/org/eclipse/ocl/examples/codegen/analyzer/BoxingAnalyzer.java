@@ -123,7 +123,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	 * Insert a CGAssertNonNullExp around cgChild.
 	 */
 	public @Nullable CGValuedElement rewriteAsAssertNonNulled(@Nullable CGValuedElement cgChild) {
-		if ((cgChild == null) || cgChild.isNonNull() /*|| (cgParent instanceof CGGuardExp)*/) {
+		if ((cgChild == null) || cgChild.isNonNullChecked() /*|| (cgParent instanceof CGGuardExp)*/) {
 			return cgChild;
 		}
 		CGAssertNonNullExp cgAssertExp = CGModelFactory.eINSTANCE.createCGAssertNonNullExp();

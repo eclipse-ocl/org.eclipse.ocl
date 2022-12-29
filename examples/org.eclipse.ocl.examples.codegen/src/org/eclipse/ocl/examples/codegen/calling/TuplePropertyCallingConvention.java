@@ -76,7 +76,7 @@ public class TuplePropertyCallingConvention extends AbstractPropertyCallingConve
 			return false;
 		}
 		//
-		boolean isRequired = cgTuplePartCallExp.isNonNull();
+		boolean isRequired = cgTuplePartCallExp.isNonNullChecked();
 		boolean isPrimitive = js.isPrimitive(cgTuplePartCallExp);
 		if (!isPrimitive && isRequired /*&& (ecoreIsRequired == Boolean.FALSE)*/) {
 			js.appendSuppressWarningsNull(true);

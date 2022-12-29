@@ -532,7 +532,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			CGValuedElement cgArgument = cgArguments.get(i);
 			boxingAnalyzer.rewriteAsBoxed(cgArgument);
 			if (i == 0) {
-				if (!sourceMayBeNull && !cgArgument.isNonNull()) {
+				if (!sourceMayBeNull && !cgArgument.isNonNullChecked()) {
 //					rewriteAsGuarded(cgSource, false, "value3 for source parameter");
 					boxingAnalyzer.rewriteAsGuarded(cgArgument, false, "''" + asClass.getName() + "'' rather than ''OclVoid'' value required");
 				}
@@ -540,7 +540,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			else {
 			//	Parameter asParameter = CGUtil.basicGetParameter(cgParameter);
 			//	if ((asParameter != null) && asParameter.isIsRequired() && !cgArgument.isNonNull()) {
-				if (cgParameter.isRequired() && !cgArgument.isNonNull()) {
+				if (cgParameter.isRequired() && !cgArgument.isNonNullChecked()) {
 //					rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
 					boxingAnalyzer.rewriteAsGuarded(cgArgument, false, "''" + cgParameter.getTypeId() + "'' rather than ''OclVoid'' elementId");
 				}

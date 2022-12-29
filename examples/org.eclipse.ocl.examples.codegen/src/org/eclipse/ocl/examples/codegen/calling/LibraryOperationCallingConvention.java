@@ -298,7 +298,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 		Boolean actualNullity = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
 		boolean actualIsNonNull = actualNullity == Boolean.TRUE;
 	//	boolean actualIsNullable = actualNullity == Boolean.FALSE;
-		boolean expectedIsNonNull = cgOperationCallExp.isNonNull();
+		boolean expectedIsNonNull = cgOperationCallExp.isNonNullChecked();
 		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
@@ -322,7 +322,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 					return false;
 				}
 				else {
-					boolean mayBeNull = !cgArgument.isNonNull();
+					boolean mayBeNull = !cgArgument.isNonNullChecked();
 					if (mayBeNull) {
 						js.append("if (");
 						js.appendValueName(cgArgument);
