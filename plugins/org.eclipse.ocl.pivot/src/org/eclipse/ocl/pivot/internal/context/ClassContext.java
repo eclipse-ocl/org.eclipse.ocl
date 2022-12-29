@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.context;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -24,10 +25,10 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class ClassContext extends AbstractParserContext
 {
 	protected final org.eclipse.ocl.pivot.@Nullable Class classContext;
-	protected final @Nullable Object instanceContext;
+	protected final @Nullable Element instanceContext;
 	private @NonNull String selfName = PivotConstants.SELF_NAME;
 
-	public ClassContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, org.eclipse.ocl.pivot.@Nullable Class classContext, @Nullable Object instanceContext) {
+	public ClassContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, org.eclipse.ocl.pivot.@Nullable Class classContext, @Nullable Element instanceContext) {
 		super(environmentFactory, uri);
 		this.classContext = classContext != null ? getMetamodelManager().getPrimaryClass(classContext) : null;
 		this.instanceContext = instanceContext;
@@ -39,7 +40,7 @@ public class ClassContext extends AbstractParserContext
 	}
 
 	@Override
-	public @Nullable Object getInstanceContext() {
+	public @Nullable Element getInstanceContext() {
 		return instanceContext;
 	}
 

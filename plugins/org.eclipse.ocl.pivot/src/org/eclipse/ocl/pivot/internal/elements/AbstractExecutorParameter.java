@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
@@ -38,7 +39,7 @@ public final class AbstractExecutorParameter extends AbstractExecutorTypedElemen
 	}
 
 	@Override
-	public void setTypeValue(Type value) {
+	public void setTypeValue(Element value) {
 		throw new UnsupportedOperationException();
 	}
 

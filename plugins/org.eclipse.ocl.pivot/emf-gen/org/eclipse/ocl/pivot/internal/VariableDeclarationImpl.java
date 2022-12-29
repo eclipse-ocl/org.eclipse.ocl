@@ -82,7 +82,7 @@ implements VariableDeclaration {
 	 * @generated
 	 * @ordered
 	 */
-	protected Type typeValue;
+	protected Element typeValue;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -109,7 +109,7 @@ implements VariableDeclaration {
 	 * @generated
 	 */
 	@Override
-	public Type getTypeValue()
+	public Element getTypeValue()
 	{
 		return typeValue;
 	}
@@ -120,9 +120,9 @@ implements VariableDeclaration {
 	 * @generated
 	 */
 	@Override
-	public void setTypeValue(Type newTypeValue)
+	public void setTypeValue(Element newTypeValue)
 	{
-		Type oldTypeValue = typeValue;
+		Element oldTypeValue = typeValue;
 		typeValue = newTypeValue;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldTypeValue, typeValue));

@@ -1199,14 +1199,14 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	/* @deprecated no longer used / use PivotHelper.setType() */
 	@Deprecated
 	@Override
-	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
+	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Element typeValue) {
 		getHelper().setType(pivotElement, type, isRequired, typeValue);
 	}
 
 	/* @deprecated no longer used / use PivotHelper.setType() */
 	@Deprecated
 	@Override
-	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {
+	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Element typeValue) {
 		getHelper().setType(pivotElement, type, isRequired, typeValue);
 	}
 

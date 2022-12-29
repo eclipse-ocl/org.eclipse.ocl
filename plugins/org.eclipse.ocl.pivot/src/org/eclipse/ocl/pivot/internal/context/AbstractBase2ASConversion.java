@@ -17,6 +17,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -234,9 +235,9 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 
 	/* @deprecated no longer used / use PivotHelper.setType() */
 	@Deprecated
-	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
+	public void setType(@NonNull OCLExpression pivotElement, Type type, boolean isRequired, @Nullable Element typeValue) {	// FIXME redirect to PivotHelper
 		getHelper().setType(pivotElement, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
+		Type primaryTypeValue = typeValue instanceof Type ? metamodelManager.getPrimaryType((Type) typeValue) : null;
 		if (primaryTypeValue != pivotElement.getTypeValue()) {
 			pivotElement.setTypeValue(primaryTypeValue);
 		}
@@ -244,9 +245,9 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 
 	/* @deprecated no longer used / use PivotHelper.setType() */
 	@Deprecated
-	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Type typeValue) {	// FIXME redirect to PivotHelper
+	public void setType(@NonNull VariableDeclaration pivotElement, Type type, boolean isRequired, @Nullable Element typeValue) {	// FIXME redirect to PivotHelper
 		getHelper().setType(pivotElement, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
+		Type primaryTypeValue = typeValue instanceof Type ? metamodelManager.getPrimaryType((Type) typeValue) : null;
 		if (primaryTypeValue != pivotElement.getTypeValue()) {
 			pivotElement.setTypeValue(primaryTypeValue);
 		}

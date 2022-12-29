@@ -696,7 +696,7 @@ public class PivotHelper
 	/**
 	 * @since 1.4
 	 */
-	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Object contextInstance) {
+	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Element contextInstance) {
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		if (contextVariable == null) {
 			assert !(pivotSpecification.eContainer() instanceof Feature) || !((Feature)pivotSpecification.eContainer()).isIsStatic();
@@ -752,9 +752,9 @@ public class PivotHelper
 		setType(asCallExp, returnType, returnIsRequired, (Type)returnValue);
 	}
 
-	public void setType(@NonNull OCLExpression asExpression, Type type, boolean isRequired, @Nullable Type typeValue) {
+	public void setType(@NonNull OCLExpression asExpression, Type type, boolean isRequired, @Nullable Element typeValue) {
 		setType(asExpression, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
+		Type primaryTypeValue = typeValue instanceof Type ? metamodelManager.getPrimaryType((Type)typeValue) : null;
 		if (primaryTypeValue != asExpression.getTypeValue()) {
 			asExpression.setTypeValue(primaryTypeValue);
 		}
@@ -763,15 +763,15 @@ public class PivotHelper
 	/**
 	 * @since 1.4
 	 */
-	public void setType(@NonNull VariableDeclaration asVariable, Type type, boolean isRequired, @Nullable Type typeValue) {
+	public void setType(@NonNull VariableDeclaration asVariable, @Nullable Type type, boolean isRequired, @Nullable Element typeValue) {
 		setType(asVariable, type, isRequired);
-		Type primaryTypeValue = typeValue != null ? metamodelManager.getPrimaryType(typeValue) : null;
+		Type primaryTypeValue = typeValue instanceof Type ? metamodelManager.getPrimaryType((Type)typeValue) : null;
 		if (primaryTypeValue != asVariable.getTypeValue()) {
 			asVariable.setTypeValue(primaryTypeValue);
 		}
 	}
 
-	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
+	public void setType(@NonNull TypedElement asTypedElement, @Nullable Type type, boolean isRequired) {
 		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
 		if (primaryType != asTypedElement.getType()) {
 			asTypedElement.setType(primaryType);

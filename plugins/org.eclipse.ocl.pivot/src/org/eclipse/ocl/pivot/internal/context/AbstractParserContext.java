@@ -193,7 +193,7 @@ public abstract class AbstractParserContext /*extends AdapterImpl*/ implements P
 		throw new ParserException("Non-expression ignored");
 	}
 
-	public @Nullable Object getInstanceContext() {
+	public @Nullable Element getInstanceContext() {
 		return null;
 	}
 
