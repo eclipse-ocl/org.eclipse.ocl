@@ -589,8 +589,8 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
-		ocl.assertValidationErrorQuery(ocl.getContextType(context), "Apple{stem=null}.label", "Missing initializers: color");
-		ocl.assertValidationErrorQuery(ocl.getContextType(context), "Apple{name=null}.label", "Unexpected initializers: name");
+		ocl.assertValidationErrorQuery(ocl.getContextType(context), false, "Apple{stem=null}.label", "Missing initializers: color");
+		ocl.assertValidationErrorQuery(ocl.getContextType(context), false, "Apple{name=null}.label", "Unexpected initializers: name");
 		ocl.assertQueryEquals(context, null, "Apple{color=null,label=null,stem=null}.label");
 		ocl.assertQueryEquals(context, "RedApple", "Apple{color=Color::red,label='RedApple',stem=null}.label");
 		ocl.assertQueryEquals(context, color_red, "Apple{color=Color::red,label='RedApple',stem=null}.color");

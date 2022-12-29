@@ -37,6 +37,8 @@ import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -997,26 +999,26 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				if (contextType != null) {
 					setClassifierContext(pivotSpecification, contextType);
 				}
-				getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextType, null);
+				setContextVariable(pivotSpecification, contextType);
 			}
 			else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS) {
 				Operation contextOperation = (Operation)eContainer;
 				if (contextOperation != null) {
-					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
+					setContextVariable(pivotSpecification, contextOperation.getOwningClass());
 					setOperationContext(pivotSpecification, contextOperation, null);
 				}
 				else {
-					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
+					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, false, null);
 				}
 			}
 			else if (eContainingFeature == PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS) {
 				Operation contextOperation = (Operation)eContainer;
 				if (contextOperation != null) {
-					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
+					setContextVariable(pivotSpecification, contextOperation.getOwningClass());
 					setOperationContext(pivotSpecification, contextOperation, PivotConstants.RESULT_NAME);
 				}
 				else {
-					getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, null, null);
+					setContextVariable(pivotSpecification, null);
 				}
 			}
 			else {
@@ -1026,11 +1028,11 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		else if (eContainingFeature == PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION) {
 			Property contextProperty = (Property)eContainer;
 			setPropertyContext(pivotSpecification, contextProperty);
-			getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextProperty.getOwningClass(), null);
+			setContextVariable(pivotSpecification, contextProperty.getOwningClass());
 		}
 		else if (eContainingFeature == PivotPackage.Literals.OPERATION__BODY_EXPRESSION) {
 			Operation contextOperation = (Operation)eContainer;
-			getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextOperation.getOwningClass(), null);
+			setContextVariable(pivotSpecification, contextOperation.getOwningClass());
 			setOperationContext(pivotSpecification, contextOperation, null);
 		}
 		else {
@@ -1179,11 +1181,25 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		getHelper().setBehavioralType(targetElement, sourceElement);
 	}
 
+	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @Nullable Type contextType) {
+		boolean isNotOclVoidType;
+		if (contextType != null) {
+			CompleteModel completeModel = environmentFactory.getCompleteModel();
+			CompleteClass completeContextType = completeModel.getCompleteClass(contextType);
+			CompleteClass completeOclVoidType = completeModel.getCompleteClass(environmentFactory.getStandardLibrary().getOclVoidType());
+			isNotOclVoidType = completeContextType != completeOclVoidType;
+		}
+		else {
+			isNotOclVoidType = true;
+		}
+		getHelper().setContextVariable(pivotSpecification, PivotConstants.SELF_NAME, contextType, isNotOclVoidType, null);
+	}
+
 	/* @deprecated use PivotHelper.setContextVariable() */
 	@Override
 	@Deprecated
 	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Type contextInstance) {
-		getHelper().setContextVariable(pivotSpecification, selfVariableName, contextType, contextInstance);
+		getHelper().setContextVariable(pivotSpecification, selfVariableName, contextType, false, contextInstance);
 	}
 
 	public void setReferredIteration(@NonNull LoopExp expression, @Nullable Iteration iteration) {

@@ -696,12 +696,12 @@ public class PivotHelper
 	/**
 	 * @since 1.4
 	 */
-	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, @Nullable Element contextInstance) {
+	public void setContextVariable(@NonNull ExpressionInOCL pivotSpecification, @NonNull String selfVariableName, @Nullable Type contextType, boolean isRequired, @Nullable Element contextInstance) {
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		if (contextVariable == null) {
 			assert !(pivotSpecification.eContainer() instanceof Feature) || !((Feature)pivotSpecification.eContainer()).isIsStatic();
 			contextVariable = PivotFactory.eINSTANCE.createParameterVariable();
-			contextVariable.setIsRequired(contextInstance != null);
+			contextVariable.setIsRequired(isRequired);
 			pivotSpecification.setOwnedContext(contextVariable);
 			if (contextType == null) {
 				contextType = standardLibrary.getOclVoidType();

@@ -25,14 +25,17 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 public class ClassContext extends AbstractParserContext
 {
 	protected final org.eclipse.ocl.pivot.@Nullable Class classContext;
+	protected final boolean isRequired;
 	protected final @Nullable Element instanceContext;
 	private @NonNull String selfName = PivotConstants.SELF_NAME;
 
-	public ClassContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, org.eclipse.ocl.pivot.@Nullable Class classContext, @Nullable Element instanceContext) {
+	public ClassContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, org.eclipse.ocl.pivot.@Nullable Class classContext, boolean isRequired, @Nullable Element instanceContext) {
 		super(environmentFactory, uri);
 		this.classContext = classContext != null ? getMetamodelManager().getPrimaryClass(classContext) : null;
+		this.isRequired = isRequired;
 		this.instanceContext = instanceContext;
 	}
+
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getClassContext() {
@@ -48,9 +51,14 @@ public class ClassContext extends AbstractParserContext
 	public void initialize(@NonNull Base2ASConversion conversion, @NonNull ExpressionInOCL expression) {
 		super.initialize(conversion, expression);
 		if ( !(expression.eContainer() instanceof Feature) || !((Feature)expression.eContainer()).isIsStatic()) {
-			conversion.getHelper().setContextVariable(expression, selfName, classContext, instanceContext);
+			conversion.getHelper().setContextVariable(expression, selfName, classContext, isRequired, instanceContext);
 		}
 	}
+
+	public boolean isRequired() {
+		return isRequired;
+	}
+
 
 	/**
 	 * @since 1.3

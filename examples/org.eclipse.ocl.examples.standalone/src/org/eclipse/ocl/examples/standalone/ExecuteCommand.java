@@ -414,7 +414,7 @@ public class ExecuteCommand extends StandaloneCommand
 			Object result = null;
 			ExpressionInOCL query = null;
 			List<@NonNull String> errors = new ArrayList<>();
-			ParserContext parserContext = new ClassContext(ocl.getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
+			ParserContext parserContext = new ClassContext(ocl.getEnvironmentFactory(), null, classContext, context != null, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 			try {
 				query = parserContext.parse(classContext, queryString);
 				//	PivotTestSuite.assertNoValidationErrors(expression, query);

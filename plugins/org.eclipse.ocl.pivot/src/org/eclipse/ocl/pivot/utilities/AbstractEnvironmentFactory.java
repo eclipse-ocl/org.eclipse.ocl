@@ -559,7 +559,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				}
 				if (pivotContainerContainer instanceof org.eclipse.ocl.pivot.Class) {
 					org.eclipse.ocl.pivot.Class pivotType = (org.eclipse.ocl.pivot.Class) pivotContainerContainer;
-					return new ClassContext(this, null, pivotType, null);
+					return new ClassContext(this, null, pivotType, false, null);
 				}
 			}
 			if (pivotContainer instanceof Slot) {
@@ -567,7 +567,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				if (asDefiningFeature != null) {
 					org.eclipse.ocl.pivot.Class pivotType = asDefiningFeature.getOwningClass();
 					if (pivotType != null) {
-						return new ClassContext(this, null, pivotType, null);
+						return new ClassContext(this, null, pivotType, false, null);
 					}
 				}
 			}
@@ -635,7 +635,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		else {		// Class, Stereotype, State
 			for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 				if ((eObject instanceof org.eclipse.ocl.pivot.Class) && (((org.eclipse.ocl.pivot.Class)eObject).getOwningPackage() != null)) {	// StateMachines etc do not have Packages
-					return new ClassContext(this, null, (org.eclipse.ocl.pivot.Class)eObject, null);
+					return new ClassContext(this, null, (org.eclipse.ocl.pivot.Class)eObject, false, null);
 				}
 			}
 		}

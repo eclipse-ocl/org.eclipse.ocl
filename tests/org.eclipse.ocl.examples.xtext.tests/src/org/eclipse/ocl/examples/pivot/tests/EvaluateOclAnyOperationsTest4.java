@@ -412,7 +412,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryNull(null, "null.oclAsType(Integer)");
 		ocl.assertQueryNull(null, "null.oclAsType(Class)");
 		ocl.assertQueryNull(null, "null.oclAsType(OclVoid)");
-		ocl.assertValidationErrorQuery(null, "null.oclAsType(OclInvalid)",
+		ocl.assertValidationErrorQuery(null, false, "null.oclAsType(OclInvalid)",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "CallExp::TypeIsNotInvalid", "null.oclAsType(OclInvalid)");
 		ocl.assertQueryNull(null, "null.oclAsType(Set(String))");
 		ocl.assertQueryNull(null, "null.oclAsType(Tuple(a:String))");

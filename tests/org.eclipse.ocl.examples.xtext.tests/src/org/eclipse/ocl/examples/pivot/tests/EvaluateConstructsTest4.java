@@ -71,7 +71,7 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		ocl.assertQueryTrue(null, "if self.oclIsUndefined() then true else false endif");
 			// XXX
-		ocl.assertValidationErrorQuery(null, "if null then 1 else 2 endif",
+		ocl.assertValidationErrorQuery(null, false, "if null then 1 else 2 endif",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif");
 		//
 		ocl.assertQueryFalse(null, "if true then false else false endif");
@@ -80,7 +80,7 @@ public class EvaluateConstructsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 3.0, "if true then 3 else 4.0 endif");
 		ocl.assertQueryEquals(null, 4.0, "if false then 3 else 4.0 endif");
 		//
-		ocl.assertValidationErrorQuery(null, "if null then 1 else 2 endif",
+		ocl.assertValidationErrorQuery(null, false, "if null then 1 else 2 endif",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IfExp::ConditionTypeIsBoolean", "if null then 1 else 2 endif");
 		ocl.assertQueryInvalid(null, "if null then 1 else 2 endif");
 		ocl.assertQueryInvalid(null, "if invalid then 1 else 2 endif");

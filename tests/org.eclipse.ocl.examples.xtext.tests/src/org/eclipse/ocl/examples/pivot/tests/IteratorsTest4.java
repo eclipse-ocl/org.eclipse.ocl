@@ -165,9 +165,9 @@ public class IteratorsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package[?] | p?.name = 'bob')");
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p : ocl::Package | p.name = 'bob')");
 		ocl.assertQueryEquals(ocl.pkg1, ocl.bob, "let op : Set(Package[*|?]) = ownedPackages in op?->any(p : ocl::Package[1] | p.name = 'bob')");
-		ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package[1] | p.name = 'bob')",
+		ocl.assertValidationErrorQuery(pkg1Type, true, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package[1] | p.name = 'bob')",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::UnsafeSourceCanNotBeNull", "op->any(p : Package[1] | p.name.=('bob'))");
-		ocl.assertValidationErrorQuery(pkg1Type, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package[?] | p.name = 'bob')",
+		ocl.assertValidationErrorQuery(pkg1Type, true, "let op : Set(Package[*|?]) = ownedPackages in op->any(p : ocl::Package[?] | p.name = 'bob')",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "PropertyCallExp::UnsafeSourceCanNotBeNull", "p.name");
 
 		// shorter form
@@ -194,9 +194,9 @@ public class IteratorsTest4 extends PivotTestSuite
 
 		ocl.assertQueryInvalid(null, "Sequence{}->any(s | s = null)");		// OMG Issue 18504
 		// FIXME BUG 507628 comment 11 - check all test chnages wrt 2021-06
-		ocl.assertValidationErrorQuery(pkg1Type, "Sequence{null}->any(s | s = null)",
+		ocl.assertValidationErrorQuery(pkg1Type, false, "Sequence{null}->any(s | s = null)",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::UnsafeSourceCanNotBeNull", "Sequence{null}->any(s : OclVoid[1] | s.=(null))");
-		ocl.assertValidationErrorQuery(pkg1Type, "Sequence{null, null}->any(s | s = null)",
+		ocl.assertValidationErrorQuery(pkg1Type, false, "Sequence{null, null}->any(s | s = null)",
 			PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "IteratorExp::UnsafeSourceCanNotBeNull", "Sequence{null, null}->any(s : OclVoid[1] | s.=(null))");
 	//	ocl.assertQueryNull(null, "Sequence{null, null}->any(s | s = null)");
 
@@ -349,7 +349,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		// expression
 		// is more general than the iterator variable, so cannot be
 		// assigned recursively
-		ocl.assertValidationErrorQuery(subFake, "self->closure(getFakes())",
+		ocl.assertValidationErrorQuery(subFake, false, "self->closure(getFakes())",
 			VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->closure(1_ : fake::Subfake[1] | 1_.getFakes())");
 
 		// this should parse OK because the result of the closure expression
@@ -372,7 +372,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		Property owningPackage = getAttribute(packageMetaclass, "owningPackage", packageMetaclass);
 		SetValue expected = idResolver.createSetOfEach(typeId, owningPackage, packageMetaclass, packageMetaclass.eContainer(), packageMetaclass.eContainer().eContainer());
 		ocl.assertQueryEquals(owningPackage, expected, "self->closure(i : OclElement | i.oclContainer())");
-		ocl.assertValidationErrorQuery(propertyMetaclass, "self->closure(oclContainer())", VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->closure(1_ : Property[1] | 1_.oclContainer())");
+		ocl.assertValidationErrorQuery(propertyMetaclass, false, "self->closure(oclContainer())", VIOLATED_TEMPLATE, "IteratorExp::ClosureBodyElementTypeIsIteratorType", "self.oclAsSet()->closure(1_ : Property[1] | 1_.oclContainer())");
 		ocl.dispose();
 	}
 
@@ -1135,7 +1135,7 @@ public class IteratorsTest4 extends PivotTestSuite
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
 		org.eclipse.ocl.pivot.Class context = environmentFactory.getASClass("Package");
 		org.eclipse.ocl.pivot.Class type = environmentFactory.getASClass("Class");
-		ocl.assertValidationErrorQuery(context, "ownedClasses->sortedBy(e | e)",
+		ocl.assertValidationErrorQuery(context, false, "ownedClasses->sortedBy(e | e)",
 			PivotMessagesInternal.UnresolvedOperation_ERROR_, type + "", LibraryConstants.COMPARE_TO);
 
 		ocl.assertQuery(context, "ownedClasses->sortedBy(e | e.name)");

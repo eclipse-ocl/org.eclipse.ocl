@@ -215,9 +215,9 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 	@Test public void testMapErrors() {
 		TestOCL ocl = createOCL();
 	//	ocl.assertValidationErrorQuery(null, "Map{}?->keyType", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "CallExp::SafeSourceCannotBeMap", ocl);
-		ocl.assertValidationErrorQuery(null, "Map{}?->size()", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "CallExp::SafeSourceCannotBeMap", ocl);
-		ocl.assertValidationErrorQuery(null, "Map{}?->collect(c | '')", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "CallExp::SafeSourceCannotBeMap", "Map{}?->collect(c : OclVoid[1] | '')");
-		ocl.assertValidationErrorQuery(null, "Map{}?->iterate(c; acc:String = '' | '')", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "CallExp::SafeSourceCannotBeMap", "Map{}?->iterate(c : OclVoid[1]; acc : String[1] = '' | '')");
+		ocl.assertValidationErrorQuery(null, false, "Map{}?->size()", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "CallExp::SafeSourceCannotBeMap", ocl);
+		ocl.assertValidationErrorQuery(null, false, "Map{}?->collect(c | '')", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "CallExp::SafeSourceCannotBeMap", "Map{}?->collect(c : OclVoid[1] | '')");
+		ocl.assertValidationErrorQuery(null, false, "Map{}?->iterate(c; acc:String = '' | '')", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "CallExp::SafeSourceCannotBeMap", "Map{}?->iterate(c : OclVoid[1]; acc : String[1] = '' | '')");
 		ocl.dispose();
 	}
 

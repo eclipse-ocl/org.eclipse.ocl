@@ -18,6 +18,6 @@ import org.eclipse.ocl.pivot.Constraint;
 public class DiagnosticContext extends ClassContext
 {
 	public DiagnosticContext(ClassContext parserContext, Constraint constraint) {
-		super(parserContext.getEnvironmentFactory(), null, parserContext.getClassContext(), parserContext.getInstanceContext());
+		super(parserContext.getEnvironmentFactory(), null, parserContext.getClassContext(), parserContext.isRequired(), parserContext.getInstanceContext());
 	}
 }

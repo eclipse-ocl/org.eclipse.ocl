@@ -268,7 +268,7 @@ public class JavaStream
 			if (string.contains("INSTANCE_CACHE_ManualUML2RDBMS_getAllSupers")) {
 				getClass();		// XXX
 			}
-			if (string.contains("55")) {
+			if (string.contains("booleanValue")) {
 				getClass();		// XXX
 			}
 			if (indentationStack.isEmpty()) {
