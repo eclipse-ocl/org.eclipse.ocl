@@ -47,7 +47,7 @@ public abstract class AbstractLibraryOperationHandler implements LibraryOperatio
 		if (value.isNull()) {
 			js.append("null");
 		}
-		else if (value.isNonNull() && value.isNonInvalid()) {
+		else if (value.isNonNullChecked() && value.isNonInvalid()) {
 			js.append("!");
 			js.appendValueName(value);
 		}
@@ -66,7 +66,7 @@ public abstract class AbstractLibraryOperationHandler implements LibraryOperatio
 	} */
 
 	protected void appendAssignNullLiteral(boolean hasDeclaration, @NonNull CGLibraryOperationCallExp cgOperationCallExp) {
-		assert !cgOperationCallExp.isNonNull();
+		assert !cgOperationCallExp.isNonNullChecked();
 		if (!hasDeclaration) {
 			js.appendDeclaration(cgOperationCallExp);
 		}
@@ -90,7 +90,7 @@ public abstract class AbstractLibraryOperationHandler implements LibraryOperatio
 		if (value.isNull()) {
 			js.append("null");
 		}
-		else if (value.isNonNull() && value.isNonInvalid()) {
+		else if (value.isNonNullChecked() && value.isNonInvalid()) {
 			js.appendValueName(value);
 		}
 		else {
@@ -252,7 +252,7 @@ public abstract class AbstractLibraryOperationHandler implements LibraryOperatio
 	 * Append a conditionsal throw if cgElement may be null.
 	 */
 	protected void appendThrowIfMayBeNull(final CGValuedElement cgElement, @NonNull String context) {
-		if (!cgElement.isNonNull()) {
+		if (!cgElement.isNonNullChecked()) {
 			js.append("if (");
 			js.appendValueName(cgElement);
 			js.append(" == null) {\n");

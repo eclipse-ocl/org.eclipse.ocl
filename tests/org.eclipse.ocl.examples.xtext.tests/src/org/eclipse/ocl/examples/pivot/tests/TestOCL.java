@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.xtext.tests.NoHttpURIHandlerImpl;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -802,7 +801,7 @@ public class TestOCL extends OCLInternal
 
 	public @Nullable Object evaluate(Object unusedHelper, @Nullable Object context, @NonNull String expression) throws Exception {
 		org.eclipse.ocl.pivot.Class classContext = getContextType(context);
-		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
+		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, classContext, context); //(context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 		ExpressionInOCL query = parserContext.parse(classContext, expression);
 		PivotTestSuite.assertNoValidationErrors(expression, query);
 		try {

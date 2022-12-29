@@ -97,8 +97,8 @@ public class ImpliesOperationHandler extends AbstractLibraryOperationHandler
 					if (cgSource.isNull() || cgArgument.isNull()) {
 						appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
 					}
-					else if (cgSource.isNonNull()){
-						if (cgArgument.isNonNull()){
+					else if (cgSource.isNonNullChecked()){
+						if (cgArgument.isNonNullChecked()){
 							appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
 						}
 						else {
@@ -110,7 +110,7 @@ public class ImpliesOperationHandler extends AbstractLibraryOperationHandler
 						}
 					}
 					else {
-						if (cgArgument.isNonNull()){
+						if (cgArgument.isNonNullChecked()){
 							appendIfEqualsNull(cgSource);
 							appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
 							appendElse();

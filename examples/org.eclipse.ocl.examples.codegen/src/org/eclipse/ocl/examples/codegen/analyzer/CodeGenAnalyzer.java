@@ -658,7 +658,7 @@ public class CodeGenAnalyzer
 		CGLetExp cgLetExp = CGModelFactory.eINSTANCE.createCGLetExp();
 //		cgLetExp.setAst(asElement);
 //		cgLetExp.setTypeId(getCGTypeId(asElement.getTypeId()));
-		initAst(cgLetExp, asElement, true);
+		initAst(cgLetExp, asElement, false);
 		cgLetExp.setInit(cgVariable);
 		cgLetExp.setIn(cgIn);
 		assert cgLetExp.isRequired() == cgIn.isRequired();

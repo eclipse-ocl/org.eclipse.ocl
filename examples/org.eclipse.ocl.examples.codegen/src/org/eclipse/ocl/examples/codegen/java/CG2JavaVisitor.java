@@ -328,7 +328,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		final Method actualMethod = libraryIteration.getEvaluateMethod(referredIteration);
 		final Class<?> actualReturnClass = actualMethod.getReturnType();
 		boolean actualIsNonNull = context.getIsNonNull(actualMethod) == Boolean.TRUE;
-		boolean expectedIsNonNull = cgIterationCallExp.isNonNull();
+		boolean expectedIsNonNull = cgIterationCallExp.isNonNullChecked();
 		final String astName = getResolvedName(cgIterationCallExp);
 		final String bodyName = getVariantResolvedName(cgIterationCallExp, context.getBODY_NameVariant());
 		final String executorName = globalNameManager.getExecutorName();
@@ -589,7 +589,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	}
 
 	public void appendSuppressWarningsNull(@NonNull CGValuedElement cgActual, Boolean isNonNull) {
-		boolean isRequired = cgActual.isNonNull();
+		boolean isRequired = cgActual.isNonNullChecked();
 		boolean isPrimitive = js.isPrimitive(cgActual);
 		if (!isPrimitive && isRequired && (isNonNull != Boolean.TRUE)) {
 			js.appendSuppressWarningsNull(true);
@@ -832,7 +832,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			if (!js.appendLocalStatements(cgSource)) {
 				return false;
 			}
-			if (!cgSource.isNonNull()) {
+			if (!cgSource.isNonNullChecked()) {
 				js.append("assert ");
 				js.appendValueName(cgSource);
 				js.append(" != null;\n");
@@ -1018,7 +1018,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.appendDeclaration(cgCastExp);
 		js.append(" = ");
 		//	if (requiredTypeDescriptor != actualTypeDescriptor) {
-		Boolean isRequired = (cgCastExp.isNonNull() && !cgSource.isNonNull()) ? Boolean.TRUE : null;
+		Boolean isRequired = (cgCastExp.isNonNullChecked() && !cgSource.isNonNullChecked()) ? Boolean.TRUE : null;
 				requiredTypeDescriptor.appendCastTerm(js, isRequired, cgSource);
 		//	}
 		//	else {
@@ -1541,7 +1541,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		//	}
 		Class<?> jClass = actualTypeDescriptor.getJavaClass().getComponentType();
 		boolean isRequired = cgIndexExp.isRequired();
-		boolean wasNonNull = cgSource.isNonNull();
+		boolean wasNonNull = cgSource.isNonNullChecked();
 		if (isRequired) {
 			appendSuppressWarningsNull(cgSource, isRequired);
 		}
@@ -1626,7 +1626,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				if (cgArgument.isNull()) {
 					js.appendBooleanString(true ^ notEquals);
 				}
-				else if (cgArgument.isNonNull()) {
+				else if (cgArgument.isNonNullChecked()) {
 					js.appendBooleanString(false ^ notEquals);
 				}
 				else {
@@ -1636,7 +1636,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				}
 			}
 			else if (cgArgument.isNull()) {
-				if (cgSource.isNonNull()) {
+				if (cgSource.isNonNullChecked()) {
 					js.appendBooleanString(false ^ notEquals);
 				}
 				else {
@@ -1708,7 +1708,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.appendBooleanString(isNull1 == isNull2);
 			}
 			else if (isNull1 && !isNull2) {
-				if (cgArgument.isNonNull()) {
+				if (cgArgument.isNonNullChecked()) {
 					js.appendBooleanString(false);
 				}
 				else {
@@ -1718,7 +1718,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				}
 			}
 			else if (isNull2 && !isNull1) {
-				if (cgSource.isNonNull()) {
+				if (cgSource.isNonNullChecked()) {
 					js.appendBooleanString(false);
 				}
 				else {
@@ -1817,7 +1817,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		else {
 			CGValuedElement cgSource = getExpression(cgIsUndefinedExp.getSource());
 			boolean sourceIsNonInvalid = cgSource.isNonInvalid();
-			boolean sourceIsNonNull = cgSource.isNonNull();
+			boolean sourceIsNonNull = cgSource.isNonNullChecked();
 			if (!js.appendLocalStatements(cgSource)) {
 				return false;
 			}
