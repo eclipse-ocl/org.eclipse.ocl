@@ -2202,7 +2202,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				}
 				expression.setReferredVariable(variableDeclaration);
 				expression.setName(variableDeclaration.getName());
-				helper.setType(expression, variableDeclaration.getType(), true, variableDeclaration.getTypeValue());
+				helper.setType(expression, variableDeclaration.getType(), variableDeclaration.isIsRequired(), variableDeclaration.getTypeValue());
 			}
 		}
 		return expression;

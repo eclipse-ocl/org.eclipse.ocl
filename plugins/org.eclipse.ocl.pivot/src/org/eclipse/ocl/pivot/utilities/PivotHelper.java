@@ -700,8 +700,8 @@ public class PivotHelper
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		if (contextVariable == null) {
 			assert !(pivotSpecification.eContainer() instanceof Feature) || !((Feature)pivotSpecification.eContainer()).isIsStatic();
-			@NonNull ParameterVariable nonNullContextVariable = PivotFactory.eINSTANCE.createParameterVariable();
-			contextVariable = nonNullContextVariable;
+			contextVariable = PivotFactory.eINSTANCE.createParameterVariable();
+			contextVariable.setIsRequired(contextInstance != null);
 			pivotSpecification.setOwnedContext(contextVariable);
 			if (contextType == null) {
 				contextType = standardLibrary.getOclVoidType();
