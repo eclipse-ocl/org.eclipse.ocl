@@ -48,7 +48,7 @@ public class BooleanPrimitiveDescriptor extends AbstractPrimitiveDescriptor
 	public @NonNull Boolean appendEcore(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager, @NonNull CGEcoreExp cgEcoreExp, @NonNull CGValuedElement unboxedValue) {
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
-		assert unboxedValue.isNonNull();
+		assert unboxedValue.isNonNullChecked();
 //		js.appendClassReference(null, ValueUtil.class);
 //		js.append(".intValueOf(");
 		js.appendReferenceTo(unboxedValue);
