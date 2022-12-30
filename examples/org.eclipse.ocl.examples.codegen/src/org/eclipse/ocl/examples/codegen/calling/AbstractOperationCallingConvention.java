@@ -546,5 +546,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 				}
 			}
 		}
+		if (cgOperationCallExp.isRequired() && !cgOperationCallExp.isNonNullUnchecked()) {
+			boxingAnalyzer.rewriteAsGuarded(cgOperationCallExp, false, "result from ''" + asOperation + "''");
+		}
 	}
 }
