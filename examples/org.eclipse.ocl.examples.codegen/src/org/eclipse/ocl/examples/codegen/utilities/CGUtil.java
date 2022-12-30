@@ -40,6 +40,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
@@ -83,6 +84,7 @@ import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.Pair;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -474,6 +476,10 @@ public class CGUtil
 
 	public static @NonNull List<@NonNull CGIterator> getIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
 		return ClassUtil.nullFree(cgIterationCallExp.getIterators());
+	}
+
+	public static @NonNull LibraryOperation getLibraryOperation(@NonNull CGLibraryOperationCallExp cgLibraryOperationCallExp) {
+		return ClassUtil.nonNullState(cgLibraryOperationCallExp.getLibraryOperation());
 	}
 
 	public static @NonNull Method getMethod(@NonNull CGNativeOperationCallExp cgNativeOperationCallExp) {

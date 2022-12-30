@@ -265,7 +265,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("boolean")) {
+			if (string.contains("OrderedCollectionAtOperation")) {
 				getClass();		// XXX
 			}
 			if (string.contains("basicGetForeignPropertyValue")) {

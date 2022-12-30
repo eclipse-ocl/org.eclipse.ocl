@@ -285,20 +285,14 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)cgOperationCallExp;
 		assert cgOperationCallExp.getCgThis() == null;
-		final LibraryOperation libraryOperation = ClassUtil.nonNullState(cgLibraryOperationCallExp.getLibraryOperation());
+		final LibraryOperation libraryOperation = CGUtil.getLibraryOperation(cgLibraryOperationCallExp);
 		LibraryOperationHandler libraryOperationHandler = cg2javaVisitor.basicGetLibraryOperationHandler(libraryOperation.getClass());
 		if (libraryOperationHandler != null) {
 			return libraryOperationHandler.generate(cgLibraryOperationCallExp);		// XXX BuiltIn ??
 		}
 		final List<@NonNull CGValuedElement> cgArguments = ClassUtil.nullFree(cgOperationCallExp.getArguments());
 		int iMax = cgArguments.size();
-		CGOperation cgOperation = cgOperationCallExp.getReferredOperation();
-		Method jMethod = libraryOperation.getEvaluateMethod(CGUtil.getAST(cgOperation));
-		Class<?> actualReturnClass = jMethod.getReturnType();
-		Boolean actualNullity = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
-		boolean actualIsNonNull = actualNullity == Boolean.TRUE;
-	//	boolean actualIsNullable = actualNullity == Boolean.FALSE;
-		boolean expectedIsNonNull = cgOperationCallExp.isNonNullChecked();
+		CGOperation cgOperation = CGUtil.getReferredOperation(cgOperationCallExp);
 		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
 			return false;
 		}
@@ -353,19 +347,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 				}
 			}
 		}
-	//	Boolean returnNullity = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
-		if (expectedIsNonNull && !actualIsNonNull) {
-			js.appendSuppressWarningsNull(true);
-		}
-		js.appendDeclaration(cgOperationCallExp);
-		js.append(" = ");
-		boolean isRequiredNullCast = expectedIsNonNull;// && !actualIsNonNull;
-		//		if (expectedIsNonNull && !actualIsNonNull) {
-		//			js.appendClassReference(null, ClassUtil.class);
-		//			js.append(".nonNullState(");
-		//		}
-		js.appendClassCast(cgOperationCallExp, isRequiredNullCast, actualReturnClass, new JavaStream.SubStream()
-		{
+		JavaStream.SubStream sourceStream = new JavaStream.SubStream() {
 			@Override
 			public void append() {
 				GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
@@ -388,12 +370,36 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 				}
 				js.append(")");
 			}
+		};
+		Method jMethod = libraryOperation.getEvaluateMethod(CGUtil.getAST(cgOperation));
+		Boolean sourceIsRequired = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
+		Class<?> sourceClass = jMethod.getReturnType();
+		assert sourceClass != null;
+		js.appendAssignWithCast(cgOperationCallExp, sourceIsRequired, sourceClass, sourceStream);
+		return true;
+/*
+
+
+
+	//	Boolean returnNullity = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
+		if (expectedIsNonNull && !actualIsNonNull) {
+			js.appendSuppressWarningsNull(true);
+		}
+		js.appendDeclaration(cgOperationCallExp);
+		js.append(" = ");
+		boolean isRequiredNullCast = expectedIsNonNull;// && !actualIsNonNull;
+		//		if (expectedIsNonNull && !actualIsNonNull) {
+		//			js.appendClassReference(null, ClassUtil.class);
+		//			js.append(".nonNullState(");
+		//		}
+		js.appendClassCast(cgOperationCallExp, isRequiredNullCast, actualReturnClass, new JavaStream.SubStream()
+		{
 		});
 		//		if (expectedIsNonNull && !actualIsNonNull) {
 		//			js.append(")");
 		//		}
 		js.append(";\n");
-		return true;
+		return true; */
 	}
 
 	@Override
