@@ -268,4 +268,10 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	public @NonNull CGValuedElement getSecondArgument() {
 		return ClassUtil.nonNullState(getArguments().get(1));
 	}
+
+	@Override
+	public void setRequired(boolean newRequired) {
+		// XXX Auto-generated method stub
+		super.setRequired(newRequired);
+	}
 } //CGLibraryOperationCallExpImpl

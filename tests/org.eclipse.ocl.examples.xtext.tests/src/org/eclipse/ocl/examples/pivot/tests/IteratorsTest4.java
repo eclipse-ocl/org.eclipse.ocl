@@ -215,6 +215,9 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_any_invalidBody_142518() {
 		MyOCL ocl = createOCL();
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"let b:Boolean = null in Bag{1, 2, 3}->any(b and b)");
+// XXX
 		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->any('true')");		// Bug 415669
 		ocl.assertQueryInvalid(null, "Bag{1, 2, 3}->any(2)");			// Bug 415669
 

@@ -113,6 +113,8 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 		MapValue expected1 = idResolver.createMapOfAll(TypeId.INTEGER, TypeId.INTEGER, map);
 		CollectionValue expected1k = idResolver.createSetOfAll(typeId, map.keySet());
 		CollectionValue expected1v = idResolver.createBagOfAll(typeId, map.values());
+// XXX
+		ocl.assertQueryEquals(null, expected1, "Sequence{1..5}->collectBy(i : Integer | i*i)");
 // XXX FIXME bad warning/ global duplicate
 		ocl.assertQueryEquals(null, expected1, "Sequence{1..5}->collectBy(i with j | i*j)");
 // XXX
