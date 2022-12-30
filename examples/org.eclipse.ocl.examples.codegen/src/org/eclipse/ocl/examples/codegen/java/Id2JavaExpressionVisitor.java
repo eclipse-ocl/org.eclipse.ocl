@@ -302,8 +302,23 @@ public class Id2JavaExpressionVisitor implements CGIdVisitor<@Nullable Object>
 
 	@Override
 	public @Nullable Object visitTemplateParameterId(@NonNull TemplateParameterId id) {
-		js.appendClassReference(null, IdManager.class);
-		js.append(".getTemplateParameterId(" + id.getIndex() + ")");
+		int index = id.getIndex();
+		switch (index) {
+		//	case 0:
+		//		js.appendClassReference(null, ParametersId.class);
+		//		js.append(".T_0");
+		//		break;
+			case 0:
+			case 1:
+			case 2:
+				js.appendClassReference(null, TypeId.class);
+				js.append(".T_" + (index+1));
+				break;
+			default:
+				js.appendClassReference(null, IdManager.class);
+				js.append(".getTemplateParameterId(" + index + ")");
+				break;
+		}
 		return null;
 	}
 

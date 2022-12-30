@@ -565,6 +565,7 @@ public class CodeGenAnalyzer
 		CGBoolean cgBoolean = CGModelFactory.eINSTANCE.createCGBoolean();
 		cgBoolean.setBooleanValue(booleanValue);
 		cgBoolean.setTypeId(getCGTypeId(TypeId.BOOLEAN));
+		cgBoolean.setRequired(true);
 		globalNameManager.getNameResolution(cgBoolean);
 		return cgBoolean;
 	}
@@ -1351,6 +1352,7 @@ public class CodeGenAnalyzer
 			cgInteger = CGModelFactory.eINSTANCE.createCGInteger();
 			cgInteger.setNumericValue(aNumber);
 			cgInteger.setTypeId(getCGTypeId(TypeId.INTEGER));
+			cgInteger.setRequired(true);
 			globalNameManager.getNameResolution(cgInteger);
 			cgIntegers.put(aNumber, cgInteger);
 		}
@@ -1402,6 +1404,7 @@ public class CodeGenAnalyzer
 			cgReal = CGModelFactory.eINSTANCE.createCGReal();
 			cgReal.setNumericValue(aNumber);
 			cgReal.setTypeId(getCGTypeId(TypeId.REAL));
+			cgReal.setRequired(true);
 			globalNameManager.getNameResolution(cgReal);
 			cgReals.put(aNumber, cgReal);
 		}
@@ -1427,6 +1430,7 @@ public class CodeGenAnalyzer
 			cgString = CGModelFactory.eINSTANCE.createCGString();
 			cgString.setStringValue(aString);
 			cgString.setTypeId(getCGTypeId(TypeId.STRING));
+			cgString.setRequired(true);
 			globalNameManager.getNameResolution(cgString);
 		//	globalNameManager.declareLazyName(cgString);
 			cgStrings.put(aString, cgString);

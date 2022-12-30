@@ -264,6 +264,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGCollectionPart cgCollectionPart = CGModelFactory.eINSTANCE.createCGCollectionPart();
 		cgCollectionPart.setAst(asElement);
 		cgCollectionPart.setTypeId(context.getCGTypeId(TypeId.INTEGER_RANGE));
+		cgCollectionPart.setRequired(true);
 		cgCollectionPart.setFirst(context.createCGElement(CGValuedElement.class, asElement.getOwnedFirst()));
 		cgCollectionPart.setLast(context.createCGElement(CGValuedElement.class, asElement.getOwnedLast()));
 		return cgCollectionPart;
@@ -370,6 +371,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		CGMapPart cgMapPart = CGModelFactory.eINSTANCE.createCGMapPart();
 		cgMapPart.setAst(element);
 		cgMapPart.setTypeId(context.getCGTypeId(TypeId.MAP_ENTRY));
+		cgMapPart.setRequired(true);
 		cgMapPart.setKey(context.createCGElement(CGValuedElement.class, element.getOwnedKey()));
 		cgMapPart.setValue(context.createCGElement(CGValuedElement.class, element.getOwnedValue()));
 		return cgMapPart;

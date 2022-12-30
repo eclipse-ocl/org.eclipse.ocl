@@ -265,10 +265,10 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("OrderedCollectionAtOperation")) {
+			if (string.contains("ClassifierAllInstancesOperation")) {
 				getClass();		// XXX
 			}
-			if (string.contains("evaluate")) {
+			if (string.contains("RNG")) {
 				getClass();		// XXX
 			}
 			if (indentationStack.isEmpty()) {

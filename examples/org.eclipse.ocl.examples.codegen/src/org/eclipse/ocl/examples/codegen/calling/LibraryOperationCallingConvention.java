@@ -359,7 +359,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 		}
 		js.appendDeclaration(cgOperationCallExp);
 		js.append(" = ");
-		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
+		boolean isRequiredNullCast = expectedIsNonNull;// && !actualIsNonNull;
 		//		if (expectedIsNonNull && !actualIsNonNull) {
 		//			js.appendClassReference(null, ClassUtil.class);
 		//			js.append(".nonNullState(");
