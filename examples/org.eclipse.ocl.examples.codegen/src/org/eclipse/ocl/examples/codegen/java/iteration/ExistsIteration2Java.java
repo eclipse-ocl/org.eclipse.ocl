@@ -38,7 +38,7 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 	public boolean appendFinalValue(@NonNull JavaStream js, @NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGIterator cgAccumulator = CGUtil.getAccumulator(cgIterationCallExp);
 		CGValuedElement cgBody = getBody(cgIterationCallExp);
-		if (!cgBody.isNonNull()) {
+		if (!cgBody.isNonNullChecked()) {
 			js.append("if (");
 			js.appendValueName(cgAccumulator);
 			js.append(" == null) {\n");
@@ -114,7 +114,7 @@ public class ExistsIteration2Java extends AbstractIteration2Java
 			js.popIndentation();
 			js.append("}\n");
 			//
-			if (!cgBody.isNonNull()) {
+			if (!cgBody.isNonNullChecked()) {
 				js.append("else if (");
 				js.appendValueName(cgBody);
 				js.append(" == null) {								// Abnormal null body evaluation result\n");
