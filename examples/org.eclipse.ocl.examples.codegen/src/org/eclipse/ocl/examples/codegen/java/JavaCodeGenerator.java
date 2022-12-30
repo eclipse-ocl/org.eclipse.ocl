@@ -785,7 +785,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		TypeDescriptor typeDescriptor = getTypeDescriptor(cgValue);
 		Class<?> javaClass = typeDescriptor.getJavaClass();		// FIXME Rationalize with TypeDescriptor.isPrimitive()
-		boolean isNonNull = cgValue.isNonNull();
+		boolean isNonNull = cgValue.isNonNullChecked();
 		return JavaLanguageSupport.isPrimitive(isNonNull, javaClass);
 	}
 
