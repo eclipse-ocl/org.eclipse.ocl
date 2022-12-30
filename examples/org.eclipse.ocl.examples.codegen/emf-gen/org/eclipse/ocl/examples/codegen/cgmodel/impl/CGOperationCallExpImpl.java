@@ -303,11 +303,11 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 
 	/**
 	 * {@inheritDoc}
-	 * @generated
+	 * @generated XXX
 	 */
 	@Override
 	public boolean isNonNull() {
-		return referredOperation != null ? referredOperation.isRequired() : asOperation != null ? asOperation.isIsRequired() : isRequired();
+		return isRequired() || ((referredOperation != null) && referredOperation.isRequired()) || ((asOperation != null) && asOperation.isIsRequired());
 	}
 
 	/**

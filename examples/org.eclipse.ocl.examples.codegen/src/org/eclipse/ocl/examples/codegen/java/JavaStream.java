@@ -265,10 +265,10 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("INSTANCE_CACHE_ManualUML2RDBMS_getAllSupers")) {
+			if (string.contains("OrderedCollectionAtOperation")) {
 				getClass();		// XXX
 			}
-			if (string.contains("booleanValue")) {
+			if (string.contains("evaluate")) {
 				getClass();		// XXX
 			}
 			if (indentationStack.isEmpty()) {

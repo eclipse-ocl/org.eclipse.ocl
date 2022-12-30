@@ -797,7 +797,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	 */
 	public @Nullable Boolean isRequired(@NonNull CGValuedElement cgElement) {
 	//	invalid has no effect on declared requiredness
-		if (cgElement.isNull()) {				// definitely null
+/*		if (cgElement.isNull()) {				// definitely null
 			assert !cgElement.isRequired() : "null for isRequired";
 			return Boolean.FALSE;
 		}
@@ -807,7 +807,8 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		else {
 		//	assert !cgElement.isRequired();
 			return null;
-		}
+		} */
+		return cgElement.isRequired();
 	}
 
 	@Override
