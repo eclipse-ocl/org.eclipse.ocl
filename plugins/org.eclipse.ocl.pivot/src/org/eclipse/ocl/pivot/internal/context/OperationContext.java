@@ -28,7 +28,7 @@ public class OperationContext extends ClassContext
 	private final @Nullable String resultVariableName;		// Null for none
 
 	public OperationContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, @NonNull Operation operation, @Nullable String resultVariableName) {
-		super(environmentFactory, uri, ClassUtil.nonNullModel(operation.getOwningClass()), false, null);
+		super(environmentFactory, uri, ClassUtil.nonNullModel(operation.getOwningClass()), !environmentFactory.getCompleteModel().hasOclVoidOverload(operation.getOperationId()), null);
 		this.operation = operation;
 		this.resultVariableName = resultVariableName;
 	}

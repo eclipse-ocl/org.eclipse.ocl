@@ -265,10 +265,10 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("evaluate")) {
+			if (string.contains("IMPPROPid_count")) {
 				getClass();		// XXX
 			}
-			if (string.contains("RNG")) {
+			if (string.contains("basicGetForeignPropertyValue")) {
 				getClass();		// XXX
 			}
 			if (indentationStack.isEmpty()) {
@@ -326,6 +326,46 @@ public class JavaStream
 			appendClassReference(null, ValueUtil.class);
 			append(".");
 			append(value ? "TRUE_VALUE" : "FALSE_VALUE");
+		}
+		append(";\n");
+	}
+
+	/**
+	 * Append a complete assignment statement to cgTargetValue, by wrapping the sourceStream in a cast if necessary
+	 * to make the sourceClass return and sourceIsRequired nullity compatible with cgTargetValue.
+	 */
+	public void appendAssignWithCast(@NonNull CGValuedElement cgTargetValue, @Nullable Boolean sourceIsRequired,
+			@NonNull Class<?> sourceClass, JavaStream.@NonNull SubStream sourceStream) {
+		boolean targetIsRequired = cgTargetValue.isRequired();
+		TypeDescriptor targetTypeDescriptor = codeGenerator.getTypeDescriptor(cgTargetValue);
+		Class<?> targetClass = targetTypeDescriptor.getJavaClass();
+		Boolean nullCast;
+		if (targetIsRequired) {
+			if (sourceIsRequired == Boolean.TRUE) {
+				nullCast = null;
+			}
+			else {
+				if (sourceIsRequired == Boolean.FALSE) {
+					appendSuppressWarningsNull(true);
+				}
+				nullCast = Boolean.TRUE;
+			}
+		}
+		else {
+			if (sourceIsRequired == Boolean.TRUE) {
+				nullCast = null;//Boolean.FALSE;
+			}
+			else {
+				nullCast = null;
+			}
+		}
+		appendDeclaration(cgTargetValue);
+		append(" = ");
+		if ((nullCast != null) || !targetClass.isAssignableFrom(sourceClass)) {
+			targetTypeDescriptor.appendCast(this, nullCast, sourceClass, sourceStream);
+		}
+		else {
+			sourceStream.append();
 		}
 		append(";\n");
 	}

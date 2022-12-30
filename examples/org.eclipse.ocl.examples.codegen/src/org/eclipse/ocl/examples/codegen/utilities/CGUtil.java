@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.utilities;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -40,6 +41,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -472,6 +474,10 @@ public class CGUtil
 
 	public static @NonNull List<@NonNull CGIterator> getIteratorsList(@NonNull CGIterationCallExp cgIterationCallExp) {
 		return ClassUtil.nullFree(cgIterationCallExp.getIterators());
+	}
+
+	public static @NonNull Method getMethod(@NonNull CGNativeOperationCallExp cgNativeOperationCallExp) {
+		return ClassUtil.nonNullState(cgNativeOperationCallExp.getMethod());
 	}
 
 	public static @NonNull String getName(@NonNull CGNamedElement cgNamedElement) {

@@ -672,6 +672,7 @@ public class CodeGenAnalyzer
 		CGNativeOperationCallExp cgNativeOperationCallExp = CGModelFactory.eINSTANCE.createCGNativeOperationCallExp();
 		cgNativeOperationCallExp.setMethod(method);		// Use cc
 		cgNativeOperationCallExp.setReferredOperation(cgOperation);
+		cgNativeOperationCallExp.setRequired(cgOperation.isRequired());
 		return cgNativeOperationCallExp;
 	}
 
@@ -681,6 +682,7 @@ public class CodeGenAnalyzer
 		CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
 		cgNativePropertyCallExp.setField(field);		// Use cc
 		cgNativePropertyCallExp.setReferredProperty(cgProperty);
+		cgNativePropertyCallExp.setRequired(cgProperty.isRequired());
 	//	callingConvention.createCGOperationCallExp(null, cgOperation, null, cgOperation, null)
 		return cgNativePropertyCallExp;
 	}

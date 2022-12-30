@@ -26,7 +26,7 @@ public class PropertyContext extends ClassContext
 	protected final @NonNull Property property;
 
 	public PropertyContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, @NonNull Property property) {
-		super(environmentFactory, uri, ClassUtil.nonNullModel(property.getOwningClass()), false, null);
+		super(environmentFactory, uri, ClassUtil.nonNullModel(property.getOwningClass()), true, null);	// OclVoid cannot overload properties
 		this.property = property;
 	}
 

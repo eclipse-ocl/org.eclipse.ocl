@@ -102,36 +102,43 @@ public class NativeOperationCallingConvention extends AbstractUncachedOperationC
 			return false;
 		}
 		//
-		Method jMethod = cgNativeOperationCallExp.getMethod();
-		List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getArguments();
-		Class<?>[] jParameterTypes = jMethod.getParameterTypes();
-		js.appendDeclaration(cgNativeOperationCallExp);
-		js.append(" = ");
-		if (cgThis2 != null) {
-			js.appendValueName(cgThis2);
-		}
-		else {
-			js.appendClassReference(null, jMethod.getDeclaringClass());
-		}
-		js.append(".");
-		js.append(jMethod.getName());
-		js.append("(");
-		int iMax = Math.min(jParameterTypes.length, cgArguments.size());
-		for (int i = 0; i < iMax; i++) {
-			if (i > 0) {
-				js.append(", ");
+		Method jMethod = CGUtil.getMethod(cgNativeOperationCallExp);
+		JavaStream.SubStream sourceStream = new JavaStream.SubStream() {
+			@Override
+			public void append() {
+				List<CGValuedElement> cgArguments = cgNativeOperationCallExp.getArguments();
+				Class<?>[] jParameterTypes = jMethod.getParameterTypes();
+				if (cgThis2 != null) {
+					js.appendValueName(cgThis2);
+				}
+				else {
+					js.appendClassReference(null, jMethod.getDeclaringClass());
+				}
+				js.append(".");
+				js.append(jMethod.getName());
+				js.append("(");
+				int iMax = Math.min(jParameterTypes.length, cgArguments.size());
+				for (int i = 0; i < iMax; i++) {
+					if (i > 0) {
+						js.append(", ");
+					}
+					Class<?> jParameterType = jParameterTypes[i];
+					CGValuedElement cgArgument = cgArguments.get(i);
+					CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
+					js.appendValueName(argument);
+					if (jParameterType == Object[].class) {
+						js.append(".toArray(new Object[");
+						js.appendValueName(argument);
+						js.append(".size()])");
+					}
+				}
+				js.append(")");
 			}
-			Class<?> jParameterType = jParameterTypes[i];
-			CGValuedElement cgArgument = cgArguments.get(i);
-			CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
-			js.appendValueName(argument);
-			if (jParameterType == Object[].class) {
-				js.append(".toArray(new Object[");
-				js.appendValueName(argument);
-				js.append(".size()])");
-			}
-		}
-		js.append(");\n");
+		};
+		Boolean sourceIsRequired = cg2javaVisitor.getCodeGenerator().getIsNonNull(jMethod);
+		Class<?> sourceClass = jMethod.getReturnType();
+		assert sourceClass != null;
+		js.appendAssignWithCast(cgOperationCallExp, sourceIsRequired, sourceClass, sourceStream);
 		return true;
 	}
 

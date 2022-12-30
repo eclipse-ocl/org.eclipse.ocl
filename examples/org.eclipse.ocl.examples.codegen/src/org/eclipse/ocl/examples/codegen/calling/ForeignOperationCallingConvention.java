@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.GenModelException;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -334,6 +335,8 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	//	cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
 		addExpressionInOCLParameters(analyzer, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
+		CGVariable executorVariable = analyzer.getExecutorVariable(operationNameManager);
+		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		initCallArguments(analyzer, cgForeignOperationCallExp);
 		return cgForeignOperationCallExp;
 	}

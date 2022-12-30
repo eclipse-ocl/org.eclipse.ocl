@@ -29,7 +29,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.OCLExpression;
@@ -1240,10 +1239,7 @@ implements OperationCallExp {
 	{
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.evaluation.@NonNull Executor executor = PivotUtil.getExecutor(this);
 		Operation referredOperation = getReferredOperation();
-		OperationId baseOperationId = referredOperation.getOperationId();
-		org.eclipse.ocl.pivot.Class oclVoidType = executor.getStandardLibrary().getOclVoidType();
-		CompleteClass oclVoidCompleteClass = executor.getEnvironmentFactory().getCompleteModel().getCompleteClass(oclVoidType);
-		Operation oclVoidOperation = oclVoidCompleteClass.getOperation(baseOperationId);
-		return oclVoidOperation != null;
+		OperationId operationId = referredOperation.getOperationId();
+		return executor.getEnvironmentFactory().getCompleteModel().hasOclVoidOverload(operationId);
 	}
 } //OperationCallExpImpl
