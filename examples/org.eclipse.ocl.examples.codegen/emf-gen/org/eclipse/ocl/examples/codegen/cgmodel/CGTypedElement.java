@@ -66,6 +66,9 @@ public interface CGTypedElement extends CGNamedElement {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The value is declared to be not-null; evaluation that yields a null value must convert it to invalid.
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Required</em>' attribute.
 	 * @see #setRequired(boolean)
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGTypedElement_Required()

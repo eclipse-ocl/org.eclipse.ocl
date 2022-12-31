@@ -225,11 +225,12 @@ public interface CGValuedElement extends CGTypedElement {
 	boolean isNonInvalid();
 
 	/**
-	 * Return true if this value is not null.
+	 * Return true if this value is not null in so far as symbolic evalation can determine this.
+	 * Use isRequired() to exploit the declared not-nullness. May be invalid
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$11
+	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$15
 	boolean isNonNull();
 
 	/**
