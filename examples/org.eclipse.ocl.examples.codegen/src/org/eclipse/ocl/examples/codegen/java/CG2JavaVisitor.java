@@ -14,7 +14,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +27,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.BuiltInIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
@@ -128,7 +128,6 @@ import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
-import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIterationManager;
@@ -872,132 +871,9 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		CGValuedElement cgSource = getExpression(cgIterationCallExp.getSource());
-		CGValuedElement cgBody = getExpression(cgIterationCallExp.getBody());
-		CGIterator cgAccumulator = cgIterationCallExp.getAccumulator();
-		CGIterator cgIterator = CGUtil.getIterator(cgIterationCallExp, 0);
-		CGIterator cgCoIterator = cgIterationCallExp.getCoIterators().size() > 0 ? cgIterationCallExp.getCoIterators().get(0) : null;
-		String iteratorName = getVariantResolvedName(cgIterator, context.getITER_NameVariant());
-		Iteration2Java iterationHelper = context.getIterationHelper(ClassUtil.nonNullState(cgIterationCallExp.getAsIteration()));
-		assert iterationHelper != null;
-		boolean flowContinues = false;
-		boolean isMap = cgSource.getASTypeId() instanceof MapTypeId;
-		//
-		if (!js.appendLocalStatements(cgSource)) {
-			return false;
-		}
-		//
-		//	Declare and initialize accumulator
-		//
-		if (cgAccumulator != null) {
-			CGValuedElement cgInit = cgAccumulator.getInit();
-			if (cgInit != null) {
-				if (!js.appendLocalStatements(cgInit)) {
-					return false;
-				}
-			}
-			cgAccumulator.toString();
-			js.appendDeclaration(cgAccumulator);
-			js.append(" = ");
-			iterationHelper.appendAccumulatorInit(js, cgIterationCallExp);
-			js.append(";\n");
-		}
-		//
-		//	Declare iterator
-		//
-		js.appendClassReference(cgIterator.isRequired(), Iterator.class, false, Object.class); //, getJavaClass(cgIterator));
-		js.append(" " + iteratorName + " = ");
-		js.appendAtomicReferenceTo(cgSource);
-		js.append(".iterator();\n");
-		if (!isMap && (cgCoIterator != null)) {
-			js.appendDeclaration(cgCoIterator);
-			js.append(" = ");
-			js.appendClassReference(null, ValueUtil.class);
-			js.append(".ONE_VALUE;\n");
-		}
-		//
-		//	Declare body result
-		//
-		js.appendDeclaration(cgIterationCallExp);
-		js.append(";\n");
-		//
-		//	Declare loop head
-		//
-		js.append("while (true) {\n");
-		js.pushIndentation(null);
-		//
-		//	Terminate loop once done
-		//
-		js.append("if (!" + iteratorName + ".hasNext()) {\n");
-		js.pushIndentation(null);
-		if (iterationHelper.appendFinalValue(js, cgIterationCallExp)) {
-			js.append("break;\n");
-			flowContinues = true;
-		}
-		js.popIndentation();
-		js.append("}\n");
-		//
-		// Declare iterator advance.
-		//
-		appendSuppressWarningsNull(cgIterator, Boolean.FALSE);
-		js.appendDeclaration(cgIterator);
-		js.append(" = ");
-		SubStream castBody1 = new SubStream() {
-			@Override
-			public void append() {
-				js.append(iteratorName + ".next()");
-			}
-		};
-		js.appendClassCast(cgIterator, castBody1);
-		js.append(";\n");
-		//
-		// Declare coiterator/key access.
-		//
-		if (isMap && (cgCoIterator != null)) { // && !isImplicit
-			Variable asCoIterator = CGUtil.getAST(cgCoIterator);
-			if (!asCoIterator.isIsImplicit()) {
-				if (cgCoIterator.isRequired()) {
-					js.appendSuppressWarningsNull(true);
-				}
-				js.appendDeclaration(cgCoIterator);
-				js.append(" = ");
-				SubStream castBody2 = new SubStream() {
-					@Override
-					public void append() {
-						js.appendReferenceTo(cgSource);
-						js.append(".at(");
-						js.appendReferenceTo(cgIterator);
-						js.append(")");
-					}
-				};
-				js.appendClassCast(cgCoIterator, castBody2);
-				js.append(";\n");
-			}
-		}
-		//
-		// Declare iteration body.
-		//
-		js.appendCommentWithOCL(null, cgBody.getAst());
-		if (js.appendLocalStatements(cgBody)) {
-			js.append("//\n");
-			if (iterationHelper.appendUpdate(js, cgIterationCallExp)) {
-				flowContinues = true;
-			}
-		}
-		if (!isMap && (cgCoIterator != null)) {
-			js.appendReferenceTo(cgCoIterator);
-			js.append(" = ");
-			js.appendReferenceTo(cgCoIterator);
-			js.append(".addInteger(");
-			js.appendClassReference(null, ValueUtil.class);
-			js.append(".ONE_VALUE);\n");
-		}
-		//
-		//	Declare loop tail
-		//
-		js.popIndentation();
-		js.append("}\n");
-		return flowContinues;
+		CGOperation cgOperation = CGUtil.getReferredIteration(cgIterationCallExp);
+		BuiltInIterationCallingConvention callingConvention = (BuiltInIterationCallingConvention)cgOperation.getCallingConvention();
+		return callingConvention.generateJavaCall(this, cgIterationCallExp);
 	}
 
 	@Override
@@ -1006,7 +882,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (!js.appendLocalStatements(cgSource)) {
 			return false;
 		}
-		CGExecutorType cgType = CGUtil.getExecutorType(cgCastExp);
+		//	CGExecutorType cgType = CGUtil.getExecutorType(cgCastExp);
 		TypeDescriptor requiredTypeDescriptor = context.getTypeDescriptor(cgCastExp);
 		//	TypeDescriptor actualTypeDescriptor;
 		//	if (cgSource instanceof CGVariableExp) {	// CAST self has a distinct OclVoid type

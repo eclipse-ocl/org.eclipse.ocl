@@ -351,7 +351,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public final @NonNull CGValuedElement visitLoopExp(@NonNull LoopExp asLoopExp) {
-		return context.generateLoopExp(asLoopExp);
+		return context.generateLoopExp(asLoopExp);		// FIXME ?? same safe guards as OperationCallExp
 	}
 
 	@Override

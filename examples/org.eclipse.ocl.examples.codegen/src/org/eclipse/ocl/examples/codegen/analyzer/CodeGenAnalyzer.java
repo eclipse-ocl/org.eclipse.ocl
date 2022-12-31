@@ -23,14 +23,13 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.BuiltInIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConvention;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -49,10 +48,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqual2Exp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -95,7 +91,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
-import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -925,111 +920,20 @@ public class CodeGenAnalyzer
 		return cgOperation;
 	}
 
-	protected @NonNull CGIterationCallExp generateLoopDeclaration(@NonNull LoopExp asLoopExp) {
-		CGIterationCallExp cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(asLoopExp);
-		if (cgIterationCallExp == null) {
-			Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
-			IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
-			if (iterationHelper != null) {
-				cgIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
-			}
-			else {
-				LibraryIteration libraryIteration = (LibraryIteration) metamodelManager.getImplementation(asIteration);
-				CGLibraryIterationCallExp cgLibraryIterationCallExp = CGModelFactory.eINSTANCE.createCGLibraryIterationCallExp();
-				cgLibraryIterationCallExp.setLibraryIteration(libraryIteration);
-				cgIterationCallExp = cgLibraryIterationCallExp;
-			}
-			initAst(cgIterationCallExp, asLoopExp, true);
-		}
-		return cgIterationCallExp;
-	}
-
 	protected @NonNull CGIterationCallExp generateLoopExp(@NonNull LoopExp asLoopExp) {
-		ExecutableNameManager parentNameManager = useExecutableNameManager((NamedElement)asLoopExp.eContainer());
 		Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
-		IterationHelper iterationHelper = codeGenerator.getIterationHelper(asIteration);
-		CGIterationCallExp cgIterationCallExp = generateLoopDeclaration(asLoopExp);
 		CGValuedElement cgUnsafeSource = createCGElement(CGValuedElement.class, asLoopExp.getOwnedSource());
 		CGValuedElement cgSafeSource = asLoopExp.isIsSafe() ? generateSafeExclusion(asLoopExp, cgUnsafeSource) : cgUnsafeSource;
 	//	OCLExpression asSource = asLoopExp.getOwnedSource();
 	//	Type asSourceType = asSource != null ? asSource.getType() : null;
 		CGOperation cgOperation = generateIterationDeclaration(/*asSourceType,*/ asIteration);
-		cgIterationCallExp.setAsIteration(asIteration);
-		cgIterationCallExp.setReferredIteration(cgOperation);
-		cgIterationCallExp.setInvalidating(asIteration.isIsInvalidating());
-		cgIterationCallExp.setValidating(asIteration.isIsValidating());
-		cgIterationCallExp.setSource(cgSafeSource);
-		globalNameManager.addSelfNameManager(cgSafeSource, parentNameManager);										// Source always evaluated in parent context
-		ExecutableNameManager childNameManager = getLoopNameManager(cgIterationCallExp, asLoopExp);
-		//
-		//	Iterators / co-iterators
-		//
-		ExecutableNameManager iteratorNameManager = iterationHelper != null ? parentNameManager : childNameManager;	// Iterators conditionally in parent/child context
-		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
-			CGIterator cgIterator = iteratorNameManager.getIterator(iterator);
-			if (iterationHelper != null) {
-				setNullableIterator(cgIterator, iterator);
-			}
-			cgIterationCallExp.getIterators().add(cgIterator);
-			globalNameManager.addSelfNameManager(cgIterator, iteratorNameManager);
-		}
-		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(asLoopExp)) {
-			CGIterator cgCoIterator = iteratorNameManager.getIterator(coIterator);
-			if (iterationHelper != null) {
-				setNullableIterator(cgCoIterator, coIterator);
-			}
-			cgIterationCallExp.getCoIterators().add(cgCoIterator);
-			globalNameManager.addSelfNameManager(cgCoIterator, iteratorNameManager);
-		}
-		if (asLoopExp instanceof IterateExp) {
-			Variable accumulator = PivotUtil.getOwnedResult((IterateExp)asLoopExp);
-			CGIterator cgAccumulator = iteratorNameManager.getIterator(accumulator);
-			if (iterationHelper != null) {
-				//				cgBuiltInIterationCallExp.setNonNull();
-				setNullableIterator(cgAccumulator, accumulator);
-				((CGBuiltInIterationCallExp)cgIterationCallExp).setAccumulator(cgAccumulator);
-				globalNameManager.addSelfNameManager(cgAccumulator, iteratorNameManager);
-			}
-			else {
-				((CGLibraryIterateCallExp)cgIterationCallExp).setResult(cgAccumulator);
-			}
-			CGValuedElement cgInitExpression = createCGElement(CGValuedElement.class, accumulator.getOwnedInit());
-			cgAccumulator.setInit(cgInitExpression);
-		}
-		else {
-			if (iterationHelper != null) {
-				CGBuiltInIterationCallExp cgBuiltInIterationCallExp = (CGBuiltInIterationCallExp) cgIterationCallExp;
-				CGTypeId cgAccumulatorId = iterationHelper.getAccumulatorTypeId(this, cgBuiltInIterationCallExp);
-				if (cgAccumulatorId != null) {
-					boolean isNonNullAccumulator = iterationHelper.isNonNullAccumulator(asLoopExp);
-					CGAccumulator cgAccumulator = CGModelFactory.eINSTANCE.createCGAccumulator();
-					cgAccumulator.setTypeId(cgAccumulatorId);
-					if (isNonNullAccumulator) {
-						cgAccumulator.setNonNull();
-					}
-					if (!asIteration.isIsValidating()) {
-						cgAccumulator.setNonInvalid();
-					}
-					cgBuiltInIterationCallExp.setAccumulator(cgAccumulator);
-					globalNameManager.addSelfNameManager(cgAccumulator, iteratorNameManager);
-				}
-			}
-		}
-		//
-		//	Body
-		//
-		boolean isRequired = asLoopExp.isIsRequired();
-		CGValuedElement cgBody = createCGElement(CGValuedElement.class, asLoopExp.getOwnedBody());
-		cgIterationCallExp.setBody(cgBody);
-		if (iterationHelper != null) {
-			if (asIteration.getOwnedParameters().get(0).isIsRequired()) {
-				cgBody.setRequired(true);
-			}
-			if (isRequired) {
-				((CGBuiltInIterationCallExp)cgIterationCallExp).setNonNull();
-			}
-		}
-		cgIterationCallExp.setRequired(isRequired);
+		BuiltInIterationCallingConvention callingConvention = (BuiltInIterationCallingConvention)cgOperation.getCallingConvention();
+		LibraryIteration libraryIteration = (LibraryIteration)metamodelManager.getImplementation(asIteration);
+		CGIterationCallExp cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(asLoopExp);
+		assert cgIterationCallExp == null;
+		cgIterationCallExp = callingConvention.createCGIterationCallExp(this, cgOperation, libraryIteration, cgSafeSource, asLoopExp);
+		CGNamedElement old = asElement2cgElement.put(asLoopExp, cgIterationCallExp);
+	//	assert old == cgIterationCallExp;			// XXX demonstrates that put is redundant
 		return cgIterationCallExp;
 	}
 
@@ -1625,26 +1529,6 @@ public class CodeGenAnalyzer
 		return (JavaLanguageSupport)ClassUtil.nonNullState(codeGenerator.getEnvironmentFactory().getLanguageSupport("java"));
 	}
 
-	/**
-	 * Create or use the ExecutableNameManager for asLoopExp exploiting an optionally already known cgIterationCallExp.
-	 */
-	public @NonNull ExecutableNameManager getLoopNameManager(@Nullable CGIterationCallExp cgIterationCallExp, @NonNull LoopExp asLoopExp) {
-		if (cgIterationCallExp == null) {
-			cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(asLoopExp);
-			if (cgIterationCallExp == null) {
-				cgIterationCallExp = generateLoopDeclaration(asLoopExp);
-			}
-		}
-		assert cgIterationCallExp.getAst() == asLoopExp;
-		ExecutableNameManager loopNameManager = (ExecutableNameManager)globalNameManager.basicGetChildNameManager(cgIterationCallExp);
-		if (loopNameManager == null) {			//
-			ExecutableNameManager parentNameManager = useExecutableNameManager((Element)asLoopExp.eContainer());
-			ClassNameManager classNameManager = parentNameManager.getClassNameManager();
-			loopNameManager = globalNameManager.createLoopNameManager(classNameManager, parentNameManager, cgIterationCallExp);
-		}
-		return loopNameManager;
-	}
-
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
 		return codeGenerator.getEnvironmentFactory().getMetamodelManager();
 	}
@@ -2039,15 +1923,6 @@ public class CodeGenAnalyzer
 
 	public void setGlobals(@Nullable Iterable<@NonNull CGValuedElement> cgGlobals) {
 		this.cgGlobals  = cgGlobals;
-	}
-
-	private void setNullableIterator(@NonNull CGIterator cgIterator, @NonNull Variable iterator) {
-		cgIterator.setTypeId(getCGTypeId(iterator.getTypeId()));
-		cgIterator.setRequired(iterator.isIsRequired());
-		if (iterator.isIsRequired()) {
-			cgIterator.setNonNull();
-		}
-		cgIterator.setNonInvalid();
 	}
 
 	public void setRootClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
