@@ -303,7 +303,7 @@ public class Id2JavaExpressionVisitor implements CGIdVisitor<@Nullable Object>
 	@Override
 	public @Nullable Object visitTemplateParameterId(@NonNull TemplateParameterId id) {
 		int index = id.getIndex();
-		if  (index <= 2) {
+		if  (index <= 3) {
 			js.appendClassReference(null, TypeId.class);
 			js.append(".T_" + (index+1));
 		}

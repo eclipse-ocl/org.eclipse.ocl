@@ -117,17 +117,20 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		ExecutableNameManager iteratorNameManager = childNameManager;				// Nested class Iterators in child context
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
 			CGIterator cgIterator = iteratorNameManager.getIterator(iterator);
+			cgIterator.setRequired(false);
 			cgIterationCallExp.getIterators().add(cgIterator);
 			globalNameManager.addSelfNameManager(cgIterator, iteratorNameManager);
 		}
 		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(asLoopExp)) {
 			CGIterator cgCoIterator = iteratorNameManager.getIterator(coIterator);
+			cgCoIterator.setRequired(false);
 			cgIterationCallExp.getCoIterators().add(cgCoIterator);
 			globalNameManager.addSelfNameManager(cgCoIterator, iteratorNameManager);
 		}
 		if (asLoopExp instanceof IterateExp) {
 			Variable accumulator = PivotUtil.getOwnedResult((IterateExp)asLoopExp);
 			CGIterator cgAccumulator = iteratorNameManager.getIterator(accumulator);
+			cgAccumulator.setRequired(false);
 			((CGLibraryIterateCallExp)cgIterationCallExp).setResult(cgAccumulator);
 			CGValuedElement cgInitExpression = analyzer.createCGElement(CGValuedElement.class, accumulator.getOwnedInit());
 			cgAccumulator.setInit(cgInitExpression);
