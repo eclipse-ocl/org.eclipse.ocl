@@ -23,9 +23,9 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.calling.BuiltInIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignClassCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.IterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.VirtualOperationCallingConvention;
@@ -895,29 +895,16 @@ public class CodeGenAnalyzer
 	}
 
 	/**
-	 * Generate / share the CG declaration for asOperation.
+	 * Generate / share the CG declaration for asIteration.
 	 */
-	public @NonNull CGOperation generateIterationDeclaration(@NonNull Iteration asIteration) {	// XXX rationalize as generateOperationDeclaration with later createImplementation
-		CGOperation cgOperation = basicGetCGOperation(asIteration);
-		if (cgOperation == null) {
-			ExpressionInOCL asExpressionInOCL = null;
-			LanguageExpression asSpecification = asIteration.getBodyExpression();
-			if (asSpecification != null) {
-				try {
-					asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);
-				} catch (ParserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			OperationCallingConvention callingConvention = codeGenerator.getCallingConvention(asIteration, false);
-			cgOperation = callingConvention.createOperation(this, asIteration, asExpressionInOCL);
-		//	cgOperation.setCallingConvention(callingConvention);
-		//	initAst(cgOperation, asIteration, true);
-		//	ExecutableNameManager operationNameManager = getOperationNameManager(cgOperation, asIteration);
-		//	callingConvention.createCGParameters(operationNameManager, asExpressionInOCL);
+	public @NonNull CGOperation generateIterationDeclaration(@NonNull Iteration asIteration) {
+		CGOperation cgIteration = basicGetCGOperation(asIteration);
+		if (cgIteration == null) {
+			assert asIteration.getBodyExpression() == null;
+			IterationCallingConvention callingConvention = codeGenerator.getCallingConvention(asIteration);
+			cgIteration = callingConvention.createIteration(this, asIteration);
 		}
-		return cgOperation;
+		return cgIteration;
 	}
 
 	protected @NonNull CGIterationCallExp generateLoopExp(@NonNull LoopExp asLoopExp) {
@@ -926,12 +913,12 @@ public class CodeGenAnalyzer
 		CGValuedElement cgSafeSource = asLoopExp.isIsSafe() ? generateSafeExclusion(asLoopExp, cgUnsafeSource) : cgUnsafeSource;
 	//	OCLExpression asSource = asLoopExp.getOwnedSource();
 	//	Type asSourceType = asSource != null ? asSource.getType() : null;
-		CGOperation cgOperation = generateIterationDeclaration(/*asSourceType,*/ asIteration);
-		BuiltInIterationCallingConvention callingConvention = (BuiltInIterationCallingConvention)cgOperation.getCallingConvention();
+		CGOperation cgIteration = generateIterationDeclaration(/*asSourceType,*/ asIteration);
+		IterationCallingConvention callingConvention = (IterationCallingConvention)cgIteration.getCallingConvention();
 		LibraryIteration libraryIteration = (LibraryIteration)metamodelManager.getImplementation(asIteration);
 		CGIterationCallExp cgIterationCallExp = (CGIterationCallExp)asElement2cgElement.get(asLoopExp);
 		assert cgIterationCallExp == null;
-		cgIterationCallExp = callingConvention.createCGIterationCallExp(this, cgOperation, libraryIteration, cgSafeSource, asLoopExp);
+		cgIterationCallExp = callingConvention.createCGIterationCallExp(this, cgIteration, libraryIteration, cgSafeSource, asLoopExp);
 		CGNamedElement old = asElement2cgElement.put(asLoopExp, cgIterationCallExp);
 	//	assert old == cgIterationCallExp;			// XXX demonstrates that put is redundant
 		return cgIterationCallExp;

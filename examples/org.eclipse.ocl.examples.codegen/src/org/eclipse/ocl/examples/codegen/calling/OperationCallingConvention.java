@@ -35,22 +35,10 @@ public interface OperationCallingConvention extends CallingConvention
 	void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation);
 
 	/**
-	 * Create the appropriate CGOperation less parameters and body.
-	 */
-//	@NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
-
-	/**
-	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource, or return null
-	 * if this OperationCallingConvention cannot handle it.
-	 * @param cgOperation
+	 * Create the appropriate CGOperationCallExp for asOperationCallExp with cgSource.
 	 */
 	@NonNull CGValuedElement createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull LibraryOperation libraryOperation,
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp);
-
-	/**
-	 * Elaborate the CGOperation with the parameters appropriate to bodyExpression.
-	 */
-//	void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression);
 
 	@NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, ExpressionInOCL asExpressionInOCL);
 
@@ -65,8 +53,6 @@ public interface OperationCallingConvention extends CallingConvention
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
 	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation);
-
-//	FieldingAnalyzer.@NonNull ReturnState getRequiredReturn(@NonNull CGOperation cgOperation);
 
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation);
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp);

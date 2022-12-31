@@ -27,10 +27,10 @@ import org.eclipse.ocl.examples.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.BuiltInOperationCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.DefaultOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ContextClassCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.DefaultOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOppositePropertyCallingConvention;
@@ -41,6 +41,8 @@ import org.eclipse.ocl.examples.codegen.calling.ExecutorPropertyCallingConventio
 import org.eclipse.ocl.examples.codegen.calling.ForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.InlinedOperationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.IterationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.LibraryIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.LibraryPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.NativeOperationCallingConvention;
@@ -202,10 +204,19 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean maybeVirtual) {
-		if (asOperation instanceof Iteration) {
-			return BuiltInIterationCallingConvention.getInstance(asOperation, maybeVirtual);
+	public @NonNull IterationCallingConvention getCallingConvention(@NonNull Iteration asIteration) {
+		IterationHelper iterationHelper = getIterationHelper(asIteration);
+		if (iterationHelper != null) {
+			return BuiltInIterationCallingConvention.getInstance(asIteration);
 		}
+		else {
+			return LibraryIterationCallingConvention.getInstance(asIteration);
+		}
+	}
+
+	@Override
+	public @NonNull OperationCallingConvention getCallingConvention(@NonNull Operation asOperation, boolean maybeVirtual) {
+		assert !(asOperation instanceof Iteration) : "Expected a non-Iteration Operation";
 		LibraryOperation libraryOperation = (LibraryOperation)metamodelManager.getImplementation(asOperation);
 		if (BuiltInOperationCallingConvention.getInstance(asOperation, maybeVirtual).canHandle(libraryOperation)) {
 			return BuiltInOperationCallingConvention.getInstance(asOperation, maybeVirtual);

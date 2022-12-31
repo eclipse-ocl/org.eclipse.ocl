@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.DependencyVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.FieldingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.ReferencesVisitor;
+import org.eclipse.ocl.examples.codegen.calling.IterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -49,6 +50,11 @@ public interface CodeGenerator
 	@NonNull ReferencesVisitor createReferencesVisitor();
 	@NonNull CodeGenAnalyzer getAnalyzer();
 	@NonNull BoxedDescriptor getBoxedDescriptor(@NonNull ElementId elementId);
+
+	/**
+	 * Determine the calling convention appropriate to asIteration.
+	 */
+	@NonNull IterationCallingConvention getCallingConvention(@NonNull Iteration asIteration);
 
 	/**
 	 * Determine the calling convention appropriate to asOperation. If requireFinal is false and asOperation has overrides

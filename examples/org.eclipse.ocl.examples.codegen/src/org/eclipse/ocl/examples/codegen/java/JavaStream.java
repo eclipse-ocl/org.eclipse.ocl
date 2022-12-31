@@ -180,7 +180,7 @@ public class JavaStream
 			}
 			appendTypeDeclaration(cgElement);
 			js.append(" ");
-			String valueName = js.cg2java.getResolvedName(cgElement);
+			String valueName = cgElement.getResolvedName();
 			js.append(valueName);
 		}
 
@@ -265,7 +265,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("OrderedCollectionAtOperation")) {
+			if (string.contains("AbstractBinaryOperation")) {
 				getClass();		// XXX
 			}
 			if (string.contains("basicGetForeignPropertyValue")) {
@@ -1251,7 +1251,7 @@ public class JavaStream
 			if (cgElement.isGlobal()) {
 				cg2java.appendGlobalPrefix();
 			}
-			String valueName = cg2java.getResolvedName(cgElement);
+			String valueName = cgElement.getResolvedName();
 			append(valueName);
 		}
 	}

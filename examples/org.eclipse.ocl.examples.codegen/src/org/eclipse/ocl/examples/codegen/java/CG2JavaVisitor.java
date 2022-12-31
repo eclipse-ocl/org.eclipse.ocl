@@ -27,8 +27,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.calling.BuiltInIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.IterationCallingConvention;
+import org.eclipse.ocl.examples.codegen.calling.LibraryIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
@@ -59,7 +60,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsInvalidExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsKindOfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
@@ -112,45 +112,30 @@ import org.eclipse.ocl.examples.codegen.naming.NameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.naming.NestedNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.LoopExp;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
 import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleIterationManager;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorMultipleMapIterationManager;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.values.IntIntegerValueImpl;
 import org.eclipse.ocl.pivot.internal.values.LongIntegerValueImpl;
-import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
-import org.eclipse.ocl.pivot.library.AbstractSimpleOperation;
-import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.MapValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 import com.google.common.collect.Iterables;
@@ -167,22 +152,6 @@ import com.google.common.collect.Iterables;
  */
 public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@NonNull Boolean, @NonNull JavaCodeGenerator>
 {
-	protected class ArgumentSubStream implements SubStream
-	{
-		private final int argIndex;
-
-		protected ArgumentSubStream(int argIndex) {
-			this.argIndex = argIndex;
-		}
-
-		@Override
-		public void append() {
-			js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
-			js.append("[" + argIndex);
-			js.append("]");
-		}
-	}
-
 	protected final @NonNull GlobalNameManager globalNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
@@ -291,272 +260,6 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append("(");
 		js.appendString("Null " + cgGuardExp.getMessage());
 		js.append(");\n");
-	}
-
-	protected @NonNull Boolean appendLoopCall(@NonNull CGLibraryIterationCallExp cgIterationCallExp, @Nullable CGIterator iterateResult) {
-		final CGValuedElement source = getExpression(cgIterationCallExp.getSource());
-		final List<@NonNull CGIterator> iterators = CGUtil.getIteratorsList(cgIterationCallExp);
-		final List<@NonNull CGIterator> coIterators = CGUtil.getCoIteratorsList(cgIterationCallExp);
-		final CGValuedElement body = getExpression(cgIterationCallExp.getBody());
-		final CGTypeId resultType = cgIterationCallExp.getTypeId();
-		LoopExp asLoopExp = CGUtil.getAST(cgIterationCallExp);
-		final Iteration referredIteration = PivotUtil.getReferredIteration(asLoopExp);
-		final int arity = iterators.size();
-		Type sourceType = ((CallExp)asLoopExp).getOwnedSource().getType();
-		boolean isMap = sourceType instanceof MapType;
-		final Class<?> managerClass; 	// FIXME ExecutorMultipleIterationManager
-		final Class<?> operationClass;
-		final boolean passesCoIterators;
-		boolean useMultiple = isMap || (coIterators.size() > 0) || (arity > 1);
-		if (isMap) {
-			managerClass = ExecutorMultipleMapIterationManager.class;
-			operationClass = AbstractSimpleOperation.class;
-			passesCoIterators = true;
-		}
-		else if (useMultiple) {
-			managerClass = ExecutorMultipleIterationManager.class;
-			operationClass = AbstractSimpleOperation.class;
-			passesCoIterators = true;
-		}
-		else {
-			managerClass = ExecutorSingleIterationManager.class;
-			operationClass = AbstractBinaryOperation.class;
-			passesCoIterators = false;
-		}
-		final LibraryIteration libraryIteration = ClassUtil.nonNullState(cgIterationCallExp.getLibraryIteration());
-		final Method actualMethod = libraryIteration.getEvaluateMethod(referredIteration);
-		final Class<?> actualReturnClass = actualMethod.getReturnType();
-		boolean actualIsNonNull = context.getIsNonNull(actualMethod) == Boolean.TRUE;
-		boolean expectedIsNonNull = cgIterationCallExp.isNonNullChecked();
-		final String astName = getResolvedName(cgIterationCallExp);
-		final String bodyName = getVariantResolvedName(cgIterationCallExp, context.getBODY_NameVariant());
-		final String executorName = globalNameManager.getExecutorName();
-		final String implementationName = getVariantResolvedName(cgIterationCallExp, context.getIMPL_NameVariant());
-		final String managerName = getVariantResolvedName(cgIterationCallExp, context.getMGR_NameVariant());
-		final String staticTypeName = getVariantResolvedName(cgIterationCallExp, context.getTYPE_NameVariant());
-		String accumulatorName;
-		//
-		//	Pre-amble: hoisted assignments
-		//
-		if (!js.appendLocalStatements(source)) {
-			return false;
-		}
-		//
-		//	Dispatch: Determine static type
-		//
-		js.append("final ");
-		js.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);
-		js.append(" " + staticTypeName + " = ");
-		//		js.appendReferenceTo(evaluatorParameter);
-		js.append(executorName);
-		js.append(".getStaticTypeOfValue(null, ");
-		js.appendValueName(source);
-		js.append(");\n");
-		//
-		//	Dispatch: Determine dynamic operation
-		//
-		js.append("final ");
-		js.appendClassReference(true, LibraryIteration.LibraryIterationExtension.class);
-		js.append(" " + implementationName + " = (");
-		js.appendClassReference(null, LibraryIteration.LibraryIterationExtension.class);
-		js.append( ")" + staticTypeName + ".lookupImplementation(");
-		js.appendReferenceTo(globalNameManager.useRootExecutableNameManager(cgIterationCallExp).getStandardLibraryVariable());
-		js.append(", ");
-		js.appendQualifiedLiteralName(referredIteration);
-		js.append(");\n");
-		//
-		if (iterateResult != null) {
-			CGValuedElement init = CGUtil.getInit(iterateResult);
-			accumulatorName = init.getResolvedName();
-			if (!js.appendLocalStatements(init)) {
-				return false;
-			}
-			js.appendDeclaration(iterateResult);
-			js.append(" = ");
-			js.appendValueName(init);
-			js.append(";\n");
-			//
-			/*			js.append("Object " + accumulatorName + " = " + implementationName + ".createAccumulatorValue(");
-//			js.appendValueName(evaluatorParameter);
-			js.append(JavaConstants.EVALUATOR_NAME);
-			js.append(", ");
-			js.appendValueName(resultType);
-			js.append(", ");
-			js.appendValueName(body.getTypeId());
-			js.append(");\n"); */
-		}
-		else {
-			accumulatorName = "ACC_" + astName;
-			js.append("final ");
-			js.appendIsRequired(true);
-			js.append(" Object " + accumulatorName + " = " + implementationName + ".createAccumulatorValue(");
-			//			js.appendValueName(evaluatorParameter);
-			js.append(executorName);
-			js.append(", ");
-			js.appendValueName(resultType);
-			js.append(", ");
-			js.appendValueName(body.getTypeId());
-			js.append(");\n");
-		}
-		//
-		js.append("/**\n");
-		js.append(" * Implementation of the iterator body.\n");
-		js.append(" */\n");
-		js.append("final ");
-		js.appendClassReference(true, operationClass);
-		js.append(" " + bodyName + " = new ");
-		js.appendClassReference(null, operationClass);
-		js.append("()");
-		js.pushClassBody(String.valueOf(operationClass));
-		js.appendOptionalBlankLine();					// XXX delete me
-		js.appendCommentWithOCL(null, body.getAst());
-		js.append("@Override\n");
-		js.append("public ");
-		js.appendIsRequired(false);
-		js.append(" Object ");
-		js.append(globalNameManager.getEvaluateName());
-		js.append("(final ");
-		//		js.appendDeclaration(evaluatorParameter);
-		js.appendClassReference(true, Executor.class);
-		js.append(" ");
-		js.append(executorName);
-		js.append(", ");
-		js.append("final ");
-		//		js.appendDeclaration(currentNameManager.getTypeIdParameter(cgIterateCallExp));
-		js.appendClassReference(true, TypeId.class);
-		js.append(" ");
-		js.append(globalNameManager.getTypeIdNameResolution().getResolvedName());
-		if (useMultiple) {
-			js.append(", final ");
-			js.appendIsRequired(false);
-			js.append(" Object ");
-			js.appendIsRequired(true);
-			js.append(" [] ");
-			js.append(JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
-		}
-		else {
-			if (iterateResult != null) {
-				js.append(", ");
-				js.appendDeclaration(iterateResult);
-			}
-			else {
-				js.append(", final ");
-				js.appendIsRequired(false);
-				js.append(" Object ");
-				js.appendValueName(source);
-				//				js.appendDeclaration(source);
-			}
-			for (int i = 0; i < arity; i++) {
-				CGIterator iterator = iterators.get(i);
-				js.append(", final ");
-				js.appendDeclaration(iterator);
-			}
-			if (coIterators.size() > 0) {
-				for (int i = 0; i < arity; i++) {
-					js.append(", final ");
-					js.appendDeclaration(coIterators.get(i));
-				}
-			}
-		}
-		js.append(") {\n");
-		js.pushIndentation(null);
-		if (useMultiple) {
-			int argIndex = 0;			// Skip source
-			Boolean isRequired = context.isRequired(source);
-			if (isRequired == Boolean.TRUE) {
-				js.appendSuppressWarningsNull(true);
-			}
-			js.append("final ");
-			js.appendTypeDeclaration(source);
-			js.append(" ");
-			js.appendValueName(source);
-			js.append(" = ");
-			js.appendClassCast(source, isRequired, Object.class, new ArgumentSubStream(argIndex));
-			js.append(";\n");
-			argIndex++;
-			for (int i = 0; i < arity; i++) {
-				CGParameter iterator = iterators.get(i);
-				isRequired = context.isRequired(iterator);
-				if (isRequired == Boolean.TRUE) {
-					js.appendSuppressWarningsNull(true);
-				}
-				js.append("final ");
-				js.appendDeclaration(iterator);
-				js.append(" = ");
-				js.appendClassCast(iterator, isRequired, Object.class, new ArgumentSubStream(argIndex));
-				js.append(";\n");
-				argIndex++;
-			}
-			if (coIterators.size() > 0) {
-				for (int i = 0; i < arity; i++) {
-					CGIterator coIterator = coIterators.get(i);
-					Variable asCoIterator = CGUtil.getAST(coIterator);
-					if (!asCoIterator.isIsImplicit()) {
-						isRequired = context.isRequired(coIterator);
-						if (isRequired == Boolean.TRUE) {
-							js.appendSuppressWarningsNull(true);
-						}
-						js.append("final ");
-						js.appendDeclaration(coIterator);
-						js.append(" = ");
-						js.appendClassCast(coIterator, isRequired, Object.class, new ArgumentSubStream(argIndex));
-						js.append(";\n");
-					}
-					argIndex++;
-				}
-			}
-		}
-		appendReturn(body);
-		js.popIndentation();
-		js.append("}\n");
-		js.popClassBody(true);
-		//
-		//	Dispatch: Create execution manager
-		//
-		js.append("final ");
-		js.appendClassReference(true, managerClass);
-		js.append(" " + managerName + " = new ");
-		js.appendClassReference(null, managerClass);
-		js.append("(");
-		//		js.appendReferenceTo(evaluatorParameter);
-		js.append(executorName);
-		js.append(", ");
-		if (useMultiple) {
-			js.append(arity + ", ");
-		}
-		if (passesCoIterators) {
-			js.append((coIterators.size() > 0) + ", ");
-		}
-		js.appendValueName(resultType);
-		js.append(", " + bodyName + ", ");
-		js.appendReferenceTo(isMap ? MapValue.class : CollectionValue.class, source);
-		//		js.appendValueName(source);
-		js.append(", " + accumulatorName + ");\n");
-		//
-		//	Dispatch: Invoke iteration
-		//
-		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
-		if (isRequiredNullCast) {
-			js.appendSuppressWarningsNull(true);
-		}
-		js.appendDeclaration(cgIterationCallExp);
-		js.append(" = ");
-		//		if (isRequiredNullCast) {
-		//			js.appendClassReference(null, ClassUtil.class);
-		//			js.append(".nonNullState(");
-		//		}
-		SubStream castBody4 = new SubStream() {
-			@Override
-			public void append() {
-				js.append(implementationName + ".evaluateIteration(" + managerName + ")");
-				//				if (isRequiredNullCast) {
-				//					js.append(")");
-				//				}
-			}
-		};
-		js.appendClassCast(cgIterationCallExp, isRequiredNullCast, actualReturnClass, castBody4);
-		js.append(";\n");
-		return true;
 	}
 
 	public @Nullable LibraryOperationHandler basicGetLibraryOperationHandler(@NonNull Class<? extends LibraryOperation> libraryOperation) {
@@ -739,10 +442,6 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		return null;
 	}
 
-	protected @NonNull String getResolvedName(@NonNull CGValuedElement cgElement) {
-		return cgElement.getResolvedName();
-	}
-
 	public @NonNull String getVariantResolvedName(@NonNull CGNamedElement cgElement, @NonNull NameVariant nameVariant) {
 		NestedNameManager nameManager = globalNameManager.useRootExecutableNameManager(cgElement);
 		String variantResolvedName = nameManager.basicGetVariantResolvedName(cgElement, nameVariant);
@@ -872,7 +571,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull Boolean visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
 		CGOperation cgOperation = CGUtil.getReferredIteration(cgIterationCallExp);
-		BuiltInIterationCallingConvention callingConvention = (BuiltInIterationCallingConvention)cgOperation.getCallingConvention();
+		IterationCallingConvention callingConvention = (IterationCallingConvention)cgOperation.getCallingConvention();
 		return callingConvention.generateJavaCall(this, cgIterationCallExp);
 	}
 
@@ -1752,12 +1451,16 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull Boolean visitCGLibraryIterateCallExp(@NonNull CGLibraryIterateCallExp cgIterateCallExp) {
-		return appendLoopCall(cgIterateCallExp, cgIterateCallExp.getResult());
+		CGOperation cgIteration = CGUtil.getReferredIteration(cgIterateCallExp);
+		LibraryIterationCallingConvention callingConvention = (LibraryIterationCallingConvention)cgIteration.getCallingConvention();
+		return callingConvention.generateJavaCall(this, cgIterateCallExp);
 	}
 
 	@Override
 	public @NonNull Boolean visitCGLibraryIterationCallExp(@NonNull CGLibraryIterationCallExp cgIterationCallExp) {
-		return appendLoopCall(cgIterationCallExp, null);
+		CGOperation cgIteration = CGUtil.getReferredIteration(cgIterationCallExp);
+		LibraryIterationCallingConvention callingConvention = (LibraryIterationCallingConvention)cgIteration.getCallingConvention();
+		return callingConvention.generateJavaCall(this, cgIterationCallExp);
 	}
 
 /*	@Override
