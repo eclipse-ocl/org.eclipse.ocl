@@ -433,7 +433,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	//	assert !required || isNonNull;
 		if (!suppressRequiredNonNullCheck && required && !isNonNull) {
 			isNonNull = (referredValue != this) && referredValue.isNonNullChecked();
-			NameUtil.errPrintln("isNonNull: required but !isNonNull for " + NameUtil.debugSimpleName(this) + " : " + this);
+			NameUtil.errPrintln("Required value may be null for " + NameUtil.debugSimpleName(this) + " : " + this);
 		}
 		return isNonNull;
 	}

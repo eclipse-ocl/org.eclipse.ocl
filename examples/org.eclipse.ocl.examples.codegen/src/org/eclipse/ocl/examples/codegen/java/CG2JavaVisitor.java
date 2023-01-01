@@ -616,7 +616,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		//	else {
 		//		js.appendReferenceTo(cgSource);
 		//	}
-		js.append(";\n");
+	//	js.append(";\n");
 		return true;
 	}
 

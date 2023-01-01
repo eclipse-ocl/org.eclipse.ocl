@@ -63,16 +63,18 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
-		if (contextVariable != null) {
-			contextVariable.setIsRequired(false); 				// May be null for test
-		}
+	//	if (contextVariable != null) {
+	//		contextVariable.setIsRequired(false); 				// May be null for test
+	//	}
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		cgParameters.add(codeGenerator.createExecutorParameter());
 		cgParameters.add(codeGenerator.createTypeIdParameter());
 		if (contextVariable != null) {
 			CGParameter cgContext = operationNameManager.getCGParameter(contextVariable, (String)null);			// XXX getSelf ???
 			cgContext.setIsSelf(true);
-			cgContext.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// FIXME Java-specific
+			cgContext.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// JUnit evaluate overrides
+			cgContext.setRequired(false);										//  self : Object[?]
+			analyzer.getGlobalNameManager().getSelfNameResolution().addCGElement(cgContext);
 			cgParameters.add(cgContext);
 		}
 		Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(expressionInOCL);

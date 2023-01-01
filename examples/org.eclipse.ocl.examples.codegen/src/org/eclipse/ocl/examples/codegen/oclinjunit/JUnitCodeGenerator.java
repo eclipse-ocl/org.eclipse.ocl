@@ -73,9 +73,9 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		assert asTestOperation == null;
 		//
 		Variable contextVariable = expInOcl.getOwnedContext();
-		if (contextVariable != null) {
-			contextVariable.setIsRequired(false); // May be null for test
-		}
+	//	if (contextVariable != null) {
+	//		contextVariable.setIsRequired(false); // May be null for test		// XXX this is after a VariableExp has referenced
+	//	}
 		Resource eResource = expInOcl.eResource();
 		NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
 		@NonNull String packageNames[] = qualifiedPackageName.split("\\.");
