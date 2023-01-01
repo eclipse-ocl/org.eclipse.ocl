@@ -582,7 +582,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			return false;
 		}
 		//	CGExecutorType cgType = CGUtil.getExecutorType(cgCastExp);
-		TypeDescriptor requiredTypeDescriptor = context.getTypeDescriptor(cgCastExp);
+	//	TypeDescriptor requiredTypeDescriptor = context.getTypeDescriptor(cgCastExp);
 		//	TypeDescriptor actualTypeDescriptor;
 		//	if (cgSource instanceof CGVariableExp) {	// CAST self has a distinct OclVoid type
 		//		actualTypeDescriptor = context.getTypeDescriptor(CGUtil.getReferredVariable((CGVariableExp)cgSource));
@@ -590,11 +590,28 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		//	else {
 		//		actualTypeDescriptor = context.getTypeDescriptor(cgSource);
 		//	}
-		js.appendDeclaration(cgCastExp);
-		js.append(" = ");
+		JavaStream.SubStream sourceStream = new JavaStream.SubStream() {
+			@Override
+			public void append() {
+				js.appendReferenceTo(cgSource);
+			}
+		};
+		TypeDescriptor sourceTypeDescriptor;
+		if (cgSource instanceof CGVariableExp) {
+			CGVariable cgVariable = CGUtil.getReferredVariable((CGVariableExp)cgSource);	// A CGParameter may be just OclVoid
+			sourceTypeDescriptor = context.getTypeDescriptor(cgVariable);
+		}
+		else {
+			sourceTypeDescriptor = context.getTypeDescriptor(cgSource);
+		}
+		Class<?> sourceClass = sourceTypeDescriptor.getJavaClass();
+		Boolean sourceIsRequired = cgSource.isRequired();
+		js.appendAssignWithCast(cgCastExp, sourceIsRequired, sourceClass, sourceStream);
+	//	js.appendDeclaration(cgCastExp);
+	//	js.append(" = ");
 		//	if (requiredTypeDescriptor != actualTypeDescriptor) {
-		Boolean isRequired = (cgCastExp.isNonNullChecked() && !cgSource.isNonNullChecked()) ? Boolean.TRUE : null;
-				requiredTypeDescriptor.appendCastTerm(js, isRequired, cgSource);
+	//	Boolean isRequired = (cgCastExp.isNonNullChecked() && !cgSource.isNonNullChecked()) ? Boolean.TRUE : null;
+	//			requiredTypeDescriptor.appendCastTerm(js, isRequired, cgSource);
 		//	}
 		//	else {
 		//		js.appendReferenceTo(cgSource);

@@ -1876,7 +1876,16 @@ public class CodeGenAnalyzer
 
 	public void setCGConstant(@NonNull CGValuedElement oldElement, @NonNull CGValuedElement aConstant) {
 		CGConstantExp newElement = CGModelFactory.eINSTANCE.createCGConstantExp();		// FIXME wrapper not needed
-		initAst(newElement, (TypedElement)oldElement.getAst(), false);
+		Element asConstant = oldElement.getAst();
+		if (asConstant instanceof TypedElement) {
+			initAst(newElement, (TypedElement)asConstant, false);
+		}
+		else {
+			assert asConstant == null;
+			newElement.setTypeId(oldElement.getTypeId());
+			newElement.setAst(null);
+			newElement.setRequired(false);
+		}
 		newElement.setReferredConstant(aConstant);
 	//	newElement.setTypeId(oldElement.getTypeId());
 	//	newElement.setAst(oldElement.getAst());
