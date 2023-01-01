@@ -822,7 +822,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			return false;
 		}
 		else {
-			return cgValue.isNonNullUnchecked(); // need to see whether Java uses e.g boolean // Required();
+			return cgValue.isRequired() || cgValue.isNonNullUnchecked(); // need to see whether Java uses e.g boolean // Required();
 		}
 	}
 

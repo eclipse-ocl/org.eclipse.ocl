@@ -138,7 +138,7 @@ public class CommonAnalysis extends AbstractAnalysis
 		//	NameManager nameManager = globalContext.getLocalContext(controlElement).getNameManager();;
 			CGVariable cgVariable = CGModelFactory.eINSTANCE.createCGLocalVariable();
 			cgVariable.setTypeId(cgCSE.getTypeId());
-			cgVariable.setRequired(cgCSE.isNonNullChecked());
+			cgVariable.setRequired(cgCSE.isRequired());
 			cgVariable.setAst(cgCSE.getAst());
 		//	nameManager.declareStandardName(cgVariable);
 		//	analyzer.getCodeGenerator().getNameResolution(cgCSE).addCGElement(cgVariable);

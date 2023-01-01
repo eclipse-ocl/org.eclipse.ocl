@@ -151,13 +151,6 @@ public abstract class CGConstantImpl extends CGValuedElementImpl implements CGCo
 		return false;
 	}
 
-	@Override
-	public boolean isRequired() {
-		boolean isRequired = super.isRequired();
-		assert isRequired;
-		return isRequired;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 * @generated
