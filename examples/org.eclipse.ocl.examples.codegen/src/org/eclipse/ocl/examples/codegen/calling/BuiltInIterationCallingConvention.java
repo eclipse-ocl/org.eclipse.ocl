@@ -223,7 +223,7 @@ public class BuiltInIterationCallingConvention extends AbstractIterationCallingC
 				js.append(iteratorName + ".next()");
 			}
 		};
-		js.appendClassCast(cgIterator, castBody1);
+		js.appendClassCast(cgIterator, castBody1);			// XXX appendAssignWithCast
 		js.append(";\n");
 		//
 		// Declare coiterator/key access.

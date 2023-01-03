@@ -241,6 +241,10 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			cgCastExp.setExecutorType(cgExecutorType);
 		}
 		cgCastExp.setTypeId(codeGenerator.getAnalyzer().getCGTypeId(asChild.getTypeId()));
+		cgCastExp.setRequired(asChild.isIsRequired());			// post-cast supports the AS required-ness
+		if (!cgVariable.isRequired()) {
+			cgChild.setRequired(false);							// pre-cast supports the 'deficient' CG required-ness
+		}
 		return cgCastExp;
 	}
 

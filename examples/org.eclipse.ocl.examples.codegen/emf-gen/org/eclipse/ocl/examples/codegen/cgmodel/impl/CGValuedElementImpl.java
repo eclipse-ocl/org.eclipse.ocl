@@ -414,7 +414,8 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isNonInvalid() {
 		CGValuedElement referredValue = getReferredValue();
-		return (referredValue != this) && referredValue.isNonInvalid();
+		boolean mayBeInvalid = (referredValue != this) && !referredValue.isNonInvalid();
+		return !mayBeInvalid;
 	}
 
 	private static boolean suppressRequiredNonNullCheck = false;

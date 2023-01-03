@@ -1151,6 +1151,10 @@ public class CGValuedElementModelSpec extends ModelSpec
 		public static final @NonNull Inl ISCON = new Inl() { @Override public @NonNull String generateIsInlined(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return isConstant();";
 		}};
+	//	public static final @NonNull Inl PCE = new Inl() { @Override public @NonNull String generateIsInlined(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+	//		return classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
+	//				"		return (referredValue != this) && referredValue.isInlined();";
+	//	}};
 		public static final @NonNull Inl ROOT = new Inl() { @Override public @NonNull String generateIsInlined(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
 					"		return (referredValue != this) && referredValue.isInlined();";
@@ -1237,7 +1241,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return null;
 			}
 			@Override public @Nullable String generateIsNonInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return super.isNonInvalid() && (source != null) && source.isNonNullChecked();";
+				return "return super.isNonInvalid() && (source != null) && source.isRequired();";
 			}
 		};
 
@@ -1492,7 +1496,8 @@ public class CGValuedElementModelSpec extends ModelSpec
 			}
 			@Override public @Nullable String generateIsNonInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
-						"		return (referredValue != this) && referredValue.isNonInvalid();";
+						"		boolean mayBeInvalid = (referredValue != this) && !referredValue.isNonInvalid();\n" +
+						"		return !mayBeInvalid;";
 			}
 		};
 
@@ -1800,7 +1805,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Nul OPRTN = new Nul() {
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return referredOperation != null ? referredOperation.isRequired() : asOperation != null ? asOperation.isIsRequired() : isRequired();";
+				return "return ((referredOperation != null) && referredOperation.isRequired()) || ((asOperation != null) && asOperation.isIsRequired());";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return false;";

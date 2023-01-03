@@ -314,7 +314,7 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 
 	/**
 	 * {@inheritDoc}
-	 * @generated XXX
+	 * @generated
 	 */
 	@Override
 	public boolean isNonInvalid() {
