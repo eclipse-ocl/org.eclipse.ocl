@@ -1142,6 +1142,9 @@ public class CGValuedElementModelSpec extends ModelSpec
 	public static interface Inl {
 		@Nullable String generateIsInlined(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 
+		public static final @NonNull Inl CALL = new Inl() { @Override public @NonNull String generateIsInlined(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+			return "return getReferredProperty().getCallingConvention().isInlined();";
+		}};
 		public static final @NonNull Inl CPART = new Inl() { @Override public @NonNull String generateIsInlined(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return (last == null) && first.isInlined();";
 		}};
@@ -2303,7 +2306,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGExecutorOppositePropertyCallExp.class, null,	Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , Rew.OPROP, null    );
 			new CGValuedElementModelSpec(CGExecutorPropertyCallExp.class, null,			Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , Rew.PROP, null    );
 			new CGValuedElementModelSpec(CGForeignPropertyCallExp.class, null,			Box.BOX  , null     , null     , null     , Inv.NEVER, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
-			new CGValuedElementModelSpec(CGLibraryPropertyCallExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
+			new CGValuedElementModelSpec(CGLibraryPropertyCallExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , Inl.CALL , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGNativePropertyCallExp.class, null,			Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGTuplePartCallExp.class, null,				Box.BOX  , null     , null     , null     , Inv.PRPTY, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 

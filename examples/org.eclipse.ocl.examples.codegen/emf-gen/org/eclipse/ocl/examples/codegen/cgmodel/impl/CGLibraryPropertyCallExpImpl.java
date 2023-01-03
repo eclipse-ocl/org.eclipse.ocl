@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 
@@ -206,13 +205,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	 */
 	@Override
 	public boolean isInlined() {
-		CGValuedElement referredValue = getReferredValue();
-		if (referredValue == this) {			// XXX Always true
-			return getReferredProperty().getCallingConvention().isInlined();
-		}
-		else {
-			return referredValue.isInlined();
-		}
+		return getReferredProperty().getCallingConvention().isInlined();
 	}
 
 	/**
