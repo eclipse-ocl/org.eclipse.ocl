@@ -263,6 +263,24 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 	 * @generated
 	 */
 	@Override
+	public boolean isNonNull() {
+		return required;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isNull() {
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public boolean isUnboxed() {
 		return false;
 	}

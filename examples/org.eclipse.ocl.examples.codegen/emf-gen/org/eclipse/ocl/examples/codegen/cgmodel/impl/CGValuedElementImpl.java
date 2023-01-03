@@ -432,7 +432,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 		CGValuedElement referredValue = getReferredValue();
 		boolean isNonNull = referredValue != this ? referredValue.isNonNullChecked() : required;
 	//	assert !required || isNonNull;
-		if (!suppressRequiredNonNullCheck && required && !isNonNull) {
+		if (!suppressRequiredNonNullCheck && required && !isNonNull) {// && !(this instanceof CGCastExp)) {		// CGCastExp may cast a
 			isNonNull = (referredValue != this) && referredValue.isNonNullChecked();
 			NameUtil.errPrintln("Required value may be null for " + NameUtil.debugSimpleName(this) + " : " + this);
 		}

@@ -1779,6 +1779,15 @@ public class CGValuedElementModelSpec extends ModelSpec
 			}
 		};
 
+		public static final @NonNull Nul INDEX = new Nul() {
+			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return required;";
+			}
+			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return false;";
+			}
+		};
+
 		public static final @NonNull Nul ITER = new Nul() {
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return nonNull || ((asIteration != null) && asIteration.isIsRequired());";
@@ -2278,7 +2287,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGCatchExp.class, "source",					Box.DELEG, null     , null     , null     , null     , null     , null     , Set.TRUE , Ct.TRUE , null     , Val.DELTY, null     , null     , Ctl.CATCH, null     , null     , null    );
 			new CGValuedElementModelSpec(CGEcoreExp.class, "source",					Box.E_CNV, null     , null     , null     , null     , null     , null     , null     , null    , Con.FALSE, Val.DELVL, null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGGuardExp.class, "source",					Box.DELEG, null     , null     , Nul.NEVER, Inv.GUARD, null     , null     , null     , null    , null     , Val.DELNM, null     , null     , null     , null     , null     , null    );
-			new CGValuedElementModelSpec(CGIndexExp.class, "source",	                Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , Val.DELVL, null     , null     , Ctl.CNTRL, null     , null     , null    );
+			new CGValuedElementModelSpec(CGIndexExp.class, "source",	                Box.BOX  , null     , null     , Nul.INDEX, null     , null     , null     , null     , null    , null     , Val.DELVL, null     , null     , Ctl.CNTRL, null     , null     , null    );
 			new CGValuedElementModelSpec(CGIsInvalidExp.class, "source",				Box.ALL  , null     , Log.ISINV, Nul.NEVER, Inv.NEVER, null     , Inl.ISCON, null     , Ct.FALSE, Con.TORF , Val.DELVL, null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGIsUndefinedExp.class, "source",				Box.ALL  , null     , Log.ISUND, Nul.NEVER, Inv.NEVER, null     , Inl.ISCON, null     , Ct.FALSE, Con.TORF , Val.DELVL, null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGIsEqualExp.class, null,						Box.ALL  , null     , Log.EQUAL, Nul.NEVER, Inv.EQUAL, null     , Inl.FALSE, null     , Ct.ROOT , Con.EQUAL, null     , null     , null     , null     , null     , null     , null    );
