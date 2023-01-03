@@ -90,7 +90,7 @@ public class OrOperationHandler extends AbstractLibraryOperationHandler
 					appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 					appendElse();
 				}
-				if (!appendThrowIfInvalid(cgSource, "or source") && !appendThrowIfInvalid(cgSource, "or argument")) {
+				if (!appendThrowIfInvalid(cgSource, "or source") && !appendThrowIfInvalid(cgArgument, "or argument")) {
 					appendThrowIfMayBeInvalid(cgSource);
 					appendThrowIfMayBeInvalid(cgArgument);
 					if (cgSource.isNull() || cgArgument.isNull()) {

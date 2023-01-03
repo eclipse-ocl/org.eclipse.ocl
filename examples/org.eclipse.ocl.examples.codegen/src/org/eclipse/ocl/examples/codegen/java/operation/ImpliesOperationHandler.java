@@ -91,7 +91,7 @@ public class ImpliesOperationHandler extends AbstractLibraryOperationHandler
 					appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
 					appendElse();
 				}
-				if (!appendThrowIfInvalid(cgSource, "implies source") && !appendThrowIfInvalid(cgSource, "implies argument")) {
+				if (!appendThrowIfInvalid(cgSource, "implies source") && !appendThrowIfInvalid(cgArgument, "implies argument")) {
 					appendThrowIfMayBeInvalid(cgSource);
 					appendThrowIfMayBeInvalid(cgArgument);
 					if (cgSource.isNull() || cgArgument.isNull()) {
