@@ -80,7 +80,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 			cgProperty.setSettable();
 		}
 		else {
-			cgProperty.setNonNull();
+			cgProperty.setRequired(true);
 		}
 		return cgProperty;
 	}

@@ -305,7 +305,7 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	 */
 	@Override
 	public boolean isNonNull() {
-		return nonNull || super.isNonNull();
+		return required || super.isNonNull();
 	}
 
 	/**
@@ -314,7 +314,7 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 	 */
 	@Override
 	public boolean isNull() {
-		return !nonNull && super.isNull();
+		return !required && super.isNull();
 	}
 
 	/**
@@ -340,18 +340,9 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 		nonInvalid = true;
 	}
 
-	/**
-	 * @generated
-	 */
-	protected boolean nonNull = false;
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
 	@Override
 	public void setNonNull() {
-		nonNull = true;
+		setRequired(true);
 	}
 
 } //CGVariableImpl

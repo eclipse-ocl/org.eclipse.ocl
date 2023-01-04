@@ -1797,15 +1797,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			}
 		};
 
-		public static final @NonNull Nul MAYBE = new Nul() {
-			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return nonNull;";
-			}
-			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return false;";
-			}
-		};
-
 		public static final @NonNull Nul NEVER = new Nul() {
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return true;";
@@ -1849,10 +1840,10 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Nul VAR = new Nul() {
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return nonNull || super.isNonNull();";
+				return "return required || super.isNonNull();";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return !nonNull && super.isNull();";
+				return "return !required && super.isNull();";
 			}
 		};
 
@@ -1874,18 +1865,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				Nul nul = cgModelSpec.nul;
 				return nul != null ? nul.generateIsNull(cgModelSpec, genModel) : null;
-			}
-		};
-
-		public static MethodSpec setNonNull1 = new MyMethodSpec(CGVariable.class, "void setNonNull()", "boolean nonNull = false",
-				"Set the non-null status.")
-		{
-			@Override
-			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				if (cgModelSpec.cgClass != rootClass) {
-					return null;
-				}
-				return "nonNull = true;";
 			}
 		};
 	}
@@ -2428,7 +2407,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		Ct.setCaught.generate(s, this, genModel, isImplementation);
 		Inv.setNonInvalid.generate(s, this, genModel, isImplementation);
 		Inv.setNonInvalidValue.generate(s, this, genModel, isImplementation);
-		Nul.setNonNull1.generate(s, this, genModel, isImplementation);
 		Set.setSettable.generate(s, this, genModel, isImplementation);
 	}
 }
