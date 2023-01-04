@@ -131,9 +131,6 @@ public class BuiltInIterationCallingConvention extends AbstractIterationCallingC
 		boolean isRequired = asLoopExp.isIsRequired();
 		CGValuedElement cgBody = analyzer.createCGElement(CGValuedElement.class, asLoopExp.getOwnedBody());
 		cgIterationCallExp.setBody(cgBody);
-		if (asIteration.getOwnedParameters().get(0).isIsRequired()) {
-			cgBody.setRequired(true);
-		}
 		if (isRequired) {
 			((CGBuiltInIterationCallExp)cgIterationCallExp).setNonNull();
 		}

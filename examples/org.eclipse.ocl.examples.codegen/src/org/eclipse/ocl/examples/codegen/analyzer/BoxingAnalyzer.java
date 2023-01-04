@@ -61,8 +61,11 @@ import org.eclipse.ocl.examples.codegen.java.types.EcoreDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
@@ -202,7 +205,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	 * Insert a CGGuardExp around cgChild.
 	 */
 	public @Nullable CGValuedElement rewriteAsGuarded(@Nullable CGValuedElement cgChild, boolean isSafe, @NonNull String message) {
-		if ((cgChild == null) || cgChild.isNonNullUnchecked() /*|| (cgParent instanceof CGGuardExp)*/) {
+		if ((cgChild == null) || cgChild.isRequired() || cgChild.isNonNullChecked() /*|| (cgParent instanceof CGGuardExp)*/) {
 			return cgChild;
 		}
 		CGGuardExp cgGuardExp = CGModelFactory.eINSTANCE.createCGGuardExp();
@@ -289,16 +292,17 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	}
 
 	@Override
-	public @Nullable Object visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgElement) {
-		super.visitCGBuiltInIterationCallExp(cgElement);
-		rewriteAsBoxed(rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getAsIteration() + "'"));
-		CGValuedElement cgBody = cgElement.getBody();
-		if (cgBody.isRequired()) {
-			rewriteAsBoxed(rewriteAsGuarded(cgBody, false, "body for '" + cgElement.getAsIteration() + "'"));
+	public @Nullable Object visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgBuiltInIterationCallExp) {
+		super.visitCGBuiltInIterationCallExp(cgBuiltInIterationCallExp);
+		Iteration asIteration = CGUtil.getAsIteration(cgBuiltInIterationCallExp);
+		CGValuedElement cgSource = cgBuiltInIterationCallExp.getSource();
+		rewriteAsBoxed(rewriteAsGuarded(cgSource, isSafe(cgBuiltInIterationCallExp), "source for '" + asIteration + "'"));
+		CGValuedElement cgBody = cgBuiltInIterationCallExp.getBody();
+		Parameter asLambdaParameter = asIteration.getOwnedParameters().get(0);
+		if (asLambdaParameter.isIsRequired() && !cgBody.isRequired() && !cgBody.isNonNullChecked()) {	// Lambda declared to be non-null, but analysis cannot guarantee it
+			rewriteAsGuarded(cgBody, false, "body for '" + asIteration + "'");
 		}
-		else {
-			rewriteAsBoxed(cgBody);
-		}
+		rewriteAsBoxed(cgBody);
 		return null;
 	}
 
