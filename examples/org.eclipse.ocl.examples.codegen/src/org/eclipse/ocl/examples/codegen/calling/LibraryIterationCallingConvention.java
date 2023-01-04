@@ -181,7 +181,7 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		final Method actualMethod = libraryIteration.getEvaluateMethod(referredIteration);
 		final Class<?> actualReturnClass = actualMethod.getReturnType();
 		boolean actualIsNonNull = codeGenerator.getIsNonNull(actualMethod) == Boolean.TRUE;
-		boolean expectedIsNonNull = cgIterationCallExp.isNonNullChecked();
+		boolean expectedIsNonNull = cgIterationCallExp.isRequiredOrNonNull();
 		final String astName = cgIterationCallExp.getResolvedName();
 		final String bodyName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getBODY_NameVariant());
 		final String executorName = globalNameManager.getExecutorName();

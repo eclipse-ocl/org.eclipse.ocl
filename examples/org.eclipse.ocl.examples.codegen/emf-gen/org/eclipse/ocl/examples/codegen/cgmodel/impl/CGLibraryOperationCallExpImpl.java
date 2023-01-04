@@ -249,7 +249,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 			if (!cgArgument.isNonInvalid()) {
 				return false;
 			}
-			if (cgParameter.isRequired() && !cgArgument.isNonNullChecked()) {
+			if (cgParameter.isRequired() && !cgArgument.isRequiredOrNonNull()) {
 				return false;
 			}
 		//	if (!argument.isNonNull() || !argument.isNonInvalid()) {			// XXX nullable parameter

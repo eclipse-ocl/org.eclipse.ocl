@@ -357,7 +357,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			CGValuedElement cgArgument = cgSourceAndArguments.get(i);
 			boxingAnalyzer.rewriteAsBoxed(cgArgument);
 			if (i == 0) {
-				if (!sourceMayBeNull && !cgArgument.isNonNullChecked()) {
+				if (!sourceMayBeNull && !cgArgument.isRequiredOrNonNull()) {
 //					rewriteAsGuarded(cgSource, false, "value3 for source parameter");
 					boxingAnalyzer.rewriteAsGuarded(cgArgument, false, "''" + asClass.getName() + "'' rather than ''OclVoid'' value required");
 				}
@@ -366,8 +366,8 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 				Parameter asParameter = asParameters.get(i-1);
 				if (asParameter.isIsRequired()) {
 			//	Parameter asParameter = CGUtil.basicGetParameter(cgParameter);
-			//	if ((asParameter != null) && asParameter.isIsRequired() && !cgArgument.isNonNullChecked()) {
-			//	if (cgParameter.isRequired() && !cgArgument.isNonNullChecked()) {
+			//	if ((asParameter != null) && asParameter.isIsRequired() && !cgArgument.isRequiredOrNonNull()) {
+			//	if (cgParameter.isRequired() && !cgArgument.isRequiredOrNonNull()) {
 //					rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
 					boxingAnalyzer.rewriteAsGuarded(cgArgument, false, "''" + asParameter.getTypeId() + "'' rather than ''OclVoid'' elementId");
 				}

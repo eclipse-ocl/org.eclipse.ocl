@@ -425,21 +425,12 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	@Override
 	public boolean isNonNull() {
 		CGValuedElement referredValue = getReferredValue();
-		boolean isNonNull = referredValue != this ? referredValue.isNonNullChecked() : required;
+		boolean isNonNull = referredValue != this ? referredValue.isRequiredOrNonNull() : required;
 		if (required && !isNonNull) {		// To avoid false diagnostics prefix the isNonNull() call by isRequired() or more likely change the call to isRequired() or isRequiredOrNonNull().
-			isNonNull = (referredValue != this) && referredValue.isNonNullChecked();
+			isNonNull = (referredValue != this) && referredValue.isRequiredOrNonNull();
 			NameUtil.errPrintln("Required value may be null for " + NameUtil.debugSimpleName(this) + " : " + this);
 		}
 		return isNonNull;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated NOT
-	 */
-	@Override
-	public final boolean isNonNullChecked() {
-		return isNonNull();
 	}
 
 	/**

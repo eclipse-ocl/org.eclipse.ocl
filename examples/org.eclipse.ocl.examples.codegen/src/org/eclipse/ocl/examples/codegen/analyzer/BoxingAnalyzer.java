@@ -126,7 +126,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	 * Insert a CGAssertNonNullExp around cgChild.
 	 */
 	public @Nullable CGValuedElement rewriteAsAssertNonNulled(@Nullable CGValuedElement cgChild) {
-		if ((cgChild == null) || cgChild.isNonNullChecked() /*|| (cgParent instanceof CGGuardExp)*/) {
+		if ((cgChild == null) || cgChild.isRequiredOrNonNull() /*|| (cgParent instanceof CGGuardExp)*/) {
 			return cgChild;
 		}
 		CGAssertNonNullExp cgAssertExp = CGModelFactory.eINSTANCE.createCGAssertNonNullExp();
@@ -205,7 +205,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	 * Insert a CGGuardExp around cgChild.
 	 */
 	public @Nullable CGValuedElement rewriteAsGuarded(@Nullable CGValuedElement cgChild, boolean isSafe, @NonNull String message) {
-		if ((cgChild == null) || cgChild.isRequired() || cgChild.isNonNullChecked() /*|| (cgParent instanceof CGGuardExp)*/) {
+		if ((cgChild == null) || cgChild.isRequired() || cgChild.isRequiredOrNonNull() /*|| (cgParent instanceof CGGuardExp)*/) {
 			return cgChild;
 		}
 		CGGuardExp cgGuardExp = CGModelFactory.eINSTANCE.createCGGuardExp();
@@ -299,7 +299,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		rewriteAsBoxed(rewriteAsGuarded(cgSource, isSafe(cgBuiltInIterationCallExp), "source for '" + asIteration + "'"));
 		CGValuedElement cgBody = cgBuiltInIterationCallExp.getBody();
 		Parameter asLambdaParameter = asIteration.getOwnedParameters().get(0);
-		if (asLambdaParameter.isIsRequired() && !cgBody.isRequired() && !cgBody.isNonNullChecked()) {	// Lambda declared to be non-null, but analysis cannot guarantee it
+		if (asLambdaParameter.isIsRequired() && !cgBody.isRequired() && !cgBody.isRequiredOrNonNull()) {	// Lambda declared to be non-null, but analysis cannot guarantee it
 			rewriteAsGuarded(cgBody, false, "body for '" + asIteration + "'");
 		}
 		rewriteAsBoxed(cgBody);

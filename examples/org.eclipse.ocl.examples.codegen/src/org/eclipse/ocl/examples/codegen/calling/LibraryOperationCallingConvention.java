@@ -316,7 +316,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 					return false;
 				}
 				else {
-					boolean mayBeNull = !cgArgument.isNonNullChecked();
+					boolean mayBeNull = !cgArgument.isRequiredOrNonNull();
 					if (mayBeNull) {
 						js.append("if (");
 						js.appendValueName(cgArgument);

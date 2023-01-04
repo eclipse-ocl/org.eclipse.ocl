@@ -156,7 +156,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		Method actualMethod = libraryProperty.getEvaluateMethod(CGUtil.getAsProperty(cgPropertyCallExp));
 		Class<?> actualReturnClass = actualMethod.getReturnType();
 		boolean actualIsNonNull = codeGenerator.getIsNonNull(actualMethod) == Boolean.TRUE;
-		boolean expectedIsNonNull = cgPropertyCallExp.isNonNullChecked();
+		boolean expectedIsNonNull = cgPropertyCallExp.isRequiredOrNonNull();
 		//		Class<?> actualBoxedReturnClass = getBoxedReturnClass(libraryProperty);
 		//		CGValuedElement resultVariable = cgOperationCallExp; //.getValue();
 		CGTypeId resultType = cgPropertyCallExp.getTypeId();

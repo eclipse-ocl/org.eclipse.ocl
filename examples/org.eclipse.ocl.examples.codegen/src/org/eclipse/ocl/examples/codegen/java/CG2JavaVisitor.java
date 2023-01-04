@@ -291,7 +291,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	}
 
 	public void appendSuppressWarningsNull(@NonNull CGValuedElement cgActual, Boolean isNonNull) {
-		boolean isRequired = cgActual.isNonNullChecked();
+		boolean isRequired = cgActual.isRequiredOrNonNull();
 		boolean isPrimitive = js.isPrimitive(cgActual);
 		if (!isPrimitive && isRequired && (isNonNull != Boolean.TRUE)) {
 			js.appendSuppressWarningsNull(true);
@@ -530,7 +530,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			if (!js.appendLocalStatements(cgSource)) {
 				return false;
 			}
-			if (!cgSource.isNonNullChecked()) {
+			if (!cgSource.isRequiredOrNonNull()) {
 				js.append("assert ");
 				js.appendValueName(cgSource);
 				js.append(" != null;\n");
@@ -610,7 +610,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	//	js.appendDeclaration(cgCastExp);
 	//	js.append(" = ");
 		//	if (requiredTypeDescriptor != actualTypeDescriptor) {
-	//	Boolean isRequired = (cgCastExp.isNonNullChecked() && !cgSource.isNonNullChecked()) ? Boolean.TRUE : null;
+	//	Boolean isRequired = (cgCastExp.isRequiredOrNonNull() && !cgSource.isRequiredOrNonNull()) ? Boolean.TRUE : null;
 	//			requiredTypeDescriptor.appendCastTerm(js, isRequired, cgSource);
 		//	}
 		//	else {
@@ -1066,7 +1066,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.appendValueName(cgSource);
 				js.append(" != null;\n");
 			}
-			else if (!cgSource.isNonNullChecked()) {
+			else if (!cgSource.isRequiredOrNonNull()) {
 				js.append("if (");
 				js.appendValueName(cgSource);
 				js.append(" == null) {\n");
@@ -1133,7 +1133,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		//	}
 		Class<?> jClass = actualTypeDescriptor.getJavaClass().getComponentType();
 		boolean isRequired = cgIndexExp.isRequired();
-		boolean wasNonNull = cgSource.isNonNullChecked();
+		boolean wasNonNull = cgSource.isRequiredOrNonNull();
 		if (isRequired) {
 			appendSuppressWarningsNull(cgSource, isRequired);
 		}
@@ -1218,7 +1218,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				if (cgArgument.isNull()) {
 					js.appendBooleanString(true ^ notEquals);
 				}
-				else if (cgArgument.isNonNullChecked()) {
+				else if (cgArgument.isRequiredOrNonNull()) {
 					js.appendBooleanString(false ^ notEquals);
 				}
 				else {
@@ -1228,7 +1228,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				}
 			}
 			else if (cgArgument.isNull()) {
-				if (cgSource.isNonNullChecked()) {
+				if (cgSource.isRequiredOrNonNull()) {
 					js.appendBooleanString(false ^ notEquals);
 				}
 				else {
@@ -1300,7 +1300,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.appendBooleanString(isNull1 == isNull2);
 			}
 			else if (isNull1 && !isNull2) {
-				if (cgArgument.isNonNullChecked()) {
+				if (cgArgument.isRequiredOrNonNull()) {
 					js.appendBooleanString(false);
 				}
 				else {
@@ -1310,7 +1310,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				}
 			}
 			else if (isNull2 && !isNull1) {
-				if (cgSource.isNonNullChecked()) {
+				if (cgSource.isRequiredOrNonNull()) {
 					js.appendBooleanString(false);
 				}
 				else {
@@ -1409,7 +1409,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		else {
 			CGValuedElement cgSource = getExpression(cgIsUndefinedExp.getSource());
 			boolean sourceIsNonInvalid = cgSource.isNonInvalid();
-			boolean sourceIsNonNull = cgSource.isNonNullChecked();
+			boolean sourceIsNonNull = cgSource.isRequiredOrNonNull();
 			if (!js.appendLocalStatements(cgSource)) {
 				return false;
 			}

@@ -486,7 +486,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 		js.appendCommentWithOCL(null, asConstraint);
 		js.appendLocalStatements(cgBody);
 		js.append("return ");
-		if (!cgBody.isNonNullChecked() || (cgBody.getASTypeId() != TypeId.BOOLEAN)) {
+		if (!cgBody.isRequiredOrNonNull() || (cgBody.getASTypeId() != TypeId.BOOLEAN)) {
 			js.append("Boolean.TRUE == ");
 		}
 		js.appendValueName(cgBody);

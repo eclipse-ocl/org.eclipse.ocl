@@ -44,7 +44,7 @@ public class FutureEnumerationObjectDescriptor extends UnboxedValueDescriptor
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
-		if (!unboxedValue.isNonNullChecked()) {
+		if (!unboxedValue.isRequiredOrNonNull()) {
 			js.appendReferenceTo(unboxedValue);
 			js.append(" == null ? null : ");
 		}
@@ -63,7 +63,7 @@ public class FutureEnumerationObjectDescriptor extends UnboxedValueDescriptor
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
-		if (!unboxedValue.isNonNullChecked()) {
+		if (!unboxedValue.isRequiredOrNonNull()) {
 			js.appendReferenceTo(unboxedValue);
 			js.append(" == null ? null : ");
 		}

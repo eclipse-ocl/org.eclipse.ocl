@@ -785,7 +785,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		}
 		TypeDescriptor typeDescriptor = getTypeDescriptor(cgValue);
 		Class<?> javaClass = typeDescriptor.getJavaClass();		// FIXME Rationalize with TypeDescriptor.isPrimitive()
-		boolean isNonNull = cgValue.isNonNullChecked();
+		boolean isNonNull = cgValue.isRequiredOrNonNull();
 		return JavaLanguageSupport.isPrimitive(isNonNull, javaClass);
 	}
 
@@ -822,7 +822,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			return false;
 		}
 		else {
-			return cgValue.isRequired() || cgValue.isNonNullChecked(); // need to see whether Java uses e.g boolean // Required();
+			return cgValue.isRequiredOrNonNull(); // need to see whether Java uses e.g boolean // Required();
 		}
 	}
 

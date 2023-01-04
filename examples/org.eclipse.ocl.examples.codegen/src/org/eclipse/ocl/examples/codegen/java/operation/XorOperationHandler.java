@@ -80,8 +80,8 @@ public class XorOperationHandler extends AbstractLibraryOperationHandler
 				return true;
 			}
 
-			if (cgSource.isNonNullChecked()) {
-				if (cgArgument.isNonNullChecked()) {
+			if (cgSource.isRequiredOrNonNull()) {
+				if (cgArgument.isRequiredOrNonNull()) {
 					appendAssignXor(hasDeclaration, cgOperationCallExp, cgSource, cgArgument);
 				}
 				else {
@@ -98,7 +98,7 @@ public class XorOperationHandler extends AbstractLibraryOperationHandler
 				appendIfEqualsNull(cgSource);
 				appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
 				appendElse();
-				if (cgArgument.isNonNullChecked()) {
+				if (cgArgument.isRequiredOrNonNull()) {
 					appendAssignXor(hasDeclaration, cgOperationCallExp, cgSource, cgArgument);
 				}
 				else {

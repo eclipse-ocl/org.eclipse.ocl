@@ -44,7 +44,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 		TypeId typeId = unboxedValue.getASTypeId();
 		js.appendDeclaration(cgBoxExp);
 		js.append(" = ");
-		if (!unboxedValue.isNonNullChecked()) {
+		if (!unboxedValue.isRequiredOrNonNull()) {
 			js.appendReferenceTo(unboxedValue);
 			js.append(" == null ? null : ");
 		}
@@ -69,7 +69,7 @@ public abstract class AbstractCollectionDescriptor extends AbstractDescriptor im
 		TypeRepresentation ecoreTypeRepresentation = js.getEcoreTypeRepresentation(instanceClass);
 		ecoreTypeRepresentation.appendDeclaration(cgEcoreExp);
 		js.append(" = ");
-		if (!nonEcoreValue.isNonNullChecked()) {
+		if (!nonEcoreValue.isRequiredOrNonNull()) {
 			js.appendReferenceTo(nonEcoreValue);
 			js.append(" == null ? null : ");
 		}

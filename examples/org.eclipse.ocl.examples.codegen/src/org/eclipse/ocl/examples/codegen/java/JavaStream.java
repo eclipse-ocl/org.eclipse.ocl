@@ -319,7 +319,7 @@ public class JavaStream
 			appendValueName(cgValue);
 		}
 		append(" = ");
-		if (cgValue.isNonNullChecked()) {
+		if (cgValue.isRequiredOrNonNull()) {
 			appendBooleanString(value);
 		}
 		else {
@@ -486,7 +486,7 @@ public class JavaStream
 
 	public void appendBooleanValueName(@NonNull CGValuedElement cgValue, boolean isTrue) {
 		@NonNull TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
-		if (!cgValue.isNonNullChecked() || cgValue.isCaught() || cgValue.getNamedValue().isCaught() || (typeDescriptor.getJavaClass() == Object.class)) {
+		if (!cgValue.isRequiredOrNonNull() || cgValue.isCaught() || cgValue.getNamedValue().isCaught() || (typeDescriptor.getJavaClass() == Object.class)) {
 			appendValueName(cgValue);
 			append(" == ");
 			append(isTrue ? "Boolean.TRUE" : "Boolean.FALSE");
@@ -948,7 +948,7 @@ public class JavaStream
 	}
 
 	public void appendEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {
-		if (cgValue.isNonNullChecked() && cgValue.isNonInvalid()) {
+		if (cgValue.isRequiredOrNonNull() && cgValue.isNonInvalid()) {
 			if (!value) {
 				append("!");
 			}
@@ -1021,7 +1021,7 @@ public class JavaStream
 	}
 
 	public void appendNotEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {
-		if (cgValue.isNonNullChecked() && cgValue.isNonInvalid()) {
+		if (cgValue.isRequiredOrNonNull() && cgValue.isNonInvalid()) {
 			if (value) {
 				append("!");
 			}
@@ -1297,7 +1297,7 @@ public class JavaStream
 		else {
 			TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
 			Class<?> javaClass = typeDescriptor.getJavaClass();
-			return (javaClass == boolean.class) || ((javaClass == Boolean.class) && cgValue.isNonNullChecked());
+			return (javaClass == boolean.class) || ((javaClass == Boolean.class) && cgValue.isRequiredOrNonNull());
 		}
 	}
 

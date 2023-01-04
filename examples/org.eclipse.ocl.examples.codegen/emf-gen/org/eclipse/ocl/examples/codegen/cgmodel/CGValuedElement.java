@@ -289,14 +289,4 @@ public interface CGValuedElement extends CGTypedElement {
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Ct$5
 	void setCaught(boolean isCaught);
 
-	/**
-	 * Return true if symbolic evaluation guarantees that this value is non-null and check
-	 * that the value is declared to be required.
-	 * <br>
-	 * This method is an evplution aid while migrating to isRequired rather than isNonNull.
-	 *
-	 * @generated NOT
-	 */
-	boolean isNonNullChecked();
-
 } // CGValuedElement

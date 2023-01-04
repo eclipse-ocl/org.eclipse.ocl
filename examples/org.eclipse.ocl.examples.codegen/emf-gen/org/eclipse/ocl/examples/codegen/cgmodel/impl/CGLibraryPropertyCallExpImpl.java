@@ -201,7 +201,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 
 	/**
 	 * {@inheritDoc}
-	 * @generated XXX
+	 * @generated
 	 */
 	@Override
 	public boolean isInlined() {
