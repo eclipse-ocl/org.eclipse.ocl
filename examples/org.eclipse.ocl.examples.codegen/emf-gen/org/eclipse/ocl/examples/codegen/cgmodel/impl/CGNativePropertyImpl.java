@@ -78,7 +78,7 @@ public class CGNativePropertyImpl extends CGBodiedPropertyImpl implements CGNati
 	 */
 	@Override
 	public boolean isNonNull() {
-		return nonNull;
+		return required;
 	}
 
 	/**
@@ -106,20 +106,6 @@ public class CGNativePropertyImpl extends CGBodiedPropertyImpl implements CGNati
 	@Override
 	public boolean isUnboxed() {
 		return true;
-	}
-
-	/**
-	 * @generated
-	 */
-	protected boolean nonNull = false;
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public void setNonNull() {
-		nonNull = true;
 	}
 
 	/**

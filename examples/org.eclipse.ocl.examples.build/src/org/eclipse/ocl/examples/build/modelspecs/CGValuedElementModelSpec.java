@@ -1840,7 +1840,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Nul VAL = new Nul() {
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return nonNull;";
+				return "return required;";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return false;";
@@ -1878,17 +1878,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static MethodSpec setNonNull1 = new MyMethodSpec(CGVariable.class, "void setNonNull()", "boolean nonNull = false",
-				"Set the non-null status.")
-		{
-			@Override
-			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				if (cgModelSpec.cgClass != rootClass) {
-					return null;
-				}
-				return "nonNull = true;";
-			}
-		};
-		public static MethodSpec setNonNull3 = new MyMethodSpec(CGNativeProperty.class, "void setNonNull()", "boolean nonNull = false",
 				"Set the non-null status.")
 		{
 			@Override
@@ -2440,7 +2429,6 @@ public class CGValuedElementModelSpec extends ModelSpec
 		Inv.setNonInvalid.generate(s, this, genModel, isImplementation);
 		Inv.setNonInvalidValue.generate(s, this, genModel, isImplementation);
 		Nul.setNonNull1.generate(s, this, genModel, isImplementation);
-		Nul.setNonNull3.generate(s, this, genModel, isImplementation);
 		Set.setSettable.generate(s, this, genModel, isImplementation);
 	}
 }
