@@ -418,21 +418,15 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 		return !mayBeInvalid;
 	}
 
-	private static boolean suppressRequiredNonNullCheck = false;
-
 	/**
 	 * {@inheritDoc}
 	 * @generated XXX
 	 */
 	@Override
 	public boolean isNonNull() {
-	//	if (required) {
-	//		return true;
-	//	}
 		CGValuedElement referredValue = getReferredValue();
 		boolean isNonNull = referredValue != this ? referredValue.isNonNullChecked() : required;
-	//	assert !required || isNonNull;
-		if (!suppressRequiredNonNullCheck && required && !isNonNull) {// && !(this instanceof CGCastExp)) {		// CGCastExp may cast a
+		if (required && !isNonNull) {		// To avoid false diagnostics prefix the isNonNull() call by isRequired() or more likely change the call to isRequired() or isRequiredOrNonNull().
 			isNonNull = (referredValue != this) && referredValue.isNonNullChecked();
 			NameUtil.errPrintln("Required value may be null for " + NameUtil.debugSimpleName(this) + " : " + this);
 		}
@@ -445,30 +439,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 */
 	@Override
 	public final boolean isNonNullChecked() {
-		boolean saved = suppressRequiredNonNullCheck;
-		try {
-			suppressRequiredNonNullCheck = false;
-			return isNonNull();
-		}
-		finally {
-			suppressRequiredNonNullCheck = saved;
-		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated NOT
-	 */
-	@Override
-	public final boolean isNonNullUnchecked() {
-		boolean saved = suppressRequiredNonNullCheck;
-		try {
-			suppressRequiredNonNullCheck = true;
-			return isNonNull();
-		}
-		finally {
-			suppressRequiredNonNullCheck = saved;
-		}
+		return isNonNull();
 	}
 
 	/**
@@ -479,6 +450,15 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public boolean isNull() {
 		CGValuedElement referredValue = getReferredValue();
 		return (referredValue != this) && referredValue.isNull();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isRequiredOrNonNull() {
+		return required || isNonNull();
 	}
 
 	/**

@@ -294,7 +294,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 			}
 		}
 		for (@NonNull CGValuedElement argument : ClassUtil.nullFree(getArguments())) {
-			if (!argument.isNonNullChecked() || !argument.isNonInvalid()) {
+			if (!argument.isRequiredOrNonNull() || !argument.isNonInvalid()) {
 				return false;
 			}
 		}

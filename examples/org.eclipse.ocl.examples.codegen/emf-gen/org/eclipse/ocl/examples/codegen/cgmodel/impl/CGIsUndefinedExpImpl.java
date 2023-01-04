@@ -151,7 +151,7 @@ public class CGIsUndefinedExpImpl extends CGSourcedCallExpImpl implements CGIsUn
 	 */
 	@Override
 	public boolean isFalse() {
-		return (source != null) && source.isNonInvalid() && source.isNonNullChecked();
+		return (source != null) && source.isNonInvalid() && source.isRequiredOrNonNull();
 	}
 
 	/**

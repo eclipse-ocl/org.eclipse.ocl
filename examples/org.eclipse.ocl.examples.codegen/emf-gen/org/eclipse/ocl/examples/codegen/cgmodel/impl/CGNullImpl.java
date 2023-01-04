@@ -82,7 +82,7 @@ public class CGNullImpl extends CGConstantImpl implements CGNull {
 		if (thatValue.isNull()) {
 			return Boolean.TRUE;
 		}
-		else if (thatValue.isNonNullChecked()) {
+		else if (thatValue.isRequiredOrNonNull()) {
 			return Boolean.FALSE;
 		}
 		else {

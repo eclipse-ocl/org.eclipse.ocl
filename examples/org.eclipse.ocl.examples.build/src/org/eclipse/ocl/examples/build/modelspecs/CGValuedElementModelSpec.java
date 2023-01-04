@@ -876,7 +876,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "if (thatValue.isNull()) {\n" +
 						"			return Boolean.TRUE;\n" +
 						"		}\n" +
-						"		else if (thatValue.isNonNullChecked()) {\n" +
+						"		else if (thatValue.isRequiredOrNonNull()) {\n" +
 						"			return Boolean.FALSE;\n" +
 						"		}\n" +
 						//				"		if (thatValue.isConstant()) {\n" +
@@ -1310,18 +1310,18 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"				// normal use case - nonInvalid if all inputs nonInvalid\n" +
 						"			}\n" +
 						"		}\n" +
-						"		if (!source.isNonNullChecked() || !source.isNonInvalid()) {\n" +
+						"		if (!source.isRequiredOrNonNull() || !source.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
 						"		for (@NonNull " + classRef(CGValuedElement.class) + " iterator : " + classRef(ClassUtil.class) + ".nullFree(getIterators())) {\n" +
-						"			if (!iterator.isNonNullChecked() || !iterator.isNonInvalid()) {\n" +
+						"			if (!iterator.isRequiredOrNonNull() || !iterator.isNonInvalid()) {\n" +
 						"				return false;\n" +
 						"			}\n" +
 						"		}\n" +
-						"		if ((result == null) || !result.isNonNullChecked() || !result.isNonInvalid()) {\n" +
+						"		if ((result == null) || !result.isRequiredOrNonNull() || !result.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
-						"		if ((body == null) || !body.isNonNullChecked() || !body.isNonInvalid()) {\n" +
+						"		if ((body == null) || !body.isRequiredOrNonNull() || !body.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
 						"		return true;";
@@ -1355,15 +1355,15 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"				// normal use case - nonInvalid if all inputs nonInvalid\n" +
 						"			}\n" +
 						"		}\n" +
-						"		if (!source.isNonNullChecked() || !source.isNonInvalid()) {\n" +
+						"		if (!source.isRequiredOrNonNull() || !source.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
 						"		for (@NonNull " + classRef(CGValuedElement.class) + " iterator : " + classRef(ClassUtil.class) + ".nullFree(getIterators())) {\n" +
-						"			if (!iterator.isNonNullChecked() || !iterator.isNonInvalid()) {\n" +
+						"			if (!iterator.isRequiredOrNonNull() || !iterator.isNonInvalid()) {\n" +
 						"				return false;\n" +
 						"			}\n" +
 						"		}\n" +
-						"		if ((body == null) || !body.isNonNullChecked() || !body.isNonInvalid()) {\n" +
+						"		if ((body == null) || !body.isRequiredOrNonNull() || !body.isNonInvalid()) {\n" +
 						"			return false;\n" +
 						"		}\n" +
 						"		return true;";
@@ -1444,7 +1444,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"			}\n" +
 						"		}\n" +
 						"		for (@NonNull " + classRef(CGValuedElement.class) + " argument : " + classRef(ClassUtil.class) + ".nullFree(getArguments())) {\n" +
-						"			if (!argument.isNonNullChecked() || !argument.isNonInvalid()) {\n" +
+						"			if (!argument.isRequiredOrNonNull() || !argument.isNonInvalid()) {\n" +
 						"				return false;\n" +
 						"			}\n" +
 						"		}\n" +
@@ -1485,7 +1485,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			}
 			@Override public @Nullable String generateIsNonInvalid(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return classRef(CGValuedElement.class) + " source = getSource();\n" +
-						"		return source.isNonNullChecked() && source.isNonInvalid();";
+						"		return source.isRequiredOrNonNull() && source.isNonInvalid();";
 			}
 		};
 
@@ -1670,7 +1670,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Log ISUND = new Log() {
 			@Override public @NonNull String generateIsFalse(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return (source != null) && source.isNonInvalid() && source.isNonNullChecked();";
+				return "return (source != null) && source.isNonInvalid() && source.isRequiredOrNonNull();";
 			}
 			@Override public @NonNull String generateIsTrue(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return (source != null) && (source.isInvalid() || source.isNull());";
@@ -1715,6 +1715,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 	public interface Nul {
 		@NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 		@NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
+		default @Nullable String generateIsRequiredOrNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) { return null; }
 
 		public static final @NonNull Nul ALWAY = new Nul() {
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
@@ -1736,7 +1737,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Nul CPART = new Nul() {
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return first.isNonNullChecked() || ((last != null) && last.isNonNullChecked());";
+				return "return first.isRequiredOrNonNull() || ((last != null) && last.isRequiredOrNonNull());";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return first.isNull() && (last == null);";
@@ -1772,7 +1773,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Nul IF = new Nul() {
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return condition.isTrue() ? thenExpression.isNonNullChecked() : condition.isFalse() ? elseExpression.isNonNullChecked() : thenExpression.isNonNullChecked() && elseExpression.isNonNullChecked();";
+				return "return condition.isTrue() ? thenExpression.isRequiredOrNonNull() : condition.isFalse() ? elseExpression.isRequiredOrNonNull() : thenExpression.isRequiredOrNonNull() && elseExpression.isRequiredOrNonNull();";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return condition.isTrue() ? thenExpression.isNull() : condition.isFalse() ? elseExpression.isNull() : thenExpression.isNull() && elseExpression.isNull();";
@@ -1821,11 +1822,14 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"			return true;\n" +
 						"		}\n" +
 						"		" + classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
-						"		return (referredValue != this) && referredValue.isNonNullChecked();";
+						"		return (referredValue != this) && referredValue.isRequiredOrNonNull();";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return classRef(CGValuedElement.class) + " referredValue = getReferredValue();\n" +
 						"		return (referredValue != this) && referredValue.isNull();";
+			}
+			@Override public @NonNull String generateIsRequiredOrNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return required || isNonNull();";
 			}
 		};
 
@@ -1849,7 +1853,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static MethodSpec isNonNull = new MyMethodSpec(CGValuedElement.class, "boolean isNonNull()", null,
 				"Return true if this value is not null in so far as symbolic evalation can determine this.\n" +
-				"Use isRequired() to exploit the declared not-nullness. May be invalid")
+				"Use isRequired() or isRequiredOrNonNull() to exploit the declared not-nullness. May be invalid")
 		{
 			@Override
 			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
@@ -1865,6 +1869,16 @@ public class CGValuedElementModelSpec extends ModelSpec
 			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				Nul nul = cgModelSpec.nul;
 				return nul != null ? nul.generateIsNull(cgModelSpec, genModel) : null;
+			}
+		};
+
+		public static MethodSpec isRequiredOrNonNull = new MyMethodSpec(CGValuedElement.class, "boolean isRequiredOrNonNull()", null,
+				"Return true if this value is declared to be not-null or determined to be not null in so far as symbolic evalation can do so. May be invalid")
+		{
+			@Override
+			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				Nul nul = cgModelSpec.nul;
+				return nul != null ? nul.generateIsRequiredOrNonNull(cgModelSpec, genModel) : null;
 			}
 		};
 	}
@@ -2399,6 +2413,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 		Nul.isNonNull.generate(s, this, genModel, isImplementation);
 		Nul.isNull.generate(s, this, genModel, isImplementation);
 		Rng.isRange.generate(s, this, genModel, isImplementation);
+		Nul.isRequiredOrNonNull.generate(s, this, genModel, isImplementation);
 		Set.isSettable.generate(s, this, genModel, isImplementation);
 		Log.isTrue.generate(s, this, genModel, isImplementation);
 		Box.isUnboxed.generate(s, this, genModel, isImplementation);

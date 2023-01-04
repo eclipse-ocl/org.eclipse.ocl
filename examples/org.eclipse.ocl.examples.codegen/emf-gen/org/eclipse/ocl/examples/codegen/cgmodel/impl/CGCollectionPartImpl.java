@@ -429,7 +429,7 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	 */
 	@Override
 	public boolean isNonNull() {
-		return first.isNonNullChecked() || ((last != null) && last.isNonNullChecked());
+		return first.isRequiredOrNonNull() || ((last != null) && last.isRequiredOrNonNull());
 	}
 
 	/**
