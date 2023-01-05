@@ -464,10 +464,4 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	public boolean isUnboxed() {
 		return thenExpression.isUnboxed() && elseExpression.isUnboxed();
 	}
-
-	@Override
-	public void setCaught(boolean isCaught) {
-		// XXX Auto-generated method stub
-		super.setCaught(isCaught);
-	}
 } //CGIfExpImpl

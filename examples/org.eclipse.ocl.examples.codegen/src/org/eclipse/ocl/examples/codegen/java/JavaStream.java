@@ -1094,7 +1094,7 @@ public class JavaStream
 		}
 		else {
 			TypeDescriptor actualTypeDescriptor = codeGenerator.getTypeDescriptor(cgValue);
-			if (!cgValue.isNull() && !cgValue.getNamedValue().isCaught()) {
+			if (!cgValue.isNull() && !cgValue.isNonInvalid() && !cgValue.getNamedValue().isCaught()) {
 				if (!requiredTypeDescriptor.isAssignableFrom(actualTypeDescriptor)) {
 					Boolean isRequired = null;
 					SubStream castBody = new SubStream() {

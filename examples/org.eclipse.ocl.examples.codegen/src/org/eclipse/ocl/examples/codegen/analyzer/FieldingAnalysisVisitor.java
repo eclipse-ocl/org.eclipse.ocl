@@ -17,7 +17,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstantExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsInvalidExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
@@ -147,9 +146,6 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 					}
 				}
 			}
-			if (cgValuedElement instanceof CGIfExp) {			// XXX debugging
-				mayBeInvalid = !cgValuedElement.isNonInvalid();
-			}
 			cgValuedElement.setCaught(returnState.isCaught());
 		}
 		return returnState;
@@ -193,9 +189,6 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull ReturnState visitCGElement(@NonNull CGElement cgElement) {
 		ReturnState returnState = visitAll(cgElement.getChildren());
 		if (cgElement instanceof CGValuedElement) {
-			if (cgElement instanceof CGIfExp) {			// XXX
-				boolean isNonInvalid = ((CGIfExp) cgElement).isNonInvalid();
-			}
 			((CGValuedElement)cgElement).setCaught(returnState.isCaught());
 		}
 		return returnState;
