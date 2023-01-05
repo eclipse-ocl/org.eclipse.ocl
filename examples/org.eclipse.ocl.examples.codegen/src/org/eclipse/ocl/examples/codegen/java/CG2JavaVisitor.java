@@ -29,14 +29,12 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.IterationCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.LibraryIterationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoxExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -60,9 +58,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsInvalidExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsKindOfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIsUndefinedExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterateCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -566,13 +563,6 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			return false;
 		}
 		return unboxedTypeDescriptor.appendBox(js, currentNameManager, cgBoxExp, unboxedValue);
-	}
-
-	@Override
-	public @NonNull Boolean visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgIterationCallExp) {
-		CGOperation cgOperation = CGUtil.getReferredIteration(cgIterationCallExp);
-		IterationCallingConvention callingConvention = (IterationCallingConvention)cgOperation.getCallingConvention();
-		return callingConvention.generateJavaCall(this, cgIterationCallExp);
 	}
 
 	@Override
@@ -1467,16 +1457,9 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	}
 
 	@Override
-	public @NonNull Boolean visitCGLibraryIterateCallExp(@NonNull CGLibraryIterateCallExp cgIterateCallExp) {
-		CGOperation cgIteration = CGUtil.getReferredIteration(cgIterateCallExp);
-		LibraryIterationCallingConvention callingConvention = (LibraryIterationCallingConvention)cgIteration.getCallingConvention();
-		return callingConvention.generateJavaCall(this, cgIterateCallExp);
-	}
-
-	@Override
-	public @NonNull Boolean visitCGLibraryIterationCallExp(@NonNull CGLibraryIterationCallExp cgIterationCallExp) {
+	public @NonNull Boolean visitCGIterationCallExp(@NonNull CGIterationCallExp cgIterationCallExp) {
 		CGOperation cgIteration = CGUtil.getReferredIteration(cgIterationCallExp);
-		LibraryIterationCallingConvention callingConvention = (LibraryIterationCallingConvention)cgIteration.getCallingConvention();
+		IterationCallingConvention callingConvention = (IterationCallingConvention)cgIteration.getCallingConvention();
 		return callingConvention.generateJavaCall(this, cgIterationCallExp);
 	}
 

@@ -139,11 +139,13 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		ExecutableNameManager iteratorNameManager = childNameManager;				// Nested class Iterators in child context
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
 			CGIterator cgIterator = iteratorNameManager.getIterator(iterator);
+			cgIterator.setRequired(false);
 			cgIterationCallExp.getIterators().add(cgIterator);
 			globalNameManager.addSelfNameManager(cgIterator, iteratorNameManager);
 		}
 		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(asLoopExp)) {
 			CGIterator cgCoIterator = iteratorNameManager.getIterator(coIterator);
+			cgCoIterator.setRequired(false);
 			cgIterationCallExp.getCoIterators().add(cgCoIterator);
 			globalNameManager.addSelfNameManager(cgCoIterator, iteratorNameManager);
 		}
@@ -328,6 +330,9 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 				CGIterator iterator = iterators.get(i);
 				js.append(", final ");
 				js.appendDeclaration(iterator);
+//				js.appendIsRequired(false);
+//				js.append(" Object ");
+//				js.appendValueName(iterator);
 			}
 			if (coIterators.size() > 0) {
 				for (int i = 0; i < arity; i++) {

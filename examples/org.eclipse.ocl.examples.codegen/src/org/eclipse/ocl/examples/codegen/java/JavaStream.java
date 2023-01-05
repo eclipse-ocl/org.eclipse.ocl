@@ -155,6 +155,7 @@ public class JavaStream
 				js.append("<<null->>");
 			}
 			else if (cgValue.getNamedValue().isCaught()) {
+				assert !cgValue.isNonInvalid();
 				js.appendClassReference(isRequired, Object.class);
 			}
 			else {
@@ -268,7 +269,7 @@ public class JavaStream
 			if (string.contains("AbstractBinaryOperation")) {
 				getClass();		// XXX
 			}
-			if (string.contains("basicGetForeignPropertyValue")) {
+			if (string.contains("IF_CAUGHT_or")) {
 				getClass();		// XXX
 			}
 			if (indentationStack.isEmpty()) {
