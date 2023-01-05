@@ -559,7 +559,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				}
 				if (pivotContainerContainer instanceof org.eclipse.ocl.pivot.Class) {
 					org.eclipse.ocl.pivot.Class pivotType = (org.eclipse.ocl.pivot.Class) pivotContainerContainer;
-					return new ClassContext(this, null, pivotType, false, null);
+					return new ClassContext(this, null, pivotType, null, null);
 				}
 			}
 			if (pivotContainer instanceof Slot) {
@@ -567,7 +567,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				if (asDefiningFeature != null) {
 					org.eclipse.ocl.pivot.Class pivotType = asDefiningFeature.getOwningClass();
 					if (pivotType != null) {
-						return new ClassContext(this, null, pivotType, false, null);
+						return new ClassContext(this, null, pivotType, null, null);
 					}
 				}
 			}
