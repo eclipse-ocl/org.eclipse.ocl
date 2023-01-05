@@ -635,7 +635,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		else {		// Class, Stereotype, State
 			for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 				if ((eObject instanceof org.eclipse.ocl.pivot.Class) && (((org.eclipse.ocl.pivot.Class)eObject).getOwningPackage() != null)) {	// StateMachines etc do not have Packages
-					return new ClassContext(this, null, (org.eclipse.ocl.pivot.Class)eObject, false, null);
+					return new ClassContext(this, null, (org.eclipse.ocl.pivot.Class)eObject, null, null);
 				}
 			}
 		}

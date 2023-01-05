@@ -97,7 +97,7 @@ public class OCLHelperImpl implements OCLHelper
 		if (contextClass == null) {
 			throw new IllegalStateException("Undefined contextClass");
 		}
-		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, contextClass, false, null);
+		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, contextClass, null, null);
 		return parserContext.parse(contextClass, expression);
 	}
 
@@ -137,7 +137,7 @@ public class OCLHelperImpl implements OCLHelper
 		if (contextClass == null) {
 			throw new IllegalStateException("Undefined contextClassifier");
 		}
-		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, contextClass, false, null);
+		ParserContext parserContext = new ClassContext(getEnvironmentFactory(), null, contextClass, null, null);
 		return parserContext.parse(contextClass, expression);
 	}
 

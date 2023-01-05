@@ -137,7 +137,7 @@ public class TestOCL extends OCLInternal
 			@NonNull String expression, /*@NonNull*/ String messageTemplate, Object... bindings) {
 		CSResource resource = null;
 		try {
-			ParserContext semanticContext = new ClassContext(getEnvironmentFactory(), null, contextType, false, null);
+			ParserContext semanticContext = new ClassContext(getEnvironmentFactory(), null, contextType, null, null);
 			resource = semanticContext.createBaseResource(expression);
 			PivotUtil.checkResourceErrors(StringUtil.bind(PivotMessagesInternal.ErrorsInResource, expression), resource);
 			TestCase.fail("Should not have parsed \"" + expression + "\"");
@@ -170,7 +170,7 @@ public class TestOCL extends OCLInternal
 	public void assertBadQuery(@NonNull Class<?> exception, int severity, org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression, /*@NonNull*/ String messageTemplate, Object... bindings) {
 		BaseCSResource csResource = null;
 		try {
-			ClassContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, false, null);
+			ClassContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null, null);
 			if (PivotMessages.UnspecifiedSelfContext.equals(messageTemplate)) {
 				classContext.setSelfName("SELF");
 			}
@@ -644,7 +644,7 @@ public class TestOCL extends OCLInternal
 	public void assertSemanticWarningQuery(org.eclipse.ocl.pivot.@Nullable Class contextType, @NonNull String expression, String messageTemplate, Object... bindings) {
 		BaseCSResource csResource = null;
 		try {
-			ClassContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, false, null);
+			ClassContext classContext = new ClassContext(getEnvironmentFactory(), null, contextType, null, null);
 			if (PivotMessages.UnspecifiedSelfContext.equals(messageTemplate)) {
 				classContext.setSelfName("SELF");
 			}
