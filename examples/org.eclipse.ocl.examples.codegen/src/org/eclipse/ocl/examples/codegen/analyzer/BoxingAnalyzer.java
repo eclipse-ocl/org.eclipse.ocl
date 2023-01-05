@@ -229,9 +229,11 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		if (cgRequiredTypeId == cgActualTypeId) {
 			return cgChild;
 		}
-		TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgChild);
-		if (typeDescriptor.getJavaClass() == Object.class) {
-			return cgChild;
+		if (cgVariable.isRequired() || !cgChild.isRequired()) {			// If @NonNull cast not needed, check if Object.class redundant
+			TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgChild);
+			if (typeDescriptor.getJavaClass() == Object.class) {
+				return cgChild;
+			}
 		}
 		TypedElement asChild = (TypedElement) cgChild.getAst();
 		Type asType = asChild.getType();

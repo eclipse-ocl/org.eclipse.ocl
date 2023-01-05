@@ -1114,29 +1114,18 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (!js.appendLocalStatements(cgSource)) {
 			return false;
 		}
-		TypeDescriptor actualTypeDescriptor;
-		//	if (cgSource instanceof CGVariableExp) {	// CAST self has a distinct OclVoid type
-		//		actualTypeDescriptor = context.getTypeDescriptor(CGUtil.getReferredVariable((CGVariableExp)cgSource));
-		//	}
-		//	else {
-				actualTypeDescriptor = context.getTypeDescriptor(cgSource);
-		//	}
-		Class<?> jClass = actualTypeDescriptor.getJavaClass().getComponentType();
-		boolean isRequired = cgIndexExp.isRequired();
-		boolean wasNonNull = cgSource.isRequiredOrNonNull();
-		if (isRequired) {
-			appendSuppressWarningsNull(cgSource, isRequired);
-		}
-		js.appendDeclaration(cgIndexExp);
-		js.append(" = ");
 		SubStream castBody = new SubStream() {
 			@Override
 			public void append() {
 				js.appendValueName(cgSource);
-				js.append("[" + cgIndexExp.getIndex() + "];\n");
+				js.append("[" + cgIndexExp.getIndex() + "]");
 			}
 		};
-		js.appendClassCast(cgIndexExp, isRequired == wasNonNull ? null : isRequired, jClass, castBody);
+		boolean sourceRequired = cgSource.isRequired();
+		TypeDescriptor sourceTypeDescriptor = context.getTypeDescriptor(cgSource);
+		Class<?> sourceClass = sourceTypeDescriptor.getJavaClass().getComponentType();
+		assert sourceClass != null;
+		js.appendAssignWithCast(cgIndexExp, sourceRequired, sourceClass, castBody);
 		return true;
 	}
 

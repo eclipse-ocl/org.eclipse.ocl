@@ -269,7 +269,7 @@ public class JavaStream
 			if (string.contains("AbstractBinaryOperation")) {
 				getClass();		// XXX
 			}
-			if (string.contains("IF_CAUGHT_or")) {
+			if (string.contains("INDEX_0_boxedValues")) {
 				getClass();		// XXX
 			}
 			if (indentationStack.isEmpty()) {

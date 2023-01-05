@@ -37,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
@@ -280,6 +281,10 @@ public class CGUtil
 
 	public static @NonNull Type getAST(@NonNull CGExecutorType cgExecutorType) {
 		return ClassUtil.nonNullState((Type)cgExecutorType.getAst());
+	}
+
+	public static @NonNull TypedElement getAST(@NonNull CGIndexExp cgIndexExp) {
+		return ClassUtil.nonNullState((TypedElement)cgIndexExp.getAst());
 	}
 
 	public static @NonNull LoopExp getAST(@NonNull CGIterationCallExp cgIterationCallExp) {
