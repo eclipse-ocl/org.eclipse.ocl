@@ -87,6 +87,28 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 	}
 
 	@Override
+	public @NonNull CGOperation createIteration(@NonNull CodeGenAnalyzer analyzer, @NonNull Iteration asIteration) {
+		CGOperation cgOperation = createCGOperation(analyzer, asIteration);
+		assert cgOperation.getCallingConvention() == null;
+		cgOperation.setCallingConvention(this);
+		assert cgOperation.getAst() == null;						// Lightweight createCGOperation just creates
+		assert analyzer.basicGetCGElement(asIteration) == null;
+		analyzer.initAst(cgOperation, asIteration, true);
+		assert analyzer.basicGetCGElement(asIteration) != null;
+	//	ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asIteration);	// Needed to support downstream useOperationNameManager()
+		assert cgOperation.eContainer() == null;
+	//	CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asIteration));
+	//	cgClass.getOperations().add(cgOperation);
+	//	createCGParameters(operationNameManager, asExpressionInOCL);
+
+	//	org.eclipse.ocl.pivot.@NonNull Package asParentPackage = analyzer.getRootClassParentPackage(asClass);
+	//	IterationClassCallingConvention.getInstance(asIteration).createIterationClass(analyzer, null);
+
+
+		return cgOperation;		// Redundant orphan
+	}
+
+	@Override
 	public @NonNull CGIterationCallExp createCGIterationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation,
 				@NonNull LibraryIteration libraryIteration, @NonNull CGValuedElement cgSafeSource, @NonNull LoopExp asLoopExp) {
 		ExecutableNameManager parentNameManager = analyzer.useExecutableNameManager((NamedElement)asLoopExp.eContainer());

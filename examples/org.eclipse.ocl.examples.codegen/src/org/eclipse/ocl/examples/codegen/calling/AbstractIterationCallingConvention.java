@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -25,7 +24,6 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  AbstractIterationCallingConvention defines the common support for the call of an iteration.
@@ -52,23 +50,6 @@ public abstract class AbstractIterationCallingConvention extends AbstractOperati
 	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
 		throw new UnsupportedOperationException("Not used");
-	}
-
-	@Override
-	public @NonNull CGOperation createIteration(@NonNull CodeGenAnalyzer analyzer, @NonNull Iteration asIteration) {
-		CGOperation cgOperation = createCGOperation(analyzer, asIteration);
-		assert cgOperation.getCallingConvention() == null;
-		cgOperation.setCallingConvention(this);
-		assert cgOperation.getAst() == null;						// Lightweight createCGOperation just creates
-		assert analyzer.basicGetCGElement(asIteration) == null;
-		analyzer.initAst(cgOperation, asIteration, true);
-		assert analyzer.basicGetCGElement(asIteration) != null;
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asIteration);	// Needed to support downstream useOperationNameManager()
-		assert cgOperation.eContainer() == null;
-		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asIteration));
-		cgClass.getOperations().add(cgOperation);
-	//	createCGParameters(operationNameManager, asExpressionInOCL);
-		return cgOperation;
 	}
 
 	@Override
