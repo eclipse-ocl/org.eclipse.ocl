@@ -705,7 +705,7 @@ public class CodeGenAnalyzer
 	//	setAst(cgVariableExp, asVariableExp);
 		cgVariableExp.setReferredVariable(cgVariable);
 		cgVariableExp.setTypeId(cgVariable.getTypeId());
-	//	cgVariableExp.setRequired(cgVariable.getIs);
+		cgVariableExp.setRequired(cgVariable.isRequired());
 //		cgVariable.getNameResolution().addCGElement(cgVariableExp);
 		return cgVariableExp;
 	}

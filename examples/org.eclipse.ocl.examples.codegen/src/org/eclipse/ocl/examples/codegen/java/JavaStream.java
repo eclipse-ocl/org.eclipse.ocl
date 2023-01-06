@@ -22,12 +22,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper;
@@ -269,7 +271,7 @@ public class JavaStream
 			if (string.contains("AbstractBinaryOperation")) {
 				getClass();		// XXX
 			}
-			if (string.contains("INDEX_0_boxedValues")) {
+			if (string.contains("CAST_d3p")) {
 				getClass();		// XXX
 			}
 			if (indentationStack.isEmpty()) {
@@ -332,6 +334,38 @@ public class JavaStream
 	}
 
 	/**
+	 * Append a complete assignment statement to cgTargetValue including any necessary cast of cSourceValue.
+	 */
+	public void appendAssignWithCast(@NonNull CGCastExp cgTargetValue, @NonNull CGValuedElement cgSourceValue) {
+		JavaStream.SubStream sourceStream = new JavaStream.SubStream() {
+			@Override
+			public void append() {
+				appendReferenceTo(cgSourceValue);
+			}
+		};
+		TypeDescriptor sourceTypeDescriptor;
+		if (cgSourceValue instanceof CGVariableExp) {
+			CGVariable cgVariable = CGUtil.getReferredVariable((CGVariableExp)cgSourceValue);	// A CGParameter may be just OclVoid
+			sourceTypeDescriptor = codeGenerator.getTypeDescriptor(cgVariable);
+		}
+		else {
+			sourceTypeDescriptor = codeGenerator.getTypeDescriptor(cgSourceValue);
+		}
+		Class<?> sourceClass = sourceTypeDescriptor.hasJavaClass();
+		if (sourceClass != null) {
+			Boolean sourceIsRequired = cgSourceValue.isRequired();
+			appendAssignWithCast(cgTargetValue, sourceIsRequired, sourceClass, sourceStream);
+		}
+		else {
+			TypeDescriptor targetTypeDescriptor = codeGenerator.getTypeDescriptor(cgTargetValue);
+			appendDeclaration(cgTargetValue);
+			append(" = ");				// XXX integrate better
+			targetTypeDescriptor.appendCastTerm(this, null, cgSourceValue);
+			append(";\n");
+		}
+	}
+
+	/**
 	 * Append a complete assignment statement to cgTargetValue, by wrapping the sourceStream in a cast if necessary
 	 * to make the sourceClass return and sourceIsRequired nullity compatible with cgTargetValue.
 	 */
@@ -339,7 +373,7 @@ public class JavaStream
 			@NonNull Class<?> sourceClass, JavaStream.@NonNull SubStream sourceStream) {
 		boolean targetIsRequired = cgTargetValue.isRequired();
 		TypeDescriptor targetTypeDescriptor = codeGenerator.getTypeDescriptor(cgTargetValue);
-		Class<?> targetClass = targetTypeDescriptor.getJavaClass();
+		Class<?> targetClass = targetTypeDescriptor.hasJavaClass();
 		Boolean nullCast;
 		if (targetIsRequired) {
 			if (sourceIsRequired == Boolean.TRUE) {
@@ -362,7 +396,7 @@ public class JavaStream
 		}
 		appendDeclaration(cgTargetValue);
 		append(" = ");
-		if ((nullCast != null) || !targetClass.isAssignableFrom(sourceClass)) {
+		if ((nullCast != null) || (targetClass == null) || !targetClass.isAssignableFrom(sourceClass)) {
 			targetTypeDescriptor.appendCast(this, nullCast, sourceClass, sourceStream);
 		}
 		else {
