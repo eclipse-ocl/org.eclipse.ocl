@@ -417,16 +417,6 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	}
 
 	@Override
-	public @NonNull ImportNameManager getImportNameManager() {
-		return globalNameManager.getImportNameManager();
-	}
-
-/*	@Override
-	public @NonNull NameManager getNameManager() {
-		return nameManager;
-	} */
-
-	@Override
 	public @NonNull CodeGenOptions getOptions() {
 		CodeGenOptions options2 = options;
 		if (options2 == null) {

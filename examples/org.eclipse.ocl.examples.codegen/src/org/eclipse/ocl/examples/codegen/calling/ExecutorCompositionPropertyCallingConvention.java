@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorCompositionProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorOppositePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorProperty;
@@ -48,20 +49,6 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
-		assert cgProperty instanceof CGExecutorCompositionProperty;
-		JavaStream js = cg2javaVisitor.getJavaStream();
-		CGExecutorCompositionProperty cgExecutorCompositionProperty = (CGExecutorCompositionProperty)cgProperty;
-		js.appendDeclaration(cgExecutorCompositionProperty);
-		js.append(" = new ");
-		js.appendClassReference(null, cgExecutorCompositionProperty);
-		js.append("(");
-		js.appendIdReference(cgExecutorCompositionProperty.getUnderlyingPropertyId().getElementId());
-		js.append(");\n");
-		return true;
-	}
-
-	@Override
 	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asNavigationCallExp) {
 		CodeGenerator codeGenerator = analyzer.getCodeGenerator();
@@ -83,6 +70,13 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 		cgPropertyCallExp.setSource(cgSource);
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		return cgPropertyCallExp;
+	}
+
+	@Override
+	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
+		assert cgBody == null;
+		return false;
 	}
 
 	@Override
@@ -116,6 +110,20 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 		};
 		js.appendClassCast(cgPropertyCallExp, castBody);
 		js.append(";\n");
+		return true;
+	}
+
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		assert cgProperty instanceof CGExecutorCompositionProperty;
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		CGExecutorCompositionProperty cgExecutorCompositionProperty = (CGExecutorCompositionProperty)cgProperty;
+		js.appendDeclaration(cgExecutorCompositionProperty);
+		js.append(" = new ");
+		js.appendClassReference(null, cgExecutorCompositionProperty);
+		js.append("(");
+		js.appendIdReference(cgExecutorCompositionProperty.getUnderlyingPropertyId().getElementId());
+		js.append(");\n");
 		return true;
 	}
 }

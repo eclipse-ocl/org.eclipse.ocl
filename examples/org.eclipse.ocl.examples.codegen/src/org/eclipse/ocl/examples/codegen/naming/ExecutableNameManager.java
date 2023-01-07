@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -128,7 +129,7 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @Nullable CGVariable basicGetExecutorVariable() {
-		return (executorVariable != null) && !(executorVariable instanceof CGParameter) ? executorVariable : null;
+		return executorVariable;
 	}
 
 	public @Nullable CGVariable basicGetIdResolverVariable() {
@@ -278,7 +279,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return modelManagerVariable;
 	}
 
-	public @NonNull CGFinalVariable createQualifiedThisVariable() {
+	protected @NonNull CGFinalVariable createQualifiedThisVariable() {
 		NameResolution qualifiedThisNameResolution = globalNameManager.declareEagerName(null, classNameManager.getASClass().getName() + "_" + JavaConstants.THIS_NAME);
 		CGFinalVariable qualifiedThisVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		qualifiedThisVariable.setTypeId(analyzer.getCGTypeId(classNameManager.getASClass().getTypeId()));
@@ -465,22 +466,46 @@ public class ExecutableNameManager extends NestedNameManager
 		return contextObjectParameter2;
 	}
 
+	@Deprecated		// ?? but is ther always an asExecutorParameter
 	public @NonNull CGParameter getExecutorParameter() {
-		CGVariable executorVariable2 = executorVariable;
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getExecutorParameter();
+		}
+		CGParameter executorVariable2 = (CGParameter)executorVariable;
 		if (executorVariable2 == null) {
 			executorVariable = executorVariable2 = codeGenerator.createExecutorParameter();
 		}
-		return (CGParameter)executorVariable2;
+		return executorVariable2;
 	}
 
+	public @NonNull CGParameter getExecutorParameter(@NonNull Parameter asExecutorParameter) {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getExecutorParameter(asExecutorParameter);
+		}
+		CGParameter executorVariable2 = (CGParameter)executorVariable;
+		if (executorVariable2 == null) {
+			executorVariable = executorVariable2 = codeGenerator.createExecutorParameter();
+			codeGenerator.getAnalyzer().initAst(executorVariable2, asExecutorParameter, true);
+		}
+		else {
+			assert executorVariable2.getAst() == asExecutorParameter;
+		}
+		return executorVariable2;
+	}
+
+	@Deprecated // XXX review wrt CallingConvention flexibility
 	public @NonNull CGVariable getExecutorVariableInternal() {	// Invoked from CodeGenAnalyzer that overrides for JUnit support
+	//	CGParameter executorParameter2 = executorParameter;
+	//	if (executorParameter2 != null) {
+	//		return executorParameter2;
+	//	}
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).getExecutorVariableInternal();
 		}
 	//	if (asScope instanceof CallExp) {
 	//		return ((ExecutableNameManager)parent).getExecutorVariable();
 	//	}
-		CGVariable executorVariable2 = executorVariable;
+		CGVariable executorVariable2 = executorVariable;		// XXX redirect to executorParameter
 		if (executorVariable2 == null) {
 			executorVariable = executorVariable2 = createExecutorVariable();
 		}

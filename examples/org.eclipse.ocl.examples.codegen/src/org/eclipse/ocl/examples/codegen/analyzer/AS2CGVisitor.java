@@ -41,7 +41,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGMapPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGReal;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
@@ -446,33 +445,19 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 	}
 
 	@Override
-	public @Nullable CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		CGPackage cgPackage = context.basicGetCGPackage(asPackage);
-		if (cgPackage == null) {
-			cgPackage = context.generatePackage(null, asPackage);
-		}
-	/*	else {
-			for (org.eclipse.ocl.pivot.@NonNull Class asType : ClassUtil.nullFree(asPackage.getOwnedClasses())) {
-				System.out.println("visitPackage: " + NameUtil.debugSimpleName(asType) + " : " + asType);
-				CGClass cgClass = context.createCGElement(CGClass.class, asType);
-				assert cgClass.eContainer().eContainer() == cgPackage.eContainer();			// asClass may be a psuedo-nested class
-			}
-			for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : ClassUtil.nullFree(asPackage.getOwnedPackages())) {
-				System.out.println("visitPackage: " + NameUtil.debugSimpleName(asNestedPackage) + " : " + asNestedPackage);
-				CGPackage cgNestedPackage = context.createCGElement(CGPackage.class, asNestedPackage);
-				assert cgPackage.getPackages().contains(cgNestedPackage);
-			}
-		} */
-		return cgPackage;
+	public @NonNull CGNamedElement visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		assert context.basicGetCGPackage(asPackage) == null;
+		return context.generatePackage(null, asPackage);
 	}
 
 	@Override
 	public final @NonNull CGProperty visitProperty(@NonNull Property asProperty) {
-		CGProperty cgProperty = context.basicGetCGProperty(asProperty);
-		if (cgProperty == null) {
-			cgProperty = context.generateProperty(asProperty);
-		}
-		return cgProperty;
+	//	CGProperty cgProperty = context.basicGetCGProperty(asProperty);
+	//	if (cgProperty == null) {
+	//		cgProperty = context.generateProperty(asProperty);
+	//	}
+	//	return cgProperty;
+		return context.generateProperty(asProperty);
 	}
 
 	@Override

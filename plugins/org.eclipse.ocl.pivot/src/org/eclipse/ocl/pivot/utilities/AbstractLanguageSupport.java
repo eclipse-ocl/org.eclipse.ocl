@@ -35,12 +35,11 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
  */
 public abstract class AbstractLanguageSupport implements LanguageSupport
 {
-	public static interface Factory {
+	public static interface Factory
+	{
 		@NonNull AbstractLanguageSupport createLanguageSupport(@NonNull EnvironmentFactory environmentFactory);
-
-		void install();
-
 		@NonNull String getName();
+		void install();
 	}
 	private static final @NonNull String TAG_LANGUAGE = "language";
 	private static final @NonNull String ATT_CLASS = "class";
@@ -51,8 +50,7 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 	public static void addLanguageSupport(AbstractLanguageSupport.@NonNull Factory support) {
 		Map<@NonNull String, AbstractLanguageSupport.@NonNull Factory> supportRegistry2 = supportRegistry;
 		if (supportRegistry2 == null) {
-			supportRegistry = supportRegistry2 = new HashMap<>();
-			readExtension();
+			supportRegistry2 = createSupportRegistry();
 		}
 		supportRegistry2.put(support.getName(), support);
 	}
@@ -89,6 +87,12 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 		return NameUtil.getNameable(asSiblingPackages, PivotUtil.getName(asClass));
 	}
 
+	protected static @NonNull Map<@NonNull String, AbstractLanguageSupport.@NonNull Factory> createSupportRegistry() {
+		Map<@NonNull String, AbstractLanguageSupport.@NonNull Factory> supportRegistry2 = supportRegistry = new HashMap<>(4);
+		readExtension();
+		return supportRegistry2;
+	}
+
 	/**
 	 * Return the package in which a cache class to support asFeature may be created.
 	 *
@@ -118,8 +122,7 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 	public static @Nullable AbstractLanguageSupport getLanguageSupport(@NonNull String name, @NonNull EnvironmentFactory environmentFactory) {
 		Map<@NonNull String, AbstractLanguageSupport.@NonNull Factory> supportRegistry2 = supportRegistry;
 		if (supportRegistry2 == null) {
-			supportRegistry = supportRegistry2 = new HashMap<>();
-			readExtension();
+			supportRegistry2 = createSupportRegistry();
 		}
 		Factory factory = supportRegistry2.get(name);
 		return factory != null ? factory.createLanguageSupport(environmentFactory) : null;

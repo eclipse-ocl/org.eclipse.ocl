@@ -18,6 +18,8 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 
 /**
  * Manage the mapping from long fully qualified class names to the short class names that may be used once an import has been provided.
@@ -154,13 +156,19 @@ public class JavaImportNameManager extends AbstractImportNameManager
 
 	/**
 	 * Register classname as a locally defined nested class to prevent its use as an imported name.
-	 * THrows an IllegalStateException if already reserved.
+	 * Throws an IllegalStateException if already reserved.
 	 */
-	@Override
 	public void reserveLocalName(@NonNull String className) {
 		String oldName = short2longName.put(className, className);
 		if (oldName != null) {
 			throw new IllegalStateException(className + " already reserved");
+		}
+	}
+
+	@Override
+	public void reserveNestedClassNames(@NonNull CGClass cgClass) {
+		for (@NonNull CGClass cgNestedClass : CGUtil.getClasses(cgClass)) {
+			reserveLocalName(CGUtil.getName(cgNestedClass));
 		}
 	}
 }

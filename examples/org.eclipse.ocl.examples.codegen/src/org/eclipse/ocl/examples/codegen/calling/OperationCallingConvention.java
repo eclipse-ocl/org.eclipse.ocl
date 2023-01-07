@@ -43,6 +43,13 @@ public interface OperationCallingConvention extends CallingConvention
 	@NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, ExpressionInOCL asExpressionInOCL);
 
 	/**
+	 * Generate the body text of an Ecore Operation to the vistor's JavaStream.
+	 *
+	 * Return null if no body required or available.
+	 */
+	boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation);
+
+	/**
 	 * Generate the Java code for an Operation call.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
@@ -56,4 +63,5 @@ public interface OperationCallingConvention extends CallingConvention
 
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperation cgOperation);
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp);
+
 }

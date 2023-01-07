@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.util.CodeGenUtil;
@@ -150,17 +149,13 @@ import com.google.common.collect.Iterables;
 public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@NonNull Boolean, @NonNull JavaCodeGenerator>
 {
 	protected final @NonNull GlobalNameManager globalNameManager;
+//	protected final @NonNull ImportNameManager importNameManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull Id2JavaInterfaceVisitor id2JavaInterfaceVisitor;
 	protected final @NonNull JavaStream js;
 	protected final @NonNull Map<@NonNull Class<? extends LibraryOperation>, @NonNull LibraryOperationHandler> libraryOperation2handler = new HashMap<>();;
-
-	@Deprecated /* obsolete auto-generated signature */
-	public CG2JavaVisitor(@NonNull JavaCodeGenerator codeGenerator, @NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
-		this(codeGenerator);
-	}
 
 	public CG2JavaVisitor(@NonNull JavaCodeGenerator codeGenerator) {
 		super(codeGenerator);
@@ -169,7 +164,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		this.analyzer = context.getAnalyzer();
 		this.id2JavaInterfaceVisitor = createId2JavaClassVisitor();
 		this.environmentFactory = analyzer.getCodeGenerator().getEnvironmentFactory();
-		this.js = codeGenerator.createJavaStream(this);
+		this.js = codeGenerator.createJavaStream(this, createImportNameManager());
 		installLibraryHandler(new AndOperationHandler(js));
 		installLibraryHandler(new AndOperation2Handler(js));
 		installLibraryHandler(new ImpliesOperationHandler(js));
@@ -186,9 +181,9 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		libraryOperation2handler.put(libraryOperationHandler.getLibraryOperationClass(), libraryOperationHandler);
 	}
 
-	protected @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String className) {
-		return globalNameManager.addImport(isRequired, className);
-	}
+//	protected @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String className) {
+//		return importNameManager.addImport(isRequired, className);
+//	}
 
 	/**
 	 * Append the code for an EcorePropertyCall. If source is null, the code for the source will also be appended.
@@ -249,8 +244,6 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append("()");
 	} */
 
-	protected void appendGlobalPrefix() {}
-
 	protected void appendGuardFailure(@NonNull CGGuardExp cgGuardExp) {
 		js.append("throw new ");
 		js.appendClassReference(null, InvalidValueException.class);
@@ -258,6 +251,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.appendString("Null " + cgGuardExp.getMessage());
 		js.append(");\n");
 	}
+
+	protected void appendSupportPrefix() {}
+
+	protected void appendTablesPrefix() {}
 
 	public @Nullable LibraryOperationHandler basicGetLibraryOperationHandler(@NonNull Class<? extends LibraryOperation> libraryOperation) {
 		return libraryOperation2handler.get(libraryOperation);
@@ -268,22 +265,23 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	}
 
 	public void appendReturn(@NonNull CGValuedElement body) {
-		if (js.appendLocalStatements(body)) {
-			if (body instanceof CGThrowExp) {				// FIXME generalize
-				body.accept(this);
+		if (body instanceof CGLetExp) {
+			CGLetExp cgLetExp = (CGLetExp)body;
+			cgLetExp.getInit().accept(this);
+			CGValuedElement cgIn = CGUtil.getIn(cgLetExp);
+			appendReturn(cgIn);
+		}
+		else if (js.appendLocalStatements(body)) {
+			CGInvalid cgInvalidValue = body.getInvalidValue();
+			if (cgInvalidValue != null) {
+				js.append("throw ");
+				js.appendValueName(cgInvalidValue);
 			}
 			else {
-				CGInvalid cgInvalidValue = body.getInvalidValue();
-				if (cgInvalidValue != null) {
-					js.append("throw ");
-					js.appendValueName(cgInvalidValue);
-				}
-				else {
-					js.append("return ");
-					js.appendValueName(body);
-				}
-				js.append(";\n");
+				js.append("return ");
+				js.appendValueName(body);
 			}
+			js.append(";\n");
 		}
 	}
 
@@ -301,6 +299,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	protected @NonNull Id2JavaExpressionVisitor createId2JavaExpressionVisitor(@NonNull JavaStream javaStream) {
 		return new Id2JavaExpressionVisitor(javaStream);
+	}
+
+	protected @NonNull ImportNameManager createImportNameManager() {
+		return context.createImportNameManager();
 	}
 
 	protected boolean doClassFields(@NonNull CGClass cgClass, boolean needsBlankLine) {
@@ -329,10 +331,6 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		return needsBlankLine;
 	}
 
-	protected boolean doClassStatics(@NonNull CGClass cgClass, boolean needsBlankLine) {
-		return needsBlankLine;
-	}
-
 	protected boolean doNestedClasses(@NonNull CGClass cgClass, boolean needsBlankLine) {
 		List<CGClass> cgClasses = new ArrayList<>(cgClass.getClasses());
 		Collections.sort(cgClasses, NameUtil.NAMEABLE_COMPARATOR);
@@ -351,11 +349,6 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			assert cgElement.isGlobal();
 			cgElement.accept(this);
 		}
-	}
-
-	@Deprecated /* deprecated use getImportManager */
-	public @NonNull Set<String> getAllImports() {
-		return getImportNameManager().getLong2ShortImportNames().keySet();
 	}
 
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
@@ -401,7 +394,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	}
 
 	public @NonNull ImportNameManager getImportNameManager() {
-		return context.getImportNameManager();
+		return js.getImportNameManager();
 	}
 
 	public @NonNull JavaStream getJavaStream() {

@@ -21,8 +21,6 @@ import java.util.List
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator
 import org.eclipse.ocl.examples.codegen.cse.GlobalPlace
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper
 
 class GenerateCGVisitors extends GenerateVisitorsXtend
@@ -40,8 +38,8 @@ class GenerateCGVisitors extends GenerateVisitorsXtend
 				"Analysis", "@Nullable Object", "@NonNull CodeGenAnalyzer analyzer", "analyzer");
 			ePackage.generateAbstractGenericVisitor2(Lists.newArrayList(NonNull, Nullable, CodeGenAnalyzer),
 				"BoxingAnalysis", "@Nullable Object", "@NonNull CodeGenAnalyzer analyzer", "analyzer");
-			ePackage.generateAbstractGenericVisitor2(Lists.newArrayList(Iterable, NonNull, Nullable, JavaCodeGenerator, CGPackage, CGValuedElement),
-				"CG2Java", "@NonNull Boolean", "@NonNull JavaCodeGenerator codeGenerator, @NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals", "codeGenerator, cgPackage, sortedGlobals");
+			ePackage.generateAbstractGenericVisitor2(Lists.newArrayList(NonNull, JavaCodeGenerator),
+				"CG2Java", "@NonNull Boolean", "@NonNull JavaCodeGenerator codeGenerator", "codeGenerator");
 			ePackage.generateAbstractGenericVisitor2(Lists.newArrayList(NonNull, Nullable, JavaCodeGenerator),
 				"CG2JavaName", "@Nullable Object", "@NonNull JavaCodeGenerator codeGenerator", "codeGenerator");
 			ePackage.generateAbstractGenericVisitor2(Lists.newArrayList(NonNull, Nullable, JavaCodeGenerator),

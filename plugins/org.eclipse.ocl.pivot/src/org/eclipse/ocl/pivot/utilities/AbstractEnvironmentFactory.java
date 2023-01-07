@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
+import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -132,7 +133,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	private int attachCount = 0;
 
 	/**
-	 * Debug lust of the System.identityHashCode of each active owners of an attach
+	 * Debug list of the System.identityHashCode of each active owners of an attach
 	 *
 	 * System.identityHashCode avoids problmes with finalized attachOwners.
 	 */
@@ -145,6 +146,12 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	private /*LazyNonNull*/ Map<Object, StatusCodes.Severity> validationKey2severity = null;
 
+	/**
+	 * The registered language-specific support for each possible language used as a prefix to a foreign feature call.
+	 * </br>
+	 * More substantial Java support is provided by the codegen plugin, so the initialization of this by an extension
+	 * point avoids a dependency on the codegen plugin.
+	 */
 	private /*LazyNonNull*/ Map<@NonNull String, @NonNull LanguageSupport> language2support = null;
 
 	/**
@@ -164,6 +171,11 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 		@Override
 		public org.eclipse.ocl.pivot.@NonNull Class getNativeClass(@NonNull String qualifiedClassName) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull Package getNativePackage(@NonNull String qualifiedPackageName) {
 			throw new UnsupportedOperationException();
 		}
 	};
@@ -903,7 +915,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	public @Nullable LanguageSupport getLanguageSupport(@NonNull String language) {
 		Map<@NonNull String, @NonNull LanguageSupport> language2support2 = language2support;
 		if (language2support2 == null) {
-			language2support = language2support2 = new HashMap<>();
+			language2support = language2support2 = new HashMap<>(4);
 		}
 		LanguageSupport languageSupport = language2support2.get(language);
 		if (languageSupport == null) {

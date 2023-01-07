@@ -26,7 +26,6 @@ import org.eclipse.ocl.examples.codegen.calling.PropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
 import org.eclipse.ocl.examples.codegen.cse.GlobalPlace;
-import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.types.BoxedDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EcoreDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.UnboxedDescriptor;
@@ -70,15 +69,12 @@ public interface CodeGenerator
 	@NonNull String getDefaultIndent();
 	@NonNull EcoreDescriptor getEcoreDescriptor(@NonNull ElementId elementId, @Nullable Class<?> instanceClass);
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
-	@Deprecated /* @deprecated obsolete approach */
-	@NonNull String getExternalClassName(org.eclipse.ocl.pivot.@NonNull Class asClass);
+//	@Deprecated /* @deprecated obsolete approach */
+//	@NonNull String getExternalClassName(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	@NonNull GenModelHelper getGenModelHelper();
-//	@NonNull GlobalContext getGlobalContext();
 	@NonNull GlobalPlace getGlobalPlace();
-	@NonNull ImportNameManager getImportNameManager();
 	@Nullable IterationHelper getIterationHelper(@NonNull Iteration iteration);
 	@NonNull GlobalNameManager getGlobalNameManager();
-//	@NonNull NameResolution getNameResolution(@NonNull CGValuedElement cgChild);
 	@NonNull CodeGenOptions getOptions();
 	@Nullable List<@NonNull Exception> getProblems();
 	@NonNull TypeDescriptor getTypeDescriptor(@NonNull CGValuedElement cgElement);

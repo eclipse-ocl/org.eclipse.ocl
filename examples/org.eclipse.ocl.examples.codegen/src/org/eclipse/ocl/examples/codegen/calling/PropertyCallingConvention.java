@@ -49,6 +49,13 @@ public interface PropertyCallingConvention extends CallingConvention
 	@NonNull CGProperty createProperty(@NonNull CodeGenAnalyzer codeGenAnalyzer, @NonNull Property asProperty, @Nullable ExpressionInOCL query);
 
 	/**
+	 * Generate the body text of an Ecore StructuralFeature to the vistor's JavaStream.
+	 *
+	 * Return null if no body required or available.
+	 */
+	boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
+
+	/**
 	 * Generate the Java code for a Property assign.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */

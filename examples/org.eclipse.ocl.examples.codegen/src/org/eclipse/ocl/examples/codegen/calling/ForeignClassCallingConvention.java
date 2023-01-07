@@ -13,14 +13,9 @@ package org.eclipse.ocl.examples.codegen.calling;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.naming.PackageNameManager;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -46,14 +41,12 @@ public class ForeignClassCallingConvention extends AbstractClassCallingConventio
 	}
 
 	public @NonNull CGClass createForeignClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Package asParentPackage) {
-		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
+	//	JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		org.eclipse.ocl.pivot.Class asClass = ClassUtil.nonNullState(NameUtil.getNameable(asParentPackage.getOwningPackage().getOwnedClasses(), asParentPackage.getName()));
 		//
 		PackageNameManager packageNameManager = analyzer.getPackageNameManager(null, asParentPackage);
 		String foreignClassName = packageNameManager.getUniqueClassName(NameManagerHelper.FOREIGN_CLASS_NAME_PREFIX, asClass);
 		org.eclipse.ocl.pivot.Class asForeignClass = AbstractLanguageSupport.getClass(asParentPackage, foreignClassName);
-		importNameManager.reserveLocalName(PivotUtil.getName(asForeignClass));
 		//
 		CGClass cgForeignClass = analyzer.generateClassDeclaration(asForeignClass, this);
 		return cgForeignClass;
@@ -68,19 +61,19 @@ public class ForeignClassCallingConvention extends AbstractClassCallingConventio
 	//	if (isEmpty(cgClass)) {
 	//		return true;
 	//	}
-		JavaStream js = cg2javaVisitor.getJavaStream();
-		js.appendOptionalBlankLine();
-		String className = CGUtil.getName(cgClass);
-		CGPackage cgContainingPackage = cgClass.getContainingPackage();
-		assert cgContainingPackage == null;
-		String title = cgClass.getName() + " provides the Java implementations for foreign feature accesses";
-		js.appendCommentWithOCL(title, null);
-		js.append("public static class " + className);
-		appendSuperTypes(js, cgClass);
-		js.pushClassBody(className);
+	//	JavaStream js = cg2javaVisitor.getJavaStream();
+	//	js.appendOptionalBlankLine();
+	//	String className = CGUtil.getName(cgClass);
+	//	CGPackage cgContainingPackage = cgClass.getContainingPackage();
+	//	assert cgContainingPackage == null;
+	//	String title = cgClass.getName() + " provides the Java implementations for foreign feature accesses";
+	//	js.appendCommentWithOCL(title, null);
+	//	js.append("public class " + className);
+	//	appendSuperTypes(js, cgClass);
+	//	js.pushClassBody(className);
 		generateProperties(cg2javaVisitor, cgClass);
 		generateOperations(cg2javaVisitor, cgClass);
-		js.popClassBody(false);
+	//	js.popClassBody(false);
 		return true;
 	}
 

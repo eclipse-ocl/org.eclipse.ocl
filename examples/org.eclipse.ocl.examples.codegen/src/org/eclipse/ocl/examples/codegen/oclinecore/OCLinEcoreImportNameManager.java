@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.examples.codegen.java.AbstractImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
@@ -78,7 +79,7 @@ public class OCLinEcoreImportNameManager extends AbstractImportNameManager
 	}
 
 	@Override
-	public void reserveLocalName(@NonNull String foreignClassName) {
+	public void reserveNestedClassNames(@NonNull CGClass cgClass) {
 		throw new UnsupportedOperationException();
 	}
 }

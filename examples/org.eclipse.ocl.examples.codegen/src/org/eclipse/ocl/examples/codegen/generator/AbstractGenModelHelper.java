@@ -63,6 +63,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	public static final @NonNull String OPERATIONS_PACKAGE_NAME = "Operations";
 	public static final @NonNull String PARAMETERS_PACKAGE_NAME = "Parameters";
 	public static final @NonNull String PROPERTIES_PACKAGE_NAME = "Properties";
+	public static final @NonNull String SUPPORT_CLASS_SUFFIX = "Support";
 	public static final @NonNull String TABLES_CLASS_SUFFIX = "Tables";
 	public static final @NonNull String TABLES_PACKAGE_NAME = "";
 	public static final @NonNull String TYPE_FRAGMENTS_PACKAGE_NAME = "TypeFragments";
@@ -717,16 +718,12 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 
 	@Override
 	public @NonNull String getQualifiedEcoreLiteralName(@NonNull EClassifier eClassifier) {
-		GenClassifier genClassifier = getGenClassifier(eClassifier);
-		GenPackage genPackage = getGenPackage(genClassifier);
-		return genPackage.getPrefix() + "Package.Literals." + getEcoreLiteralName(eClassifier);
+		return getQualifiedEcoreLiteralsPrefix(eClassifier) + ".Literals." + getEcoreLiteralName(eClassifier);
 	}
 
 	@Override
 	public @NonNull String getQualifiedEcoreLiteralName(@NonNull EStructuralFeature eStructuralFeature) {
-		GenFeature genFeature = getGenFeature(eStructuralFeature);
-		GenPackage genPackage = getGenPackage(genFeature);
-		return genPackage.getPrefix() + "Package.Literals." + getEcoreLiteralName(eStructuralFeature);
+		return getQualifiedEcoreLiteralsPrefix(eStructuralFeature.getEContainingClass()) + ".Literals." + getEcoreLiteralName(eStructuralFeature);
 	}
 
 	@Override
@@ -763,6 +760,20 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 			return null;
 		}
 		return genPackage.getQualifiedFactoryInstanceAccessor();
+	}
+
+	@Override
+	public @NonNull String getQualifiedEcoreLiteralsPrefix(@NonNull EClassifier eClassifier) {
+		GenClassifier genClassifier = getGenClassifier(eClassifier);
+		GenPackage genPackage = getGenPackage(genClassifier);
+		return genPackage.getReflectionPackageName() + "." + genPackage.getPrefix() + "Package";
+	}
+
+	@Override
+	public @NonNull String getQualifiedEcoreLiteralsPrefix(@NonNull EStructuralFeature eStructuralFeature) {
+		GenFeature genFeature = getGenFeature(eStructuralFeature);
+		GenPackage genPackage = getGenPackage(genFeature);
+		return genPackage.getReflectionPackageName() + "." + genPackage.getPrefix() + "Package";
 	}
 
 	@Override

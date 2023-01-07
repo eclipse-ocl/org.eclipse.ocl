@@ -499,6 +499,10 @@ public class CGUtil
 		return ClassUtil.nonNullState(cgOperationCallExp.getReferredOperation());
 	}
 
+	public static @NonNull Iterable<@NonNull CGOperation> getOperations(@NonNull CGClass cgClass) {
+		return ClassUtil.nullFree(cgClass.getOperations());
+	}
+
 	public static @NonNull List<@NonNull CGOperation> getOperationsList(@NonNull CGClass cgClass) {
 		return ClassUtil.nullFree(cgClass.getOperations());
 	}

@@ -290,8 +290,8 @@ public class LookupFilterGenerator extends AutoCodeGenerator
 	}
 
 	@Override
-	protected @NonNull LookupFilterCG2JavaVisitor createCG2JavaVisitor(@NonNull CGPackage cgPackage, @Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
-		return new LookupFilterCG2JavaVisitor(this, cgPackage, sortedGlobals);
+	protected @NonNull LookupFilterCG2JavaVisitor createCG2JavaVisitor() {
+		return new LookupFilterCG2JavaVisitor(this);
 	}
 
 	@Override

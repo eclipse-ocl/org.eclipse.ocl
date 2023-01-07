@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -131,12 +133,32 @@ public class PivotTestCase extends TestCase
 	}
 
 	protected static void appendChildren(StringBuilder s, List<Diagnostic> children, int depth) {
-		for (Diagnostic child : children){
-			s.append("\n");
+		for (Diagnostic child : children) {
+			StringBuilder nl = new StringBuilder();
+			nl.append("\n");
 			for (int i = 0; i < depth; i++) {
-				s.append("    ");
+				nl.append("  ");
 			}
+			s.append(nl);
 			s.append(child.getMessage());
+			List<?> datas = child.getData();
+			if (datas != null) {
+				nl.append("  ");
+				String nlString = nl.toString();
+				for (Object data : datas) {
+					if (data instanceof Throwable)  {
+						Throwable cause = (Throwable)data;
+						StringWriter sw = new StringWriter();
+						cause.printStackTrace(new PrintWriter(sw));
+						String rawStackTrace = sw.toString().replace("\r", "");
+						if (rawStackTrace.endsWith("\n")) {
+							rawStackTrace = "\n" + rawStackTrace.substring(0, rawStackTrace.length()-1);
+						}
+						String stackTrace = rawStackTrace.replace("\n", nlString);
+						s.append(stackTrace);
+					}
+				}
+			}
 			appendChildren(s, child.getChildren(), depth+1);
 		}
 	}
@@ -403,6 +425,7 @@ public class PivotTestCase extends TestCase
 		}
 		StringBuilder s = new StringBuilder();
 		s.append(children.size() + " validation errors");
+	//	PivotUtil.formatDiagnostic(s, diagnostics, "\n");
 		appendChildren(s, children, 0);
 		fail(s.toString());
 	}

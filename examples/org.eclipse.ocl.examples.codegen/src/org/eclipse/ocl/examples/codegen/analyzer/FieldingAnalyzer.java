@@ -12,8 +12,8 @@ package org.eclipse.ocl.examples.codegen.analyzer;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 
 /**
@@ -132,8 +132,10 @@ public class FieldingAnalyzer
 		this.mustBeThrown = createAnalysisVisitor(ReturnState.IS_THROWN);
 	}
 
-	public void analyze(@NonNull CGElement cgTree, boolean requiredReturn) {		// XXX rationalize parameter
-		mustBeThrown.visit(cgTree);
+	public void analyze(@NonNull Iterable<@NonNull CGPackage> cgPackages, boolean requiredReturn) {		// XXX rationalize parameter
+		for (@NonNull CGPackage cgPackage : cgPackages) {
+			mustBeThrown.visit(cgPackage);
+		}
 	}
 
 	protected @NonNull FieldingAnalysisVisitor createAnalysisVisitor(@NonNull ReturnState returnState) {

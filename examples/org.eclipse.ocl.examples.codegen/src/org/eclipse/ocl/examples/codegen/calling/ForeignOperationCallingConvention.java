@@ -39,6 +39,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreCodeGenerator;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Element;
@@ -48,8 +49,10 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
@@ -304,6 +307,10 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
+	public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
+	}
+
+	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		EOperation eOperation = (EOperation) asOperation.getESObject();
 		if ((eOperation != null) && !PivotUtil.isStatic(eOperation)) {
@@ -367,6 +374,56 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		createCGParameters(operationNameManager, asExpressionInOCL);
 		return cgOperation;
 	}
+
+	@Override
+	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		CGValuedElement cgBody = cgOperation.getBody();
+		assert cgBody == null;
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		OCLinEcoreCodeGenerator codeGenerator = (OCLinEcoreCodeGenerator)cg2javaVisitor.getCodeGenerator();
+		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		Property asProperty = analyzer.getCacheInstance(asOperation);
+		String qualifiedSupportClassName = codeGenerator.getQualifiedSupportClassName();
+		String returnClassName = cg2javaVisitor.getGenModelHelper().getOperationReturnType(asOperation);
+		//
+		js.appendClassReference(null, ExecutorExtension.class);
+		js.append(" executor = (");
+		js.appendClassReference(null, ExecutorExtension.class);
+		js.append(")");
+		js.appendClassReference(null, PivotUtil.class);
+		js.append(".getExecutor(null);\n");
+		//
+		js.appendClassReference(null, qualifiedSupportClassName);
+		js.append(" support = executor.getExecutionSupport(");
+		js.appendClassReference(null, qualifiedSupportClassName);
+		js.append(".class);\n");
+		//
+		js.appendClassReference(null, Object.class);
+		js.append(" value = support.");
+		js.append(asProperty.getName());
+		js.append(".evaluate(");
+		boolean isFirst = true;
+		for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+			if (!isFirst) {
+				js.append(", ");
+			}
+			js.append(asParameter.getName());
+			isFirst = false;
+		}
+		js.append(");\n");
+		//
+		js.appendClassReference(null, Object.class);
+		js.append(" ecoreValue = executor.getIdResolver().ecoreValueOf(");			// XXX Collection
+		js.appendClassReference(null, returnClassName);
+		js.append(".class, value);\n");
+		//
+		js.append("return (");
+		js.appendClassReference(null, returnClassName);
+		js.append(")ecoreValue;\n");
+		return true;
+	}
+
 
 /*	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {

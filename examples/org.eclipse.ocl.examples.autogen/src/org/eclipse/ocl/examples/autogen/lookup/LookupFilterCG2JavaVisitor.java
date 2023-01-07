@@ -12,13 +12,11 @@
 package org.eclipse.ocl.examples.autogen.lookup;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.autogen.java.AutoCG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.calling.DefaultOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -34,9 +32,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor
 {
-	public LookupFilterCG2JavaVisitor(@NonNull LookupFilterGenerator codeGenerator, @NonNull CGPackage cgPackage,
-			@Nullable Iterable<CGValuedElement> sortedGlobals) {
-		super(codeGenerator, cgPackage, sortedGlobals);
+	public LookupFilterCG2JavaVisitor(@NonNull LookupFilterGenerator codeGenerator) {
+		super(codeGenerator);
 	}
 
 	@Override

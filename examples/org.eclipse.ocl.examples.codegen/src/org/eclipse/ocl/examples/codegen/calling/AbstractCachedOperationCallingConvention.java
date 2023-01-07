@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.AbstractCachePropertyCallingConvention.ImmutableCachePropertyCallingConvention;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -224,10 +225,17 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		}
 
 		@Override
+		public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+			CGValuedElement cgBody = ((CGBodiedProperty)cgProperty).getBody();
+			assert cgBody == null;
+			return false;			// Support property is not needed in Ecore
+		}
+
+		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
-			js.append("protected final");
+			js.append("public final");
 			js.append(" /*@NonInvalid*/ ");
 			boxedTypeRepresentation.appendClassReference(cgProperty.isRequired(), cgProperty);
 			js.append(" ");

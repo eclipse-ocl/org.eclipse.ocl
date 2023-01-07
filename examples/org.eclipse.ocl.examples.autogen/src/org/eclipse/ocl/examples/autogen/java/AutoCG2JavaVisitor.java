@@ -12,11 +12,8 @@
 package org.eclipse.ocl.examples.autogen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 
 /**
@@ -26,15 +23,10 @@ import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 public abstract class AutoCG2JavaVisitor extends CG2JavaVisitor
 {
 	protected final @NonNull CodeGenAnalyzer analyzer;
-	protected final @NonNull CGPackage cgPackage;
-	protected final @Nullable Iterable<CGValuedElement> sortedGlobals;
 
-	public AutoCG2JavaVisitor(@NonNull AutoCodeGenerator codeGenerator, @NonNull CGPackage cgPackage,
-			@Nullable Iterable<CGValuedElement> sortedGlobals) {
+	public AutoCG2JavaVisitor(@NonNull AutoCodeGenerator codeGenerator) {
 		super(codeGenerator);
 		this.analyzer = codeGenerator.getAnalyzer();
-		this.cgPackage = cgPackage;
-		this.sortedGlobals = sortedGlobals;
 	}
 
 	@Override
@@ -49,23 +41,6 @@ public abstract class AutoCG2JavaVisitor extends CG2JavaVisitor
 
 	protected void doMoreClassMethods(@NonNull CGClass cgClass) {
 		// doNothing
-	}
-
-	@Override
-	protected boolean doClassStatics(@NonNull CGClass cgClass, boolean needsBlankLine) {
-		@Nullable
-		Iterable<CGValuedElement> sortedGlobals2 = sortedGlobals;
-		if (sortedGlobals2 != null) {
-			if (needsBlankLine) {
-				js.appendOptionalBlankLine();
-			}
-			for (CGValuedElement cgElement : sortedGlobals2) {
-				assert cgElement.isGlobal();
-				cgElement.accept(this);
-			}
-			needsBlankLine = true;
-		}
-		return needsBlankLine;
 	}
 
 	protected abstract void doConstructor(@NonNull CGClass cgClass);

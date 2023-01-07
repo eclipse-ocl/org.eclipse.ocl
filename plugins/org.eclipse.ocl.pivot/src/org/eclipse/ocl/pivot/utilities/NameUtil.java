@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -121,6 +122,20 @@ public class NameUtil
 	 * @since 1.3
 	 */
 	public static final @NonNull ToStringComparator TO_STRING_COMPARATOR = ToStringComparator.INSTANCE;
+
+	public static @NonNull String debugClassName(@Nullable Object value) {
+		if (value instanceof EObject) {
+			String eClassName = ((EObject)value).eClass().getName();
+			assert eClassName != null;
+			return eClassName;
+		}
+		else if (value != null) {
+			return value.getClass().getSimpleName();
+		}
+		else {
+			return void.class.getSimpleName();
+		}
+	}
 
 	public static String debugFullName(Object object) {
 		if (object == null) {

@@ -201,10 +201,13 @@ public class CodeGenAnalyzer
 	private org.eclipse.ocl.pivot.@Nullable Class asCurrentRootClass = null;
 
 	/**
-	 * The additional CGClasses that have no counterpart in the original AS hierarchy. These may implement caches or
+	 * All CGClasses forming a queue between their discovery with package/supertype hierarchy resolution and
+	 * the deferred content resolution. Soe classes are user defined, some are synthesized to support
+	 * the additional CGClasses that have no counterpart in the original AS hierarchy. These may implement caches or
 	 * may reify functionality locally for which no external implementation is available.
 	 */
-	private /*@LazyNonNull*/ Set<@NonNull CGClass> injectedCGClasses = null;
+	private @NonNull ArrayList<@NonNull CGClass> cgClassesQueue = new ArrayList<>();
+	private int cgClassesQueueHead = 0;
 
 	/**
 	 * Mapping from each AS Element to its corresponding CGNamedElement. (Variables are mapped by the prevailing
@@ -349,12 +352,6 @@ public class CodeGenAnalyzer
 		globalNameManager.addGlobal(cgGlobal);
 	}
 
-	public void addInjectedCGClass(@NonNull CGClass cgClass) {
-		if (injectedCGClasses == null) {
-			injectedCGClasses = new HashSet<>();
-		}
-		injectedCGClasses.add(cgClass);
-	}
 
 
 //	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
@@ -392,17 +389,21 @@ public class CodeGenAnalyzer
 		return asOverrideOperations;
 	}
 
-	public void analyze(@NonNull CGElement cgRoot) {
+	public void analyze(@NonNull Iterable<@NonNull CGPackage> cgPackages) {
 		AnalysisVisitor analysisVisitor = codeGenerator.createAnalysisVisitor();
-		cgRoot.accept(analysisVisitor);
-		assert checkNameManagers(cgRoot);
+		for (@NonNull CGPackage cgPackage : cgPackages) {
+			cgPackage.accept(analysisVisitor);
+		}
+		assert checkNameManagers(cgPackages);
 		//
 		BoxingAnalyzer boxingAnalyzer = codeGenerator.createBoxingAnalyzer();
-		cgRoot.accept(boxingAnalyzer);
+		for (@NonNull CGPackage cgPackage : cgPackages) {
+			cgPackage.accept(boxingAnalyzer);
+		}
 		//
 		FieldingAnalyzer fieldingAnalyzer = codeGenerator.createFieldingAnalyzer();
-		fieldingAnalyzer.analyze(cgRoot, false);
-		assert checkNameManagers(cgRoot);
+		fieldingAnalyzer.analyze(cgPackages, false);
+		assert checkNameManagers(cgPackages);
 	}
 
 	public @Nullable CGClass basicGetCGClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
@@ -529,16 +530,18 @@ public class CodeGenAnalyzer
 	//
 	//	Assert method to verify the consistency of AS/CG NameManagers
 	//
-	protected boolean checkNameManagers(@NonNull CGElement cgRoot) {
-		for (@NonNull EObject eObject : new TreeIterable(cgRoot, true)) {
-			if ((eObject instanceof CGNamedElement) && !(eObject instanceof CGExecutorType) && !(eObject instanceof CGExecutorProperty)) {		// FIXME CGExecutorXXX.ast is a Class/Property
-				CGNamedElement cgElement = (CGNamedElement)eObject;
-				if (cgElement instanceof CGVariableExp) {
-					getClass();		// XXX
-				}
-				EObject asElement = cgElement.getAst();
-				if (asElement instanceof NamedElement) {
-					checkNameManager(cgElement, (NamedElement)asElement);
+	protected boolean checkNameManagers(@NonNull Iterable<@NonNull CGPackage> cgPackages) {
+		for (@NonNull CGPackage cgPackage : cgPackages) {
+			for (@NonNull EObject eObject : new TreeIterable(cgPackage, true)) {
+				if ((eObject instanceof CGNamedElement) && !(eObject instanceof CGExecutorType) && !(eObject instanceof CGExecutorProperty)) {		// FIXME CGExecutorXXX.ast is a Class/Property
+					CGNamedElement cgElement = (CGNamedElement)eObject;
+					if (cgElement instanceof CGVariableExp) {
+						getClass();		// XXX
+					}
+					EObject asElement = cgElement.getAst();
+					if (asElement instanceof NamedElement) {
+						checkNameManager(cgElement, (NamedElement)asElement);
+					}
 				}
 			}
 		}
@@ -802,9 +805,16 @@ public class CodeGenAnalyzer
 			CGClass cgSuperClass = generateClassDeclaration(asSuperClass, null);
 			cgClass.getSuperTypes().add(cgSuperClass);
 		}
+		queueCGClassDeclaration(cgClass);
+		return cgClass;
+	}
+
+	public void generateClassContents(@NonNull CGClass cgClass) {
+		org.eclipse.ocl.pivot.@NonNull Class asClass = CGUtil.getAST(cgClass);
 		for (@NonNull Property asProperty : ClassUtil.nullFree(asClass.getOwnedProperties())) {
 			CGProperty cgProperty = createCGElement(CGProperty.class, asProperty);
-			assert cgClass.getProperties().contains(cgProperty);
+		//	assert cgClass.getProperties().contains(cgProperty);
+			assert cgProperty.eContainer() != null;			// May be the cgForeignClass
 		}
 		for (@NonNull Constraint asConstraint : ClassUtil.nullFree(asClass.getOwnedInvariants())) {
 			CGConstraint cgConstraint = createCGElement(CGConstraint.class, asConstraint);
@@ -814,7 +824,6 @@ public class CodeGenAnalyzer
 			CGOperation cgOperation = createCGElement(CGOperation.class, asOperation);
 			assert cgClass.getOperations().contains(cgOperation);
 		}
-		return cgClass;
 	}
 
 	/**
@@ -931,6 +940,21 @@ public class CodeGenAnalyzer
 		return generateOperationDeclaration(asOperation, null, true);
 	}
 
+	protected void generateNestedPackages(@NonNull CGPackage cgPackage, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		List<org.eclipse.ocl.pivot.@NonNull Package> asPackages = new ArrayList<>(ClassUtil.nullFree(asPackage.getOwnedPackages()));
+		Collections.sort(asPackages, NameUtil.NAMEABLE_COMPARATOR);
+		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : asPackages) {
+			CGPackage cgNestedPackage2 = basicGetCGPackage(asNestedPackage);
+			if (cgNestedPackage2 == null) {
+				CGPackage cgNestedPackage = createCGElement(CGPackage.class, asNestedPackage);
+				assert cgPackage.getPackages().contains(cgNestedPackage);
+			}
+			else {		// Nested support/foreign CGPackage may already exist - e.g. in testQVTcCompiler_HSVToHSL_CG
+				assert NameUtil.getNameable(CGUtil.getClasses(cgPackage), asNestedPackage.getName()) != null;
+			}
+		}
+	}
+
 	public @NonNull CGOperation generateNonVirtualOperationDeclaration(@NonNull Operation asOperation) {
 		return generateOperationDeclaration(asOperation, null, false);
 	}
@@ -1035,15 +1059,10 @@ public class CodeGenAnalyzer
 		Collections.sort(asClasses, NameUtil.NAMEABLE_COMPARATOR);
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
 			CGClass cgClass = createCGElement(CGClass.class, asClass);
-			assert cgPackage.getClasses().contains(cgClass);
-		//	assert cgClass.eContainer().eContainer() == cgPackage.eContainer();			// asClass may be a psuedo-nested class
+		//	assert cgPackage.getClasses().contains(cgClass);
+			assert cgClass.eContainer().eContainer() == cgPackage.eContainer();			// asClass may be a psuedo-nested class
 		}
-		List<org.eclipse.ocl.pivot.@NonNull Package> asPackages = new ArrayList<>(ClassUtil.nullFree(asPackage.getOwnedPackages()));
-		Collections.sort(asPackages, NameUtil.NAMEABLE_COMPARATOR);
-		for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : asPackages) {
-			CGPackage cgNestedPackage = createCGElement(CGPackage.class, asNestedPackage);
-			assert cgPackage.getPackages().contains(cgNestedPackage);
-		}
+		generateNestedPackages(cgPackage, asPackage);
 		return cgPackage;
 	}
 
@@ -1107,6 +1126,9 @@ public class CodeGenAnalyzer
 	 * @param callingConvention
 	 */
 	public final @NonNull CGProperty generatePropertyDeclaration(@NonNull Property asProperty, @Nullable PropertyCallingConvention callingConvention) {
+		if ("reportingChain".equals(asProperty.getName())) {
+			getClass();		// XXX
+		}
 		CGProperty cgProperty = basicGetCGProperty(asProperty);
 		if (cgProperty == null) {
 			ExpressionInOCL asExpressionInOCL = null;
@@ -1130,16 +1152,11 @@ public class CodeGenAnalyzer
 		return cgProperty;
 	}
 
-	public @NonNull CGPackage generateRootPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		CGPackage cgRootPackage = generatePackage(null, asPackage);
-		if (injectedCGClasses != null) {
-			List<@NonNull CGClass> cgClasses = new ArrayList<>(injectedCGClasses);
-			Collections.sort(cgClasses, NameUtil.NAMEABLE_COMPARATOR);
-			for (@NonNull CGClass cgClass : cgClasses) {
-				generateClass(cgClass, CGUtil.getAST(cgClass));
-			}
+	public void generateQueuedClassesContents() {
+		while (cgClassesQueueHead < cgClassesQueue.size()) {
+			@NonNull CGClass cgClass = cgClassesQueue.get(cgClassesQueueHead++);
+			generateClassContents(cgClass);
 		}
-		return cgRootPackage;
 	}
 
 	protected @NonNull CGValuedElement generateSafeExclusion(@NonNull CallExp callExp, @NonNull CGValuedElement cgSource) {
@@ -1308,6 +1325,20 @@ public class CodeGenAnalyzer
 		return ClassUtil.nonNullState(basicGetCGRootClass(cgElement));
 	} */
 
+	protected org.eclipse.ocl.pivot.@NonNull Class getASRootClass() {
+		assert asCurrentRootClass != null;
+		return asCurrentRootClass;
+	}
+
+	public org.eclipse.ocl.pivot.@NonNull Class getASRootClass(@NonNull Element asElement) {
+		org.eclipse.ocl.pivot.Class asRootClass = basicGetRootClass(asElement);
+		if (asRootClass != null) {
+			return asRootClass;
+		}
+		assert asCurrentRootClass != null;
+		return asCurrentRootClass;
+	}
+
 	public @NonNull CGClass getCGRootClass(@NonNull Element asElement) {
 		org.eclipse.ocl.pivot.Class asRootClass = basicGetRootClass(asElement);
 		if (asRootClass != null) {
@@ -1385,6 +1416,10 @@ public class CodeGenAnalyzer
 		return ClassUtil.nonNullState(asCacheClass2asOperation.get(asClass));
 	}
 
+//	public @NonNull Operation getCachedOperation(@NonNull Operation asOperation) {
+//		return ClassUtil.nonNullState(asOperation2operationCache.get(asOperation));
+//	}
+
 	/**
 	 * Create or use the ClassNameManager for asClass exploiting an optionally already known cgClass.
 	 */
@@ -1441,7 +1476,6 @@ public class CodeGenAnalyzer
 		if (cgForeignClass2 == null) {
 			ForeignClassCallingConvention callingConvention = ForeignClassCallingConvention.getInstance();
 			cgForeignClass2 = cgForeignClass = callingConvention.createForeignClass(this, asParentPackage);
-			addInjectedCGClass(cgForeignClass2);
 		}
 		return cgForeignClass2;
 	}
@@ -1684,8 +1718,7 @@ public class CodeGenAnalyzer
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Package getRootClassParentPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		CGClass cgClass = getCGRootClass(asClass);
-		org.eclipse.ocl.pivot.Class asRootClass = CGUtil.getAST(cgClass);
+		org.eclipse.ocl.pivot.Class asRootClass = getASRootClass(asClass);
 		return AbstractLanguageSupport.getCachePackage(asRootClass);
 	}
 
@@ -1849,6 +1882,11 @@ public class CodeGenAnalyzer
 //	public boolean isExternal(@NonNull Feature asFeature) {
 //		return (externalFeatures != null) && externalFeatures.contains(asFeature);
 //	}
+
+	public void queueCGClassDeclaration(@NonNull CGClass cgClass) {
+		assert !cgClassesQueue.contains(cgClass);
+		cgClassesQueue.add(cgClass);
+	}
 
 	/**
 	 * Replace oldElement by newElement and return oldElement which is orphaned by the replacement.

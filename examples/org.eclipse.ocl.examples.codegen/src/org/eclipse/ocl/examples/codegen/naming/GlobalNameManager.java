@@ -32,7 +32,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSourcedCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -125,7 +124,6 @@ public class GlobalNameManager extends AbstractNameManager
 	}
 
 	protected final @NonNull JavaCodeGenerator codeGenerator;
-	protected final @NonNull ImportNameManager importNameManager;
 
 	private @NonNull Set<@NonNull CGValuedElement> globals = new HashSet<>();
 
@@ -192,7 +190,6 @@ public class GlobalNameManager extends AbstractNameManager
 		super(null, helper);
 		this.context = new Context(this);			// Global can allocate names straightawy
 		this.codeGenerator = codeGenerator;
-		this.importNameManager = codeGenerator.createImportNameManager();
 		//
 		//	Java reserved words first
 		//
@@ -239,10 +236,6 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public void addGlobal(@NonNull CGValuedElement cgGlobal) {
 		globals.add(cgGlobal);
-	}
-
-	public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String className) {
-		return importNameManager.addImport(isRequired, className);
 	}
 
 	public @NonNull NameVariant addNameVariantPreferred(@NonNull String name) {
@@ -455,10 +448,6 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public @NonNull NameResolution getIdResolverNameResolution() {
 		return idResolverName;
-	}
-
-	public @NonNull ImportNameManager getImportNameManager() {
-		return importNameManager;
 	}
 
 	public @NonNull String getInitValueName() {

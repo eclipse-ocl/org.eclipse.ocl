@@ -12,18 +12,12 @@ package org.eclipse.ocl.examples.autogen.lookup;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 
 public class LookupUnqualifiedCG2JavaVisitor extends LookupVisitorsCG2JavaVisitor {
 
-	public LookupUnqualifiedCG2JavaVisitor(
-			@NonNull LookupUnqualifiedCodeGenerator codeGenerator,
-			@NonNull CGPackage cgPackage,
-			@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals) {
-		super(codeGenerator, cgPackage, sortedGlobals);
+	public LookupUnqualifiedCG2JavaVisitor(@NonNull LookupUnqualifiedCodeGenerator codeGenerator) {
+		super(codeGenerator);
 	}
 
 	@Override

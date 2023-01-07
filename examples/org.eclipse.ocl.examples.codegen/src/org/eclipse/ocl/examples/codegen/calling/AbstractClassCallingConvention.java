@@ -143,7 +143,7 @@ public abstract class AbstractClassCallingConvention extends AbstractCallingConv
 	protected void installCGRootClassParent(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgRootClass = analyzer.getCGRootClass(asClass);
 		cgRootClass.getClasses().add(cgClass);
-		analyzer.addInjectedCGClass(cgClass);
+		analyzer.queueCGClassDeclaration(cgClass);
 	}
 
 	@Deprecated // moving to ClassCallingConvention

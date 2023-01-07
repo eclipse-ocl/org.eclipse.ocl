@@ -23,6 +23,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
@@ -38,13 +39,16 @@ import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -178,6 +182,15 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 	}
 
 	@Override
+	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		if (cgOperation.getBody() == null) {
+			return false;
+		}
+		cgOperation.accept(cg2javaVisitor);
+		return true;
+	}
+
+	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
 	//	Operation asOperation = cgOperationCallExp.getReferredOperation();
@@ -252,7 +265,43 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
-		throw new UnsupportedOperationException();		// Ecore operations are declared by genmodel
+		Operation asOperation = CGUtil.getAST(cgOperation);
+		List<CGParameter> cgParameters = cgOperation.getParameters();
+		CGValuedElement cgBody = cgOperation.getBody();
+		if (cgBody == null) {
+			return false;
+		}
+		String returnClassName = cg2javaVisitor.getGenModelHelper().getOperationReturnType(asOperation);
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		js.appendCommentWithOCL(null, cgBody.getAst());
+		for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
+			VariableDeclaration asParameter = CGUtil.getAST(cgParameter);
+			Type asType = PivotUtil.getType(asParameter);
+			if (asType instanceof CollectionType) {
+				js.append("assert ");
+				js.appendValueName(cgParameter);
+				js.append(" != null;\n");
+			}
+		}
+		js.appendLocalStatements(cgBody);
+		CGInvalid cgInvalidValue = cgBody.getInvalidValue();
+		if (cgInvalidValue  != null) {
+			js.append("throw ");
+			js.appendValueName(cgInvalidValue);
+		}
+		else {
+			TypeDescriptor typeDescriptor = cg2javaVisitor.getCodeGenerator().getTypeDescriptor(cgBody);
+			//			String className = typeDescriptor.getClassName();
+			//			Class<?> javaClass = typeDescriptor.getJavaClass();
+			js.append("return ");
+			//			if (returnClassName.contains("<")) {
+			//				js.append("(" + returnClassName + ")");
+			//			}
+			//			js.appendValueName(cgBody);
+			typeDescriptor.appendEcoreValue(js, returnClassName, cgBody);
+		}
+		js.append(";");
+		return true;
 	}
 
 	@Override

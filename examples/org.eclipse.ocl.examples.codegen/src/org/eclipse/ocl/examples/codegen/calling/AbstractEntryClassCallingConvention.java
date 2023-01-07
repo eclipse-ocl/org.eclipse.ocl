@@ -28,7 +28,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -234,7 +233,13 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			OCLExpression asBody = null;
 			ExpressionInOCL asEntryExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
-			ParameterVariable asEntryThisVariable = asHelper.createParameterVariable(globalNameManager.getThisNameResolution().getResolvedName(), codeGenerator.getContextClass(), true);
+//			ParameterVariable asEntryThisVariable = asHelper.createParameterVariable(globalNameManager.getThisNameResolution().getResolvedName(), codeGenerator.getContextClass(), true);
+
+			org.eclipse.ocl.pivot.Class asNewContextClass = CGUtil.getAST(cgEntryClass);
+			org.eclipse.ocl.pivot.Class asOldContextClass = codeGenerator.getContextClass();
+		//	NameUtil.errPrintln("createOperation: old: " + asOldContextClass + " new: " + asNewContextClass);
+			ParameterVariable asEntryThisVariable = asHelper.createParameterVariable(globalNameManager.getThisNameResolution().getResolvedName(), asOldContextClass, true);
+
 			asEntryExpressionInOCL.setOwnedContext(asEntryThisVariable);
 			ParameterVariable asEntrySelfVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asEntryClass, true);
 			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
@@ -321,7 +326,6 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		boolean isIncremental = codeGenerator.getOptions().isIncremental();
 		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
 		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
 		Operation asOperation = CGUtil.getAST(cgOperation);
 		org.eclipse.ocl.pivot.@NonNull Package asParentPackage = getParentPackage(analyzer, asOperation);
@@ -332,15 +336,22 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		analyzer.addCachedOperation(asEntryClass, asOperation);
 		org.eclipse.ocl.pivot.Class asEntrySuperClass = jLanguageSupport.getNativeClass(isIncremental ? AbstractComputation.Incremental.class : AbstractComputation.class);
 		asEntryClass.getSuperClasses().add(asEntrySuperClass);
-		importNameManager.reserveLocalName(PivotUtil.getName(asEntryClass));
 		//
 		CGClass cgEntryClass = analyzer.generateClassDeclaration(asEntryClass, this);
 		CGClass cgEntrySuperClass = analyzer.generateClassDeclaration(asEntrySuperClass, null);
 		cgEntryClass.getSuperTypes().add(cgEntrySuperClass);
 		//
 		NameResolution contextNameResolution = getContextNameResolution(globalNameManager);
-		org.eclipse.ocl.pivot.Class asContextClass = getContextClass(analyzer, cgEntryClass);
-		createEntryProperty(analyzer, cgEntryClass, contextNameResolution, asContextClass);
+//		org.eclipse.ocl.pivot.Class asContextClass = getContextClass(analyzer, cgEntryClass);
+//		createEntryProperty(analyzer, cgEntryClass, contextNameResolution, asContextClass);
+
+		org.eclipse.ocl.pivot.Class asOldContextClass = getContextClass(analyzer, cgEntryClass);
+
+		CGClass cgForeignClass = analyzer.getForeignCGClass(asParentPackage);
+		org.eclipse.ocl.pivot.Class asNewContextClass = CGUtil.getAST(cgForeignClass);
+	//	NameUtil.errPrintln("createEntryClass: old: " + asOldContextClass + " new: " + asNewContextClass);
+
+		createEntryProperty(analyzer, cgEntryClass, contextNameResolution, asOldContextClass);
 		for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
 			createEntryProperty(analyzer, cgEntryClass, null, asParameter);
 			// XXX need to support a cached invalid

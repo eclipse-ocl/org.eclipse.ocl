@@ -235,9 +235,10 @@ public class JavaStream
 		}
 	}
 
-	protected @NonNull JavaCodeGenerator codeGenerator;
-	protected @NonNull CG2JavaVisitor cg2java;
-	protected @NonNull CodeGenAnalyzer analyzer;
+	protected final @NonNull JavaCodeGenerator codeGenerator;
+	protected final @NonNull CG2JavaVisitor cg2java;
+	protected final @NonNull ImportNameManager importNameManager;
+	protected final @NonNull CodeGenAnalyzer analyzer;
 	protected final @NonNull Id2JavaExpressionVisitor id2JavaExpressionVisitor;
 	protected final boolean useNullAnnotations;
 	protected final boolean suppressNullWarnings;
@@ -251,9 +252,10 @@ public class JavaStream
 	private final @NonNull TypeRepresentation boxedTypeRepresentation;
 	private final @NonNull TypeRepresentation unboxedTypeRepresentation;
 
-	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor cg2java) {
+	public JavaStream(@NonNull JavaCodeGenerator codeGenerator, @NonNull CG2JavaVisitor cg2java, @NonNull ImportNameManager importNameManager) {
 		this.codeGenerator = codeGenerator;
 		this.cg2java = cg2java;
+		this.importNameManager = importNameManager;
 		this.analyzer = codeGenerator.getAnalyzer();
 		this.id2JavaExpressionVisitor = cg2java.createId2JavaExpressionVisitor(this);
 		CodeGenOptions options = codeGenerator.getOptions();
@@ -268,10 +270,10 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("AbstractBinaryOperation")) {
+			if (string.contains("THROWN_IF_IsEQ2_")) {
 				getClass();		// XXX
 			}
-			if (string.contains("CAST_d3p")) {
+			if (string.contains("InvalidValueException")) {
 				getClass();		// XXX
 			}
 			if (indentationStack.isEmpty()) {
@@ -734,7 +736,7 @@ public class JavaStream
 	public void appendClassReference(@Nullable Boolean isRequired, @Nullable String className) {
 		assert className != null;
 		className = codeGenerator.getRequalifiedClassName(className);
-		append(cg2java.addImport(useNullAnnotations ? isRequired : null, className));
+		append(importNameManager.addImport(useNullAnnotations ? isRequired : null, className));
 	}
 
 	public void appendClassReference(@NonNull CGClass cgClass) {
@@ -1284,7 +1286,7 @@ public class JavaStream
 		}
 		else {
 			if (cgElement.isGlobal()) {
-				cg2java.appendGlobalPrefix();
+				cg2java.appendSupportPrefix();
 			}
 			String valueName = cgElement.getResolvedName();
 			append(valueName);
@@ -1305,6 +1307,10 @@ public class JavaStream
 
 	public @Nullable GenPackage getGenPackage() {
 		return cg2java.getGenPackage();
+	}
+
+	public @NonNull ImportNameManager getImportNameManager() {
+		return importNameManager;
 	}
 
 	public @NonNull TypeRepresentation getUnboxedTypeRepresentation() {

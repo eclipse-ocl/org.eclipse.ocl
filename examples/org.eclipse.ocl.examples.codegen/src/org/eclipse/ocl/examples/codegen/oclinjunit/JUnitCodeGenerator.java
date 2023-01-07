@@ -26,7 +26,6 @@ import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -109,7 +108,9 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		asHelper.setType(asOperation, expInOcl.getType(), expInOcl.isIsRequired());
 
 		analyzer.setRootClass(asClass);				// Identify the host for synthesized nested classes
-		return analyzer.generateRootPackage(asRootPackage);
+		CGPackage cgRootPackage = analyzer.generatePackage(null, asRootPackage);
+		analyzer.generateQueuedClassesContents();
+		return cgRootPackage;
 	}
 
 	@Override
@@ -157,10 +158,10 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		return super.getCallingConvention(asOperation, maybeVirtual);
 	}
 
-	@Override
-	public @NonNull JavaImportNameManager getImportNameManager() {
-		return (JavaImportNameManager) super.getImportNameManager();
-	}
+//	@Override
+//	public @NonNull JavaImportNameManager getImportNameManager() {
+//		return (JavaImportNameManager) super.getImportNameManager();
+//	}
 
 	@Deprecated /* @deprecated obsolete approach */
 	@Override

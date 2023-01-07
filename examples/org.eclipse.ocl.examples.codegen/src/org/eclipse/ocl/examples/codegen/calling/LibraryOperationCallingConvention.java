@@ -132,7 +132,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 		return cgOperationCallExp;
 	}
 
-	public @NonNull CGCallExp createCGOperationCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation,
+/*	public @NonNull CGCallExp createCGOperationCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation,
 			@Nullable CGValuedElement cgSource, @NonNull CGValuedElement @Nullable ... cgArguments) {
 		@NonNull Operation asOperation = CGUtil.getAST(cgOperation);
 		@NonNull LibraryOperation libraryOperation = (LibraryOperation) asOperation.getImplementation();
@@ -172,7 +172,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 			else {
 				throw new UnsupportedOperationException();
 			}
-		} */
+		} * /
 		if (cgArguments != null) {
 			for (@NonNull CGValuedElement cgArgument : cgArguments) {
 			//	CGValuedElement cgArgument = analyzer.createCGElement(CGValuedElement.class, asArgument);
@@ -181,9 +181,9 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 		}
 	//	initCallArguments(as2cgVisitor, cgOperationCallExp);
 		return cgOperationCallExp;
-	}
+	} */
 
-	private void initCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp,
+/*	private void initCallExp2(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp,
 			@NonNull CGOperation cgOperation, boolean isRequired) {		// XXX wip eliminate isRequired
 	//	Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
 		Operation asOperation = CGUtil.getAST(cgOperation);
@@ -198,7 +198,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 		cgOperationCallExp.setReferredOperation(cgOperation);
 		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
 		cgOperationCallExp.setValidating(asOperation.isIsValidating());
-	}
+	} */
 
 	public @NonNull CGLibraryOperationCallExp createCGMethodOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull LibraryOperation libraryOperation,
 	//		CGValuedElement cgSource, @NonNull Operation asOperation) {

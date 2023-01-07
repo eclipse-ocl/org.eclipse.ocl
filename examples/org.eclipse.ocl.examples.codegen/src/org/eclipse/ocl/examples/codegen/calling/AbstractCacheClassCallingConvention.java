@@ -19,7 +19,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.ImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -250,7 +249,6 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 
 	public @NonNull CGClass createCacheClass(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull AbstractCachedOperationCallingConvention operationCallingConvention) {
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		ImportNameManager importNameManager = codeGenerator.getImportNameManager();
 		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
 		//
 		org.eclipse.ocl.pivot.@NonNull Package asPackage = getParentPackage(analyzer, asOperation);
@@ -259,7 +257,6 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		org.eclipse.ocl.pivot.Class asCacheClass = AbstractLanguageSupport.getClass(asPackage, cacheClassName);
 		org.eclipse.ocl.pivot.Class asCacheSuperClass = jLanguageSupport.getNativeClass(getSuperClass());
 		asCacheClass.getSuperClasses().add(asCacheSuperClass);
-		importNameManager.reserveLocalName(PivotUtil.getName(asCacheClass));
 		analyzer.addCachedOperation(asCacheClass, asOperation);
 		//
 		CGClass cgCacheClass = analyzer.generateClassDeclaration(asCacheClass, this);
@@ -285,7 +282,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		Operation asOperation = cg2javaVisitor.getAnalyzer().basicGetCachedOperation(asClass);
 		js.appendCommentWithOCL(title, asOperation);
-		js.append("protected class " + className);		// Could be static if dynamic INSTANCE_CACHE accessible statically
+		js.append("public class " + className);		// Could be static if dynamic INSTANCE_CACHE accessible statically
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
 		generateProperties(cg2javaVisitor, cgClass);

@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -23,6 +24,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -68,6 +70,15 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 				throw new WrappedException(e);
 			}
 		}
+	}
+
+	@Override
+	protected void generateNestedPackages(@NonNull CGPackage cgPackage, @NonNull Package asPackage) {
+		// Do nothing since we process GenPackages
+	}
+
+	public org.eclipse.ocl.pivot.@NonNull Class getContextClass() {
+		return getASRootClass();
 	}
 
 	@Override

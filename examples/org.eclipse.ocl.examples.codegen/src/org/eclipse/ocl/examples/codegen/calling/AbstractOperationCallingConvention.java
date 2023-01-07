@@ -400,6 +400,11 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	@Override
+	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		throw new UnsupportedOperationException("Unexpected " + this + " for an Ecore Operation");
+	}
+
+	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		// XXX abstract
 		return false;
