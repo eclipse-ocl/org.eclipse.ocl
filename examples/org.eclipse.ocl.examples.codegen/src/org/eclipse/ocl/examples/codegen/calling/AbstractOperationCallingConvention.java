@@ -219,11 +219,13 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {  // XXX perhaps always override
 		Element asOperation = cgOperation.getAst();
 		ExpressionInOCL asSpecification = (ExpressionInOCL) (asOperation instanceof ExpressionInOCL ? asOperation : ((Operation)asOperation).getBodyExpression());
-		assert (asSpecification != null);
-		OCLExpression asExpression = PivotUtil.getOwnedBody(asSpecification);
-		CGValuedElement cgBody = analyzer.createCGElement(CGValuedElement.class, asExpression);
-		cgOperation.setBody(cgBody);
-	//	System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
+		// XXX	assert (asSpecification != null);
+		if (asSpecification != null) {
+			OCLExpression asExpression = PivotUtil.getOwnedBody(asSpecification);
+			CGValuedElement cgBody = analyzer.createCGElement(CGValuedElement.class, asExpression);
+			cgOperation.setBody(cgBody);
+		//	System.out.println("setBody " + NameUtil.debugSimpleName(cgOperation) + " : " + cgBody);
+		}
 	}
 
 	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
@@ -401,7 +403,9 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 
 	@Override
 	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
-		throw new UnsupportedOperationException("Unexpected " + this + " for an Ecore Operation");
+	//	throw new UnsupportedOperationException("Unexpected " + this + " for an Ecore Operation");
+	//	cg2javaVisitor.getJavaStream().append("Unexpected " + this + " for the Ecore Operation for " + cgOperation);
+		return false;		// requires manual implementation
 	}
 
 	@Override

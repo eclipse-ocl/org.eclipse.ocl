@@ -67,7 +67,4 @@ public interface CGVariable extends CGValuedElement {
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$24
 	void setNonInvalid();
 
-	@Deprecated
-	void setNonNull();
-
 } // CGVariableDeclaration

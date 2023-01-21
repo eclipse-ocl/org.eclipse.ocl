@@ -617,9 +617,6 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 		}
 
 		protected void installProperty(@NonNull Ecore2AS ecore2as, @NonNull EStructuralFeature eFeature, @NonNull Map<@NonNull String, @NonNull String> results) {
-			if ("dependsOnUnits".equals(eFeature.getName())) {
-				getClass();		// XXX
-			}
 			Property pProperty = ecore2as.getCreated(Property.class, eFeature);
 			String fragmentURI = String.valueOf(EcoreUtil.getURI(pProperty).fragment());
 			String body = results.get(fragmentURI);
@@ -630,7 +627,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				}
 				body = "throw new UnsupportedOperationException();  // FIXME Unimplemented " + (pProperty != null ? AS2Moniker.toString(pProperty) : "");
 			}
-		// XXX	assert body.trim().length() > 0;
+			assert body.trim().length() > 0;
 			addEAnnotationDetail(eFeature, GenModelPackage.eNS_URI, "get", body);
 			//	removeEAnnotation(eFeature.getEAnnotation(OCLConstants.OCL_DELEGATE_URI));
 			//	removeEAnnotation(eFeature.getEAnnotation(OCLConstants.OCL_DELEGATE_URI_LPG));

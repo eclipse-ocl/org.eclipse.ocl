@@ -173,10 +173,8 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		analyzer.initAst(cgOperation, asOperation, true);
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() == null;
-		if (cgOperation.eContainer() == null) {			// Unless createCGOperation defined an alternative
-			CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
-			cgClass.getOperations().add(cgOperation);
-		}
+		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
+		cgClass.getOperations().add(cgOperation);
 		createCGParameters(operationNameManager, asExpressionInOCL);
 		return cgOperation;
 	}

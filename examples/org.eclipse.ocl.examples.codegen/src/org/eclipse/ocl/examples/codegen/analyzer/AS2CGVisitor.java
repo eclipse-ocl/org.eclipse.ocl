@@ -391,7 +391,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGOperation visitOperation(@NonNull Operation asOperation) {
-		if (asOperation.toString().contains("ENTRY_Parent_static_count(")) {
+		if (asOperation.toString().contains("and(")) {
 			getClass();		// XXX
 		}
 		CGOperation cgOperation = context.basicGetCGOperation(asOperation);

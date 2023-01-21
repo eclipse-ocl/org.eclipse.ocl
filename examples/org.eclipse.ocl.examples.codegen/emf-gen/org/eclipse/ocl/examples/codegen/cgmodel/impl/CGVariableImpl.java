@@ -340,9 +340,4 @@ public abstract class CGVariableImpl extends CGValuedElementImpl implements CGVa
 		nonInvalid = true;
 	}
 
-	@Override
-	public void setNonNull() {
-		setRequired(true);
-	}
-
 } //CGVariableImpl

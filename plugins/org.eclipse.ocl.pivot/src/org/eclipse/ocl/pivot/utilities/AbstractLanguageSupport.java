@@ -74,6 +74,9 @@ public abstract class AbstractLanguageSupport implements LanguageSupport
 		if ((asNamedElement instanceof NamedElement) && !(asNamedElement instanceof Model)) {
 			appendQualification(s, asNamedElement.eContainer());
 			String name = ((NamedElement)asNamedElement).getName();
+			if (name == null) {
+				name = "_anon_";
+			}
 			if (name.length() > 0) {			// Hide the default Java package
 				appendAndEncodeName(s, name);
 				s.append(".");

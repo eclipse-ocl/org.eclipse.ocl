@@ -89,7 +89,9 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 
 	@Override
 	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
-		throw new UnsupportedOperationException("Unexpected " + this + " for an Ecore Property");
+		// throw new UnsupportedOperationException("Unexpected " + this + " for an Ecore Property " + cgProperty);
+		// cg2javaVisitor.getJavaStream().append("Unexpected " + this + " for the Ecore Property for " + cgProperty);
+		return false;		// requires manual implementation
 	}
 
 	@Override

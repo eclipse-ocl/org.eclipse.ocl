@@ -294,7 +294,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
 			CGParameter cgIdResolverParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
 			cgIdResolverParameter.setNonInvalid();
-			cgIdResolverParameter.setNonNull();
+			cgIdResolverParameter.setRequired(true);
 			cgEntryParameters.add(cgIdResolverParameter);
 			CGParameter cgEntryBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
 			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);

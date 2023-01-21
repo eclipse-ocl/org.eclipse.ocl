@@ -311,7 +311,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		CGParameter executorParameter = getAnalyzer().createCGParameter(executorName, getAnalyzer().getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
 	//	executorParameter.setValueName(executorName);
 		executorParameter.setNonInvalid();
-		executorParameter.setNonNull();
+		executorParameter.setRequired(true);
 		return executorParameter;
 	}
 
@@ -387,7 +387,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		CGParameter typeIdParameter = getAnalyzer().createCGParameter(typeIdNameResolution, getAnalyzer().getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
 	//	typeIdParameter.setValueName(typeIdName);
 		typeIdParameter.setNonInvalid();
-		typeIdParameter.setNonNull();
+		typeIdParameter.setRequired(true);
 		return typeIdParameter;
 	}
 

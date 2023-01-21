@@ -101,7 +101,7 @@ public class BuiltInIterationCallingConvention extends AbstractIterationCallingC
 		if (asLoopExp instanceof IterateExp) {
 			Variable accumulator = PivotUtil.getOwnedResult((IterateExp)asLoopExp);
 			CGIterator cgAccumulator = iteratorNameManager.getIterator(accumulator);
-			//				cgBuiltInIterationCallExp.setNonNull();
+			//				cgBuiltInIterationCallExp.setRequired(true);
 			setNullableIterator(analyzer, cgAccumulator, accumulator);
 			((CGBuiltInIterationCallExp)cgIterationCallExp).setAccumulator(cgAccumulator);
 			globalNameManager.addSelfNameManager(cgAccumulator, iteratorNameManager);
@@ -116,7 +116,7 @@ public class BuiltInIterationCallingConvention extends AbstractIterationCallingC
 				CGAccumulator cgAccumulator = CGModelFactory.eINSTANCE.createCGAccumulator();
 				cgAccumulator.setTypeId(cgAccumulatorId);
 				if (isNonNullAccumulator) {
-					cgAccumulator.setNonNull();
+					cgAccumulator.setRequired(true);
 				}
 				if (!asIteration.isIsValidating()) {
 					cgAccumulator.setNonInvalid();
@@ -294,9 +294,6 @@ public class BuiltInIterationCallingConvention extends AbstractIterationCallingC
 	private void setNullableIterator(@NonNull CodeGenAnalyzer analyzer, @NonNull CGIterator cgIterator, @NonNull Variable iterator) {
 		cgIterator.setTypeId(analyzer.getCGTypeId(iterator.getTypeId()));
 		cgIterator.setRequired(iterator.isIsRequired());
-		if (iterator.isIsRequired()) {
-			cgIterator.setNonNull();
-		}
 		cgIterator.setNonInvalid();
 	}
 }

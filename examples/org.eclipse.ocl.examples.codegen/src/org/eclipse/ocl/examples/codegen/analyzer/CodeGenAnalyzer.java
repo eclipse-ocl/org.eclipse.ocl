@@ -697,9 +697,6 @@ public class CodeGenAnalyzer
 		nameResolution.addCGElement(cgParameter);
 		cgParameter.setTypeId(typeId);
 		cgParameter.setRequired(isRequired);
-		if (isRequired) {
-			cgParameter.setNonNull();
-		}
 		return cgParameter;
 	}
 
@@ -793,6 +790,9 @@ public class CodeGenAnalyzer
 	 * Generate the full CG declaration and implementation for asClass.
 	 */
 	public @NonNull CGClass generateClass(@Nullable CGClass cgClass, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		if (asClass.getName().equals("Boolean")) {
+			getClass();		// XXX
+		}
 		if (cgClass == null) {
 			cgClass = basicGetCGClass(asClass);
 			if (cgClass == null) {
@@ -820,6 +820,9 @@ public class CodeGenAnalyzer
 			CGConstraint cgConstraint = createCGElement(CGConstraint.class, asConstraint);
 			assert cgClass.getInvariants().contains(cgConstraint);
 		}
+		if (asClass.getName().equals("Boolean")) {
+			getClass();		// XXX
+		}
 		for (@NonNull Operation asOperation : ClassUtil.nullFree(asClass.getOwnedOperations())) {
 			CGOperation cgOperation = createCGElement(CGOperation.class, asOperation);
 			assert cgClass.getOperations().contains(cgOperation);
@@ -833,7 +836,7 @@ public class CodeGenAnalyzer
 		CGClass cgClass = (CGClass)asElement2cgElement.get(asClass);
 		if (cgClass == null) {
 			CompleteClass completeClass = completeModel.getCompleteClass(asClass);
-			asClass = completeClass.getPrimaryClass();
+		//	asClass = completeClass.getPrimaryClass();
 		//	System.out.println("generateClassDeclaration " + NameUtil.debugSimpleName(asClass) + " " + asClass);
 			if (callingConvention == null) {
 				callingConvention = codeGenerator.getCallingConvention(asClass);
@@ -868,9 +871,7 @@ public class CodeGenAnalyzer
 		CGConstraint cgConstraint = (CGConstraint)asElement2cgElement.get(asConstraint);
 		if (cgConstraint == null) {
 			cgConstraint = CGModelFactory.eINSTANCE.createCGConstraint();
-			cgConstraint.setAst(asConstraint);
-		//	cgConstraint.setTypeId(getCGTypeId(asConstraint.getTypeId()));
-			asElement2cgElement.put(asConstraint, cgConstraint);
+			initAst(cgConstraint, asConstraint, TypeId.BOOLEAN, true);
 			generateConstraintBody(cgConstraint, asConstraint);
 			CGClass cgClass = getCGClass(PivotUtil.getContainingClass(asConstraint));		// XXX
 			cgClass.getInvariants().add(cgConstraint);
@@ -879,7 +880,8 @@ public class CodeGenAnalyzer
 	}
 
 	protected void generateConstraintBody(@NonNull CGConstraint cgConstraint, @NonNull Constraint asConstraint) {
-		LanguageExpression specification = asConstraint.getOwnedSpecification();
+		throw new UnsupportedOperationException("generateConstraintBody only supported for OCLinEcore");
+	/*		LanguageExpression specification = asConstraint.getOwnedSpecification();
 		if (specification != null) {
 			assert cgConstraint.basicGetNameResolution() == null;
 		//	getNameManager().declarePreferredName(cgConstraint);
@@ -900,7 +902,7 @@ public class CodeGenAnalyzer
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		} */
 	}
 
 	/**
@@ -1073,7 +1075,7 @@ public class CodeGenAnalyzer
 		CGPackage cgPackage = (CGPackage)asElement2cgElement.get(asPackage);
 		if (cgPackage == null) {
 			CompletePackage completePackage = completeModel.getCompletePackage(asPackage);
-			org.eclipse.ocl.pivot.Package asPrimaryPackage = ClassUtil.nonNullState(completePackage.getPrimaryPackage());
+			org.eclipse.ocl.pivot.Package asPrimaryPackage = asPackage; // ClassUtil.nonNullState(completePackage.getPrimaryPackage());
 			cgPackage = (CGPackage)asElement2cgElement.get(asPrimaryPackage);
 			if (cgPackage != null) {
 				asElement2cgElement.put(asPackage, cgPackage);			// Late native discovery
@@ -1430,7 +1432,7 @@ public class CodeGenAnalyzer
 				cgClass = generateClassDeclaration(asClass, null);
 			}
 		}
-		assert completeModel.getCompleteClass(asClass).getPrimaryClass() == cgClass.getAst();
+	//	assert completeModel.getCompleteClass(asClass).getPrimaryClass() == cgClass.getAst();
 		ClassNameManager classNameManager = (ClassNameManager)globalNameManager.basicGetChildNameManager(cgClass);
 		if (classNameManager == null) {
 			EObject eContainer = asClass.eContainer();
@@ -1682,7 +1684,7 @@ public class CodeGenAnalyzer
 				cgPackage = generatePackageDeclaration(asPackage);
 			}
 		}
-		assert cgPackage.getAst() == completeModel.getCompletePackage(asPackage).getPrimaryPackage();
+	//	assert cgPackage.getAst() == completeModel.getCompletePackage(asPackage).getPrimaryPackage();
 		PackageNameManager packageNameManager = (PackageNameManager)globalNameManager.basicGetChildNameManager(cgPackage);
 		if (packageNameManager == null) {
 			org.eclipse.ocl.pivot.Package asParentPackage = asPackage.getOwningPackage();
@@ -1737,9 +1739,6 @@ public class CodeGenAnalyzer
 			executableNameManager.addVariable(asParameter, cgParameter);
 			boolean isRequired = asParameter.isIsRequired();
 			cgParameter.setRequired(isRequired);
-			if (isRequired) {
-				cgParameter.setNonNull();
-			}
 		}
 		return cgParameter;
 	}

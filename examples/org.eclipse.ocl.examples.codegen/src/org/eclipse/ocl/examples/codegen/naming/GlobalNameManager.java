@@ -183,7 +183,6 @@ public class GlobalNameManager extends AbstractNameManager
 	protected final @NonNull NameResolution standardLibraryVariableName;
 	protected final @NonNull NameResolution thisName;
 	protected final @NonNull NameResolution typeIdName;
-	protected final @NonNull NameResolution valueName;
 	private boolean needsExecutor = false;
 
 	public GlobalNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManagerHelper helper) {
@@ -194,6 +193,8 @@ public class GlobalNameManager extends AbstractNameManager
 		//	Java reserved words first
 		//
 		this.thisName = declareEagerName(null, JavaConstants.THIS_NAME);
+		//
+		//	XXX FIXME any name reserved here provokes a name occlusion diagnostic for user usage
 		//
 		this.anyName = declareEagerName(null, JavaConstants.ANY_NAME);
 		this.basicEvaluateName = declareEagerName(null, JavaConstants.BASIC_EVALUATE_NAME);
@@ -218,7 +219,6 @@ public class GlobalNameManager extends AbstractNameManager
 		this.sourceAndArgumentValuesName = declareEagerName(null, JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
 		this.standardLibraryVariableName = declareEagerName(null, JavaConstants.STANDARD_LIBRARY_NAME);
 		this.typeIdName = declareEagerName(null, JavaConstants.TYPE_ID_NAME);
-		this.valueName = declareEagerName(null, "value");
 	}
 
 	/**
@@ -537,10 +537,6 @@ public class GlobalNameManager extends AbstractNameManager
 
 	public @NonNull NameResolution getTypeIdNameResolution() {
 		return typeIdName;
-	}
-
-	public @NonNull String getValueName() {
-		return valueName.getResolvedName();
 	}
 
 	@Override
