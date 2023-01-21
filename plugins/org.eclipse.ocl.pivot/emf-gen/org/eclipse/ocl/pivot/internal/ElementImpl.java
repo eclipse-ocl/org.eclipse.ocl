@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PivotSupport;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -216,10 +217,10 @@ public abstract class ElementImpl
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ @NonNull StandardLibrary standardLibrary = executor.getStandardLibrary();
-		final /*@NonInvalid*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_Element, this);
+		final /*@NonInvalid*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotSupport.SET_CLSSid_Element, this);
 		final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure = executor.getStaticTypeOfValue(null, oclAsSet);
 		final @NonNull LibraryIterationExtension IMPL_closure = (LibraryIterationExtension)TYPE_closure.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
-		final @NonNull Object ACC_closure = IMPL_closure.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Element, PivotTables.SET_CLSSid_Element);
+		final @NonNull Object ACC_closure = IMPL_closure.createAccumulatorValue(executor, PivotSupport.SET_CLSSid_Element, PivotSupport.SET_CLSSid_Element);
 		/**
 		 * Implementation of the iterator body.
 		 */
@@ -230,20 +231,18 @@ public abstract class ElementImpl
 			 */
 			@Override
 			public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object oclAsSet, final /*@NonInvalid*/ @Nullable Object _1) {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Element = idResolver.getClass(PivotTables.CLSSid_Element, null);
-				final /*@NonInvalid*/ @Nullable Element CAST_1_ = (Element)_1;
-				if (CAST_1_ == null) {
-					throw new InvalidValueException("Null \'\'OclElement\'\' rather than \'\'OclVoid\'\' value required");
-				}
-				final /*@Thrown*/ @NonNull SetValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OclElement, CAST_1_);
-				final /*@Thrown*/ @NonNull SetValue selectByKind = (@Nullable SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Element = idResolver.getClass(PivotSupport.CLSSid_Element, null);
+				@SuppressWarnings("null")
+				final /*@NonInvalid*/ @NonNull Element CAST_1_ = (@NonNull Element)_1;
+				final /*@NonInvalid*/ @NonNull SetValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotSupport.SET_CLSSid_OclElement, CAST_1_);
+				final /*@NonInvalid*/ @NonNull SetValue selectByKind = (SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element);
 				return selectByKind;
 			}
 		};
-		final @NonNull ExecutorSingleIterationManager MGR_closure = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Element, BODY_closure, oclAsSet, ACC_closure);
+		final @NonNull ExecutorSingleIterationManager MGR_closure = new ExecutorSingleIterationManager(executor, PivotSupport.SET_CLSSid_Element, BODY_closure, oclAsSet, ACC_closure);
 		@SuppressWarnings("null")
 		final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure.evaluateIteration(MGR_closure);
-		final /*@Thrown*/ @NonNull List<Element> ECORE_closure = ((IdResolverExtension)idResolver).ecoreValueOfAll(Element.class, closure);
+		final /*@Thrown*/ @Nullable List<Element> ECORE_closure = ((IdResolverExtension)idResolver).ecoreValueOfAll(Element.class, closure);
 		return (List<Element>)ECORE_closure;
 	}
 

@@ -85,9 +85,7 @@ implements Type {
 	@Override
 	public org.eclipse.ocl.pivot.Class isClass()
 	{
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!Type!isClass()
 	}
 
 	/**
@@ -98,9 +96,7 @@ implements Type {
 	@Override
 	public TemplateParameter isTemplateParameter()
 	{
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!Type!isTemplateParameter()
 	}
 
 	/**

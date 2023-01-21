@@ -74,9 +74,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public boolean isComputable() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!isComputable()
 	}
 
 	/**
@@ -86,9 +84,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public Number integerValue() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!integerValue()
 	}
 
 	/**
@@ -98,9 +94,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public boolean booleanValue() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!booleanValue()
 	}
 
 	/**
@@ -110,9 +104,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public String stringValue() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!stringValue()
 	}
 
 	/**
@@ -122,9 +114,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public Number unlimitedValue() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!unlimitedValue()
 	}
 
 	/**
@@ -134,9 +124,7 @@ public abstract class ValueSpecificationImpl
 	 */
 	@Override
 	public boolean isNull() {
-		// TODO: implement this method
-		// Ensure that you remove @generated or mark it @generated NOT
-		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!isNull()
 	}
 
 	/**

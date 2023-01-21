@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PivotSupport;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -633,16 +634,16 @@ implements DataType {
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull StandardLibrary standardLibrary = executor.getStandardLibrary();
 			final /*@NonInvalid*/ @NonNull IntegerValue getSeverity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.DATA_TYPE___VALIDATE_BEHAVIORAL_CLASS_HAS_DISTINCT_NAME__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotSupport.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
 				/*@Caught*/ @Nullable Object CAUGHT_implies;
 				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
-					final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass != null;
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass_0 = this.getBehavioralClass();
+					final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass_0 != null;
 					final /*@Thrown*/ @Nullable Boolean implies;
 					if (!IsEQ_) {
 						implies = ValueUtil.TRUE_VALUE;
@@ -651,10 +652,10 @@ implements DataType {
 						/*@Caught*/ @Nullable Object CAUGHT_forAll;
 						try {
 							final /*@NonInvalid*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = this.getSuperClasses();
-							final /*@NonInvalid*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
+							final /*@NonInvalid*/ @Nullable SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotSupport.SET_CLSSid_Class, superClasses);
 							final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure = executor.getStaticTypeOfValue(null, BOXED_superClasses);
 							final @NonNull LibraryIterationExtension IMPL_closure = (LibraryIterationExtension)TYPE_closure.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
-							final @NonNull Object ACC_closure = IMPL_closure.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Class, PivotTables.SET_CLSSid_Class);
+							final @NonNull Object ACC_closure = IMPL_closure.createAccumulatorValue(executor, PivotSupport.SET_CLSSid_Class, PivotSupport.SET_CLSSid_Class);
 							/**
 							 * Implementation of the iterator body.
 							 */
@@ -665,16 +666,14 @@ implements DataType {
 								 */
 								@Override
 								public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object BOXED_superClasses, final /*@NonInvalid*/ @Nullable Object _1) {
-									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class CAST_1_ = (org.eclipse.ocl.pivot.Class)_1;
-									if (CAST_1_ == null) {
-										throw new InvalidValueException("Null source for \'Class::superClasses\'");
-									}
-									final /*@Thrown*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses_0 = CAST_1_.getSuperClasses();
-									final /*@Thrown*/ @NonNull SetValue BOXED_superClasses_0 = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses_0);
+									@SuppressWarnings("null")
+									final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class CAST_1_ = (org.eclipse.ocl.pivot.@NonNull Class)_1;
+									final /*@NonInvalid*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses_0 = CAST_1_.getSuperClasses();
+									final /*@NonInvalid*/ @Nullable SetValue BOXED_superClasses_0 = idResolver.createSetOfAll(PivotSupport.SET_CLSSid_Class, superClasses_0);
 									return BOXED_superClasses_0;
 								}
 							};
-							final @NonNull ExecutorSingleIterationManager MGR_closure = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY_closure, BOXED_superClasses, ACC_closure);
+							final @NonNull ExecutorSingleIterationManager MGR_closure = new ExecutorSingleIterationManager(executor, PivotSupport.SET_CLSSid_Class, BODY_closure, BOXED_superClasses, ACC_closure);
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure.evaluateIteration(MGR_closure);
 							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
@@ -697,7 +696,7 @@ implements DataType {
 								 */
 								final /*@NonInvalid*/ @Nullable String name = b.getName();
 								final /*@NonInvalid*/ @Nullable String name_0 = this.getName();
-								final /*@NonInvalid*/ boolean IsEQ__0 = (name != null) ? !name.equals(name_0) : (name_0 != null);
+								final /*@NonInvalid*/ boolean IsEQ__0 = (name != null) ? !idResolver.oclEquals(name, name_0) : (name_0 != null);
 								//
 								if (!IsEQ__0) {					// Normal unsuccessful body evaluation result
 									forAll = ValueUtil.FALSE_VALUE;
@@ -735,7 +734,7 @@ implements DataType {
 				catch (Exception THROWN_CAUGHT_implies) {
 					CAUGHT_implies = ValueUtil.createInvalidValue(THROWN_CAUGHT_implies);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -743,6 +742,7 @@ implements DataType {
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+
 	}
 
 	/**
@@ -772,46 +772,29 @@ implements DataType {
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue getSeverity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.DATA_TYPE___VALIDATE_BEHAVIORAL_CLASS_IS_PRIMITIVE_TYPE__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotSupport.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_implies;
-				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
-					final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass != null;
-					final /*@Thrown*/ @Nullable Boolean implies;
-					if (!IsEQ_) {
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_PrimitiveType = idResolver.getClass(PivotSupport.CLSSid_PrimitiveType, null);
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass_0 = this.getBehavioralClass();
+				final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass_0 != null;
+				final /*@NonInvalid*/ @Nullable Boolean implies;
+				if (!IsEQ_) {
+					implies = ValueUtil.TRUE_VALUE;
+				}
+				else {
+					final /*@NonInvalid*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, behavioralClass_0, TYP_PrimitiveType).booleanValue();
+					if (oclIsKindOf) {
 						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @NonNull Object CAUGHT_oclIsKindOf;
-						try {
-							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_PrimitiveType = idResolver.getClass(PivotTables.CLSSid_PrimitiveType, null);
-							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, behavioralClass, TYP_PrimitiveType).booleanValue();
-							CAUGHT_oclIsKindOf = oclIsKindOf;
-						}
-						catch (Exception THROWN_CAUGHT_oclIsKindOf) {
-							CAUGHT_oclIsKindOf = ValueUtil.createInvalidValue(THROWN_CAUGHT_oclIsKindOf);
-						}
-						if (CAUGHT_oclIsKindOf == ValueUtil.TRUE_VALUE) {
-							implies = ValueUtil.TRUE_VALUE;
-						}
-						else {
-							if (CAUGHT_oclIsKindOf instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_oclIsKindOf;
-							}
-							implies = ValueUtil.FALSE_VALUE;
-						}
+						implies = ValueUtil.FALSE_VALUE;
 					}
-					CAUGHT_implies = implies;
 				}
-				catch (Exception THROWN_CAUGHT_implies) {
-					CAUGHT_implies = ValueUtil.createInvalidValue(THROWN_CAUGHT_implies);
-				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, implies, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -819,6 +802,7 @@ implements DataType {
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+
 	}
 
 	/**
@@ -848,47 +832,30 @@ implements DataType {
 			final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 			final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 			final /*@NonInvalid*/ @NonNull IntegerValue getSeverity = CGStringGetSeverityOperation.INSTANCE.evaluate(executor, PivotPackage.Literals.DATA_TYPE___VALIDATE_BEHAVIORAL_CLASS_IS_SUPER_CLASS__DIAGNOSTICCHAIN_MAP);
-			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotTables.INT_0).booleanValue();
+			final /*@NonInvalid*/ boolean le = OclComparableLessThanEqualOperation.INSTANCE.evaluate(executor, getSeverity, PivotSupport.INT_0).booleanValue();
 			/*@NonInvalid*/ boolean IF_le;
 			if (le) {
-				IF_le = true;
+				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_implies;
-				try {
-					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
-					final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass != null;
-					final /*@Thrown*/ @Nullable Boolean implies;
-					if (!IsEQ_) {
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass_0 = this.getBehavioralClass();
+				final /*@NonInvalid*/ boolean IsEQ_ = behavioralClass_0 != null;
+				final /*@NonInvalid*/ @Nullable Boolean implies;
+				if (!IsEQ_) {
+					implies = ValueUtil.TRUE_VALUE;
+				}
+				else {
+					final /*@NonInvalid*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = this.getSuperClasses();
+					final /*@NonInvalid*/ @Nullable SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotSupport.SET_CLSSid_Class, superClasses);
+					final /*@NonInvalid*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_superClasses, behavioralClass_0).booleanValue();
+					if (includes) {
 						implies = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						/*@Caught*/ @NonNull Object CAUGHT_includes;
-						try {
-							final /*@NonInvalid*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = this.getSuperClasses();
-							final /*@NonInvalid*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
-							final /*@Thrown*/ boolean includes = CollectionIncludesOperation.INSTANCE.evaluate(BOXED_superClasses, behavioralClass).booleanValue();
-							CAUGHT_includes = includes;
-						}
-						catch (Exception THROWN_CAUGHT_includes) {
-							CAUGHT_includes = ValueUtil.createInvalidValue(THROWN_CAUGHT_includes);
-						}
-						if (CAUGHT_includes == ValueUtil.TRUE_VALUE) {
-							implies = ValueUtil.TRUE_VALUE;
-						}
-						else {
-							if (CAUGHT_includes instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_includes;
-							}
-							implies = ValueUtil.FALSE_VALUE;
-						}
+						implies = ValueUtil.FALSE_VALUE;
 					}
-					CAUGHT_implies = implies;
 				}
-				catch (Exception THROWN_CAUGHT_implies) {
-					CAUGHT_implies = ValueUtil.createInvalidValue(THROWN_CAUGHT_implies);
-				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_implies, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, implies, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -896,6 +863,7 @@ implements DataType {
 		catch (Throwable e) {
 			return ValueUtil.validationFailedDiagnostic(constraintName, this, diagnostics, context, e);
 		}
+
 	}
 
 	@Override

@@ -46,7 +46,7 @@ extends TypedElement {
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getVariableDeclaration_TypeValue()
 	 * @generated
 	 */
-	Element getTypeValue();
+	Type getTypeValue();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.VariableDeclaration#getTypeValue <em>Type Value</em>}' reference.
@@ -56,7 +56,7 @@ extends TypedElement {
 	 * @see #getTypeValue()
 	 * @generated
 	 */
-	void setTypeValue(Element value);
+	void setTypeValue(Type value);
 
 	/**
 	 * <!-- begin-user-doc -->
