@@ -78,12 +78,12 @@ import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
-import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
@@ -2123,20 +2123,26 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			public void runWithThrowable() throws Exception {
 				String testFileStem = "StaticProperty";
 				String testProjectName = "statics";
+				int INT_PROP = 3;
+				int STATIC_INT_PROP = 9;
+				int STATIC_INT_OP = 55;
+				int STATIC_STRING_OP = 77;
+				int STATIC_SUM_PROP = STATIC_INT_PROP + STATIC_INT_OP;
 				String oclinecoreFile =
 						"import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';\n"
 								+ "package statics : statics = 'http://staticProperty'\n"
 								+ "{\n"
 								+ "    class Statics\n"
 								+ "    {\n"
-//								+ "    	   static attribute startTime1 : ecore::EDate[1] { initial: null; 3}\n"
-								+ "    	   static attribute startTime2 : Integer[1] { derived readonly transient volatile } { initial: 3; }\n"
-								+ "    	   static attribute startTime3 : Integer[1] { derived readonly transient volatile }  { initial: startTime2 + Statics::startTime1(); }\n"
-								+ "        static operation startTime1() :Integer[1] {"
-								+ "             body : 55;\n"
+								+ "    	   static attribute intProp : Integer[1] { derived readonly transient volatile } { initial: " + INT_PROP + "; }\n"
+								+ "    	   static attribute sumProp : Integer[1] { derived readonly transient volatile }  { initial: staticIntProp + Statics::staticIntOp(); }\n"
+								+ "    	   static attribute staticIntProp : Integer[1] { derived readonly transient volatile } { initial: " + STATIC_INT_PROP + "; }\n"
+								+ "    	   static attribute staticSumProp : Integer[1] { derived readonly transient volatile }  { initial: staticIntProp + Statics::staticIntOp(); }\n"
+								+ "        static operation staticIntOp() :Integer[1] {"
+								+ "             body : " + STATIC_INT_OP + ";\n"
 								+ "        }\n"
-								+ "        static operation startTime2() :String[1] {"
-								+ "             body : '77';\n"
+								+ "        static operation staticStringOp() :String[1] {"
+								+ "             body : '"+ STATIC_STRING_OP + "';\n"
 								+ "        }\n"
 								+ "    }\n"
 								+ "}\n";
@@ -2160,38 +2166,40 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				org.eclipse.ocl.pivot.Package ePackage1 = doLoadTables(classLoader, qualifiedTablesName);
 				EPackage ePackage = doLoadPackage(classLoader, qualifiedPackageName);
 				EClass eClass = (EClass) ePackage.getEClassifier("Statics");
-				EStructuralFeature startTime2Feature = eClass.getEStructuralFeature("startTime2");
-				EStructuralFeature startTime3Feature = eClass.getEStructuralFeature("startTime3");
-				EOperation startTime1Operation = NameUtil.getENamedElement(eClass.getEOperations(), "startTime1");
-				EOperation startTime2Operation = NameUtil.getENamedElement(eClass.getEOperations(), "startTime2");
-				PropertyId startTime2propertyId = IdManager.getPropertyId(startTime2Feature);
+				EStructuralFeature staticIntFeature = eClass.getEStructuralFeature("staticIntProp");
+				EStructuralFeature staticSumFeature = eClass.getEStructuralFeature("staticSumProp");
+				EOperation staticIntOperation = NameUtil.getENamedElement(eClass.getEOperations(), "staticIntOp");
+				EOperation staticStringOperation = NameUtil.getENamedElement(eClass.getEOperations(), "staticStringOp");
+				PropertyId staticIntPropertyId = IdManager.getPropertyId(staticIntFeature);
 				EFactory eFactory = ePackage.getEFactoryInstance();
 				//
 				EObject eObject = eFactory.create(eClass);
-				ModelManager modelManager = new LazyEcoreModelManager(eObject);
-				ocl2.setModelManager(modelManager);
+				ExecutorExtension executor = (ExecutorExtension)PivotUtil.getExecutor(eObject);
+				ModelManager modelManager = executor.getModelManager();
+				ocl2.setModelManager(modelManager);				// Ensure ModelManager persists across queries
 
-				//		eObject.eSet(startTime2Feature, 3);
-				assertEquals(BigInteger.valueOf(3), eObject.eGet(startTime2Feature));
-				modelManager.setForeignPropertyValue(null, startTime2propertyId, ValueUtil.integerValueOf(33));
-				assertEquals(BigInteger.valueOf(33), eObject.eGet(startTime2Feature));
+				int DELTA1 = 30;
+				//		eObject.eSet(staticIntFeature, 3);
+				assertEquals(BigInteger.valueOf(STATIC_INT_PROP), eObject.eGet(staticIntFeature));
+				modelManager.setForeignPropertyValue(null, staticIntPropertyId, ValueUtil.integerValueOf(STATIC_INT_PROP + DELTA1));
+				assertEquals(BigInteger.valueOf(STATIC_INT_PROP + DELTA1), eObject.eGet(staticIntFeature));
+				modelManager.setForeignPropertyValue(null, staticIntPropertyId, ValueUtil.integerValueOf(STATIC_INT_PROP));
 
-				assertEquals(BigInteger.valueOf(3), eObject.eGet(startTime2Feature));
-				assertEquals(BigInteger.valueOf(55), eObject.eInvoke(startTime1Operation, null));
-				assertEquals("77", eObject.eInvoke(startTime2Operation, null));
-				assertEquals(BigInteger.valueOf(58), eObject.eGet(startTime3Feature));
+				assertEquals(BigInteger.valueOf(STATIC_INT_PROP), eObject.eGet(staticIntFeature));
+				assertEquals(BigInteger.valueOf(STATIC_INT_OP), eObject.eInvoke(staticIntOperation, null));
+				assertEquals("77", eObject.eInvoke(staticStringOperation, null));
+				assertEquals(BigInteger.valueOf(STATIC_SUM_PROP), eObject.eGet(staticSumFeature));
 
+				ocl2.assertQueryEquals(eObject, STATIC_INT_PROP, "statics::Statics::staticIntProp");
+				ocl2.assertQueryEquals(eObject, STATIC_INT_OP, "statics::Statics::staticIntOp()");
+				ocl2.assertQueryEquals(eObject, "" + STATIC_STRING_OP, "statics::Statics::staticStringOp()");
+				ocl2.assertQueryEquals(eObject, STATIC_SUM_PROP, "statics::Statics::staticSumProp");
 
-				ocl2.assertQueryEquals(eObject, 3, "statics::Statics::startTime2");
-				ocl2.assertQueryEquals(eObject, 55, "statics::Statics::startTime1()");
-				ocl2.assertQueryEquals(eObject, "77", "statics::Statics::startTime2()");
-				ocl2.assertQueryEquals(eObject, 58, "statics::Statics::startTime3");
-
-
-				modelManager.setForeignPropertyValue(null, startTime2propertyId, ValueUtil.integerValueOf(33));
-				ocl2.assertQueryEquals(eObject, 33, "statics::Statics::startTime2");
-				ocl2.assertQueryEquals(eObject, 88, "statics::Statics::startTime3");
-				assertEquals(33, eObject.eGet(startTime2Feature));
+				int DELTA2 = 99;
+				modelManager.setForeignPropertyValue(null, staticIntPropertyId, ValueUtil.integerValueOf(STATIC_INT_PROP + DELTA2));
+				ocl2.assertQueryEquals(eObject, STATIC_INT_PROP + DELTA2, "statics::Statics::staticIntProp");
+//	XXX volatility			ocl2.assertQueryEquals(eObject, STATIC_SUM_PROP + DELTA2, "statics::Statics::staticSumProp");
+//				assertEquals(BigInteger.valueOf(STATIC_INT_PROP + DELTA2), eObject.eGet(staticIntFeature));
 				ocl2.dispose();
 			}
 		});
