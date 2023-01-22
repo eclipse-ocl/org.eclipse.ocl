@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -23,7 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  */
 public class CatchPlace extends ControlPlace
 {
-	public static @NonNull LocalPlace createCatchPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGCatchExp cgCatchExp) {
+	public static @NonNull LocalPlace createCatchPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGCatchExp cgCatchExp) {
 		ControlPlace catchPlace = ControlPlace.getControlPlace(element2place, cgCatchExp);
 		CGValuedElement cgCaughtExp = cgCatchExp.getSource();
 		if (cgCaughtExp != null) {

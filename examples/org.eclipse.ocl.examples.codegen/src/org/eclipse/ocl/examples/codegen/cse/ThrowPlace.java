@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -23,7 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  */
 public class ThrowPlace extends ControlPlace
 {
-	public static @NonNull LocalPlace createThrowPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGThrowExp cgThrowExp) {
+	public static @NonNull LocalPlace createThrowPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGThrowExp cgThrowExp) {
 		ControlPlace throwPlace = ControlPlace.getControlPlace(element2place, cgThrowExp);
 		CGValuedElement cgThrownExp = cgThrowExp.getSource();
 		if (cgThrownExp != null) {

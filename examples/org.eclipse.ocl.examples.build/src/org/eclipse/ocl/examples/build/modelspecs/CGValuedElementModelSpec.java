@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBoolean;
@@ -629,44 +630,44 @@ public class CGValuedElementModelSpec extends ModelSpec
 		@NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 
 		public static final @NonNull Ctl BODY = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(OuterStackPlace.class) + ".createOuterStackPlace(element2place, this);";
+			return "return " + classRef(OuterStackPlace.class) + ".createOuterStackPlace(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl CATCH = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(CatchPlace.class) + ".createCatchPlace(element2place, this);";
+			return "return " + classRef(CatchPlace.class) + ".createCatchPlace(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl CNTRL = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(ControlPlace.class) + ".createControlPlace(element2place, this);";
+			return "return " + classRef(ControlPlace.class) + ".createControlPlace(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl GLOBL = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(GlobalPlace.class) + ".createGlobalPlace(element2place, this);";
+			return "return " + classRef(GlobalPlace.class) + ".createGlobalPlace(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl IF = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(IfPlaces.class) + ".createIfPlaces(element2place, this);";
+			return "return " + classRef(IfPlaces.class) + ".createIfPlacesanalyzer, (element2place, this);";
 		}};
 		public static final @NonNull Ctl INNER = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(InnerStackPlace.class) + ".createInnerStackPlace(element2place, this);";
+			return "return " + classRef(InnerStackPlace.class) + ".createInnerStackPlace(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl LET = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(LetPlaces.class) + ".createLetPlaces(element2place, this);";
+			return "return " + classRef(LetPlaces.class) + ".createLetPlaces(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl LORG = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(LocalPlace.class) + ".createLocalPlace(element2place, this);";
+			return "return " + classRef(LocalPlace.class) + ".createLocalPlace(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl SEQ = new Ctl() { @Override
 			public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(SequencePlaces.class) + ".createSequencePlaces(element2place, this);";
+			return "return " + classRef(SequencePlaces.class) + ".createSequencePlaces(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl PARAM = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(StackPlace.class) + ".createStackPlace(element2place, this);";
+			return "return " + classRef(StackPlace.class) + ".createStackPlace(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl THROW = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(ThrowPlace.class) + ".createThrowPlace(element2place, this);";
+			return "return " + classRef(ThrowPlace.class) + ".createThrowPlace(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl UNSUP = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "throw new UnsupportedOperationException();";
 		}};
 
-		public static MethodSpec getPlace = new MyMethodSpec(CGElement.class, "@Nullable " + classRef(AbstractPlace.class) + " getPlace(@NonNull " + classRef(Map.class) + "<@Nullable " + classRef(CGElement.class) + ", @NonNull " + classRef(AbstractPlace.class) + "> element2place)", null,
+		public static MethodSpec getPlace = new MyMethodSpec(CGElement.class, "@Nullable " + classRef(AbstractPlace.class) + " getPlace(@NonNull " + classRef(CodeGenAnalyzer.class) + " analyzer, @NonNull " + classRef(Map.class) + "<@Nullable " + classRef(CGElement.class) + ", @NonNull " + classRef(AbstractPlace.class) + "> element2place)", null,
 				"Returns the place for this element, updating and reusing element2place as required.\nAll parent elements have entries in element2place.\nNo child elements have entries in element2place.\nThe global place is accessible as the null element.")
 		{
 			@Override

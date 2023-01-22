@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSequence;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -26,7 +27,7 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
  */
 public class SequencePlaces
 {
-	public static @NonNull LocalPlace createSequencePlaces(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGSequence cgSequence) {
+	public static @NonNull LocalPlace createSequencePlaces(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGSequence cgSequence) {
 		ControlPlace mapExpPlace = ControlPlace.getControlPlace(element2place, cgSequence);
 		for (CGValuedElement cgBody : CGUtil.getOwnedStatements(cgSequence)) {
 			BodyPlace bodyPlace = new BodyPlace(mapExpPlace, cgBody);

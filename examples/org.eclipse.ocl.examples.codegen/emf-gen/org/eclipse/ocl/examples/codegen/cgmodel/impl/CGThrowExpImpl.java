@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGThrowExp;
@@ -83,15 +84,6 @@ public class CGThrowExpImpl extends CGSourcedCallExpImpl implements CGThrowExp {
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
-		return ThrowPlace.createThrowPlace(element2place, this);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public @NonNull CGValuedElement getReferredValue() {
 		return source != null ? source : this;
 	}
@@ -121,6 +113,15 @@ public class CGThrowExpImpl extends CGSourcedCallExpImpl implements CGThrowExp {
 	@Override
 	public @NonNull CGValuedElement getNamedValue() {
 		return this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable AbstractPlace getPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
+		return ThrowPlace.createThrowPlace(analyzer, element2place, this);
 	}
 
 	/**

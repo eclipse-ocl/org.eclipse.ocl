@@ -14,11 +14,12 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 
 public class OuterStackPlace extends StackPlace
 {
-	public static @Nullable OuterStackPlace createOuterStackPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGElement cgStackElement) {
+	public static @Nullable OuterStackPlace createOuterStackPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGElement cgStackElement) {
 		GlobalPlace globalPlace = getGlobalPlace(element2place);
 		OuterStackPlace stackPlace = new OuterStackPlace(globalPlace, cgStackElement);
 		return stackPlace;

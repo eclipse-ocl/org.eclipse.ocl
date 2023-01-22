@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -24,13 +25,13 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public abstract class LocalPlace extends AbstractPlace
 {
-	public static @NonNull AbstractPlace createLocalPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
+	public static @NonNull AbstractPlace createLocalPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
 		boolean isGlobal = cgElement.isGlobal();
 		if (isGlobal) {
 			return ClassUtil.nonNullState(element2place.get(null));
 		}
 		else {
-			return ControlPlace.createControlPlace(element2place, cgElement);
+			return ControlPlace.createControlPlace(analyzer, element2place, cgElement);
 		}
 	}
 

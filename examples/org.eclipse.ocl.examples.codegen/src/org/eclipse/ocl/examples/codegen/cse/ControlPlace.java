@@ -34,7 +34,7 @@ import com.google.common.collect.Multimap;
  */
 public class ControlPlace extends LocalPlace
 {
-	public static @NonNull AbstractPlace createControlPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
+	public static @NonNull AbstractPlace createControlPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGValuedElement cgElement) {
 		if (cgElement.isGlobal()) {
 			return ClassUtil.nonNullState(element2place.get(null));
 		}
