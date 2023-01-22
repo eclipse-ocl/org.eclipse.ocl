@@ -20,7 +20,9 @@ import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
 
 /**
@@ -63,6 +65,18 @@ public class SupportOperationCallingConvention extends NativeOperationCallingCon
 
 	public boolean canHandle(@NonNull Method jMethod) {
 		return supportMethods.contains(jMethod);
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+		Operation asOperation = (Operation)operationNameManager.getASScope();
+		assert asOperation.getBodyExpression() == null;
+		if (!asOperation.isIsStatic()) {
+			return CG_PARAMETER_STYLES_SELF_PARAMETERS;
+		}
+		else {
+			return CG_PARAMETER_STYLES_PARAMETERS;
+		}
 	}
 
 	@Override

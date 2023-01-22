@@ -123,7 +123,7 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 		String oldMessage = message;
 		message = newMessage;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldMessage, message));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldMessage, message));
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 		boolean oldSafe = safe;
 		safe = newSafe;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldSafe, safe));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldSafe, safe));
 	}
 
 	/**
@@ -167,9 +167,9 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return getMessage();
-			case 10:
+			case 9:
 				return isSafe();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -183,10 +183,10 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setMessage((String)newValue);
 				return;
-			case 10:
+			case 9:
 				setSafe((Boolean)newValue);
 				return;
 		}
@@ -201,10 +201,10 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setMessage(MESSAGE_EDEFAULT);
 				return;
-			case 10:
+			case 9:
 				setSafe(SAFE_EDEFAULT);
 				return;
 		}
@@ -219,9 +219,9 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return MESSAGE_EDEFAULT == null ? message != null : !MESSAGE_EDEFAULT.equals(message);
-			case 10:
+			case 9:
 				return safe != SAFE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

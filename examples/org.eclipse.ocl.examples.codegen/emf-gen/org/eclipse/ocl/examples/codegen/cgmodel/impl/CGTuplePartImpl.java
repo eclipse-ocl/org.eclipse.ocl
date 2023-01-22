@@ -96,7 +96,7 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 		CGValuedElement oldInit = init;
 		init = newInit;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldInit, newInit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldInit, newInit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -112,14 +112,14 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 		if (newInit != init) {
 			NotificationChain msgs = null;
 			if (init != null)
-				msgs = ((InternalEObject)init).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)init).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			if (newInit != null)
-				msgs = ((InternalEObject)newInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)newInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			msgs = basicSetInit(newInit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, newInit, newInit));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newInit, newInit));
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	 */
 	@Override
 	public CGTupleExp getTupleExp() {
-		if (eContainerFeatureID() != (7)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (CGTupleExp)eInternalContainer();
 	}
 
@@ -141,10 +141,10 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 7:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return eBasicSetContainer(otherEnd, 7, msgs);
+				return eBasicSetContainer(otherEnd, 6, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -157,10 +157,10 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return basicSetInit(null, msgs);
-			case 7:
-				return eBasicSetContainer(null, 7, msgs);
+			case 6:
+				return eBasicSetContainer(null, 6, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -173,8 +173,8 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case 7:
-				return eInternalContainer().eInverseRemove(this, 6, CGTupleExp.class, msgs);
+			case 6:
+				return eInternalContainer().eInverseRemove(this, 5, CGTupleExp.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -187,9 +187,9 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getInit();
-			case 7:
+			case 6:
 				return getTupleExp();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -203,7 +203,7 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setInit((CGValuedElement)newValue);
 				return;
 		}
@@ -218,7 +218,7 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setInit((CGValuedElement)null);
 				return;
 		}
@@ -233,9 +233,9 @@ public class CGTuplePartImpl extends CGValuedElementImpl implements CGTuplePart 
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return init != null;
-			case 7:
+			case 6:
 				return getTupleExp() != null;
 		}
 		return super.eIsSet(featureID);

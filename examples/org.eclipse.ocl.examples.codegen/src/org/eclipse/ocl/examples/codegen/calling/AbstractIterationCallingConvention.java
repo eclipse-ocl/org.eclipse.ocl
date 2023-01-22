@@ -18,7 +18,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
@@ -44,11 +43,6 @@ public abstract class AbstractIterationCallingConvention extends AbstractOperati
 	@Override
 	public @NonNull CGValuedElement createCGOperationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation,
 			@NonNull LibraryOperation libraryOperation, @Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
-		throw new UnsupportedOperationException("Not used");
-	}
-
-	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
 		throw new UnsupportedOperationException("Not used");
 	}
 

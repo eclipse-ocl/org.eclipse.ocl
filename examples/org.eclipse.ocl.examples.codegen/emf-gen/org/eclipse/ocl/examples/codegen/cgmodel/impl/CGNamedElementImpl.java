@@ -261,6 +261,7 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 
 	@Override
 	public @NonNull String getResolvedName() {
+//		System.out.println("getResolvedName " + NameUtil.debugSimpleName(this) + ":" +  this);
 		return getNameResolution().getResolvedName();
 	}
 

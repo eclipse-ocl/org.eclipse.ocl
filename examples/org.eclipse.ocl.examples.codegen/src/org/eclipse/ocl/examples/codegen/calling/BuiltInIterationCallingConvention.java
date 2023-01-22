@@ -87,20 +87,20 @@ public class BuiltInIterationCallingConvention extends AbstractIterationCallingC
 		//
 		ExecutableNameManager iteratorNameManager = parentNameManager;				// Inlined Iterators in parent context
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
-			CGIterator cgIterator = iteratorNameManager.getIterator(iterator);
+			CGIterator cgIterator = iteratorNameManager.lazyGetIterator(iterator);
 			setNullableIterator(analyzer, cgIterator, iterator);
 			cgIterationCallExp.getIterators().add(cgIterator);
 			globalNameManager.addSelfNameManager(cgIterator, iteratorNameManager);
 		}
 		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(asLoopExp)) {
-			CGIterator cgCoIterator = iteratorNameManager.getIterator(coIterator);
+			CGIterator cgCoIterator = iteratorNameManager.lazyGetIterator(coIterator);
 			setNullableIterator(analyzer, cgCoIterator, coIterator);
 			cgIterationCallExp.getCoIterators().add(cgCoIterator);
 			globalNameManager.addSelfNameManager(cgCoIterator, iteratorNameManager);
 		}
 		if (asLoopExp instanceof IterateExp) {
 			Variable accumulator = PivotUtil.getOwnedResult((IterateExp)asLoopExp);
-			CGIterator cgAccumulator = iteratorNameManager.getIterator(accumulator);
+			CGIterator cgAccumulator = iteratorNameManager.lazyGetIterator(accumulator);
 			//				cgBuiltInIterationCallExp.setRequired(true);
 			setNullableIterator(analyzer, cgAccumulator, accumulator);
 			((CGBuiltInIterationCallExp)cgIterationCallExp).setAccumulator(cgAccumulator);

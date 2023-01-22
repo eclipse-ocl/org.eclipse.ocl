@@ -45,7 +45,7 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 		js.append(" = (");
 		js.appendClassReference(true, ecoreJavaClass);
 		js.append(")");
-		js.appendReferenceTo(localNameManager.getIdResolverVariable());
+		js.appendReferenceTo(localNameManager.lazyGetIdResolverVariable());
 		js.append(".ecoreValueOf(");
 		js.appendClassReference(null, Enumerator.class);
 		js.append(".class, ");
@@ -73,7 +73,7 @@ public class EnumerationValueDescriptor extends BoxedValueDescriptor //implement
 			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
 		js.appendDeclaration(cgUnboxExp);
 		js.append(" = ");
-		js.appendReferenceTo(localNameManager.getIdResolverVariable());
+		js.appendReferenceTo(localNameManager.lazyGetIdResolverVariable());
 		js.append(".unboxedValueOf(");
 		js.appendValueName(boxedValue);
 		js.append(");\n");

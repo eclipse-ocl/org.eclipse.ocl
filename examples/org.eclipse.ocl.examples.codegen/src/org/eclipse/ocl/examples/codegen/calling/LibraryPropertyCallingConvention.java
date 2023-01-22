@@ -202,9 +202,4 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		js.append(";\n");
 		return true;
 	}
-
-	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
-		return generateJavaDeclarationUnimplemented(cg2javaVisitor, cgProperty);		// XXX
-	}
 }

@@ -270,7 +270,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("context_0")) {
+			if (string.contains("StaticPropertySupport")) {
 				getClass();		// XXX
 			}
 			if (string.contains("InvalidValueException")) {

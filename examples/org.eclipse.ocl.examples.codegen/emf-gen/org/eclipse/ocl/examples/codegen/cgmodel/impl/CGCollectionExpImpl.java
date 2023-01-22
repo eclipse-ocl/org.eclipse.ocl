@@ -93,7 +93,7 @@ public class CGCollectionExpImpl extends CGValuedElementImpl implements CGCollec
 	@Override
 	public List<CGCollectionPart> getParts() {
 		if (parts == null) {
-			parts = new EObjectContainmentWithInverseEList<CGCollectionPart>(CGCollectionPart.class, this, 6, 8);
+			parts = new EObjectContainmentWithInverseEList<CGCollectionPart>(CGCollectionPart.class, this, 5, 7);
 		}
 		return parts;
 	}
@@ -107,7 +107,7 @@ public class CGCollectionExpImpl extends CGValuedElementImpl implements CGCollec
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getParts()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -121,7 +121,7 @@ public class CGCollectionExpImpl extends CGValuedElementImpl implements CGCollec
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return ((InternalEList<?>)getParts()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -135,7 +135,7 @@ public class CGCollectionExpImpl extends CGValuedElementImpl implements CGCollec
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getParts();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -150,7 +150,7 @@ public class CGCollectionExpImpl extends CGValuedElementImpl implements CGCollec
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				getParts().clear();
 				getParts().addAll((Collection<? extends CGCollectionPart>)newValue);
 				return;
@@ -166,7 +166,7 @@ public class CGCollectionExpImpl extends CGValuedElementImpl implements CGCollec
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				getParts().clear();
 				return;
 		}
@@ -181,7 +181,7 @@ public class CGCollectionExpImpl extends CGValuedElementImpl implements CGCollec
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return parts != null && !parts.isEmpty();
 		}
 		return super.eIsSet(featureID);

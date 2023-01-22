@@ -24,8 +24,10 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 
 /**
@@ -47,13 +49,9 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 	}
 
 	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-		super.createCGParametersDefault(operationNameManager, expressionInOCL);
-	}
-
-	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
+		js.append("// " + cgOperation.getCallingConvention() + "\n");
 		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(cgOperation);
 		if (jMethod != null) {
 			js.append("@Override\n");
@@ -77,5 +75,35 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 	protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		cg2javaVisitor.appendReturn(body);
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+		Operation asOperation = (Operation)operationNameManager.getASScope();
+		ExpressionInOCL bodyExpression = (ExpressionInOCL)asOperation.getBodyExpression();
+		if (bodyExpression != null) {
+			Variable asContextVariable = bodyExpression.getOwnedContext();
+			if (asContextVariable != null) {
+				return CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS;
+			}
+			else {
+				return CG_PARAMETER_STYLES_PARAMETERS;
+			}
+		}
+		else {
+			if (!asOperation.isIsStatic()) {
+				return CG_PARAMETER_STYLES_SELF_PARAMETERS;
+			}
+			else {
+				return CG_PARAMETER_STYLES_PARAMETERS;
+			}
+		}
+	}
+
+	protected void installExpressionInOCLBody(@NonNull Operation asOperation, @NonNull ExpressionInOCL asExpressionInOCL, @NonNull OCLExpression asBody) {
+		asExpressionInOCL.setOwnedBody(asBody);
+		asExpressionInOCL.setType(asBody.getType());
+		asExpressionInOCL.setIsRequired(asBody.isIsRequired());
+		asOperation.setBodyExpression(asExpressionInOCL);
 	}
 }

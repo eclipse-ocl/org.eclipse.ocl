@@ -131,6 +131,7 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		assert cgProperty instanceof CGExecutorNavigationProperty;
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGExecutorNavigationProperty cgExecutorNavigationProperty = (CGExecutorNavigationProperty)cgProperty;
+		js.append("// " + cgProperty.getCallingConvention() + "\n");
 		js.appendDeclaration(cgExecutorNavigationProperty);
 		js.append(" = new ");
 		js.appendClassReference(null, UnboxedExplicitNavigationProperty.class);

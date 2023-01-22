@@ -102,7 +102,7 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 		boolean oldBooleanValue = booleanValue;
 		booleanValue = newBooleanValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldBooleanValue, booleanValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldBooleanValue, booleanValue));
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return isBooleanValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -137,7 +137,7 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setBooleanValue((Boolean)newValue);
 				return;
 		}
@@ -152,7 +152,7 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setBooleanValue(BOOLEAN_VALUE_EDEFAULT);
 				return;
 		}
@@ -167,7 +167,7 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return booleanValue != BOOLEAN_VALUE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

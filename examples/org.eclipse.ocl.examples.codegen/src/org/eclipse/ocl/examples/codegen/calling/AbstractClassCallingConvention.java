@@ -69,11 +69,18 @@ public abstract class AbstractClassCallingConvention extends AbstractCallingConv
 		}
 	}
 
-	protected void generateProperties(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
+	protected void generatePropertyDeclarations(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGClass cgClass) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendOptionalBlankLine();
 		for (CGProperty cgProperty : cgClass.getProperties()) {
 			cgProperty.accept(cg2javaVisitor);
+		}
+	}
+
+	public void generatePropertyInitializations(@NonNull CG2JavaVisitor cg2java, @NonNull CGClass cgClass) {
+		for (@NonNull CGProperty cgProperty : CGUtil.getProperties(cgClass)) {	// XXX sort/dependencies
+			PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
+			callingConvention.generateJavaInitialization(cg2java, cgProperty);
 		}
 	}
 

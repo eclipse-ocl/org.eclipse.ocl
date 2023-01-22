@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBuiltInIterationCallExp;
@@ -52,12 +50,12 @@ public class CG2JavaNameVisitor extends AbstractExtendingCGModelVisitor<@Nullabl
 
 	@Override
 	public @Nullable Object visitCGElement(@NonNull CGElement cgElement) {
-		List<?> owns = cgElement instanceof CGValuedElement ? ((CGValuedElement)cgElement).getOwns() : null;
+//		List<?> owns = cgElement instanceof CGValuedElement ? ((CGValuedElement)cgElement).getOwns() : null;
 		for (CGElement cgChild : cgElement.getChildren()) {
-			if ((owns == null) || !owns.contains(cgChild)) {
+//			if ((owns == null) || !owns.contains(cgChild)) {
 				cgChild.accept(this);
 			}
-		}
+//		}
 		return null;
 	}
 

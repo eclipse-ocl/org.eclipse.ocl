@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.Constraint;
@@ -25,8 +24,6 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Package;
-import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -54,17 +51,7 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 				}
 				ExpressionInOCL asSynthesizedQuery = ((OCLinEcoreCodeGenerator)codeGenerator).rewriteQuery(oldQuery);
 				OCLExpression asSynthesizedExpression = asSynthesizedQuery.getOwnedBody();
-				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
-				if (contextVariable != null) {
-					CGParameter cgParameter = getSelfParameter(nameManager, contextVariable);
-					cgConstraint.getParameters().add(cgParameter);
-				}
-				for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(asSynthesizedQuery)) {
-					String parameterName = parameterVariable.getName();
-					CGParameter cgParameter = nameManager.getCGParameter(parameterVariable, parameterName);
-					nameManager.declareEagerName(cgParameter);
-					cgConstraint.getParameters().add(cgParameter);
-				}
+				nameManager.createCGConstraintParameters();
 				cgConstraint.setBody(createCGElement(CGValuedElement.class, asSynthesizedExpression));
 			} catch (ParserException e) {
 				cgConstraint.setBody(createCGConstantExp(getCGInvalid()));
@@ -80,10 +67,4 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 
 	public org.eclipse.ocl.pivot.@NonNull Class getContextClass() {
 		return getASRootClass();
-	}
-
-	@Override
-	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {	// XXX never exercised
-		return executableNameManager.getThisParameter(asParameter);
-	}
-}
+	}}

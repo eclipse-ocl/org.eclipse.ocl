@@ -324,7 +324,6 @@
     <genClasses ecoreClass="cgmodel.ecore#//CGUnlimited"/>
     <genClasses image="false" ecoreClass="cgmodel.ecore#//CGValuedElement">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGValuedElement/dependsOn"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGValuedElement/owns"/>
     </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGVariable">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGVariable/init"/>

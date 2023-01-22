@@ -103,7 +103,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public List<CGMapPart> getParts() {
 		if (parts == null) {
-			parts = new EObjectContainmentWithInverseEList<CGMapPart>(CGMapPart.class, this, 6, 8);
+			parts = new EObjectContainmentWithInverseEList<CGMapPart>(CGMapPart.class, this, 5, 7);
 		}
 		return parts;
 	}
@@ -117,7 +117,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getParts()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -131,7 +131,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return ((InternalEList<?>)getParts()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -145,7 +145,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getParts();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -160,7 +160,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				getParts().clear();
 				getParts().addAll((Collection<? extends CGMapPart>)newValue);
 				return;
@@ -176,7 +176,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				getParts().clear();
 				return;
 		}
@@ -191,7 +191,7 @@ public class CGMapExpImpl extends CGValuedElementImpl implements CGMapExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return parts != null && !parts.isEmpty();
 		}
 		return super.eIsSet(featureID);

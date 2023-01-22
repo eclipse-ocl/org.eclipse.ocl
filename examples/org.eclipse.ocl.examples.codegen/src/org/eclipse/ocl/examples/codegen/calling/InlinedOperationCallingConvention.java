@@ -170,11 +170,6 @@ public class InlinedOperationCallingConvention extends AbstractOperationCallingC
 	//	}
 	}
 
-	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		//	InlinedOperation never actually used so doesn't need parameters
-	}
-
 //	protected <T extends EObject> @NonNull T createCopy(@NonNull T anEObject) {
 //		return EcoreUtil.copy(anEObject);
 //	}
@@ -200,6 +195,11 @@ public class InlinedOperationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new IllegalStateException("Inlined operation cannot be declared");
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+		return CG_PARAMETER_STYLES; //	InlinedOperation never actually used so doesn't need parameters
 	}
 
 	@Override

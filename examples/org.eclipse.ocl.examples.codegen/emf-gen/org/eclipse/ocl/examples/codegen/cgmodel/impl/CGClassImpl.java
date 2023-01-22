@@ -238,7 +238,7 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 	@SuppressWarnings("null")
 	public @NonNull List<CGOperation> getOperations() {
 		if (operations == null) {
-			operations = new EObjectContainmentWithInverseEList<CGOperation>(CGOperation.class, this, 3, 10);
+			operations = new EObjectContainmentWithInverseEList<CGOperation>(CGOperation.class, this, 3, 9);
 		}
 		return operations;
 	}
@@ -252,7 +252,7 @@ public class CGClassImpl extends CGNamedElementImpl implements CGClass {
 	@SuppressWarnings("null")
 	public @NonNull List<CGProperty> getProperties() {
 		if (properties == null) {
-			properties = new EObjectContainmentWithInverseEList<CGProperty>(CGProperty.class, this, 4, 7);
+			properties = new EObjectContainmentWithInverseEList<CGProperty>(CGProperty.class, this, 4, 6);
 		}
 		return properties;
 	}

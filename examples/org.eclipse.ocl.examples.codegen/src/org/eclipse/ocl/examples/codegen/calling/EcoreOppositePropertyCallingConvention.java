@@ -127,7 +127,7 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 			CGExecutorOppositePropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorOppositePropertyCallExp();
 			CGExecutorProperty cgExecutorProperty = analyzer.createExecutorOppositeProperty(asProperty);
 			cgExecutorPropertyCallExp.setExecutorProperty(cgExecutorProperty);
-			cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
+			analyzer.addReferencedExtraChild(cgExecutorPropertyCallExp, cgExecutorProperty);
 			cgPropertyCallExp = cgExecutorPropertyCallExp;
 		}
 		cgPropertyCallExp.setReferredProperty(cgProperty);
@@ -160,11 +160,6 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 		appendEcoreGet(cg2javaVisitor, source, asProperty);
 		js.append(";\n");
 		return true;
-	}
-
-	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
-		return generateJavaDeclarationUnimplemented(cg2javaVisitor, cgProperty);		// XXX
 	}
 
 	@Override

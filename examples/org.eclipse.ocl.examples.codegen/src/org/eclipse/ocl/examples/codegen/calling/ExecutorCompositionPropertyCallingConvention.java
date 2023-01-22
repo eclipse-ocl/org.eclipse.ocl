@@ -63,7 +63,7 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 		CGExecutorProperty cgExecutorProperty = analyzer.createExecutorOppositeProperty(asProperty);
 		cgExecutorProperty.setCallingConvention(this);
 		cgPropertyCallExp.setExecutorProperty(cgExecutorProperty);
-		cgPropertyCallExp.getOwns().add(cgExecutorProperty);
+		analyzer.addReferencedExtraChild(cgPropertyCallExp, cgExecutorProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
 		analyzer.initAst(cgPropertyCallExp, asOppositePropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired);
@@ -118,6 +118,7 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 		assert cgProperty instanceof CGExecutorCompositionProperty;
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGExecutorCompositionProperty cgExecutorCompositionProperty = (CGExecutorCompositionProperty)cgProperty;
+		js.append("// " + cgProperty.getCallingConvention() + "\n");
 		js.appendDeclaration(cgExecutorCompositionProperty);
 		js.append(" = new ");
 		js.appendClassReference(null, cgExecutorCompositionProperty);

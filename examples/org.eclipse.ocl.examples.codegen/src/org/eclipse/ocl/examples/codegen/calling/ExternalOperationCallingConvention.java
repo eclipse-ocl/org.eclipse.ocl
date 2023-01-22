@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
@@ -20,7 +18,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
@@ -31,9 +28,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -47,48 +41,6 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 	public static @NonNull ExternalOperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
 		INSTANCE.logInstance(asOperation, maybeVirtual);
 		return INSTANCE;
-	}
-
-	public static class ExternalCacheClassCallingConvention extends AbstractCacheClassCallingConvention
-	{
-		private static final @NonNull ExternalCacheClassCallingConvention INSTANCE = new ExternalCacheClassCallingConvention();
-
-		public static @NonNull ExternalCacheClassCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
-			INSTANCE.logInstance(asOperation, maybeVirtual);
-			return INSTANCE;
-		}
-
-		public static class ExternalEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
-		{
-			private static final @NonNull ExternalEvaluateOperationCallingConvention INSTANCE = new ExternalEvaluateOperationCallingConvention();
-
-			public static @NonNull ExternalEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-				INSTANCE.logInstance(asClass);
-				return INSTANCE;
-			}
-
-			@Override
-			protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
-				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-				String selfName = globalNameManager.getSelfNameResolution().getResolvedName();
-				Parameter asEvaluateParameter = PivotUtil.createParameter(selfName, PivotUtil.getOwningClass(asOperation), true);
-				List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
-				asCacheEvaluateParameters.add(asEvaluateParameter);
-				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
-			}
-		}
-
-		@Override
-		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			return analyzer.getRootClassParentPackage(asOperation);
-		}
-
-		@Override
-		protected void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
-			org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-			ExternalEvaluateOperationCallingConvention callingConvention = ExternalEvaluateOperationCallingConvention.getInstance(asCacheClass);
-			callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
-		}
 	}
 
 	public static class ExternalEntryClassCallingConvention extends AbstractEntryClassCallingConvention
@@ -118,6 +70,16 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		}
 	}
 
+	public static class ExternalEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
+	{
+		private static final @NonNull ExternalEvaluateOperationCallingConvention INSTANCE = new ExternalEvaluateOperationCallingConvention();
+
+		public static @NonNull ExternalEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
+		}
+	}
+
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		return CGModelFactory.eINSTANCE.createCGCachedOperation();
@@ -137,16 +99,6 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 	}
 
 	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		assert bodyExpression != null;
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		cgParameters.add(operationNameManager.getSelfParameter());
-		Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(bodyExpression);
-		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
-	}
-
-	@Override
 	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
 		assert asOperation.getImplementationClass() == null;
 		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
@@ -157,20 +109,32 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		cgOperation.setCallingConvention(this);
 		assert asOperation == cgOperation.getAst();
 		assert analyzer.basicGetCGElement(asOperation) != null;
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation, null);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() != null;
-		createCGParameters(operationNameManager, asExpressionInOCL);
+		initCGParameters(operationNameManager);
 		return cgOperation;
 	}
 
 	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+		return CG_PARAMETER_STYLES_SELF_PARAMETERS;
+	}
+
+	@Override
 	protected @NonNull AbstractCacheClassCallingConvention getCacheClassCallingConvention(@NonNull Operation asOperation) {
-		return ExternalCacheClassCallingConvention.getInstance(asOperation, false);
+		return RootCacheClassCallingConvention.getInstance(asOperation, false);
 	}
 
 	@Override
 	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {
 		return ExternalEntryClassCallingConvention.getInstance(asOperation, false);
+	}
+
+	@Override
+	public void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
+		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
+		ExternalEvaluateOperationCallingConvention callingConvention = ExternalEvaluateOperationCallingConvention.getInstance(asCacheClass);
+		callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
 	}
 
 	@Override

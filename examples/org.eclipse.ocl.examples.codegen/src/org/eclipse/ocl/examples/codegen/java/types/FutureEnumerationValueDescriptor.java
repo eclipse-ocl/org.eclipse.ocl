@@ -59,7 +59,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 		js.append(" = (");
 		js.appendClassReference(null, className);
 		js.append(")");
-		js.appendReferenceTo(localNameManager.getIdResolverVariable());
+		js.appendReferenceTo(localNameManager.lazyGetIdResolverVariable());
 		js.append(".ecoreValueOf(");
 		js.appendClassReference(null, Enumerator.class);
 		js.append(".class, ");
@@ -76,7 +76,7 @@ public class FutureEnumerationValueDescriptor extends BoxedValueDescriptor imple
 		js.append(" = (");
 		js.appendClassReference(null, className);
 		js.append(")");
-		js.appendReferenceTo(localNameManager.getIdResolverVariable());
+		js.appendReferenceTo(localNameManager.lazyGetIdResolverVariable());
 		js.append(".ecoreValueOf(");
 		js.appendClassReference(null, Enumerator.class);
 		js.append(".class, ");

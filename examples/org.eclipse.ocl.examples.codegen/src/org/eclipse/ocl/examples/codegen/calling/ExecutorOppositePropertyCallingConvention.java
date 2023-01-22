@@ -69,7 +69,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		CGExecutorProperty cgExecutorProperty = analyzer.createExecutorOppositeProperty(asProperty);
 		cgExecutorProperty.setCallingConvention(this);
 		cgPropertyCallExp.setExecutorProperty(cgExecutorProperty);
-		cgPropertyCallExp.getOwns().add(cgExecutorProperty);
+		analyzer.addReferencedExtraChild(cgPropertyCallExp, cgExecutorProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
 		analyzer.initAst(cgPropertyCallExp, asOppositePropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired);
@@ -199,6 +199,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		Property asProperty = (Property) cgProperty.getAst();
 		Property asOppositeProperty = asProperty.getOpposite();
+		js.append("// " + cgProperty.getCallingConvention() + "\n");
 		js.appendDeclaration(cgProperty);
 		js.append(" = new ");
 		js.appendClassReference(null, cgProperty);

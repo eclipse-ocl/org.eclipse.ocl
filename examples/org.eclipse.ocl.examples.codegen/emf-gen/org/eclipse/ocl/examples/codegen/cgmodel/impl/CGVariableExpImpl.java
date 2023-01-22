@@ -93,7 +93,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 		CGVariable oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldReferredVariable, referredVariable));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldReferredVariable, referredVariable));
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getReferredVariable();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -118,7 +118,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setReferredVariable((CGVariable)newValue);
 				return;
 		}
@@ -133,7 +133,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setReferredVariable((CGVariable)null);
 				return;
 		}
@@ -148,7 +148,7 @@ public class CGVariableExpImpl extends CGValuedElementImpl implements CGVariable
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return referredVariable != null;
 		}
 		return super.eIsSet(featureID);

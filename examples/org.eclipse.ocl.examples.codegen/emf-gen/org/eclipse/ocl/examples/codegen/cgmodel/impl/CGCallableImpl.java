@@ -105,7 +105,7 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public @NonNull List<CGParameter> getParameters() {
 		if (parameters == null) {
-			parameters = new EObjectContainmentWithInverseEList<CGParameter>(CGParameter.class, this, 6, 7);
+			parameters = new EObjectContainmentWithInverseEList<CGParameter>(CGParameter.class, this, 5, 6);
 		}
 		return parameters;
 	}
@@ -129,7 +129,7 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 		CGValuedElement oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -145,14 +145,14 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newBody, newBody));
 	}
 
 	/**
@@ -164,7 +164,7 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getParameters()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -178,9 +178,9 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
-			case 7:
+			case 6:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -194,9 +194,9 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getParameters();
-			case 7:
+			case 6:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -211,11 +211,11 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends CGParameter>)newValue);
 				return;
-			case 7:
+			case 6:
 				setBody((CGValuedElement)newValue);
 				return;
 		}
@@ -230,10 +230,10 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				getParameters().clear();
 				return;
-			case 7:
+			case 6:
 				setBody((CGValuedElement)null);
 				return;
 		}
@@ -248,9 +248,9 @@ public abstract class CGCallableImpl extends CGValuedElementImpl implements CGCa
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return parameters != null && !parameters.isEmpty();
-			case 7:
+			case 6:
 				return body != null;
 		}
 		return super.eIsSet(featureID);

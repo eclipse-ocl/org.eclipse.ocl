@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -108,7 +109,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 			Class<?> jParameterType = jParameterTypes[i];
 			if (jParameterType == Executor.class) {
 				ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(asOperationCallExp);
-				CGVariable executorVariable = analyzer.getExecutorVariable(executableNameManager);
+				CGVariable executorVariable = executableNameManager.lazyGetExecutorVariable();
 				cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 			}
 			else if (jParameterType == TypeId.class) {
@@ -212,7 +213,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 			for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 				if (jParameterType == Executor.class) {
 					ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(asOperationCallExp);
-					CGVariable executorVariable = analyzer.getExecutorVariable(executableNameManager);
+					CGVariable executorVariable = executableNameManager.lazyGetExecutorVariable();
 					cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 				}
 				else if (jParameterType == TypeId.class) {
@@ -229,56 +230,6 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 				}
 			}
 		return cgOperationCallExp;
-	}
-
-	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-	//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
-		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		List<CGParameter> cgParameters = cgOperation.getParameters();
-		LibraryOperation libraryOperation = (LibraryOperation)analyzer.getMetamodelManager().getImplementation(asOperation);
-		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-	//	cgOperation.setRequired(analyzer.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);			-- CG follows OCL declaration; Java compatibility is resolved in generateJavaCall
-		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
-		int i = asOperation.isIsStatic() ? 0 : -1;
-		if (Modifier.isStatic(jMethod.getModifiers())) {
-			cgParameters.add(operationNameManager.getThisParameter());
-		}
-		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
-			if (jParameterType == Executor.class) {
-				cgParameters.add(operationNameManager.getExecutorParameter());
-			}
-			else if (jParameterType == TypeId.class) {
-				cgParameters.add(operationNameManager.getTypeIdParameter());
-			}
-			else if (jParameterType == Object.class)  {
-				if (i < 0) {
-					CGParameter selfParameter;
-					if (expressionInOCL != null) {
-						selfParameter = analyzer.getSelfParameter(operationNameManager, PivotUtil.getOwnedContext(expressionInOCL));
-					}
-					else {
-						selfParameter = operationNameManager.getSelfParameter();
-					}
-					if (analyzer.hasOclVoidOperation(asOperation.getOperationId())) {
-						selfParameter.setRequired(false);
-					}
-					cgParameters.add(selfParameter);
-					i = 0;
-				}
-				else {
-					Parameter aParameter = asParameters.get(i++);
-					CGParameter cgParameter = operationNameManager.getCGParameter(aParameter, (String)null);
-					cgParameters.add(cgParameter);
-				}
-			}
-			else {
-				throw new UnsupportedOperationException();
-			}
-		}
-		assert (i == asParameters.size()) || (libraryOperation == OclAnyUnsupportedOperation.INSTANCE);
 	}
 
 	@Override
@@ -405,6 +356,79 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new UnsupportedOperationException();		// Library operations are declared natively
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+		Operation asOperation = (Operation)operationNameManager.getASScope();
+/*		assert asOperation.getBodyExpression() == null;
+		if (!asOperation.isIsStatic()) {
+			return CG_PARAMETER_STYLES_SELF_PARAMETERS;
+		}
+		else {
+			return CG_PARAMETER_STYLES_PARAMETERS;
+		} */
+		//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
+		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
+		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
+		List<CGParameter> cgParameters = cgOperation.getParameters();
+		LibraryOperation libraryOperation = (LibraryOperation)analyzer.getMetamodelManager().getImplementation(asOperation);
+		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
+	//	cgOperation.setRequired(analyzer.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);			-- CG follows OCL declaration; Java compatibility is resolved in generateJavaCall
+		List<@NonNull CGParameterStyle> cgParameterStyles = new ArrayList<>();
+		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
+		int i = asOperation.isIsStatic() ? 0 : -1;
+		if (Modifier.isStatic(jMethod.getModifiers())) {
+			cgParameterStyles.add(CGParameterStyle.THIS);
+		}
+		boolean hasExecutor = false;
+		boolean hasTypeId = false;
+		boolean hasSelf = false;
+		boolean hasParameters = false;
+		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
+			if (jParameterType == Executor.class) {
+				hasExecutor = true;
+				assert !hasTypeId : "executor must precede typeId";
+				assert !hasSelf : "executor must precede self";
+				assert !hasParameters : "executor must precede parameters";
+				cgParameterStyles.add(CGParameterStyle.EXECUTOR);
+			}
+			else if (jParameterType == TypeId.class) {
+				hasTypeId = true;
+				assert !hasSelf : "typeId must precede self";
+				assert !hasParameters : "typeId must precede parameters";
+				cgParameterStyles.add(CGParameterStyle.TYPE_ID);
+			}
+			else if (jParameterType == Object.class)  {
+				if (i < 0) {
+					hasSelf = true;
+					assert !hasParameters : "self must precede parameters";
+					ExpressionInOCL expressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();	//	-- some library operations also have OCL bodies
+
+					boolean mayBeVoid = analyzer.hasOclVoidOperation(asOperation.getOperationId());
+					if (expressionInOCL != null) {
+						cgParameterStyles.add(mayBeVoid ? CGParameterStyle.OPTIONAL_BODY_SELF : CGParameterStyle.BODY_SELF);
+					}
+					else {
+						cgParameterStyles.add(mayBeVoid ? CGParameterStyle.OPTIONAL_SELF : CGParameterStyle.SELF);
+					}
+				//	if (analyzer.hasOclVoidOperation(asOperation.getOperationId())) {
+				//		selfParameter.setRequired(false);
+				//	}
+					i = 0;
+				}
+				else {
+					hasParameters = true;
+					cgParameterStyles.add(CGParameterStyle.PARAMETERS);
+					i++;
+				}
+			}
+			else {
+				throw new UnsupportedOperationException();
+			}
+		}
+		assert (i == asParameters.size()) || (libraryOperation == OclAnyUnsupportedOperation.INSTANCE);
+		return cgParameterStyles.toArray(new @NonNull CGParameterStyle @NonNull [cgParameterStyles.size()]);
 	}
 
 	@Override

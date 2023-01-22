@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 
 
 
@@ -29,7 +30,6 @@ import org.eclipse.jdt.annotation.Nullable;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement#getDependsOn <em>Depends On</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement#getOwns <em>Owns</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGValuedElement()
@@ -50,21 +50,6 @@ public interface CGValuedElement extends CGTypedElement {
 	 * @generated
 	 */
 	List<CGValuedElement> getDependsOn();
-
-	/**
-	 * Returns the value of the '<em><b>Owns</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Owns</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owns</em>' containment reference list.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGValuedElement_Owns()
-	 * @generated
-	 */
-	List<CGValuedElement> getOwns();
 
 	/**
 	 * Return a non-null EClassifier if this value has a known EClassifier to define its instance class.
@@ -91,6 +76,14 @@ public interface CGValuedElement extends CGTypedElement {
 	 */
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Val$7
 	@NonNull CGValuedElement getNamedValue();
+
+	/**
+	 * Return the additional non-contained but directly referenced child element that the CSE analysis treats as children.
+	 *
+	 * @generated
+	 */
+	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Rew$6
+	@Nullable CGValuedElement getReferencedExtraChild(@NonNull CodeGenAnalyzer analyzer);
 
 	/**
 	 * Return the CGValuedElement to which the value of this CGValuedElement delegates.
@@ -280,6 +273,14 @@ public interface CGValuedElement extends CGTypedElement {
 	 */
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Com$6
 	boolean isUncommonable();
+
+	/**
+	 * Rewrite the reference to oldValue by newValue.
+	 *
+	 * @generated
+	 */
+	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Rew$7
+	boolean rewriteAs(@NonNull CGValuedElement oldValue, @NonNull CGValuedElement newValue);
 
 	/**
 	 * Set the caught status.

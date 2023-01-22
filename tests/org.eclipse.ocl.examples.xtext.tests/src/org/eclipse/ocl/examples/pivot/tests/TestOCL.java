@@ -12,6 +12,7 @@ package org.eclipse.ocl.examples.pivot.tests;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -836,15 +837,27 @@ public class TestOCL extends OCLInternal
 			}
 			File targetFolder = testProject.getOutputFile("test-src").getFile();
 			String className = "TestClass" + testCounter++;
-			LibraryUnaryOperation.LibraryUnaryOperationExtension testInstance = (LibraryUnaryOperation.LibraryUnaryOperationExtension) genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
-			assert testInstance != null;
+			Class<?> testClass = genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
+			Constructor<?> constructor = null;
+			try {
+				constructor = testClass.getConstructor(Executor.class);
+			}
+			catch (NoSuchMethodException e) {}
 			Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
 			try {
 				Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY, getModelManager());
 				ThreadLocalExecutor.setExecutor(executor);
 				OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();
 				callExp.setType(expr.getType());
-				result = testInstance.evaluate(executor, callExp.getTypeId(), self);
+				Object testInstance;
+				if (constructor != null) {
+					testInstance = constructor.newInstance(executor);
+				}
+				else {
+					testInstance =  testClass.newInstance();
+				}
+				assert testInstance != null;
+				result = ((LibraryUnaryOperation.LibraryUnaryOperationExtension)testInstance).evaluate(executor, callExp.getTypeId(), self);
 			}
 			finally {
 				ThreadLocalExecutor.setExecutor(savedExecutor);

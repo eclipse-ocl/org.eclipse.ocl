@@ -102,7 +102,7 @@ public class CGIsEqual2ExpImpl extends CGSourcedCallExpImpl implements CGIsEqual
 		CGValuedElement oldArgument = argument;
 		argument = newArgument;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 9, oldArgument, newArgument);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldArgument, newArgument);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -118,14 +118,14 @@ public class CGIsEqual2ExpImpl extends CGSourcedCallExpImpl implements CGIsEqual
 		if (newArgument != argument) {
 			NotificationChain msgs = null;
 			if (argument != null)
-				msgs = ((InternalEObject)argument).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
+				msgs = ((InternalEObject)argument).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newArgument != null)
-				msgs = ((InternalEObject)newArgument).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
+				msgs = ((InternalEObject)newArgument).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetArgument(newArgument, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, newArgument, newArgument));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newArgument, newArgument));
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class CGIsEqual2ExpImpl extends CGSourcedCallExpImpl implements CGIsEqual
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return basicSetArgument(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -150,7 +150,7 @@ public class CGIsEqual2ExpImpl extends CGSourcedCallExpImpl implements CGIsEqual
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return getArgument();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -164,7 +164,7 @@ public class CGIsEqual2ExpImpl extends CGSourcedCallExpImpl implements CGIsEqual
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setArgument((CGValuedElement)newValue);
 				return;
 		}
@@ -179,7 +179,7 @@ public class CGIsEqual2ExpImpl extends CGSourcedCallExpImpl implements CGIsEqual
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setArgument((CGValuedElement)null);
 				return;
 		}
@@ -194,7 +194,7 @@ public class CGIsEqual2ExpImpl extends CGSourcedCallExpImpl implements CGIsEqual
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return argument != null;
 		}
 		return super.eIsSet(featureID);

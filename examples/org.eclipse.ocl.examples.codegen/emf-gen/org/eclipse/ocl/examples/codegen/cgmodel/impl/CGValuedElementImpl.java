@@ -14,14 +14,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
@@ -42,7 +38,6 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGValuedElementImpl#getDependsOn <em>Depends On</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGValuedElementImpl#getOwns <em>Owns</em>}</li>
  * </ul>
  *
  * @generated
@@ -56,7 +51,7 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CG_VALUED_ELEMENT_FEATURE_COUNT = CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 2;
+	public static final int CG_VALUED_ELEMENT_FEATURE_COUNT = CGTypedElementImpl.CG_TYPED_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The cached value of the '{@link #getDependsOn() <em>Depends On</em>}' reference list.
@@ -67,16 +62,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 * @ordered
 	 */
 	protected EList<CGValuedElement> dependsOn;
-
-	/**
-	 * The cached value of the '{@link #getOwns() <em>Owns</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwns()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<CGValuedElement> owns;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -119,42 +104,11 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 * @generated
 	 */
 	@Override
-	public List<CGValuedElement> getOwns()
-	{
-		if (owns == null) {
-			owns = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 5);
-		}
-		return owns;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-	{
-		switch (featureID) {
-			case 5:
-				return ((InternalEList<?>)getOwns()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
 		switch (featureID) {
 			case 4:
 				return getDependsOn();
-			case 5:
-				return getOwns();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -173,10 +127,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 				getDependsOn().clear();
 				getDependsOn().addAll((Collection<? extends CGValuedElement>)newValue);
 				return;
-			case 5:
-				getOwns().clear();
-				getOwns().addAll((Collection<? extends CGValuedElement>)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -193,9 +143,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 			case 4:
 				getDependsOn().clear();
 				return;
-			case 5:
-				getOwns().clear();
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -211,8 +158,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 		switch (featureID) {
 			case 4:
 				return dependsOn != null && !dependsOn.isEmpty();
-			case 5:
-				return owns != null && !owns.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -235,6 +180,34 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public @Nullable CGInvalid getInvalidValue() {
 		CGValuedElement sourceValue = getReferredValue();
 		return sourceValue != this ? sourceValue.getInvalidValue() : null;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @NonNull CGValuedElement getNamedValue() {
+		CGValuedElement value = getThisValue();
+		return value != this ? value.getNamedValue() : value;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable AbstractPlace getPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
+		return ControlPlace.createControlPlace(analyzer, element2place, this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable CGValuedElement getReferencedExtraChild(@NonNull CodeGenAnalyzer analyzer) {
+		return null;
 	}
 
 	/**
@@ -270,31 +243,10 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 * @generated
 	 */
 	@Override
-	public @NonNull CGValuedElement getNamedValue() {
-		CGValuedElement value = getThisValue();
-		return value != this ? value.getNamedValue() : value;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
-		return ControlPlace.createControlPlace(analyzer, element2place, this);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public @NonNull CGValuedElement getTypedValue() {
 		CGValuedElement value = getThisValue();
 		return value != this ? value.getTypedValue() : value;
 	}
-
-	public static boolean ALLOW_GET_VALUE_NAME = false;
 
 	/**
 	 * {@inheritDoc}

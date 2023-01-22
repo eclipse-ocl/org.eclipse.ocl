@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -26,7 +27,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  */
 public class IfPlaces
 {
-	public static @NonNull LocalPlace createIfPlaces(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGIfExp cgIfExp) {
+	public static @NonNull LocalPlace createIfPlaces(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGIfExp cgIfExp) {
 		ControlPlace ifPlace = ControlPlace.getControlPlace(element2place, cgIfExp);
 		CGValuedElement cgThenExp = cgIfExp.getThenExpression();
 		CGValuedElement cgElseExp = cgIfExp.getElseExpression();

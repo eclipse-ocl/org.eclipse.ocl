@@ -94,7 +94,7 @@ public class CGEcoreDataTypeShadowExpImpl extends CGShadowExpImpl implements CGE
 		EDataType oldEDataType = eDataType;
 		eDataType = newEDataType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldEDataType, eDataType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldEDataType, eDataType));
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class CGEcoreDataTypeShadowExpImpl extends CGShadowExpImpl implements CGE
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return getEDataType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -119,7 +119,7 @@ public class CGEcoreDataTypeShadowExpImpl extends CGShadowExpImpl implements CGE
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				setEDataType((EDataType)newValue);
 				return;
 		}
@@ -134,7 +134,7 @@ public class CGEcoreDataTypeShadowExpImpl extends CGShadowExpImpl implements CGE
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				setEDataType((EDataType)null);
 				return;
 		}
@@ -149,7 +149,7 @@ public class CGEcoreDataTypeShadowExpImpl extends CGShadowExpImpl implements CGE
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return eDataType != null;
 		}
 		return super.eIsSet(featureID);

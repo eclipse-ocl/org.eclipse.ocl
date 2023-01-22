@@ -807,7 +807,8 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 		//
 		IntegerValue int55 = ValueUtil.integerValueOf(55);
 		IntegerValue int77 = ValueUtil.integerValueOf(77);
-//
+		ocl2.assertQueryEquals(parent, int55, "count()");
+// XXX //
 //		assertNull(modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 //		ocl2.assertQueryEquals(parent, int55, "count");
 		ocl2.assertQueryEquals(parent, int55, "statics::Parent::static_count()");
@@ -817,7 +818,6 @@ public class EvaluateModelOperationsTest4 extends PivotTestSuite
 //		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
 		ocl2.assertQueryEquals(parent, int55, "static_count()");
 //		assertEquals(int77, modelManager.basicGetForeignPropertyValue(null, staticCountPropertyId));
-		ocl2.assertQueryEquals(parent, int55, "count()");
 
 		// Eliminate shared ModelManager => new ModelManager, Executor per query
 		modelManager = null;

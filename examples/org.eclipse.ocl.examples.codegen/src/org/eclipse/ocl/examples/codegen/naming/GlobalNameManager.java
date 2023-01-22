@@ -35,6 +35,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -176,13 +177,17 @@ public class GlobalNameManager extends AbstractNameManager
 	protected final @NonNull NameResolution isEqualName;
 	protected final @NonNull NameResolution modelManagerName;
 	protected final @NonNull NameResolution newInstanceName;
-	protected final @NonNull NameResolution objectName;
-	protected final @NonNull NameResolution rootObjectName ;
+//	protected final @NonNull NameResolution objectName;
+	protected final @NonNull NameResolution rootExecutorName ;
+	protected final @NonNull NameResolution rootThisName ;
 	protected final @NonNull NameResolution selfName;
 	protected final @NonNull NameResolution sourceAndArgumentValuesName;
 	protected final @NonNull NameResolution standardLibraryVariableName;
 	protected final @NonNull NameResolution thisName;
 	protected final @NonNull NameResolution typeIdName;
+	protected final @NonNull String asBoxedValuesName;
+	protected final @NonNull String asExecutorName;
+	protected final @NonNull String asSelfName;
 	private boolean needsExecutor = false;
 
 	public GlobalNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManagerHelper helper) {
@@ -213,12 +218,20 @@ public class GlobalNameManager extends AbstractNameManager
 		this.isEqualName = declareEagerName(null, "isEqual");
 		this.modelManagerName = declareEagerName(null, JavaConstants.MODEL_MANAGER_NAME);
 		this.newInstanceName = globalNameManager.declareEagerName(null, JavaConstants.NEW_INSTANCE_NAME);
-		this.objectName = declareEagerName(null, PivotConstants.OBJECT_NAME);
-		this.rootObjectName = declareEagerName(null, PivotConstants.ROOT_OBJECT_NAME);
+//		this.objectName = declareEagerName(null, PivotConstants.OBJECT_NAME);
+		this.rootExecutorName = declareEagerName(null, PivotConstants.ROOT_EXECUTOR_NAME);
+		this.rootThisName = declareEagerName(null, PivotConstants.ROOT_THIS_NAME);
 		this.selfName = declareEagerName(null, PivotConstants.SELF_NAME);
 		this.sourceAndArgumentValuesName = declareEagerName(null, JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
 		this.standardLibraryVariableName = declareEagerName(null, JavaConstants.STANDARD_LIBRARY_NAME);
 		this.typeIdName = declareEagerName(null, JavaConstants.TYPE_ID_NAME);
+		//
+		//	The AS names have a distinctive not-interned String enabling e.g. the AS variant of executor to
+		//	co-exist with a user executor in an AS parameter list.
+		//
+		this.asBoxedValuesName = new String(JavaConstants.BOXED_VALUES_NAME);
+		this.asExecutorName = new String(JavaConstants.EXECUTOR_NAME);
+		this.asSelfName = new String(JavaConstants.SELF_NAME);
 	}
 
 	/**
@@ -320,8 +333,8 @@ public class GlobalNameManager extends AbstractNameManager
 		return loopNameManager;
 	}
 
-	public @NonNull ExecutableNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
-		ExecutableNameManager operationNameManager = codeGenerator.createOperationNameManager(classNameManager, cgOperation);
+	public @NonNull ExecutableNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation, @Nullable TypedElement asOrigin) {
+		ExecutableNameManager operationNameManager = codeGenerator.createOperationNameManager(classNameManager, cgOperation, asOrigin);
 		assert cgElement2childNameManager.get(cgOperation) == operationNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());
@@ -353,6 +366,18 @@ public class GlobalNameManager extends AbstractNameManager
 		NameResolution.EagerGlobal baseNameResolution = new NameResolution.EagerGlobal(this, cgElement, reservedName);
 		context.allocateEagerName(reservedName, cgElement);
 		return baseNameResolution;
+	}
+
+	public @NonNull String getASBoxedValuesName() {
+		return asBoxedValuesName;
+	}
+
+	public @NonNull String getASExecutorName() {
+		return asExecutorName;
+	}
+
+	public @NonNull String getASSelfName() {
+		return asSelfName;
 	}
 
 	public @NonNull NameResolution getAnyNameResolution() {
@@ -499,20 +524,24 @@ public class GlobalNameManager extends AbstractNameManager
 		return newInstanceName;
 	}
 
-	public @NonNull String getObjectName() {
-		return objectName.getResolvedName();
-	}
+//	public @NonNull String getObjectName() {
+//		return objectName.getResolvedName();
+//	}
 
-	public @NonNull NameResolution getObjectNameResolution() {
-		return objectName;
-	}
+//	public @NonNull NameResolution getObjectNameResolution() {
+//		return objectName;
+//	}
 
 	public @NonNull String getReservedName(@NonNull String name) {
 		return ClassUtil.nonNullState(name2reservedNameResolutions.get(name)).getResolvedName();
 	}
 
-	public @NonNull NameResolution getRootObjectNameResolution() {
-		return rootObjectName;
+	public @NonNull NameResolution getRootExecutorNameResolution() {
+		return rootExecutorName;
+	}
+
+	public @NonNull NameResolution getRootThisNameResolution() {
+		return rootThisName;
 	}
 
 	public @NonNull String getSelfName() {

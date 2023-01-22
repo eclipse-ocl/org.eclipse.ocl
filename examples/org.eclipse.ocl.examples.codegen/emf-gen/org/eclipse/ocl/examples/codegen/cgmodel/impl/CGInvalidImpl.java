@@ -119,7 +119,7 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 		String oldMessageTemplate = messageTemplate;
 		messageTemplate = newMessageTemplate;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldMessageTemplate, messageTemplate));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldMessageTemplate, messageTemplate));
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	@Override
 	public List<Object> getBindings() {
 		if (bindings == null) {
-			bindings = new EDataTypeUniqueEList<Object>(Object.class, this, 7);
+			bindings = new EDataTypeUniqueEList<Object>(Object.class, this, 6);
 		}
 		return bindings;
 	}
@@ -153,9 +153,9 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getMessageTemplate();
-			case 7:
+			case 6:
 				return getBindings();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -170,10 +170,10 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setMessageTemplate((String)newValue);
 				return;
-			case 7:
+			case 6:
 				getBindings().clear();
 				getBindings().addAll((Collection<? extends Object>)newValue);
 				return;
@@ -189,10 +189,10 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setMessageTemplate(MESSAGE_TEMPLATE_EDEFAULT);
 				return;
-			case 7:
+			case 6:
 				getBindings().clear();
 				return;
 		}
@@ -207,9 +207,9 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return MESSAGE_TEMPLATE_EDEFAULT == null ? messageTemplate != null : !MESSAGE_TEMPLATE_EDEFAULT.equals(messageTemplate);
-			case 7:
+			case 6:
 				return bindings != null && !bindings.isEmpty();
 		}
 		return super.eIsSet(featureID);

@@ -75,12 +75,4 @@ public interface CGElement extends EObject {
 	 */
 	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$10
 	boolean isContext();
-
-	/**
-	 * Rewrite the reference to oldValue by newValue.
-	 *
-	 * @generated
-	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$22
-	boolean rewriteAs(@NonNull CGValuedElement oldValue, @NonNull CGValuedElement newValue);
 } // CGElement

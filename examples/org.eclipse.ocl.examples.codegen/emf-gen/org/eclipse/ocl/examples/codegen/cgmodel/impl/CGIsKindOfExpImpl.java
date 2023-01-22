@@ -96,7 +96,7 @@ public class CGIsKindOfExpImpl extends CGSourcedCallExpImpl implements CGIsKindO
 		CGExecutorType oldExecutorType = executorType;
 		executorType = newExecutorType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldExecutorType, executorType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldExecutorType, executorType));
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class CGIsKindOfExpImpl extends CGSourcedCallExpImpl implements CGIsKindO
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return getExecutorType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -121,7 +121,7 @@ public class CGIsKindOfExpImpl extends CGSourcedCallExpImpl implements CGIsKindO
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setExecutorType((CGExecutorType)newValue);
 				return;
 		}
@@ -136,7 +136,7 @@ public class CGIsKindOfExpImpl extends CGSourcedCallExpImpl implements CGIsKindO
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setExecutorType((CGExecutorType)null);
 				return;
 		}
@@ -151,7 +151,7 @@ public class CGIsKindOfExpImpl extends CGSourcedCallExpImpl implements CGIsKindO
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return executorType != null;
 		}
 		return super.eIsSet(featureID);

@@ -146,8 +146,14 @@ public class CommonAnalysis extends AbstractAnalysis
 			for (SimpleAnalysis simpleAnalysis : simpleAnalyses) {
 				CGValuedElement commonElement = simpleAnalysis.getElement();
 				CGElement cgParent = commonElement.getParent();
+				if (cgParent == null) {
+					Iterable<@NonNull CGValuedElement> extraChildParents = analyzer.getExtraChildParents(commonElement);
+					if (extraChildParents != null) {
+						cgParent = extraChildParents.iterator().next();
+					}
+				}
 //				assert cgParent != null;		null if already rewritten by another rewrite
-				if ((cgParent != null) && !cgParent.rewriteAs(commonElement, cgCSE)) {
+				if ((cgParent instanceof CGValuedElement) && !((CGValuedElement)cgParent).rewriteAs(commonElement, cgCSE)) {
 					rewriteAsVariableExp(commonElement, cgVariable);
 				}
 			}

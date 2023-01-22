@@ -46,10 +46,22 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
+			js.append("// " + cgProperty.getCallingConvention() + "\n");
 			js.append("protected final");
 			js.append(" /*@NonInvalid*/ ");
 			boxedTypeRepresentation.appendClassReference(cgProperty.isRequired(), cgProperty);
 			js.append(" ");
+			js.appendValueName(cgProperty);
+			js.append(";\n");
+			return true;
+		}
+
+		@Override
+		public boolean generateJavaInitialization(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
+			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
+			js.append("// " + cgProperty.getCallingConvention() + "\n");
+			js.append("this.");
 			js.appendValueName(cgProperty);
 			js.append(" = new ");
 			boxedTypeRepresentation.appendClassReference(null, cgProperty);
@@ -73,6 +85,7 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
+			js.append("// " + cgProperty.getCallingConvention() + "\n");
 			js.append("protected final");
 			js.append(" /*@NonInvalid*/ ");
 			js.getBoxedTypeRepresentation().appendClassReference(cgProperty.isRequired(), cgProperty);

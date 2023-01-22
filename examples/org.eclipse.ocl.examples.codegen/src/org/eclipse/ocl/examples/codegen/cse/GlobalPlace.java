@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
 
 /**
@@ -107,18 +108,22 @@ public class GlobalPlace extends AbstractPlace
 		//
 		//	Accumulate the contained part of the structural hash code in a post order traversal
 		//
-		Iterable<? extends CGElement> childElements = cgElement.getChildren();
+		Iterable<@NonNull ? extends CGElement> allChildElements = cgElement.getChildren();
+		if (cgElement instanceof CGValuedElement) {
+			Iterable<@NonNull CGValuedElement> extraChildElements = analyzer.getExtraChildElements((CGValuedElement)cgElement);
+			if (extraChildElements != null) {
+				allChildElements = Iterables.concat(allChildElements, extraChildElements);
+			}
+		}
 		List<@NonNull SimpleAnalysis> childAnalyses = null;
-		for (CGElement cgChild : childElements) {
-			if ((cgChild != null) /*&& (cgChild.eContainmentFeature() != CGModelPackage.Literals.CG_VALUED_ELEMENT__OWNS)*/) {
-				SimpleAnalysis childAnalysis = buildSimpleAnalysisTree(cgChild, depth+1);
-				if (childAnalysis != null) {
-					structuralHashCode = 3 * structuralHashCode + childAnalysis.getStructuralHashCode();
-					if (childAnalyses == null) {
-						childAnalyses = new ArrayList<>();
-					}
-					childAnalyses.add(childAnalysis);
+		for (@NonNull CGElement cgChild : allChildElements) {
+			SimpleAnalysis childAnalysis = buildSimpleAnalysisTree(cgChild, depth+1);
+			if (childAnalysis != null) {
+				structuralHashCode = 3 * structuralHashCode + childAnalysis.getStructuralHashCode();
+				if (childAnalyses == null) {
+					childAnalyses = new ArrayList<>();
 				}
+				childAnalyses.add(childAnalysis);
 			}
 		}
 		if (!(cgElement instanceof CGValuedElement)) {

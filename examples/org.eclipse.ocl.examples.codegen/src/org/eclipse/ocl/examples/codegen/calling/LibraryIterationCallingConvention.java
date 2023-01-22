@@ -138,20 +138,20 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		//
 		ExecutableNameManager iteratorNameManager = childNameManager;				// Nested class Iterators in child context
 		for (@NonNull Variable iterator : PivotUtil.getOwnedIterators(asLoopExp)) {
-			CGIterator cgIterator = iteratorNameManager.getIterator(iterator);
+			CGIterator cgIterator = iteratorNameManager.lazyGetIterator(iterator);
 			cgIterator.setRequired(false);
 			cgIterationCallExp.getIterators().add(cgIterator);
 			globalNameManager.addSelfNameManager(cgIterator, iteratorNameManager);
 		}
 		for (@NonNull Variable coIterator : PivotUtil.getOwnedCoIterators(asLoopExp)) {
-			CGIterator cgCoIterator = iteratorNameManager.getIterator(coIterator);
+			CGIterator cgCoIterator = iteratorNameManager.lazyGetIterator(coIterator);
 			cgCoIterator.setRequired(false);
 			cgIterationCallExp.getCoIterators().add(cgCoIterator);
 			globalNameManager.addSelfNameManager(cgCoIterator, iteratorNameManager);
 		}
 		if (asLoopExp instanceof IterateExp) {
 			Variable accumulator = PivotUtil.getOwnedResult((IterateExp)asLoopExp);
-			CGIterator cgAccumulator = iteratorNameManager.getIterator(accumulator);
+			CGIterator cgAccumulator = iteratorNameManager.lazyGetIterator(accumulator);
 			((CGLibraryIterateCallExp)cgIterationCallExp).setResult(cgAccumulator);
 			CGValuedElement cgInitExpression = analyzer.createCGElement(CGValuedElement.class, accumulator.getOwnedInit());
 			cgAccumulator.setInit(cgInitExpression);
@@ -202,13 +202,14 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		final LibraryIteration libraryIteration = ClassUtil.nonNullState(((CGLibraryIterationCallExp)cgIterationCallExp).getLibraryIteration());
+		ExecutableNameManager nameManager = globalNameManager.useExecutableNameManager(cgIterationCallExp);
 		final Method actualMethod = libraryIteration.getEvaluateMethod(referredIteration);
 		final Class<?> actualReturnClass = actualMethod.getReturnType();
 		boolean actualIsNonNull = codeGenerator.getIsNonNull(actualMethod) == Boolean.TRUE;
 		boolean expectedIsNonNull = cgIterationCallExp.isRequiredOrNonNull();
 		final String astName = cgIterationCallExp.getResolvedName();
 		final String bodyName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getBODY_NameVariant());
-		final String executorName = globalNameManager.getExecutorName();
+		final String executorName = nameManager.lazyGetExecutorVariable().getResolvedName();
 		final String implementationName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getIMPL_NameVariant());
 		final String managerName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getMGR_NameVariant());
 		final String staticTypeName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getTYPE_NameVariant());
@@ -240,7 +241,7 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		js.append(" " + implementationName + " = (");
 		js.appendClassReference(null, LibraryIteration.LibraryIterationExtension.class);
 		js.append( ")" + staticTypeName + ".lookupImplementation(");
-		js.appendReferenceTo(globalNameManager.useRootExecutableNameManager(cgIterationCallExp).getStandardLibraryVariable());
+		js.appendReferenceTo(globalNameManager.useRootExecutableNameManager(cgIterationCallExp).lazyGetStandardLibraryVariable());
 		js.append(", ");
 		js.appendQualifiedLiteralName(referredIteration);
 		js.append(");\n");

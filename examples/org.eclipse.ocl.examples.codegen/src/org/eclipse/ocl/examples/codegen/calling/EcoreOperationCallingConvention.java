@@ -126,12 +126,12 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		}
 	}
 
-	@Override
+/*	@Override
 	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
 		CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, PivotUtil.getName(asParameterVariable));
 		operationNameManager.declareEagerName(cgParameter);
 		return cgParameter;
-	}
+	}*/
 
 	@Override
 	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
@@ -171,11 +171,11 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		assert asOperation2 == null;
 		assert analyzer.basicGetCGElement(asOperation) == null;
 		analyzer.initAst(cgOperation, asOperation, true);
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation, null);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() == null;
 		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
 		cgClass.getOperations().add(cgOperation);
-		createCGParameters(operationNameManager, asExpressionInOCL);
+		initCGParameters(operationNameManager);
 		return cgOperation;
 	}
 
@@ -272,6 +272,7 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		String returnClassName = cg2javaVisitor.getGenModelHelper().getOperationReturnType(asOperation);
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendCommentWithOCL(null, cgBody.getAst());
+		js.append("// " + cgOperation.getCallingConvention() + "\n");
 		for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
 			VariableDeclaration asParameter = CGUtil.getAST(cgParameter);
 			Type asType = PivotUtil.getType(asParameter);
@@ -300,6 +301,29 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		}
 		js.append(";");
 		return true;
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+		Operation asOperation = (Operation)operationNameManager.getASScope();
+		ExpressionInOCL bodyExpression = (ExpressionInOCL)asOperation.getBodyExpression();
+		if (bodyExpression != null) {
+			Variable asContextVariable = bodyExpression.getOwnedContext();
+			if (asContextVariable != null) {
+				return CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETER_VARIABLES;
+			}
+			else {
+				return CG_PARAMETER_STYLES_EAGER_PARAMETER_VARIABLES;
+			}
+		}
+		else {
+			if (!asOperation.isIsStatic()) {
+				return CG_PARAMETER_STYLES_SELF_EAGER_PARAMETERS;
+			}
+			else {
+				return CG_PARAMETER_STYLES_EAGER_PARAMETERS;
+			}
+		}
 	}
 
 	@Override

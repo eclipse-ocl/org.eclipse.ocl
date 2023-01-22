@@ -157,6 +157,9 @@ public abstract class NameResolution
 			this.nameHint = nameHint != null ? nameHint : UNRESOLVED;
 			assert debugNameHint(this.nameHint);
 		//	resolveNameHint();				// Redundant, just for debugging
+			if (primaryElement.eClass().getName().equals("CGExecutorType")) {
+				getClass();		// XXX
+			}
 		}
 
 		@Override
@@ -191,6 +194,9 @@ public abstract class NameResolution
 		 */
 		@Override
 		public @NonNull String resolveIn(@NonNull Context context, @Nullable CGNamedElement cgElement) {		// XXX use @Nullable cgElement
+			if (getPrimaryElement().eClass().getName().equals("CGExecutorType")) {
+				getClass();		// XXX
+			}
 			assert nameHint != UNRESOLVED;
 			String resolvedName2 = resolvedName;
 			if (resolvedName2 == null) {
@@ -346,8 +352,13 @@ public abstract class NameResolution
 		if (newName.contains("AbstractComputation")) {
 			getClass();		// XXX
 		}
-		if ("IMPPROPid_d3atlExpression".equals(newName)) {
+		if ("boxedValues".equals(newName)) {
 			getClass();			// XXX
+		//	if (cgElements != null) {
+		//		for (CGNamedElement cgElement : cgElements) {
+		//			System.out.println("debugNameHint " + NameUtil.debugSimpleName(cgElement));
+		//		}
+		//	}
 		}
 		if ("context".equals(newName)) {
 			getClass();			// XXX

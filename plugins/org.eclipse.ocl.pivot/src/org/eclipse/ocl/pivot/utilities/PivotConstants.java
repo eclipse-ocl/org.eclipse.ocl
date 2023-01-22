@@ -144,7 +144,7 @@ public interface PivotConstants
 	/**
 	 * The name of the dispatch source variable 'object'.
 	 */
-	static final @NonNull String OBJECT_NAME = "object"; //$NON-NLS-1$
+//	static final @NonNull String OBJECT_NAME = "object"; //$NON-NLS-1$
 
 	/**
 	 * Stereotype applied to operation postcondition constraints.
@@ -162,9 +162,14 @@ public interface PivotConstants
 	static final @NonNull String RESULT_NAME = "result"; //$NON-NLS-1$
 
 	/**
+	 * The name of the executor visible as a member of the root object.
+	 */
+	static final @NonNull String ROOT_EXECUTOR_NAME = "rootExecutor"; //$NON-NLS-1$
+
+	/**
 	 * The name of the root object of the execution (perhaps a transformation).
 	 */
-	static final @NonNull String ROOT_OBJECT_NAME = "rootObject"; //$NON-NLS-1$
+	static final @NonNull String ROOT_THIS_NAME = "rootThis"; //$NON-NLS-1$
 
 	/**
 	 * The name of the context variable 'self'.

@@ -289,7 +289,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		ExecutableNameManager nameManager = context.useExecutableNameManager(query);
 		Variable contextVariable = query.getOwnedContext();
 		if (contextVariable != null) {
-			CGVariable cgContext = nameManager.getThisParameter();
+			CGVariable cgContext = nameManager.lazyGetThisParameter();
 			nameManager.addVariable(contextVariable, cgContext);
 			cgContext.setNonInvalid();
 			//			cgContext.setNonNull();
@@ -298,7 +298,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		for (@NonNull Variable parameterVariable : asParameters) {
 			CGVariable cgParameterVariable = nameManager.basicGetCGParameterVariable(parameterVariable);
 			if (cgParameterVariable == null) {				// XXX May be pre-mapped to a CG let variable
-				@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getCGParameter(parameterVariable, null);
+				@SuppressWarnings("unused") CGVariable cgParameter = nameManager.lazyGetCGParameter(parameterVariable);
 			}
 		//	@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, null);
 		}
@@ -516,9 +516,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgShadowExp != null) {
 			ExecutableNameManager executableNameManager = context.useExecutableNameManager(element);
 			CGExecutorType cgExecutorType = executableNameManager.getCGExecutorType(ClassUtil.nonNullState(element.getType()));
-			cgShadowExp.setExecutorType(cgExecutorType);
-			cgShadowExp.getOwns().add(cgExecutorType);
 			context.initAst(cgShadowExp, element, true);
+			cgShadowExp.setExecutorType(cgExecutorType);
+			context.addReferencedExtraChild(cgShadowExp, cgExecutorType);
 			List<@NonNull ShadowPart> asParts = new ArrayList<>(ClassUtil.nullFree(element.getOwnedParts()));
 			Collections.sort(asParts, NameUtil.NAMEABLE_COMPARATOR);
 			List<@NonNull CGShadowPart> cgParts = ClassUtil.nullFree(cgShadowExp.getParts());		// Ensure deterministic CGShadowPart order
@@ -603,7 +603,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			context.initAst(cgTypeExp, asTypeExp, true);
 			CGExecutorType cgExecutorType = executableNameManager.getCGExecutorType(referredType);
 			cgTypeExp.setExecutorType(cgExecutorType);
-			cgTypeExp.getOwns().add(cgExecutorType);	// FIXME this ownership inhibits ExecutableNameManager sharing
+			context.addReferencedExtraChild(cgTypeExp, cgExecutorType);
 			return cgTypeExp;
 		}
 		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;
@@ -625,7 +625,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgTemplateParameterExp.setIndex(index);
 		context.initAst(cgTemplateParameterExp, asTypeExp, true);
 		cgTemplateParameterExp.setTemplateableElement(cgTemplateableElement);
-		cgTemplateParameterExp.getOwns().add(cgTemplateableElement);
+		context.addReferencedExtraChild(cgTemplateParameterExp, cgTemplateableElement);
 		return cgTemplateParameterExp;
 	}
 

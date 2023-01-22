@@ -54,7 +54,8 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendOptionalBlankLine();;
 		GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
-		String rootObjectName = globalNameManager.getRootObjectNameResolution().getResolvedName();
+		String rootExecutorName = globalNameManager.getRootExecutorNameResolution().getResolvedName();
+		String rootThisName = globalNameManager.getRootThisNameResolution().getResolvedName();
 		String className = CGUtil.getName(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		js.appendClassHeader(asClass);
@@ -65,6 +66,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.appendCommentWithOCL(title, expInOcl);
 		assert className != null;
 		//	js.append("@SuppressWarnings(\"nls\")\n");
+		js.append("// " + cgClass.getCallingConvention() + "\n");
 		js.append("public class " + className + " extends ");
 		js.appendClassReference(null, baseClass);
 	//	appendSuperTypes(js, cgClass);
@@ -77,26 +79,53 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		}
 		//
 		js.appendOptionalBlankLine();
-		if (globalNameManager.needsExecutor()) {
-			js.append("protected final ");
-			js.appendClassReference(true, Executor.class);
-			js.append(" ");
-			js.append("executor");
-			js.append(" = ");
-			js.appendClassReference(null, PivotUtil.class);
-			js.append(".getExecutor(null);\n");
-		}
-		//
 		js.append("protected final ");
 		js.appendIsRequired(true);
 		js.append(" ");
 		js.append(className);
 		js.append(" ");
-		js.append(rootObjectName);
+		js.append(rootThisName);
 		js.append(" = this;\n");
 		//
+		if (globalNameManager.needsExecutor()) {
+			js.append("protected final ");
+			js.appendClassReference(true, Executor.class);
+			js.append(" ");
+			js.append(rootExecutorName);
+			js.append(";\n");
+			//
+			js.appendOptionalBlankLine();
+			js.append("public ");
+			js.append(className);
+			js.append("() {\n");
+			js.pushIndentation(null);
+			js.append("this(");
+			js.appendClassReference(null, PivotUtil.class);
+			js.append(".getExecutor(null));\n");
+			js.popIndentation();
+			js.append("}\n");
+			//
+			js.appendOptionalBlankLine();
+			js.append("public ");
+			js.append(className);
+			js.append("(");
+			js.appendClassReference(true, Executor.class);
+			js.append(" ");
+			js.append(rootExecutorName);
+			js.append(") {\n");
+			js.pushIndentation(null);
+			js.append("this.");
+			js.append(rootExecutorName);
+			js.append(" = ");
+			js.append(rootExecutorName);
+			js.append(";\n");
+			generatePropertyInitializations(cg2javaVisitor, cgClass);
+			js.popIndentation();
+			js.append("}\n");
+		}
+		//
 		if (expInOcl.getOwnedContext() != null) {
-			generateProperties(cg2javaVisitor, cgClass);
+			generatePropertyDeclarations(cg2javaVisitor, cgClass);
 			generateOperations(cg2javaVisitor, cgClass);
 		}
 		else {

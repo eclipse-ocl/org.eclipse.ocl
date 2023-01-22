@@ -44,6 +44,8 @@ import org.junit.runners.Suite;
 	EvaluateStringOperationsTest4.class,
 	EvaluateTupleOperationsTest4.class,
 	EvaluateUMLTest4.class,
-	IteratorsTest4.class})
+	IteratorsTest4.class,
+	LastTest.class
+	})
 
 public class AllEvaluationTests {}

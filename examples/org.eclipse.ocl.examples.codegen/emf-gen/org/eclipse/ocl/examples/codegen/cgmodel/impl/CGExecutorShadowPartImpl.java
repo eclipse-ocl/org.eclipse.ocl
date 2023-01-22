@@ -72,4 +72,14 @@ public class CGExecutorShadowPartImpl extends CGExecutorPropertyImpl implements 
 		return (getClass() == thatValue.getClass()) ? this.ast == thatValue.getAst() : null;
 	}
 
+	@Override
+	public boolean isInlined() {
+		// XXX Auto-generated method stub
+		boolean inlined = super.isInlined();
+		if (inlined) {
+			inlined = super.isInlined();
+		}
+		return inlined;
+	}
+
 } //CGExecutorConstructorPartImpl
