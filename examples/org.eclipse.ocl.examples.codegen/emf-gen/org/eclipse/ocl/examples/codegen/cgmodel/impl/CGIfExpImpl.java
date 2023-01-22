@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIfExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
@@ -372,7 +373,7 @@ public class CGIfExpImpl extends CGValuedElementImpl implements CGIfExp {
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
+	public @Nullable AbstractPlace getPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
 		return IfPlaces.createIfPlaces(element2place, this);
 	}
 

@@ -15,6 +15,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -83,8 +84,8 @@ public class CGIteratorImpl extends CGParameterImpl implements CGIterator {
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
-		return ControlPlace.createControlPlace(element2place, this);
+	public @Nullable AbstractPlace getPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
+		return ControlPlace.createControlPlace(analyzer, element2place, this);
 	}
 
 	/**

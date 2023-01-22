@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -26,7 +27,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  */
 public class LetPlaces
 {
-	public static @NonNull LocalPlace createLetPlaces(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGLetExp cgLetExp) {
+	public static @NonNull LocalPlace createLetPlaces(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGLetExp cgLetExp) {
 		ControlPlace letPlace = ControlPlace.getControlPlace(element2place, cgLetExp);
 		CGValuedElement cgInExp = cgLetExp.getIn();
 		CGValuedElement cgInitExp = cgLetExp.getInit();

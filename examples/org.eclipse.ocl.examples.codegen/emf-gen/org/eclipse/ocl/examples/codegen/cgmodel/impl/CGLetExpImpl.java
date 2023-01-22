@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -290,15 +291,6 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
-		return LetPlaces.createLetPlaces(element2place, this);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public @NonNull CGValuedElement getReferredValue() {
 		return in != null ? in : this;
 	}
@@ -319,6 +311,15 @@ public class CGLetExpImpl extends CGValuedElementImpl implements CGLetExp {
 	@Override
 	public @NonNull CGValuedElement getNamedValue() {
 		return in != null ? in.getNamedValue() : this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable AbstractPlace getPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
+		return LetPlaces.createLetPlaces(analyzer, element2place, this);
 	}
 
 	/**

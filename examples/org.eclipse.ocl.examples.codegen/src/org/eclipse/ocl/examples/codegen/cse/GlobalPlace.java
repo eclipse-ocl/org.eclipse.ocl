@@ -40,7 +40,7 @@ import com.google.common.collect.Multimap;
  */
 public class GlobalPlace extends AbstractPlace
 {
-	public static @NonNull AbstractPlace createGlobalPlace(@NonNull Map<CGElement, AbstractPlace> element2place, @NonNull CGElement cgElement) {
+	public static @NonNull AbstractPlace createGlobalPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<CGElement, AbstractPlace> element2place, @NonNull CGElement cgElement) {
 		AbstractPlace abstractPlace = element2place.get(null);
 		assert abstractPlace != null;
 		return abstractPlace;
@@ -90,7 +90,7 @@ public class GlobalPlace extends AbstractPlace
 		//
 		//	Create the Place hierarchy in Preorder
 		//
-		AbstractPlace abstractPlace = cgElement.getPlace(element2place);
+		AbstractPlace abstractPlace = cgElement.getPlace(analyzer, element2place);
 		if (abstractPlace == null) {
 			return null;
 		}

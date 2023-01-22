@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.EObjectEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
@@ -241,15 +242,6 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	 * @generated
 	 */
 	@Override
-	public @Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
-		return ControlPlace.createControlPlace(element2place, this);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
 	public @NonNull CGValuedElement getReferredValue() {
 		return getThisValue();
 	}
@@ -281,6 +273,15 @@ public abstract class CGValuedElementImpl extends CGTypedElementImpl implements 
 	public @NonNull CGValuedElement getNamedValue() {
 		CGValuedElement value = getThisValue();
 		return value != this ? value.getNamedValue() : value;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable AbstractPlace getPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place) {
+		return ControlPlace.createControlPlace(analyzer, element2place, this);
 	}
 
 	/**

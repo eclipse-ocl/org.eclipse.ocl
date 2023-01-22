@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -23,7 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
  */
 public class InnerStackPlace extends StackPlace
 {
-	public static @NonNull LocalPlace createInnerStackPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGIterationCallExp cgLoopExp) {
+	public static @NonNull LocalPlace createInnerStackPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place, @NonNull CGIterationCallExp cgLoopExp) {
 		ControlPlace loopPlace = ControlPlace.getControlPlace(element2place, cgLoopExp);
 		CGValuedElement cgBodyExp = cgLoopExp.getBody();
 		if (cgBodyExp != null) {

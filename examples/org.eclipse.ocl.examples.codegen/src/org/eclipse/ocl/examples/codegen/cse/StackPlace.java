@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink(CEA LIST) - Initial API and implementation
  *******************************************************************************/
@@ -15,13 +15,14 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public abstract class StackPlace extends LocalPlace
 {
-	public static @NonNull StackPlace createStackPlace(@NonNull Map<CGElement, AbstractPlace> element2place, @NonNull CGParameter cgParameter) {
+	public static @NonNull StackPlace createStackPlace(@NonNull CodeGenAnalyzer analyzer, @NonNull Map<CGElement, AbstractPlace> element2place, @NonNull CGParameter cgParameter) {
 		AbstractPlace abstractPlace = element2place.get(cgParameter.getParent());
 		if (abstractPlace instanceof StackPlace) {
 			return (StackPlace) abstractPlace;
@@ -33,7 +34,7 @@ public abstract class StackPlace extends LocalPlace
 
 	protected final @NonNull CGElement stackElement;
 	private /*@LazyNonNull*/ Set<InnerStackPlace> stackPlaces = null;
-	
+
 	protected StackPlace(@NonNull GlobalPlace globalPlace, @NonNull CGElement stackElement) {
 		super(globalPlace);
 		this.stackElement = stackElement;
@@ -54,7 +55,7 @@ public abstract class StackPlace extends LocalPlace
 	public @NonNull StackPlace getStackPlace() {
 		return this;
 	}
-	
+
 	@Override
 	public void printHierarchy(@NonNull Appendable appendable, @NonNull String indentation) {
 		TracingOption.println(appendable, indentation + this);
@@ -65,7 +66,7 @@ public abstract class StackPlace extends LocalPlace
 			}
 		}
 	}
-	
+
 	@Override
 	public void prune() {
 		if (stackPlaces != null) {
@@ -75,7 +76,7 @@ public abstract class StackPlace extends LocalPlace
 		}
 		super.prune();
 	}
-	
+
 	@Override
 	public void pullUp() {
 		if (stackPlaces != null) {
@@ -85,7 +86,7 @@ public abstract class StackPlace extends LocalPlace
 		}
 		super.pullUp();
 	}
-	
+
 	@Override
 	public void pushUp() {
 		if (stackPlaces != null) {
@@ -95,7 +96,7 @@ public abstract class StackPlace extends LocalPlace
 		}
 		super.pushUp();
 	}
-	
+
 	@Override
 	public void rewrite() {
 		if (stackPlaces != null) {
