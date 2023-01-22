@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.Constraint;
@@ -586,9 +587,13 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 * Tests construction of a type instance with property values
 	 */
 	@Test public void test_type_construction() throws InvocationTargetException {
+		NameResolution.NAMES_GATHER.setState(true);
+		NameResolution.NAMES_RESOLVE.setState(true);
 		TestOCL ocl = createOCLWithProjectMap();
 		initFruitPackage(ocl);
 		EObject context = fruitEFactory.create(tree);
+		ocl.assertQueryTrue(context, "let thisApple = Apple{stem=null,label='AnApple',color=Color::red}, thatApple = Apple{stem=null,label='AnApple',color=Color::red} in thisApple.label = thatApple.label and thisApple.color = thatApple.color");
+// XXX
 		ocl.assertValidationErrorQuery(ocl.getContextType(context), false, "Apple{stem=null}.label", "Missing initializers: color");
 		ocl.assertValidationErrorQuery(ocl.getContextType(context), false, "Apple{name=null}.label", "Unexpected initializers: name");
 		ocl.assertQueryEquals(context, null, "Apple{color=null,label=null,stem=null}.label");

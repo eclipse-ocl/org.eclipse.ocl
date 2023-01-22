@@ -89,7 +89,7 @@ public class CGSequenceImpl extends CGValuedElementImpl implements CGSequence {
 	@Override
 	public List<CGValuedElement> getOwnedStatements() {
 		if (ownedStatements == null) {
-			ownedStatements = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 6);
+			ownedStatements = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 5);
 		}
 		return ownedStatements;
 	}
@@ -102,7 +102,7 @@ public class CGSequenceImpl extends CGValuedElementImpl implements CGSequence {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return ((InternalEList<?>)getOwnedStatements()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -116,7 +116,7 @@ public class CGSequenceImpl extends CGValuedElementImpl implements CGSequence {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getOwnedStatements();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -131,7 +131,7 @@ public class CGSequenceImpl extends CGValuedElementImpl implements CGSequence {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				getOwnedStatements().clear();
 				getOwnedStatements().addAll((Collection<? extends CGValuedElement>)newValue);
 				return;
@@ -147,7 +147,7 @@ public class CGSequenceImpl extends CGValuedElementImpl implements CGSequence {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				getOwnedStatements().clear();
 				return;
 		}
@@ -162,7 +162,7 @@ public class CGSequenceImpl extends CGValuedElementImpl implements CGSequence {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return ownedStatements != null && !ownedStatements.isEmpty();
 		}
 		return super.eIsSet(featureID);

@@ -116,7 +116,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 		CGOperation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -127,7 +127,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public List<CGValuedElement> getArguments() {
 		if (arguments == null) {
-			arguments = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 9);
+			arguments = new EObjectContainmentEList<CGValuedElement>(CGValuedElement.class, this, 8);
 		}
 		return arguments;
 	}
@@ -152,7 +152,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 		Operation oldAsOperation = asOperation;
 		asOperation = newAsOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldAsOperation, asOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldAsOperation, asOperation));
 	}
 
 	/**
@@ -173,7 +173,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return ((InternalEList<?>)getArguments()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -187,11 +187,11 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return getReferredOperation();
-			case 9:
+			case 8:
 				return getArguments();
-			case 10:
+			case 9:
 				return getAsOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -206,14 +206,14 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				setReferredOperation((CGOperation)newValue);
 				return;
-			case 9:
+			case 8:
 				getArguments().clear();
 				getArguments().addAll((Collection<? extends CGValuedElement>)newValue);
 				return;
-			case 10:
+			case 9:
 				setAsOperation((Operation)newValue);
 				return;
 		}
@@ -228,13 +228,13 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				setReferredOperation((CGOperation)null);
 				return;
-			case 9:
+			case 8:
 				getArguments().clear();
 				return;
-			case 10:
+			case 9:
 				setAsOperation(AS_OPERATION_EDEFAULT);
 				return;
 		}
@@ -249,11 +249,11 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return referredOperation != null;
-			case 9:
+			case 8:
 				return arguments != null && !arguments.isEmpty();
-			case 10:
+			case 9:
 				return AS_OPERATION_EDEFAULT == null ? asOperation != null : !AS_OPERATION_EDEFAULT.equals(asOperation);
 		}
 		return super.eIsSet(featureID);

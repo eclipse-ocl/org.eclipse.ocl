@@ -126,7 +126,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 */
 	@Override
 	public CGCallable getCallable() {
-		if (eContainerFeatureID() != (7)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (CGCallable)eInternalContainer();
 	}
 
@@ -136,7 +136,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 * @generated
 	 */
 	public NotificationChain basicSetCallable(CGCallable newCallable, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newCallable, 7, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newCallable, 6, msgs);
 		return msgs;
 	}
 
@@ -147,19 +147,19 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	 */
 	@Override
 	public void setCallable(CGCallable newCallable) {
-		if (newCallable != eInternalContainer() || (eContainerFeatureID() != (7) && newCallable != null)) {
+		if (newCallable != eInternalContainer() || (eContainerFeatureID() != (6) && newCallable != null)) {
 			if (EcoreUtil.isAncestor(this, newCallable))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newCallable != null)
-				msgs = ((InternalEObject)newCallable).eInverseAdd(this, 6, CGCallable.class, msgs);
+				msgs = ((InternalEObject)newCallable).eInverseAdd(this, 5, CGCallable.class, msgs);
 			msgs = basicSetCallable(newCallable, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newCallable, newCallable));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newCallable, newCallable));
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 		boolean oldIsSelf = isSelf;
 		isSelf = newIsSelf;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldIsSelf, isSelf));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldIsSelf, isSelf));
 	}
 
 	/**
@@ -205,7 +205,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 		boolean oldIsThis = isThis;
 		isThis = newIsThis;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldIsThis, isThis));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldIsThis, isThis));
 	}
 
 	/**
@@ -216,7 +216,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 7:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetCallable((CGCallable)otherEnd, msgs);
@@ -232,7 +232,7 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 7:
+			case 6:
 				return basicSetCallable(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -246,8 +246,8 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case 7:
-				return eInternalContainer().eInverseRemove(this, 6, CGCallable.class, msgs);
+			case 6:
+				return eInternalContainer().eInverseRemove(this, 5, CGCallable.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -260,11 +260,11 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 7:
+			case 6:
 				return getCallable();
-			case 8:
+			case 7:
 				return isIsSelf();
-			case 9:
+			case 8:
 				return isIsThis();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -278,13 +278,13 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 7:
+			case 6:
 				setCallable((CGCallable)newValue);
 				return;
-			case 8:
+			case 7:
 				setIsSelf((Boolean)newValue);
 				return;
-			case 9:
+			case 8:
 				setIsThis((Boolean)newValue);
 				return;
 		}
@@ -299,13 +299,13 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 7:
+			case 6:
 				setCallable((CGCallable)null);
 				return;
-			case 8:
+			case 7:
 				setIsSelf(IS_SELF_EDEFAULT);
 				return;
-			case 9:
+			case 8:
 				setIsThis(IS_THIS_EDEFAULT);
 				return;
 		}
@@ -320,11 +320,11 @@ public class CGParameterImpl extends CGVariableImpl implements CGParameter {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 7:
+			case 6:
 				return getCallable() != null;
-			case 8:
+			case 7:
 				return isSelf != IS_SELF_EDEFAULT;
-			case 9:
+			case 8:
 				return isThis != IS_THIS_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

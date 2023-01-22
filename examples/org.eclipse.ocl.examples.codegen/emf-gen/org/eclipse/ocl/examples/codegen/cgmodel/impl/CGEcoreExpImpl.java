@@ -92,7 +92,7 @@ public class CGEcoreExpImpl extends CGSourcedCallExpImpl implements CGEcoreExp {
 			eClassifier = (EClassifier)eResolveProxy(oldEClassifier);
 			if (eClassifier != oldEClassifier) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 9, oldEClassifier, eClassifier));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 8, oldEClassifier, eClassifier));
 			}
 		}
 		return eClassifier;
@@ -117,7 +117,7 @@ public class CGEcoreExpImpl extends CGSourcedCallExpImpl implements CGEcoreExp {
 		EClassifier oldEClassifier = eClassifier;
 		eClassifier = newEClassifier;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldEClassifier, eClassifier));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldEClassifier, eClassifier));
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class CGEcoreExpImpl extends CGSourcedCallExpImpl implements CGEcoreExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				if (resolve) return getEClassifier();
 				return basicGetEClassifier();
 		}
@@ -143,7 +143,7 @@ public class CGEcoreExpImpl extends CGSourcedCallExpImpl implements CGEcoreExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setEClassifier((EClassifier)newValue);
 				return;
 		}
@@ -158,7 +158,7 @@ public class CGEcoreExpImpl extends CGSourcedCallExpImpl implements CGEcoreExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setEClassifier((EClassifier)null);
 				return;
 		}
@@ -173,7 +173,7 @@ public class CGEcoreExpImpl extends CGSourcedCallExpImpl implements CGEcoreExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return eClassifier != null;
 		}
 		return super.eIsSet(featureID);

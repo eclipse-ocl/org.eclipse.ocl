@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
@@ -91,7 +92,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 		CGExecutorType oldExecutorType = executorType;
 		executorType = newExecutorType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldExecutorType, executorType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldExecutorType, executorType));
 	}
 
 	/**
@@ -102,7 +103,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getExecutorType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -116,7 +117,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setExecutorType((CGExecutorType)newValue);
 				return;
 		}
@@ -131,7 +132,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setExecutorType((CGExecutorType)null);
 				return;
 		}
@@ -146,7 +147,7 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return executorType != null;
 		}
 		return super.eIsSet(featureID);
@@ -177,6 +178,16 @@ public class CGTypeExpImpl extends CGValuedElementImpl implements CGTypeExp {
 	@Override
 	public @NonNull CGValuedElement getNamedValue() {
 		return executorType != null ? executorType.getNamedValue() : this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable CGValuedElement getReferencedExtraChild(@NonNull CodeGenAnalyzer analyzer) {
+		assert executorType != null;
+		return executorType;
 	}
 
 	/**

@@ -90,7 +90,7 @@ public class CGEcorePropertyAssignmentImpl extends CGPropertyAssignmentImpl impl
 		EStructuralFeature oldEStructuralFeature = eStructuralFeature;
 		eStructuralFeature = newEStructuralFeature;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldEStructuralFeature, eStructuralFeature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldEStructuralFeature, eStructuralFeature));
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class CGEcorePropertyAssignmentImpl extends CGPropertyAssignmentImpl impl
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 10:
+			case 9:
 				return getEStructuralFeature();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -115,7 +115,7 @@ public class CGEcorePropertyAssignmentImpl extends CGPropertyAssignmentImpl impl
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 10:
+			case 9:
 				setEStructuralFeature((EStructuralFeature)newValue);
 				return;
 		}
@@ -130,7 +130,7 @@ public class CGEcorePropertyAssignmentImpl extends CGPropertyAssignmentImpl impl
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 9:
 				setEStructuralFeature((EStructuralFeature)null);
 				return;
 		}
@@ -145,7 +145,7 @@ public class CGEcorePropertyAssignmentImpl extends CGPropertyAssignmentImpl impl
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 9:
 				return eStructuralFeature != null;
 		}
 		return super.eIsSet(featureID);

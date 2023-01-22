@@ -107,7 +107,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 		LibraryOperation oldLibraryOperation = libraryOperation;
 		libraryOperation = newLibraryOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldLibraryOperation, libraryOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldLibraryOperation, libraryOperation));
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				return getLibraryOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -142,7 +142,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				setLibraryOperation((LibraryOperation)newValue);
 				return;
 		}
@@ -157,7 +157,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				setLibraryOperation(LIBRARY_OPERATION_EDEFAULT);
 				return;
 		}
@@ -172,7 +172,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				return LIBRARY_OPERATION_EDEFAULT == null ? libraryOperation != null : !LIBRARY_OPERATION_EDEFAULT.equals(libraryOperation);
 		}
 		return super.eIsSet(featureID);

@@ -103,7 +103,7 @@ public class CGForeignPropertyImpl extends CGBodiedPropertyImpl implements CGFor
 	@Override
 	public List<CGParameter> getParameters() {
 		if (parameters == null) {
-			parameters = new EObjectContainmentEList<CGParameter>(CGParameter.class, this, 9);
+			parameters = new EObjectContainmentEList<CGParameter>(CGParameter.class, this, 8);
 		}
 		return parameters;
 	}
@@ -116,7 +116,7 @@ public class CGForeignPropertyImpl extends CGBodiedPropertyImpl implements CGFor
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -130,7 +130,7 @@ public class CGForeignPropertyImpl extends CGBodiedPropertyImpl implements CGFor
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return getParameters();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -145,7 +145,7 @@ public class CGForeignPropertyImpl extends CGBodiedPropertyImpl implements CGFor
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				getParameters().clear();
 				getParameters().addAll((Collection<? extends CGParameter>)newValue);
 				return;
@@ -161,7 +161,7 @@ public class CGForeignPropertyImpl extends CGBodiedPropertyImpl implements CGFor
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				getParameters().clear();
 				return;
 		}
@@ -176,7 +176,7 @@ public class CGForeignPropertyImpl extends CGBodiedPropertyImpl implements CGFor
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return parameters != null && !parameters.isEmpty();
 		}
 		return super.eIsSet(featureID);

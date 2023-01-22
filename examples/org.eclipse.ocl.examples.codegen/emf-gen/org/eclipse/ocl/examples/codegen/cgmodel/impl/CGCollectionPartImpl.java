@@ -108,7 +108,7 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 		CGValuedElement oldFirst = first;
 		first = newFirst;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldFirst, newFirst);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldFirst, newFirst);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -124,14 +124,14 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 		if (newFirst != first) {
 			NotificationChain msgs = null;
 			if (first != null)
-				msgs = ((InternalEObject)first).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)first).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			if (newFirst != null)
-				msgs = ((InternalEObject)newFirst).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)newFirst).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			msgs = basicSetFirst(newFirst, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, newFirst, newFirst));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newFirst, newFirst));
 	}
 
 	/**
@@ -153,7 +153,7 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 		CGValuedElement oldLast = last;
 		last = newLast;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldLast, newLast);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldLast, newLast);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -169,14 +169,14 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 		if (newLast != last) {
 			NotificationChain msgs = null;
 			if (last != null)
-				msgs = ((InternalEObject)last).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)last).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			if (newLast != null)
-				msgs = ((InternalEObject)newLast).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)newLast).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			msgs = basicSetLast(newLast, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newLast, newLast));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newLast, newLast));
 	}
 
 	/**
@@ -186,7 +186,7 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	 */
 	@Override
 	public CGCollectionExp getCollectionExp() {
-		if (eContainerFeatureID() != (8)) return null;
+		if (eContainerFeatureID() != (7)) return null;
 		return (CGCollectionExp)eInternalContainer();
 	}
 
@@ -198,10 +198,10 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return eBasicSetContainer(otherEnd, 8, msgs);
+				return eBasicSetContainer(otherEnd, 7, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -214,12 +214,12 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return basicSetFirst(null, msgs);
-			case 7:
+			case 6:
 				return basicSetLast(null, msgs);
-			case 8:
-				return eBasicSetContainer(null, 8, msgs);
+			case 7:
+				return eBasicSetContainer(null, 7, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -232,8 +232,8 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case 8:
-				return eInternalContainer().eInverseRemove(this, 6, CGCollectionExp.class, msgs);
+			case 7:
+				return eInternalContainer().eInverseRemove(this, 5, CGCollectionExp.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -246,11 +246,11 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getFirst();
-			case 7:
+			case 6:
 				return getLast();
-			case 8:
+			case 7:
 				return getCollectionExp();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -264,10 +264,10 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setFirst((CGValuedElement)newValue);
 				return;
-			case 7:
+			case 6:
 				setLast((CGValuedElement)newValue);
 				return;
 		}
@@ -282,10 +282,10 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setFirst((CGValuedElement)null);
 				return;
-			case 7:
+			case 6:
 				setLast((CGValuedElement)null);
 				return;
 		}
@@ -300,11 +300,11 @@ public class CGCollectionPartImpl extends CGValuedElementImpl implements CGColle
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return first != null;
-			case 7:
+			case 6:
 				return last != null;
-			case 8:
+			case 7:
 				return getCollectionExp() != null;
 		}
 		return super.eIsSet(featureID);

@@ -52,7 +52,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.impl.CGValuedElementImpl;
 import org.eclipse.ocl.examples.codegen.cse.CommonSubexpressionEliminator;
 import org.eclipse.ocl.examples.codegen.cse.GlobalPlace;
 import org.eclipse.ocl.examples.codegen.generator.AbstractCodeGenerator;
@@ -456,17 +455,51 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 
 	// Fold into visitInPostOrder
 	private void gatherNames(@NonNull CGValuedElement cgElement, @NonNull Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements) {
-		NameResolution nameResolution = cgElement.basicGetNameResolution();
-		assert nameResolution != null;
-		NameManager nameManager = nameResolution.getNameManager();
-		List<@NonNull CGValuedElement> namedElements = nameManager2namedElements.get(nameManager);
-		if (namedElements == null) {
-			namedElements = new ArrayList<>();
-			nameManager2namedElements.put(nameManager, namedElements);
+		if (cgElement.eClass().getName().equals("CGExecutorType")) {
+			getClass();		// XXX
 		}
-		namedElements.add(cgElement);
-		if (NameResolution.NAMES_GATHER.isActive()) {
-			NameResolution.NAMES_GATHER.println(NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(nameResolution) + " in " + NameUtil.debugSimpleName(nameManager));
+		if (!cgElement.isInlined()) {
+			NameResolution nameResolution = cgElement.basicGetNameResolution();
+			if (nameResolution == null) {
+				Iterable<@NonNull CGValuedElement> extraChildParents = getAnalyzer().getExtraChildParents(cgElement);
+				if (extraChildParents != null) {
+					getClass();		// XXX
+					for (@NonNull CGValuedElement extraChildParent : extraChildParents) {
+						Iterable<@NonNull CGValuedElement> extraChildParentChildren = getAnalyzer().getExtraChildElements(extraChildParent);
+						Iterable<@NonNull CGValuedElement> extraChildGrandParents = getAnalyzer().getExtraChildParents(extraChildParent);
+						if (extraChildGrandParents != null) {
+							for (@NonNull CGValuedElement extraChildGrandParent : extraChildGrandParents) {
+								Iterable<@NonNull CGValuedElement> extraChildGreatGrandParents = getAnalyzer().getExtraChildParents(extraChildGrandParent);
+								getClass();		// XXX
+							}
+
+						}
+					}
+				}
+			}
+			assert nameResolution != null;
+			NameManager nameManager = nameResolution.getNameManager();
+			if (NameResolution.NAMES_GATHER.isActive()) {
+				NameResolution.NAMES_GATHER.println(NameUtil.debugSimpleName(cgElement) + " : " + NameUtil.debugSimpleName(nameResolution) + " in " + NameUtil.debugSimpleName(nameManager));
+			}
+			List<@NonNull CGValuedElement> namedElements = nameManager2namedElements.get(nameManager);
+			if (namedElements == null) {
+				namedElements = new ArrayList<>();
+				nameManager2namedElements.put(nameManager, namedElements);
+			}
+			namedElements.add(cgElement);
+		}
+		else {
+			if (NameResolution.NAMES_GATHER.isActive()) {
+				NameResolution.NAMES_GATHER.println(NameUtil.debugSimpleName(cgElement) + " inlined");
+			}
+		}
+		Iterable<@NonNull CGValuedElement> extraChildElements = getAnalyzer().getExtraChildElements(cgElement);
+		if (extraChildElements != null) {
+			for (@NonNull CGValuedElement cgExtraChild : extraChildElements) {
+			//	assert !cgExtraChild.isInlined();
+				gatherNames(cgExtraChild, nameManager2namedElements);
+			}
 		}
 	}
 
@@ -893,7 +926,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return sortedGlobals;
 	}
 
-	protected void propagateChildNameResolution(@NonNull CGElement cgElement, @NonNull CGElement cgChild, @NonNull EReference eContainmentFeature, @Nullable NameResolution parentNameResolution) {
+	protected void propagateChildNameResolution(@NonNull CGElement cgElement, @NonNull CGElement cgChild, @Nullable EReference eContainmentFeature, @Nullable NameResolution parentNameResolution) {
 		if (eContainmentFeature == CGModelPackage.Literals.CG_VARIABLE__INIT) {
 			CGVariable cgVariable = (@NonNull CGVariable)cgElement;
 			NameResolution nameResolution = cgVariable.basicGetNameResolution();
@@ -926,6 +959,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	 * If the child already has an eager name such as an Ecore parameter, then that name must be preferred.
 	 */
 	protected void propagateNameResolution(@NonNull CGElement cgElement, @Nullable NameResolution parentNameResolution) {
+	//	System.out.println("propagateNameResolution " + NameUtil.debugSimpleName(cgElement) + ":" +  cgElement);
+		if (cgElement.eClass().getName().equals("CGExecutorShadowPart")) {
+			getClass();		// XXX
+		}
 		for (EObject eObject : cgElement.eContents()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 			if (eObject instanceof CGElement) {
 				CGElement cgChild = (CGElement)eObject;
@@ -935,7 +972,19 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 			}
 		}
 		if (cgElement instanceof CGValuedElement) {
-			if (cgElement.eClass().getName().equals("CGFunction")) {
+			Iterable<@NonNull CGValuedElement> extraChildElements = getAnalyzer().getExtraChildElements((CGValuedElement)cgElement);
+			if (extraChildElements != null) {
+				for (@NonNull CGValuedElement cgExtraChild : extraChildElements) {
+					if (cgExtraChild.eClass().getName().equals("CGExecutorType")) {
+						getClass();		// XXX
+					}
+				//	assert !cgExtraChild.isInlined();
+					propagateChildNameResolution(cgElement, cgExtraChild, null, parentNameResolution);
+				}
+			}
+		}
+		if (cgElement instanceof CGValuedElement) {
+			if (cgElement.eClass().getName().equals("CGExecutorType")) {
 				getClass();		// XXX
 			}
 			CGValuedElement cgValuedElement2 = (CGValuedElement)cgElement;
@@ -957,7 +1006,15 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 					nameResolution.resolveNameHint();
 				}
 			}
-			for (EObject eObject : ((CGValuedElement)cgElement).getOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
+			CGValuedElement cgValuedElement5 = ((CGValuedElement)cgElement).getReferencedExtraChild(getAnalyzer());
+			if (cgValuedElement5 != null) {
+				propagateNameResolution(cgValuedElement5, null);
+				if ((cgValuedElement5.basicGetNameResolution() == null) && !cgValuedElement5.isInlined()) {
+					NestedNameManager localNameManager = globalNameManager.useSelfExecutableNameManager(cgValuedElement5);
+					localNameManager.getNameResolution(cgValuedElement5);		// XXX redundant ??
+				}
+			}
+		/*	for (EObject eObject : ((CGValuedElement)cgElement).getNotOwns()) {					// XXX Surely preorder - no post order to satisfy bottom up dependency evaluation
 				if (eObject instanceof CGElement) {
 					propagateNameResolution((CGElement)eObject, null);
 					if (eObject instanceof CGValuedElement) {
@@ -968,7 +1025,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 						}
 					}
 				}
-			}
+			} */
 		}
 	}
 
@@ -979,9 +1036,17 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	protected void propagateNames(@NonNull CGElement cgElement) {
 		propagateNameResolution(cgElement, null);
 		for (EObject eObject : new TreeIterable(cgElement, true)) {		// XXX debugging
-			if ((eObject instanceof CGValuedElement) && !((CGValuedElement)eObject).isInlined()) {
-				NameResolution nameResolution = ((CGValuedElement)eObject).basicGetNameResolution();
-				assert nameResolution != null;
+			if (eObject instanceof CGValuedElement) {
+				CGValuedElement cgValuedElement = (CGValuedElement)eObject;
+				if (!cgValuedElement.isInlined()) {
+					NameResolution nameResolution = cgValuedElement.basicGetNameResolution();
+					assert nameResolution != null;
+				}
+				CGValuedElement cgValuedElement2 = cgValuedElement.getReferencedExtraChild(getAnalyzer());
+				if (cgValuedElement2 != null) {
+					NameResolution nameResolution = cgValuedElement2.basicGetNameResolution();
+					assert nameResolution != null;
+				}
 			}
 		}
 	}
@@ -991,6 +1056,10 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	 */
 	private void resolveUniqueNames(@Nullable Iterable<@NonNull CGValuedElement> sortedGlobals, @NonNull Iterable<@NonNull CGPackage> cgRootPackages) {
 		NameResolution.inhibitNameResolution = false;
+		//
+		//	Propagate the NameResolutions down and up the hierarchy to facilitate sharing of future names.
+		//	Resolve each NameResolution.nameHint.
+		//
 		if (sortedGlobals != null) {
 			for (@NonNull CGValuedElement global : sortedGlobals) {
 				if (global instanceof CGTupleExp) {
@@ -1000,32 +1069,34 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				propagateNames(global);
 			}
 		}
-	//	System.out.println("-----------------resolveNames--------------------");
 		for (@NonNull CGPackage cgRootPackage : cgRootPackages) {
 			propagateNames(cgRootPackage);
 		}
+		//
+		//	Gather all the NameResolutions.
+		//
 		Map<@NonNull NameManager, @NonNull List<@NonNull CGValuedElement>> nameManager2namedElements = new HashMap<>();
 		if (sortedGlobals != null) {
 			for (@NonNull CGNamedElement cgNamedElement : sortedGlobals) {
 				if (cgNamedElement instanceof CGValuedElement) {
-					CGValuedElement cgElement = (CGValuedElement)cgNamedElement;
-					if (!cgElement.isInlined()) {
-						gatherNames(cgElement, nameManager2namedElements);
-					}
+					gatherNames((CGValuedElement)cgNamedElement, nameManager2namedElements);
 				}
 			}
 		}
 		for (@NonNull CGPackage cgRootPackage : cgRootPackages) {
 			for (EObject eObject : new TreeIterable(cgRootPackage, true)) {		// XXX debugging
 				if (eObject instanceof CGValuedElement) {
-					CGValuedElement cgElement = (CGValuedElement)eObject;
-					if (!cgElement.isInlined()) {
-						gatherNames(cgElement, nameManager2namedElements);
-					}
+					gatherNames((CGValuedElement)eObject, nameManager2namedElements);
 				}
 			}
 		}
+		//
+		//	Assign the hierarchically distinct resolvedName to each NameResolution from its nameHint.
+		//
 		globalNameManager.assignNames(nameManager2namedElements);
+		//
+		//	Debug traversal to confirm that all names have been resolved.
+		//
 		for (@NonNull CGPackage cgRootPackage : cgRootPackages) {
 			for (EObject eObject : new TreeIterable(cgRootPackage, true)) {		// XXX debugging
 				if (eObject instanceof CGValuedElement) {
@@ -1046,7 +1117,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 				}
 			}
 		}
-		CGValuedElementImpl.ALLOW_GET_VALUE_NAME = true;
 		NameResolution.inhibitNameResolution = true;
 	}
 }

@@ -642,7 +642,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			return "return " + classRef(GlobalPlace.class) + ".createGlobalPlace(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl IF = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return " + classRef(IfPlaces.class) + ".createIfPlacesanalyzer, (element2place, this);";
+			return "return " + classRef(IfPlaces.class) + ".createIfPlaces(analyzer, element2place, this);";
 		}};
 		public static final @NonNull Ctl INNER = new Ctl() { @Override public @NonNull String generate(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 			return "return " + classRef(InnerStackPlace.class) + ".createInnerStackPlace(analyzer, element2place, this);";
@@ -1888,44 +1888,90 @@ public class CGValuedElementModelSpec extends ModelSpec
 	 * The algorithm options for rewriteAs()
 	 */
 	public static interface Rew {
+		@Nullable String generateGetReferencedExtraChild(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 		@Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel);
 
-		public static final @NonNull Rew OPROP = new Rew() { @Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "if (oldValue == executorProperty) {\n" +
+		public static final @NonNull Rew FPROP = new Rew() {
+			@Override public @Nullable String generateGetReferencedExtraChild(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return analyzer.getCGElementId(asProperty.getPropertyId());";
+			}
+			@Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return null;
+		}};
+		public static final @NonNull Rew OPROP = new Rew() {
+			@Override public @Nullable String generateGetReferencedExtraChild(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "assert executorProperty != null;\n" +
+					"		return executorProperty;";
+			}
+			@Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "if (oldValue == executorProperty) {\n" +
 					"			setExecutorProperty((" + classRef(CGExecutorProperty.class) + ")newValue);\n" +
 					"			return true;\n" +
 					"		}\n" +
 					"		return false;";
 		}};
-		public static final @NonNull Rew PART = new Rew() { @Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "if (oldValue == executorPart) {\n" +
+		public static final @NonNull Rew PART = new Rew() {
+			@Override public @Nullable String generateGetReferencedExtraChild(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "assert executorPart != null;\n" +
+					"		return executorPart;";
+			}
+			@Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "if (oldValue == executorPart) {\n" +
 					"			setExecutorPart((" + classRef(CGExecutorShadowPart.class) + ")newValue);\n" +
 					"			return true;\n" +
 					"		}\n" +
 					"		return false;";
 		}};
-		public static final @NonNull Rew PROP = new Rew() { @Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "if (oldValue == referredProperty) {\n" +
+		public static final @NonNull Rew PROP = new Rew() {
+			@Override public @Nullable String generateGetReferencedExtraChild(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return null;				// no executorProperty
+			}
+			@Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "if (oldValue == referredProperty) {\n" +
 					"			setReferredProperty((" + classRef(CGProperty.class) + ")newValue);\n" +
 					"			return true;\n" +
 					"		}\n" +
 					"		return false;";
 		}};
-		public static final @NonNull Rew TYPE = new Rew() { @Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "if (oldValue == executorType) {\n" +
+		public static final @NonNull Rew TEMP = new Rew() {
+			@Override public @Nullable String generateGetReferencedExtraChild(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "assert templateableElement != null;\n" +
+					"		return templateableElement;";
+			}
+			@Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return null;
+		}};
+		public static final @NonNull Rew TYPE = new Rew() {
+			@Override public @Nullable String generateGetReferencedExtraChild(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "assert executorType != null;\n" +
+					"		return executorType;";
+			}
+			@Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "if (oldValue == executorType) {\n" +
 					"			setExecutorType((" + classRef(CGExecutorType.class) + ")newValue);\n" +
 					"			return true;\n" +
 					"		}\n" +
 					"		return false;";
 		}};
-		public static final @NonNull Rew UNSUP = new Rew() { @Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "throw new UnsupportedOperationException(getClass().getName() + \".rewriteAs()\");";
-		}};
-		public static final @NonNull Rew VAREX = new Rew() { @Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-			return "return false;";
+		public static final @NonNull Rew VAREX = new Rew() {
+			@Override public @Nullable String generateGetReferencedExtraChild(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return null;";
+			}
+			@Override public @Nullable String generateRewriteAs(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				return "return false;";
 		}};
 
-		public static MethodSpec rewriteAs = new MyMethodSpec(CGElement.class, "boolean rewriteAs(@NonNull " + classRef(CGValuedElement.class) + " oldValue, @NonNull " + classRef(CGValuedElement.class) + " newValue)", null,
+		public static MethodSpec getReferencedExtraChild = new MyMethodSpec(CGValuedElement.class, "@Nullable " + classRef(CGValuedElement.class) + " getReferencedExtraChild(@NonNull " + classRef(CodeGenAnalyzer.class) + " analyzer)", null,
+				"Return the additional non-contained but directly referenced child element that the CSE analysis treats as children.")
+		{
+			@Override
+			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
+				Rew rew = cgModelSpec.rew;
+				return rew != null ? rew.generateGetReferencedExtraChild(cgModelSpec, genModel) : null;
+			}
+		};
+
+		public static MethodSpec rewriteAs = new MyMethodSpec(CGValuedElement.class, "boolean rewriteAs(@NonNull " + classRef(CGValuedElement.class) + " oldValue, @NonNull " + classRef(CGValuedElement.class) + " newValue)", null,
 				"Rewrite the reference to oldValue by newValue.")
 		{
 			@Override
@@ -2232,12 +2278,12 @@ public class CGValuedElementModelSpec extends ModelSpec
 	// FIXME Why isNonNull FEAT isMany
 	public static class Register {
 		public Register() {
-			new CGValuedElementModelSpec(CGElement.class, null,							null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , Rew.UNSUP, null    );
+			new CGValuedElementModelSpec(CGElement.class, null,							null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , null     , null    );
 
-			new CGValuedElementModelSpec(CGNamedElement.class, null,					null     , null     , null     , null     , null     , Glo.FALSE, null     , null    , null     , null     , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , Rew.UNSUP, null    );
-			new CGValuedElementModelSpec(CGClass.class, null,							null     , null     , null     , null     , null     , Glo.CLS  , null     , null    , null     , null     , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , Rew.UNSUP, null    );
-			new CGValuedElementModelSpec(CGModel.class, null,							null     , null     , null     , null     , null     , Glo.TRUE , Inl.FALSE, null    , null     , Con.TRUE , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , Rew.UNSUP, null    );
-			new CGValuedElementModelSpec(CGPackage.class, null,							null     , null     , null     , null     , null     , Glo.TRUE , Inl.FALSE, null    , null     , Con.TRUE , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , Rew.UNSUP, null    );
+			new CGValuedElementModelSpec(CGNamedElement.class, null,					null     , null     , null     , null     , null     , Glo.FALSE, null     , null    , null     , null     , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , null     , null    );
+			new CGValuedElementModelSpec(CGClass.class, null,							null     , null     , null     , null     , null     , Glo.CLS  , null     , null    , null     , null     , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , null     , null    );
+			new CGValuedElementModelSpec(CGModel.class, null,							null     , null     , null     , null     , null     , Glo.TRUE , Inl.FALSE, null    , null     , Con.TRUE , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , null     , null    );
+			new CGValuedElementModelSpec(CGPackage.class, null,							null     , null     , null     , null     , null     , Glo.TRUE , Inl.FALSE, null    , null     , Con.TRUE , null     , null     , Ctx.TRUE , Ctl.GLOBL, null     , null     , null    );
 
 			new CGValuedElementModelSpec(CGValuedElement.class, null,					Box.ROOT , Ths.ROOT , Log.ROOT , Nul.ROOT , Inv.ROOT , Glo.ROOT , Inl.ROOT , Set.FALSE, Ct.ROOT , Con.ROOT , Val.ROOT , null     , Ctx.FALSE, Ctl.CNTRL, Com.MAY  , Rew.VAREX, Eq.ROOT );
 
@@ -2286,7 +2332,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGEcorePropertyCallExp.class, null,			Box.E_PRC, null     , null     , Nul.ECORE, null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGExecutorOppositePropertyCallExp.class, null,	Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , Rew.OPROP, null    );
 			new CGValuedElementModelSpec(CGExecutorPropertyCallExp.class, null,			Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , Rew.PROP, null    );
-			new CGValuedElementModelSpec(CGForeignPropertyCallExp.class, null,			Box.BOX  , null     , null     , null     , Inv.NEVER, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
+			new CGValuedElementModelSpec(CGForeignPropertyCallExp.class, null,			Box.BOX  , null     , null     , null     , Inv.NEVER, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , Rew.FPROP, null    );
 			new CGValuedElementModelSpec(CGLibraryPropertyCallExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , Inl.CALL , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGNativePropertyCallExp.class, null,			Box.UNBOX, null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGTuplePartCallExp.class, null,				Box.BOX  , null     , null     , null     , Inv.PRPTY, null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
@@ -2330,7 +2376,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 			new CGValuedElementModelSpec(CGForeignProperty.class, null,					Box.BOX  , null     , null     , Nul.ECORE, null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGNativeProperty.class, null,					Box.UNBOX, null     , null     , Nul.VAL  , null     , null     , null     , Set.VAL  , null    , null     , null     , null     , null     , null     , null     , null     , null    );
 			new CGValuedElementModelSpec(CGTupleExp.class, "CGTuplePart",				Box.BOX  , Ths.PARTS, null     , Nul.NEVER, Inv.PARTS, Glo.PARTS, null     , null     , null    , Con.PARTS, null     , null     , null     , null     , null     , null     , Eq.EQUIV);
-			new CGValuedElementModelSpec(CGTemplateParameterExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , null     , Eq.TPARM);
+			new CGValuedElementModelSpec(CGTemplateParameterExp.class, null,			Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , null     , null     , null     , null     , null     , Rew.TEMP , Eq.TPARM);
 			new CGValuedElementModelSpec(CGTypeExp.class, "executorType",				Box.BOX  , null     , null     , null     , null     , null     , null     , null     , null    , null     , Val.DELEG, null     , null     , null     , null     , Rew.TYPE , Eq.DELEG);
 			new CGValuedElementModelSpec(CGVariableExp.class, "referredVariable",		Box.DELEG, null     , null     , null     , null     , null     , null     , null     , null    , null     , Val.DELEG, null     , null     , null     , Com.FALSE, null     , Eq.DELEG);
 
@@ -2394,6 +2440,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 		Inv.getInvalidValue.generate(s, this, genModel, isImplementation);
 		Val.getNamedValue.generate(s, this, genModel, isImplementation);
 		Ctl.getPlace.generate(s, this, genModel, isImplementation);
+		Rew.getReferencedExtraChild.generate(s, this, genModel, isImplementation);
 		Val.getReferredValue.generate(s, this, genModel, isImplementation);
 		Val.getSourceValue.generate(s, this, genModel, isImplementation);
 		Ths.getThisValue.generate(s, this, genModel, isImplementation);

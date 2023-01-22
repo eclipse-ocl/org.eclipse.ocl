@@ -127,7 +127,7 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		Method oldMethod = method;
 		method = newMethod;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldMethod, method));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldMethod, method));
 	}
 
 	/**
@@ -150,7 +150,7 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		boolean oldThisIsSelf = thisIsSelf;
 		thisIsSelf = newThisIsSelf;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldThisIsSelf, thisIsSelf));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldThisIsSelf, thisIsSelf));
 	}
 
 	/**
@@ -171,9 +171,9 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				return getMethod();
-			case 12:
+			case 11:
 				return isThisIsSelf();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -187,10 +187,10 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				setMethod((Method)newValue);
 				return;
-			case 12:
+			case 11:
 				setThisIsSelf((Boolean)newValue);
 				return;
 		}
@@ -205,10 +205,10 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				setMethod(METHOD_EDEFAULT);
 				return;
-			case 12:
+			case 11:
 				setThisIsSelf(THIS_IS_SELF_EDEFAULT);
 				return;
 		}
@@ -223,9 +223,9 @@ public class CGCachedOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				return METHOD_EDEFAULT == null ? method != null : !METHOD_EDEFAULT.equals(method);
-			case 12:
+			case 11:
 				return thisIsSelf != THIS_IS_SELF_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

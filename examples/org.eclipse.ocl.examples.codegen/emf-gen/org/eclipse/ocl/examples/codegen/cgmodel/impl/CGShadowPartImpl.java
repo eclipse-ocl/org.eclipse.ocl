@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowExp;
@@ -107,7 +108,7 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 		CGValuedElement oldInit = init;
 		init = newInit;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldInit, newInit);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldInit, newInit);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -123,14 +124,14 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 		if (newInit != init) {
 			NotificationChain msgs = null;
 			if (init != null)
-				msgs = ((InternalEObject)init).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)init).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			if (newInit != null)
-				msgs = ((InternalEObject)newInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)newInit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			msgs = basicSetInit(newInit, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, newInit, newInit));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newInit, newInit));
 	}
 
 	/**
@@ -140,7 +141,7 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	 */
 	@Override
 	public CGShadowExp getShadowExp() {
-		if (eContainerFeatureID() != (7)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (CGShadowExp)eInternalContainer();
 	}
 
@@ -164,7 +165,7 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 		CGExecutorShadowPart oldExecutorPart = executorPart;
 		executorPart = newExecutorPart;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldExecutorPart, executorPart));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldExecutorPart, executorPart));
 	}
 
 	/**
@@ -175,10 +176,10 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 7:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return eBasicSetContainer(otherEnd, 7, msgs);
+				return eBasicSetContainer(otherEnd, 6, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -191,10 +192,10 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return basicSetInit(null, msgs);
-			case 7:
-				return eBasicSetContainer(null, 7, msgs);
+			case 6:
+				return eBasicSetContainer(null, 6, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -207,8 +208,8 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case 7:
-				return eInternalContainer().eInverseRemove(this, 6, CGShadowExp.class, msgs);
+			case 6:
+				return eInternalContainer().eInverseRemove(this, 5, CGShadowExp.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -221,11 +222,11 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getInit();
-			case 7:
+			case 6:
 				return getShadowExp();
-			case 8:
+			case 7:
 				return getExecutorPart();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -239,10 +240,10 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setInit((CGValuedElement)newValue);
 				return;
-			case 8:
+			case 7:
 				setExecutorPart((CGExecutorShadowPart)newValue);
 				return;
 		}
@@ -257,10 +258,10 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setInit((CGValuedElement)null);
 				return;
-			case 8:
+			case 7:
 				setExecutorPart((CGExecutorShadowPart)null);
 				return;
 		}
@@ -275,11 +276,11 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return init != null;
-			case 7:
+			case 6:
 				return getShadowExp() != null;
-			case 8:
+			case 7:
 				return executorPart != null;
 		}
 		return super.eIsSet(featureID);
@@ -301,6 +302,16 @@ public class CGShadowPartImpl extends CGValuedElementImpl implements CGShadowPar
 	@Override
 	public @NonNull CGValuedElement getNamedValue() {
 		return init != null ? init.getNamedValue() : this;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable CGValuedElement getReferencedExtraChild(@NonNull CodeGenAnalyzer analyzer) {
+		assert executorPart != null;
+		return executorPart;
 	}
 
 	/**

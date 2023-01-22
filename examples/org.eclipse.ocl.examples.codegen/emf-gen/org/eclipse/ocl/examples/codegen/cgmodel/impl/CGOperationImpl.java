@@ -126,7 +126,7 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	@Override
 	public @NonNull List<CGConstraint> getPreconditions() {
 		if (preconditions == null) {
-			preconditions = new EObjectContainmentEList<CGConstraint>(CGConstraint.class, this, 8);
+			preconditions = new EObjectContainmentEList<CGConstraint>(CGConstraint.class, this, 7);
 		}
 		return preconditions;
 	}
@@ -140,7 +140,7 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	@Override
 	public @NonNull List<CGConstraint> getPostconditions() {
 		if (postconditions == null) {
-			postconditions = new EObjectContainmentEList<CGConstraint>(CGConstraint.class, this, 9);
+			postconditions = new EObjectContainmentEList<CGConstraint>(CGConstraint.class, this, 8);
 		}
 		return postconditions;
 	}
@@ -152,7 +152,7 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	 */
 	@Override
 	public CGClass getContainingClass() {
-		if (eContainerFeatureID() != (10)) return null;
+		if (eContainerFeatureID() != (9)) return null;
 		return (CGClass)eInternalContainer();
 	}
 
@@ -162,7 +162,7 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	 * @generated
 	 */
 	public NotificationChain basicSetContainingClass(CGClass newContainingClass, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newContainingClass, 10, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newContainingClass, 9, msgs);
 		return msgs;
 	}
 
@@ -173,7 +173,7 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	 */
 	@Override
 	public void setContainingClass(CGClass newContainingClass) {
-		if (newContainingClass != eInternalContainer() || (eContainerFeatureID() != (10) && newContainingClass != null)) {
+		if (newContainingClass != eInternalContainer() || (eContainerFeatureID() != (9) && newContainingClass != null)) {
 			if (EcoreUtil.isAncestor(this, newContainingClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -185,7 +185,7 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, newContainingClass, newContainingClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, newContainingClass, newContainingClass));
 	}
 
 	/**
@@ -208,7 +208,7 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 		OperationCallingConvention oldCallingConvention = callingConvention;
 		callingConvention = newCallingConvention;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldCallingConvention, callingConvention));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldCallingConvention, callingConvention));
 	}
 
 	/**
@@ -219,7 +219,7 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 10:
+			case 9:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetContainingClass((CGClass)otherEnd, msgs);
@@ -235,11 +235,11 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return ((InternalEList<?>)getPreconditions()).basicRemove(otherEnd, msgs);
-			case 9:
+			case 8:
 				return ((InternalEList<?>)getPostconditions()).basicRemove(otherEnd, msgs);
-			case 10:
+			case 9:
 				return basicSetContainingClass(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -253,7 +253,7 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case 10:
+			case 9:
 				return eInternalContainer().eInverseRemove(this, 3, CGClass.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
@@ -267,13 +267,13 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return getPreconditions();
-			case 9:
+			case 8:
 				return getPostconditions();
-			case 10:
+			case 9:
 				return getContainingClass();
-			case 11:
+			case 10:
 				return getCallingConvention();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -288,18 +288,18 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				getPreconditions().clear();
 				getPreconditions().addAll((Collection<? extends CGConstraint>)newValue);
 				return;
-			case 9:
+			case 8:
 				getPostconditions().clear();
 				getPostconditions().addAll((Collection<? extends CGConstraint>)newValue);
 				return;
-			case 10:
+			case 9:
 				setContainingClass((CGClass)newValue);
 				return;
-			case 11:
+			case 10:
 				setCallingConvention((OperationCallingConvention)newValue);
 				return;
 		}
@@ -314,16 +314,16 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				getPreconditions().clear();
 				return;
-			case 9:
+			case 8:
 				getPostconditions().clear();
 				return;
-			case 10:
+			case 9:
 				setContainingClass((CGClass)null);
 				return;
-			case 11:
+			case 10:
 				setCallingConvention(CALLING_CONVENTION_EDEFAULT);
 				return;
 		}
@@ -338,13 +338,13 @@ public abstract class CGOperationImpl extends CGCallableImpl implements CGOperat
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return preconditions != null && !preconditions.isEmpty();
-			case 9:
+			case 8:
 				return postconditions != null && !postconditions.isEmpty();
-			case 10:
+			case 9:
 				return getContainingClass() != null;
-			case 11:
+			case 10:
 				return CALLING_CONVENTION_EDEFAULT == null ? callingConvention != null : !CALLING_CONVENTION_EDEFAULT.equals(callingConvention);
 		}
 		return super.eIsSet(featureID);

@@ -25,6 +25,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 
@@ -145,10 +146,20 @@ public class CommonAnalysis extends AbstractAnalysis
 		//	nameManager.queueValueName(cgVariable, null, "_cse");		// let post-order nameHint resolution find a name
 			for (SimpleAnalysis simpleAnalysis : simpleAnalyses) {
 				CGValuedElement commonElement = simpleAnalysis.getElement();
-				CGElement cgParent = commonElement.getParent();
-//				assert cgParent != null;		null if already rewritten by another rewrite
-				if ((cgParent != null) && !cgParent.rewriteAs(commonElement, cgCSE)) {
-					rewriteAsVariableExp(commonElement, cgVariable);
+				NameResolution nameResolution = commonElement.basicGetNameResolution();
+				boolean isDead = (nameResolution != null) && nameResolution.isDead();
+				if (!isDead) {
+					CGElement cgParent = commonElement.getParent();
+					if (cgParent == null) {
+						Iterable<@NonNull CGValuedElement> extraChildParents = analyzer.getExtraChildParents(commonElement);
+						if (extraChildParents != null) {
+							cgParent = extraChildParents.iterator().next();
+						}
+					}
+//					assert cgParent != null;		null if already rewritten by another rewrite
+					if ((cgParent instanceof CGValuedElement) && !((CGValuedElement)cgParent).rewriteAs(commonElement, cgCSE)) {
+						rewriteAsVariableExp(commonElement, cgVariable);
+					}
 				}
 			}
 			analyzer.getGlobalNameManager().rewriteAsLet(controlElement, cgVariable);

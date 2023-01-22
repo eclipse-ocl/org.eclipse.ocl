@@ -1,32 +1,28 @@
 /**
  * <copyright>
- * 
+ *
  * Copyright (c) 2015, 2019 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
- * 
+ *
  * </copyright>
  */
 package org.eclipse.ocl.examples.codegen.cgmodel.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.jdt.annotation.NonNull;
-
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTemplateParameterExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -124,7 +120,7 @@ public class CGTemplateParameterExpImpl extends CGValuedElementImpl implements C
 		CGValuedElement oldTemplateableElement = templateableElement;
 		templateableElement = newTemplateableElement;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldTemplateableElement, templateableElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldTemplateableElement, templateableElement));
 	}
 
 	/**
@@ -147,7 +143,7 @@ public class CGTemplateParameterExpImpl extends CGValuedElementImpl implements C
 		int oldIndex = index;
 		index = newIndex;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldIndex, index));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldIndex, index));
 	}
 
 	/**
@@ -158,9 +154,9 @@ public class CGTemplateParameterExpImpl extends CGValuedElementImpl implements C
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getTemplateableElement();
-			case 7:
+			case 6:
 				return getIndex();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -174,10 +170,10 @@ public class CGTemplateParameterExpImpl extends CGValuedElementImpl implements C
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setTemplateableElement((CGValuedElement)newValue);
 				return;
-			case 7:
+			case 6:
 				setIndex((Integer)newValue);
 				return;
 		}
@@ -192,10 +188,10 @@ public class CGTemplateParameterExpImpl extends CGValuedElementImpl implements C
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setTemplateableElement((CGValuedElement)null);
 				return;
-			case 7:
+			case 6:
 				setIndex(INDEX_EDEFAULT);
 				return;
 		}
@@ -210,9 +206,9 @@ public class CGTemplateParameterExpImpl extends CGValuedElementImpl implements C
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return templateableElement != null;
-			case 7:
+			case 6:
 				return index != INDEX_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -241,6 +237,16 @@ public class CGTemplateParameterExpImpl extends CGValuedElementImpl implements C
 	@Override
 	public <R> R accept(@NonNull CGModelVisitor<R> visitor) {
 		return visitor.visitCGTemplateParameterExp(this);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public @Nullable CGValuedElement getReferencedExtraChild(@NonNull CodeGenAnalyzer analyzer) {
+		assert templateableElement != null;
+		return templateableElement;
 	}
 
 	/**

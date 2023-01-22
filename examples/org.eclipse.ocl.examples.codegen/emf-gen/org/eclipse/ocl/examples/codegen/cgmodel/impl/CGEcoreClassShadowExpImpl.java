@@ -93,7 +93,7 @@ public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcor
 		EClass oldEClass = eClass;
 		eClass = newEClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldEClass, eClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldEClass, eClass));
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcor
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return getEClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -118,7 +118,7 @@ public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcor
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				setEClass((EClass)newValue);
 				return;
 		}
@@ -133,7 +133,7 @@ public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcor
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				setEClass((EClass)null);
 				return;
 		}
@@ -148,7 +148,7 @@ public class CGEcoreClassShadowExpImpl extends CGShadowExpImpl implements CGEcor
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return eClass != null;
 		}
 		return super.eIsSet(featureID);

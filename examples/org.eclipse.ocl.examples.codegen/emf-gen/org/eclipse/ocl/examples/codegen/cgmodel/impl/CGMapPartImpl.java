@@ -117,7 +117,7 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 		CGValuedElement oldKey = key;
 		key = newKey;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldKey, newKey);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldKey, newKey);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -133,14 +133,14 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 		if (newKey != key) {
 			NotificationChain msgs = null;
 			if (key != null)
-				msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			if (newKey != null)
-				msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
+				msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			msgs = basicSetKey(newKey, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, newKey, newKey));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newKey, newKey));
 	}
 
 	/**
@@ -162,7 +162,7 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 		CGValuedElement oldValue = value;
 		value = newValue;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldValue, newValue);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldValue, newValue);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -178,14 +178,14 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 		if (newValue != value) {
 			NotificationChain msgs = null;
 			if (value != null)
-				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			if (newValue != null)
-				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			msgs = basicSetValue(newValue, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newValue, newValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newValue, newValue));
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	 */
 	@Override
 	public CGMapExp getMapExp() {
-		if (eContainerFeatureID() != (8)) return null;
+		if (eContainerFeatureID() != (7)) return null;
 		return (CGMapExp)eInternalContainer();
 	}
 
@@ -207,10 +207,10 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return eBasicSetContainer(otherEnd, 8, msgs);
+				return eBasicSetContainer(otherEnd, 7, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -223,12 +223,12 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return basicSetKey(null, msgs);
-			case 7:
+			case 6:
 				return basicSetValue(null, msgs);
-			case 8:
-				return eBasicSetContainer(null, 8, msgs);
+			case 7:
+				return eBasicSetContainer(null, 7, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -241,8 +241,8 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case 8:
-				return eInternalContainer().eInverseRemove(this, 6, CGMapExp.class, msgs);
+			case 7:
+				return eInternalContainer().eInverseRemove(this, 5, CGMapExp.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -255,11 +255,11 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getKey();
-			case 7:
+			case 6:
 				return getValue();
-			case 8:
+			case 7:
 				return getMapExp();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -273,10 +273,10 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setKey((CGValuedElement)newValue);
 				return;
-			case 7:
+			case 6:
 				setValue((CGValuedElement)newValue);
 				return;
 		}
@@ -291,10 +291,10 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setKey((CGValuedElement)null);
 				return;
-			case 7:
+			case 6:
 				setValue((CGValuedElement)null);
 				return;
 		}
@@ -309,11 +309,11 @@ public class CGMapPartImpl extends CGValuedElementImpl implements CGMapPart {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return key != null;
-			case 7:
+			case 6:
 				return value != null;
-			case 8:
+			case 7:
 				return getMapExp() != null;
 		}
 		return super.eIsSet(featureID);

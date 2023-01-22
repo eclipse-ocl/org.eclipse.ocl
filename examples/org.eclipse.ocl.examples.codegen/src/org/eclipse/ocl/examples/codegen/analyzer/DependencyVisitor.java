@@ -292,11 +292,13 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGElement(@NonNull CGElement cgElement) {
-		for (CGElement cgChild : cgElement.getChildren()) {
-			if ((cgElement instanceof CGValuedElement) && (cgChild instanceof CGValuedElement)) {
-				addDependency((CGValuedElement)cgElement, (CGValuedElement) cgChild);
+		if (cgElement instanceof CGValuedElement) {
+			for (CGElement cgChild : cgElement.getChildren()) {
+				if (cgChild instanceof CGValuedElement) {
+					addDependency((CGValuedElement)cgElement, (CGValuedElement) cgChild);
+				}
+				cgChild.accept(this);
 			}
-			cgChild.accept(this);
 		}
 		return null;
 	}

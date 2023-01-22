@@ -98,7 +98,7 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	 */
 	@Override
 	public CGClass getContainingClass() {
-		if (eContainerFeatureID() != (7)) return null;
+		if (eContainerFeatureID() != (6)) return null;
 		return (CGClass)eInternalContainer();
 	}
 
@@ -108,7 +108,7 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	 * @generated
 	 */
 	public NotificationChain basicSetContainingClass(CGClass newContainingClass, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newContainingClass, 7, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newContainingClass, 6, msgs);
 		return msgs;
 	}
 
@@ -119,7 +119,7 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	 */
 	@Override
 	public void setContainingClass(CGClass newContainingClass) {
-		if (newContainingClass != eInternalContainer() || (eContainerFeatureID() != (7) && newContainingClass != null)) {
+		if (newContainingClass != eInternalContainer() || (eContainerFeatureID() != (6) && newContainingClass != null)) {
 			if (EcoreUtil.isAncestor(this, newContainingClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
@@ -131,7 +131,7 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newContainingClass, newContainingClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newContainingClass, newContainingClass));
 	}
 
 	/**
@@ -154,7 +154,7 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 		PropertyCallingConvention oldCallingConvention = callingConvention;
 		callingConvention = newCallingConvention;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldCallingConvention, callingConvention));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldCallingConvention, callingConvention));
 	}
 
 	/**
@@ -165,7 +165,7 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 7:
+			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetContainingClass((CGClass)otherEnd, msgs);
@@ -181,7 +181,7 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 7:
+			case 6:
 				return basicSetContainingClass(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -195,7 +195,7 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case 7:
+			case 6:
 				return eInternalContainer().eInverseRemove(this, 4, CGClass.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
@@ -209,9 +209,9 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getCallingConvention();
-			case 7:
+			case 6:
 				return getContainingClass();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -225,10 +225,10 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setCallingConvention((PropertyCallingConvention)newValue);
 				return;
-			case 7:
+			case 6:
 				setContainingClass((CGClass)newValue);
 				return;
 		}
@@ -243,10 +243,10 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setCallingConvention(CALLING_CONVENTION_EDEFAULT);
 				return;
-			case 7:
+			case 6:
 				setContainingClass((CGClass)null);
 				return;
 		}
@@ -261,9 +261,9 @@ public abstract class CGPropertyImpl extends CGValuedElementImpl implements CGPr
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return CALLING_CONVENTION_EDEFAULT == null ? callingConvention != null : !CALLING_CONVENTION_EDEFAULT.equals(callingConvention);
-			case 7:
+			case 6:
 				return getContainingClass() != null;
 		}
 		return super.eIsSet(featureID);

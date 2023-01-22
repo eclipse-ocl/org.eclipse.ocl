@@ -101,7 +101,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 		LibraryProperty oldLibraryProperty = libraryProperty;
 		libraryProperty = newLibraryProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldLibraryProperty, libraryProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldLibraryProperty, libraryProperty));
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				return getLibraryProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -136,7 +136,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				setLibraryProperty((LibraryProperty)newValue);
 				return;
 		}
@@ -151,7 +151,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				setLibraryProperty(LIBRARY_PROPERTY_EDEFAULT);
 				return;
 		}
@@ -166,7 +166,7 @@ public class CGLibraryPropertyCallExpImpl extends CGPropertyCallExpImpl implemen
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 11:
+			case 10:
 				return LIBRARY_PROPERTY_EDEFAULT == null ? libraryProperty != null : !LIBRARY_PROPERTY_EDEFAULT.equals(libraryProperty);
 		}
 		return super.eIsSet(featureID);

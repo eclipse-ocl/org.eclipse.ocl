@@ -115,7 +115,7 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 		CGProperty oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldReferredProperty, referredProperty));
 	}
 
 	/**
@@ -138,7 +138,7 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 		Property oldAsProperty = asProperty;
 		asProperty = newAsProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldAsProperty, asProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldAsProperty, asProperty));
 	}
 
 	/**
@@ -159,9 +159,9 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return getReferredProperty();
-			case 10:
+			case 9:
 				return getAsProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -175,10 +175,10 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setReferredProperty((CGProperty)newValue);
 				return;
-			case 10:
+			case 9:
 				setAsProperty((Property)newValue);
 				return;
 		}
@@ -193,10 +193,10 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				setReferredProperty((CGProperty)null);
 				return;
-			case 10:
+			case 9:
 				setAsProperty(AS_PROPERTY_EDEFAULT);
 				return;
 		}
@@ -211,9 +211,9 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 9:
+			case 8:
 				return referredProperty != null;
-			case 10:
+			case 9:
 				return AS_PROPERTY_EDEFAULT == null ? asProperty != null : !AS_PROPERTY_EDEFAULT.equals(asProperty);
 		}
 		return super.eIsSet(featureID);

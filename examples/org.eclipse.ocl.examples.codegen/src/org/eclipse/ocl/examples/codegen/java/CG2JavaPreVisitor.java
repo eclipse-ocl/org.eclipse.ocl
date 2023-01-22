@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -117,9 +115,7 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 			if (elementId instanceof CGTypeId) {
 				cgConstantExp.setTypeId((CGTypeId) elementId);
 			}
-			//			if (cgElement != null) {
-			cgElement.getOwns().add(cgConstantExp);		// FIXME suppress/detect duplicates
-			//			}
+			analyzer.addUnreferencedExtraChild(cgElement, cgConstantExp);		// FIXME suppress/detect duplicates
 			if (typeId instanceof CollectionTypeId) {
 				addOwnedTypeId(cgConstantExp, ((CollectionTypeId)typeId).getElementTypeId());
 			}
@@ -271,11 +267,11 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	@Override
 	public @Nullable Object visitCGElement(@NonNull CGElement cgElement) {
-		List<?> owns = cgElement instanceof CGValuedElement ? ((CGValuedElement)cgElement).getOwns() : null;
+//		List<?> owns = cgElement instanceof CGValuedElement ? ((CGValuedElement)cgElement).getOwns() : null;
 		for (CGElement cgChild : cgElement.getChildren()) {
-			if ((owns == null) || !owns.contains(cgChild)) {
+//			if ((owns == null) || !owns.contains(cgChild)) {
 				cgChild.accept(this);
-			}
+//			}
 		}
 		return null;
 	}
@@ -481,9 +477,8 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 	public @Nullable Object visitCGShadowPart(@NonNull CGShadowPart cgShadowPart) {
 		CGExecutorShadowPart cgExecutorConstructorPart = cgShadowPart.getExecutorPart();
 		cgExecutorConstructorPart.accept(this);
-		//		currentNameManager.addLocalVariable(cgExecutorConstructorPart);
 		installIdResolverVariable(cgShadowPart);
-		cgShadowPart.getOwns().add(cgExecutorConstructorPart);
+		analyzer.addReferencedExtraChild(cgShadowPart, cgExecutorConstructorPart);
 		cgShadowPart.getDependsOn().add(cgExecutorConstructorPart);
 		//		cgShadowPart.getDependsOn().add(cgShadowPart.getShadowExp());
 		return super.visitCGShadowPart(cgShadowPart);

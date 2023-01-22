@@ -91,7 +91,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 		CGIterator oldAccumulator = accumulator;
 		accumulator = newAccumulator;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 14, oldAccumulator, newAccumulator);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 13, oldAccumulator, newAccumulator);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -107,14 +107,14 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 		if (newAccumulator != accumulator) {
 			NotificationChain msgs = null;
 			if (accumulator != null)
-				msgs = ((InternalEObject)accumulator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
+				msgs = ((InternalEObject)accumulator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (13), null, msgs);
 			if (newAccumulator != null)
-				msgs = ((InternalEObject)newAccumulator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
+				msgs = ((InternalEObject)newAccumulator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (13), null, msgs);
 			msgs = basicSetAccumulator(newAccumulator, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 14, newAccumulator, newAccumulator));
+			eNotify(new ENotificationImpl(this, Notification.SET, 13, newAccumulator, newAccumulator));
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 14:
+			case 13:
 				return basicSetAccumulator(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -139,7 +139,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 14:
+			case 13:
 				return getAccumulator();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -153,7 +153,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 14:
+			case 13:
 				setAccumulator((CGIterator)newValue);
 				return;
 		}
@@ -168,7 +168,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 14:
+			case 13:
 				setAccumulator((CGIterator)null);
 				return;
 		}
@@ -183,7 +183,7 @@ public class CGBuiltInIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 14:
+			case 13:
 				return accumulator != null;
 		}
 		return super.eIsSet(featureID);

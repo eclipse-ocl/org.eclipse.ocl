@@ -280,9 +280,9 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 //		CGForeignOperationCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		CGForeignPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGForeignPropertyCallExp();
 		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
-		cgPropertyCallExp.getOwns().add(cgPropertyId);
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setAsProperty(asProperty);
+		analyzer.addReferencedExtraChild(cgPropertyCallExp, cgPropertyId);
 		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);

@@ -127,7 +127,7 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 			CGExecutorOppositePropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorOppositePropertyCallExp();
 			CGExecutorProperty cgExecutorProperty = analyzer.createExecutorOppositeProperty(asProperty);
 			cgExecutorPropertyCallExp.setExecutorProperty(cgExecutorProperty);
-			cgExecutorPropertyCallExp.getOwns().add(cgExecutorProperty);
+			analyzer.addReferencedExtraChild(cgExecutorPropertyCallExp, cgExecutorProperty);
 			cgPropertyCallExp = cgExecutorPropertyCallExp;
 		}
 		cgPropertyCallExp.setReferredProperty(cgProperty);

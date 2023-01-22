@@ -103,7 +103,7 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 		String oldStringValue = stringValue;
 		stringValue = newStringValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldStringValue, stringValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldStringValue, stringValue));
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return getStringValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -138,7 +138,7 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setStringValue((String)newValue);
 				return;
 		}
@@ -153,7 +153,7 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setStringValue(STRING_VALUE_EDEFAULT);
 				return;
 		}
@@ -168,7 +168,7 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return STRING_VALUE_EDEFAULT == null ? stringValue != null : !STRING_VALUE_EDEFAULT.equals(stringValue);
 		}
 		return super.eIsSet(featureID);

@@ -119,7 +119,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 		boolean oldInvalidating = invalidating;
 		invalidating = newInvalidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldInvalidating, invalidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldInvalidating, invalidating));
 	}
 
 	/**
@@ -142,7 +142,7 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 		boolean oldValidating = validating;
 		validating = newValidating;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldValidating, validating));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldValidating, validating));
 	}
 
 	/**
@@ -163,9 +163,9 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return isInvalidating();
-			case 7:
+			case 6:
 				return isValidating();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -179,10 +179,10 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setInvalidating((Boolean)newValue);
 				return;
-			case 7:
+			case 6:
 				setValidating((Boolean)newValue);
 				return;
 		}
@@ -197,10 +197,10 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				setInvalidating(INVALIDATING_EDEFAULT);
 				return;
-			case 7:
+			case 6:
 				setValidating(VALIDATING_EDEFAULT);
 				return;
 		}
@@ -215,9 +215,9 @@ public abstract class CGCallExpImpl extends CGValuedElementImpl implements CGCal
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 6:
+			case 5:
 				return invalidating != INVALIDATING_EDEFAULT;
-			case 7:
+			case 6:
 				return validating != VALIDATING_EDEFAULT;
 		}
 		return super.eIsSet(featureID);

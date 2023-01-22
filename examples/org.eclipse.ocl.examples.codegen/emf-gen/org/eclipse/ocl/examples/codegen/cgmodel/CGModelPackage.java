@@ -2371,17 +2371,6 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGValuedElement_DependsOn();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement#getOwns <em>Owns</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Owns</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement#getOwns()
-	 * @see #getCGValuedElement()
-	 * @generated
-	 */
-	EReference getCGValuedElement_Owns();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGVariable <em>CG Variable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4589,14 +4578,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_VALUED_ELEMENT__DEPENDS_ON = eINSTANCE.getCGValuedElement_DependsOn();
-
-		/**
-		 * The meta object literal for the '<em><b>Owns</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_VALUED_ELEMENT__OWNS = eINSTANCE.getCGValuedElement_Owns();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGVariableImpl <em>CG Variable</em>}' class.

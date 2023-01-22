@@ -39,6 +39,12 @@ public class ControlPlace extends LocalPlace
 			return ClassUtil.nonNullState(element2place.get(null));
 		}
 		CGElement cgParent = cgElement.getParent();
+		if (cgParent == null) {
+			Iterable<@NonNull CGValuedElement> notOwners = analyzer.getExtraChildParents(cgElement);
+			if (notOwners != null) {
+				cgParent = notOwners.iterator().next();
+			}
+		}
 		AbstractPlace parentPlace = element2place.get(cgParent);
 		if (parentPlace instanceof ControlPlace) {
 			return parentPlace;

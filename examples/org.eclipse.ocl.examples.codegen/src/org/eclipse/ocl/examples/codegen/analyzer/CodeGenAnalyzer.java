@@ -135,6 +135,7 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * A CodeGenAnalyzer performs the analysis of a Pivot AST in preparation for code generation.
@@ -235,6 +236,18 @@ public class CodeGenAnalyzer
 	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull AbstractCache> asCacheClass2abstractCache = new HashMap<>();
 
 	private @Nullable Iterable<@NonNull CGValuedElement> cgGlobals = null;
+
+	/**
+	 * The 'opposite' of the CGValuedElement to referenced/unreferencedExtraChild relationship that the
+	 * prevailing CSE requires.This should go obsolete with a CSE / CGLetExp redesign.
+	 */
+	private final @NonNull Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> extraChild2parents = new HashMap<>();
+
+	/**
+	 * The unreferencedExtraChild relationship that the prevailing CSE requires.
+	 * This should go obsolete with a CSE / CGLetExp redesign.
+	 */
+	private final @NonNull Map<@NonNull CGValuedElement, @NonNull List<@NonNull CGValuedElement>> parent2unreferencedExtraChildren = new HashMap<>();
 
 	/**
 	 * AbstractCache describes the AS class and instance that cache distinct evaluations of a derived capability.
@@ -352,7 +365,35 @@ public class CodeGenAnalyzer
 		globalNameManager.addGlobal(cgGlobal);
 	}
 
+	public void addReferencedExtraChild(@NonNull CGValuedElement extraChildParent, @NonNull CGValuedElement extraChild) {
+		assert extraChild == extraChildParent.getReferencedExtraChild(this);
+		List<@NonNull CGValuedElement> parents = extraChild2parents.get(extraChild);
+		if (parents == null) {
+			parents = new ArrayList<>();
+			extraChild2parents.put(extraChild, parents);
+		}
+		assert !parents.contains(extraChildParent);
+		parents.add(extraChildParent);
+		System.out.println("addReferencedExtraChild " + NameUtil.debugSimpleName(extraChildParent) + ":" +  extraChildParent + "   " + NameUtil.debugSimpleName(extraChild) + ":" +  extraChild);
+	}
 
+	public void addUnreferencedExtraChild(@NonNull CGValuedElement extraChildParent, @NonNull CGValuedElement extraChild) {
+		List<@NonNull CGValuedElement> unreferencedExtraChildren = parent2unreferencedExtraChildren.get(extraChildParent);
+		if (unreferencedExtraChildren == null) {
+			unreferencedExtraChildren = new ArrayList<>();
+			parent2unreferencedExtraChildren.put(extraChildParent, unreferencedExtraChildren);
+		}
+		assert !unreferencedExtraChildren.contains(extraChild);
+		unreferencedExtraChildren.add(extraChild);
+		List<@NonNull CGValuedElement> parents = extraChild2parents.get(extraChild);
+		if (parents == null) {
+			parents = new ArrayList<>();
+			extraChild2parents.put(extraChild, parents);
+		}
+		assert !parents.contains(extraChildParent);
+		parents.add(extraChildParent);
+		System.out.println("addUnreferencedExtraChild " + NameUtil.debugSimpleName(extraChildParent) + ":" +  extraChildParent + "   " + NameUtil.debugSimpleName(extraChild) + ":" +  extraChild);
+	}
 
 //	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
 //		CGNamedElement old = asElement2cgElement.put(asVariable, cgVariable);
@@ -1471,6 +1512,28 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGVariable getExecutorVariable(@NonNull ExecutableNameManager executableNameManager) {		// Overridden for JUnit support
 		return executableNameManager.getExecutorVariableInternal();
+	}
+
+	public @Nullable Iterable<@NonNull CGValuedElement> getExtraChildElements(@NonNull CGValuedElement cgElement) {
+		List<@NonNull CGValuedElement> unreferencedExtraChildren = parent2unreferencedExtraChildren.get(cgElement);
+		CGValuedElement referencedExtraChild = cgElement.getReferencedExtraChild(this);
+		if (referencedExtraChild != null) {
+			if (unreferencedExtraChildren != null) {
+				List<@NonNull CGValuedElement> extraChildren = Lists.newArrayList(unreferencedExtraChildren);
+				extraChildren.add(referencedExtraChild);
+				return extraChildren ;
+			}
+			else {
+				return Collections.singletonList(referencedExtraChild);
+			}
+		}
+		else {
+			return unreferencedExtraChildren;
+		}
+	}
+
+	public @Nullable Iterable<@NonNull CGValuedElement> getExtraChildParents(@NonNull CGValuedElement extraChild) {
+		return extraChild2parents.get(extraChild);
 	}
 
 	public @NonNull CGClass getForeignCGClass(org.eclipse.ocl.pivot.@NonNull Package asParentPackage) {

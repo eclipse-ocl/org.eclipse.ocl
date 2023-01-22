@@ -516,9 +516,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgShadowExp != null) {
 			ExecutableNameManager executableNameManager = context.useExecutableNameManager(element);
 			CGExecutorType cgExecutorType = executableNameManager.getCGExecutorType(ClassUtil.nonNullState(element.getType()));
-			cgShadowExp.setExecutorType(cgExecutorType);
-			cgShadowExp.getOwns().add(cgExecutorType);
 			context.initAst(cgShadowExp, element, true);
+			cgShadowExp.setExecutorType(cgExecutorType);
+			context.addReferencedExtraChild(cgShadowExp, cgExecutorType);
 			List<@NonNull ShadowPart> asParts = new ArrayList<>(ClassUtil.nullFree(element.getOwnedParts()));
 			Collections.sort(asParts, NameUtil.NAMEABLE_COMPARATOR);
 			List<@NonNull CGShadowPart> cgParts = ClassUtil.nullFree(cgShadowExp.getParts());		// Ensure deterministic CGShadowPart order
@@ -603,7 +603,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			context.initAst(cgTypeExp, asTypeExp, true);
 			CGExecutorType cgExecutorType = executableNameManager.getCGExecutorType(referredType);
 			cgTypeExp.setExecutorType(cgExecutorType);
-			cgTypeExp.getOwns().add(cgExecutorType);	// FIXME this ownership inhibits ExecutableNameManager sharing
+			context.addReferencedExtraChild(cgTypeExp, cgExecutorType);	// FIXME this ownership inhibits ExecutableNameManager sharing
 			return cgTypeExp;
 		}
 		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;
@@ -625,7 +625,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		cgTemplateParameterExp.setIndex(index);
 		context.initAst(cgTemplateParameterExp, asTypeExp, true);
 		cgTemplateParameterExp.setTemplateableElement(cgTemplateableElement);
-		cgTemplateParameterExp.getOwns().add(cgTemplateableElement);
+		context.addReferencedExtraChild(cgTemplateParameterExp, cgTemplateableElement);
 		return cgTemplateParameterExp;
 	}
 

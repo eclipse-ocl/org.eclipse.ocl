@@ -98,7 +98,7 @@ public abstract class CGBodiedPropertyImpl extends CGPropertyImpl implements CGB
 		CGValuedElement oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -114,14 +114,14 @@ public abstract class CGBodiedPropertyImpl extends CGPropertyImpl implements CGB
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newBody, newBody));
 	}
 
 	/**
@@ -132,7 +132,7 @@ public abstract class CGBodiedPropertyImpl extends CGPropertyImpl implements CGB
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -146,7 +146,7 @@ public abstract class CGBodiedPropertyImpl extends CGPropertyImpl implements CGB
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return getBody();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -160,7 +160,7 @@ public abstract class CGBodiedPropertyImpl extends CGPropertyImpl implements CGB
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				setBody((CGValuedElement)newValue);
 				return;
 		}
@@ -175,7 +175,7 @@ public abstract class CGBodiedPropertyImpl extends CGPropertyImpl implements CGB
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				setBody((CGValuedElement)null);
 				return;
 		}
@@ -190,7 +190,7 @@ public abstract class CGBodiedPropertyImpl extends CGPropertyImpl implements CGB
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 7:
 				return body != null;
 		}
 		return super.eIsSet(featureID);
