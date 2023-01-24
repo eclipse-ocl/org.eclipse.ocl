@@ -46,46 +46,6 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 public abstract class NameResolution
 {
 	/**
-	 * The Dead NameResolution is assigned to indicate that its associatedc element has been optimized away..
-	 */
-	private static class Dead extends NameResolution
-	{
-		protected Dead(@NonNull GlobalNameManager nameManager) {
-			super(nameManager, null);
-		}
-
-		@Override
-		public @Nullable String basicGetResolvedName() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public @NonNull String getNameHint() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public @NonNull String getResolvedName() {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public boolean isDead() {
-			return true;
-		}
-
-		@Override
-		public @NonNull String resolveIn(@NonNull Context context, @Nullable CGNamedElement cgElement) {
-			throw new UnsupportedOperationException();
-		}
-
-		@Override
-		public void resolveNameHint() {
-			throw new UnsupportedOperationException();
-		}
-	}
-
-	/**
 	 * An Eager NameResolution specifies an exact symbol name spelling for preferred allocation in some scope.
 	 */
 	public static abstract class Eager extends NameResolution
@@ -416,10 +376,6 @@ public abstract class NameResolution
 	}
 
 	public abstract @NonNull String getResolvedName();
-
-	public boolean isDead() {
-		return false;
-	}
 
 	public boolean isUnresolved() {
 		return getNameHint() == UNRESOLVED;

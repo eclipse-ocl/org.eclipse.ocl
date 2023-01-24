@@ -603,7 +603,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			context.initAst(cgTypeExp, asTypeExp, true);
 			CGExecutorType cgExecutorType = executableNameManager.getCGExecutorType(referredType);
 			cgTypeExp.setExecutorType(cgExecutorType);
-			context.addReferencedExtraChild(cgTypeExp, cgExecutorType);	// FIXME this ownership inhibits ExecutableNameManager sharing
+			context.addReferencedExtraChild(cgTypeExp, cgExecutorType);
 			return cgTypeExp;
 		}
 		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;
