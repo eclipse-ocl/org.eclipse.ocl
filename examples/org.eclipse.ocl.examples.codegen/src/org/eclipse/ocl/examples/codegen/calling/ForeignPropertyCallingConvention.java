@@ -50,16 +50,11 @@ import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.ParameterVariable;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
 import org.eclipse.ocl.pivot.internal.library.StaticProperty;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -175,7 +170,8 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			//
 			//	Create AS body for property access operation
 			//
-			asProperty.getOwnedExpression();
+			ExpressionInOCL asForeignExpressionInOCL = createASExpressionInOCL(analyzer, asProperty,
+				ContextVariableStyle.THIS, isStatic ? ParameterVariableStyle.SKIP : ParameterVariableStyle.SELF);
 			OCLExpression asBody;
 			if (asExpressionInOCL != null) {
 				asBody = EcoreUtil.copy(asExpressionInOCL.getOwnedBody());
@@ -183,18 +179,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			else {
 				asBody = ValueUtil.createLiteralExp(asProperty.getDefaultValue());
 			}
-			ExpressionInOCL asForeignExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
-			ParameterVariable asForeignThisVariable = asHelper.createParameterVariable(globalNameManager.getThisNameResolution().getResolvedName(), asForeignClass, true);
-			asForeignExpressionInOCL.setOwnedContext(asForeignThisVariable);
-			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asForeignExpressionInOCL);
-			if (!isStatic) {
-				ParameterVariable asForeignSelfVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asClass, true);
-				asEntryParameterVariables.add(asForeignSelfVariable);
-			}
-			asForeignExpressionInOCL.setOwnedBody(asBody);
-			asForeignExpressionInOCL.setType(asBody.getType());
-			asForeignExpressionInOCL.setIsRequired(asBody.isIsRequired());
-			asForeignOperation.setBodyExpression(asForeignExpressionInOCL);
+			installExpressionInOCLBody(asForeignOperation, asForeignExpressionInOCL, asBody);
 			//
 			//	Create CG declaration
 			//

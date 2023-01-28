@@ -69,7 +69,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractConstructorOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
-	public static class DefaultConstructorOperationCallingConvention extends AbstractConstructorOperationCallingConvention
+/*	public static class DefaultConstructorOperationCallingConvention extends AbstractConstructorOperationCallingConvention
 	{
 		private static final @NonNull DefaultConstructorOperationCallingConvention INSTANCE = new DefaultConstructorOperationCallingConvention();
 
@@ -77,7 +77,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
-	}
+	} */
 
 	@Override
 	protected void appendBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGValuedElement body) {
@@ -299,7 +299,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		//
 		ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
 		if (asExpressionInOCL != null) {
-			ExpressionInOCL asEntryExpressionInOCL = EcoreUtil.copy(asExpressionInOCL);
+			ExpressionInOCL asEntryExpressionInOCL = EcoreUtil.copy(asExpressionInOCL);		// Copy replaces the ParameterVariables too.
 			Variable asContextVariable = asEntryExpressionInOCL.getOwnedContext();
 			if (asContextVariable == null) {			// QVTi FunctionBody has eager ownedContext, OCL ExpressionInOCL is lazy
 				PivotHelper asHelper = codeGenerator.getASHelper();
@@ -313,7 +313,6 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 			}
 			assert asContextVariable.isIsRequired();
 			assert asContextVariable.getTypeValue() == null;
-			asContextVariable.setType(asEntryClass);		// Change copied context from context class to entry class
 			asEntryConstructor.setBodyExpression(asEntryExpressionInOCL);
 		}
 		else {

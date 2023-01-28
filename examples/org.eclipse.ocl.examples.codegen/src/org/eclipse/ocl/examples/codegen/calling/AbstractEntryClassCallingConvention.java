@@ -54,14 +54,12 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.qvtd.runtime.evaluation.AbstractComputation;
@@ -131,14 +129,12 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			//	Create AS body - self.cachedResult for AS => this.cachedResult for CG
 			//
-			ExpressionInOCL asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
-			ParameterVariable asSelfVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asEntryClass, true);
-			asExpressionInOCL.setOwnedContext(asSelfVariable);
+			ExpressionInOCL asExpressionInOCL = createASExpressionInOCL(analyzer, asEntryOperation, ContextVariableStyle.SELF);
+			ParameterVariable asSelfVariable = (ParameterVariable)PivotUtil.getOwnedContext(asExpressionInOCL);
 			OCLExpression asSelfVariableExp = asHelper.createVariableExp(asSelfVariable);
 			OCLExpression asBody = asHelper.createPropertyCallExp(asSelfVariableExp, asEntryResultProperty);
-			asExpressionInOCL.setOwnedBody(asBody);
-			asExpressionInOCL.setType(asBody.getType());
-			asEntryOperation.setBodyExpression(asExpressionInOCL);
+			//
+			installExpressionInOCLBody(asEntryOperation, asExpressionInOCL, asBody);
 			//
 			//	Create CG declaration
 			//
@@ -211,48 +207,28 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-			LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+		//	LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
 			PivotHelper asHelper = codeGenerator.getASHelper();
 			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 			//
 			//	Create AS declaration for isEqual
 			//
 			NameResolution isEqualNameResolution = globalNameManager.getIsEqualNameResolution();
-			Operation asEntryOperation = createASOperationDeclaration(analyzer, asEntryClass,
-				asOperation, isEqualNameResolution.getResolvedName(), ResultStyle.BOOLEAN, ParameterStyle.BOXED_VALUES_OPTIONAL);
+			Operation asEntryOperation = createASOperationDeclaration(analyzer, asEntryClass, asOperation,
+				isEqualNameResolution.getResolvedName(), ResultStyle.BOOLEAN, ParameterStyle.BOXED_VALUES_OPTIONAL);
 			//
 			//	Create AS body for isEqual
 			//
 			OCLExpression asBody = null;
-			ExpressionInOCL asEntryExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
-//			ParameterVariable asEntryThisVariable = asHelper.createParameterVariable(globalNameManager.getThisNameResolution().getResolvedName(), codeGenerator.getContextClass(), true);
-
-			org.eclipse.ocl.pivot.Class asNewContextClass = CGUtil.getAST(cgEntryClass);
-			org.eclipse.ocl.pivot.Class asOldContextClass = codeGenerator.getContextClass();
-		//	NameUtil.errPrintln("createOperation: old: " + asOldContextClass + " new: " + asNewContextClass);
-			ParameterVariable asEntryThisVariable = asHelper.createParameterVariable(globalNameManager.getThisNameResolution().getResolvedName(), asOldContextClass, true);
-
-			asEntryExpressionInOCL.setOwnedContext(asEntryThisVariable);
-			ParameterVariable asEntrySelfVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asEntryClass, true);
+			ExpressionInOCL asEntryExpressionInOCL = createASExpressionInOCL(analyzer, asOperation,
+				ContextVariableStyle.THIS, ParameterVariableStyle.ID_RESOLVER, ParameterVariableStyle.SELF, ParameterVariableStyle.BOXED_VALUES);
+			ParameterVariable asEntryThisVariable = (ParameterVariable)PivotUtil.getOwnedContext(asEntryExpressionInOCL);
 			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
 			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
 			Stack<@NonNull LetVariable> asLetVariables = new Stack<>();
-			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-			ParameterVariable asEntryIdResolverParameterVariable = asHelper.createParameterVariable(globalNameManager.getIdResolverNameResolution().getResolvedName(), jLanguageSupport.getNativeClass(IdResolver.class), true);
-			asEntryParameterVariables.add(asEntryIdResolverParameterVariable);
 			for (int i = 0; i < asEntryProperties.size()-1; i++) {		// not cachedResult
-				@NonNull ParameterVariable asEntryParameterVariable;
-				if (i == 0) {
-					asEntryParameterVariable = asEntrySelfVariable;
-				}
-				else {
-					Parameter asParameter = asParameters.get(i-1);		// skip no-self
-					asEntryParameterVariable = asHelper.createParameterVariable(asParameter);
-					asEntryParameterVariable.setRepresentedParameter(asParameter);
-				}
-				asEntryParameterVariables.add(asEntryParameterVariable);
-				//
 				Property asEntryProperty = asEntryProperties.get(i);
+				@NonNull ParameterVariable asEntryParameterVariable = (ParameterVariable) asEntryParameterVariables.get(1);	// skip idResolver
 				String name = PivotUtil.getName(asEntryProperty);
 				VariableExp asInit = asHelper.createVariableExp(asEntryParameterVariable);
 				LetVariable asLetVariable = asHelper.createLetVariable(name, asInit);
@@ -269,9 +245,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 				LetVariable asVariable = asLetVariables.pop();
 				asBody = asHelper.createLetExp(asVariable, asBody);
 			}
-			asEntryExpressionInOCL.setOwnedBody(asBody);
-			asEntryExpressionInOCL.setType(asBody.getType());
-			asEntryOperation.setBodyExpression(asEntryExpressionInOCL);
+			installExpressionInOCLBody(asEntryOperation, asEntryExpressionInOCL, asBody);
 			//
 			//	Create CG declaration for isEqual
 			//

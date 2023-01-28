@@ -24,17 +24,27 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
+import org.eclipse.ocl.pivot.Class;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -84,10 +94,95 @@ public abstract class AbstractCallingConvention implements CallingConvention, Na
 		BOXED_VALUES_ALL,		// The parameter is the array of original parameters passed as a boxed array of required parameters if all required
 		BOXED_VALUES_OPTIONAL,	// The parameter is the array of original parameters passed as a boxed array of optional parameters
 		EXECUTOR,				// The parameter is the executor
-		PARAMETERS,				// The original paramters are replicated in the new operation
+		PARAMETERS,				// The original parameters are replicated in the new operation
 		OBJECT,					// The parameter is the context object for a dispatch
 		SELF,					// The parameter is the original self and is called contextObject
 		SKIP					// There is no parameter - a convenience for conditional parameters
+	}
+	protected enum ContextVariableStyle {
+		SELF,					// The context variable is the original self and is called contextObject
+		THIS					// The context variable is the Java this
+	}
+	protected enum ParameterVariableStyle {
+		ID_RESOLVER,			// The next parameter variable is the idResolver
+		SELF,					// The next parameter variable is the passed original OCL self
+		BOXED_VALUES,			// The next parameter variables are split from the passed parameter array
+	//	PARAMETERS,				// The original parameters are replicated in the new operation body
+		SKIP					// There is no parameter variable - a convenience for conditional parameters
+	}
+
+	protected @NonNull ExpressionInOCL createASExpressionInOCL(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asOriginalFeature,
+			@NonNull ContextVariableStyle contextStyle, @NonNull ParameterVariableStyle... parameterStyles) {
+		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+		PivotHelper asHelper = codeGenerator.getASHelper();
+		org.eclipse.ocl.pivot.@NonNull Class asClass = PivotUtil.getOwningClass(asOriginalFeature);
+		ExpressionInOCL asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
+		ParameterVariable asContextVariable;
+		switch (contextStyle) {
+			case SELF: {
+				asContextVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asClass, true);
+				break;
+			}
+			case THIS: {
+				org.eclipse.ocl.pivot.Class asOldContextClass = codeGenerator.getContextClass();
+				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+				String thisName = globalNameManager.getThisNameResolution().getResolvedName();
+				asContextVariable = asHelper.createParameterVariable(thisName, asOldContextClass, true);
+				break;
+			}
+			default: {
+				throw new UnsupportedOperationException();
+			}
+		}
+		asExpressionInOCL.setOwnedContext(asContextVariable);
+		if (parameterStyles.length > 0) {
+			List<Variable> asParameterVariables = asExpressionInOCL.getOwnedParameters();
+			for (ParameterVariableStyle parameterStyle : parameterStyles) {
+				ParameterVariable asParameterVariable;
+				switch (parameterStyle) {
+					case ID_RESOLVER: {
+						GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+						LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+						String idResolverName = globalNameManager.getIdResolverNameResolution().getResolvedName();
+						Class idResolverClass = jLanguageSupport.getNativeClass(IdResolver.class);
+						asParameterVariable = asHelper.createParameterVariable(idResolverName, idResolverClass, true);
+						asParameterVariables.add(asParameterVariable);
+						break;
+					}
+					case SELF: {
+						asParameterVariable = asHelper.createParameterVariable(PivotConstants.SELF_NAME, asClass, true);
+						asParameterVariables.add(asParameterVariable);
+						break;
+					}
+					case SKIP: {
+						break;
+					}
+					case BOXED_VALUES: {
+						Operation asOriginalOperation = (Operation) asOriginalFeature;
+						for (@NonNull Parameter asOriginalParameter : PivotUtilInternal.getOwnedParametersList(asOriginalOperation)) {
+							asParameterVariable = asHelper.createParameterVariable(asOriginalParameter);
+							asParameterVariable.setRepresentedParameter(asOriginalParameter);
+							asParameterVariables.add(asParameterVariable);
+						}
+						break;
+					}
+				/*	case PARAMETERS: {
+						Operation asOriginalOperation = (Operation) asOriginalFeature;
+						ExpressionInOCL asOriginalExpressionInOCL = PivotUtil.getBodyExpression(asOriginalOperation);
+						for (@NonNull Variable asParameter : PivotUtilInternal.getOwnedParametersList(asOriginalExpressionInOCL)) {
+						//	asParameterVariable = asHelper.createParameterVariable((ParameterVariable)asParameter);
+						//	asParameterVariable.setRepresentedParameter(asParameter);
+						//	asParameterVariables.add(asParameterVariable);
+						}
+						break;
+					} */
+					default: {
+						throw new UnsupportedOperationException();
+					}
+				}
+			}
+		}
+		return asExpressionInOCL;
 	}
 
 	/**
@@ -141,12 +236,12 @@ public abstract class AbstractCallingConvention implements CallingConvention, Na
 			List<Parameter> asParameters = asOperation.getOwnedParameters();
 			for (@NonNull ParameterStyle parameterStyle : parameterStyles) {
 				switch (parameterStyle) {
-					case BOXED_VALUES_ALL: {
+					case BOXED_VALUES_OPTIONAL: {
 						Parameter asParameter = createBoxedValuesParameter(codeGenerator, false);
 						asParameters.add(asParameter);
 						break;
 					}
-					case BOXED_VALUES_OPTIONAL: {
+					case BOXED_VALUES_ALL: {
 						@NonNull Operation asOriginalOperation = (Operation)asOrigin;
 						Parameter asParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOriginalOperation));
 						asParameters.add(asParameter);
@@ -219,9 +314,26 @@ public abstract class AbstractCallingConvention implements CallingConvention, Na
 		return ClassUtil.nonNullState(NameUtil.getNameable(asOperation.getOwnedParameters(), executorName));
 	}
 
+//	protected @NonNull ParameterVariable getSelfParameterVariable(@NonNull CodeGenAnalyzer analyzer, @NonNull ExpressionInOCL asExpressionInOCL) {
+//		return (ParameterVariable)ClassUtil.nonNullState(NameUtil.getNameable(asExpressionInOCL.getOwnedParameters(), PivotConstants.SELF_NAME));
+//	}
+
+//	protected @NonNull Parameter getThisParameterVariable(@NonNull CodeGenAnalyzer analyzer, @NonNull ExpressionInOCL asExpressionInOCL) {
+	//	NameResolution executorResolution = analyzer.getGlobalNameManager().getExecutorNameResolution();
+	//	String executorName = executorResolution.getResolvedName();
+//		return Pivot.getOwnedContext(asExpressionInOCL); //.nonNullState(NameUtil.getNameable(asOperation.getOwnedParameters(), executorName));
+//	}
+
 	@Override
 	public @NonNull String getName() {
 		return getClass().getSimpleName();
+	}
+
+	protected void installExpressionInOCLBody(@NonNull Operation asOperation, @NonNull ExpressionInOCL asExpressionInOCL, @NonNull OCLExpression asBody) {
+		asExpressionInOCL.setOwnedBody(asBody);
+		asExpressionInOCL.setType(asBody.getType());
+		asExpressionInOCL.setIsRequired(asBody.isIsRequired());
+		asOperation.setBodyExpression(asExpressionInOCL);
 	}
 
 	protected void logInstance(@Nullable Object usage) {

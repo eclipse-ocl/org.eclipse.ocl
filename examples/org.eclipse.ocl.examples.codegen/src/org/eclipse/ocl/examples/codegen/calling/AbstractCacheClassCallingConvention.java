@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.qvtd.runtime.internal.evaluation.AbstractComputationConstructor;
@@ -74,7 +73,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			// CG Cache Operation.lets -
 			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+		//	EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 			org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
 			//
