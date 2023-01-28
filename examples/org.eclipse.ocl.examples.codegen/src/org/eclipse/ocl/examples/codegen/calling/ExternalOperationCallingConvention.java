@@ -47,53 +47,6 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		return INSTANCE;
 	}
 
-	public static class ExternalCacheClassCallingConvention extends AbstractCacheClassCallingConvention
-	{
-		private static final @NonNull ExternalCacheClassCallingConvention INSTANCE = new ExternalCacheClassCallingConvention();
-
-		public static @NonNull ExternalCacheClassCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
-			INSTANCE.logInstance(asOperation, maybeVirtual);
-			return INSTANCE;
-		}
-
-		public static class ExternalEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
-		{
-			private static final @NonNull ExternalEvaluateOperationCallingConvention INSTANCE = new ExternalEvaluateOperationCallingConvention();
-
-			public static @NonNull ExternalEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-				INSTANCE.logInstance(asClass);
-				return INSTANCE;
-			}
-
-		/*	@Override
-			protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
-				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-				String selfName = globalNameManager.getSelfNameResolution().getResolvedName();
-				Parameter asEvaluateParameter = PivotUtil.createParameter(selfName, PivotUtil.getOwningClass(asOperation), true);
-				List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
-				asCacheEvaluateParameters.add(asEvaluateParameter);
-				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
-			} */
-
-			@Override
-			protected @NonNull ParameterStyle getASOperationDeclarationContextParameterStyle(@NonNull Operation asOperation) {
-				return ParameterStyle.SELF;
-			}
-		}
-
-		@Override
-		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			return analyzer.getRootClassParentPackage(asOperation);
-		}
-
-		@Override
-		protected void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
-			org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-			ExternalEvaluateOperationCallingConvention callingConvention = ExternalEvaluateOperationCallingConvention.getInstance(asCacheClass);
-			callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
-		}
-	}
-
 	public static class ExternalEntryClassCallingConvention extends AbstractEntryClassCallingConvention
 	{
 		private static final @NonNull ExternalEntryClassCallingConvention INSTANCE = new ExternalEntryClassCallingConvention();
@@ -118,6 +71,16 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		@Override
 		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asFeature) {
 			return analyzer.getRootClassParentPackage(asFeature);
+		}
+	}
+
+	public static class ExternalEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
+	{
+		private static final @NonNull ExternalEvaluateOperationCallingConvention INSTANCE = new ExternalEvaluateOperationCallingConvention();
+
+		public static @NonNull ExternalEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
 		}
 	}
 
@@ -168,12 +131,19 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 
 	@Override
 	protected @NonNull AbstractCacheClassCallingConvention getCacheClassCallingConvention(@NonNull Operation asOperation) {
-		return ExternalCacheClassCallingConvention.getInstance(asOperation, false);
+		return RootCacheClassCallingConvention.getInstance(asOperation, false);
 	}
 
 	@Override
 	protected @NonNull AbstractEntryClassCallingConvention getEntryClassCallingConvention(@NonNull Operation asOperation) {
 		return ExternalEntryClassCallingConvention.getInstance(asOperation, false);
+	}
+
+	@Override
+	public void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
+		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
+		ExternalEvaluateOperationCallingConvention callingConvention = ExternalEvaluateOperationCallingConvention.getInstance(asCacheClass);
+		callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
 	}
 
 	@Override

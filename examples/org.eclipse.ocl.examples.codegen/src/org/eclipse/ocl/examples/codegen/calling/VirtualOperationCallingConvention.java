@@ -30,7 +30,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
@@ -42,11 +41,11 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.qvtd.runtime.evaluation.AbstractDispatchOperation2;
 
@@ -66,7 +65,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	/**
 	 *  DispatchClassCallingConvention defines the nested Class whose instance realizes a virtual dispatch table.
 	 */
-	public static class DispatchClassCallingConvention extends AbstractCacheClassCallingConvention
+	public static class DispatchClassCallingConvention extends RootCacheClassCallingConvention
 	{
 		private static final @NonNull DispatchClassCallingConvention INSTANCE = new DispatchClassCallingConvention();
 
@@ -75,70 +74,9 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			return INSTANCE;
 		}
 
-		/**
-		 *  DispatchEvaluateOperationCallingConvention provides the type-safe evaluate() interface for a virtual operation dispatch.
-		 */
-		public static class DispatchEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
-		{
-			private static final @NonNull DispatchEvaluateOperationCallingConvention INSTANCE = new DispatchEvaluateOperationCallingConvention();
-
-			public static @NonNull DispatchEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-				INSTANCE.logInstance(asClass);
-				return INSTANCE;
-			}
-
-		/*	@Override
-			protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
-				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-				String objectName = globalNameManager.getObjectNameResolution().getResolvedName();
-				Parameter asEvaluateParameter = PivotUtil.createParameter(objectName, PivotUtil.getOwningClass(asOperation), true);
-				List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
-				asCacheEvaluateParameters.add(asEvaluateParameter);
-				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
-			} */
-
-			@Override
-			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
-				JavaStream js = cg2javaVisitor.getJavaStream();
-				CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
-				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-				List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
-				Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
-				js.append("return (");
-				js.appendClassReference(isRequiredReturn, cgOperation);
-				js.append(")");
-				js.append(globalNameManager.getEvaluationCacheName());
-				js.append(".");
-				js.append(globalNameManager.getGetCachedEvaluationResultName());
-				js.append("(this, caller, new ");
-				js.appendClassReference(false, Object.class);
-				js.append("[]{");
-				boolean isFirst = true;
-				for (@NonNull CGParameter cgParameter : cgParameters) {
-					if (!isFirst) {
-						js.append(", ");
-					}
-					js.appendValueName(cgParameter);
-					isFirst = false;
-				}
-				js.append("}");
-				js.append(");\n");
-			}
-
-			@Override
-			protected @NonNull ParameterStyle getASOperationDeclarationContextParameterStyle(@NonNull Operation asOperation) {
-				return ParameterStyle.OBJECT;
-			}
-		}
-
 		@Override
 		protected @NonNull String getClassNamePrefix() {
 			return NameManagerHelper.DISPATCH_CLASS_NAME_PREFIX;
-		}
-
-		@Override
-		protected org.eclipse.ocl.pivot.@NonNull Package getParentPackage(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-			return analyzer.getRootClassParentPackage(asOperation);
 		}
 
 		@Override
@@ -150,67 +88,46 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		protected @NonNull String getTitle(@NonNull CGClass cgClass) {
 			return "The instance of " + cgClass.getName() + " provides the virtual dispatch table for\n";
 		}
+	}
 
-		@Override
-		protected void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation, @NonNull AbstractCachedOperationCallingConvention operationCallingConvention) {
-			//
-			// AS Class - yyy2zzz
-			// AS Properties -
-			// AS Operation - yyy2zzz
-			// AS Operation.ownedParameters -
-			// AS Cache Operation - yyy2zzz
-			// AS Cache Operation.parameters -
-			// AS Cache ExpressionInOCL.ownedContext -
-			// AS Cache ExpressionInOCL.ownedParameters -
-			// CG Cache Operation - yyy2zzz
-			// CG Cache Operation.lets -
-			//
-			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
-			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-			org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
-			//
-			//	Create AS declaration for newInstance
-			//
-			String constructorName = PivotUtil.getName(asCacheClass);
-			Operation asConstructorOperation = createASOperationDeclaration(analyzer, asCacheClass, asOperation,
-				constructorName, ResultStyle.VOID, ParameterStyle.BOXED_VALUES_ALL);
-			//
-			//	Create AS body for newInstance
-			//
-			//	not implemented
-			//
-			//	Create CG declaration for newInstance
-			//
-			CGCachedOperation cgConstructorOperation = /*(CGCachedOperation) createCGOperation(analyzer, asConstructorOperation);*/
-				CGModelFactory.eINSTANCE.createCGCachedOperation();
-			analyzer.initAst(cgConstructorOperation, asConstructorOperation, true);
-			cgConstructorOperation.setCallingConvention(operationCallingConvention);
-			//	newInstanceNameResolution.addCGElement(cgConstructorOperation);
-			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructorOperation, asConstructorOperation);
-			List<@NonNull CGParameter> cgCacheParameters = CGUtil.getParametersList(cgConstructorOperation);
-			Parameter asBoxedValuesParameter = getBoxedValuesParameter(analyzer, asConstructorOperation);
-			CGParameter cgConstructorBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
-			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgConstructorBoxedValuesParameter);
-			cgCacheParameters.add(cgConstructorBoxedValuesParameter);
-			//
-			cgCacheClass.getOperations().add(cgConstructorOperation);
-			//
-			//	Create CG body
-			//
-			//	createCGBody(analyzer, cgConstructorOperation);
+	/**
+	 *  DispatchEvaluateOperationCallingConvention provides the type-safe evaluate() interface for a virtual operation dispatch.
+	 */
+	public static class DispatchEvaluateOperationCallingConvention extends AbstractEvaluateOperationCallingConvention
+	{
+		private static final @NonNull DispatchEvaluateOperationCallingConvention INSTANCE = new DispatchEvaluateOperationCallingConvention();
+
+		public static @NonNull DispatchEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			INSTANCE.logInstance(asClass);
+			return INSTANCE;
 		}
 
 		@Override
-		protected void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
-			org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
-			DispatchEvaluateOperationCallingConvention callingConvention = DispatchEvaluateOperationCallingConvention.getInstance(asCacheClass);
-			callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
-		}
-
-		@Override
-		protected void installNewInstanceOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
-			// dispatch delegates rather than creates an entry instance
+		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
+			CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
+			GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+			List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
+			Boolean isRequiredReturn = cgOperation.isRequired() ? true : null;
+			js.append("return (");
+			js.appendClassReference(isRequiredReturn, cgOperation);
+			js.append(")");
+			js.append(globalNameManager.getEvaluationCacheName());
+			js.append(".");
+			js.append(globalNameManager.getGetCachedEvaluationResultName());
+			js.append("(this, caller, new ");
+			js.appendClassReference(false, Object.class);
+			js.append("[]{");
+			boolean isFirst = true;
+			for (@NonNull CGParameter cgParameter : cgParameters) {
+				if (!isFirst) {
+					js.append(", ");
+				}
+				js.appendValueName(cgParameter);
+				isFirst = false;
+			}
+			js.append("}");
+			js.append(");\n");
 		}
 	}
 
@@ -241,7 +158,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		throw new UnsupportedOperationException();		// created directly
+		return CGModelFactory.eINSTANCE.createCGCachedOperation();
 	}
 
 	@Override
@@ -300,8 +217,61 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
+	protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
+		return AS_PARAMETER_STYLES_BOXED_VALUES_ALL;
+	}
+
+	@Override
 	protected @NonNull AbstractCachePropertyCallingConvention getCacheInstancePropertyCallingConvention(@NonNull Property asProperty) {
 		return DefaultInstancePropertyCallingConvention.getInstance(asProperty);
+	}
+
+	@Override
+	public void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
+		//
+		// AS Class - yyy2zzz
+		// AS Properties -
+		// AS Operation - yyy2zzz
+		// AS Operation.ownedParameters -
+		// AS Cache Operation - yyy2zzz
+		// AS Cache Operation.parameters -
+		// AS Cache ExpressionInOCL.ownedContext -
+		// AS Cache ExpressionInOCL.ownedParameters -
+		// CG Cache Operation - yyy2zzz
+		// CG Cache Operation.lets -
+		//
+	//	JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+	//	EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+	//	GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
+		org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
+		//
+		//	Create AS declaration for newInstance
+		//
+		String constructorName = PivotUtil.getName(asCacheClass);
+		Operation asConstructorOperation = createASOperationDeclaration(analyzer, asCacheClass, asOperation,
+			constructorName, ASResultStyle.VOID);
+		//
+		//	Create AS body for newInstance
+		//
+		//	not implemented
+		//
+		//	Create CG declaration for newInstance
+		//
+		@SuppressWarnings("unused")
+		CGOperation cgConstructorOperation = createCGOperationDeclaration(analyzer, cgCacheClass, asConstructorOperation,
+			null, CGParameterStyle.BOXED_VALUES);
+	}
+
+	@Override
+	public void installEvaluateOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
+		org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
+		DispatchEvaluateOperationCallingConvention callingConvention = DispatchEvaluateOperationCallingConvention.getInstance(asCacheClass);
+		callingConvention.createOperation(analyzer, cgCacheClass, asOperation, asEntryClass);
+	}
+
+	@Override
+	public void installNewInstanceOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
+		// dispatch delegates rather than creates an entry instance
 	}
 
 	// Default guards and boxes all terms. Derived implementations for unboxed/ecore/simple-boxed

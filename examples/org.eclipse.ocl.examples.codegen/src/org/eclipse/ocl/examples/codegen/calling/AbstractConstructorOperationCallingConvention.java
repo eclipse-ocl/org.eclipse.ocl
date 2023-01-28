@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -280,20 +281,12 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		// CG Entry Operation.lets -
 		//
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-	//	EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
 		org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 		//
 		NameResolution ctorNameResolution = cgEntryClass.getNameResolution();
 		String ctorName = ctorNameResolution.getResolvedName();
-	/*	Type asDummyType = environmentFactory.getStandardLibrary().getOclVoidType();
-		Operation asEntryConstructor = PivotUtil.createOperation(ctorName, asDummyType, null, null);
-		Parameter asExecutorParameter = createExecutorParameter(codeGenerator);
-		asEntryConstructor.getOwnedParameters().add(asExecutorParameter);
-		Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOperation));
-		asEntryConstructor.getOwnedParameters().add(asBoxedValuesParameter);
-		asEntryClass.getOwnedOperations().add(asEntryConstructor); */
 		Operation asEntryConstructor = createASOperationDeclaration(analyzer, asEntryClass, asOperation,
-			ctorName, ResultStyle.VOID, ParameterStyle.EXECUTOR, ParameterStyle.BOXED_VALUES_ALL);
+			ctorName, ASResultStyle.VOID);
 		//
 		//	Wrap a copy of the original constructor bodies in a let expression per constructor parameter.
 		//
@@ -319,13 +312,15 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 			assert asOperation.getImplementationClass() != null;
 		}
 		//
-		CGOperation cgConstructor = createCGOperation(analyzer, asEntryConstructor);
+		CGOperation cgConstructor = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryConstructor,
+			ctorNameResolution);
+/*		CGOperation cgConstructor = createCGOperation(analyzer, asEntryConstructor);
 		cgConstructor.setCallingConvention(this);
 		analyzer.initAst(cgConstructor, asEntryConstructor, true);
 		ctorNameResolution.addCGElement(cgConstructor);
 		analyzer.getOperationNameManager(cgConstructor, asEntryConstructor);
 		//
-		cgEntryClass.getOperations().add(cgConstructor);
+		cgEntryClass.getOperations().add(cgConstructor); */
 		return cgConstructor;
 	}
 
@@ -349,6 +344,11 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		appendParameterList(js, cgOperation);
 		appendBody(cg2javaVisitor, body);
 		return true;
+	}
+
+	@Override
+	protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
+		return AS_PARAMETER_STYLES_EXECUTOR_BOXED_VALUES_ALL;
 	}
 
 	@Override

@@ -144,7 +144,7 @@ public interface PivotConstants
 	/**
 	 * The name of the dispatch source variable 'object'.
 	 */
-	static final @NonNull String OBJECT_NAME = "object"; //$NON-NLS-1$
+//	static final @NonNull String OBJECT_NAME = "object"; //$NON-NLS-1$
 
 	/**
 	 * Stereotype applied to operation postcondition constraints.

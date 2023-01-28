@@ -24,6 +24,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -35,20 +36,6 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
  */
 public abstract class AbstractUncachedOperationCallingConvention extends AbstractOperationCallingConvention
 {
-	/**
-	 * Prepare the parameter list of the AS Cache Evalute operation for the invoked AS Operation.
-	 * The default implementation copies the parameters. Derived implementations may prefix a self/context object.
-	 *
-	@Deprecated /* folding into createASOperationDeclaration * /
-	protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
-//		List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
-//		for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
-//			Parameter asEvaluateParameter = PivotUtil.createParameter(PivotUtil.getName(asParameter), PivotUtil.getType(asParameter), asParameter.isIsRequired());
-//			asCacheEvaluateParameters.add(asEvaluateParameter);
-//		}
-		throw new UnsupportedOperationException();
-	} */
-
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		return CGModelFactory.eINSTANCE.createCGCachedOperation();
@@ -93,7 +80,10 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 		cg2javaVisitor.appendReturn(body);
 	}
 
-	protected @NonNull ParameterStyle getASOperationDeclarationContextParameterStyle(@NonNull Operation asOperation) {
-		return ParameterStyle.SKIP;
+	protected void installExpressionInOCLBody(@NonNull Operation asOperation, @NonNull ExpressionInOCL asExpressionInOCL, @NonNull OCLExpression asBody) {
+		asExpressionInOCL.setOwnedBody(asBody);
+		asExpressionInOCL.setType(asBody.getType());
+		asExpressionInOCL.setIsRequired(asBody.isIsRequired());
+		asOperation.setBodyExpression(asExpressionInOCL);
 	}
 }

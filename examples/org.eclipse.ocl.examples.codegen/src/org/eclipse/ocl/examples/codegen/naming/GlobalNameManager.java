@@ -176,7 +176,7 @@ public class GlobalNameManager extends AbstractNameManager
 	protected final @NonNull NameResolution isEqualName;
 	protected final @NonNull NameResolution modelManagerName;
 	protected final @NonNull NameResolution newInstanceName;
-	protected final @NonNull NameResolution objectName;
+//	protected final @NonNull NameResolution objectName;
 	protected final @NonNull NameResolution rootObjectName ;
 	protected final @NonNull NameResolution selfName;
 	protected final @NonNull NameResolution sourceAndArgumentValuesName;
@@ -213,7 +213,7 @@ public class GlobalNameManager extends AbstractNameManager
 		this.isEqualName = declareEagerName(null, "isEqual");
 		this.modelManagerName = declareEagerName(null, JavaConstants.MODEL_MANAGER_NAME);
 		this.newInstanceName = globalNameManager.declareEagerName(null, JavaConstants.NEW_INSTANCE_NAME);
-		this.objectName = declareEagerName(null, PivotConstants.OBJECT_NAME);
+//		this.objectName = declareEagerName(null, PivotConstants.OBJECT_NAME);
 		this.rootObjectName = declareEagerName(null, PivotConstants.ROOT_OBJECT_NAME);
 		this.selfName = declareEagerName(null, PivotConstants.SELF_NAME);
 		this.sourceAndArgumentValuesName = declareEagerName(null, JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
@@ -499,13 +499,13 @@ public class GlobalNameManager extends AbstractNameManager
 		return newInstanceName;
 	}
 
-	public @NonNull String getObjectName() {
-		return objectName.getResolvedName();
-	}
+//	public @NonNull String getObjectName() {
+//		return objectName.getResolvedName();
+//	}
 
-	public @NonNull NameResolution getObjectNameResolution() {
-		return objectName;
-	}
+//	public @NonNull NameResolution getObjectNameResolution() {
+//		return objectName;
+//	}
 
 	public @NonNull String getReservedName(@NonNull String name) {
 		return ClassUtil.nonNullState(name2reservedNameResolutions.get(name)).getResolvedName();

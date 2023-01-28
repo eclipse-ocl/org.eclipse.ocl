@@ -24,12 +24,10 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -58,7 +56,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -114,7 +111,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+		//	EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
 			PivotHelper asHelper = codeGenerator.getASHelper();
 			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 			//
@@ -129,7 +126,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			//	Create AS body - self.cachedResult for AS => this.cachedResult for CG
 			//
-			ExpressionInOCL asExpressionInOCL = createASExpressionInOCL(analyzer, asEntryOperation, ContextVariableStyle.SELF);
+			ExpressionInOCL asExpressionInOCL = createASExpressionInOCL(analyzer, asEntryOperation, ASContextVariableStyle.SELF);
 			ParameterVariable asSelfVariable = (ParameterVariable)PivotUtil.getOwnedContext(asExpressionInOCL);
 			OCLExpression asSelfVariableExp = asHelper.createVariableExp(asSelfVariable);
 			OCLExpression asBody = asHelper.createPropertyCallExp(asSelfVariableExp, asEntryResultProperty);
@@ -138,14 +135,14 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			//	Create CG declaration
 			//
-			CGOperation cgEntryOperation = createCGOperation(analyzer, asEntryOperation);
-			analyzer.initAst(cgEntryOperation, asEntryOperation, true);
-			cgEntryOperation.setCallingConvention(this);
-			getResultNameResolution.addCGElement(cgEntryOperation);
-			analyzer.getOperationNameManager(cgEntryOperation, asEntryOperation);
-			//
-			cgEntryClass.getOperations().add(cgEntryOperation);
+			CGOperation cgEntryOperation = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryOperation,
+				getResultNameResolution);
 			return cgEntryOperation;
+		}
+
+		@Override
+		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
+			return AS_PARAMETER_STYLES;
 		}
 	}
 
@@ -207,7 +204,6 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-		//	LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
 			PivotHelper asHelper = codeGenerator.getASHelper();
 			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 			//
@@ -215,13 +211,13 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			NameResolution isEqualNameResolution = globalNameManager.getIsEqualNameResolution();
 			Operation asEntryOperation = createASOperationDeclaration(analyzer, asEntryClass, asOperation,
-				isEqualNameResolution.getResolvedName(), ResultStyle.BOOLEAN, ParameterStyle.BOXED_VALUES_OPTIONAL);
+				isEqualNameResolution.getResolvedName(), ASResultStyle.BOOLEAN);
 			//
 			//	Create AS body for isEqual
 			//
 			OCLExpression asBody = null;
 			ExpressionInOCL asEntryExpressionInOCL = createASExpressionInOCL(analyzer, asOperation,
-				ContextVariableStyle.THIS, ParameterVariableStyle.ID_RESOLVER, ParameterVariableStyle.SELF, ParameterVariableStyle.BOXED_VALUES);
+				ASContextVariableStyle.THIS, AS_PARAMETER_VARIABLE_STYLES_ID_RESOLVER_SELF_BOXED_VALUES);
 			ParameterVariable asEntryThisVariable = (ParameterVariable)PivotUtil.getOwnedContext(asEntryExpressionInOCL);
 			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
 			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
@@ -249,25 +245,8 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			//	Create CG declaration for isEqual
 			//
-			CGOperation cgEntryOperation = createCGOperation(analyzer, asEntryOperation);
-			analyzer.initAst(cgEntryOperation, asEntryOperation, true);
-			cgEntryOperation.setCallingConvention(this);
-			isEqualNameResolution.addCGElement(cgEntryOperation);
-			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgEntryOperation, asEntryOperation);
-			List<@NonNull CGParameter> cgEntryParameters = CGUtil.getParametersList(cgEntryOperation);
-	//		CGParameter cgIdResolverParameter = operationNameManager.getIdResolverParameter();	// FIXME notify operationNameManager that we need a regular idResolver parameter
-			NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
-			CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
-			CGParameter cgIdResolverParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
-			cgIdResolverParameter.setNonInvalid();
-			cgIdResolverParameter.setRequired(true);
-			cgEntryParameters.add(cgIdResolverParameter);
-			Parameter asBoxedValuesParameter = getBoxedValuesParameter(analyzer, asEntryOperation);
-			CGParameter cgEntryBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
-			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
-			cgEntryParameters.add(cgEntryBoxedValuesParameter);
-			//
-			cgEntryClass.getOperations().add(cgEntryOperation);
+			CGOperation cgEntryOperation = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryOperation,
+				isEqualNameResolution, CGParameterStyle.ID_RESOLVER, CGParameterStyle.BOXED_VALUES);
 			return cgEntryOperation;
 		}
 
@@ -279,6 +258,11 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			js.append(" * If so, the cachedResult can be re-used and no further ENTRY needs construction.\n");
 			js.append(" */\n");
 			return super.generateJavaDeclaration(cg2javaVisitor, cgOperation);
+		}
+
+		@Override
+		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
+			return AS_PARAMETER_STYLES_BOXED_VALUES_OPTIONAL;
 		}
 	}
 
@@ -314,8 +298,8 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 
 		org.eclipse.ocl.pivot.Class asOldContextClass = getContextClass(analyzer, cgEntryClass);
 
-		CGClass cgForeignClass = analyzer.getForeignCGClass(asParentPackage);
-		org.eclipse.ocl.pivot.Class asNewContextClass = CGUtil.getAST(cgForeignClass);
+	//	CGClass cgForeignClass = analyzer.getForeignCGClass(asParentPackage);
+	//	org.eclipse.ocl.pivot.Class asNewContextClass = CGUtil.getAST(cgForeignClass);
 	//	NameUtil.errPrintln("createEntryClass: old: " + asOldContextClass + " new: " + asNewContextClass);
 
 		createEntryProperty(analyzer, cgEntryClass, contextNameResolution, asOldContextClass);

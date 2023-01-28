@@ -29,25 +29,39 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterVariable;
+import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.ElementId;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.LanguageSupport;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -55,6 +69,52 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractOperationCallingConvention extends AbstractCallingConvention implements OperationCallingConvention
 {
+	protected enum ASContextVariableStyle {
+		SELF,					// The context variable is the original self and is called contextObject
+		THIS					// The context variable is the Java this
+	}
+
+	protected enum ASParameterStyle {
+		BOXED_VALUES_ALL,		// The next parameter is the array of original parameters passed as a boxed array of required parameters if all required
+		BOXED_VALUES_OPTIONAL,	// The next parameter is the array of original parameters passed as a boxed array of optional parameters
+		EXECUTOR,				// The next parameter is the executor
+		PARAMETERS,				// The next parameters are replicated from the original in the new operation
+		SELF					// The next parameter is the original self
+	}
+
+	protected static final @NonNull ASParameterStyle @NonNull [] AS_PARAMETER_STYLES = new @NonNull ASParameterStyle[] {};
+	protected static final @NonNull ASParameterStyle @NonNull [] AS_PARAMETER_STYLES_BOXED_VALUES_ALL = new @NonNull ASParameterStyle[] {ASParameterStyle.BOXED_VALUES_ALL};
+	protected static final @NonNull ASParameterStyle @NonNull [] AS_PARAMETER_STYLES_BOXED_VALUES_OPTIONAL = new @NonNull ASParameterStyle[] {ASParameterStyle.BOXED_VALUES_OPTIONAL};
+	protected static final @NonNull ASParameterStyle @NonNull [] AS_PARAMETER_STYLES_EXECUTOR = new @NonNull ASParameterStyle[] {ASParameterStyle.EXECUTOR};
+	protected static final @NonNull ASParameterStyle @NonNull [] AS_PARAMETER_STYLES_EXECUTOR_BOXED_VALUES_ALL = new @NonNull ASParameterStyle[] {ASParameterStyle.EXECUTOR, ASParameterStyle.BOXED_VALUES_ALL};
+	protected static final @NonNull ASParameterStyle @NonNull [] AS_PARAMETER_STYLES_EXECUTOR_BOXED_VALUES_OPTIONAL = new @NonNull ASParameterStyle[] {ASParameterStyle.EXECUTOR, ASParameterStyle.BOXED_VALUES_OPTIONAL};
+	protected static final @NonNull ASParameterStyle @NonNull [] AS_PARAMETER_STYLES_EXECUTOR_SELF = new @NonNull ASParameterStyle[] {ASParameterStyle.EXECUTOR, ASParameterStyle.SELF};
+	protected static final @NonNull ASParameterStyle @NonNull [] AS_PARAMETER_STYLES_PARAMETERS = new @NonNull ASParameterStyle[] {ASParameterStyle.PARAMETERS};
+	protected static final @NonNull ASParameterStyle @NonNull [] AS_PARAMETER_STYLES_SELF_PARAMETERS = new @NonNull ASParameterStyle[] {ASParameterStyle.SELF, ASParameterStyle.PARAMETERS};
+
+	protected enum ASParameterVariableStyle {
+		ID_RESOLVER,			// The next parameter variable is the idResolver
+		SELF,					// The next parameter variable is the passed original OCL self
+		BOXED_VALUES			// The next parameter variables are split from the passed parameter array
+	}
+
+	protected static final @NonNull ASParameterVariableStyle @NonNull [] AS_PARAMETER_VARIABLE_STYLES = new @NonNull ASParameterVariableStyle[] {};
+	protected static final @NonNull ASParameterVariableStyle @NonNull [] AS_PARAMETER_VARIABLE_STYLES_ID_RESOLVER_SELF_BOXED_VALUES = new @NonNull ASParameterVariableStyle[] {ASParameterVariableStyle.ID_RESOLVER, ASParameterVariableStyle.SELF, ASParameterVariableStyle.BOXED_VALUES};
+	protected static final @NonNull ASParameterVariableStyle @NonNull [] AS_PARAMETER_VARIABLE_STYLES_SELF = new @NonNull ASParameterVariableStyle[] {ASParameterVariableStyle.SELF};
+
+	protected enum ASResultStyle {
+		BOOLEAN,			// The result type is precisely Boolean
+		RESULT,				// The result type is that of the original AS operation.
+		VOID				// There is no result type
+	}
+
+	protected enum CGParameterStyle {
+		EXECUTOR,				// The next parameter variable is the executor
+		ID_RESOLVER,			// The next parameter variable is the idResolver
+		BOXED_VALUES,			// The next parameter variable is the parameter array
+		PARAMETERS				// The next parameter variables are copied
+	}
+
 	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
 		ExecutableNameManager operationNameManager = analyzer.getGlobalNameManager().useOperationNameManager(cgOperation);
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
@@ -70,12 +130,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			cgParameters.add(cgParameter);
 		}
 	}
-//	protected void addSelfArgument(@NonNull AS2CGVisitor as2cgVisitor, @NonNull CGOperationCallExp cgOperationCallExp, Operation asOperation) {
-//		CodeGenAnalyzer analyzer = as2cgVisitor.getAnalyzer();
-//		CGVariable selfVariable = as2cgVisitor.getSelfParameter(asOperation.getBodyExpression());
-//		cgOperationCallExp.getCgArguments().add(analyzer.createCGVariableExp(selfVariable));
-//	}
-
 
 	protected void addTypeIdArgument(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
@@ -99,106 +153,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		js.appendCommentWithOCL(title + "\n", expressionInOCL);
 	}
 
-/*	protected void appendDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
-		js.append("generateJavaDeclaration " + this);
-	//	return true;
-	//	assert false : "Missing overload for " + cgOperation.getCallingConvention().getClass().getSimpleName();
-		boolean isExternal = false;
-		Element ast = cgOperation.getAst();
-		assert (ast instanceof Operation); {
-			Operation asOperation = (Operation)ast;
-			isExternal = cg2javaVisitor.getAnalyzer().isExternal(asOperation);//cgOperation instanceof CGFo;
-			LanguageExpression expressionInOCL = asOperation.getBodyExpression();
-			if (ast instanceof Operation) {
-				String title = PrettyPrinter.printName(asOperation);
-				js.appendCommentWithOCL(title+"\n", expressionInOCL);
-			}
-		}
-		//
-		//
-		if (!isExternal) {
-			js.append("@Override\n");
-		}
-		js.append("public ");
-		if (isExternal) {
-			js.append("static ");
-		}
-		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
-		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
-		js.append(" ");
-		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
-		js.append(" ");
-		if (isExternal) {
-			js.append("op_");
-		}
-		js.appendValueName(cgOperation);
-	} */
-
-/*	Original merged function  temporaily retained in case derivations need review.
-  	protected @NonNull CGOperation createCGOperationWithoutBody(@NonNull AS2CGVisitor as2cgVisitor, @NonNull Operation asOperation) {
-		PivotMetamodelManager metamodelManager = as2cgVisitor.getMetamodelManager();
-		GenModelHelper genModelHelper = as2cgVisitor.getGenModelHelper();
-		CGOperation cgOperation = null;
-		LibraryFeature libraryOperation = metamodelManager.getImplementation(asOperation);
-		if ((libraryOperation instanceof NativeStaticOperation) || (libraryOperation instanceof NativeVisitorOperation)) {
-			CGNativeOperation cgNativeOperation = CGModelFactory.eINSTANCE.createCGNativeOperation();
-			cgOperation = cgNativeOperation;
-		}
-		else if (libraryOperation instanceof EObjectOperation) {
-			EOperation eOperation = (EOperation) asOperation.getESObject();
-			if (eOperation != null) {
-				boolean isForeign = PivotUtil.isStatic(eOperation);
-				if (!isForeign) {
-					try {
-						genModelHelper.getGenOperation(eOperation);
-					}
-					catch (GenModelException e) {
-						isForeign = true;
-					}
-				}
-				if (!isForeign) {
-					CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-					cgEcoreOperation.setEOperation(eOperation);
-					cgOperation = cgEcoreOperation;
-				}
-				else {
-					cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-				}
-			}
-		}
-		else if (libraryOperation instanceof ForeignOperation) {
-			EOperation eOperation = (EOperation) asOperation.getESObject();
-			if (eOperation != null) {
-				boolean isForeign = PivotUtil.isStatic(eOperation);
-				if (isForeign) {
-					cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-				//	CGParameter cgParameter = context.get    getSelfParameter(contextVariable);
-				//	cgOperation.getParameters().add(cgParameter);
-				}
-				else {
-					try {
-						genModelHelper.getGenOperation(eOperation);
-						CGEcoreOperation cgEcoreOperation = CGModelFactory.eINSTANCE.createCGEcoreOperation();
-						cgEcoreOperation.setEOperation(eOperation);
-						cgOperation = cgEcoreOperation;
-					}
-					catch (GenModelException e) {
-						cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-					}
-				}
-			}
-		}
-		else if (libraryOperation instanceof ConstrainedOperation) {
-			org.eclipse.ocl.pivot.Package pPackage = asOperation.getOwningClass().getOwningPackage();
-			cgOperation = pPackage instanceof Library ? CGModelFactory.eINSTANCE.createCGLibraryOperation()
-				: CGModelFactory.eINSTANCE.createCGCachedOperation();
-		}
-		if (cgOperation == null) {
-			cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
-		}
-		return cgOperation;
-	} */
-
 	protected void appendParameterList(@NonNull JavaStream js, @NonNull CGOperation cgOperation) {
 		js.append("(");
 		boolean isFirst = true;
@@ -210,6 +164,175 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			isFirst = false;
 		}
 		js.append(")");
+	}
+
+	protected @NonNull ExpressionInOCL createASExpressionInOCL(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asOriginalFeature,
+			@NonNull ASContextVariableStyle contextStyle, @NonNull ASParameterVariableStyle... parameterStyles) {
+		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+		GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+		PivotHelper asHelper = codeGenerator.getASHelper();
+		org.eclipse.ocl.pivot.@NonNull Class asClass = PivotUtil.getOwningClass(asOriginalFeature);
+		ExpressionInOCL asExpressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
+		ParameterVariable asContextVariable;
+		switch (contextStyle) {
+			case SELF: {
+				String selfName = globalNameManager.getSelfNameResolution().getResolvedName();
+				asContextVariable = asHelper.createParameterVariable(selfName, asClass, true);
+				break;
+			}
+			case THIS: {
+				org.eclipse.ocl.pivot.Class asOldContextClass = codeGenerator.getContextClass();
+				String thisName = globalNameManager.getThisNameResolution().getResolvedName();
+				asContextVariable = asHelper.createParameterVariable(thisName, asOldContextClass, true);
+				break;
+			}
+			default: {
+				throw new UnsupportedOperationException();
+			}
+		}
+		asExpressionInOCL.setOwnedContext(asContextVariable);
+		if (parameterStyles.length > 0) {
+			List<Variable> asParameterVariables = asExpressionInOCL.getOwnedParameters();
+			for (ASParameterVariableStyle parameterStyle : parameterStyles) {
+				ParameterVariable asParameterVariable;
+				switch (parameterStyle) {
+					case ID_RESOLVER: {
+						LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+						String idResolverName = globalNameManager.getIdResolverNameResolution().getResolvedName();
+						Class idResolverClass = jLanguageSupport.getNativeClass(IdResolver.class);
+						asParameterVariable = asHelper.createParameterVariable(idResolverName, idResolverClass, true);
+						asParameterVariables.add(asParameterVariable);
+						break;
+					}
+					case SELF: {
+						String selfName = globalNameManager.getSelfNameResolution().getResolvedName();
+						asParameterVariable = asHelper.createParameterVariable(selfName, asClass, true);
+						asParameterVariables.add(asParameterVariable);
+						break;
+					}
+					case BOXED_VALUES: {
+						@NonNull Operation asOriginalOperation = (Operation) asOriginalFeature;
+						for (@NonNull Parameter asOriginalParameter : PivotUtilInternal.getOwnedParametersList(asOriginalOperation)) {
+							asParameterVariable = asHelper.createParameterVariable(asOriginalParameter);
+							asParameterVariable.setRepresentedParameter(asOriginalParameter);
+							asParameterVariables.add(asParameterVariable);
+						}
+						break;
+					}
+					default: {
+						throw new UnsupportedOperationException();
+					}
+				}
+			}
+		}
+		return asExpressionInOCL;
+	}
+
+	/**
+	 * Create the declaration for an AS Operation within asClass in support of asOriginalOperation.
+	 * The declaration las a name, result and parameters configured by resultStyleOrClass and parameterStyles.
+	 * The resultStyleOrClass may be an explicit class or a ResultStyle algorithm.
+	 */
+	protected @NonNull Operation createASOperationDeclaration(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull TypedElement asOrigin,
+			@NonNull String name, @NonNull Object resultStyleOrClass) {
+		@NonNull ASParameterStyle[] asParameterStyles = getASParameterStyles(asOrigin);
+		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+		Type asReturnType;
+		boolean isRequired;
+		if (resultStyleOrClass instanceof org.eclipse.ocl.pivot.Class) {
+			asReturnType = (org.eclipse.ocl.pivot.Class)resultStyleOrClass;
+			isRequired = true;
+		}
+		else if (resultStyleOrClass instanceof TypedElement) {
+			TypedElement asTypedElement = (TypedElement)resultStyleOrClass;
+			asReturnType = PivotUtil.getType(asTypedElement);
+			isRequired = asTypedElement.isIsRequired();
+		}
+		else {
+			ASResultStyle resultStyle = (ASResultStyle)resultStyleOrClass;
+			switch (resultStyle) {
+				case BOOLEAN: {
+					EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+					asReturnType = environmentFactory.getStandardLibrary().getBooleanType();
+					isRequired = true;
+					break;
+				}
+				case RESULT: {
+					asReturnType = PivotUtil.getType(asOrigin);
+					isRequired = asOrigin.isIsRequired();
+					break;
+				}
+				case VOID: {
+					EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+					asReturnType = environmentFactory.getStandardLibrary().getOclVoidType();
+					isRequired = true;
+					break;
+				}
+				default: {
+					throw new UnsupportedOperationException();
+				}
+			}
+		}
+		Operation asOperation = PivotUtil.createOperation(name, asReturnType, null, null);
+		asOperation.setIsRequired(isRequired);
+		asClass.getOwnedOperations().add(asOperation);
+		if (asParameterStyles.length > 0) {
+			List<Parameter> asParameters = asOperation.getOwnedParameters();
+			for (@NonNull ASParameterStyle asParameterStyle : asParameterStyles) {
+				switch (asParameterStyle) {
+					case BOXED_VALUES_OPTIONAL: {
+						Parameter asParameter = createBoxedValuesParameter(codeGenerator, false);
+						asParameters.add(asParameter);
+						break;
+					}
+					case BOXED_VALUES_ALL: {
+						@NonNull Operation asOriginalOperation = (Operation)asOrigin;
+						Parameter asParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOriginalOperation));
+						asParameters.add(asParameter);
+						break;
+					}
+					case EXECUTOR: {
+						NameResolution executorResolution = codeGenerator.getGlobalNameManager().getExecutorNameResolution();
+						String executorName = executorResolution.getResolvedName();
+						LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+						org.eclipse.ocl.pivot.Class executorType = jLanguageSupport.getNativeClass(Executor.class);
+						Parameter asParameter = PivotUtil.createParameter(executorName, executorType, true);
+						asParameters.add(asParameter);
+						break;
+					}
+					case PARAMETERS: {
+						@NonNull Operation asOriginalOperation = (Operation)asOrigin;
+						for (@NonNull Parameter asOriginalParameter : PivotUtil.getOwnedParameters(asOriginalOperation)) {
+							String parameterName = PivotUtil.getName(asOriginalParameter);
+							Type parameterType = PivotUtil.getType(asOriginalParameter);
+							boolean parameterIsRequired = asOriginalParameter.isIsRequired();
+							Parameter asParameter = PivotUtil.createParameter(parameterName, parameterType, parameterIsRequired);
+							asParameters.add(asParameter);
+						}
+						break;
+					}
+					case SELF: {
+						@NonNull Feature asOriginalFeature = (Feature)asOrigin;
+						GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+						String selfName = globalNameManager.getSelfNameResolution().getResolvedName();
+						Parameter asParameter = PivotUtil.createParameter(selfName, PivotUtil.getOwningClass(asOriginalFeature), true);
+						asParameters.add(asParameter);
+						break;
+					}
+					default:
+						throw new UnsupportedOperationException();
+				}
+			}
+		}
+		return asOperation;
+	}
+
+	private @NonNull Parameter createBoxedValuesParameter(@NonNull JavaCodeGenerator codeGenerator, boolean isRequired) {
+		NameResolution boxedValuesResolution = codeGenerator.getGlobalNameManager().getBoxedValuesNameResolution();
+		String boxedValuesName = boxedValuesResolution.getResolvedName();
+		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+		org.eclipse.ocl.pivot.Class boxedValueType = jLanguageSupport.getNativeClass(Object[].class);
+		return PivotUtil.createParameter(boxedValuesName, boxedValueType, isRequired);
 	}
 
 	@Override
@@ -226,6 +349,106 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
+
+	protected @NonNull CGOperation createCGOperationDeclaration(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass,
+			@NonNull Operation asOperation, @Nullable NameResolution nameResolution, @NonNull CGParameterStyle... cgParameterStyles) {
+		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
+		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
+		analyzer.initAst(cgOperation, asOperation, true);
+		cgOperation.setCallingConvention(this);
+		if (nameResolution !=  null) {
+			nameResolution.addCGElement(cgOperation);
+		}
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
+		cgClass.getOperations().add(cgOperation);
+		if (cgParameterStyles.length > 0) {
+			List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+			for (@NonNull CGParameterStyle cgParameterStyle : cgParameterStyles) {
+				switch(cgParameterStyle) {
+					case EXECUTOR: {
+						Parameter asExecutorParameter = getExecutorParameter(analyzer, asOperation);
+						CGParameter cgParameter = operationNameManager.getExecutorParameter(asExecutorParameter);
+						NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
+						executorNameResolution.addCGElement(cgParameter);
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case ID_RESOLVER: {
+						NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
+						CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
+						CGParameter cgParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
+						cgParameter.setNonInvalid();
+						cgParameter.setRequired(true);
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case BOXED_VALUES: {
+						Parameter asBoxedValuesParameter = getBoxedValuesParameter(analyzer, asOperation);
+						CGParameter cgParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
+						globalNameManager.getBoxedValuesNameResolution().addCGElement(cgParameter);
+						cgParameters.add(cgParameter);
+						break;
+					}
+				/*	case CONTEXT_OBJECT_SELF: {
+						List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
+						for (@NonNull Parameter asCacheEvaluateParameter : asCacheEvaluateParameters) {
+							CGParameter cgParameter = operationNameManager.getCGParameter(asCacheEvaluateParameter, null);
+							String name = asCacheEvaluateParameter.getName();
+							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
+							if (selfNameResolution.getResolvedName().equals(name)) {
+								selfNameResolution.addCGElement(cgParameter);
+							}
+							else {
+								NameResolution objectNameResolution = globalNameManager.getObjectNameResolution();
+								if (objectNameResolution.getResolvedName().equals(name)) {
+									objectNameResolution.addCGElement(cgParameter);
+								}
+								else {
+									NameResolution contextObjectNameResolution = globalNameManager.getContextObjectNameResolution();
+									if (contextObjectNameResolution.getResolvedName().equals(name)) {
+										contextObjectNameResolution.addCGElement(cgParameter);
+									}
+								}
+							}
+							cgParameters.add(cgParameter);
+						}
+						break;
+					} */
+					case PARAMETERS: {
+						List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
+						for (@NonNull Parameter asCacheEvaluateParameter : asCacheEvaluateParameters) {
+							CGParameter cgParameter = operationNameManager.getCGParameter(asCacheEvaluateParameter, null);
+							String name = asCacheEvaluateParameter.getName();
+							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
+							if (selfNameResolution.getResolvedName().equals(name)) {
+								selfNameResolution.addCGElement(cgParameter);
+							}
+							else {
+							//	NameResolution objectNameResolution = globalNameManager.getObjectNameResolution();
+							//	if (objectNameResolution.getResolvedName().equals(name)) {
+							//		objectNameResolution.addCGElement(cgParameter);
+							//	}
+							//	else {
+									NameResolution contextObjectNameResolution = globalNameManager.getContextObjectNameResolution();
+									if (contextObjectNameResolution.getResolvedName().equals(name)) {
+										contextObjectNameResolution.addCGElement(cgParameter);
+										throw new UnsupportedOperationException();
+									}
+							//	}
+							}
+							cgParameters.add(cgParameter);
+						}
+						break;
+					}
+					default: {
+						throw new UnsupportedOperationException();
+					}
+				}
+			}
+		}
+		return cgOperation;
+	}
 
 	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
 		return operationNameManager.getCGParameter(asParameterVariable, (String)null);
@@ -405,6 +628,22 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			}
 		}
 		return true;
+	}
+
+	protected /*abstract*/ @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
+		throw new UnsupportedOperationException();
+	}
+
+	protected @NonNull Parameter getBoxedValuesParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		NameResolution boxedValuesResolution = analyzer.getGlobalNameManager().getBoxedValuesNameResolution();
+		String boxedValuesName = boxedValuesResolution.getResolvedName();
+		return ClassUtil.nonNullState(NameUtil.getNameable(asOperation.getOwnedParameters(), boxedValuesName));
+	}
+
+	protected @NonNull Parameter getExecutorParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		NameResolution executorResolution = analyzer.getGlobalNameManager().getExecutorNameResolution();
+		String executorName = executorResolution.getResolvedName();
+		return ClassUtil.nonNullState(NameUtil.getNameable(asOperation.getOwnedParameters(), executorName));
 	}
 
 	private @NonNull String getFunctionCtorName(@NonNull CGOperation cgOperation) {
