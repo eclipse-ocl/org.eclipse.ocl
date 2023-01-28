@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -88,7 +87,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 				return INSTANCE;
 			}
 
-			@Override
+		/*	@Override
 			protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
 				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 				String objectName = globalNameManager.getObjectNameResolution().getResolvedName();
@@ -96,7 +95,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 				List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
 				asCacheEvaluateParameters.add(asEvaluateParameter);
 				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
-			}
+			} */
 
 			@Override
 			protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
@@ -124,6 +123,11 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 				}
 				js.append("}");
 				js.append(");\n");
+			}
+
+			@Override
+			protected @NonNull ParameterStyle getASOperationDeclarationContextParameterStyle(@NonNull Operation asOperation) {
+				return ParameterStyle.OBJECT;
 			}
 		}
 
@@ -169,12 +173,8 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			//	Create AS declaration for newInstance
 			//
 			String constructorName = PivotUtil.getName(asCacheClass);
-			Type asReturnType = environmentFactory.getStandardLibrary().getOclVoidType();
-			Operation asConstructorOperation = PivotUtil.createOperation(constructorName, asReturnType, null, null);
-			asConstructorOperation.setIsRequired(true);
-			Parameter asBoxedValuesParameter = operationCallingConvention.createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOperation));
-			asConstructorOperation.getOwnedParameters().add(asBoxedValuesParameter);
-			asCacheClass.getOwnedOperations().add(asConstructorOperation);
+			Operation asConstructorOperation = createASOperationDeclaration(analyzer, asCacheClass, asOperation,
+				constructorName, ResultStyle.VOID, ParameterStyle.BOXED_VALUES_ALL);
 			//
 			//	Create AS body for newInstance
 			//
@@ -189,6 +189,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			//	newInstanceNameResolution.addCGElement(cgConstructorOperation);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructorOperation, asConstructorOperation);
 			List<@NonNull CGParameter> cgCacheParameters = CGUtil.getParametersList(cgConstructorOperation);
+			Parameter asBoxedValuesParameter = getBoxedValuesParameter(analyzer, asConstructorOperation);
 			CGParameter cgConstructorBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
 			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgConstructorBoxedValuesParameter);
 			cgCacheParameters.add(cgConstructorBoxedValuesParameter);

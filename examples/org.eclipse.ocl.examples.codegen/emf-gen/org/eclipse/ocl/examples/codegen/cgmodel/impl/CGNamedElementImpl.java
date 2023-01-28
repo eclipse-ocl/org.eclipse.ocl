@@ -20,7 +20,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -262,7 +261,7 @@ public abstract class CGNamedElementImpl extends CGElementImpl implements CGName
 
 	@Override
 	public @NonNull String getResolvedName() {
-		System.out.println("getResolvedName " + NameUtil.debugSimpleName(this) + ":" +  this);
+//		System.out.println("getResolvedName " + NameUtil.debugSimpleName(this) + ":" +  this);
 		return getNameResolution().getResolvedName();
 	}
 

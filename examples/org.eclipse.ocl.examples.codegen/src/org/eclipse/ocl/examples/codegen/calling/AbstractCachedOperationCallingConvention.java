@@ -90,18 +90,6 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 
 	public static abstract class AbstractEvaluateOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 	{
-		/**
-		 * Prepare the parameter list of the AS Cache Evalute operation for the invoked AS Operation.
-		 * The default implementation copies the parameters. Derived implementations may prefix a self/context object.
-		 */
-		protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
-			List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
-			for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
-				Parameter asEvaluateParameter = PivotUtil.createParameter(PivotUtil.getName(asParameter), PivotUtil.getType(asParameter), asParameter.isIsRequired());
-				asCacheEvaluateParameters.add(asEvaluateParameter);
-			}
-		}
-
 		@Override
 		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
 			//	Implemented as direct synthesis
@@ -154,21 +142,17 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 			org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
 			//
-			//	Create AS declaration for newInstance
+			//	Create AS declaration for evaluate
 			//
 			NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
-			String newInstanceName = evaluateNameResolution.getResolvedName();
-			Operation asCacheEvaluateOperation = PivotUtil.createOperation(newInstanceName, asEntryClass, null, null);
-			asCacheEvaluateOperation.setType(asOperation.getType());
-			asCacheEvaluateOperation.setIsRequired(asOperation.isIsRequired());
-			asCacheClass.getOwnedOperations().add(asCacheEvaluateOperation);
-			createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
+			Operation asCacheEvaluateOperation = createASOperationDeclaration(analyzer, asCacheClass, asOperation,
+					evaluateNameResolution.getResolvedName(), ResultStyle.RESULT, getASOperationDeclarationContextParameterStyle(asOperation), ParameterStyle.PARAMETERS);
 			//
 			//	Create AS body for newInstance
 			//
 			//	not implemented
 			//
-			//	Create CG declaration for newInstance
+			//	Create CG declaration for evaluate
 			//
 			CGOperation cgCacheEvaluateOperation = createCGOperation(analyzer, asCacheEvaluateOperation);
 			analyzer.initAst(cgCacheEvaluateOperation, asCacheEvaluateOperation, true);

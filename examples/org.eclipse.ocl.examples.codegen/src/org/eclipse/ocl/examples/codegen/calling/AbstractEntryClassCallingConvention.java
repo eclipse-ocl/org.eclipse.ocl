@@ -126,10 +126,8 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			String getResultName = getResultNameResolution.getResolvedName();
 			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
 			Property asEntryResultProperty = asEntryProperties.get(asEntryProperties.size()-1);
-			Type asEntryResultType = PivotUtil.getType(asEntryResultProperty);
-			Operation asEntryOperation = PivotUtil.createOperation(getResultName, asEntryResultType, null, null);
-			asEntryOperation.setIsRequired(asEntryResultProperty.isIsRequired());
-			asEntryClass.getOwnedOperations().add(asEntryOperation);
+			Operation asEntryOperation = createASOperationDeclaration(analyzer, asEntryClass, asOperation,
+				getResultName, asEntryResultProperty);
 			//
 			//	Create AS body - self.cachedResult for AS => this.cachedResult for CG
 			//
@@ -213,7 +211,6 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
 			LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
 			PivotHelper asHelper = codeGenerator.getASHelper();
 			org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
@@ -221,13 +218,8 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//	Create AS declaration for isEqual
 			//
 			NameResolution isEqualNameResolution = globalNameManager.getIsEqualNameResolution();
-			String isEqualName = isEqualNameResolution.getResolvedName();
-			Type asReturnType = environmentFactory.getStandardLibrary().getBooleanType();
-			Operation asEntryOperation = PivotUtil.createOperation(isEqualName, asReturnType, null, null);
-			asEntryOperation.setIsRequired(true);
-			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, false);
-			asEntryOperation.getOwnedParameters().add(asBoxedValuesParameter);
-			asEntryClass.getOwnedOperations().add(asEntryOperation);
+			Operation asEntryOperation = createASOperationDeclaration(analyzer, asEntryClass,
+				asOperation, isEqualNameResolution.getResolvedName(), ResultStyle.BOOLEAN, ParameterStyle.BOXED_VALUES_OPTIONAL);
 			//
 			//	Create AS body for isEqual
 			//
@@ -296,6 +288,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			cgIdResolverParameter.setNonInvalid();
 			cgIdResolverParameter.setRequired(true);
 			cgEntryParameters.add(cgIdResolverParameter);
+			Parameter asBoxedValuesParameter = getBoxedValuesParameter(analyzer, asEntryOperation);
 			CGParameter cgEntryBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
 			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
 			cgEntryParameters.add(cgEntryBoxedValuesParameter);

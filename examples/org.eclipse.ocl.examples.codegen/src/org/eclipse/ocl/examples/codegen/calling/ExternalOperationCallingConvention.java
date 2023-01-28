@@ -31,9 +31,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -67,7 +65,7 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 				return INSTANCE;
 			}
 
-			@Override
+		/*	@Override
 			protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
 				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
 				String selfName = globalNameManager.getSelfNameResolution().getResolvedName();
@@ -75,6 +73,11 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 				List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
 				asCacheEvaluateParameters.add(asEvaluateParameter);
 				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
+			} */
+
+			@Override
+			protected @NonNull ParameterStyle getASOperationDeclarationContextParameterStyle(@NonNull Operation asOperation) {
+				return ParameterStyle.SELF;
 			}
 		}
 

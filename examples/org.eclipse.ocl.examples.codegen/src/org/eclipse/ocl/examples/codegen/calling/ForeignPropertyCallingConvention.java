@@ -53,15 +53,12 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
 import org.eclipse.ocl.pivot.internal.library.StaticProperty;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -165,8 +162,6 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-			EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
-			LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
 			PivotHelper asHelper = codeGenerator.getASHelper();
 			org.eclipse.ocl.pivot.@NonNull Class asForeignClass = CGUtil.getAST(cgForeignClass);
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
@@ -175,19 +170,8 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			//	Create AS declaration for property access operation
 			//
 			String qualifiedPropertyName = asProperty.toString().replace("::", "_");
-			Type asReturnType = asProperty.getType();
-			Operation asForeignOperation = PivotUtil.createOperation(qualifiedPropertyName, asReturnType, null, null);
-			asForeignOperation.setIsRequired(asProperty.isIsRequired());
-			asForeignOperation.setIsStatic(false);
-			List<@NonNull Parameter> asForeignParameters = PivotUtilInternal.getOwnedParametersList(asForeignOperation);
-			Parameter asExecutorParameter = createExecutorParameter(codeGenerator);
-			asForeignParameters.add(asExecutorParameter);
-			if (!isStatic) {
-				String contextObjectName = globalNameManager.getContextObjectNameResolution().getResolvedName();
-				Parameter asContextObjectParameter = PivotUtil.createParameter(contextObjectName, asClass, true);
-				asForeignParameters.add(asContextObjectParameter);
-			}
-			asForeignClass.getOwnedOperations().add(asForeignOperation);
+			Operation asForeignOperation = createASOperationDeclaration(analyzer, asForeignClass, asProperty,
+				qualifiedPropertyName, asProperty, ParameterStyle.EXECUTOR, isStatic ? ParameterStyle.SKIP : ParameterStyle.SELF);
 			//
 			//	Create AS body for property access operation
 			//
@@ -219,6 +203,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			cgForeignOperation.setCallingConvention(this);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgForeignOperation, asForeignOperation);
 			List<@NonNull CGParameter> cgForeignParameters = CGUtil.getParametersList(cgForeignOperation);
+			Parameter asExecutorParameter = getExecutorParameter(analyzer, asForeignOperation);
 			CGParameter cgExecutorParameter = operationNameManager.getExecutorParameter(asExecutorParameter);
 			globalNameManager.getExecutorNameResolution().addCGElement(cgExecutorParameter);
 			cgForeignParameters.add(cgExecutorParameter);

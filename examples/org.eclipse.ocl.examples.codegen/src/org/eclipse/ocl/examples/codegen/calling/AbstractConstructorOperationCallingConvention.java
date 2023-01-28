@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -62,7 +61,6 @@ import org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -282,18 +280,20 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		// CG Entry Operation.lets -
 		//
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
+	//	EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
 		org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 		//
 		NameResolution ctorNameResolution = cgEntryClass.getNameResolution();
 		String ctorName = ctorNameResolution.getResolvedName();
-		Type asDummyType = environmentFactory.getStandardLibrary().getOclVoidType();
+	/*	Type asDummyType = environmentFactory.getStandardLibrary().getOclVoidType();
 		Operation asEntryConstructor = PivotUtil.createOperation(ctorName, asDummyType, null, null);
 		Parameter asExecutorParameter = createExecutorParameter(codeGenerator);
 		asEntryConstructor.getOwnedParameters().add(asExecutorParameter);
 		Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOperation));
 		asEntryConstructor.getOwnedParameters().add(asBoxedValuesParameter);
-		asEntryClass.getOwnedOperations().add(asEntryConstructor);
+		asEntryClass.getOwnedOperations().add(asEntryConstructor); */
+		Operation asEntryConstructor = createASOperationDeclaration(analyzer, asEntryClass, asOperation,
+			ctorName, ResultStyle.VOID, ParameterStyle.EXECUTOR, ParameterStyle.BOXED_VALUES_ALL);
 		//
 		//	Wrap a copy of the original constructor bodies in a let expression per constructor parameter.
 		//

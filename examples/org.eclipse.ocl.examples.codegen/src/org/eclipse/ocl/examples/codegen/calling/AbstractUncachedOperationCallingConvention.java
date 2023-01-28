@@ -35,6 +35,20 @@ import org.eclipse.ocl.pivot.library.LibraryOperation;
  */
 public abstract class AbstractUncachedOperationCallingConvention extends AbstractOperationCallingConvention
 {
+	/**
+	 * Prepare the parameter list of the AS Cache Evalute operation for the invoked AS Operation.
+	 * The default implementation copies the parameters. Derived implementations may prefix a self/context object.
+	 *
+	@Deprecated /* folding into createASOperationDeclaration * /
+	protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
+//		List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asCacheEvaluateOperation);
+//		for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+//			Parameter asEvaluateParameter = PivotUtil.createParameter(PivotUtil.getName(asParameter), PivotUtil.getType(asParameter), asParameter.isIsRequired());
+//			asCacheEvaluateParameters.add(asEvaluateParameter);
+//		}
+		throw new UnsupportedOperationException();
+	} */
+
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
 		return CGModelFactory.eINSTANCE.createCGCachedOperation();
@@ -77,5 +91,9 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 	protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		cg2javaVisitor.appendReturn(body);
+	}
+
+	protected @NonNull ParameterStyle getASOperationDeclarationContextParameterStyle(@NonNull Operation asOperation) {
+		return ParameterStyle.SKIP;
 	}
 }

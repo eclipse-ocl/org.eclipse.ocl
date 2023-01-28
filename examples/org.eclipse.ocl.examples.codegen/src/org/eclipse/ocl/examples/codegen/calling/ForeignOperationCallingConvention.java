@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -88,7 +87,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		{
 			private static final @NonNull ForeignEvaluateOperationCallingConvention INSTANCE = new ForeignEvaluateOperationCallingConvention();
 
-			@Override
+		/*	@Override
 			protected void createASParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asCacheEvaluateOperation, @NonNull Operation asOperation) {
 				if (!asOperation.isIsStatic()) {
 					GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
@@ -98,7 +97,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 					asCacheEvaluateParameters.add(asEvaluateParameter);
 				}
 				super.createASParameters(analyzer, asCacheEvaluateOperation, asOperation);
-			}
+			} */
 
 			@Override
 			protected void generateUniqueComputationArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
@@ -121,6 +120,11 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			public static @NonNull ForeignEvaluateOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 				INSTANCE.logInstance(asClass);
 				return INSTANCE;
+			}
+
+			@Override
+			protected @NonNull ParameterStyle getASOperationDeclarationContextParameterStyle(@NonNull Operation asOperation) {
+				return asOperation.isIsStatic() ? ParameterStyle.SKIP : ParameterStyle.SELF;
 			}
 
 	/*		@Override

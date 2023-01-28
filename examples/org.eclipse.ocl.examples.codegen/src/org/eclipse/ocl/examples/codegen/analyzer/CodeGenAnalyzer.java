@@ -374,7 +374,7 @@ public class CodeGenAnalyzer
 		}
 		assert !parents.contains(extraChildParent);
 		parents.add(extraChildParent);
-		System.out.println("addReferencedExtraChild " + NameUtil.debugSimpleName(extraChildParent) + ":" +  extraChildParent + "   " + NameUtil.debugSimpleName(extraChild) + ":" +  extraChild);
+	//	System.out.println("addReferencedExtraChild " + NameUtil.debugSimpleName(extraChildParent) + ":" +  extraChildParent + "   " + NameUtil.debugSimpleName(extraChild) + ":" +  extraChild);
 	}
 
 	public void addUnreferencedExtraChild(@NonNull CGValuedElement extraChildParent, @NonNull CGValuedElement extraChild) {
@@ -392,7 +392,7 @@ public class CodeGenAnalyzer
 		}
 		assert !parents.contains(extraChildParent);
 		parents.add(extraChildParent);
-		System.out.println("addUnreferencedExtraChild " + NameUtil.debugSimpleName(extraChildParent) + ":" +  extraChildParent + "   " + NameUtil.debugSimpleName(extraChild) + ":" +  extraChild);
+	//	System.out.println("addUnreferencedExtraChild " + NameUtil.debugSimpleName(extraChildParent) + ":" +  extraChildParent + "   " + NameUtil.debugSimpleName(extraChild) + ":" +  extraChild);
 	}
 
 //	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {

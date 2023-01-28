@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -82,12 +81,8 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//	Create AS declaration for newInstance
 			//
 			String constructorName = PivotUtil.getName(asCacheClass);
-			Type asReturnType = environmentFactory.getStandardLibrary().getOclVoidType();
-			Operation asConstructorOperation = PivotUtil.createOperation(constructorName, asReturnType, null, null);
-			asConstructorOperation.setIsRequired(true);
-			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOperation));
-			asConstructorOperation.getOwnedParameters().add(asBoxedValuesParameter);
-			asCacheClass.getOwnedOperations().add(asConstructorOperation);
+			Operation asConstructorOperation = createASOperationDeclaration(analyzer, asCacheClass, asOperation,
+				constructorName, ResultStyle.VOID, ParameterStyle.BOXED_VALUES_ALL);
 			//
 			//	Create AS body for newInstance
 			//
@@ -100,6 +95,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			cgConstructorOperation.setCallingConvention(this);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructorOperation, asConstructorOperation);
 			List<@NonNull CGParameter> cgCacheParameters = CGUtil.getParametersList(cgConstructorOperation);
+			Parameter asBoxedValuesParameter = getBoxedValuesParameter(analyzer, asConstructorOperation);
 			CGParameter cgCacheBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
 			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgCacheBoxedValuesParameter);			// FIXME move to CGParameters
 			cgCacheParameters.add(cgCacheBoxedValuesParameter);
@@ -188,14 +184,8 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//	Create AS declaration for newInstance
 			//
 			NameResolution newInstanceNameResolution = globalNameManager.getNewInstanceResolution();
-			String newInstanceName = newInstanceNameResolution.getResolvedName();
-			Operation asConstructorOperation = PivotUtil.createOperation(newInstanceName, asCacheClass, null, null);
-			asConstructorOperation.setIsRequired(true);
-			Parameter asExecutorParameter = createExecutorParameter(codeGenerator);
-			asConstructorOperation.getOwnedParameters().add(asExecutorParameter);
-			Parameter asBoxedValuesParameter = createBoxedValuesParameter(codeGenerator, false);
-			asConstructorOperation.getOwnedParameters().add(asBoxedValuesParameter);
-			asConstructorClass.getOwnedOperations().add(asConstructorOperation);
+			Operation asConstructorOperation = createASOperationDeclaration(analyzer, asConstructorClass, asOperation,
+				newInstanceNameResolution.getResolvedName(), asCacheClass, ParameterStyle.EXECUTOR, ParameterStyle.BOXED_VALUES_OPTIONAL);
 			//
 			//	Create AS body for newInstance
 			//
@@ -212,6 +202,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		//	CGParameter cgConstructorExecutorParameter = operationNameManager.getCGParameter(asExecutorParameter, (String)null);
 		//	globalNameManager.getExecutorNameResolution().addCGElement(cgConstructorExecutorParameter);
 		//	cgCacheParameters.add(cgConstructorExecutorParameter);
+			Parameter asBoxedValuesParameter = getBoxedValuesParameter(analyzer, asConstructorOperation);
 			CGParameter cgConstructorBoxedValuesParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
 			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgConstructorBoxedValuesParameter);
 			cgCacheParameters.add(cgConstructorBoxedValuesParameter);
