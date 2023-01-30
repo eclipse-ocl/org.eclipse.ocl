@@ -34,7 +34,7 @@ import junit.framework.TestCase;
 /**
  * Class testing the AbstractExport class.
  */
-public class AbstractExportOCLValidationResultTests extends AbstractValidityTestCase
+public abstract class AbstractExportOCLValidationResultTests extends AbstractValidityTestCase
 {
 	protected IValidityExporter exporter;
 	protected EList<Result> results;
