@@ -127,49 +127,12 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		}
 	}
 
-	@Override
+/*	@Override
 	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
 		CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, PivotUtil.getName(asParameterVariable));
 		operationNameManager.declareEagerName(cgParameter);
 		return cgParameter;
-	}
-
-	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-		initCGParameters(operationNameManager, null);
-//		throw new UnsupportedOperationException();
-//		assert expressionInOCL != null;
-/*		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		if (expressionInOCL != null) {
-			Variable asContextVariable = expressionInOCL.getOwnedContext();
-			if (asContextVariable != null) {
-				CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, asContextVariable);
-				cgParameters.add(cgParameter);
-				assertCGParameterStyles(CG_PARAMETER_STYLES_BODY_SELF_EAGER_PARAMETERS, operationNameManager, expressionInOCL);
-			}
-			else {
-				assertCGParameterStyles(CG_PARAMETER_STYLES_EAGER_PARAMETERS, operationNameManager, expressionInOCL);
-			}
-			Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(expressionInOCL);
-			createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
-		//	initCGParameters(operationNameManager, null);
-		}
-		else {
-			Operation asOperation = CGUtil.getAST(cgOperation);
-			if (!asOperation.isIsStatic()) {						// XXX Static is a derived CC
-				CGParameter cgParameter = operationNameManager.getSelfParameter();
-				cgParameters.add(cgParameter);
-				assertCGParameterStyles(CG_PARAMETER_STYLES_SELF_EAGER_PARAMETERS, operationNameManager, expressionInOCL);
-			}
-			else {
-				assertCGParameterStyles(CG_PARAMETER_STYLES_EAGER_PARAMETERS, operationNameManager, expressionInOCL);
-			}
-			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-			createCGParameters4asParameters(operationNameManager, cgParameters, asParameters);
-		} */
-	}
+	}*/
 
 	@Override
 	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
@@ -213,7 +176,7 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		assert cgOperation.eContainer() == null;
 		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
 		cgClass.getOperations().add(cgOperation);
-		createCGParameters(operationNameManager, asExpressionInOCL);
+		initCGParameters(operationNameManager, null);
 		return cgOperation;
 	}
 
@@ -347,10 +310,10 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		if (bodyExpression != null) {
 			Variable asContextVariable = bodyExpression.getOwnedContext();
 			if (asContextVariable != null) {
-				return CG_PARAMETER_STYLES_BODY_SELF_EAGER_PARAMETERS;
+				return CG_PARAMETER_STYLES_BODY_SELF_EAGER_PARAMETER_VARIABLES;
 			}
 			else {
-				return CG_PARAMETER_STYLES_EAGER_PARAMETERS;
+				return CG_PARAMETER_STYLES_EAGER_PARAMETER_VARIABLES;
 			}
 		}
 		else {

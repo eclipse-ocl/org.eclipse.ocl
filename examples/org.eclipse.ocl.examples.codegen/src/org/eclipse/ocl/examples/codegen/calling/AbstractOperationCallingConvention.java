@@ -115,7 +115,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		EXECUTOR,				// The next parameter variable is the executor
 		ID_RESOLVER,			// The next parameter variable is the idResolver
 		BOXED_VALUES,			// The next parameter variable is the parameter array
-		EAGER_PARAMETERS,		// The next parameter variables are copied anmd their names are reserved eagerly
+		EAGER_PARAMETERS,		// The next parameter variables are copied and their names are reserved eagerly
+		EAGER_PARAMETER_VARIABLES,	// The next parameter variables are copied and their names are reserved eagerly
 		JUNIT_SELF,				// The next parameter variables is the original self for a JUnit test
 		OPTIONAL_BODY_SELF,		// The next parameter variables is the nullable self of the ExpressionInOCL
 		OPTIONAL_SELF,			// The next parameter variables is the original nullable self
@@ -126,7 +127,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES = new @NonNull CGParameterStyle[]{};
-	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BODY_SELF_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.BODY_SELF, CGParameterStyle.EAGER_PARAMETERS};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BODY_SELF_EAGER_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.BODY_SELF, CGParameterStyle.EAGER_PARAMETER_VARIABLES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.BODY_SELF, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_CONTEXT_OBJECT_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.CONTEXT_OBJECT, CGParameterStyle.PARAMETERS};
@@ -138,6 +139,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.TYPE_ID, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_ID_RESOLVER_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.ID_RESOLVER, CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETERS};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EAGER_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.EAGER_PARAMETER_VARIABLES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EAGER_PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.EAGER_PARAMETERS};
@@ -406,28 +408,23 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		return cgOperation;
 	}
 
-	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
+/*	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
 		return operationNameManager.getCGParameter(asParameterVariable, (String)null);
-	}
+	} */
 
-	protected void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-	//	initCGParameters(operationNameManager, expressionInOCL);
-		throw new UnsupportedOperationException();
-	}
-
-	protected void createCGParameters4asParameters(@NonNull ExecutableNameManager operationNameManager, @NonNull List<@NonNull CGParameter> cgParameters, @NonNull Iterable<@NonNull Parameter> asParameters) {
+/*	protected void createCGParameters4asParameters(@NonNull ExecutableNameManager operationNameManager, @NonNull List<@NonNull CGParameter> cgParameters, @NonNull Iterable<@NonNull Parameter> asParameters) {
 		for (@NonNull Parameter asParameterVariable : asParameters) {
 			CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, (String)null);
 			cgParameters.add(cgParameter);
 		}
-	}
+	} */
 
-	protected void createCGParameters4asParameterVariables(@NonNull ExecutableNameManager operationNameManager, @NonNull List<@NonNull CGParameter> cgParameters, @NonNull Iterable<@NonNull Variable> asParameterVariables) {
+/*	protected void createCGParameters4asParameterVariables(@NonNull ExecutableNameManager operationNameManager, @NonNull List<@NonNull CGParameter> cgParameters, @NonNull Iterable<@NonNull Variable> asParameterVariables) {
 		for (@NonNull Variable asParameterVariable : asParameterVariables) {
 			CGParameter cgParameter = createCGParameter(operationNameManager, asParameterVariable);
 			cgParameters.add(cgParameter);
 		}
-	}
+	} */
 
 	@Override
 	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
@@ -454,7 +451,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	@Deprecated
 	protected void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL asExpressionInOCL) {
 		NameUtil.errPrintln("newCreateCGParameters for " + this);
-		createCGParameters(operationNameManager, asExpressionInOCL);
+		throw new UnsupportedOperationException();
 	}
 
 	protected @NonNull ParameterVariable createThisParameterVariable(@NonNull CodeGenAnalyzer analyzer) {
@@ -621,7 +618,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			for (@NonNull CGParameterStyle cgParameterStyle : cgParameterStyles) {
 				switch(cgParameterStyle) {
 					case BODY_SELF: {
-						CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, PivotUtil.getOwnedContext((ExpressionInOCL) asOperation.getBodyExpression()));
+						ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
+						CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, PivotUtil.getOwnedContext(asExpressionInOCL));
 						cgParameters.add(cgParameter);
 						break;
 					}
@@ -641,7 +639,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 						List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
 						for (@NonNull Parameter asCacheEvaluateParameter : asCacheEvaluateParameters) {
 							CGParameter cgParameter = operationNameManager.getCGParameter(asCacheEvaluateParameter, null);
-							String name = asCacheEvaluateParameter.getName();
+						/*	String name = asCacheEvaluateParameter.getName();
 							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
 							if (selfNameResolution.getResolvedName().equals(name)) {
 								selfNameResolution.addCGElement(cgParameter);
@@ -652,10 +650,32 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 									contextObjectNameResolution.addCGElement(cgParameter);
 									throw new UnsupportedOperationException();
 								}
-							}
+							} */
 							cgParameters.add(cgParameter);
 							operationNameManager.declareEagerName(cgParameter);
+						}
+						break;
 					}
+					case EAGER_PARAMETER_VARIABLES: {
+						ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
+						Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(asExpressionInOCL);
+						for (@NonNull Variable asParameterVariable : asParameterVariables) {
+							CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, null);
+						/*	String name = asParameterVariable.getName();
+							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
+							if (selfNameResolution.getResolvedName().equals(name)) {
+								selfNameResolution.addCGElement(cgParameter);
+							}
+							else {
+								NameResolution contextObjectNameResolution = globalNameManager.getContextObjectNameResolution();
+								if (contextObjectNameResolution.getResolvedName().equals(name)) {
+									contextObjectNameResolution.addCGElement(cgParameter);
+									throw new UnsupportedOperationException();
+								}
+							} */
+							cgParameters.add(cgParameter);
+							operationNameManager.declareEagerName(cgParameter);
+						}
 						break;
 					}
 					case EXECUTOR: {
@@ -721,7 +741,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 						List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
 						for (@NonNull Parameter asCacheEvaluateParameter : asCacheEvaluateParameters) {
 							CGParameter cgParameter = operationNameManager.getCGParameter(asCacheEvaluateParameter, null);
-							String name = asCacheEvaluateParameter.getName();
+						/*	String name = asCacheEvaluateParameter.getName();
 							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
 							if (selfNameResolution.getResolvedName().equals(name)) {
 								selfNameResolution.addCGElement(cgParameter);
@@ -732,7 +752,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 									contextObjectNameResolution.addCGElement(cgParameter);
 									throw new UnsupportedOperationException();
 								}
-							}
+							} */
 							cgParameters.add(cgParameter);
 						}
 						break;
