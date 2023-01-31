@@ -100,17 +100,6 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 	}
 
 	@Override
-	public void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		assert bodyExpression != null;
-	/*	CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		cgParameters.add(operationNameManager.getSelfParameter());
-		Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(bodyExpression);
-		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables); */
-		initCGParameters(operationNameManager, bodyExpression);
-	}
-
-	@Override
 	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
 		assert asOperation.getImplementationClass() == null;
 		CGOperation cgOperation = createCGOperation(analyzer, asOperation);

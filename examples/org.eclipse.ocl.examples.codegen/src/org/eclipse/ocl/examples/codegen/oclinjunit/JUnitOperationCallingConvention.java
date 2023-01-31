@@ -51,24 +51,6 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	}
 
 	@Override
-	public void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-		Operation asOperation = (Operation)operationNameManager.getASScope();
-		assert (expressionInOCL != null) && (expressionInOCL == asOperation.getBodyExpression());
-		Variable contextVariable = expressionInOCL.getOwnedContext();
-		assert contextVariable != null;
-		initCGParameters(operationNameManager, asOperation);
-	}
-
-	@Override
-	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
-		Operation asOperation = (Operation)operationNameManager.getASScope();
-		ExpressionInOCL expressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
-		Variable contextVariable = expressionInOCL.getOwnedContext();
-		assert contextVariable != null;
-		return CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_JUNIT_SELF_PARAMETERS;
-	}
-
-	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
@@ -84,6 +66,15 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		appendParameterList(js, cgOperation);
 		appendBody(cg2javaVisitor, body);
 		return true;
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		Operation asOperation = (Operation)operationNameManager.getASScope();
+		ExpressionInOCL expressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
+		Variable contextVariable = expressionInOCL.getOwnedContext();
+		assert contextVariable != null;
+		return CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_JUNIT_SELF_PARAMETERS;
 	}
 
 	@Override

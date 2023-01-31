@@ -23,7 +23,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.library.UnboxedExplicitNavigationProperty;
@@ -68,26 +67,6 @@ public class SupportOperationCallingConvention extends NativeOperationCallingCon
 
 	public boolean canHandle(@NonNull Method jMethod) {
 		return supportMethods.contains(jMethod);
-	}
-
-	@Override
-	public void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-//		throw new UnsupportedOperationException();
-		assert expressionInOCL == null;
-	/*	CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		if (!asOperation.isIsStatic()) {						// XXX Static is a derived CC
-			CGParameter cgParameter = operationNameManager.getSelfParameter();
-			cgParameters.add(cgParameter);
-			assertCGParameterStyles(CG_PARAMETER_STYLES_SELF_PARAMETERS, operationNameManager, expressionInOCL);
-		}
-		else {
-			assertCGParameterStyles(CG_PARAMETER_STYLES_PARAMETERS, operationNameManager, expressionInOCL);
-		}
-		List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-		createCGParameters4asParameters(operationNameManager, cgParameters, asParameters); */
-		initCGParameters(operationNameManager, null);
 	}
 
 	@Override

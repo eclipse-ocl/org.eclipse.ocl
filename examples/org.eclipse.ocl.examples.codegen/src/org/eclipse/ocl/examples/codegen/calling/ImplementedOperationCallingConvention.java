@@ -97,19 +97,6 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 	}
 
 	@Override
-	public void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		assert bodyExpression == null;
-	//	CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-	//	List<CGParameter> cgParameters = cgOperation.getParameters();
-	//	cgParameters.add(operationNameManager.getSelfParameter());
-		//	for (@NonNull Variable asParameterVariable : ClassUtil.nullFree(bodyExpression.getOwnedParameters())) {
-		//		CGParameter cgParameter = createCGParameter(operationNameManager, asParameterVariable);
-		//		cgParameters.add(cgParameter);
-		//	}
-		initCGParameters(operationNameManager, bodyExpression);
-	}
-
-	@Override
 	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
 		return CG_PARAMETER_STYLES_SELF;
 	}

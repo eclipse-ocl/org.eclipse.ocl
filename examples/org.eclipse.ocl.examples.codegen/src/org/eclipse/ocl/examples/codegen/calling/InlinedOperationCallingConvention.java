@@ -171,12 +171,6 @@ public class InlinedOperationCallingConvention extends AbstractOperationCallingC
 	//	}
 	}
 
-	@Override
-	public final void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		//	InlinedOperation never actually used so doesn't need parameters
-		initCGParameters(operationNameManager, null);
-	}
-
 //	protected <T extends EObject> @NonNull T createCopy(@NonNull T anEObject) {
 //		return EcoreUtil.copy(anEObject);
 //	}

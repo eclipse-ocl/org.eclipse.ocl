@@ -442,16 +442,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() == null;
 		cgClass.getOperations().add(cgOperation);
-		newCreateCGParameters(operationNameManager, asExpressionInOCL);
-	//	CGOperation cgOperation = createCGOperationDeclaration(analyzer, cgClass, asOperation, null, CG_PARAMETER_STYLES);
-	//	initCGParameters(operationNameManager, getCGParameterStyles());
+		initCGParameters(operationNameManager, asExpressionInOCL);
 		return cgOperation;
-	}
-
-	@Deprecated
-	protected void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL asExpressionInOCL) {
-		NameUtil.errPrintln("newCreateCGParameters for " + this);
-		throw new UnsupportedOperationException();
 	}
 
 	protected @NonNull ParameterVariable createThisParameterVariable(@NonNull CodeGenAnalyzer analyzer) {
@@ -636,21 +628,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 						break;
 					}
 					case EAGER_PARAMETERS: {
-						List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-						for (@NonNull Parameter asCacheEvaluateParameter : asCacheEvaluateParameters) {
-							CGParameter cgParameter = operationNameManager.getCGParameter(asCacheEvaluateParameter, null);
-						/*	String name = asCacheEvaluateParameter.getName();
-							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
-							if (selfNameResolution.getResolvedName().equals(name)) {
-								selfNameResolution.addCGElement(cgParameter);
-							}
-							else {
-								NameResolution contextObjectNameResolution = globalNameManager.getContextObjectNameResolution();
-								if (contextObjectNameResolution.getResolvedName().equals(name)) {
-									contextObjectNameResolution.addCGElement(cgParameter);
-									throw new UnsupportedOperationException();
-								}
-							} */
+						for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+							CGParameter cgParameter = operationNameManager.getCGParameter(asParameter, null);
 							cgParameters.add(cgParameter);
 							operationNameManager.declareEagerName(cgParameter);
 						}
@@ -658,21 +637,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 					}
 					case EAGER_PARAMETER_VARIABLES: {
 						ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
-						Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(asExpressionInOCL);
-						for (@NonNull Variable asParameterVariable : asParameterVariables) {
+						for (@NonNull Variable asParameterVariable : PivotUtil.getOwnedParameters(asExpressionInOCL)) {
 							CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, null);
-						/*	String name = asParameterVariable.getName();
-							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
-							if (selfNameResolution.getResolvedName().equals(name)) {
-								selfNameResolution.addCGElement(cgParameter);
-							}
-							else {
-								NameResolution contextObjectNameResolution = globalNameManager.getContextObjectNameResolution();
-								if (contextObjectNameResolution.getResolvedName().equals(name)) {
-									contextObjectNameResolution.addCGElement(cgParameter);
-									throw new UnsupportedOperationException();
-								}
-							} */
 							cgParameters.add(cgParameter);
 							operationNameManager.declareEagerName(cgParameter);
 						}
@@ -711,18 +677,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 						NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
 						selfNameResolution.addCGElement(cgParameter);
 						cgParameters.add(cgParameter);
-					/*	List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-						for (@NonNull Parameter asCacheEvaluateParameter : asCacheEvaluateParameters) {
-							CGParameter cgParameter = operationNameManager.getCGParameter(asCacheEvaluateParameter, null);
-							String name = asCacheEvaluateParameter.getName();
-							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
-							if (selfNameResolution.getResolvedName().equals(name)) {
-								selfNameResolution.addCGElement(cgParameter);
-								cgParameters.add(cgParameter);
-							}
-						} */
-					//	CGParameter cgParameter = operationNameManager.getSelfParameter();
-					//	cgParameters.add(cgParameter);
 						break;
 					}
 					case OPTIONAL_BODY_SELF: {
@@ -738,36 +692,13 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 						break;
 					}
 					case PARAMETERS: {
-						List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-						for (@NonNull Parameter asCacheEvaluateParameter : asCacheEvaluateParameters) {
-							CGParameter cgParameter = operationNameManager.getCGParameter(asCacheEvaluateParameter, null);
-						/*	String name = asCacheEvaluateParameter.getName();
-							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
-							if (selfNameResolution.getResolvedName().equals(name)) {
-								selfNameResolution.addCGElement(cgParameter);
-							}
-							else {
-								NameResolution contextObjectNameResolution = globalNameManager.getContextObjectNameResolution();
-								if (contextObjectNameResolution.getResolvedName().equals(name)) {
-									contextObjectNameResolution.addCGElement(cgParameter);
-									throw new UnsupportedOperationException();
-								}
-							} */
+						for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+							CGParameter cgParameter = operationNameManager.getCGParameter(asParameter, null);
 							cgParameters.add(cgParameter);
 						}
 						break;
 					}
 					case SELF: {
-					/*	List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-						for (@NonNull Parameter asCacheEvaluateParameter : asCacheEvaluateParameters) {
-							CGParameter cgParameter = operationNameManager.getCGParameter(asCacheEvaluateParameter, null);
-							String name = asCacheEvaluateParameter.getName();
-							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
-							if (selfNameResolution.getResolvedName().equals(name)) {
-								selfNameResolution.addCGElement(cgParameter);
-								cgParameters.add(cgParameter);
-							}
-						} */
 						CGParameter cgParameter = operationNameManager.getSelfParameter();
 						cgParameters.add(cgParameter);
 						break;
