@@ -188,7 +188,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		assert analyzer.basicGetCGElement(asDispatchOperation) != null;
 		assert cgDispatchOperation.eContainer() != null;
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgDispatchOperation, asDispatchOperation);	// Needed to support downstream useOperationNameManager()
-		createCGParameters(operationNameManager, asExpressionInOCL);
+		initCGParameters(operationNameManager, null);
 		return cgDispatchOperation;
 	}
 
