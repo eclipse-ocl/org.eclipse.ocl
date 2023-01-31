@@ -331,11 +331,6 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
-	protected void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		CGValuedElement cgBody = cgOperation.getBody();
 		assert cgBody == null;

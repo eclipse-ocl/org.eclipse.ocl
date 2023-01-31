@@ -161,11 +161,11 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		return CGModelFactory.eINSTANCE.createCGCachedOperation();
 	}
 
-	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager,@Nullable ExpressionInOCL bodyExpression) {
+//	@Override
+//	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager,@Nullable ExpressionInOCL bodyExpression) {
 		// TODO Auto-generated method stub
 		//super.createCGParameters(operationNameManager, bodyExpression); in createDispatchConstructor
-	}
+//	}
 
 	@Override
 	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
