@@ -11,14 +11,12 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import java.lang.reflect.Method;
-import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
@@ -29,12 +27,9 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *
@@ -56,9 +51,9 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 
 	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-//		throw new UnsupportedOperationException();
+		throw new UnsupportedOperationException();
 //		assert expressionInOCL != null;
-		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
+/*		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		if (expressionInOCL != null) {
@@ -87,7 +82,7 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 			}
 			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
 			createCGParameters4asParameters(operationNameManager, cgParameters, asParameters);
-		}
+		} */
 	}
 
 	@Override
