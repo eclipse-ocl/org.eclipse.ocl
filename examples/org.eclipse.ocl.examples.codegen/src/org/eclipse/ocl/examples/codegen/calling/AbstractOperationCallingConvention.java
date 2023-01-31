@@ -110,17 +110,22 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	protected enum CGParameterStyle {
+		BODY_SELF,				// The next parameter variables is the non-null self of the ExpressionInOCL
 		CONTEXT_OBJECT,			// The next parameter variable is the root context object
 		EXECUTOR,				// The next parameter variable is the executor
 		ID_RESOLVER,			// The next parameter variable is the idResolver
 		BOXED_VALUES,			// The next parameter variable is the parameter array
 		JUNIT_SELF,				// The next parameter variables is the original self for a JUnit test
+		OPTIONAL_BODY_SELF,		// The next parameter variables is the nullable self of the ExpressionInOCL
+		OPTIONAL_SELF,			// The next parameter variables is the original nullable self
 		PARAMETERS,				// The next parameter variables are copied
-		SELF,					// The next parameter variables is the original self
+		SELF,					// The next parameter variables is the original non-null self
+		THIS,					// The next parameter variables is the Java this
 		TYPE_ID					// The next parameter variable is the return type id
 	}
 
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES = new @NonNull CGParameterStyle[]{};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.BODY_SELF, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_CONTEXT_OBJECT_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.CONTEXT_OBJECT, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR};
@@ -436,10 +441,16 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() == null;
 		cgClass.getOperations().add(cgOperation);
-		createCGParameters(operationNameManager, asExpressionInOCL);
+		newCreateCGParameters(operationNameManager, asExpressionInOCL);
 	//	CGOperation cgOperation = createCGOperationDeclaration(analyzer, cgClass, asOperation, null, CG_PARAMETER_STYLES);
 	//	initCGParameters(operationNameManager, getCGParameterStyles());
 		return cgOperation;
+	}
+
+	@Deprecated
+	protected void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL asExpressionInOCL) {
+		NameUtil.errPrintln("newCreateCGParameters for " + this);
+		createCGParameters(operationNameManager, asExpressionInOCL);
 	}
 
 	protected @NonNull ParameterVariable createThisParameterVariable(@NonNull CodeGenAnalyzer analyzer) {
@@ -593,7 +604,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		return JavaStream.convertToJavaIdentifier("FTOR_" + cgOperation.getName());
 	}
 
-	@Deprecated /* temporary sub createCGOperationDeclaration functionality*/
+	@Deprecated /* temporary sub createCGOperationDeclaration functionality*/ // XXX create rather than lazy get
 	protected final void initCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
 		@NonNull CGParameterStyle @NonNull  [] cgParameterStyles = getCGParameterStyles(operationNameManager, zzasOrigin);
 		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
@@ -605,6 +616,18 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 			for (@NonNull CGParameterStyle cgParameterStyle : cgParameterStyles) {
 				switch(cgParameterStyle) {
+					case BODY_SELF: {
+						CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, PivotUtil.getOwnedContext((ExpressionInOCL) asOperation.getBodyExpression()));
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case BOXED_VALUES: {
+						Parameter asBoxedValuesParameter = getBoxedValuesParameter(analyzer, asOperation);
+						CGParameter cgParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
+						globalNameManager.getBoxedValuesNameResolution().addCGElement(cgParameter);
+						cgParameters.add(cgParameter);
+						break;
+					}
 					case CONTEXT_OBJECT: {
 						CGParameter cgParameter = operationNameManager.getContextObjectParameter();
 						cgParameters.add(cgParameter);
@@ -633,13 +656,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 						cgParameters.add(cgParameter);
 						break;
 					}
-					case BOXED_VALUES: {
-						Parameter asBoxedValuesParameter = getBoxedValuesParameter(analyzer, asOperation);
-						CGParameter cgParameter = operationNameManager.getCGParameter(asBoxedValuesParameter, (String)null);
-						globalNameManager.getBoxedValuesNameResolution().addCGElement(cgParameter);
-						cgParameters.add(cgParameter);
-						break;
-					}
 					case JUNIT_SELF: {
 						ExpressionInOCL expressionInOCL = (ExpressionInOCL) asOperation.getBodyExpression();
 						Variable contextVariable = expressionInOCL.getOwnedContext();
@@ -662,6 +678,18 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 						} */
 					//	CGParameter cgParameter = operationNameManager.getSelfParameter();
 					//	cgParameters.add(cgParameter);
+						break;
+					}
+					case OPTIONAL_BODY_SELF: {
+						CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, PivotUtil.getOwnedContext((ExpressionInOCL) asOperation.getBodyExpression()));
+						cgParameter.setRequired(false);
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case OPTIONAL_SELF: {
+						CGParameter cgParameter = operationNameManager.getSelfParameter();
+						cgParameter.setRequired(false);
+						cgParameters.add(cgParameter);
 						break;
 					}
 					case PARAMETERS: {
@@ -696,6 +724,11 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 							}
 						} */
 						CGParameter cgParameter = operationNameManager.getSelfParameter();
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case THIS: {
+						CGParameter cgParameter = operationNameManager.getThisParameter();
 						cgParameters.add(cgParameter);
 						break;
 					}

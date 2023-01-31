@@ -22,6 +22,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -108,6 +110,47 @@ public class BuiltInOperationCallingConvention extends AbstractUncachedOperation
 			return cgIsEqualExp;
 		}
 		throw new IllegalStateException("Unsupported built-in " + libraryOperation);
+	}
+
+	@Override
+	public final void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
+//		assert expressionInOCL != null;
+/*		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
+		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+		if (expressionInOCL != null) {
+			Variable asContextVariable = expressionInOCL.getOwnedContext();
+			if (asContextVariable != null) {
+				CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, asContextVariable);
+				cgParameters.add(cgParameter);
+				assertCGParameterStyles(CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS, operationNameManager, expressionInOCL);
+			}
+			else {
+				assertCGParameterStyles(CG_PARAMETER_STYLES_PARAMETERS, operationNameManager, expressionInOCL);
+			}
+			Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(expressionInOCL);
+			createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
+		//	initCGParameters(operationNameManager, null);
+		}
+		else {
+			Operation asOperation = CGUtil.getAST(cgOperation);
+			if (!asOperation.isIsStatic()) {						// XXX Static is a derived CC
+				CGParameter cgParameter = operationNameManager.getSelfParameter();
+				cgParameters.add(cgParameter);
+				assertCGParameterStyles(CG_PARAMETER_STYLES_SELF_PARAMETERS, operationNameManager, expressionInOCL);
+			}
+			else {
+				assertCGParameterStyles(CG_PARAMETER_STYLES_PARAMETERS, operationNameManager, expressionInOCL);
+			}
+			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
+			createCGParameters4asParameters(operationNameManager, cgParameters, asParameters);
+		} */
+		initCGParameters(operationNameManager, null);
 	}
 
 	@Override

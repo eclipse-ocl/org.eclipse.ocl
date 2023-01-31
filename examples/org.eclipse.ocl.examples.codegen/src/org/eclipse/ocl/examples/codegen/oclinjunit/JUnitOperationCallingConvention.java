@@ -51,7 +51,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 	}
 
 	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
+	public void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
 		Operation asOperation = (Operation)operationNameManager.getASScope();
 		assert (expressionInOCL != null) && (expressionInOCL == asOperation.getBodyExpression());
 		Variable contextVariable = expressionInOCL.getOwnedContext();

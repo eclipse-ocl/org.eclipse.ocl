@@ -66,7 +66,7 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 			if (asContextVariable != null) {
 				CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, asContextVariable);
 				cgParameters.add(cgParameter);
-				assertCGParameterStyles(CG_PARAMETER_STYLES_SELF_PARAMETERS, operationNameManager, expressionInOCL);
+				assertCGParameterStyles(CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS, operationNameManager, expressionInOCL);
 			}
 			else {
 				assertCGParameterStyles(CG_PARAMETER_STYLES_PARAMETERS, operationNameManager, expressionInOCL);
@@ -125,7 +125,7 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 		if (bodyExpression != null) {
 			Variable asContextVariable = bodyExpression.getOwnedContext();
 			if (asContextVariable != null) {
-				return CG_PARAMETER_STYLES_SELF_PARAMETERS;
+				return CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS;
 			}
 			else {
 				return CG_PARAMETER_STYLES_PARAMETERS;
