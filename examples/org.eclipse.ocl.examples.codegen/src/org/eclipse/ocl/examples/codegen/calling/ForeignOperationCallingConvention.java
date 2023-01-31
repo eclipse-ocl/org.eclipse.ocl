@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -315,15 +313,6 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-		assert expressionInOCL != null;
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		cgParameters.add(operationNameManager.getExecutorParameter());
-		super.createCGParametersDefault(operationNameManager, expressionInOCL);
-	}
-
-	@Override
 	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
 		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
 		assert cgOperation.getCallingConvention() == null;
@@ -572,10 +561,10 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		ExpressionInOCL bodyExpression = (ExpressionInOCL)asOperation.getBodyExpression();
 		Variable asContextVariable = bodyExpression.getOwnedContext();
 		if (asContextVariable != null) {
-			return CG_PARAMETER_STYLES_SELF_PARAMETERS;
+			return CG_PARAMETER_STYLES_EXECUTOR_SELF_PARAMETERS;
 		}
 		else {
-			return CG_PARAMETER_STYLES_PARAMETERS;
+			return CG_PARAMETER_STYLES_EXECUTOR_PARAMETERS;
 		}
 	}
 

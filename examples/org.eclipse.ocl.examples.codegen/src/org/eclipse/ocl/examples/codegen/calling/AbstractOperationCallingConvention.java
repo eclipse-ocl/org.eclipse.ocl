@@ -122,7 +122,9 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES = new @NonNull CGParameterStyle[]{};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_SELF = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.SELF};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.SELF, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_JUNIT_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.TYPE_ID, CGParameterStyle.JUNIT_SELF, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.TYPE_ID, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_ID_RESOLVER_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.ID_RESOLVER, CGParameterStyle.BOXED_VALUES};
@@ -388,42 +390,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		return operationNameManager.getCGParameter(asParameterVariable, (String)null);
 	}
 
-	protected void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Deprecated /* @deprecated this legacy functionality is needlessly generic for most derivations */
-	protected /*final*/ void createCGParametersDefault(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		if (bodyExpression != null) {
-			Variable asContextVariable = bodyExpression.getOwnedContext();
-			if (asContextVariable != null) {
-				CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, asContextVariable);
-				cgParameters.add(cgParameter);
-				assertCGParameterStyles(CG_PARAMETER_STYLES_SELF_PARAMETERS, operationNameManager, bodyExpression);
-			}
-			else {
-				assertCGParameterStyles(CG_PARAMETER_STYLES_PARAMETERS, operationNameManager, bodyExpression);
-			}
-			Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(bodyExpression);
-			createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
-		//	initCGParameters(operationNameManager, null);
-		}
-		else {
-			Operation asOperation = CGUtil.getAST(cgOperation);
-			if (!asOperation.isIsStatic()) {						// XXX Static is a derived CC
-				CGParameter cgParameter = operationNameManager.getSelfParameter();
-				cgParameters.add(cgParameter);
-				assertCGParameterStyles(CG_PARAMETER_STYLES_SELF_PARAMETERS, operationNameManager, bodyExpression);
-			}
-			else {
-				assertCGParameterStyles(CG_PARAMETER_STYLES_PARAMETERS, operationNameManager, bodyExpression);
-			}
-			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-			createCGParameters4asParameters(operationNameManager, cgParameters, asParameters);
-		}
+	protected void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
+		initCGParameters(operationNameManager, expressionInOCL);
 	}
 
 	protected void assertCGParameterStyles(@NonNull CGParameterStyle @NonNull [] cgParameterStyles, @NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
