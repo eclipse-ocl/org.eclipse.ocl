@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
@@ -20,7 +18,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
@@ -31,7 +28,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -105,11 +102,12 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
 		assert bodyExpression != null;
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
+	/*	CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		cgParameters.add(operationNameManager.getSelfParameter());
 		Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(bodyExpression);
-		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
+		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables); */
+		initCGParameters(operationNameManager, bodyExpression);
 	}
 
 	@Override
@@ -127,6 +125,11 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		assert cgOperation.eContainer() != null;
 		createCGParameters(operationNameManager, asExpressionInOCL);
 		return cgOperation;
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		return CG_PARAMETER_STYLES_SELF_PARAMETERS;
 	}
 
 	@Override

@@ -110,6 +110,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	protected enum CGParameterStyle {
+		CONTEXT_OBJECT,			// The next parameter variable is the root context object
 		EXECUTOR,				// The next parameter variable is the executor
 		ID_RESOLVER,			// The next parameter variable is the idResolver
 		BOXED_VALUES,			// The next parameter variable is the parameter array
@@ -121,6 +122,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES = new @NonNull CGParameterStyle[]{};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.BOXED_VALUES};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_CONTEXT_OBJECT_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.CONTEXT_OBJECT, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_SELF = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.SELF};
@@ -129,6 +131,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.TYPE_ID, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_ID_RESOLVER_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.ID_RESOLVER, CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETERS};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.PARAMETERS};
 
 	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
@@ -180,6 +183,14 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			isFirst = false;
 		}
 		js.append(")");
+	}
+
+	protected void assertCGParameterStyles(@NonNull CGParameterStyle @NonNull [] cgParameterStyles, @NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
+		@NonNull CGParameterStyle@NonNull [] cgParameterStyles2 = getCGParameterStyles(operationNameManager, bodyExpression);
+		if (cgParameterStyles != cgParameterStyles2) {
+			cgParameterStyles2 = getCGParameterStyles(operationNameManager, bodyExpression);
+		}
+		assert cgParameterStyles == cgParameterStyles2;
 	}
 
 	protected @Nullable Parameter basicGetExecutorParameter(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
@@ -391,15 +402,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	protected void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-		initCGParameters(operationNameManager, expressionInOCL);
-	}
-
-	protected void assertCGParameterStyles(@NonNull CGParameterStyle @NonNull [] cgParameterStyles, @NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		@NonNull CGParameterStyle@NonNull [] cgParameterStyles2 = getCGParameterStyles(operationNameManager, bodyExpression);
-		if (cgParameterStyles != cgParameterStyles2) {
-			cgParameterStyles2 = getCGParameterStyles(operationNameManager, bodyExpression);
-		}
-		assert cgParameterStyles == cgParameterStyles2;
+	//	initCGParameters(operationNameManager, expressionInOCL);
+		throw new UnsupportedOperationException();
 	}
 
 	protected void createCGParameters4asParameters(@NonNull ExecutableNameManager operationNameManager, @NonNull List<@NonNull CGParameter> cgParameters, @NonNull Iterable<@NonNull Parameter> asParameters) {
@@ -601,6 +605,11 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 			for (@NonNull CGParameterStyle cgParameterStyle : cgParameterStyles) {
 				switch(cgParameterStyle) {
+					case CONTEXT_OBJECT: {
+						CGParameter cgParameter = operationNameManager.getContextObjectParameter();
+						cgParameters.add(cgParameter);
+						break;
+					}
 					case EXECUTOR: {
 						CGParameter cgParameter;
 						NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
