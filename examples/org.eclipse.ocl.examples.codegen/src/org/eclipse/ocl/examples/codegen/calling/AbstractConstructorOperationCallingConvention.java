@@ -301,7 +301,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		}
 		//
 		CGOperation cgConstructor = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryConstructor,
-			ctorNameResolution, CG_PARAMETER_STYLES);
+			ctorNameResolution, null);
 /*		CGOperation cgConstructor = createCGOperation(analyzer, asEntryConstructor);
 		cgConstructor.setCallingConvention(this);
 		analyzer.initAst(cgConstructor, asEntryConstructor, true);
@@ -337,6 +337,11 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 	@Override
 	protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
 		return AS_PARAMETER_STYLES_EXECUTOR_BOXED_VALUES_ALL;
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		return CG_PARAMETER_STYLES;
 	}
 
 	@Override

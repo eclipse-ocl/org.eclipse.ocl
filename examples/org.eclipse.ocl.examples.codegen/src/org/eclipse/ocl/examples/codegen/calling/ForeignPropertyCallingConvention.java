@@ -186,7 +186,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			//	Create CG declaration
 			//
 			CGOperation cgForeignOperation = createCGOperationDeclaration(analyzer, cgForeignClass, asForeignOperation,
-				null, isStatic ? CG_PARAMETER_STYLES_EXECUTOR : CG_PARAMETER_STYLES_EXECUTOR_SELF);
+				null, asProperty);
 			return cgForeignOperation;
 		}
 
@@ -205,6 +205,14 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
 			Property asProperty = (Property) asOrigin;
 			return asProperty.isIsStatic() ? AS_PARAMETER_STYLES_EXECUTOR : AS_PARAMETER_STYLES_EXECUTOR_SELF;
+		}
+
+		@Override
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+			assert zzasOrigin != null;
+			Property asProperty = (Property)zzasOrigin;
+			boolean isStatic = asProperty.isIsStatic();
+			return isStatic ? CG_PARAMETER_STYLES_EXECUTOR : CG_PARAMETER_STYLES_EXECUTOR_SELF;
 		}
 
 		@Override

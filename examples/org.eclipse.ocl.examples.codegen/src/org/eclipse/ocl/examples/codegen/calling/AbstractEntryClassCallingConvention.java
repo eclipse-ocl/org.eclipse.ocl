@@ -136,13 +136,18 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//	Create CG declaration
 			//
 			CGOperation cgEntryOperation = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryOperation,
-				getResultNameResolution, CG_PARAMETER_STYLES);
+				getResultNameResolution, null);
 			return cgEntryOperation;
 		}
 
 		@Override
 		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
 			return AS_PARAMETER_STYLES;
+		}
+
+		@Override
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+			return CG_PARAMETER_STYLES;
 		}
 	}
 
@@ -246,7 +251,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//	Create CG declaration for isEqual
 			//
 			CGOperation cgEntryOperation = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryOperation,
-				isEqualNameResolution, CG_PARAMETER_STYLES_ID_RESOLVER_BOXED_VALUES);
+				isEqualNameResolution, null);
 			return cgEntryOperation;
 		}
 
@@ -263,6 +268,11 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		@Override
 		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
 			return AS_PARAMETER_STYLES_BOXED_VALUES_OPTIONAL;
+		}
+
+		@Override
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+			return CG_PARAMETER_STYLES_ID_RESOLVER_BOXED_VALUES;
 		}
 	}
 

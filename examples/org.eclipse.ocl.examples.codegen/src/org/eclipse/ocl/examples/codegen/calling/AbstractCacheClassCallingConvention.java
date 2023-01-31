@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention.AbstractEvaluateOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -19,6 +20,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
@@ -84,7 +86,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//	Create CG declaration for newInstance
 			//
 			CGOperation cgConstructorOperation = createCGOperationDeclaration(analyzer, cgCacheClass, asConstructorOperation,
-				null, CG_PARAMETER_STYLES_BOXED_VALUES);
+				null, null);
 			return cgConstructorOperation;
 		}
 
@@ -119,6 +121,11 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		@Override
 		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
 			return AS_PARAMETER_STYLES_BOXED_VALUES_ALL;
+		}
+
+		@Override
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+			return CG_PARAMETER_STYLES_BOXED_VALUES;
 		}
 	}
 
@@ -183,7 +190,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//	Create CG declaration for newInstance
 			//
 			CGOperation cgConstructorOperation = createCGOperationDeclaration(analyzer, cgConstructorClass, asConstructorOperation,
-				newInstanceNameResolution, CG_PARAMETER_STYLES_BOXED_VALUES);
+				newInstanceNameResolution, null);
 			return cgConstructorOperation;
 		}
 
@@ -205,6 +212,11 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		@Override
 		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
 			return AS_PARAMETER_STYLES_EXECUTOR_BOXED_VALUES_OPTIONAL;
+		}
+
+		@Override
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+			return CG_PARAMETER_STYLES_BOXED_VALUES;
 		}
 	}
 

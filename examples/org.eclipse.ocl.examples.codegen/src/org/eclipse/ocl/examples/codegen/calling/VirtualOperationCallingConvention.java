@@ -222,6 +222,11 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		return CG_PARAMETER_STYLES_BOXED_VALUES;
+	}
+
+	@Override
 	protected @NonNull AbstractCachePropertyCallingConvention getCacheInstancePropertyCallingConvention(@NonNull Property asProperty) {
 		return DefaultInstancePropertyCallingConvention.getInstance(asProperty);
 	}
@@ -259,7 +264,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		//
 		@SuppressWarnings("unused")
 		CGOperation cgConstructorOperation = createCGOperationDeclaration(analyzer, cgCacheClass, asConstructorOperation,
-			null, CG_PARAMETER_STYLES_BOXED_VALUES);
+			null, null);
 	}
 
 	@Override

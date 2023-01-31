@@ -368,7 +368,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
 
 	protected @NonNull CGOperation createCGOperationDeclaration(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass,
-			@NonNull Operation asOperation, @Nullable NameResolution nameResolution, @NonNull CGParameterStyle @NonNull [] cgParameterStyles) {
+			@NonNull Operation asOperation, @Nullable NameResolution nameResolution, @Nullable TypedElement zzasOrigin) {
 	//	JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 	//	GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
@@ -379,7 +379,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		}
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
 		cgClass.getOperations().add(cgOperation);
-		initCGParameters(operationNameManager, cgParameterStyles);
+		initCGParameters(operationNameManager, zzasOrigin);
 		return cgOperation;
 	}
 
@@ -589,7 +589,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		return ClassUtil.nonNullState(NameUtil.getNameable(asOperation.getOwnedParameters(), boxedValuesName));
 	}
 
-	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
 		return CG_PARAMETER_STYLES_PARAMETERS;
 	}
 
@@ -602,7 +602,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	@Deprecated /* temporary sub createCGOperationDeclaration functionality*/
-	protected final void initCGParameters(@NonNull ExecutableNameManager operationNameManager, @NonNull CGParameterStyle @NonNull [] cgParameterStyles) {
+	protected final void initCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		@NonNull CGParameterStyle @NonNull  [] cgParameterStyles = getCGParameterStyles(operationNameManager, zzasOrigin);
 		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		Operation asOperation = (Operation)operationNameManager.getASScope();

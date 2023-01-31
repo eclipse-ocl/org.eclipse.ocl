@@ -24,6 +24,7 @@ import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 
 /**
@@ -73,11 +74,11 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(expressionInOCL);
 		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables); */
 		assert contextVariable != null;
-		initCGParameters(operationNameManager, getCGParameterStyles(operationNameManager));
+		initCGParameters(operationNameManager, asOperation);
 	}
 
 	@Override
-	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
 		Operation asOperation = (Operation)operationNameManager.getASScope();
 		ExpressionInOCL expressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
 		Variable contextVariable = expressionInOCL.getOwnedContext();

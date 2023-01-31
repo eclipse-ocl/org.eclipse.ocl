@@ -130,7 +130,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			//	Create CG declaration for evaluate
 			//
 			CGOperation cgCacheEvaluateOperation = createCGOperationDeclaration(analyzer, cgCacheClass, asCacheEvaluateOperation,
-				evaluateNameResolution, CG_PARAMETER_STYLES_PARAMETERS);
+				evaluateNameResolution, null);
 		/*	CGOperation cgCacheEvaluateOperation = createCGOperation(analyzer, asCacheEvaluateOperation);
 			analyzer.initAst(cgCacheEvaluateOperation, asCacheEvaluateOperation, true);
 			cgCacheEvaluateOperation.setCallingConvention(this);
@@ -200,6 +200,11 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
 			Operation asOperation = (Operation) asOrigin;
 			return asOperation.isIsStatic() ? AS_PARAMETER_STYLES_PARAMETERS : AS_PARAMETER_STYLES_SELF_PARAMETERS;
+		}
+
+		@Override
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+			return CG_PARAMETER_STYLES_PARAMETERS;
 		}
 	}
 
