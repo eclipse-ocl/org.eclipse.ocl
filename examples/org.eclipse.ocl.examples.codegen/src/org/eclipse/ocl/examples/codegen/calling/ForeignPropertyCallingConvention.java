@@ -50,9 +50,11 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.internal.library.ForeignProperty;
 import org.eclipse.ocl.pivot.internal.library.StaticProperty;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -88,7 +90,8 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgForeignOperation, asForeignOperation);
 			List<@NonNull CGParameter> cgForeignParametersList = CGUtil.getParametersList(cgForeignOperation);
 			CGParameter cgSelfParameter = cgForeignParametersList.size() > 1 ? cgForeignParametersList.get(1) : null;
-			CGValuedElement cgInitValue = analyzer.getInitExpression(/*cgParameter,*/ asProperty);
+		//	CGValuedElement cgInitValue = analyzer.getInitExpression(/*cgParameter,*/ asProperty);
+			CGValuedElement cgInitValue = analyzer.createCGElement(CGValuedElement.class, asForeignOperation.getBodyExpression());
 			assert cgInitValue != null;
 			CGParameter executorParameter = operationNameManager.getExecutorParameter();
 			CGVariable modelManagerVariable = operationNameManager.getModelManagerVariable();
@@ -160,21 +163,30 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			//
 			//	Create AS body for property access operation
 			//
-			ExpressionInOCL asForeignExpressionInOCL = createASExpressionInOCL(analyzer, asProperty,
-				ASContextVariableStyle.THIS, isStatic ? AS_PARAMETER_VARIABLE_STYLES : AS_PARAMETER_VARIABLE_STYLES_SELF);
-			OCLExpression asBody;
+			ExpressionInOCL asForeignExpressionInOCL;
 			if (asExpressionInOCL != null) {
-				asBody = EcoreUtil.copy(asExpressionInOCL.getOwnedBody());
+				asForeignExpressionInOCL = EcoreUtil.copy(asExpressionInOCL);
+				if (!isStatic) {
+					Variable ownedContext = asForeignExpressionInOCL.getOwnedContext();
+					assert ownedContext != null;
+					PivotUtilInternal.resetContainer(ownedContext);
+					asForeignExpressionInOCL.getOwnedParameters().add(0, ownedContext);
+				}
+				Variable thisVariable = createThisParameterVariable(analyzer);
+				asForeignExpressionInOCL.setOwnedContext(thisVariable);
+				asForeignOperation.setBodyExpression(asForeignExpressionInOCL);
 			}
 			else {
-				asBody = ValueUtil.createLiteralExp(asProperty.getDefaultValue());
+				asForeignExpressionInOCL = createASExpressionInOCL(analyzer, asProperty,
+					ASContextVariableStyle.THIS, isStatic ? AS_PARAMETER_VARIABLE_STYLES : AS_PARAMETER_VARIABLE_STYLES_SELF);
+				OCLExpression asBody = ValueUtil.createLiteralExp(asProperty.getDefaultValue());
+				installExpressionInOCLBody(asForeignOperation, asForeignExpressionInOCL, asBody);
 			}
-			installExpressionInOCLBody(asForeignOperation, asForeignExpressionInOCL, asBody);
 			//
 			//	Create CG declaration
 			//
 			CGOperation cgForeignOperation = createCGOperationDeclaration(analyzer, cgForeignClass, asForeignOperation,
-				null, CGParameterStyle.EXECUTOR);
+				null, isStatic ? CG_PARAMETER_STYLES_EXECUTOR : CG_PARAMETER_STYLES_EXECUTOR_SELF);
 			return cgForeignOperation;
 		}
 

@@ -313,7 +313,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		}
 		//
 		CGOperation cgConstructor = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryConstructor,
-			ctorNameResolution);
+			ctorNameResolution, CG_PARAMETER_STYLES);
 /*		CGOperation cgConstructor = createCGOperation(analyzer, asEntryConstructor);
 		cgConstructor.setCallingConvention(this);
 		analyzer.initAst(cgConstructor, asEntryConstructor, true);

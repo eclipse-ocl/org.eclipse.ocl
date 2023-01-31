@@ -84,7 +84,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//	Create CG declaration for newInstance
 			//
 			CGOperation cgConstructorOperation = createCGOperationDeclaration(analyzer, cgCacheClass, asConstructorOperation,
-				null, CGParameterStyle.BOXED_VALUES);
+				null, CG_PARAMETER_STYLES_BOXED_VALUES);
 			return cgConstructorOperation;
 		}
 
@@ -183,7 +183,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//	Create CG declaration for newInstance
 			//
 			CGOperation cgConstructorOperation = createCGOperationDeclaration(analyzer, cgConstructorClass, asConstructorOperation,
-				newInstanceNameResolution, CGParameterStyle.BOXED_VALUES);
+				newInstanceNameResolution, CG_PARAMETER_STYLES_BOXED_VALUES);
 			return cgConstructorOperation;
 		}
 

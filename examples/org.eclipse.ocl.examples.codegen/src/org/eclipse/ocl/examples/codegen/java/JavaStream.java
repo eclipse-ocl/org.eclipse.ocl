@@ -270,7 +270,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("CTORid_color")) {
+			if (string.contains("self_0")) {
 				getClass();		// XXX
 			}
 			if (string.contains("InvalidValueException")) {
