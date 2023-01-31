@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -563,6 +564,19 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		cg2javaVisitor.appendReturn(body);
 		js.popIndentation();
 		js.append("}\n");
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		Operation asOperation = (Operation)operationNameManager.getASScope();
+		ExpressionInOCL bodyExpression = (ExpressionInOCL)asOperation.getBodyExpression();
+		Variable asContextVariable = bodyExpression.getOwnedContext();
+		if (asContextVariable != null) {
+			return CG_PARAMETER_STYLES_SELF_PARAMETERS;
+		}
+		else {
+			return CG_PARAMETER_STYLES_PARAMETERS;
+		}
 	}
 
 	@Override

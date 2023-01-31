@@ -52,27 +52,9 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 
 	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-	//	CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
-	//	CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		Operation asOperation = (Operation)operationNameManager.getASScope();
 		assert (expressionInOCL != null) && (expressionInOCL == asOperation.getBodyExpression());
 		Variable contextVariable = expressionInOCL.getOwnedContext();
-	//	if (contextVariable != null) {
-	//		contextVariable.setIsRequired(false); 				// May be null for test
-	//	}
-	/*	List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		cgParameters.add(operationNameManager.createExecutorParameter());
-		cgParameters.add(operationNameManager.createTypeIdParameter());
-		if (contextVariable != null) {
-			CGParameter cgContext = operationNameManager.getCGParameter(contextVariable, (String)null);			// XXX getSelf ???
-			cgContext.setIsSelf(true);
-			cgContext.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// JUnit evaluate overrides
-			cgContext.setRequired(false);										//  self : Object[?]
-			analyzer.getGlobalNameManager().getSelfNameResolution().addCGElement(cgContext);
-			cgParameters.add(cgContext);
-		}
-		Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(expressionInOCL);
-		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables); */
 		assert contextVariable != null;
 		initCGParameters(operationNameManager, asOperation);
 	}
