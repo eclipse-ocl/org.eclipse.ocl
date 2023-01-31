@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -171,8 +172,9 @@ public class InlinedOperationCallingConvention extends AbstractOperationCallingC
 	}
 
 	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
+	public final void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
 		//	InlinedOperation never actually used so doesn't need parameters
+		initCGParameters(operationNameManager, null);
 	}
 
 //	protected <T extends EObject> @NonNull T createCopy(@NonNull T anEObject) {
@@ -200,6 +202,11 @@ public class InlinedOperationCallingConvention extends AbstractOperationCallingC
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		throw new IllegalStateException("Inlined operation cannot be declared");
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		return CG_PARAMETER_STYLES; //	InlinedOperation never actually used so doesn't need parameters
 	}
 
 	@Override
