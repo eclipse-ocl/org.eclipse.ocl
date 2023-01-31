@@ -249,19 +249,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 
 	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		assert bodyExpression == null;
-		Operation asOperation = CGUtil.getAST(cgOperation);
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		//	cgParameters.add(qvtiOperationNameManager.getThisTransformerParameter());
-		if (!asOperation.isIsStatic()) {
-			//XXX			CGParameter cgParameter = nameManager.getSelfParameter();
-			//			cgParameter.setTypeId(context.getTypeId(JavaConstants.getJavaTypeId(Object.class)));
-			//			cgParameter.setRequired(contextVariable.isIsRequired());
-			//			cgParameters.add(cgParameter);
-		}
-		List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-		createCGParameters4asParameters(operationNameManager, cgParameters, asParameters);
+		throw new UnsupportedOperationException();
 	}
 
 	/**

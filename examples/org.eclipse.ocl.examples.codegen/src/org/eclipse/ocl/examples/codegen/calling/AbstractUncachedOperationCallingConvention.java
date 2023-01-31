@@ -49,6 +49,7 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 
 	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
+//		throw new UnsupportedOperationException();
 		super.createCGParametersDefault(operationNameManager, expressionInOCL);
 	}
 

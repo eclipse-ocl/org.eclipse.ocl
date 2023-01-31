@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.oclinjunit;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
@@ -19,18 +17,14 @@ import org.eclipse.ocl.examples.codegen.calling.LibraryOperationCallingConventio
 import org.eclipse.ocl.examples.codegen.cgmodel.CGLibraryOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  The JUnitOperationCallingConvention defines the support for an operation configured for use in a JUnit test.
@@ -57,14 +51,15 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 
 	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-		assert expressionInOCL != null;
-		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
+	//	CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
+	//	CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
+		Operation asOperation = (Operation)operationNameManager.getASScope();
+		assert (expressionInOCL != null) && (expressionInOCL == asOperation.getBodyExpression());
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 	//	if (contextVariable != null) {
 	//		contextVariable.setIsRequired(false); 				// May be null for test
 	//	}
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+	/*	List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		cgParameters.add(operationNameManager.createExecutorParameter());
 		cgParameters.add(operationNameManager.createTypeIdParameter());
 		if (contextVariable != null) {
@@ -76,7 +71,18 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 			cgParameters.add(cgContext);
 		}
 		Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(expressionInOCL);
-		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
+		createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables); */
+		assert contextVariable != null;
+		initCGParameters(operationNameManager, getCGParameterStyles(operationNameManager));
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+		Operation asOperation = (Operation)operationNameManager.getASScope();
+		ExpressionInOCL expressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
+		Variable contextVariable = expressionInOCL.getOwnedContext();
+		assert contextVariable != null;
+		return CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_JUNIT_SELF_PARAMETERS;
 	}
 
 	@Override

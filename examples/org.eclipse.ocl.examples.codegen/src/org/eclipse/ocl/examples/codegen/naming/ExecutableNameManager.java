@@ -363,7 +363,7 @@ public class ExecutableNameManager extends NestedNameManager
 		CGParameter typeIdParameter = getAnalyzer().createCGParameter(typeIdNameResolution, getAnalyzer().getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
 	//	typeIdParameter.setValueName(typeIdName);
 		typeIdParameter.setNonInvalid();
-		typeIdParameter.setRequired(true);
+	//	typeIdParameter.setRequired(true);
 		return typeIdParameter;
 	}
 
