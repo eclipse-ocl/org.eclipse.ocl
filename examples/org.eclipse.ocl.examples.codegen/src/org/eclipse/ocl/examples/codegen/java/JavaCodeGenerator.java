@@ -45,7 +45,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -304,16 +303,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		return new JavaDependencyVisitor(this, getGlobalPlace());
 	}
 
-	public @NonNull CGParameter createExecutorParameter() {
-	//	assert executorIsParameter;
-		NameResolution executorName = globalNameManager.getExecutorNameResolution();
-		CGParameter executorParameter = getAnalyzer().createCGParameter(executorName, getAnalyzer().getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
-	//	executorParameter.setValueName(executorName);
-		executorParameter.setNonInvalid();
-	//	executorParameter.setRequired(true);
-		return executorParameter;
-	}
-
 	public @NonNull ExecutableNameManager createConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
 		return new ExecutableNameManager(classNameManager, classNameManager, cgConstraint);
 	}
@@ -378,16 +367,6 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	@Override
 	public @NonNull ReferencesVisitor createReferencesVisitor() {
 		return ReferencesVisitor.INSTANCE;
-	}
-
-//	@Deprecated /* @deprecated no longer used */
-	public @NonNull CGParameter createTypeIdParameter() {
-		NameResolution typeIdNameResolution = globalNameManager.getTypeIdNameResolution();
-		CGParameter typeIdParameter = getAnalyzer().createCGParameter(typeIdNameResolution, getAnalyzer().getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
-	//	typeIdParameter.setValueName(typeIdName);
-		typeIdParameter.setNonInvalid();
-		typeIdParameter.setRequired(true);
-		return typeIdParameter;
 	}
 
 	/**

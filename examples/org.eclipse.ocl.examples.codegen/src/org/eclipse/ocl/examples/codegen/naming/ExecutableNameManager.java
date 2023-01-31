@@ -197,6 +197,16 @@ public class ExecutableNameManager extends NestedNameManager
 		return thisObjectParameter;
 	}
 
+	public @NonNull CGParameter createExecutorParameter() {
+	//	assert executorIsParameter;
+		NameResolution executorName = globalNameManager.getExecutorNameResolution();
+		CGParameter executorParameter = getAnalyzer().createCGParameter(executorName, getAnalyzer().getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
+	//	executorParameter.setValueName(executorName);
+		executorParameter.setNonInvalid();
+	//	executorParameter.setRequired(true);
+		return executorParameter;
+	}
+
 	protected @NonNull CGVariable createExecutorVariable() {
 		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD));
 		NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
@@ -348,6 +358,15 @@ public class ExecutableNameManager extends NestedNameManager
 		return thisParameter;
 	}
 
+	public @NonNull CGParameter createTypeIdParameter() {
+		NameResolution typeIdNameResolution = globalNameManager.getTypeIdNameResolution();
+		CGParameter typeIdParameter = getAnalyzer().createCGParameter(typeIdNameResolution, getAnalyzer().getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
+	//	typeIdParameter.setValueName(typeIdName);
+		typeIdParameter.setNonInvalid();
+		typeIdParameter.setRequired(true);
+		return typeIdParameter;
+	}
+
 	@Override
 	public @NonNull NamedElement getASScope() {
 		return asScope;
@@ -470,7 +489,7 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 		CGParameter executorVariable2 = (CGParameter)executorVariable;
 		if (executorVariable2 == null) {
-			executorVariable = executorVariable2 = codeGenerator.createExecutorParameter();
+			executorVariable = executorVariable2 = createExecutorParameter();
 		}
 		return executorVariable2;
 	}
@@ -481,7 +500,7 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 		CGParameter executorVariable2 = (CGParameter)executorVariable;
 		if (executorVariable2 == null) {
-			executorVariable = executorVariable2 = codeGenerator.createExecutorParameter();
+			executorVariable = executorVariable2 = createExecutorParameter();
 			codeGenerator.getAnalyzer().initAst(executorVariable2, asExecutorParameter, true);
 		}
 		else {
@@ -658,7 +677,7 @@ public class ExecutableNameManager extends NestedNameManager
 	//	assert !isStatic;
 		CGParameter typeIdParameter2 = typeIdParameter;
 		if (typeIdParameter2 == null) {
-			typeIdParameter = typeIdParameter2 = codeGenerator.createTypeIdParameter();
+			typeIdParameter = typeIdParameter2 = createTypeIdParameter();
 		}
 		return typeIdParameter2;
 	}
