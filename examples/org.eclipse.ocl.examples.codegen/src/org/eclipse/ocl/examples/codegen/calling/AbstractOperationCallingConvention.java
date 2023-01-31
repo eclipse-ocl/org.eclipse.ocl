@@ -363,7 +363,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
 		analyzer.initAst(cgOperation, asOperation, true);
 		cgOperation.setCallingConvention(this);
-		if (nameResolution !=  null) {
+		if (nameResolution != null) {
 			nameResolution.addCGElement(cgOperation);
 		}
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
@@ -376,7 +376,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 						Parameter asExecutorParameter = getExecutorParameter(analyzer, asOperation);
 						CGParameter cgParameter = operationNameManager.getExecutorParameter(asExecutorParameter);
 						NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
-						executorNameResolution.addCGElement(cgParameter);
+						assert cgParameter.basicGetNameResolution() == executorNameResolution;//	executorNameResolution.addCGElement(cgParameter);
 						cgParameters.add(cgParameter);
 						break;
 					}

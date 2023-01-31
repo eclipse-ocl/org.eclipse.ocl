@@ -311,7 +311,7 @@ public class ExecutableNameManager extends NestedNameManager
 			CGParameter selfParameter = analyzer.createCGParameter(selfName, analyzer.getCGTypeId(classNameManager.getASClass().getTypeId()), !sourceMayBeNull);
 			selfParameter.setIsSelf(true);
 			selfParameter.setNonInvalid();
-			selfParameter.setRequired(true);
+		//	selfParameter.setRequired(true);
 			return selfParameter;
 		}
 		else {

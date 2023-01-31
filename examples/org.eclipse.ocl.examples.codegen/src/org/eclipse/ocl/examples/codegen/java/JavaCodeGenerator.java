@@ -310,7 +310,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 		CGParameter executorParameter = getAnalyzer().createCGParameter(executorName, getAnalyzer().getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
 	//	executorParameter.setValueName(executorName);
 		executorParameter.setNonInvalid();
-		executorParameter.setRequired(true);
+	//	executorParameter.setRequired(true);
 		return executorParameter;
 	}
 
