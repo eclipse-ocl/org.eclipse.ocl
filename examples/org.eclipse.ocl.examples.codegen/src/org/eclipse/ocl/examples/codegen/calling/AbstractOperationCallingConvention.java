@@ -115,6 +115,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		EXECUTOR,				// The next parameter variable is the executor
 		ID_RESOLVER,			// The next parameter variable is the idResolver
 		BOXED_VALUES,			// The next parameter variable is the parameter array
+		EAGER_PARAMETERS,		// The next parameter variables are copied anmd their names are reserved eagerly
 		JUNIT_SELF,				// The next parameter variables is the original self for a JUnit test
 		OPTIONAL_BODY_SELF,		// The next parameter variables is the nullable self of the ExpressionInOCL
 		OPTIONAL_SELF,			// The next parameter variables is the original nullable self
@@ -125,6 +126,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES = new @NonNull CGParameterStyle[]{};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BODY_SELF_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.BODY_SELF, CGParameterStyle.EAGER_PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.BODY_SELF, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_CONTEXT_OBJECT_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.CONTEXT_OBJECT, CGParameterStyle.PARAMETERS};
@@ -135,8 +137,10 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_JUNIT_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.TYPE_ID, CGParameterStyle.JUNIT_SELF, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EXECUTOR, CGParameterStyle.TYPE_ID, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_ID_RESOLVER_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.ID_RESOLVER, CGParameterStyle.BOXED_VALUES};
-	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETERS};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETERS};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EAGER_PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.EAGER_PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.PARAMETERS};
 
 	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
@@ -631,6 +635,27 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 					case CONTEXT_OBJECT: {
 						CGParameter cgParameter = operationNameManager.getContextObjectParameter();
 						cgParameters.add(cgParameter);
+						break;
+					}
+					case EAGER_PARAMETERS: {
+						List<@NonNull Parameter> asCacheEvaluateParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
+						for (@NonNull Parameter asCacheEvaluateParameter : asCacheEvaluateParameters) {
+							CGParameter cgParameter = operationNameManager.getCGParameter(asCacheEvaluateParameter, null);
+							String name = asCacheEvaluateParameter.getName();
+							NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
+							if (selfNameResolution.getResolvedName().equals(name)) {
+								selfNameResolution.addCGElement(cgParameter);
+							}
+							else {
+								NameResolution contextObjectNameResolution = globalNameManager.getContextObjectNameResolution();
+								if (contextObjectNameResolution.getResolvedName().equals(name)) {
+									contextObjectNameResolution.addCGElement(cgParameter);
+									throw new UnsupportedOperationException();
+								}
+							}
+							cgParameters.add(cgParameter);
+							operationNameManager.declareEagerName(cgParameter);
+					}
 						break;
 					}
 					case EXECUTOR: {

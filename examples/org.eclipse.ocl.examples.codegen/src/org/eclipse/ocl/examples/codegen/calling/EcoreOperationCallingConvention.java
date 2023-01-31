@@ -47,12 +47,12 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.library.EInvokeOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -136,9 +136,10 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 
 	@Override
 	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
+		initCGParameters(operationNameManager, null);
 //		throw new UnsupportedOperationException();
 //		assert expressionInOCL != null;
-		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
+/*		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
 		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 		if (expressionInOCL != null) {
@@ -146,10 +147,10 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 			if (asContextVariable != null) {
 				CGParameter cgParameter = analyzer.getSelfParameter(operationNameManager, asContextVariable);
 				cgParameters.add(cgParameter);
-				assertCGParameterStyles(CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS, operationNameManager, expressionInOCL);
+				assertCGParameterStyles(CG_PARAMETER_STYLES_BODY_SELF_EAGER_PARAMETERS, operationNameManager, expressionInOCL);
 			}
 			else {
-				assertCGParameterStyles(CG_PARAMETER_STYLES_PARAMETERS, operationNameManager, expressionInOCL);
+				assertCGParameterStyles(CG_PARAMETER_STYLES_EAGER_PARAMETERS, operationNameManager, expressionInOCL);
 			}
 			Iterable<@NonNull Variable> asParameterVariables = PivotUtil.getOwnedParameters(expressionInOCL);
 			createCGParameters4asParameterVariables(operationNameManager, cgParameters, asParameterVariables);
@@ -160,14 +161,14 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 			if (!asOperation.isIsStatic()) {						// XXX Static is a derived CC
 				CGParameter cgParameter = operationNameManager.getSelfParameter();
 				cgParameters.add(cgParameter);
-				assertCGParameterStyles(CG_PARAMETER_STYLES_SELF_PARAMETERS, operationNameManager, expressionInOCL);
+				assertCGParameterStyles(CG_PARAMETER_STYLES_SELF_EAGER_PARAMETERS, operationNameManager, expressionInOCL);
 			}
 			else {
-				assertCGParameterStyles(CG_PARAMETER_STYLES_PARAMETERS, operationNameManager, expressionInOCL);
+				assertCGParameterStyles(CG_PARAMETER_STYLES_EAGER_PARAMETERS, operationNameManager, expressionInOCL);
 			}
 			List<@NonNull Parameter> asParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
 			createCGParameters4asParameters(operationNameManager, cgParameters, asParameters);
-		}
+		} */
 	}
 
 	@Override
@@ -337,6 +338,29 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		}
 		js.append(";");
 		return true;
+	}
+
+	@Override
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		Operation asOperation = (Operation)operationNameManager.getASScope();
+		ExpressionInOCL bodyExpression = (ExpressionInOCL)asOperation.getBodyExpression();
+		if (bodyExpression != null) {
+			Variable asContextVariable = bodyExpression.getOwnedContext();
+			if (asContextVariable != null) {
+				return CG_PARAMETER_STYLES_BODY_SELF_EAGER_PARAMETERS;
+			}
+			else {
+				return CG_PARAMETER_STYLES_EAGER_PARAMETERS;
+			}
+		}
+		else {
+			if (!asOperation.isIsStatic()) {
+				return CG_PARAMETER_STYLES_SELF_EAGER_PARAMETERS;
+			}
+			else {
+				return CG_PARAMETER_STYLES_EAGER_PARAMETERS;
+			}
+		}
 	}
 
 	@Override
