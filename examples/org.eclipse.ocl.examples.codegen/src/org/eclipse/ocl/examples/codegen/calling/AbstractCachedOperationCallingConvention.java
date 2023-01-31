@@ -95,11 +95,6 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			//	Implemented as direct synthesis
 		}
 
-		@Override
-		public final void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-			throw new UnsupportedOperationException();
-		}
-
 		public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
 			//
 			// AS Class - yyy2zzz

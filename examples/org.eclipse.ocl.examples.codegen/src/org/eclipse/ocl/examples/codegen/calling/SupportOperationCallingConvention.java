@@ -71,11 +71,6 @@ public class SupportOperationCallingConvention extends NativeOperationCallingCon
 	}
 
 	@Override
-	public final void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
 //		throw new UnsupportedOperationException();
 		assert expressionInOCL == null;

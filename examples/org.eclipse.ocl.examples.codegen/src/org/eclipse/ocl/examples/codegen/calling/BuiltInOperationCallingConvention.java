@@ -113,11 +113,6 @@ public class BuiltInOperationCallingConvention extends AbstractUncachedOperation
 	}
 
 	@Override
-	public final void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
 //		assert expressionInOCL != null;
 /*		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();

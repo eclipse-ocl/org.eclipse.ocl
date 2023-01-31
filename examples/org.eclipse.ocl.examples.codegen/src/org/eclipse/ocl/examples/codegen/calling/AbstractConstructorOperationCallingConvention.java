@@ -247,11 +247,6 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		throw new IllegalStateException("Unsupported built-in " + libraryOperation);
 	}
 
-	@Override
-	public void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		throw new UnsupportedOperationException();
-	}
-
 	/**
 	 * Create the AS entry operation, AS body and CG operation declaration for the AS operation within cgEntryClass.
 	 */

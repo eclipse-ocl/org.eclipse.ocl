@@ -234,11 +234,6 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 	}
 
 	@Override
-	public final void createCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void newCreateCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL expressionInOCL) {
 		Operation asOperation = (Operation)operationNameManager.getASScope();
 		assert expressionInOCL == asOperation.getBodyExpression();	//	-- some library operations also have OCL bodies
