@@ -442,7 +442,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() == null;
 		cgClass.getOperations().add(cgOperation);
-		initCGParameters(operationNameManager, asExpressionInOCL);
+		initCGParameters(operationNameManager, null);
 		return cgOperation;
 	}
 

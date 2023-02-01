@@ -326,7 +326,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
 		cgClass.getOperations().add(cgOperation);
-		initCGParameters(operationNameManager, asExpressionInOCL);
+		initCGParameters(operationNameManager, null);
 		return cgOperation;
 	}
 
