@@ -63,7 +63,7 @@ public class ExecutableNameManager extends NestedNameManager
 	protected final @NonNull NamedElement asScope;
 	protected final boolean isStatic;
 
-	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
+//	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 	private /*@LazyNonNull*/ CGParameter contextObjectParameter = null;		// A local parameter spelled "contextObject" to distinguish unique evaluations
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / cached local thread lookup
 	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// A convenience cache of execitpr.getIdResolver()
@@ -97,9 +97,9 @@ public class ExecutableNameManager extends NestedNameManager
 //		analyzer.addVariable(asVariable, cgVariable);
 	}
 
-	public @Nullable CGParameter basicGetAnyParameter() {
-		return anyParameter;
-	}
+//	public @Nullable CGParameter basicGetAnyParameter() {
+//		return anyParameter;
+//	}
 
 	public @Nullable CGParameter basicGetCGParameter(@NonNull VariableDeclaration asVariable) {		// XXX tighten to AS Parameter
 		CGVariable cgVariable = asVariable2cgVariable.get(asVariable);
@@ -135,12 +135,6 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 	}
 
-	public @Nullable Parameter basicGetExecutorParameter(@NonNull Operation asOperation) {
-		NameResolution executorResolution = globalNameManager.getExecutorNameResolution();
-		String executorName = executorResolution.getResolvedName();
-		return NameUtil.getNameable(asOperation.getOwnedParameters(), executorName);
-	}
-
 	public @Nullable CGVariable basicGetExecutorVariable() {
 		return executorVariable;
 	}
@@ -169,15 +163,16 @@ public class ExecutableNameManager extends NestedNameManager
 		return standardLibraryVariable;
 	}
 
-	protected @NonNull CGParameter createAnyParameter() {
+/*	protected @NonNull CGParameter createAnyParameter() {
 		assert isStatic;
 		NameResolution anyName = globalNameManager.getAnyNameResolution();
 		CGParameter anyParameter = analyzer.createCGParameter(anyName, analyzer.getCGTypeId(TypeId.OCL_ANY), false);
 		anyParameter.setNonInvalid();
 		return anyParameter;
-	}
+	} */
 
 	public void createCGParameters(@NonNull CGParameterStyle @NonNull  [] cgParameterStyles, @Nullable TypedElement zzasOrigin) {
+		assert !(parent instanceof ExecutableNameManager);
 		CGOperation cgOperation = (CGOperation)getCGScope();
 		Operation asOperation = (Operation)getASScope();
 		if (cgParameterStyles.length > 0) {
@@ -220,26 +215,29 @@ public class ExecutableNameManager extends NestedNameManager
 						break;
 					}
 					case EXECUTOR: {
+						NameResolution nameResolution = globalNameManager.getExecutorNameResolution();
+						String executorName = nameResolution.getResolvedName();
+						Parameter asExecutorParameter = NameUtil.getNameable(asOperation.getOwnedParameters(), executorName);
 						CGParameter cgParameter;
-						NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
-						Parameter asExecutorParameter = basicGetExecutorParameter(asOperation);
 						if (asExecutorParameter != null) {
 							cgParameter = getExecutorParameter(asExecutorParameter);
 						}
 						else {
 							cgParameter = createExecutorParameter();
 						}
-						assert cgParameter.basicGetNameResolution() == executorNameResolution;
+						assert cgParameter.basicGetNameResolution() == nameResolution;
 						cgParameters.add(cgParameter);
 						break;
 					}
 					case ID_RESOLVER: {
-						NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
+						assert idResolverParameter == null;
+						assert idResolverVariable == null;
+						NameResolution nameResolution = globalNameManager.getIdResolverNameResolution();
 						CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
-						CGParameter cgParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
+						CGParameter cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, true);
 						cgParameter.setNonInvalid();
-						cgParameter.setRequired(true);
 						cgParameters.add(cgParameter);
+						idResolverVariable = idResolverParameter = cgParameter;
 						break;
 					}
 					case JUNIT_SELF: {
@@ -284,9 +282,11 @@ public class ExecutableNameManager extends NestedNameManager
 						break;
 					}
 					case TYPE_ID: {
-						CGParameter cgParameter = createTypeIdParameter();
-						NameResolution typeidNameResolution = globalNameManager.getTypeIdNameResolution();
-						assert cgParameter.basicGetNameResolution() == typeidNameResolution;//	executorNameResolution.addCGElement(cgParameter);
+						assert typeIdParameter == null;
+						NameResolution nameResolution = globalNameManager.getTypeIdNameResolution();
+						CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID);
+						CGParameter cgParameter = typeIdParameter = analyzer.createCGParameter(nameResolution, cgTypeId, true);
+						cgParameter.setNonInvalid();
 						cgParameters.add(cgParameter);
 						break;
 					}
@@ -356,13 +356,13 @@ public class ExecutableNameManager extends NestedNameManager
 				contextParameter = analyzer.createCGVariableExp(selfParameter);
 			}
 			else {
-				CGParameter anyParameter = basicGetAnyParameter();
-				if (anyParameter != null) {
-					contextParameter = analyzer.createCGVariableExp(anyParameter);
-				}
-				else {
+			//	CGParameter anyParameter = basicGetAnyParameter();
+			//	if (anyParameter != null) {
+			//		contextParameter = analyzer.createCGVariableExp(anyParameter);
+			//	}
+			//	else {
 					contextParameter = analyzer.createCGNull();
-				}
+			//	}
 			}
 		}
 		executorInit.getArguments().add(contextParameter);
@@ -377,17 +377,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return executorVariable;
 	}
 
-	protected @NonNull CGParameter createIdResolverParameter() {
-		assert !isStatic;
-		assert idResolverParameter == null;
-		NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
-		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
-		CGParameter idResolverParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
-		idResolverParameter.setNonInvalid();
-		return idResolverParameter;
-	}
-
-	public @NonNull CGVariable createIdResolverVariable() {
+	private @NonNull CGVariable createIdResolverVariable() {
 		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
 		CGNativeOperationCallExp idResolverInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.EXECUTOR_GET_ID_RESOLVER_METHOD));
 		NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
@@ -405,7 +395,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return idResolverVariable;
 	}
 
-	public @NonNull CGVariable createModelManagerVariable() {
+	private @NonNull CGVariable createModelManagerVariable() {
 		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.MODEL_MANAGER_TYPE_ID);
 		CGNativeOperationCallExp modelManagerInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.EXECUTOR_GET_MODEL_MANAGER_METHOD));
 		NameResolution modelManagerNameResolution = globalNameManager.getModelManagerNameResolution();
@@ -463,7 +453,7 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 	}
 
-	public @NonNull CGVariable createStandardLibraryVariable() {
+	private @NonNull CGVariable createStandardLibraryVariable() {
 		CGNativeOperationCallExp standardLibraryInit = analyzer.createCGNativeOperationCallExp(JavaConstants.EXECUTOR_GET_STANDARD_LIBRARY_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.EXECUTOR_GET_STANDARD_LIBRARY_METHOD));
 		NameResolution standardLibraryNameResolution = globalNameManager.getStandardLibraryVariableNameResolution();
 		standardLibraryNameResolution.addCGElement(standardLibraryInit);
@@ -491,27 +481,19 @@ public class ExecutableNameManager extends NestedNameManager
 		return thisParameter;
 	}
 
-	public @NonNull CGParameter createTypeIdParameter() {
-		assert typeIdParameter == null;
-		NameResolution typeIdNameResolution = globalNameManager.getTypeIdNameResolution();
-		CGParameter typeIdParameter = analyzer.createCGParameter(typeIdNameResolution, analyzer.getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
-		typeIdParameter.setNonInvalid();
-		return typeIdParameter;
-	}
-
 	@Override
 	public @NonNull NamedElement getASScope() {
 		return asScope;
 	}
 
-	public @NonNull CGParameter getAnyParameter() {
+/*	public @NonNull CGParameter getAnyParameter() {
 	//	assert !isStatic;
 		CGParameter anyParameter2 = anyParameter;
 		if (anyParameter2 == null) {
 			anyParameter = anyParameter2 = createAnyParameter();
 		}
 		return anyParameter2;
-	}
+	} */
 
 	public @Nullable CGValuedElement getBody() {
 		if (cgScope instanceof CGConstraint) {
@@ -620,7 +602,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return contextObjectParameter2;
 	}
 
-	@Deprecated		// ?? but is ther always an asExecutorParameter
+	@Deprecated		// ?? but is there always an asExecutorParameter
 	public @NonNull CGParameter getExecutorParameter() {
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).getExecutorParameter();
@@ -667,6 +649,9 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGParameter getIdResolverParameter() {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getIdResolverParameter();
+		}
 		assert !isStatic;
 		assert idResolverParameter != null;
 		return idResolverParameter;
@@ -676,12 +661,9 @@ public class ExecutableNameManager extends NestedNameManager
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).getIdResolverVariable();
 		}
-	//	if (asScope instanceof CallExp) {
-	//		return ((ExecutableNameManager)parent).getIdResolverVariable();
-	//	}
 		CGVariable idResolverVariable2 = idResolverVariable;
 		if (idResolverVariable2 == null) {
-			if (cgScope instanceof CGOperation) {
+		/*	if (cgScope instanceof CGOperation) {
 				NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
 				for (@NonNull CGParameter cgParameter : CGUtil.getParameters((CGOperation)cgScope)) {
 					if (cgParameter.basicGetNameResolution() == idResolverNameResolution) {
@@ -689,10 +671,10 @@ public class ExecutableNameManager extends NestedNameManager
 						break;
 					}
 				}
-			}
-			if (idResolverVariable2 == null) {
+			} */
+		//	if (idResolverVariable2 == null) {
 				idResolverVariable2 = createIdResolverVariable();
-			}
+		//	}
 			idResolverVariable = idResolverVariable2;
 		}
 		return idResolverVariable2;
@@ -722,30 +704,10 @@ public class ExecutableNameManager extends NestedNameManager
 		return modelManagerVariable2;
 	}
 
-
-
-/*	public @NonNull CGParameter getParameter(@NonNull Variable asParameter, @NonNull NameResolution nameResolution) {
-		CGParameter cgParameter = basicGetParameter(asParameter);
-		if (cgParameter == null) {
-			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-			cgParameter.setName(asParameter.getName());
-			nameResolution.addCGElement(cgParameter);
-			cgParameter.setAst(asParameter);
-			cgParameter.setTypeId(analyzer.getCGTypeId(asParameter.getTypeId()));
-			declareLazyName(cgParameter);
-			addVariable(asParameter, cgParameter);
-			cgParameter.setRequired(asParameter.isIsRequired());
-		}
-		return cgParameter;
-	} */
-
 	public @NonNull CGFinalVariable getQualifiedThisVariable() {
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).getQualifiedThisVariable();
 		}
-	//	if (asScope != classNameManager.getASClass()) {				// XXX
-	//		return ((ExecutableNameManager)parent).getQualifiedThisVariable();
-	//	}
 		CGFinalVariable qualifiedThisVariable2 = qualifiedThisVariable;
 		if (qualifiedThisVariable2 == null) {
 			qualifiedThisVariable = qualifiedThisVariable2 = createQualifiedThisVariable();
@@ -775,9 +737,6 @@ public class ExecutableNameManager extends NestedNameManager
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).getStandardLibraryVariable();
 		}
-	//	if (asScope instanceof CallExp) {
-	//		return ((ExecutableNameManager)parent).getStandardLibraryVariable();
-	//	}
 		CGVariable standardLibraryVariable2 = standardLibraryVariable;
 		if (standardLibraryVariable2 == null) {
 			standardLibraryVariable = standardLibraryVariable2 = createStandardLibraryVariable();
@@ -809,20 +768,12 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGParameter getTypeIdParameter() {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getTypeIdParameter();
+		}
 		assert typeIdParameter != null;
 		return typeIdParameter;
 	}
-
-/*	public @NonNull CGParameter getTypeIdParameter() {		-- no addVariable - no AST
-		//	assert !isStatic;
-		CGParameter typeIdParameter2 = typeIdParameter;
-		if (typeIdParameter2 == null) {
-			typeIdParameter = typeIdParameter2 = codeGenerator.createTypeIdParameter();
-		}
-		assert typeIdParameter2.eContainer() == null;
-		addVariable(CGUtil.getAST(typeIdParameter2), typeIdParameter2);
-		return typeIdParameter2;
-	} */
 
 	public @NonNull CGVariable lazyGetCGVariable(@NonNull VariableDeclaration asVariable) {
 		CGVariable cgVariable = basicGetCGVariable(asVariable);
