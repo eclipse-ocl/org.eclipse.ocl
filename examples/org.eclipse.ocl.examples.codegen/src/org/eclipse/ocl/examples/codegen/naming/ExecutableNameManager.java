@@ -278,14 +278,13 @@ public class ExecutableNameManager extends NestedNameManager
 						assert selfParameter == null;
 						assert thisParameter == null;
 						assert asContextVariable != null;
-						CGParameter cgParameter = lazyGetThisParameter();
+						CGParameter cgParameter = lazyGetThisParameter(asContextVariable);
 						cgParameter.setIsSelf(true);
 						assert cgParameter.isIsThis();
-						assert cgParameter.getAst() == null;
-						cgParameter.setAst(asContextVariable);
+						assert cgParameter.getAst() == asContextVariable;
 						cgParameters.add(cgParameter);
-						thisParameter = selfParameter = cgParameter;
-						addVariable(asContextVariable, cgParameter);
+						assert thisParameter == cgParameter;
+						selfParameter = cgParameter;
 						break;
 					}
 					case THIS: {
@@ -600,6 +599,9 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	private @NonNull CGParameter getSelfParameter() {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getSelfParameter();
+		}
 	//	assert !isStatic;
 		CGParameter selfParameter2 = selfParameter;
 		if (selfParameter2 == null) {
@@ -608,25 +610,19 @@ public class ExecutableNameManager extends NestedNameManager
 		return selfParameter2;
 	}
 
-	public @NonNull CGParameter getThisParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants, never exercised
-/*		CGParameter cgParameter = basicGetCGParameter(asParameter);
+	public @NonNull CGParameter getSelfParameter2(@NonNull VariableDeclaration asParameter) {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getSelfParameter2(asParameter);
+		}
+		CGParameter cgParameter = basicGetCGParameter(asParameter);
 		if (cgParameter == null) {
-			org.eclipse.ocl.pivot.Class asThisClass = classNameManager.getASClass();
-			CGTypeId cgTypeId2 = analyzer.getCGTypeId(asThisClass.getTypeId());
-			NameResolution nameResolution = globalNameManager.getThisNameResolution();
+			NameResolution nameResolution = globalNameManager.getSelfNameResolution();
 			CGTypeId cgTypeId = analyzer.getCGTypeId(asParameter.getTypeId());
-			assert cgTypeId == cgTypeId2;
-			cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, asParameter.isIsRequired());
+			boolean isRequired = asParameter.isIsRequired();
+			cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, isRequired);
 			cgParameter.setAst(asParameter);
-			cgParameter.setIsSelf(true);
 			addVariable(asParameter, cgParameter);
-		} */
-		CGParameter cgParameter = lazyGetThisParameter();
-		org.eclipse.ocl.pivot.Class asThisClass = classNameManager.getASClass();
-		CGTypeId cgTypeId2 = analyzer.getCGTypeId(asThisClass.getTypeId());
-		CGTypeId cgTypeId3 = cgParameter.getTypeId();
-		assert cgTypeId3 == cgTypeId2;
-		addVariable(asParameter, cgParameter);
+		}
 		return cgParameter;
 	}
 
@@ -706,6 +702,9 @@ public class ExecutableNameManager extends NestedNameManager
 		return standardLibraryVariable2;
 	}
 
+	/**
+	 * Create the 'this' CG parameter unless already created (without any known AS parameter).
+	 */
 	public @NonNull CGParameter lazyGetThisParameter() {
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).lazyGetThisParameter();
@@ -717,6 +716,26 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 		return thisParameter2;
 	}
+
+	/**
+	 * Create the 'this' CG parameter unless already created (without a known AS parameter).
+	 * This can update a previously created 'this'parameter with anAS origin.
+	 */
+	public @NonNull CGParameter lazyGetThisParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants, never exercised
+			CGParameter cgParameter = lazyGetThisParameter();
+			org.eclipse.ocl.pivot.Class asThisClass = classNameManager.getASClass();
+			CGTypeId cgTypeId2 = analyzer.getCGTypeId(asThisClass.getTypeId());
+			CGTypeId cgTypeId3 = cgParameter.getTypeId();
+			assert cgTypeId3 == cgTypeId2;
+			if (cgParameter.getAst() == null) {
+				cgParameter.setAst(asParameter);
+				addVariable(asParameter, cgParameter);
+			}
+			else {
+				assert cgParameter.getAst() == asParameter;
+			}
+			return cgParameter;
+		}
 
 	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
 		CGVariable qualifiedThisVariable = basicGetQualifiedThisVariable();

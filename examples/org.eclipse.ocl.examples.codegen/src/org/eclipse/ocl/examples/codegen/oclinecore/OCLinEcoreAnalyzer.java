@@ -56,7 +56,7 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 				OCLExpression asSynthesizedExpression = asSynthesizedQuery.getOwnedBody();
 				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
 				if (contextVariable != null) {
-					CGParameter cgParameter = nameManager.getThisParameter(contextVariable);
+					CGParameter cgParameter = nameManager.lazyGetThisParameter(contextVariable);
 					cgConstraint.getParameters().add(cgParameter);
 				}
 				for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(asSynthesizedQuery)) {
@@ -84,6 +84,7 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 
 	@Override
 	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {
-		return executableNameManager.getThisParameter(asParameter);
+//		return executableNameManager.lazyGetThisParameter(asParameter);
+		return super.getSelfParameter(executableNameManager, asParameter);
 	}
 }

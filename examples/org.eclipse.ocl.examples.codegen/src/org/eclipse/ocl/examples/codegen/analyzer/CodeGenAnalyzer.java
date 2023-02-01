@@ -23,6 +23,7 @@ import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.AbstractOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ForeignClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.IterationCallingConvention;
@@ -1157,7 +1158,8 @@ public class CodeGenAnalyzer
 	public @NonNull CGProperty generateProperty(@NonNull Property asProperty) {
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);		// XXX redundant
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
-	//	getPropertyNameManager(cgProperty);
+		ExecutableNameManager propertyNameManager = getPropertyNameManager(cgProperty, asProperty);
+		propertyNameManager.createCGParameters(AbstractOperationCallingConvention.CG_PARAMETER_STYLES_SELF, null);
 		// parse ownedExpression here to simplify createImplementation arguments
 		callingConvention.createImplementation(this, cgProperty);
 		return cgProperty;
@@ -1803,17 +1805,7 @@ public class CodeGenAnalyzer
 	}
 
 	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {		// Overridden for OCLinEcore support
-		CGParameter cgParameter = executableNameManager.basicGetCGParameter(asParameter);
-		if (cgParameter == null) {
-			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-			cgParameter.setAst(asParameter);
-			cgParameter.setTypeId(getCGTypeId(asParameter.getTypeId()));
-			globalNameManager.getSelfNameResolution().addCGElement(cgParameter);
-			executableNameManager.addVariable(asParameter, cgParameter);
-			boolean isRequired = asParameter.isIsRequired();
-			cgParameter.setRequired(isRequired);
-		}
-		return cgParameter;
+		return executableNameManager.getSelfParameter2(asParameter);
 	}
 
 	public @NonNull StandardLibraryInternal getStandardLibrary() {
