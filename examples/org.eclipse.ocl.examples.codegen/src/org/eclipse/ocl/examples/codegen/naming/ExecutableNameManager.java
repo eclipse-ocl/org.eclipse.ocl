@@ -11,11 +11,13 @@
 package org.eclipse.ocl.examples.codegen.naming;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.AbstractOperationCallingConvention.CGParameterStyle;
 import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -36,14 +38,19 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -87,7 +94,7 @@ public class ExecutableNameManager extends NestedNameManager
 	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
 		CGVariable old = asVariable2cgVariable.put(asVariable, cgVariable);
 		assert old == null;
-//		codeGenerator.getAnalyzer().addVariable(asVariable, cgVariable);
+//		analyzer.addVariable(asVariable, cgVariable);
 	}
 
 	public @Nullable CGParameter basicGetAnyParameter() {
@@ -128,6 +135,12 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 	}
 
+	public @Nullable Parameter basicGetExecutorParameter(@NonNull Operation asOperation) {
+		NameResolution executorResolution = globalNameManager.getExecutorNameResolution();
+		String executorName = executorResolution.getResolvedName();
+		return NameUtil.getNameable(asOperation.getOwnedParameters(), executorName);
+	}
+
 	public @Nullable CGVariable basicGetExecutorVariable() {
 		return executorVariable;
 	}
@@ -162,6 +175,127 @@ public class ExecutableNameManager extends NestedNameManager
 		CGParameter anyParameter = analyzer.createCGParameter(anyName, analyzer.getCGTypeId(TypeId.OCL_ANY), false);
 		anyParameter.setNonInvalid();
 		return anyParameter;
+	}
+
+	public void createCGParameters(@NonNull CGParameterStyle @NonNull  [] cgParameterStyles, @Nullable TypedElement zzasOrigin) {
+		CGOperation cgOperation = (CGOperation)getCGScope();
+		Operation asOperation = (Operation)getASScope();
+		if (cgParameterStyles.length > 0) {
+			List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+			for (@NonNull CGParameterStyle cgParameterStyle : cgParameterStyles) {
+				switch(cgParameterStyle) {
+					case BODY_SELF: {
+						ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
+						CGParameter cgParameter = analyzer.getSelfParameter(this, PivotUtil.getOwnedContext(asExpressionInOCL));
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case BOXED_VALUES: {
+						Parameter asBoxedValuesParameter = getBoxedValuesParameter(asOperation);
+						CGParameter cgParameter = getCGParameter(asBoxedValuesParameter, (String)null);
+						globalNameManager.getBoxedValuesNameResolution().addCGElement(cgParameter);
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case CONTEXT_OBJECT: {
+						CGParameter cgParameter = getContextObjectParameter();
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case EAGER_PARAMETERS: {
+						for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+							CGParameter cgParameter = getCGParameter(asParameter, null);
+							cgParameters.add(cgParameter);
+							declareEagerName(cgParameter);
+						}
+						break;
+					}
+					case EAGER_PARAMETER_VARIABLES: {
+						ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
+						for (@NonNull Variable asParameterVariable : PivotUtil.getOwnedParameters(asExpressionInOCL)) {
+							CGParameter cgParameter = getCGParameter(asParameterVariable, null);
+							cgParameters.add(cgParameter);
+							declareEagerName(cgParameter);
+						}
+						break;
+					}
+					case EXECUTOR: {
+						CGParameter cgParameter;
+						NameResolution executorNameResolution = globalNameManager.getExecutorNameResolution();
+						Parameter asExecutorParameter = basicGetExecutorParameter(asOperation);
+						if (asExecutorParameter != null) {
+							cgParameter = getExecutorParameter(asExecutorParameter);
+						}
+						else {
+							cgParameter = createExecutorParameter();
+						}
+						assert cgParameter.basicGetNameResolution() == executorNameResolution;
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case ID_RESOLVER: {
+						NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
+						CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
+						CGParameter cgParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
+						cgParameter.setNonInvalid();
+						cgParameter.setRequired(true);
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case JUNIT_SELF: {
+						ExpressionInOCL expressionInOCL = (ExpressionInOCL) asOperation.getBodyExpression();
+						Variable contextVariable = expressionInOCL.getOwnedContext();
+						CGParameter cgParameter = getCGParameter(contextVariable, (String)null);			// XXX getSelf ???
+						cgParameter.setIsSelf(true);
+						cgParameter.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// JUnit evaluate overrides
+						cgParameter.setRequired(false);										//  self : Object[?]
+						NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
+						selfNameResolution.addCGElement(cgParameter);
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case OPTIONAL_BODY_SELF: {
+						CGParameter cgParameter = analyzer.getSelfParameter(this, PivotUtil.getOwnedContext((ExpressionInOCL) asOperation.getBodyExpression()));
+						cgParameter.setRequired(false);
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case OPTIONAL_SELF: {
+						CGParameter cgParameter = getSelfParameter();
+						cgParameter.setRequired(false);
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case PARAMETERS: {
+						for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+							CGParameter cgParameter = getCGParameter(asParameter, null);
+							cgParameters.add(cgParameter);
+						}
+						break;
+					}
+					case SELF: {
+						CGParameter cgParameter = getSelfParameter();
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case THIS: {
+						CGParameter cgParameter = getThisParameter();
+						cgParameters.add(cgParameter);
+						break;
+					}
+					case TYPE_ID: {
+						CGParameter cgParameter = createTypeIdParameter();
+						NameResolution typeidNameResolution = globalNameManager.getTypeIdNameResolution();
+						assert cgParameter.basicGetNameResolution() == typeidNameResolution;//	executorNameResolution.addCGElement(cgParameter);
+						cgParameters.add(cgParameter);
+						break;
+					}
+					default: {
+						throw new UnsupportedOperationException();
+					}
+				}
+			}
+		}
 	}
 
 	public @NonNull CGFinalVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
@@ -200,7 +334,7 @@ public class ExecutableNameManager extends NestedNameManager
 	public @NonNull CGParameter createExecutorParameter() {
 	//	assert executorIsParameter;
 		NameResolution executorName = globalNameManager.getExecutorNameResolution();
-		CGParameter executorParameter = getAnalyzer().createCGParameter(executorName, getAnalyzer().getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
+		CGParameter executorParameter = analyzer.createCGParameter(executorName, analyzer.getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
 	//	executorParameter.setValueName(executorName);
 		executorParameter.setNonInvalid();
 	//	executorParameter.setRequired(true);
@@ -245,11 +379,11 @@ public class ExecutableNameManager extends NestedNameManager
 
 	protected @NonNull CGParameter createIdResolverParameter() {
 		assert !isStatic;
-		NameResolution idResolverNameResolution = getGlobalNameManager().getIdResolverNameResolution();
+		assert idResolverParameter == null;
+		NameResolution idResolverNameResolution = globalNameManager.getIdResolverNameResolution();
 		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.ID_RESOLVER_TYPE_ID);
 		CGParameter idResolverParameter = analyzer.createCGParameter(idResolverNameResolution, cgTypeId, true);
 		idResolverParameter.setNonInvalid();
-		idResolverParameter.setRequired(true);
 		return idResolverParameter;
 	}
 
@@ -354,16 +488,14 @@ public class ExecutableNameManager extends NestedNameManager
 		CGParameter thisParameter = analyzer.createCGParameter(thisName, cgTypeId, true);
 		thisParameter.setIsThis(true);		// Use Java's 'this' spelling
 		thisParameter.setNonInvalid();
-		thisParameter.setRequired(true);
 		return thisParameter;
 	}
 
 	public @NonNull CGParameter createTypeIdParameter() {
+		assert typeIdParameter == null;
 		NameResolution typeIdNameResolution = globalNameManager.getTypeIdNameResolution();
-		CGParameter typeIdParameter = getAnalyzer().createCGParameter(typeIdNameResolution, getAnalyzer().getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
-	//	typeIdParameter.setValueName(typeIdName);
+		CGParameter typeIdParameter = analyzer.createCGParameter(typeIdNameResolution, analyzer.getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID), true);
 		typeIdParameter.setNonInvalid();
-	//	typeIdParameter.setRequired(true);
 		return typeIdParameter;
 	}
 
@@ -393,6 +525,12 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 		assert false;;
 		return null;
+	}
+
+	public @NonNull Parameter getBoxedValuesParameter(@NonNull Operation asOperation) {
+		NameResolution boxedValuesResolution = globalNameManager.getBoxedValuesNameResolution();
+		String boxedValuesName = boxedValuesResolution.getResolvedName();
+		return ClassUtil.nonNullState(NameUtil.getNameable(asOperation.getOwnedParameters(), boxedValuesName));
 	}
 
 	public @NonNull CGExecutorType getCGExecutorType(@NonNull Type asType) {
@@ -501,7 +639,7 @@ public class ExecutableNameManager extends NestedNameManager
 		CGParameter executorVariable2 = (CGParameter)executorVariable;
 		if (executorVariable2 == null) {
 			executorVariable = executorVariable2 = createExecutorParameter();
-			codeGenerator.getAnalyzer().initAst(executorVariable2, asExecutorParameter, true);
+			analyzer.initAst(executorVariable2, asExecutorParameter, true);
 		}
 		else {
 			assert executorVariable2.getAst() == asExecutorParameter;
@@ -530,11 +668,8 @@ public class ExecutableNameManager extends NestedNameManager
 
 	public @NonNull CGParameter getIdResolverParameter() {
 		assert !isStatic;
-		CGParameter idResolverParameter2 = idResolverParameter;
-		if (idResolverParameter2 == null) {
-			idResolverParameter = idResolverParameter2 = createIdResolverParameter();
-		}
-		return idResolverParameter2;
+		assert idResolverParameter != null;
+		return idResolverParameter;
 	}
 
 	public @NonNull CGVariable getIdResolverVariable() {
@@ -674,12 +809,8 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @NonNull CGParameter getTypeIdParameter() {
-	//	assert !isStatic;
-		CGParameter typeIdParameter2 = typeIdParameter;
-		if (typeIdParameter2 == null) {
-			typeIdParameter = typeIdParameter2 = createTypeIdParameter();
-		}
-		return typeIdParameter2;
+		assert typeIdParameter != null;
+		return typeIdParameter;
 	}
 
 /*	public @NonNull CGParameter getTypeIdParameter() {		-- no addVariable - no AST
