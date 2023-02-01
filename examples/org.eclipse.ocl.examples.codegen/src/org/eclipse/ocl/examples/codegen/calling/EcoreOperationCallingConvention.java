@@ -310,7 +310,7 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		if (bodyExpression != null) {
 			Variable asContextVariable = bodyExpression.getOwnedContext();
 			if (asContextVariable != null) {
-				return CG_PARAMETER_STYLES_BODY_SELF_EAGER_PARAMETER_VARIABLES;
+				return CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETER_VARIABLES;
 			}
 			else {
 				return CG_PARAMETER_STYLES_EAGER_PARAMETER_VARIABLES;
