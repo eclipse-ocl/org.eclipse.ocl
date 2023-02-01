@@ -65,6 +65,7 @@ public class ExecutableNameManager extends NestedNameManager
 
 //	private /*@LazyNonNull*/ CGParameter anyParameter = null;				// A local parameter spelled "any" to be added to the static signature
 	private /*@LazyNonNull*/ CGParameter contextObjectParameter = null;		// A local parameter spelled "contextObject" to distinguish unique evaluations
+	private /*@LazyNonNull*/ CGParameter executorParameter = null;			// Passed executor parameter
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / cached local thread lookup
 	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// A convenience cache of execitpr.getIdResolver()
 	private /*@LazyNonNull*/ CGParameter idResolverParameter = null;		// A local orphan parameter spelled "idResolver" -- XXX probably doesn't need caching
@@ -215,18 +216,18 @@ public class ExecutableNameManager extends NestedNameManager
 						break;
 					}
 					case EXECUTOR: {
+						assert executorParameter == null;
+						assert executorVariable == null;
 						NameResolution nameResolution = globalNameManager.getExecutorNameResolution();
 						String executorName = nameResolution.getResolvedName();
 						Parameter asExecutorParameter = NameUtil.getNameable(asOperation.getOwnedParameters(), executorName);
-						CGParameter cgParameter;
+						CGParameter cgParameter = createExecutorParameter();
 						if (asExecutorParameter != null) {
-							cgParameter = getExecutorParameter(asExecutorParameter);
-						}
-						else {
-							cgParameter = createExecutorParameter();
+							analyzer.initAst(cgParameter, asExecutorParameter, true);
 						}
 						assert cgParameter.basicGetNameResolution() == nameResolution;
 						cgParameters.add(cgParameter);
+						executorVariable = executorParameter = cgParameter;
 						break;
 					}
 					case ID_RESOLVER: {
@@ -285,9 +286,10 @@ public class ExecutableNameManager extends NestedNameManager
 						assert typeIdParameter == null;
 						NameResolution nameResolution = globalNameManager.getTypeIdNameResolution();
 						CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID);
-						CGParameter cgParameter = typeIdParameter = analyzer.createCGParameter(nameResolution, cgTypeId, true);
+						CGParameter cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, true);
 						cgParameter.setNonInvalid();
 						cgParameters.add(cgParameter);
+						typeIdParameter = cgParameter;
 						break;
 					}
 					default: {
@@ -610,21 +612,6 @@ public class ExecutableNameManager extends NestedNameManager
 		CGParameter executorVariable2 = (CGParameter)executorVariable;
 		if (executorVariable2 == null) {
 			executorVariable = executorVariable2 = createExecutorParameter();
-		}
-		return executorVariable2;
-	}
-
-	public @NonNull CGParameter getExecutorParameter(@NonNull Parameter asExecutorParameter) {
-		if (parent instanceof ExecutableNameManager) {
-			return ((ExecutableNameManager)parent).getExecutorParameter(asExecutorParameter);
-		}
-		CGParameter executorVariable2 = (CGParameter)executorVariable;
-		if (executorVariable2 == null) {
-			executorVariable = executorVariable2 = createExecutorParameter();
-			analyzer.initAst(executorVariable2, asExecutorParameter, true);
-		}
-		else {
-			assert executorVariable2.getAst() == asExecutorParameter;
 		}
 		return executorVariable2;
 	}
