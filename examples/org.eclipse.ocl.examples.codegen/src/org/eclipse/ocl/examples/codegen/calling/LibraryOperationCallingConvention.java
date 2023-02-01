@@ -110,7 +110,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 			Class<?> jParameterType = jParameterTypes[i];
 			if (jParameterType == Executor.class) {
 				ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(asOperationCallExp);
-				CGVariable executorVariable = analyzer.getExecutorVariable(executableNameManager);
+				CGVariable executorVariable = executableNameManager.getExecutorVariable();
 				cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 			}
 			else if (jParameterType == TypeId.class) {
@@ -214,7 +214,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 			for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 				if (jParameterType == Executor.class) {
 					ExecutableNameManager executableNameManager = analyzer.useExecutableNameManager(asOperationCallExp);
-					CGVariable executorVariable = analyzer.getExecutorVariable(executableNameManager);
+					CGVariable executorVariable = executableNameManager.getExecutorVariable();
 					cgArguments.add(analyzer.createCGVariableExp(executorVariable));
 				}
 				else if (jParameterType == TypeId.class) {

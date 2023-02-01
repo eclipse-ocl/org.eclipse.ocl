@@ -113,11 +113,6 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 		return cgRootPackage;
 	}
 
-	@Override
-	protected @NonNull CodeGenAnalyzer createCodeGenAnalyzer() {
-		return new JUnitAnalyzer(this);
-	}
-
 	protected @NonNull String generate(@NonNull ExpressionInOCL expInOcl, @NonNull String packageName, @NonNull String className) {
 		CGPackage cgPackage = createCGPackage(expInOcl, packageName, className);
 		optimize(cgPackage);

@@ -306,7 +306,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	//	cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
 		addExpressionInOCLParameters(analyzer, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
-		CGVariable executorVariable = analyzer.getExecutorVariable(operationNameManager);
+		CGVariable executorVariable = operationNameManager.getExecutorVariable();
 		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		initCallArguments(analyzer, cgForeignOperationCallExp);
 		return cgForeignOperationCallExp;

@@ -649,6 +649,16 @@ public class CodeGenAnalyzer
 		return cgElement2;
 	}
 
+	public @NonNull CGFinalVariable createCGFinalVariable(@Nullable NameResolution nameResolution, @NonNull CGTypeId typeId, boolean isRequired) {
+		CGFinalVariable cgFinalVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
+		cgFinalVariable.setTypeId(typeId);
+		cgFinalVariable.setRequired(isRequired);
+		if (nameResolution != null) {
+			nameResolution.addCGElement(cgFinalVariable);
+		}
+		return cgFinalVariable;
+	}
+
 	public @NonNull CGIfExp createCGIfExp(@NonNull CGValuedElement cgCondition, @NonNull CGValuedElement cgThenExpression, @NonNull CGValuedElement cgElseExpression) {
 		CGIfExp cgIfExp = CGModelFactory.eINSTANCE.createCGIfExp();
 		cgIfExp.setCondition(cgCondition);
@@ -1510,9 +1520,9 @@ public class CodeGenAnalyzer
 		return cacheClassData.getASEntryClass();
 	}
 
-	public @NonNull CGVariable getExecutorVariable(@NonNull ExecutableNameManager executableNameManager) {		// Overridden for JUnit support
-		return executableNameManager.getExecutorVariableInternal();
-	}
+//	public @NonNull CGVariable getExecutorVariable(@NonNull ExecutableNameManager executableNameManager) {		// Overridden for JUnit support
+//		return executableNameManager.getExecutorVariableInternal();
+//	}
 
 	public @Nullable Iterable<@NonNull CGValuedElement> getExtraChildElements(@NonNull CGValuedElement cgElement) {
 		List<@NonNull CGValuedElement> unreferencedExtraChildren = parent2unreferencedExtraChildren.get(cgElement);
