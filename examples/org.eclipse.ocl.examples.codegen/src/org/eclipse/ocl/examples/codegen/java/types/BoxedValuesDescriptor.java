@@ -60,7 +60,7 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 			js.append(" = ");
 			js.appendValueName(boxedValue);
 			js.append(".asUnboxedObjects(");
-			js.appendReferenceTo(localNameManager.getIdResolverVariable());
+			js.appendReferenceTo(localNameManager.lazyGetIdResolverVariable());
 			js.append(");\n");
 			//
 			js.append("assert ");

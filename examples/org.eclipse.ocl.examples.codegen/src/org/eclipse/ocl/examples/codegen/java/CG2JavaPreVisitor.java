@@ -173,12 +173,12 @@ public class CG2JavaPreVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 
 	protected @NonNull CGVariable installIdResolverVariable(@NonNull CGValuedElement cgElement) {
 		ExecutableNameManager executableNameManager = getTreeNameManager(cgElement);
-		return executableNameManager.getIdResolverVariable();
+		return executableNameManager.lazyGetIdResolverVariable();
 	}
 
 	protected @NonNull CGVariable installStandardLibraryVariable(@NonNull CGValuedElement cgElement) {
 		ExecutableNameManager executableNameManager = getTreeNameManager(cgElement);
-		return executableNameManager.getStandardLibraryVariable();
+		return executableNameManager.lazyGetStandardLibraryVariable();
 	}
 
 	public void prepare(@NonNull Iterable<@NonNull CGPackage> cgPackages) {

@@ -984,7 +984,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		SubStream castBody1 = new SubStream() {
 			@Override
 			public void append() {
-				js.appendValueName(globalNameManager.useRootExecutableNameManager(cgExecutorType).getIdResolverVariable());
+				js.appendValueName(globalNameManager.useRootExecutableNameManager(cgExecutorType).lazyGetIdResolverVariable());
 				js.append(".getClass(");
 				js.appendIdReference(CGUtil.getAST(cgExecutorType).getTypeId());
 				js.append(", null)");

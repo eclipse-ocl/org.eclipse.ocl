@@ -240,7 +240,7 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		js.append(" " + implementationName + " = (");
 		js.appendClassReference(null, LibraryIteration.LibraryIterationExtension.class);
 		js.append( ")" + staticTypeName + ".lookupImplementation(");
-		js.appendReferenceTo(globalNameManager.useRootExecutableNameManager(cgIterationCallExp).getStandardLibraryVariable());
+		js.appendReferenceTo(globalNameManager.useRootExecutableNameManager(cgIterationCallExp).lazyGetStandardLibraryVariable());
 		js.append(", ");
 		js.appendQualifiedLiteralName(referredIteration);
 		js.append(");\n");

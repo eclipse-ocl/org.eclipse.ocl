@@ -70,16 +70,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public abstract class AbstractConstructorOperationCallingConvention extends AbstractUncachedOperationCallingConvention
 {
-/*	public static class DefaultConstructorOperationCallingConvention extends AbstractConstructorOperationCallingConvention
-	{
-		private static final @NonNull DefaultConstructorOperationCallingConvention INSTANCE = new DefaultConstructorOperationCallingConvention();
-
-		public static @NonNull DefaultConstructorOperationCallingConvention getInstance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			INSTANCE.logInstance(asClass);
-			return INSTANCE;
-		}
-	} */
-
 	@Override
 	protected void appendBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGValuedElement body) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
@@ -135,7 +125,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
 		cgParameters.add(cgEntryBoxedValuesParameter);
 		CGTypeId cgTypeId = analyzer.getCGTypeId(TypeId.OCL_VOID);
-		CGParameter cgThisParameter = operationNameManager.getThisParameter();
+		CGParameter cgThisParameter = operationNameManager.lazyGetThisParameter();
 		CGSequence cgSequence = CGModelFactory.eINSTANCE.createCGSequence();
 		List<@NonNull CGValuedElement> cgStatements = CGUtil.getOwnedStatementsList(cgSequence);
 		Stack<@NonNull CGFinalVariable> cgLetVariables = new Stack<>();

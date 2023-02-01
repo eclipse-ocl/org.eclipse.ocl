@@ -289,7 +289,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		ExecutableNameManager nameManager = context.useExecutableNameManager(query);
 		Variable contextVariable = query.getOwnedContext();
 		if (contextVariable != null) {
-			CGVariable cgContext = nameManager.getThisParameter();
+			CGVariable cgContext = nameManager.lazyGetThisParameter();
 			nameManager.addVariable(contextVariable, cgContext);
 			cgContext.setNonInvalid();
 			//			cgContext.setNonNull();
