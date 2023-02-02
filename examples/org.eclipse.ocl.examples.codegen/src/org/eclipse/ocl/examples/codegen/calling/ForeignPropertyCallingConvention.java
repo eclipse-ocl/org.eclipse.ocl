@@ -93,7 +93,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		//	CGValuedElement cgInitValue = analyzer.getInitExpression(/*cgParameter,*/ asProperty);
 			CGValuedElement cgInitValue = analyzer.createCGElement(CGValuedElement.class, asForeignOperation.getBodyExpression());
 			assert cgInitValue != null;
-			CGParameter executorParameter = operationNameManager.getExecutorParameter();
+		//	CGParameter executorParameter = operationNameManager.getExecutorParameter();
 			CGVariable modelManagerVariable = operationNameManager.lazyGetModelManagerVariable();
 			CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 			CGExecutorType cgCastType = operationNameManager.getCGExecutorType(PivotUtil.getType(asProperty));
