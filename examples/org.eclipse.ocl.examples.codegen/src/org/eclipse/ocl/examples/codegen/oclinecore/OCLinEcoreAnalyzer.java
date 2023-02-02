@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.Constraint;
@@ -25,7 +24,6 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Package;
-import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -53,7 +51,9 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 				}
 				ExpressionInOCL asSynthesizedQuery = ((OCLinEcoreCodeGenerator)codeGenerator).rewriteQuery(oldQuery);
 				OCLExpression asSynthesizedExpression = asSynthesizedQuery.getOwnedBody();
-				Variable contextVariable = asSynthesizedQuery.getOwnedContext();
+
+				nameManager.createCGConstraintParameters();
+			/*	Variable contextVariable = asSynthesizedQuery.getOwnedContext();
 				if (contextVariable != null) {
 					CGParameter cgParameter = nameManager.lazyGetThisParameter(contextVariable);
 					cgConstraint.getParameters().add(cgParameter);
@@ -63,7 +63,7 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 					CGParameter cgParameter = nameManager.lazyGetCGParameter(parameterVariable, parameterName);
 					nameManager.declareEagerName(cgParameter);
 					cgConstraint.getParameters().add(cgParameter);
-				}
+				} */
 				cgConstraint.setBody(createCGElement(CGValuedElement.class, asSynthesizedExpression));
 			} catch (ParserException e) {
 				cgConstraint.setBody(createCGConstantExp(getCGInvalid()));

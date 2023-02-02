@@ -17,6 +17,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.calling.AbstractOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.AbstractOperationCallingConvention.CGParameterStyle;
 import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
@@ -159,6 +160,45 @@ public class ExecutableNameManager extends NestedNameManager
 
 	public @Nullable CGVariable basicGetStandardLibraryVariable() {
 		return standardLibraryVariable;
+	}
+
+	public void createCGConstraintParameters() {		// Constraint CallingConvention
+		@NonNull CGParameterStyle @NonNull  [] cgParameterStyles = AbstractOperationCallingConvention.CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETER_VARIABLES;
+		CGConstraint cgConstraint = (CGConstraint)getCGScope();
+		Constraint asConstraint = (Constraint)getASScope();
+		ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asConstraint.getOwnedSpecification();
+		assert asExpressionInOCL != null;
+		Variable asContextVariable = asExpressionInOCL.getOwnedContext();
+		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgConstraint);
+		for (@NonNull CGParameterStyle cgParameterStyle : cgParameterStyles) {
+			switch(cgParameterStyle) {
+				case EAGER_PARAMETER_VARIABLES: {
+					assert asExpressionInOCL != null;
+					for (@NonNull Variable asParameterVariable : PivotUtil.getOwnedParameters(asExpressionInOCL)) {
+						CGParameter cgParameter = lazyGetCGParameter(asParameterVariable, null);
+						cgParameters.add(cgParameter);
+						declareEagerName(cgParameter);
+					}
+					break;
+				}
+				case SELF_THIS: {
+					assert selfParameter == null;
+					assert thisParameter == null;
+					assert asContextVariable != null;
+					CGParameter cgParameter = lazyGetThisParameter(asContextVariable);
+					cgParameter.setIsSelf(true);
+					assert cgParameter.isIsThis();
+					assert cgParameter.getAst() == asContextVariable;
+					cgParameters.add(cgParameter);
+					assert thisParameter == cgParameter;
+					selfParameter = cgParameter;
+					break;
+				}
+				default: {
+					throw new UnsupportedOperationException("createCGConstraintParameter for " + cgParameterStyle);
+				}
+			}
+		}
 	}
 
 	public void createCGOperationParameters(@NonNull CGParameterStyle @NonNull  [] cgParameterStyles, @Nullable TypedElement zzasOrigin) {
