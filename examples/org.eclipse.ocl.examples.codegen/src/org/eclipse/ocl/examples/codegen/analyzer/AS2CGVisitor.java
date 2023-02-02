@@ -298,7 +298,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		for (@NonNull Variable parameterVariable : asParameters) {
 			CGVariable cgParameterVariable = nameManager.basicGetCGParameterVariable(parameterVariable);
 			if (cgParameterVariable == null) {				// XXX May be pre-mapped to a CG let variable
-				@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getCGParameter(parameterVariable, null);
+				@SuppressWarnings("unused") CGVariable cgParameter = nameManager.lazyGetCGParameter(parameterVariable, null);
 			}
 		//	@SuppressWarnings("unused") CGVariable cgParameter = nameManager.getParameter(parameterVariable, null);
 		}

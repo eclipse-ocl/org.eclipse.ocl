@@ -156,7 +156,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		boolean hasExternalNames = cgOperation instanceof CGEcoreOperation;		// Ecore has genmodel-defined names
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {
 			String name = hasExternalNames ? parameterVariable.getName() : null;
-			CGParameter cgParameter = operationNameManager.getCGParameter(parameterVariable, name);
+			CGParameter cgParameter = operationNameManager.lazyGetCGParameter(parameterVariable, name);
 			cgParameters.add(cgParameter);
 		}
 	}

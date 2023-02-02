@@ -1582,7 +1582,7 @@ public class CodeGenAnalyzer
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					useExecutableNameManager(asProperty).getCGParameter(contextVariable, (String)null);
+					useExecutableNameManager(asProperty).lazyGetCGParameter(contextVariable, (String)null);
 				}
 				initExpression = createCGElement(CGValuedElement.class, query.getOwnedBody());
 			} catch (ParserException e) {
