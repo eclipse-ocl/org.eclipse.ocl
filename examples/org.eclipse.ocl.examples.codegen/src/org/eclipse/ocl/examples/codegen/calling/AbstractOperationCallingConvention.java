@@ -140,7 +140,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EAGER_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.EAGER_PARAMETER_VARIABLES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EAGER_PARAMETERS};
-	public static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.EAGER_PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF_THIS, CGParameterStyle.EAGER_PARAMETER_VARIABLES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.PARAMETERS};
@@ -584,7 +584,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	@Deprecated /* temporary sub createCGOperationDeclaration functionality*/ // XXX create rather than lazy get
 	protected void initCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
 		@NonNull CGParameterStyle @NonNull  [] cgParameterStyles = getCGParameterStyles(operationNameManager, zzasOrigin);
-		operationNameManager.createCGParameters(cgParameterStyles, zzasOrigin);
+		operationNameManager.createCGOperationParameters(cgParameterStyles, zzasOrigin);
 	}
 
 	protected void initCallArguments(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp) {

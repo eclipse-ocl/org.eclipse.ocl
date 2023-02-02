@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.calling.AbstractOperationCallingConventi
 import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
@@ -32,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -43,6 +45,7 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
@@ -159,7 +162,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return standardLibraryVariable;
 	}
 
-	public void createCGParameters(@NonNull CGParameterStyle @NonNull  [] cgParameterStyles, @Nullable TypedElement zzasOrigin) {
+	public void createCGOperationParameters(@NonNull CGParameterStyle @NonNull  [] cgParameterStyles, @Nullable TypedElement zzasOrigin) {
 		assert !(parent instanceof ExecutableNameManager);
 		if (cgParameterStyles.length > 0) {
 			CGOperation cgOperation = (CGOperation)getCGScope();
@@ -311,6 +314,24 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 	}
 
+	public void createCGPropertyParameter() {		// For a Property
+		CGProperty cgProperty = (CGProperty)getCGScope();
+		Property asProperty = (Property)getASScope();
+	//	ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
+	//	Variable asContextVariable = asExpressionInOCL != null ? asExpressionInOCL.getOwnedContext() : null;
+	//	List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
+		assert selfParameter == null;
+		assert thisParameter == null;
+	//	assert asContextVariable != null;
+		CGParameter cgParameter = lazyGetThisParameter();
+		cgParameter.setIsSelf(true);
+		assert cgParameter.isIsThis();
+	//	assert cgParameter.getAst() == asContextVariable;
+	//	cgParameters.add(cgParameter);
+		assert thisParameter == cgParameter;
+		selfParameter = cgParameter;
+	}
+
 	public @NonNull CGFinalVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
 		assert basicGetCGVariable(asVariable) == null;
 		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();		// XXX typeId
@@ -413,9 +434,14 @@ public class ExecutableNameManager extends NestedNameManager
 		CGTypeId cgTypeId = analyzer.getCGTypeId(classNameManager.getASClass().getTypeId());
 		boolean sourceMayBeNull = false;
 		if (cgScope instanceof CGForeignProperty) {
-		//	Property referredProperty = CGUtil.getAST(((CGForeignProperty)scope));
-		//	OperationId operationId = referredOperation.getOperationId();
-			sourceMayBeNull = false;
+			//	Property referredProperty = CGUtil.getAST(((CGForeignProperty)scope));
+			//	OperationId operationId = referredOperation.getOperationId();
+				sourceMayBeNull = false;
+		}
+		else if (cgScope instanceof CGConstrainedProperty) {
+			//	Property referredProperty = CGUtil.getAST(((CGForeignProperty)scope));
+			//	OperationId operationId = referredOperation.getOperationId();
+				sourceMayBeNull = false;
 		}
 		else if (cgScope instanceof CGOperation) {
 			Operation referredOperation = CGUtil.getAST(((CGOperation)cgScope));
@@ -610,7 +636,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return selfParameter2;
 	}
 
-	public @NonNull CGParameter getSelfParameter2(@NonNull VariableDeclaration asParameter) {
+	public @NonNull CGParameter getSelfParameter2(@NonNull VariableDeclaration asParameter) {	// XXX
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).getSelfParameter2(asParameter);
 		}
