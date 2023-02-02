@@ -743,9 +743,11 @@ public class CodeGenAnalyzer
 		return cgNull;
 	}
 
-	public @NonNull CGParameter createCGParameter(@NonNull NameResolution nameResolution, @NonNull CGTypeId typeId, boolean isRequired) {
+	public @NonNull CGParameter createCGParameter(@Nullable NameResolution nameResolution, @NonNull CGTypeId typeId, boolean isRequired) {
 		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
-		nameResolution.addCGElement(cgParameter);
+		if (nameResolution != null) {
+			nameResolution.addCGElement(cgParameter);
+		}
 		cgParameter.setTypeId(typeId);
 		cgParameter.setRequired(isRequired);
 		return cgParameter;
@@ -1582,7 +1584,7 @@ public class CodeGenAnalyzer
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					useExecutableNameManager(asProperty).lazyGetCGParameter(contextVariable, (String)null);
+					useExecutableNameManager(asProperty).lazyGetCGParameter(contextVariable);
 				}
 				initExpression = createCGElement(CGValuedElement.class, query.getOwnedBody());
 			} catch (ParserException e) {
@@ -1672,12 +1674,10 @@ public class CodeGenAnalyzer
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
 			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {
 				Type asParameterType = asParameter.getType();
+				CGTypeId cgTypeId = getCGTypeId(asParameterType.getTypeId());
 				boolean isRequired = asParameter.isIsRequired();
-				CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+				CGParameter cgParameter = createCGParameter(null, cgTypeId, isRequired);
 				cgParameter.setAst(asParameter);
-//				nameManager.declarePreferredName(cgParameter);
-				cgParameter.setTypeId(getCGTypeId(asParameterType.getTypeId()));
-				cgParameter.setRequired(isRequired);
 				cgParameters.add(cgParameter);
 			}
 		}

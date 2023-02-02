@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.AbstractOperationCallingConvention;
@@ -175,7 +174,7 @@ public class ExecutableNameManager extends NestedNameManager
 				case EAGER_PARAMETER_VARIABLES: {
 					assert asExpressionInOCL != null;
 					for (@NonNull Variable asParameterVariable : PivotUtil.getOwnedParameters(asExpressionInOCL)) {
-						CGParameter cgParameter = lazyGetCGParameter(asParameterVariable, null);
+						CGParameter cgParameter = lazyGetCGParameter(asParameterVariable);
 						cgParameters.add(cgParameter);
 						declareEagerName(cgParameter);
 					}
@@ -222,7 +221,7 @@ public class ExecutableNameManager extends NestedNameManager
 						NameResolution nameResolution = globalNameManager.getBoxedValuesNameResolution();
 						String boxedValuesName = nameResolution.getResolvedName();
 						Parameter asBoxedValuesParameter = ClassUtil.nonNullState(NameUtil.getNameable(asOperation.getOwnedParameters(), boxedValuesName));
-						CGParameter cgParameter = lazyGetCGParameter(asBoxedValuesParameter, (String)null);
+						CGParameter cgParameter = lazyGetCGParameter(asBoxedValuesParameter);
 						globalNameManager.getBoxedValuesNameResolution().addCGElement(cgParameter);
 						cgParameters.add(cgParameter);
 						break;
@@ -237,7 +236,7 @@ public class ExecutableNameManager extends NestedNameManager
 					}
 					case EAGER_PARAMETERS: {
 						for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
-							CGParameter cgParameter = lazyGetCGParameter(asParameter, null);
+							CGParameter cgParameter = lazyGetCGParameter(asParameter);
 							cgParameters.add(cgParameter);
 							declareEagerName(cgParameter);
 						}
@@ -246,7 +245,7 @@ public class ExecutableNameManager extends NestedNameManager
 					case EAGER_PARAMETER_VARIABLES: {
 						assert asExpressionInOCL != null;
 						for (@NonNull Variable asParameterVariable : PivotUtil.getOwnedParameters(asExpressionInOCL)) {
-							CGParameter cgParameter = lazyGetCGParameter(asParameterVariable, null);
+							CGParameter cgParameter = lazyGetCGParameter(asParameterVariable);
 							cgParameters.add(cgParameter);
 							declareEagerName(cgParameter);
 						}
@@ -282,7 +281,7 @@ public class ExecutableNameManager extends NestedNameManager
 					case JUNIT_SELF: {
 						assert selfParameter == null;
 						assert asContextVariable != null;
-						CGParameter cgParameter = lazyGetCGParameter(asContextVariable, (String)null);			// XXX getSelf ???
+						CGParameter cgParameter = lazyGetCGParameter(asContextVariable);			// XXX getSelf ???
 						cgParameter.setIsSelf(true);
 						cgParameter.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// JUnit evaluate overrides
 						cgParameter.setRequired(false);										//  self : Object[?]
@@ -308,7 +307,7 @@ public class ExecutableNameManager extends NestedNameManager
 					}
 					case PARAMETERS: {
 						for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
-							CGParameter cgParameter = lazyGetCGParameter(asParameter, null);
+							CGParameter cgParameter = lazyGetCGParameter(asParameter);
 							cgParameters.add(cgParameter);
 						}
 						break;
@@ -650,18 +649,18 @@ public class ExecutableNameManager extends NestedNameManager
 		return typeIdParameter;
 	}
 
-	public @NonNull CGParameter lazyGetCGParameter(@NonNull VariableDeclaration asParameter, @Nullable String explicitName) {
+	public @NonNull CGParameter lazyGetCGParameter(@NonNull VariableDeclaration asParameter) {
 		CGParameter cgParameter = basicGetCGParameter(asParameter);
 		if (cgParameter == null) {
-			cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+			CGTypeId cgTypeId = analyzer.getCGTypeId(asParameter.getTypeId());
+			cgParameter = analyzer.createCGParameter(null, cgTypeId, asParameter.isIsRequired());
 			cgParameter.setAst(asParameter);
-			cgParameter.setTypeId(analyzer.getCGTypeId(asParameter.getTypeId()));
-			if (explicitName != null) {
+		/*	if (explicitName != null) {
 				assert explicitName.equals(asParameter.getName());
 				Operation asOperation = PivotUtil.getContainingOperation(asParameter);
 				Constraint asConstraint = PivotUtil.getContainingConstraint(asParameter);
 				assert ((asOperation != null) && (asOperation.getESObject() instanceof EOperation)) || ((asConstraint != null) && (asConstraint.getESObject() instanceof EOperation));
-			}
+			} */
 			addVariable(asParameter, cgParameter);
 			cgParameter.setRequired(asParameter.isIsRequired());
 		}

@@ -168,7 +168,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			assert (asEntryExpressionInOCL != null);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgEntryOperation, asEntryOperation);
 			Parameter asEntryBoxedValuesParameter = PivotUtilInternal.getOwnedParametersList(asEntryOperation).get(0);
-			CGParameter cgEntryBoxedValuesParameter = operationNameManager.lazyGetCGParameter(asEntryBoxedValuesParameter, (String)null);
+			CGParameter cgEntryBoxedValuesParameter = operationNameManager.lazyGetCGParameter(asEntryBoxedValuesParameter);
 			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
 			List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
 			Stack<@NonNull CGFinalVariable> cgLetVariables = new Stack<>();

@@ -117,11 +117,11 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		//
 		List<@NonNull Parameter> asEntryParameters = PivotUtilInternal.getOwnedParametersList(asEntryOperation);
 		Parameter asExecutorParameter = asEntryParameters.get(0);
-		CGParameter cgEntryExecutorParameter = operationNameManager.lazyGetCGParameter(asExecutorParameter, (String)null);
+		CGParameter cgEntryExecutorParameter = operationNameManager.lazyGetCGParameter(asExecutorParameter);
 		globalNameManager.getExecutorNameResolution().addCGElement(cgEntryExecutorParameter);
 		cgParameters.add(cgEntryExecutorParameter);
 		Parameter asBoxedValuesParameter = asEntryParameters.get(1);
-		CGParameter cgEntryBoxedValuesParameter = operationNameManager.lazyGetCGParameter(asBoxedValuesParameter, (String)null);
+		CGParameter cgEntryBoxedValuesParameter = operationNameManager.lazyGetCGParameter(asBoxedValuesParameter);
 		globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
 		cgParameters.add(cgEntryBoxedValuesParameter);
 		CGTypeId cgTypeId = analyzer.getCGTypeId(TypeId.OCL_VOID);
