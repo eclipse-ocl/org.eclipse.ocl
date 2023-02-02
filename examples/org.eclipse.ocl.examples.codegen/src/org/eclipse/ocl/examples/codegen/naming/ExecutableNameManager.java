@@ -636,6 +636,14 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 	}
 
+	public @NonNull CGParameter getSelfParameter() {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getSelfParameter();
+		}
+		assert selfParameter != null;
+		return selfParameter;
+	}
+
 	public @NonNull CGParameter getTypeIdParameter() {
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).getTypeIdParameter();
@@ -701,19 +709,24 @@ public class ExecutableNameManager extends NestedNameManager
 		return qualifiedThisVariable2;
 	}
 
-	public @NonNull CGParameter lazyGetSelfParameter(@NonNull VariableDeclaration asParameter) {	// XXX
-		assert !(parent instanceof ExecutableNameManager);
-	//	if (parent instanceof ExecutableNameManager) {
-	//		return ((ExecutableNameManager)parent).lazyGetSelfParameter(asParameter);
-	//	}
-		CGParameter cgParameter = basicGetCGParameter(asParameter);
+	/**
+	 * Create the 'self' CG parameter unless already created with a known AS parameter.
+	 * This can update a previously created 'this'parameter with anAS origin.
+	 */
+	public @NonNull CGParameter lazyGetSelfParameter(@NonNull VariableDeclaration asParameter) {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).lazyGetSelfParameter(asParameter);
+		}
+		CGParameter cgParameter = selfParameter;
 		if (cgParameter == null) {
-			NameResolution nameResolution = globalNameManager.getSelfNameResolution();
-			CGTypeId cgTypeId = analyzer.getCGTypeId(asParameter.getTypeId());
-			boolean isRequired = asParameter.isIsRequired();
-			cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, isRequired);
+			selfParameter = cgParameter = createThisParameter();
+		}
+		if (cgParameter.getAst() == null) {
 			cgParameter.setAst(asParameter);
 			addVariable(asParameter, cgParameter);
+		}
+		else {
+			assert cgParameter.getAst() == asParameter;
 		}
 		return cgParameter;
 	}
