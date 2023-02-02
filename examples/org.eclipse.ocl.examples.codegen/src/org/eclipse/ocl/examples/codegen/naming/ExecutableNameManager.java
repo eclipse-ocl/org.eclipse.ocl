@@ -33,7 +33,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
@@ -175,7 +174,7 @@ public class ExecutableNameManager extends NestedNameManager
 					case BODY_SELF: {
 						assert selfParameter == null;
 						assert asContextVariable != null;
-						CGParameter cgParameter = analyzer.getSelfParameter(this, asContextVariable);
+						CGParameter cgParameter = lazyGetSelfParameter(asContextVariable);
 						cgParameters.add(cgParameter);
 						break;
 					}
@@ -252,14 +251,15 @@ public class ExecutableNameManager extends NestedNameManager
 					}
 					case OPTIONAL_BODY_SELF: {
 						assert selfParameter == null;
-						CGParameter cgParameter = analyzer.getSelfParameter(this, PivotUtil.getOwnedContext((ExpressionInOCL) asOperation.getBodyExpression()));
+						assert asContextVariable != null;
+						CGParameter cgParameter = lazyGetSelfParameter(asContextVariable);
 						cgParameter.setRequired(false);
 						cgParameters.add(cgParameter);
 						break;
 					}
 					case OPTIONAL_SELF: {
 						assert selfParameter == null;
-						CGParameter cgParameter = getSelfParameter();
+						CGParameter cgParameter = createSelfParameter();
 						cgParameter.setRequired(false);
 						cgParameters.add(cgParameter);
 						break;
@@ -273,8 +273,9 @@ public class ExecutableNameManager extends NestedNameManager
 					}
 					case SELF: {
 						assert selfParameter == null;
-						CGParameter cgParameter = getSelfParameter();
+						CGParameter cgParameter = createSelfParameter();
 						cgParameters.add(cgParameter);
+						assert selfParameter == cgParameter;
 						break;
 					}
 					case SELF_THIS: {
@@ -294,6 +295,7 @@ public class ExecutableNameManager extends NestedNameManager
 						assert thisParameter == null;
 						@SuppressWarnings("unused") CGParameter cgParameter = lazyGetThisParameter();
 					//	cgParameters.add(cgParameter);	-- 'this' is a convenience for a global - not a passed parameter
+						assert thisParameter == cgParameter;
 						break;
 					}
 					case TYPE_ID: {
@@ -307,38 +309,90 @@ public class ExecutableNameManager extends NestedNameManager
 						break;
 					}
 					default: {
-						throw new UnsupportedOperationException();
+						throw new UnsupportedOperationException("createCGOperationParameter for " + cgParameterStyle);
 					}
 				}
 			}
 		}
 	}
 
-	public void createCGPropertyParameter() {		// For a Property
-		CGProperty cgProperty = (CGProperty)getCGScope();
+	public void createCGPropertyParameter(@NonNull CGParameterStyle cgParameterStyle) {
+		assert !(parent instanceof ExecutableNameManager);
+	//	CGProperty cgProperty = (CGProperty)getCGScope();
 		Property asProperty = (Property)getASScope();
-	//	ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
-	//	Variable asContextVariable = asExpressionInOCL != null ? asExpressionInOCL.getOwnedContext() : null;
-	//	List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		assert selfParameter == null;
-		assert thisParameter == null;
-	//	assert asContextVariable != null;
-		CGParameter cgParameter = lazyGetThisParameter();
-		cgParameter.setIsSelf(true);
-		assert cgParameter.isIsThis();
-	//	assert cgParameter.getAst() == asContextVariable;
-	//	cgParameters.add(cgParameter);
-		assert thisParameter == cgParameter;
-		selfParameter = cgParameter;
+		ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asProperty.getOwnedExpression();	// XXX defaultValue
+		Variable asContextVariable = asExpressionInOCL != null ? asExpressionInOCL.getOwnedContext() : null;
+		switch(cgParameterStyle) {
+		/*	case BODY_SELF: {
+				assert selfParameter == null;
+				assert asContextVariable != null;
+				CGParameter cgParameter = analyzer.getSelfParameter(this, asContextVariable);
+				break;
+			}
+			case CONTEXT_OBJECT: {
+				assert contextObjectParameter == null;
+				assert !isStatic;
+				CGParameter cgParameter = createContextObjectParameter();
+				contextObjectParameter = cgParameter;
+				break;
+			}
+			case JUNIT_SELF: {
+				assert selfParameter == null;
+				assert asContextVariable != null;
+				CGParameter cgParameter = getCGParameter(asContextVariable, (String)null);			// XXX getSelf ???
+				cgParameter.setIsSelf(true);
+				cgParameter.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// JUnit evaluate overrides
+				cgParameter.setRequired(false);										//  self : Object[?]
+				NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
+				selfNameResolution.addCGElement(cgParameter);
+				break;
+			}
+			case OPTIONAL_BODY_SELF: {
+				assert selfParameter == null;
+				assert asContextVariable != null;
+				CGParameter cgParameter = analyzer.getSelfParameter(this, asContextVariable);
+				cgParameter.setRequired(false);
+				break;
+			}
+			case OPTIONAL_SELF: {
+				assert selfParameter == null;
+				CGParameter cgParameter = getSelfParameter();
+				cgParameter.setRequired(false);
+				break;
+			} */
+			case SELF: {
+				assert selfParameter == null;
+				CGParameter cgParameter = createSelfParameter();
+				assert selfParameter == cgParameter;
+				break;
+			}
+			case SELF_THIS: {
+				assert selfParameter == null;
+				assert thisParameter == null;
+				assert asContextVariable != null;
+				CGParameter cgParameter = lazyGetThisParameter(asContextVariable);
+				cgParameter.setIsSelf(true);
+				assert cgParameter.isIsThis();
+				assert cgParameter.getAst() == asContextVariable;
+				assert thisParameter == cgParameter;
+				selfParameter = cgParameter;
+				break;
+			}
+		/*	case THIS: {
+				assert thisParameter == null;
+				@SuppressWarnings("unused") CGParameter cgParameter = lazyGetThisParameter();
+				break;
+			} */
+			default: {
+				throw new UnsupportedOperationException("createCGPropertyParameter for " + cgParameterStyle);
+			}
+		}
 	}
 
 	public @NonNull CGFinalVariable createCGVariable(@NonNull VariableDeclaration asVariable) {
 		assert basicGetCGVariable(asVariable) == null;
-		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();		// XXX typeId
+		CGFinalVariable cgVariable = CGModelFactory.eINSTANCE.createCGFinalVariable();
 		analyzer.initAst(cgVariable, asVariable, false);
-//		cgVariable.setAst(asVariable);
-//		cgVariable.setTypeId(analyzer.getCGTypeId(asVariable.getTypeId()));
-//		declarePreferredName(cgVariable);
 		addVariable(asVariable, cgVariable);
 		return cgVariable;
 	}
@@ -350,7 +404,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return cgVariable;
 	}
 
-	protected @NonNull CGParameter createContextObjectParameter() {
+	private @NonNull CGParameter createContextObjectParameter() {
 		assert !isStatic;
 		org.eclipse.ocl.pivot.Class asContextClass = classNameManager.getASClass(); //codeGenerator.getContextClass();
 		NameResolution nameResolution = globalNameManager.getContextObjectNameResolution();
@@ -419,7 +473,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return modelManagerVariable;
 	}
 
-	protected @NonNull CGFinalVariable createQualifiedThisVariable() {		// QVTi overides to use global context
+	private @NonNull CGFinalVariable createQualifiedThisVariable() {		// QVTi overides to use global context
 		NameResolution qualifiedThisNameResolution = globalNameManager.declareEagerName(null, classNameManager.getASClass().getName() + "_" + JavaConstants.THIS_NAME);
 		CGTypeId cgTypeId = analyzer.getCGTypeId(classNameManager.getASClass().getTypeId());
 		CGFinalVariable qualifiedThisVariable = analyzer.createCGFinalVariable(qualifiedThisNameResolution, cgTypeId, true);
@@ -428,19 +482,18 @@ public class ExecutableNameManager extends NestedNameManager
 		return qualifiedThisVariable;
 	}
 
-	protected @NonNull CGParameter createSelfParameter() {
-	//	assert !isStatic;
+	private @NonNull CGParameter createSelfParameter() {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).createSelfParameter();
+		}
+		assert selfParameter == null;
 		NameResolution selfName = globalNameManager.getSelfNameResolution();
 		CGTypeId cgTypeId = analyzer.getCGTypeId(classNameManager.getASClass().getTypeId());
 		boolean sourceMayBeNull = false;
 		if (cgScope instanceof CGForeignProperty) {
-			//	Property referredProperty = CGUtil.getAST(((CGForeignProperty)scope));
-			//	OperationId operationId = referredOperation.getOperationId();
 				sourceMayBeNull = false;
 		}
-		else if (cgScope instanceof CGConstrainedProperty) {
-			//	Property referredProperty = CGUtil.getAST(((CGForeignProperty)scope));
-			//	OperationId operationId = referredOperation.getOperationId();
+		else if (cgScope instanceof CGConstrainedProperty) {		// XXX from caller
 				sourceMayBeNull = false;
 		}
 		else if (cgScope instanceof CGOperation) {
@@ -454,6 +507,7 @@ public class ExecutableNameManager extends NestedNameManager
 		CGParameter cgParameter = analyzer.createCGParameter(selfName, cgTypeId, !sourceMayBeNull);
 		cgParameter.setIsSelf(true);
 		cgParameter.setNonInvalid();
+		selfParameter = cgParameter;
 		return cgParameter;
 	}
 
@@ -624,34 +678,6 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 	}
 
-	private @NonNull CGParameter getSelfParameter() {
-		if (parent instanceof ExecutableNameManager) {
-			return ((ExecutableNameManager)parent).getSelfParameter();
-		}
-	//	assert !isStatic;
-		CGParameter selfParameter2 = selfParameter;
-		if (selfParameter2 == null) {
-			selfParameter = selfParameter2 = createSelfParameter();
-		}
-		return selfParameter2;
-	}
-
-	public @NonNull CGParameter getSelfParameter2(@NonNull VariableDeclaration asParameter) {	// XXX
-		if (parent instanceof ExecutableNameManager) {
-			return ((ExecutableNameManager)parent).getSelfParameter2(asParameter);
-		}
-		CGParameter cgParameter = basicGetCGParameter(asParameter);
-		if (cgParameter == null) {
-			NameResolution nameResolution = globalNameManager.getSelfNameResolution();
-			CGTypeId cgTypeId = analyzer.getCGTypeId(asParameter.getTypeId());
-			boolean isRequired = asParameter.isIsRequired();
-			cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, isRequired);
-			cgParameter.setAst(asParameter);
-			addVariable(asParameter, cgParameter);
-		}
-		return cgParameter;
-	}
-
 	public @NonNull CGParameter getTypeIdParameter() {
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).getTypeIdParameter();
@@ -717,6 +743,23 @@ public class ExecutableNameManager extends NestedNameManager
 		return qualifiedThisVariable2;
 	}
 
+	public @NonNull CGParameter lazyGetSelfParameter(@NonNull VariableDeclaration asParameter) {	// XXX
+		assert !(parent instanceof ExecutableNameManager);
+	//	if (parent instanceof ExecutableNameManager) {
+	//		return ((ExecutableNameManager)parent).lazyGetSelfParameter(asParameter);
+	//	}
+		CGParameter cgParameter = basicGetCGParameter(asParameter);
+		if (cgParameter == null) {
+			NameResolution nameResolution = globalNameManager.getSelfNameResolution();
+			CGTypeId cgTypeId = analyzer.getCGTypeId(asParameter.getTypeId());
+			boolean isRequired = asParameter.isIsRequired();
+			cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, isRequired);
+			cgParameter.setAst(asParameter);
+			addVariable(asParameter, cgParameter);
+		}
+		return cgParameter;
+	}
+
 	public @NonNull CGVariable lazyGetStandardLibraryVariable() {
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).lazyGetStandardLibraryVariable();
@@ -744,24 +787,25 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	/**
-	 * Create the 'this' CG parameter unless already created (without a known AS parameter).
+	 * Create the 'this' CG parameter unless already created with a known AS parameter.
 	 * This can update a previously created 'this'parameter with anAS origin.
 	 */
 	public @NonNull CGParameter lazyGetThisParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants, never exercised
-			CGParameter cgParameter = lazyGetThisParameter();
-			org.eclipse.ocl.pivot.Class asThisClass = classNameManager.getASClass();
-			CGTypeId cgTypeId2 = analyzer.getCGTypeId(asThisClass.getTypeId());
-			CGTypeId cgTypeId3 = cgParameter.getTypeId();
-			assert cgTypeId3 == cgTypeId2;
-			if (cgParameter.getAst() == null) {
-				cgParameter.setAst(asParameter);
-				addVariable(asParameter, cgParameter);
-			}
-			else {
-				assert cgParameter.getAst() == asParameter;
-			}
-			return cgParameter;
+		assert !(parent instanceof ExecutableNameManager);
+		CGParameter cgParameter = lazyGetThisParameter();
+		org.eclipse.ocl.pivot.Class asThisClass = classNameManager.getASClass();
+		CGTypeId cgTypeId2 = analyzer.getCGTypeId(asThisClass.getTypeId());
+		CGTypeId cgTypeId3 = cgParameter.getTypeId();
+		assert cgTypeId3 == cgTypeId2;
+		if (cgParameter.getAst() == null) {
+			cgParameter.setAst(asParameter);
+			addVariable(asParameter, cgParameter);
 		}
+		else {
+			assert cgParameter.getAst() == asParameter;
+		}
+		return cgParameter;
+	}
 
 	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
 		CGVariable qualifiedThisVariable = basicGetQualifiedThisVariable();

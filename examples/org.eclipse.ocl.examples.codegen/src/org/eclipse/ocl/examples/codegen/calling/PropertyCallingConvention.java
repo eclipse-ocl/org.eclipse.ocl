@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
@@ -72,6 +73,8 @@ public interface PropertyCallingConvention extends CallingConvention
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
 	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
+
+	void initCGParameter(@NonNull ExecutableNameManager propertyNameManager);
 
 	boolean isInlined();
 

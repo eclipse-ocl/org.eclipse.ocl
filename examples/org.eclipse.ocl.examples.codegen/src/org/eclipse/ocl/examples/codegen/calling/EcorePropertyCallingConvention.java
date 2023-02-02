@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.AbstractOperationCallingConvention.CGParameterStyle;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
@@ -224,6 +225,15 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		}
 		js.append(";");
 		return true;
+	}
+
+	@Override
+	public void initCGParameter(@NonNull ExecutableNameManager propertyNameManager) {
+		Property asProperty = (Property)propertyNameManager.getASScope();
+		ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asProperty.getOwnedExpression();	// XXX ??? defaultValue
+		if (asExpressionInOCL != null) {
+			propertyNameManager.createCGPropertyParameter(CGParameterStyle.SELF_THIS);
+		}
 	}
 
 	@Override

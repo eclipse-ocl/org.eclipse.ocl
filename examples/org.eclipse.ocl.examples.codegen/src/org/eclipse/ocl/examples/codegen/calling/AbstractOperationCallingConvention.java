@@ -151,7 +151,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 	//	assert isStatic(cgOperation) == (contextVariable == null);
 		if (contextVariable != null) {
-			cgParameters.add(analyzer.getSelfParameter(operationNameManager, contextVariable));
+			cgParameters.add(operationNameManager.lazyGetSelfParameter(contextVariable));
 		}
 		boolean hasExternalNames = cgOperation instanceof CGEcoreOperation;		// Ecore has genmodel-defined names
 		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {

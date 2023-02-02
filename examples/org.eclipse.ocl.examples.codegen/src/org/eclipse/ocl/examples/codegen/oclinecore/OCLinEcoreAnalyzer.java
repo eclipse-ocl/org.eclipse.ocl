@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Variable;
-import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -80,11 +79,4 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 
 	public org.eclipse.ocl.pivot.@NonNull Class getContextClass() {
 		return getASRootClass();
-	}
-
-	@Override
-	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {
-//		return executableNameManager.lazyGetThisParameter(asParameter);
-		return super.getSelfParameter(executableNameManager, asParameter);
-	}
-}
+	}}

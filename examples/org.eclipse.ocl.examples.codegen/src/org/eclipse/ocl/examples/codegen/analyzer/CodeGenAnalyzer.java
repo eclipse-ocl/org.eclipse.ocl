@@ -1158,8 +1158,8 @@ public class CodeGenAnalyzer
 		CGProperty cgProperty = generatePropertyDeclaration(asProperty, null);		// XXX redundant
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		ExecutableNameManager propertyNameManager = getPropertyNameManager(cgProperty, asProperty);
-		propertyNameManager.createCGPropertyParameter();
 		// parse ownedExpression here to simplify createImplementation arguments
+		callingConvention.initCGParameter(propertyNameManager);
 		callingConvention.createImplementation(this, cgProperty);
 		return cgProperty;
 	}
@@ -1801,10 +1801,6 @@ public class CodeGenAnalyzer
 	public org.eclipse.ocl.pivot.@NonNull Package getRootClassParentPackage(@NonNull Feature asFeature) {
 		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asFeature);
 		return getRootClassParentPackage(asClass);
-	}
-
-	public @NonNull CGParameter getSelfParameter(@NonNull ExecutableNameManager executableNameManager, @NonNull VariableDeclaration asParameter) {		// Overridden for OCLinEcore support
-		return executableNameManager.getSelfParameter2(asParameter);
 	}
 
 	public @NonNull StandardLibraryInternal getStandardLibrary() {

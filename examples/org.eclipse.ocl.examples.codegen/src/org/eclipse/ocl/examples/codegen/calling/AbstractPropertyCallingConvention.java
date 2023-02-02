@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.AbstractOperationCallingConvention.CGParameterStyle;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
@@ -62,7 +63,7 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					analyzer.getSelfParameter(propertyNameManager, contextVariable);
+					propertyNameManager.lazyGetSelfParameter(contextVariable);
 				}
 				((CGBodiedProperty)cgProperty).setBody(analyzer.createCGElement(CGValuedElement.class, query.getOwnedBody()));
 			} catch (ParserException e) {
@@ -124,6 +125,11 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 		js.append("»\n");
 		return true;
 	//	throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".generateJavaDeclaration");	// A number of Property Calling Conventions are call-only
+	}
+
+	@Override
+	public void initCGParameter(@NonNull ExecutableNameManager propertyNameManager) {
+		propertyNameManager.createCGPropertyParameter(CGParameterStyle.SELF);
 	}
 
 	@Override
