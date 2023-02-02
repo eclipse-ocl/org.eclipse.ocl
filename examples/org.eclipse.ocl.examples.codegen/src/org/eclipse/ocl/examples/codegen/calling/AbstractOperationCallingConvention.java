@@ -388,8 +388,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 
 	protected @NonNull CGOperation createCGOperationDeclaration(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass,
 			@NonNull Operation asOperation, @Nullable NameResolution nameResolution, @Nullable TypedElement zzasOrigin) {
-	//	JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-	//	GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
 		analyzer.initAst(cgOperation, asOperation, true);
 		cgOperation.setCallingConvention(this);
@@ -401,24 +399,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		initCGParameters(operationNameManager, zzasOrigin);
 		return cgOperation;
 	}
-
-/*	protected @NonNull CGParameter createCGParameter(@NonNull ExecutableNameManager operationNameManager, @NonNull Variable asParameterVariable) {
-		return operationNameManager.getCGParameter(asParameterVariable, (String)null);
-	} */
-
-/*	protected void createCGParameters4asParameters(@NonNull ExecutableNameManager operationNameManager, @NonNull List<@NonNull CGParameter> cgParameters, @NonNull Iterable<@NonNull Parameter> asParameters) {
-		for (@NonNull Parameter asParameterVariable : asParameters) {
-			CGParameter cgParameter = operationNameManager.getCGParameter(asParameterVariable, (String)null);
-			cgParameters.add(cgParameter);
-		}
-	} */
-
-/*	protected void createCGParameters4asParameterVariables(@NonNull ExecutableNameManager operationNameManager, @NonNull List<@NonNull CGParameter> cgParameters, @NonNull Iterable<@NonNull Variable> asParameterVariables) {
-		for (@NonNull Variable asParameterVariable : asParameterVariables) {
-			CGParameter cgParameter = createCGParameter(operationNameManager, asParameterVariable);
-			cgParameters.add(cgParameter);
-		}
-	} */
 
 	@Override
 	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
@@ -584,7 +564,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	@Deprecated /* temporary sub createCGOperationDeclaration functionality*/ // XXX create rather than lazy get
 	protected void initCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
 		@NonNull CGParameterStyle @NonNull  [] cgParameterStyles = getCGParameterStyles(operationNameManager, zzasOrigin);
-		operationNameManager.createCGOperationParameters(cgParameterStyles, zzasOrigin);
+		operationNameManager.createCGOperationParameters(cgParameterStyles);
 	}
 
 	protected void initCallArguments(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp) {

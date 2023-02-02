@@ -46,7 +46,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -65,17 +64,17 @@ public class ExecutableNameManager extends NestedNameManager
 	protected final @NonNull NamedElement asScope;
 	protected final boolean isStatic;
 
-	private /*@LazyNonNull*/ CGParameter contextObjectParameter = null;		// A local parameter spelled "contextObject" to distinguish unique evaluations
-	private /*@LazyNonNull*/ CGParameter executorParameter = null;			// Passed executor parameter
+	private /*@LazyNonNull*/ CGParameter contextObjectParameter = null;		// Passed parameter spelled "contextObject" to distinguish unique evaluations
+	private /*@LazyNonNull*/ CGParameter executorParameter = null;			// Passed parameter spelled "executor"
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / cached local thread lookup
-	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// A convenience cache of execitpr.getIdResolver()
-	private /*@LazyNonNull*/ CGParameter idResolverParameter = null;		// A local orphan parameter spelled "idResolver" -- XXX probably doesn't need caching
-	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;		// A convenience cache of execitpr.getModelManager()
+	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// Passed idResolver parameter / cache of executor.getIdResolver()
+	private /*@LazyNonNull*/ CGParameter idResolverParameter = null;		// Passed parameter spelled "idResolver"
+	private /*@LazyNonNull*/ CGVariable modelManagerVariable = null;		// Cache of executor.getModelManager()
 	private /*@LazyNonNull*/ CGFinalVariable qualifiedThisVariable = null;	// An unambiguous spelling of this for external access.
-	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// A convenience cache of executor.getStandardVariable()
-	private /*@LazyNonNull*/ CGParameter selfParameter = null;				// A local parameter spelled "self" to be added to the signature
+	private /*@LazyNonNull*/ CGVariable standardLibraryVariable = null;		// Cache of executor.getStandardVariable()
+	private /*@LazyNonNull*/ CGParameter selfParameter = null;				// Passed parameter spelled "self"
 	private /*@LazyNonNull*/ CGParameter thisParameter = null;				// A local orphan parameter spelled "this"
-	private /*@LazyNonNull*/ CGParameter typeIdParameter = null;			// A local orphan parameter spelled "typeId"
+	private /*@LazyNonNull*/ CGParameter typeIdParameter = null;			// Passed parameter spelled "typeId"
 
 	/**
 	 * Mapping from an AS Variable to the CG Variable defined in this cgScope.
@@ -200,7 +199,7 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 	}
 
-	public void createCGOperationParameters(@NonNull CGParameterStyle @NonNull  [] cgParameterStyles, @Nullable TypedElement zzasOrigin) {
+	public void createCGOperationParameters(@NonNull CGParameterStyle @NonNull [] cgParameterStyles) {
 		assert !(parent instanceof ExecutableNameManager);
 		if (cgParameterStyles.length > 0) {
 			CGOperation cgOperation = (CGOperation)getCGScope();
