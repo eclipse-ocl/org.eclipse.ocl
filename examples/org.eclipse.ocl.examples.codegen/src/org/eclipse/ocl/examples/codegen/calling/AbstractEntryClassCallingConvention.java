@@ -146,7 +146,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		}
 
 		@Override
-		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 			return CG_PARAMETER_STYLES;
 		}
 	}
@@ -166,7 +166,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			org.eclipse.ocl.pivot.Class asEntryClass = PivotUtil.getOwningClass(asEntryOperation);
 			ExpressionInOCL asEntryExpressionInOCL = (ExpressionInOCL) asEntryOperation.getBodyExpression();
 			assert (asEntryExpressionInOCL != null);
-			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgEntryOperation, asEntryOperation);
+			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgEntryOperation, asEntryOperation, null);
 			Parameter asEntryBoxedValuesParameter = PivotUtilInternal.getOwnedParametersList(asEntryOperation).get(0);
 			CGParameter cgEntryBoxedValuesParameter = operationNameManager.lazyGetCGParameter(asEntryBoxedValuesParameter);
 			List<@NonNull Property> asEntryProperties = PivotUtilInternal.getOwnedPropertiesList(asEntryClass);
@@ -271,7 +271,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		}
 
 		@Override
-		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 			return CG_PARAMETER_STYLES_ID_RESOLVER_BOXED_VALUES;
 		}
 	}

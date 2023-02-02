@@ -35,6 +35,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -320,8 +321,8 @@ public class GlobalNameManager extends AbstractNameManager
 		return loopNameManager;
 	}
 
-	public @NonNull ExecutableNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
-		ExecutableNameManager operationNameManager = codeGenerator.createOperationNameManager(classNameManager, cgOperation);
+	public @NonNull ExecutableNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation, @Nullable TypedElement asOrigin) {
+		ExecutableNameManager operationNameManager = codeGenerator.createOperationNameManager(classNameManager, cgOperation, asOrigin);
 		assert cgElement2childNameManager.get(cgOperation) == operationNameManager;
 	//	we could populate the cgScope to parent NameManager now but any CSE rewrite could invalidate this premature action.
 	//	addNameManager(cgScope, nestedNameManager.getParent());

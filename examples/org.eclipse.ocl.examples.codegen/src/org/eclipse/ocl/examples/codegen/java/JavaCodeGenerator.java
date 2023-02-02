@@ -88,6 +88,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
@@ -304,19 +305,19 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	}
 
 	public @NonNull ExecutableNameManager createConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
-		return new ExecutableNameManager(classNameManager, classNameManager, cgConstraint);
+		return new ExecutableNameManager(classNameManager, classNameManager, cgConstraint, null);
 	}
 
 	public @NonNull ExecutableNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull ExecutableNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
-		return new ExecutableNameManager(classNameManager, parentNameManager, cgIterationCallExp);
+		return new ExecutableNameManager(classNameManager, parentNameManager, cgIterationCallExp, null);
 	}
 
-	public @NonNull ExecutableNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation) {
-		return new ExecutableNameManager(classNameManager, classNameManager, cgOperation);
+	public @NonNull ExecutableNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation, @Nullable TypedElement asOrigin) {
+		return new ExecutableNameManager(classNameManager, classNameManager, cgOperation, asOrigin);
 	}
 
 	public @NonNull ExecutableNameManager createPropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
-		return new ExecutableNameManager(classNameManager, classNameManager, cgProperty);
+		return new ExecutableNameManager(classNameManager, classNameManager, cgProperty, null);
 	}
 
 	@Override

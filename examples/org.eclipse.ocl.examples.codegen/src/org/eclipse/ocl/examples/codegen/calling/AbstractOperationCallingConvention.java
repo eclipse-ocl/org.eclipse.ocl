@@ -197,9 +197,9 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	protected void assertCGParameterStyles(@NonNull CGParameterStyle @NonNull [] cgParameterStyles, @NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		@NonNull CGParameterStyle@NonNull [] cgParameterStyles2 = getCGParameterStyles(operationNameManager, bodyExpression);
+		@NonNull CGParameterStyle@NonNull [] cgParameterStyles2 = getCGParameterStyles(operationNameManager);
 		if (cgParameterStyles != cgParameterStyles2) {
-			cgParameterStyles2 = getCGParameterStyles(operationNameManager, bodyExpression);
+			cgParameterStyles2 = getCGParameterStyles(operationNameManager);
 		}
 		assert cgParameterStyles == cgParameterStyles2;
 	}
@@ -387,16 +387,16 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
 
 	protected @NonNull CGOperation createCGOperationDeclaration(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass,
-			@NonNull Operation asOperation, @Nullable NameResolution nameResolution, @Nullable TypedElement zzasOrigin) {
+			@NonNull Operation asOperation, @Nullable NameResolution nameResolution, @Nullable TypedElement asOrigin) {
 		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
 		analyzer.initAst(cgOperation, asOperation, true);
 		cgOperation.setCallingConvention(this);
 		if (nameResolution != null) {
 			nameResolution.addCGElement(cgOperation);
 		}
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation, asOrigin);
 		cgClass.getOperations().add(cgOperation);
-		initCGParameters(operationNameManager, zzasOrigin);
+		initCGParameters(operationNameManager);
 		return cgOperation;
 	}
 
@@ -413,10 +413,10 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		assert analyzer.basicGetCGElement(asOperation) == null;
 		analyzer.initAst(cgOperation, asOperation, true);
 		assert analyzer.basicGetCGElement(asOperation) != null;
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() == null;
 		cgClass.getOperations().add(cgOperation);
-		initCGParameters(operationNameManager, null);
+		initCGParameters(operationNameManager);
 		return cgOperation;
 	}
 
@@ -553,7 +553,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		throw new UnsupportedOperationException();
 	}
 
-	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 		return CG_PARAMETER_STYLES_PARAMETERS;
 	}
 
@@ -562,8 +562,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	@Deprecated /* temporary sub createCGOperationDeclaration functionality*/ // XXX create rather than lazy get
-	protected void initCGParameters(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
-		@NonNull CGParameterStyle @NonNull  [] cgParameterStyles = getCGParameterStyles(operationNameManager, zzasOrigin);
+	protected void initCGParameters(@NonNull ExecutableNameManager operationNameManager) {
+		@NonNull CGParameterStyle @NonNull  [] cgParameterStyles = getCGParameterStyles(operationNameManager);
 		operationNameManager.createCGOperationParameters(cgParameterStyles);
 	}
 

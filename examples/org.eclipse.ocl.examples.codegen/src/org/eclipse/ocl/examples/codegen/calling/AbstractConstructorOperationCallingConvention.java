@@ -110,7 +110,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		CGClass cgEntryClass = CGUtil.getContainingClass(cgConstructor);
 		List<@NonNull CGProperty> cgProperties = CGUtil.getPropertiesList(cgEntryClass);
 		Operation asEntryOperation = CGUtil.getAST(cgConstructor);
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructor, asEntryOperation);
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructor, asEntryOperation, null);
 		ExpressionInOCL asEntryExpressionInOCL = (ExpressionInOCL)asEntryOperation.getBodyExpression();
 		assert (asEntryExpressionInOCL != null);
 		List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
@@ -325,7 +325,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 	}
 
 	@Override
-	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 		return CG_PARAMETER_STYLES;
 	}
 

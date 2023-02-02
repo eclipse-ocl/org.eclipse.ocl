@@ -87,7 +87,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgForeignOperation) {
 			Property asProperty = analyzer.getOriginalProperty(cgForeignOperation);
 			Operation asForeignOperation = CGUtil.getAST(cgForeignOperation);
-			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgForeignOperation, asForeignOperation);
+			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgForeignOperation, asForeignOperation, null);
 			List<@NonNull CGParameter> cgForeignParametersList = CGUtil.getParametersList(cgForeignOperation);
 			CGParameter cgSelfParameter = cgForeignParametersList.size() > 1 ? cgForeignParametersList.get(1) : null;
 		//	CGValuedElement cgInitValue = analyzer.getInitExpression(/*cgParameter,*/ asProperty);
@@ -208,9 +208,9 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		}
 
 		@Override
-		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
-			assert zzasOrigin != null;
-			Property asProperty = (Property)zzasOrigin;
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+			TypedElement asOrigin = operationNameManager.getASOrigin();
+			Property asProperty = (Property)asOrigin;
 			boolean isStatic = asProperty.isIsStatic();
 			return isStatic ? CG_PARAMETER_STYLES_EXECUTOR : CG_PARAMETER_STYLES_EXECUTOR_SELF;
 		}

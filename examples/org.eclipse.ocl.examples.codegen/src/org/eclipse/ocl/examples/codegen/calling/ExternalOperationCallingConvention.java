@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -110,14 +109,14 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		cgOperation.setCallingConvention(this);
 		assert asOperation == cgOperation.getAst();
 		assert analyzer.basicGetCGElement(asOperation) != null;
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation, null);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() != null;
-		initCGParameters(operationNameManager, null);
+		initCGParameters(operationNameManager);
 		return cgOperation;
 	}
 
 	@Override
-	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 		return CG_PARAMETER_STYLES_SELF_PARAMETERS;
 	}
 

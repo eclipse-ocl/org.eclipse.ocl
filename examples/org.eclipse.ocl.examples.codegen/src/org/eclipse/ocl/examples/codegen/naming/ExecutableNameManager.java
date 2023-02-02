@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -62,6 +63,7 @@ public class ExecutableNameManager extends NestedNameManager
 	protected final @NonNull ClassNameManager classNameManager;
 	protected final @NonNull CGNamedElement cgScope;
 	protected final @NonNull NamedElement asScope;
+	protected final @Nullable TypedElement asOrigin;	// Only used to detect Property.isStatic
 	protected final boolean isStatic;
 
 	private /*@LazyNonNull*/ CGParameter contextObjectParameter = null;		// Passed parameter spelled "contextObject" to distinguish unique evaluations
@@ -81,11 +83,12 @@ public class ExecutableNameManager extends NestedNameManager
 	 */
 	private @NonNull Map<@NonNull VariableDeclaration, @NonNull CGVariable> asVariable2cgVariable = new HashMap<>();	// XXX Eliminate use CGA.as2cg
 
-	public ExecutableNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parentNameManager, @NonNull CGNamedElement cgScope) {
+	public ExecutableNameManager(@NonNull ClassNameManager classNameManager, @NonNull NestedNameManager parentNameManager, @NonNull CGNamedElement cgScope, @Nullable TypedElement asOrigin) {
 		super(classNameManager.getCodeGenerator(), parentNameManager, cgScope);
 		this.classNameManager = classNameManager;
 		this.cgScope = cgScope;
 		this.asScope = CGUtil.getAST(cgScope);
+		this.asOrigin = asOrigin;
 		boolean staticFeature = (asScope instanceof Feature) && ((Feature)asScope).isIsStatic();
 		this.isStatic = /*(asScope == null) ||*/ staticFeature;
 		assert !(parent instanceof ExecutableNameManager) || (((ExecutableNameManager)parent).cgScope != cgScope);		// XXX
@@ -532,6 +535,10 @@ public class ExecutableNameManager extends NestedNameManager
 		cgParameter.setIsThis(true);		// Use Java's 'this' spelling
 		cgParameter.setNonInvalid();
 		return cgParameter;
+	}
+
+	public @NonNull TypedElement getASOrigin() {
+		return ClassUtil.nonNullState(asOrigin);
 	}
 
 	@Override

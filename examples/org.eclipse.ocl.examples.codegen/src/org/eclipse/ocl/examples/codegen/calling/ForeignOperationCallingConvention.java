@@ -323,10 +323,10 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		assert analyzer.basicGetCGElement(asOperation) != null;
 		createCachingClassesAndInstance(analyzer, cgOperation);
 		assert cgOperation.eContainer() == null;
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation);	// Needed to support downstream useOperationNameManager()
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation, null);	// Needed to support downstream useOperationNameManager()
 		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
 		cgClass.getOperations().add(cgOperation);
-		initCGParameters(operationNameManager, null);
+		initCGParameters(operationNameManager);
 		return cgOperation;
 	}
 
@@ -556,7 +556,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
-	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 		Operation asOperation = (Operation)operationNameManager.getASScope();
 		ExpressionInOCL bodyExpression = (ExpressionInOCL)asOperation.getBodyExpression();
 		Variable asContextVariable = bodyExpression.getOwnedContext();

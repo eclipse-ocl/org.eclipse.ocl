@@ -11,7 +11,6 @@
 package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention.AbstractEvaluateOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
@@ -124,7 +123,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		}
 
 		@Override
-		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 			return CG_PARAMETER_STYLES_BOXED_VALUES;
 		}
 	}
@@ -215,7 +214,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		}
 
 		@Override
-		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 			return CG_PARAMETER_STYLES_BOXED_VALUES;
 		}
 	}

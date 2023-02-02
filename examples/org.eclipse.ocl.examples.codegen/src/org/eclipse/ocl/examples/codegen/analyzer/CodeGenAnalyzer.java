@@ -101,6 +101,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.Type;
@@ -1034,7 +1035,7 @@ public class CodeGenAnalyzer
 		if (cgVirtualOperation != cgFinalOperation) {
 			assert cgVirtualOperation.getBody() == null;
 //			System.out.println("visitOperation " + NameUtil.debugSimpleName(cgVirtualOperation) + " : " + asOperation);
-			getOperationNameManager(cgVirtualOperation, asOperation);
+			getOperationNameManager(cgVirtualOperation, asOperation, asOperation);
 			if (specification instanceof ExpressionInOCL) {			// Should already be parsed
 //				cgVirtualOperation.getCallingConvention().createCGBody(this, cgVirtualOperation);
 //				scanBody(specification);
@@ -1676,9 +1677,9 @@ public class CodeGenAnalyzer
 			cgNativeOperation.setRequired(asOperation.isIsRequired());
 			cgNativeOperation.setCallingConvention(callingConvention);
 			cgNativeOperation.setAst(asOperation);
-			getOperationNameManager(cgNativeOperation, asOperation);
+			getOperationNameManager(cgNativeOperation, asOperation, asOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
-			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {
+			for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
 				CGParameter cgParameter = createCGParameter(asParameter);
 				cgParameters.add(cgParameter);
 			}
@@ -1719,7 +1720,7 @@ public class CodeGenAnalyzer
 	/**
 	 * Create or use the OperationNameManager for asOperation exploiting an optionally already known cgOperation.
 	 */
-	public @NonNull ExecutableNameManager getOperationNameManager(@Nullable CGOperation cgOperation, @NonNull Operation asOperation) {
+	public @NonNull ExecutableNameManager getOperationNameManager(@Nullable CGOperation cgOperation, @NonNull Operation asOperation, @Nullable TypedElement asOrigin) {
 		if (cgOperation == null) {
 			cgOperation = (CGOperation)asElement2cgElement.get(asOperation);
 			if (cgOperation == null) {
@@ -1731,7 +1732,7 @@ public class CodeGenAnalyzer
 		if (operationNameManager == null) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
 			ClassNameManager classNameManager = getClassNameManager(null, asClass);
-			operationNameManager = globalNameManager.createOperationNameManager(classNameManager, cgOperation);
+			operationNameManager = globalNameManager.createOperationNameManager(classNameManager, cgOperation, asOrigin);
 		}
 		return operationNameManager;
 	}

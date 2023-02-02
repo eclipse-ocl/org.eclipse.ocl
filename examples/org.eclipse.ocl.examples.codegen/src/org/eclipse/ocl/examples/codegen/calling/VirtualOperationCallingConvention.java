@@ -187,8 +187,8 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		assert cgDispatchOperation.getCallingConvention() == this;
 		assert analyzer.basicGetCGElement(asDispatchOperation) != null;
 		assert cgDispatchOperation.eContainer() != null;
-		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgDispatchOperation, asDispatchOperation);	// Needed to support downstream useOperationNameManager()
-		initCGParameters(operationNameManager, null);
+		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgDispatchOperation, asDispatchOperation, null);	// Needed to support downstream useOperationNameManager()
+		initCGParameters(operationNameManager);
 		return cgDispatchOperation;
 	}
 
@@ -222,7 +222,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 	}
 
 	@Override
-	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 		return CG_PARAMETER_STYLES_BOXED_VALUES;
 	}
 

@@ -198,7 +198,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		}
 
 		@Override
-		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager, @Nullable TypedElement zzasOrigin) {
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 			return CG_PARAMETER_STYLES_PARAMETERS;
 		}
 	}
