@@ -652,9 +652,7 @@ public class ExecutableNameManager extends NestedNameManager
 	public @NonNull CGParameter lazyGetCGParameter(@NonNull VariableDeclaration asParameter) {
 		CGParameter cgParameter = basicGetCGParameter(asParameter);
 		if (cgParameter == null) {
-			CGTypeId cgTypeId = analyzer.getCGTypeId(asParameter.getTypeId());
-			cgParameter = analyzer.createCGParameter(null, cgTypeId, asParameter.isIsRequired());
-			cgParameter.setAst(asParameter);
+			cgParameter = analyzer.createCGParameter(asParameter);
 		/*	if (explicitName != null) {
 				assert explicitName.equals(asParameter.getName());
 				Operation asOperation = PivotUtil.getContainingOperation(asParameter);

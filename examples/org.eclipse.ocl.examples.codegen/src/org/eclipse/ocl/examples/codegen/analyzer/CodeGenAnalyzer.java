@@ -743,6 +743,12 @@ public class CodeGenAnalyzer
 		return cgNull;
 	}
 
+	public @NonNull CGParameter createCGParameter(@NonNull VariableDeclaration asParameter) {
+		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
+		initAst(cgParameter, asParameter, false);
+		return cgParameter;
+	}
+
 	public @NonNull CGParameter createCGParameter(@Nullable NameResolution nameResolution, @NonNull CGTypeId typeId, boolean isRequired) {
 		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 		if (nameResolution != null) {
@@ -1673,11 +1679,7 @@ public class CodeGenAnalyzer
 			getOperationNameManager(cgNativeOperation, asOperation);
 			List<CGParameter> cgParameters = cgNativeOperation.getParameters();
 			for (org.eclipse.ocl.pivot.Parameter asParameter : asOperation.getOwnedParameters()) {
-				Type asParameterType = asParameter.getType();
-				CGTypeId cgTypeId = getCGTypeId(asParameterType.getTypeId());
-				boolean isRequired = asParameter.isIsRequired();
-				CGParameter cgParameter = createCGParameter(null, cgTypeId, isRequired);
-				cgParameter.setAst(asParameter);
+				CGParameter cgParameter = createCGParameter(asParameter);
 				cgParameters.add(cgParameter);
 			}
 		}
