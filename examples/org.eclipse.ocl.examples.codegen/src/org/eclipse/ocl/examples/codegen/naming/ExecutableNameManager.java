@@ -323,43 +323,6 @@ public class ExecutableNameManager extends NestedNameManager
 		ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)asProperty.getOwnedExpression();	// XXX defaultValue
 		Variable asContextVariable = asExpressionInOCL != null ? asExpressionInOCL.getOwnedContext() : null;
 		switch(cgParameterStyle) {
-		/*	case BODY_SELF: {
-				assert selfParameter == null;
-				assert asContextVariable != null;
-				CGParameter cgParameter = analyzer.getSelfParameter(this, asContextVariable);
-				break;
-			}
-			case CONTEXT_OBJECT: {
-				assert contextObjectParameter == null;
-				assert !isStatic;
-				CGParameter cgParameter = createContextObjectParameter();
-				contextObjectParameter = cgParameter;
-				break;
-			}
-			case JUNIT_SELF: {
-				assert selfParameter == null;
-				assert asContextVariable != null;
-				CGParameter cgParameter = getCGParameter(asContextVariable, (String)null);			// XXX getSelf ???
-				cgParameter.setIsSelf(true);
-				cgParameter.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// JUnit evaluate overrides
-				cgParameter.setRequired(false);										//  self : Object[?]
-				NameResolution selfNameResolution = globalNameManager.getSelfNameResolution();
-				selfNameResolution.addCGElement(cgParameter);
-				break;
-			}
-			case OPTIONAL_BODY_SELF: {
-				assert selfParameter == null;
-				assert asContextVariable != null;
-				CGParameter cgParameter = analyzer.getSelfParameter(this, asContextVariable);
-				cgParameter.setRequired(false);
-				break;
-			}
-			case OPTIONAL_SELF: {
-				assert selfParameter == null;
-				CGParameter cgParameter = getSelfParameter();
-				cgParameter.setRequired(false);
-				break;
-			} */
 			case SELF: {
 				assert selfParameter == null;
 				CGParameter cgParameter = createSelfParameter();
@@ -378,11 +341,6 @@ public class ExecutableNameManager extends NestedNameManager
 				selfParameter = cgParameter;
 				break;
 			}
-		/*	case THIS: {
-				assert thisParameter == null;
-				@SuppressWarnings("unused") CGParameter cgParameter = lazyGetThisParameter();
-				break;
-			} */
 			default: {
 				throw new UnsupportedOperationException("createCGPropertyParameter for " + cgParameterStyle);
 			}
@@ -473,7 +431,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return modelManagerVariable;
 	}
 
-	private @NonNull CGFinalVariable createQualifiedThisVariable() {		// QVTi overides to use global context
+	protected @NonNull CGFinalVariable createQualifiedThisVariable() {		// QVTi overides to use global context
 		NameResolution qualifiedThisNameResolution = globalNameManager.declareEagerName(null, classNameManager.getASClass().getName() + "_" + JavaConstants.THIS_NAME);
 		CGTypeId cgTypeId = analyzer.getCGTypeId(classNameManager.getASClass().getTypeId());
 		CGFinalVariable qualifiedThisVariable = analyzer.createCGFinalVariable(qualifiedThisNameResolution, cgTypeId, true);
