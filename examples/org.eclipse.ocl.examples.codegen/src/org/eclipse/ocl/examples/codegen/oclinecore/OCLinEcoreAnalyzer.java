@@ -51,19 +51,7 @@ public class OCLinEcoreAnalyzer extends CodeGenAnalyzer
 				}
 				ExpressionInOCL asSynthesizedQuery = ((OCLinEcoreCodeGenerator)codeGenerator).rewriteQuery(oldQuery);
 				OCLExpression asSynthesizedExpression = asSynthesizedQuery.getOwnedBody();
-
 				nameManager.createCGConstraintParameters();
-			/*	Variable contextVariable = asSynthesizedQuery.getOwnedContext();
-				if (contextVariable != null) {
-					CGParameter cgParameter = nameManager.lazyGetThisParameter(contextVariable);
-					cgConstraint.getParameters().add(cgParameter);
-				}
-				for (@NonNull Variable parameterVariable : PivotUtil.getOwnedParameters(asSynthesizedQuery)) {
-					String parameterName = parameterVariable.getName();
-					CGParameter cgParameter = nameManager.lazyGetCGParameter(parameterVariable, parameterName);
-					nameManager.declareEagerName(cgParameter);
-					cgConstraint.getParameters().add(cgParameter);
-				} */
 				cgConstraint.setBody(createCGElement(CGValuedElement.class, asSynthesizedExpression));
 			} catch (ParserException e) {
 				cgConstraint.setBody(createCGConstantExp(getCGInvalid()));
