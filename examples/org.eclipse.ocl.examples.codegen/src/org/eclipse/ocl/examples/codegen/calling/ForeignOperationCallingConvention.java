@@ -302,10 +302,6 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		initCallExp(analyzer, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
 		ExecutableNameManager operationNameManager = analyzer.getGlobalNameManager().useOperationNameManager(cgOperation);
-	//	CGVariable executorVariable = analyzer.getExecutorVariable(operationNameManager);
-	//	cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
-		//	addTypeIdArgument(as2cgVisitor, cgForeignOperationCallExp, asOperation.getTypeId());
-//		addExpressionInOCLParameters(analyzer, cgOperation, (ExpressionInOCL) asOperation.getBodyExpression());
 		CGVariable executorVariable = operationNameManager.lazyGetExecutorVariable();
 		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
 		initCallArguments(analyzer, cgForeignOperationCallExp);

@@ -286,7 +286,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		}
 		//
 		CGOperation cgConstructor = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryConstructor,
-			ctorNameResolution, null);
+			ctorNameResolution, asOperation);
 /*		CGOperation cgConstructor = createCGOperation(analyzer, asEntryConstructor);
 		cgConstructor.setCallingConvention(this);
 		analyzer.initAst(cgConstructor, asEntryConstructor, true);

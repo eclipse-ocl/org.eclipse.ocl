@@ -314,6 +314,14 @@ public class ExecutableNameManager extends NestedNameManager
 						}
 						break;
 					}
+					case PARAMETER_VARIABLES: {
+						assert asExpressionInOCL != null;
+						for (@NonNull Variable asParameterVariable : PivotUtil.getOwnedParameters(asExpressionInOCL)) {
+							CGParameter cgParameter = lazyGetCGParameter(asParameterVariable);
+							cgParameters.add(cgParameter);
+						}
+						break;
+					}
 					case SELF: {
 						assert selfParameter == null;
 						CGParameter cgParameter = createSelfParameter();
