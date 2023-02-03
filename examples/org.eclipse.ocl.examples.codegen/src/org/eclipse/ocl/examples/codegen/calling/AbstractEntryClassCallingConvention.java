@@ -74,6 +74,20 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
+
+		@Override
+		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(
+				@NonNull TypedElement asOrigin) {
+			// TODO Auto-generated method stub
+			return super.getASParameterStyles(asOrigin);
+		}
+
+		@Override
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(
+				@NonNull ExecutableNameManager operationNameManager) {
+			// TODO Auto-generated method stub
+			return super.getCGParameterStyles(operationNameManager);
+		}
 	}
 
 	public static class EntryGetResultOperationCallingConvention extends AbstractUncachedOperationCallingConvention
