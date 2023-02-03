@@ -352,8 +352,13 @@ public abstract class NameResolution
 		if (newName.contains("AbstractComputation")) {
 			getClass();		// XXX
 		}
-		if ("IMPPROPid_d3atlExpression".equals(newName)) {
+		if ("boxedValues".equals(newName)) {
 			getClass();			// XXX
+			if (cgElements != null) {
+				for (CGNamedElement cgElement : cgElements) {
+					System.out.println("debugNameHint " + NameUtil.debugSimpleName(cgElement));
+				}
+			}
 		}
 		if ("context".equals(newName)) {
 			getClass();			// XXX

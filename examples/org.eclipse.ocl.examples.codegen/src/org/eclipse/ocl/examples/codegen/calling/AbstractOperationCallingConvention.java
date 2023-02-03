@@ -319,20 +319,27 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			for (@NonNull ASParameterStyle asParameterStyle : asParameterStyles) {
 				switch (asParameterStyle) {
 					case BOXED_VALUES_OPTIONAL: {
-						Parameter asParameter = createBoxedValuesParameter(codeGenerator, false);
+						LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+						String boxedValuesName = analyzer.getGlobalNameManager().getASBoxedValuesName();
+						org.eclipse.ocl.pivot.Class boxedValuesType = jLanguageSupport.getNativeClass(Object[].class);
+						Parameter asParameter = PivotUtil.createParameter(boxedValuesName, boxedValuesType, false);
 						asParameters.add(asParameter);
 						break;
 					}
 					case BOXED_VALUES_ALL: {
 						@NonNull Operation asOriginalOperation = (Operation)asOrigin;
-						Parameter asParameter = createBoxedValuesParameter(codeGenerator, PivotUtil.allParametersRequired(asOriginalOperation));
+						LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+						String boxedValuesName = analyzer.getGlobalNameManager().getASBoxedValuesName();
+						org.eclipse.ocl.pivot.Class boxedValuesType = jLanguageSupport.getNativeClass(Object[].class);
+						Parameter asParameter = PivotUtil.createParameter(boxedValuesName, boxedValuesType, PivotUtil.allParametersRequired(asOriginalOperation));
 						asParameters.add(asParameter);
 						break;
 					}
 					case EXECUTOR: {
-						NameResolution executorResolution = codeGenerator.getGlobalNameManager().getExecutorNameResolution();
-						String executorName = executorResolution.getResolvedName();
+					//	NameResolution executorResolution = codeGenerator.getGlobalNameManager().getExecutorNameResolution();
+					//	String executorName = executorResolution.getResolvedName();
 						LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
+						String executorName = analyzer.getGlobalNameManager().getASExecutorName();
 						org.eclipse.ocl.pivot.Class executorType = jLanguageSupport.getNativeClass(Executor.class);
 						Parameter asParameter = PivotUtil.createParameter(executorName, executorType, true);
 						asParameters.add(asParameter);
@@ -351,9 +358,10 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 					}
 					case SELF: {
 						@NonNull Feature asOriginalFeature = (Feature)asOrigin;
-						GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-						String selfName = globalNameManager.getSelfNameResolution().getResolvedName();
-						Parameter asParameter = PivotUtil.createParameter(selfName, PivotUtil.getOwningClass(asOriginalFeature), true);
+					//	GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
+						String selfName = analyzer.getGlobalNameManager().getASSelfName();
+						Type selfType = PivotUtil.getOwningClass(asOriginalFeature);
+						Parameter asParameter = PivotUtil.createParameter(selfName, selfType, true);
 						asParameters.add(asParameter);
 						break;
 					}
@@ -363,14 +371,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			}
 		}
 		return asOperation;
-	}
-
-	private @NonNull Parameter createBoxedValuesParameter(@NonNull JavaCodeGenerator codeGenerator, boolean isRequired) {
-		NameResolution boxedValuesResolution = codeGenerator.getGlobalNameManager().getBoxedValuesNameResolution();
-		String boxedValuesName = boxedValuesResolution.getResolvedName();
-		LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
-		org.eclipse.ocl.pivot.Class boxedValueType = jLanguageSupport.getNativeClass(Object[].class);
-		return PivotUtil.createParameter(boxedValuesName, boxedValueType, isRequired);
 	}
 
 	@Override

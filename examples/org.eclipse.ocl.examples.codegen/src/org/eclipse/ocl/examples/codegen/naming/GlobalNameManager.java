@@ -184,6 +184,9 @@ public class GlobalNameManager extends AbstractNameManager
 	protected final @NonNull NameResolution standardLibraryVariableName;
 	protected final @NonNull NameResolution thisName;
 	protected final @NonNull NameResolution typeIdName;
+	protected final @NonNull String asBoxedValuesName;
+	protected final @NonNull String asExecutorName;
+	protected final @NonNull String asSelfName;
 	private boolean needsExecutor = false;
 
 	public GlobalNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull NameManagerHelper helper) {
@@ -220,6 +223,13 @@ public class GlobalNameManager extends AbstractNameManager
 		this.sourceAndArgumentValuesName = declareEagerName(null, JavaConstants.SOURCE_AND_ARGUMENT_VALUES_NAME);
 		this.standardLibraryVariableName = declareEagerName(null, JavaConstants.STANDARD_LIBRARY_NAME);
 		this.typeIdName = declareEagerName(null, JavaConstants.TYPE_ID_NAME);
+		//
+		//	The AS names have a distinctive not-interned String enabling e.g. the AS variant of executor to
+		//	co-exist with a user executor in an AS parameter list.
+		//
+		this.asBoxedValuesName = new String(JavaConstants.BOXED_VALUES_NAME);
+		this.asExecutorName = new String(JavaConstants.EXECUTOR_NAME);
+		this.asSelfName = new String(JavaConstants.SELF_NAME);
 	}
 
 	/**
@@ -354,6 +364,18 @@ public class GlobalNameManager extends AbstractNameManager
 		NameResolution.EagerGlobal baseNameResolution = new NameResolution.EagerGlobal(this, cgElement, reservedName);
 		context.allocateEagerName(reservedName, cgElement);
 		return baseNameResolution;
+	}
+
+	public @NonNull String getASBoxedValuesName() {
+		return asBoxedValuesName;
+	}
+
+	public @NonNull String getASExecutorName() {
+		return asExecutorName;
+	}
+
+	public @NonNull String getASSelfName() {
+		return asSelfName;
 	}
 
 	public @NonNull NameResolution getAnyNameResolution() {

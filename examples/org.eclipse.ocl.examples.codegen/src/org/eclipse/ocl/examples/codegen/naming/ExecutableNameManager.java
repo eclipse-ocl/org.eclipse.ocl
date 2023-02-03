@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -66,6 +65,7 @@ public class ExecutableNameManager extends NestedNameManager
 	protected final @Nullable TypedElement asOrigin;	// Only used to detect Property.isStatic
 	protected final boolean isStatic;
 
+	private /*@LazyNonNull*/ CGParameter boxedValuesParameter = null;		// Passed parameter spelled "boxedValues"
 	private /*@LazyNonNull*/ CGParameter contextObjectParameter = null;		// Passed parameter spelled "contextObject" to distinguish unique evaluations
 	private /*@LazyNonNull*/ CGParameter executorParameter = null;			// Passed parameter spelled "executor"
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / cached local thread lookup
@@ -99,6 +99,15 @@ public class ExecutableNameManager extends NestedNameManager
 		CGVariable old = asVariable2cgVariable.put(asVariable, cgVariable);
 		assert old == null;
 //		analyzer.addVariable(asVariable, cgVariable);
+	}
+
+	private @Nullable Parameter basicGetASParameter(@NonNull Operation asOperation, @NonNull String asName) {
+		for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
+			if (asName == asParameter.getName()) {	// NB == to only match the AS-specific singleton
+				return asParameter;
+			}
+		}
+		return null;
 	}
 
 	public @Nullable CGParameter basicGetCGParameter(@NonNull VariableDeclaration asVariable) {		// XXX tighten to AS Parameter
@@ -220,12 +229,14 @@ public class ExecutableNameManager extends NestedNameManager
 						break;
 					}
 					case BOXED_VALUES: {
+						assert boxedValuesParameter == null;
+						Parameter asBoxedValuesParameter = getASParameter(asOperation, globalNameManager.getASBoxedValuesName());
 						NameResolution nameResolution = globalNameManager.getBoxedValuesNameResolution();
-						String boxedValuesName = nameResolution.getResolvedName();
-						Parameter asBoxedValuesParameter = ClassUtil.nonNullState(NameUtil.getNameable(asOperation.getOwnedParameters(), boxedValuesName));
-						CGParameter cgParameter = lazyGetCGParameter(asBoxedValuesParameter);
-						globalNameManager.getBoxedValuesNameResolution().addCGElement(cgParameter);
+						CGTypeId cgTypeId = analyzer.getCGTypeId(asBoxedValuesParameter.getTypeId());
+						CGParameter cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, true);
+						analyzer.initAst(cgParameter, asBoxedValuesParameter, true);
 						cgParameters.add(cgParameter);
+						boxedValuesParameter = cgParameter;
 						break;
 					}
 					case CONTEXT_OBJECT: {
@@ -257,8 +268,7 @@ public class ExecutableNameManager extends NestedNameManager
 						assert executorParameter == null;
 						assert executorVariable == null;
 						NameResolution nameResolution = globalNameManager.getExecutorNameResolution();
-						String executorName = nameResolution.getResolvedName();
-						Parameter asExecutorParameter = NameUtil.getNameable(asOperation.getOwnedParameters(), executorName);
+						Parameter asExecutorParameter = basicGetASParameter(asOperation, globalNameManager.getASExecutorName());
 						CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID);
 						CGParameter cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, true);
 						cgParameter.setNonInvalid();
@@ -549,6 +559,14 @@ public class ExecutableNameManager extends NestedNameManager
 		return ClassUtil.nonNullState(asOrigin);
 	}
 
+	private @NonNull Parameter getASParameter(@NonNull Operation asOperation, @NonNull String asName) {
+		Parameter asParameter = basicGetASParameter(asOperation, asName);
+		if (asParameter != null) {
+			return asParameter;
+		}
+		throw new IllegalStateException("Missing " + asName + " AS Parameter for " + asOperation);
+	}
+
 	@Override
 	public @NonNull NamedElement getASScope() {
 		return asScope;
@@ -566,6 +584,14 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 		assert false;;
 		return null;
+	}
+
+	public @NonNull CGParameter getBoxedValuesParameter() {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getBoxedValuesParameter();
+		}
+		assert boxedValuesParameter != null;
+		return boxedValuesParameter;
 	}
 
 	public @NonNull CGExecutorType getCGExecutorType(@NonNull Type asType) {

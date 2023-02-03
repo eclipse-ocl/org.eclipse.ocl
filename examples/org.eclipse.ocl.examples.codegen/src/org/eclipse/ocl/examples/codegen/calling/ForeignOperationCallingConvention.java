@@ -141,6 +141,18 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			cgEntryClass.getOperations().add(cgConstructor);
 			return cgConstructor;
 		} */
+
+		@Override
+		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
+		//	return AS_PARAMETER_STYLES_BOXED_VALUES_ALL;
+			return super.getASParameterStyles(asOrigin);
+		}
+
+		@Override
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+		//	return CG_PARAMETER_STYLES_EXECUTOR_PARAMETER_VARIABLES;
+			return super.getCGParameterStyles(operationNameManager);
+		}
 	}
 
 	public static class ForeignEntryClassCallingConvention extends AbstractEntryClassCallingConvention
