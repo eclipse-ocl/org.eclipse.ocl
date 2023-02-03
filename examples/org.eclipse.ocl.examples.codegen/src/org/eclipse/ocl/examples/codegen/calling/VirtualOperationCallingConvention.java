@@ -197,6 +197,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 		//	js.appendCommentWithOCL(title, asFeature);
+		js.append("// " + cgOperation.getCallingConvention() + "\n");
 		js.append("private ");
 		js.appendValueName(cgOperation);
 		js.append("() {\n");

@@ -439,6 +439,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		assert operationName != null;
 		js.appendCommentWithOCL(null, cgOperation.getAst());
 	//	assert false;		// XXX
+		js.append("// " + cgOperation.getCallingConvention() + "\n");
 		js.append("public static class ");
 		js.append(operationName);
 		js.append(" extends ");
@@ -541,6 +542,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 				js.appendCommentWithOCL(null/*title+"\n"*/, expressionInOCL);
 		//	}
 		}
+		js.append("// " + cgOperation.getCallingConvention() + "\n");
 		js.append("public static ");
 		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
 		js.append(" ");

@@ -65,6 +65,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.appendCommentWithOCL(title, expInOcl);
 		assert className != null;
 		//	js.append("@SuppressWarnings(\"nls\")\n");
+		js.append("// " + cgClass.getCallingConvention() + "\n");
 		js.append("public class " + className + " extends ");
 		js.appendClassReference(null, baseClass);
 	//	appendSuperTypes(js, cgClass);

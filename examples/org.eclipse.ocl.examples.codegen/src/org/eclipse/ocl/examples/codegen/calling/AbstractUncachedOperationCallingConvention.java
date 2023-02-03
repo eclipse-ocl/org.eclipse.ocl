@@ -51,6 +51,7 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
+		js.append("// " + cgOperation.getCallingConvention() + "\n");
 		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(cgOperation);
 		if (jMethod != null) {
 			js.append("@Override\n");

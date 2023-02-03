@@ -95,6 +95,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
 			String executorName = globalNameManager.getExecutorNameResolution().getResolvedName();
 			String rootObjectName = globalNameManager.getRootObjectNameResolution().getResolvedName();
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
 			js.append("public ");
 			js.appendValueName(cgOperation);
 			js.append("(");
@@ -265,6 +266,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		Operation asOperation = cg2javaVisitor.getAnalyzer().basicGetCachedOperation(asClass);
 		js.appendCommentWithOCL(title, asOperation);
+		js.append("// " + cgClass.getCallingConvention() + "\n");
 		js.append("public class " + className);		// Could be static if dynamic INSTANCE_CACHE accessible statically
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);

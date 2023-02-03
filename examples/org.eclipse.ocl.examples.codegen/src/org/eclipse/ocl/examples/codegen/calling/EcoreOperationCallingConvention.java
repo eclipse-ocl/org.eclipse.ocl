@@ -272,6 +272,7 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		String returnClassName = cg2javaVisitor.getGenModelHelper().getOperationReturnType(asOperation);
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendCommentWithOCL(null, cgBody.getAst());
+		js.append("// " + cgOperation.getCallingConvention() + "\n");
 		for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
 			VariableDeclaration asParameter = CGUtil.getAST(cgParameter);
 			Type asType = PivotUtil.getType(asParameter);

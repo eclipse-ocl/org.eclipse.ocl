@@ -385,6 +385,7 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		String title = PrettyPrinter.printName(asOperation);
 		js.appendCommentWithOCL(title+"\n", expressionInOCL);
 		//
+		js.append("// " + cgOperation.getCallingConvention() + "\n");
 		js.append("public class ");
 		js.append(operationClassName);
 		js.append(" extends ");

@@ -317,6 +317,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
 		js.appendCommentWithOCL(null, asExpression);
+		js.append("// " + cgOperation.getCallingConvention() + "\n");
 		js.append("protected ");
 		js.appendValueName(cgOperation);
 		appendParameterList(js, cgOperation);

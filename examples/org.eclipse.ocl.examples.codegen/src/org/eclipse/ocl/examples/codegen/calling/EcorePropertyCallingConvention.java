@@ -206,6 +206,7 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		String returnClassName = cg2javaVisitor.getGenModelHelper().getPropertyResultType(asProperty);
 		js.appendCommentWithOCL(null, cgBody.getAst());
+		js.append("// " + cgProperty.getCallingConvention() + "\n");
 		js.appendLocalStatements(cgBody);
 		CGInvalid cgInvalidValue = cgBody.getInvalidValue();
 		if (cgInvalidValue  != null) {

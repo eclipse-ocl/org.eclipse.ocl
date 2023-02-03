@@ -199,6 +199,7 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		Property asProperty = (Property) cgProperty.getAst();
 		Property asOppositeProperty = asProperty.getOpposite();
+		js.append("// " + cgProperty.getCallingConvention() + "\n");
 		js.appendDeclaration(cgProperty);
 		js.append(" = new ");
 		js.appendClassReference(null, cgProperty);

@@ -46,6 +46,7 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
+			js.append("// " + cgProperty.getCallingConvention() + "\n");
 			js.append("protected final");
 			js.append(" /*@NonInvalid*/ ");
 			boxedTypeRepresentation.appendClassReference(cgProperty.isRequired(), cgProperty);
@@ -73,6 +74,7 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
+			js.append("// " + cgProperty.getCallingConvention() + "\n");
 			js.append("protected final");
 			js.append(" /*@NonInvalid*/ ");
 			js.getBoxedTypeRepresentation().appendClassReference(cgProperty.isRequired(), cgProperty);

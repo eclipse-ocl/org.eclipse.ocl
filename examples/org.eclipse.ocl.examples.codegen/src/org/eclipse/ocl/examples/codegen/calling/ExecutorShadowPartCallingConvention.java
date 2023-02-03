@@ -44,6 +44,7 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 		assert cgProperty instanceof CGExecutorShadowPart;
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)cgProperty;
+		js.append("// " + cgProperty.getCallingConvention() + "\n");
 		js.appendDeclaration(cgExecutorShadowPart);
 		js.append(" = ");
 		CodeGenAnalyzer analyzer = cg2javaVisitor.getCodeGenerator().getAnalyzer();
