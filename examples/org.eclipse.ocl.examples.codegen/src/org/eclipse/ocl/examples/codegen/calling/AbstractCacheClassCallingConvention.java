@@ -199,11 +199,15 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			js.append("return new ");
 			js.appendClassReference(null, cgOperation);
 			js.append("(");
-			js.append(cg2javaVisitor.getGlobalNameManager().getExecutorNameResolution().getResolvedName());
+		//	js.append(cg2javaVisitor.getGlobalNameManager().getExecutorNameResolution().getResolvedName());
+			boolean isFirst = true;
 			for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
-				js.append(", ");
+				if (!isFirst) {
+					js.append(", ");
+				}
 				js.append("(@NonNull Object @NonNull [])");		// XXX conditionalize / parameterize
 				js.appendValueName(cgParameter);
+				isFirst = false;
 			}
 			js.append(");\n");
 		}

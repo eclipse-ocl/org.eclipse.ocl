@@ -747,7 +747,6 @@ public class CodeGenAnalyzer
 	public @NonNull CGParameter createCGParameter(@NonNull VariableDeclaration asParameter) {
 		CGParameter cgParameter = CGModelFactory.eINSTANCE.createCGParameter();
 		initAst(cgParameter, asParameter, false);
-		System.out.println("createCGParameter " + NameUtil.debugSimpleName(cgParameter) + " " + asParameter);
 		return cgParameter;
 	}
 
@@ -758,7 +757,6 @@ public class CodeGenAnalyzer
 		}
 		cgParameter.setTypeId(typeId);
 		cgParameter.setRequired(isRequired);
-		System.out.println("createCGParameter " + NameUtil.debugSimpleName(cgParameter) + " " + nameResolution + ":" + typeId);
 		return cgParameter;
 	}
 

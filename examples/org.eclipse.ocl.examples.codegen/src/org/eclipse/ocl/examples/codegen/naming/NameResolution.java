@@ -354,11 +354,11 @@ public abstract class NameResolution
 		}
 		if ("boxedValues".equals(newName)) {
 			getClass();			// XXX
-			if (cgElements != null) {
-				for (CGNamedElement cgElement : cgElements) {
-					System.out.println("debugNameHint " + NameUtil.debugSimpleName(cgElement));
-				}
-			}
+		//	if (cgElements != null) {
+		//		for (CGNamedElement cgElement : cgElements) {
+		//			System.out.println("debugNameHint " + NameUtil.debugSimpleName(cgElement));
+		//		}
+		//	}
 		}
 		if ("context".equals(newName)) {
 			getClass();			// XXX

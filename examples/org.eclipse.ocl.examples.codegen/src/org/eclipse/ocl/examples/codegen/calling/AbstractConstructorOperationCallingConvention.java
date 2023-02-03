@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -115,6 +114,9 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		assert (asEntryExpressionInOCL != null);
 		List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
 		//
+	/*	CGVariable executorVariable = operationNameManager.lazyGetExecutorVariable();
+
+
 		List<@NonNull Parameter> asEntryParameters = PivotUtilInternal.getOwnedParametersList(asEntryOperation);
 		Parameter asExecutorParameter = asEntryParameters.get(0);
 		CGParameter cgEntryExecutorParameter = operationNameManager.lazyGetCGParameter(asExecutorParameter);
@@ -123,7 +125,10 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		Parameter asBoxedValuesParameter = asEntryParameters.get(1);
 		CGParameter cgEntryBoxedValuesParameter = operationNameManager.lazyGetCGParameter(asBoxedValuesParameter);
 		globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
-		cgParameters.add(cgEntryBoxedValuesParameter);
+		cgParameters.add(cgEntryBoxedValuesParameter); */
+
+		CGParameter cgEntryBoxedValuesParameter = operationNameManager.getBoxedValuesParameter();
+
 		CGTypeId cgTypeId = analyzer.getCGTypeId(TypeId.OCL_VOID);
 		CGParameter cgThisParameter = operationNameManager.lazyGetThisParameter();
 		CGSequence cgSequence = CGModelFactory.eINSTANCE.createCGSequence();
