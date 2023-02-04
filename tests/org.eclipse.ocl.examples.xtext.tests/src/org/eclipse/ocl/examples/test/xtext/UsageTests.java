@@ -655,7 +655,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 
 	@Override
 	protected @NonNull TestFileSystemHelper getTestFileSystemHelper() {
-		return new TestFileSystemHelper()
+		return new TestFileSystemHelper() // FIXME share with QVTbaseTestFileSystemHelper
+
 		{
 			@Override
 			protected void appendBuildSpec(@NonNull Writer s) throws IOException {
@@ -714,6 +715,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 				try {
 					s = new FileWriter(file);
 					s.append("Manifest-Version: 1.0\n");
+					s.append("Automatic-Module-Name: " + projectName + "\n");
 					s.append("Bundle-ManifestVersion: 2\n");
 					s.append("Bundle-Name: " + projectName + "\n");
 					s.append("Bundle-SymbolicName: " + projectName + ";singleton:=true\n");

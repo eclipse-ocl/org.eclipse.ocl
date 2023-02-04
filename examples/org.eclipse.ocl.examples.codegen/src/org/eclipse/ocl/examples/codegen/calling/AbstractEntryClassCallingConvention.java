@@ -74,6 +74,11 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			INSTANCE.logInstance(asClass);
 			return INSTANCE;
 		}
+
+		@Override
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles( @NonNull ExecutableNameManager operationNameManager) {
+			return CG_PARAMETER_STYLES_BOXED_VALUES;
+		}
 	}
 
 	public static class EntryGetResultOperationCallingConvention extends AbstractUncachedOperationCallingConvention

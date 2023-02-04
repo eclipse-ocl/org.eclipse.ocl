@@ -202,13 +202,15 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 		final LibraryIteration libraryIteration = ClassUtil.nonNullState(((CGLibraryIterationCallExp)cgIterationCallExp).getLibraryIteration());
+		ExecutableNameManager nameManager = globalNameManager.useExecutableNameManager(cgIterationCallExp);
 		final Method actualMethod = libraryIteration.getEvaluateMethod(referredIteration);
 		final Class<?> actualReturnClass = actualMethod.getReturnType();
 		boolean actualIsNonNull = codeGenerator.getIsNonNull(actualMethod) == Boolean.TRUE;
 		boolean expectedIsNonNull = cgIterationCallExp.isRequiredOrNonNull();
 		final String astName = cgIterationCallExp.getResolvedName();
 		final String bodyName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getBODY_NameVariant());
-		final String executorName = globalNameManager.getExecutorName();
+//		final String rootExecutorName = globalNameManager.getRootExecutorNameResolution().getResolvedName();
+		final String executorName = nameManager.lazyGetExecutorVariable().getResolvedName();
 		final String implementationName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getIMPL_NameVariant());
 		final String managerName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getMGR_NameVariant());
 		final String staticTypeName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getTYPE_NameVariant());
