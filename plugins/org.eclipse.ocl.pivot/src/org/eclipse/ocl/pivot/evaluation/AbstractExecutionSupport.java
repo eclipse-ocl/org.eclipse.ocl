@@ -17,15 +17,15 @@ import org.eclipse.jdt.annotation.NonNull;
  */
 public abstract class AbstractExecutionSupport implements ExecutionSupport
 {
-	protected final @NonNull Executor executor;// = PivotUtil.getExecutor(null);
-	protected final @NonNull AbstractExecutionSupport rootObject = this;
+	protected final @NonNull Executor rootExecutor;// = PivotUtil.getExecutor(null);
+	protected final @NonNull AbstractExecutionSupport rootThis = this;
 
 	protected AbstractExecutionSupport(@NonNull Executor executor) {
-		this.executor = executor;
+		this.rootExecutor = executor;
 	}
 
 	@Override
 	public @NonNull Executor getExecutor() {
-		return executor;
+		return rootExecutor;
 	}
 }

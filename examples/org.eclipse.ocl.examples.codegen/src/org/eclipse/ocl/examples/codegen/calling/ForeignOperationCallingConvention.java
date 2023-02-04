@@ -202,7 +202,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
 			Operation asOperation = cg2javaVisitor.getAnalyzer().getCachedOperation(asCacheClass);
 			if (asOperation.isIsStatic()) {
-				cg2javaVisitor.getJavaStream().append(globalNameManager.getRootObjectNameResolution().getResolvedName());
+				cg2javaVisitor.getJavaStream().append(globalNameManager.getRootThisNameResolution().getResolvedName());
 				isFirst = false;
 			}
 			super.generateUniqueComputationArguments(cg2javaVisitor, isFirst, globalNameManager, cgOperation);

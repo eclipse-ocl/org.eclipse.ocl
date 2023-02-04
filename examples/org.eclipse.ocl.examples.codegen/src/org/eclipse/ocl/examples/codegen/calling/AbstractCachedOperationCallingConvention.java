@@ -227,6 +227,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
+			GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
 			js.append("// " + cgProperty.getCallingConvention() + "\n");
 			js.append("public final");
@@ -237,9 +238,9 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			js.append(" = new ");
 			boxedTypeRepresentation.appendClassReference(null, cgProperty);
 			js.append("(");
-			js.append(cg2javaVisitor.getGlobalNameManager().getExecutorNameResolution().getResolvedName());
+			js.append(globalNameManager.getRootExecutorNameResolution().getResolvedName());
 			js.append(", ");
-			js.append(cg2javaVisitor.getGlobalNameManager().getRootObjectNameResolution().getResolvedName());
+			js.append(globalNameManager.getRootThisNameResolution().getResolvedName());
 			js.append(");\n");
 			return true;
 		}

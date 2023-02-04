@@ -93,25 +93,25 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
-			String executorName = globalNameManager.getExecutorNameResolution().getResolvedName();
-			String rootObjectName = globalNameManager.getRootObjectNameResolution().getResolvedName();
+			String rootExecutorName = globalNameManager.getRootExecutorNameResolution().getResolvedName();
+			String rootThisName = globalNameManager.getRootThisNameResolution().getResolvedName();
 			js.append("// " + cgOperation.getCallingConvention() + "\n");
 			js.append("public ");
 			js.appendValueName(cgOperation);
 			js.append("(");
 			js.appendClassReference(true, Executor.class);
 			js.append(" ");
-			js.append(executorName);
+			js.append(rootExecutorName);
 			js.append(", ");
 			js.appendClassReference(true, Object.class);
 			js.append(" ");
-			js.append(rootObjectName);
+			js.append(rootThisName);
 			js.append(") {\n");
 			js.pushIndentation(null);
 			js.append("super(");
-			js.append(executorName);
+			js.append(rootExecutorName);
 			js.append(", ");
-			js.append(rootObjectName);
+			js.append(rootThisName);
 			js.append(");\n");
 			js.popIndentation();
 			js.append("}\n");
@@ -140,7 +140,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 
 		@Override
 		protected void generateUniqueComputationArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
-			cg2javaVisitor.getJavaStream().append(globalNameManager.getRootObjectNameResolution().getResolvedName());
+			cg2javaVisitor.getJavaStream().append(globalNameManager.getRootThisNameResolution().getResolvedName());
 			super.generateUniqueComputationArguments(cg2javaVisitor, false, globalNameManager, cgOperation);
 		}
 	}

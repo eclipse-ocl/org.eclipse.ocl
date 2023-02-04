@@ -54,7 +54,8 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendOptionalBlankLine();;
 		GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
-		String rootObjectName = globalNameManager.getRootObjectNameResolution().getResolvedName();
+		String rootExecutorName = globalNameManager.getRootExecutorNameResolution().getResolvedName();
+		String rootThisName = globalNameManager.getRootThisNameResolution().getResolvedName();
 		String className = CGUtil.getName(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		js.appendClassHeader(asClass);
@@ -82,7 +83,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 			js.append("protected final ");
 			js.appendClassReference(true, Executor.class);
 			js.append(" ");
-			js.append("executor");
+			js.append(rootExecutorName);
 			js.append(" = ");
 			js.appendClassReference(null, PivotUtil.class);
 			js.append(".getExecutor(null);\n");
@@ -93,7 +94,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.append(" ");
 		js.append(className);
 		js.append(" ");
-		js.append(rootObjectName);
+		js.append(rootThisName);
 		js.append(" = this;\n");
 		//
 		if (expInOcl.getOwnedContext() != null) {

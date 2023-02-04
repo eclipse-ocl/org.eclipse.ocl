@@ -81,7 +81,7 @@ public class OCLinEcoreSupport
 		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2java, @NonNull CGClass cgClass) {
 			GlobalNameManager globalNameManager = cg2java.getGlobalNameManager();
-			String rootObjectName = globalNameManager.getRootObjectNameResolution().getResolvedName();
+			String rootThisName = globalNameManager.getRootThisNameResolution().getResolvedName();
 			String supportPackageName = cgClass.getContainingPackage().toString().replace("::", "."); //generator.getQualifiedSupportClassName();
 		//	int index = qualifiedSupportClassName.lastIndexOf(".");
 		//	String supportPackageName = index >= 0 ? qualifiedSupportClassName.substring(0, index) : null;
