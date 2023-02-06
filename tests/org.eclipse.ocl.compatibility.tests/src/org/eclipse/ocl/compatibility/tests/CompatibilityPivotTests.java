@@ -10,7 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.compatibility.tests;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 public class CompatibilityPivotTests extends org.eclipse.ocl.examples.test.xtext.AllXtextTests
 {
-	// Selectively flatten AllXtextTests to focus for debugging.
+	public static Test suite() {
+		TestSuite suite = (TestSuite) org.eclipse.ocl.examples.test.xtext.AllXtextTests.suite();
+		suite.addTestSuite(StandaloneClassPathTests.class);
+		return suite;
+	}
 }

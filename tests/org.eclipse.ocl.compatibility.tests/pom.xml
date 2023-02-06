@@ -673,7 +673,6 @@
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
         <targetRelease>2021-06</targetRelease>
-        <tycho-version>2.1.0</tycho-version>
       </properties>
     </profile>
     <profile>
@@ -685,7 +684,6 @@
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
         <targetRelease>2021-09</targetRelease>
-        <tycho-version>2.1.0</tycho-version>
       </properties>
     </profile>
     <profile>
@@ -697,7 +695,94 @@
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
         <targetRelease>2021-12</targetRelease>
-        <tycho-version>2.1.0</tycho-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>2022-03</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2022-03</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2022-06</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2022-06</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2022-09</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2022-09</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2022-12</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2022-12</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2023-03</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2023-03</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2023-06</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2023-06</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2023-09</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2023-09</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>2023-12</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <targetRelease>2023-12</targetRelease>
       </properties>
     </profile>
   </profiles>
