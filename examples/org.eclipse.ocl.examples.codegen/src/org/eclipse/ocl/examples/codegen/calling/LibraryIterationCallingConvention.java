@@ -209,7 +209,6 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		boolean expectedIsNonNull = cgIterationCallExp.isRequiredOrNonNull();
 		final String astName = cgIterationCallExp.getResolvedName();
 		final String bodyName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getBODY_NameVariant());
-//		final String rootExecutorName = globalNameManager.getRootExecutorNameResolution().getResolvedName();
 		final String executorName = nameManager.lazyGetExecutorVariable().getResolvedName();
 		final String implementationName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getIMPL_NameVariant());
 		final String managerName = cg2javaVisitor.getVariantResolvedName(cgIterationCallExp, codeGenerator.getMGR_NameVariant());

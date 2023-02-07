@@ -103,9 +103,9 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 
 	@Override
 	public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgConstructor) {
-		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgConstructor);
+	//	JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
+	//	GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
+	//	List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgConstructor);
 		CGClass cgEntryClass = CGUtil.getContainingClass(cgConstructor);
 		List<@NonNull CGProperty> cgProperties = CGUtil.getPropertiesList(cgEntryClass);
 		Operation asEntryOperation = CGUtil.getAST(cgConstructor);

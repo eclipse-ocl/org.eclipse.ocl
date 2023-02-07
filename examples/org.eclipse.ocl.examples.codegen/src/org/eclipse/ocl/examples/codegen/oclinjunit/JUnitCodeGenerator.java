@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.naming.ClassNameManager;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
+import org.eclipse.ocl.examples.codegen.naming.SupportedExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils.CodeGenString;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
@@ -122,22 +123,22 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 
 	@Override
 	public @NonNull ExecutableNameManager createConstraintNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGConstraint cgConstraint) {
-		return new JUnitExecutableNameManager(classNameManager, classNameManager, cgConstraint, null);
+		return new SupportedExecutableNameManager(classNameManager, classNameManager, cgConstraint, null);
 	}
 
 	@Override
 	public @NonNull ExecutableNameManager createLoopNameManager(@NonNull ClassNameManager classNameManager, @NonNull ExecutableNameManager parentNameManager, @NonNull CGIterationCallExp cgIterationCallExp) {
-		return new JUnitExecutableNameManager(classNameManager, parentNameManager, cgIterationCallExp, null);
+		return new SupportedExecutableNameManager(classNameManager, parentNameManager, cgIterationCallExp, null);
 	}
 
 	@Override
 	public @NonNull ExecutableNameManager createOperationNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGOperation cgOperation, @Nullable TypedElement asOrigin) {
-		return new JUnitExecutableNameManager(classNameManager, classNameManager, cgOperation, asOrigin);
+		return new SupportedExecutableNameManager(classNameManager, classNameManager, cgOperation, asOrigin);
 	}
 
 	@Override
 	public @NonNull ExecutableNameManager createPropertyNameManager(@NonNull ClassNameManager classNameManager, @NonNull CGProperty cgProperty) {
-		return new JUnitExecutableNameManager(classNameManager, classNameManager, cgProperty, null);
+		return new SupportedExecutableNameManager(classNameManager, classNameManager, cgProperty, null);
 	}
 
 	protected @NonNull String generate(@NonNull ExpressionInOCL expInOcl, @NonNull String packageName, @NonNull String className) {
