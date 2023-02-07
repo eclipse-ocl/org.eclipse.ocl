@@ -270,7 +270,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		js.append("public class " + className);		// Could be static if dynamic INSTANCE_CACHE accessible statically
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
-		generateProperties(cg2javaVisitor, cgClass);
+		generatePropertyDeclarations(cg2javaVisitor, cgClass);
 		generateOperations(cg2javaVisitor, cgClass);
 		js.popClassBody(false);
 		return true;

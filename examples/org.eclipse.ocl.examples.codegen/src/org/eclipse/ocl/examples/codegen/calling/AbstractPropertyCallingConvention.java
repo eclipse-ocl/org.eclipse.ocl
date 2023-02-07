@@ -109,9 +109,11 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 	}
 
 	@Override
-	public abstract boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
-
-	protected boolean generateJavaDeclarationUnimplemented(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+//		return generateJavaDeclarationUnimplemented(cg2javaVisitor, cgProperty);		// XXX
+//	}
+//
+//	protected boolean generateJavaDeclarationUnimplemented(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		js.append("«");
@@ -125,6 +127,27 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 		js.append("»\n");
 		return true;
 	//	throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".generateJavaDeclaration");	// A number of Property Calling Conventions are call-only
+	}
+
+	@Override
+	public boolean generateJavaInitialization(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+//		return generateJavaInitializationUnimplemented(cg2javaVisitor, cgProperty);
+//	}
+//
+//	protected boolean generateJavaInitializationUnimplemented(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		JavaStream js = cg2javaVisitor.getJavaStream();
+		Property asProperty = CGUtil.getAST(cgProperty);
+		js.append("«");
+		js.append(getClass().getSimpleName());
+		js.append(".generateJavaInitialization ");		// XXX debugging - change to abstract
+		js.append(asProperty.getOwningClass().getOwningPackage().getName());
+		js.append("::");
+		js.append(asProperty.getOwningClass().getName());
+		js.append("::");
+		js.append(asProperty.getName());
+		js.append("»\n");
+		return true;
+	//	throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".generateJavaInitialization");	// A number of Property Calling Conventions are call-only
 	}
 
 	@Override

@@ -181,11 +181,6 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
-		return generateJavaDeclarationUnimplemented(cg2javaVisitor, cgProperty);		// XXX
-	}
-
-	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGProperty cgProperty) {
 		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgProperty);
 		CGConstrainedProperty cgConstrainedProperty = (CGConstrainedProperty)cgProperty;

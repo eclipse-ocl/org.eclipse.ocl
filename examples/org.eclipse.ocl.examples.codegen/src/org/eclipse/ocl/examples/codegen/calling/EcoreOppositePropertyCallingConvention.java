@@ -163,11 +163,6 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 	}
 
 	@Override
-	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
-		return generateJavaDeclarationUnimplemented(cg2javaVisitor, cgProperty);		// XXX
-	}
-
-	@Override
 	public boolean needsGeneration() {
 		return false;
 	}

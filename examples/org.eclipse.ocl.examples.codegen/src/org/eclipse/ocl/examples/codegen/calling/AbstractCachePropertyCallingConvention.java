@@ -52,6 +52,17 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 			boxedTypeRepresentation.appendClassReference(cgProperty.isRequired(), cgProperty);
 			js.append(" ");
 			js.appendValueName(cgProperty);
+			js.append(";\n");
+			return true;
+		}
+
+		@Override
+		public boolean generateJavaInitialization(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+			JavaStream js = cg2javaVisitor.getJavaStream();
+			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
+			js.append("// " + cgProperty.getCallingConvention() + "\n");
+			js.append("this.");
+			js.appendValueName(cgProperty);
 			js.append(" = new ");
 			boxedTypeRepresentation.appendClassReference(null, cgProperty);
 			js.append("();\n");

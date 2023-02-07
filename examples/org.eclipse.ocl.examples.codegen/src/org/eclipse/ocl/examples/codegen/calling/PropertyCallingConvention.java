@@ -74,6 +74,8 @@ public interface PropertyCallingConvention extends CallingConvention
 	 */
 	boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
 
+	boolean generateJavaInitialization(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
+
 	void initCGParameter(@NonNull ExecutableNameManager propertyNameManager);
 
 	boolean isInlined();

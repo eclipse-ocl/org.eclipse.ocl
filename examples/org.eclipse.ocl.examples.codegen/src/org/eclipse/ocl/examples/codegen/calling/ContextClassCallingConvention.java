@@ -63,7 +63,7 @@ public class ContextClassCallingConvention extends AbstractClassCallingConventio
 //		if (!Iterables.isEmpty(cgSuperTypes)) {
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);
-		generateProperties(cg2javaVisitor, cgClass);
+		generatePropertyDeclarations(cg2javaVisitor, cgClass);
 		generateOperations(cg2javaVisitor, cgClass);
 		js.popClassBody(false);
 		return true;

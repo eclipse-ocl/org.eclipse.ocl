@@ -81,6 +81,7 @@ public class OCLinEcoreSupport
 		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2java, @NonNull CGClass cgClass) {
 			GlobalNameManager globalNameManager = cg2java.getGlobalNameManager();
+			String rootExecutorName = globalNameManager.getRootExecutorNameResolution().getResolvedName();
 			String rootThisName = globalNameManager.getRootThisNameResolution().getResolvedName();
 			String supportPackageName = cgClass.getContainingPackage().toString().replace("::", "."); //generator.getQualifiedSupportClassName();
 		//	int index = qualifiedSupportClassName.lastIndexOf(".");
@@ -124,18 +125,24 @@ public class OCLinEcoreSupport
 			if (cgGlobals != null) {
 				cg2java.generateGlobals(cgGlobals);
 			}
+			generatePropertyDeclarations(cg2java, cgClass);
 			js.appendOptionalBlankLine();
 			js.append("public ");
 			js.append(supportClassName);
 			js.append("(");
 			js.appendClassReference(true, Executor.class);
-			js.append(" executor) {\n");
+			js.append(" ");
+			js.append(rootExecutorName);
+			js.append(") {\n");
 			js.pushIndentation(null);
-			js.append("super(executor);\n");
+			js.append("super(");
+			js.append(rootExecutorName);
+			js.append(");\n");
+			generatePropertyInitializations(cg2java, cgClass);
 			js.popIndentation();
 			js.append("}\n");
 			//
-			generateProperties(cg2java, cgClass);
+		//	generateProperties(cg2java, cgClass);
 			generateOperations(cg2java, cgClass);
 			generateClasses(cg2java, cgClass);
 			js.popClassBody(false);
