@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
-import org.eclipse.ocl.pivot.library.LibraryOperation;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 
 public class JavaGenModelCodeGenHelper implements CodeGenHelper
@@ -139,7 +138,7 @@ public class JavaGenModelCodeGenHelper implements CodeGenHelper
 	}
 
 	@Override
-	public @Nullable LibraryOperation loadClass(@NonNull ExpressionInOCL query, @NonNull File targetFolder,
+	public @NonNull Class<?> loadClass(@NonNull ExpressionInOCL query, @NonNull File targetFolder,
 			@NonNull String packageName, @NonNull String className, boolean saveSource) throws Exception {
 		String qualifiedClassName = packageName + "." + className;
 		String javaCodeSource = JUnitCodeGenerator.generateClassFile(environmentFactory, query, packageName, className);
@@ -156,6 +155,8 @@ public class JavaGenModelCodeGenHelper implements CodeGenHelper
 			throw new IOException("Failed to compile " + qualifiedClassName + "\n" + problems);
 		}
 		Class<?> testClass = OCL2JavaFileObject.loadExplicitClass(explicitClassPath, qualifiedClassName);
-		return (LibraryOperation) testClass.newInstance();
+		return testClass;
+	//	testClass.getConstructor(Executor.class);
+	//	return (LibraryOperation) testClass.newInstance();
 	}
 }
