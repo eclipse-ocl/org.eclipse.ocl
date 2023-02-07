@@ -43,8 +43,8 @@
 
     <tycho.scmUrl>scm:git:https://git.eclipse.org/c/ocl/org.eclipse.ocl.git</tycho.scmUrl>
     <executionEnvironment>${executionEnvironment}</executionEnvironment>
-    <!--source-java-version>1.5</source-java-version>
-    <target-java-version>${source-java-version}</target-java-version-->
+    <source-java-version>1.8</source-java-version>
+    <target-java-version>${source-java-version}</target-java-version>
     <java-source-encoding>UTF-8</java-source-encoding>
     <resource-encoding>UTF-8</resource-encoding>
     <os-jvm-flags/>
