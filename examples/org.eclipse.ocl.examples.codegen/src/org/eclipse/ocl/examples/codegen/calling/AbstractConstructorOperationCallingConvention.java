@@ -327,7 +327,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 
 	@Override
 	protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
-		return AS_PARAMETER_STYLES_EXECUTOR_BOXED_VALUES_ALL;
+		return AS_PARAMETER_STYLES_BOXED_VALUES_ALL;
 	}
 
 	@Override
