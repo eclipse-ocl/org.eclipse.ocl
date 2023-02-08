@@ -37,16 +37,11 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Evaluator;
-import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.PropertyId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractProperty;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -58,34 +53,13 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public abstract class AbstractCachedOperationCallingConvention extends AbstractOperationCallingConvention
 {
 	/**
-	 * A CacheProperty instance supports evaluation of a property in a CGed cache. (It has no opposite).
+	 * A CacheProperty instance signals a property in a CGed cache. (It has no opposite).
 	 */
 	public static class CacheProperty extends AbstractProperty
 	{
-		private final @NonNull PropertyId propertyId;
-		private final @Nullable OCLExpression initExpression;
-		private final @Nullable Object defaultValue;
+		public static final @NonNull CacheProperty INSTANCE = new CacheProperty();
 
-		public CacheProperty(@NonNull PropertyId propertyId, @Nullable OCLExpression initExpression, @Nullable Object defaultValue) {
-			this.propertyId = propertyId;
-			this.initExpression = initExpression;
-			this.defaultValue = defaultValue;
-		}
-
-		/** @deprecated use Executor */
-		@Deprecated
-		@Override
-		public @Nullable Object evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-			return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
-		}
-
-		/**
-		 * @since 1.1
-		 */
-		@Override
-		public @Nullable Object evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-			throw new UnsupportedOperationException();
-		}
+		private CacheProperty() {}
 	}
 
 	public static abstract class AbstractEvaluateOperationCallingConvention extends AbstractUncachedOperationCallingConvention
@@ -96,25 +70,13 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		}
 
 		public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation, org.eclipse.ocl.pivot.@NonNull Class asEntryClass) {
-			//
-			// AS Class - yyy2zzz
-			// AS Properties -
-			// AS Operation - yyy2zzz
-			// AS Operation.ownedParameters - x, y
-			// AS Cache Operation - evaluate
-			// AS Cache Operation.parameters - x, y
-			// AS Cache ExpressionInOCL.ownedContext - this
-			// AS Cache ExpressionInOCL.ownedParameters -
-			// CG Cache Operation - evaluate
-			// CG Cache Operation.lets -
-			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 			org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
 			//
 			//	Create AS declaration for evaluate
 			//
-			NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
+			NameResolution evaluateNameResolution = globalNameManager.getEvaluateName();
 			Operation asCacheEvaluateOperation = createASOperationDeclaration(analyzer, asCacheClass, asOperation,
 					evaluateNameResolution.getResolvedName(), ASResultStyle.RESULT);
 			//
@@ -125,7 +87,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			//	Create CG declaration for evaluate
 			//
 			CGOperation cgCacheEvaluateOperation = createCGOperationDeclaration(analyzer, cgCacheClass, asCacheEvaluateOperation,
-				evaluateNameResolution, null);
+				evaluateNameResolution, asOperation);
 		/*	CGOperation cgCacheEvaluateOperation = createCGOperation(analyzer, asCacheEvaluateOperation);
 			analyzer.initAst(cgCacheEvaluateOperation, asCacheEvaluateOperation, true);
 			cgCacheEvaluateOperation.setCallingConvention(this);
@@ -176,7 +138,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			js.append(")getUniqueComputation(");
 			generateUniqueComputationArguments(cg2javaVisitor, true, globalNameManager, cgOperation);
 			js.append(")).");
-			js.append(globalNameManager.getCachedResultNameResolution().getResolvedName());
+			js.appendName(globalNameManager.getCachedResultName());
 			js.append(";\n");
 		}
 
@@ -228,7 +190,9 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
-			js.append("// " + cgProperty.getCallingConvention() + "\n");
+			if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+				js.append("// " + cgProperty.getCallingConvention() + "\n");
+			}
 			js.append("public final");
 			js.append(" /*@NonInvalid*/ ");
 			boxedTypeRepresentation.appendClassReference(cgProperty.isRequired(), cgProperty);
@@ -241,18 +205,15 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		@Override
 		public boolean generateJavaInitialization(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
-			GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
-			js.append("// " + cgProperty.getCallingConvention() + "\n");
+			if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+				js.append("// " + cgProperty.getCallingConvention() + "\n");
+			}
 			js.append("this.");
 			js.appendValueName(cgProperty);
 			js.append(" = new ");
 			boxedTypeRepresentation.appendClassReference(null, cgProperty);
-			js.append("(");
-			js.append(globalNameManager.getRootExecutorNameResolution().getResolvedName());
-			js.append(", ");
-			js.append(globalNameManager.getRootThisNameResolution().getResolvedName());
-			js.append(");\n");
+			js.append("();\n");
 			return true;
 		}
 	}
@@ -335,7 +296,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			throw new IllegalStateException();
 		}
 		asCacheClass.getOwnedProperties().add(asCacheProperty);
-		asCacheProperty.setImplementation(new CacheProperty(asCacheProperty.getPropertyId(), null, null));
+		asCacheProperty.setImplementation(CacheProperty.INSTANCE);
 		//
 		CGProperty cgCacheProperty = analyzer.generatePropertyDeclaration(asCacheProperty, ImmutableCachePropertyCallingConvention.getInstance(asCacheProperty));
 		if (nameResolution != null) {

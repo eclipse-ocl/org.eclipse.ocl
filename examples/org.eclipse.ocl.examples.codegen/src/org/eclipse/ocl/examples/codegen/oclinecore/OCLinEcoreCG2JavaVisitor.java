@@ -32,9 +32,11 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
@@ -92,6 +94,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 				GenModelHelper genModelHelper = context.getGenModelHelper();
 				GenClassifier genClassifier = genModelHelper.getGenClassifier(asClass);
 				if (genClassifier instanceof GenClass) {
+					ExecutableNameManager executableNameManager = globalNameManager.useRootExecutableNameManager(cgOperationCallExp);
+					CGVariable cgExecutorVariable = executableNameManager.lazyGetExecutorVariable();
 					GenClass genClass = (GenClass)genClassifier;
 					for (GenOperation genOperation : genClass.getGenOperations()) {
 						if (genOperation.getEcoreOperation() == eOperation) {
@@ -99,11 +103,11 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 							js.append(" = ");
 							js.appendClassReference(null, CGStringGetSeverityOperation.class);
 							js.append(".");
-							js.append(globalNameManager.getInstanceName());
+							js.appendName(globalNameManager.getInstanceName());
 							js.append(".");
-							js.append(globalNameManager.getEvaluateName());
+							js.appendName(globalNameManager.getEvaluateName());
 							js.append("(");
-							js.append(globalNameManager.getExecutorName());
+							js.appendValueName(cgExecutorVariable);
 							js.append(", ");
 							js.appendClassReference(null, genClassifier.getGenPackage().getQualifiedPackageInterfaceName());
 							js.append(".Literals.");

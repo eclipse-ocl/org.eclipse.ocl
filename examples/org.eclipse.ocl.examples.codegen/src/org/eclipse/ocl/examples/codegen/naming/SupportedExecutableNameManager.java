@@ -13,8 +13,6 @@ package org.eclipse.ocl.examples.codegen.naming;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.TypedElement;
 
 /**
@@ -26,22 +24,23 @@ public class SupportedExecutableNameManager extends ExecutableNameManager
 		super(classNameManager, parentNameManager, cgScope, asOrigin);
 	}
 
-	@Override
+/*	@Override
 	public @Nullable CGVariable basicGetExecutorVariable() {
 		CGVariable executorVariable = super.basicGetExecutorVariable();
 		if (executorVariable == null) {
 			executorVariable = lazyGetExecutorVariable();		// Always exists so must create
 		}
 		return executorVariable;
-	}
+	} */
 
-	@Override
+/*	@Override
 	protected @NonNull CGVariable createExecutorVariable() {
+	//	assert false;
 		// create a variable that exposes the static field name as a variable
 		NameResolution rootExecutorNameResolution = globalNameManager.getRootExecutorNameResolution();
 		CGVariable cgExecutorVariable = analyzer.createCGFinalVariable(rootExecutorNameResolution, analyzer.getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID), true);
 		cgExecutorVariable.setNonInvalid();
 		rootExecutorNameResolution.addCGElement(cgExecutorVariable);
 		return cgExecutorVariable;
-	}
+	} */
 }

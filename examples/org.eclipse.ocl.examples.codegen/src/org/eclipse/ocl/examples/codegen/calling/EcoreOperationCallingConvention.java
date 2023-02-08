@@ -175,7 +175,8 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		assert cgOperation.eContainer() == null;
 		CGClass cgClass = analyzer.getCGClass(PivotUtil.getOwningClass(asOperation));
 		cgClass.getOperations().add(cgOperation);
-		initCGParameters(operationNameManager);
+		@NonNull CGParameterStyle @NonNull [] cgParameterStyles = getCGParameterStyles(operationNameManager);
+		operationNameManager.createCGOperationParameters(cgParameterStyles);
 		return cgOperation;
 	}
 
@@ -272,7 +273,9 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		String returnClassName = cg2javaVisitor.getGenModelHelper().getOperationReturnType(asOperation);
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendCommentWithOCL(null, cgBody.getAst());
-		js.append("// " + cgOperation.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
+		}
 		for (@SuppressWarnings("null")@NonNull CGParameter cgParameter : cgParameters) {
 			VariableDeclaration asParameter = CGUtil.getAST(cgParameter);
 			Type asType = PivotUtil.getType(asParameter);
@@ -310,10 +313,10 @@ public class EcoreOperationCallingConvention extends AbstractUncachedOperationCa
 		if (bodyExpression != null) {
 			Variable asContextVariable = bodyExpression.getOwnedContext();
 			if (asContextVariable != null) {
-				return CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETER_VARIABLES;
+				return CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETERS;
 			}
 			else {
-				return CG_PARAMETER_STYLES_EAGER_PARAMETER_VARIABLES;
+				return CG_PARAMETER_STYLES_EAGER_PARAMETERS;
 			}
 		}
 		else {

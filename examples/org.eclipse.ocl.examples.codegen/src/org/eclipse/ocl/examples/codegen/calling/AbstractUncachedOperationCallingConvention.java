@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -51,11 +52,11 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
-		js.append("// " + cgOperation.getCallingConvention() + "\n");
-		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(cgOperation);
-		if (jMethod != null) {
-			js.append("@Override\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
 		}
+		generateSuppressWarnings(js, cgOperation);
+		generateOverrideDeclaration(js, cgOperation);
 		js.append("public ");
 		if (CGUtil.getAST(cgOperation).isIsStatic()) {
 			js.append("static ");
@@ -77,6 +78,15 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 		cg2javaVisitor.appendReturn(body);
 	}
 
+	protected void generateOverrideDeclaration(@NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(cgOperation);
+		if (jMethod != null) {
+			js.append("@Override\n");
+		}
+	}
+
+	protected void generateSuppressWarnings(@NonNull JavaStream js, @NonNull CGOperation cgOperation) {}
+
 	@Override
 	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 		Operation asOperation = (Operation)operationNameManager.getASScope();
@@ -84,7 +94,7 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 		if (bodyExpression != null) {
 			Variable asContextVariable = bodyExpression.getOwnedContext();
 			if (asContextVariable != null) {
-				return CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS;
+				return CG_PARAMETER_STYLES_SELF_PARAMETERS;
 			}
 			else {
 				return CG_PARAMETER_STYLES_PARAMETERS;

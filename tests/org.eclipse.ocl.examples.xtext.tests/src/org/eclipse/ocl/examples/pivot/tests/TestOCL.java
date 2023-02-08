@@ -13,6 +13,8 @@ package org.eclipse.ocl.examples.pivot.tests;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -29,6 +31,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.common.CodeGenHelper;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaGenModelCodeGenHelper;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.xtext.tests.NoHttpURIHandlerImpl;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.examples.xtext.tests.TestProject;
@@ -59,7 +63,6 @@ import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.library.LibraryUnaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -115,6 +118,7 @@ public class TestOCL extends OCLInternal
 		configureGeneratedPackage(EcorePackage.eNS_URI);
 		configureGeneratedPackage(PivotPackage.eNS_URI);
 		configureGeneratedPackage(OCLstdlibPackage.eNS_URI);
+		JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.setState(true);
 	}
 
 	private void configureGeneratedPackage( /*@NonNull*/ String uriString) {
@@ -819,51 +823,41 @@ public class TestOCL extends OCLInternal
 	}
 
 	public @Nullable Object evaluate(@NonNull ExpressionInOCL expr, @Nullable Object self) throws Exception {
-		Object result = null;
-
-		//    	try {
 		if (!PivotTestSuite.useCodeGen) {
-			result = super.evaluate(self, expr);
+			return super.evaluate(self, expr);
 		}
-		else {
-			CodeGenHelper genModelHelper = getCodeGenHelper(getEnvironmentFactory());
-			//			File targetFolder = new File(PivotTestSuite.ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS + "/src-gen");
-			String packagePath = testPackageName + "/" + testName;
-			String packageName = testPackageName + "." + testName;
-			if (testProject == null) {
-				testProject = testFileSystem.getTestProject("_OCLtests", false);
-				testProject.getOutputFile("test-src/" + packagePath).getFile().mkdirs();
-				testProject.getOutputFile("test-bin/" + packagePath).getFile().mkdirs();
-			}
-			File targetFolder = testProject.getOutputFile("test-src").getFile();
-			String className = "TestClass" + testCounter++;
-			Class<?> testClass = genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
-			Constructor<?> constructor = null;
+		CodeGenHelper genModelHelper = getCodeGenHelper(getEnvironmentFactory());
+		//			File targetFolder = new File(PivotTestSuite.ORG_ECLIPSE_OCL_EXAMPLES_XTEXT_TESTRESULTS + "/src-gen");
+		String packagePath = testPackageName + "/" + testName;
+		String packageName = testPackageName + "." + testName;
+		if (testProject == null) {
+			testProject = testFileSystem.getTestProject("_OCLtests", false);
+			testProject.getOutputFile("test-src/" + packagePath).getFile().mkdirs();
+			testProject.getOutputFile("test-bin/" + packagePath).getFile().mkdirs();
+		}
+		File targetFolder = testProject.getOutputFile("test-src").getFile();
+		String className = "TestClass" + testCounter++;
+		Class<?> testClass = genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
+		Constructor<?> constructor = testClass.getConstructor(Executor.class);
+		Method evaluateMethod = testClass.getMethod(JavaConstants.EVALUATE_NAME, Object.class);
+		Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
+		try {
+			Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY, getModelManager());
+			ThreadLocalExecutor.setExecutor(executor);
+			OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();
+			callExp.setType(expr.getType());
+			Object testInstance = constructor.newInstance(executor);
+			assert testInstance != null;
 			try {
-				constructor = testClass.getConstructor(Executor.class);
+				return evaluateMethod.invoke(testInstance, self);
 			}
-			catch (NoSuchMethodException e) {}
-			Executor savedExecutor = ThreadLocalExecutor.basicGetExecutor();
-			try {
-				Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY, getModelManager());
-				ThreadLocalExecutor.setExecutor(executor);
-				OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();
-				callExp.setType(expr.getType());
-				Object testInstance;
-				if (constructor != null) {
-					testInstance = constructor.newInstance(executor);
-				}
-				else {
-					testInstance =  testClass.newInstance();
-				}
-				assert testInstance != null;
-				result = ((LibraryUnaryOperation.LibraryUnaryOperationExtension)testInstance).evaluate(executor, callExp.getTypeId(), self);
-			}
-			finally {
-				ThreadLocalExecutor.setExecutor(savedExecutor);
+			catch (InvocationTargetException e) {
+				throw (Exception)e.getCause();
 			}
 		}
-		return result;
+		finally {
+			ThreadLocalExecutor.setExecutor(savedExecutor);
+		}
 	}
 
 	public @Nullable Object evaluateLocal(@Nullable Object context, @NonNull String expression) throws Exception {

@@ -30,6 +30,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
@@ -112,9 +113,9 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			js.append("return (");
 			js.appendClassReference(isRequiredReturn, cgOperation);
 			js.append(")");
-			js.append(globalNameManager.getEvaluationCacheName());
+			js.appendName(globalNameManager.getEvaluationCacheName());
 			js.append(".");
-			js.append(globalNameManager.getGetCachedEvaluationResultName());
+			js.appendName(globalNameManager.getGetCachedEvaluationResultName());
 			js.append("(this, caller, new ");
 			js.appendClassReference(false, Object.class);
 			js.append("[]{");
@@ -197,7 +198,9 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 		//	js.appendCommentWithOCL(title, asFeature);
-		js.append("// " + cgOperation.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
+		}
 		js.append("private ");
 		js.appendValueName(cgOperation);
 		js.append("() {\n");
@@ -234,21 +237,6 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 
 	@Override
 	public void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
-		//
-		// AS Class - yyy2zzz
-		// AS Properties -
-		// AS Operation - yyy2zzz
-		// AS Operation.ownedParameters -
-		// AS Cache Operation - yyy2zzz
-		// AS Cache Operation.parameters -
-		// AS Cache ExpressionInOCL.ownedContext -
-		// AS Cache ExpressionInOCL.ownedParameters -
-		// CG Cache Operation - yyy2zzz
-		// CG Cache Operation.lets -
-		//
-	//	JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-	//	EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
-	//	GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
 		//
 		//	Create AS declaration for newInstance
@@ -265,7 +253,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		//
 		@SuppressWarnings("unused")
 		CGOperation cgConstructorOperation = createCGOperationDeclaration(analyzer, cgCacheClass, asConstructorOperation,
-			null, null);
+			null, asOperation);
 	}
 
 	@Override

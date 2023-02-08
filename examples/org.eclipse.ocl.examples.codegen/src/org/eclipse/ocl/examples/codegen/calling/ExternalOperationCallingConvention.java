@@ -60,8 +60,8 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		}
 
 		@Override
-		protected @NonNull NameResolution getContextNameResolution(@NonNull GlobalNameManager globalNameManager) {
-			return globalNameManager.getSelfNameResolution();
+		protected @NonNull NameResolution getContextName(@NonNull GlobalNameManager globalNameManager) {
+			return globalNameManager.getSelfName();
 		}
 
 		@Override
@@ -111,7 +111,8 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		assert analyzer.basicGetCGElement(asOperation) != null;
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation, null);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() != null;
-		initCGParameters(operationNameManager);
+		@NonNull CGParameterStyle @NonNull [] cgParameterStyles = getCGParameterStyles(operationNameManager);
+		operationNameManager.createCGOperationParameters(cgParameterStyles);
 		return cgOperation;
 	}
 
@@ -139,7 +140,7 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
-		if (cgOperationCallExp.eContainer() != cgOperationCallExp.getReferredOperation()) {
+		if (cgOperationCallExp.eContainer() != cgOperationCallExp.getReferredOperation()) {					// XXX is this vintage irrelevance
 			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperationCallExp);
 		}
 		else {

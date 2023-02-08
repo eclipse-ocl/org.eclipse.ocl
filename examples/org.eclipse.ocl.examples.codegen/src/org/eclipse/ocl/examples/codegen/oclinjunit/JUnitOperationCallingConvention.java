@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
@@ -41,7 +42,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		NameResolution evaluateNameResolution = analyzer.getGlobalNameManager().getEvaluateNameResolution();
+		NameResolution evaluateNameResolution = analyzer.getGlobalNameManager().getEvaluateName();
 		assert evaluateNameResolution.getResolvedName().equals(asOperation.getName());
 		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		evaluateNameResolution.addCGElement(cgOperation);
@@ -53,8 +54,10 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
-		js.append("// " + cgOperation.getCallingConvention() + "\n");
-		js.append("@Override\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
+		}
+	//	js.append("@Override\n");
 		js.append("public ");
 		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
@@ -73,7 +76,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		ExpressionInOCL expressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		assert contextVariable != null;
-		return CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_JUNIT_SELF_PARAMETERS;
+		return CG_PARAMETER_STYLES_JUNIT_SELF;
 	}
 
 	@Override

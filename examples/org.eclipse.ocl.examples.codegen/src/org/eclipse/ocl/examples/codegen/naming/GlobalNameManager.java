@@ -380,24 +380,19 @@ public class GlobalNameManager extends AbstractNameManager
 		return asSelfName;
 	}
 
-	public @NonNull NameResolution getAnyNameResolution() {
+	public @NonNull NameResolution getAnyName() {
 		return anyName;
 	}
 
-	public @NonNull NameResolution getBasicEvaluateNameResolution() {
+	public @NonNull NameResolution getBasicEvaluateName() {
 		return basicEvaluateName;
 	}
 
-	public @NonNull NameResolution getBoxedValuesNameResolution() {
+	public @NonNull NameResolution getBoxedValuesName() {
 		return boxedValuesName;
 	}
 
-	@Deprecated
-	public @NonNull String getCachedResultName() {
-		return cachedResultName.getResolvedName();
-	}
-
-	public @NonNull NameResolution getCachedResultNameResolution() {
+	public @NonNull NameResolution getCachedResultName() {
 		return cachedResultName;
 	}
 
@@ -418,7 +413,7 @@ public class GlobalNameManager extends AbstractNameManager
 		return context;
 	}
 
-	public @NonNull NameResolution getContextObjectNameResolution() {
+	public @NonNull NameResolution getContextObjectName() {
 		return contextObjectName;
 	}
 
@@ -427,75 +422,47 @@ public class GlobalNameManager extends AbstractNameManager
 		return elementId.accept(id2EClassVisitor);
 	}
 
-	public @NonNull String getEvaluateName() {
-		return evaluateName.getResolvedName();
-	}
-
-	public @NonNull NameResolution getEvaluateNameResolution() {
+	public @NonNull NameResolution getEvaluateName() {
 		return evaluateName;
 	}
 
-	public @NonNull String getEvaluationCacheName() {
-		return evaluationCacheName.getResolvedName();
+	public @NonNull NameResolution getEvaluationCacheName() {
+		return evaluationCacheName;
 	}
 
-	public @NonNull String getExecutorName() {
-		return executorName.getResolvedName();
-	}
-
-	public @NonNull NameResolution getExecutorNameResolution() {
+	public @NonNull NameResolution getExecutorName() {
 		return executorName;
 	}
 
-//	public @NonNull NameResolution getGetCachedEvaluationResultNameResolution() {
-//		return getCachedEvaluationResultName;
-//	}
-
-	public @NonNull String getGetCachedEvaluationResultName() {
-		return getCachedEvaluationResultName.getResolvedName();
+	public @NonNull NameResolution getGetCachedEvaluationResultName() {
+		return getCachedEvaluationResultName;
 	}
 
-	public @NonNull NameResolution getGetResultNameResolution() {
+	public @NonNull NameResolution getGetResultName() {
 		return getResultName;
-	}
-
-	public @NonNull String getGetResultName() {
-		return getResultName.getResolvedName();
 	}
 
 	public @NonNull Collection<@NonNull CGValuedElement> getGlobals() {
 		return globals;
 	}
 
-	public @NonNull String getIdResolverName() {
-		return idResolverName.getResolvedName();
-	}
-
-	public @NonNull NameResolution getIdResolverNameResolution() {
+	public @NonNull NameResolution getIdResolverName() {
 		return idResolverName;
 	}
 
-	public @NonNull String getInitValueName() {
-		return initValueName.getResolvedName();
+	public @NonNull NameResolution getInitValueName() {
+		return initValueName;
 	}
 
-	public @NonNull String getInstanceName() {
-		return instanceName.getResolvedName();
-	}
-
-	public @NonNull NameResolution getInstanceNameResolution() {
+	public @NonNull NameResolution getInstanceName() {
 		return instanceName;
 	}
 
-	public @NonNull NameResolution getIsEqualNameResolution() {
+	public @NonNull NameResolution getIsEqualName() {
 		return isEqualName;
 	}
 
-	public @NonNull String getModelManagerName() {
-		return modelManagerName.getResolvedName();
-	}
-
-	public @NonNull NameResolution getModelManagerNameResolution() {
+	public @NonNull NameResolution getModelManagerName() {
 		return modelManagerName;
 	}
 
@@ -520,51 +487,43 @@ public class GlobalNameManager extends AbstractNameManager
 		return nameResolution;
 	}
 
-	public @NonNull NameResolution getNewInstanceResolution() {
+	public @NonNull NameResolution getNewInstance() {
 		return newInstanceName;
 	}
 
-//	public @NonNull String getObjectName() {
-//		return objectName.getResolvedName();
-//	}
-
-//	public @NonNull NameResolution getObjectNameResolution() {
+//	public @NonNull NameResolution getObjectName() {
 //		return objectName;
 //	}
 
-	public @NonNull String getReservedName(@NonNull String name) {
-		return ClassUtil.nonNullState(name2reservedNameResolutions.get(name)).getResolvedName();
+	public @NonNull NameResolution getReservedName(@NonNull String name) {
+		return ClassUtil.nonNullState(name2reservedNameResolutions.get(name));
 	}
 
-	public @NonNull NameResolution getRootExecutorNameResolution() {
+	public @NonNull NameResolution getRootExecutorName() {
 		return rootExecutorName;
 	}
 
-	public @NonNull NameResolution getRootThisNameResolution() {
+	public @NonNull NameResolution getRootThisName() {
 		return rootThisName;
 	}
 
-	public @NonNull String getSelfName() {
-		return selfName.getResolvedName();
-	}
-
-	public @NonNull NameResolution getSelfNameResolution() {
+	public @NonNull NameResolution getSelfName() {
 		return selfName;
 	}
 
-	public @NonNull String getSourceAndArgumentValuesName() {
-		return sourceAndArgumentValuesName.getResolvedName();
+	public @NonNull NameResolution getSourceAndArgumentValuesName() {
+		return sourceAndArgumentValuesName;
 	}
 
-	public @NonNull NameResolution getStandardLibraryVariableNameResolution() {
+	public @NonNull NameResolution getStandardLibraryVariableName() {
 		return standardLibraryVariableName;
 	}
 
-	public @NonNull NameResolution getThisNameResolution() {
+	public @NonNull NameResolution getThisName() {
 		return thisName;
 	}
 
-	public @NonNull NameResolution getTypeIdNameResolution() {
+	public @NonNull NameResolution getTypeIdName() {
 		return typeIdName;
 	}
 

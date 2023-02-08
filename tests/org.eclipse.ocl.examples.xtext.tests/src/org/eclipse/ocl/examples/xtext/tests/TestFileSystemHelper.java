@@ -25,19 +25,23 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public class TestFileSystemHelper
 {
+	public TestFileSystemHelper() {
+		super();
+	}
+
 	protected void appendBuildSpec(@NonNull Writer s) throws IOException {}
 
 	protected void appendNatures(@NonNull Writer s) throws IOException {}
 
-	public @Nullable File createBuildDotProperties(@NonNull File projectFolder, @NonNull String projectName) {
+	protected @Nullable File createBuildDotProperties(@NonNull File projectFolder, @NonNull String projectName) {
 		return null;
 	}
 
-	public @Nullable File createDotClasspathFile(@NonNull File projectFolder, @NonNull String projectName) {
+	protected @Nullable File createDotClasspathFile(@NonNull File projectFolder, @NonNull String projectName) {
 		return null;
 	}
 
-	public @NonNull File createDotProjectFile(@NonNull File projectFolder, @NonNull String projectName) {
+	protected @NonNull File createDotProjectFile(@NonNull File projectFolder, @NonNull String projectName) {
 		File file = new File(projectFolder, ".project");
 		Writer s;
 		try {
@@ -67,7 +71,14 @@ public class TestFileSystemHelper
 		return file;
 	}
 
-	public @Nullable File createManifestFile(@NonNull File projectFolder, @NonNull String projectName) {
+	public void createFiles(@NonNull File projectFolder, @NonNull String projectName) {
+		createDotProjectFile(projectFolder, projectName);
+		createDotClasspathFile(projectFolder, projectName);
+		createManifestFile(projectFolder, projectName);
+		createBuildDotProperties(projectFolder, projectName);
+	}
+
+	protected @Nullable File createManifestFile(@NonNull File projectFolder, @NonNull String projectName) {
 		return null;
 	}
 

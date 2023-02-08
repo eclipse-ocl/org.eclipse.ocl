@@ -21,9 +21,12 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -188,6 +191,9 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		List<@NonNull CGParameter> cgParameters = ClassUtil.nullFree(cgOperation.getParameters());
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
+		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
+		ExecutableNameManager executableNameManager = globalNameManager.useRootExecutableNameManager(cgOperation);
+		CGVariable cgExecutorVariable = executableNameManager.lazyGetExecutorVariable();
 		js.append("@Override\n");
 		js.append("public ");
 		//				boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
@@ -196,7 +202,7 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		js.append(" basicEvaluate(");
 		js.appendClassReference(true, Executor.class);
 		js.append(" ");
-		js.append(cg2javaVisitor.getCodeGenerator().getGlobalNameManager().getExecutorName());
+		js.appendValueName(cgExecutorVariable);
 		js.append(", ");
 		js.appendClassReference(true, TypedElement.class);
 		js.append(" ");
@@ -283,7 +289,7 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		//				js.append(" ");
 		js.appendClassReference(isRequiredReturn, cgOperation);
 		js.append(" ");
-		js.append(globalNameManager.getEvaluateName());
+		js.appendName(globalNameManager.getEvaluateName());
 		js.append("(");
 		boolean isFirst = true;
 		for (@NonNull CGParameter cgParameter : cgParameters) {
@@ -298,9 +304,9 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		js.append("return (");
 		js.appendClassReference(isRequiredReturn, cgOperation);
 		js.append(")");
-		js.append(globalNameManager.getEvaluationCacheName());
+		js.appendName(globalNameManager.getEvaluationCacheName());
 		js.append(".");
-		js.append(globalNameManager.getGetCachedEvaluationResultName());
+		js.appendName(globalNameManager.getGetCachedEvaluationResultName());
 		js.append("(this, caller, new ");
 		js.appendClassReference(false, Object.class);
 		js.append("[]{");
@@ -385,7 +391,9 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		String title = PrettyPrinter.printName(asOperation);
 		js.appendCommentWithOCL(title+"\n", expressionInOCL);
 		//
-		js.append("// " + cgOperation.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
+		}
 		js.append("public class ");
 		js.append(operationClassName);
 		js.append(" extends ");

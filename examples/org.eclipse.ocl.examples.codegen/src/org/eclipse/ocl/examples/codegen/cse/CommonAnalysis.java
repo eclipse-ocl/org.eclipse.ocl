@@ -11,6 +11,7 @@
 package org.eclipse.ocl.examples.codegen.cse;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -30,6 +31,23 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 
 public class CommonAnalysis extends AbstractAnalysis
 {
+	public static final @NonNull PrimaryAnalysisComparator PRIMARY_ANALYSIS_COMPARATOR = new PrimaryAnalysisComparator();
+
+	private static class PrimaryAnalysisComparator implements Comparator<@NonNull CommonAnalysis>
+	{
+
+		@Override
+		public int compare(@NonNull CommonAnalysis o1, @NonNull CommonAnalysis o2) {
+			SimpleAnalysis p1 = o1.getPrimaryAnalysis();
+			SimpleAnalysis p2 = o2.getPrimaryAnalysis();
+			CGValuedElement e1 = p1.getPrimaryElement();
+			CGValuedElement e2 = p2.getPrimaryElement();
+			String s1 = e1.toString();
+			String s2 = e2.toString();
+			return s1.compareTo(s2);
+		}
+	}
+
 	private /*@LazyNonNull*/ SimpleAnalysis primaryAnalysis = null;
 	protected final @NonNull List<SimpleAnalysis> simpleAnalyses = new ArrayList<SimpleAnalysis>();
 	private int minDepth = Integer.MAX_VALUE;

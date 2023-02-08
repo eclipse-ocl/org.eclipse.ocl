@@ -8,20 +8,24 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.calling;
+package org.eclipse.ocl.examples.codegen.oclinjunit;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.AbstractClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.evaluation.AbstractExecutionSupport;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 
 /**
  *  JUnitClassCallingConvention defines the style of a JUnit root Class declaration.
@@ -39,6 +43,10 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgClass = createCGClass();
 		installCGDefaultClassParent(analyzer, cgClass, asClass);
+		LanguageSupport languageSupport = analyzer.getCodeGenerator().getLanguageSupport();
+		org.eclipse.ocl.pivot.@NonNull Class asSuperClass = languageSupport.getNativeClass(AbstractExecutionSupport.class);
+		CGClass cgSuperClass = analyzer.generateClassDeclaration(asSuperClass, null);
+		cgClass.getSuperTypes().add(cgSuperClass);
 		return cgClass;
 	}
 
@@ -54,19 +62,21 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendOptionalBlankLine();;
 		GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
-		String rootExecutorName = globalNameManager.getRootExecutorNameResolution().getResolvedName();
-		String rootThisName = globalNameManager.getRootThisNameResolution().getResolvedName();
+		NameResolution rootExecutorName = globalNameManager.getRootExecutorName();
 		String className = CGUtil.getName(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		js.appendClassHeader(asClass);
 		Operation asOperation = asClass.getOwnedOperations().get(0);
 		ExpressionInOCL expInOcl = (ExpressionInOCL)asOperation.getBodyExpression();
-		Class<?> baseClass = cg2javaVisitor.getGenModelHelper().getAbstractOperationClass(expInOcl.getOwnedParameters().size());
+	//	Class<?> baseClass = cg2javaVisitor.getGenModelHelper().getAbstractOperationClass(expInOcl.getOwnedParameters().size());
+		Class<?> baseClass = AbstractExecutionSupport.class;
 		String title = cgClass.getName() + " provides the Java implementation for";
 		js.appendCommentWithOCL(title, expInOcl);
 		assert className != null;
 		//	js.append("@SuppressWarnings(\"nls\")\n");
-		js.append("// " + cgClass.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgClass.getCallingConvention() + "\n");
+		}
 		js.append("public class " + className + " extends ");
 		js.appendClassReference(null, baseClass);
 	//	appendSuperTypes(js, cgClass);
@@ -77,24 +87,25 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 			cg2javaVisitor.generateGlobals(sortedGlobals);
 	//		js.appendOptionalBlankLine();
 		}
+		generatePropertyDeclarations(cg2javaVisitor, cgClass);
 		//
-		js.appendOptionalBlankLine();
+	/*	js.appendOptionalBlankLine();
 		js.append("protected final ");
 		js.appendIsRequired(true);
 		js.append(" ");
 		js.append(className);
 		js.append(" ");
-		js.append(rootThisName);
+		js.appendName(globalNameManager.getRootThisName());
 		js.append(" = this;\n");
 		//
-		if (globalNameManager.needsExecutor()) {
-			js.append("protected final ");
-			js.appendClassReference(true, Executor.class);
-			js.append(" ");
-			js.append(rootExecutorName);
-			js.append(";\n");
+	//	if (globalNameManager.needsExecutor()) {
+		//	js.append("protected final ");
+		//	js.appendClassReference(true, Executor.class);
+		//	js.append(" ");
+		//	js.appendName(globalNameManager.getRootExecutorName());
+		//	js.append(";\n");
 			//
-			js.appendOptionalBlankLine();
+		/*	js.appendOptionalBlankLine();
 			js.append("public ");
 			js.append(className);
 			js.append("() {\n");
@@ -103,7 +114,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 			js.appendClassReference(null, PivotUtil.class);
 			js.append(".getExecutor(null));\n");
 			js.popIndentation();
-			js.append("}\n");
+			js.append("}\n"); */
 			//
 			js.appendOptionalBlankLine();
 			js.append("public ");
@@ -111,21 +122,24 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 			js.append("(");
 			js.appendClassReference(true, Executor.class);
 			js.append(" ");
-			js.append(rootExecutorName);
+			js.appendName(rootExecutorName);
 			js.append(") {\n");
 			js.pushIndentation(null);
-			js.append("this.");
-			js.append(rootExecutorName);
-			js.append(" = ");
-			js.append(rootExecutorName);
-			js.append(";\n");
+		//	js.append("this.");
+		//	js.appendName(rootExecutorName);
+		//	js.append(" = ");
+		//	js.appendName(rootExecutorName);
+		//	js.append(";\n");
+			js.append("super(");
+			js.appendName(rootExecutorName);
+			js.append(");\n");
 			generatePropertyInitializations(cg2javaVisitor, cgClass);
 			js.popIndentation();
 			js.append("}\n");
-		}
+	//	}
 		//
 		if (expInOcl.getOwnedContext() != null) {
-			generatePropertyDeclarations(cg2javaVisitor, cgClass);
+//			generatePropertyDeclarations(cg2javaVisitor, cgClass);
 			generateOperations(cg2javaVisitor, cgClass);
 		}
 		else {

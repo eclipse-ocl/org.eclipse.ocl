@@ -28,6 +28,7 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.library.NativeProperty;
 
@@ -40,7 +41,7 @@ public class NativePropertyCallingConvention extends AbstractPropertyCallingConv
 {
 	private static final @NonNull NativePropertyCallingConvention INSTANCE = new NativePropertyCallingConvention();
 
-	public static @NonNull NativePropertyCallingConvention getInstance(@NonNull Property asProperty) {
+	public static @NonNull NativePropertyCallingConvention getInstance(@NonNull TypedElement asProperty) {
 		INSTANCE.logInstance(asProperty);
 		return INSTANCE;
 	}

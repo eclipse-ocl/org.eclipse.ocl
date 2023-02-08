@@ -27,11 +27,13 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -98,6 +100,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {
 			return false;
 		}
+		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
+		ExecutableNameManager executableNameManager = globalNameManager.useRootExecutableNameManager(cgPropertyCallExp);
+		CGVariable cgExecutorVariable = executableNameManager.lazyGetExecutorVariable();
 		JavaStream.SubStream sourceStream = new JavaStream.SubStream() {
 			@Override
 			public void append() {
@@ -110,9 +115,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 					js.appendReferenceTo(CGUtil.getReferredProperty(cgPropertyCallExp));
 				}
 				js.append(".");
-				js.append(globalNameManager.getEvaluateNameResolution().getResolvedName());
+				js.appendName(globalNameManager.getEvaluateName());
 				js.append("(");
-				js.append(globalNameManager.getExecutorNameResolution().getResolvedName());
+				js.appendValueName(cgExecutorVariable);
 				js.append(", ");
 				js.appendIdReference(cgExecutorPropertyCallExp.getASTypeId());
 				js.append(", ");
@@ -131,7 +136,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		assert cgProperty instanceof CGExecutorNavigationProperty;
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGExecutorNavigationProperty cgExecutorNavigationProperty = (CGExecutorNavigationProperty)cgProperty;
-		js.append("// " + cgProperty.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgProperty.getCallingConvention() + "\n");
+		}
 		js.appendDeclaration(cgExecutorNavigationProperty);
 		js.append(" = new ");
 		js.appendClassReference(null, UnboxedExplicitNavigationProperty.class);

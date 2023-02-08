@@ -82,4 +82,9 @@ public class OCLinEcoreImportNameManager extends AbstractImportNameManager
 	public void reserveNestedClassNames(@NonNull CGClass cgClass) {
 		throw new UnsupportedOperationException();
 	}
+
+	@Override
+	public void setClassName(@NonNull String className) {
+		throw new UnsupportedOperationException();
+	}
 }

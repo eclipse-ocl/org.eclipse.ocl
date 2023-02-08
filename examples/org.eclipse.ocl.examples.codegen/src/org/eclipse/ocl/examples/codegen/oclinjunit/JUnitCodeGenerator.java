@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.JUnitClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp;
@@ -84,7 +83,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	//		contextVariable.setIsRequired(false); // May be null for test		// XXX this is after a VariableExp has referenced
 	//	}
 		Resource eResource = expInOcl.eResource();
-		NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
+		NameResolution evaluateNameResolution = globalNameManager.getEvaluateName();
 		@NonNull String packageNames[] = qualifiedPackageName.split("\\.");
 		org.eclipse.ocl.pivot.Package asRootPackage = null;
 		org.eclipse.ocl.pivot.Package asLeafPackage = null;

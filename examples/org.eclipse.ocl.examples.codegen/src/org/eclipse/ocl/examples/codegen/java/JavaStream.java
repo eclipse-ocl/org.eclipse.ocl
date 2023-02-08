@@ -37,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.generator.CodeGenOptions;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EObjectDescriptor;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -270,7 +271,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("StaticPropertySupport")) {
+			if (string.contains("INSTANCE_CACHE_ATL2QVTr_getProperty")) {
 				getClass();		// XXX
 			}
 			if (string.contains("InvalidValueException")) {
@@ -569,6 +570,7 @@ public class JavaStream
 			append(";\n");
 			append("\n");
 		}
+		importNameManager.setClassName(className);
 		append(ImportUtils.IMPORTS_MARKER + "\n");
 	}
 
@@ -1057,6 +1059,10 @@ public class JavaStream
 		return true;
 	}
 
+	public void appendName(@NonNull NameResolution nameResolution) {
+		append(nameResolution.getResolvedName());
+	}
+
 	public void appendNotEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {
 		if (cgValue.isRequiredOrNonNull() && cgValue.isNonInvalid()) {
 			if (value) {
@@ -1379,9 +1385,9 @@ public class JavaStream
 	public void pushClassBody(@NonNull String className) {
 		classNameStack.push(className);
 		append("\n");
-		append("{");
+		append("{\n");
 		pushIndentation(null);
-		tailNewLines = 1;		// Avoid gratuitous blank line
+		tailNewLines = 2;		// Avoid gratuitous blank line
 	}
 
 	public void pushIndentation(@Nullable String extraIndentation) {

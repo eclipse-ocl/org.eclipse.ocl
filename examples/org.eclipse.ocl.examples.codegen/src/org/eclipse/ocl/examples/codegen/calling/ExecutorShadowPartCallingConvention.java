@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -44,7 +45,9 @@ public class ExecutorShadowPartCallingConvention extends AbstractPropertyCalling
 		assert cgProperty instanceof CGExecutorShadowPart;
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)cgProperty;
-		js.append("// " + cgProperty.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgProperty.getCallingConvention() + "\n");
+		}
 		js.appendDeclaration(cgExecutorShadowPart);
 		js.append(" = ");
 		CodeGenAnalyzer analyzer = cg2javaVisitor.getCodeGenerator().getAnalyzer();

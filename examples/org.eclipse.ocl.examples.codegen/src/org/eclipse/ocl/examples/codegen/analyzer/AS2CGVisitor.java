@@ -289,9 +289,9 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		ExecutableNameManager nameManager = context.useExecutableNameManager(query);
 		Variable contextVariable = query.getOwnedContext();
 		if (contextVariable != null) {
-			CGVariable cgContext = nameManager.lazyGetThisParameter();
-			nameManager.addVariable(contextVariable, cgContext);
-			cgContext.setNonInvalid();
+			CGVariable cgContext = nameManager.lazyGetThisParameter(contextVariable);
+		//	nameManager.addVariable(contextVariable, cgContext);
+		//	cgContext.setNonInvalid();
 			//			cgContext.setNonNull();
 		}
 		Iterable<@NonNull ParameterVariable> asParameters = (Iterable<@NonNull ParameterVariable>)(Object)PivotUtil.getOwnedParameters(query);

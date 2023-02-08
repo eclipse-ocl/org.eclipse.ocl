@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.TypeRepresentation;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
@@ -46,7 +47,9 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
-			js.append("// " + cgProperty.getCallingConvention() + "\n");
+			if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+				js.append("// " + cgProperty.getCallingConvention() + "\n");
+			}
 			js.append("protected final");
 			js.append(" /*@NonInvalid*/ ");
 			boxedTypeRepresentation.appendClassReference(cgProperty.isRequired(), cgProperty);
@@ -60,7 +63,9 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 		public boolean generateJavaInitialization(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
-			js.append("// " + cgProperty.getCallingConvention() + "\n");
+			if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+				js.append("// " + cgProperty.getCallingConvention() + "\n");
+			}
 			js.append("this.");
 			js.appendValueName(cgProperty);
 			js.append(" = new ");
@@ -71,7 +76,7 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 	}
 
 	/**
-	 *  ImmutableCachePropertyCallingConvention defines the support for an immutable input property of a chahe realizing an operation call.
+	 *  ImmutableCachePropertyCallingConvention defines the support for an immutable input property of a cache realizing an operation call.
 	 */
 	public static class ImmutableCachePropertyCallingConvention extends AbstractCachePropertyCallingConvention
 	{
@@ -85,7 +90,9 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
-			js.append("// " + cgProperty.getCallingConvention() + "\n");
+			if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+				js.append("// " + cgProperty.getCallingConvention() + "\n");
+			}
 			js.append("protected final");
 			js.append(" /*@NonInvalid*/ ");
 			js.getBoxedTypeRepresentation().appendClassReference(cgProperty.isRequired(), cgProperty);

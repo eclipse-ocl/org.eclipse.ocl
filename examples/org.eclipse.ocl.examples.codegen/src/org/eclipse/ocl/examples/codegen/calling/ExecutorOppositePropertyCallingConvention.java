@@ -24,12 +24,14 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
@@ -113,12 +115,14 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {
 			return false;
 		}
+		GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
+		ExecutableNameManager executableNameManager = globalNameManager.useRootExecutableNameManager(cgPropertyCallExp);
+		CGVariable cgExecutorVariable = executableNameManager.lazyGetExecutorVariable();
 		//
 		//	CGExecutorProperty cgExecutorProperty = ClassUtil.nonNullState(cgPropertyCallExp.getExecutorProperty());
 		Boolean ecoreIsRequired = Boolean.FALSE;						// CP properties evaluate is nullable -- FIXME compute rather than assume
 		//	boolean isPrimitive = js.isPrimitive(cgPropertyCallExp);
 		JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
-		GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		Boolean isRequired = codeGenerator.isRequired(cgPropertyCallExp);
 		if ((isRequired == Boolean.TRUE) && (ecoreIsRequired != Boolean.TRUE)) {
 			js.appendSuppressWarningsNull(true);
@@ -131,10 +135,9 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 			public void append() {
 				js.appendReferenceTo(cgPropertyCallExp.getReferredProperty());
 				js.append(".");
-				js.append(globalNameManager.getEvaluateName());
+				js.appendName(globalNameManager.getEvaluateName());
 				js.append("(");
-				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalNameManager.getExecutorName());
+				js.appendValueName(cgExecutorVariable);
 				js.append(", ");
 				js.appendIdReference(cgPropertyCallExp.getASTypeId());
 				js.append(", ");
@@ -172,6 +175,8 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 			return false;
 		}
 		//
+		ExecutableNameManager executableNameManager = globalNameManager.useRootExecutableNameManager(cgPropertyCallExp);
+		CGVariable cgExecutorVariable = executableNameManager.lazyGetExecutorVariable();
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
 		SubStream castBody = new SubStream() {
@@ -179,10 +184,9 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 			public void append() {
 				js.appendReferenceTo(cgPropertyCallExp.getExecutorProperty());
 				js.append(".");
-				js.append(globalNameManager.getEvaluateName());
+				js.appendName(globalNameManager.getEvaluateName());
 				js.append("(");
-				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalNameManager.getExecutorName());
+				js.appendValueName(cgExecutorVariable);
 				js.append(", ");
 				js.appendIdReference(cgPropertyCallExp.getASTypeId());
 				js.append(", ");
@@ -199,7 +203,9 @@ public class ExecutorOppositePropertyCallingConvention extends AbstractPropertyC
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		Property asProperty = (Property) cgProperty.getAst();
 		Property asOppositeProperty = asProperty.getOpposite();
-		js.append("// " + cgProperty.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgProperty.getCallingConvention() + "\n");
+		}
 		js.appendDeclaration(cgProperty);
 		js.append(" = new ");
 		js.appendClassReference(null, cgProperty);

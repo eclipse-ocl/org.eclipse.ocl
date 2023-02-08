@@ -31,7 +31,6 @@ import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ContextClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.DefaultOperationCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOppositePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcorePropertyCallingConvention;
@@ -289,7 +288,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 				return NativeOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 			}
 			else {
-				return EcoreForeignOperationCallingConvention.getInstance(asOperation, maybeVirtual);
+				return /*Ecore*/ForeignOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 			}
 		}
 		return LibraryOperationCallingConvention.getInstance(asOperation, maybeVirtual);
@@ -302,7 +301,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			return NativePropertyCallingConvention.getInstance(asProperty);
 		}
 		else if (libraryProperty instanceof OclElementOclContainerProperty) {
-			return EcorePropertyCallingConvention.getInstance(asProperty);
+			return getEcorePropertyCallingConvention(asProperty);
 		}
 		else if (libraryProperty instanceof CompositionProperty) {
 		/*	EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
@@ -347,7 +346,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			if (eStructuralFeature != null) {
 				try {
 					getGenModelHelper().getGetAccessor(eStructuralFeature);
-					return EcorePropertyCallingConvention.getInstance(asProperty);
+					return getEcorePropertyCallingConvention(asProperty);
 				} catch (GenModelException e) {
 					addProblem(e);		// FIXME drop through to better default
 				}
@@ -359,7 +358,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			assert eStructuralFeature != null;
 			try {
 				getGenModelHelper().getGetAccessor(eStructuralFeature);
-				return EcorePropertyCallingConvention.getInstance(asProperty);
+				return getEcorePropertyCallingConvention(asProperty);
 			} catch (GenModelException e) {
 				addProblem(e);		// FIXME drop through to better default
 			}
@@ -374,7 +373,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			if (eStructuralFeature != null) {
 				try {
 					getGenModelHelper().getGetAccessor(eStructuralFeature);
-					return EcorePropertyCallingConvention.getInstance(asProperty);
+					return getEcorePropertyCallingConvention(asProperty);
 				} catch (GenModelException e) {
 					addProblem(e);		// FIXME drop through to better default
 				}
@@ -399,6 +398,10 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	@Override
 	public @NonNull String getDefaultIndent() {
 		return defaultIndent;
+	}
+
+	protected @NonNull EcorePropertyCallingConvention getEcorePropertyCallingConvention(@NonNull Property asProperty) {
+		return EcorePropertyCallingConvention.getInstance(asProperty);
 	}
 
 	@Override

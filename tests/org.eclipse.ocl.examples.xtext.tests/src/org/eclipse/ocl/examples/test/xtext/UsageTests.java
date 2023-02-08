@@ -47,7 +47,6 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -69,11 +68,12 @@ import org.eclipse.ocl.examples.codegen.dynamic.ExplicitClassLoader;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaClasspath;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaFileUtil;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
+import org.eclipse.ocl.examples.xtext.tests.ProjectTestFileSystemHelper;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
-import org.eclipse.ocl.examples.xtext.tests.TestFileSystemHelper;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -199,6 +199,13 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		return new TestOCL(getTestFileSystem(), getTestPackageName(), getName(), getTestProjectManager(), null);
 	}
 
+	@Override
+	protected @NonNull ProjectTestFileSystemHelper createTestFileSystemHelper() {
+		ProjectTestFileSystemHelper projectTestFileSystemHelper = new ProjectTestFileSystemHelper();
+		projectTestFileSystemHelper.addRequiredBundle("org.eclipse.qvtd.runtime");
+		return projectTestFileSystemHelper;
+	}
+
 	/**
 	 * Return the URI of a file in the test harness models folder.
 	 */
@@ -228,6 +235,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		configurePlatformResources();
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
 		//			.put("pivot", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+		JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.setState(true);
 	}
 
 	@Override
@@ -654,80 +662,8 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	@Override
-	protected @NonNull TestFileSystemHelper getTestFileSystemHelper() {
-		return new TestFileSystemHelper() // FIXME share with QVTbaseTestFileSystemHelper
-
-		{
-			@Override
-			protected void appendBuildSpec(@NonNull Writer s) throws IOException {
-				s.append("\t<buildSpec>\n");
-				s.append("\t\t<buildCommand>\n");
-				s.append("\t\t\t<name>org.eclipse.jdt.core.javabuilder</name>\n");
-				s.append("\t\t\t<arguments>\n");
-				s.append("\t\t\t</arguments>\n");
-				s.append("\t\t</buildCommand>\n");
-				s.append("\t\t<buildCommand>\n");
-				s.append("\t\t\t<name>org.eclipse.pde.ManifestBuilder</name>\n");
-				s.append("\t\t\t<arguments>\n");
-				s.append("\t\t\t</arguments>\n");
-				s.append("\t\t</buildCommand>\n");
-				s.append("\t\t<buildCommand>\n");
-				s.append("\t\t\t<name>org.eclipse.pde.SchemaBuilder</name>\n");
-				s.append("\t\t\t<arguments>\n");
-				s.append("\t\t\t</arguments>\n");
-				s.append("\t\t</buildCommand>\n");
-				s.append("\t</buildSpec>\n");
-			}
-
-			@Override
-			protected void appendNatures(@NonNull Writer s) throws IOException {
-				s.append("\t<natures>\n");
-				s.append("\t\t<nature>org.eclipse.pde.PluginNature</nature>\n");
-				s.append("\t\t<nature>org.eclipse.jdt.core.javanature</nature>\n");
-				s.append("\t</natures>\n");
-			}
-
-			@Override
-			public @Nullable File createDotClasspathFile(@NonNull File projectFolder, @NonNull String projectName) {
-				File file = new File(projectFolder, ".classpath");
-				Writer s;
-				try {
-					s = new FileWriter(file);
-					s.append("<classpath>\n");
-					s.append("  <classpathentry kind=\"con\" path=\"org.eclipse.jdt.launching.JRE_CONTAINER\"/>\n");
-					s.append("  <classpathentry kind=\"con\" path=\"org.eclipse.pde.core.requiredPlugins\"/>\n");
-					s.append("  <classpathentry kind=\"src\" path=\"test-src\"/>\n");
-					s.append("  <classpathentry kind=\"output\" path=\"test-bin\"/>\n");
-					s.append("</classpath>\n");
-					s.close();
-				} catch (IOException e) {
-					throw new WrappedException(e);
-				}
-				return file;
-			}
-
-			@Override
-			public @Nullable File createManifestFile(@NonNull File projectFolder, @NonNull String projectName) {
-				File projectFolder2 = new File(projectFolder, "META-INF");
-				projectFolder2.mkdir();
-				File file = new File(projectFolder2, "MANIFEST.MF");
-				Writer s;
-				try {
-					s = new FileWriter(file);
-					s.append("Manifest-Version: 1.0\n");
-					s.append("Automatic-Module-Name: " + projectName + "\n");
-					s.append("Bundle-ManifestVersion: 2\n");
-					s.append("Bundle-Name: " + projectName + "\n");
-					s.append("Bundle-SymbolicName: " + projectName + ";singleton:=true\n");
-					s.append("Bundle-Version: 1.0.0.qualifier\n");
-					s.append("Require-Bundle: org.eclipse.qvtd.runtime\n");
-					s.close();
-				} catch (IOException e) {
-					throw new WrappedException(e);
-				}
-				return file;
-			}
-		};
+	protected @NonNull ProjectTestFileSystemHelper getTestFileSystemHelper() {
+		return (ProjectTestFileSystemHelper)super.getTestFileSystemHelper();
 	}
 
 	@Override
@@ -1159,6 +1095,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
 	 */
 	public void testBug570717_uml() throws Throwable {
+		getTestFileSystemHelper().addRequiredBundle("org.eclipse.uml2.uml");
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1204,6 +1141,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug570717.uml model can be generated and compiled.
 	 */
 	public void testBug570717a_uml() throws Throwable {
+		getTestFileSystemHelper().addRequiredBundle("org.eclipse.uml2.uml");
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1270,6 +1208,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 			System.err.println(getName() + " has been disabled -see UML Bug 547424");
 			return;
 		}
+		getTestFileSystemHelper().addRequiredBundle("org.eclipse.uml2.uml");
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1307,6 +1246,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * and that the 570892.uml model can then validate.
 	 */
 	public void testBug570892_uml() throws Throwable {
+		getTestFileSystemHelper().addRequiredBundle("org.eclipse.uml2.uml");
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1356,6 +1296,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * and that the Bug570894.uml model can then validate.
 	 */
 	public void testBug570894_uml() throws Throwable {
+		getTestFileSystemHelper().addRequiredBundle("org.eclipse.uml2.uml");
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -1420,6 +1361,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * Verify that the static profile in Bug571407.profile.uml model can be generated and compiled.
 	 */
 	public void testBug571407_uml() throws Throwable {
+		getTestFileSystemHelper().addRequiredBundle("org.eclipse.uml2.uml");
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
@@ -2019,6 +1961,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * @throws Throwable
 	 */
 	public void testOpen_Bug469251_uml() throws Throwable {
+		getTestFileSystemHelper().addRequiredBundle("org.eclipse.uml2.uml");
 		try {
 			doTestRunnable(new TestRunnable() {
 				@Override

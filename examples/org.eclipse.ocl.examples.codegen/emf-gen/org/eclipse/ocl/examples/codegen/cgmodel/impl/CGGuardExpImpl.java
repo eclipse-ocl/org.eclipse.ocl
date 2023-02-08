@@ -318,7 +318,7 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	 */
 	@Override
 	public boolean isNonInvalid() {
-		return super.isNonInvalid() && (source != null) && source.isRequired();
+		return super.isNonInvalid() && (source != null) && source.isRequiredOrNonNull();// XXX && source.isRequired();
 	}
 
 	/**
@@ -352,6 +352,20 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	public void setSource(CGValuedElement newSource) {
 		// TODO Auto-generated method stub
 		super.setSource(newSource);		// XXX
+	}
+
+	@Override
+	public boolean isRequiredOrNonNull() {
+		boolean requiredOrNonNull = super.isRequiredOrNonNull();
+		assert requiredOrNonNull;			// XXX
+		return requiredOrNonNull;
+	}
+
+	@Override
+	public boolean isRequired() {
+		boolean required2 = super.isRequired();
+		assert required2;			// XXX
+		return required2;
 	}
 
 } //CGGuardExpImpl

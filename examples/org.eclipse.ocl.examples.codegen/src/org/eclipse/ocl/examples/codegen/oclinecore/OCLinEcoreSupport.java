@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter.OCLinEcoreStateAdapter;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Class;
@@ -71,6 +72,9 @@ public class OCLinEcoreSupport
 		public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			CGClass cgClass = createCGClass();
 			installCGDefaultClassParent(analyzer, cgClass, asClass);
+			org.eclipse.ocl.pivot.@NonNull Class asSuperClass = analyzer.getCodeGenerator().getLanguageSupport().getNativeClass(AbstractExecutionSupport.class);
+			CGClass cgSuperClass = analyzer.generateClassDeclaration(asSuperClass, null);
+			cgClass.getSuperTypes().add(cgSuperClass);
 			return cgClass;
 		}
 
@@ -81,8 +85,7 @@ public class OCLinEcoreSupport
 		@Override
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2java, @NonNull CGClass cgClass) {
 			GlobalNameManager globalNameManager = cg2java.getGlobalNameManager();
-			String rootExecutorName = globalNameManager.getRootExecutorNameResolution().getResolvedName();
-			String rootThisName = globalNameManager.getRootThisNameResolution().getResolvedName();
+			NameResolution rootExecutorName = globalNameManager.getRootExecutorName();
 			String supportPackageName = cgClass.getContainingPackage().toString().replace("::", "."); //generator.getQualifiedSupportClassName();
 		//	int index = qualifiedSupportClassName.lastIndexOf(".");
 		//	String supportPackageName = index >= 0 ? qualifiedSupportClassName.substring(0, index) : null;
@@ -132,11 +135,11 @@ public class OCLinEcoreSupport
 			js.append("(");
 			js.appendClassReference(true, Executor.class);
 			js.append(" ");
-			js.append(rootExecutorName);
+			js.appendName(rootExecutorName);
 			js.append(") {\n");
 			js.pushIndentation(null);
 			js.append("super(");
-			js.append(rootExecutorName);
+			js.appendName(rootExecutorName);
 			js.append(");\n");
 			generatePropertyInitializations(cg2java, cgClass);
 			js.popIndentation();

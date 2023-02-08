@@ -53,6 +53,7 @@ import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
  */
 public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 {
+	public @Nullable TestFileSystemHelper testFileSystemHelper = null;
 	public @Nullable TestFileSystem testFileSystem = null;
 	public @Nullable TestProject testProject = null;
 	public @Nullable ProjectManager testProjectManager = null;
@@ -141,6 +142,10 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 		return createFile(filePath, fileContent);
 	}
 
+	protected @NonNull TestFileSystemHelper createTestFileSystemHelper() {
+		return new TestFileSystemHelper();
+	}
+
 	/**
 	 * Return the name of the test bundle. The default implementation assumes that the package name is
 	 * the same as the bundle name. Override when this assumption is unjustified.
@@ -218,7 +223,11 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	}
 
 	protected @NonNull TestFileSystemHelper getTestFileSystemHelper() {
-		return new TestFileSystemHelper();
+		TestFileSystemHelper testFileSystemHelper2 = testFileSystemHelper;
+		if (testFileSystemHelper2 == null) {
+			testFileSystemHelper = testFileSystemHelper2 = createTestFileSystemHelper();
+		}
+		return testFileSystemHelper2;
 	}
 
 	protected @NonNull String getTestPackageName() {

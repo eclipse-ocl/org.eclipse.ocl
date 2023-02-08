@@ -349,7 +349,7 @@ public abstract class NameResolution
 	public abstract @Nullable String basicGetResolvedName();
 
 	protected boolean debugNameHint(@NonNull String newName) {
-		if (newName.contains("AbstractComputation")) {
+		if (newName.contains("MAP_MAP_mFtoP1__Daughter2Female__persons")) {
 			getClass();		// XXX
 		}
 		if ("boxedValues".equals(newName)) {

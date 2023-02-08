@@ -103,9 +103,6 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 
 	@Override
 	public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgConstructor) {
-	//	JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-	//	GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-	//	List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgConstructor);
 		CGClass cgEntryClass = CGUtil.getContainingClass(cgConstructor);
 		List<@NonNull CGProperty> cgProperties = CGUtil.getPropertiesList(cgEntryClass);
 		Operation asEntryOperation = CGUtil.getAST(cgConstructor);
@@ -114,29 +111,16 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		assert (asEntryExpressionInOCL != null);
 		List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
 		//
-	/*	CGVariable executorVariable = operationNameManager.lazyGetExecutorVariable();
-
-
-		List<@NonNull Parameter> asEntryParameters = PivotUtilInternal.getOwnedParametersList(asEntryOperation);
-		Parameter asExecutorParameter = asEntryParameters.get(0);
-		CGParameter cgEntryExecutorParameter = operationNameManager.lazyGetCGParameter(asExecutorParameter);
-		globalNameManager.getExecutorNameResolution().addCGElement(cgEntryExecutorParameter);
-		cgParameters.add(cgEntryExecutorParameter);
-		Parameter asBoxedValuesParameter = asEntryParameters.get(1);
-		CGParameter cgEntryBoxedValuesParameter = operationNameManager.lazyGetCGParameter(asBoxedValuesParameter);
-		globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
-		cgParameters.add(cgEntryBoxedValuesParameter); */
-
-		CGParameter cgEntryBoxedValuesParameter = operationNameManager.getBoxedValuesParameter();
 
 		CGTypeId cgTypeId = analyzer.getCGTypeId(TypeId.OCL_VOID);
-		CGParameter cgThisParameter = operationNameManager.lazyGetThisParameter();
+		CGParameter cgThisParameter = operationNameManager.getThisParameter();
 		CGSequence cgSequence = CGModelFactory.eINSTANCE.createCGSequence();
 		List<@NonNull CGValuedElement> cgStatements = CGUtil.getOwnedStatementsList(cgSequence);
 		Stack<@NonNull CGFinalVariable> cgLetVariables = new Stack<>();
 		//
 		//	Unpack boxedValues and assign properties.
 		//
+		CGParameter cgEntryBoxedValuesParameter = operationNameManager.getBoxedValuesParameter();
 		ParameterVariable asThisParameterVariable = (ParameterVariable)asEntryExpressionInOCL.getOwnedContext();
 		assert asThisParameterVariable != null;		// Must have a Java 'this' to initialize its properties
 		// FIXME wrong type
@@ -203,6 +187,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		//	assert !(libraryOperation instanceof ForeignOperation);
 		//	assert !(libraryOperation instanceof ConstrainedOperation);
 		return CGModelFactory.eINSTANCE.createCGLibraryOperation();
+	//	return CGModelFactory.eINSTANCE.createCGCachedOperation();
 	}
 
 	@Override
@@ -246,18 +231,6 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 	 * Create the AS entry operation, AS body and CG operation declaration for the AS operation within cgEntryClass.
 	 */
 	protected /*final*/ @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
-		//
-		// AS Class - yyy2zzz
-		// AS Properties -
-		// AS Operation - f
-		// AS Operation.ownedParameters - x1, x2
-		// AS Entry Operation - newInstance
-		// AS Entry Operation.parameters - boxedValues
-		// AS Entry ExpressionInOCL.ownedContext - this for AS Entry class
-		// AS Entry ExpressionInOCL.ownedParameters - x1, x2
-		// CG Entry Operation - AS Entry class name
-		// CG Entry Operation.lets -
-		//
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 		//
@@ -275,7 +248,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 			if (asContextVariable == null) {			// QVTi FunctionBody has eager ownedContext, OCL ExpressionInOCL is lazy
 				PivotHelper asHelper = codeGenerator.getASHelper();
 				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-				String thisName = globalNameManager.getThisNameResolution().getResolvedName();
+				String thisName = globalNameManager.getThisName().getResolvedName();
 				asContextVariable = asHelper.createParameterVariable(thisName, asEntryClass, true);
 				asEntryExpressionInOCL.setOwnedContext(asContextVariable);
 			}
@@ -292,13 +265,6 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		//
 		CGOperation cgConstructor = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryConstructor,
 			ctorNameResolution, asOperation);
-/*		CGOperation cgConstructor = createCGOperation(analyzer, asEntryConstructor);
-		cgConstructor.setCallingConvention(this);
-		analyzer.initAst(cgConstructor, asEntryConstructor, true);
-		ctorNameResolution.addCGElement(cgConstructor);
-		analyzer.getOperationNameManager(cgConstructor, asEntryConstructor);
-		//
-		cgEntryClass.getOperations().add(cgConstructor); */
 		return cgConstructor;
 	}
 
@@ -317,7 +283,9 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
 		js.appendCommentWithOCL(null, asExpression);
-		js.append("// " + cgOperation.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
+		}
 		js.append("protected ");
 		js.appendValueName(cgOperation);
 		appendParameterList(js, cgOperation);

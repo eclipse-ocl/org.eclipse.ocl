@@ -233,6 +233,11 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 	}
 
 	@Override
+	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		return createOperation(analyzer, asOperation, null);		// Bypass redundant body parsing
+	}
+
+	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)cgOperationCallExp;
 		assert cgOperationCallExp.getCgThis() == null;
@@ -304,9 +309,9 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 				GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 				js.appendClassReference(null, libraryOperation.getClass());
 				js.append(".");
-				js.append(globalNameManager.getInstanceName());
+				js.appendName(globalNameManager.getInstanceName());
 				js.append(".");
-				js.append(globalNameManager.getEvaluateName());
+				js.appendName(globalNameManager.getEvaluateName());
 				js.append("(");
 				boolean needsComma = false;
 				for (@NonNull CGValuedElement cgArgument : cgArguments) {
@@ -361,33 +366,20 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 	@Override
 	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 		Operation asOperation = (Operation)operationNameManager.getASScope();
-/*		assert asOperation.getBodyExpression() == null;
-		if (!asOperation.isIsStatic()) {
-			return CG_PARAMETER_STYLES_SELF_PARAMETERS;
-		}
-		else {
-			return CG_PARAMETER_STYLES_PARAMETERS;
-		} */
-		//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
 		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)analyzer.getMetamodelManager().getImplementation(asOperation);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-	//	cgOperation.setRequired(analyzer.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);			-- CG follows OCL declaration; Java compatibility is resolved in generateJavaCall
 		List<@NonNull CGParameterStyle> cgParameterStyles = new ArrayList<>();
 		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
 		int i = asOperation.isIsStatic() ? 0 : -1;
 		if (Modifier.isStatic(jMethod.getModifiers())) {
 			cgParameterStyles.add(CGParameterStyle.THIS);
 		}
-		boolean hasExecutor = false;
 		boolean hasTypeId = false;
 		boolean hasSelf = false;
 		boolean hasParameters = false;
 		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 			if (jParameterType == Executor.class) {
-				hasExecutor = true;
 				assert !hasTypeId : "executor must precede typeId";
 				assert !hasSelf : "executor must precede self";
 				assert !hasParameters : "executor must precede parameters";
@@ -406,15 +398,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 					ExpressionInOCL expressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();	//	-- some library operations also have OCL bodies
 
 					boolean mayBeVoid = analyzer.hasOclVoidOperation(asOperation.getOperationId());
-					if (expressionInOCL != null) {
-						cgParameterStyles.add(mayBeVoid ? CGParameterStyle.OPTIONAL_BODY_SELF : CGParameterStyle.BODY_SELF);
-					}
-					else {
-						cgParameterStyles.add(mayBeVoid ? CGParameterStyle.OPTIONAL_SELF : CGParameterStyle.SELF);
-					}
-				//	if (analyzer.hasOclVoidOperation(asOperation.getOperationId())) {
-				//		selfParameter.setRequired(false);
-				//	}
+					cgParameterStyles.add(mayBeVoid ? CGParameterStyle.OPTIONAL_SELF : CGParameterStyle.SELF);
 					i = 0;
 				}
 				else {
@@ -441,5 +425,13 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 		CGLibraryOperation cgLibraryOperation = (CGLibraryOperation)cgOperation;
 		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgLibraryOperation);
 		boxingAnalyzer.rewriteAsBoxed(cgLibraryOperation.getBody());
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(
+			@NonNull BoxingAnalyzer boxingAnalyzer,
+			@NonNull CGOperationCallExp cgOperationCallExp) {
+		// TODO Auto-generated method stub
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperationCallExp);
 	}
 }

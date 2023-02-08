@@ -110,20 +110,20 @@ public class FieldingAnalyzer
 	 * The MayBeThrown enforces the container's requirement that an invalid received value
 	 * may be thrown but may also be caught, so no wrapping is required.
 	 */
-	protected final @NonNull FieldingAnalysisVisitor mayBeThrown;
+	private final @NonNull FieldingAnalysisVisitor mayBeThrown;
 
 	/**
 	 * The MustBeCaught visitor enforces the container's requirement that an invalid received value
 	 * must be caught by a CGCatchExp. CGVariableExp are redirected to a cached CGCatchExp. Other
 	 * terms are wrapped in a CGCatchExp.
 	 */
-	protected final @NonNull FieldingAnalysisVisitor mustBeCaught;
+	private final @NonNull FieldingAnalysisVisitor mustBeCaught;
 
 	/**
 	 * The MustBeThrown enforces the container's requirement that an invalid received value
 	 * may be thrown by a CGThrowExp.
 	 */
-	protected final @NonNull FieldingAnalysisVisitor mustBeThrown;
+	private final @NonNull FieldingAnalysisVisitor mustBeThrown;
 
 	public FieldingAnalyzer(@NonNull CodeGenAnalyzer analyzer) {
 		this.analyzer = analyzer;
@@ -178,6 +178,18 @@ public class FieldingAnalyzer
 		}
 		return cgCaughtVariable;
 	} */
+
+	public @NonNull FieldingAnalysisVisitor getMayBeThrownVisitor() {
+		return mayBeThrown;
+	}
+
+	public @NonNull FieldingAnalysisVisitor getMustBeCaughtVisitor() {
+		return mustBeCaught;
+	}
+
+	public @NonNull FieldingAnalysisVisitor getMustBeThrownVisitor() {
+		return mustBeThrown;
+	}
 
 /*	protected boolean isValidating(EObject eObject) {
 		if (eObject instanceof OperationCallExp) {

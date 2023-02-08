@@ -287,6 +287,10 @@ public abstract class AbstractNameManager implements NameManager
 		}
 	}
 
+	public @Nullable List<@NonNull NestedNameManager> getChildren() {
+		return children;
+	}
+
 	@Deprecated // not needed
 	protected abstract @NonNull Context getContext();
 

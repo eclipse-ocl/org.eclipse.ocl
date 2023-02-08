@@ -33,4 +33,6 @@ public interface ImportNameManager
 	@NonNull Map<@NonNull String, @Nullable String> getLong2ShortImportNames();
 
 	void reserveNestedClassNames(@NonNull CGClass cgClass);
+
+	void setClassName(@NonNull String className);
 }

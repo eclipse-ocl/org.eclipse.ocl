@@ -27,7 +27,10 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
  */
 public class JavaImportNameManager extends AbstractImportNameManager
 {
-	/**
+	private @Nullable String classNamePrefix = null;
+
+
+/**
 	 * The short class name associated with a given long class name, null if the shortened class name is already used by some other class.
 	 */
 	protected final @NonNull Map<@NonNull String, @Nullable String> long2short = new HashMap<>();
@@ -47,18 +50,25 @@ public class JavaImportNameManager extends AbstractImportNameManager
 	 */
 	@Override
 	public @NonNull String addImport(@Nullable Boolean isRequired, @NonNull String fullyQualifiedClassName) {
-		if (fullyQualifiedClassName.contains("CACHE")) {
+		if (fullyQualifiedClassName.contains("EvaluateModelOperations")) {
 			getClass();		// XXX
 		}
-		String dollarPrefix = fullyQualifiedClassName;
-		String dollarSuffix = "";
-		int dollarIndex = fullyQualifiedClassName.indexOf('$');
-		if (dollarIndex >= 0) {
-			dollarPrefix = fullyQualifiedClassName.substring(0, dollarIndex);
-			dollarSuffix = fullyQualifiedClassName.substring(dollarIndex+1, fullyQualifiedClassName.length()).replace('$',  '.');
+		String importName;
+		String packageNamePrefix2 = classNamePrefix;
+		if ((packageNamePrefix2 != null) && fullyQualifiedClassName.startsWith(packageNamePrefix2)) {
+			importName = fullyQualifiedClassName.substring(packageNamePrefix2.length());
 		}
-		String shortName = addImport(dollarPrefix);
-		String importName = (shortName != null ? shortName : dollarPrefix) + (dollarSuffix .length() > 0 ? "." + dollarSuffix : "");
+		else {
+			String dollarPrefix = fullyQualifiedClassName;
+			String dollarSuffix = "";
+			int dollarIndex = fullyQualifiedClassName.indexOf('$');
+			if (dollarIndex >= 0) {
+				dollarPrefix = fullyQualifiedClassName.substring(0, dollarIndex);
+				dollarSuffix = fullyQualifiedClassName.substring(dollarIndex+1, fullyQualifiedClassName.length()).replace('$',  '.');
+			}
+			String shortName = addImport(dollarPrefix);
+			importName = (shortName != null ? shortName : dollarPrefix) + (dollarSuffix .length() > 0 ? "." + dollarSuffix : "");
+		}
 		if (isRequired == null) {
 			return importName;
 		}
@@ -170,5 +180,11 @@ public class JavaImportNameManager extends AbstractImportNameManager
 		for (@NonNull CGClass cgNestedClass : CGUtil.getClasses(cgClass)) {
 			reserveLocalName(CGUtil.getName(cgNestedClass));
 		}
+	}
+
+	@Override
+	public void setClassName(@NonNull String className) {
+		assert this.classNamePrefix == null;
+		this.classNamePrefix = className + ".";
 	}
 }

@@ -70,16 +70,8 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		this.requiredReturn = requiredReturn;
 	}
 
-	protected @NonNull FieldingAnalysisVisitor getMayBeThrownVisitor() {
-		return context.mayBeThrown;
-	}
-
-	protected @NonNull FieldingAnalysisVisitor getMustBeCaughtVisitor() {
-		return context.mustBeCaught;
-	}
-
-	protected @NonNull FieldingAnalysisVisitor getMustBeThrownVisitor() {
-		return context.mustBeThrown;
+	public @NonNull FieldingAnalyzer getFieldingAnalyzer() {
+		return context;
 	}
 
 	protected void insertCatch(@NonNull CGValuedElement cgChild) {
@@ -87,6 +79,10 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		assert !(cgChild instanceof CGVariableExp) : "must catch variable not its access";
 		boolean mayBeInvalid = !cgChild.isNonInvalid();
 		if (mayBeInvalid) {
+			String s = cgChild.toString();			// XXX
+			if  (s.contains("d4qvtrExpression")) {
+				getClass();		// XXX
+			}
 			mayBeInvalid = !cgChild.isNonInvalid();
 			CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
 			cgCatchExp.setCaught(true);
@@ -210,7 +206,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull ReturnState visitCGIsInvalidExp(@NonNull CGIsInvalidExp cgIsInvalidExp) {
 		CGValuedElement cgSource = CGUtil.getSource(cgIsInvalidExp);
-		context.mustBeCaught.visit(cgSource);
+		context.getMustBeCaughtVisitor().visit(cgSource);
 		cgIsInvalidExp.setCaught(false);
 		return ReturnState.IS_VALID;			// XXX IS_THROWN and thrown
 	}
@@ -221,7 +217,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull ReturnState visitCGIsUndefinedExp(@NonNull CGIsUndefinedExp cgIsUndefinedExp) {
 		CGValuedElement cgSource = CGUtil.getSource(cgIsUndefinedExp);
-		context.mustBeCaught.visit(cgSource);
+		context.getMustBeCaughtVisitor().visit(cgSource);
 		cgIsUndefinedExp.setCaught(false);
 		return ReturnState.IS_VALID;
 	}
@@ -235,7 +231,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (s.contains("select(")) {
 			getClass();		// XXX
 		}
-		FieldingAnalysisVisitor mustBeThrownVisitor = context.mustBeThrown;
+		FieldingAnalysisVisitor mustBeThrownVisitor = context.getMustBeThrownVisitor();
 		mustBeThrownVisitor.visit(CGUtil.getSource(cgIterationCallExp));
 		for (CGIterator cgIterator : CGUtil.getIterators(cgIterationCallExp)) {
 			mustBeThrownVisitor.visit(cgIterator);
@@ -243,7 +239,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		for (CGIterator cgCoIterator : CGUtil.getCoIterators(cgIterationCallExp)) {
 			mustBeThrownVisitor.visit(cgCoIterator);
 		}
-		FieldingAnalysisVisitor bodyAnalysisVisitor = asIteration.isIsValidating() ? context.mustBeCaught : mustBeThrownVisitor;
+		FieldingAnalysisVisitor bodyAnalysisVisitor = asIteration.isIsValidating() ? context.getMustBeCaughtVisitor() : mustBeThrownVisitor;
 		CGValuedElement cgBody = CGUtil.getBody(cgIterationCallExp);
 		boolean isValid = cgBody.isNonInvalid();
 		ReturnState returnState = bodyAnalysisVisitor.visit(cgBody);
@@ -264,7 +260,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull ReturnState visitCGLetExp(@NonNull CGLetExp cgLetExp) {
 		CGVariable cgVariable = CGUtil.getInit(cgLetExp);
-		ReturnState initReturnState = context.mustBeCaught.visit(CGUtil.getInit(cgVariable));		// let will have to be caught anyway.
+		ReturnState initReturnState = context.getMustBeCaughtVisitor().visit(CGUtil.getInit(cgVariable));		// XXX let will have to be caught anyway. Optimize the 99.9% invalid never used case.
 		cgVariable.setCaught(initReturnState.isCaught());
 		ReturnState inReturnState = visit(CGUtil.getIn(cgLetExp));
 		cgLetExp.setCaught(inReturnState.isCaught());
@@ -309,7 +305,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (asOperation.getName().contains("and")) {
 			getClass();			// XXX
 		}
-		FieldingAnalysisVisitor childVisitor = asOperation.isIsValidating() ? context.mustBeCaught : context.mustBeThrown;
+		FieldingAnalysisVisitor childVisitor = asOperation.isIsValidating() ? context.getMustBeCaughtVisitor() : context.getMustBeThrownVisitor();
 		ReturnState requiredChildReturn = childVisitor.requiredReturn();
 		for (CGValuedElement cgArgument : CGUtil.getArguments(cgOperationCallExp)) {
 			ReturnState returnState = childVisitor.visit(cgArgument);
@@ -330,14 +326,14 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull ReturnState visitCGSourcedCallExp(@NonNull CGSourcedCallExp cgSourcedCallExp) {
-		ReturnState returnState = context.mustBeThrown.visitAll(cgSourcedCallExp.getChildren());
+		ReturnState returnState = context.getMustBeThrownVisitor().visitAll(cgSourcedCallExp.getChildren());
 		cgSourcedCallExp.setCaught(returnState.isCaught());
 		return returnState;
 	}
 
 	@Override
 	public @NonNull ReturnState visitCGVariable(@NonNull CGVariable cgVariable) {
-		ReturnState returnState = context.mayBeThrown.visit(CGUtil.getInit(cgVariable));
+		ReturnState returnState = context.getMayBeThrownVisitor().visit(CGUtil.getInit(cgVariable));
 		cgVariable.setCaught(returnState.isCaught());
 		return returnState;
 	}
@@ -345,23 +341,28 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull ReturnState visitCGVariableExp(@NonNull CGVariableExp cgVariableExp) {
 		CGVariable cgVariable = CGUtil.getReferredVariable(cgVariableExp);
+		boolean isCaught = cgVariable.isCaught();
 		boolean mayBeInvalid = !cgVariable.isNonInvalid();
-		if (mayBeInvalid) {			// If the CGVariable could be invalid
-			if (!cgVariable.isCaught()) {
-				CGValuedElement cgInit = cgVariable.getInit();
-				if (cgInit != null) {
-					insertCatch(cgInit);
-					cgVariable.setCaught(true);
-				}
-				else {
-					assert false;
+		if (mayBeInvalid) {							// If the CGVariable could be invalid
+			if (requiredReturn == ReturnState.IS_CAUGHT) {
+				if (!isCaught) {
+					CGValuedElement cgInit = cgVariable.getInit();
+					if (cgInit != null) {
+						insertCatch(cgInit);		// catch the init not the variable
+						cgVariable.setCaught(true);
+					}
+					else {
+						assert false;
+					}
 				}
 			}
-			if (requiredReturn == ReturnState.IS_THROWN) {
-				insertThrow(cgVariableExp);
+			else if (requiredReturn == ReturnState.IS_THROWN) {
+				if (isCaught) {
+					insertThrow(cgVariableExp);
+				}
 			}
 		}
-		cgVariableExp.setCaught(cgVariable.isCaught());
+		cgVariableExp.setCaught(isCaught);
 		return requiredReturn;
 	}
 }

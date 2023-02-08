@@ -196,7 +196,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (source == null) {
 			source = getExpression(cgPropertyCallExp.getSource());
 			if (!js.appendLocalStatements(source)) {
-				return false;
+				return Boolean.FALSE;
 			}
 		}
 		//
@@ -208,7 +208,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append(" = ");
 		appendEcoreGet(source, asProperty);
 		js.append(";\n");
-		return true;
+		return Boolean.TRUE;
 	} */
 
 /*	protected void appendEcoreGet(@NonNull CGValuedElement cgSource, @NonNull Property asProperty) {
@@ -518,7 +518,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		}
 		else {
 			if (!js.appendLocalStatements(cgSource)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			if (!cgSource.isRequiredOrNonNull()) {
 				js.append("assert ");
@@ -526,7 +526,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.append(" != null;\n");
 			}
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -543,7 +543,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		else {
 			js.appendFalse();
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -553,7 +553,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		ExecutableNameManager currentNameManager = globalNameManager.useRootExecutableNameManager(cgBoxExp);
 		//
 		if (!js.appendLocalStatements(unboxedValue)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		return unboxedTypeDescriptor.appendBox(js, currentNameManager, cgBoxExp, unboxedValue);
 	}
@@ -562,10 +562,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull Boolean visitCGCastExp(@NonNull CGCastExp cgCastExp) {
 		CGValuedElement cgSource = getExpression(cgCastExp.getSource());
 		if (!js.appendLocalStatements(cgSource)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		js.appendAssignWithCast(cgCastExp, cgSource);
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -575,7 +575,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		final String thrownName = getVariantResolvedName(cgCatchExp, context.getTHROWN_NameVariant());
 		if (cgSource.isNonInvalid()) {
 			if (!js.appendLocalStatements(cgSource)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			js.appendDeclaration(cgCatchExp);
 			js.append(" = ");
@@ -604,7 +604,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			//	js.append(";\n");
 				js.popIndentation();
 				js.append("}\n");
-				return true;
+				return Boolean.TRUE;
 			}
 			js.appendValueName(cgCatchExp);
 			js.append(" = ");
@@ -627,14 +627,14 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.popIndentation();
 			js.append("}\n");
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
 	public @NonNull Boolean visitCGClass(@NonNull CGClass cgClass) {
 		ClassCallingConvention callingConvention = cgClass.getCallingConvention();
 		callingConvention.generateJavaDeclaration(this, cgClass);
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -645,7 +645,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				ranges++;
 			}
 			if (!js.appendLocalStatements(cgPart)) {
-				return false;
+				return Boolean.FALSE;
 			}
 		}
 		js.appendDeclaration(cgCollectionExp);
@@ -674,7 +674,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			}
 		}
 		js.append(");\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -683,10 +683,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		CGValuedElement last = cgCollectionPart.getLast();
 		if (last != null) {
 			if (!js.appendLocalStatements(first)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			if (!js.appendLocalStatements(last)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			js.appendDeclaration(cgCollectionPart);
 			js.append(" = ");
@@ -703,11 +703,11 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			}
 			else {
 				if (!js.appendLocalStatements(first)) {
-					return false;
+					return Boolean.FALSE;
 				}
 			}
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -719,7 +719,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		else {
 			// Non-inline constants should be generated somewhere else and referenced by name in the caller
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -764,7 +764,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		//
 		CGValuedElement init = ClassUtil.nonNullState(cgShadowExp.getParts().get(0).getInit());
 		if (!js.appendLocalStatements(init)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		Boolean ecoreIsRequired = null;						// createFromString is undeclared-nonnull -- FIXME compute rather than assume
 		Boolean isRequired = context.isRequired(cgShadowExp);
@@ -784,7 +784,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append(".Literals." + dataTypeName + ", ");
 		js.appendValueName(init);
 		js.append(");\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -794,7 +794,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		ExecutableNameManager currentNameManager = globalNameManager.useRootExecutableNameManager(cgEcoreExp);
 		//
 		if (!js.appendLocalStatements(boxedValue)) {
-			return false;
+			return Boolean.FALSE;
 		}
 	/*	EClassifier eClassifier = cgEcoreExp.getEClassifier();
 		if (eClassifier != null) {		// FIXME ignores Collections
@@ -840,7 +840,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 					js.append("(");
 					js.appendValueName(cgEcoreExp.getSource());
 					js.append(");\n");
-					return true;
+					return Boolean.TRUE;
 				}
 			}
 		} */
@@ -862,7 +862,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.appendIdReference2(elementId);
 			js.append(";\n");
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 /*	@Override
@@ -873,7 +873,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append("(");
 		js.appendIdReference(cgExecutorProperty.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");
-		return true;
+		return Boolean.TRUE;
 	} */
 
 /*	@Override
@@ -884,7 +884,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append(".getProperty(");
 		js.appendIdReference(cgExecutorShadowPart.getUnderlyingPropertyId().getElementId());
 		js.append(");\n");
-		return true;
+		return Boolean.TRUE;
 	} */
 
 /*	@Override
@@ -916,7 +916,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		};
 		js.appendClassCast(cgExecutorOperation, castBody);
 		js.append(";\n");
-		return true;
+		return Boolean.TRUE;
 	} */
 
 /*	@Override
@@ -928,12 +928,12 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		List<Parameter> pParameters = pOperation.getOwnedParameters();
 		//
 		if ((cgSource != null) && !js.appendLocalStatements(cgSource)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		for (@SuppressWarnings("null")@NonNull CGValuedElement cgArgument : cgArguments) {
 			CGValuedElement argument = getExpression(cgArgument);
 			if (!js.appendLocalStatements(argument)) {
-				return false;
+				return Boolean.FALSE;
 			}
 		}
 		//
@@ -969,7 +969,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		};
 		js.appendClassCast(cgOperationCallExp, castBody);
 		js.append(";\n");
-		return true;
+		return Boolean.TRUE;
 	} */
 
 /*	@Override
@@ -992,7 +992,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		};
 		js.appendClassCast(cgExecutorType, null, org.eclipse.ocl.pivot.Class.class, castBody1);
 		js.append(";\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1007,7 +1007,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		}
 		else {
 			if (!js.appendLocalStatements(cgSource)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			if (cgGuardExp.isSafe()) {
 				js.append("assert ");
@@ -1024,7 +1024,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.append("}\n");
 			}
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1070,7 +1070,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull Boolean visitCGIndexExp(@NonNull CGIndexExp cgIndexExp) {
 		CGValuedElement cgSource = getExpression(cgIndexExp.getSource());
 		if (!js.appendLocalStatements(cgSource)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		SubStream castBody = new SubStream() {
 			@Override
@@ -1084,7 +1084,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		Class<?> sourceClass = sourceTypeDescriptor.getJavaClass().getComponentType();
 		assert sourceClass != null;
 		js.appendAssignWithCast(cgIndexExp, sourceRequired, sourceClass, castBody);
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1106,7 +1106,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.append("\"" + valueString + "\"");
 		}
 		js.append(");\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1127,7 +1127,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.appendClassReference(null, ValueUtil.class);
 			js.append(".INVALID_VALUE");
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1142,10 +1142,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			CGValuedElement cgSource = getExpression(cgIsEqualExp.getSource());
 			CGValuedElement cgArgument = getExpression(cgIsEqualExp.getArgument());
 			if (!js.appendLocalStatements(cgSource)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			if (!js.appendLocalStatements(cgArgument)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			//
 			boolean notEquals = cgIsEqualExp.isNotEquals();
@@ -1208,7 +1208,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			}
 			js.append(";\n");
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1223,10 +1223,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			CGValuedElement cgSource = getExpression(cgIsEqualExp.getSource());
 			CGValuedElement cgArgument = getExpression(cgIsEqualExp.getArgument());
 			if (!js.appendLocalStatements(cgSource)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			if (!js.appendLocalStatements(cgArgument)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			//
 			js.appendDeclaration(cgIsEqualExp);
@@ -1290,7 +1290,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			}
 			js.append(";\n");
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1304,7 +1304,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		else {
 			CGValuedElement cgSource = getExpression(cgIsInvalidExp.getSource());
 			if (!js.appendLocalStatements(cgSource)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			//
 			js.appendDeclaration(cgIsInvalidExp);
@@ -1314,7 +1314,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.appendClassReference(null, InvalidValueException.class);
 			js.append(";\n");
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1332,7 +1332,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			typeDescriptor.append(js, null);
 			js.append(";\n");
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1348,7 +1348,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			boolean sourceIsNonInvalid = cgSource.isNonInvalid();
 			boolean sourceIsNonNull = cgSource.isRequiredOrNonNull();
 			if (!js.appendLocalStatements(cgSource)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			//
 			js.appendDeclaration(cgIsUndefinedExp);
@@ -1373,7 +1373,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			}
 			js.append(";\n");
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1381,7 +1381,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		cgLetExp.getInit().accept(this);
 		CGValuedElement cgIn = CGUtil.getIn(cgLetExp);
 		if (!js.appendLocalStatements(cgIn)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		if (cgIn.isInlined()) {
 			return cgIn.accept(this);
@@ -1400,7 +1400,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.append(";\n");
 			}
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1475,14 +1475,14 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		finally {
 			popNameManager();
 		}
-		return true;
+		return Boolean.TRUE;
 	} */
 
 	@Override
 	public @NonNull Boolean visitCGMapExp(@NonNull CGMapExp cgMapExp) {
 		for (CGMapPart cgPart : cgMapExp.getParts()) {
 			if ((cgPart != null) && !js.appendLocalStatements(cgPart)) {
-				return false;
+				return Boolean.FALSE;
 			}
 		}
 		js.appendDeclaration(cgMapExp);
@@ -1499,7 +1499,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.appendValueName(cgPart);
 		}
 		js.append(");\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1507,10 +1507,10 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		CGValuedElement key = getExpression(cgMapPart.getKey());
 		CGValuedElement value = getExpression(cgMapPart.getValue());
 		if (!js.appendLocalStatements(key)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		if (!js.appendLocalStatements(value)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		js.appendDeclaration(cgMapPart);
 		js.append(" = ");
@@ -1520,7 +1520,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append(", ");
 		js.appendValueName(value);
 		js.append(");\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 /*	@Override		// FIXME revert to the pre-cached code
@@ -1550,7 +1550,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		finally {
 			popNameManager();
 		}
-		return true;
+		return Boolean.TRUE;
 	} */
 
 	@Override
@@ -1563,7 +1563,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull Boolean visitCGNull(@NonNull CGNull object) {
 		js.append("null");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1571,7 +1571,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	//	System.out.println("visitCGOperation " + NameUtil.debugSimpleName(cgOperation) + " : " + cgOperation.getAst());
 		OperationCallingConvention callingConvention = cgOperation.getCallingConvention();
 		callingConvention.generateJavaDeclaration(this, cgOperation);
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1589,12 +1589,12 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		for (CGClass cgClass : cgPackage.getClasses()) {
 			cgClass.accept(this);
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
 	public @NonNull Boolean visitCGParameter(@NonNull CGParameter object) {
-		return true;			// Parameters are declared by their Operation
+		return Boolean.TRUE;			// Parameters are declared by their Operation
 	}
 
 	@Override
@@ -1617,7 +1617,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.append("\"" + valueString + "\"");
 		}
 		js.append(");\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1627,16 +1627,16 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		CGValuedElement initValue = CGUtil.getOwnedInitValue(cgPropertyAssignment);
 		if (initValue.isInvalid()) {
 			js.appendValueName(initValue);
-			return false;
+			return Boolean.FALSE;
 		}
 		if (!js.appendLocalStatements(slotValue)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		if (!js.appendLocalStatements(initValue)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		cgProperty.getCallingConvention().generateJavaAssign(this, slotValue, cgProperty, initValue);
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1644,7 +1644,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		for (@NonNull CGValuedElement cgStatement : ClassUtil.nullFree(cgSequence.getOwnedStatements())) {
 			cgStatement.accept(this);
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1693,7 +1693,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		for (CGShadowPart part : cgShadowExp.getParts()) {
 			part.accept(this);
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1712,7 +1712,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			@Override
 			public boolean appendAtHead(@NonNull CodeGenSnippet snippet) {
 				initSnippet = snippet.appendUnboxedGuardedChild(initExpression, null, DomainMessage.INVALID);
-				return true;
+				return Boolean.TRUE;
 			}
 
 			@Override
@@ -1722,7 +1722,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		CGValuedElement init = getExpression(cgShadowPart.getInit());
 		//
 		if (!js.appendLocalStatements(init)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		//
 		js.appendValueName(cgExecutorShadowPart);			// XXX use super
@@ -1731,7 +1731,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append(", ");
 		js.appendValueName(init);
 		js.append(");\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1740,7 +1740,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append(" = ");
 		js.appendString(ClassUtil.nonNullState(object.getStringValue()));
 		js.append(";\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1750,7 +1750,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append(" = ");
 		js.appendReferenceTo(cgType);
 		js.append(".getOwnedSignature().getOwnedParameters().get(" + cgTemplateParameterExp.getIndex() + ");\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1764,11 +1764,11 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.append("throw ");
 			js.appendReferenceTo(InvalidValueException.class, cgInvalidValue);
 			js.append(";\n");
-			return false;
+			return Boolean.FALSE;
 		}
 		else {
 			if (!js.appendLocalStatements(cgSource)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			if (cgSource.isCaught()) {
 				js.append("if (");
@@ -1793,7 +1793,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 				js.append(";\n");
 			}
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1801,7 +1801,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		Iterable<@NonNull CGTuplePart> parts = CGUtil.getParts(cgTupleExp);
 		for (@NonNull CGTuplePart cgPart : parts) {
 			if (!js.appendLocalStatements(CGUtil.getInit(cgPart))) {
-				return false;
+				return Boolean.FALSE;
 			}
 		}
 		js.appendDeclaration(cgTupleExp);
@@ -1819,13 +1819,13 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			js.appendValueName(cgInit);
 		}
 		js.append(");\n");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	//	@Override
 	//	public @NonNull Boolean visitCGTuplePart(@NonNull CGTuplePart cgTuplePart) {
 	//		js.appendLocalStatements(cgTuplePart.getInit());
-	//		return true;
+	//		return Boolean.TRUE;
 	//	}
 
 	@Override
@@ -1836,7 +1836,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		else {
 			super.visitCGTypeId(cgTypeId);
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1846,7 +1846,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		//		if (type != null) {
 		//			type.accept(this);
 		//		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1856,7 +1856,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		ExecutableNameManager currentNameManager = globalNameManager.useRootExecutableNameManager(cgUnboxExp);
 		//
 		if (!js.appendLocalStatements(boxedValue)) {
-			return false;
+			return Boolean.FALSE;
 		}
 		return boxedTypeDescriptor.appendUnboxStatements(js, currentNameManager, cgUnboxExp, boxedValue);
 	}
@@ -1865,7 +1865,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 	public @NonNull Boolean visitCGUnlimited(@NonNull CGUnlimited object) {
 		js.appendClassReference(null, ValueUtil.class);
 		js.append(".UNLIMITED_VALUE");
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1873,7 +1873,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		CGValuedElement cgInit = cgVariable.getInit();
 		if (cgInit != null) {
 			if (!js.appendLocalStatements(cgInit)) {
-				return false;
+				return Boolean.FALSE;
 			}
 			if (!cgInit.isGlobal()) {
 				// The following fallback would not be required if the init name propagated better, see testSysML_QUDV
@@ -1906,7 +1906,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 			//	}
 			}
 		}
-		return true;
+		return Boolean.TRUE;
 	}
 
 	@Override
@@ -1915,6 +1915,6 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		//		if (variable != null) {
 		//			variable.accept(this);
 		//		}
-		return true;
+		return Boolean.TRUE;
 	}
 }

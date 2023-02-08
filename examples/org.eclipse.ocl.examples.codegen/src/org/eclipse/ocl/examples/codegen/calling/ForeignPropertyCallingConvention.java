@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingConvention.AbstractEvaluateOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
@@ -30,7 +29,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -89,7 +87,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			Operation asForeignOperation = CGUtil.getAST(cgForeignOperation);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgForeignOperation, asForeignOperation, null);
 			List<@NonNull CGParameter> cgForeignParametersList = CGUtil.getParametersList(cgForeignOperation);
-			CGParameter cgSelfParameter = cgForeignParametersList.size() > 1 ? cgForeignParametersList.get(1) : null;
+			CGParameter cgSelfParameter = cgForeignParametersList.size() > 0 ? cgForeignParametersList.get(0) : null;
 		//	CGValuedElement cgInitValue = analyzer.getInitExpression(/*cgParameter,*/ asProperty);
 			CGValuedElement cgInitValue = analyzer.createCGElement(CGValuedElement.class, asForeignOperation.getBodyExpression());
 			assert cgInitValue != null;
@@ -139,19 +137,6 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		}
 
 		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgForeignClass, @NonNull Property asProperty, @Nullable ExpressionInOCL asExpressionInOCL) {
-			//
-			// AS Class - yyy2zzz
-			// AS Properties - contextObject, x1, x2, cachedResult
-			// AS Operation - yyy2zzz
-			// AS Operation.ownedParameters - x1, x2
-			// AS Entry Operation - isEqual
-			// AS Entry Operation.parameters - boxedValues{x1, x2}
-			// AS Entry ExpressionInOCL.ownedContext - this
-			// AS Entry ExpressionInOCL.ownedParameter(Variable)s - idResolver, self, x1, x2
-			// CG Entry Operation - isEqual
-			// CG Entry Operation.parameters - idResolver, boxedValues{x1, x2}
-			// CG Entry Operation.lets - x1, x2
-			//
 			org.eclipse.ocl.pivot.@NonNull Class asForeignClass = CGUtil.getAST(cgForeignClass);
 			boolean isStatic = asProperty.isIsStatic();
 			//
@@ -203,45 +188,15 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 
 		@Override
 		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
-			Property asProperty = (Property) asOrigin;
+			Property asProperty = (Property)asOrigin;
 			return asProperty.isIsStatic() ? AS_PARAMETER_STYLES_EXECUTOR : AS_PARAMETER_STYLES_EXECUTOR_SELF;
 		}
 
-		@Override
-		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
-			TypedElement asOrigin = operationNameManager.getASOrigin();
-			Property asProperty = (Property)asOrigin;
-			boolean isStatic = asProperty.isIsStatic();
-			return isStatic ? CG_PARAMETER_STYLES_EXECUTOR : CG_PARAMETER_STYLES_EXECUTOR_PARAMETER_VARIABLES;
-		}
-
-		@Override
-		public void rewriteWithBoxingAndGuards(
-				@NonNull BoxingAnalyzer boxingAnalyzer,
-				@NonNull CGOperation cgOperation) {
-			// TODO Auto-generated method stub
-			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperation);
-		}
-
-		@Override
-		public void rewriteWithBoxingAndGuards(
-				@NonNull BoxingAnalyzer boxingAnalyzer,
-				@NonNull CGOperationCallExp cgOperationCallExp) {
-			// TODO Auto-generated method stub
-			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperationCallExp);
-		}
-
 	/*	@Override
-		public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGProperty cgProperty) {
-			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgProperty);
-			CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
-			boxingAnalyzer.rewriteAsBoxed(cgForeignProperty.getBody());
-			if (cgForeignProperty.isRequired()) {
-				CGValuedElement body = cgForeignProperty.getBody();
-				if (body != null) {
-					boxingAnalyzer.rewriteAsGuarded(body, false, "body for '" + cgForeignProperty.getAst() + "'");
-				}
-			}
+		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+			Property asProperty = (Property)operationNameManager.getASOrigin();
+			boolean isStatic = asProperty.isIsStatic();
+			return isStatic ? CG_PARAMETER_STYLES : CG_PARAMETER_STYLES_PARAMETERS;
 		} */
 	}
 
@@ -324,7 +279,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		js.appendClassReference(null, Object.class);
 		js.append(" value = support.");
 		js.append(cgOperation.getName());
-		js.append("(executor);\n");
+		js.append("();\n");
 		//
 		js.appendClassReference(null, Object.class);
 		js.append(" ecoreValue = executor.getIdResolver().ecoreValueOf(");			// XXX Collection
@@ -355,14 +310,9 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		//
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
-		CGClass cgForeignClass = CGUtil.getContainingClass(cgProperty);
-	//	js.appendClassReference(cgForeignClass);		// XXX
-	//	js.append(".");
 		js.appendValueName(cgForeignOperation);
 		js.append("(");
-		js.append(analyzer.getGlobalNameManager().getExecutorNameResolution().getResolvedName());
 		if (cgSource != null) {
-			js.append(", ");
 			js.appendValueName(cgSource);
 		}
 		js.append(");\n");

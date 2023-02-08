@@ -15,7 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
+import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
+import org.eclipse.ocl.pivot.internal.ids.PropertyIdImpl.PropertyIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.UnscopedId;
 
 /**
@@ -58,6 +60,11 @@ public class JavaTypeId extends UnscopedId implements PrimitiveTypeId
 
 	protected final @NonNull Class<?> javaClass;
 
+	/**
+	 * Map from the property name to the propertyIds.
+	 */
+	private @Nullable PropertyIdSingletonScope memberProperties = null;
+
 	public JavaTypeId(@NonNull Class<?> javaClass) {
 		super(javaClass.getName());
 		this.javaClass = javaClass;
@@ -82,5 +89,19 @@ public class JavaTypeId extends UnscopedId implements PrimitiveTypeId
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return "JavaClass";
+	}
+
+	@Override
+	public @NonNull PropertyId getPropertyId(@NonNull String name) {
+		PropertyIdSingletonScope memberProperties2 = memberProperties;
+		if (memberProperties2 == null) {
+			synchronized (this) {
+				memberProperties2 = memberProperties;
+				if (memberProperties2 == null) {
+					memberProperties = memberProperties2 = new PropertyIdSingletonScope();
+				}
+			}
+		}
+		return memberProperties2.getSingleton(this, name);
 	}
 }

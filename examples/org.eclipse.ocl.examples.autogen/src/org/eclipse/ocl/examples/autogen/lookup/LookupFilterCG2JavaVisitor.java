@@ -20,6 +20,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.EvaluationCache;
@@ -42,7 +43,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor
 		js.append("protected final ");
 		js.appendClassReference(true, EvaluationCache.class);
 		js.append(" ");
-		js.append(globalNameManager.getEvaluationCacheName());
+		js.appendName(globalNameManager.getEvaluationCacheName());
 		js.append(";\n");
 		return super.doClassFields(cgClass, false);
 	}
@@ -91,7 +92,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor
 
 	@Override
 	protected void doConstructor(@NonNull CGClass cgClass) {
-		String executorName = globalNameManager.getExecutorName();
+		NameResolution executorName = globalNameManager.getRootExecutorName();
 		js.append("public " + cgClass.getName() + "(");
 		js.appendClassReference(true, Executor.class);
 		js.append(" "+ executorName);
@@ -105,10 +106,18 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor
 		js.append(");\n");
 
 		addFilterPropsInit(cgClass);
-		js.append("this." + executorName + " = " + executorName + ";\n");
-		js.append("this." + globalNameManager.getIdResolverName() + " = " + executorName + ".getIdResolver();\n");
 		js.append("this.");
-		js.append(globalNameManager.getEvaluationCacheName());
+		js.appendName(executorName);
+		js.append(" = ");
+		js.appendName(executorName);
+		js.append(";\n");
+		js.append("this.");
+		js.appendName(globalNameManager.getIdResolverName());
+		js.append(" = ");
+		js.appendName(executorName);
+		js.append(".getIdResolver();\n");
+		js.append("this.");
+		js.appendName(globalNameManager.getEvaluationCacheName());
 		js.append(" = ((");
 		js.appendClassReference(null, ExecutorInternalExtension.class);
 		js.append(")" + executorName + ").getEvaluationCache();\n");

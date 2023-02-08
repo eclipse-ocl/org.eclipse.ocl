@@ -283,7 +283,9 @@ public class GlobalPlace extends AbstractPlace
 			Collections.reverse(sortedMaxDepths);
 			for (int maxDepth : sortedMaxDepths) {
 				List<@NonNull CommonAnalysis> commonAnalyses = new ArrayList<>(depth2commonAnalyses.get(maxDepth));
-				Collections.sort(commonAnalyses);
+				if (commonAnalyses.size() > 1) {
+					Collections.sort(commonAnalyses, CommonAnalysis.PRIMARY_ANALYSIS_COMPARATOR);
+				}
 				for (@NonNull CommonAnalysis commonAnalysis : commonAnalyses) {
 					commonAnalysis.rewriteGlobal(analyzer);
 				}

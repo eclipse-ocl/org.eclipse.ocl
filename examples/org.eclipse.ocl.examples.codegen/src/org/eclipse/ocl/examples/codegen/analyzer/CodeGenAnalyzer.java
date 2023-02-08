@@ -321,7 +321,7 @@ public class CodeGenAnalyzer
 		this.cgNull = createCGNull();
 	}
 
-	public void addCGCachedOperation(@NonNull CGCachedOperation cgOperation, @NonNull Operation asOperation) {
+	public void addCGCachedOperation(@NonNull CGOperation cgOperation, @NonNull Operation asOperation) {
 		Operation oldOperation = cgOperation2asOriginalOperation.put(cgOperation, asOperation);
 		assert oldOperation == null;
 	}
@@ -403,7 +403,8 @@ public class CodeGenAnalyzer
 
 	public @NonNull Iterable<@NonNull Operation> addVirtualCGOperations(@NonNull Operation asBaseOperation, @NonNull CGCachedOperation cgDispatchOperation) {
 		assert cgDispatchOperation.getCallingConvention() == VirtualOperationCallingConvention.getInstance(asBaseOperation, true);
-		addCGCachedOperation(cgDispatchOperation, asBaseOperation);
+		assert getOriginalOperation(cgDispatchOperation) == asBaseOperation;
+	//	addCGCachedOperation(cgDispatchOperation, asBaseOperation);
 		FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
 		Iterable<@NonNull Operation> asOverrideOperations = finalAnalysis.getOverrides(asBaseOperation);
 		assert Iterables.contains(asOverrideOperations, asBaseOperation);
@@ -728,12 +729,15 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGNativePropertyCallExp createCGNativePropertyCallExp(@NonNull Field field, @NonNull PropertyCallingConvention callingConvention) {
 		Property asProperty = getNativeProperty(field, callingConvention);
-		CGProperty cgProperty = getCGProperty(asProperty);
+//		CGProperty cgProperty = getCGProperty(asProperty);
+		CGProperty cgProperty = generatePropertyDeclaration(asProperty, callingConvention);
 		CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
 		cgNativePropertyCallExp.setField(field);		// Use cc
 		cgNativePropertyCallExp.setReferredProperty(cgProperty);
+		cgNativePropertyCallExp.setAsProperty(asProperty);
 		cgNativePropertyCallExp.setRequired(cgProperty.isRequired());
-	//	callingConvention.createCGOperationCallExp(null, cgOperation, null, cgOperation, null)
+		cgNativePropertyCallExp.setTypeId(cgProperty.getTypeId());
+	//	callingConvention.createCGNavigationCallExp(this, cgProperty, asProperty.getImplementation(), cgSource, asPropertyCallExp);
 		return cgNativePropertyCallExp;
 	}
 
@@ -1071,23 +1075,10 @@ public class CodeGenAnalyzer
 		}
 		CGOperation cgOperation = basicGetCGOperation(asOperation);
 		if (cgOperation == null) {
-			ExpressionInOCL asExpressionInOCL = null;
-			LanguageExpression asSpecification = asOperation.getBodyExpression();
-			if (asSpecification != null) {
-				try {
-					asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);			// XXX Not appropriate for virtual dispatcher
-				} catch (ParserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 			if (callingConvention == null) {
 				callingConvention = codeGenerator.getCallingConvention(asOperation, maybeVirtual);
 			}
-			cgOperation = callingConvention.createOperation(this, asOperation, asExpressionInOCL);
-			if (asSpecification != null) {
-				scanBody(asSpecification);
-			}
+			cgOperation = callingConvention.createOperation(this, asOperation);
 		}
 		if (maybeVirtual) {					// If virtual dispatch now known.
 			CGOperation cgVirtualOperation = basicGetCGDispatchOperation(asOperation);
