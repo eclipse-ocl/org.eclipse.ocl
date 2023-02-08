@@ -10,17 +10,23 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.naming;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
+import org.eclipse.ocl.examples.codegen.java.JavaConstants;
+import org.eclipse.ocl.examples.codegen.java.types.JavaTypeId;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -32,11 +38,44 @@ public class ClassNameManager extends NestedNameManager implements ClassableName
 {
 	protected final @NonNull CGClass cgClass;
 	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
+	private /*@LazyNonNull*/ CGParameter rootExecutorParameter = null;
 
 	public ClassNameManager(@NonNull JavaCodeGenerator codeGenerator, @NonNull ClassableNameManager parent, @NonNull CGClass cgClass) {
 		super(codeGenerator, (AbstractNameManager)parent, cgClass);
 		this.cgClass = cgClass;
 		this.asClass = CGUtil.getAST(cgClass);
+		NameResolution rootExecutorNameResolution = globalNameManager.getRootExecutorNameResolution();
+		String rootExecutorName = rootExecutorNameResolution.getResolvedName();
+		for (@NonNull CGClass cgSuperClass : CGUtil.getSuperTypes(cgClass)) {
+			TypeId typeId = CGUtil.getAST(cgSuperClass).getTypeId();
+			if (typeId instanceof JavaTypeId) {
+				Field rootExecutorField = null;
+				for (Class<?> jClass = ((JavaTypeId)typeId).getJavaClass(); jClass != null; jClass = jClass.getSuperclass()) {
+					try {
+						rootExecutorField = jClass.getDeclaredField(rootExecutorName);
+						if (rootExecutorField != null) {
+							break;
+						}
+					} catch (NoSuchFieldException | SecurityException e) {;
+					}
+				}
+				if (rootExecutorField != null) {
+				//	JavaLanguageSupport javaLanguageSupport = (JavaLanguageSupport)codeGenerator.getLanguageSupport();
+				//	Property asProperty = javaLanguageSupport.getNativeProperty(rootExecutorField);
+				//	CGProperty cgProperty = analyzer.getCGProperty(asProperty);
+					CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID);
+					rootExecutorParameter = analyzer.createCGParameter(rootExecutorNameResolution, cgTypeId, true);
+					break;
+				}
+			}
+		}
+	}
+
+	public @Nullable CGVariable basicGetRootExecutorVariable() {
+		if (parent instanceof ClassNameManager) {
+			return ((ClassNameManager)parent).basicGetRootExecutorVariable();
+		}
+		return rootExecutorParameter;
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getASClass() {
@@ -76,7 +115,7 @@ public class ClassNameManager extends NestedNameManager implements ClassableName
 		return null;
 	}
 
-	public @NonNull String getUniquePropertyName(@NonNull String namePrefix, @NonNull Class asNestedClass) {
+	public @NonNull String getUniquePropertyName(@NonNull String namePrefix, org.eclipse.ocl.pivot.@NonNull Class asNestedClass) {
 		String name = namePrefix + PivotUtil.getName(asNestedClass);
 		List<Property> ownedProperties = asClass.getOwnedProperties();
 		if (NameUtil.getNameable(ownedProperties, name) == null) {

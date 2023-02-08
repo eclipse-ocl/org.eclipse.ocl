@@ -93,6 +93,7 @@ public class ExecutableNameManager extends NestedNameManager
 		this.isStatic = /*(asScope == null) ||*/ staticFeature;
 		assert !(parent instanceof ExecutableNameManager) || (((ExecutableNameManager)parent).cgScope != cgScope);		// XXX
 		assert !(cgScope instanceof CGClass) || (cgScope instanceof CGPackage);
+		this.executorVariable = classNameManager.basicGetRootExecutorVariable();
 	}
 
 	public void addVariable(@NonNull VariableDeclaration asVariable, @NonNull CGVariable cgVariable) {
@@ -145,6 +146,9 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	public @Nullable CGVariable basicGetExecutorVariable() {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).basicGetExecutorVariable();
+		}
 		return executorVariable;
 	}
 

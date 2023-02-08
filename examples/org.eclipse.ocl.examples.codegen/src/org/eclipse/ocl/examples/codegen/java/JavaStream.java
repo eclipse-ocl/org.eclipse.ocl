@@ -1379,7 +1379,7 @@ public class JavaStream
 	public void pushClassBody(@NonNull String className) {
 		classNameStack.push(className);
 		append("\n");
-		append("{");
+		append("{\n");
 		pushIndentation(null);
 		tailNewLines = 1;		// Avoid gratuitous blank line
 	}
