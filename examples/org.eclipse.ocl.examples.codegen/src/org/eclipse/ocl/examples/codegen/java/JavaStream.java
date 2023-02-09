@@ -1386,7 +1386,7 @@ public class JavaStream
 		append("\n");
 		append("{\n");
 		pushIndentation(null);
-		tailNewLines = 1;		// Avoid gratuitous blank line
+		tailNewLines = 2;		// Avoid gratuitous blank line
 	}
 
 	public void pushIndentation(@Nullable String extraIndentation) {
