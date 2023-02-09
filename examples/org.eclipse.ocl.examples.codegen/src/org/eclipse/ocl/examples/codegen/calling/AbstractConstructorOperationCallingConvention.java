@@ -246,18 +246,6 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 	 * Create the AS entry operation, AS body and CG operation declaration for the AS operation within cgEntryClass.
 	 */
 	protected /*final*/ @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
-		//
-		// AS Class - yyy2zzz
-		// AS Properties -
-		// AS Operation - f
-		// AS Operation.ownedParameters - x1, x2
-		// AS Entry Operation - newInstance
-		// AS Entry Operation.parameters - boxedValues
-		// AS Entry ExpressionInOCL.ownedContext - this for AS Entry class
-		// AS Entry ExpressionInOCL.ownedParameters - x1, x2
-		// CG Entry Operation - AS Entry class name
-		// CG Entry Operation.lets -
-		//
 		JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 		org.eclipse.ocl.pivot.@NonNull Class asEntryClass = CGUtil.getAST(cgEntryClass);
 		//

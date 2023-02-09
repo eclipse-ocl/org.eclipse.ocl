@@ -101,19 +101,6 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		}
 
 		public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
-			//
-			// AS Class - yyy2zzz
-			// AS Properties - thisTransformer, x1, x2, cachedResult
-			// AS Operation - yyy2zzz
-			// AS Operation.ownedParameters - x1, x2
-			// AS Cache Operation - isEqual
-			// AS Cache Operation.parameters - boxedValues
-			// AS Cache ExpressionInOCL.ownedContext - this
-			// AS Cache ExpressionInOCL.ownedParameters - thisTransformer, x1, x2
-			// CG Cache Operation - isEqual
-			// CG Cache Operation.parameters - idResolver, boxedValues
-			// CG Cache Operation.lets - thisTransformer, x1, x2
-			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		//	EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
@@ -199,19 +186,6 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		}
 
 		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgEntryClass, @NonNull Operation asOperation) {
-			//
-			// AS Class - yyy2zzz
-			// AS Properties - contextObject, x1, x2, cachedResult
-			// AS Operation - yyy2zzz
-			// AS Operation.ownedParameters - x1, x2
-			// AS Entry Operation - isEqual
-			// AS Entry Operation.parameters - boxedValues{x1, x2}
-			// AS Entry ExpressionInOCL.ownedContext - this
-			// AS Entry ExpressionInOCL.ownedParameter(Variable)s - idResolver, self, x1, x2
-			// CG Entry Operation - isEqual
-			// CG Entry Operation.parameters - idResolver, boxedValues{x1, x2}
-			// CG Entry Operation.lets - x1, x2
-			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 			PivotHelper asHelper = codeGenerator.getASHelper();
@@ -350,7 +324,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			throw new IllegalStateException();
 		}
 		asEntryClass.getOwnedProperties().add(asEntryProperty);
-		asEntryProperty.setImplementation(new CacheProperty(asEntryProperty.getPropertyId(), null, null));
+		asEntryProperty.setImplementation(CacheProperty.INSTANCE);
 		//
 		CGProperty cgEntryProperty = analyzer.generatePropertyDeclaration(asEntryProperty, ImmutableCachePropertyCallingConvention.getInstance(asEntryProperty));
 		if (nameResolution != null) {

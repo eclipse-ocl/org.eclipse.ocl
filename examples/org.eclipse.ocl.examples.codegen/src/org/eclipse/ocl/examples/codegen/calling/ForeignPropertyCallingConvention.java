@@ -139,19 +139,6 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		}
 
 		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgForeignClass, @NonNull Property asProperty, @Nullable ExpressionInOCL asExpressionInOCL) {
-			//
-			// AS Class - yyy2zzz
-			// AS Properties - contextObject, x1, x2, cachedResult
-			// AS Operation - yyy2zzz
-			// AS Operation.ownedParameters - x1, x2
-			// AS Entry Operation - isEqual
-			// AS Entry Operation.parameters - boxedValues{x1, x2}
-			// AS Entry ExpressionInOCL.ownedContext - this
-			// AS Entry ExpressionInOCL.ownedParameter(Variable)s - idResolver, self, x1, x2
-			// CG Entry Operation - isEqual
-			// CG Entry Operation.parameters - idResolver, boxedValues{x1, x2}
-			// CG Entry Operation.lets - x1, x2
-			//
 			org.eclipse.ocl.pivot.@NonNull Class asForeignClass = CGUtil.getAST(cgForeignClass);
 			boolean isStatic = asProperty.isIsStatic();
 			//

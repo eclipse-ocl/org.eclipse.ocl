@@ -57,18 +57,6 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 
 		@Override
 		public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, @NonNull Operation asOperation) {
-			//
-			// AS Class - yyy2zzz
-			// AS Properties -
-			// AS Operation - yyy2zzz
-			// AS Operation.ownedParameters -
-			// AS Cache Operation - yyy2zzz
-			// AS Cache Operation.parameters -
-			// AS Cache ExpressionInOCL.ownedContext -
-			// AS Cache ExpressionInOCL.ownedParameters -
-			// CG Cache Operation - yyy2zzz
-			// CG Cache Operation.lets -
-			//
 			org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
 			//
 			//	Create AS declaration for newInstance
@@ -150,18 +138,6 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		}
 
 		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgConstructorClass, org.eclipse.ocl.pivot.@NonNull Class asCacheClass, @NonNull Operation asOperation) {
-			//
-			// AS Class - yyy2zzz
-			// AS Properties -
-			// AS Operation - yyy2zzz
-			// AS Operation.ownedParameters -
-			// AS Cache Operation - newInstance
-			// AS Cache Operation.parameters - boxedValues
-			// AS Cache ExpressionInOCL.ownedContext - this
-			// AS Cache ExpressionInOCL.ownedParameters -
-			// CG Cache Operation - newInstance
-			// CG Cache Operation.lets -
-			//
 			JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
 			GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 			org.eclipse.ocl.pivot.@NonNull Class asConstructorClass = CGUtil.getAST(cgConstructorClass);

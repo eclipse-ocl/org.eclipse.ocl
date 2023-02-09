@@ -402,7 +402,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		}
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation, asOrigin);
 		cgClass.getOperations().add(cgOperation);
-		initCGParameters(operationNameManager);
+		@NonNull CGParameterStyle @NonNull [] cgParameterStyles = getCGParameterStyles(operationNameManager);
+		operationNameManager.createCGOperationParameters(cgParameterStyles);
 		return cgOperation;
 	}
 
@@ -422,7 +423,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation, asOperation);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() == null;
 		cgClass.getOperations().add(cgOperation);
-		initCGParameters(operationNameManager);
+		@NonNull CGParameterStyle @NonNull [] cgParameterStyles = getCGParameterStyles(operationNameManager);
+		operationNameManager.createCGOperationParameters(cgParameterStyles);
 		return cgOperation;
 	}
 
@@ -564,12 +566,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 
 	private @NonNull String getFunctionCtorName(@NonNull CGOperation cgOperation) {
 		return JavaStream.convertToJavaIdentifier("FTOR_" + cgOperation.getName());
-	}
-
-	@Deprecated /* temporary sub createCGOperationDeclaration functionality*/ // XXX create rather than lazy get
-	protected void initCGParameters(@NonNull ExecutableNameManager operationNameManager) {
-		@NonNull CGParameterStyle @NonNull [] cgParameterStyles = getCGParameterStyles(operationNameManager);
-		operationNameManager.createCGOperationParameters(cgParameterStyles);
 	}
 
 	protected void initCallArguments(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp) {

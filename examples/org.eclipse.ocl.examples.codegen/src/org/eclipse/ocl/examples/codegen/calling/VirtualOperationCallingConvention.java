@@ -234,21 +234,6 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 
 	@Override
 	public void installConstructorOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgCacheClass, org.eclipse.ocl.pivot.@NonNull Class asEntryClass, @NonNull Operation asOperation) {
-		//
-		// AS Class - yyy2zzz
-		// AS Properties -
-		// AS Operation - yyy2zzz
-		// AS Operation.ownedParameters -
-		// AS Cache Operation - yyy2zzz
-		// AS Cache Operation.parameters -
-		// AS Cache ExpressionInOCL.ownedContext -
-		// AS Cache ExpressionInOCL.ownedParameters -
-		// CG Cache Operation - yyy2zzz
-		// CG Cache Operation.lets -
-		//
-	//	JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-	//	EnvironmentFactory environmentFactory = codeGenerator.getEnvironmentFactory();
-	//	GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
 		org.eclipse.ocl.pivot.@NonNull Class asCacheClass = CGUtil.getAST(cgCacheClass);
 		//
 		//	Create AS declaration for newInstance

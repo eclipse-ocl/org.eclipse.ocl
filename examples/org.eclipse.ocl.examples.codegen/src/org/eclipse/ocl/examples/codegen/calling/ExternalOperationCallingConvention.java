@@ -111,7 +111,8 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		assert analyzer.basicGetCGElement(asOperation) != null;
 		ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgOperation, asOperation, null);	// Needed to support downstream useOperationNameManager()
 		assert cgOperation.eContainer() != null;
-		initCGParameters(operationNameManager);
+		@NonNull CGParameterStyle @NonNull [] cgParameterStyles = getCGParameterStyles(operationNameManager);
+		operationNameManager.createCGOperationParameters(cgParameterStyles);
 		return cgOperation;
 	}
 
