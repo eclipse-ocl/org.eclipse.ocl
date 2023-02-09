@@ -21,11 +21,13 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -164,6 +166,8 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		if (!js.appendLocalStatements(source)) {
 			return false;
 		}
+		ExecutableNameManager executableNameManager = globalNameManager.useRootExecutableNameManager(cgPropertyCallExp);
+		CGVariable cgExecutorVariable = executableNameManager.lazyGetExecutorVariable();
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
 		boolean isRequiredNullCast = expectedIsNonNull && !actualIsNonNull;
@@ -183,7 +187,7 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 				js.append("(");
 				//		if (!(libraryOperation instanceof LibrarySimpleOperation)) {
 				//			js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.appendName(globalNameManager.getExecutorName());
+				js.appendValueName(cgExecutorVariable);
 				js.append(", ");
 				//			if (!(libraryProperty instanceof LibraryUntypedOperation)) {
 				//				CGTypeVariable typeVariable = localContext.getTypeVariable(resultType);

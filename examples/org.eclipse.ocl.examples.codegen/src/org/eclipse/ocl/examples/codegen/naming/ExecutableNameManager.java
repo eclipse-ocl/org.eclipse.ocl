@@ -437,8 +437,7 @@ public class ExecutableNameManager extends NestedNameManager
 		return cgParameter;
 	}
 
-	protected @NonNull CGVariable createExecutorVariable() {		// XXX QVTi overrides to use global executor
-		// XXX Use a calling convention
+	protected @NonNull CGVariable createExecutorVariable() {		// XXX QVTi overrides to use global rootExecutor
 		CGNativeOperationCallExp executorInit = analyzer.createCGNativeOperationCallExp(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD, SupportOperationCallingConvention.getInstance(JavaConstants.PIVOT_UTIL_GET_EXECUTOR_GET_METHOD));
 		NameResolution nameResolution = globalNameManager.getExecutorName();
 		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.EXECUTOR_TYPE_ID);

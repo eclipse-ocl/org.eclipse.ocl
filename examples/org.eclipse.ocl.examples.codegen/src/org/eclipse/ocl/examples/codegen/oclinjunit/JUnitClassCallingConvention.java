@@ -8,10 +8,11 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.examples.codegen.calling;
+package org.eclipse.ocl.examples.codegen.oclinjunit;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
+import org.eclipse.ocl.examples.codegen.calling.AbstractClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -23,6 +24,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.evaluation.AbstractExecutionSupport;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 
 /**
  *  JUnitClassCallingConvention defines the style of a JUnit root Class declaration.
@@ -40,6 +42,10 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 	public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		CGClass cgClass = createCGClass();
 		installCGDefaultClassParent(analyzer, cgClass, asClass);
+		LanguageSupport languageSupport = analyzer.getCodeGenerator().getLanguageSupport();
+		org.eclipse.ocl.pivot.@NonNull Class asSuperClass = languageSupport.getNativeClass(AbstractExecutionSupport.class);
+		CGClass cgSuperClass = analyzer.generateClassDeclaration(asSuperClass, null);
+		cgClass.getSuperTypes().add(cgSuperClass);
 		return cgClass;
 	}
 

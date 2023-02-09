@@ -21,10 +21,12 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
@@ -90,6 +92,8 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 			return false;
 		}
 		//
+		ExecutableNameManager executableNameManager = globalNameManager.useRootExecutableNameManager(cgPropertyCallExp);
+		CGVariable cgExecutorVariable = executableNameManager.lazyGetExecutorVariable();
 		js.appendDeclaration(cgPropertyCallExp);
 		js.append(" = ");
 		SubStream castBody = new SubStream() {
@@ -100,7 +104,7 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 				js.appendName(globalNameManager.getEvaluateName());
 				js.append("(");
 				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.appendName(globalNameManager.getExecutorName());
+				js.appendValueName(cgExecutorVariable);
 				js.append(", ");
 				js.appendIdReference(cgPropertyCallExp.getASTypeId());
 				js.append(", ");

@@ -357,9 +357,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		js.append(" = ");
 		js.appendValueName(cgForeignOperation);
 		js.append("(");
-		js.appendName(analyzer.getGlobalNameManager().getExecutorName());
 		if (cgSource != null) {
-			js.append(", ");
 			js.appendValueName(cgSource);
 		}
 		js.append(");\n");

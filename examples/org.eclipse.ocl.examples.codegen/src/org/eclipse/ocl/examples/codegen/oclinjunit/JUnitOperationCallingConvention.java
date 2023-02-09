@@ -54,7 +54,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
 		js.append("// " + cgOperation.getCallingConvention() + "\n");
-		js.append("@Override\n");
+	//	js.append("@Override\n");
 		js.append("public ");
 		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 		js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);

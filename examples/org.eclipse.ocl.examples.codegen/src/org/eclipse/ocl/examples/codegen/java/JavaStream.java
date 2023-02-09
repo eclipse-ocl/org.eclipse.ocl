@@ -271,7 +271,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("globals")) {
+			if (string.contains("statics_Parent_static_count")) {
 				getClass();		// XXX
 			}
 			if (string.contains("InvalidValueException")) {

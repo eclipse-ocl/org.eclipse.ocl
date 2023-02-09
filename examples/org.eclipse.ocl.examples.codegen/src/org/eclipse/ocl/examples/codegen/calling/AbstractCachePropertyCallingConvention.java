@@ -71,7 +71,7 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 	}
 
 	/**
-	 *  ImmutableCachePropertyCallingConvention defines the support for an immutable input property of a chahe realizing an operation call.
+	 *  ImmutableCachePropertyCallingConvention defines the support for an immutable input property of a cache realizing an operation call.
 	 */
 	public static class ImmutableCachePropertyCallingConvention extends AbstractCachePropertyCallingConvention
 	{
