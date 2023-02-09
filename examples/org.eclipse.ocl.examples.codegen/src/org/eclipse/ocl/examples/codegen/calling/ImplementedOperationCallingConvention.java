@@ -16,7 +16,6 @@ import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
-import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
@@ -42,30 +41,13 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 			return INSTANCE;
 		}
 
-	//	public static @NonNull OperationCallingConvention getInstance(@NonNull Operation asOperation, boolean maybeVirtual) {
-	//		INSTANCE.logInstance(asOperation, maybeVirtual);
-	//		return INSTANCE;
-	//	}
-
 		@Override
 		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgConstructor) {	// merge with super
 			Operation asCacheOperation = CGUtil.getAST(cgConstructor);
 			ExpressionInOCL asCacheExpressionInOCL = (ExpressionInOCL)asCacheOperation.getBodyExpression();
 			assert (asCacheExpressionInOCL == null);
-
-
-
-
-
-			//			asCacheOperation.setBodyExpression();
 			super.createCGBody(analyzer, cgConstructor);
 		}
-
-		//	@Override
-		//	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
-		// XXX Auto-generated method stub
-		//	super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperationCallExp);
-		//	}
 	}
 
 	/**
@@ -94,10 +76,10 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 		// direct synthesis
 	}
 
-	@Override
-	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
-		return CG_PARAMETER_STYLES_SELF;
-	}
+//	@Override
+//	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+//		return CG_PARAMETER_STYLES_SELF;
+//	}
 
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {

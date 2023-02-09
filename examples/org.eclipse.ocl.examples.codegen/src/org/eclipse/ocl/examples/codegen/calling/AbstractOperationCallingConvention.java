@@ -108,38 +108,35 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 
 	public enum CGParameterStyle {
 		BODY_SELF,				// The next parameter variables is the non-null self of the ExpressionInOCL
-		CONTEXT_OBJECT,			// The next parameter variable is the root context object
 		EXECUTOR,				// The next parameter variable is the executor
 		ID_RESOLVER,			// The next parameter variable is the idResolver
 		BOXED_VALUES,			// The next parameter variable is the parameter array
 		EAGER_PARAMETERS,		// The next parameter variables are copied operation parameters and their names are reserved eagerly
 		EAGER_PARAMETER_VARIABLES,	// The next parameter variables are copied expression parameter variables and their names are reserved eagerly
-		JUNIT_SELF,				// The next parameter variables is the original self for a JUnit test
-		OPTIONAL_BODY_SELF,		// The next parameter variables is the nullable self of the ExpressionInOCL
-		OPTIONAL_SELF,			// The next parameter variables is the original nullable self
+		JUNIT_SELF,				// The next parameter variable is the original self for a JUnit test
+		OPTIONAL_BODY_SELF,		// The next parameter variable is the nullable self of the ExpressionInOCL
+		OPTIONAL_SELF,			// The next parameter variable is the original nullable self
 		PARAMETERS,				// The next parameter variables are copied operation parameters
 		PARAMETER_VARIABLES,	// The next parameter variables are copied expression parameter variables
-		SELF,					// The next parameter variables is the original non-null self
-		SELF_THIS,				// The next parameter variables is the original non-null self realized by Java's this
-		THIS,					// The next parameter variables is the Java this
+		SELF,					// The next parameter variable is the original non-null self
+		SELF_THIS,				// The next parameter variable is the original non-null self realized by Java's this
+		THIS,					// The next parameter variable is the Java this
 		TYPE_ID					// The next parameter variable is the return type id
 	}
 
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES = new @NonNull CGParameterStyle[]{};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.BODY_SELF, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.BOXED_VALUES};
-	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_CONTEXT_OBJECT_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.CONTEXT_OBJECT, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_ID_RESOLVER_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.ID_RESOLVER, CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EAGER_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.EAGER_PARAMETER_VARIABLES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_JUNIT_SELF = new @NonNull CGParameterStyle[] {CGParameterStyle.JUNIT_SELF};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EAGER_PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETER_VARIABLES};
-	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF};
+//	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.EAGER_PARAMETERS};
-	public static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF_THIS, CGParameterStyle.EAGER_PARAMETER_VARIABLES};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF_THIS, CGParameterStyle.EAGER_PARAMETER_VARIABLES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.PARAMETERS};
-	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_TYPE_ID_JUNIT_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.TYPE_ID, CGParameterStyle.JUNIT_SELF, CGParameterStyle.PARAMETERS};
 
 	protected void addTypeIdArgument(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
