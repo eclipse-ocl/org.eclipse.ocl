@@ -73,7 +73,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		ExpressionInOCL expressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
 		Variable contextVariable = expressionInOCL.getOwnedContext();
 		assert contextVariable != null;
-		return CG_PARAMETER_STYLES_EXECUTOR_TYPE_ID_JUNIT_SELF_PARAMETERS;
+		return CG_PARAMETER_STYLES_JUNIT_SELF;
 	}
 
 	@Override

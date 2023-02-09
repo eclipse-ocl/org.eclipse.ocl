@@ -212,7 +212,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			TypedElement asOrigin = operationNameManager.getASOrigin();
 			Property asProperty = (Property)asOrigin;
 			boolean isStatic = asProperty.isIsStatic();
-			return isStatic ? CG_PARAMETER_STYLES_EXECUTOR : CG_PARAMETER_STYLES_EXECUTOR_PARAMETER_VARIABLES;
+			return isStatic ? CG_PARAMETER_STYLES : CG_PARAMETER_STYLES_PARAMETER_VARIABLES;
 		}
 
 		@Override

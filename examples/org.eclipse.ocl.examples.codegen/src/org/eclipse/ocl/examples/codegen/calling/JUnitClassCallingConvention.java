@@ -21,8 +21,8 @@ import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.evaluation.AbstractExecutionSupport;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  *  JUnitClassCallingConvention defines the style of a JUnit root Class declaration.
@@ -61,7 +61,8 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.appendClassHeader(asClass);
 		Operation asOperation = asClass.getOwnedOperations().get(0);
 		ExpressionInOCL expInOcl = (ExpressionInOCL)asOperation.getBodyExpression();
-		Class<?> baseClass = cg2javaVisitor.getGenModelHelper().getAbstractOperationClass(expInOcl.getOwnedParameters().size());
+	//	Class<?> baseClass = cg2javaVisitor.getGenModelHelper().getAbstractOperationClass(expInOcl.getOwnedParameters().size());
+		Class<?> baseClass = AbstractExecutionSupport.class;
 		String title = cgClass.getName() + " provides the Java implementation for";
 		js.appendCommentWithOCL(title, expInOcl);
 		assert className != null;
@@ -77,8 +78,9 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 			cg2javaVisitor.generateGlobals(sortedGlobals);
 	//		js.appendOptionalBlankLine();
 		}
+		generatePropertyDeclarations(cg2javaVisitor, cgClass);
 		//
-		js.appendOptionalBlankLine();
+	/*	js.appendOptionalBlankLine();
 		js.append("protected final ");
 		js.appendIsRequired(true);
 		js.append(" ");
@@ -87,14 +89,14 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.appendName(globalNameManager.getRootThisName());
 		js.append(" = this;\n");
 		//
-		if (globalNameManager.needsExecutor()) {
-			js.append("protected final ");
-			js.appendClassReference(true, Executor.class);
-			js.append(" ");
-			js.appendName(globalNameManager.getRootExecutorName());
-			js.append(";\n");
+	//	if (globalNameManager.needsExecutor()) {
+		//	js.append("protected final ");
+		//	js.appendClassReference(true, Executor.class);
+		//	js.append(" ");
+		//	js.appendName(globalNameManager.getRootExecutorName());
+		//	js.append(";\n");
 			//
-			js.appendOptionalBlankLine();
+		/*	js.appendOptionalBlankLine();
 			js.append("public ");
 			js.append(className);
 			js.append("() {\n");
@@ -103,7 +105,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 			js.appendClassReference(null, PivotUtil.class);
 			js.append(".getExecutor(null));\n");
 			js.popIndentation();
-			js.append("}\n");
+			js.append("}\n"); */
 			//
 			js.appendOptionalBlankLine();
 			js.append("public ");
@@ -114,18 +116,21 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 			js.appendName(rootExecutorName);
 			js.append(") {\n");
 			js.pushIndentation(null);
-			js.append("this.");
+		//	js.append("this.");
+		//	js.appendName(rootExecutorName);
+		//	js.append(" = ");
+		//	js.appendName(rootExecutorName);
+		//	js.append(";\n");
+			js.append("super(");
 			js.appendName(rootExecutorName);
-			js.append(" = ");
-			js.appendName(rootExecutorName);
-			js.append(";\n");
+			js.append(");\n");
 			generatePropertyInitializations(cg2javaVisitor, cgClass);
 			js.popIndentation();
 			js.append("}\n");
-		}
+	//	}
 		//
 		if (expInOcl.getOwnedContext() != null) {
-			generatePropertyDeclarations(cg2javaVisitor, cgClass);
+//			generatePropertyDeclarations(cg2javaVisitor, cgClass);
 			generateOperations(cg2javaVisitor, cgClass);
 		}
 		else {
