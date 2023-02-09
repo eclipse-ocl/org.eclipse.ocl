@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.pivot.tests;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.List;
@@ -845,7 +846,12 @@ public class TestOCL extends OCLInternal
 			callExp.setType(expr.getType());
 			Object testInstance = constructor.newInstance(executor);
 			assert testInstance != null;
-			return evaluateMethod.invoke(testInstance, self);
+			try {
+				return evaluateMethod.invoke(testInstance, self);
+			}
+			catch (InvocationTargetException e) {
+				throw (Exception)e.getCause();
+			}
 		}
 		finally {
 			ThreadLocalExecutor.setExecutor(savedExecutor);

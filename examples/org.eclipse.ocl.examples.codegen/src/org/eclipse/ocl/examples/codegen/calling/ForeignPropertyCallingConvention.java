@@ -89,7 +89,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			Operation asForeignOperation = CGUtil.getAST(cgForeignOperation);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgForeignOperation, asForeignOperation, null);
 			List<@NonNull CGParameter> cgForeignParametersList = CGUtil.getParametersList(cgForeignOperation);
-			CGParameter cgSelfParameter = cgForeignParametersList.size() > 1 ? cgForeignParametersList.get(1) : null;
+			CGParameter cgSelfParameter = cgForeignParametersList.size() > 0 ? cgForeignParametersList.get(0) : null;
 		//	CGValuedElement cgInitValue = analyzer.getInitExpression(/*cgParameter,*/ asProperty);
 			CGValuedElement cgInitValue = analyzer.createCGElement(CGValuedElement.class, asForeignOperation.getBodyExpression());
 			assert cgInitValue != null;
