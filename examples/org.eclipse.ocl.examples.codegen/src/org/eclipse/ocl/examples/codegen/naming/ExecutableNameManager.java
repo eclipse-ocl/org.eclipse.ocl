@@ -223,6 +223,7 @@ public class ExecutableNameManager extends NestedNameManager
 			Variable asContextVariable = asExpressionInOCL != null ? asExpressionInOCL.getOwnedContext() : null;
 			List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 			for (@NonNull CGParameterStyle cgParameterStyle : cgParameterStyles) {
+				boolean eagerNames = false;
 				switch(cgParameterStyle) {
 					case BODY_SELF: {
 						assert selfParameter == null;
@@ -242,20 +243,22 @@ public class ExecutableNameManager extends NestedNameManager
 						boxedValuesParameter = cgParameter;
 						break;
 					}
-					case EAGER_PARAMETERS: {
-						for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
-							CGParameter cgParameter = lazyGetCGParameter(asParameter);
-							cgParameters.add(cgParameter);
-							declareEagerName(cgParameter);
+					case EAGER_PARAMETERS:
+						eagerNames = true;
+					case PARAMETERS: {
+						Iterable<? extends @NonNull VariableDeclaration> ownedParameters;
+						if (asExpressionInOCL != null) {
+							ownedParameters = PivotUtil.getOwnedParameters(asExpressionInOCL);
 						}
-						break;
-					}
-					case EAGER_PARAMETER_VARIABLES: {
-						assert asExpressionInOCL != null;
-						for (@NonNull Variable asParameterVariable : PivotUtil.getOwnedParameters(asExpressionInOCL)) {
+						else {
+							ownedParameters = PivotUtil.getOwnedParameters(asOperation);
+						}
+						for (@NonNull VariableDeclaration asParameterVariable : ownedParameters) {
 							CGParameter cgParameter = lazyGetCGParameter(asParameterVariable);
 							cgParameters.add(cgParameter);
-							declareEagerName(cgParameter);
+							if (eagerNames) {
+								declareEagerName(cgParameter);
+							}
 						}
 						break;
 					}
@@ -310,21 +313,6 @@ public class ExecutableNameManager extends NestedNameManager
 						CGParameter cgParameter = createSelfParameter();
 						cgParameter.setRequired(false);
 						cgParameters.add(cgParameter);
-						break;
-					}
-					case PARAMETERS: {
-						for (@NonNull Parameter asParameter : PivotUtil.getOwnedParameters(asOperation)) {
-							CGParameter cgParameter = lazyGetCGParameter(asParameter);
-							cgParameters.add(cgParameter);
-						}
-						break;
-					}
-					case PARAMETER_VARIABLES: {
-						assert asExpressionInOCL != null;
-						for (@NonNull Variable asParameterVariable : PivotUtil.getOwnedParameters(asExpressionInOCL)) {
-							CGParameter cgParameter = lazyGetCGParameter(asParameterVariable);
-							cgParameters.add(cgParameter);
-						}
 						break;
 					}
 					case SELF: {
