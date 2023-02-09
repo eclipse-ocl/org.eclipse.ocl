@@ -202,7 +202,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			org.eclipse.ocl.pivot.Class asCacheClass = CGUtil.getAST(cgCacheClass);
 			Operation asOperation = cg2javaVisitor.getAnalyzer().getCachedOperation(asCacheClass);
 			if (asOperation.isIsStatic()) {
-				cg2javaVisitor.getJavaStream().append(globalNameManager.getRootThisNameResolution().getResolvedName());
+				cg2javaVisitor.getJavaStream().appendName(globalNameManager.getRootThisName());
 				isFirst = false;
 			}
 			super.generateUniqueComputationArguments(cg2javaVisitor, isFirst, globalNameManager, cgOperation);
@@ -451,7 +451,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		js.append(" ");
 		js.append(operationName);
 		js.append(" ");
-		js.append(globalNameManager.getInstanceName());
+		js.appendName(globalNameManager.getInstanceName());
 		js.append(" = new ");
 		js.append(operationName);
 		js.append("();\n");
@@ -464,7 +464,7 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		js.append(" ");
 		js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
 		js.append(" ");
-		js.append(globalNameManager.getEvaluateName());
+		js.appendName(globalNameManager.getEvaluateName());
 		js.append("(");
 		js.appendClassReference(true, Executor.class);
 		js.append(" executor, ");

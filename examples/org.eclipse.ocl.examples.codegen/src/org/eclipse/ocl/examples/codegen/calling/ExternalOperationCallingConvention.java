@@ -60,8 +60,8 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 		}
 
 		@Override
-		protected @NonNull NameResolution getContextNameResolution(@NonNull GlobalNameManager globalNameManager) {
-			return globalNameManager.getSelfNameResolution();
+		protected @NonNull NameResolution getContextName(@NonNull GlobalNameManager globalNameManager) {
+			return globalNameManager.getSelfName();
 		}
 
 		@Override

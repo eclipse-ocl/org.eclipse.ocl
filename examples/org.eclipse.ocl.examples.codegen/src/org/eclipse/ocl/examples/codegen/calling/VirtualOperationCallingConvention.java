@@ -112,9 +112,9 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 			js.append("return (");
 			js.appendClassReference(isRequiredReturn, cgOperation);
 			js.append(")");
-			js.append(globalNameManager.getEvaluationCacheName());
+			js.appendName(globalNameManager.getEvaluationCacheName());
 			js.append(".");
-			js.append(globalNameManager.getGetCachedEvaluationResultName());
+			js.appendName(globalNameManager.getGetCachedEvaluationResultName());
 			js.append("(this, caller, new ");
 			js.appendClassReference(false, Object.class);
 			js.append("[]{");

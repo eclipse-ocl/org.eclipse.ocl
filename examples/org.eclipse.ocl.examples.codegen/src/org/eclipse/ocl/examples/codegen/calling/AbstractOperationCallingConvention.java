@@ -217,7 +217,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		ParameterVariable asContextVariable;
 		switch (contextStyle) {
 			case SELF: {
-				String selfName = globalNameManager.getSelfNameResolution().getResolvedName();
+				String selfName = globalNameManager.getSelfName().getResolvedName();
 				asContextVariable = asHelper.createParameterVariable(selfName, asClass, true);
 				break;
 			}
@@ -237,14 +237,14 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 				switch (parameterStyle) {
 					case ID_RESOLVER: {
 						LanguageSupport jLanguageSupport = codeGenerator.getLanguageSupport();
-						String idResolverName = globalNameManager.getIdResolverNameResolution().getResolvedName();
+						String idResolverName = globalNameManager.getIdResolverName().getResolvedName();
 						Class idResolverClass = jLanguageSupport.getNativeClass(IdResolver.class);
 						asParameterVariable = asHelper.createParameterVariable(idResolverName, idResolverClass, true);
 						asParameterVariables.add(asParameterVariable);
 						break;
 					}
 					case SELF: {
-						String selfName = globalNameManager.getSelfNameResolution().getResolvedName();
+						String selfName = globalNameManager.getSelfName().getResolvedName();
 						asParameterVariable = asHelper.createParameterVariable(selfName, asClass, true);
 						asParameterVariables.add(asParameterVariable);
 						break;
@@ -429,7 +429,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		PivotHelper asHelper = codeGenerator.getASHelper();
 		ParameterVariable asContextVariable;
 		org.eclipse.ocl.pivot.Class asOldContextClass = codeGenerator.getContextClass();
-		String thisName = globalNameManager.getThisNameResolution().getResolvedName();
+		String thisName = globalNameManager.getThisName().getResolvedName();
 		asContextVariable = asHelper.createParameterVariable(thisName, asOldContextClass, true);
 		return asContextVariable;
 	}
@@ -519,9 +519,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			js.append(")");
 			//	String cachedResultName = qvticg2javaVisitor.getVariantResolvedName(cgFunction, codeGenerator.getCACHED_RESULT_NameVariant());
 			GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
-			String cachedResultName = globalNameManager.getCachedResultNameResolution().getResolvedName();
 			js.append(".");
-			js.append(cachedResultName);
+			js.appendName(globalNameManager.getCachedResultName());
 		}
 		js.append(";\n");
 		return true;

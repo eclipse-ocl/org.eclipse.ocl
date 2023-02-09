@@ -307,7 +307,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			if (notEquals) {
 				js.append("!");
 			}
-			js.append(js.getCodeGenerator().getGlobalNameManager().getIdResolverName());
+			js.appendName(js.getCodeGenerator().getGlobalNameManager().getIdResolverName());
 			js.append(".oclEquals(");
 			js.appendValueName(thisValue);
 			js.append(", ");
@@ -318,7 +318,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			if (notEquals) {
 				js.append("!");
 			}
-			js.append(js.getCodeGenerator().getGlobalNameManager().getIdResolverName());
+			js.appendName(js.getCodeGenerator().getGlobalNameManager().getIdResolverName());
 			js.append(".oclEquals(");
 			js.appendValueName(thatValue);
 			js.append(", ");
@@ -332,7 +332,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 			if (notEquals) {
 				js.append("!");
 			}
-			js.append(js.getCodeGenerator().getGlobalNameManager().getIdResolverName());
+			js.appendName(js.getCodeGenerator().getGlobalNameManager().getIdResolverName());
 			js.append(".oclEquals(");
 			js.appendValueName(thisValue);
 			js.append(", ");

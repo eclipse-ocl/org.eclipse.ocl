@@ -41,7 +41,7 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 
 	@Override
 	public @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
-		NameResolution evaluateNameResolution = analyzer.getGlobalNameManager().getEvaluateNameResolution();
+		NameResolution evaluateNameResolution = analyzer.getGlobalNameManager().getEvaluateName();
 		assert evaluateNameResolution.getResolvedName().equals(asOperation.getName());
 		CGLibraryOperation cgOperation = CGModelFactory.eINSTANCE.createCGLibraryOperation();
 		evaluateNameResolution.addCGElement(cgOperation);

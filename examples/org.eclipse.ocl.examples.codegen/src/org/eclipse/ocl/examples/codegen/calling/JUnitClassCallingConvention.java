@@ -17,6 +17,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Operation;
@@ -54,8 +55,7 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendOptionalBlankLine();;
 		GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
-		String rootExecutorName = globalNameManager.getRootExecutorNameResolution().getResolvedName();
-		String rootThisName = globalNameManager.getRootThisNameResolution().getResolvedName();
+		NameResolution rootExecutorName = globalNameManager.getRootExecutorName();
 		String className = CGUtil.getName(cgClass);
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		js.appendClassHeader(asClass);
@@ -84,14 +84,14 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.append(" ");
 		js.append(className);
 		js.append(" ");
-		js.append(rootThisName);
+		js.appendName(globalNameManager.getRootThisName());
 		js.append(" = this;\n");
 		//
 		if (globalNameManager.needsExecutor()) {
 			js.append("protected final ");
 			js.appendClassReference(true, Executor.class);
 			js.append(" ");
-			js.append(rootExecutorName);
+			js.appendName(globalNameManager.getRootExecutorName());
 			js.append(";\n");
 			//
 			js.appendOptionalBlankLine();
@@ -111,13 +111,13 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 			js.append("(");
 			js.appendClassReference(true, Executor.class);
 			js.append(" ");
-			js.append(rootExecutorName);
+			js.appendName(rootExecutorName);
 			js.append(") {\n");
 			js.pushIndentation(null);
 			js.append("this.");
-			js.append(rootExecutorName);
+			js.appendName(rootExecutorName);
 			js.append(" = ");
-			js.append(rootExecutorName);
+			js.appendName(rootExecutorName);
 			js.append(";\n");
 			generatePropertyInitializations(cg2javaVisitor, cgClass);
 			js.popIndentation();

@@ -37,6 +37,7 @@ import org.eclipse.ocl.examples.codegen.generator.CodeGenOptions;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.types.EObjectDescriptor;
+import org.eclipse.ocl.examples.codegen.naming.NameResolution;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -270,7 +271,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("StaticPropertySupport")) {
+			if (string.contains("globals")) {
 				getClass();		// XXX
 			}
 			if (string.contains("InvalidValueException")) {
@@ -1055,6 +1056,10 @@ public class JavaStream
 			return cgElement.accept(cg2java) == Boolean.TRUE;
 		}
 		return true;
+	}
+
+	public void appendName(@NonNull NameResolution nameResolution) {
+		append(nameResolution.getResolvedName());
 	}
 
 	public void appendNotEqualsBoolean(@NonNull CGValuedElement cgValue, boolean value) {

@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.utilities.AbstractLanguageSupport;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
@@ -93,25 +92,15 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
-			String rootExecutorName = globalNameManager.getRootExecutorNameResolution().getResolvedName();
-			String rootThisName = globalNameManager.getRootThisNameResolution().getResolvedName();
 			js.append("// " + cgOperation.getCallingConvention() + "\n");
 			js.append("public ");
 			js.appendValueName(cgOperation);
-			js.append("(");
-			js.appendClassReference(true, Executor.class);
-			js.append(" ");
-			js.append(rootExecutorName);
-			js.append(", ");
-			js.appendClassReference(true, Object.class);
-			js.append(" ");
-			js.append(rootThisName);
-			js.append(") {\n");
+			js.append("() {\n");
 			js.pushIndentation(null);
 			js.append("super(");
-			js.append(rootExecutorName);
+			js.appendName(globalNameManager.getRootExecutorName());
 			js.append(", ");
-			js.append(rootThisName);
+			js.appendName(globalNameManager.getRootThisName());
 			js.append(");\n");
 			js.popIndentation();
 			js.append("}\n");
@@ -140,7 +129,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 
 		@Override
 		protected void generateUniqueComputationArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull GlobalNameManager globalNameManager, @NonNull CGOperation cgOperation) {
-			cg2javaVisitor.getJavaStream().append(globalNameManager.getRootThisNameResolution().getResolvedName());
+			cg2javaVisitor.getJavaStream().appendName(globalNameManager.getRootThisName());
 			super.generateUniqueComputationArguments(cg2javaVisitor, false, globalNameManager, cgOperation);
 		}
 	}
@@ -179,7 +168,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//
 			//	Create AS declaration for newInstance
 			//
-			NameResolution newInstanceNameResolution = globalNameManager.getNewInstanceResolution();
+			NameResolution newInstanceNameResolution = globalNameManager.getNewInstance();
 			Operation asConstructorOperation = createASOperationDeclaration(analyzer, asConstructorClass, asOperation,
 				newInstanceNameResolution.getResolvedName(), asCacheClass);
 			//

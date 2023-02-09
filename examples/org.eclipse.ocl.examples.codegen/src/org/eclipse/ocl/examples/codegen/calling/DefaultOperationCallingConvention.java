@@ -196,7 +196,7 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		js.append(" basicEvaluate(");
 		js.appendClassReference(true, Executor.class);
 		js.append(" ");
-		js.append(cg2javaVisitor.getCodeGenerator().getGlobalNameManager().getExecutorName());
+		js.appendName(cg2javaVisitor.getCodeGenerator().getGlobalNameManager().getExecutorName());
 		js.append(", ");
 		js.appendClassReference(true, TypedElement.class);
 		js.append(" ");
@@ -283,7 +283,7 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		//				js.append(" ");
 		js.appendClassReference(isRequiredReturn, cgOperation);
 		js.append(" ");
-		js.append(globalNameManager.getEvaluateName());
+		js.appendName(globalNameManager.getEvaluateName());
 		js.append("(");
 		boolean isFirst = true;
 		for (@NonNull CGParameter cgParameter : cgParameters) {
@@ -298,9 +298,9 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		js.append("return (");
 		js.appendClassReference(isRequiredReturn, cgOperation);
 		js.append(")");
-		js.append(globalNameManager.getEvaluationCacheName());
+		js.appendName(globalNameManager.getEvaluationCacheName());
 		js.append(".");
-		js.append(globalNameManager.getGetCachedEvaluationResultName());
+		js.appendName(globalNameManager.getGetCachedEvaluationResultName());
 		js.append("(this, caller, new ");
 		js.appendClassReference(false, Object.class);
 		js.append("[]{");

@@ -295,7 +295,7 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		js.append("public ");
 		js.appendIsRequired(false);
 		js.append(" Object ");
-		js.append(globalNameManager.getEvaluateName());
+		js.appendName(globalNameManager.getEvaluateName());
 		js.append("(final ");
 		//		js.appendDeclaration(evaluatorParameter);
 		js.appendClassReference(true, Executor.class);
@@ -306,7 +306,7 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		//		js.appendDeclaration(currentNameManager.getTypeIdParameter(cgIterateCallExp));
 		js.appendClassReference(true, TypeId.class);
 		js.append(" ");
-		js.append(globalNameManager.getTypeIdNameResolution().getResolvedName());
+		js.appendName(globalNameManager.getTypeIdName());
 		if (useMultiple) {
 			js.append(", final ");
 			js.appendIsRequired(false);

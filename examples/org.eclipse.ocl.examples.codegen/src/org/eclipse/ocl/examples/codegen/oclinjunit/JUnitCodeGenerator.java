@@ -84,7 +84,7 @@ public class JUnitCodeGenerator extends JavaCodeGenerator
 	//		contextVariable.setIsRequired(false); // May be null for test		// XXX this is after a VariableExp has referenced
 	//	}
 		Resource eResource = expInOcl.eResource();
-		NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
+		NameResolution evaluateNameResolution = globalNameManager.getEvaluateName();
 		@NonNull String packageNames[] = qualifiedPackageName.split("\\.");
 		org.eclipse.ocl.pivot.Package asRootPackage = null;
 		org.eclipse.ocl.pivot.Package asLeafPackage = null;

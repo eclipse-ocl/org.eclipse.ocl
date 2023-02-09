@@ -275,7 +275,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 			if (asContextVariable == null) {			// QVTi FunctionBody has eager ownedContext, OCL ExpressionInOCL is lazy
 				PivotHelper asHelper = codeGenerator.getASHelper();
 				GlobalNameManager globalNameManager = analyzer.getGlobalNameManager();
-				String thisName = globalNameManager.getThisNameResolution().getResolvedName();
+				String thisName = globalNameManager.getThisName().getResolvedName();
 				asContextVariable = asHelper.createParameterVariable(thisName, asEntryClass, true);
 				asEntryExpressionInOCL.setOwnedContext(asContextVariable);
 			}

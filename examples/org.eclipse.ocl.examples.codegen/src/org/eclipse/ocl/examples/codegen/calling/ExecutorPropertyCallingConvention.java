@@ -110,9 +110,9 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 					js.appendReferenceTo(CGUtil.getReferredProperty(cgPropertyCallExp));
 				}
 				js.append(".");
-				js.append(globalNameManager.getEvaluateNameResolution().getResolvedName());
+				js.appendName(globalNameManager.getEvaluateName());
 				js.append("(");
-				js.append(globalNameManager.getExecutorNameResolution().getResolvedName());
+				js.appendName(globalNameManager.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgExecutorPropertyCallExp.getASTypeId());
 				js.append(", ");

@@ -99,11 +99,11 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor
 							js.append(" = ");
 							js.appendClassReference(null, CGStringGetSeverityOperation.class);
 							js.append(".");
-							js.append(globalNameManager.getInstanceName());
+							js.appendName(globalNameManager.getInstanceName());
 							js.append(".");
-							js.append(globalNameManager.getEvaluateName());
+							js.appendName(globalNameManager.getEvaluateName());
 							js.append("(");
-							js.append(globalNameManager.getExecutorName());
+							js.appendName(globalNameManager.getExecutorName());
 							js.append(", ");
 							js.appendClassReference(null, genClassifier.getGenPackage().getQualifiedPackageInterfaceName());
 							js.append(".Literals.");

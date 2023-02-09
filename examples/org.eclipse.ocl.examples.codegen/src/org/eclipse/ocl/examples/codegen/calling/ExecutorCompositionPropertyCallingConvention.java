@@ -97,10 +97,10 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 			public void append() {
 				js.appendReferenceTo(cgExecutorOppositePropertyCallExp.getExecutorProperty());
 				js.append(".");
-				js.append(globalNameManager.getEvaluateName());
+				js.appendName(globalNameManager.getEvaluateName());
 				js.append("(");
 				//		js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalNameManager.getExecutorName());
+				js.appendName(globalNameManager.getExecutorName());
 				js.append(", ");
 				js.appendIdReference(cgPropertyCallExp.getASTypeId());
 				js.append(", ");

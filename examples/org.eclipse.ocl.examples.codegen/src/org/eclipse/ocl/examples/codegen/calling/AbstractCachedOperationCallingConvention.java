@@ -114,7 +114,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			//
 			//	Create AS declaration for evaluate
 			//
-			NameResolution evaluateNameResolution = globalNameManager.getEvaluateNameResolution();
+			NameResolution evaluateNameResolution = globalNameManager.getEvaluateName();
 			Operation asCacheEvaluateOperation = createASOperationDeclaration(analyzer, asCacheClass, asOperation,
 					evaluateNameResolution.getResolvedName(), ASResultStyle.RESULT);
 			//
@@ -176,7 +176,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			js.append(")getUniqueComputation(");
 			generateUniqueComputationArguments(cg2javaVisitor, true, globalNameManager, cgOperation);
 			js.append(")).");
-			js.append(globalNameManager.getCachedResultNameResolution().getResolvedName());
+			js.appendName(globalNameManager.getCachedResultName());
 			js.append(";\n");
 		}
 
@@ -248,11 +248,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			js.appendValueName(cgProperty);
 			js.append(" = new ");
 			boxedTypeRepresentation.appendClassReference(null, cgProperty);
-			js.append("(");
-			js.append(globalNameManager.getRootExecutorNameResolution().getResolvedName());
-			js.append(", ");
-			js.append(globalNameManager.getRootThisNameResolution().getResolvedName());
-			js.append(");\n");
+			js.append("();\n");
 			return true;
 		}
 	}

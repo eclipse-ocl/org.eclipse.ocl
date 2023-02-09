@@ -304,9 +304,9 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 				GlobalNameManager globalNameManager = cg2javaVisitor.getCodeGenerator().getGlobalNameManager();
 				js.appendClassReference(null, libraryOperation.getClass());
 				js.append(".");
-				js.append(globalNameManager.getInstanceName());
+				js.appendName(globalNameManager.getInstanceName());
 				js.append(".");
-				js.append(globalNameManager.getEvaluateName());
+				js.appendName(globalNameManager.getEvaluateName());
 				js.append("(");
 				boolean needsComma = false;
 				for (@NonNull CGValuedElement cgArgument : cgArguments) {

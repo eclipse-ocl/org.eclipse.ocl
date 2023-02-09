@@ -177,13 +177,13 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 				js.appendClassReference(null, libraryProperty.getClass());
 				//		CGOperation cgOperation = ClassUtil.nonNullState(CGUtils.getContainingOperation(cgPropertyCallExp));
 				js.append(".");
-				js.append(globalNameManager.getInstanceName());
+				js.appendName(globalNameManager.getInstanceName());
 				js.append(".");
-				js.append(globalNameManager.getEvaluateName());
+				js.appendName(globalNameManager.getEvaluateName());
 				js.append("(");
 				//		if (!(libraryOperation instanceof LibrarySimpleOperation)) {
 				//			js.append(getValueName(localContext.getEvaluatorParameter(cgPropertyCallExp)));
-				js.append(globalNameManager.getExecutorName());
+				js.appendName(globalNameManager.getExecutorName());
 				js.append(", ");
 				//			if (!(libraryProperty instanceof LibraryUntypedOperation)) {
 				//				CGTypeVariable typeVariable = localContext.getTypeVariable(resultType);
