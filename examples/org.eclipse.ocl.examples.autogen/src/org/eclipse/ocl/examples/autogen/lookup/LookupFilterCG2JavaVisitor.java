@@ -92,7 +92,7 @@ public class LookupFilterCG2JavaVisitor extends AutoCG2JavaVisitor
 
 	@Override
 	protected void doConstructor(@NonNull CGClass cgClass) {
-		NameResolution executorName = globalNameManager.getExecutorName();
+		NameResolution executorName = globalNameManager.getRootExecutorName();
 		js.append("public " + cgClass.getName() + "(");
 		js.appendClassReference(true, Executor.class);
 		js.append(" "+ executorName);

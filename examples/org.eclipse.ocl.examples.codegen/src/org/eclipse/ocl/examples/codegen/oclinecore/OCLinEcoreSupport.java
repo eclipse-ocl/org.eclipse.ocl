@@ -72,6 +72,9 @@ public class OCLinEcoreSupport
 		public @NonNull CGClass createCGClass(@NonNull CodeGenAnalyzer analyzer, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			CGClass cgClass = createCGClass();
 			installCGDefaultClassParent(analyzer, cgClass, asClass);
+			org.eclipse.ocl.pivot.@NonNull Class asSuperClass = analyzer.getCodeGenerator().getLanguageSupport().getNativeClass(AbstractExecutionSupport.class);
+			CGClass cgSuperClass = analyzer.generateClassDeclaration(asSuperClass, null);
+			cgClass.getSuperTypes().add(cgSuperClass);
 			return cgClass;
 		}
 

@@ -38,10 +38,14 @@ public abstract class LookupVisitorsCG2JavaVisitor extends AutoVisitorsCG2JavaVi
 		js.append(") {\n");
 		js.pushIndentation(null);
 		js.append("super(" + LookupVisitorsCodeGenerator.CONTEXT_NAME + ");\n");
-		js.append("this." + globalNameManager.getExecutorName() + " = ");
+		js.append("this.");
+		js.appendName(globalNameManager.getRootExecutorName());
+		js.append(" = ");
 		js.appendClassReference(null, ClassUtil.class);
 		js.append(".nonNull(" + LookupVisitorsCodeGenerator.CONTEXT_NAME + ".getExecutor());\n");
-		js.append("this." + JavaConstants.ID_RESOLVER_NAME + " = " + globalNameManager.getExecutorName() + ".getIdResolver();\n");
+		js.append("this." + JavaConstants.ID_RESOLVER_NAME + " = ");
+		js.appendName(globalNameManager.getRootExecutorName());
+		js.append(".getIdResolver();\n");
 		doAdditionalFieldsInitialization(cgClass);
 		js.popIndentation();
 		js.append("}\n");

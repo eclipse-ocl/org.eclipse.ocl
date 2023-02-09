@@ -324,7 +324,7 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 		js.appendClassReference(null, Object.class);
 		js.append(" value = support.");
 		js.append(cgOperation.getName());
-		js.append("(executor);\n");
+		js.append("();\n");
 		//
 		js.appendClassReference(null, Object.class);
 		js.append(" ecoreValue = executor.getIdResolver().ecoreValueOf(");			// XXX Collection
