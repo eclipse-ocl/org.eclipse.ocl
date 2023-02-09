@@ -31,7 +31,6 @@ import org.eclipse.ocl.examples.codegen.calling.ClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ConstrainedPropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.ContextClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.DefaultOperationCallingConvention;
-import org.eclipse.ocl.examples.codegen.calling.EcoreForeignOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcoreOppositePropertyCallingConvention;
 import org.eclipse.ocl.examples.codegen.calling.EcorePropertyCallingConvention;
@@ -289,7 +288,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 				return NativeOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 			}
 			else {
-				return EcoreForeignOperationCallingConvention.getInstance(asOperation, maybeVirtual);
+				return /*Ecore*/ForeignOperationCallingConvention.getInstance(asOperation, maybeVirtual);
 			}
 		}
 		return LibraryOperationCallingConvention.getInstance(asOperation, maybeVirtual);

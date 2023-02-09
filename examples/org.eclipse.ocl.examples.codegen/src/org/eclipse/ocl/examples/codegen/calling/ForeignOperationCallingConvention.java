@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -27,7 +29,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.GenModelException;
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -309,13 +310,14 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 			@Nullable CGValuedElement cgSource, @NonNull OperationCallExp asOperationCallExp) {
 		Operation asOperation = ClassUtil.nonNullState(asOperationCallExp.getReferredOperation());
 		boolean isRequired = asOperation.isIsRequired();
-		assert cgSource == null;
-		assert asOperation.isIsStatic();
+	//	assert cgSource == null;
+	//	assert asOperation.isIsStatic();
 		CGForeignOperationCallExp cgForeignOperationCallExp = CGModelFactory.eINSTANCE.createCGForeignOperationCallExp();
 		initCallExp(analyzer, cgForeignOperationCallExp, asOperationCallExp, cgOperation, isRequired);
-		ExecutableNameManager operationNameManager = analyzer.getGlobalNameManager().useOperationNameManager(cgOperation);
-		CGVariable executorVariable = operationNameManager.lazyGetExecutorVariable();
-		cgForeignOperationCallExp.getArguments().add(analyzer.createCGVariableExp(executorVariable));
+		if (cgSource != null) {
+			List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(cgForeignOperationCallExp);
+			cgArguments.add(cgSource);
+		}
 		initCallArguments(analyzer, cgForeignOperationCallExp);
 		return cgForeignOperationCallExp;
 	}
@@ -385,37 +387,6 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		js.appendClassReference(null, returnClassName);
 		js.append(")ecoreValue;\n");
 		return true;
-	}
-
-
-/*	@Override
-	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
-		if (!generateLocals(cg2javaVisitor, cgOperationCallExp)) {
-			return false;
-		}
-		js.appendDeclaration(cgOperationCallExp);
-		js.append(" = ");
-		js.append("appendForeignOperationName(cg2javaVisitor, cgOperationCallExp)");		// XXX
-		js.append("(");
-		generateArgumentList(cg2javaVisitor, cgOperationCallExp);
-		js.append(");\n");
-		return true;
-	} */
-
-	@Override
-	protected void generateJavaCallArguments(@NonNull CG2JavaVisitor cg2javaVisitor, boolean isFirst, @NonNull Iterable<@NonNull CGValuedElement> cgArguments) {
-		JavaStream js = cg2javaVisitor.getJavaStream();
-		int i = 0;
-		for (@NonNull CGValuedElement cgArgument : cgArguments) {		// Skip first argument
-			if (i >= 1) {
-				if (i >= 2) {
-					js.append(", ");
-				}
-				CGValuedElement argument = cg2javaVisitor.getExpression(cgArgument);
-				js.appendValueName(argument);
-			}
-			i++;
-		}
 	}
 
 	@Override
@@ -571,10 +542,10 @@ public class ForeignOperationCallingConvention extends AbstractCachedOperationCa
 		ExpressionInOCL bodyExpression = (ExpressionInOCL)asOperation.getBodyExpression();
 		Variable asContextVariable = bodyExpression.getOwnedContext();
 		if (asContextVariable != null) {
-			return CG_PARAMETER_STYLES_EXECUTOR_SELF_PARAMETERS;
+			return CG_PARAMETER_STYLES_SELF_PARAMETERS;
 		}
 		else {
-			return CG_PARAMETER_STYLES_EXECUTOR_PARAMETERS;
+			return CG_PARAMETER_STYLES_PARAMETERS;
 		}
 	}
 
