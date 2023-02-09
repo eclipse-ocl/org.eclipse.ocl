@@ -190,46 +190,16 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 
 		@Override
 		protected @NonNull ASParameterStyle @NonNull [] getASParameterStyles(@NonNull TypedElement asOrigin) {
-			Property asProperty = (Property) asOrigin;
+			Property asProperty = (Property)asOrigin;
 			return asProperty.isIsStatic() ? AS_PARAMETER_STYLES_EXECUTOR : AS_PARAMETER_STYLES_EXECUTOR_SELF;
 		}
 
 		@Override
 		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
-			TypedElement asOrigin = operationNameManager.getASOrigin();
-			Property asProperty = (Property)asOrigin;
+			Property asProperty = (Property)operationNameManager.getASOrigin();
 			boolean isStatic = asProperty.isIsStatic();
 			return isStatic ? CG_PARAMETER_STYLES : CG_PARAMETER_STYLES_PARAMETER_VARIABLES;
 		}
-
-		@Override
-		public void rewriteWithBoxingAndGuards(
-				@NonNull BoxingAnalyzer boxingAnalyzer,
-				@NonNull CGOperation cgOperation) {
-			// TODO Auto-generated method stub
-			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperation);
-		}
-
-		@Override
-		public void rewriteWithBoxingAndGuards(
-				@NonNull BoxingAnalyzer boxingAnalyzer,
-				@NonNull CGOperationCallExp cgOperationCallExp) {
-			// TODO Auto-generated method stub
-			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperationCallExp);
-		}
-
-	/*	@Override
-		public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGProperty cgProperty) {
-			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgProperty);
-			CGForeignProperty cgForeignProperty = (CGForeignProperty)cgProperty;
-			boxingAnalyzer.rewriteAsBoxed(cgForeignProperty.getBody());
-			if (cgForeignProperty.isRequired()) {
-				CGValuedElement body = cgForeignProperty.getBody();
-				if (body != null) {
-					boxingAnalyzer.rewriteAsGuarded(body, false, "body for '" + cgForeignProperty.getAst() + "'");
-				}
-			}
-		} */
 	}
 
 	@Override

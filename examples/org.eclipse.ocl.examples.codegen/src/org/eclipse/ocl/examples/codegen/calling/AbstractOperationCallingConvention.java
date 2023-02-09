@@ -151,22 +151,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 //	public static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF_THIS, CGParameterStyle.EAGER_PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_TYPE_ID_JUNIT_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.TYPE_ID, CGParameterStyle.JUNIT_SELF, CGParameterStyle.PARAMETERS};
 
-/*	protected void addExpressionInOCLParameters(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation, @NonNull ExpressionInOCL expressionInOCL) {
-		ExecutableNameManager operationNameManager = analyzer.getGlobalNameManager().useOperationNameManager(cgOperation);
-		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
-		Variable contextVariable = expressionInOCL.getOwnedContext();
-	//	assert isStatic(cgOperation) == (contextVariable == null);
-		if (contextVariable != null) {
-			cgParameters.add(operationNameManager.lazyGetSelfParameter(contextVariable));
-		}
-		boolean hasExternalNames = cgOperation instanceof CGEcoreOperation;		// Ecore has genmodel-defined names
-		for (@NonNull Variable parameterVariable : ClassUtil.nullFree(expressionInOCL.getOwnedParameters())) {
-			String name = hasExternalNames ? parameterVariable.getName() : null;
-			CGParameter cgParameter = operationNameManager.lazyGetCGParameter(parameterVariable, name);
-			cgParameters.add(cgParameter);
-		}
-	} */
-
 	protected void addTypeIdArgument(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
 		CGTypeId cgTypeId = analyzer.getCGTypeId(asTypeId);
@@ -200,14 +184,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 			isFirst = false;
 		}
 		js.append(")");
-	}
-
-	protected void assertCGParameterStyles(@NonNull CGParameterStyle @NonNull [] cgParameterStyles, @NonNull ExecutableNameManager operationNameManager, @Nullable ExpressionInOCL bodyExpression) {
-		@NonNull CGParameterStyle@NonNull [] cgParameterStyles2 = getCGParameterStyles(operationNameManager);
-		if (cgParameterStyles != cgParameterStyles2) {
-			cgParameterStyles2 = getCGParameterStyles(operationNameManager);
-		}
-		assert cgParameterStyles == cgParameterStyles2;
 	}
 
 	protected @NonNull ExpressionInOCL createASExpressionInOCL(@NonNull CodeGenAnalyzer analyzer, @NonNull Feature asOriginalFeature,
