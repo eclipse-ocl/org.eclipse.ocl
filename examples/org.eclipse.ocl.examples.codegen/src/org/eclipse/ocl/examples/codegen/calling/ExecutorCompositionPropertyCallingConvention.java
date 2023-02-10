@@ -24,6 +24,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -122,7 +123,9 @@ public class ExecutorCompositionPropertyCallingConvention extends AbstractProper
 		assert cgProperty instanceof CGExecutorCompositionProperty;
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGExecutorCompositionProperty cgExecutorCompositionProperty = (CGExecutorCompositionProperty)cgProperty;
-		js.append("// " + cgProperty.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgProperty.getCallingConvention() + "\n");
+		}
 		js.appendDeclaration(cgExecutorCompositionProperty);
 		js.append(" = new ");
 		js.appendClassReference(null, cgExecutorCompositionProperty);

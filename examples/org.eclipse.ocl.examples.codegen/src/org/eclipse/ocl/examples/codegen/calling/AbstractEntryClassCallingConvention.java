@@ -347,7 +347,9 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		Operation asOperation = cg2javaVisitor.getAnalyzer().basicGetCachedOperation(asClass);
 		js.appendCommentWithOCL(title, asOperation);
-		js.append("// " + cgClass.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgClass.getCallingConvention() + "\n");
+		}
 		js.append("protected class " + className);		// Could be static if dynamic INSTANCE_CACHE accessible statically
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);

@@ -31,6 +31,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.common.CodeGenHelper;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaGenModelCodeGenHelper;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.xtext.tests.NoHttpURIHandlerImpl;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
@@ -117,6 +118,7 @@ public class TestOCL extends OCLInternal
 		configureGeneratedPackage(EcorePackage.eNS_URI);
 		configureGeneratedPackage(PivotPackage.eNS_URI);
 		configureGeneratedPackage(OCLstdlibPackage.eNS_URI);
+		JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.setState(true);
 	}
 
 	private void configureGeneratedPackage( /*@NonNull*/ String uriString) {

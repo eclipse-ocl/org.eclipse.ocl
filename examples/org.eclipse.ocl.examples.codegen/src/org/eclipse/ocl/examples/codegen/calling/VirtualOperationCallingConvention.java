@@ -30,6 +30,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
@@ -197,7 +198,9 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CodeGenAnalyzer analyzer = cg2javaVisitor.getAnalyzer();
 		//	js.appendCommentWithOCL(title, asFeature);
-		js.append("// " + cgOperation.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
+		}
 		js.append("private ");
 		js.appendValueName(cgOperation);
 		js.append("() {\n");

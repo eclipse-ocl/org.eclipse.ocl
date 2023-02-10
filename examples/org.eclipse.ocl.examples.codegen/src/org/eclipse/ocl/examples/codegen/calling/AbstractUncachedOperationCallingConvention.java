@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -51,7 +52,9 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
-		js.append("// " + cgOperation.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
+		}
 		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(cgOperation);
 		if (jMethod != null) {
 			js.append("@Override\n");

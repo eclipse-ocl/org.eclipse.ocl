@@ -80,7 +80,9 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			GlobalNameManager globalNameManager = cg2javaVisitor.getGlobalNameManager();
-			js.append("// " + cgOperation.getCallingConvention() + "\n");
+			if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+				js.append("// " + cgOperation.getCallingConvention() + "\n");
+			}
 			js.append("public ");
 			js.appendValueName(cgOperation);
 			js.append("() {\n");
@@ -231,7 +233,9 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 		Operation asOperation = cg2javaVisitor.getAnalyzer().basicGetCachedOperation(asClass);
 		js.appendCommentWithOCL(title, asOperation);
-		js.append("// " + cgClass.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgClass.getCallingConvention() + "\n");
+		}
 		js.append("public class " + className);		// Could be static if dynamic INSTANCE_CACHE accessible statically
 		appendSuperTypes(js, cgClass);
 		js.pushClassBody(className);

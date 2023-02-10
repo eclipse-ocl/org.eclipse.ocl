@@ -23,6 +23,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -390,7 +391,9 @@ public class DefaultOperationCallingConvention extends AbstractUncachedOperation
 		String title = PrettyPrinter.printName(asOperation);
 		js.appendCommentWithOCL(title+"\n", expressionInOCL);
 		//
-		js.append("// " + cgOperation.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
+		}
 		js.append("public class ");
 		js.append(operationClassName);
 		js.append(" extends ");

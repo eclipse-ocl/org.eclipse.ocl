@@ -16,6 +16,7 @@ import org.eclipse.ocl.examples.codegen.calling.AbstractClassCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
@@ -73,7 +74,9 @@ public class JUnitClassCallingConvention extends AbstractClassCallingConvention
 		js.appendCommentWithOCL(title, expInOcl);
 		assert className != null;
 		//	js.append("@SuppressWarnings(\"nls\")\n");
-		js.append("// " + cgClass.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgClass.getCallingConvention() + "\n");
+		}
 		js.append("public class " + className + " extends ");
 		js.appendClassReference(null, baseClass);
 	//	appendSuperTypes(js, cgClass);

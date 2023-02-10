@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.CodeGenConstants;
 import org.eclipse.ocl.examples.codegen.analyzer.AS2CGVisitor;
 import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
@@ -107,6 +108,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
 
@@ -119,6 +121,8 @@ import com.google.common.collect.Lists;
  */
 public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 {
+	public static final @NonNull TracingOption CALLING_CONVENTION_COMMENTS = new TracingOption(CodeGenConstants.PLUGIN_ID, "java/callingConventionComments");
+
 	public static Map<Class<?>, Class<?>> javaPrimitiveClasses = new HashMap<Class<?>, Class<?>>();
 
 	public static Map<String, Class<?>> javaPrimitiveNames = new HashMap<String, Class<?>>();

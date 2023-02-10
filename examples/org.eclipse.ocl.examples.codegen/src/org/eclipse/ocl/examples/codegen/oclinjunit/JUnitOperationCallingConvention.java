@@ -18,6 +18,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameResolution;
@@ -53,7 +54,9 @@ public class JUnitOperationCallingConvention extends LibraryOperationCallingConv
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		//
-		js.append("// " + cgOperation.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgOperation.getCallingConvention() + "\n");
+		}
 	//	js.append("@Override\n");
 		js.append("public ");
 		boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;

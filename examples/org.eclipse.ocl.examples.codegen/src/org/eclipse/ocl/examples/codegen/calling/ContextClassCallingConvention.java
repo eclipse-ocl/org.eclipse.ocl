@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 
@@ -57,7 +58,9 @@ public class ContextClassCallingConvention extends AbstractClassCallingConventio
 		assert cgContainingPackage != null;
 		String title = cgClass.getName() + " provides the Java implementation for the additional non-Ecore features of";
 		js.appendCommentWithOCL(title, cgClass.getAst());
-		js.append("// " + cgClass.getCallingConvention() + "\n");
+		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+			js.append("// " + cgClass.getCallingConvention() + "\n");
+		}
 		js.append("public static class " + className);
 //		Iterable<@NonNull CGClass> cgSuperTypes = CGUtil.getSuperTypes(cgClass);
 //		if (!Iterables.isEmpty(cgSuperTypes)) {

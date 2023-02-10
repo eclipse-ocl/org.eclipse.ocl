@@ -69,6 +69,7 @@ import org.eclipse.ocl.examples.codegen.dynamic.ExplicitClassLoader;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaClasspath;
 import org.eclipse.ocl.examples.codegen.dynamic.JavaFileUtil;
 import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
+import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
@@ -228,6 +229,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 		configurePlatformResources();
 		//		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
 		//			.put("pivot", new XMIResourceFactoryImpl()); //$NON-NLS-1$
+		JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.setState(true);
 	}
 
 	@Override

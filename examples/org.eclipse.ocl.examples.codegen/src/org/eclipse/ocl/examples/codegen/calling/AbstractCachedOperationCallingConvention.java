@@ -190,7 +190,9 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
-			js.append("// " + cgProperty.getCallingConvention() + "\n");
+			if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+				js.append("// " + cgProperty.getCallingConvention() + "\n");
+			}
 			js.append("public final");
 			js.append(" /*@NonInvalid*/ ");
 			boxedTypeRepresentation.appendClassReference(cgProperty.isRequired(), cgProperty);
@@ -204,7 +206,9 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 		public boolean generateJavaInitialization(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			TypeRepresentation boxedTypeRepresentation = js.getBoxedTypeRepresentation();
-			js.append("// " + cgProperty.getCallingConvention() + "\n");
+			if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
+				js.append("// " + cgProperty.getCallingConvention() + "\n");
+			}
 			js.append("this.");
 			js.appendValueName(cgProperty);
 			js.append(" = new ");
