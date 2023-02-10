@@ -107,13 +107,11 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	public enum CGParameterStyle {
-		BODY_SELF,				// The next parameter variables is the non-null self of the ExpressionInOCL
 		EXECUTOR,				// The next parameter variable is the executor
 		ID_RESOLVER,			// The next parameter variable is the idResolver
 		BOXED_VALUES,			// The next parameter variable is the parameter array
 		EAGER_PARAMETERS,		// The next parameter variables are copied body parameter variables / operation parameters and their names are reserved eagerly
 		JUNIT_SELF,				// The next parameter variable is the original self for a JUnit test
-		OPTIONAL_BODY_SELF,		// The next parameter variable is the nullable self of the ExpressionInOCL
 		OPTIONAL_SELF,			// The next parameter variable is the original nullable self
 		PARAMETERS,				// The next parameter variables are copied body parameter variables / operation parameters
 		SELF,					// The next parameter variable is the original non-null self
@@ -123,7 +121,6 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES = new @NonNull CGParameterStyle[]{};
-	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.BODY_SELF, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_ID_RESOLVER_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.ID_RESOLVER, CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETERS};

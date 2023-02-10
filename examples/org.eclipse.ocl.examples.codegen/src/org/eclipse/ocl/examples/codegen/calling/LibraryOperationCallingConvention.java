@@ -393,12 +393,7 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 					ExpressionInOCL expressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();	//	-- some library operations also have OCL bodies
 
 					boolean mayBeVoid = analyzer.hasOclVoidOperation(asOperation.getOperationId());
-					if (expressionInOCL != null) {
-						cgParameterStyles.add(mayBeVoid ? CGParameterStyle.OPTIONAL_BODY_SELF : CGParameterStyle.BODY_SELF);
-					}
-					else {
-						cgParameterStyles.add(mayBeVoid ? CGParameterStyle.OPTIONAL_SELF : CGParameterStyle.SELF);
-					}
+					cgParameterStyles.add(mayBeVoid ? CGParameterStyle.OPTIONAL_SELF : CGParameterStyle.SELF);
 					i = 0;
 				}
 				else {

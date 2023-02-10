@@ -226,20 +226,6 @@ public class ExecutableNameManager extends NestedNameManager
 				boolean eagerNames = false;
 				boolean isRequired = true;
 				switch(cgParameterStyle) {
-					case OPTIONAL_BODY_SELF:
-						isRequired = false;
-					case BODY_SELF: {
-						assert selfParameter == null;
-						assert asContextVariable != null;
-					//	CGParameter cgParameter = lazyGetSelfParameter(asContextVariable);
-						CGParameter cgParameter = createSelfParameter();
-						cgParameter.setAst(asContextVariable);
-						addVariable(asContextVariable, cgParameter);
-						cgParameter.setRequired(isRequired);
-						cgParameters.add(cgParameter);
-						assert selfParameter == cgParameter;
-						break;
-					}
 					case BOXED_VALUES: {
 						assert boxedValuesParameter == null;
 						Parameter asBoxedValuesParameter = getASParameter(asOperation, globalNameManager.getASBoxedValuesName());
@@ -312,8 +298,11 @@ public class ExecutableNameManager extends NestedNameManager
 						isRequired = false;
 					case SELF: {
 						assert selfParameter == null;
-						assert asContextVariable == null;
 						CGParameter cgParameter = createSelfParameter();
+						if (asContextVariable != null) {
+							cgParameter.setAst(asContextVariable);
+							addVariable(asContextVariable, cgParameter);
+						}
 						cgParameter.setRequired(isRequired);
 						cgParameters.add(cgParameter);
 						assert selfParameter == cgParameter;

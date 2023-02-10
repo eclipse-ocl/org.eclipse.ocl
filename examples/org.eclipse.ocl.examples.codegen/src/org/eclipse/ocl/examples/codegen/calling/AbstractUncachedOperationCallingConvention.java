@@ -84,7 +84,7 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 		if (bodyExpression != null) {
 			Variable asContextVariable = bodyExpression.getOwnedContext();
 			if (asContextVariable != null) {
-				return CG_PARAMETER_STYLES_BODY_SELF_PARAMETERS;
+				return CG_PARAMETER_STYLES_SELF_PARAMETERS;
 			}
 			else {
 				return CG_PARAMETER_STYLES_PARAMETERS;
