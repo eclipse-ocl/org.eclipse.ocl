@@ -192,12 +192,12 @@ public class ForeignPropertyCallingConvention extends AbstractPropertyCallingCon
 			return asProperty.isIsStatic() ? AS_PARAMETER_STYLES_EXECUTOR : AS_PARAMETER_STYLES_EXECUTOR_SELF;
 		}
 
-		@Override
+	/*	@Override
 		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 			Property asProperty = (Property)operationNameManager.getASOrigin();
 			boolean isStatic = asProperty.isIsStatic();
 			return isStatic ? CG_PARAMETER_STYLES : CG_PARAMETER_STYLES_PARAMETERS;
-		}
+		} */
 	}
 
 	@Override
