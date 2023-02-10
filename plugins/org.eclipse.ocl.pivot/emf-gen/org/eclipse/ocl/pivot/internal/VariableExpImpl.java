@@ -25,12 +25,15 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotSupport;
 import org.eclipse.ocl.pivot.ReferringElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -40,6 +43,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -170,12 +174,32 @@ implements VariableExp {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setReferredVariable(VariableDeclaration newReferredVariable) {
+	public void setReferredVariableGen(VariableDeclaration newReferredVariable) {
 		VariableDeclaration oldReferredVariable = referredVariable;
 		referredVariable = newReferredVariable;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldReferredVariable, referredVariable));
+	}
+	@Override
+	public void setReferredVariable(VariableDeclaration newReferredVariable) {
+		//
+		//	Bad legacy practices synthesized operation/function bodies that referred to their Parameters rather
+		//	than their ParameterVariables. ?? These have now been cleared by the following assertion.
+		//
+		//	FIXME But legacy loads of persisted AS remain.
+		//
+	//	assert newReferredVariable.eContainingFeature() != PivotPackage.Literals.OPERATION__OWNED_PARAMETERS;
+		if (newReferredVariable.eContainingFeature() == PivotPackage.Literals.OPERATION__OWNED_PARAMETERS) {
+			Operation operation = (Operation)newReferredVariable.eContainer();
+			ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)operation.getBodyExpression();
+			for (Variable parameterVariable : asExpressionInOCL.getOwnedParameters()) {
+				if (parameterVariable.getRepresentedParameter() == newReferredVariable) {
+					NameUtil.errPrintln("Direct parameter reference fixed up for  \"" + operation + "\"." + newReferredVariable.getName());
+					newReferredVariable = parameterVariable;
+				}
+			}
+		}
+		setReferredVariableGen(newReferredVariable);
 	}
 
 	/**
