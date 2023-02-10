@@ -111,13 +111,11 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		EXECUTOR,				// The next parameter variable is the executor
 		ID_RESOLVER,			// The next parameter variable is the idResolver
 		BOXED_VALUES,			// The next parameter variable is the parameter array
-		EAGER_PARAMETERS,		// The next parameter variables are copied operation parameters and their names are reserved eagerly
-//		EAGER_PARAMETER_VARIABLES,	// The next parameter variables are copied expression parameter variables and their names are reserved eagerly
+		EAGER_PARAMETERS,		// The next parameter variables are copied body parameter variables / operation parameters and their names are reserved eagerly
 		JUNIT_SELF,				// The next parameter variable is the original self for a JUnit test
 		OPTIONAL_BODY_SELF,		// The next parameter variable is the nullable self of the ExpressionInOCL
 		OPTIONAL_SELF,			// The next parameter variable is the original nullable self
-		PARAMETERS,				// The next parameter variables are copied operation parameters
-//		PARAMETER_VARIABLES,	// The next parameter variables are copied expression parameter variables
+		PARAMETERS,				// The next parameter variables are copied body parameter variables / operation parameters
 		SELF,					// The next parameter variable is the original non-null self
 		SELF_THIS,				// The next parameter variable is the original non-null self realized by Java's this
 		THIS,					// The next parameter variable is the Java this
@@ -129,14 +127,11 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_ID_RESOLVER_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.ID_RESOLVER, CGParameterStyle.BOXED_VALUES};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETERS};
-	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_EAGER_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.EAGER_PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_JUNIT_SELF = new @NonNull CGParameterStyle[] {CGParameterStyle.JUNIT_SELF};
-	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.EAGER_PARAMETERS};
-	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETERS};
-//	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.EAGER_PARAMETERS};
-	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETER_VARIABLES = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF_THIS, CGParameterStyle.EAGER_PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.PARAMETERS};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF_THIS, CGParameterStyle.EAGER_PARAMETERS};
 
 	protected void addTypeIdArgument(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
