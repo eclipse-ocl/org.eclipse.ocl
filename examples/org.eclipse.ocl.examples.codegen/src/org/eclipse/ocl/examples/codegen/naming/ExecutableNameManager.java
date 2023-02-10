@@ -224,11 +224,15 @@ public class ExecutableNameManager extends NestedNameManager
 			List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgOperation);
 			for (@NonNull CGParameterStyle cgParameterStyle : cgParameterStyles) {
 				boolean eagerNames = false;
+				boolean isRequired = true;
 				switch(cgParameterStyle) {
+					case OPTIONAL_BODY_SELF:
+						isRequired = false;
 					case BODY_SELF: {
 						assert selfParameter == null;
 						assert asContextVariable != null;
 						CGParameter cgParameter = lazyGetSelfParameter(asContextVariable);
+						cgParameter.setRequired(isRequired);
 						cgParameters.add(cgParameter);
 						break;
 					}
@@ -300,24 +304,12 @@ public class ExecutableNameManager extends NestedNameManager
 						cgParameters.add(cgParameter);
 						break;
 					}
-					case OPTIONAL_BODY_SELF: {
-						assert selfParameter == null;
-						assert asContextVariable != null;
-						CGParameter cgParameter = lazyGetSelfParameter(asContextVariable);
-						cgParameter.setRequired(false);
-						cgParameters.add(cgParameter);
-						break;
-					}
-					case OPTIONAL_SELF: {
-						assert selfParameter == null;
-						CGParameter cgParameter = createSelfParameter();
-						cgParameter.setRequired(false);
-						cgParameters.add(cgParameter);
-						break;
-					}
+					case OPTIONAL_SELF:
+						isRequired = false;
 					case SELF: {
 						assert selfParameter == null;
 						CGParameter cgParameter = createSelfParameter();
+						cgParameter.setRequired(isRequired);
 						cgParameters.add(cgParameter);
 						assert selfParameter == cgParameter;
 						break;
@@ -337,7 +329,7 @@ public class ExecutableNameManager extends NestedNameManager
 					}
 					case THIS: {
 						assert thisParameter == null;
-						@SuppressWarnings("unused") CGParameter cgParameter = lazyGetThisParameter();
+						CGParameter cgParameter = lazyGetThisParameter();
 					//	cgParameters.add(cgParameter);	-- 'this' is a convenience for a global - not a passed parameter
 						assert thisParameter == cgParameter;
 						break;

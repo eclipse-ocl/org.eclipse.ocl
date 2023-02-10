@@ -361,33 +361,20 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 	@Override
 	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 		Operation asOperation = (Operation)operationNameManager.getASScope();
-/*		assert asOperation.getBodyExpression() == null;
-		if (!asOperation.isIsStatic()) {
-			return CG_PARAMETER_STYLES_SELF_PARAMETERS;
-		}
-		else {
-			return CG_PARAMETER_STYLES_PARAMETERS;
-		} */
-		//	assert expressionInOCL == null;		-- some library operations also have OCL bodies
 		CodeGenAnalyzer analyzer = operationNameManager.getAnalyzer();
-		CGOperation cgOperation = (CGOperation)operationNameManager.getCGScope();
-		List<CGParameter> cgParameters = cgOperation.getParameters();
 		LibraryOperation libraryOperation = (LibraryOperation)analyzer.getMetamodelManager().getImplementation(asOperation);
 		Method jMethod = libraryOperation.getEvaluateMethod(asOperation);
-	//	cgOperation.setRequired(analyzer.getCodeGenerator().getIsNonNull(jMethod) == Boolean.TRUE);			-- CG follows OCL declaration; Java compatibility is resolved in generateJavaCall
 		List<@NonNull CGParameterStyle> cgParameterStyles = new ArrayList<>();
 		List<@NonNull Parameter> asParameters = ClassUtil.nullFree(asOperation.getOwnedParameters());
 		int i = asOperation.isIsStatic() ? 0 : -1;
 		if (Modifier.isStatic(jMethod.getModifiers())) {
 			cgParameterStyles.add(CGParameterStyle.THIS);
 		}
-		boolean hasExecutor = false;
 		boolean hasTypeId = false;
 		boolean hasSelf = false;
 		boolean hasParameters = false;
 		for (Class<?> jParameterType : jMethod.getParameterTypes()) {
 			if (jParameterType == Executor.class) {
-				hasExecutor = true;
 				assert !hasTypeId : "executor must precede typeId";
 				assert !hasSelf : "executor must precede self";
 				assert !hasParameters : "executor must precede parameters";
@@ -412,9 +399,6 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 					else {
 						cgParameterStyles.add(mayBeVoid ? CGParameterStyle.OPTIONAL_SELF : CGParameterStyle.SELF);
 					}
-				//	if (analyzer.hasOclVoidOperation(asOperation.getOperationId())) {
-				//		selfParameter.setRequired(false);
-				//	}
 					i = 0;
 				}
 				else {
