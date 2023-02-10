@@ -744,7 +744,7 @@ public class ExecutableNameManager extends NestedNameManager
 	/**
 	 * Create the 'self' CG parameter unless already created with a known AS parameter.
 	 * This can update a previously created 'this'parameter with anAS origin.
-	 */
+	 *
 	public @NonNull CGParameter lazyGetSelfParameter(@NonNull VariableDeclaration asParameter) {
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).lazyGetSelfParameter(asParameter);
@@ -761,7 +761,7 @@ public class ExecutableNameManager extends NestedNameManager
 			assert cgParameter.getAst() == asParameter;
 		}
 		return cgParameter;
-	}
+	} */
 
 	public @NonNull CGVariable lazyGetStandardLibraryVariable() {
 		if (parent instanceof ExecutableNameManager) {

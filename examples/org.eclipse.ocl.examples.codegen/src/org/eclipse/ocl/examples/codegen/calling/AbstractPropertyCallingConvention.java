@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -63,7 +64,9 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-					propertyNameManager.lazyGetSelfParameter(contextVariable);
+//					propertyNameManager.lazyGetSelfParameter(contextVariable);
+					CGParameter selfParameter = propertyNameManager.getSelfParameter();
+					assert selfParameter.getAst() == contextVariable;
 				}
 				((CGBodiedProperty)cgProperty).setBody(analyzer.createCGElement(CGValuedElement.class, query.getOwnedBody()));
 			} catch (ParserException e) {
