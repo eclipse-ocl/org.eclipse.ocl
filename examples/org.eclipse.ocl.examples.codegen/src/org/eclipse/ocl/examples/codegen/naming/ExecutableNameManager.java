@@ -231,9 +231,13 @@ public class ExecutableNameManager extends NestedNameManager
 					case BODY_SELF: {
 						assert selfParameter == null;
 						assert asContextVariable != null;
-						CGParameter cgParameter = lazyGetSelfParameter(asContextVariable);
+					//	CGParameter cgParameter = lazyGetSelfParameter(asContextVariable);
+						CGParameter cgParameter = createSelfParameter();
+						cgParameter.setAst(asContextVariable);
+						addVariable(asContextVariable, cgParameter);
 						cgParameter.setRequired(isRequired);
 						cgParameters.add(cgParameter);
+						assert selfParameter == cgParameter;
 						break;
 					}
 					case BOXED_VALUES: {
@@ -308,6 +312,7 @@ public class ExecutableNameManager extends NestedNameManager
 						isRequired = false;
 					case SELF: {
 						assert selfParameter == null;
+						assert asContextVariable == null;
 						CGParameter cgParameter = createSelfParameter();
 						cgParameter.setRequired(isRequired);
 						cgParameters.add(cgParameter);
@@ -757,7 +762,7 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 		CGParameter cgParameter = selfParameter;
 		if (cgParameter == null) {
-			selfParameter = cgParameter = createThisParameter();
+			selfParameter = cgParameter = createThisParameter();		// XXX typo ???
 		}
 		if (cgParameter.getAst() == null) {
 			cgParameter.setAst(asParameter);
