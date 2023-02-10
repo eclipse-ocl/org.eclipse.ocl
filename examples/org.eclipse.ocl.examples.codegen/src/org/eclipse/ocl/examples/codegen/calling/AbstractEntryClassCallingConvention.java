@@ -77,7 +77,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 
 		@Override
 		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles( @NonNull ExecutableNameManager operationNameManager) {
-			return CG_PARAMETER_STYLES_BOXED_VALUES;
+			return CG_PARAMETER_STYLES_THIS_BOXED_VALUES;
 		}
 	}
 

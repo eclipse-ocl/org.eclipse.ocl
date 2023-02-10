@@ -63,7 +63,6 @@ public class ExecutableNameManager extends NestedNameManager
 	protected final boolean isStatic;
 
 	private /*@LazyNonNull*/ CGParameter boxedValuesParameter = null;		// Passed parameter spelled "boxedValues"
-	private /*@LazyNonNull*/ CGParameter contextObjectParameter = null;		// Passed parameter spelled "contextObject" to distinguish unique evaluations
 	private /*@LazyNonNull*/ CGParameter executorParameter = null;			// Passed parameter spelled "executor"
 	private /*@LazyNonNull*/ CGVariable executorVariable = null;			// Passed executor parameter / cached local thread lookup
 	private /*@LazyNonNull*/ CGVariable idResolverVariable = null;			// Passed idResolver parameter / cache of executor.getIdResolver()
@@ -309,10 +308,11 @@ public class ExecutableNameManager extends NestedNameManager
 						assert selfParameter == null;
 						assert thisParameter == null;
 						assert asContextVariable != null;
-						CGParameter cgParameter = lazyGetThisParameter(asContextVariable);
+						CGParameter cgParameter = createThisParameter();
+						cgParameter.setAst(asContextVariable);
+						addVariable(asContextVariable, cgParameter);
 						cgParameter.setIsSelf(true);
 						assert cgParameter.isIsThis();
-						assert cgParameter.getAst() == asContextVariable;
 						cgParameters.add(cgParameter);
 						assert thisParameter == cgParameter;
 						selfParameter = cgParameter;
@@ -320,7 +320,7 @@ public class ExecutableNameManager extends NestedNameManager
 					}
 					case THIS: {
 						assert thisParameter == null;
-						CGParameter cgParameter = lazyGetThisParameter();
+						CGParameter cgParameter = createThisParameter();
 					//	cgParameters.add(cgParameter);	-- 'this' is a convenience for a global - not a passed parameter
 						assert thisParameter == cgParameter;
 						break;
@@ -502,6 +502,7 @@ public class ExecutableNameManager extends NestedNameManager
 	}
 
 	private @NonNull CGParameter createThisParameter() {
+		assert thisParameter == null;
 		assert !isStatic;
 		org.eclipse.ocl.pivot.Class asThisClass = classNameManager.getASClass();
 		NameResolution nameResolution = globalNameManager.getThisName();
@@ -509,6 +510,7 @@ public class ExecutableNameManager extends NestedNameManager
 		CGParameter cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, true);
 		cgParameter.setIsThis(true);		// Use Java's 'this' spelling
 		cgParameter.setNonInvalid();
+		thisParameter = cgParameter;
 		return cgParameter;
 	}
 
@@ -636,6 +638,14 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 		assert selfParameter != null;
 		return selfParameter;
+	}
+
+	public @NonNull CGParameter getThisParameter() {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).getThisParameter();
+		}
+		assert thisParameter != null;
+		return thisParameter;
 	}
 
 	public @NonNull CGParameter getTypeIdParameter() {
@@ -766,14 +776,14 @@ public class ExecutableNameManager extends NestedNameManager
 	/**
 	 * Create the 'this' CG parameter unless already created (without any known AS parameter).
 	 */
-	public @NonNull CGParameter lazyGetThisParameter() {
+	private @NonNull CGParameter lazyGetThisParameter() {
 		if (parent instanceof ExecutableNameManager) {
 			return ((ExecutableNameManager)parent).lazyGetThisParameter();
 		}
 		assert !isStatic;
 		CGParameter thisParameter2 = thisParameter;
 		if (thisParameter2 == null) {
-			thisParameter = thisParameter2 = createThisParameter();
+			thisParameter2 = createThisParameter();
 		}
 		return thisParameter2;
 	}
@@ -785,10 +795,10 @@ public class ExecutableNameManager extends NestedNameManager
 	public @NonNull CGParameter lazyGetThisParameter(@NonNull VariableDeclaration asParameter) {		// XXX Why with/without arg variants, never exercised
 		assert !(parent instanceof ExecutableNameManager);
 		CGParameter cgParameter = lazyGetThisParameter();
-		org.eclipse.ocl.pivot.Class asThisClass = classNameManager.getASClass();
-		CGTypeId cgTypeId2 = analyzer.getCGTypeId(asThisClass.getTypeId());
-		CGTypeId cgTypeId3 = cgParameter.getTypeId();
-		assert cgTypeId3 == cgTypeId2;
+//		org.eclipse.ocl.pivot.Class asThisClass = classNameManager.getASClass();
+//		CGTypeId cgTypeId2 = analyzer.getCGTypeId(asThisClass.getTypeId());
+//		CGTypeId cgTypeId3 = cgParameter.getTypeId();
+//		assert cgTypeId3 == cgTypeId2;
 		if (cgParameter.getAst() == null) {
 			cgParameter.setAst(asParameter);
 			addVariable(asParameter, cgParameter);

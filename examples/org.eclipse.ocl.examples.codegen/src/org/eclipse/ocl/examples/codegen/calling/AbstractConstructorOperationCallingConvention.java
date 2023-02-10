@@ -130,7 +130,7 @@ public abstract class AbstractConstructorOperationCallingConvention extends Abst
 		CGParameter cgEntryBoxedValuesParameter = operationNameManager.getBoxedValuesParameter();
 
 		CGTypeId cgTypeId = analyzer.getCGTypeId(TypeId.OCL_VOID);
-		CGParameter cgThisParameter = operationNameManager.lazyGetThisParameter();
+		CGParameter cgThisParameter = operationNameManager.getThisParameter();
 		CGSequence cgSequence = CGModelFactory.eINSTANCE.createCGSequence();
 		List<@NonNull CGValuedElement> cgStatements = CGUtil.getOwnedStatementsList(cgSequence);
 		Stack<@NonNull CGFinalVariable> cgLetVariables = new Stack<>();

@@ -129,6 +129,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.EAGER_PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF, CGParameterStyle.PARAMETERS};
 	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_SELF_THIS_EAGER_PARAMETERS = new @NonNull CGParameterStyle[]{CGParameterStyle.SELF_THIS, CGParameterStyle.EAGER_PARAMETERS};
+	protected static final @NonNull CGParameterStyle @NonNull [] CG_PARAMETER_STYLES_THIS_BOXED_VALUES = new @NonNull CGParameterStyle[]{CGParameterStyle.THIS, CGParameterStyle.BOXED_VALUES};
 
 	protected void addTypeIdArgument(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull TypeId asTypeId) {
 		List<CGValuedElement> cgArguments = cgOperationCallExp.getArguments();
