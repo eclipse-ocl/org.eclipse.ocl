@@ -27,6 +27,9 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 
 public class PivotSupport extends AbstractExecutionSupport
 {
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId COL_ = TypeId.COLLECTION;
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId COL__0 = TypeId.COLLECTION;
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_ = TypeId.SET;
 	public static final /*@NonInvalid*/ @NonNull RootPackageId PACKid_$metamodel$ = IdManager.getRootPackageId("$metamodel$");
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_TMPLid_ = TypeId.BAG.getSpecializedId(TypeId.T_2, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Annotation = PACKid_$metamodel$.getClassId("Annotation", 0);
@@ -144,8 +147,6 @@ public class PivotSupport extends AbstractExecutionSupport
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Vertex = PACKid_$metamodel$.getClassId("Vertex", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_VoidType = PACKid_$metamodel$.getClassId("VoidType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_WildcardType = PACKid_$metamodel$.getClassId("WildcardType", 0);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId COL_ = TypeId.COLLECTION;
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId COL__0 = TypeId.COLLECTION;
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId COL_TMPLid_ = TypeId.COLLECTION.getSpecializedId(TypeId.T_1, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EcoreObject = PACKid_$metamodel$.getDataTypeId("EcoreObject", 0);
 	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_LibraryFeature = PACKid_$metamodel$.getDataTypeId("LibraryFeature", 0);
@@ -159,7 +160,6 @@ public class PivotSupport extends AbstractExecutionSupport
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_TMPLid_ = TypeId.ORDERED_SET.getSpecializedId(TypeId.T_1, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_TMPLid_ = TypeId.SEQUENCE.getSpecializedId(TypeId.T_2, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_ = TypeId.SET;
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_OclSelf = TypeId.SET.getSpecializedId(TypeId.OCL_SELF, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_String = TypeId.SET.getSpecializedId(TypeId.STRING, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_TMPLid_ = TypeId.SET.getSpecializedId(TypeId.T_1, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -282,8 +282,7 @@ public class PivotSupport extends AbstractExecutionSupport
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Vertex = TypeId.SET.getSpecializedId(CLSSid_Vertex, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId("Tuple", PARTid_, PARTid__0);
 
-	public PivotSupport(@NonNull Executor executor) {
-		super(executor);
+	public PivotSupport(@NonNull Executor rootExecutor) {
+		super(rootExecutor);
 	}
-
 }

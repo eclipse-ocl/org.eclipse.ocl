@@ -402,8 +402,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType = idResolver.getClass(PivotSupport.CLSSid_DataType, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_DataType = idResolver.getClass(PivotSupport.CLSSid_DataType, null);
 				final /*@NonInvalid*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, type, TYP_DataType).booleanValue();
 				/*@Caught*/ @NonNull Object IF_oclIsKindOf;
 				if (oclIsKindOf) {
