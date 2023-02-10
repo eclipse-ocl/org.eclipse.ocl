@@ -20,11 +20,9 @@ import org.eclipse.ocl.examples.codegen.calling.AbstractOperationCallingConventi
 import org.eclipse.ocl.examples.codegen.calling.SupportOperationCallingConvention;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGConstrainedProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGForeignProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNamedElement;
@@ -285,25 +283,24 @@ public class ExecutableNameManager extends NestedNameManager
 					case JUNIT_SELF: {
 						assert selfParameter == null;
 						assert asContextVariable != null;
-						CGParameter cgParameter = lazyGetCGParameter(asContextVariable);			// XXX getSelf ???
-						cgParameter.setIsSelf(true);
-						cgParameter.setTypeId(analyzer.getCGTypeId(TypeId.OCL_VOID));			// JUnit evaluate overrides
-						cgParameter.setRequired(false);										//  self : Object[?]
-						NameResolution selfNameResolution = globalNameManager.getSelfName();
-						selfNameResolution.addCGElement(cgParameter);
+						CGTypeId cgTypeId = analyzer.getCGTypeId(TypeId.OCL_VOID);
+						CGParameter cgParameter = createSelfParameter(false, cgTypeId);
+						cgParameter.setAst(asContextVariable);
+						addVariable(asContextVariable, cgParameter);
 						cgParameters.add(cgParameter);
+						assert selfParameter == cgParameter;
 						break;
 					}
 					case OPTIONAL_SELF:
 						isRequired = false;
 					case SELF: {
 						assert selfParameter == null;
-						CGParameter cgParameter = createSelfParameter();
+						CGTypeId cgTypeId = analyzer.getCGTypeId(classNameManager.getASClass().getTypeId());
+						CGParameter cgParameter = createSelfParameter(isRequired, cgTypeId);
 						if (asContextVariable != null) {
 							cgParameter.setAst(asContextVariable);
 							addVariable(asContextVariable, cgParameter);
 						}
-						cgParameter.setRequired(isRequired);
 						cgParameters.add(cgParameter);
 						assert selfParameter == cgParameter;
 						break;
@@ -354,7 +351,8 @@ public class ExecutableNameManager extends NestedNameManager
 		switch(cgParameterStyle) {
 			case SELF: {
 				assert selfParameter == null;
-				CGParameter cgParameter = createSelfParameter();
+				CGTypeId cgTypeId = analyzer.getCGTypeId(classNameManager.getASClass().getTypeId());
+				CGParameter cgParameter = createSelfParameter(true, cgTypeId);
 				assert selfParameter == cgParameter;
 				break;
 			}
@@ -468,29 +466,20 @@ public class ExecutableNameManager extends NestedNameManager
 		return qualifiedThisVariable;
 	}
 
-	private @NonNull CGParameter createSelfParameter() {
-		if (parent instanceof ExecutableNameManager) {
-			return ((ExecutableNameManager)parent).createSelfParameter();
-		}
+	private @NonNull CGParameter createSelfParameter(boolean isRequired, @NonNull CGTypeId cgTypeId) {
 		assert selfParameter == null;
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).createSelfParameter(isRequired, cgTypeId);
+		}
 		NameResolution selfName = globalNameManager.getSelfName();
-		CGTypeId cgTypeId = analyzer.getCGTypeId(classNameManager.getASClass().getTypeId());
-		boolean sourceMayBeNull = false;
-		if (cgScope instanceof CGForeignProperty) {
-				sourceMayBeNull = false;
-		}
-		else if (cgScope instanceof CGConstrainedProperty) {		// XXX from caller
-				sourceMayBeNull = false;
-		}
-		else if (cgScope instanceof CGOperation) {
+		if (cgScope instanceof CGOperation) {
 			Operation referredOperation = CGUtil.getAST(((CGOperation)cgScope));
 			OperationId operationId = referredOperation.getOperationId();
-			sourceMayBeNull = analyzer.hasOclVoidOperation(operationId);	// FIXME redundant since LibraryOperationCallingConvention.createParaeters invokes hasOclVoidOperation
+			if (analyzer.hasOclVoidOperation(operationId)) {
+				isRequired = false;
+			}
 		}
-		else {
-			throw new UnsupportedOperationException(getClass().getSimpleName() + ".createSelfParameter for " + cgScope.eClass().getName());
-		}
-		CGParameter cgParameter = analyzer.createCGParameter(selfName, cgTypeId, !sourceMayBeNull);
+		CGParameter cgParameter = analyzer.createCGParameter(selfName, cgTypeId, isRequired);
 		cgParameter.setIsSelf(true);
 		cgParameter.setNonInvalid();
 		selfParameter = cgParameter;
