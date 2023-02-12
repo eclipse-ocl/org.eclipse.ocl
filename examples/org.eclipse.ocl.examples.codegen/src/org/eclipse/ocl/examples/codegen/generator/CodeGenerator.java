@@ -90,7 +90,7 @@ public interface CodeGenerator
 
 	/**
 	 * Return true if asProperty may provide a nonNull value,
-	 * false if asOperationCallExp may provide a null value,
+	 * false if asProperty may provide a null value,
 	 * null if no determination can be made.
 	 */
 	@Nullable Boolean isNonNull(@NonNull Property asProperty);

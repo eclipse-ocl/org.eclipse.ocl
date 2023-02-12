@@ -271,7 +271,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("isPREFER_EXISTING_FAMILY_TO_NEW")) {
+			if (string.contains("MAP_mFtoP1__Daughter2Female__persons")) {
 				getClass();		// XXX
 			}
 			if (string.contains("InvalidValueException")) {

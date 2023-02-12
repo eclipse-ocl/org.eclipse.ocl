@@ -88,6 +88,10 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		boolean mayBeInvalid = !cgChild.isNonInvalid();
 		if (mayBeInvalid) {
 			mayBeInvalid = !cgChild.isNonInvalid();
+			String s = cgChild.toString();			// XXX
+			if  (s.contains("daughtersInverse")) {
+				getClass();		// XXX
+			}
 			CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
 			cgCatchExp.setCaught(true);
 			globalNameManager.wrap(cgCatchExp, cgChild);
@@ -345,6 +349,10 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull ReturnState visitCGVariableExp(@NonNull CGVariableExp cgVariableExp) {
 		CGVariable cgVariable = CGUtil.getReferredVariable(cgVariableExp);
+		String s = cgVariable.toString();			// XXX
+		if  (s.contains("daughtersInverse")) {
+			getClass();		// XXX
+		}
 		boolean mayBeInvalid = !cgVariable.isNonInvalid();
 		if (mayBeInvalid) {			// If the CGVariable could be invalid
 			if (!cgVariable.isCaught()) {
