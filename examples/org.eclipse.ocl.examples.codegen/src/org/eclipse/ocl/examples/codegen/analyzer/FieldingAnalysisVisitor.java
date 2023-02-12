@@ -341,28 +341,28 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull ReturnState visitCGVariableExp(@NonNull CGVariableExp cgVariableExp) {
 		CGVariable cgVariable = CGUtil.getReferredVariable(cgVariableExp);
-		String s = cgVariable.toString();			// XXX
-		if  (s.contains("daughtersInverse")) {
-			getClass();		// XXX
-		}
+		boolean isCaught = cgVariable.isCaught();
 		boolean mayBeInvalid = !cgVariable.isNonInvalid();
-		if (mayBeInvalid) {			// If the CGVariable could be invalid
-			if (!cgVariable.isCaught()) {
-				assert requiredReturn == ReturnState.IS_CAUGHT;			// XXX
-				CGValuedElement cgInit = cgVariable.getInit();
-				if (cgInit != null) {
-					insertCatch(cgInit);
-					cgVariable.setCaught(true);
-				}
-				else {
-					assert false;
+		if (mayBeInvalid) {							// If the CGVariable could be invalid
+			if (requiredReturn == ReturnState.IS_CAUGHT) {
+				if (!isCaught) {
+					CGValuedElement cgInit = cgVariable.getInit();
+					if (cgInit != null) {
+						insertCatch(cgInit);		// catch the init not the variable
+						cgVariable.setCaught(true);
+					}
+					else {
+						assert false;
+					}
 				}
 			}
-			if (requiredReturn == ReturnState.IS_THROWN) {
-				insertThrow(cgVariableExp);
+			else if (requiredReturn == ReturnState.IS_THROWN) {
+				if (isCaught) {
+					insertThrow(cgVariableExp);
+				}
 			}
 		}
-		cgVariableExp.setCaught(cgVariable.isCaught());
+		cgVariableExp.setCaught(isCaught);
 		return requiredReturn;
 	}
 }
