@@ -1562,7 +1562,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 
 		public static MethodSpec isNonInvalid = new MyMethodSpec(CGValuedElement.class, "boolean isNonInvalid()", null,
-				"Return true if this value cannot be invalid. It may however be a crash from e.g. a null guard.")
+				"Return true if this value cannot be invalid. Not even a crash from e.g. a null guard.")
 		{
 			@Override
 			protected @Nullable String getBody(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
