@@ -301,7 +301,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			return NativePropertyCallingConvention.getInstance(asProperty);
 		}
 		else if (libraryProperty instanceof OclElementOclContainerProperty) {
-			return EcorePropertyCallingConvention.getInstance(asProperty);
+			return getEcorePropertyCallingConvention(asProperty);
 		}
 		else if (libraryProperty instanceof CompositionProperty) {
 		/*	EStructuralFeature eStructuralFeature = (EStructuralFeature) asProperty.getESObject();
@@ -346,7 +346,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			if (eStructuralFeature != null) {
 				try {
 					getGenModelHelper().getGetAccessor(eStructuralFeature);
-					return EcorePropertyCallingConvention.getInstance(asProperty);
+					return getEcorePropertyCallingConvention(asProperty);
 				} catch (GenModelException e) {
 					addProblem(e);		// FIXME drop through to better default
 				}
@@ -358,7 +358,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			assert eStructuralFeature != null;
 			try {
 				getGenModelHelper().getGetAccessor(eStructuralFeature);
-				return EcorePropertyCallingConvention.getInstance(asProperty);
+				return getEcorePropertyCallingConvention(asProperty);
 			} catch (GenModelException e) {
 				addProblem(e);		// FIXME drop through to better default
 			}
@@ -373,7 +373,7 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 			if (eStructuralFeature != null) {
 				try {
 					getGenModelHelper().getGetAccessor(eStructuralFeature);
-					return EcorePropertyCallingConvention.getInstance(asProperty);
+					return getEcorePropertyCallingConvention(asProperty);
 				} catch (GenModelException e) {
 					addProblem(e);		// FIXME drop through to better default
 				}
@@ -398,6 +398,10 @@ public abstract class AbstractCodeGenerator implements CodeGenerator
 	@Override
 	public @NonNull String getDefaultIndent() {
 		return defaultIndent;
+	}
+
+	protected @NonNull EcorePropertyCallingConvention getEcorePropertyCallingConvention(@NonNull Property asProperty) {
+		return EcorePropertyCallingConvention.getInstance(asProperty);
 	}
 
 	@Override

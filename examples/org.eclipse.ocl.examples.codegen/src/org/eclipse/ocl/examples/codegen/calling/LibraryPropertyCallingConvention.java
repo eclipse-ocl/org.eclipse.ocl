@@ -206,4 +206,16 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		js.append(";\n");
 		return true;
 	}
+
+	@Override
+	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		// Declaration is in an imported metamodel/library
+		return true;
+	}
+
+	@Override
+	public boolean generateJavaInitialization(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
+		// Initialization is in an imported metamodel/library
+		return true;
+	}
 }
