@@ -233,6 +233,28 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 	}
 
 	@Override
+	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		return createOperation(analyzer, asOperation, null);		// Bypass redundant body parsing
+/*		CGOperation cgOperation;
+		ExpressionInOCL asExpressionInOCL = null;
+		LanguageExpression asSpecification = asOperation.getBodyExpression();
+		if (asSpecification != null) {
+			try {
+				AbstractEnvironmentFactory environmentFactory = (AbstractEnvironmentFactory)analyzer.getCodeGenerator().getEnvironmentFactory();
+				asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);			// XXX Not appropriate for virtual dispatcher
+			} catch (ParserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		cgOperation = createOperation(analyzer, asOperation, asExpressionInOCL);
+	//	if (asSpecification != null) {
+	//		analyzer.scanBody(asSpecification);
+	//	}
+		return cgOperation; */
+	}
+
+	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperationCallExp cgOperationCallExp) {
 		CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)cgOperationCallExp;
 		assert cgOperationCallExp.getCgThis() == null;
@@ -420,5 +442,13 @@ public class LibraryOperationCallingConvention extends AbstractUncachedOperation
 		CGLibraryOperation cgLibraryOperation = (CGLibraryOperation)cgOperation;
 		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgLibraryOperation);
 		boxingAnalyzer.rewriteAsBoxed(cgLibraryOperation.getBody());
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(
+			@NonNull BoxingAnalyzer boxingAnalyzer,
+			@NonNull CGOperationCallExp cgOperationCallExp) {
+		// TODO Auto-generated method stub
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperationCallExp);
 	}
 }

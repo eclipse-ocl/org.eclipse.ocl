@@ -56,9 +56,11 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
+import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -364,7 +366,27 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	}
 
 	@Override
-	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
+	public @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation) {
+		CGOperation cgOperation;
+		ExpressionInOCL asExpressionInOCL = null;
+		LanguageExpression asSpecification = asOperation.getBodyExpression();
+		if (asSpecification != null) {
+			try {
+				AbstractEnvironmentFactory environmentFactory = (AbstractEnvironmentFactory)analyzer.getCodeGenerator().getEnvironmentFactory();
+				asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);			// XXX Not appropriate for virtual dispatcher
+			} catch (ParserException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		cgOperation = createOperation(analyzer, asOperation, asExpressionInOCL);
+		if (asSpecification != null) {
+			analyzer.scanBody(asSpecification);
+		}
+		return cgOperation;
+	}
+
+	protected @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation, @Nullable ExpressionInOCL asExpressionInOCL) {
 		assert (asExpressionInOCL == null) || (asExpressionInOCL == asOperation.getBodyExpression());
 		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
 		ClassNameManager classNameManager = analyzer.getClassNameManager(null, asClass);

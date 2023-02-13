@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -166,6 +167,12 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitParameterVariable(this);
+	}
+
+	@Override
+	public void setType(Type newType) {
+		System.out.println("setType: " + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(newType) + " : " + this + " : " + newType);		// XXX
+		super.setType(newType);
 	}
 
 } //ParameterVariableImpl

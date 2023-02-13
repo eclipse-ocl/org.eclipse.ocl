@@ -1071,23 +1071,10 @@ public class CodeGenAnalyzer
 		}
 		CGOperation cgOperation = basicGetCGOperation(asOperation);
 		if (cgOperation == null) {
-			ExpressionInOCL asExpressionInOCL = null;
-			LanguageExpression asSpecification = asOperation.getBodyExpression();
-			if (asSpecification != null) {
-				try {
-					asExpressionInOCL = environmentFactory.parseSpecification(asSpecification);			// XXX Not appropriate for virtual dispatcher
-				} catch (ParserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 			if (callingConvention == null) {
 				callingConvention = codeGenerator.getCallingConvention(asOperation, maybeVirtual);
 			}
-			cgOperation = callingConvention.createOperation(this, asOperation, asExpressionInOCL);
-			if (asSpecification != null) {
-				scanBody(asSpecification);
-			}
+			cgOperation = callingConvention.createOperation(this, asOperation);
 		}
 		if (maybeVirtual) {					// If virtual dispatch now known.
 			CGOperation cgVirtualOperation = basicGetCGDispatchOperation(asOperation);
