@@ -35,11 +35,9 @@ import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 
 /**
  *  ImplementedOperationCallingConvention defines the support for the call of an operation implemented by a Java class.
@@ -65,32 +63,12 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 		@Override
 		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgConstructor) {	// merge with super
 			Operation asOperation = CGUtil.getAST(cgConstructor);
-			Operation asOrigin = null;  // XXX analyzer.getOriginalOperation(cgConstructor);
-		//	ExpressionInOCL asCacheExpressionInOCL = (ExpressionInOCL)asOperation.getBodyExpression();
+			Operation asOrigin = analyzer.getOriginalOperation(cgConstructor);
 			assert asOperation.getBodyExpression() == null;
-		//	JavaCodeGenerator codeGenerator = analyzer.getCodeGenerator();
-		//	GlobalNameManager globalNameManager = codeGenerator.getGlobalNameManager();
-		//	List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(cgConstructor);
 			CGClass cgEntryClass = CGUtil.getContainingClass(cgConstructor);
 			List<@NonNull CGProperty> cgProperties = CGUtil.getPropertiesList(cgEntryClass);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructor, asOperation, asOrigin);
-		//	ExpressionInOCL asEntryExpressionInOCL = (ExpressionInOCL)asEntryOperation.getBodyExpression();
-		//	assert (asEntryExpressionInOCL != null);
-		//	List<@NonNull Variable> asEntryParameterVariables = PivotUtilInternal.getOwnedParametersList(asEntryExpressionInOCL);
 			//
-			List<@NonNull Parameter> asEntryParameters = PivotUtilInternal.getOwnedParametersList(asOperation);
-		/*	CGVariable executorVariable = operationNameManager.lazyGetExecutorVariable();
-
-
-			Parameter asExecutorParameter = asEntryParameters.get(0);
-			CGParameter cgEntryExecutorParameter = operationNameManager.lazyGetCGParameter(asExecutorParameter);
-			globalNameManager.getExecutorNameResolution().addCGElement(cgEntryExecutorParameter);
-			cgParameters.add(cgEntryExecutorParameter);
-			Parameter asBoxedValuesParameter = asEntryParameters.get(1);
-			CGParameter cgEntryBoxedValuesParameter = operationNameManager.lazyGetCGParameter(asBoxedValuesParameter);
-			globalNameManager.getBoxedValuesNameResolution().addCGElement(cgEntryBoxedValuesParameter);
-			cgParameters.add(cgEntryBoxedValuesParameter); */
-
 			CGParameter cgEntryBoxedValuesParameter = operationNameManager.getBoxedValuesParameter();
 
 			CGTypeId cgTypeId = analyzer.getCGTypeId(TypeId.OCL_VOID);
@@ -101,9 +79,6 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 			//
 			//	Unpack boxedValues and assign properties.
 			//
-		//	VariableDeclaration asThisParameterVariable = null;  //PivotUtil.get     (ParameterVariable)asEntryExpressionInOCL.getOwnedContext();
-		//	assert asThisParameterVariable != null;		// Must have a Java 'this' to initialize its properties
-			// FIXME wrong type
 			int iInclusiveMax = cgProperties.size()-1;
 			for (int i = 0; i <= iInclusiveMax; i++) {
 				CGProperty cgProperty = cgProperties.get(i);
@@ -114,14 +89,6 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 					cgInitValue = analyzer.createCGElement(CGValuedElement.class, asEntryResult);
 				}
 				else {
-				//	TypedElement asEntryParameterVariable;
-				//	if (i == 0) {
-				//		asEntryParameterVariable = asThisParameterVariable;
-				//	}
-				//	else {
-				//		asEntryParameterVariable = asEntryParameters.get(i-1);
-				//	}
-				//	assert asEntryParameterVariable != null;
 					//
 					//	Unpack boxedValues[i] to a let-variable
 					//

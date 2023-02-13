@@ -321,7 +321,7 @@ public class CodeGenAnalyzer
 		this.cgNull = createCGNull();
 	}
 
-	public void addCGCachedOperation(@NonNull CGCachedOperation cgOperation, @NonNull Operation asOperation) {
+	public void addCGCachedOperation(@NonNull CGOperation cgOperation, @NonNull Operation asOperation) {
 		Operation oldOperation = cgOperation2asOriginalOperation.put(cgOperation, asOperation);
 		assert oldOperation == null;
 	}
