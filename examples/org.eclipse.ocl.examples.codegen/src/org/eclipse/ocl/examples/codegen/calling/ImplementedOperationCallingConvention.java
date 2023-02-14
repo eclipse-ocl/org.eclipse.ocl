@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.calling;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -21,6 +24,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGFinalVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGIndexExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativeOperationCallExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGNativePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
@@ -29,15 +34,21 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGSequence;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariableExp;
+import org.eclipse.ocl.examples.codegen.java.JavaLanguageSupport;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.library.AbstractOperation;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryOperation;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 
 /**
  *  ImplementedOperationCallingConvention defines the support for the call of an operation implemented by a Java class.
@@ -69,11 +80,12 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 			List<@NonNull CGProperty> cgProperties = CGUtil.getPropertiesList(cgEntryClass);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructor, asOperation, asOrigin);
 			//
+			PivotHelper asHelper = analyzer.getASHelper();
 			CGParameter cgEntryBoxedValuesParameter = operationNameManager.getBoxedValuesParameter();
-
 			CGTypeId cgTypeId = analyzer.getCGTypeId(TypeId.OCL_VOID);
 			CGParameter cgThisParameter = operationNameManager.getThisParameter();
 			CGSequence cgSequence = CGModelFactory.eINSTANCE.createCGSequence();
+			List<@NonNull CGValuedElement> cgSourceAndArguments = new ArrayList<>();
 			List<@NonNull CGValuedElement> cgStatements = CGUtil.getOwnedStatementsList(cgSequence);
 			Stack<@NonNull CGFinalVariable> cgLetVariables = new Stack<>();
 			//
@@ -84,11 +96,7 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 				CGProperty cgProperty = cgProperties.get(i);
 				Property asProperty = CGUtil.getAST(cgProperty);
 				CGValuedElement cgInitValue;
-				if (i >= iInclusiveMax) {
-					OCLExpression asEntryResult = analyzer.getASHelper().createIntegerLiteralExp(77) ; //asEntryExpressionInOCL.getOwnedBody();
-					cgInitValue = analyzer.createCGElement(CGValuedElement.class, asEntryResult);
-				}
-				else {
+				if (i < iInclusiveMax) {
 					//
 					//	Unpack boxedValues[i] to a let-variable
 					//
@@ -99,6 +107,55 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 					cgProperty.getNameResolution().addCGElement(cgLetVariable);
 					cgLetVariables.push(cgLetVariable);
 					cgInitValue = analyzer.createCGVariableExp(cgLetVariable);
+					cgSourceAndArguments.add(analyzer.createCGVariableExp(cgLetVariable));
+				}
+				else {
+					//
+					//	Compute value
+					//
+					LibraryFeature asImplementation = asOrigin.getImplementation();
+					Field field = null;
+					Method method = null;
+					if (asImplementation instanceof JavaLanguageSupport.JavaNativeOperation) {
+						method = ((JavaLanguageSupport.JavaNativeOperation)asImplementation).getMethod();
+					}
+					else if (asImplementation instanceof AbstractOperation) {
+						AbstractOperation abstractOperation = (AbstractOperation)asImplementation;
+						field = abstractOperation.getInstanceField();
+						method = abstractOperation.getEvaluateMethod(asOrigin);
+						int j = 0;
+						for (Class<?> jParameterType : method.getParameterTypes()) {
+							if (jParameterType == Executor.class) {
+								CGVariable cgExecutorVariable = operationNameManager.lazyGetExecutorVariable();
+								cgSourceAndArguments.add(j, analyzer.createCGVariableExp(cgExecutorVariable));
+							}
+							else if (jParameterType == TypeId.class) {
+								CGValuedElement cgConstantExp = analyzer.createCGConstantExp(analyzer.getCGTypeId(asOrigin.getTypeId()));
+								cgSourceAndArguments.add(j, cgConstantExp);
+							}
+							j++;
+						}
+					}
+					assert method != null;			// XXX
+					NativePropertyCallingConvention nativePropertyCallingConvention = NativePropertyCallingConvention.getInstance(asOperation);
+					NativeOperationCallingConvention nativeOperationCallingConvention = NativeOperationCallingConvention.getInstance(asOperation, false);
+
+					CGNativeOperationCallExp cgNativeOperationCallExp = analyzer.createCGNativeOperationCallExp(method, nativeOperationCallingConvention);
+					cgNativeOperationCallExp.setTypeId(analyzer.getCGTypeId(asOrigin.getTypeId()));
+					cgNativeOperationCallExp.setRequired(asOrigin.isIsRequired());
+					cgNativeOperationCallExp.getArguments().addAll(cgSourceAndArguments);
+					if (field != null) {
+						CGNativePropertyCallExp cgNativePropertyCallExp = analyzer.createCGNativePropertyCallExp(field, nativePropertyCallingConvention);
+						cgNativePropertyCallExp.setSource(null);
+						cgNativePropertyCallExp.setTypeId(analyzer.getCGTypeId(asOrigin.getOwningClass().getTypeId()));
+					//	cgNativePropertyCallExp.setRequired(true);
+						cgNativeOperationCallExp.setCgThis(cgNativePropertyCallExp);
+					}
+
+
+					//	OCLExpression asEntryResult = asHelper.createOperationCallExp(null, asOrigin, asArguments);
+				//	OCLExpression asEntryResult = asHelper.createIntegerLiteralExp(77) ; //asEntryExpressionInOCL.getOwnedBody();
+					cgInitValue = cgNativeOperationCallExp;
 				}
 				//
 				//	Assign  property from let-variable / computation
@@ -133,7 +190,33 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 
 		@Override
 		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
-			return CG_PARAMETER_STYLES_THIS_BOXED_VALUES;
+			Operation asOrigin = (Operation) operationNameManager.getASOrigin();
+		//	LibraryFeature asImplementation = asOrigin.getImplementation();
+			LibraryOperation asImplementation = (LibraryOperation)operationNameManager.getCodeGenerator().getEnvironmentFactory().getMetamodelManager().getImplementation(asOrigin);
+			Method method = null;
+		//	boolean hasExecutor = false;
+			boolean hasTypeId = false;
+		/*	if (asImplementation instanceof AbstractOperation) {
+				method = ((AbstractOperation)asImplementation).getEvaluateMethod(asOrigin);
+				for (Class<?> jParameterType : method.getParameterTypes()) {
+					if (jParameterType == Executor.class) {
+				//		hasExecutor = true;
+					}
+					else if (jParameterType == TypeId.class) {
+						hasTypeId = true;
+					}
+				}
+			} */
+			if (hasTypeId) {
+			//	assert hasExecutor;
+				return CG_PARAMETER_STYLES_THIS_TYPE_ID_BOXED_VALUES;
+			}
+		//	else if (hasExecutor) {
+		//		return CG_PARAMETER_STYLES_THIS_EXECUTOR_BOXED_VALUES;
+		//	}
+			else {
+				return CG_PARAMETER_STYLES_THIS_BOXED_VALUES;
+			}
 		}
 	}
 

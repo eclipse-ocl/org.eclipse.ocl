@@ -728,12 +728,14 @@ public class CodeGenAnalyzer
 
 	public @NonNull CGNativePropertyCallExp createCGNativePropertyCallExp(@NonNull Field field, @NonNull PropertyCallingConvention callingConvention) {
 		Property asProperty = getNativeProperty(field, callingConvention);
-		CGProperty cgProperty = getCGProperty(asProperty);
+//		CGProperty cgProperty = getCGProperty(asProperty);
+		CGProperty cgProperty = generatePropertyDeclaration(asProperty, callingConvention);
 		CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
 		cgNativePropertyCallExp.setField(field);		// Use cc
 		cgNativePropertyCallExp.setReferredProperty(cgProperty);
+		cgNativePropertyCallExp.setAsProperty(asProperty);
 		cgNativePropertyCallExp.setRequired(cgProperty.isRequired());
-	//	callingConvention.createCGOperationCallExp(null, cgOperation, null, cgOperation, null)
+	//	callingConvention.createCGNavigationCallExp(this, cgProperty, asProperty.getImplementation(), cgSource, asPropertyCallExp);
 		return cgNativePropertyCallExp;
 	}
 

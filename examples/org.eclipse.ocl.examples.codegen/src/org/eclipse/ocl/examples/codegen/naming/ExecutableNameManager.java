@@ -327,10 +327,7 @@ public class ExecutableNameManager extends NestedNameManager
 					}
 					case TYPE_ID: {
 						assert typeIdParameter == null;
-						NameResolution nameResolution = globalNameManager.getTypeIdName();
-						CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID);
-						CGParameter cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, true);
-						cgParameter.setNonInvalid();
+						CGParameter cgParameter = createTypeIdParameter();
 						cgParameters.add(cgParameter);
 						typeIdParameter = cgParameter;
 						break;
@@ -512,6 +509,14 @@ public class ExecutableNameManager extends NestedNameManager
 		cgParameter.setNonInvalid();
 		thisParameter = cgParameter;
 		return cgParameter;
+	}
+
+	private @NonNull CGParameter createTypeIdParameter() {
+		NameResolution nameResolution = globalNameManager.getTypeIdName();
+		CGTypeId cgTypeId = analyzer.getCGTypeId(JavaConstants.TYPE_ID_TYPE_ID);
+		CGParameter typeIdParameter = analyzer.createCGParameter(nameResolution, cgTypeId, true);
+		typeIdParameter.setNonInvalid();
+		return typeIdParameter;
 	}
 
 	public @NonNull TypedElement getASOrigin() {
@@ -808,6 +813,17 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 		return cgParameter;
 	}
+
+/*	public @NonNull CGVariable lazyGetTypeIdVariable() {
+		if (parent instanceof ExecutableNameManager) {
+			return ((ExecutableNameManager)parent).lazyGetTypeIdVariable();
+		}
+		CGParameter typeIdParameter2 = typeIdParameter;
+		if (typeIdParameter2 == null) {
+			typeIdParameter = typeIdParameter2 = createTypeIdParameter();
+		}
+		return typeIdParameter2;
+	} */
 
 	public @NonNull CGValuedElement wrapLetVariables(@NonNull CGValuedElement cgTree) {
 		assert !(parent instanceof ExecutableNameManager);

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -178,6 +179,25 @@ public abstract class AbstractOperation extends AbstractIterationOrOperation imp
 				isFirst = false;
 			}
 			s.append(")");
+			throw new UnsupportedOperationException(s.toString());
+		}
+	}
+
+	@SuppressWarnings("null")
+	public final @NonNull Field getInstanceField() {
+		try {
+			return getClass().getField("INSTANCE"/*JavaConstants.INSTANCE_NAME*/);
+		} catch (Exception e) {
+			for (Method method : getClass().getDeclaredMethods()) {
+				if ("evaluate".equals(method.getName()) ) {
+					for (Class<?> parameter : method.getParameterTypes()) {
+						parameter.toString();
+					}
+				}
+			}
+			StringBuilder s = new StringBuilder();
+			s.append(getClass().getName());
+			s.append(".INSTANCE");
 			throw new UnsupportedOperationException(s.toString());
 		}
 	}
