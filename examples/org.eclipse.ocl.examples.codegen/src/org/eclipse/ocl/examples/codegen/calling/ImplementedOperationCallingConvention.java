@@ -147,7 +147,7 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 					if (field != null) {
 						CGNativePropertyCallExp cgNativePropertyCallExp = analyzer.createCGNativePropertyCallExp(field, nativePropertyCallingConvention);
 						cgNativePropertyCallExp.setSource(null);
-						cgNativePropertyCallExp.setTypeId(analyzer.getCGTypeId(asOrigin.getOwningClass().getTypeId()));
+					//	cgNativePropertyCallExp.setTypeId(analyzer.getCGTypeId(asOrigin.getOwningClass().getTypeId()));
 					//	cgNativePropertyCallExp.setRequired(true);
 						cgNativeOperationCallExp.setCgThis(cgNativePropertyCallExp);
 					}

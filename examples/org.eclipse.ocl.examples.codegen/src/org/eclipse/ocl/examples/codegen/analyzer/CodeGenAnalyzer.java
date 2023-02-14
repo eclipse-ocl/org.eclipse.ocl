@@ -735,6 +735,7 @@ public class CodeGenAnalyzer
 		cgNativePropertyCallExp.setReferredProperty(cgProperty);
 		cgNativePropertyCallExp.setAsProperty(asProperty);
 		cgNativePropertyCallExp.setRequired(cgProperty.isRequired());
+		cgNativePropertyCallExp.setTypeId(cgProperty.getTypeId());
 	//	callingConvention.createCGNavigationCallExp(this, cgProperty, asProperty.getImplementation(), cgSource, asPropertyCallExp);
 		return cgNativePropertyCallExp;
 	}
