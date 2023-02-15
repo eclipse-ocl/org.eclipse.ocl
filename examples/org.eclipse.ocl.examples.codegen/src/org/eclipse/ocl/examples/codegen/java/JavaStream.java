@@ -271,7 +271,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("Helper4getCommonType")) {
+			if (string.contains("ENTRY_ATL2QVTr_getType")) {
 				getClass();		// XXX
 			}
 			if (string.contains("InvalidValueException")) {

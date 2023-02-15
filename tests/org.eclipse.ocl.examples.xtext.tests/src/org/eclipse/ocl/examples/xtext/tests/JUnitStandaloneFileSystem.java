@@ -262,10 +262,7 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 				helper.createFile(runtimeFile, getRuntimePreferenceContents());
 				File dotProjectFile = new File(projectFolder, ".project");
 				if (!dotProjectFile.exists()) {
-					helper.createDotProjectFile(projectFolder, projectName);
-					helper.createDotClasspathFile(projectFolder, projectName);
-					helper.createManifestFile(projectFolder, projectName);
-					helper.createBuildDotProperties(projectFolder, projectName);
+					helper.createFiles(projectFolder, projectName);
 				}
 				/*			URI location = projectMap.getLocation(projectName);
 				if (location == null) {

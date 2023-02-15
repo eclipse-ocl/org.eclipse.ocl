@@ -24,17 +24,22 @@ public abstract class TestFileSystem
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			return JUnitStandaloneFileSystem.create(helper, pathFromCurrentWorkingDirectoryToFileSystem);
 		}
-		else{
+		else {
 			return JUnitPluginFileSystem.create(helper, pathFromCurrentWorkingDirectoryToFileSystem);
 		}
 	}
 
 	protected final @NonNull TestFileSystemHelper helper;
+
 	protected final @NonNull String pathFromCurrentWorkingDirectoryToFileSystem;
 
 	protected TestFileSystem(@NonNull TestFileSystemHelper helper, @NonNull String pathFromCurrentWorkingDirectoryToFileSystem) {
 		this.helper = helper;
 		this.pathFromCurrentWorkingDirectoryToFileSystem = pathFromCurrentWorkingDirectoryToFileSystem;
+	}
+
+	public @NonNull TestFileSystemHelper getHelper() {
+		return helper;
 	}
 
 	protected @NonNull String getResourcesPreferenceContents() {

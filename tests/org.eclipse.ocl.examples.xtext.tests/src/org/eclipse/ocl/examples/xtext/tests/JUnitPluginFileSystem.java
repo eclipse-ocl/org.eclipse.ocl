@@ -311,10 +311,7 @@ public class JUnitPluginFileSystem extends TestFileSystem
 					FileWriter runtimeFile = new FileWriter(new File(settingsFolder, "org.eclipse.core.runtime.prefs"));
 					runtimeFile.write(getRuntimePreferenceContents());
 					runtimeFile.close();
-					helper.createDotProjectFile(projectFolder, projectName);
-					helper.createDotClasspathFile(projectFolder, projectName);
-					helper.createManifestFile(projectFolder, projectName);
-					helper.createBuildDotProperties(projectFolder, projectName);
+					helper.createFiles(projectFolder, projectName);
 					if (!project.isOpen()) {
 						project.open(null);
 					}

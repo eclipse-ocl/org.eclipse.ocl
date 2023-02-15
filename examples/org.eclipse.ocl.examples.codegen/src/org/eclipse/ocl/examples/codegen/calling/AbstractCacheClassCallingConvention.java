@@ -16,9 +16,11 @@ import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingCo
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
@@ -164,6 +166,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		@Override
 		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
 			JavaStream js = cg2javaVisitor.getJavaStream();
+			JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 			js.append("return new ");
 			js.appendClassReference(null, cgOperation);
 			js.append("(");
@@ -173,8 +176,20 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 				if (!isFirst) {
 					js.append(", ");
 				}
-				js.append("(@NonNull Object @NonNull [])");		// XXX conditionalize / parameterize
-				js.appendValueName(cgParameter);
+		//		js.append("(@NonNull Object @NonNull [])");		// XXX conditionalize / parameterize
+		//		js.appendValueName(cgParameter);
+				TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgParameter);
+				Class<?> actualJavaClass = typeDescriptor.getJavaClass();
+			//	TypeDeclaration actualType = cgParameter.getTy
+				Boolean isRequired = codeGenerator.isRequired(cgParameter);
+				SubStream castStream = new SubStream() {
+					@Override
+					public void append() {
+						js.appendValueName(cgParameter);
+					}
+				};
+
+				js.appendClassCast(cgParameter, isRequired, actualJavaClass, castStream);
 				isFirst = false;
 			}
 			js.append(");\n");
