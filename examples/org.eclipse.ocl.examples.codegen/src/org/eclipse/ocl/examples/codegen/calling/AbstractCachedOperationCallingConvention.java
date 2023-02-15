@@ -87,7 +87,7 @@ public abstract class AbstractCachedOperationCallingConvention extends AbstractO
 			//	Create CG declaration for evaluate
 			//
 			CGOperation cgCacheEvaluateOperation = createCGOperationDeclaration(analyzer, cgCacheClass, asCacheEvaluateOperation,
-				evaluateNameResolution, null);
+				evaluateNameResolution, asOperation);
 		/*	CGOperation cgCacheEvaluateOperation = createCGOperation(analyzer, asCacheEvaluateOperation);
 			analyzer.initAst(cgCacheEvaluateOperation, asCacheEvaluateOperation, true);
 			cgCacheEvaluateOperation.setCallingConvention(this);

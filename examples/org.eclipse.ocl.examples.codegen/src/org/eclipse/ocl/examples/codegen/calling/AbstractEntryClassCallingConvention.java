@@ -128,7 +128,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//	Create CG declaration
 			//
 			CGOperation cgEntryOperation = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryOperation,
-				getResultNameResolution, null);
+				getResultNameResolution, asOperation);
 			return cgEntryOperation;
 		}
 
@@ -230,7 +230,7 @@ public abstract class AbstractEntryClassCallingConvention extends AbstractClassC
 			//	Create CG declaration for isEqual
 			//
 			CGOperation cgEntryOperation = createCGOperationDeclaration(analyzer, cgEntryClass, asEntryOperation,
-				isEqualNameResolution, null);
+				isEqualNameResolution, asOperation);
 			return cgEntryOperation;
 		}
 

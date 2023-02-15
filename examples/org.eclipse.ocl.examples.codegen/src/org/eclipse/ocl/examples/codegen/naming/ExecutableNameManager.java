@@ -228,7 +228,7 @@ public class ExecutableNameManager extends NestedNameManager
 						Parameter asBoxedValuesParameter = getASParameter(asOperation, globalNameManager.getASBoxedValuesName());
 						NameResolution nameResolution = globalNameManager.getBoxedValuesName();
 						CGTypeId cgTypeId = analyzer.getCGTypeId(asBoxedValuesParameter.getTypeId());
-						CGParameter cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, true);
+						CGParameter cgParameter = analyzer.createCGParameter(nameResolution, cgTypeId, asBoxedValuesParameter.isIsRequired());
 						analyzer.initAst(cgParameter, asBoxedValuesParameter, true);
 						cgParameters.add(cgParameter);
 						boxedValuesParameter = cgParameter;

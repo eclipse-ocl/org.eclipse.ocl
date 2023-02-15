@@ -354,7 +354,7 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 	protected abstract @NonNull CGOperation createCGOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull Operation asOperation);
 
 	protected @NonNull CGOperation createCGOperationDeclaration(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgClass,
-			@NonNull Operation asOperation, @Nullable NameResolution nameResolution, @Nullable TypedElement asOrigin) {
+			@NonNull Operation asOperation, @Nullable NameResolution nameResolution, @NonNull TypedElement asOrigin) {
 		CGOperation cgOperation = createCGOperation(analyzer, asOperation);
 		analyzer.initAst(cgOperation, asOperation, true);
 		cgOperation.setCallingConvention(this);
@@ -365,6 +365,9 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 		cgClass.getOperations().add(cgOperation);
 		@NonNull CGParameterStyle @NonNull [] cgParameterStyles = getCGParameterStyles(operationNameManager);
 		operationNameManager.createCGOperationParameters(cgParameterStyles);
+		if (asOrigin instanceof Operation) {
+			analyzer.addCGCachedOperation(cgOperation, (Operation)asOrigin);
+		}
 		return cgOperation;
 	}
 

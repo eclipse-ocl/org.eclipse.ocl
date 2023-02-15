@@ -55,10 +55,8 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 		if (JavaCodeGenerator.CALLING_CONVENTION_COMMENTS.isActive()) {
 			js.append("// " + cgOperation.getCallingConvention() + "\n");
 		}
-		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(cgOperation);
-		if (jMethod != null) {
-			js.append("@Override\n");
-		}
+		generateSuppressWarnings(js, cgOperation);
+		generateOverrideDeclaration(js, cgOperation);
 		js.append("public ");
 		if (CGUtil.getAST(cgOperation).isIsStatic()) {
 			js.append("static ");
@@ -79,6 +77,15 @@ public abstract class AbstractUncachedOperationCallingConvention extends Abstrac
 		CGValuedElement body = cg2javaVisitor.getExpression(cgOperation.getBody());
 		cg2javaVisitor.appendReturn(body);
 	}
+
+	protected void generateOverrideDeclaration(@NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+		Method jMethod =  JavaLanguageSupport.getOverriddenMethod(cgOperation);
+		if (jMethod != null) {
+			js.append("@Override\n");
+		}
+	}
+
+	protected void generateSuppressWarnings(@NonNull JavaStream js, @NonNull CGOperation cgOperation) {}
 
 	@Override
 	protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {

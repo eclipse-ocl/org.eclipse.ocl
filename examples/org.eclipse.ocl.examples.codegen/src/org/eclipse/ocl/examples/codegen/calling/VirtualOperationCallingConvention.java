@@ -253,7 +253,7 @@ public class VirtualOperationCallingConvention extends AbstractCachedOperationCa
 		//
 		@SuppressWarnings("unused")
 		CGOperation cgConstructorOperation = createCGOperationDeclaration(analyzer, cgCacheClass, asConstructorOperation,
-			null, null);
+			null, asOperation);
 	}
 
 	@Override

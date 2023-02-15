@@ -16,11 +16,9 @@ import org.eclipse.ocl.examples.codegen.calling.AbstractCachedOperationCallingCo
 import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
-import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaCodeGenerator;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.examples.codegen.java.JavaStream.SubStream;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.examples.codegen.naming.GlobalNameManager;
 import org.eclipse.ocl.examples.codegen.naming.NameManagerHelper;
@@ -36,6 +34,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LanguageSupport;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.qvtd.runtime.internal.evaluation.AbstractComputationConstructor;
+
+import com.google.common.collect.Iterables;
 
 /**
  *  CacheClassCallingConvention defines the style of a nested Class whose instance caches a feature computation.
@@ -74,7 +74,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//	Create CG declaration for newInstance
 			//
 			CGOperation cgConstructorOperation = createCGOperationDeclaration(analyzer, cgCacheClass, asConstructorOperation,
-				null, null);
+				null, asOperation);
 			return cgConstructorOperation;
 		}
 
@@ -139,6 +139,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		public void createCGBody(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperation cgOperation) {
 			//	Implemented as direct synthesis.
 			//	Needs an ability to specify a new T invocation.
+		//	assert false;
 		}
 
 		public final @NonNull CGOperation createOperation(@NonNull CodeGenAnalyzer analyzer, @NonNull CGClass cgConstructorClass, org.eclipse.ocl.pivot.@NonNull Class asCacheClass, @NonNull Operation asOperation) {
@@ -159,12 +160,13 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			//	Create CG declaration for newInstance
 			//
 			CGOperation cgConstructorOperation = createCGOperationDeclaration(analyzer, cgConstructorClass, asConstructorOperation,
-				newInstanceNameResolution, null);
+				newInstanceNameResolution, asOperation);
 			return cgConstructorOperation;
 		}
 
 		@Override
 		protected void generateJavaOperationBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGOperation cgOperation) {
+		//	assert false;
 			JavaStream js = cg2javaVisitor.getJavaStream();
 			JavaCodeGenerator codeGenerator = cg2javaVisitor.getCodeGenerator();
 			js.append("return new ");
@@ -172,13 +174,19 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 			js.append("(");
 		//	js.append(cg2javaVisitor.getGlobalNameManager().getExecutorNameResolution().getResolvedName());
 			boolean isFirst = true;
-			for (@NonNull CGParameter cgParameter : CGUtil.getParameters(cgOperation)) {
+			Iterable<@NonNull CGParameter> cgParameters = CGUtil.getParameters(cgOperation);
+			assert Iterables.size(cgParameters) == 1;
+			Operation asOriginalOperation = cg2javaVisitor.getAnalyzer().getOriginalOperation(cgOperation);
+			boolean isOriginalRequired = PivotUtil.allParametersRequired(asOriginalOperation);
+			for (@NonNull CGParameter cgParameter : cgParameters) {
 				if (!isFirst) {
 					js.append(", ");
 				}
-		//		js.append("(@NonNull Object @NonNull [])");		// XXX conditionalize / parameterize
-		//		js.appendValueName(cgParameter);
-				TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgParameter);
+				if (isOriginalRequired) {							// Inherited cgParameter is @Nullable Object @NonNull []
+					js.append("(@NonNull Object @NonNull [])");		// XXX conditionalize / parameterize
+				}
+				js.appendValueName(cgParameter);
+		/*		TypeDescriptor typeDescriptor = codeGenerator.getTypeDescriptor(cgParameter);
 				Class<?> actualJavaClass = typeDescriptor.getJavaClass();
 			//	TypeDeclaration actualType = cgParameter.getTy
 				Boolean isRequired = codeGenerator.isRequired(cgParameter);
@@ -189,10 +197,19 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 					}
 				};
 
-				js.appendClassCast(cgParameter, isRequired, actualJavaClass, castStream);
+				js.appendClassCast(cgParameter, isRequired, actualJavaClass, castStream); */
 				isFirst = false;
 			}
 			js.append(");\n");
+		}
+
+		@Override
+		protected void generateSuppressWarnings(@NonNull JavaStream js, @NonNull CGOperation cgOperation) {
+			Operation asOriginalOperation = js.getCodeGenerator().getAnalyzer().getOriginalOperation(cgOperation);
+			boolean isOriginalRequired = PivotUtil.allParametersRequired(asOriginalOperation);
+			if (isOriginalRequired) {							// Inherited cgParameter is @Nullable Object @NonNull []
+				js.append("@SuppressWarnings({\"cast\",\"null\"})\n");
+			}
 		}
 
 		@Override
@@ -201,7 +218,7 @@ public abstract class AbstractCacheClassCallingConvention extends AbstractClassC
 		}
 
 		@Override
-		protected @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
+		protected final @NonNull CGParameterStyle @NonNull [] getCGParameterStyles(@NonNull ExecutableNameManager operationNameManager) {
 			return CG_PARAMETER_STYLES_BOXED_VALUES;
 		}
 	}

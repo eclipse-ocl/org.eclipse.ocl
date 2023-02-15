@@ -271,7 +271,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("ENTRY_ATL2QVTr_getType")) {
+			if (string.contains("package")) {
 				getClass();		// XXX
 			}
 			if (string.contains("InvalidValueException")) {
@@ -570,6 +570,7 @@ public class JavaStream
 			append(";\n");
 			append("\n");
 		}
+		importNameManager.setClassName(className);
 		append(ImportUtils.IMPORTS_MARKER + "\n");
 	}
 
