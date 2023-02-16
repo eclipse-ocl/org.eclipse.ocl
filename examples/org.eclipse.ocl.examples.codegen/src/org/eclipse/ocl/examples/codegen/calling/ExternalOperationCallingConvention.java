@@ -140,7 +140,7 @@ public class ExternalOperationCallingConvention extends AbstractCachedOperationC
 
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
-		if (cgOperationCallExp.eContainer() != cgOperationCallExp.getReferredOperation()) {
+		if (cgOperationCallExp.eContainer() != cgOperationCallExp.getReferredOperation()) {					// XXX is this vintage irrelevance
 			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperationCallExp);
 		}
 		else {

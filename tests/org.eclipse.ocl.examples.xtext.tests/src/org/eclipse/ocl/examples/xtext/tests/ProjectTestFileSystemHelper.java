@@ -119,6 +119,7 @@ public class ProjectTestFileSystemHelper extends TestFileSystemHelper
 		try {
 			s = new FileWriter(file);
 			s.append("org.eclipse.jdt.core.compiler.annotation.nullanalysis=enabled\n");
+			s.append("org.eclipse.jdt.core.compiler.problem.includeNullInfoFromAsserts=enabled\n");
 			s.close();
 		} catch (IOException e) {
 			throw new WrappedException(e);

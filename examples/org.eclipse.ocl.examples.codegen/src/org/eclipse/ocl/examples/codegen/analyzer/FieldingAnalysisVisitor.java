@@ -79,11 +79,11 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		assert !(cgChild instanceof CGVariableExp) : "must catch variable not its access";
 		boolean mayBeInvalid = !cgChild.isNonInvalid();
 		if (mayBeInvalid) {
-			mayBeInvalid = !cgChild.isNonInvalid();
 			String s = cgChild.toString();			// XXX
-			if  (s.contains("daughtersInverse")) {
+			if  (s.contains("d4qvtrExpression")) {
 				getClass();		// XXX
 			}
+			mayBeInvalid = !cgChild.isNonInvalid();
 			CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
 			cgCatchExp.setCaught(true);
 			globalNameManager.wrap(cgCatchExp, cgChild);
@@ -260,7 +260,7 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 	@Override
 	public @NonNull ReturnState visitCGLetExp(@NonNull CGLetExp cgLetExp) {
 		CGVariable cgVariable = CGUtil.getInit(cgLetExp);
-		ReturnState initReturnState = context.getMustBeCaughtVisitor().visit(CGUtil.getInit(cgVariable));		// let will have to be caught anyway.
+		ReturnState initReturnState = context.getMustBeCaughtVisitor().visit(CGUtil.getInit(cgVariable));		// XXX let will have to be caught anyway. Optimize the 99.9% invalid never used case.
 		cgVariable.setCaught(initReturnState.isCaught());
 		ReturnState inReturnState = visit(CGUtil.getIn(cgLetExp));
 		cgLetExp.setCaught(inReturnState.isCaught());

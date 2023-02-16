@@ -271,7 +271,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("package")) {
+			if (string.contains("INSTANCE_CACHE_ATL2QVTr_getProperty")) {
 				getClass();		// XXX
 			}
 			if (string.contains("InvalidValueException")) {

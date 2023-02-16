@@ -354,4 +354,18 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 		super.setSource(newSource);		// XXX
 	}
 
+	@Override
+	public boolean isRequiredOrNonNull() {
+		boolean requiredOrNonNull = super.isRequiredOrNonNull();
+		assert requiredOrNonNull;			// XXX
+		return requiredOrNonNull;
+	}
+
+	@Override
+	public boolean isRequired() {
+		boolean required2 = super.isRequired();
+		assert required2;			// XXX
+		return required2;
+	}
+
 } //CGGuardExpImpl

@@ -403,7 +403,8 @@ public class CodeGenAnalyzer
 
 	public @NonNull Iterable<@NonNull Operation> addVirtualCGOperations(@NonNull Operation asBaseOperation, @NonNull CGCachedOperation cgDispatchOperation) {
 		assert cgDispatchOperation.getCallingConvention() == VirtualOperationCallingConvention.getInstance(asBaseOperation, true);
-		addCGCachedOperation(cgDispatchOperation, asBaseOperation);
+		assert getOriginalOperation(cgDispatchOperation) == asBaseOperation;
+	//	addCGCachedOperation(cgDispatchOperation, asBaseOperation);
 		FinalAnalysis finalAnalysis = metamodelManager.getFinalAnalysis();
 		Iterable<@NonNull Operation> asOverrideOperations = finalAnalysis.getOverrides(asBaseOperation);
 		assert Iterables.contains(asOverrideOperations, asBaseOperation);

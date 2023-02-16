@@ -277,6 +277,6 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 	@Override
 	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGOperationCallExp cgOperationCallExp) {
 		// XXX Auto-generated method stub
-		//	super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperationCallExp);
+			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgOperationCallExp);
 	}
 }
