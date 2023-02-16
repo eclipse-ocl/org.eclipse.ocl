@@ -78,20 +78,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//CGValuedElement"
         containment="true" resolveProxies="false"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CGCallExp" abstract="true" eSuperTypes="#//CGValuedElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="invalidating" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Whether this call expression may return an invalid result for non-invalid (or invalid if also validating) inputs."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="validating" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Whether this call expression may return a non-invalid result for invalid inputs."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CGCallExp" abstract="true" eSuperTypes="#//CGValuedElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="CGCastExp" eSuperTypes="#//CGSourcedCallExp">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A cast expression imposes a known type on a poorly typer source such as a CGEcoreParameter."/>
@@ -433,7 +420,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" lowerBound="1" eType="#//CGValuedElement"
         containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="asIteration" lowerBound="1"
-        eType="#//Iteration"/>
+        eType="#//Iteration" changeable="false" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGIterator" eSuperTypes="#//CGParameter">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -551,7 +538,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="asProperty" lowerBound="1"
-        eType="#//Property"/>
+        eType="#//Property" changeable="false" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGNull" eSuperTypes="#//CGConstant">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -598,7 +585,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="asOperation" lowerBound="1"
-        eType="#//Operation"/>
+        eType="#//Operation" changeable="false" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGOppositePropertyCallExp" abstract="true"
       eSuperTypes="#//CGNavigationCallExp"/>
@@ -642,7 +629,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSlotValue" lowerBound="1"
         eType="#//CGValuedElement" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="asProperty" lowerBound="1"
-        eType="#//Property"/>
+        eType="#//Property" changeable="false" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGPropertyCallExp" abstract="true" eSuperTypes="#//CGNavigationCallExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="CGReal" eSuperTypes="#//CGNumber">

@@ -66,14 +66,7 @@ public class BuiltInIterationCallingConvention extends AbstractIterationCallingC
 		assert iterationHelper != null;
 		CGIterationCallExp cgIterationCallExp = CGModelFactory.eINSTANCE.createCGBuiltInIterationCallExp();
 		analyzer.initAst(cgIterationCallExp, asLoopExp, true);
-
-
-
-
-		cgIterationCallExp.setAsIteration(asIteration);
 		cgIterationCallExp.setReferredIteration(cgOperation);
-		cgIterationCallExp.setInvalidating(asIteration.isIsInvalidating());
-		cgIterationCallExp.setValidating(asIteration.isIsValidating());
 		cgIterationCallExp.setSource(cgSafeSource);
 		globalNameManager.addSelfNameManager(cgSafeSource, parentNameManager);										// Source always evaluated in parent context
 		assert cgIterationCallExp.getAst() == asLoopExp;

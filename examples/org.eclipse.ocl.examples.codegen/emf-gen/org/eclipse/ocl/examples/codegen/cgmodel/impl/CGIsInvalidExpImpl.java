@@ -213,6 +213,15 @@ public class CGIsInvalidExpImpl extends CGSourcedCallExpImpl implements CGIsInva
 	 * @generated
 	 */
 	@Override
+	public boolean isValidating() {
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public void setCaught(boolean isCaught) {
 		assert !isCaught;
 	}

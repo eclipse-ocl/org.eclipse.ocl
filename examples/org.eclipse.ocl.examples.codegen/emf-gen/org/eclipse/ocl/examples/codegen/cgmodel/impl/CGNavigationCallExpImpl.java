@@ -19,6 +19,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
 import org.eclipse.ocl.pivot.Property;
 
@@ -110,12 +111,16 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setReferredProperty(CGProperty newReferredProperty) {
+	public void setReferredPropertyGen(CGProperty newReferredProperty) {
 		CGProperty oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldReferredProperty, referredProperty));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldReferredProperty, referredProperty));
+	}
+	@Override
+	public void setReferredProperty(CGProperty newReferredProperty) {
+		setReferredPropertyGen(newReferredProperty);
+		this.asProperty = referredProperty != null ? CGUtil.getAST(referredProperty) : null;
 	}
 
 	/**
@@ -126,19 +131,6 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	@Override
 	public Property getAsProperty() {
 		return asProperty;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setAsProperty(Property newAsProperty) {
-		Property oldAsProperty = asProperty;
-		asProperty = newAsProperty;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldAsProperty, asProperty));
 	}
 
 	/**
@@ -159,9 +151,9 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return getReferredProperty();
-			case 9:
+			case 7:
 				return getAsProperty();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -175,11 +167,8 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				setReferredProperty((CGProperty)newValue);
-				return;
-			case 9:
-				setAsProperty((Property)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -193,11 +182,8 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				setReferredProperty((CGProperty)null);
-				return;
-			case 9:
-				setAsProperty(AS_PROPERTY_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -211,9 +197,9 @@ public abstract class CGNavigationCallExpImpl extends CGSourcedCallExpImpl imple
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return referredProperty != null;
-			case 9:
+			case 7:
 				return AS_PROPERTY_EDEFAULT == null ? asProperty != null : !AS_PROPERTY_EDEFAULT.equals(asProperty);
 		}
 		return super.eIsSet(featureID);

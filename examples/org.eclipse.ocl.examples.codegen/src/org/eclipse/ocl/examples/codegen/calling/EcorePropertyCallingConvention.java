@@ -145,7 +145,6 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 			cgPropertyCallExp = cgExecutorPropertyCallExp;
 		} */
 		cgPropertyCallExp.setReferredProperty(cgProperty);
-		cgPropertyCallExp.setAsProperty(asProperty);
 		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);

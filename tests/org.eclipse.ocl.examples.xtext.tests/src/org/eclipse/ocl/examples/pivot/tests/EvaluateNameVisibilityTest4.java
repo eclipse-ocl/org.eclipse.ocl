@@ -260,20 +260,26 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	}
 
 	@Test public void test_let_implies_let_implies() {
-		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
-		String textQuery =
-				"let bodyConstraint : Constraint = oclType().ownedInvariants?->any(name = 'body')\n" +
-						"in bodyConstraint <> null implies\n" +
-						"let bodySpecification : ValueSpecification = bodyConstraint?.ownedSpecification\n" +
-						"in bodySpecification <> null and\n" +
-						"bodySpecification?.oclIsKindOf(ExpressionInOCL) implies\n" +
-						"true";
-		//	    "CompatibleBody(bodySpecification)";
-		org.eclipse.ocl.pivot.Class testType = standardLibrary.getIntegerType();
-		assert testType.getOwnedInvariants().isEmpty();
-		ocl.assertQueryTrue(-1, textQuery);
-		ocl.dispose();
+	//	FieldingAnalyzer.CATCHES.setState(true);
+		if (PivotTestSuite.useCodeGen) {		// FIXME Bug 581543
+			System.err.println(getTestName() + " - skipped for CG - missing ownedInvariants - see Bug 581543");
+		}
+		else {
+			TestOCL ocl = createOCL();
+			StandardLibrary standardLibrary = ocl.getStandardLibrary();
+			String textQuery =
+					"let bodyConstraint : Constraint = oclType().ownedInvariants?->any(name = 'body')\n" +
+							"in bodyConstraint <> null implies\n" +
+							"let bodySpecification : ValueSpecification = bodyConstraint?.ownedSpecification\n" +
+							"in bodySpecification <> null and\n" +
+							"bodySpecification?.oclIsKindOf(ExpressionInOCL) implies\n" +
+							"true";
+			//	    "CompatibleBody(bodySpecification)";
+			org.eclipse.ocl.pivot.Class testType = standardLibrary.getIntegerType();
+			assert testType.getOwnedInvariants().isEmpty();
+			ocl.assertQueryTrue(-1, textQuery);
+			ocl.dispose();
+		}
 	}
 
 	@Test public void test_no_self() throws ParserException {

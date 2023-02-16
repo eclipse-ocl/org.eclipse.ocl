@@ -61,21 +61,10 @@ public interface CGIterationCallExp extends CGSourcedCallExp {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>As Iteration</em>' attribute.
-	 * @see #setAsIteration(Iteration)
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGIterationCallExp_AsIteration()
 	 * @generated
 	 */
 	Iteration getAsIteration();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGIterationCallExp#getAsIteration <em>As Iteration</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>As Iteration</em>' attribute.
-	 * @see #getAsIteration()
-	 * @generated
-	 */
-	void setAsIteration(Iteration value);
 
 	/**
 	 * Returns the value of the '<em><b>Iterators</b></em>' containment reference list.

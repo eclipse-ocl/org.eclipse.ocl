@@ -102,7 +102,7 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 		Field oldField = field;
 		field = newField;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldField, field));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldField, field));
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				return getField();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -137,7 +137,7 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				setField((Field)newValue);
 				return;
 		}
@@ -152,7 +152,7 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				setField(FIELD_EDEFAULT);
 				return;
 		}
@@ -167,7 +167,7 @@ public class CGNativePropertyCallExpImpl extends CGPropertyCallExpImpl implement
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				return FIELD_EDEFAULT == null ? field != null : !FIELD_EDEFAULT.equals(field);
 		}
 		return super.eIsSet(featureID);

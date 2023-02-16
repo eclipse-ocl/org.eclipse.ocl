@@ -123,7 +123,7 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 		String oldMessage = message;
 		message = newMessage;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldMessage, message));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldMessage, message));
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 		boolean oldSafe = safe;
 		safe = newSafe;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldSafe, safe));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldSafe, safe));
 	}
 
 	/**
@@ -167,9 +167,9 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return getMessage();
-			case 9:
+			case 7:
 				return isSafe();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -183,10 +183,10 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				setMessage((String)newValue);
 				return;
-			case 9:
+			case 7:
 				setSafe((Boolean)newValue);
 				return;
 		}
@@ -201,10 +201,10 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				setMessage(MESSAGE_EDEFAULT);
 				return;
-			case 9:
+			case 7:
 				setSafe(SAFE_EDEFAULT);
 				return;
 		}
@@ -219,9 +219,9 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return MESSAGE_EDEFAULT == null ? message != null : !MESSAGE_EDEFAULT.equals(message);
-			case 9:
+			case 7:
 				return safe != SAFE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
@@ -318,7 +318,7 @@ public class CGGuardExpImpl extends CGSourcedCallExpImpl implements CGGuardExp {
 	 */
 	@Override
 	public boolean isNonInvalid() {
-		return super.isNonInvalid() && (source != null) && source.isRequiredOrNonNull();// XXX && source.isRequired();
+		return super.isNonInvalid() && (source != null) && source.isRequired();
 	}
 
 	/**

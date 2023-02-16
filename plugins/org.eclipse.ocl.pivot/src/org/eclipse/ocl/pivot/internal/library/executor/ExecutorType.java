@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.executor;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -155,7 +156,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public @NonNull List<Constraint> getOwnedInvariants() {
-		throw new UnsupportedOperationException();			// FIXME
+		throw new UnsupportedOperationException();			// FIXME Bug 581543
 	}
 
 	@Override

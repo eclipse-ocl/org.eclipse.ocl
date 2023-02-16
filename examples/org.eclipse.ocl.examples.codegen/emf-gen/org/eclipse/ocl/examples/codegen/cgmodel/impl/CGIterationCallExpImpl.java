@@ -33,6 +33,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cse.AbstractPlace;
 import org.eclipse.ocl.examples.codegen.cse.InnerStackPlace;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -158,12 +159,16 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setReferredIteration(CGOperation newReferredIteration) {
+	public void setReferredIterationGen(CGOperation newReferredIteration) {
 		CGOperation oldReferredIteration = referredIteration;
 		referredIteration = newReferredIteration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldReferredIteration, referredIteration));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldReferredIteration, referredIteration));
+	}
+	@Override
+	public void setReferredIteration(CGOperation newReferredIteration) {
+		setReferredIterationGen(newReferredIteration);
+		this.asIteration = newReferredIteration != null ? (Iteration)CGUtil.getAST(newReferredIteration) : null;
 	}
 
 	/**
@@ -182,23 +187,10 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 	 * @generated
 	 */
 	@Override
-	public void setAsIteration(Iteration newAsIteration) {
-		Iteration oldAsIteration = asIteration;
-		asIteration = newAsIteration;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldAsIteration, asIteration));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	@SuppressWarnings("null")
 	public @NonNull List<CGIterator> getIterators() {
 		if (iterators == null) {
-			iterators = new EObjectContainmentEList<CGIterator>(CGIterator.class, this, 9);
+			iterators = new EObjectContainmentEList<CGIterator>(CGIterator.class, this, 7);
 		}
 		return iterators;
 	}
@@ -222,7 +214,7 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 		CGValuedElement oldBody = body;
 		body = newBody;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldBody, newBody);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 9, oldBody, newBody);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -238,14 +230,14 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 		if (newBody != body) {
 			NotificationChain msgs = null;
 			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
+				msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
 			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (9), null, msgs);
 			msgs = basicSetBody(newBody, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, newBody, newBody));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, newBody, newBody));
 	}
 
 	/**
@@ -256,7 +248,7 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 	@Override
 	public List<CGIterator> getCoIterators() {
 		if (coIterators == null) {
-			coIterators = new EObjectContainmentEList<CGIterator>(CGIterator.class, this, 10);
+			coIterators = new EObjectContainmentEList<CGIterator>(CGIterator.class, this, 8);
 		}
 		return coIterators;
 	}
@@ -288,11 +280,11 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 9:
+			case 7:
 				return ((InternalEList<?>)getIterators()).basicRemove(otherEnd, msgs);
-			case 10:
+			case 8:
 				return ((InternalEList<?>)getCoIterators()).basicRemove(otherEnd, msgs);
-			case 11:
+			case 9:
 				return basicSetBody(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -306,15 +298,15 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return getReferredIteration();
-			case 9:
+			case 7:
 				return getIterators();
-			case 10:
+			case 8:
 				return getCoIterators();
-			case 11:
+			case 9:
 				return getBody();
-			case 12:
+			case 10:
 				return getAsIteration();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -329,22 +321,19 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				setReferredIteration((CGOperation)newValue);
 				return;
-			case 9:
+			case 7:
 				getIterators().clear();
 				getIterators().addAll((Collection<? extends CGIterator>)newValue);
 				return;
-			case 10:
+			case 8:
 				getCoIterators().clear();
 				getCoIterators().addAll((Collection<? extends CGIterator>)newValue);
 				return;
-			case 11:
+			case 9:
 				setBody((CGValuedElement)newValue);
-				return;
-			case 12:
-				setAsIteration((Iteration)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -358,20 +347,17 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				setReferredIteration((CGOperation)null);
 				return;
-			case 9:
+			case 7:
 				getIterators().clear();
 				return;
-			case 10:
+			case 8:
 				getCoIterators().clear();
 				return;
-			case 11:
+			case 9:
 				setBody((CGValuedElement)null);
-				return;
-			case 12:
-				setAsIteration(AS_ITERATION_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -385,15 +371,15 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return referredIteration != null;
-			case 9:
+			case 7:
 				return iterators != null && !iterators.isEmpty();
-			case 10:
+			case 8:
 				return coIterators != null && !coIterators.isEmpty();
-			case 11:
+			case 9:
 				return body != null;
-			case 12:
+			case 10:
 				return AS_ITERATION_EDEFAULT == null ? asIteration != null : !AS_ITERATION_EDEFAULT.equals(asIteration);
 		}
 		return super.eIsSet(featureID);
@@ -463,6 +449,15 @@ public abstract class CGIterationCallExpImpl extends CGSourcedCallExpImpl implem
 	@Override
 	public boolean isNull() {
 		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public boolean isValidating() {
+		return asIteration.isIsValidating();
 	}
 
 } //CGIterationCallExpImpl

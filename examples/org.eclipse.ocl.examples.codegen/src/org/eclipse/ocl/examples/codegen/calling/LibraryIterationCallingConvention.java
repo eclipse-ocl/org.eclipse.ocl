@@ -120,11 +120,7 @@ public class LibraryIterationCallingConvention extends AbstractIterationCallingC
 		CGLibraryIterationCallExp cgIterationCallExp = CGModelFactory.eINSTANCE.createCGLibraryIterationCallExp();
 		cgIterationCallExp.setLibraryIteration(libraryIteration);
 		analyzer.initAst(cgIterationCallExp, asLoopExp, true);
-
-		cgIterationCallExp.setAsIteration(asIteration);
 		cgIterationCallExp.setReferredIteration(cgOperation);
-		cgIterationCallExp.setInvalidating(asIteration.isIsInvalidating());
-		cgIterationCallExp.setValidating(asIteration.isIsValidating());
 		cgIterationCallExp.setSource(cgSafeSource);
 		globalNameManager.addSelfNameManager(cgSafeSource, parentNameManager);										// Source always evaluated in parent context
 		assert cgIterationCallExp.getAst() == asLoopExp;

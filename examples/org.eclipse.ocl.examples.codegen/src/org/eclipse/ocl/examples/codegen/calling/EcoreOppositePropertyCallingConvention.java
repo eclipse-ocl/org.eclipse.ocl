@@ -131,7 +131,6 @@ public class EcoreOppositePropertyCallingConvention extends AbstractPropertyCall
 			cgPropertyCallExp = cgExecutorPropertyCallExp;
 		}
 		cgPropertyCallExp.setReferredProperty(cgProperty);
-		cgPropertyCallExp.setAsProperty(asProperty);
 		cgPropertyCallExp.setAst(asOppositePropertyCallExp);
 		cgPropertyCallExp.setTypeId(analyzer.getCGTypeId(asOppositePropertyCallExp.getTypeId()));
 		cgPropertyCallExp.setRequired(isRequired); // || codeGenerator.isPrimitive(cgPropertyCallExp));

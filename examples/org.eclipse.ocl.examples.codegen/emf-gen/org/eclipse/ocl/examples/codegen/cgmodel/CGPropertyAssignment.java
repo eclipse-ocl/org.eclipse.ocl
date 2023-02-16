@@ -46,21 +46,10 @@ public interface CGPropertyAssignment extends CGValuedElement {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>As Property</em>' attribute.
-	 * @see #setAsProperty(Property)
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGPropertyAssignment_AsProperty()
 	 * @generated
 	 */
 	Property getAsProperty();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment#getAsProperty <em>As Property</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>As Property</em>' attribute.
-	 * @see #getAsProperty()
-	 * @generated
-	 */
-	void setAsProperty(Property value);
 
 	/**
 	 * Returns the value of the '<em><b>Referred Property</b></em>' reference.

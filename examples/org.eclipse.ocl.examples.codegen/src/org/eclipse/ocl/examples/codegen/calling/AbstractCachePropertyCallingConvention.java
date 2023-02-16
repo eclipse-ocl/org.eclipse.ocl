@@ -118,7 +118,6 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 	//	CGTuplePartCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGNaCallExp();
 	//	cgPropertyCallExp.setAstTuplePartId(IdManager.getTuplePartId(asProperty));
 	//	cgPropertyCallExp.setReferredProperty(cgProperty);
-		cgPropertyCallExp.setAsProperty(asProperty);
 		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 	//	cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 	//	cgPropertyCallExp.setSource(cgSource);

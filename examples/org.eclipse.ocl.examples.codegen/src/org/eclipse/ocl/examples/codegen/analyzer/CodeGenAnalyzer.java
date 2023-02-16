@@ -734,7 +734,6 @@ public class CodeGenAnalyzer
 		CGNativePropertyCallExp cgNativePropertyCallExp = CGModelFactory.eINSTANCE.createCGNativePropertyCallExp();
 		cgNativePropertyCallExp.setField(field);		// Use cc
 		cgNativePropertyCallExp.setReferredProperty(cgProperty);
-		cgNativePropertyCallExp.setAsProperty(asProperty);
 		cgNativePropertyCallExp.setRequired(cgProperty.isRequired());
 		cgNativePropertyCallExp.setTypeId(cgProperty.getTypeId());
 	//	callingConvention.createCGNavigationCallExp(this, cgProperty, asProperty.getImplementation(), cgSource, asPropertyCallExp);
@@ -1240,8 +1239,6 @@ public class CodeGenAnalyzer
 		initAst(cgCondition, callExp, TypeId.BOOLEAN, false); // Guard has different type.
 		cgCondition.setSource(cgVariableExp);
 		cgCondition.setArgument(cgNullExpression);
-		cgCondition.setInvalidating(false);
-		cgCondition.setValidating(true);
 		//
 		CGConstantExp cgThenExpression = createCGConstantExp(callExp, getCGNull());
 		//

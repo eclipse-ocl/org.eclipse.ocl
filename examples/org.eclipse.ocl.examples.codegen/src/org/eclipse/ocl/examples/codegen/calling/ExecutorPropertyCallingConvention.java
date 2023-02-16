@@ -80,7 +80,6 @@ public class ExecutorPropertyCallingConvention extends AbstractPropertyCallingCo
 		CGFinalVariable cgVariable = analyzer.useExecutableNameManager(asPropertyCallExp).createCGVariable(cgNativeOperationCallExp);
 		CGExecutorPropertyCallExp cgExecutorPropertyCallExp = CGModelFactory.eINSTANCE.createCGExecutorPropertyCallExp();
 		cgExecutorPropertyCallExp.setReferredProperty(cgProperty);
-		cgExecutorPropertyCallExp.setAsProperty(asProperty);
 		analyzer.initAst(cgExecutorPropertyCallExp, asPropertyCallExp, false);
 		cgExecutorPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgExecutorPropertyCallExp));
 		cgExecutorPropertyCallExp.setSource(cgSource);

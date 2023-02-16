@@ -124,7 +124,6 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGLibraryPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGLibraryPropertyCallExp();
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setLibraryProperty(libraryProperty);
-		cgPropertyCallExp.setAsProperty(asProperty);
 		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
@@ -140,7 +139,6 @@ public class LibraryPropertyCallingConvention extends AbstractPropertyCallingCon
 		CGLibraryPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGLibraryPropertyCallExp();
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setLibraryProperty(libraryProperty);
-		cgPropertyCallExp.setAsProperty(asProperty);
 		analyzer.initAst(cgPropertyCallExp, asProperty, false);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);

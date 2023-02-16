@@ -80,18 +80,12 @@ public class BuiltInOperationCallingConvention extends AbstractUncachedOperation
 			CGIsInvalidExp cgIsInvalidExp = CGModelFactory.eINSTANCE.createCGIsInvalidExp();
 			cgIsInvalidExp.setSource(cgSource);
 			analyzer.initAst(cgIsInvalidExp, asOperationCallExp, true);
-		//	as2cgVisitor.declareLazyName(cgIsInvalidExp);
-			cgIsInvalidExp.setInvalidating(false);
-			cgIsInvalidExp.setValidating(true);
 			return cgIsInvalidExp;
 		}
 		if (libraryOperation instanceof OclAnyOclIsUndefinedOperation) {
 			CGIsUndefinedExp cgIsUndefinedExp = CGModelFactory.eINSTANCE.createCGIsUndefinedExp();
 			cgIsUndefinedExp.setSource(cgSource);
 			analyzer.initAst(cgIsUndefinedExp, asOperationCallExp, true);
-		//	as2cgVisitor.declareLazyName(cgIsUndefinedExp);
-			cgIsUndefinedExp.setInvalidating(false);
-			cgIsUndefinedExp.setValidating(true);
 			return cgIsUndefinedExp;
 		}
 		if (libraryOperation instanceof OclAnyEqualOperation) {
@@ -102,9 +96,6 @@ public class BuiltInOperationCallingConvention extends AbstractUncachedOperation
 			cgIsEqualExp.setSource(cgSource);
 			cgIsEqualExp.setArgument(cgArgument);
 			analyzer.initAst(cgIsEqualExp, asOperationCallExp, true);
-		//	as2cgVisitor.declareLazyName(cgIsEqualExp);
-			cgIsEqualExp.setInvalidating(false);
-			cgIsEqualExp.setValidating(true);
 			return cgIsEqualExp;
 		}
 		throw new IllegalStateException("Unsupported built-in " + libraryOperation);

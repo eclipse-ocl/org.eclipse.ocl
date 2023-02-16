@@ -391,28 +391,6 @@ public interface CGModelPackage extends EPackage {
 	EClass getCGCallExp();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#isInvalidating <em>Invalidating</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Invalidating</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#isInvalidating()
-	 * @see #getCGCallExp()
-	 * @generated
-	 */
-	EAttribute getCGCallExp_Invalidating();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#isValidating <em>Validating</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Validating</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#isValidating()
-	 * @see #getCGCallExp()
-	 * @generated
-	 */
-	EAttribute getCGCallExp_Validating();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp <em>CG Cast Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2898,22 +2876,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CG_CALL_EXP = eINSTANCE.getCGCallExp();
-
-		/**
-		 * The meta object literal for the '<em><b>Invalidating</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CG_CALL_EXP__INVALIDATING = eINSTANCE.getCGCallExp_Invalidating();
-
-		/**
-		 * The meta object literal for the '<em><b>Validating</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute CG_CALL_EXP__VALIDATING = eINSTANCE.getCGCallExp_Validating();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGCastExpImpl <em>CG Cast Exp</em>}' class.

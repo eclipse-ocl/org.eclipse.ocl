@@ -23,6 +23,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.util.CGModelVisitor;
+import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.codegen.utilities.EquivalenceUtil;
 import org.eclipse.ocl.pivot.Property;
 
@@ -136,12 +137,16 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setReferredProperty(CGProperty newReferredProperty) {
+	public void setReferredPropertyGen(CGProperty newReferredProperty) {
 		CGProperty oldReferredProperty = referredProperty;
 		referredProperty = newReferredProperty;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldReferredProperty, referredProperty));
+	}
+	@Override
+	public void setReferredProperty(CGProperty newReferredProperty) {
+		setReferredPropertyGen(newReferredProperty);
+		this.asProperty = newReferredProperty != null ? CGUtil.getAST(newReferredProperty) : null;
 	}
 
 	/**
@@ -152,19 +157,6 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	@Override
 	public Property getAsProperty() {
 		return asProperty;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setAsProperty(Property newAsProperty) {
-		Property oldAsProperty = asProperty;
-		asProperty = newAsProperty;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldAsProperty, asProperty));
 	}
 
 	/**
@@ -310,9 +302,6 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 			case 7:
 				setOwnedSlotValue((CGValuedElement)newValue);
 				return;
-			case 8:
-				setAsProperty((Property)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -333,9 +322,6 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 				return;
 			case 7:
 				setOwnedSlotValue((CGValuedElement)null);
-				return;
-			case 8:
-				setAsProperty(AS_PROPERTY_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -365,7 +351,6 @@ public class CGPropertyAssignmentImpl extends CGValuedElementImpl implements CGP
 	 * {@inheritDoc}
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R accept(@NonNull CGModelVisitor<R> visitor) {
 		return visitor.visitCGPropertyAssignment(this);

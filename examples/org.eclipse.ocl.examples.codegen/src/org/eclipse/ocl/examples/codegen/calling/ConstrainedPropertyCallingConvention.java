@@ -79,7 +79,6 @@ public class ConstrainedPropertyCallingConvention extends AbstractPropertyCallin
 		CGElementId cgPropertyId = analyzer.getCGElementId(asProperty.getPropertyId());
 		analyzer.addReferencedExtraChild(cgPropertyCallExp, cgPropertyId);
 		cgPropertyCallExp.setReferredProperty(cgProperty);
-		cgPropertyCallExp.setAsProperty(asProperty);
 		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
 		cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
 		cgPropertyCallExp.setSource(cgSource);
