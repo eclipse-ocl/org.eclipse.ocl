@@ -91,7 +91,7 @@ public class CGCastExpImpl extends CGSourcedCallExpImpl implements CGCastExp {
 		CGExecutorType oldExecutorType = executorType;
 		executorType = newExecutorType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldExecutorType, executorType));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldExecutorType, executorType));
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class CGCastExpImpl extends CGSourcedCallExpImpl implements CGCastExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return getExecutorType();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -116,7 +116,7 @@ public class CGCastExpImpl extends CGSourcedCallExpImpl implements CGCastExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				setExecutorType((CGExecutorType)newValue);
 				return;
 		}
@@ -131,7 +131,7 @@ public class CGCastExpImpl extends CGSourcedCallExpImpl implements CGCastExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				setExecutorType((CGExecutorType)null);
 				return;
 		}
@@ -146,7 +146,7 @@ public class CGCastExpImpl extends CGSourcedCallExpImpl implements CGCastExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return executorType != null;
 		}
 		return super.eIsSet(featureID);

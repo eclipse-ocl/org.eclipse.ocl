@@ -58,20 +58,9 @@ public interface CGNavigationCallExp extends CGSourcedCallExp {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>As Property</em>' attribute.
-	 * @see #setAsProperty(Property)
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGNavigationCallExp_AsProperty()
 	 * @generated
 	 */
 	Property getAsProperty();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp#getAsProperty <em>As Property</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>As Property</em>' attribute.
-	 * @see #getAsProperty()
-	 * @generated
-	 */
-	void setAsProperty(Property value);
 
 } // CGNavigationCallExp

@@ -79,11 +79,6 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 		assert !(cgChild instanceof CGVariableExp) : "must catch variable not its access";
 		boolean mayBeInvalid = !cgChild.isNonInvalid();
 		if (mayBeInvalid) {
-			String s = cgChild.toString();			// XXX
-			if  (s.contains("d4qvtrExpression")) {
-				getClass();		// XXX
-			}
-			mayBeInvalid = !cgChild.isNonInvalid();
 			CGCatchExp cgCatchExp = CGModelFactory.eINSTANCE.createCGCatchExp();
 			cgCatchExp.setCaught(true);
 			globalNameManager.wrap(cgCatchExp, cgChild);
@@ -123,12 +118,21 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 			getClass();		// XXX
 		}
 		ReturnState returnState = cgElement.accept(this);
+		if (FieldingAnalyzer.CATCHES.isActive()) {
+			FieldingAnalyzer.CATCHES.println(this + ": " + returnState + " <= " + cgElement);
+		}
 		if ((cgElement instanceof CGValuedElement) && (cgElement.eContainer() == oldEContainer)) {	// skip if already wrapped
 			CGValuedElement cgValuedElement = (CGValuedElement)cgElement;
 			boolean mayBeInvalid = !cgValuedElement.isNonInvalid();
+			if (FieldingAnalyzer.CATCHES.isActive()) {
+				FieldingAnalyzer.CATCHES.println("mayBeInvalid = " + mayBeInvalid);
+			}
 			if (mayBeInvalid) {
 				if (requiredReturn == ReturnState.IS_CAUGHT) {
 					if (!returnState.isSuitableFor(ReturnState.IS_CAUGHT)) {
+						if (FieldingAnalyzer.CATCHES.isActive()) {
+							FieldingAnalyzer.CATCHES.println("insertCatch");
+						}
 						insertCatch(cgValuedElement);
 					//	cgValuedElement.setCaught(true);
 						return ReturnState.IS_CAUGHT;
@@ -136,6 +140,9 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 				}
 				else if (requiredReturn == ReturnState.IS_THROWN) {
 					if (!returnState.isSuitableFor(ReturnState.IS_THROWN)) {
+						if (FieldingAnalyzer.CATCHES.isActive()) {
+							FieldingAnalyzer.CATCHES.println("insertThrow");
+						}
 						insertThrow(cgValuedElement);
 					//	cgValuedElement.setCaught(false);
 						return ReturnState.IS_THROWN;

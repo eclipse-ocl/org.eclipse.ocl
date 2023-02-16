@@ -97,7 +97,7 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 		CGValuedElement oldIndex = index;
 		index = newIndex;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldIndex, newIndex);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 6, oldIndex, newIndex);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -113,14 +113,14 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 		if (newIndex != index) {
 			NotificationChain msgs = null;
 			if (index != null)
-				msgs = ((InternalEObject)index).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
+				msgs = ((InternalEObject)index).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			if (newIndex != null)
-				msgs = ((InternalEObject)newIndex).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
+				msgs = ((InternalEObject)newIndex).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (6), null, msgs);
 			msgs = basicSetIndex(newIndex, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, newIndex, newIndex));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newIndex, newIndex));
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return basicSetIndex(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -145,7 +145,7 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return getIndex();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -159,7 +159,7 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				setIndex((CGValuedElement)newValue);
 				return;
 		}
@@ -174,7 +174,7 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				setIndex((CGValuedElement)null);
 				return;
 		}
@@ -189,7 +189,7 @@ public class CGIndexExpImpl extends CGSourcedCallExpImpl implements CGIndexExp {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 8:
+			case 6:
 				return index != null;
 		}
 		return super.eIsSet(featureID);

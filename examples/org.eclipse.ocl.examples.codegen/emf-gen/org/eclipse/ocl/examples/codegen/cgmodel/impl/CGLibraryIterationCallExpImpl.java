@@ -101,7 +101,7 @@ public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implem
 		LibraryIteration oldLibraryIteration = libraryIteration;
 		libraryIteration = newLibraryIteration;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldLibraryIteration, libraryIteration));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldLibraryIteration, libraryIteration));
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 13:
+			case 11:
 				return getLibraryIteration();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -136,7 +136,7 @@ public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 13:
+			case 11:
 				setLibraryIteration((LibraryIteration)newValue);
 				return;
 		}
@@ -151,7 +151,7 @@ public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 13:
+			case 11:
 				setLibraryIteration(LIBRARY_ITERATION_EDEFAULT);
 				return;
 		}
@@ -166,7 +166,7 @@ public class CGLibraryIterationCallExpImpl extends CGIterationCallExpImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 13:
+			case 11:
 				return LIBRARY_ITERATION_EDEFAULT == null ? libraryIteration != null : !LIBRARY_ITERATION_EDEFAULT.equals(libraryIteration);
 		}
 		return super.eIsSet(featureID);

@@ -92,7 +92,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 		CGValuedElement oldCgArgument = cgArgument;
 		cgArgument = newCgArgument;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 10, oldCgArgument, newCgArgument);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldCgArgument, newCgArgument);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -108,14 +108,14 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 		if (newCgArgument != cgArgument) {
 			NotificationChain msgs = null;
 			if (cgArgument != null)
-				msgs = ((InternalEObject)cgArgument).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
+				msgs = ((InternalEObject)cgArgument).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			if (newCgArgument != null)
-				msgs = ((InternalEObject)newCgArgument).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (10), null, msgs);
+				msgs = ((InternalEObject)newCgArgument).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 			msgs = basicSetCgArgument(newCgArgument, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, newCgArgument, newCgArgument));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newCgArgument, newCgArgument));
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				return basicSetCgArgument(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -140,7 +140,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				return getCgArgument();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -154,7 +154,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				setCgArgument((CGValuedElement)newValue);
 				return;
 		}
@@ -169,7 +169,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				setCgArgument((CGValuedElement)null);
 				return;
 		}
@@ -184,7 +184,7 @@ public class CGExecutorPropertyCallExpImpl extends CGPropertyCallExpImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				return cgArgument != null;
 		}
 		return super.eIsSet(featureID);

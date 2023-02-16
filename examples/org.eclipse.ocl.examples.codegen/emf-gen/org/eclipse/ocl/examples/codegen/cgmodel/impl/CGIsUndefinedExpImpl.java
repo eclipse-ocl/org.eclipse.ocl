@@ -213,6 +213,15 @@ public class CGIsUndefinedExpImpl extends CGSourcedCallExpImpl implements CGIsUn
 	 * @generated
 	 */
 	@Override
+	public boolean isValidating() {
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public void setCaught(boolean isCaught) {
 		assert !isCaught;
 	}

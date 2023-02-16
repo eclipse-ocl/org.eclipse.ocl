@@ -567,18 +567,8 @@ public abstract class AbstractOperationCallingConvention extends AbstractCalling
 
 	protected void initCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGOperationCallExp cgOperationCallExp, @NonNull OperationCallExp asOperationCallExp,
 			@NonNull CGOperation cgOperation, boolean isRequired) {		// XXX wip eliminate isRequired
-		Operation asOperation = PivotUtil.getReferredOperation(asOperationCallExp);
-	//	boolean isRequired2 = asOperation.isIsRequired();
-	//	Boolean ecoreIsRequired = as2cgVisitor.getCodeGenerator().isNonNull(asOperationCallExp);
-	//	if (ecoreIsRequired != null) {
-	//		isRequired2 = ecoreIsRequired;
-	//	}
-	//	assert isRequired == isRequired2;
-		cgOperationCallExp.setAsOperation(asOperation);
 		analyzer.initAst(cgOperationCallExp, asOperationCallExp, true);
 		cgOperationCallExp.setReferredOperation(cgOperation);
-		cgOperationCallExp.setInvalidating(asOperation.isIsInvalidating());
-		cgOperationCallExp.setValidating(asOperation.isIsValidating());
 	}
 
 	@Override

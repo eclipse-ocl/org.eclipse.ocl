@@ -417,7 +417,6 @@ public class ExecutableNameManager extends NestedNameManager
 		}
 		executorInit.getArguments().add(contextParameter);
 		executorInit.setRequired(true);
-		executorInit.setInvalidating(false);
 		CGVariable executorVariable = analyzer.createCGFinalVariable(nameResolution, cgTypeId, true);
 		executorVariable.setInit(executorInit);
 		executorVariable.setNonInvalid();
@@ -432,7 +431,6 @@ public class ExecutableNameManager extends NestedNameManager
 		idResolverInit.setTypeId(cgTypeId);
 		idResolverInit.setCgThis(analyzer.createCGVariableExp(lazyGetExecutorVariable()));
 		idResolverInit.setRequired(true);
-		idResolverInit.setInvalidating(false);
 		CGVariable idResolverVariable = analyzer.createCGFinalVariable(idResolverNameResolution, cgTypeId, true);
 		idResolverVariable.setInit(idResolverInit);
 		idResolverVariable.setNonInvalid();
@@ -447,7 +445,6 @@ public class ExecutableNameManager extends NestedNameManager
 		modelManagerInit.setTypeId(cgTypeId);
 		modelManagerInit.setCgThis(analyzer.createCGVariableExp(lazyGetExecutorVariable()));
 		modelManagerInit.setRequired(true);
-		modelManagerInit.setInvalidating(false);
 		CGVariable modelManagerVariable = analyzer.createCGFinalVariable(modelManagerNameResolution, cgTypeId, true);
 		modelManagerVariable.setInit(modelManagerInit);
 		modelManagerVariable.setNonInvalid();
@@ -491,7 +488,6 @@ public class ExecutableNameManager extends NestedNameManager
 		standardLibraryInit.setTypeId(cgTypeId);
 		standardLibraryInit.setCgThis(analyzer.createCGVariableExp(lazyGetExecutorVariable()));
 		standardLibraryInit.setRequired(true);
-		standardLibraryInit.setInvalidating(false);
 		CGVariable standardLibraryVariable = analyzer.createCGFinalVariable(nameResolution, cgTypeId, true);
 		standardLibraryVariable.setInit(standardLibraryInit);
 		standardLibraryVariable.setNonInvalid();

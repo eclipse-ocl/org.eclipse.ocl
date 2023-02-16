@@ -72,21 +72,10 @@ public interface CGOperationCallExp extends CGCallExp {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>As Operation</em>' attribute.
-	 * @see #setAsOperation(Operation)
 	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGOperationCallExp_AsOperation()
 	 * @generated
 	 */
 	Operation getAsOperation();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp#getAsOperation <em>As Operation</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>As Operation</em>' attribute.
-	 * @see #getAsOperation()
-	 * @generated
-	 */
-	void setAsOperation(Operation value);
 
 	default CGValuedElement getCgThis() { return null; }
 } // CGOperationCallExp

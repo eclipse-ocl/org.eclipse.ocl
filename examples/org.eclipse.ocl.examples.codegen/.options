@@ -17,6 +17,8 @@ org.eclipse.ocl.examples.codegen/cse/rewrite=false
 org.eclipse.ocl.examples.codegen/classPath=false
 # Turn on tracing of the explicit compilations 
 org.eclipse.ocl.examples.codegen/compiles=false
+# Turn on tracing of the fielding analysis catch insertion
+org.eclipse.ocl.examples.codegen/fielding/catch=false
 
 # Turn on production of comments identifying the calling convention 
 org.eclipse.ocl.examples.codegen/java/callingConventionComments=false

@@ -14,11 +14,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.CodeGenConstants;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 /**
  * A FieldingAnalyzer identifies the necessary catches and throws to accommodate the alternative mechanisms
@@ -84,6 +86,8 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
  */
 public class FieldingAnalyzer
 {
+	public static final @NonNull TracingOption CATCHES = new TracingOption(CodeGenConstants.PLUGIN_ID, "fielding/catch");
+
 	public enum ReturnState {
 		IS_CAUGHT,			// Any invalid value is returned by value as an InvalidValueException
 		IS_THROWN,			// Any invalid value is returned by throwing an InvalidValueException

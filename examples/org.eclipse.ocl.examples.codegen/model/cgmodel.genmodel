@@ -67,10 +67,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGCallable/parameters"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGCallable/body"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="cgmodel.ecore#//CGCallExp">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGCallExp/invalidating"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute cgmodel.ecore#//CGCallExp/validating"/>
-    </genClasses>
+    <genClasses image="false" ecoreClass="cgmodel.ecore#//CGCallExp"/>
     <genClasses ecoreClass="cgmodel.ecore#//CGCastExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGCastExp/executorType"/>
     </genClasses>

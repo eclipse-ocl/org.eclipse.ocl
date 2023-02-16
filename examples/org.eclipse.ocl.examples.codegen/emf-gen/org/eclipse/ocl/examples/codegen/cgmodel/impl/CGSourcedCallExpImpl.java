@@ -98,7 +98,7 @@ public abstract class CGSourcedCallExpImpl extends CGCallExpImpl implements CGSo
 		CGValuedElement oldSource = source;
 		source = newSource;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldSource, newSource);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldSource, newSource);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -114,14 +114,14 @@ public abstract class CGSourcedCallExpImpl extends CGCallExpImpl implements CGSo
 		if (newSource != source) {
 			NotificationChain msgs = null;
 			if (source != null)
-				msgs = ((InternalEObject)source).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)source).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			if (newSource != null)
-				msgs = ((InternalEObject)newSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+				msgs = ((InternalEObject)newSource).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
 			msgs = basicSetSource(newSource, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newSource, newSource));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, newSource, newSource));
 	}
 
 	/**
@@ -132,7 +132,7 @@ public abstract class CGSourcedCallExpImpl extends CGCallExpImpl implements CGSo
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 7:
+			case 5:
 				return basicSetSource(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -146,7 +146,7 @@ public abstract class CGSourcedCallExpImpl extends CGCallExpImpl implements CGSo
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 7:
+			case 5:
 				return getSource();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -160,7 +160,7 @@ public abstract class CGSourcedCallExpImpl extends CGCallExpImpl implements CGSo
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 7:
+			case 5:
 				setSource((CGValuedElement)newValue);
 				return;
 		}
@@ -175,7 +175,7 @@ public abstract class CGSourcedCallExpImpl extends CGCallExpImpl implements CGSo
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 7:
+			case 5:
 				setSource((CGValuedElement)null);
 				return;
 		}
@@ -190,7 +190,7 @@ public abstract class CGSourcedCallExpImpl extends CGCallExpImpl implements CGSo
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 7:
+			case 5:
 				return source != null;
 		}
 		return super.eIsSet(featureID);

@@ -158,7 +158,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		Method oldMethod = method;
 		method = newMethod;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldMethod, method));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldMethod, method));
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		boolean oldValueIsBoxed = valueIsBoxed;
 		valueIsBoxed = newValueIsBoxed;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldValueIsBoxed, valueIsBoxed));
+			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldValueIsBoxed, valueIsBoxed));
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		boolean oldValueIsEcore = valueIsEcore;
 		valueIsEcore = newValueIsEcore;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldValueIsEcore, valueIsEcore));
+			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldValueIsEcore, valueIsEcore));
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		CGValuedElement oldCgThis = cgThis;
 		cgThis = newCgThis;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 13, oldCgThis, newCgThis);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 11, oldCgThis, newCgThis);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -242,14 +242,14 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 		if (newCgThis != cgThis) {
 			NotificationChain msgs = null;
 			if (cgThis != null)
-				msgs = ((InternalEObject)cgThis).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (13), null, msgs);
+				msgs = ((InternalEObject)cgThis).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			if (newCgThis != null)
-				msgs = ((InternalEObject)newCgThis).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (13), null, msgs);
+				msgs = ((InternalEObject)newCgThis).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (11), null, msgs);
 			msgs = basicSetCgThis(newCgThis, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 13, newCgThis, newCgThis));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, newCgThis, newCgThis));
 	}
 
 	/**
@@ -260,7 +260,7 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case 13:
+			case 11:
 				return basicSetCgThis(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -284,13 +284,13 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				return getMethod();
-			case 11:
+			case 9:
 				return isValueIsBoxed();
-			case 12:
+			case 10:
 				return isValueIsEcore();
-			case 13:
+			case 11:
 				return getCgThis();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -304,16 +304,16 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				setMethod((Method)newValue);
 				return;
-			case 11:
+			case 9:
 				setValueIsBoxed((Boolean)newValue);
 				return;
-			case 12:
+			case 10:
 				setValueIsEcore((Boolean)newValue);
 				return;
-			case 13:
+			case 11:
 				setCgThis((CGValuedElement)newValue);
 				return;
 		}
@@ -328,16 +328,16 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				setMethod(METHOD_EDEFAULT);
 				return;
-			case 11:
+			case 9:
 				setValueIsBoxed(VALUE_IS_BOXED_EDEFAULT);
 				return;
-			case 12:
+			case 10:
 				setValueIsEcore(VALUE_IS_ECORE_EDEFAULT);
 				return;
-			case 13:
+			case 11:
 				setCgThis((CGValuedElement)null);
 				return;
 		}
@@ -352,13 +352,13 @@ public class CGNativeOperationCallExpImpl extends CGOperationCallExpImpl impleme
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				return METHOD_EDEFAULT == null ? method != null : !METHOD_EDEFAULT.equals(method);
-			case 11:
+			case 9:
 				return valueIsBoxed != VALUE_IS_BOXED_EDEFAULT;
-			case 12:
+			case 10:
 				return valueIsEcore != VALUE_IS_ECORE_EDEFAULT;
-			case 13:
+			case 11:
 				return cgThis != null;
 		}
 		return super.eIsSet(featureID);

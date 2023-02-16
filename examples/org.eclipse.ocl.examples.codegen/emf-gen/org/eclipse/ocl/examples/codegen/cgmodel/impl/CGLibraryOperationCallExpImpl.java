@@ -107,7 +107,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 		LibraryOperation oldLibraryOperation = libraryOperation;
 		libraryOperation = newLibraryOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldLibraryOperation, libraryOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldLibraryOperation, libraryOperation));
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				return getLibraryOperation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -142,7 +142,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				setLibraryOperation((LibraryOperation)newValue);
 				return;
 		}
@@ -157,7 +157,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				setLibraryOperation(LIBRARY_OPERATION_EDEFAULT);
 				return;
 		}
@@ -172,7 +172,7 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case 10:
+			case 8:
 				return LIBRARY_OPERATION_EDEFAULT == null ? libraryOperation != null : !LIBRARY_OPERATION_EDEFAULT.equals(libraryOperation);
 		}
 		return super.eIsSet(featureID);
@@ -220,9 +220,10 @@ public class CGLibraryOperationCallExpImpl extends CGOperationCallExpImpl implem
 	 */
 	@Override
 	public boolean isNonInvalid() {			// XXX more cases e.g.invalidValue
-		if (asOperation == null) {
-			return false;
-		}
+		assert asOperation != null;
+	//	if (asOperation == null) {
+	//		return false;
+	//	}
 		List<@NonNull CGParameter> cgParameters = CGUtil.getParametersList(CGUtil.getReferredOperation(this));
 		List<@NonNull CGValuedElement> cgArguments = CGUtil.getArgumentsList(this);
 		int iMax = cgArguments.size();

@@ -15,13 +15,6 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
  * A representation of the model object '<em><b>CG Call Exp</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#isInvalidating <em>Invalidating</em>}</li>
- *   <li>{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#isValidating <em>Validating</em>}</li>
- * </ul>
  *
  * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGCallExp()
  * @generated
@@ -29,64 +22,10 @@ package org.eclipse.ocl.examples.codegen.cgmodel;
 public interface CGCallExp extends CGValuedElement {
 
 	/**
-	 * Returns the value of the '<em><b>Invalidating</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Invalidating</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Whether this call expression may return an invalid result for non-invalid (or invalid if also validating) inputs.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Invalidating</em>' attribute.
-	 * @see #setInvalidating(boolean)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGCallExp_Invalidating()
+	 * Return true if this call may be valid even though an input is invalid; e.g. oclIsInvalid()
+	 *
 	 * @generated
 	 */
-	boolean isInvalidating();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#isInvalidating <em>Invalidating</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Invalidating</em>' attribute.
-	 * @see #isInvalidating()
-	 * @generated
-	 */
-	void setInvalidating(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Validating</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Validating</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Whether this call expression may return a non-invalid result for invalid inputs.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Validating</em>' attribute.
-	 * @see #setValidating(boolean)
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGModelPackage#getCGCallExp_Validating()
-	 * @generated
-	 */
+	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Inv$22
 	boolean isValidating();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp#isValidating <em>Validating</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Validating</em>' attribute.
-	 * @see #isValidating()
-	 * @generated
-	 */
-	void setValidating(boolean value);
-
-//	@NonNull OperationCallingConvention getCallingConvention();
-
-//	void setCallingConvention(@NonNull OperationCallingConvention callingConvention);
 } // CGCallExp
