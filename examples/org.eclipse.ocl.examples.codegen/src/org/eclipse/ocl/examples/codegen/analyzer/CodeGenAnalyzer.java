@@ -445,7 +445,7 @@ public class CodeGenAnalyzer
 		}
 		//
 		FieldingAnalyzer fieldingAnalyzer = codeGenerator.createFieldingAnalyzer();
-		fieldingAnalyzer.analyze(cgPackages, false);
+		fieldingAnalyzer.analyze(cgPackages);
 		assert checkNameManagers(cgPackages);
 	}
 
