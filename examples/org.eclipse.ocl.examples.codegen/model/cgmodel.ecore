@@ -629,7 +629,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSlotValue" lowerBound="1"
         eType="#//CGValuedElement" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="asProperty" lowerBound="1"
-        eType="#//Property"/>
+        eType="#//Property" changeable="false" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CGPropertyCallExp" abstract="true" eSuperTypes="#//CGNavigationCallExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="CGReal" eSuperTypes="#//CGNumber">
