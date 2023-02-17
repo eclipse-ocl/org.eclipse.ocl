@@ -10,11 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.analyzer;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGVariable;
 
 /**
  * A FieldingAnalyzer identifies the necessary catches and throws to accommodate the alternative mechanisms
@@ -107,6 +111,16 @@ public class FieldingAnalyzer
 	protected final @NonNull CodeGenAnalyzer analyzer;
 
 	/**
+	 * The isValidating ensures that variable accesses notify their source let-variables that they need to catch invalid.
+	 */
+	private final @NonNull FieldingValidationVisitor isValidating;
+
+	/**
+	 * The notValidating allows source let-variables to be uncaught.
+	 */
+	private final @NonNull FieldingValidationVisitor notValidating;
+
+	/**
 	 * The MayBeThrown enforces the container's requirement that an invalid received value
 	 * may be thrown but may also be caught, so no wrapping is required.
 	 */
@@ -125,14 +139,29 @@ public class FieldingAnalyzer
 	 */
 	private final @NonNull FieldingAnalysisVisitor mustBeThrown;
 
+	/**
+	 * All variables that are transitively consumed by an isValidating operation. This includes
+	 * paramters and other variables that cannot actually be invalid.
+	 */
+	private final @NonNull Set<@NonNull CGVariable> validatedVariables = new HashSet<>();
+
 	public FieldingAnalyzer(@NonNull CodeGenAnalyzer analyzer) {
 		this.analyzer = analyzer;
+		this.isValidating = createValidatedVisitor(true);
+		this.notValidating = createValidatedVisitor(false);
 		this.mayBeThrown = createAnalysisVisitor(ReturnState.MAYBE_THROWN);
 		this.mustBeCaught = createAnalysisVisitor(ReturnState.IS_CAUGHT);
 		this.mustBeThrown = createAnalysisVisitor(ReturnState.IS_THROWN);
 	}
 
-	public void analyze(@NonNull Iterable<@NonNull CGPackage> cgPackages, boolean requiredReturn) {		// XXX rationalize parameter
+	public void addValidated(@NonNull CGVariable cgVariable) {
+		validatedVariables.add(cgVariable);
+	}
+
+	public void analyze(@NonNull Iterable<@NonNull CGPackage> cgPackages) {
+		for (@NonNull CGPackage cgPackage : cgPackages) {
+			notValidating.visit(cgPackage);
+		}
 		for (@NonNull CGPackage cgPackage : cgPackages) {
 			mustBeThrown.visit(cgPackage);
 		}
@@ -149,6 +178,10 @@ public class FieldingAnalyzer
 		cgCatchExp.setTypeId(cgValuedElement.getTypeId());
 		cgCatchExp.setCaught(true);
 		return cgCatchExp;
+	}
+
+	protected @NonNull FieldingValidationVisitor createValidatedVisitor(boolean isValidating) {
+		return new FieldingValidationVisitor(this, isValidating);
 	}
 
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
@@ -179,6 +212,10 @@ public class FieldingAnalyzer
 		return cgCaughtVariable;
 	} */
 
+	public @NonNull FieldingValidationVisitor getIsValidatingVisitor() {
+		return isValidating;
+	}
+
 	public @NonNull FieldingAnalysisVisitor getMayBeThrownVisitor() {
 		return mayBeThrown;
 	}
@@ -189,6 +226,14 @@ public class FieldingAnalyzer
 
 	public @NonNull FieldingAnalysisVisitor getMustBeThrownVisitor() {
 		return mustBeThrown;
+	}
+
+	public @NonNull FieldingValidationVisitor getNotValidatingVisitor() {
+		return notValidating;
+	}
+
+	public boolean isValidated(@NonNull CGVariable cgVariable) {
+		return validatedVariables.contains(cgVariable);
 	}
 
 /*	protected boolean isValidating(EObject eObject) {

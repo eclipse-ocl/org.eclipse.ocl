@@ -259,8 +259,16 @@ public class FieldingAnalysisVisitor extends AbstractExtendingCGModelVisitor<@No
 
 	@Override
 	public @NonNull ReturnState visitCGLetExp(@NonNull CGLetExp cgLetExp) {
+		FieldingAnalysisVisitor initVisitor;
 		CGVariable cgVariable = CGUtil.getInit(cgLetExp);
-		ReturnState initReturnState = context.getMustBeCaughtVisitor().visit(CGUtil.getInit(cgVariable));		// XXX let will have to be caught anyway. Optimize the 99.9% invalid never used case.
+		boolean needsCatching = context.isValidated(cgVariable) && !cgVariable.isNonInvalid();
+		if (needsCatching) {
+			initVisitor = context.getMustBeCaughtVisitor();
+		}
+		else {
+			initVisitor = this;
+		}
+		ReturnState initReturnState = initVisitor.visit(CGUtil.getInit(cgVariable));
 		cgVariable.setCaught(initReturnState.isCaught());
 		ReturnState inReturnState = visit(CGUtil.getIn(cgLetExp));
 		cgLetExp.setCaught(inReturnState.isCaught());
