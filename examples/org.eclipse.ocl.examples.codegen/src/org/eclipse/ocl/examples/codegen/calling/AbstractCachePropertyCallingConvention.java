@@ -12,10 +12,12 @@ package org.eclipse.ocl.examples.codegen.calling;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
@@ -101,32 +103,31 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 			js.append(";\n");
 			return true;
 		}
+
+		@Override
+		public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGPropertyAssignment cgPropertyAssignment) {
+			boxingAnalyzer.rewriteAsBoxed(cgPropertyAssignment.getOwnedInitValue());
+			super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgPropertyAssignment);
+		}
 	}
 
 	@Override
 	public @NonNull CGValuedElement createCGNavigationCallExp(@NonNull CodeGenAnalyzer analyzer, @NonNull CGProperty cgProperty,
 			@NonNull LibraryProperty libraryProperty, @Nullable CGValuedElement cgSource, @NonNull NavigationCallExp asPropertyCallExp) {
-	//	CodeGenerator codeGenerator = as2cgVisitor.getCodeGenerator();
-		Property asProperty = CGUtil.getAST(cgProperty);
-	//	boolean isRequired = asProperty.isIsRequired();
-	//	assert libraryProperty instanceof CacheProperty;
 		CGPropertyCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGLibraryPropertyCallExp();
 		cgPropertyCallExp.setSource(cgSource);
 		cgPropertyCallExp.setReferredProperty(cgProperty);
 		cgPropertyCallExp.setTypeId(cgProperty.getTypeId());
 		cgPropertyCallExp.setRequired(cgProperty.isRequired());
-	//	CGTuplePartCallExp cgPropertyCallExp = CGModelFactory.eINSTANCE.createCGNaCallExp();
-	//	cgPropertyCallExp.setAstTuplePartId(IdManager.getTuplePartId(asProperty));
-	//	cgPropertyCallExp.setReferredProperty(cgProperty);
 		analyzer.initAst(cgPropertyCallExp, asPropertyCallExp, true);
-	//	cgPropertyCallExp.setRequired(isRequired || codeGenerator.isPrimitive(cgPropertyCallExp));
-	//	cgPropertyCallExp.setSource(cgSource);
 		return cgPropertyCallExp;
 	}
 
 	@Override
-	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor,
-			@NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue) {
+	public boolean generateJavaAssignment(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGPropertyAssignment cgPropertyAssignment) {
+		CGProperty cgProperty = CGUtil.getReferredProperty(cgPropertyAssignment);
+		CGValuedElement slotValue = CGUtil.getOwnedSlotValue(cgPropertyAssignment);
+		CGValuedElement initValue = CGUtil.getOwnedInitValue(cgPropertyAssignment);
 		assert !initValue.isInvalid();
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		js.appendValueName(slotValue);			// Always "this"
@@ -141,17 +142,22 @@ public abstract class AbstractCachePropertyCallingConvention extends AbstractPro
 	@Override
 	public boolean generateJavaCall(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGNavigationCallExp cgPropertyCallExp) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
-	//	js.appendDeclaration(cgPropertyCallExp);
-	//	js.append(" = ");
 		js.appendValueName(cgPropertyCallExp.getSource());			// Always "this"
 		js.append(".");
 		js.appendReferenceTo(cgPropertyCallExp.getReferredProperty());
-	//	js.append(";\n");
 		return true;
 	}
 
 	@Override
 	public boolean isInlined() {
 		return true;
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(
+			@NonNull BoxingAnalyzer boxingAnalyzer,
+			@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		// TODO Auto-generated method stub
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgPropertyAssignment);
 	}
 }

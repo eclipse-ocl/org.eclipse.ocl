@@ -419,15 +419,6 @@ public interface CGModelFactory extends EFactory {
 	@NonNull CGEcoreClassShadowExp createCGEcoreClassShadowExp();
 
 	/**
-	 * Returns a new object of class '<em>CG Ecore Container Assignment</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>CG Ecore Container Assignment</em>'.
-	 * @generated
-	 */
-	@NonNull CGEcoreContainerAssignment createCGEcoreContainerAssignment();
-
-	/**
 	 * Returns a new object of class '<em>CG Ecore Property Assignment</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

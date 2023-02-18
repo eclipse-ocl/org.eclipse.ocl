@@ -46,7 +46,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
-import org.eclipse.ocl.pivot.utilities.PivotHelper;
 
 /**
  *  ImplementedOperationCallingConvention defines the support for the call of an operation implemented by a Java class.
@@ -78,7 +77,7 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 			List<@NonNull CGProperty> cgProperties = CGUtil.getPropertiesList(cgEntryClass);
 			ExecutableNameManager operationNameManager = analyzer.getOperationNameManager(cgConstructor, asOperation, asOrigin);
 			//
-			PivotHelper asHelper = analyzer.getASHelper();
+		//	PivotHelper asHelper = analyzer.getASHelper();
 			CGParameter cgEntryBoxedValuesParameter = operationNameManager.getBoxedValuesParameter();
 			CGTypeId cgTypeId = analyzer.getCGTypeId(TypeId.OCL_VOID);
 			CGParameter cgThisParameter = operationNameManager.getThisParameter();
@@ -105,7 +104,9 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 					cgProperty.getNameResolution().addCGElement(cgLetVariable);
 					cgLetVariables.push(cgLetVariable);
 					cgInitValue = analyzer.createCGVariableExp(cgLetVariable);
-					cgSourceAndArguments.add(analyzer.createCGVariableExp(cgLetVariable));
+			//		if (i > 0) {				// Skip self ?? conditionalize on static
+						cgSourceAndArguments.add(analyzer.createCGVariableExp(cgLetVariable));
+			//		}
 				}
 				else {
 					//
@@ -192,27 +193,38 @@ public class ImplementedOperationCallingConvention extends ExternalOperationCall
 		//	LibraryFeature asImplementation = asOrigin.getImplementation();
 			LibraryOperation asImplementation = (LibraryOperation)operationNameManager.getCodeGenerator().getEnvironmentFactory().getMetamodelManager().getImplementation(asOrigin);
 			Method method = null;
-		//	boolean hasExecutor = false;
+			boolean hasExecutor = false;
 			boolean hasTypeId = false;
-		/*	if (asImplementation instanceof AbstractOperation) {
+			int hasSelfThenArgs = 0;
+			if (asImplementation instanceof AbstractOperation) {
 				method = ((AbstractOperation)asImplementation).getEvaluateMethod(asOrigin);
 				for (Class<?> jParameterType : method.getParameterTypes()) {
 					if (jParameterType == Executor.class) {
-				//		hasExecutor = true;
+						assert !hasExecutor;
+						assert !hasTypeId;
+						assert hasSelfThenArgs == 0;
+						hasExecutor = true;
 					}
 					else if (jParameterType == TypeId.class) {
+						assert hasExecutor;
+						assert !hasTypeId;
+						assert hasSelfThenArgs == 0;
 						hasTypeId = true;
 					}
+					else {
+						hasSelfThenArgs++;
+					}
 				}
-			} */
-			if (hasTypeId) {
-			//	assert hasExecutor;
+			}
+			assert hasSelfThenArgs == (asOrigin.isIsStatic() ? 0 : 1) + asOrigin.getOwnedParameters().size();
+		/*	if (hasTypeId) {
+				assert hasExecutor;
 				return CG_PARAMETER_STYLES_THIS_TYPE_ID_BOXED_VALUES;
 			}
 		//	else if (hasExecutor) {
 		//		return CG_PARAMETER_STYLES_THIS_EXECUTOR_BOXED_VALUES;
 		//	}
-			else {
+			else*/ {
 				return CG_PARAMETER_STYLES_THIS_BOXED_VALUES;
 			}
 		}

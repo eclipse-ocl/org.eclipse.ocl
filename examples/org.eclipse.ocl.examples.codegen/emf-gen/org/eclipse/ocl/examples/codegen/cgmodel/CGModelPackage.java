@@ -1064,27 +1064,6 @@ public interface CGModelPackage extends EPackage {
 	EReference getCGEcoreClassShadowExp_EClass();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment <em>CG Ecore Container Assignment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>CG Ecore Container Assignment</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment
-	 * @generated
-	 */
-	EClass getCGEcoreContainerAssignment();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment#getEStructuralFeature <em>EStructural Feature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>EStructural Feature</em>'.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment#getEStructuralFeature()
-	 * @see #getCGEcoreContainerAssignment()
-	 * @generated
-	 */
-	EReference getCGEcoreContainerAssignment_EStructuralFeature();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyAssignment <em>CG Ecore Property Assignment</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3450,24 +3429,6 @@ public interface CGModelPackage extends EPackage {
 		 * @generated
 		 */
 		EReference CG_ECORE_CLASS_SHADOW_EXP__ECLASS = eINSTANCE.getCGEcoreClassShadowExp_EClass();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreContainerAssignmentImpl <em>CG Ecore Container Assignment</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcoreContainerAssignmentImpl
-		 * @see org.eclipse.ocl.examples.codegen.cgmodel.impl.CGModelPackageImpl#getCGEcoreContainerAssignment()
-		 * @generated
-		 */
-		EClass CG_ECORE_CONTAINER_ASSIGNMENT = eINSTANCE.getCGEcoreContainerAssignment();
-
-		/**
-		 * The meta object literal for the '<em><b>EStructural Feature</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CG_ECORE_CONTAINER_ASSIGNMENT__ESTRUCTURAL_FEATURE = eINSTANCE.getCGEcoreContainerAssignment_EStructuralFeature();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.codegen.cgmodel.impl.CGEcorePropertyAssignmentImpl <em>CG Ecore Property Assignment</em>}' class.

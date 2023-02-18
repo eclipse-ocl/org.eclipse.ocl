@@ -101,9 +101,6 @@
     <genClasses ecoreClass="cgmodel.ecore#//CGEcoreClassShadowExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreClassShadowExp/eClass"/>
     </genClasses>
-    <genClasses ecoreClass="cgmodel.ecore#//CGEcoreContainerAssignment">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcoreContainerAssignment/eStructuralFeature"/>
-    </genClasses>
     <genClasses ecoreClass="cgmodel.ecore#//CGEcorePropertyAssignment">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference cgmodel.ecore#//CGEcorePropertyAssignment/eStructuralFeature"/>
     </genClasses>

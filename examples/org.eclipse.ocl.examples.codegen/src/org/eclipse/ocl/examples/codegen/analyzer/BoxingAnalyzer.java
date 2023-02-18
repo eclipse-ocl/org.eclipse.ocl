@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.calling.OperationCallingConvention;
@@ -26,9 +25,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCachedOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCastExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGExecutorType;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGGuardExp;
@@ -46,6 +43,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGShadowPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
@@ -336,7 +334,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		return null;
 	}
 
-	@Override
+/*	@Override
 	public @Nullable Object visitCGEcoreContainerAssignment(@NonNull CGEcoreContainerAssignment cgEcoreContainerAssignment) {
 		EStructuralFeature eStructuralFeature = cgEcoreContainerAssignment.getEStructuralFeature();
 		boolean isRequired = eStructuralFeature.isRequired();
@@ -346,7 +344,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			rewriteAsGuarded(cgEcoreContainerAssignment.getOwnedSlotValue(), false, "value for " + cgEcoreContainerAssignment.getReferredProperty() + " assignment");
 		}
 		return super.visitCGEcoreContainerAssignment(cgEcoreContainerAssignment);
-	}
+	} */
 
 /*	@Override
 	public @Nullable Object visitCGConstrainedProperty(@NonNull CGConstrainedProperty cgProperty) {
@@ -412,8 +410,12 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		return null;
 	} */
 
-	@Override
+/*	@Override
 	public @Nullable Object visitCGEcorePropertyAssignment(@NonNull CGEcorePropertyAssignment cgEcorePropertyAssignment) {
+		System.out.println(cgEcorePropertyAssignment.getReferredProperty().getCallingConvention() + " <=e " + NameUtil.debugSimpleName(cgEcorePropertyAssignment));
+
+
+
 		EStructuralFeature eStructuralFeature = cgEcorePropertyAssignment.getEStructuralFeature();
 		rewriteAsEcore(cgEcorePropertyAssignment.getOwnedSlotValue(), eStructuralFeature.getEContainingClass());
 		rewriteAsEcore(cgEcorePropertyAssignment.getOwnedInitValue(), eStructuralFeature.getEType());
@@ -425,7 +427,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			}
 		}
 		return super.visitCGEcorePropertyAssignment(cgEcorePropertyAssignment);
-	}
+	} */
 
 	@Override
 	public @Nullable Object visitCGElement(@NonNull CGElement cgElement) {
@@ -727,6 +729,15 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		//		}
 		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
 		callingConvention.rewriteWithBoxingAndGuards(this, cgProperty);
+		return null;
+	}
+
+	@Override
+	public @Nullable Object visitCGPropertyAssignment(@NonNull CGPropertyAssignment cgPropertyAssignment) {
+		super.visitCGPropertyAssignment(cgPropertyAssignment);
+		CGProperty cgProperty = CGUtil.getReferredProperty(cgPropertyAssignment);
+		PropertyCallingConvention callingConvention = cgProperty.getCallingConvention();
+		callingConvention.rewriteWithBoxingAndGuards(this, cgPropertyAssignment);
 		return null;
 	}
 

@@ -21,6 +21,7 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
@@ -64,7 +65,6 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
 				Variable contextVariable = query.getOwnedContext();
 				if (contextVariable != null) {
-//					propertyNameManager.lazyGetSelfParameter(contextVariable);
 					CGParameter selfParameter = propertyNameManager.getSelfParameter();
 					assert selfParameter.getAst() == contextVariable;
 				}
@@ -99,24 +99,24 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 	}
 
 	@Override
-	public boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor,
-			@NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue) {
+	public boolean generateJavaAssignment(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGPropertyAssignment cgPropertyAssignment) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
-		js.appendReferenceTo(cgProperty);
-		js.append(".initValue(");
-		js.appendValueName(slotValue);
-		js.append(", ");
-		js.appendValueName(initValue);
-		js.append(");\n");
+		CGProperty cgProperty = CGUtil.getReferredProperty(cgPropertyAssignment);
+		Property asProperty = CGUtil.getAST(cgProperty);
+		js.append("«");
+		js.append(getClass().getSimpleName());
+		js.append(".generateJavaAssignment ");		// XXX debugging - change to abstract
+		js.append(asProperty.getOwningClass().getOwningPackage().getName());
+		js.append("::");
+		js.append(asProperty.getOwningClass().getName());
+		js.append("::");
+		js.append(asProperty.getName());
+		js.append("»\n");
 		return false;
 	}
 
 	@Override
 	public boolean generateJavaDeclaration(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
-//		return generateJavaDeclarationUnimplemented(cg2javaVisitor, cgProperty);		// XXX
-//	}
-//
-//	protected boolean generateJavaDeclarationUnimplemented(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		js.append("«");
@@ -129,15 +129,10 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 		js.append(asProperty.getName());
 		js.append("»\n");
 		return true;
-	//	throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".generateJavaDeclaration");	// A number of Property Calling Conventions are call-only
 	}
 
 	@Override
 	public boolean generateJavaInitialization(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
-//		return generateJavaInitializationUnimplemented(cg2javaVisitor, cgProperty);
-//	}
-//
-//	protected boolean generateJavaInitializationUnimplemented(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty) {
 		JavaStream js = cg2javaVisitor.getJavaStream();
 		Property asProperty = CGUtil.getAST(cgProperty);
 		js.append("«");
@@ -150,7 +145,6 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 		js.append(asProperty.getName());
 		js.append("»\n");
 		return true;
-	//	throw new UnsupportedOperationException("Missing/No support for " + getClass().getSimpleName() + ".generateJavaInitialization");	// A number of Property Calling Conventions are call-only
 	}
 
 	@Override
@@ -184,6 +178,11 @@ public abstract class AbstractPropertyCallingConvention extends AbstractCallingC
 		boxingAnalyzer.rewriteAsGuarded(cgNavigationCallExp.getSource(), boxingAnalyzer.isSafe(cgNavigationCallExp), "source for '" + referredPropertyName + "'");
 		rewriteWithSourceBoxing(boxingAnalyzer, cgNavigationCallExp);
 		rewriteWithResultBoxing(boxingAnalyzer, cgNavigationCallExp);
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGPropertyAssignment cgPropertyAssignment) {
+		// XXX change to abstract to mandate handling
 	}
 
 	protected void rewriteWithResultBoxing(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp) {

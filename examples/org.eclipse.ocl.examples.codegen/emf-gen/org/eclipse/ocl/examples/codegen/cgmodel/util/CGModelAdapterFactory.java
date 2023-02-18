@@ -253,10 +253,6 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 				return createCGEcoreClassShadowExpAdapter();
 			}
 			@Override
-			public Adapter caseCGEcoreContainerAssignment(CGEcoreContainerAssignment object) {
-				return createCGEcoreContainerAssignmentAdapter();
-			}
-			@Override
 			public Adapter caseCGEcorePropertyAssignment(CGEcorePropertyAssignment object) {
 				return createCGEcorePropertyAssignmentAdapter();
 			}
@@ -1185,20 +1181,6 @@ public class CGModelAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCGEcoreClassShadowExpAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment <em>CG Ecore Container Assignment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment
-	 * @generated
-	 */
-	public Adapter createCGEcoreContainerAssignmentAdapter() {
 		return null;
 	}
 
