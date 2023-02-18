@@ -16,6 +16,7 @@ import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
 import org.eclipse.ocl.examples.codegen.java.CG2JavaVisitor;
 import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
@@ -57,10 +58,10 @@ public interface PropertyCallingConvention extends CallingConvention
 	boolean generateEcoreBody(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGProperty cgProperty);
 
 	/**
-	 * Generate the Java code for a Property assign.
+	 * Generate the Java code for a Property assignment.
 	 * Returns true if control flow continues, false if an exception throw has been synthesized.
 	 */
-	boolean generateJavaAssign(@NonNull CG2JavaVisitor cg2javaVisitor, @NonNull CGValuedElement slotValue, @NonNull CGProperty cgProperty, @NonNull CGValuedElement initValue);
+	boolean generateJavaAssignment(@NonNull CG2JavaVisitor cg2JavaVisitor, @NonNull CGPropertyAssignment cgPropertyAssignment);
 
 	/**
 	 * Generate the Java code for a Property call.
@@ -82,4 +83,5 @@ public interface PropertyCallingConvention extends CallingConvention
 
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGProperty cgProperty);
 	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGNavigationCallExp cgNavigationCallExp);
+	void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGPropertyAssignment cgPropertyAssignment);
 }

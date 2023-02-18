@@ -271,7 +271,7 @@ public class JavaStream
 			if ("\n".equals(string)) {
 				assert tailNewLines < 2 : "Use appendOptionalBlankLine";
 			}
-			if (string.contains("INSTANCE_CACHE_ATL2QVTr_getProperty")) {
+			if (string.contains("ExternalFunctionSum")) {
 				getClass();		// XXX
 			}
 			if (string.contains("InvalidValueException")) {

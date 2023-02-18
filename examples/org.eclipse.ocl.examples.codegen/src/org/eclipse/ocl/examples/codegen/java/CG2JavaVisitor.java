@@ -19,6 +19,7 @@ import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.util.CodeGenUtil;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -250,6 +251,14 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		js.append("(");
 		js.appendString("Null " + cgGuardExp.getMessage());
 		js.append(");\n");
+	}
+
+	public void appendQualifiedLiteralName(@NonNull EStructuralFeature eStructuralFeature) {
+		EClass eContainingClass = ClassUtil.nonNullState(eStructuralFeature.getEContainingClass());
+		EPackage ePackage = ClassUtil.nonNullState(eContainingClass.getEPackage());
+		js.appendClassReference(null, genModelHelper.getQualifiedPackageInterfaceName(ePackage));
+		js.append(".Literals.");
+		js.append(genModelHelper.getEcoreLiteralName(eStructuralFeature));
 	}
 
 	protected void appendSupportPrefix() {}
@@ -1635,7 +1644,7 @@ public abstract class CG2JavaVisitor extends AbstractExtendingCGModelVisitor<@No
 		if (!js.appendLocalStatements(initValue)) {
 			return Boolean.FALSE;
 		}
-		cgProperty.getCallingConvention().generateJavaAssign(this, slotValue, cgProperty, initValue);
+		cgProperty.getCallingConvention().generateJavaAssignment(this, cgPropertyAssignment);
 		return Boolean.TRUE;
 	}
 

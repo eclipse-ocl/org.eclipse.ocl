@@ -395,17 +395,6 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				return result;
 			}
 			case 20: {
-				CGEcoreContainerAssignment cgEcoreContainerAssignment = (CGEcoreContainerAssignment)theEObject;
-				T result = caseCGEcoreContainerAssignment(cgEcoreContainerAssignment);
-				if (result == null) result = caseCGPropertyAssignment(cgEcoreContainerAssignment);
-				if (result == null) result = caseCGValuedElement(cgEcoreContainerAssignment);
-				if (result == null) result = caseCGTypedElement(cgEcoreContainerAssignment);
-				if (result == null) result = caseCGNamedElement(cgEcoreContainerAssignment);
-				if (result == null) result = caseCGElement(cgEcoreContainerAssignment);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case 21: {
 				CGEcorePropertyAssignment cgEcorePropertyAssignment = (CGEcorePropertyAssignment)theEObject;
 				T result = caseCGEcorePropertyAssignment(cgEcorePropertyAssignment);
 				if (result == null) result = caseCGPropertyAssignment(cgEcorePropertyAssignment);
@@ -416,7 +405,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 22: {
+			case 21: {
 				CGEcoreDataTypeShadowExp cgEcoreDataTypeShadowExp = (CGEcoreDataTypeShadowExp)theEObject;
 				T result = caseCGEcoreDataTypeShadowExp(cgEcoreDataTypeShadowExp);
 				if (result == null) result = caseCGShadowExp(cgEcoreDataTypeShadowExp);
@@ -427,7 +416,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 23: {
+			case 22: {
 				CGEcoreExp cgEcoreExp = (CGEcoreExp)theEObject;
 				T result = caseCGEcoreExp(cgEcoreExp);
 				if (result == null) result = caseCGSourcedCallExp(cgEcoreExp);
@@ -439,7 +428,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 24: {
+			case 23: {
 				CGEcoreOperation cgEcoreOperation = (CGEcoreOperation)theEObject;
 				T result = caseCGEcoreOperation(cgEcoreOperation);
 				if (result == null) result = caseCGOperation(cgEcoreOperation);
@@ -451,7 +440,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 25: {
+			case 24: {
 				CGEcoreOperationCallExp cgEcoreOperationCallExp = (CGEcoreOperationCallExp)theEObject;
 				T result = caseCGEcoreOperationCallExp(cgEcoreOperationCallExp);
 				if (result == null) result = caseCGOperationCallExp(cgEcoreOperationCallExp);
@@ -463,7 +452,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 26: {
+			case 25: {
 				CGEcoreOppositePropertyCallExp cgEcoreOppositePropertyCallExp = (CGEcoreOppositePropertyCallExp)theEObject;
 				T result = caseCGEcoreOppositePropertyCallExp(cgEcoreOppositePropertyCallExp);
 				if (result == null) result = caseCGOppositePropertyCallExp(cgEcoreOppositePropertyCallExp);
@@ -477,7 +466,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 27: {
+			case 26: {
 				CGEcorePropertyCallExp cgEcorePropertyCallExp = (CGEcorePropertyCallExp)theEObject;
 				T result = caseCGEcorePropertyCallExp(cgEcorePropertyCallExp);
 				if (result == null) result = caseCGPropertyCallExp(cgEcorePropertyCallExp);
@@ -491,13 +480,13 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 28: {
+			case 27: {
 				CGElement cgElement = (CGElement)theEObject;
 				T result = caseCGElement(cgElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 29: {
+			case 28: {
 				CGElementId cgElementId = (CGElementId)theEObject;
 				T result = caseCGElementId(cgElementId);
 				if (result == null) result = caseCGConstant(cgElementId);
@@ -508,7 +497,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 30: {
+			case 29: {
 				CGExecutorCompositionProperty cgExecutorCompositionProperty = (CGExecutorCompositionProperty)theEObject;
 				T result = caseCGExecutorCompositionProperty(cgExecutorCompositionProperty);
 				if (result == null) result = caseCGExecutorProperty(cgExecutorCompositionProperty);
@@ -520,7 +509,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 31: {
+			case 30: {
 				CGExecutorNavigationProperty cgExecutorNavigationProperty = (CGExecutorNavigationProperty)theEObject;
 				T result = caseCGExecutorNavigationProperty(cgExecutorNavigationProperty);
 				if (result == null) result = caseCGExecutorProperty(cgExecutorNavigationProperty);
@@ -532,7 +521,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 32: {
+			case 31: {
 				CGExecutorOppositeProperty cgExecutorOppositeProperty = (CGExecutorOppositeProperty)theEObject;
 				T result = caseCGExecutorOppositeProperty(cgExecutorOppositeProperty);
 				if (result == null) result = caseCGExecutorProperty(cgExecutorOppositeProperty);
@@ -544,7 +533,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 33: {
+			case 32: {
 				CGExecutorOppositePropertyCallExp cgExecutorOppositePropertyCallExp = (CGExecutorOppositePropertyCallExp)theEObject;
 				T result = caseCGExecutorOppositePropertyCallExp(cgExecutorOppositePropertyCallExp);
 				if (result == null) result = caseCGOppositePropertyCallExp(cgExecutorOppositePropertyCallExp);
@@ -558,7 +547,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 34: {
+			case 33: {
 				CGExecutorProperty cgExecutorProperty = (CGExecutorProperty)theEObject;
 				T result = caseCGExecutorProperty(cgExecutorProperty);
 				if (result == null) result = caseCGProperty(cgExecutorProperty);
@@ -569,7 +558,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 35: {
+			case 34: {
 				CGExecutorPropertyCallExp cgExecutorPropertyCallExp = (CGExecutorPropertyCallExp)theEObject;
 				T result = caseCGExecutorPropertyCallExp(cgExecutorPropertyCallExp);
 				if (result == null) result = caseCGPropertyCallExp(cgExecutorPropertyCallExp);
@@ -583,7 +572,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 36: {
+			case 35: {
 				CGExecutorShadowPart cgExecutorShadowPart = (CGExecutorShadowPart)theEObject;
 				T result = caseCGExecutorShadowPart(cgExecutorShadowPart);
 				if (result == null) result = caseCGExecutorProperty(cgExecutorShadowPart);
@@ -595,7 +584,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 37: {
+			case 36: {
 				CGExecutorType cgExecutorType = (CGExecutorType)theEObject;
 				T result = caseCGExecutorType(cgExecutorType);
 				if (result == null) result = caseCGValuedElement(cgExecutorType);
@@ -605,7 +594,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 38: {
+			case 37: {
 				CGFinalVariable cgFinalVariable = (CGFinalVariable)theEObject;
 				T result = caseCGFinalVariable(cgFinalVariable);
 				if (result == null) result = caseCGVariable(cgFinalVariable);
@@ -616,7 +605,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 39: {
+			case 38: {
 				CGForeignOperationCallExp cgForeignOperationCallExp = (CGForeignOperationCallExp)theEObject;
 				T result = caseCGForeignOperationCallExp(cgForeignOperationCallExp);
 				if (result == null) result = caseCGOperationCallExp(cgForeignOperationCallExp);
@@ -628,7 +617,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 40: {
+			case 39: {
 				CGForeignProperty cgForeignProperty = (CGForeignProperty)theEObject;
 				T result = caseCGForeignProperty(cgForeignProperty);
 				if (result == null) result = caseCGBodiedProperty(cgForeignProperty);
@@ -640,7 +629,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 41: {
+			case 40: {
 				CGForeignPropertyCallExp cgForeignPropertyCallExp = (CGForeignPropertyCallExp)theEObject;
 				T result = caseCGForeignPropertyCallExp(cgForeignPropertyCallExp);
 				if (result == null) result = caseCGPropertyCallExp(cgForeignPropertyCallExp);
@@ -654,7 +643,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 42: {
+			case 41: {
 				CGGuardExp cgGuardExp = (CGGuardExp)theEObject;
 				T result = caseCGGuardExp(cgGuardExp);
 				if (result == null) result = caseCGSourcedCallExp(cgGuardExp);
@@ -666,7 +655,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 43: {
+			case 42: {
 				CGIfExp cgIfExp = (CGIfExp)theEObject;
 				T result = caseCGIfExp(cgIfExp);
 				if (result == null) result = caseCGValuedElement(cgIfExp);
@@ -676,7 +665,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 44: {
+			case 43: {
 				CGIndexExp cgIndexExp = (CGIndexExp)theEObject;
 				T result = caseCGIndexExp(cgIndexExp);
 				if (result == null) result = caseCGSourcedCallExp(cgIndexExp);
@@ -688,7 +677,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 45: {
+			case 44: {
 				CGInlinedOperation cgInlinedOperation = (CGInlinedOperation)theEObject;
 				T result = caseCGInlinedOperation(cgInlinedOperation);
 				if (result == null) result = caseCGOperation(cgInlinedOperation);
@@ -700,7 +689,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 46: {
+			case 45: {
 				CGInteger cgInteger = (CGInteger)theEObject;
 				T result = caseCGInteger(cgInteger);
 				if (result == null) result = caseCGNumber(cgInteger);
@@ -712,7 +701,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 47: {
+			case 46: {
 				CGInvalid cgInvalid = (CGInvalid)theEObject;
 				T result = caseCGInvalid(cgInvalid);
 				if (result == null) result = caseCGConstant(cgInvalid);
@@ -723,7 +712,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 48: {
+			case 47: {
 				CGIsEqualExp cgIsEqualExp = (CGIsEqualExp)theEObject;
 				T result = caseCGIsEqualExp(cgIsEqualExp);
 				if (result == null) result = caseCGSourcedCallExp(cgIsEqualExp);
@@ -735,7 +724,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 49: {
+			case 48: {
 				CGIsEqual2Exp cgIsEqual2Exp = (CGIsEqual2Exp)theEObject;
 				T result = caseCGIsEqual2Exp(cgIsEqual2Exp);
 				if (result == null) result = caseCGSourcedCallExp(cgIsEqual2Exp);
@@ -747,7 +736,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 50: {
+			case 49: {
 				CGIsInvalidExp cgIsInvalidExp = (CGIsInvalidExp)theEObject;
 				T result = caseCGIsInvalidExp(cgIsInvalidExp);
 				if (result == null) result = caseCGSourcedCallExp(cgIsInvalidExp);
@@ -759,7 +748,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 51: {
+			case 50: {
 				CGIsKindOfExp cgIsKindOfExp = (CGIsKindOfExp)theEObject;
 				T result = caseCGIsKindOfExp(cgIsKindOfExp);
 				if (result == null) result = caseCGSourcedCallExp(cgIsKindOfExp);
@@ -771,7 +760,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 52: {
+			case 51: {
 				CGIsUndefinedExp cgIsUndefinedExp = (CGIsUndefinedExp)theEObject;
 				T result = caseCGIsUndefinedExp(cgIsUndefinedExp);
 				if (result == null) result = caseCGSourcedCallExp(cgIsUndefinedExp);
@@ -783,7 +772,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 53: {
+			case 52: {
 				CGIterationCallExp cgIterationCallExp = (CGIterationCallExp)theEObject;
 				T result = caseCGIterationCallExp(cgIterationCallExp);
 				if (result == null) result = caseCGSourcedCallExp(cgIterationCallExp);
@@ -795,7 +784,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 54: {
+			case 53: {
 				CGIterator cgIterator = (CGIterator)theEObject;
 				T result = caseCGIterator(cgIterator);
 				if (result == null) result = caseCGParameter(cgIterator);
@@ -807,7 +796,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 55: {
+			case 54: {
 				CGLetExp cgLetExp = (CGLetExp)theEObject;
 				T result = caseCGLetExp(cgLetExp);
 				if (result == null) result = caseCGValuedElement(cgLetExp);
@@ -817,7 +806,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 56: {
+			case 55: {
 				CGLibraryIterateCallExp cgLibraryIterateCallExp = (CGLibraryIterateCallExp)theEObject;
 				T result = caseCGLibraryIterateCallExp(cgLibraryIterateCallExp);
 				if (result == null) result = caseCGLibraryIterationCallExp(cgLibraryIterateCallExp);
@@ -831,7 +820,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 57: {
+			case 56: {
 				CGLibraryIterationCallExp cgLibraryIterationCallExp = (CGLibraryIterationCallExp)theEObject;
 				T result = caseCGLibraryIterationCallExp(cgLibraryIterationCallExp);
 				if (result == null) result = caseCGIterationCallExp(cgLibraryIterationCallExp);
@@ -844,7 +833,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 58: {
+			case 57: {
 				CGLibraryOperation cgLibraryOperation = (CGLibraryOperation)theEObject;
 				T result = caseCGLibraryOperation(cgLibraryOperation);
 				if (result == null) result = caseCGOperation(cgLibraryOperation);
@@ -856,7 +845,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 59: {
+			case 58: {
 				CGLibraryOperationCallExp cgLibraryOperationCallExp = (CGLibraryOperationCallExp)theEObject;
 				T result = caseCGLibraryOperationCallExp(cgLibraryOperationCallExp);
 				if (result == null) result = caseCGOperationCallExp(cgLibraryOperationCallExp);
@@ -868,7 +857,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 60: {
+			case 59: {
 				CGLibraryPropertyCallExp cgLibraryPropertyCallExp = (CGLibraryPropertyCallExp)theEObject;
 				T result = caseCGLibraryPropertyCallExp(cgLibraryPropertyCallExp);
 				if (result == null) result = caseCGPropertyCallExp(cgLibraryPropertyCallExp);
@@ -882,7 +871,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 61: {
+			case 60: {
 				CGLocalVariable cgLocalVariable = (CGLocalVariable)theEObject;
 				T result = caseCGLocalVariable(cgLocalVariable);
 				if (result == null) result = caseCGVariable(cgLocalVariable);
@@ -893,7 +882,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 62: {
+			case 61: {
 				CGMapExp cgMapExp = (CGMapExp)theEObject;
 				T result = caseCGMapExp(cgMapExp);
 				if (result == null) result = caseCGValuedElement(cgMapExp);
@@ -903,7 +892,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 63: {
+			case 62: {
 				CGMapPart cgMapPart = (CGMapPart)theEObject;
 				T result = caseCGMapPart(cgMapPart);
 				if (result == null) result = caseCGValuedElement(cgMapPart);
@@ -913,7 +902,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 64: {
+			case 63: {
 				CGModel cgModel = (CGModel)theEObject;
 				T result = caseCGModel(cgModel);
 				if (result == null) result = caseCGNamedElement(cgModel);
@@ -921,14 +910,14 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 65: {
+			case 64: {
 				CGNamedElement cgNamedElement = (CGNamedElement)theEObject;
 				T result = caseCGNamedElement(cgNamedElement);
 				if (result == null) result = caseCGElement(cgNamedElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 66: {
+			case 65: {
 				CGNativeOperation cgNativeOperation = (CGNativeOperation)theEObject;
 				T result = caseCGNativeOperation(cgNativeOperation);
 				if (result == null) result = caseCGOperation(cgNativeOperation);
@@ -940,7 +929,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 67: {
+			case 66: {
 				CGNativeOperationCallExp cgNativeOperationCallExp = (CGNativeOperationCallExp)theEObject;
 				T result = caseCGNativeOperationCallExp(cgNativeOperationCallExp);
 				if (result == null) result = caseCGOperationCallExp(cgNativeOperationCallExp);
@@ -952,7 +941,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 68: {
+			case 67: {
 				CGNativeProperty cgNativeProperty = (CGNativeProperty)theEObject;
 				T result = caseCGNativeProperty(cgNativeProperty);
 				if (result == null) result = caseCGBodiedProperty(cgNativeProperty);
@@ -964,7 +953,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 69: {
+			case 68: {
 				CGNativePropertyCallExp cgNativePropertyCallExp = (CGNativePropertyCallExp)theEObject;
 				T result = caseCGNativePropertyCallExp(cgNativePropertyCallExp);
 				if (result == null) result = caseCGPropertyCallExp(cgNativePropertyCallExp);
@@ -978,7 +967,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 70: {
+			case 69: {
 				CGNavigationCallExp cgNavigationCallExp = (CGNavigationCallExp)theEObject;
 				T result = caseCGNavigationCallExp(cgNavigationCallExp);
 				if (result == null) result = caseCGSourcedCallExp(cgNavigationCallExp);
@@ -990,7 +979,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 71: {
+			case 70: {
 				CGNull cgNull = (CGNull)theEObject;
 				T result = caseCGNull(cgNull);
 				if (result == null) result = caseCGConstant(cgNull);
@@ -1001,7 +990,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 72: {
+			case 71: {
 				CGNumber cgNumber = (CGNumber)theEObject;
 				T result = caseCGNumber(cgNumber);
 				if (result == null) result = caseCGConstant(cgNumber);
@@ -1012,7 +1001,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 73: {
+			case 72: {
 				CGOperation cgOperation = (CGOperation)theEObject;
 				T result = caseCGOperation(cgOperation);
 				if (result == null) result = caseCGCallable(cgOperation);
@@ -1023,7 +1012,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 74: {
+			case 73: {
 				CGOperationCallExp cgOperationCallExp = (CGOperationCallExp)theEObject;
 				T result = caseCGOperationCallExp(cgOperationCallExp);
 				if (result == null) result = caseCGCallExp(cgOperationCallExp);
@@ -1034,7 +1023,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 75: {
+			case 74: {
 				CGOppositePropertyCallExp cgOppositePropertyCallExp = (CGOppositePropertyCallExp)theEObject;
 				T result = caseCGOppositePropertyCallExp(cgOppositePropertyCallExp);
 				if (result == null) result = caseCGNavigationCallExp(cgOppositePropertyCallExp);
@@ -1047,7 +1036,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 76: {
+			case 75: {
 				CGPackage cgPackage = (CGPackage)theEObject;
 				T result = caseCGPackage(cgPackage);
 				if (result == null) result = caseCGNamedElement(cgPackage);
@@ -1055,7 +1044,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 77: {
+			case 76: {
 				CGParameter cgParameter = (CGParameter)theEObject;
 				T result = caseCGParameter(cgParameter);
 				if (result == null) result = caseCGVariable(cgParameter);
@@ -1066,7 +1055,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 78: {
+			case 77: {
 				CGProperty cgProperty = (CGProperty)theEObject;
 				T result = caseCGProperty(cgProperty);
 				if (result == null) result = caseCGValuedElement(cgProperty);
@@ -1076,7 +1065,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 79: {
+			case 78: {
 				CGPropertyAssignment cgPropertyAssignment = (CGPropertyAssignment)theEObject;
 				T result = caseCGPropertyAssignment(cgPropertyAssignment);
 				if (result == null) result = caseCGValuedElement(cgPropertyAssignment);
@@ -1086,7 +1075,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 80: {
+			case 79: {
 				CGPropertyCallExp cgPropertyCallExp = (CGPropertyCallExp)theEObject;
 				T result = caseCGPropertyCallExp(cgPropertyCallExp);
 				if (result == null) result = caseCGNavigationCallExp(cgPropertyCallExp);
@@ -1099,7 +1088,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 81: {
+			case 80: {
 				CGReal cgReal = (CGReal)theEObject;
 				T result = caseCGReal(cgReal);
 				if (result == null) result = caseCGNumber(cgReal);
@@ -1111,7 +1100,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 82: {
+			case 81: {
 				CGSequence cgSequence = (CGSequence)theEObject;
 				T result = caseCGSequence(cgSequence);
 				if (result == null) result = caseCGValuedElement(cgSequence);
@@ -1121,7 +1110,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 83: {
+			case 82: {
 				CGSettableVariable cgSettableVariable = (CGSettableVariable)theEObject;
 				T result = caseCGSettableVariable(cgSettableVariable);
 				if (result == null) result = caseCGVariable(cgSettableVariable);
@@ -1132,7 +1121,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 84: {
+			case 83: {
 				CGShadowExp cgShadowExp = (CGShadowExp)theEObject;
 				T result = caseCGShadowExp(cgShadowExp);
 				if (result == null) result = caseCGValuedElement(cgShadowExp);
@@ -1142,7 +1131,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 85: {
+			case 84: {
 				CGShadowPart cgShadowPart = (CGShadowPart)theEObject;
 				T result = caseCGShadowPart(cgShadowPart);
 				if (result == null) result = caseCGValuedElement(cgShadowPart);
@@ -1152,7 +1141,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 86: {
+			case 85: {
 				CGSourcedCallExp cgSourcedCallExp = (CGSourcedCallExp)theEObject;
 				T result = caseCGSourcedCallExp(cgSourcedCallExp);
 				if (result == null) result = caseCGCallExp(cgSourcedCallExp);
@@ -1163,7 +1152,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 87: {
+			case 86: {
 				CGString cgString = (CGString)theEObject;
 				T result = caseCGString(cgString);
 				if (result == null) result = caseCGConstant(cgString);
@@ -1174,7 +1163,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 88: {
+			case 87: {
 				CGTemplateParameterExp cgTemplateParameterExp = (CGTemplateParameterExp)theEObject;
 				T result = caseCGTemplateParameterExp(cgTemplateParameterExp);
 				if (result == null) result = caseCGValuedElement(cgTemplateParameterExp);
@@ -1184,7 +1173,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 89: {
+			case 88: {
 				CGThrowExp cgThrowExp = (CGThrowExp)theEObject;
 				T result = caseCGThrowExp(cgThrowExp);
 				if (result == null) result = caseCGSourcedCallExp(cgThrowExp);
@@ -1196,7 +1185,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 90: {
+			case 89: {
 				CGTupleExp cgTupleExp = (CGTupleExp)theEObject;
 				T result = caseCGTupleExp(cgTupleExp);
 				if (result == null) result = caseCGValuedElement(cgTupleExp);
@@ -1206,7 +1195,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 91: {
+			case 90: {
 				CGTuplePart cgTuplePart = (CGTuplePart)theEObject;
 				T result = caseCGTuplePart(cgTuplePart);
 				if (result == null) result = caseCGValuedElement(cgTuplePart);
@@ -1216,7 +1205,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 92: {
+			case 91: {
 				CGTuplePartCallExp cgTuplePartCallExp = (CGTuplePartCallExp)theEObject;
 				T result = caseCGTuplePartCallExp(cgTuplePartCallExp);
 				if (result == null) result = caseCGPropertyCallExp(cgTuplePartCallExp);
@@ -1230,7 +1219,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 93: {
+			case 92: {
 				CGTypeId cgTypeId = (CGTypeId)theEObject;
 				T result = caseCGTypeId(cgTypeId);
 				if (result == null) result = caseCGElementId(cgTypeId);
@@ -1242,7 +1231,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 94: {
+			case 93: {
 				CGTypeExp cgTypeExp = (CGTypeExp)theEObject;
 				T result = caseCGTypeExp(cgTypeExp);
 				if (result == null) result = caseCGValuedElement(cgTypeExp);
@@ -1252,7 +1241,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 95: {
+			case 94: {
 				CGTypedElement cgTypedElement = (CGTypedElement)theEObject;
 				T result = caseCGTypedElement(cgTypedElement);
 				if (result == null) result = caseCGNamedElement(cgTypedElement);
@@ -1260,7 +1249,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 96: {
+			case 95: {
 				CGUnboxExp cgUnboxExp = (CGUnboxExp)theEObject;
 				T result = caseCGUnboxExp(cgUnboxExp);
 				if (result == null) result = caseCGSourcedCallExp(cgUnboxExp);
@@ -1272,7 +1261,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 97: {
+			case 96: {
 				CGUnlimited cgUnlimited = (CGUnlimited)theEObject;
 				T result = caseCGUnlimited(cgUnlimited);
 				if (result == null) result = caseCGConstant(cgUnlimited);
@@ -1283,7 +1272,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 98: {
+			case 97: {
 				CGValuedElement cgValuedElement = (CGValuedElement)theEObject;
 				T result = caseCGValuedElement(cgValuedElement);
 				if (result == null) result = caseCGTypedElement(cgValuedElement);
@@ -1292,7 +1281,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 99: {
+			case 98: {
 				CGVariable cgVariable = (CGVariable)theEObject;
 				T result = caseCGVariable(cgVariable);
 				if (result == null) result = caseCGValuedElement(cgVariable);
@@ -1302,7 +1291,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 100: {
+			case 99: {
 				CGVariableExp cgVariableExp = (CGVariableExp)theEObject;
 				T result = caseCGVariableExp(cgVariableExp);
 				if (result == null) result = caseCGValuedElement(cgVariableExp);
@@ -1312,7 +1301,7 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 101: {
+			case 100: {
 				Nameable nameable = (Nameable)theEObject;
 				T result = caseNameable(nameable);
 				if (result == null) result = defaultCase(theEObject);
@@ -1949,21 +1938,6 @@ public class CGModelSwitch<@Nullable T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCGEcoreClassShadowExp(CGEcoreClassShadowExp object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>CG Ecore Container Assignment</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>CG Ecore Container Assignment</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCGEcoreContainerAssignment(CGEcoreContainerAssignment object) {
 		return null;
 	}
 

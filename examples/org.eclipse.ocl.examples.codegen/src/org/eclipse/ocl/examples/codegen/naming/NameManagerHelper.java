@@ -28,7 +28,6 @@ import org.eclipse.ocl.examples.codegen.cgmodel.CGCatchExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGCollectionPart;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGConstraint;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreContainerAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
@@ -555,11 +554,6 @@ public class NameManagerHelper
 		@Override
 		public @NonNull String visitCGCollectionPart(@NonNull CGCollectionPart object) {
 			return RANGE_NAME_HINT_PREFIX;
-		}
-
-		@Override
-		public @NonNull String visitCGEcoreContainerAssignment(@NonNull CGEcoreContainerAssignment object) {
-			return NameResolution.NOT_NEEDED; // "XXX" + context.getNameableHint(object);		// Never used
 		}
 
 		@Override

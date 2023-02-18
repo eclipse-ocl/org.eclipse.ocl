@@ -592,51 +592,44 @@ implements LoopExp {
 				IF_le = ValueUtil.TRUE_VALUE;
 			}
 			else {
-				/*@Caught*/ @Nullable Object CAUGHT_forAll;
-				try {
-					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull List<IteratorVariable> ownedCoIterators_0 = this.getOwnedCoIterators();
-					final /*@NonInvalid*/ @Nullable OrderedSetValue BOXED_ownedCoIterators = idResolver.createOrderedSetOfAll(PivotSupport.ORD_CLSSid_IteratorVariable, ownedCoIterators_0);
-					final /*@Thrown*/ @NonNull OrderedSetValue excluding = (OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(BOXED_ownedCoIterators, (Object)null);
-					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-					@NonNull Iterator<Object> ITER__1 = excluding.iterator();
-					/*@Thrown*/ @Nullable Boolean forAll;
-					while (true) {
-						if (!ITER__1.hasNext()) {
-							if (accumulator == ValueUtil.TRUE_VALUE) {
-								forAll = ValueUtil.TRUE_VALUE;
-							}
-							else {
-								throw (InvalidValueException)accumulator;
-							}
-							break;
+				@SuppressWarnings("null")
+				final /*@NonInvalid*/ @NonNull List<IteratorVariable> ownedCoIterators_0 = this.getOwnedCoIterators();
+				final /*@NonInvalid*/ @Nullable OrderedSetValue BOXED_ownedCoIterators = idResolver.createOrderedSetOfAll(PivotSupport.ORD_CLSSid_IteratorVariable, ownedCoIterators_0);
+				final /*@NonInvalid*/ @NonNull OrderedSetValue excluding = (OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(BOXED_ownedCoIterators, (Object)null);
+				/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
+				@NonNull Iterator<Object> ITER__1 = excluding.iterator();
+				/*@NonInvalid*/ @Nullable Boolean forAll;
+				while (true) {
+					if (!ITER__1.hasNext()) {
+						if (accumulator == ValueUtil.TRUE_VALUE) {
+							forAll = ValueUtil.TRUE_VALUE;
 						}
-						@SuppressWarnings("null")
-						/*@NonInvalid*/ @NonNull IteratorVariable _1 = (@NonNull IteratorVariable)ITER__1.next();
-						/**
-						 * ownedInit->isEmpty()
-						 */
-						final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = _1.getOwnedInit();
-						final /*@NonInvalid*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotSupport.SET_CLSSid_OCLExpression, ownedInit);
-						final /*@NonInvalid*/ boolean isEmpty = CollectionIsEmptyOperation.INSTANCE.evaluate(oclAsSet).booleanValue();
-						//
-						if (!isEmpty) {					// Normal unsuccessful body evaluation result
-							forAll = ValueUtil.FALSE_VALUE;
-							break;														// Stop immediately
+						else {
+							throw (InvalidValueException)accumulator;
 						}
-						else if (isEmpty) {				// Normal successful body evaluation result
-							;															// Carry on
-						}
-						else {															// Impossible badly typed result
-							accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
-						}
+						break;
 					}
-					CAUGHT_forAll = forAll;
+					@SuppressWarnings("null")
+					/*@NonInvalid*/ @NonNull IteratorVariable _1 = (@NonNull IteratorVariable)ITER__1.next();
+					/**
+					 * ownedInit->isEmpty()
+					 */
+					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = _1.getOwnedInit();
+					final /*@NonInvalid*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotSupport.SET_CLSSid_OCLExpression, ownedInit);
+					final /*@NonInvalid*/ boolean isEmpty = CollectionIsEmptyOperation.INSTANCE.evaluate(oclAsSet).booleanValue();
+					//
+					if (!isEmpty) {					// Normal unsuccessful body evaluation result
+						forAll = ValueUtil.FALSE_VALUE;
+						break;														// Stop immediately
+					}
+					else if (isEmpty) {				// Normal successful body evaluation result
+						;															// Carry on
+					}
+					else {															// Impossible badly typed result
+						accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
+					}
 				}
-				catch (Exception THROWN_CAUGHT_forAll) {
-					CAUGHT_forAll = ValueUtil.createInvalidValue(THROWN_CAUGHT_forAll);
-				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, CAUGHT_forAll, PivotSupport.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, getSeverity, forAll, PivotSupport.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

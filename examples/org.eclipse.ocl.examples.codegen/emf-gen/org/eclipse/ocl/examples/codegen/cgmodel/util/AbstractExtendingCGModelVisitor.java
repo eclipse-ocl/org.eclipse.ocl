@@ -140,11 +140,6 @@ public abstract class AbstractExtendingCGModelVisitor<R, C>
 	}
 
 	@Override
-	public R visitCGEcoreContainerAssignment(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreContainerAssignment object) {
-		return visitCGPropertyAssignment(object);
-	}
-
-	@Override
 	public R visitCGEcoreDataTypeShadowExp(org.eclipse.ocl.examples.codegen.cgmodel.@NonNull CGEcoreDataTypeShadowExp object) {
 		return visitCGShadowExp(object);
 	}

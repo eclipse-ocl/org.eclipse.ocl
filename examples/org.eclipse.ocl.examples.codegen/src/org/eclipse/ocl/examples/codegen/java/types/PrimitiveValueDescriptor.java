@@ -10,7 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.codegen.java.types;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGUnboxExp;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.examples.codegen.java.JavaStream;
+import org.eclipse.ocl.examples.codegen.naming.ExecutableNameManager;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
 
 /**
@@ -23,6 +30,40 @@ public class PrimitiveValueDescriptor extends BoxedValueDescriptor
 	public PrimitiveValueDescriptor(@NonNull DataTypeId typeId, @NonNull Class<?> boxedClass, @NonNull Class<?> primitiveClass) {
 		super(typeId, boxedClass);
 		this.primitiveClass = primitiveClass;
+	}
+
+	@Override
+	public @NonNull Boolean appendUnboxStatements(@NonNull JavaStream js, @NonNull ExecutableNameManager localNameManager,
+			@NonNull CGUnboxExp cgUnboxExp, @NonNull CGValuedElement boxedValue) {
+		js.appendDeclaration(cgUnboxExp);
+		js.append(" = ");
+		if (primitiveClass == Character.class) {
+			js.append("Character.valueOf(");
+			js.appendValueName(boxedValue);
+			js.append(".asInteger());\n");
+		}
+		else {
+			js.appendValueName(boxedValue);
+			if (primitiveClass == BigInteger.class) {
+				js.append(".bigDecimalValue();\n");
+			}
+			else if (primitiveClass == BigDecimal.class) {
+				js.append(".bigIntegerValue();\n");
+			}
+			else if (primitiveClass == boolean.class) {
+				js.append(".asInteger() != 0;\n");
+			}
+			else if ((primitiveClass == double.class) || (primitiveClass == Double.class) || (primitiveClass == float.class) || (primitiveClass == Float.class)) {
+				js.append(".asDouble();\n");
+			}
+			else if ((primitiveClass == byte.class) || (primitiveClass == char.class) || (primitiveClass == int.class) || (primitiveClass == Integer.class) || (primitiveClass == long.class) || (primitiveClass == Long.class) || (primitiveClass == short.class) || (primitiveClass == Short.class)) {
+				js.append(".asInteger();\n");
+			}
+			else {
+				throw new UnsupportedOperationException("PrimitiveValueDescriptor.appendUnboxStatements for " + primitiveClass);
+			}
+		}
+		return true;
 	}
 
 	@Override

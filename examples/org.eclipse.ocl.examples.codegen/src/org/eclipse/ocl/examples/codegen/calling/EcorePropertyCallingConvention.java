@@ -19,11 +19,13 @@ import org.eclipse.ocl.examples.codegen.analyzer.BoxingAnalyzer;
 import org.eclipse.ocl.examples.codegen.analyzer.CodeGenAnalyzer;
 import org.eclipse.ocl.examples.codegen.calling.AbstractOperationCallingConvention.CGParameterStyle;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGBodiedProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGEcorePropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGInvalid;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGModelFactory;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGNavigationCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGProperty;
+import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyAssignment;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGTypeId;
 import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
@@ -241,6 +243,22 @@ public class EcorePropertyCallingConvention extends AbstractPropertyCallingConve
 	@Override
 	public boolean needsGeneration() {
 		return false;
+	}
+
+	@Override
+	public void rewriteWithBoxingAndGuards(@NonNull BoxingAnalyzer boxingAnalyzer, @NonNull CGPropertyAssignment cgPropertyAssignment) {
+		CGEcorePropertyAssignment cgEcorePropertyAssignment = (CGEcorePropertyAssignment)cgPropertyAssignment;
+		EStructuralFeature eStructuralFeature = cgEcorePropertyAssignment.getEStructuralFeature();
+		boxingAnalyzer.rewriteAsEcore(cgEcorePropertyAssignment.getOwnedSlotValue(), eStructuralFeature.getEContainingClass());
+		boxingAnalyzer.rewriteAsEcore(cgEcorePropertyAssignment.getOwnedInitValue(), eStructuralFeature.getEType());
+		if (eStructuralFeature.isRequired()) {
+			CGValuedElement cgInit = cgEcorePropertyAssignment.getOwnedInitValue();
+			TypeDescriptor typeDescriptor = cgInit != null ? boxingAnalyzer.getCodeGenerator().getTypeDescriptor(cgInit) : null;
+			if ((typeDescriptor == null) || !typeDescriptor.isPrimitive()) {
+				boxingAnalyzer.rewriteAsGuarded(cgInit, false, "value for " + cgEcorePropertyAssignment.getReferredProperty() + " assignment");
+			}
+		}
+		super.rewriteWithBoxingAndGuards(boxingAnalyzer, cgPropertyAssignment);
 	}
 
 	@Override
