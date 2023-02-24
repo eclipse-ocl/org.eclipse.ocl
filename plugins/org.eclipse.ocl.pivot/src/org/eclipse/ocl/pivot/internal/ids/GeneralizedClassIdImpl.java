@@ -71,6 +71,9 @@ public class GeneralizedClassIdImpl extends GeneralizedNestedTypeIdImpl implemen
 
 	public GeneralizedClassIdImpl(@NonNull PackageId parentId, int templateParameters, @NonNull String name) {
 		super(computeHashCode(parentId, templateParameters,name), parentId, templateParameters, name);
+		if ("OclSelf".equals(name)) {
+			getClass();		// XXX
+		}
 	}
 
 	@Override

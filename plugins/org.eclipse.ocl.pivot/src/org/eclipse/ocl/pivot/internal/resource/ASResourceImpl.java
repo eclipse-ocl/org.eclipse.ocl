@@ -131,6 +131,9 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 						}
 					}
 				}
+				else if (eventType == Notification.MOVE) {								// Occurs for sort
+					return;
+				}
 				else if (eventType == Notification.REMOVE) {
 					if (notifier instanceof org.eclipse.ocl.pivot.Class) {
 						if (feature == PivotPackage.Literals.CLASS__OWNED_PROPERTIES) {

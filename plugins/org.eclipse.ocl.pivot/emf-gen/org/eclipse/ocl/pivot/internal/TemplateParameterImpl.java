@@ -26,7 +26,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Operation;
@@ -36,6 +35,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -370,15 +370,15 @@ public class TemplateParameterImpl
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.getLowerBound(this, standardLibrary.getOclAnyType());
-		return standardLibrary.getInheritance(lowerBound);
+		return standardLibrary.getFlatClass(lowerBound);
 	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
 		try {
-			return getInheritance(standardLibrary).getPivotClass();
+			return getFlatClass(standardLibrary).getPivotClass();
 		}
 		catch (Throwable e) {
 			return standardLibrary.getOclAnyType();			// FIXME should never happen
@@ -389,9 +389,10 @@ public class TemplateParameterImpl
 
 	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId() {
-		assert eContainer() != null;
+	//	assert eContainer() != null;			// protos have no eContainer
 		TemplateParameterId templateParameterId2 = templateParameterId;
 		if (templateParameterId2 == null) {
+			assert eContainer() != null;
 			synchronized (this) {
 				templateParameterId2 = templateParameterId;
 				if (templateParameterId2 == null) {
@@ -444,6 +445,11 @@ public class TemplateParameterImpl
 	@Override
 	public @NonNull TemplateParameter isTemplateParameter() {
 		return this;
+	}
+
+	public void setTemplateParameterId(@NonNull TemplateParameterId templateParameterId) {
+		assert this.templateParameterId == null;
+		this.templateParameterId = templateParameterId;
 	}
 
 	@Override

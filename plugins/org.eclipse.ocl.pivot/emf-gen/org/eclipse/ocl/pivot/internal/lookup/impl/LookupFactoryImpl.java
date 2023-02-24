@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, 2018 Willink Transformations Ltd., University of York and others.
+ * Copyright (c) 2014, 2023 Willink Transformations Ltd., University of York and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -64,7 +64,7 @@ public class LookupFactoryImpl extends EFactoryImpl implements LookupFactory {
 	@Override
 	public @NonNull EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case LookupPackage.LOOKUP_ENVIRONMENT: return createLookupEnvironment();
+			case 0: return createLookupEnvironment();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}

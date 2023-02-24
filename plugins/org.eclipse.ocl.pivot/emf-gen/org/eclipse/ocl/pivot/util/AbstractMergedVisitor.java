@@ -285,6 +285,11 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
+	public R visitJavaType(org.eclipse.ocl.pivot.@NonNull JavaType object) {
+		return visiting(object);
+	}
+
+	@Override
 	public R visitLambdaType(org.eclipse.ocl.pivot.@NonNull LambdaType object) {
 		return visiting(object);
 	}

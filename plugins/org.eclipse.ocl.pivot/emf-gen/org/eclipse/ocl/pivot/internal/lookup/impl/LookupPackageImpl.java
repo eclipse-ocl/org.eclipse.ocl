@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, 2019 Willink Transformations Ltd., University of York and others.
+ * Copyright (c) 2014, 2023 Willink Transformations Ltd., University of York and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -37,12 +37,14 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 	 * @generated
 	 */
 	private EClass lookupEnvironmentEClass = null;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	private EClass executorEClass = null;
+
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
@@ -110,7 +112,6 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -121,7 +122,6 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -132,7 +132,6 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -143,7 +142,6 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -154,7 +152,6 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -165,7 +162,6 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -176,7 +172,6 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -187,7 +182,6 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 
 	/**
 	 * <!-- begin-user-doc -->
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
@@ -225,15 +219,15 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		lookupEnvironmentEClass = createEClass(LOOKUP_ENVIRONMENT);
-		createEReference(lookupEnvironmentEClass, LOOKUP_ENVIRONMENT__NAMED_ELEMENTS);
-		createEReference(lookupEnvironmentEClass, LOOKUP_ENVIRONMENT__PARENT_ENV);
-		createEOperation(lookupEnvironmentEClass, LOOKUP_ENVIRONMENT___ADD_ELEMENTS__COLLECTION);
-		createEOperation(lookupEnvironmentEClass, LOOKUP_ENVIRONMENT___ADD_ELEMENT__NAMEDELEMENT);
-		createEOperation(lookupEnvironmentEClass, LOOKUP_ENVIRONMENT___HAS_FINAL_RESULT);
-		createEOperation(lookupEnvironmentEClass, LOOKUP_ENVIRONMENT___GET_EXECUTOR);
+		lookupEnvironmentEClass = createEClass(0);
+		createEReference(lookupEnvironmentEClass, 0);
+		createEReference(lookupEnvironmentEClass, 1);
+		createEOperation(lookupEnvironmentEClass, 0);
+		createEOperation(lookupEnvironmentEClass, 1);
+		createEOperation(lookupEnvironmentEClass, 2);
+		createEOperation(lookupEnvironmentEClass, 3);
 
-		executorEClass = createEClass(EXECUTOR);
+		executorEClass = createEClass(1);
 	}
 
 	/**
@@ -303,48 +297,40 @@ public class LookupPackageImpl extends EPackageImpl implements LookupPackage {
 	}
 
 	/**
-	 * @generated NOT
-	 */
-	@Deprecated /* @deprecated not used, no functionality */
-	protected void createImportAnnotations() {}
-
-	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
 	 * <!-- begin-user-doc -->
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected void createEcoreAnnotations() {
 		String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
 		addAnnotation
-		(this,
-			source,
-			new String[] {
-		});
+		  (this,
+		   source,
+		   new String[] {
+		   });
 	}
 
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot</b>.
 	 * <!-- begin-user-doc -->
-	 * @since 1.7
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	protected void createPivotAnnotations() {
 		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"; //$NON-NLS-1$
 		addAnnotation
-		(getLookupEnvironment__AddElements__Collection(),
-			source,
-			new String[] {
-				"body", "LookupEnvironment{\n\t\t\t\t\t\tnamedElements = namedElements->includingAll(elements) --, TODO\n\t\t\t\t\t\t-- parentEnv = parentEnv\t\n\t\t\t\t}" //$NON-NLS-1$ //$NON-NLS-2$
-		});
+		  (getLookupEnvironment__AddElements__Collection(),
+		   source,
+		   new String[] {
+			   "body", "LookupEnvironment{\n\t\t\t\t\t\tnamedElements = namedElements->includingAll(elements) --, TODO\n\t\t\t\t\t\t-- parentEnv = parentEnv\t\n\t\t\t\t}" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
 		addAnnotation
-		(getLookupEnvironment__AddElement__NamedElement(),
-			source,
-			new String[] {
-				"body", "LookupEnvironment {\n\t\t\t\t\t\tnamedElements = namedElements->including(element) --, TODO\n\t\t\t\t\t\t-- parentEnv = parentEnv\n\t\t\t\t\t}" //$NON-NLS-1$ //$NON-NLS-2$
-		});
+		  (getLookupEnvironment__AddElement__NamedElement(),
+		   source,
+		   new String[] {
+			   "body", "LookupEnvironment {\n\t\t\t\t\t\tnamedElements = namedElements->including(element) --, TODO\n\t\t\t\t\t\t-- parentEnv = parentEnv\n\t\t\t\t\t}" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
 	}
 
 } //LookupPackageImpl

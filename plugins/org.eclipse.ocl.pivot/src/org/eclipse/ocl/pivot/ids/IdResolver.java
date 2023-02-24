@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -29,6 +28,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.MapValue;
@@ -128,7 +128,7 @@ public interface IdResolver extends IdVisitor<Element>
 
 	@NonNull CompleteEnvironment getEnvironment();
 
-	@NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier);
+	@NonNull EcoreFlatClass getFlatClass(@NonNull EClassifier eClassifier);
 
 	org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Class<?> javaClass);
 

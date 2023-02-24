@@ -28,12 +28,12 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -475,9 +476,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		}
 		firstCompleteClass = getCompleteClass(firstType);
 		secondCompleteClass = getCompleteClass(secondType);
-		CompleteInheritance firstInheritance = firstCompleteClass.getCompleteInheritance();
-		CompleteInheritance secondInheritance = secondCompleteClass.getCompleteInheritance();
-		return firstInheritance.isSubInheritanceOf(secondInheritance);
+		FlatClass firstFlatClass = firstCompleteClass.getFlatClass();
+		FlatClass secondFlatClass = secondCompleteClass.getFlatClass();
+		return firstFlatClass.isSubFlatClassOf(secondFlatClass);
 	}
 
 	/*	@Override
@@ -496,9 +497,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		if (firstContainerType != secondContainerType) {
 			CompleteClass firstContainerCompleteClass = getCompleteClass(firstContainerType);
 			CompleteClass secondContainerCompleteClass = getCompleteClass(secondContainerType);
-			CompleteInheritance firstContainerInheritance = firstContainerCompleteClass.getCompleteInheritance();
-			CompleteInheritance secondContainerInheritance = secondContainerCompleteClass.getCompleteInheritance();
-			if (!firstContainerInheritance.isSubInheritanceOf(secondContainerInheritance)) {
+			FlatClass firstContainerFlatClass = firstContainerCompleteClass.getFlatClass();
+			FlatClass secondContainerFlatClass = secondContainerCompleteClass.getFlatClass();
+			if (!firstContainerFlatClass.isSubFlatClassOf(secondContainerFlatClass)) {
 				return false;
 			}
 		}
@@ -613,6 +614,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
 		//		assert partialClass.getUnspecializedElement() == null;
+		if ("Real".equals(partialClass.getName()) ) {
+			getClass();		// XXX
+		}
 		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
 		assert (oldCompleteClass == null) ||(oldCompleteClass == completeClass);
 	}
@@ -704,9 +708,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			CompletePackageInternal primitiveCompletePackage = ownedCompleteModel.getPrimitiveCompletePackage();
 			return primitiveCompletePackage.getCompleteClass((PrimitiveType)pivotType);
 		}
-		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getUnspecializedElement() != null)) {
+		else if ((pivotType instanceof IterableType) && (((IterableType)pivotType).getUnspecializedElement() != null)) {
 			CompletePackageInternal orphanCompletePackage = ownedCompleteModel.getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass((CollectionType)pivotType);
+			return orphanCompletePackage.getCompleteClass((IterableType)pivotType);
 		}
 		else if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
 			org.eclipse.ocl.pivot.Package pivotPackage = ((org.eclipse.ocl.pivot.Class)pivotType).getOwningPackage();

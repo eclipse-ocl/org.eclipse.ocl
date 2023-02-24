@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
 import org.osgi.framework.BundleContext;
 
 /**
- * This is the central singleton for the Pivot model plugin.
+ * This is the central singleton for the OCLAS model plugin.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated

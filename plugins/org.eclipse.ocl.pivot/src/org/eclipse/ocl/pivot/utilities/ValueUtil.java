@@ -79,7 +79,6 @@ import org.eclipse.ocl.pivot.internal.values.UnlimitedValueImpl;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
-import org.eclipse.ocl.pivot.types.AbstractInheritance;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.values.Bag;
@@ -886,14 +885,14 @@ public abstract class ValueUtil
 					//					TemplateParameterId.NULL_TEMPLATE_PARAMETER_ID_ARRAY.getClass();
 					TypeId.INTEGER.getClass();
 					// org.eclipse.ocl.domain.types
-					AbstractInheritance.initStatics();
+				//	AbstractInheritance.initStatics();
 					// org.eclipse.ocl.domain.library
 					UnsupportedOperation.INSTANCE.getClass();
 					// org.eclipse.ocl.domain.messages
 					PivotMessages.InvalidOperation.getClass();
 					new StatusCodes();
 					// org.eclipse.ocl.domain.types
-					AbstractInheritance.initStatics();
+				//	AbstractInheritance.initStatics();
 					// org.eclipse.ocl.domain.utilities
 					StringUtil.createNumberFromString("0");
 					StandaloneProjectMap.initStatics();

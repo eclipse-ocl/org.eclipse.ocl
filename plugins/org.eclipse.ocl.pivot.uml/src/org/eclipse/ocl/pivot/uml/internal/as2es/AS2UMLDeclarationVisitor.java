@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -287,7 +286,7 @@ public class AS2UMLDeclarationVisitor
 	}
 
 	@Override
-	public org.eclipse.uml2.uml.Package visitPackage(@NonNull Package pivotPackage) {
+	public org.eclipse.uml2.uml.Package visitPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		@SuppressWarnings("null")
 		org.eclipse.uml2.uml.@NonNull Package umlPackage = UMLFactory.eINSTANCE.createPackage();
 		copyNamedElement(umlPackage, pivotPackage);

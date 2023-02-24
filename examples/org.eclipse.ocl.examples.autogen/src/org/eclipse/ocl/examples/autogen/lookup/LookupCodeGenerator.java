@@ -19,10 +19,8 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -87,16 +85,16 @@ public class LookupCodeGenerator
 	}
 
 
-	private static Set<@NonNull String> gatherEnvOpNames(@NonNull Package oclDocPackage, @NonNull String envOpNamePrefix) {
+	private static Set<@NonNull String> gatherEnvOpNames(org.eclipse.ocl.pivot.@NonNull Package oclDocPackage, @NonNull String envOpNamePrefix) {
 
 		Set<@NonNull String> result = new LinkedHashSet<@NonNull String>();
 
 		Model model = (Model) oclDocPackage.eContainer();
-		for (Package pPackage : model.getOwnedPackages()) {
+		for (org.eclipse.ocl.pivot.Package pPackage : model.getOwnedPackages()) {
 			String uri = pPackage.getURI();
 			if (uri.equals(OCLstdlibPackage.eNS_URI)
 				|| uri.equals(PivotPackage.eNS_URI)) { // FIXME
-				for (Class pClass : pPackage.getOwnedClasses()) {
+				for (org.eclipse.ocl.pivot.Class pClass : pPackage.getOwnedClasses()) {
 					for (Operation op : pClass.getOwnedOperations()) {
 						String opName = op.getName();
 						if (opName != null && opName.startsWith(envOpNamePrefix)) {

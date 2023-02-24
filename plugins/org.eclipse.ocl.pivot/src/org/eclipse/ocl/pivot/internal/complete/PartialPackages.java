@@ -10,13 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.complete;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
@@ -46,11 +44,6 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	 */
 	private Map<String, CompletePackage> name2nestedCompletePackage = null;
 
-	/**
-	 * Lazily created map of nested class-name to its inheritance.
-	 */
-	protected final @NonNull Map<String, CompleteInheritanceImpl> name2inheritance = new HashMap<String, CompleteInheritanceImpl>();
-
 	public PartialPackages(@NonNull CompletePackageImpl owner) {
 		super(org.eclipse.ocl.pivot.Package.class, owner, PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES.getFeatureID());
 	}
@@ -73,6 +66,8 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		if (PARTIAL_PACKAGES.isActive()) {
 			PARTIAL_PACKAGES.println("Do-didAdd " + this + " " + partialPackage);
 		}
+	//	Model partialModel = PivotUtil.getContainingModel(partialPackage);
+	//	assert (partialModel == null) || getCompleteModel().getPartialModels().contains(partialModel);		// Null during Ecore2AS, not true for QVTd tx chain
 		((PackageImpl)partialPackage).addPackageListener(this);
 		getCompletePackage().didAddPartialPackage(partialPackage);
 		for (org.eclipse.ocl.pivot.Package nestedPackage : partialPackage.getOwnedPackages()) {
@@ -155,23 +150,8 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 
 	@Override
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		CompleteInheritanceImpl completeInheritance = name2inheritance.remove(partialClass.getName());
 		//		System.out.println("PartialPackage.didRemoveClass " + partialClass);
 		getCompletePackage().didRemoveClass(partialClass);
-		if (completeInheritance != null) {
-			completeInheritance.uninstall();
-		}
-	}
-
-	public @NonNull CompleteInheritanceImpl getCompleteInheritance(@NonNull CompleteClassInternal completeClass) {
-		String name = completeClass.getName();
-		CompleteInheritanceImpl completeInheritance = name2inheritance.get(name);
-		if (completeInheritance == null) {
-			completeInheritance = new CompleteInheritanceImpl(completeClass);
-			//			System.out.println("PartialPackage.add " + completeClass);
-			name2inheritance.put(name, completeInheritance);
-		}
-		return completeInheritance;
 	}
 
 	public @NonNull CompleteModelInternal getCompleteModel() {
@@ -186,15 +166,11 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.Package> getNestedPartialPackages() {
 		PartialPackages partialPackages = getCompletePackage().getPartialPackages();
 		Iterable<Iterable<org.eclipse.ocl.pivot.Package>> roots_packages = Iterables.transform(partialPackages, package2PackageOwnedPackages);
-		@NonNull Iterable<Package> allPackages = Iterables.concat(roots_packages);
+		@NonNull Iterable<org.eclipse.ocl.pivot.Package> allPackages = Iterables.concat(roots_packages);
 		return allPackages;
 	}
 
 	public void uninstalled(@NonNull CompleteClassInternal completeClass) {
 		//		System.out.println("PartialPackages.uninstalled " + completeClass + " " + NameUtil.debugFullName(completeClass));
-		CompleteInheritanceImpl inheritance = name2inheritance.remove(completeClass.getName());
-		if (inheritance != null) {
-			inheritance.uninstall();
-		}
 	}
 }

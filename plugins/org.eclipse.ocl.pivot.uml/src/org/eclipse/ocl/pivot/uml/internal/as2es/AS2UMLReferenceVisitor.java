@@ -15,12 +15,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
@@ -39,7 +37,7 @@ public class AS2UMLReferenceVisitor
 	private static final Logger logger = Logger.getLogger(AS2UMLReferenceVisitor.class);
 
 //	protected final AS2EcoreTypeRefVisitor typeRefVisitor;
-	
+
 	public AS2UMLReferenceVisitor(@NonNull AS2UML context) {
 		super(context);
 //		typeRefVisitor = new AS2EcoreTypeRefVisitor(context);
@@ -73,7 +71,7 @@ public class AS2UMLReferenceVisitor
 	} */
 
 	@Override
-	public EObject visitClass(@NonNull Class pivotClass) {
+	public EObject visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
 		org.eclipse.uml2.uml.Class umlClass = context.getCreated(org.eclipse.uml2.uml.Class.class, pivotClass);
 		if (umlClass == null) {
 			return null;
@@ -105,7 +103,7 @@ public class AS2UMLReferenceVisitor
 	}
 
 	@Override
-	public EObject visitPackage(@NonNull Package pivotPackage) {
+	public EObject visitPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 //		org.eclipse.uml2.uml.Package umlPackage = context.getCreated(org.eclipse.uml2.uml.Package.class, pivotPackage);
 /*		boolean needsDelegates = false;
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
@@ -246,7 +244,7 @@ public class AS2UMLReferenceVisitor
 			return null;
 		}
 	}
-	
+
 /*	@Override
 	public Object caseEAnnotation(EAnnotation eAnnotation) {
 		AnnotationCS csAnnotation = (AnnotationCS) deferMap.get(eAnnotation);
@@ -309,5 +307,5 @@ public class AS2UMLReferenceVisitor
 		} */
 //		return null;
 //	}
-	
+
 }

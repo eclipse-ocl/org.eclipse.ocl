@@ -31,7 +31,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -73,7 +72,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @Nullable ResourceSet externalResourceSet) {
 			super(testFileSystem, testPackageName, name, useCodeGen ? getProjectMap() : OCL.NO_PROJECTS, externalResourceSet);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
-			Package asMetamodel = metamodelManager.getASmetamodel();
+			org.eclipse.ocl.pivot.Package asMetamodel = metamodelManager.getASmetamodel();
 			if (asMetamodel != null) {
 				metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, asMetamodel);
 			}
@@ -82,7 +81,7 @@ public class EvaluateUMLTest4 extends PivotTestSuite
 		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @NonNull ProjectManager projectManager, @Nullable ResourceSet externalResourceSet) {
 			super(testFileSystem, testPackageName, name, projectManager, externalResourceSet);
 			MetamodelManagerInternal metamodelManager = getMetamodelManager();
-			Package asMetamodel = metamodelManager.getASmetamodel();
+			org.eclipse.ocl.pivot.Package asMetamodel = metamodelManager.getASmetamodel();
 			if (asMetamodel != null) {
 				metamodelManager.addGlobalNamespace(PivotConstants.OCL_NAME, asMetamodel);
 			}

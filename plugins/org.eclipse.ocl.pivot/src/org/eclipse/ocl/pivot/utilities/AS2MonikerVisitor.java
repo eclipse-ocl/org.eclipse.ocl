@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.IteratorExp;
+import org.eclipse.ocl.pivot.JavaType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.LoopExp;
@@ -352,6 +353,12 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	public Object visitInvalidLiteralExp(@NonNull InvalidLiteralExp object) {
 		appendExpPrefix(object);
 		context.append(MONIKER_INVALID_LITERAL_EXP);
+		return true;
+	}
+
+	@Override
+	public Object visitJavaType(@NonNull JavaType object) {
+		context.append(object.getJavaClass().getName());
 		return true;
 	}
 

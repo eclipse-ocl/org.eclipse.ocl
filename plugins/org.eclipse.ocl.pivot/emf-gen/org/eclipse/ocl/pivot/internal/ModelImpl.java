@@ -31,6 +31,9 @@ import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
+import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.internal.complete.ModelListeners;
 import org.eclipse.ocl.pivot.util.Visitor;
 
@@ -416,7 +419,24 @@ public class ModelImpl extends NamespaceImpl implements Model
 		return eDynamicIsSet(featureID);
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("null")
+	@Override
+	public @NonNull List<Import> getOwnedImports()
+	{
+		if (ownedImports == null)
+		{
+			ownedImports = new EObjectContainmentEList<Import>(Import.class, this, 7);
+		}
+		return ownedImports;
+	}
+
 	private @Nullable ModelListeners<ModelListeners.IModelListener> rootListeners = null;
+	private @Nullable FlatModel flatModel = null;
 
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
@@ -441,6 +461,19 @@ public class ModelImpl extends NamespaceImpl implements Model
 		if (rootListeners != null) {
 			rootListeners.didRemovePackage(partialPackage);
 		}
+	}
+
+	@Override
+	public @NonNull FlatModel getFlatModel() {
+		assert flatModel != null;
+		return flatModel;
+	}
+
+	@Override
+	public @NonNull FlatModel initFlatModel(@NonNull StandardLibrary standardLibrary) {
+		assert flatModel == null;
+		flatModel = new EcoreFlatModel(this, standardLibrary);
+		return flatModel;
 	}
 
 	public synchronized void removeRootListener(ModelListeners.@NonNull IModelListener rootListener) {
@@ -470,24 +503,8 @@ public class ModelImpl extends NamespaceImpl implements Model
 		super.setName(newName);
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("null")
 	@Override
-	public @NonNull List<Import> getOwnedImports()
-	{
-		if (ownedImports == null)
-		{
-			ownedImports = new EObjectContainmentEList<Import>(Import.class, this, 7);
-		}
-		return ownedImports;
-	}
-
-	@Override
-	public void setName(String newName) {		// FIXME BUG 421716 remove Namedspace/NamedElement inheritance
+	public void setName(String newName) {		// FIXME BUG 421716 remove Namespace/NamedElement inheritance
 		// name is a cached optimization of externalURI
 	}
 

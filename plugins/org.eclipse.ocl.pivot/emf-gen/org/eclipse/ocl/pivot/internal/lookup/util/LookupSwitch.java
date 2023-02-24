@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, 2018 Willink Transformations Ltd., University of York and others.
+ * Copyright (c) 2014, 2023 Willink Transformations Ltd., University of York and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -75,13 +75,13 @@ public class LookupSwitch<@Nullable T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case LookupPackage.LOOKUP_ENVIRONMENT: {
+			case 0: {
 				LookupEnvironment lookupEnvironment = (LookupEnvironment)theEObject;
 				T result = caseLookupEnvironment(lookupEnvironment);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case LookupPackage.EXECUTOR: {
+			case 1: {
 				Executor executor = (Executor)theEObject;
 				T result = caseExecutor(executor);
 				if (result == null) result = defaultCase(theEObject);
@@ -96,7 +96,6 @@ public class LookupSwitch<@Nullable T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Environment</em>'.
@@ -112,7 +111,6 @@ public class LookupSwitch<@Nullable T> extends Switch<T> {
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
 	 * @return the result of interpreting the object as an instance of '<em>Executor</em>'.

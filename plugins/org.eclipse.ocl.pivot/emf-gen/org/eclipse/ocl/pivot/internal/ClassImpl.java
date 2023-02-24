@@ -34,7 +34,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -52,6 +51,8 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -100,9 +101,7 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  *
  * @generated
  */
-public class ClassImpl
-extends TypeImpl
-implements org.eclipse.ocl.pivot.Class {
+public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 
 	/**
 	 * The number of structural features of the '<em>Class</em>' class.
@@ -327,14 +326,28 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @generated
 	 */
 	@Override
-	@SuppressWarnings("null")
-	public @NonNull List<Constraint> getOwnedConstraints()
+	public List<Constraint> getOwnedConstraints()
 	{
 		if (ownedConstraints == null)
 		{
 			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, 5);
 		}
 		return ownedConstraints;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<TemplateBinding> getOwnedBindings()
+	{
+		if (ownedBindings == null)
+		{
+			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 6, 5);
+		}
+		return ownedBindings;
 	}
 
 	/**
@@ -385,35 +398,6 @@ implements org.eclipse.ocl.pivot.Class {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedSignature, newOwnedSignature));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public List<TemplateBinding> getOwnedBindings()
-	{
-		if (ownedBindings == null)
-		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 6, 5);
-		}
-		return ownedBindings;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
-	{
-		TemplateableElement oldUnspecializedElement = unspecializedElement;
-		unspecializedElement = newUnspecializedElement;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldUnspecializedElement, unspecializedElement));
 	}
 
 	/**
@@ -1131,8 +1115,9 @@ implements org.eclipse.ocl.pivot.Class {
 		return eDynamicInvoke(operationID, arguments);
 	}
 
-	private TypeId typeId = null;
-	private TypeId normalizedTypeId = null;
+	private @Nullable TypeId typeId = null;
+	private @Nullable TypeId normalizedTypeId = null;
+	private @Nullable FlatClass flatClass = null;
 	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
 
 	@Override
@@ -1140,12 +1125,22 @@ implements org.eclipse.ocl.pivot.Class {
 		return visitor.visitClass(this);
 	}
 
+//	@Override
+	@Override
 	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
 		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
 		if (classListeners2 == null) {
-			classListeners2 = classListeners = new ClassListeners<ClassListeners.IClassListener>();
+			classListeners2 = classListeners = new ClassListeners<>();
 		}
 		classListeners2.addListener(classListener);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
+		return ClassifierAllInstancesOperation.allInstances(executor, returnTypeId, this);
 	}
 
 	public @NonNull TypeId computeId() {
@@ -1159,20 +1154,24 @@ implements org.eclipse.ocl.pivot.Class {
 		return computeId();
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		if (type == this) {
 			return this;
 		}
 		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		return thisInheritance.getCommonInheritance(thatInheritance).getPivotClass();
-	}
+		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
+		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
+		return thisFlatClass.getCommonFlatClass(thatFlatClass).getPivotClass();
+	} */
 
+	public @NonNull FlatClass getFlatClass() {
+		assert flatClass != null;
+		return flatClass;
+	}
 	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		return standardLibrary.getInheritance(this);
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		return standardLibrary.getFlatClass(this);
 	}
 
 	@Override
@@ -1183,7 +1182,8 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
 		try {
-			return getInheritance(standardLibrary).getPivotClass();
+		//	return getInheritance(standardLibrary).getPivotClass();
+			return getFlatClass(standardLibrary).getPivotClass();
 		}
 		catch (Throwable e) {
 			return this;			// WIP FIXME should never happen
@@ -1332,14 +1332,6 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 1.18
 	 */
 	@Override
-	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
-		return ClassifierAllInstancesOperation.allInstances(executor, returnTypeId, this);
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Override
 	public @NonNull TypeId getNormalizedTypeId() {
 		TypeId normalizedTypeId2 = normalizedTypeId;
 		if (normalizedTypeId2 == null) {
@@ -1389,6 +1381,25 @@ implements org.eclipse.ocl.pivot.Class {
 		return unspecializedElement;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
+	{
+		TemplateableElement oldUnspecializedElement = unspecializedElement;
+		unspecializedElement = newUnspecializedElement;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldUnspecializedElement, unspecializedElement));
+	}
+
+	@Override
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
+		getFlatClass().initFragments(fragments, depthCounts);;
+	}
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class isClass() {
 		return this;
@@ -1411,21 +1422,27 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		CompleteInheritance inheritance = getInheritance(standardLibrary);
-		return inheritance.lookupActualOperation(standardLibrary, apparentOperation);
+		FlatClass flatClass = getFlatClass(standardLibrary);
+		return flatClass.lookupActualOperation(standardLibrary, apparentOperation);
 	}
 
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		CompleteInheritance inheritance = getInheritance(standardLibrary);
-		return inheritance.lookupImplementation(standardLibrary, apparentOperation);
+		FlatClass flatClass = getFlatClass(standardLibrary);
+		return flatClass.lookupImplementation(apparentOperation);
 	}
 
+	@Override
 	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
 		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
 		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
 			classListeners = null;
 		}
+	}
+
+	public void setFlatClass(@NonNull FlatClass flatClass) {
+		assert this.flatClass == null;
+		this.flatClass = flatClass;
 	}
 
 	@Override
@@ -1439,6 +1456,16 @@ implements org.eclipse.ocl.pivot.Class {
 		if ((owningPackage instanceof PackageImpl) && (newName != null) && !newName.equals(oldName)) {
 			((PackageImpl)owningPackage).didAddClass(this);
 		}
+	}
+
+	public void setNormalizedTypeId(@Nullable TypeId typeId) {
+		assert this.normalizedTypeId == null;
+		this.normalizedTypeId = typeId;
+	}
+
+	public void setTypeId(@NonNull TypeId typeId) {
+		assert this.typeId == null;
+		this.typeId = typeId;
 	}
 
 	@Override

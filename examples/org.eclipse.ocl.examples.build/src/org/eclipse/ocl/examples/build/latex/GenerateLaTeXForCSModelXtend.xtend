@@ -10,10 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.latex
 
-import org.eclipse.ocl.pivot.Class
 import org.eclipse.ocl.pivot.Element
 import org.eclipse.ocl.pivot.Namespace
-import org.eclipse.ocl.pivot.Package
 import org.eclipse.xtext.AbstractElement
 import org.eclipse.xtext.AbstractMetamodelDeclaration
 import org.eclipse.xtext.Action
@@ -34,9 +32,9 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 
  class GenerateLaTeXForCSModelXtend extends GenerateLaTeXForCSModel
 {
-	/*@NonNull*/ protected override String generateLaTeX(/*@NonNull*/ Package asPackage,
-		/*@NonNull*/ Grammar grammar, /*@Nullable*/ Package cs2asPackage,
-		/*@Nullable*/ Package cs2csPackage) {
+	/*@NonNull*/ protected override String generateLaTeX(/*@NonNull*/ org.eclipse.ocl.pivot.Package asPackage,
+		/*@NonNull*/ Grammar grammar, /*@Nullable*/ org.eclipse.ocl.pivot.Package cs2asPackage,
+		/*@Nullable*/ org.eclipse.ocl.pivot.Package cs2csPackage) {
 		'''
 		«emitClasses(asPackage, grammar, cs2asPackage, cs2csPackage)»
 
@@ -85,7 +83,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 		return assignment.feature + assignment.operator + emitAbstractElement(assignment.terminal, false) + emitCardinality(assignment) + "\n";
 	}
 
-	protected def emitAssociations(/*@NonNull*/ Class asClass) {
+	protected def emitAssociations(/*@NonNull*/ org.eclipse.ocl.pivot.Class asClass) {
 		var asAssociations = getSortedAssociations(asClass);
 		if (asAssociations.size() > 0) {
 		'''
@@ -100,7 +98,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 		}
 	}
 
-	protected def emitAttributes(/*@NonNull*/ Class asClass) {
+	protected def emitAttributes(/*@NonNull*/ org.eclipse.ocl.pivot.Class asClass) {
 		var asAttributes = getSortedAttributes(asClass);
 		if ( asAttributes.size() > 0) {
 		'''
@@ -115,7 +113,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 		}
 	}
 
-	protected def emitCS2AS(/*@NonNull*/ Class asClass, /*@NonNull*/ Package cs2asPackage) {
+	protected def emitCS2AS(/*@NonNull*/ org.eclipse.ocl.pivot.Class asClass, /*@NonNull*/ org.eclipse.ocl.pivot.Package cs2asPackage) {
 		var cs2asClass = NameUtil.getNameable(cs2asPackage.getOwnedClasses(), asClass.getName());
 		if (cs2asClass !== null)  {
 		'''
@@ -133,7 +131,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 		}
 	}
 
-	protected def emitCS2CS(/*@NonNull*/ Class asClass, /*@NonNull*/ Package cs2asPackage) {
+	protected def emitCS2CS(/*@NonNull*/ org.eclipse.ocl.pivot.Class asClass, /*@NonNull*/ org.eclipse.ocl.pivot.Package cs2asPackage) {
 		var cs2csClass = NameUtil.getNameable(cs2asPackage.getOwnedClasses(), asClass.getName());
 		if (cs2csClass !== null)  {
 		'''
@@ -169,9 +167,9 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 		}
 	}
 
-	protected def emitClasses(/*@NonNull*/ Package asPackage,
-		/*@NonNull*/ Grammar grammar, /*@Nullable*/ Package cs2asPackage,
-		/*@Nullable*/ Package cs2csPackage) {
+	protected def emitClasses(/*@NonNull*/ org.eclipse.ocl.pivot.Package asPackage,
+		/*@NonNull*/ Grammar grammar, /*@Nullable*/ org.eclipse.ocl.pivot.Package cs2asPackage,
+		/*@Nullable*/ org.eclipse.ocl.pivot.Package cs2csPackage) {
 		var asClasses = getSortedClasses(asPackage);
 		'''
 		«FOR asClass : asClasses»
@@ -243,7 +241,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 		}
 	}
 
-	protected def emitOperations(/*@NonNull*/ Class asClass) {
+	protected def emitOperations(/*@NonNull*/ org.eclipse.ocl.pivot.Class asClass) {
 		var asOperations = getSortedOperations(asClass);
 		if (asOperations.size() > 0) {
 		'''
@@ -300,7 +298,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 		'''
 	}
 	
-	protected def emitParserRules(/*@NonNull*/ Class asClass, /*@NonNull*/ Grammar grammar) {
+	protected def emitParserRules(/*@NonNull*/ org.eclipse.ocl.pivot.Class asClass, /*@NonNull*/ Grammar grammar) {
 		var parserRules = getSortedParserRules(asClass, grammar);
 		if (parserRules.size() > 0) {
 		'''
@@ -320,7 +318,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 		}
 	}
 
-	protected def emitSuperclasses(/*@NonNull*/ Class asClass) {
+	protected def emitSuperclasses(/*@NonNull*/ org.eclipse.ocl.pivot.Class asClass) {
 		var asSuperClasses = asClass.getSuperClasses();
 		if (asSuperClasses.size() > 0) {
 		'''

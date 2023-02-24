@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -142,7 +141,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		Collections.sort(sortedImportedNamespaces, NameUtil.NAMEABLE_COMPARATOR);
 		for (@NonNull Namespace importedNamespace : sortedImportedNamespaces) {
 			if (importedNamespace instanceof org.eclipse.ocl.pivot.Package){
-				Package pivotPackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)importedNamespace).getPrimaryPackage();
+				org.eclipse.ocl.pivot.Package pivotPackage = metamodelManager.getCompletePackage((org.eclipse.ocl.pivot.Package)importedNamespace).getPrimaryPackage();
 				//			ModelElementCS csElement = createMap.get(importedPackage);
 				//			if ((csElement != null) && (csElement.eResource() == xtextResource)) {
 				//				continue;		// Don't import defined packages

@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.Type;
  */
 public class TemplateParametersImpl implements TemplateParameters
 {
-	
+
 	private final @NonNull Type @NonNull [] typeParameters;
 	private final int hashCode;
 
@@ -37,7 +37,7 @@ public class TemplateParametersImpl implements TemplateParameters
 		}
 		hashCode = hash;
 	}
-	
+
 	public TemplateParametersImpl(@NonNull List<@NonNull ? extends Type> parameters) {
 		typeParameters = new @NonNull Type[parameters.size()];
 		int hash = 0;
@@ -48,7 +48,7 @@ public class TemplateParametersImpl implements TemplateParameters
 		}
 		hashCode = hash;
 	}
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof TemplateParametersImpl)) {
@@ -75,7 +75,7 @@ public class TemplateParametersImpl implements TemplateParameters
 	@Override
 	public @NonNull Type get(int i) {
 		return typeParameters[i];
-	}		
+	}
 
 	@Override
 	public int hashCode() {

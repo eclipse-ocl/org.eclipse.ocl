@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, 2018 Willink Transformations Ltd., University of York and others.
+ * Copyright (c) 2014, 2023 Willink Transformations Ltd., University of York and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -64,127 +64,7 @@ public interface LookupPackage extends EPackage {
 	 */
 	LookupPackage eINSTANCE = org.eclipse.ocl.pivot.internal.lookup.impl.LookupPackageImpl.init();
 
-	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.pivot.internal.lookup.impl.LookupEnvironmentImpl <em>Environment</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.pivot.internal.lookup.impl.LookupEnvironmentImpl
-	 * @see org.eclipse.ocl.pivot.internal.lookup.impl.LookupPackageImpl#getLookupEnvironment()
-	 * @generated
-	 */
-	int LOOKUP_ENVIRONMENT = 0;
 
-	/**
-	 * The feature id for the '<em><b>Named Elements</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOOKUP_ENVIRONMENT__NAMED_ELEMENTS = 0;
-
-	/**
-	 * The feature id for the '<em><b>Parent Env</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOOKUP_ENVIRONMENT__PARENT_ENV = 1;
-
-	/**
-	 * The number of structural features of the '<em>Environment</em>' class.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOOKUP_ENVIRONMENT_FEATURE_COUNT = 2;
-
-	/**
-	 * The operation id for the '<em>Add Elements</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOOKUP_ENVIRONMENT___ADD_ELEMENTS__COLLECTION = 0;
-
-	/**
-	 * The operation id for the '<em>Add Element</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOOKUP_ENVIRONMENT___ADD_ELEMENT__NAMEDELEMENT = 1;
-
-	/**
-	 * The operation id for the '<em>Has Final Result</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOOKUP_ENVIRONMENT___HAS_FINAL_RESULT = 2;
-
-	/**
-	 * The operation id for the '<em>Get Executor</em>' operation.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOOKUP_ENVIRONMENT___GET_EXECUTOR = 3;
-
-	/**
-	 * The number of operations of the '<em>Environment</em>' class.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOOKUP_ENVIRONMENT_OPERATION_COUNT = 4;
-
-	/**
-	 * The meta object id for the '{@link org.eclipse.ocl.pivot.evaluation.Executor <em>Executor</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.ocl.pivot.evaluation.Executor
-	 * @see org.eclipse.ocl.pivot.internal.lookup.impl.LookupPackageImpl#getExecutor()
-	 * @generated
-	 */
-	int EXECUTOR = 1;
-
-	/**
-	 * The number of structural features of the '<em>Executor</em>' class.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXECUTOR_FEATURE_COUNT = 0;
-
-	/**
-	 * The number of operations of the '<em>Executor</em>' class.
-	 * <!-- begin-user-doc -->
-	 * @since 1.1
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXECUTOR_OPERATION_COUNT = 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.internal.lookup.LookupEnvironment <em>Environment</em>}'.
