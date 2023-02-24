@@ -14,10 +14,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
-import org.eclipse.ocl.pivot.types.FlatClass;
 
 /**
  * A ReflectiveType defines a Type using a compact representation suitable for efficient
@@ -52,19 +50,6 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		return flags;
 	}
 
-	/**
-	 * Depth ordered inheritance fragments. OclAny at depth 0, OclSelf at depth size-1.
-	 */
-	private @NonNull InheritanceFragment @Nullable [] fragments = null;
-
-	/**
-	 * The index in fragments at which inheritance fragments at a given depth start.
-	 * depthIndexes[0] is always zero since OclAny is always at depth 0.
-	 * depthIndexes[depthIndexes.length-2] is always depthIndexes.length-1 since OclSelf is always at depth depthIndexes.length-2.
-	 * depthIndexes[depthIndexes.length-1] is always depthIndexes.length to provide an easy end stop.
-	 */
-	private int @Nullable [] indexes = null;
-
 	public ReflectiveInheritance(@NonNull String name, int flags, ExecutorTypeParameter... typeParameters) {
 		super(name, flags);
 	}
@@ -84,17 +69,6 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	}
 
 	public void uninstall() {
-		@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
-		boolean isNonNull = fragments2 != null;		// FIXME needed for JDT 4.5, not needed for JDT 4.6M4
-		if (isNonNull && (fragments2 != null)) {
-			//			System.out.println("Uninstall " + this);
-			for (InheritanceFragment fragment : fragments2) {
-				FlatClass baseInheritance = fragment.getBaseFlatClass();
-				baseInheritance.removeSubInheritance(this.getFlatClass());
-			}
-			fragments = null;
-			indexes = null;
-			flatClass.uninstall();
-		}
+		flatClass.uninstall();
 	}
 }

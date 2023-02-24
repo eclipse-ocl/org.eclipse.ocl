@@ -967,10 +967,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			return commonType;
 		}
 		if ((leftType instanceof CollectionType) && (rightType instanceof CollectionType)) {
-			CompleteInheritance leftInheritance = leftType.getInheritance(standardLibrary);
-			CompleteInheritance rightInheritance = rightType.getInheritance(standardLibrary);
-			CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
-			org.eclipse.ocl.pivot.Class commonCollectionType = getPrimaryClass(commonInheritance.getPivotClass());
+			FlatClass leftFlatClass = leftType.getFlatClass(standardLibrary);
+			FlatClass rightFlatClass = rightType.getFlatClass(standardLibrary);
+			FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
+			org.eclipse.ocl.pivot.Class commonCollectionType = getPrimaryClass(commonFlatClass.getPivotClass());
 			CollectionType leftCollectionType = (CollectionType)leftType;
 			CollectionType rightCollectionType = (CollectionType)rightType;
 			Type leftElementType = ClassUtil.nonNullModel(leftCollectionType.getElementType());
@@ -985,10 +985,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions)) {
 			return leftType;
 		}
-		CompleteInheritance leftInheritance = leftType.getInheritance(standardLibrary);
-		CompleteInheritance rightInheritance = rightType.getInheritance(standardLibrary);
-		CompleteInheritance commonInheritance = leftInheritance.getCommonInheritance(rightInheritance);
-		return getPrimaryClass(commonInheritance.getPivotClass());
+		FlatClass leftFlatClass = leftType.getFlatClass(standardLibrary);
+		FlatClass rightFlatClass = rightType.getFlatClass(standardLibrary);
+		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
+		return getPrimaryClass(commonFlatClass.getPivotClass());
 	}
 
 	@Override

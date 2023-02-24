@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -23,6 +22,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class DomainReflectiveType extends AbstractReflectiveInheritanceType
@@ -47,10 +47,10 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 		if (this == type) {
 			return this.getPivotClass();
 		}
-		CompleteInheritance firstInheritance = this;
-		CompleteInheritance secondInheritance = type.getInheritance(idResolver.getStandardLibrary());
-		CompleteInheritance commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
-		return commonInheritance.getPivotClass();
+		FlatClass firstFlatClass = this.getFlatClass();
+		FlatClass secondFlatClass = type.getFlatClass(idResolver.getStandardLibrary());
+		FlatClass commonFlatClass = firstFlatClass.getCommonFlatClass(secondFlatClass);
+		return commonFlatClass.getPivotClass();
 	}
 
 /*	@Override

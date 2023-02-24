@@ -12,10 +12,12 @@
 package org.eclipse.ocl.examples.pivot.tests;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SetType;
@@ -256,15 +258,16 @@ public class InheritanceTests extends PivotTestSuite
 		try {
 			FlatClass integerTypeFlatClass = standardLibrary.getFlatClass(standardLibrary.getIntegerType());
 			assertEquals(3, integerTypeFlatClass.getDepth());
+			List<Class> superClasses = standardLibrary.getRealType().getSuperClasses();
 			try {
-				standardLibrary.getRealType().getSuperClasses().clear();
-				standardLibrary.getRealType().getSuperClasses().add(standardLibrary.getOclAnyType());
+				superClasses.clear();
+				superClasses.add(standardLibrary.getOclAnyType());
 				assertEquals(2, integerTypeFlatClass.getDepth());
 				assertEquals(2, standardLibrary.getFlatClass(standardLibrary.getIntegerType()).getDepth());
 				assertEquals(1, standardLibrary.getFlatClass(standardLibrary.getRealType()).getDepth());
 			} finally {
-				standardLibrary.getRealType().getSuperClasses().add(standardLibrary.getOclComparableType());
-				standardLibrary.getRealType().getSuperClasses().add(standardLibrary.getOclSummableType());
+				superClasses.add(standardLibrary.getOclComparableType());
+				superClasses.add(standardLibrary.getOclSummableType());
 			}
 		} finally {
 			ocl.dispose();

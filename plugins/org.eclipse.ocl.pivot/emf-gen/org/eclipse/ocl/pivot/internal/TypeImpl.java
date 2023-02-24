@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -226,9 +225,9 @@ implements Type {
 			return this;
 		}
 		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		return thisInheritance.getCommonInheritance(thatInheritance).getPivotClass();
+		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
+		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
+		return thisFlatClass.getCommonFlatClass(thatFlatClass).getPivotClass();
 	}
 
 	@Override

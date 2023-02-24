@@ -69,10 +69,10 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 		if (this == type) {
 			return this.getPivotClass();
 		}
-		CompleteInheritance firstInheritance = this;
-		CompleteInheritance secondInheritance = type.getInheritance(idResolver.getStandardLibrary());
-		CompleteInheritance commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
-		return commonInheritance.getPivotClass();
+		FlatClass firstFlatClass = this.getFlatClass();
+		FlatClass secondFlatClass = type.getFlatClass(idResolver.getStandardLibrary());
+		FlatClass commonFlatClass = firstFlatClass.getCommonFlatClass(secondFlatClass);
+		return commonFlatClass.getPivotClass();
 	}
 
 	@Override

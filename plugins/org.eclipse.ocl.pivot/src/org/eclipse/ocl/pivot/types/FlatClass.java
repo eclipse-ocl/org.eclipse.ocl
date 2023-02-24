@@ -27,12 +27,11 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.executor.PivotReflectiveFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
-import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveInheritance;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
-public class FlatClass implements Nameable
+public class FlatClass implements Nameable		// XXX FIXME immutable metamodels
 {
 	public static class FragmentIterable implements IndexableIterable<@NonNull InheritanceFragment>
 	{
@@ -118,7 +117,7 @@ public class FlatClass implements Nameable
 	 */
 	public static final int ABSTRACT = 1 << 5;
 
-	protected final @NonNull CompleteInheritance completeInheritance;
+	protected final @NonNull CompleteInheritance completeInheritance;		// XXX ?? just pivotClass ??
 
 	protected final @NonNull String name;
 	protected final int flags;
@@ -208,25 +207,29 @@ public class FlatClass implements Nameable
 		return new FragmentIterable(ClassUtil.nonNullState(fragments));
 	}
 
+	@Deprecated
 	public @NonNull CompleteInheritance getCommonInheritance(@NonNull CompleteInheritance thatInheritance) {
-		FlatClass that = thatInheritance.getFlatClass();
+		return getCommonFlatClass(thatInheritance.getFlatClass()).getCompleteInheritance();
+	}
+
+	public @NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that) {
 		if (this == that) {
-			return this.completeInheritance;
+			return this;
 		}
 		if ((flags & (OCL_ANY|OCL_VOID|OCL_INVALID)) != 0) {
 			if ((flags & OCL_ANY) != 0) {
-				return this.completeInheritance;
+				return this;
 			}
 			else if ((flags & OCL_INVALID) != 0) {
-				return that.completeInheritance;
+				return that;
 			}
 			else {
-				return that.isUndefined() ? this.completeInheritance : that.completeInheritance;
+				return that.isUndefined() ? this : that;
 			}
 		}
 		int thatDepth = that.getDepth();
 		if ((thatDepth ==  1) && that.isUndefined()) {
-			return this.completeInheritance;
+			return this;
 		}
 		int thisDepth = getDepth();
 		int staticDepth = Math.min(thisDepth, thatDepth);
@@ -251,10 +254,10 @@ public class FlatClass implements Nameable
 			}
 			if (commonInheritances == 1) {					// Must be unique to avoid arbitrary choice for e.g. Sequence{1, 2.0, '3'}->elementType
 				assert commonFlatClass != null;
-				return commonFlatClass.completeInheritance;
+				return commonFlatClass;
 			}
 		}
-		return getFragment(0).getBaseFlatClass().completeInheritance;	// Always OclAny at index 0
+		return getFragment(0).getBaseFlatClass();	// Always OclAny at index 0
 	}
 
 	@Deprecated /* @deprecated phase out to enhance modulrity */
@@ -327,7 +330,7 @@ public class FlatClass implements Nameable
 	 */
 	private @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses() {
 		if (isOclAny()) {
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
 		return ((CompleteClassInternal)getCompleteClass()).getPartialClasses().getInitialSuperFlatClasses();
 	}
@@ -646,19 +649,31 @@ public class FlatClass implements Nameable
 	}
 
 	@Override
-	public String toString() {
-		return completeInheritance.getPivotClass().toString();
+	public @NonNull String toString() {
+		return getPivotClass().toString();
 	}
 
 	public void uninstall() {
+//	}
+//
+//	public void uninstall() {
+		@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
+		boolean isNonNull = fragments2 != null;		// FIXME needed for JDT 4.5, not needed for JDT 4.6M4
+		if (isNonNull && (fragments2 != null)) {
+			//			System.out.println("Uninstall " + this);
+			for (InheritanceFragment fragment : fragments2) {
+				FlatClass baseInheritance = fragment.getBaseFlatClass();
+				baseInheritance.removeSubInheritance(this);
+			}
+			fragments = null;
+			indexes = null;
+		}
 		if (knownSubInheritances != null) {
 			Set<@NonNull FlatClass> previouslyKnownSubInheritances = knownSubInheritances;
 			knownSubInheritances = null;
-			for (FlatClass subInheritance : previouslyKnownSubInheritances) {
-				CompleteInheritance completeInheritance2 = subInheritance.getCompleteInheritance();
-				if (completeInheritance2 instanceof ReflectiveInheritance) {
-					((ReflectiveInheritance)completeInheritance2).uninstall();
-				}
+			for (FlatClass subFlatClass : previouslyKnownSubInheritances) {
+				((CompleteClassInternal)subFlatClass.getCompleteClass()).uninstall();
+				subFlatClass.uninstall();
 			}
 		}
 	}

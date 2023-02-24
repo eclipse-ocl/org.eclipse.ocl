@@ -1160,16 +1160,16 @@ implements org.eclipse.ocl.pivot.Class {
 		return computeId();
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		if (type == this) {
 			return this;
 		}
 		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		return thisInheritance.getCommonInheritance(thatInheritance).getPivotClass();
-	}
+		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
+		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
+		return thisFlatClass.getCommonFlatClass(thatFlatClass).getPivotClass();
+	} */
 
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {

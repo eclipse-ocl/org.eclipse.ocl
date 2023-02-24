@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
 import org.eclipse.ocl.pivot.internal.library.executor.DomainProperties;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -93,10 +94,10 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		if (this == type) {
 			return this.getPivotClass();
 		}
-		CompleteInheritance firstInheritance = this;
-		CompleteInheritance secondInheritance = type.getInheritance(idResolver.getStandardLibrary());
-		CompleteInheritance commonInheritance = firstInheritance.getCommonInheritance(secondInheritance);
-		return commonInheritance.getPivotClass();
+		FlatClass firstFlatClass = this.getFlatClass();
+		FlatClass secondFlatClass = type.getFlatClass(idResolver.getStandardLibrary());
+		FlatClass commonFlatClass = firstFlatClass.getCommonFlatClass(secondFlatClass);
+		return commonFlatClass.getPivotClass();
 	}
 
 	public final @NonNull EClassifier getEClassifier() {
