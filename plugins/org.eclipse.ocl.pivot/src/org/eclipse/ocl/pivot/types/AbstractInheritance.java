@@ -24,155 +24,39 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 
 public abstract class AbstractInheritance extends AbstractExecutorNamedElement implements CompleteInheritance
 {
-	public static class FragmentIterable implements IndexableIterable<@NonNull InheritanceFragment>
-	{
-		protected class Iterator implements java.util.Iterator<@NonNull InheritanceFragment>
-		{
-			private int index = firstIndex;
-
-			@Override
-			public boolean hasNext() {
-				return index < lastIndex;
-			}
-
-			@Override
-			public @NonNull InheritanceFragment next() {
-				return array[index++];
-			}
-
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		}
-
-		private final @NonNull InheritanceFragment @NonNull [] array;
-		private final int firstIndex;
-		private final int lastIndex;
-
-		public FragmentIterable(@NonNull InheritanceFragment @NonNull [] array) {
-			this.array = array;
-			this.firstIndex = 0;
-			this.lastIndex = array.length;
-		}
-
-		public FragmentIterable(@NonNull InheritanceFragment @NonNull [] array, int firstIndex, int lastIndex) {
-			this.array = array;
-			this.firstIndex = firstIndex;
-			this.lastIndex = lastIndex;
-		}
-
-		@Override
-		public @NonNull InheritanceFragment get(int index) {
-			return ClassUtil.nonNullState(array[firstIndex + index]);
-		}
-
-		@Override
-		public java.util.@NonNull Iterator<@NonNull InheritanceFragment> iterator() {
-			return new Iterator();
-		}
-
-		@Override
-		public int size() {
-			return lastIndex - firstIndex;
-		}
-
-		@Override
-		public String toString() {
-			StringBuilder s = null;
-			for (int i = firstIndex; i < lastIndex; i++) {
-				if (s == null) {
-					s = new StringBuilder();
-					s.append("[");
-				}
-				else {
-					s.append(", ");
-				}
-				s.append(array[i]);
-			}
-			if (s == null) {
-				return "";
-			}
-			s.append("]");
-			return s.toString();
-		}
-	}
-
-	public static final int ORDERED = 1 << 0;
-	public static final int UNIQUE = 1 << 1;
-	public static final int OCL_ANY = 1 << 2;
-	public static final int OCL_VOID = 1 << 3;
-	public static final int OCL_INVALID = 1 << 4;			// NB. OCL_INVALID assumed greater than OCL_VOID by isSuper/SubInheritanceOf
+	public static final int ORDERED = FlatClass.ORDERED;
+	public static final int UNIQUE = FlatClass.UNIQUE;
+	public static final int OCL_ANY = FlatClass.OCL_ANY;
+	public static final int OCL_VOID = FlatClass.OCL_VOID;
+	public static final int OCL_INVALID = FlatClass.OCL_INVALID;
 	/**
 	 * @since 1.1
 	 */
-	public static final int ABSTRACT = 1 << 5;
+	public static final int ABSTRACT = FlatClass.ABSTRACT;
 
 	/**
 	 * A simple public static method that may be used to force class initialization.
 	 */
 	public static void initStatics() {}
 
-	protected final int flags;
-	//	protected @Nullable Map<String, DomainOperation> operationMap = null;
-	//	protected @Nullable Map<String, DomainProperty> propertyMap = null;
+	protected final @NonNull FlatClass flatClass;
 
 	public AbstractInheritance(@NonNull String name, int flags) {
 		super(name);
-		this.flags = flags;
+		this.flatClass = new FlatClass(this, name, flags);
 	}
 
 	@Override
 	public @NonNull CompleteInheritance getCommonInheritance(@NonNull CompleteInheritance thatInheritance) {
-		if (this == thatInheritance) {
-			return this;
-		}
-		if ((flags & (OCL_ANY|OCL_VOID|OCL_INVALID)) != 0) {
-			if ((flags & OCL_ANY) != 0) {
-				return this;
-			}
-			else if ((flags & OCL_INVALID) != 0) {
-				return thatInheritance;
-			}
-			else {
-				return thatInheritance.isUndefined() ? this : thatInheritance;
-			}
-		}
-		int thatDepth = thatInheritance.getDepth();
-		if ((thatDepth ==  1) && thatInheritance.isUndefined()) {
-			return this;
-		}
-		int thisDepth = getDepth();
-		int staticDepth = Math.min(thisDepth, thatDepth);
-		for ( ; staticDepth > 0; --staticDepth) {
-			int iMax = getIndex(staticDepth+1);
-			int jMax = thatInheritance.getIndex(staticDepth+1);
-			CompleteInheritance commonInheritance = null;
-			int commonInheritances = 0;
-			for (int i = getIndex(staticDepth); i < iMax; i++) {
-				CompleteInheritance thisBaseInheritance = getFragment(i).getBaseInheritance();
-				for (int j = thatInheritance.getIndex(staticDepth); j < jMax; j++) {
-					CompleteInheritance thatBaseInheritance = thatInheritance.getFragment(j).getBaseInheritance();
-					if (thisBaseInheritance == thatBaseInheritance) {
-						commonInheritances++;
-						commonInheritance = thisBaseInheritance;
-						break;
-					}
-				}
-				if (commonInheritances > 1) { 				// More than one so must go less deep to find uniqueness
-					break;
-				}
-			}
-			if (commonInheritances == 1) {					// Must be unique to avoid arbitrary choice for e.g. Sequence{1, 2.0, '3'}->elementType
-				assert commonInheritance != null;
-				return commonInheritance;
-			}
-		}
-		return getFragment(0).getBaseInheritance();	// Always OclAny at index 0
+		return flatClass.getCommonInheritance(thatInheritance);
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass() {
+		return flatClass;
 	}
 
 	@Override
@@ -196,41 +80,37 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	public final boolean isInvalid() {
-		return (flags & OCL_INVALID) != 0;
+		return flatClass.isInvalid();
 	}
 
 	@Override
 	public final boolean isOclAny() {
-		return (flags & OCL_ANY) != 0;
+		return flatClass.isOclAny();
+	}
+
+//	@Override
+	public /*final*/ boolean isOrdered() {
+		return flatClass.isOrdered();
 	}
 
 	@Override
 	public boolean isSubInheritanceOf(@NonNull CompleteInheritance thatInheritance) {
-		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
-		int thoseFlags = ((AbstractInheritance)thatInheritance).flags & (OCL_VOID|OCL_INVALID);
-		if ((theseFlags == 0) && (thoseFlags == 0)) {
-			return getFragment(thatInheritance) != null;
-		}
-		else {
-			return theseFlags >= thoseFlags;
-		}
+		return flatClass.isSubInheritanceOf(((AbstractInheritance)thatInheritance).getFlatClass());
 	}
 
 	@Override
 	public boolean isSuperInheritanceOf(@NonNull CompleteInheritance thatInheritance) {
-		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
-		int thoseFlags = ((AbstractInheritance)thatInheritance).flags & (OCL_VOID|OCL_INVALID);
-		if ((theseFlags == 0) && (thoseFlags == 0)) {
-			return thatInheritance.getFragment(this) != null;
-		}
-		else {
-			return theseFlags <= thoseFlags;
-		}
+		return flatClass.isSuperInheritanceOf(((AbstractInheritance)thatInheritance).getFlatClass());
 	}
 
 	@Override
 	public final boolean isUndefined() {
-		return (flags & (OCL_VOID|OCL_INVALID)) != 0;
+		return flatClass.isUndefined();
+	}
+
+//	@Override
+	public /*final*/ boolean isUnique() {
+		return flatClass.isUnique();
 	}
 
 	@Override

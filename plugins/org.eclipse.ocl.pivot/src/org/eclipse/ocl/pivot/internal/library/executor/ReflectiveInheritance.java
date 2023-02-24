@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.types.FlatClass.FragmentIterable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -158,7 +159,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	}
 
 	@Override
-	public InheritanceFragment getFragment(int fragmentNumber) {
+	public @NonNull InheritanceFragment getFragment(int fragmentNumber) {
 		if ((fragments == null) && isOclAny()) {
 			installOclAny();
 		}
@@ -204,9 +205,9 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
 		assert fragments2 != null;
 		InheritanceFragment fragment = getFragment(fragments2.length-1);
-		if (fragment == null) {
-			throw new IllegalStateException("No self fragment"); //$NON-NLS-1$
-		}
+	//	if (fragment == null) {
+	//		throw new IllegalStateException("No self fragment"); //$NON-NLS-1$
+	//	}
 		return fragment;
 	}
 

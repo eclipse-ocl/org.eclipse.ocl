@@ -70,7 +70,7 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 	}
 
 	@Override
-	public InheritanceFragment getFragment(int fragmentNumber) {
+	public @NonNull InheritanceFragment getFragment(int fragmentNumber) {
 		throw new UnsupportedOperationException();
 	}
 

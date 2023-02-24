@@ -152,7 +152,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 
 	@Override
 	public boolean isIsAbstract() {
-		return (flags & ABSTRACT) != 0;
+		return flatClass.isAbstract();
 	}
 
 	@Override
@@ -167,6 +167,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 
 	@Override
 	public boolean isOrdered() {
+		assert !flatClass.isOrdered();
 		return false;
 	}
 
@@ -177,6 +178,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 
 	@Override
 	public boolean isUnique() {
+		assert !flatClass.isUnique();
 		return false;
 	}
 

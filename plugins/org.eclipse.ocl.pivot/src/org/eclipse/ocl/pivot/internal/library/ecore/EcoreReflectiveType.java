@@ -218,11 +218,11 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 
 	@Override
 	public boolean isOrdered() {
-		return (flags & ORDERED) != 0;
+		return flatClass.isOrdered();
 	}
 
 	@Override
 	public boolean isUnique() {
-		return (flags & UNIQUE) != 0;
+		return flatClass.isUnique();
 	}
 }

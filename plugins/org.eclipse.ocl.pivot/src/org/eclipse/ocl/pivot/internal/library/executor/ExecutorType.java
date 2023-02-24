@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
+import org.eclipse.ocl.pivot.types.FlatClass.FragmentIterable;
 import org.eclipse.ocl.pivot.utilities.ArrayIterable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -238,7 +239,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public boolean isOrdered() {
-		return (flags & ORDERED) != 0;
+		return flatClass.isOrdered();
 	}
 
 	@Override
@@ -248,7 +249,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public boolean isUnique() {
-		return (flags & UNIQUE) != 0;
+		return flatClass.isUnique();
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
@@ -47,12 +48,14 @@ public interface CompleteInheritance extends Nameable
 	 */
 	int getDepth();
 
+	@NonNull FlatClass getFlatClass();
+
 	/**
 	 * Return the InheritanceFragment of this inheritance whose baseInheritance is thatInheritance. Return null if no InheritanceFragment corresponds.
 	 */
 	@Nullable InheritanceFragment getFragment(@NonNull CompleteInheritance thatInheritance);
 	@NonNull Iterable<@NonNull InheritanceFragment> getFragments();
-	/*@Nullable*/ InheritanceFragment getFragment(int fragmentNumber);
+	@NonNull InheritanceFragment getFragment(int fragmentNumber);
 	int getIndex(int fragmentNumber);
 	int getIndexes();
 	@Nullable Operation getMemberOperation(@NonNull OperationId id);
