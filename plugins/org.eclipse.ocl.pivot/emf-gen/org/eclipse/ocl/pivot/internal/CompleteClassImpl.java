@@ -540,7 +540,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		{
 			@Override
 			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull InheritanceFragment input) {
-				return input.getBaseInheritance().getPivotClass();
+				return input.getBaseFlatClass().getPivotClass();
 			}
 		});
 	}
@@ -552,7 +552,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		{
 			@Override
 			public @NonNull CompleteClass apply(@NonNull InheritanceFragment input) {
-				return ((CompleteInheritanceImpl)input.getBaseInheritance()).getCompleteClass();		// FIXME cast
+				return input.getBaseFlatClass().getCompleteClass();
 			}
 		});
 	}

@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class DomainReflectiveType extends AbstractReflectiveInheritanceType
@@ -41,8 +42,8 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
-		return new DomainReflectiveFragment(this, baseInheritance);
+	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
+		return new DomainReflectiveFragment(this.getFlatClass(), baseInheritance);
 	}
 
 	@Override

@@ -66,7 +66,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 			int iMax = getIndex(staticDepth+1);
 			for (int i = getIndex(staticDepth); i < iMax; i++) {
 				InheritanceFragment fragment = getFragment(i);
-				if (fragment.getBaseInheritance() == thatInheritance) {
+				if (fragment.getBaseFlatClass() == thatInheritance) {
 					return fragment;
 				}
 			}
@@ -95,12 +95,12 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 
 	@Override
 	public boolean isSubInheritanceOf(@NonNull CompleteInheritance thatInheritance) {
-		return flatClass.isSubInheritanceOf(((AbstractInheritance)thatInheritance).getFlatClass());
+		return flatClass.isSubFlatClassOf(thatInheritance.getFlatClass());
 	}
 
 	@Override
 	public boolean isSuperInheritanceOf(@NonNull CompleteInheritance thatInheritance) {
-		return flatClass.isSuperInheritanceOf(((AbstractInheritance)thatInheritance).getFlatClass());
+		return flatClass.isSuperFlatClassOf(thatInheritance.getFlatClass());
 	}
 
 	@Override
@@ -117,14 +117,17 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		getDepth();
 		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
-		int apparentDepth = ClassUtil.nonNullModel(apparentInheritance).getDepth();
-		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
-			int iMax = getIndex(apparentDepth+1);
-			for (int i = getIndex(apparentDepth); i < iMax; i++) {
-				InheritanceFragment fragment = getFragment(i);
-				if (fragment.getBaseInheritance() == apparentInheritance) {
-					Operation actualOperation = fragment.getActualOperation(apparentOperation);
-					return actualOperation;
+		if (apparentInheritance != null) {
+			FlatClass apparentFlatClass = apparentInheritance.getFlatClass();
+			int apparentDepth = ClassUtil.nonNullModel(apparentInheritance).getDepth();
+			if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
+				int iMax = getIndex(apparentDepth+1);
+				for (int i = getIndex(apparentDepth); i < iMax; i++) {
+					InheritanceFragment fragment = getFragment(i);
+					if (fragment.getBaseFlatClass() == apparentFlatClass) {
+						Operation actualOperation = fragment.getActualOperation(apparentOperation);
+						return actualOperation;
+					}
 				}
 			}
 		}
@@ -135,13 +138,16 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		getDepth();
 		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
-		int apparentDepth = ClassUtil.nonNullModel(apparentInheritance).getDepth();
-		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
-			int iMax = getIndex(apparentDepth+1);
-			for (int i = getIndex(apparentDepth); i < iMax; i++) {
-				InheritanceFragment fragment = getFragment(i);
-				if (fragment.getBaseInheritance() == apparentInheritance) {
-					return fragment.getImplementation(apparentOperation);
+		if (apparentInheritance != null) {
+			FlatClass apparentFlatClass = apparentInheritance.getFlatClass();
+			int apparentDepth = ClassUtil.nonNullModel(apparentInheritance).getDepth();
+			if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
+				int iMax = getIndex(apparentDepth+1);
+				for (int i = getIndex(apparentDepth); i < iMax; i++) {
+					InheritanceFragment fragment = getFragment(i);
+					if (fragment.getBaseFlatClass() == apparentFlatClass) {
+						return fragment.getImplementation(apparentOperation);
+					}
 				}
 			}
 		}

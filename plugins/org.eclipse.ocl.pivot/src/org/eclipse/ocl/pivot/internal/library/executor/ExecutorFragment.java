@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import com.google.common.collect.Lists;
@@ -34,7 +35,11 @@ public class ExecutorFragment extends AbstractFragment
 	private @NonNull ExecutorProperty[] properties;
 
 	public ExecutorFragment(@NonNull ExecutorType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
-		super(derivedInheritance, baseInheritance);
+		this(derivedInheritance.getFlatClass(), baseInheritance.getFlatClass());
+	}
+
+	public ExecutorFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
+		super(derivedFlatClass, baseFlatClass);
 		this.operations = null;
 		this.properties = null;
 	}

@@ -11,11 +11,9 @@
 package org.eclipse.ocl.pivot.internal.library.executor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
@@ -26,6 +24,7 @@ import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.types.FlatClass.FragmentIterable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -75,24 +74,15 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	 */
 	private int @Nullable [] indexes = null;
 
-	/**
-	 * The Inheritances of sub-types that have been installed, and which must be
-	 * uninstalled in the event of an inheritance change for this Inheritance.
-	 */
-	private Set<@NonNull ReflectiveInheritance> knownSubInheritances = null;
-
 	public ReflectiveInheritance(@NonNull String name, int flags, ExecutorTypeParameter... typeParameters) {
 		super(name, flags);
 	}
 
-	public void addSubInheritance(@NonNull ReflectiveInheritance subInheritance) {
-		if (knownSubInheritances == null) {
-			knownSubInheritances = new HashSet<>();
-		}
-		knownSubInheritances.add(subInheritance);
+	protected final @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
+		return createFragment(baseInheritance.getFlatClass());
 	}
 
-	protected abstract @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance);
+	protected abstract @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance);
 
 	@Override
 	public @NonNull EObject createInstance() {
@@ -286,12 +276,12 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 			installOclAny();
 		}
 		else {
-			List<@NonNull List<@NonNull CompleteInheritance>> all = new ArrayList<>();
+			List<@NonNull List<@NonNull FlatClass>> all = new ArrayList<>();
 			for (@NonNull CompleteInheritance superInheritance : getInitialSuperInheritances()) {
 				//				installIn(superInheritance, this, all);
 				int j = 0;
 				for (int i = 0; i < superInheritance.getIndexes()-1; i++) {
-					List<@NonNull CompleteInheritance> some = (i < all.size()) ? all.get(i) : null;
+					List<@NonNull FlatClass> some = (i < all.size()) ? all.get(i) : null;
 					if (some == null) {
 						some = new ArrayList<>();
 						all.add(some);
@@ -299,19 +289,17 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 					int jMax = superInheritance.getIndex(i+1);
 					for (; j < jMax; j++) {
 						InheritanceFragment fragment = superInheritance.getFragment(j);
-						CompleteInheritance baseInheritance = fragment.getBaseInheritance();
+						FlatClass baseInheritance = fragment.getBaseFlatClass();
 						if (!some.contains(baseInheritance)) {
 							some.add(baseInheritance);
-							if (baseInheritance instanceof ReflectiveInheritance) {
-								((ReflectiveInheritance)baseInheritance).addSubInheritance(this);
-							}
+							baseInheritance.addSubInheritance(this.getFlatClass());
 						}
 					}
 				}
 			}
 			int superDepths = all.size();
 			int superInheritances = 0;
-			for (List<CompleteInheritance> some : all) {
+			for (List<FlatClass> some : all) {
 				superInheritances += some.size();
 			}
 			assert superDepths > 0;
@@ -320,7 +308,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 			int j = 0;
 			indexes2[0] = 0;
 			for (int i = 0; i < superDepths; i++) {
-				for (CompleteInheritance some : all.get(i)) {
+				for (FlatClass some : all.get(i)) {
 					fragments2[j++] = createFragment(some);
 				}
 				indexes2[i+1] = j;
@@ -371,32 +359,18 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		return fragments != null;
 	}
 
-	public void removeSubInheritance(@NonNull ReflectiveInheritance subInheritance) {
-		if (knownSubInheritances != null) {
-			knownSubInheritances.remove(subInheritance);
-		}
-	}
-
 	public void uninstall() {
 		@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
 		boolean isNonNull = fragments2 != null;		// FIXME needed for JDT 4.5, not needed for JDT 4.6M4
 		if (isNonNull && (fragments2 != null)) {
 			//			System.out.println("Uninstall " + this);
 			for (InheritanceFragment fragment : fragments2) {
-				CompleteInheritance baseInheritance = fragment.getBaseInheritance();
-				if (baseInheritance instanceof ReflectiveInheritance) {
-					((ReflectiveInheritance)baseInheritance).removeSubInheritance(this);
-				}
+				FlatClass baseInheritance = fragment.getBaseFlatClass();
+				baseInheritance.removeSubInheritance(this.getFlatClass());
 			}
 			fragments = null;
 			indexes = null;
-			if (knownSubInheritances != null) {
-				Set<ReflectiveInheritance> previouslyKnownSubInheritances = knownSubInheritances;
-				knownSubInheritances = null;
-				for (ReflectiveInheritance subInheritance : previouslyKnownSubInheritances) {
-					subInheritance.uninstall();
-				}
-			}
+			flatClass.uninstall();
 		}
 	}
 }

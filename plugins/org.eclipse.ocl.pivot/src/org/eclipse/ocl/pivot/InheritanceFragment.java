@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.types.FlatClass;
 
 /**
  * An InheritanceFragment identifies the capabilities introduced by a particular inheritance.
@@ -25,14 +26,14 @@ public interface InheritanceFragment
 	@NonNull InheritanceFragment getBaseFragment();
 
 	/**
-	 * Return the inheritance that introduces the operations and properties in this fragment.
+	 * Return the FlatClass that introduces the operations and properties in this fragment.
 	 */
-	@NonNull CompleteInheritance getBaseInheritance();
+	@NonNull FlatClass getBaseFlatClass();
 
 	/**
-	 * Return the inheritance that overloads the operations and properties in this fragment.
+	 * Return the FlatClass that overloads the operations and properties in this fragment.
 	 */
-	@NonNull CompleteInheritance getDerivedInheritance();
+	@NonNull FlatClass getDerivedFlatClass();
 
 	/**
 	 * Return the actualOperation that has the same signature as apparentOperation.

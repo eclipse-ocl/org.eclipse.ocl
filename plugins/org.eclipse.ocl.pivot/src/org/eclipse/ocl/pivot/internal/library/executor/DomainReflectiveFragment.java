@@ -12,16 +12,16 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.types.FlatClass;
 
 public class DomainReflectiveFragment extends ReflectiveFragment
 {
 //	protected final EClassifier eClassifier;
 
-	public DomainReflectiveFragment(@NonNull DomainReflectiveType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
+	public DomainReflectiveFragment(@NonNull FlatClass derivedInheritance, @NonNull FlatClass baseInheritance) {
 		super(derivedInheritance, baseInheritance);
-//		this.eClassifier = derivedInheritance.getEClassifier();		
+//		this.eClassifier = derivedInheritance.getEClassifier();
 	}
 
 //	public final EClassifier getEClassifier() {

@@ -12,21 +12,20 @@ package org.eclipse.ocl.pivot.internal.executor;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.ids.ParametersId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveFragment;
+import org.eclipse.ocl.pivot.types.FlatClass;
 
 public class PivotReflectiveFragment extends ReflectiveFragment
 {
-	public PivotReflectiveFragment(@NonNull CompleteInheritanceImpl derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
+	public PivotReflectiveFragment(@NonNull FlatClass derivedInheritance, @NonNull FlatClass baseInheritance) {
 		super(derivedInheritance, baseInheritance);
 	}
 
 	@Override
 	public @Nullable Operation getLocalOperation(@NonNull Operation baseOperation) {
-		CompleteInheritanceImpl completeInheritance = (CompleteInheritanceImpl) derivedInheritance;
+		FlatClass completeInheritance = derivedFlatClass;
 		String baseOperationName = baseOperation.getName();
 		ParametersId baseParametersId = baseOperation.getParametersId();
 		Operation bestOperation = null;
@@ -35,7 +34,7 @@ public class PivotReflectiveFragment extends ReflectiveFragment
 				if (localOperation.getName().equals(baseOperationName) && (localOperation.getParametersId() == baseParametersId)) {
 					if (localOperation.getESObject() != null) {
 						return localOperation;
-					}					
+					}
 					if (bestOperation == null) {
 						bestOperation = localOperation;
 					}

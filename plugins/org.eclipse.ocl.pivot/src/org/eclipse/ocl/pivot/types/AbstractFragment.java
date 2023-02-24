@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.types;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -19,12 +18,12 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 public abstract class AbstractFragment implements InheritanceFragment
 {
-	public final @NonNull CompleteInheritance derivedInheritance;
-	public final @NonNull CompleteInheritance baseInheritance;
+	public final @NonNull FlatClass derivedFlatClass;
+	public final @NonNull FlatClass baseFlatClass;
 
-	public AbstractFragment(@NonNull CompleteInheritance derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
-		this.derivedInheritance = derivedInheritance;
-		this.baseInheritance = baseInheritance;
+	public AbstractFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
+		this.derivedFlatClass = derivedFlatClass;
+		this.baseFlatClass = baseFlatClass;
 	}
 
 	/**
@@ -34,26 +33,26 @@ public abstract class AbstractFragment implements InheritanceFragment
 	public @NonNull Operation getActualOperation(@NonNull Operation apparentOperation) {
 		Operation localOperation = getLocalOperation(apparentOperation);
 		if (localOperation == null) {
-			if (derivedInheritance == baseInheritance) {
+			if (derivedFlatClass == baseFlatClass) {
 				localOperation = apparentOperation;
 			}
 		}
 		if (localOperation == null) {				// Non-trivial, search up the inheritance tree for an inherited operation
 			Operation bestOverload = null;
-			CompleteInheritance bestInheritance = null;
+			FlatClass bestFlatClass = null;
 			int bestDepth = -1;
-			int minDepth = baseInheritance.getDepth();
-			for (int depth = derivedInheritance.getDepth()-1; depth >= minDepth; depth--) {
-				Iterable<InheritanceFragment> derivedSuperFragments = derivedInheritance.getSuperFragments(depth);
+			int minDepth = baseFlatClass.getDepth();
+			for (int depth = derivedFlatClass.getDepth()-1; depth >= minDepth; depth--) {
+				Iterable<@NonNull InheritanceFragment> derivedSuperFragments = derivedFlatClass.getSuperFragments(depth);
 				for (InheritanceFragment derivedSuperFragment : derivedSuperFragments) {
-					CompleteInheritance superInheritance = derivedSuperFragment.getBaseInheritance();
-					InheritanceFragment superFragment = superInheritance.getFragment(baseInheritance);
+					FlatClass superFlatClass = derivedSuperFragment.getBaseFlatClass();
+					InheritanceFragment superFragment = superFlatClass.getFragment(baseFlatClass);
 					if (superFragment != null) {
 						Operation overload = superFragment.getLocalOperation(apparentOperation);
 						if (overload != null) {
-							if (bestInheritance == null) {				// First candidate
+							if (bestFlatClass == null) {				// First candidate
 								bestDepth = depth;
-								bestInheritance = superInheritance;
+								bestFlatClass = superFlatClass;
 								bestOverload = overload;
 							}
 							else if (depth == bestDepth) {				// Sibling candidate
@@ -61,7 +60,7 @@ public abstract class AbstractFragment implements InheritanceFragment
 								depth = -1;
 								break;
 							}
-							else if (!bestInheritance.isSubInheritanceOf(superInheritance)) {	// Non-occluded child candidate
+							else if (!bestFlatClass.isSubFlatClassOf(superFlatClass)) {	// Non-occluded child candidate
 								bestOverload = null;
 								depth = -1;
 								break;
@@ -73,11 +72,11 @@ public abstract class AbstractFragment implements InheritanceFragment
 			if (bestOverload != null) {
 				localOperation = bestOverload;
 			}
-			else if (bestInheritance == null) {
+			else if (bestFlatClass == null) {
 				localOperation = apparentOperation;		// FIXME Missing operation
 			}
 			else {
-				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, derivedInheritance);
+				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, derivedFlatClass);
 			}
 		}
 		//		if (localOperation == null) {
@@ -91,17 +90,17 @@ public abstract class AbstractFragment implements InheritanceFragment
 
 	@Override
 	public final @NonNull InheritanceFragment getBaseFragment() {
-		return baseInheritance.getSelfFragment();
+		return baseFlatClass.getSelfFragment();
 	}
 
 	@Override
-	public final @NonNull CompleteInheritance getBaseInheritance() {
-		return baseInheritance;
+	public final @NonNull FlatClass getBaseFlatClass() {
+		return baseFlatClass;
 	}
 
 	@Override
-	public final @NonNull CompleteInheritance getDerivedInheritance() {
-		return derivedInheritance;
+	public final @NonNull FlatClass getDerivedFlatClass() {
+		return derivedFlatClass;
 	}
 
 	/**
@@ -161,6 +160,6 @@ public abstract class AbstractFragment implements InheritanceFragment
 
 	@Override
 	public @NonNull String toString() {
-		return derivedInheritance.toString() + "__" + baseInheritance.toString(); //$NON-NLS-1$
+		return derivedFlatClass.toString() + "__" + baseFlatClass.toString(); //$NON-NLS-1$
 	}
 }

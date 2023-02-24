@@ -741,7 +741,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		{
 			@Override
 			public @NonNull CompleteClass apply(InheritanceFragment input) {
-				return ((CompleteInheritanceImpl)input.getBaseInheritance()).getCompleteClass();
+				return input.getBaseFlatClass().getCompleteClass();
 			}
 		});
 	}

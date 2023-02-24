@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.executor.PivotReflectiveFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveInheritance;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import com.google.common.base.Function;
@@ -47,7 +48,7 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 			return operations.get(0);
 		}
 	}
-	
+
 	public static final @NonNull BestOperation bestOperation = new BestOperation();
 
 	public static @NonNull TemplateParameterSubstitution createTemplateParameterSubstitution(@NonNull TemplateParameter formalParameter, @NonNull Type type) {
@@ -67,8 +68,8 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	}
 
 	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
-		return new PivotReflectiveFragment(this, baseInheritance);
+	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
+		return new PivotReflectiveFragment(this.getFlatClass(), baseInheritance);
 	}
 
 	public @NonNull CompleteClassInternal getCompleteClass() {
@@ -79,7 +80,7 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
 		return isOclAny() ? EMPTY_LIST : completeClass.getPartialClasses().getInitialSuperInheritances();
 	}
-	
+
 	public @NonNull List<? extends Operation> getLocalOperations() {
 		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedOperations());			// FIXME Use local cache
 	}
@@ -107,12 +108,12 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	public @NonNull List<Property> getOwnedProperties() {
 		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedProperties());			// FIXME Use local cache
 	}
-	
+
 	@Override
 	public @NonNull List<Operation> getOwnedOperations() {
 		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedOperations());			// FIXME Use local cache
 	}
-	
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
 		return getCompleteClass().getPrimaryClass();
@@ -139,7 +140,7 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 
 	@Override
 	public String toString() {
-		return completeClass.getPrimaryClass().toString();	
+		return completeClass.getPrimaryClass().toString();
 	}
 
 	@Override

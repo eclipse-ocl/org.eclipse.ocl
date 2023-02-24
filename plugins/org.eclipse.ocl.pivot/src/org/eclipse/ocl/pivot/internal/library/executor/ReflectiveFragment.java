@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -23,6 +22,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.types.FlatClass;
 
 /**
  * A ReflectiveFragment provides the description of the properties and operations defined by some class when accessed by the same
@@ -34,8 +34,8 @@ public abstract class ReflectiveFragment extends AbstractFragment
 	protected Map<@NonNull Operation, @NonNull Operation> apparentOperation2actualOperation = null;
 	protected Map<@NonNull Property, @NonNull LibraryFeature> propertyMap = null;
 
-	public ReflectiveFragment(@NonNull CompleteInheritance derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
-		super(derivedInheritance, baseInheritance);
+	public ReflectiveFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
+		super(derivedFlatClass, baseFlatClass);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public abstract class ReflectiveFragment extends AbstractFragment
 			}
 			Operation localOperation = getLocalOperation(apparentOperation);
 			if (localOperation == null) {
-				if (derivedInheritance == baseInheritance) {
+				if (derivedFlatClass == baseFlatClass) {
 					localOperation = apparentOperation;
 				}
 			}
@@ -67,20 +67,20 @@ public abstract class ReflectiveFragment extends AbstractFragment
 			}
 			else {										// Non-trivial, search up the inheritance tree for an inherited operation
 				Operation bestOverload = null;
-				CompleteInheritance bestInheritance = null;
+				FlatClass bestFlatClass = null;
 				int bestDepth = -1;
-				int minDepth = baseInheritance.getDepth();
-				for (int depth = derivedInheritance.getDepth()-1; depth >= minDepth; depth--) {
-					Iterable<InheritanceFragment> derivedSuperFragments = derivedInheritance.getSuperFragments(depth);
+				int minDepth = baseFlatClass.getDepth();
+				for (int depth = derivedFlatClass.getDepth()-1; depth >= minDepth; depth--) {
+					Iterable<InheritanceFragment> derivedSuperFragments = derivedFlatClass.getSuperFragments(depth);
 					for (InheritanceFragment derivedSuperFragment : derivedSuperFragments) {
-						CompleteInheritance superInheritance = derivedSuperFragment.getBaseInheritance();
-						InheritanceFragment superFragment = superInheritance.getFragment(baseInheritance);
+						FlatClass superFlatClass = derivedSuperFragment.getBaseFlatClass();
+						InheritanceFragment superFragment = superFlatClass.getFragment(baseFlatClass);
 						if (superFragment != null) {
 							Operation overload = superFragment.getLocalOperation(apparentOperation);
 							if (overload != null) {
-								if (bestInheritance == null) {				// First candidate
+								if (bestFlatClass == null) {				// First candidate
 									bestDepth = depth;
-									bestInheritance = superInheritance;
+									bestFlatClass = superFlatClass;
 									bestOverload = overload;
 								}
 								else if (depth == bestDepth) {				// Sibling candidate
@@ -88,7 +88,7 @@ public abstract class ReflectiveFragment extends AbstractFragment
 									depth = -1;
 									break;
 								}
-								else if (!bestInheritance.isSubInheritanceOf(superInheritance)) {	// Non-occluded child candidate
+								else if (!bestFlatClass.isSubFlatClassOf(superFlatClass)) {	// Non-occluded child candidate
 									bestOverload = null;
 									depth = -1;
 									break;
