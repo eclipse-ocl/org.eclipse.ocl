@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
@@ -66,7 +67,7 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	/**
 	 * Return the inheritance description for this type within standardLibrary.
 	 */
-	@NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary);
+	@NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary);
 
 	/**
 	 * Return the unique executable form of this type within standardLibrary.

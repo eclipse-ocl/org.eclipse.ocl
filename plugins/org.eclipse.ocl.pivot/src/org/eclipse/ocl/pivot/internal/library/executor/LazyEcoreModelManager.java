@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -564,7 +563,7 @@ public class LazyEcoreModelManager extends LazyModelManager implements ModelMana
 	 * @since 1.18
 	 */
 	@Override
-	public @Nullable Iterable<@NonNull ? extends Object> getInstances(@NonNull Class type) {
+	public @Nullable Iterable<@NonNull ? extends Object> getInstances(org.eclipse.ocl.pivot.@NonNull Class type) {
 		EObject esObject = type.getESObject();
 		if (esObject instanceof EClass) {
 			return getInstances((EClass)esObject);

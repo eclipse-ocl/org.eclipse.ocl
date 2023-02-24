@@ -16,10 +16,10 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.ParametersId;
-import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorParameter;
 
 /**
  * DomainParameterTypesIterable provides a hashable list of operation
@@ -28,12 +28,12 @@ import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorParameter;
 public class ParameterTypesImpl implements ParameterTypes
 {
 	public static final @NonNull ParameterTypesImpl EMPTY_LIST = new ParameterTypesImpl();
-	
+
 	private final @NonNull ParametersId parametersId;
 	private final @NonNull Type @NonNull [] parameterTypes;
 	private final int hashCode;
 	private /*@LazyNonNull*/ List<Parameter> parameters = null;
-	
+
 	public ParameterTypesImpl(@NonNull Type @NonNull ... parameterTypes) {
 		this.parametersId = IdManager.getParametersId(parameterTypes);
 		this.parameterTypes = parameterTypes;
@@ -77,7 +77,7 @@ public class ParameterTypesImpl implements ParameterTypes
 	public @NonNull ParametersId getParametersId() {
 		return parametersId;
 	}
-	
+
 	@Override
 	public @NonNull List<Parameter> getParameters() {
 		List<Parameter> parameters2 = parameters;
@@ -85,7 +85,13 @@ public class ParameterTypesImpl implements ParameterTypes
 			parameters = parameters2 = new ArrayList<Parameter>();
 			for (int i = 0; i < parameterTypes.length; i++) {
 				Type type = parameterTypes[i];
-				parameters2.add(new AbstractExecutorParameter("_" + i, type, false));
+				String name = "_" + i;
+			//	AbstractExecutorParameter asParameter = new AbstractExecutorParameter(name, type, false);
+				Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
+				asParameter.setName(name);
+				asParameter.setType(type);
+				asParameter.setIsTypeof(false);
+				parameters2.add(asParameter);
 			}
 		}
 		return parameters2;

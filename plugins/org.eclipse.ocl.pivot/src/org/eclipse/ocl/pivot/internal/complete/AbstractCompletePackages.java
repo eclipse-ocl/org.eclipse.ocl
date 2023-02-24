@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.internal.NamedElementImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -107,7 +106,7 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 
 	public void didRemovePackage(org.eclipse.ocl.pivot.@NonNull Package partialPackage) {
 		CompletePackage completePackage = getCompletePackage(partialPackage);
-		List<Package> partialPackages = completePackage.getPartialPackages();
+		List<org.eclipse.ocl.pivot.Package> partialPackages = completePackage.getPartialPackages();
 		partialPackages.remove(partialPackage);
 		if (partialPackages.size() <= 0) {
 			getCompleteModel().getCompleteURIs().removeCompletePackage(completePackage.getURI());

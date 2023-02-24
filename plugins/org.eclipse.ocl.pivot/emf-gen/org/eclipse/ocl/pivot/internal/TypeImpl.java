@@ -19,12 +19,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -173,9 +173,9 @@ implements Type {
 		if (this == type) {
 			return true;
 		}
-		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		return thisInheritance.isSubInheritanceOf(thatInheritance);
+		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
+		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
+		return thisFlatClass.isSubFlatClassOf(thatFlatClass);
 	}
 
 	/**
@@ -225,9 +225,9 @@ implements Type {
 			return this;
 		}
 		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
-		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		return thisInheritance.getCommonInheritance(thatInheritance).getPivotClass();
+		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
+		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
+		return thisFlatClass.getCommonFlatClass(thatFlatClass).getPivotClass();
 	}
 
 	@Override

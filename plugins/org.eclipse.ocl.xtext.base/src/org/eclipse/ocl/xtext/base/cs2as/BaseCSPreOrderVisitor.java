@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -93,9 +92,17 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 
 		@Override
+		public boolean canExecute() {
+			boolean canExecute = super.canExecute();
+		//	System.out.println("canExecute " + canExecute + " : " + csElement);
+			return canExecute;
+		}
+
+		@Override
 		public BasicContinuation<?> execute() {
 			org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csElement);
 			if (pivotElement != null) {
+			//	System.out.println("addSuperClasses " + pivotElement );
 				List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = ClassUtil.nullFree(pivotElement.getSuperClasses());
 				context.refreshList(org.eclipse.ocl.pivot.Class.class, superClasses, csElement.getOwnedSuperTypes());
 				if (superClasses.isEmpty()) {
@@ -384,7 +391,8 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					if (partName != null) {
 						Type partType = PivotUtil.getPivot(Type.class, csTuplePart.getOwnedType());
 						if (partType != null) {
-							parts.add(new ExecutorTuplePart(partType, partName));
+							Property property = PivotUtil.createProperty(partName, partType);
+							parts.add(property);
 						}
 					}
 				}

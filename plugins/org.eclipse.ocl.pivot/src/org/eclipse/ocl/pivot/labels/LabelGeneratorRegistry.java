@@ -20,6 +20,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.labels.BooleanLabelGenerator;
 import org.eclipse.ocl.pivot.internal.labels.ClassLabelGenerator;
+import org.eclipse.ocl.pivot.internal.labels.CompleteClassLabelGenerator;
+import org.eclipse.ocl.pivot.internal.labels.CompleteEnvironmentLabelGenerator;
+import org.eclipse.ocl.pivot.internal.labels.CompleteModelLabelGenerator;
+import org.eclipse.ocl.pivot.internal.labels.CompletePackageLabelGenerator;
 import org.eclipse.ocl.pivot.internal.labels.DynamicEObjectImplLabelGenerator;
 import org.eclipse.ocl.pivot.internal.labels.EAnnotationLabelGenerator;
 import org.eclipse.ocl.pivot.internal.labels.EGenericTypeLabelGenerator;
@@ -125,6 +129,10 @@ public class LabelGeneratorRegistry implements ILabelGenerator.Registry
 	public static void initialize(ILabelGenerator.@NonNull Registry registry) {
 		BooleanLabelGenerator.initialize(registry);
 		ClassLabelGenerator.initialize(registry);
+		CompleteClassLabelGenerator.initialize(registry);
+		CompleteEnvironmentLabelGenerator.initialize(registry);
+		CompleteModelLabelGenerator.initialize(registry);
+		CompletePackageLabelGenerator.initialize(registry);
 		DynamicEObjectImplLabelGenerator.initialize(registry);
 		EAnnotationLabelGenerator.initialize(registry);
 		EGenericTypeLabelGenerator.initialize(registry);

@@ -61,7 +61,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -678,7 +677,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	@Override
-	public EObject visitPackage(@NonNull Package pivotPackage) {
+	public EObject visitPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
 		@SuppressWarnings("null")
 		@NonNull EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
 		copyNamedElement(ePackage, pivotPackage);

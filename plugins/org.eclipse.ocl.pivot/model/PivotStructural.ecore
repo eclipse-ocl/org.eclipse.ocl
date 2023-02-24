@@ -16,6 +16,7 @@
       <details key="documentation" value="Integer is a primitive type representing integer values."/>
     </eAnnotations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="JavaClass" instanceClassName="java.lang.Class"/>
   <eClassifiers xsi:type="ecore:EDataType" name="LibraryFeature" instanceClassName="org.eclipse.ocl.pivot.library.LibraryFeature"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
   <eClassifiers xsi:type="ecore:EDataType" name="Real" instanceClassName="java.lang.Number">
@@ -576,6 +577,13 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IteratorExp" eSuperTypes="#//LoopExp #//ReferringElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="IteratorVariable" eSuperTypes="#//Variable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JavaType" eSuperTypes="#//Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="JavaType supports the use of a Java class as part of a foreign operation or property call."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaClass" lowerBound="1"
+        eType="#//JavaClass"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LambdaType" eSuperTypes="#//DataType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="contextType" lowerBound="1"
         eType="#//Type"/>

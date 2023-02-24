@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.JavaType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
@@ -898,6 +899,12 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		append(" | ");
 		safeVisit(callExp.getOwnedBody());
 		append(")");//$NON-NLS-1$
+		return null;
+	}
+
+	@Override
+	public String visitJavaType(@NonNull JavaType object) {
+		append(object.getJavaClass().getName());
 		return null;
 	}
 

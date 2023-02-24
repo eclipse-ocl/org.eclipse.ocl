@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -308,7 +309,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eGenericTypes.clear();
 		for (org.eclipse.ocl.pivot.Class pivotObject : superClasses) {
 			// Skip OCL's pseudo-supertypes.
-			if ((pivotObject != oclAnyType) && (pivotObject != oclElementType) && (pivotObject != oclTypeType)) {
+		//	if ((pivotObject != oclAnyType) /*&& (pivotObject != oclElementType) && (pivotObject != oclTypeType)*/) {			// XXX
 				EObject superEClass = typeRefVisitor.safeVisit(pivotObject);
 				if (superEClass != null) {
 					if (superEClass instanceof EGenericType) {
@@ -319,7 +320,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					}
 				}
 				// else error
-			}
+		//	}
 		}
 	}
 
@@ -407,13 +408,29 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			} catch (InvalidValueException e) {
 				logger.error("Illegal upper bound", e);
 			}
+			boolean prevailingCollectionIsNullFree = true;
+			for (EObject eContainer = eTypedElement; (eContainer = eContainer.eContainer()) != null; ) {
+				if (eContainer instanceof ENamedElement) {
+					EAnnotation eAnnotation = ((ENamedElement)eContainer).getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
+					if (eAnnotation != null) {
+						prevailingCollectionIsNullFree = Boolean.valueOf(eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE));
+						break;
+					}
+				}
+				else if (eContainer instanceof EAnnotation) {			// UML applied Stereotype EAnnotation
+					break;
+				}
+				else {
+					;													// EOperation for an EParameter
+				}
+			}
 			EAnnotation eAnnotation = eTypedElement.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
-			if (!collectionType.isIsNullFree()) {
+			if (collectionType.isIsNullFree() != prevailingCollectionIsNullFree) {
 				if (eAnnotation == null) {
 					eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 					eAnnotation.setSource(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 				}
-				eAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, "false");
+				eAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, prevailingCollectionIsNullFree ? "false" : "true");
 				eTypedElement.getEAnnotations().add(eAnnotation);
 			}
 			else {

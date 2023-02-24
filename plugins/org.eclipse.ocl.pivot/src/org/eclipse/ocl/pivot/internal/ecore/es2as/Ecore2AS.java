@@ -155,7 +155,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				isNullFree = isNullFree((ENamedElement)eContainer);
 			}
 			else {
-				isNullFree = true;		// UML collections are always null-free.Make it the undeclared default.
+				isNullFree = true;		// UML collections are always null-free. Make it the undeclared default.
 			}
 		}
 		return isNullFree;
@@ -624,6 +624,10 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		if (needsLibrary && (asClasses != null)) {
+			Model asModel = OCLstdlib.getDefaultModel();
+			if (!metamodelManager.getCompleteModel().getPartialModels().contains(asModel)) {
+				metamodelManager.installRoot(asModel);
+			}
 			Set<String> installName= new HashSet<>();
 			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
 				installName.add(asClass.getName());

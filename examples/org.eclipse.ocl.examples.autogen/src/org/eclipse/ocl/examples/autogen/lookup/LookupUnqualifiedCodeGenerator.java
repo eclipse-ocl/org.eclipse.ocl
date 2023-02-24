@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
@@ -76,8 +75,8 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 
 	protected LookupUnqualifiedCodeGenerator(
 			@NonNull EnvironmentFactoryInternal environmentFactory,
-			@NonNull Package asPackage, @Nullable Package asSuperPackage,
-			@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@Nullable Package asSuperPackage,
+			org.eclipse.ocl.pivot.@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
 			@Nullable GenPackage superGenPackage,
 			@Nullable GenPackage baseGenPackage) {
 		this(environmentFactory, asPackage, asSuperPackage, asBasePackage, genPackage,
@@ -86,8 +85,8 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 
 	protected LookupUnqualifiedCodeGenerator(
 			@NonNull EnvironmentFactoryInternal environmentFactory,
-			@NonNull Package asPackage, @Nullable Package asSuperPackage,
-			@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@Nullable Package asSuperPackage,
+			org.eclipse.ocl.pivot.@NonNull Package asBasePackage, @NonNull GenPackage genPackage,
 			@Nullable GenPackage superGenPackage,
 			@Nullable GenPackage baseGenPackage,
 			@NonNull String envOperationName) {

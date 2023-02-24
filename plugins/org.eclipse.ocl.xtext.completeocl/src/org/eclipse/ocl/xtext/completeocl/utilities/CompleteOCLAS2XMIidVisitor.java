@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -52,7 +51,7 @@ public class CompleteOCLAS2XMIidVisitor extends org.eclipse.ocl.pivot.utilities.
 	}
 
 	@Override
-	public @Nullable Boolean visitClass(@NonNull Class object) {
+	public @Nullable Boolean visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
 		Boolean status = super.visitClass(object);
 		if (status != Boolean.TRUE) {
 			return status;

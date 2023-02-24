@@ -15,6 +15,8 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -128,9 +130,9 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getEnumerationType();
 
 	/**
-	 * Return the Inheritance dispatch table for a given type.
+	 * Return the FlatClass for a given type.
 	 */
-	@NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type);
+	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
@@ -329,4 +331,6 @@ public interface StandardLibrary extends Element
 	 *     PrimitiveType)
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getUnlimitedNaturalType();
+
+	@NonNull FlatModel getFlatModel();
 } // StandardLibrary

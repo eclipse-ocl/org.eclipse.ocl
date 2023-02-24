@@ -12,8 +12,6 @@ package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
-import org.eclipse.jdt.annotation.NonNull;
-
 
 /**
  * <!-- begin-user-doc -->
@@ -52,5 +50,5 @@ public interface Namespace extends NamedElement {
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getNamespace_OwnedConstraints()
 	 * @generated
 	 */
-	@NonNull List<Constraint> getOwnedConstraints();
+	List<Constraint> getOwnedConstraints();
 } // Namespace

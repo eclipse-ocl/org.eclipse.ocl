@@ -310,6 +310,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitJavaType(org.eclipse.ocl.pivot.@NonNull JavaType object) {
+		return delegate.visitJavaType(object);
+	}
+
+	@Override
 	public R visitLambdaType(org.eclipse.ocl.pivot.@NonNull LambdaType object) {
 		return delegate.visitLambdaType(object);
 	}

@@ -47,9 +47,9 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteURIs;
@@ -709,6 +709,17 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return ownedCompletePackages.getOwnedCompletePackage(completeURIorName);
 	}
 
+	private @Nullable CompleteFlatModel flatModel = null;
+
+	@Override
+	public @NonNull CompleteFlatModel getFlatModel() {
+		CompleteFlatModel flatModel2 = flatModel;
+		if (flatModel2 == null) {
+			flatModel = flatModel2 = new CompleteFlatModel(getStandardLibrary(), this);
+		}
+		return flatModel2;
+	}
+
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName) {
 		CompletePackage completePackage = completeURIs.getCompletePackage(completeURIorName);
@@ -805,8 +816,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 							superTemplateArgumentList.add(actual);
 						}
 					}
-					CompleteInheritanceImpl superCompleteInheritance = superCompleteClass.getCompleteInheritance();
-					org.eclipse.ocl.pivot.Class specializedSuperType = superCompleteInheritance.getCompleteClass().getPartialClasses().getSpecializedType(superTemplateArgumentList);
+					org.eclipse.ocl.pivot.Class specializedSuperType = superCompleteClass.getSpecializedType(superTemplateArgumentList);
 					specializedClass.getSuperClasses().add(specializedSuperType);
 				}
 			}

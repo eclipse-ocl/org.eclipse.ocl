@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2014, 2018 Willink Transformations Ltd., University of York and others.
+ * Copyright (c) 2014, 2023 Willink Transformations Ltd., University of York and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -16,7 +16,6 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.internal.lookup.*;
 import org.eclipse.ocl.pivot.internal.lookup.LookupEnvironment;
 import org.eclipse.ocl.pivot.internal.lookup.LookupPackage;
 
@@ -28,7 +27,6 @@ import org.eclipse.ocl.pivot.internal.lookup.LookupPackage;
  * @see org.eclipse.ocl.pivot.internal.lookup.LookupPackage
  * @generated
  */
-@SuppressWarnings("unused")
 public class LookupAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
@@ -110,7 +108,6 @@ public class LookupAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.eclipse.ocl.pivot.internal.lookup.LookupEnvironment
@@ -125,7 +122,6 @@ public class LookupAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * @since 1.1
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.eclipse.ocl.pivot.evaluation.Executor

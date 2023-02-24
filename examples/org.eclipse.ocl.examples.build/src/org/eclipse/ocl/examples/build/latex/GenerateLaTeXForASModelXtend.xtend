@@ -10,20 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.build.latex
 
-import org.eclipse.ocl.pivot.Class
 import org.eclipse.ocl.pivot.Element
 import org.eclipse.ocl.pivot.Namespace
-import org.eclipse.ocl.pivot.Package
 
  class GenerateLaTeXForASModelXtend extends GenerateLaTeXForASModel
 {
-	/*@NonNull*/ protected override String generateLaTeX(/*@NonNull*/ Package asPackage) {
+	/*@NonNull*/ protected override String generateLaTeX(/*@NonNull*/ org.eclipse.ocl.pivot.Package asPackage) {
 		'''
 		«emitClasses(asPackage)»
 		'''
 	}
 
-	protected def emitAssociations(Class asClass) {
+	protected def emitAssociations(org.eclipse.ocl.pivot.Class asClass) {
 		var asAssociations = getSortedAssociations(asClass);
 		if (asAssociations.size() > 0) {
 		'''
@@ -38,7 +36,7 @@ import org.eclipse.ocl.pivot.Package
 		}
 	}
 
-	protected def emitAttributes(Class asClass) {
+	protected def emitAttributes(org.eclipse.ocl.pivot.Class asClass) {
 		var asAttributes = getSortedAttributes(asClass);
 		if ( asAttributes.size() > 0) {
 		'''
@@ -53,7 +51,7 @@ import org.eclipse.ocl.pivot.Package
 		}
 	}
 
-	protected def emitClasses(/*@NonNull*/ Package asPackage) {
+	protected def emitClasses(/*@NonNull*/ org.eclipse.ocl.pivot.Package asPackage) {
 		var asClasses = getSortedClasses(asPackage);
 		'''
 		«FOR asClass : asClasses»
@@ -82,7 +80,7 @@ import org.eclipse.ocl.pivot.Package
 		}
 	}
 
-	protected def emitOperations(Class asClass) {
+	protected def emitOperations(org.eclipse.ocl.pivot.Class asClass) {
 		var asOperations = getSortedOperations(asClass);
 		if (asOperations.size() > 0) {
 		'''

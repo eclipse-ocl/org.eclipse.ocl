@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.mwe.core.issues.Issues
 import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper
 import org.eclipse.ocl.examples.codegen.generator.GenModelHelper
-import org.eclipse.ocl.pivot.Class
 import org.eclipse.ocl.pivot.Operation
 import org.eclipse.ocl.pivot.Type
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager
@@ -572,13 +571,13 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	}
 	
 	private def String getTypeLiteral(Type type) {
-		var GenClassifier genClassifier = genModelHelper.getGenClassifier(type as Class);
+		var GenClassifier genClassifier = genModelHelper.getGenClassifier(type as org.eclipse.ocl.pivot.Class);
 		return ClassUtil.nonNullState(genClassifier).classifierID; 
 	}
 	
 	private def String getTypeFQName(Type type) {
 		return if (type instanceof CollectionType) '''java.util.List<«getTypeFQName(type.elementType)»>''' 
-			else genModelHelper.getEcoreInterfaceName(type as Class)	
+			else genModelHelper.getEcoreInterfaceName(type as org.eclipse.ocl.pivot.Class)	
 	}
 	
 	private def String getLookupVisitorName(Operation op, String typeName) {

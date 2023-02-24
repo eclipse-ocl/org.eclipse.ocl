@@ -21,9 +21,9 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
@@ -131,10 +131,10 @@ public class FinalAnalysis
 		}
 		List<@NonNull Operation> results = new ArrayList<>();
 		StandardLibraryInternal standardLibrary = completeModel.getStandardLibrary();
-		CompleteInheritance requiredInheritance = completeClass.getCompleteInheritance();
+		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
-			CompleteInheritance overrideInheritance = override.getInheritance(standardLibrary);
-			if ((overrideInheritance != null) && requiredInheritance.isSuperInheritanceOf(overrideInheritance)) {
+			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);
+			if ((overrideFlatClass != null) && requiredFlatClass.isSuperFlatClassOf(overrideFlatClass)) {
 				results.add(override);
 			}
 		}
@@ -173,10 +173,10 @@ public class FinalAnalysis
 		}
 		Operation candidate = null;
 		StandardLibraryInternal standardLibrary = completeModel.getStandardLibrary();
-		CompleteInheritance requiredInheritance = completeClass.getCompleteInheritance();
+		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
-			CompleteInheritance overrideInheritance = override.getInheritance(standardLibrary);
-			if ((overrideInheritance != null) && requiredInheritance.isSuperInheritanceOf(overrideInheritance)) {
+			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);
+			if (requiredFlatClass.isSuperFlatClassOf(overrideFlatClass)) {
 				if (candidate != null) {
 					return null;
 				}

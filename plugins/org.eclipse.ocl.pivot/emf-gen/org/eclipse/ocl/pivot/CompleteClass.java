@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
@@ -88,7 +89,7 @@ public interface CompleteClass extends NamedElement
 	@Nullable MapType findMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters);
 	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass();
-	@NonNull CompleteInheritance getCompleteInheritance();
+	@NonNull FlatClass getFlatClass();
 	@NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 	@Nullable Operation getOperation(@NonNull OperationId operationId);
 	@Nullable Operation getOperation(@NonNull Operation operationId);
@@ -100,7 +101,7 @@ public interface CompleteClass extends NamedElement
 	@Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName);
 	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter);
 	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name);
-	@Nullable Property getProperty(@Nullable String propertyName);
+	@Nullable Property getProperty(@NonNull String propertyName);
 	@NonNull Iterable<@NonNull State>  getStates();
 	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);
 	@NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses();

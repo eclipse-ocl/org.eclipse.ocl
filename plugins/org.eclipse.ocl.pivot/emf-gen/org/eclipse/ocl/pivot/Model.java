@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.flat.FlatModel;
 
 /**
  * <!-- begin-user-doc -->
@@ -121,5 +122,8 @@ public interface Model extends Namespace
 	 * @generated
 	 */
 	@NonNull List<Import> getOwnedImports();
+
+	@NonNull FlatModel getFlatModel();
+	@NonNull FlatModel initFlatModel(@NonNull StandardLibrary standardLibrary);
 
 } // Root

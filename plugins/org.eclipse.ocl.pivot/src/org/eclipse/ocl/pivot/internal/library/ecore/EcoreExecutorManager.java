@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
-import org.eclipse.ocl.pivot.utilities.PivotObject;
 
 /**
  * An EcoreExecutorManager instance provides the bridge between a conventional EMF execution context
@@ -107,13 +106,13 @@ public class EcoreExecutorManager extends ExecutorManager
 					roots = resource.getContents();
 				}
 			}
-			org.eclipse.ocl.pivot.Package root = standardLibrary.getPackage();
+		/*	org.eclipse.ocl.pivot.Package root = standardLibrary.getPackage();		// commented out; old-style EcoreExecutorPackage was not a PivotObject
 			if (root instanceof PivotObject) {
 				if (roots == null) {
 					roots = new ArrayList<EObject>();
 				}
 				roots.add(root);
-			}
+			} */
 			if (roots == null) {
 				roots = Collections.singletonList(rootContainer);
 			}

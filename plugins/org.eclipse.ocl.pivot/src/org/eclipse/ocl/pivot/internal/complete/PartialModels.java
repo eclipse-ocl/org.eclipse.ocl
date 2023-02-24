@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.complete;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.ModelImpl;
@@ -32,7 +31,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 	private static class Model2RootOwnedPackages implements Function<Model, Iterable<org.eclipse.ocl.pivot.Package>>
 	{
 		@Override
-		public Iterable<Package> apply(Model partialModel) {
+		public Iterable<org.eclipse.ocl.pivot.Package> apply(Model partialModel) {
 			return partialModel.getOwnedPackages();
 		}
 	}
@@ -109,7 +108,7 @@ public class PartialModels extends EObjectResolvingEList<Model> implements Model
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.Package> getNestedPartialPackages() {
 		PartialModels partialModels = getCompleteModel().getPartialModels();
 		Iterable<Iterable<org.eclipse.ocl.pivot.Package>> roots_packages = Iterables.transform(partialModels, model2RootOwnedPackages);
-		@NonNull Iterable<Package> allPackages = Iterables.concat(roots_packages);
+		@NonNull Iterable<org.eclipse.ocl.pivot.Package> allPackages = Iterables.concat(roots_packages);
 		return allPackages;
 	}
 }

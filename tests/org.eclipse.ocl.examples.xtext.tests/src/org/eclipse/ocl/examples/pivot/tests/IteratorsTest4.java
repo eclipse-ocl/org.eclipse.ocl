@@ -654,6 +654,8 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_exists() {
 		MyOCL ocl = createOCL();
+		ocl.assertQueryTrue(null, "Map{1 with '1', true with 'TRUE', false with 'FALSE'}->exists(key1, key2 with value2 | key1 <> value2)");
+// XXX
 		ocl.assertQueryFalse(null, "Sequence{Sequence{false}, Sequence{false}, Sequence{false}, Sequence{false}}->exists(e | e->first())");
 		ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{false}, Sequence{false}}->exists(e | e->first())");
 		ocl.assertQueryTrue(null, "Sequence{Sequence{false}, Sequence{true}, Sequence{null}, Sequence{true}}->exists(e | e->first())");

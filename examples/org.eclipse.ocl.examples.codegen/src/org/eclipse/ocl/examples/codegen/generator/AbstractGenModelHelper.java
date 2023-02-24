@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -531,7 +530,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		if (asPackage == null) {
 			return null;
 		}
-		Package oclstdlibPackage = metamodelManager.getStandardLibrary().getBooleanType().getOwningPackage();
+		org.eclipse.ocl.pivot.Package oclstdlibPackage = metamodelManager.getStandardLibrary().getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Class elementType = metamodelManager.getASClass("Element");
 		if ((elementType != null) && (oclstdlibPackage != null)) {
 			VoidType oclVoidType = metamodelManager.getStandardLibrary().getOclVoidType();

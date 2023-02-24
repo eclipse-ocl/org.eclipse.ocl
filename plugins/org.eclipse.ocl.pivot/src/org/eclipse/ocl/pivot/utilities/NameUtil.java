@@ -165,6 +165,14 @@ public class NameUtil
 		return null;
 	}
 
+	public static @NonNull String getName(@NonNull ENamedElement eNamedElement) {
+		return ClassUtil.nonNullState(eNamedElement.getName());
+	}
+
+	public static @NonNull String getName(@NonNull Nameable nameable) {
+		return ClassUtil.nonNullState(nameable.getName());
+	}
+
 	public static <T extends Nameable> @Nullable T getNameable(@Nullable Iterable<T> elements, @Nullable String name) {
 		if (elements == null)
 			return null;

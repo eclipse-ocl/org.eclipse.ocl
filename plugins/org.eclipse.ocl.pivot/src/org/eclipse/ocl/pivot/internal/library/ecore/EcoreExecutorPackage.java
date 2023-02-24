@@ -19,54 +19,63 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 
 import com.google.common.collect.Lists;
 
-public class EcoreExecutorPackage extends ExecutorPackage
+public class EcoreExecutorPackage extends PackageImpl
 {
-	protected final EPackage ePackage;
+	public static final class StringNameable implements Nameable
+	{
+		private final String typeName;
+
+		public StringNameable(String typeName) {
+			this.typeName = typeName;
+		}
+
+		@Override
+		public String getName() {
+			return typeName;
+		}
+	}
+
+//	protected final EPackage ePackage;
 	private ExecutorStandardLibrary standardLibrary = null;
-	private @NonNull ExecutorType[] types = null;
-	private @Nullable List<org.eclipse.ocl.pivot.Package> packages = null;
+	private org.eclipse.ocl.pivot.@NonNull Class[] types = null;
+	private @Nullable List<org.eclipse.ocl.pivot.@NonNull Package> packages = null;
 
-	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage) {
-		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), IdManager.getPackageId(ePackage));
-		this.ePackage = ePackage;
-	}
-
-	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage, @NonNull PackageId packageId) {
-		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), packageId);
-		this.ePackage = ePackage;
-	}
 
 	@Override
 	public final EPackage getEPackage() {
-		return ePackage;
+		return (EPackage)getESObject();
 	}
 
-	@Override
-	public EObject getESObject() {
-		return ePackage;
+//	public @NonNull EcoreFlatModel getFlatModel() {
+	//	return (EcoreFlatModel)(Object)standardLibrary.getFlatModel();		// XXX cast
+//	}
+
+	public @NonNull IdResolver getIdResolver() {
+		@NonNull List<EObject> emptyList = Collections.<EObject>emptyList();
+		assert standardLibrary != null;
+		return new EcoreIdResolver(emptyList, standardLibrary);
 	}
 
 	@Override
 	public @NonNull List<org.eclipse.ocl.pivot.Package> getOwnedPackages() {
-		List<org.eclipse.ocl.pivot.Package> packages2 = packages;
+		List<org.eclipse.ocl.pivot.@NonNull Package> packages2 = packages;
 		if (packages2 == null) {
 			synchronized (this) {
 				packages2 = packages;
 				if (packages2 == null) {
-					packages2 = packages = new ArrayList<org.eclipse.ocl.pivot.Package>();
-					for (EPackage eSubPackage : ePackage.getESubpackages()) {
+					packages2 = packages = new ArrayList<>();
+					for (EPackage eSubPackage : getEPackage().getESubpackages()) {
 						assert eSubPackage != null;
-						EcoreExecutorPackage subPackage = standardLibrary.getPackage(eSubPackage);
+						org.eclipse.ocl.pivot.Package subPackage = standardLibrary.getPackage(eSubPackage);
 						if (subPackage != null) {
 							packages2.add(subPackage);
 						}
@@ -79,7 +88,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 
 	@Override
 	public org.eclipse.ocl.pivot.Package getOwningPackage() {
-		EPackage eSuperPackage = ePackage.getESuperPackage();
+		EPackage eSuperPackage = getEPackage().getESuperPackage();
 		if (eSuperPackage == null) {
 			return null;
 		}
@@ -97,7 +106,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 	}
 
 	@Override
-	public @Nullable ExecutorType getOwnedClass(String typeName) {
+	public org.eclipse.ocl.pivot.@Nullable Class getOwnedClass(String typeName) {
 		int index = Arrays.binarySearch(types, new StringNameable(typeName), NameUtil.NameableComparator.INSTANCE);
 		if (index >= 0) {
 			return types[index];
@@ -105,14 +114,19 @@ public class EcoreExecutorPackage extends ExecutorPackage
 		//	Should be sorted, but do linear search just in case
 		for (org.eclipse.ocl.pivot.@NonNull Class type : types) {
 			if (type.getName().equals(typeName)) {
-				return (ExecutorType) type;
+				return type;
 			}
 		}
 		return null;
 	}
 
-	public void init(@Nullable ExecutorStandardLibrary standardLibrary, @NonNull ExecutorType @NonNull [] types) {
-		assert this.standardLibrary == null;
+	public @NonNull StandardLibrary getStandardLibrary() {
+		assert standardLibrary != null;
+		return standardLibrary;
+	}
+
+	public void init(@Nullable ExecutorStandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] types) {
+		assert (this.standardLibrary == null) || (this.standardLibrary == standardLibrary);
 		assert this.types == null;
 		this.standardLibrary = standardLibrary;
 		this.types = types;
