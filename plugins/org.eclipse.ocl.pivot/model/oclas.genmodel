@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2010, 2022 Willink Transformations and others.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v2.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v20.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;  E.D.Willink - Initial API and implementation"
+    modelDirectory="/org.eclipse.ocl.pivot/emf-gen" creationIcons="false" creationSubmenus="true"
+    editDirectory="/org.eclipse.ocl.pivot.edit/emf-gen" editorDirectory="/org.eclipse.ocl.pivot.editor/emf-gen"
+    modelPluginID="org.eclipse.ocl.pivot" templateDirectory="/org.eclipse.ocl.examples.codegen/templates"
+    forceOverwrite="true" modelName="OCLAS" modelPluginClass="org.eclipse.ocl.pivot.util.PivotPlugin"
+    nonNLSMarkers="true" rootExtendsClass="org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl"
+    suppressEMFTypes="true" suppressEMFModelTags="true" codeFormatting="true" booleanFlagsField="eFlags2"
+    booleanFlagsReservedBits="8" importerID="org.eclipse.emf.importer.ecore" bundleManifest="false"
+    minimalReflectiveMethods="false" complianceLevel="8.0" copyrightFields="false"
+    editPluginID="org.eclipse.ocl.pivot.edit" editorPluginID="org.eclipse.ocl.pivot.editor"
+    colorProviders="true" fontProviders="true" runtimeVersion="2.7" packedEnums="true"
+    interfaceNamePattern="" operationReflection="true" importOrganizing="true">
+  <genAnnotations source="http://www.eclipse.org/OCL/GenModel">
+    <details key="Use Delegates" value="false"/>
+    <details key="Use Null Annotations" value="true"/>
+  </genAnnotations>
+  <foreignModel>../model-gen/oclas.ecore</foreignModel>
+  <modelPluginVariables>org.eclipse.ocl.pivot</modelPluginVariables>
+  <modelPluginVariables>org.eclipse.ocl.examples.codegen</modelPluginVariables>
+  <modelPluginVariables>org.eclipse.jdt.annotation</modelPluginVariables>
+  <genPackages prefix="OCLAS" basePackage="org.eclipse.ocl.as" disposableProviderFactory="true"
+      generateExampleClass="false" contentTypeIdentifier="org.eclipse.ocl.oclas" ecorePackage="../model-gen/oclas.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="../model-gen/oclas.ecore#//AssociativityKind"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="../model-gen/oclas.ecore#//CollectionKind"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="../model-gen/oclas.ecore#//PseudostateKind"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="../model-gen/oclas.ecore#//TransitionKind"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Boolean"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//EcoreObject"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Integer"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//JavaClass"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//LibraryFeature"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Object"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Real"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//String"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Throwable"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//UnlimitedNatural"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Annotation"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//AnyType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//AssociationClass"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//AssociationClassCallExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Bag">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Bag/T"/>
+    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//BagType"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Behavior"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//BooleanLiteralExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//BooleanType"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//CallExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//CallOperationAction"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Class"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Collection">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Collection/T"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Collection/elementType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//Collection/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//Collection/upper"/>
+    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//CollectionItem"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//CollectionLiteralExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//CollectionLiteralPart"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//CollectionRange"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//CollectionType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//CollectionType/elementType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//CollectionType/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//CollectionType/upper"/>
+    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Comment"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//CompleteClass"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//CompleteEnvironment"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//CompleteModel"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//CompletePackage"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//ConnectionPointReference"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Constraint"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//DataType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Detail"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//DynamicBehavior"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//DynamicElement"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//DynamicProperty"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//DynamicType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//DynamicValueSpecification"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Element"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//ElementExtension"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//ElementLiteralExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//EnumLiteralExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Enumeration"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//EnumerationLiteral"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//ExpressionInOCL"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Feature"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//FeatureCallExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//FinalState"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//IfExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Import"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//InstanceSpecification"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//IntegerLiteralExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//InvalidLiteralExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//InvalidType"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//IterableType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//IterateExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Iteration"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//IteratorExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//IteratorVariable"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//JavaType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//LambdaType"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//LanguageExpression"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//LetExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//LetVariable"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Library"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//LiteralExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//LoopExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Map">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Map/K"/>
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Map/V"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Map/keyType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Map/valueType"/>
+    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//MapLiteralExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//MapLiteralPart"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//MapType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//MapType/keyType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//MapType/valueType"/>
+    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//MessageExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//MessageType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Model"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//MorePivotable"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Nameable"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//NamedElement"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Namespace"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//NavigationCallExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//NullLiteralExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//NumericLiteralExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OCLExpression"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclAny"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclComparable"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//OclElement/oclContainer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//OclElement/oclContents"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclEnumeration"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclInvalid">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//OclInvalid/oclBadProperty"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclLambda"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclMessage"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclSelf"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclState"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//OclStereotype"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclSummable"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclTuple"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclType"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclVoid"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Operation"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//OperationCallExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//OppositePropertyCallExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OrderedCollection">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//OrderedCollection/T"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OrderedSet">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//OrderedSet/T"/>
+    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//OrderedSetType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//OrphanCompletePackage"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Package"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Parameter"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//ParameterVariable"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Pivotable"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Precedence"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//PrimitiveCompletePackage"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//PrimitiveLiteralExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//PrimitiveType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Profile"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//ProfileApplication"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Property"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//PropertyCallExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Pseudostate"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//RealLiteralExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//ReferringElement"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Region"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//ResultVariable"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//SelfType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//SendSignalAction"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Sequence">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Sequence/T"/>
+    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//SequenceType"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Set">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Set/T"/>
+    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//SetType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//ShadowExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//ShadowPart"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Signal"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Slot"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//StandardLibrary"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//State"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//StateExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//StateMachine"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Stereotype"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//StereotypeExtender"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//StringLiteralExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//TemplateBinding"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//TemplateParameter"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//TemplateParameterSubstitution"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//TemplateSignature"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//TemplateableElement"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Transition"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Trigger"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//TupleLiteralExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//TupleLiteralPart"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//TupleType"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Type"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//TypeExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//TypedElement"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//UniqueCollection">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//UniqueCollection/T"/>
+    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//UnlimitedNaturalLiteralExp"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//UnspecifiedValueExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//ValueSpecification"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//Variable"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//VariableDeclaration"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//VariableExp"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Vertex"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Visitable"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//VoidType"/>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//WildcardType"/>
+  </genPackages>
+</genmodel:GenModel>

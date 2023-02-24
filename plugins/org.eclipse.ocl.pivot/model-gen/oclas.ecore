@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ocl" nsURI="http://www.eclipse.org/ocl/2023/Library" nsPrefix="ocl">
+  <eAnnotations source="http://www.eclipse.org/OCL/ASLibrary"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Annotation" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AnyType" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AssociationClass" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AssociationClassCallExp" eSuperTypes="#//NavigationCallExp"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="AssociativityKind" instanceClassName="java.lang.Object"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Bag" instanceClassName="org.eclipse.ocl.pivot.values.Bag"
+      abstract="true" interface="true">
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#//Collection">
+      <eTypeArguments eTypeParameter="#//Bag/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BagType" eSuperTypes="#//CollectionType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Behavior" abstract="true" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanLiteralExp" eSuperTypes="#//PrimitiveLiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanType" eSuperTypes="#//PrimitiveType #//OclElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CallExp" abstract="true" eSuperTypes="#//OCLExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CallOperationAction" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Class" eSuperTypes="#//Type #//Namespace #//TemplateableElement #//OclElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Collection" instanceClassName="java.util.Collection"
+      abstract="true" interface="true" eSuperTypes="#//OclAny">
+    <eTypeParameters name="T"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elementType" lowerBound="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Evaluates to the type of the collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
+      </eAnnotations>
+      <eGenericType eTypeParameter="#//Collection/T"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lower" lowerBound="1" eType="#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Evaluates to the lower bound on the number of collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upper" lowerBound="1" eType="#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Evaluates to the upper bound on the number of collection elements.&#xA;&#xA;@Deprecated Use regular CollectionType property&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CollectionItem" eSuperTypes="#//CollectionLiteralPart"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="CollectionKind" instanceClassName="java.lang.Object"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CollectionLiteralExp" eSuperTypes="#//LiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CollectionLiteralPart" abstract="true"
+      eSuperTypes="#//TypedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CollectionRange" eSuperTypes="#//CollectionLiteralPart"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CollectionType" eSuperTypes="#//IterableType #//OclElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elementType" lowerBound="1"
+        eType="#//Type">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Evaluates to the type of the collection elements.&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lower" lowerBound="1" eType="#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Evaluates to the lower bound on the number of collection elements.&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="upper" lowerBound="1" eType="#//Integer">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Evaluates to the upper bound on the number of collection elements.&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompleteClass" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompleteEnvironment" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompleteModel" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CompletePackage" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConnectionPointReference" eSuperTypes="#//Vertex"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Constraint" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataType" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Detail" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicBehavior" eSuperTypes="#//Behavior #//DynamicType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicElement" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicProperty" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicType" eSuperTypes="#//Class #//DynamicElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DynamicValueSpecification" eSuperTypes="#//ValueSpecification"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EcoreObject" instanceClassName="org.eclipse.emf.ecore.EObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true" eSuperTypes="#//OclElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ElementExtension" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ElementLiteralExp" eSuperTypes="#//LiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EnumLiteralExp" eSuperTypes="#//LiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Enumeration" eSuperTypes="#//DataType #//OclType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EnumerationLiteral" eSuperTypes="#//InstanceSpecification #//OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExpressionInOCL" eSuperTypes="#//LanguageExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Feature" abstract="true" eSuperTypes="#//TypedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FeatureCallExp" abstract="true" eSuperTypes="#//CallExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FinalState" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IfExp" eSuperTypes="#//OCLExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Import" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InstanceSpecification" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IntegerLiteralExp" eSuperTypes="#//NumericLiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InvalidLiteralExp" eSuperTypes="#//LiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InvalidType" eSuperTypes="#//Class #//OclElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IterableType" abstract="true" eSuperTypes="#//DataType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IterateExp" eSuperTypes="#//LoopExp #//ReferringElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Iteration" eSuperTypes="#//Operation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IteratorExp" eSuperTypes="#//LoopExp #//ReferringElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IteratorVariable" eSuperTypes="#//Variable"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="JavaClass" instanceClassName="java.lang.Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="JavaType" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LambdaType" eSuperTypes="#//DataType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LanguageExpression" abstract="true"
+      eSuperTypes="#//ValueSpecification"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LetExp" eSuperTypes="#//OCLExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LetVariable" eSuperTypes="#//Variable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Library" eSuperTypes="#//Package"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="LibraryFeature" instanceClassName="org.eclipse.ocl.pivot.library.LibraryFeature"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LiteralExp" abstract="true" eSuperTypes="#//OCLExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LoopExp" abstract="true" eSuperTypes="#//CallExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Map" instanceClassName="java.util.Map"
+      abstract="true" interface="true" eSuperTypes="#//OclAny">
+    <eTypeParameters name="K"/>
+    <eTypeParameters name="V"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" lowerBound="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The key type of the key-value pairs of oclText[self].&#xA;&#xA;@Deprecated Use regular MapType property&#xA;"/>
+      </eAnnotations>
+      <eGenericType eTypeParameter="#//Map/K"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueType" lowerBound="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The value type of the key-value pairs of oclText[self].&#xA;&#xA;@Deprecated Use regular MapType property&#xA;"/>
+      </eAnnotations>
+      <eGenericType eTypeParameter="#//Map/V"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MapLiteralExp" eSuperTypes="#//LiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MapLiteralPart" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MapType" eSuperTypes="#//IterableType #//OclElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" lowerBound="1"
+        eType="#//Type">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The key type of the key-value pairs of oclText[self].&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueType" lowerBound="1"
+        eType="#//Type">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The value type of the key-value pairs of oclText[self].&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageExp" eSuperTypes="#//OCLExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageType" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//Namespace"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MorePivotable" instanceClassName="org.eclipse.ocl.pivot.utilities.MorePivotable"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Nameable" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Namespace" abstract="true" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NavigationCallExp" abstract="true" eSuperTypes="#//FeatureCallExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NullLiteralExp" eSuperTypes="#//PrimitiveLiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="NumericLiteralExp" abstract="true" eSuperTypes="#//PrimitiveLiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OCLExpression" abstract="true" eSuperTypes="#//TypedElement"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Object" instanceClassName="java.lang.Object"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclAny" instanceClassName="java.lang.Object"
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.&#xA;True functionality is only available once converted to a Pivot model."/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OclComparable" abstract="true" interface="true"
+      eSuperTypes="#//OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclElement" abstract="true" interface="true"
+      eSuperTypes="#//OclAny">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oclContainer" eType="#//OclElement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The object for which self is a composed content or null if there is no such object.&#xA;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oclContents" ordered="false"
+        upperBound="-1" eType="#//OclElement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The composed contents of self."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OclEnumeration" abstract="true" interface="true"
+      eSuperTypes="#//OclType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclInvalid" instanceClassName="org.eclipse.ocl.as.ocl.InvalidType"
+      abstract="true" interface="true" eSuperTypes="#//OclAny">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oclBadProperty" eType="#//OclAny">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OclLambda" abstract="true" interface="true"
+      eSuperTypes="#//OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclMessage" abstract="true" interface="true"
+      eSuperTypes="#//OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclSelf" instanceClassName="org.eclipse.ocl.as.ocl.SelfType"
+      abstract="true" interface="true" eSuperTypes="#//OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclState" abstract="true" interface="true"
+      eSuperTypes="#//OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclStereotype" abstract="true" interface="true"
+      eSuperTypes="#//OclType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclSummable" abstract="true" interface="true"
+      eSuperTypes="#//OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclTuple" abstract="true" interface="true"
+      eSuperTypes="#//OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclType" abstract="true" interface="true"
+      eSuperTypes="#//OclElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OclVoid" instanceClassName="org.eclipse.ocl.as.ocl.VoidType"
+      abstract="true" interface="true" eSuperTypes="#//OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Operation" eSuperTypes="#//Feature #//Namespace #//TemplateableElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OperationCallExp" eSuperTypes="#//FeatureCallExp #//ReferringElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OppositePropertyCallExp" eSuperTypes="#//NavigationCallExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OrderedCollection" instanceClassName="java.util.Collection"
+      abstract="true" interface="true">
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#//Collection">
+      <eTypeArguments eTypeParameter="#//OrderedCollection/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrderedSet" instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet"
+      abstract="true" interface="true">
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#//OrderedCollection">
+      <eTypeArguments eTypeParameter="#//OrderedSet/T"/>
+    </eGenericSuperTypes>
+    <eGenericSuperTypes eClassifier="#//UniqueCollection">
+      <eTypeArguments eTypeParameter="#//OrderedSet/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OrderedSetType" eSuperTypes="#//CollectionType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OrphanCompletePackage" eSuperTypes="#//CompletePackage"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Package" eSuperTypes="#//Namespace"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Parameter" eSuperTypes="#//VariableDeclaration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ParameterVariable" eSuperTypes="#//Variable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Pivotable" instanceClassName="org.eclipse.ocl.pivot.utilities.Pivotable"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Precedence" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveCompletePackage" eSuperTypes="#//CompletePackage"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveLiteralExp" abstract="true"
+      eSuperTypes="#//LiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimitiveType" eSuperTypes="#//DataType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Profile" eSuperTypes="#//Package"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ProfileApplication" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Property" eSuperTypes="#//Feature"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyCallExp" eSuperTypes="#//NavigationCallExp #//ReferringElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Pseudostate" eSuperTypes="#//Vertex"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="PseudostateKind" instanceClassName="java.lang.Object"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Real" instanceClassName="org.eclipse.ocl.pivot.values.RealValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="RealLiteralExp" eSuperTypes="#//NumericLiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReferringElement" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//Namespace"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ResultVariable" eSuperTypes="#//Variable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SelfType" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SendSignalAction" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Sequence" instanceClassName="java.util.List"
+      abstract="true" interface="true">
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#//OrderedCollection">
+      <eTypeArguments eTypeParameter="#//Sequence/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SequenceType" eSuperTypes="#//CollectionType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Set" instanceClassName="java.util.Set"
+      abstract="true" interface="true">
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#//UniqueCollection">
+      <eTypeArguments eTypeParameter="#//Set/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SetType" eSuperTypes="#//CollectionType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ShadowExp" eSuperTypes="#//OCLExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ShadowPart" eSuperTypes="#//TypedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Slot" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StandardLibrary" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="#//Vertex #//Namespace #//OclState"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StateExp" eSuperTypes="#//OCLExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StateMachine" eSuperTypes="#//Behavior"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Stereotype" eSuperTypes="#//Class #//OclStereotype"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StereotypeExtender" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StringLiteralExp" eSuperTypes="#//PrimitiveLiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateBinding" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateParameter" eSuperTypes="#//Type"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateParameterSubstitution" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateSignature" eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateableElement" abstract="true"
+      eSuperTypes="#//Element"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Throwable" instanceClassName="java.lang.Throwable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Namespace"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="TransitionKind" instanceClassName="java.lang.Object"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Trigger" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TupleLiteralExp" eSuperTypes="#//LiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TupleLiteralPart" eSuperTypes="#//VariableDeclaration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TupleType" eSuperTypes="#//DataType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Type" abstract="true" eSuperTypes="#//NamedElement #//OclType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TypeExp" eSuperTypes="#//OCLExpression #//ReferringElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TypedElement" abstract="true" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UniqueCollection" instanceClassName="java.util.Collection"
+      abstract="true" interface="true">
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#//Collection">
+      <eTypeArguments eTypeParameter="#//UniqueCollection/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UnlimitedNaturalLiteralExp" eSuperTypes="#//NumericLiteralExp"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UnspecifiedValueExp" eSuperTypes="#//OCLExpression"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ValueSpecification" abstract="true"
+      eSuperTypes="#//TypedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//VariableDeclaration"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableDeclaration" abstract="true"
+      eSuperTypes="#//TypedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VariableExp" eSuperTypes="#//OCLExpression #//ReferringElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Vertex" abstract="true" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Visitable" instanceClassName="org.eclipse.ocl.pivot.util.Visitable"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="VoidType" eSuperTypes="#//Class #//OclElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WildcardType" eSuperTypes="#//Class"/>
+</ecore:EPackage>
