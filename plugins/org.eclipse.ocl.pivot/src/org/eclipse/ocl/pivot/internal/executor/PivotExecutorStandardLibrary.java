@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 @Deprecated /* @deprecated not used */
@@ -76,6 +77,11 @@ public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEnumerationType() {
 		return environmentFactory.getStandardLibrary().getEnumerationType();
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+		return environmentFactory.getMetamodelManager().getFlatClass(type);
 	}
 
 	@Override

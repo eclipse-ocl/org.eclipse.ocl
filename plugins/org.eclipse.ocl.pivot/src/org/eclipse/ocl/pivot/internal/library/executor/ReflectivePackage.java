@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -31,7 +32,7 @@ public abstract class ReflectivePackage extends ExecutorPackage
 	public ReflectivePackage(@NonNull String name, @Nullable String nsPrefix, @Nullable String nsURI, @NonNull PackageId packageId) {
 		super(name, nsPrefix, nsURI, packageId);
 	}
-	
+
 	protected synchronized @NonNull Map<org.eclipse.ocl.pivot.Class, CompleteInheritance> computeClasses() {
 		Map<org.eclipse.ocl.pivot.Class, CompleteInheritance> class2inheritance2 = class2inheritance = new HashMap<org.eclipse.ocl.pivot.Class, CompleteInheritance>();
 		for (org.eclipse.ocl.pivot.Class domainClass : getDomainClasses()) {
@@ -47,12 +48,16 @@ public abstract class ReflectivePackage extends ExecutorPackage
 
 	protected abstract @NonNull List<org.eclipse.ocl.pivot.Class> getDomainClasses();
 
-	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class domainClass) {
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return getInheritance(asClass).getFlatClass();
+	}
+
+	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		Map<org.eclipse.ocl.pivot.Class, CompleteInheritance> class2inheritance2 = class2inheritance;
 		if (class2inheritance2 == null) {
 			class2inheritance2 = computeClasses();
 		}
-		return ClassUtil.nonNullState(class2inheritance2.get(domainClass));
+		return ClassUtil.nonNullState(class2inheritance2.get(asClass));
 	}
 
 	@Override

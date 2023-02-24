@@ -26,10 +26,7 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.executor.PivotReflectiveFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveInheritance;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
-import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import com.google.common.base.Function;
@@ -67,19 +64,19 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 //		assert !(pivotClass instanceof DataType) || (((DataType)pivotClass).getBehavioralClass() == null);	// DataTypes must use the inheritance of their behavioral class
 	}
 
-	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
-		return new PivotReflectiveFragment(this.getFlatClass(), baseInheritance);
-	}
+//	@Override
+//	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
+//		return new PivotReflectiveFragment(this.getFlatClass(), baseInheritance);
+//	}
 
 	public @NonNull CompleteClassInternal getCompleteClass() {
 		return completeClass;
 	}
 
-	@Override
-	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
-		return isOclAny() ? EMPTY_LIST : completeClass.getPartialClasses().getInitialSuperInheritances();
-	}
+//	@Override
+//	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
+//		return isOclAny() ? EMPTY_LIST : completeClass.getPartialClasses().getInitialSuperInheritances();
+//	}
 
 	public @NonNull List<? extends Operation> getLocalOperations() {
 		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedOperations());			// FIXME Use local cache

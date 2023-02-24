@@ -27,7 +27,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -49,6 +48,7 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -382,22 +382,22 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public boolean conformsTo(@NonNull Type elementType) {
 		StandardLibrary standardLibrary = getStandardLibrary();
-		CompleteInheritance thisInheritance = getCompleteInheritance();
-		CompleteInheritance thatInheritance = elementType.getInheritance(standardLibrary);
-		if (thisInheritance == thatInheritance) {
+		FlatClass thisFlatClass = getFlatClass();
+		FlatClass thatFlatClass = elementType.getFlatClass(standardLibrary);
+		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return thatInheritance.isSuperInheritanceOf(thisInheritance);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
 	@Override
 	public boolean conformsTo(@NonNull CompleteClass thatCompleteClass) {
-		CompleteInheritance thisInheritance = getCompleteInheritance();
-		CompleteInheritance thatInheritance = thatCompleteClass.getCompleteInheritance();
-		if (thisInheritance == thatInheritance) {
+		FlatClass thisFlatClass = getFlatClass();
+		FlatClass thatFlatClass = thatCompleteClass.getFlatClass();
+		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return thatInheritance.isSuperInheritanceOf(thisInheritance);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
 	/**
@@ -457,6 +457,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public final @NonNull CompleteInheritanceImpl getCompleteInheritance() {
 		return partialClasses.getCompleteInheritance();
+	}
+
+	@Override
+	public final @NonNull FlatClass getFlatClass() {
+		return partialClasses.getCompleteInheritance().getFlatClass();
 	}
 
 	@Override
@@ -535,8 +540,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses() {
-		CompleteInheritance inheritance = getCompleteInheritance();
-		return Iterables.transform(inheritance.getAllProperSuperFragments(), new Function<@NonNull InheritanceFragment, org.eclipse.ocl.pivot.@NonNull Class>()
+		FlatClass flatClass = getFlatClass();
+		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull InheritanceFragment, org.eclipse.ocl.pivot.@NonNull Class>()
 		{
 			@Override
 			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull InheritanceFragment input) {
@@ -547,8 +552,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses() {
-		CompleteInheritance inheritance = getCompleteInheritance();
-		return Iterables.transform(inheritance.getAllProperSuperFragments(), new Function<@NonNull InheritanceFragment, @NonNull CompleteClass>()
+		FlatClass flatClass = getFlatClass();
+		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull InheritanceFragment, @NonNull CompleteClass>()
 		{
 			@Override
 			public @NonNull CompleteClass apply(@NonNull InheritanceFragment input) {

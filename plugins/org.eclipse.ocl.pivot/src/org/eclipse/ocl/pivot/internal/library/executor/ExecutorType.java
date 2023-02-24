@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -29,9 +28,8 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
-import org.eclipse.ocl.pivot.types.FlatClass.FragmentIterable;
-import org.eclipse.ocl.pivot.utilities.ArrayIterable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.types.FlatClass;
+import org.eclipse.ocl.pivot.utilities.IterableAsImmutableList;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
@@ -41,18 +39,6 @@ import org.eclipse.ocl.pivot.values.OCLValue;
  */
 public abstract class ExecutorType extends AbstractExecutorClass implements ExecutorTypeArgument
 {
-	/**
-	 * Depth ordered inheritance fragments. OclAny at depth 0, OclSelf at depth size-1.
-	 */
-	private @NonNull ExecutorFragment @Nullable [] fragments = null;
-
-	/**
-	 * The index in fragments at which inheritance fragments at a given depth start.
-	 * depthIndexes[0] is always zero since OclAny is always at depth 0.
-	 * depthIndexes[depthIndexes.length-2] is always depthIndexes.length-1 since OclSelf is always at depth depthIndexes.length-2.
-	 * depthIndexes[depthIndexes.length-1] is always depthIndexes.length to provide an easy end stop.
-	 */
-	private int[] indexes = null;
 
 	protected final org.eclipse.ocl.pivot.@NonNull Package evaluationPackage;
 	private final @NonNull TemplateParameters typeParameters;
@@ -79,17 +65,6 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 	}
 
 	@Override
-	public final @NonNull FragmentIterable getAllProperSuperFragments() {
-		@NonNull InheritanceFragment @NonNull [] fragments2 = ClassUtil.nonNullState(fragments);
-		return new FragmentIterable(fragments2, 0, fragments2.length-1);
-	}
-
-	@Override
-	public @NonNull FragmentIterable getAllSuperFragments() {
-		return new FragmentIterable(ClassUtil.nonNullState(fragments));
-	}
-
-	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		if (this == type) {
 			return this.getPivotClass();
@@ -101,28 +76,8 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 	}
 
 	@Override
-	public int getDepth() {
-		return indexes.length-2;
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull InheritanceFragment> getFragments() {
-		return new ArrayIterable<@NonNull InheritanceFragment>(fragments);
-	}
-
-	@Override
-	public @NonNull ExecutorFragment getFragment(int fragmentNumber) {
-		return ClassUtil.nonNullState(fragments)[fragmentNumber];
-	}
-
-	@Override
-	public int getIndex(int fragmentNumber) {
-		return indexes[fragmentNumber];
-	}
-
-	@Override
-	public int getIndexes(){
-		return indexes.length;
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		return flatClass;
 	}
 
 	@Override
@@ -161,12 +116,12 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public @NonNull List<Property> getOwnedProperties() {
-		return getSelfFragment().getLocalProperties();
+		return IterableAsImmutableList.asList(getSelfFragment().getLocalProperties());
 	}
 
 	@Override
 	public @NonNull List<Operation> getOwnedOperations() {
-		return getSelfFragment().getLocalOperations();
+		return IterableAsImmutableList.asList(getSelfFragment().getLocalOperations());
 	}
 
 	@Override
@@ -184,23 +139,13 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 		return this;
 	}
 
-	@Override
-	public @NonNull ExecutorFragment getSelfFragment() {
-		return getFragment(ClassUtil.nonNullState(fragments).length-1);
-	}
-
 	public @NonNull StandardLibrary getStandardLibrary() {
 		return OCLstdlibTables.LIBRARY;
 	}
 
 	@Override
 	public @NonNull List<org.eclipse.ocl.pivot.Class> getSuperClasses() {
-		return getSelfFragment().getSuperClasses();
-	}
-
-	@Override
-	public final @NonNull FragmentIterable getSuperFragments(int depth) {
-		return new FragmentIterable(ClassUtil.nonNullState(fragments), indexes[depth], indexes[depth+1]);
+		return IterableAsImmutableList.asList(getSelfFragment().getSuperClasses());
 	}
 
 //	public @NonNull TypeId getTypeId() {
@@ -212,14 +157,9 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 		return typeParameters;
 	}
 
+	@Deprecated
 	public void initFragments(@NonNull ExecutorFragment @NonNull [] fragments, int[] depthCounts) {
-		int[] indexes = new int[depthCounts.length+1];
-		indexes[0] = 0;
-		for (int i = 0; i <  depthCounts.length; i++) {
-			indexes[i+1] = indexes[i] + depthCounts[i];
-		}
-		this.fragments = fragments;
-		this.indexes = indexes;
+		flatClass.initFragments(fragments, depthCounts);;
 	}
 
 	@Override

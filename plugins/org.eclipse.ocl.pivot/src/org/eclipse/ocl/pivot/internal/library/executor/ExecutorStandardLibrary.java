@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class ExecutorStandardLibrary extends ExecutableStandardLibrary
@@ -105,6 +106,11 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 			return enumerationType;
 		}
 		throw new IllegalStateException("No extension package defines Enumeration type"); //$NON-NLS-1$
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+		return getInheritance(type).getFlatClass();
 	}
 
 	@Override

@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -1168,6 +1169,11 @@ implements org.eclipse.ocl.pivot.Class {
 		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
 		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
 		return thisInheritance.getCommonInheritance(thatInheritance).getPivotClass();
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		return standardLibrary.getFlatClass(this);
 	}
 
 	@Override

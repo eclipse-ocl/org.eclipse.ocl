@@ -28,7 +28,6 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
@@ -56,6 +55,7 @@ import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -475,9 +475,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		}
 		firstCompleteClass = getCompleteClass(firstType);
 		secondCompleteClass = getCompleteClass(secondType);
-		CompleteInheritance firstInheritance = firstCompleteClass.getCompleteInheritance();
-		CompleteInheritance secondInheritance = secondCompleteClass.getCompleteInheritance();
-		return firstInheritance.isSubInheritanceOf(secondInheritance);
+		FlatClass firstFlatClass = firstCompleteClass.getFlatClass();
+		FlatClass secondFlatClass = secondCompleteClass.getFlatClass();
+		return firstFlatClass.isSubFlatClassOf(secondFlatClass);
 	}
 
 	/*	@Override
@@ -496,9 +496,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		if (firstContainerType != secondContainerType) {
 			CompleteClass firstContainerCompleteClass = getCompleteClass(firstContainerType);
 			CompleteClass secondContainerCompleteClass = getCompleteClass(secondContainerType);
-			CompleteInheritance firstContainerInheritance = firstContainerCompleteClass.getCompleteInheritance();
-			CompleteInheritance secondContainerInheritance = secondContainerCompleteClass.getCompleteInheritance();
-			if (!firstContainerInheritance.isSubInheritanceOf(secondContainerInheritance)) {
+			FlatClass firstContainerFlatClass = firstContainerCompleteClass.getFlatClass();
+			FlatClass secondContainerFlatClass = secondContainerCompleteClass.getFlatClass();
+			if (!firstContainerFlatClass.isSubFlatClassOf(secondContainerFlatClass)) {
 				return false;
 			}
 		}

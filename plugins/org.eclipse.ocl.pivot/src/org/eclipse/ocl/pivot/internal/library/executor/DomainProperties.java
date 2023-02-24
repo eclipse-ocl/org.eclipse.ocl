@@ -32,7 +32,7 @@ public class DomainProperties
 
 	public DomainProperties(@NonNull CompleteInheritance inheritance) {
 		this.inheritance = inheritance;
-		InheritanceFragment selfFragment = inheritance.getSelfFragment();
+		InheritanceFragment selfFragment = inheritance.getFlatClass().getSelfFragment();
 		for (@NonNull Property property : selfFragment.getLocalProperties()) {
 			name2property.put(property.getName(), property);
 		}

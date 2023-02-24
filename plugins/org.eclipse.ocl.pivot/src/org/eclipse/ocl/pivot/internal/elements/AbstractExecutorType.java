@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -24,7 +23,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.types.AbstractInheritance;
-import org.eclipse.ocl.pivot.utilities.IndexableIterable;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
 public class AbstractExecutorType extends AbstractInheritance implements Type
@@ -44,43 +43,12 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull InheritanceFragment> getAllProperSuperFragments() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull InheritanceFragment> getAllSuperFragments() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type thatType) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public int getDepth() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-
-	public @NonNull Iterable<@NonNull InheritanceFragment> getFragments() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull InheritanceFragment getFragment(int fragmentNumber) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public int getIndex(int fragmentNumber) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public int getIndexes() {
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -107,16 +75,6 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull InheritanceFragment getSelfFragment() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull IndexableIterable<@NonNull InheritanceFragment> getSuperFragments(int depth) {
 		throw new UnsupportedOperationException();
 	}
 

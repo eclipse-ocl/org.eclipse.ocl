@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
+import org.eclipse.ocl.pivot.types.FlatClass;
 
 /**
  * @since 1.3
@@ -179,26 +180,27 @@ public class AbstractExecutorOperation extends AbstractExecutorFeature implement
 	}
 
 	@Override
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public int getIndex() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	@Nullable
-	public CompleteInheritance getInheritance(
-			@NonNull StandardLibrary standardLibrary) {
+	public @Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	@NonNull
-	public OperationId getOperationId() {
+	public @NonNull OperationId getOperationId() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	@NonNull
-	public ParametersId getParametersId() {
+	public @NonNull ParametersId getParametersId() {
 		throw new UnsupportedOperationException();
 	}
 

@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
@@ -33,8 +32,6 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
 import org.eclipse.ocl.pivot.internal.library.executor.DomainProperties;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
-import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -65,10 +62,10 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		return thatInheritance.isSuperInheritanceOf(this);
 	}
 
-	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
-		return new EcoreReflectiveFragment(this, baseInheritance);
-	}
+//	@Override
+//	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
+//		return new EcoreReflectiveFragment(this, baseInheritance);
+//	}
 
 	@Override
 	public @NonNull EObject createInstance() {
@@ -111,7 +108,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		return eClassifier;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
 		List<EClass> eSuperTypes = eClassifier instanceof EClass ? ((EClass)eClassifier).getESuperTypes() : Collections.<EClass>emptyList();
 		final Iterator<EClass> iterator = eSuperTypes.iterator();
@@ -151,7 +148,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 				};
 			}
 		};
-	}
+	} */
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getOwningPackage() {

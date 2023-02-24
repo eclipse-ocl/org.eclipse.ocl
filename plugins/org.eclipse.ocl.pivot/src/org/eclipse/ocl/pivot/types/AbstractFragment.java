@@ -159,6 +159,11 @@ public abstract class AbstractFragment implements InheritanceFragment
 	} */
 
 	@Override
+	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public @NonNull String toString() {
 		return derivedFlatClass.toString() + "__" + baseFlatClass.toString(); //$NON-NLS-1$
 	}

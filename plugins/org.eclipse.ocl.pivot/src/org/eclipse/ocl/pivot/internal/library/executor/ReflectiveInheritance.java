@@ -10,23 +10,14 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.executor;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.types.FlatClass;
-import org.eclipse.ocl.pivot.types.FlatClass.FragmentIterable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * A ReflectiveType defines a Type using a compact representation suitable for efficient
@@ -78,11 +69,9 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 		super(name, flags);
 	}
 
-	protected final @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
-		return createFragment(baseInheritance.getFlatClass());
-	}
-
-	protected abstract @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance);
+//	protected final @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
+//		return createFragment(baseInheritance.getFlatClass());
+//	}
 
 	@Override
 	public @NonNull EObject createInstance() {
@@ -92,271 +81,6 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	@Override
 	public @Nullable Object createInstance( @NonNull String value) {
 		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Add this Inheritance and all un-installed super-Inheritances to inheritances, returning true if this
-	 * inheritance was already installed.
-	 */
-	public boolean gatherUninstalledInheritances(@NonNull List<@NonNull ReflectiveInheritance> inheritances) {
-		boolean gotOne = false;
-		if (!inheritances.contains(this)) {
-			inheritances.add(this);
-			if (fragments == null) {
-				for (@NonNull CompleteInheritance superInheritance : getInitialSuperInheritances()) {
-					if (superInheritance instanceof ReflectiveInheritance) {
-						if (((ReflectiveInheritance)superInheritance).gatherUninstalledInheritances(inheritances)) {
-							gotOne = true;		// Transitively installed
-						}
-					}
-					else {
-						gotOne = true;			// Statically installed
-					}
-				}
-			}
-			else {
-				gotOne = true;					// Locally installed
-			}
-		}
-		return gotOne;
-	}
-
-	@Override
-	public final @NonNull FragmentIterable getAllProperSuperFragments() {
-		if (fragments == null) {
-			initialize();
-		}
-		@NonNull InheritanceFragment[] fragments2 = ClassUtil.nonNullState(fragments);
-		return new FragmentIterable(fragments2, 0, fragments2.length-1);
-	}
-
-	@Override
-	public final @NonNull FragmentIterable getAllSuperFragments() {
-		if (fragments == null) {
-			initialize();
-		}
-		return new FragmentIterable(ClassUtil.nonNullState(fragments));
-	}
-
-	@Override
-	public final int getDepth() {
-		if (indexes == null) {
-			initialize();
-		}
-		int @Nullable [] indexes2 = indexes;
-		assert indexes2 != null;
-		return indexes2.length-2;
-	}
-
-	@Override
-	public @NonNull InheritanceFragment getFragment(int fragmentNumber) {
-		if ((fragments == null) && isOclAny()) {
-			installOclAny();
-		}
-		assert fragments != null;
-		return fragments[fragmentNumber];
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull InheritanceFragment> getFragments() {
-		@NonNull InheritanceFragment[] fragments2 = fragments;
-		if (fragments2 == null) {
-			initialize();
-			fragments2 = fragments;
-			assert fragments2 != null;
-		}
-		return new FragmentIterable(fragments2);
-	}
-
-	@Override
-	public int getIndex(int fragmentNumber) {
-		int @Nullable [] indexes2 = indexes;
-		assert indexes2 != null;
-		return indexes2[fragmentNumber];
-	}
-
-	@Override
-	public int getIndexes(){
-		int @Nullable [] indexes2 = indexes;
-		assert indexes2 != null;
-		return indexes2.length;
-	}
-
-	/**
-	 * Return the immediate superinheritances without reference to the fragments.
-	 */
-	protected abstract @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances();
-
-	@Override
-	public @NonNull InheritanceFragment getSelfFragment() {
-		if (indexes == null) {
-			initialize();
-		}
-		@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
-		assert fragments2 != null;
-		InheritanceFragment fragment = getFragment(fragments2.length-1);
-	//	if (fragment == null) {
-	//		throw new IllegalStateException("No self fragment"); //$NON-NLS-1$
-	//	}
-		return fragment;
-	}
-
-	@Override
-	public final @NonNull FragmentIterable getSuperFragments(int depth) {
-		int @Nullable [] indexes2 = indexes;
-		assert indexes2 != null;
-		return new FragmentIterable(ClassUtil.nonNullState(fragments), indexes2[depth], indexes2[depth+1]);
-	}
-
-	protected synchronized void initialize() {
-		List<@NonNull ReflectiveInheritance> uninstalledInheritances = new ArrayList<>();
-		// Detect missing OclAny inheritance
-		// - any installed superclass must inherit from OclAny so ok.
-		// - an all-uninstalled superclass list must include OclAny to be ok.
-		if (!gatherUninstalledInheritances(uninstalledInheritances)) {
-			//			boolean containsOclAny = false;
-			//			for (DomainInheritance anInheritance : uninstalledInheritances) {
-			//				if (anInheritance.isOclAny()) {
-			//					containsOclAny = true;
-			//					break;
-			//				}
-			//			}
-			//			if (!containsOclAny)  {	// FIXME may be an rather than the OclAny - need a way to find the partial types.
-			/*				List<ReflectiveType> uninstalledInheritances2 = new ArrayList<>();
-				gatherUninstalledInheritances(uninstalledInheritances2);
-				assert uninstalledInheritances.contains(oclAnyInheritance); */
-			//			}
-		}
-		//		int oldPendingCount = uninstalledInheritances.size();
-		@SuppressWarnings("unused") List<@NonNull ReflectiveInheritance> debugOldUninstalledInheritances = new ArrayList<>(uninstalledInheritances);
-		while (true) {
-			Boolean gotOne = false;
-			for (Iterator<@NonNull ReflectiveInheritance> it = uninstalledInheritances.listIterator(); it.hasNext(); ) {
-				@NonNull ReflectiveInheritance uninstalledInheritance = it.next();
-				if (uninstalledInheritance.isInstallable()) {
-					uninstalledInheritance.install();
-					it.remove();
-					gotOne = true;
-				}
-			}
-			if (uninstalledInheritances.isEmpty()) {
-				break;
-			}
-			//			int newPendingCount = uninstalledInheritances.size();
-			if (!gotOne) {
-				List<@NonNull ReflectiveInheritance> debugNewUninstalledInheritances = new ArrayList<>();
-				gatherUninstalledInheritances(debugNewUninstalledInheritances);
-				StringBuilder s = new StringBuilder();
-				s.append("Inheritance loop for "); //$NON-NLS-1$
-				for (ListIterator<ReflectiveInheritance> it = uninstalledInheritances.listIterator(); it.hasNext(); ) {
-					ReflectiveInheritance uninstalledInheritance = it.next();
-					if (!uninstalledInheritance.isInstallable()) {
-						s.append("\n  "); //$NON-NLS-1$
-						s.append(uninstalledInheritance);
-					}
-				}
-				throw new IllegalStateException(s.toString());
-			}
-			//			oldPendingCount = newPendingCount;
-		}
-	}
-
-	/**
-	 * Install this Inheritance establishing its superClass tables and registering
-	 * it to be notified of any changes.
-	 *
-	 * @return true if installed, false if some superClass uninstallable
-	 */
-	public boolean install() {
-		if (fragments != null) {
-			return true;
-		}
-		//		System.out.println("Install " + this);
-		if (isOclAny()) {
-			installOclAny();
-		}
-		else {
-			List<@NonNull List<@NonNull FlatClass>> all = new ArrayList<>();
-			for (@NonNull CompleteInheritance superInheritance : getInitialSuperInheritances()) {
-				//				installIn(superInheritance, this, all);
-				int j = 0;
-				for (int i = 0; i < superInheritance.getIndexes()-1; i++) {
-					List<@NonNull FlatClass> some = (i < all.size()) ? all.get(i) : null;
-					if (some == null) {
-						some = new ArrayList<>();
-						all.add(some);
-					}
-					int jMax = superInheritance.getIndex(i+1);
-					for (; j < jMax; j++) {
-						InheritanceFragment fragment = superInheritance.getFragment(j);
-						FlatClass baseInheritance = fragment.getBaseFlatClass();
-						if (!some.contains(baseInheritance)) {
-							some.add(baseInheritance);
-							baseInheritance.addSubInheritance(this.getFlatClass());
-						}
-					}
-				}
-			}
-			int superDepths = all.size();
-			int superInheritances = 0;
-			for (List<FlatClass> some : all) {
-				superInheritances += some.size();
-			}
-			assert superDepths > 0;
-			@NonNull InheritanceFragment @NonNull [] fragments2 = fragments = new @NonNull InheritanceFragment[superInheritances+1];	// +1 for OclSelf
-			int @NonNull [] indexes2 = indexes = new int[superDepths+2];		// +1 for OclSelf, +1 for tail pointer
-			int j = 0;
-			indexes2[0] = 0;
-			for (int i = 0; i < superDepths; i++) {
-				for (FlatClass some : all.get(i)) {
-					fragments2[j++] = createFragment(some);
-				}
-				indexes2[i+1] = j;
-			}
-			indexes2[superDepths++] = j;
-			fragments2[j++] = createFragment(this);
-			indexes2[superDepths++] = j;
-		}
-		return true;
-	}
-
-	/**
-	 * Install the root OclAny Inheritance.
-	 */
-	protected final void installOclAny() {
-		assert fragments == null;
-		fragments = new @NonNull InheritanceFragment[] { createFragment(this) };
-		indexes = new int[] { 0, 1 };
-	}
-
-	/**
-	 * Return true if this is installed or able to be installed. Returns false if some superclass
-	 * must be installed first.
-	 */
-	public boolean isInstallable() {
-		if (isOclAny()) {
-			return true;
-		}
-		if (fragments != null) {
-			//			System.out.println("isInstallable true (already) " + this);
-			return true;
-		}
-		//		DomainInheritance oclAnyInheritance = getOclAnyInheritance();
-		for (CompleteInheritance superInheritance : getInitialSuperInheritances()) {
-			if ((superInheritance instanceof ReflectiveInheritance) && !((ReflectiveInheritance)superInheritance).isInstalled()) {
-				//				System.out.println("isInstallable false " + this);
-				return false;
-			}
-		}
-		//		System.out.println("isInstallable true " + this);
-		return true;
-	}
-
-	/**
-	 * Return true if this is installed.
-	 */
-	public boolean isInstalled() {
-		return fragments != null;
 	}
 
 	public void uninstall() {

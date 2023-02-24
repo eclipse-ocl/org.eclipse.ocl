@@ -16,7 +16,6 @@ import java.util.Iterator;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SetType;
@@ -70,19 +69,19 @@ public class InheritanceTests extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
 		try {
-			CompleteInheritance oclAnyInheritance = standardLibrary.getInheritance(standardLibrary.getOclAnyType());
+			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
 			PrimitiveType booleanType = standardLibrary.getBooleanType();
-			CompleteInheritance booleanInheritance = standardLibrary.getInheritance(booleanType);
-			assert booleanInheritance.getDepth() == 1;
-			Iterator<InheritanceFragment> allSuperInheritances = booleanInheritance.getAllSuperFragments().iterator();
-			assert allSuperInheritances.next().getBaseFlatClass() == oclAnyInheritance.getFlatClass();
-			assert allSuperInheritances.next().getBaseFlatClass() == booleanInheritance.getFlatClass();
+			FlatClass booleanFlatClass = standardLibrary.getFlatClass(booleanType);
+			assert booleanFlatClass.getDepth() == 1;
+			Iterator<@NonNull InheritanceFragment> allSuperInheritances = booleanFlatClass.getAllSuperFragments().iterator();
+			assert allSuperInheritances.next().getBaseFlatClass() == oclAnyFlatClass;
+			assert allSuperInheritances.next().getBaseFlatClass() == booleanFlatClass;
 			assert !allSuperInheritances.hasNext();
-			Iterator<InheritanceFragment> depth0Inheritances = booleanInheritance.getSuperFragments(0).iterator();
-			assert depth0Inheritances.next().getBaseFlatClass() == oclAnyInheritance.getFlatClass();
+			Iterator<@NonNull InheritanceFragment> depth0Inheritances = booleanFlatClass.getSuperFragments(0).iterator();
+			assert depth0Inheritances.next().getBaseFlatClass() == oclAnyFlatClass;
 			assert !depth0Inheritances.hasNext();
-			Iterator<InheritanceFragment> depth1Inheritances = booleanInheritance.getSuperFragments(1).iterator();
-			assert depth1Inheritances.next().getBaseFlatClass() == booleanInheritance.getFlatClass();
+			Iterator<@NonNull InheritanceFragment> depth1Inheritances = booleanFlatClass.getSuperFragments(1).iterator();
+			assert depth1Inheritances.next().getBaseFlatClass() == booleanFlatClass;
 			assert !depth1Inheritances.hasNext();
 		} finally {
 			ocl.dispose();
@@ -94,13 +93,13 @@ public class InheritanceTests extends PivotTestSuite
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
 		try {
 			AnyType oclAnyType = standardLibrary.getOclAnyType();
-			CompleteInheritance oclAnyInheritance = standardLibrary.getInheritance(oclAnyType);
-			assert oclAnyInheritance.getDepth() == 0;
-			Iterator<InheritanceFragment> allSuperInheritances = oclAnyInheritance.getAllSuperFragments().iterator();
-			assert allSuperInheritances.next().getBaseFlatClass() == oclAnyInheritance.getFlatClass();
+			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(oclAnyType);
+			assert oclAnyFlatClass.getDepth() == 0;
+			Iterator<@NonNull InheritanceFragment> allSuperInheritances = oclAnyFlatClass.getAllSuperFragments().iterator();
+			assert allSuperInheritances.next().getBaseFlatClass() == oclAnyFlatClass;
 			assert !allSuperInheritances.hasNext();
-			Iterator<InheritanceFragment> depth0Inheritances = oclAnyInheritance.getSuperFragments(0).iterator();
-			assert depth0Inheritances.next().getBaseFlatClass() == oclAnyInheritance.getFlatClass();
+			Iterator<@NonNull InheritanceFragment> depth0Inheritances = oclAnyFlatClass.getSuperFragments(0).iterator();
+			assert depth0Inheritances.next().getBaseFlatClass() == oclAnyFlatClass;
 			assert !depth0Inheritances.hasNext();
 		} finally {
 			ocl.dispose();
@@ -111,28 +110,28 @@ public class InheritanceTests extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
 		try {
-			CompleteInheritance oclAnyInheritance = standardLibrary.getInheritance(standardLibrary.getOclAnyType());
+			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
 			//		InheritanceInheritance collectionInheritance = metamodelManager.getStandardLibrary().getInheritance(metamodelManager.getStandardLibrary().getCollectionType());
 			SetType setType = standardLibrary.getSetType();
-			CompleteInheritance setInheritance = standardLibrary.getInheritance(setType);
-			assert setInheritance.getDepth() == 3;
-			Iterator<InheritanceFragment> allSuperInheritances = setInheritance.getAllSuperFragments().iterator();
-			assert allSuperInheritances.next().getBaseFlatClass() == oclAnyInheritance.getFlatClass();
+			FlatClass setFlatClass = standardLibrary.getFlatClass(setType);
+			assert setFlatClass.getDepth() == 3;
+			Iterator<@NonNull InheritanceFragment> allSuperInheritances = setFlatClass.getAllSuperFragments().iterator();
+			assert allSuperInheritances.next().getBaseFlatClass() == oclAnyFlatClass;
 			//		assert allSuperInheritances.next().getBaseInheritance() == collectionInheritance;
 			FlatClass next = allSuperInheritances.next().getBaseFlatClass();
 			while (allSuperInheritances.hasNext()) {
 				next = allSuperInheritances.next().getBaseFlatClass();
 			}
-			assert next == setInheritance.getFlatClass();
+			assert next == setFlatClass;
 			assert !allSuperInheritances.hasNext();
-			Iterator<InheritanceFragment> depth0Inheritances = setInheritance.getSuperFragments(0).iterator();
-			assert depth0Inheritances.next().getBaseFlatClass() == oclAnyInheritance.getFlatClass();
+			Iterator<@NonNull InheritanceFragment> depth0Inheritances = setFlatClass.getSuperFragments(0).iterator();
+			assert depth0Inheritances.next().getBaseFlatClass() == oclAnyFlatClass;
 			assert !depth0Inheritances.hasNext();
 			//		Iterator<InheritanceInheritance> depth1Inheritances = setInheritance.getSuperFragments(1).iterator();
 			//		assert depth1Inheritances.next() == collectionInheritance.getFlatClass();
 			//		assert !depth1Inheritances.hasNext();
-			Iterator<InheritanceFragment> depth3Inheritances = setInheritance.getSuperFragments(3).iterator();
-			assert depth3Inheritances.next().getBaseFlatClass() == setInheritance.getFlatClass();
+			Iterator<@NonNull InheritanceFragment> depth3Inheritances = setFlatClass.getSuperFragments(3).iterator();
+			assert depth3Inheritances.next().getBaseFlatClass() == setFlatClass;
 			assert !depth3Inheritances.hasNext();
 		} finally {
 			ocl.dispose();
@@ -143,30 +142,30 @@ public class InheritanceTests extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
 		try {
-			CompleteInheritance oclAnyInheritance = standardLibrary.getInheritance(standardLibrary.getOclAnyType());
-			CompleteInheritance ifInheritance = standardLibrary.getInheritance(ClassUtil.nonNullState(standardLibrary.getASClass("IfExp")));
-			Iterator<InheritanceFragment> allSuperInheritances = ifInheritance.getAllSuperFragments().iterator();
-			assert allSuperInheritances.next().getBaseFlatClass() == oclAnyInheritance.getFlatClass();
+			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
+			FlatClass ifFlatClass = standardLibrary.getFlatClass(ClassUtil.nonNullState(standardLibrary.getASClass("IfExp")));
+			Iterator<@NonNull InheritanceFragment> allSuperInheritances = ifFlatClass.getAllSuperFragments().iterator();
+			assert allSuperInheritances.next().getBaseFlatClass() == oclAnyFlatClass;
 			FlatClass next = allSuperInheritances.next().getBaseFlatClass();
 			while (allSuperInheritances.hasNext()) {
 				next = allSuperInheritances.next().getBaseFlatClass();
 			}
-			assert next == ifInheritance.getFlatClass();
+			assert next == ifFlatClass;
 			assert !allSuperInheritances.hasNext();
-			Iterator<InheritanceFragment> depth0Inheritances = ifInheritance.getSuperFragments(0).iterator();
-			assert depth0Inheritances.next().getBaseFlatClass() == oclAnyInheritance.getFlatClass();
+			Iterator<@NonNull InheritanceFragment> depth0Inheritances = ifFlatClass.getSuperFragments(0).iterator();
+			assert depth0Inheritances.next().getBaseFlatClass() == oclAnyFlatClass;
 			assert !depth0Inheritances.hasNext();
-			Iterator<InheritanceFragment> depthNInheritances = ifInheritance.getSuperFragments(ifInheritance.getDepth()).iterator();
-			assert depthNInheritances.next().getBaseFlatClass() == ifInheritance.getFlatClass();
+			Iterator<@NonNull InheritanceFragment> depthNInheritances = ifFlatClass.getSuperFragments(ifFlatClass.getDepth()).iterator();
+			assert depthNInheritances.next().getBaseFlatClass() == ifFlatClass;
 			assert !depthNInheritances.hasNext();
-			assert oclAnyInheritance.isSuperInheritanceOf(ifInheritance);
-			assert !ifInheritance.isSuperInheritanceOf(oclAnyInheritance);
-			CompleteInheritance oclExpressionInheritance = standardLibrary.getInheritance(ClassUtil.nonNullState(standardLibrary.getASClass("OCLExpression")));
-			assert oclExpressionInheritance.isSuperInheritanceOf(ifInheritance);
-			assert !ifInheritance.isSuperInheritanceOf(oclExpressionInheritance);
-			CompleteInheritance loopExpInheritance = standardLibrary.getInheritance(ClassUtil.nonNullState(standardLibrary.getASClass("LoopExp")));
-			assert !ifInheritance.isSuperInheritanceOf(loopExpInheritance);
-			assert !loopExpInheritance.isSuperInheritanceOf(ifInheritance);
+			assert oclAnyFlatClass.isSuperFlatClassOf(ifFlatClass);
+			assert !ifFlatClass.isSuperFlatClassOf(oclAnyFlatClass);
+			FlatClass oclExpressionFlatClass = standardLibrary.getFlatClass(ClassUtil.nonNullState(standardLibrary.getASClass("OCLExpression")));
+			assert oclExpressionFlatClass.isSuperFlatClassOf(ifFlatClass);
+			assert !ifFlatClass.isSuperFlatClassOf(oclExpressionFlatClass);
+			FlatClass loopExpFlatClass = standardLibrary.getFlatClass(ClassUtil.nonNullState(standardLibrary.getASClass("LoopExp")));
+			assert !ifFlatClass.isSuperFlatClassOf(loopExpFlatClass);
+			assert !loopExpFlatClass.isSuperFlatClassOf(ifFlatClass);
 		} finally {
 			ocl.dispose();
 		}
@@ -176,24 +175,24 @@ public class InheritanceTests extends PivotTestSuite
 		TestOCL ocl = createOCL();
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
 		try {
-			CompleteInheritance oclAnyInheritance = standardLibrary.getInheritance(standardLibrary.getOclAnyType());
+			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
 			//			DomainInheritance realTypeInheritance = standardLibrary.getInheritance(standardLibrary.getRealType());
 			//			DomainInheritance integerTypeInheritance = standardLibrary.getInheritance(standardLibrary.getIntegerType());
-			CompleteInheritance unlimitedNaturalTypeInheritance = standardLibrary.getInheritance(standardLibrary.getUnlimitedNaturalType());
-			assertEquals(2, unlimitedNaturalTypeInheritance.getDepth());
-			Iterator<InheritanceFragment> allSuperInheritances = unlimitedNaturalTypeInheritance.getAllSuperFragments().iterator();
-			assertEquals(oclAnyInheritance.getFlatClass(), allSuperInheritances.next().getBaseFlatClass());
-			Iterator<InheritanceFragment> depth0Inheritances = unlimitedNaturalTypeInheritance.getSuperFragments(0).iterator();
-			assertEquals(oclAnyInheritance.getFlatClass(), depth0Inheritances.next().getBaseFlatClass());
+			FlatClass unlimitedNaturalTypeFlatClass = standardLibrary.getFlatClass(standardLibrary.getUnlimitedNaturalType());
+			assertEquals(2, unlimitedNaturalTypeFlatClass.getDepth());
+			Iterator<@NonNull InheritanceFragment> allSuperInheritances = unlimitedNaturalTypeFlatClass.getAllSuperFragments().iterator();
+			assertEquals(oclAnyFlatClass, allSuperInheritances.next().getBaseFlatClass());
+			Iterator<@NonNull InheritanceFragment> depth0Inheritances = unlimitedNaturalTypeFlatClass.getSuperFragments(0).iterator();
+			assertEquals(oclAnyFlatClass, depth0Inheritances.next().getBaseFlatClass());
 			assert !depth0Inheritances.hasNext();
-			//			Iterator<DomainFragment> depth2Inheritances = unlimitedNaturalTypeInheritance.getSuperFragments(2).iterator();
+			//			Iterator<DomainFragment> depth2Inheritances = unlimitedNaturalTypeFlatClass.getSuperFragments(2).iterator();
 			//			assertEquals(realTypeInheritance, depth2Inheritances.next().getBaseInheritance());
 			//			assert !depth2Inheritances.hasNext();
-			//			Iterator<DomainFragment> depth3Inheritances = unlimitedNaturalTypeInheritance.getSuperFragments(3).iterator();
+			//			Iterator<DomainFragment> depth3Inheritances = unlimitedNaturalTypeFlatClass.getSuperFragments(3).iterator();
 			//			assertEquals(integerTypeInheritance, depth3Inheritances.next().getBaseInheritance());
 			//			assert !depth3Inheritances.hasNext();
-			Iterator<InheritanceFragment> depth2Inheritances = unlimitedNaturalTypeInheritance.getSuperFragments(2).iterator();
-			assertEquals(unlimitedNaturalTypeInheritance.getFlatClass(), depth2Inheritances.next().getBaseFlatClass());
+			Iterator<@NonNull InheritanceFragment> depth2Inheritances = unlimitedNaturalTypeFlatClass.getSuperFragments(2).iterator();
+			assertEquals(unlimitedNaturalTypeFlatClass, depth2Inheritances.next().getBaseFlatClass());
 			assert !depth2Inheritances.hasNext();
 		} finally {
 			ocl.dispose();
@@ -208,11 +207,11 @@ public class InheritanceTests extends PivotTestSuite
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
 		standardLibrary.setDefaultStandardLibraryURI(installLibraryClone());
 		try {
-			CompleteInheritance integerTypeInheritance = standardLibrary.getInheritance(standardLibrary.getIntegerType());
-			assertEquals(3, integerTypeInheritance.getDepth());
+			FlatClass integerTypeFlatClass = standardLibrary.getFlatClass(standardLibrary.getIntegerType());
+			assertEquals(3, integerTypeFlatClass.getDepth());
 			try {
 				standardLibrary.getOclComparableType().getSuperClasses().add(standardLibrary.getIntegerType());
-				integerTypeInheritance.getDepth();
+				integerTypeFlatClass.getDepth();
 				fail("Missing IllegalStateException");
 			} catch (IllegalStateException e) {
 				// FIXME validate body
@@ -232,12 +231,12 @@ public class InheritanceTests extends PivotTestSuite
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
 		standardLibrary.setDefaultStandardLibraryURI(installLibraryClone());
 		try {
-			CompleteInheritance integerTypeInheritance = standardLibrary.getInheritance(standardLibrary.getIntegerType());
-			assertEquals(3, integerTypeInheritance.getDepth());
+			FlatClass integerTypeFlatClass = standardLibrary.getFlatClass(standardLibrary.getIntegerType());
+			assertEquals(3, integerTypeFlatClass.getDepth());
 			try {
 				standardLibrary.getRealType().getSuperClasses().add(standardLibrary.getStringType());
-				assertEquals(3, standardLibrary.getInheritance(standardLibrary.getRealType()).getDepth());
-				assertEquals(4, integerTypeInheritance.getDepth());
+				assertEquals(3, standardLibrary.getFlatClass(standardLibrary.getRealType()).getDepth());
+				assertEquals(4, integerTypeFlatClass.getDepth());
 			} finally {
 				standardLibrary.getRealType().getSuperClasses().remove(standardLibrary.getStringType());
 			}
@@ -255,14 +254,14 @@ public class InheritanceTests extends PivotTestSuite
 		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
 		standardLibrary.setDefaultStandardLibraryURI(installLibraryClone());
 		try {
-			CompleteInheritance integerTypeInheritance = standardLibrary.getInheritance(standardLibrary.getIntegerType());
-			assertEquals(3, integerTypeInheritance.getDepth());
+			FlatClass integerTypeFlatClass = standardLibrary.getFlatClass(standardLibrary.getIntegerType());
+			assertEquals(3, integerTypeFlatClass.getDepth());
 			try {
 				standardLibrary.getRealType().getSuperClasses().clear();
 				standardLibrary.getRealType().getSuperClasses().add(standardLibrary.getOclAnyType());
-				assertEquals(2, integerTypeInheritance.getDepth());
-				assertEquals(2, standardLibrary.getInheritance(standardLibrary.getIntegerType()).getDepth());
-				assertEquals(1, standardLibrary.getInheritance(standardLibrary.getRealType()).getDepth());
+				assertEquals(2, integerTypeFlatClass.getDepth());
+				assertEquals(2, standardLibrary.getFlatClass(standardLibrary.getIntegerType()).getDepth());
+				assertEquals(1, standardLibrary.getFlatClass(standardLibrary.getRealType()).getDepth());
 			} finally {
 				standardLibrary.getRealType().getSuperClasses().add(standardLibrary.getOclComparableType());
 				standardLibrary.getRealType().getSuperClasses().add(standardLibrary.getOclSummableType());

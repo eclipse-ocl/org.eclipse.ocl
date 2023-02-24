@@ -120,6 +120,7 @@ import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -1160,6 +1161,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			finalAnalysis = finalAnalysis2 = new FinalAnalysis(completeModel);
 		}
 		return finalAnalysis2;
+	}
+
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+		return getInheritance(type).getFlatClass();
 	}
 
 	/**

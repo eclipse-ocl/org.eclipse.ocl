@@ -28,7 +28,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -59,6 +58,7 @@ import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -465,13 +465,13 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		return getCompleteClass().getEnvironmentFactory();
 	}
 
-	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
+	public @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses() {
 		final @NonNull Iterator<@NonNull CompleteClassInternal> iterator = ClassUtil.nonNull(computeSuperCompleteClasses().iterator());			// FIXME Use local cache
-		return new Iterable<@NonNull CompleteInheritance>()
+		return new Iterable<@NonNull FlatClass>()
 		{
 			@Override
-			public @NonNull Iterator<@NonNull CompleteInheritance> iterator() {
-				return new Iterator<@NonNull CompleteInheritance>()
+			public @NonNull Iterator<@NonNull FlatClass> iterator() {
+				return new Iterator<@NonNull FlatClass>()
 				{
 					@Override
 					public boolean hasNext() {
@@ -479,9 +479,9 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 					}
 
 					@Override
-					public @NonNull CompleteInheritance next() {
+					public @NonNull FlatClass next() {
 						CompleteClassInternal next = ClassUtil.nonNull(iterator.next());
-						return next.getCompleteInheritance();
+						return next.getFlatClass();
 					}
 
 					@Override
@@ -736,8 +736,8 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	}
 
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
-		CompleteInheritance inheritance = getCompleteClass().getCompleteInheritance();
-		return Iterables.transform(inheritance.getAllSuperFragments(), new Function<InheritanceFragment, @NonNull CompleteClass>()
+		FlatClass flatClass = getCompleteClass().getFlatClass();
+		return Iterables.transform(flatClass.getAllSuperFragments(), new Function<InheritanceFragment, @NonNull CompleteClass>()
 		{
 			@Override
 			public @NonNull CompleteClass apply(InheritanceFragment input) {

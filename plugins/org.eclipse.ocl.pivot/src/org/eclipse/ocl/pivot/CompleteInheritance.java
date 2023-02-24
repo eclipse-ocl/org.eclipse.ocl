@@ -34,18 +34,19 @@ public interface CompleteInheritance extends Nameable
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
 	 */
-	@NonNull Iterable<@NonNull InheritanceFragment> getAllProperSuperFragments();
+//	@NonNull Iterable<@NonNull InheritanceFragment> getAllProperSuperFragments();
 
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters including this one.
 	 */
-	@NonNull Iterable<@NonNull InheritanceFragment> getAllSuperFragments();
+//	@NonNull Iterable<@NonNull InheritanceFragment> getAllSuperFragments();
 
 	@NonNull CompleteInheritance getCommonInheritance(@NonNull CompleteInheritance inheritance);
 
 	/**
 	 * Return the inheritance depth of the target type: OclAny is at depth 0.
 	 */
+	@Deprecated
 	int getDepth();
 
 	@NonNull FlatClass getFlatClass();

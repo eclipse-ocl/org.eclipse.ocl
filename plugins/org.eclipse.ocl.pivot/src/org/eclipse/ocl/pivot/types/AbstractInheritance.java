@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorNamedElement;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
+import org.eclipse.ocl.pivot.types.FlatClass.FragmentIterable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public abstract class AbstractInheritance extends AbstractExecutorNamedElement implements CompleteInheritance
@@ -55,6 +56,12 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	@Override
+	@Deprecated
+	public final int getDepth() {
+		return flatClass.getDepth();
+	}
+
+	@Override
 	public @NonNull FlatClass getFlatClass() {
 		return flatClass;
 	}
@@ -72,6 +79,36 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public final @NonNull InheritanceFragment getFragment(int fragmentNumber) {
+		return flatClass.getFragment(fragmentNumber);
+	}
+
+	@Override
+	public final @NonNull Iterable<@NonNull InheritanceFragment> getFragments() {
+		return flatClass.getFragments();
+	}
+
+	@Override
+	public final int getIndex(int fragmentNumber) {
+		return flatClass.getIndex(fragmentNumber);
+	}
+
+	@Override
+	public final int getIndexes(){
+		return flatClass.getIndexes();
+	}
+
+	@Override
+	public final @NonNull InheritanceFragment getSelfFragment() {
+		return flatClass.getSelfFragment();
+	}
+
+	@Override
+	public final @NonNull FragmentIterable getSuperFragments(int depth) {
+		return flatClass.getSuperFragments(depth);
 	}
 
 	@Override
@@ -119,7 +156,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
 		if (apparentInheritance != null) {
 			FlatClass apparentFlatClass = apparentInheritance.getFlatClass();
-			int apparentDepth = ClassUtil.nonNullModel(apparentInheritance).getDepth();
+			int apparentDepth = ClassUtil.nonNullModel(apparentFlatClass).getDepth();
 			if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 				int iMax = getIndex(apparentDepth+1);
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {
@@ -140,7 +177,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
 		if (apparentInheritance != null) {
 			FlatClass apparentFlatClass = apparentInheritance.getFlatClass();
-			int apparentDepth = ClassUtil.nonNullModel(apparentInheritance).getDepth();
+			int apparentDepth = ClassUtil.nonNullModel(apparentFlatClass).getDepth();
 			if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 				int iMax = getIndex(apparentDepth+1);
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {

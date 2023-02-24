@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -131,10 +132,10 @@ public class FinalAnalysis
 		}
 		List<@NonNull Operation> results = new ArrayList<>();
 		StandardLibraryInternal standardLibrary = completeModel.getStandardLibrary();
-		CompleteInheritance requiredInheritance = completeClass.getCompleteInheritance();
+		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
-			CompleteInheritance overrideInheritance = override.getInheritance(standardLibrary);
-			if ((overrideInheritance != null) && requiredInheritance.isSuperInheritanceOf(overrideInheritance)) {
+			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);
+			if ((overrideFlatClass != null) && requiredFlatClass.isSuperFlatClassOf(overrideFlatClass)) {
 				results.add(override);
 			}
 		}

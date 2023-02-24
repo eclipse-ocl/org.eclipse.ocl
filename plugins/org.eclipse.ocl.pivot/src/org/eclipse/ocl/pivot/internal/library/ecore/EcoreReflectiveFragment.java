@@ -39,7 +39,7 @@ public class EcoreReflectiveFragment extends ReflectiveFragment
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull ? extends Property> getLocalProperties() {
+	public @NonNull Iterable<@NonNull Property> getLocalProperties() {
 		Map<@NonNull Property, @NonNull LibraryFeature> propertyMap2 = propertyMap;
 		if (propertyMap2 == null) {
 			synchronized (this) {

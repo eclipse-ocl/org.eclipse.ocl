@@ -78,7 +78,8 @@ public class ExecutorFragment extends AbstractFragment
 		return Lists.<@NonNull Property>newArrayList(properties);
 	}
 
-	public @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses() {
+	@Override
+	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses() {
 		throw new UnsupportedOperationException();		// WIP
 	}
 

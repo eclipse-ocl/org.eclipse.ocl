@@ -113,12 +113,12 @@ public abstract class ReflectiveFragment extends AbstractFragment
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull ? extends Operation> getLocalOperations() {
+	public @NonNull Iterable<@NonNull Operation> getLocalOperations() {
 		return operationMap != null ? operationMap.keySet() : Collections.<@NonNull Operation>emptyList();
 	}
 
 	@Override
-	public @NonNull Iterable<@NonNull ? extends Property> getLocalProperties() {
+	public @NonNull Iterable<@NonNull Property> getLocalProperties() {
 		return propertyMap != null ? propertyMap.keySet() : Collections.<@NonNull Property>emptyList();
 	}
 }
