@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveFragment;
@@ -63,10 +62,10 @@ public class EcoreReflectiveFragment extends ReflectiveFragment
 		List<EStructuralFeature> eStructuralFeatures = ((EClass) eClassifier).getEStructuralFeatures();
 		for (int i = 0; i < eStructuralFeatures.size(); i++) {
 			@SuppressWarnings("null")@NonNull EStructuralFeature eFeature = eStructuralFeatures.get(i);
-			CompleteInheritance completeInheritance = derivedFlatClass.getCompleteInheritance();
+		//	CompleteInheritance completeInheritance = derivedFlatClass.getCompleteInheritance();
 			org.eclipse.ocl.pivot.Class asClass = derivedFlatClass.getPivotClass();
-			assert completeInheritance == asClass;
-			EcoreExecutorProperty propertyAndImplementation = new EcoreExecutorProperty(eFeature, (EcoreReflectiveType)completeInheritance, i);
+		//	assert completeInheritance == asClass;
+			EcoreExecutorProperty propertyAndImplementation = new EcoreExecutorProperty(eFeature, asClass, i);
 			map.put(propertyAndImplementation, propertyAndImplementation);
 		}
 		return map;
