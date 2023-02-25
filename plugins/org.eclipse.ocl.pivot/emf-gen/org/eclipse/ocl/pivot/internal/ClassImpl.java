@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -65,7 +66,6 @@ import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
-import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -1417,14 +1417,14 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		CompleteInheritance inheritance = getInheritance(standardLibrary);
-		return inheritance.lookupActualOperation(standardLibrary, apparentOperation);
+		FlatClass flatClass = getFlatClass(standardLibrary);
+		return flatClass.lookupActualOperation(standardLibrary, apparentOperation);
 	}
 
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		CompleteInheritance inheritance = getInheritance(standardLibrary);
-		return inheritance.lookupImplementation(standardLibrary, apparentOperation);
+		FlatClass flatClass = getFlatClass(standardLibrary);
+		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
 	}
 
 	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {

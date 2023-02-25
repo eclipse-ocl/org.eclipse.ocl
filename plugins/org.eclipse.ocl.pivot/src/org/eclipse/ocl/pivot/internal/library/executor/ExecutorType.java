@@ -22,13 +22,13 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
-import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.IterableAsImmutableList;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.OCLValue;
@@ -52,11 +52,15 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		if (this == thatInheritance) {
+		if (this == type) {
 			return true;
 		}
-		return thatInheritance.isSuperInheritanceOf(this);
+		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
+		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
+		if (thisFlatClass == thatFlatClass) {
+			return true;
+		}
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
 	@Override
@@ -116,12 +120,12 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public @NonNull List<Property> getOwnedProperties() {
-		return IterableAsImmutableList.asList(getSelfFragment().getLocalProperties());
+		return IterableAsImmutableList.asList(flatClass.getSelfFragment().getLocalProperties());
 	}
 
 	@Override
 	public @NonNull List<Operation> getOwnedOperations() {
-		return IterableAsImmutableList.asList(getSelfFragment().getLocalOperations());
+		return IterableAsImmutableList.asList(flatClass.getSelfFragment().getLocalOperations());
 	}
 
 	@Override
@@ -145,7 +149,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	@Override
 	public @NonNull List<org.eclipse.ocl.pivot.Class> getSuperClasses() {
-		return IterableAsImmutableList.asList(getSelfFragment().getSuperClasses());
+		return IterableAsImmutableList.asList(flatClass.getSelfFragment().getSuperClasses());
 	}
 
 //	public @NonNull TypeId getTypeId() {

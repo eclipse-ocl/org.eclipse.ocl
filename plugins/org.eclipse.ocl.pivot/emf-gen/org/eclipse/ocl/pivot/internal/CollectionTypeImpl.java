@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -37,11 +36,11 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -663,17 +662,17 @@ implements CollectionType {
 	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		CompleteEnvironment environment = idResolver.getEnvironment();
 		StandardLibrary standardLibrary = environment.getOwnedStandardLibrary();
-		CompleteInheritance thisInheritance = this.getInheritance(standardLibrary);
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		CompleteInheritance commonInheritance = thisInheritance.getCommonInheritance(thatInheritance);
-		org.eclipse.ocl.pivot.Class commonType = commonInheritance.getPivotClass();
+		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
+		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
+		FlatClass commonFlatClass = thisFlatClass.getCommonFlatClass(thatFlatClass);
+		org.eclipse.ocl.pivot.Class commonType = commonFlatClass.getPivotClass();
 		if (type instanceof CollectionType) {
 			CollectionType thatCollectionType = (CollectionType)type;
 			Type thisElementType = this.getElementType();
 			Type thatElementType = ClassUtil.nonNullEMF(thatCollectionType.getElementType());
 			boolean commonIsNullFree = this.isIsNullFree() && thatCollectionType.isIsNullFree();
 			Type commonElementType = thisElementType.getCommonType(idResolver, thatElementType);
-			if ((commonInheritance instanceof CompleteInheritanceImpl) && !((CompleteInheritanceImpl)commonInheritance).isIsAbstract()) {
+			if (!commonFlatClass.isAbstract()) {
 				CollectionType commonCollectionType = (CollectionType)commonType;
 				return environment.getCollectionType(commonCollectionType, commonElementType, commonIsNullFree, null, null);
 			}

@@ -13,12 +13,14 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
@@ -28,13 +30,18 @@ public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheri
 		super(name, flags);
 	}
 
+	protected AbstractReflectiveInheritanceType(@NonNull EClassifier eClassifier, int flags) {
+		super(eClassifier, flags);
+	}
+
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		if (this == thatInheritance) {
+		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
+		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
+		if (thisFlatClass == thatFlatClass) {
 			return true;
 		}
-		return thatInheritance.isSuperInheritanceOf(this);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
 	@Override

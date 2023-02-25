@@ -10,21 +10,20 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.types;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.ParametersId;
-import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
+import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
+import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.PartialFlatClass;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorNamedElement;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.library.UnsupportedOperation;
-import org.eclipse.ocl.pivot.types.FlatClass.FragmentIterable;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public abstract class AbstractInheritance extends AbstractExecutorNamedElement implements CompleteInheritance
 {
@@ -47,26 +46,40 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 
 	public AbstractInheritance(@NonNull String name, int flags) {
 		super(name);
-		this.flatClass = new FlatClass(this, name, flags);
+		this.flatClass = new PartialFlatClass((Type)this, flags);
 	}
 
-	@Override
-	public @NonNull CompleteInheritance getCommonInheritance(@NonNull CompleteInheritance thatInheritance) {
-		return flatClass.getCommonInheritance(thatInheritance);
+	protected AbstractInheritance(@NonNull CompleteClass completeClass, int flags) {
+		super(NameUtil.getName(completeClass));
+		this.flatClass = new CompleteFlatClass(completeClass, flags);
 	}
 
-	@Override
-	@Deprecated
-	public final int getDepth() {
-		return flatClass.getDepth();
+	protected AbstractInheritance(@NonNull EClassifier eClassifier, int flags) {
+		super(NameUtil.getName(eClassifier));
+		this.flatClass = new EcoreFlatClass(eClassifier, flags);
 	}
+
+//	@Override
+//	public @NonNull CompleteInheritance getCommonInheritance(@NonNull CompleteInheritance thatInheritance) {
+//		return flatClass.getCommonInheritance(thatInheritance);
+//	}
+
+//	@Override
+//	@Deprecated
+//	public final int getDepth() {
+//		return flatClass.getDepth();
+//	}
 
 	@Override
 	public @NonNull FlatClass getFlatClass() {
 		return flatClass;
 	}
 
-	@Override
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		return flatClass;
+	}
+
+/*	@Override
 	public @Nullable InheritanceFragment getFragment(@NonNull CompleteInheritance thatInheritance) {
 		int staticDepth = thatInheritance.getDepth();
 		if (staticDepth <= getDepth()) {
@@ -79,9 +92,9 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 			}
 		}
 		return null;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public final @NonNull InheritanceFragment getFragment(int fragmentNumber) {
 		return flatClass.getFragment(fragmentNumber);
 	}
@@ -99,124 +112,69 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	@Override
 	public final int getIndexes(){
 		return flatClass.getIndexes();
-	}
-
-	@Override
-	public final @NonNull InheritanceFragment getSelfFragment() {
-		return flatClass.getSelfFragment();
-	}
-
-	@Override
-	public final @NonNull FragmentIterable getSuperFragments(int depth) {
-		return flatClass.getSuperFragments(depth);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getType() {
-		return getPivotClass();
-	}
-
-	public final boolean isInvalid() {
-		return flatClass.isInvalid();
-	}
-
-	@Override
-	public final boolean isOclAny() {
-		return flatClass.isOclAny();
-	}
+	} */
 
 //	@Override
-	public /*final*/ boolean isOrdered() {
-		return flatClass.isOrdered();
-	}
-
-	@Override
-	public boolean isSubInheritanceOf(@NonNull CompleteInheritance thatInheritance) {
-		return flatClass.isSubFlatClassOf(thatInheritance.getFlatClass());
-	}
-
-	@Override
-	public boolean isSuperInheritanceOf(@NonNull CompleteInheritance thatInheritance) {
-		return flatClass.isSuperFlatClassOf(thatInheritance.getFlatClass());
-	}
-
-	@Override
-	public final boolean isUndefined() {
-		return flatClass.isUndefined();
-	}
+//	public final @NonNull InheritanceFragment getSelfFragment() {
+//		return flatClass.getSelfFragment();
+//	}
 
 //	@Override
-	public /*final*/ boolean isUnique() {
-		return flatClass.isUnique();
-	}
+//	public final @NonNull FragmentIterable getSuperFragments(int depth) {
+//		return flatClass.getSuperFragments(depth);
+//	}
 
-	@Override
+//	@Override
+//	public org.eclipse.ocl.pivot.@NonNull Class getType() {
+//		return getPivotClass();
+//	}
+
+//	public final boolean isInvalid() {
+//		return flatClass.isInvalid();
+//	}
+
+//	@Override
+//	public final boolean isOclAny() {
+//		return flatClass.isOclAny();
+//	}
+
+//	@Override
+//	public /*final*/ boolean isOrdered() {
+//		return flatClass.isOrdered();
+//	}
+
+//	@Override
+//	public boolean isSubInheritanceOf(@NonNull CompleteInheritance thatInheritance) {
+//		return flatClass.isSubFlatClassOf(thatInheritance.getFlatClass());
+//	}
+
+//	@Override
+//	public boolean isSuperInheritanceOf(@NonNull CompleteInheritance thatInheritance) {
+//		return flatClass.isSuperFlatClassOf(thatInheritance.getFlatClass());
+//	}
+
+//	@Override
+//	public final boolean isUndefined() {
+//		return flatClass.isUndefined();
+//	}
+
+//	@Override
+//	public /*final*/ boolean isUnique() {
+//		return flatClass.isUnique();
+//	}
+
+//	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		getDepth();
-		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
-		if (apparentInheritance != null) {
-			FlatClass apparentFlatClass = apparentInheritance.getFlatClass();
-			int apparentDepth = ClassUtil.nonNullModel(apparentFlatClass).getDepth();
-			if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
-				int iMax = getIndex(apparentDepth+1);
-				for (int i = getIndex(apparentDepth); i < iMax; i++) {
-					InheritanceFragment fragment = getFragment(i);
-					if (fragment.getBaseFlatClass() == apparentFlatClass) {
-						Operation actualOperation = fragment.getActualOperation(apparentOperation);
-						return actualOperation;
-					}
-				}
-			}
-		}
-		return apparentOperation;	// invoke apparent op for null and invalid
+		return flatClass.lookupActualOperation(standardLibrary, apparentOperation);
 	}
 
-	@Override
+//	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		getDepth();
-		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
-		if (apparentInheritance != null) {
-			FlatClass apparentFlatClass = apparentInheritance.getFlatClass();
-			int apparentDepth = ClassUtil.nonNullModel(apparentFlatClass).getDepth();
-			if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
-				int iMax = getIndex(apparentDepth+1);
-				for (int i = getIndex(apparentDepth); i < iMax; i++) {
-					InheritanceFragment fragment = getFragment(i);
-					if (fragment.getBaseFlatClass() == apparentFlatClass) {
-						return fragment.getImplementation(apparentOperation);
-					}
-				}
-			}
-		}
-		LibraryFeature implementation = PivotUtilInternal.getImplementation(apparentOperation);	// invoke apparent op for null and invalid
-		if (implementation == null) {
-			implementation = UnsupportedOperation.INSTANCE;
-		}
-		return implementation;
+		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
 	}
 
-	@Override
-	public @Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, CompleteInheritance... argumentTypes) {
-		for (Operation localOperation : getPivotClass().getOwnedOperations()) {
-			if (localOperation.getName().equals(operationName)) {
-				ParametersId firstParametersId = localOperation.getParametersId();
-				int iMax = firstParametersId.size();
-				if (iMax == argumentTypes.length) {
-					int i = 0;
-					for (; i < iMax; i++) {
-						TypeId firstParameterId = firstParametersId.get(i);
-						assert firstParameterId != null;
-						@NonNull Type secondParameterType = argumentTypes[i].getPivotClass();
-						if (firstParameterId != secondParameterType.getTypeId()) {
-							break;
-						}
-					}
-					if (i >= iMax) {
-						return localOperation;
-					}
-				}
-			}
-		}
-		return null;
-	}
+//	@Override
+//	public @Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, CompleteInheritance... argumentTypes) {
+//		return flatClass.lookupLocalOperation(standardLibrary, operationName, argumentTypes);
+//	}
 }

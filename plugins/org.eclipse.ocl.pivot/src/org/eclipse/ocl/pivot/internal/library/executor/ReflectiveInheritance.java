@@ -10,10 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.executor;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 
@@ -52,6 +54,14 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 
 	public ReflectiveInheritance(@NonNull String name, int flags, ExecutorTypeParameter... typeParameters) {
 		super(name, flags);
+	}
+
+	protected ReflectiveInheritance(@NonNull CompleteClass completeClass, int flags) {
+		super(completeClass, flags);
+	}
+
+	protected ReflectiveInheritance(@NonNull EClassifier eClassifier, int flags) {
+		super(eClassifier, flags);
 	}
 
 //	protected final @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {

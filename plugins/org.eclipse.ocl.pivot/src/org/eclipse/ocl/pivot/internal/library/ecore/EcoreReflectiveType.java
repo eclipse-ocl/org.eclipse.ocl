@@ -27,12 +27,12 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
 import org.eclipse.ocl.pivot.internal.library.executor.DomainProperties;
-import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -46,7 +46,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	private /*@LazyNonNull*/ DomainProperties allProperties;
 
 	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... typeParameters) {
-		super(ClassUtil.nonNullEMF(eClassifier.getName()), flags);
+		super(eClassifier, flags);
 		this.evaluationPackage = evaluationPackage;
 		this.eClassifier = eClassifier;
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
@@ -56,11 +56,13 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		Class<?> instanceClass = eClassifier.getInstanceClass();
 		org.eclipse.ocl.pivot.@Nullable Class behavioralClass = instanceClass != null ? PivotUtil.getBehavioralClass(standardLibrary, instanceClass) : null;
-		CompleteInheritance thatInheritance = type.getInheritance(standardLibrary);
-		if (behavioralClass == thatInheritance) {
+		FlatClass behavioralFlatClass = behavioralClass != null ? behavioralClass.getFlatClass(standardLibrary) :  null;
+		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
+		if (behavioralFlatClass == thatFlatClass) {
 			return true;
 		}
-		return thatInheritance.isSuperInheritanceOf(this);
+		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
+		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
 
 //	@Override

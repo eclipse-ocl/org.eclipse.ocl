@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
@@ -28,7 +29,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class JavaType extends AbstractExecutorClass
 {
 	protected final @NonNull Class<?> javaClass;
-	
+
 	public JavaType(@NonNull Class<?> javaClass) {
 		super(ClassUtil.nonNullState(javaClass.getName()), 0);
 		this.javaClass = javaClass;
@@ -98,7 +99,7 @@ public class JavaType extends AbstractExecutorClass
 		}
 		return null;
 	}
-	
+
 	@Override
 	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
 		if (Comparable.class.isAssignableFrom(javaClass)) {
@@ -123,15 +124,15 @@ public class JavaType extends AbstractExecutorClass
 
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		CompleteInheritance inheritance = getInheritance(standardLibrary);
-		return inheritance.lookupActualOperation(standardLibrary, apparentOperation);
+		FlatClass flatClass = getFlatClass(standardLibrary);
+		return flatClass.lookupActualOperation(standardLibrary, apparentOperation);
 	}
 
 	@Override
 	@NonNull
 	public LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		CompleteInheritance inheritance = standardLibrary.getInheritance(standardLibrary.getOclAnyType());
-		return inheritance.lookupImplementation(standardLibrary, apparentOperation);
+		FlatClass flatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
+		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
 	}
 
 	@Override

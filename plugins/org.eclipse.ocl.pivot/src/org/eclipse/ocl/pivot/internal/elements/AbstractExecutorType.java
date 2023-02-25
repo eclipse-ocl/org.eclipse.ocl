@@ -10,9 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.elements;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -23,13 +25,20 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.types.AbstractInheritance;
-import org.eclipse.ocl.pivot.types.FlatClass;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
 public class AbstractExecutorType extends AbstractInheritance implements Type
 {
 	public AbstractExecutorType(@NonNull String name, int flags) {
 		super(name, flags);
+	}
+
+	protected AbstractExecutorType(@NonNull CompleteClass completeClass, int flags) {
+		super(completeClass, flags);
+	}
+
+	protected AbstractExecutorType(@NonNull EClassifier eClassifier, int flags) {
+		super(eClassifier, flags);
 	}
 
 	@Override
@@ -44,11 +53,6 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 
 	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type thatType) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -14,10 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
@@ -38,6 +40,14 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 {
 	public AbstractExecutorClass(@NonNull String name, int flags) {
 		super(name, flags);
+	}
+
+	protected AbstractExecutorClass(@NonNull CompleteClass completeClass, int flags) {
+		super(completeClass, flags);
+	}
+
+	protected AbstractExecutorClass(@NonNull EClassifier eClassifier, int flags) {
+		super(eClassifier, flags);
 	}
 
 	@Override

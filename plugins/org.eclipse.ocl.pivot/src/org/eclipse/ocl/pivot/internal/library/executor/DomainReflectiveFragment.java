@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.types.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 
 public class DomainReflectiveFragment extends ReflectiveFragment
 {

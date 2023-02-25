@@ -18,11 +18,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
-import org.eclipse.ocl.pivot.types.FlatClass;
 
 /**
  * A ReflectiveFragment provides the description of the properties and operations defined by some class when accessed by the same

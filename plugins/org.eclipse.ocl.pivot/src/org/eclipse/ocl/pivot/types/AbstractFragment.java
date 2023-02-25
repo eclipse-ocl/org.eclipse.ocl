@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.types;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 

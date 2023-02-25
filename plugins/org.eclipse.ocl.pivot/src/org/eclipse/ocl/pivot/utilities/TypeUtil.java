@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionKind;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
@@ -40,6 +39,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
@@ -62,9 +62,9 @@ public class TypeUtil
 		Type firstContainerType = firstCollectionType.getContainerType();
 		Type secondContainerType = secondCollectionType.getContainerType();
 		if (firstContainerType != secondContainerType) {
-			CompleteInheritance firstInheritance = firstContainerType.getInheritance(standardLibrary);
-			CompleteInheritance secondInheritance = secondContainerType.getInheritance(standardLibrary);
-			if (!secondInheritance.isSuperInheritanceOf(firstInheritance)) {
+			FlatClass firstFlatClass = firstContainerType.getFlatClass(standardLibrary);
+			FlatClass secondFlatClass = secondContainerType.getFlatClass(standardLibrary);
+			if (!secondFlatClass.isSuperFlatClassOf(firstFlatClass)) {
 				return false;
 			}
 		}
@@ -132,9 +132,9 @@ public class TypeUtil
 		if (isEqualToTupleType(standardLibrary, firstTupleType, secondTupleType)) {
 			return true;
 		}
-		CompleteInheritance firstInheritance = firstTupleType.getInheritance(standardLibrary);
-		CompleteInheritance secondInheritance = secondTupleType.getInheritance(standardLibrary);
-		return firstInheritance.isSuperInheritanceOf(secondInheritance);
+		FlatClass firstFlatClass = firstTupleType.getFlatClass(standardLibrary);
+		FlatClass secondFlatClass = secondTupleType.getFlatClass(standardLibrary);
+		return firstFlatClass.isSuperFlatClassOf(secondFlatClass);
 	}
 
 	/**

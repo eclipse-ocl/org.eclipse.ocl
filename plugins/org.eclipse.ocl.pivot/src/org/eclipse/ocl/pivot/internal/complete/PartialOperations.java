@@ -21,9 +21,9 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -79,8 +79,8 @@ public class PartialOperations //extends HashMap<ParametersId, List<DomainOperat
 				keys2[index] = index;
 				int metric = 0;
 				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
-				CompleteInheritance inheritance = owningClass.getInheritance(standardLibrary);
-				int depth = inheritance.getDepth();
+				FlatClass flatClass = owningClass.getFlatClass(standardLibrary);
+				int depth = flatClass.getDepth();
 				//				int isRedefinition = (operation instanceof Operation) && (((Operation)operation).getRedefinedOperation().size() > 0) ? 1 : 0;
 				metric = depth;
 				metrics[index] = metric;

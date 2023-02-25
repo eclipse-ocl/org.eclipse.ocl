@@ -12,10 +12,8 @@ package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.types.FlatClass;
-import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
 /**
@@ -41,49 +39,49 @@ public interface CompleteInheritance extends Nameable
 	 */
 //	@NonNull Iterable<@NonNull InheritanceFragment> getAllSuperFragments();
 
-	@NonNull CompleteInheritance getCommonInheritance(@NonNull CompleteInheritance inheritance);
+//	@NonNull CompleteInheritance getCommonInheritance(@NonNull CompleteInheritance inheritance);
 
 	/**
 	 * Return the inheritance depth of the target type: OclAny is at depth 0.
 	 */
-	@Deprecated
-	int getDepth();
+//	@Deprecated
+//	int getDepth();
 
 	@NonNull FlatClass getFlatClass();
 
 	/**
 	 * Return the InheritanceFragment of this inheritance whose baseInheritance is thatInheritance. Return null if no InheritanceFragment corresponds.
 	 */
-	@Nullable InheritanceFragment getFragment(@NonNull CompleteInheritance thatInheritance);
-	@NonNull Iterable<@NonNull InheritanceFragment> getFragments();
-	@NonNull InheritanceFragment getFragment(int fragmentNumber);
-	int getIndex(int fragmentNumber);
-	int getIndexes();
+//	@Nullable InheritanceFragment getFragment(@NonNull CompleteInheritance thatInheritance);
+//	@NonNull Iterable<@NonNull InheritanceFragment> getFragments();
+//	@NonNull InheritanceFragment getFragment(int fragmentNumber);
+//	int getIndex(int fragmentNumber);
+//	int getIndexes();
 	@Nullable Operation getMemberOperation(@NonNull OperationId id);
 	@Nullable Property getMemberProperty(@NonNull String name);
 
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 
-	@NonNull InheritanceFragment getSelfFragment();
+//	@NonNull InheritanceFragment getSelfFragment();
 
 	/**
 	 * Return an Iterable of all the super-inheritances at a specified depth, between 0 and getDepth() inclusive.
 	 */
-	@NonNull IndexableIterable<@NonNull InheritanceFragment> getSuperFragments(int depth);
+//	@NonNull IndexableIterable<@NonNull InheritanceFragment> getSuperFragments(int depth);
 
-	@Deprecated // Use getPivotClass
-	org.eclipse.ocl.pivot.@NonNull Class getType();
+//	@Deprecated // Use getPivotClass
+//	org.eclipse.ocl.pivot.@NonNull Class getType();
 
-	boolean isOclAny();
-	boolean isSubInheritanceOf(@NonNull CompleteInheritance inheritance);
-	boolean isSuperInheritanceOf(@NonNull CompleteInheritance inheritance);
-	boolean isUndefined();
+//	boolean isOclAny();
+//	boolean isSubInheritanceOf(@NonNull CompleteInheritance inheritance);
+//	boolean isSuperInheritanceOf(@NonNull CompleteInheritance inheritance);
+//	boolean isUndefined();
 
-	@NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
+//	@NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
 	/**
 	 * Return the dynamic (overloaded) implementation of the staticOperation applicable to the types managed
 	 * by the given Standard Library.
 	 */
-	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
-	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, CompleteInheritance... argumentTypes);
+//	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
+//	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, CompleteInheritance... argumentTypes);
 }

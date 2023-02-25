@@ -11,22 +11,26 @@
 package org.eclipse.ocl.pivot.internal.executor;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveFragment;
+import org.eclipse.ocl.pivot.flat.PartialFlatClass;
+import org.eclipse.ocl.pivot.ids.ParametersId;
 
-public abstract class PivotReflectiveFragment extends ReflectiveFragment
+public class PartialReflectiveFragment extends PivotReflectiveFragment
 {
-	public PivotReflectiveFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
+	public PartialReflectiveFragment(@NonNull PartialFlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
 		super(derivedFlatClass, baseFlatClass);
 	}
 
-/*	@Override
+	@Override
 	public @Nullable Operation getLocalOperation(@NonNull Operation baseOperation) {
-		CompleteFlatClass completeFlatClass = (CompleteFlatClass)derivedFlatClass;		// FIXME cast
+		PartialFlatClass completeFlatClass = (PartialFlatClass)derivedFlatClass;
 		String baseOperationName = baseOperation.getName();
 		ParametersId baseParametersId = baseOperation.getParametersId();
 		Operation bestOperation = null;
-		for (org.eclipse.ocl.pivot.Class partialClass : completeFlatClass.getCompleteClass().getPartialClasses()) {
+		org.eclipse.ocl.pivot.Class partialClass = completeFlatClass.getPivotClass();
+	//	for (org.eclipse.ocl.pivot.Class partialClass : completeFlatClass.getCompleteClass().getPartialClasses()) {
 			for (Operation localOperation : partialClass.getOwnedOperations()) {
 				if (localOperation.getName().equals(baseOperationName) && (localOperation.getParametersId() == baseParametersId)) {
 					if (localOperation.getESObject() != null) {
@@ -40,7 +44,7 @@ public abstract class PivotReflectiveFragment extends ReflectiveFragment
 					}
 				}
 			}
-		}
+	//	}
 		return bestOperation;					// null if not known locally, caller must try superfragments.
-	} */
+	}
 }

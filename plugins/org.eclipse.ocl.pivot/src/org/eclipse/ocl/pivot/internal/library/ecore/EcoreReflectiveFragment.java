@@ -21,17 +21,23 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveFragment;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.types.FlatClass;
 
 public class EcoreReflectiveFragment extends ReflectiveFragment
 {
 	protected final @NonNull EClassifier eClassifier;
 
-	public EcoreReflectiveFragment(@NonNull EcoreReflectiveType derivedInheritance, @NonNull FlatClass baseInheritance) {
-		super(derivedInheritance.getFlatClass(), baseInheritance);
+	public EcoreReflectiveFragment(@NonNull EcoreReflectiveType derivedInheritance, @NonNull FlatClass baseFlatClass) {
+		super(derivedInheritance.getFlatClass(), baseFlatClass);
 		this.eClassifier = derivedInheritance.getEClassifier();
+	}
+
+	public EcoreReflectiveFragment(@NonNull EcoreFlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
+		super(derivedFlatClass, baseFlatClass);
+		this.eClassifier = derivedFlatClass.getEClassifier();
 	}
 
 	public final @NonNull EClassifier getEClassifier() {
