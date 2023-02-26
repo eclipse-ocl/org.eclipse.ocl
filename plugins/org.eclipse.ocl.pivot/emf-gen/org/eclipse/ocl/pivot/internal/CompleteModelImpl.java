@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
@@ -707,6 +708,17 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			return completePackage;
 		}
 		return ownedCompletePackages.getOwnedCompletePackage(completeURIorName);
+	}
+
+	private CompleteFlatModel completeFlatModel = null;
+
+	@Override
+	public @NonNull CompleteFlatModel getFlatModel() {
+		CompleteFlatModel completeFlatModel2 = completeFlatModel;
+		if (completeFlatModel2 == null) {
+			completeFlatModel = completeFlatModel2 = new CompleteFlatModel(getStandardLibrary(), this);
+		}
+		return completeFlatModel2;
 	}
 
 	@Override

@@ -109,7 +109,7 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 	public @Nullable Property getMemberProperty(@NonNull String name) {
 		DomainProperties allProperties2 = allProperties;
 		if (allProperties2 == null) {
-			allProperties = allProperties2 = new DomainProperties(this);
+			allProperties = allProperties2 = new DomainProperties(getFlatClass());
 		}
 		return allProperties2.getMemberProperty(name);
 	}

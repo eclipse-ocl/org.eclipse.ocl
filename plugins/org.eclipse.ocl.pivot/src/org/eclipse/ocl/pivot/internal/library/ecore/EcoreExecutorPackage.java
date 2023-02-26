@@ -19,7 +19,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
@@ -46,6 +48,12 @@ public class EcoreExecutorPackage extends ExecutorPackage
 		this.ePackage = ePackage;
 	}
 
+	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage, @NonNull PackageId packageId, @NonNull ExecutorStandardLibrary standardLibrary) {
+		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), packageId);
+		this.ePackage = ePackage;
+		this.standardLibrary = standardLibrary;
+	}
+
 	@Override
 	public final EPackage getEPackage() {
 		return ePackage;
@@ -54,6 +62,15 @@ public class EcoreExecutorPackage extends ExecutorPackage
 	@Override
 	public EObject getESObject() {
 		return ePackage;
+	}
+
+//	public @NonNull EcoreFlatModel getFlatModel() {
+	//	return (EcoreFlatModel)(Object)standardLibrary.getFlatModel();		// XXX cast
+//	}
+
+	public @NonNull IdResolver getIdResolver() {
+		@NonNull List<EObject> emptyList = Collections.<EObject>emptyList();
+		return new EcoreIdResolver(emptyList, standardLibrary);
 	}
 
 	@Override
@@ -111,8 +128,13 @@ public class EcoreExecutorPackage extends ExecutorPackage
 		return null;
 	}
 
+	public @NonNull StandardLibrary getStandardLibrary() {
+		assert standardLibrary != null;
+		return standardLibrary;
+	}
+
 	public void init(@Nullable ExecutorStandardLibrary standardLibrary, @NonNull ExecutorType @NonNull [] types) {
-		assert this.standardLibrary == null;
+		assert (this.standardLibrary == null) || (this.standardLibrary == standardLibrary);
 		assert this.types == null;
 		this.standardLibrary = standardLibrary;
 		this.types = types;

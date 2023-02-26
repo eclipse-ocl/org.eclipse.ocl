@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutableStandardLibrary;
@@ -77,11 +76,6 @@ public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEnumerationType() {
 		return environmentFactory.getStandardLibrary().getEnumerationType();
-	}
-
-	@Override
-	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-		return environmentFactory.getMetamodelManager().getFlatClass(type);
 	}
 
 	@Override

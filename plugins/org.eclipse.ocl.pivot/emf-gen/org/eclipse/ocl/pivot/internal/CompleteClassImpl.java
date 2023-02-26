@@ -461,8 +461,9 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public final @NonNull FlatClass getFlatClass() {
-		return partialClasses.getCompleteInheritance().getFlatClass();
+	public final @NonNull CompleteFlatClass getFlatClass() {
+//		return partialClasses.getCompleteInheritance().getFlatClass();
+		return getCompleteModel().getFlatModel().getFlatClass(this);
 	}
 
 	@Override

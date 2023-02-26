@@ -32,6 +32,10 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 		super(name, flags);
 	}
 
+//	public AbstractExecutorType(@NonNull FlatModel flatModel, @NonNull String name, int flags) {
+//		super(flatModel, name, flags);
+//	}
+
 	protected AbstractExecutorType(@NonNull FlatClass flatClass) {
 		super(flatClass);
 	}

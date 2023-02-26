@@ -42,6 +42,12 @@ public class ExecutorTypeParameter extends AbstractExecutorType implements Execu
 		this.typeid = IdManager.getTemplateParameterId(index);
 	}
 
+	public ExecutorTypeParameter(@NonNull ExecutorStandardLibrary library, int index, @NonNull String name) {
+		super(name, 0);
+		this.typeid = IdManager.getTemplateParameterId(index);
+		setFlatClass(library.getFlatModel().getFlatClass(this));
+	}
+
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		throw new UnsupportedOperationException();			// WIP fixme

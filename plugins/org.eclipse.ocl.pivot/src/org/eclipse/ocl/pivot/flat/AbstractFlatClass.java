@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2023 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -19,13 +19,13 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteInheritance;
+//import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -38,7 +38,34 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immutable metamodels
 {
+	public static int computeFlags(@NonNull Type asType) {
+		int flags = 0;
+		if (asType instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)asType;
+			if (collectionType.isOrdered()) {
+				flags |= ORDERED;
+			}
+			if (collectionType.isUnique()) {
+				flags |= UNIQUE;
+			}
+		}
+		TypeId typeId = asType.getTypeId();
+		if (typeId == TypeId.OCL_ANY){
+			flags |= OCL_ANY;
+		}
+		else if (typeId == TypeId.OCL_VOID){
+			flags |= OCL_VOID;
+		}
+		else if (typeId == TypeId.OCL_INVALID){
+			flags |= OCL_INVALID;
+		}
+		if ((asType instanceof org.eclipse.ocl.pivot.Class) && ((org.eclipse.ocl.pivot.Class)asType).isIsAbstract()) {
+			flags |= ABSTRACT;
+		}
+		return flags;
+	}
 
+	protected final @NonNull FlatModel flatModel;
 	protected final @NonNull String name;
 	protected final int flags;
 	//	protected @Nullable Map<String, DomainOperation> operationMap = null;
@@ -63,9 +90,13 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 	 */
 	private @Nullable Set<@NonNull AbstractFlatClass> knownSubFlatClasses = null;
 
-	protected AbstractFlatClass(/*@Nullable CompleteClass completeClass, @NonNull Type pivotType,*/ @NonNull String name, int flags) {
+	protected AbstractFlatClass(@NonNull FlatModel flatModel, @NonNull String name, int flags) {
+		this.flatModel = flatModel;
 		this.name = name;
 		this.flags = flags;
+		if ("OclAny".equals(name)) {
+			getClass();		// XXX
+		}
 	}
 
 	public void addSubFlatClass(@NonNull FlatClass subFlatClass) {
@@ -196,6 +227,11 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 	}
 
 	@Override
+	public @NonNull FlatModel getFlatModel() {
+		return flatModel;
+	}
+
+	@Override
 	public @Nullable InheritanceFragment getFragment(@NonNull FlatClass that) {
 		int staticDepth = that.getDepth();
 		if (staticDepth <= getDepth()) {
@@ -230,10 +266,6 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		}
 		return new FragmentIterable(fragments2);
 	//	return ClassUtil.nonNullState(fragments)[fragmentNumber];
-	}
-
-	protected @NonNull IdResolver getIdResolver() {
-		throw new UnsupportedOperationException();		// FIXME
 	}
 
 	@Override
@@ -277,9 +309,9 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		return getFragment(ClassUtil.nonNullState(fragments).length-1);
 	}
 
-
-	protected @NonNull StandardLibrary getStandardLibrary() {
-		throw new UnsupportedOperationException();					// FIXME
+	@Override
+	public @NonNull StandardLibrary getStandardLibrary() {
+		return flatModel.getStandardLibrary();
 	}
 
 	@Override
@@ -511,17 +543,35 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 
 	@Override
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
+	//	assert standardLibrary == getStandardLibrary();
 		getDepth();
-		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
-		if (apparentInheritance != null) {
-			FlatClass apparentFlatClass = apparentInheritance.getFlatClass();
-			int apparentDepth = ClassUtil.nonNullModel(apparentFlatClass).getDepth();
+		FlatClass apparentFlatClass = apparentOperation.getFlatClass(standardLibrary);
+		if (apparentFlatClass != null) {
+			int apparentDepth = apparentFlatClass.getDepth();
 			if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 				int iMax = getIndex(apparentDepth+1);
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {
 					InheritanceFragment fragment = getFragment(i);
 					if (fragment.getBaseFlatClass() == apparentFlatClass) {
 						Operation actualOperation = fragment.getActualOperation(apparentOperation);
+						if (standardLibrary != getStandardLibrary()) {
+							FlatClass apparentFlatClass1 = apparentOperation.getFlatClass(getStandardLibrary());
+							if (apparentFlatClass1 != null) {
+								int apparentDepth1 = apparentFlatClass1.getDepth();
+								if (apparentDepth1+1 < getIndexes()) {				// null and invalid may fail here
+									int iMax1 = getIndex(apparentDepth+1);
+									for (int i1 = getIndex(apparentDepth); i1 < iMax1; i1++) {
+										InheritanceFragment fragment1 = getFragment(i1);
+										if (fragment1.getBaseFlatClass() == apparentFlatClass) {
+											Operation actualOperation1 = fragment.getActualOperation(apparentOperation);
+											assert actualOperation1 == actualOperation;
+											return actualOperation;
+										}
+									}
+								}
+							}
+
+						}
 						return actualOperation;
 					}
 				}
@@ -532,11 +582,11 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
+		assert standardLibrary == getStandardLibrary();
 		getDepth();
-		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
-		if (apparentInheritance != null) {
-			FlatClass apparentFlatClass = apparentInheritance.getFlatClass();
-			int apparentDepth = ClassUtil.nonNullModel(apparentFlatClass).getDepth();
+		FlatClass apparentFlatClass = apparentOperation.getFlatClass(standardLibrary);
+		if (apparentFlatClass != null) {
+			int apparentDepth = apparentFlatClass.getDepth();
 			if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 				int iMax = getIndex(apparentDepth+1);
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {
@@ -556,6 +606,7 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 
 	@Override
 	public @Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes) {
+		assert standardLibrary == getStandardLibrary();
 		for (Operation localOperation : getPivotClass().getOwnedOperations()) {
 			if (localOperation.getName().equals(operationName)) {
 				ParametersId firstParametersId = localOperation.getParametersId();

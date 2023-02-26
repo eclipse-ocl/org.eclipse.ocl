@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
+import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -47,10 +48,12 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	private /*@LazyNonNull*/ DomainProperties allProperties;
 
 	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... typeParameters) {
-		super(new EcoreFlatClass(/*evaluationPackage.getStandardLibrary(),*/ eClassifier, flags));
+//		super(new EcoreFlatClass(new EcoreFlatPackage(evaluationPackage.getStandardLibrary(), evaluationPackage.getIdResolver(), eClassifier.getEPackage()), eClassifier, flags));
+		super(new EcoreFlatClass((EcoreFlatModel) evaluationPackage.getStandardLibrary().getFlatModel(), eClassifier)); //, flags));		// XXX
 		this.evaluationPackage = evaluationPackage;
 		this.eClassifier = eClassifier;
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
+		((EcoreFlatClass)flatClass).setPivotClass(this);
 	}
 
 	@Override
@@ -173,7 +176,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	public @Nullable Property getMemberProperty(@NonNull String name) {
 		DomainProperties allProperties2 = allProperties;
 		if (allProperties2 == null) {
-			allProperties = allProperties2 = new DomainProperties(this);
+			allProperties = allProperties2 = new DomainProperties(getFlatClass());
 		}
 		return allProperties2.getMemberProperty(name);
 	}

@@ -21,7 +21,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
-import java.lang.String;
 import org.eclipse.jdt.annotation.NonNull;
 // import org.eclipse.ocl.pivot.ParameterTypes;
 // import org.eclipse.ocl.pivot.PivotTables;
@@ -67,14 +66,14 @@ public class PivotTables extends AbstractTables
 	}
 
 	/**
-	 *	The package descriptor for the package.
-	 */
-	public static final @NonNull EcoreExecutorPackage PACKAGE = new EcoreExecutorPackage(PivotPackage.eINSTANCE, IdManager.METAMODEL);
-
-	/**
 	 *	The library of all packages and types.
 	 */
 	public static final @NonNull ExecutorStandardLibrary LIBRARY = OCLstdlibTables.LIBRARY;
+
+	/**
+	 *	The package descriptor for the package.
+	 */
+	public static final @NonNull EcoreExecutorPackage PACKAGE = new EcoreExecutorPackage(PivotPackage.eINSTANCE, IdManager.METAMODEL, LIBRARY);
 
 	/**
 	 *	Constants used by auto-generated code.

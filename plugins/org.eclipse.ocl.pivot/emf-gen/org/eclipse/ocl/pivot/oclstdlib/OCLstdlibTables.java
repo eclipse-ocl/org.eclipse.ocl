@@ -65,14 +65,14 @@ public class OCLstdlibTables extends AbstractTables
 	}
 
 	/**
-	 *	The package descriptor for the package.
-	 */
-	public static final @NonNull EcoreExecutorPackage PACKAGE = new EcoreExecutorPackage(OCLstdlibPackage.eINSTANCE, IdManager.METAMODEL);
-
-	/**
 	 *	The library of all packages and types.
 	 */
 	public static final @NonNull ExecutorStandardLibrary LIBRARY = new ExecutorStandardLibrary();
+
+	/**
+	 *	The package descriptor for the package.
+	 */
+	public static final @NonNull EcoreExecutorPackage PACKAGE = new EcoreExecutorPackage(OCLstdlibPackage.eINSTANCE, IdManager.METAMODEL, LIBRARY);
 
 	/**
 	 *	The type parameters for templated types and operations.
@@ -83,17 +83,17 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.init();
 		}
 
-		public static final @NonNull ExecutorTypeParameter _0_K = new ExecutorTypeParameter(0, "K");
-		public static final @NonNull ExecutorTypeParameter _0_T = new ExecutorTypeParameter(0, "T");
-		public static final @NonNull ExecutorTypeParameter _0_TT = new ExecutorTypeParameter(0, "TT");
-		public static final @NonNull ExecutorTypeParameter _1_T2 = new ExecutorTypeParameter(1, "T2");
-		public static final @NonNull ExecutorTypeParameter _1_TT = new ExecutorTypeParameter(1, "TT");
-		public static final @NonNull ExecutorTypeParameter _1_Tacc = new ExecutorTypeParameter(1, "Tacc");
-		public static final @NonNull ExecutorTypeParameter _1_V = new ExecutorTypeParameter(1, "V");
-		public static final @NonNull ExecutorTypeParameter _2_K2 = new ExecutorTypeParameter(2, "K2");
-		public static final @NonNull ExecutorTypeParameter _2_Tacc = new ExecutorTypeParameter(2, "Tacc");
-		public static final @NonNull ExecutorTypeParameter _2_V2 = new ExecutorTypeParameter(2, "V2");
-		public static final @NonNull ExecutorTypeParameter _3_V2 = new ExecutorTypeParameter(3, "V2");
+		public static final @NonNull ExecutorTypeParameter _0_K = new ExecutorTypeParameter(LIBRARY, 0, "K");
+		public static final @NonNull ExecutorTypeParameter _0_T = new ExecutorTypeParameter(LIBRARY, 0, "T");
+		public static final @NonNull ExecutorTypeParameter _0_TT = new ExecutorTypeParameter(LIBRARY, 0, "TT");
+		public static final @NonNull ExecutorTypeParameter _1_T2 = new ExecutorTypeParameter(LIBRARY, 1, "T2");
+		public static final @NonNull ExecutorTypeParameter _1_TT = new ExecutorTypeParameter(LIBRARY, 1, "TT");
+		public static final @NonNull ExecutorTypeParameter _1_Tacc = new ExecutorTypeParameter(LIBRARY, 1, "Tacc");
+		public static final @NonNull ExecutorTypeParameter _1_V = new ExecutorTypeParameter(LIBRARY, 1, "V");
+		public static final @NonNull ExecutorTypeParameter _2_K2 = new ExecutorTypeParameter(LIBRARY, 2, "K2");
+		public static final @NonNull ExecutorTypeParameter _2_Tacc = new ExecutorTypeParameter(LIBRARY, 2, "Tacc");
+		public static final @NonNull ExecutorTypeParameter _2_V2 = new ExecutorTypeParameter(LIBRARY, 2, "V2");
+		public static final @NonNull ExecutorTypeParameter _3_V2 = new ExecutorTypeParameter(LIBRARY, 3, "V2");
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter _Bag_T = _0_T;
 		@Deprecated /* @deprecated use normalized name */

@@ -30,10 +30,10 @@ public class EcoreReflectiveFragment extends ReflectiveFragment
 {
 	protected final @NonNull EClassifier eClassifier;
 
-	public EcoreReflectiveFragment(@NonNull EcoreReflectiveType derivedInheritance, @NonNull FlatClass baseFlatClass) {
+/*	public EcoreReflectiveFragment(@NonNull EcoreReflectiveType derivedInheritance, @NonNull FlatClass baseFlatClass) {
 		super(derivedInheritance.getFlatClass(), baseFlatClass);
 		this.eClassifier = derivedInheritance.getEClassifier();
-	}
+	} */
 
 	public EcoreReflectiveFragment(@NonNull EcoreFlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
 		super(derivedFlatClass, baseFlatClass);

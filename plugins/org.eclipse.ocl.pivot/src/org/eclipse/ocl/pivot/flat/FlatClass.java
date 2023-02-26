@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2023 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -119,12 +119,16 @@ public interface FlatClass extends Nameable
 	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that);
 	CompleteClass getCompleteClass();
 	int getDepth();
+	@NonNull FlatModel getFlatModel();
 	@Nullable InheritanceFragment getFragment(@NonNull FlatClass that);
 	@NonNull InheritanceFragment getFragment(int fragmentNumber);
 	int getIndex(int fragmentNumber);
 	int getIndexes();
+	@Override
+	@NonNull String getName();
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 	@NonNull InheritanceFragment getSelfFragment();
+	@NonNull StandardLibrary getStandardLibrary();
 	@NonNull FragmentIterable getSuperFragments(int depth);
 	void initFragments(@NonNull ExecutorFragment @NonNull [] fragments, int[] depthCounts);
 	boolean isAbstract();

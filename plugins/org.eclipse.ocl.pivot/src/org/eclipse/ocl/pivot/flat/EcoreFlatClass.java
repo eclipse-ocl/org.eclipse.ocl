@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2023 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveFragment;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -27,9 +26,10 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
 	protected final @NonNull EClassifier eClassifier;		// XXX unify
+	private org.eclipse.ocl.pivot.Class pivotClass = null;
 
-	public EcoreFlatClass(@NonNull EClassifier eClassifier, int flags) {
-		super(NameUtil.getName(eClassifier), flags);
+	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier) { //, int flags) {
+		super(flatModel, NameUtil.getName(eClassifier), 0);
 		this.eClassifier = eClassifier;
 	}
 
@@ -47,6 +47,11 @@ public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable me
 		return eClassifier;
 	}
 
+	@Override
+	public @NonNull EcoreFlatModel getFlatModel() {
+		return (EcoreFlatModel)flatModel;
+	}
+
 	/**
 	 * Return the immediate superinheritances without reference to the fragments.
 	 */
@@ -61,7 +66,6 @@ public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable me
 				return new Iterator<@NonNull FlatClass>()
 				{
 					private @NonNull StandardLibrary standardLibrary = getStandardLibrary();
-					private @NonNull IdResolver idResolver = getIdResolver();
 					private boolean gotOne = false;
 
 					@Override
@@ -80,7 +84,8 @@ public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable me
 						}
 						EClass next = iterator.next();
 						assert next != null;
-						return idResolver.getInheritance(next).getFlatClass();
+					//	return ((EcoreFlatPackage)getFlatPackage()).getIdResolver().getInheritance(next).getFlatClass();
+						return getFlatModel().getFlatClass(next);
 					}
 
 					@Override
@@ -94,7 +99,12 @@ public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable me
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
-		throw new UnsupportedOperationException();
+		assert pivotClass != null;
+		return pivotClass;
+	}
+
+	public void setPivotClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {		// XXX
+		this.pivotClass = pivotClass;
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
@@ -141,6 +142,8 @@ public interface CompleteModel extends NamedElement
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 	@Nullable CompletePackage getCompletePackageByURI(@NonNull String packageURI);
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackagesWithUris();
+	@NonNull CompleteFlatModel getFlatModel();
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType);
 	org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);
+
 } // CompleteModel

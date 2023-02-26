@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2018 Willink Transformations and others.
+ * Copyright (c) 2023 Willink Transformations and others.
  * All rights reserved.   This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -25,8 +25,8 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 {
 	protected final @NonNull Type asType;
 
-	public PartialFlatClass(@NonNull Type asType, int flags) {
-		super(NameUtil.getName(asType), flags);
+	public PartialFlatClass(@NonNull FlatModel flatModel, @NonNull Type asType, int flags) {
+		super(flatModel, NameUtil.getName(asType), computeFlags(asType));
 		this.asType = asType;
 	}
 

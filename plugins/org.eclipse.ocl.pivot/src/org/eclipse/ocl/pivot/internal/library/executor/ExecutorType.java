@@ -50,6 +50,12 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
 	}
 
+	protected ExecutorType(@NonNull FlatClass flatClass, @NonNull ExecutorPackage evaluationPackage, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+		super(flatClass);
+		this.evaluationPackage = evaluationPackage;
+		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
+	}
+
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {
@@ -98,7 +104,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 	public @Nullable Property getMemberProperty(@NonNull String name) {
 		DomainProperties allProperties2 = allProperties;
 		if (allProperties2 == null) {
-			allProperties = allProperties2 = new DomainProperties(this);
+			allProperties = allProperties2 = new DomainProperties(getFlatClass());
 		}
 		return allProperties2.getMemberProperty(name);
 	}

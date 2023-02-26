@@ -14,9 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.flat.PartialFlatClass;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorNamedElement;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
@@ -37,11 +35,35 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	 */
 	public static void initStatics() {}
 
-	protected final @NonNull FlatClass flatClass;
+	protected /*final*/ /*@NonNull*/ FlatClass flatClass;
 
 	public AbstractInheritance(@NonNull String name, int flags) {
 		super(name);
-		this.flatClass = new PartialFlatClass((Type)this, flags);
+		if ("OclSelf".equals(name)) {
+			getClass();		// XXX
+		}
+//		throw new UnsupportedOperationException();
+/*		this.flatClass = new AbstractFlatClass(new AbstractFlatPackage(OCLstdlibTables.LIBRARY, name) {}, name, flags) {		// XXX
+
+			@Override
+			public @NonNull Class getPivotClass() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseFlatClass) {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			public @NonNull CompleteClass getCompleteClass() {
+				throw new UnsupportedOperationException();
+			}
+
+			@Override
+			protected @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses() {
+				throw new UnsupportedOperationException();
+			}};		// XXX */
 	}
 
 	protected AbstractInheritance(@NonNull FlatClass flatClass) {
@@ -49,8 +71,14 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		this.flatClass = flatClass;
 	}
 
+//	public AbstractInheritance(@NonNull FlatModel flatModel, @NonNull String name, int flags) {
+//		super(name);
+//		this.flatClass = flatModel.getFlatClass(this);
+//	}
+
 	@Override
 	public @NonNull FlatClass getFlatClass() {
+		assert flatClass != null;
 		return flatClass;
 	}
 
@@ -64,5 +92,9 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
+	}
+
+	protected void setFlatClass(@NonNull FlatClass flatClass) {
+		this.flatClass = flatClass;
 	}
 }

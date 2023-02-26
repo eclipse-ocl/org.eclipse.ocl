@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
  */
 public abstract class ReflectiveInheritance extends AbstractExecutorClass
 {
-	protected static int computeFlags(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	public static int computeFlags(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		int flags = 0;
 		if (asClass instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)asClass;

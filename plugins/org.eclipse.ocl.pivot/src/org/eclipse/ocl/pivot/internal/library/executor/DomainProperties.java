@@ -16,23 +16,22 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-
 public class DomainProperties
 {
-	protected final @NonNull CompleteInheritance inheritance;
+	protected final @NonNull FlatClass flatClass;
 	protected final @NonNull Map<String, Property> name2property = new HashMap<String, Property>();
 
-	public DomainProperties(@NonNull CompleteInheritance inheritance) {
-		this.inheritance = inheritance;
-		InheritanceFragment selfFragment = inheritance.getFlatClass().getSelfFragment();
+	public DomainProperties(@NonNull FlatClass flatClass) {
+		this.flatClass = flatClass;
+		InheritanceFragment selfFragment = flatClass.getSelfFragment();
 		for (@NonNull Property property : selfFragment.getLocalProperties()) {
 			name2property.put(property.getName(), property);
 		}

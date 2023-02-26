@@ -37,6 +37,8 @@ import org.eclipse.ocl.pivot.StandardLibrary.StandardLibraryExtension;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -167,6 +169,24 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			map.put(typeParameters, new WeakReference<>(specializedType));
 		}
 		return specializedType;
+	}
+
+	@Override
+	public final @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+//		return environmentFactory.getMetamodelManager().getFlatClass(type);
+		throw new UnsupportedOperationException();
+	}
+
+	private EcoreFlatModel ecoreFlatModel = null;
+
+	@Override
+	public @NonNull EcoreFlatModel getFlatModel() {
+		EcoreFlatModel ecoreFlatModel2 = ecoreFlatModel;
+		if (ecoreFlatModel2 == null) {
+			ecoreFlatModel = ecoreFlatModel2 = new EcoreFlatModel(this, null);
+	//		throw new UnsupportedOperationException();
+		}
+		return ecoreFlatModel2;
 	}
 
 	@Override

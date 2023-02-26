@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -555,6 +556,11 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	@Override
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 		return environmentFactory.getMetamodelManager().getFlatClass(type);
+	}
+
+	@Override
+	public @NonNull CompleteFlatModel getFlatModel() {
+		return getCompleteModel().getFlatModel();
 	}
 
 	@Override
