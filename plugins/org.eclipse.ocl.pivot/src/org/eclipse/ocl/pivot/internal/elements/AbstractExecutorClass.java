@@ -14,12 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
@@ -32,6 +30,7 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -42,12 +41,8 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 		super(name, flags);
 	}
 
-	protected AbstractExecutorClass(@NonNull CompleteClass completeClass, int flags) {
-		super(completeClass, flags);
-	}
-
-	protected AbstractExecutorClass(@NonNull EClassifier eClassifier, int flags) {
-		super(eClassifier, flags);
+	protected AbstractExecutorClass(@NonNull FlatClass flatClass) {
+		super(flatClass);
 	}
 
 	@Override

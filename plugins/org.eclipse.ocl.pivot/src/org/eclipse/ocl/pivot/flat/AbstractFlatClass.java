@@ -264,10 +264,10 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 
 	@Override
 	public @NonNull InheritanceFragment getSelfFragment() {
-	/*	if (indexes == null) {
+		if (indexes == null) {
 			initialize();
 		}
-		@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
+	/*	@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
 		assert fragments2 != null;
 		InheritanceFragment fragment = getFragment(fragments2.length-1);
 	//	if (fragment == null) {

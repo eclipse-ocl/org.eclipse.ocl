@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -46,7 +47,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	private /*@LazyNonNull*/ DomainProperties allProperties;
 
 	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... typeParameters) {
-		super(eClassifier, flags);
+		super(new EcoreFlatClass(/*evaluationPackage.getStandardLibrary(),*/ eClassifier, flags));
 		this.evaluationPackage = evaluationPackage;
 		this.eClassifier = eClassifier;
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);

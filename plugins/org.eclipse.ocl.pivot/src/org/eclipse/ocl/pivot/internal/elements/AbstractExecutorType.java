@@ -10,17 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.elements;
 
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -33,12 +32,8 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 		super(name, flags);
 	}
 
-	protected AbstractExecutorType(@NonNull CompleteClass completeClass, int flags) {
-		super(completeClass, flags);
-	}
-
-	protected AbstractExecutorType(@NonNull EClassifier eClassifier, int flags) {
-		super(eClassifier, flags);
+	protected AbstractExecutorType(@NonNull FlatClass flatClass) {
+		super(flatClass);
 	}
 
 	@Override

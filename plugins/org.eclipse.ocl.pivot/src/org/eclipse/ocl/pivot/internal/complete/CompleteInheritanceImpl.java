@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveInheritance;
@@ -58,7 +59,7 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	protected final @NonNull CompleteClassInternal completeClass;
 
 	public CompleteInheritanceImpl(@NonNull CompleteClassInternal completeClass) {
-		super(completeClass, computeFlags(completeClass.getPrimaryClass()));
+		super(new CompleteFlatClass(completeClass, computeFlags(completeClass.getPrimaryClass())));
 		this.completeClass = completeClass;
 //		org.eclipse.ocl.pivot.Class pivotClass = completeClass.getPrimaryClass();
 //		assert !(pivotClass instanceof DataType) || (((DataType)pivotClass).getBehavioralClass() == null);	// DataTypes must use the inheritance of their behavioral class

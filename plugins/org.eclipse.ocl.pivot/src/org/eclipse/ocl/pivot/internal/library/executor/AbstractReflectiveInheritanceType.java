@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
@@ -30,8 +29,8 @@ public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheri
 		super(name, flags);
 	}
 
-	protected AbstractReflectiveInheritanceType(@NonNull EClassifier eClassifier, int flags) {
-		super(eClassifier, flags);
+	protected AbstractReflectiveInheritanceType(@NonNull FlatClass flatClass) {
+		super(flatClass);
 	}
 
 	@Override
