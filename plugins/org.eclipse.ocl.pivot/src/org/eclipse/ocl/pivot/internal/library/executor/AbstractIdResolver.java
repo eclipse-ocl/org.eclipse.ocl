@@ -59,6 +59,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -938,6 +939,17 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		else { */
 		JavaType javaType = new JavaType(javaClass);
+
+
+		org.eclipse.ocl.pivot.Class oclType;
+		if (Comparable.class.isAssignableFrom(javaClass)) {
+			oclType = standardLibrary.getOclComparableType();
+		}
+		else {
+			oclType = standardLibrary.getOclAnyType();
+		}
+		FlatClass flatClass = standardLibrary.getFlatClass(oclType);
+		javaType.setFlatClass(flatClass);
 		//		}
 		key2type.put(javaClass, javaType);
 		return javaType;
@@ -1107,7 +1119,10 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			assert eClass != null;
 			Type type = key2type.get(eClass);
 			if (type == null) {
-				type = getInheritance(eClass).getPivotClass();
+				org.eclipse.ocl.pivot.Class type2 = getType(eClass);
+				type = type2.getFlatClass(standardLibrary).getPivotClass();
+				assert type == type2;							// XXX Why use FlatClass at all ??? -- already getPrimary
+			//	type = getInheritance(eClass).getPivotClass();
 				assert type != null;
 				key2type.put(eClass, type);
 			}
@@ -1842,8 +1857,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		if (domainType == null) {
 			throw new UnsupportedOperationException();
 		}
-		CompleteInheritance inheritance = standardLibrary.getInheritance(domainType);
-		Property memberProperty = inheritance.getMemberProperty(id.getName());
+		FlatClass flatClass = standardLibrary.getFlatClass(domainType);
+	//	CompleteInheritance inheritance = standardLibrary.getInheritance(domainType);
+		Property memberProperty = flatClass.getMemberProperty(id.getName());
 		if (memberProperty == null) {
 			throw new UnsupportedOperationException();
 		}

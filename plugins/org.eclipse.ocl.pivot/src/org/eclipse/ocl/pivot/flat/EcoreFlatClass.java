@@ -26,11 +26,12 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
 	protected final @NonNull EClassifier eClassifier;		// XXX unify
-	private org.eclipse.ocl.pivot.Class pivotClass = null;
+	protected final org.eclipse.ocl.pivot.@NonNull Class pivotClass;
 
-	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier) { //, int flags) {
+	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class pivotClass) { //, int flags) {
 		super(flatModel, NameUtil.getName(eClassifier), 0);
 		this.eClassifier = eClassifier;
+		this.pivotClass = pivotClass;
 	}
 
 	@Override
@@ -85,7 +86,7 @@ public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable me
 						EClass next = iterator.next();
 						assert next != null;
 					//	return ((EcoreFlatPackage)getFlatPackage()).getIdResolver().getInheritance(next).getFlatClass();
-						return getFlatModel().getFlatClass(next);
+						return getFlatModel().getEcoreFlatClass(next);
 					}
 
 					@Override
@@ -99,12 +100,7 @@ public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable me
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
-		assert pivotClass != null;
 		return pivotClass;
-	}
-
-	public void setPivotClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {		// XXX
-		this.pivotClass = pivotClass;
 	}
 
 	@Override

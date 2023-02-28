@@ -29,10 +29,6 @@ public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheri
 		super(name, flags);
 	}
 
-	protected AbstractReflectiveInheritanceType(@NonNull FlatClass flatClass) {
-		super(flatClass);
-	}
-
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);

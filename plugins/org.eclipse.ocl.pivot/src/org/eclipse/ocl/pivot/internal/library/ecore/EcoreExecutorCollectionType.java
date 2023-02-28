@@ -93,7 +93,7 @@ public class EcoreExecutorCollectionType extends EcoreExecutorType implements Co
 
 	@Override
 	public @NonNull CollectionTypeId getTypeId() {
-		throw new UnsupportedOperationException();
+		return (CollectionTypeId)super.getTypeId();
 	}
 
 	@Override

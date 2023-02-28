@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -30,14 +29,6 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 {
 	public AbstractExecutorType(@NonNull String name, int flags) {
 		super(name, flags);
-	}
-
-//	public AbstractExecutorType(@NonNull FlatModel flatModel, @NonNull String name, int flags) {
-//		super(flatModel, name, flags);
-//	}
-
-	protected AbstractExecutorType(@NonNull FlatClass flatClass) {
-		super(flatClass);
 	}
 
 	@Override
@@ -54,6 +45,12 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type thatType) {
 		throw new UnsupportedOperationException();
 	}
+
+//	@Override
+//	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		//		return standardLibrary.getFlatClass(this);
+//		throw new UnsupportedOperationException();
+//	}
 
 	@Override
 	public @NonNull CompleteInheritance getInheritance( @NonNull StandardLibrary standardLibrary) {

@@ -707,6 +707,12 @@ implements CollectionType {
 	}
 
 	@Override
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		org.eclipse.ocl.pivot.Class unspecializedType = (org.eclipse.ocl.pivot.Class)getUnspecializedElement();
+		return standardLibrary.getFlatClass(unspecializedType != null ? unspecializedType : this);
+	}
+
+	@Override
 	public @NonNull CollectionTypeId getTypeId() {
 		return (CollectionTypeId) super.getTypeId();
 	}

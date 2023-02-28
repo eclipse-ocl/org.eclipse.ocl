@@ -58,8 +58,7 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 	protected final @NonNull CompleteClassInternal completeClass;
 
 	public CompleteInheritanceImpl(@NonNull CompleteClassInternal completeClass) {
-//		super(new CompleteFlatClass(getCompleteFlatPackage(completeClass), completeClass, computeFlags(completeClass.getPrimaryClass())));
-		super(completeClass.getFlatClass());
+		super(ClassUtil.nonNullModel(completeClass.getName()), computeFlags(completeClass.getPrimaryClass()));
 		this.completeClass = completeClass;
 //		org.eclipse.ocl.pivot.Class pivotClass = completeClass.getPrimaryClass();
 //		assert !(pivotClass instanceof DataType) || (((DataType)pivotClass).getBehavioralClass() == null);	// DataTypes must use the inheritance of their behavioral class

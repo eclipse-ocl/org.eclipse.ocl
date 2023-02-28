@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -588,6 +589,12 @@ implements DataType {
 			}
 			return IdManager.getDataTypeId(this);
 		}
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		org.eclipse.ocl.pivot.Class behavioralType = getBehavioralClass();
+		return standardLibrary.getFlatClass(behavioralType != null ? behavioralType : this);
 	}
 
 	@Override

@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -39,10 +38,6 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 {
 	public AbstractExecutorClass(@NonNull String name, int flags) {
 		super(name, flags);
-	}
-
-	protected AbstractExecutorClass(@NonNull FlatClass flatClass) {
-		super(flatClass);
 	}
 
 	@Override
@@ -70,6 +65,11 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	public @NonNull List<StereotypeExtender> getExtenders() {
 		throw new UnsupportedOperationException();
 	}
+
+//	@Override
+//	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+//		return standardLibrary.getFlatClass(this);
+//	}
 
 	@Override
 	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {

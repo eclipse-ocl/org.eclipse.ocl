@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 
@@ -53,15 +52,10 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 
 	public ReflectiveInheritance(@NonNull String name, int flags, ExecutorTypeParameter... typeParameters) {
 		super(name, flags);
+		if ("Animal".equals(name)) {
+			getClass();		// XXX
+		}
 	}
-
-	protected ReflectiveInheritance(@NonNull FlatClass flatClass) {
-		super(flatClass);
-	}
-
-//	protected final @NonNull AbstractFragment createFragment(@NonNull CompleteInheritance baseInheritance) {
-//		return createFragment(baseInheritance.getFlatClass());
-//	}
 
 	@Override
 	public @NonNull EObject createInstance() {

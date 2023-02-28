@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
+import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -47,13 +49,16 @@ public class EcoreReflectivePackage extends ExecutorPackage
 		Map<EClassifier, org.eclipse.ocl.pivot.Class> types2 = types = new HashMap<EClassifier, org.eclipse.ocl.pivot.Class>();
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
 			if (eClassifier != null) {
-				org.eclipse.ocl.pivot.Class executorType;
+				EcoreReflectiveType executorType;
 				if (eClassifier instanceof EEnum) {
 					executorType = new EcoreReflectiveEnumeration(this, 0, (EEnum)eClassifier);
 				}
 				else {
 					executorType = new EcoreReflectiveType(this, 0, eClassifier);
 				}
+				EcoreFlatModel flatModel = (EcoreFlatModel)getStandardLibrary().getFlatModel();
+				EcoreFlatClass flatClass = flatModel.getEcoreFlatClass(executorType);
+				executorType.setFlatClass(flatClass);
 				types2.put(eClassifier, executorType);
 			}
 		}

@@ -35,46 +35,14 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	 */
 	public static void initStatics() {}
 
-	protected /*final*/ /*@NonNull*/ FlatClass flatClass;
+	protected /*final*/ /*@NonNull*/ FlatClass flatClass = null;
 
 	public AbstractInheritance(@NonNull String name, int flags) {
 		super(name);
 		if ("OclSelf".equals(name)) {
 			getClass();		// XXX
 		}
-//		throw new UnsupportedOperationException();
-/*		this.flatClass = new AbstractFlatClass(new AbstractFlatPackage(OCLstdlibTables.LIBRARY, name) {}, name, flags) {		// XXX
-
-			@Override
-			public @NonNull Class getPivotClass() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseFlatClass) {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			public @NonNull CompleteClass getCompleteClass() {
-				throw new UnsupportedOperationException();
-			}
-
-			@Override
-			protected @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses() {
-				throw new UnsupportedOperationException();
-			}};		// XXX */
 	}
-
-	protected AbstractInheritance(@NonNull FlatClass flatClass) {
-		super(flatClass.getName());
-		this.flatClass = flatClass;
-	}
-
-//	public AbstractInheritance(@NonNull FlatModel flatModel, @NonNull String name, int flags) {
-//		super(name);
-//		this.flatClass = flatModel.getFlatClass(this);
-//	}
 
 	@Override
 	public @NonNull FlatClass getFlatClass() {
@@ -83,6 +51,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	}
 
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		assert flatClass != null;
 		return flatClass;
 	}
 
@@ -94,7 +63,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
 	}
 
-	protected void setFlatClass(@NonNull FlatClass flatClass) {
+	public void setFlatClass(@NonNull FlatClass flatClass) {
 		this.flatClass = flatClass;
 	}
 }

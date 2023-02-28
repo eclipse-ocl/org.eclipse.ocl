@@ -27,8 +27,6 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
-import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -36,6 +34,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
 import org.eclipse.ocl.pivot.internal.library.executor.DomainProperties;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
@@ -48,12 +47,10 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	private /*@LazyNonNull*/ DomainProperties allProperties;
 
 	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... typeParameters) {
-//		super(new EcoreFlatClass(new EcoreFlatPackage(evaluationPackage.getStandardLibrary(), evaluationPackage.getIdResolver(), eClassifier.getEPackage()), eClassifier, flags));
-		super(new EcoreFlatClass((EcoreFlatModel) evaluationPackage.getStandardLibrary().getFlatModel(), eClassifier)); //, flags));		// XXX
+		super(NameUtil.getName(eClassifier), flags);
 		this.evaluationPackage = evaluationPackage;
 		this.eClassifier = eClassifier;
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
-		((EcoreFlatClass)flatClass).setPivotClass(this);
 	}
 
 	@Override

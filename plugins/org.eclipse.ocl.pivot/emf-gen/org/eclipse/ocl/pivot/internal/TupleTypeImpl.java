@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -127,6 +128,12 @@ public class TupleTypeImpl
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitTupleType(this);
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		Type tupleType = standardLibrary.getOclTupleType();
+		return tupleType.getFlatClass(standardLibrary);
 	}
 
 	@Override

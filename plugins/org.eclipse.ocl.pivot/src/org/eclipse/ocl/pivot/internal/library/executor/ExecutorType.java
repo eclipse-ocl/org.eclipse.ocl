@@ -50,12 +50,6 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
 	}
 
-	protected ExecutorType(@NonNull FlatClass flatClass, @NonNull ExecutorPackage evaluationPackage, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
-		super(flatClass);
-		this.evaluationPackage = evaluationPackage;
-		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
-	}
-
 	@Override
 	public boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {
@@ -83,11 +77,6 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 		FlatClass secondFlatClass = type.getFlatClass(idResolver.getStandardLibrary());
 		FlatClass commonFlatClass = firstFlatClass.getCommonFlatClass(secondFlatClass);
 		return commonFlatClass.getPivotClass();
-	}
-
-	@Override
-	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
-		return flatClass;
 	}
 
 	@Override

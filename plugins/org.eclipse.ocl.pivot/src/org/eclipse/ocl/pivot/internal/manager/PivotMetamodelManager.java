@@ -1173,7 +1173,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 		CompleteClass completeClass = getCompleteClass(type);
-		return getCompleteModel().getFlatModel().getFlatClass(completeClass);
+		return getCompleteModel().getFlatModel().getCompleteFlatClass(completeClass);
 	}
 
 	/**
@@ -1538,9 +1538,10 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public @NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation) {
-		CompleteInheritance pivotClass = pivotOperation.getInheritance(standardLibrary);
-		if (pivotClass != null) {					// Null for an EAnnotation element
-			CompleteClass completeClass = completeModel.getCompleteClass(pivotClass.getPivotClass());
+		FlatClass flatClass = pivotOperation.getFlatClass(standardLibrary);
+	//	CompleteInheritance pivotClass = pivotOperation.getInheritance(standardLibrary);
+		if (flatClass != null) {					// Null for an EAnnotation element
+			CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getPivotClass());		// XXX why use FlatClass at all ??
 			Operation operation = completeClass.getOperation(pivotOperation);
 			if (operation != null) {
 				return operation;

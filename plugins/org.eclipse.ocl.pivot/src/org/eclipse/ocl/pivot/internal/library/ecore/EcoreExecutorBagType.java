@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
  * @since 1.18
  */
 public class EcoreExecutorBagType extends EcoreExecutorCollectionType implements BagType
-//Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class.
+//Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class. ??? there was a bad getTypeId() overload ???
 {
 	public EcoreExecutorBagType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
 		super(typeId, evaluationPackage, flags, typeParameter);

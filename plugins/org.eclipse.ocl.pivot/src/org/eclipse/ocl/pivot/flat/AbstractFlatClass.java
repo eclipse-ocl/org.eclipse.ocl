@@ -24,12 +24,14 @@ import org.eclipse.ocl.pivot.CompleteClass;
 //import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
+import org.eclipse.ocl.pivot.internal.library.executor.JavaType;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
@@ -39,6 +41,9 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immutable metamodels
 {
 	public static int computeFlags(@NonNull Type asType) {
+		if (asType instanceof JavaType) {
+			return 0;			// XXX Avoid UOE from getTypeId().
+		}
 		int flags = 0;
 		if (asType instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)asType;
@@ -286,6 +291,11 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 	 * Return the immediate superinheritances without reference to the fragments.
 	 */
 	protected abstract @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses();
+
+	@Override
+	public @NonNull Property getMemberProperty(@NonNull String propertyName) {
+		throw new UnsupportedOperationException();		// XXX Use local cache
+	}
 
 	@Override
 	public @NonNull String getName() {

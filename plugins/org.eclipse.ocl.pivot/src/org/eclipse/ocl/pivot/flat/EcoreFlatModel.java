@@ -14,26 +14,79 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveType;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class EcoreFlatModel extends AbstractFlatModel
 {
-	private final @NonNull Map<@NonNull EClassifier, @NonNull EcoreFlatClass> flatClasses =  new HashMap<>();
+	private final @NonNull Map<@NonNull EClassifier, @NonNull EcoreFlatClass> eClassifier2flatClass =  new HashMap<>();
+	private final @NonNull Map<@NonNull String, @NonNull NamedFlatClass> name2flatClass =  new HashMap<>();
+	private final @NonNull Map<@NonNull TypeId, @NonNull TypeIdFlatClass> typeid2flatClass =  new HashMap<>();
 
-	public EcoreFlatModel(@NonNull StandardLibrary standardLibrary, @Nullable EPackage ePackage) {
-		super(standardLibrary, ""/*NameUtil.getSafeName(ePackage)*/);
-	//	this.ePackage = ePackage;
+	public EcoreFlatModel(@NonNull StandardLibrary standardLibrary) {
+		super(standardLibrary, "");
 	}
 
-	public @NonNull EcoreFlatClass getFlatClass(@NonNull EClassifier eClassifier) {
-		EcoreFlatClass flatPackage = flatClasses.get(eClassifier);
-		if (flatPackage == null) {
-			flatPackage = new EcoreFlatClass(this, eClassifier);
-			flatClasses.put(eClassifier, flatPackage);
+	public @NonNull FlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier) {
+		EcoreFlatClass flatClass = eClassifier2flatClass.get(eClassifier);
+		return ClassUtil.nonNullState(flatClass);
+	}
+
+	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EcoreExecutorType type) {
+		EClassifier eClassifier = type.getEClassifier();
+		assert eClassifier != null;
+		EcoreFlatClass flatClass = eClassifier2flatClass.get(eClassifier);
+		if (flatClass == null) {
+			flatClass = new EcoreFlatClass(this, eClassifier, type);
+			eClassifier2flatClass.put(eClassifier, flatClass);
 		}
-		return flatPackage;
+		else {
+			assert false;
+		}
+		return flatClass;
+	}
+
+	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EcoreReflectiveType type) {
+		EClassifier eClassifier = type.getEClassifier();
+		assert eClassifier != null;
+		EcoreFlatClass flatClass = eClassifier2flatClass.get(eClassifier);
+		if (flatClass == null) {
+			flatClass = new EcoreFlatClass(this, eClassifier, type);
+			eClassifier2flatClass.put(eClassifier, flatClass);
+		}
+		else {
+			assert false;
+		}
+		return flatClass;
+	}
+
+	public @NonNull NamedFlatClass getNamedFlatClass(@NonNull EcoreExecutorType type) {
+		String name = type.getName();
+		NamedFlatClass flatClass = name2flatClass.get(name);
+		if (flatClass == null) {
+			flatClass = new NamedFlatClass(this, type);
+			name2flatClass.put(name, flatClass);
+		}
+		else {
+			assert false;
+		}
+		return flatClass;
+	}
+
+	public @NonNull TypeIdFlatClass getTypeIdFlatClass(@NonNull EcoreExecutorType type) {
+		TypeId typeId = type.getTypeId();
+		TypeIdFlatClass flatClass = typeid2flatClass.get(typeId);
+		if (flatClass == null) {
+			flatClass = new TypeIdFlatClass(this, typeId);
+			typeid2flatClass.put(typeId, flatClass);
+		}
+		else {
+			assert false;
+		}
+		return flatClass;
 	}
 }

@@ -183,7 +183,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	public @NonNull EcoreFlatModel getFlatModel() {
 		EcoreFlatModel ecoreFlatModel2 = ecoreFlatModel;
 		if (ecoreFlatModel2 == null) {
-			ecoreFlatModel = ecoreFlatModel2 = new EcoreFlatModel(this, null);
+			ecoreFlatModel = ecoreFlatModel2 = new EcoreFlatModel(this);
 	//		throw new UnsupportedOperationException();
 		}
 		return ecoreFlatModel2;

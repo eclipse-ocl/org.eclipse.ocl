@@ -17,8 +17,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.TemplateParameters;
-import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
-import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -57,10 +55,8 @@ public class EcoreExecutorType extends ExecutorType
 	 * Construct an executable type descriptor for a known EClassifier.
 	 */
 	public EcoreExecutorType(/*@NonNull*/ EClassifier eClassifier, @NonNull EcoreExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
-//		super(new EcoreFlatClass(new EcoreFlatPackage(evaluationPackage.getStandardLibrary(), evaluationPackage.getIdResolver(), eClassifier.getEPackage()), eClassifier, flags), evaluationPackage, typeParameters);		// XXX
-		super(new EcoreFlatClass((EcoreFlatModel)evaluationPackage.getStandardLibrary().getFlatModel(), eClassifier/*, flags*/), evaluationPackage, typeParameters);		// XXX
+		super(ClassUtil.nonNullModel(eClassifier.getName()), evaluationPackage, flags, typeParameters);
 		this.eClassifier = eClassifier;
-		((EcoreFlatClass)flatClass).setPivotClass(this);
 	}
 
 	@Override

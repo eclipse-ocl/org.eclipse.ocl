@@ -77,14 +77,14 @@ public class CodegencompanyTables extends AbstractTables
 	}
 
 	/**
-	 *	The package descriptor for the package.
-	 */
-	public static final @NonNull EcoreExecutorPackage PACKAGE = new EcoreExecutorPackage(CodegencompanyPackage.eINSTANCE);
-
-	/**
 	 *	The library of all packages and types.
 	 */
 	public static final @NonNull ExecutorStandardLibrary LIBRARY = OCLstdlibTables.LIBRARY;
+
+	/**
+	 *	The package descriptor for the package.
+	 */
+	public static final @NonNull EcoreExecutorPackage PACKAGE = new EcoreExecutorPackage(CodegencompanyPackage.eINSTANCE);
 
 	/**
 	 *	Constants used by auto-generated code.
@@ -164,10 +164,10 @@ public class CodegencompanyTables extends AbstractTables
 			TypeParameters.init();
 		}
 
-		public static final @NonNull EcoreExecutorType _Bug418716 = new EcoreExecutorType(CodegencompanyPackage.Literals.BUG418716, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorType _Company = new EcoreExecutorType(CodegencompanyPackage.Literals.COMPANY, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorEnumeration _CompanySizeKind = new EcoreExecutorEnumeration(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorType _Employee = new EcoreExecutorType(CodegencompanyPackage.Literals.EMPLOYEE, PACKAGE, 0);
+		public static final @NonNull EcoreExecutorType _Bug418716 = LIBRARY.createEcoreExecutorType(CodegencompanyPackage.Literals.BUG418716, PACKAGE, 0);
+		public static final @NonNull EcoreExecutorType _Company = LIBRARY.createEcoreExecutorType(CodegencompanyPackage.Literals.COMPANY, PACKAGE, 0);
+		public static final @NonNull EcoreExecutorEnumeration _CompanySizeKind = LIBRARY.createEcoreExecutorEnumeration(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND, PACKAGE, 0);
+		public static final @NonNull EcoreExecutorType _Employee = LIBRARY.createEcoreExecutorType(CodegencompanyPackage.Literals.EMPLOYEE, PACKAGE, 0);
 
 		private static final @NonNull EcoreExecutorType @NonNull [] types = {
 			_Bug418716,

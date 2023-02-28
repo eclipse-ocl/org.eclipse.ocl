@@ -90,7 +90,7 @@ public class OCLinEcoreTablesUtils
 	private static int SHOW_TABLES_PACKAGE = 1;
 	private static int SHOW_TABLES_SUBPACKAGE = 2;
 
-	public Comparator<@NonNull ParameterTypes> leegacyTemplateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
+	public Comparator<@NonNull ParameterTypes> legacyTemplateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
 	{
 		@Override
 		public int compare(@NonNull ParameterTypes o1, @NonNull ParameterTypes o2) {

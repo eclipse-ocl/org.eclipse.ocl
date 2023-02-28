@@ -31,7 +31,7 @@ public abstract class AbstractFlatModel implements FlatModel		// XXX FIXME immut
 	public @NonNull FlatClass getFlatClass(@NonNull TemplateParameter templateParameter) {
 		FlatClass flatClass = flatTemplateParameters.get(templateParameter);
 		if (flatClass == null) {
-			flatClass = new PartialFlatClass(this, templateParameter, 0);		// XXX
+			flatClass = new PartialFlatClass(this, templateParameter);		// XXX
 			flatTemplateParameters.put(templateParameter, flatClass);
 		}
 		return flatClass;

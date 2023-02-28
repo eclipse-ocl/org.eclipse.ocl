@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -124,6 +125,7 @@ public interface FlatClass extends Nameable
 	@NonNull InheritanceFragment getFragment(int fragmentNumber);
 	int getIndex(int fragmentNumber);
 	int getIndexes();
+	@NonNull Property getMemberProperty(@NonNull String name);
 	@Override
 	@NonNull String getName();
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();

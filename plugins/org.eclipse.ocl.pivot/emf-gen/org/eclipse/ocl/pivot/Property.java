@@ -16,6 +16,7 @@ import java.util.Map;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 
 /**
@@ -531,6 +532,8 @@ public interface Property extends Feature {
 	 */
 	@Deprecated /* @deprecated no longer use */
 	@Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary);
+	@Deprecated /* @deprecated not used */
+	@NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary);
 
 	/**
 	 * Initialize the value of this property within objectValue to propertyValue.

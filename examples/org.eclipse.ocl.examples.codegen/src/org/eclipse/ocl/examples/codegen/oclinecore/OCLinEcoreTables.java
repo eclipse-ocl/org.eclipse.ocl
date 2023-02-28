@@ -811,7 +811,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		if (allLists.size() > 0) {
 		//	s.append("\n");
 			List<@NonNull ParameterTypes> sortedLists = new ArrayList<>(allLists);
-			Collections.sort(sortedLists, leegacyTemplateBindingNameComparator);
+			Collections.sort(sortedLists, legacyTemplateBindingNameComparator);
 			for (@NonNull ParameterTypes types : sortedLists) {
 				if (types.size() > 0) {				// Bug 471118 avoid deprecated _ identifier
 					String legacyTemplateBindingsName = getLegacyTemplateBindingsName(types);
@@ -919,11 +919,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.appendClassReference(true, typeClass);
 		s.append(" ");
 		asClass.accept(emitLiteralVisitor);
-		s.append(" = ");
+		s.append(" = LIBRARY.create");
+		s.appendClassReference(null, typeClass);
+		s.append("(");
 		if (!hasEcore(asClass) || (asClass instanceof AnyType) || (asClass instanceof CollectionType) || (asClass instanceof VoidType) || (asClass instanceof InvalidType)) {
-			s.append("new ");
-			s.appendClassReference(null, typeClass);
-			s.append("(");
 			if (isBuiltInType(asClass)) {
 				s.appendClassReference(null, TypeId.class);
 				s.append(".");
@@ -934,9 +933,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			}
 		}
 		else {
-			s.append("new ");
-			s.appendClassReference(null, typeClass);
-			s.append("(");
 			s.append(genModelHelper.getQualifiedEcoreLiteralName(eClassifier));
 		}
 		s.append(", PACKAGE, ");
@@ -1112,7 +1108,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.appendClassReference(true, ExecutorTypeParameter.class);
 				s.append(" ");
 				s.append(name);
-				s.append(" = new ");
+				s.append(" = LIBRARY.create");
 				s.appendClassReference(null, ExecutorTypeParameter.class);
 				s.append("(");
 				s.append(Integer.toString(asTemplateParameter.getTemplateParameterId().getIndex()));
@@ -1213,22 +1209,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 		s.append("\n");
 		s.append("	/**\n");
-		s.append("	 *	The package descriptor for the package.\n");
-		s.append("	 */\n");
-		s.append("	public static final ");
-		s.appendClassReference(true, EcoreExecutorPackage.class);
-		s.append(" PACKAGE = new ");
-		s.appendClassReference(null, EcoreExecutorPackage.class);
-		s.append("(" + getGenPackagePrefix() + "Package.eINSTANCE");
-		if (asPackage.getPackageId() == IdManager.METAMODEL) {
-			s.append(", ");
-			s.appendClassReference(null, IdManager.class);
-			s.append(".METAMODEL");
-		}
-		s.append(");\n");
-
-		s.append("\n");
-		s.append("	/**\n");
 		s.append("	 *	The library of all packages and types.\n");
 		s.append("	 */\n");
 
@@ -1245,6 +1225,22 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append("()");
 		}
 		s.append(";\n");
+		s.append("\n");
+		s.append("	/**\n");
+		s.append("	 *	The package descriptor for the package.\n");
+		s.append("	 */\n");
+		s.append("	public static final ");
+		s.appendClassReference(true, EcoreExecutorPackage.class);
+		s.append(" PACKAGE = new ");
+		s.appendClassReference(null, EcoreExecutorPackage.class);
+		s.append("(" + getGenPackagePrefix() + "Package.eINSTANCE");
+		if (asPackage.getPackageId() == IdManager.METAMODEL) {
+			s.append(", ");
+			s.appendClassReference(null, IdManager.class);
+			s.append(".METAMODEL, LIBRARY");
+		}
+		s.append(");\n");
+
 
 		if (constants != null) {
 			s.append("\n");

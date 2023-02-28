@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -704,6 +705,11 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitElementExtension(this);
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		return stereotype.getFlatClass(standardLibrary);
 	}
 
 	@Override

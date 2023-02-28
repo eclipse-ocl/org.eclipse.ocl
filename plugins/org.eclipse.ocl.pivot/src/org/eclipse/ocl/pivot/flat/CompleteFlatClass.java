@@ -14,9 +14,11 @@ import java.util.Collections;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.executor.CompleteReflectiveFragment;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
@@ -47,6 +49,11 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 			return Collections.emptyList();
 		}
 		return ((CompleteClassInternal)getCompleteClass()).getPartialClasses().getInitialSuperFlatClasses();
+	}
+
+	@Override
+	public @NonNull Property getMemberProperty(@NonNull String propertyName) {
+		return ClassUtil.nonNullState(completeClass.getProperty(propertyName));		// XXX Use local cache
 	}
 
 	@Override

@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -27,8 +29,27 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
+import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
+import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.NamedFlatClass;
+import org.eclipse.ocl.pivot.flat.TypeIdFlatClass;
+import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorAnyType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBagType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBooleanType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorCollectionType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class ExecutorStandardLibrary extends ExecutableStandardLibrary
@@ -72,6 +93,126 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		//				-- check for type compatibility
 		//			}
 		//		}
+	}
+
+	public @NonNull EcoreExecutorAnyType createEcoreExecutorAnyType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags) {
+		EcoreExecutorAnyType type = new EcoreExecutorAnyType(typeId, evaluationPackage, flags);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getTypeIdFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorBagType createEcoreExecutorBagType(@NonNull CollectionTypeId typeId,
+			@NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
+		EcoreExecutorBagType type = new EcoreExecutorBagType(typeId, evaluationPackage, flags, typeParameter);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getTypeIdFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorBooleanType createEcoreExecutorBooleanType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags) {
+		EcoreExecutorBooleanType type = new EcoreExecutorBooleanType(typeId, evaluationPackage, flags);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getTypeIdFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorCollectionType createEcoreExecutorCollectionType(@NonNull CollectionTypeId typeId,
+			@NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
+		EcoreExecutorCollectionType type = new EcoreExecutorCollectionType(typeId, evaluationPackage, flags, typeParameter);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getTypeIdFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorEnumeration createEcoreExecutorEnumeration(/*@NonNull*/ EEnum eEnum, @NonNull EcoreExecutorPackage evaluationPackage, int flags) {
+		EcoreExecutorEnumeration type = new EcoreExecutorEnumeration(eEnum, evaluationPackage, flags);
+		EcoreFlatModel flatModel = getFlatModel();
+		EcoreFlatClass flatClass = flatModel.getEcoreFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorInvalidType createEcoreExecutorInvalidType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags) {
+		EcoreExecutorInvalidType type = new EcoreExecutorInvalidType(typeId, evaluationPackage, flags);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getTypeIdFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorOrderedSetType createEcoreExecutorOrderedSetType(@NonNull CollectionTypeId typeId,
+			@NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
+		EcoreExecutorOrderedSetType type = new EcoreExecutorOrderedSetType(typeId, evaluationPackage, flags, typeParameter);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getTypeIdFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorPrimitiveType createEcoreExecutorPrimitiveType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags) {
+		EcoreExecutorPrimitiveType type = new EcoreExecutorPrimitiveType(typeId, evaluationPackage, flags);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getTypeIdFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorSequenceType createEcoreExecutorSequenceType(@NonNull CollectionTypeId typeId,
+			@NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
+		EcoreExecutorSequenceType type = new EcoreExecutorSequenceType(typeId, evaluationPackage, flags, typeParameter);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getTypeIdFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorSetType createEcoreExecutorSetType(@NonNull CollectionTypeId typeId,
+			@NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
+		EcoreExecutorSetType type = new EcoreExecutorSetType(typeId, evaluationPackage, flags, typeParameter);
+		EcoreFlatModel flatModel = getFlatModel();
+		TypeIdFlatClass flatClass = flatModel.getTypeIdFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorType createEcoreExecutorType(/*@NonNull*/ EClassifier eClassifier,
+			@NonNull EcoreExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+		assert eClassifier != null;
+		EcoreExecutorType type = new EcoreExecutorType(eClassifier, evaluationPackage, flags, typeParameters);
+		EcoreFlatModel flatModel = getFlatModel();
+		EcoreFlatClass flatClass = flatModel.getEcoreFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorType createEcoreExecutorType(@NonNull String name,
+			@NonNull EcoreExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+		EcoreExecutorType type = new EcoreExecutorType(name, evaluationPackage, flags, typeParameters);
+		EcoreFlatModel flatModel = getFlatModel();
+		NamedFlatClass flatClass = flatModel.getNamedFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull EcoreExecutorVoidType createEcoreExecutorVoidType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags) {
+		EcoreExecutorVoidType type = new EcoreExecutorVoidType(typeId, evaluationPackage, flags);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getTypeIdFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
+	public @NonNull ExecutorTypeParameter createExecutorTypeParameter(int index, @NonNull String name) {
+		ExecutorTypeParameter executorTypeParameter = new ExecutorTypeParameter(index, name);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getFlatClass(executorTypeParameter);
+		executorTypeParameter.setFlatClass(flatClass);
+		return executorTypeParameter;
 	}
 
 	@Override

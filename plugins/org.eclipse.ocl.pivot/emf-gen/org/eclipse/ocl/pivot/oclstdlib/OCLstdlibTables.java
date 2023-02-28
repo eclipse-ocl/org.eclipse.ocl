@@ -83,17 +83,17 @@ public class OCLstdlibTables extends AbstractTables
 			OCLstdlibTables.init();
 		}
 
-		public static final @NonNull ExecutorTypeParameter _0_K = new ExecutorTypeParameter(LIBRARY, 0, "K");
-		public static final @NonNull ExecutorTypeParameter _0_T = new ExecutorTypeParameter(LIBRARY, 0, "T");
-		public static final @NonNull ExecutorTypeParameter _0_TT = new ExecutorTypeParameter(LIBRARY, 0, "TT");
-		public static final @NonNull ExecutorTypeParameter _1_T2 = new ExecutorTypeParameter(LIBRARY, 1, "T2");
-		public static final @NonNull ExecutorTypeParameter _1_TT = new ExecutorTypeParameter(LIBRARY, 1, "TT");
-		public static final @NonNull ExecutorTypeParameter _1_Tacc = new ExecutorTypeParameter(LIBRARY, 1, "Tacc");
-		public static final @NonNull ExecutorTypeParameter _1_V = new ExecutorTypeParameter(LIBRARY, 1, "V");
-		public static final @NonNull ExecutorTypeParameter _2_K2 = new ExecutorTypeParameter(LIBRARY, 2, "K2");
-		public static final @NonNull ExecutorTypeParameter _2_Tacc = new ExecutorTypeParameter(LIBRARY, 2, "Tacc");
-		public static final @NonNull ExecutorTypeParameter _2_V2 = new ExecutorTypeParameter(LIBRARY, 2, "V2");
-		public static final @NonNull ExecutorTypeParameter _3_V2 = new ExecutorTypeParameter(LIBRARY, 3, "V2");
+		public static final @NonNull ExecutorTypeParameter _0_K = LIBRARY.createExecutorTypeParameter(0, "K");
+		public static final @NonNull ExecutorTypeParameter _0_T = LIBRARY.createExecutorTypeParameter(0, "T");
+		public static final @NonNull ExecutorTypeParameter _0_TT = LIBRARY.createExecutorTypeParameter(0, "TT");
+		public static final @NonNull ExecutorTypeParameter _1_T2 = LIBRARY.createExecutorTypeParameter(1, "T2");
+		public static final @NonNull ExecutorTypeParameter _1_TT = LIBRARY.createExecutorTypeParameter(1, "TT");
+		public static final @NonNull ExecutorTypeParameter _1_Tacc = LIBRARY.createExecutorTypeParameter(1, "Tacc");
+		public static final @NonNull ExecutorTypeParameter _1_V = LIBRARY.createExecutorTypeParameter(1, "V");
+		public static final @NonNull ExecutorTypeParameter _2_K2 = LIBRARY.createExecutorTypeParameter(2, "K2");
+		public static final @NonNull ExecutorTypeParameter _2_Tacc = LIBRARY.createExecutorTypeParameter(2, "Tacc");
+		public static final @NonNull ExecutorTypeParameter _2_V2 = LIBRARY.createExecutorTypeParameter(2, "V2");
+		public static final @NonNull ExecutorTypeParameter _3_V2 = LIBRARY.createExecutorTypeParameter(3, "V2");
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ExecutorTypeParameter _Bag_T = _0_T;
 		@Deprecated /* @deprecated use normalized name */
@@ -230,33 +230,33 @@ public class OCLstdlibTables extends AbstractTables
 			TypeParameters.init();
 		}
 
-		public static final @NonNull EcoreExecutorBagType _Bag = new EcoreExecutorBagType(TypeId.BAG, PACKAGE, 0, TypeParameters._0_T);
-		public static final @NonNull EcoreExecutorBooleanType _Boolean = new EcoreExecutorBooleanType(TypeId.BOOLEAN, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorCollectionType _Collection = new EcoreExecutorCollectionType(TypeId.COLLECTION, PACKAGE, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
-		public static final @NonNull EcoreExecutorPrimitiveType _Integer = new EcoreExecutorPrimitiveType(TypeId.INTEGER, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorType _Map = new EcoreExecutorType(OCLstdlibPackage.Literals.MAP, PACKAGE, 0, TypeParameters._0_K, TypeParameters._1_V);
-		public static final @NonNull EcoreExecutorAnyType _OclAny = new EcoreExecutorAnyType(TypeId.OCL_ANY, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclComparable = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_COMPARABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclElement = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_ELEMENT, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclEnumeration = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_ENUMERATION, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorInvalidType _OclInvalid = new EcoreExecutorInvalidType(TypeId.OCL_INVALID, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclLambda = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_LAMBDA, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclMessage = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_MESSAGE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclSelf = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_SELF, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclState = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_STATE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclStereotype = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_STEREOTYPE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclSummable = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_SUMMABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclTuple = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_TUPLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _OclType = new EcoreExecutorType(OCLstdlibPackage.Literals.OCL_TYPE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorVoidType _OclVoid = new EcoreExecutorVoidType(TypeId.OCL_VOID, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorCollectionType _OrderedCollection = new EcoreExecutorCollectionType(TypeId.ORDERED_COLLECTION, PACKAGE, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
-		public static final @NonNull EcoreExecutorOrderedSetType _OrderedSet = new EcoreExecutorOrderedSetType(TypeId.ORDERED_SET, PACKAGE, ExecutorType.ORDERED | ExecutorType.UNIQUE, TypeParameters._0_T);
-		public static final @NonNull EcoreExecutorPrimitiveType _Real = new EcoreExecutorPrimitiveType(TypeId.REAL, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorSequenceType _Sequence = new EcoreExecutorSequenceType(TypeId.SEQUENCE, PACKAGE, ExecutorType.ORDERED, TypeParameters._0_T);
-		public static final @NonNull EcoreExecutorSetType _Set = new EcoreExecutorSetType(TypeId.SET, PACKAGE, ExecutorType.UNIQUE, TypeParameters._0_T);
-		public static final @NonNull EcoreExecutorPrimitiveType _String = new EcoreExecutorPrimitiveType(TypeId.STRING, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorCollectionType _UniqueCollection = new EcoreExecutorCollectionType(TypeId.UNIQUE_COLLECTION, PACKAGE, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
-		public static final @NonNull EcoreExecutorPrimitiveType _UnlimitedNatural = new EcoreExecutorPrimitiveType(TypeId.UNLIMITED_NATURAL, PACKAGE, 0);
+		public static final @NonNull EcoreExecutorBagType _Bag = LIBRARY.createEcoreExecutorBagType(TypeId.BAG, PACKAGE, 0, TypeParameters._0_T);
+		public static final @NonNull EcoreExecutorBooleanType _Boolean = LIBRARY.createEcoreExecutorBooleanType(TypeId.BOOLEAN, PACKAGE, 0);
+		public static final @NonNull EcoreExecutorCollectionType _Collection = LIBRARY.createEcoreExecutorCollectionType(TypeId.COLLECTION, PACKAGE, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
+		public static final @NonNull EcoreExecutorPrimitiveType _Integer = LIBRARY.createEcoreExecutorPrimitiveType(TypeId.INTEGER, PACKAGE, 0);
+		public static final @NonNull EcoreExecutorType _Map = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.MAP, PACKAGE, 0, TypeParameters._0_K, TypeParameters._1_V);
+		public static final @NonNull EcoreExecutorAnyType _OclAny = LIBRARY.createEcoreExecutorAnyType(TypeId.OCL_ANY, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclComparable = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_COMPARABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclElement = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_ELEMENT, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclEnumeration = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_ENUMERATION, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorInvalidType _OclInvalid = LIBRARY.createEcoreExecutorInvalidType(TypeId.OCL_INVALID, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclLambda = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_LAMBDA, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclMessage = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_MESSAGE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclSelf = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_SELF, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclState = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_STATE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclStereotype = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_STEREOTYPE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclSummable = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_SUMMABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclTuple = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_TUPLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorType _OclType = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_TYPE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorVoidType _OclVoid = LIBRARY.createEcoreExecutorVoidType(TypeId.OCL_VOID, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final @NonNull EcoreExecutorCollectionType _OrderedCollection = LIBRARY.createEcoreExecutorCollectionType(TypeId.ORDERED_COLLECTION, PACKAGE, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
+		public static final @NonNull EcoreExecutorOrderedSetType _OrderedSet = LIBRARY.createEcoreExecutorOrderedSetType(TypeId.ORDERED_SET, PACKAGE, ExecutorType.ORDERED | ExecutorType.UNIQUE, TypeParameters._0_T);
+		public static final @NonNull EcoreExecutorPrimitiveType _Real = LIBRARY.createEcoreExecutorPrimitiveType(TypeId.REAL, PACKAGE, 0);
+		public static final @NonNull EcoreExecutorSequenceType _Sequence = LIBRARY.createEcoreExecutorSequenceType(TypeId.SEQUENCE, PACKAGE, ExecutorType.ORDERED, TypeParameters._0_T);
+		public static final @NonNull EcoreExecutorSetType _Set = LIBRARY.createEcoreExecutorSetType(TypeId.SET, PACKAGE, ExecutorType.UNIQUE, TypeParameters._0_T);
+		public static final @NonNull EcoreExecutorPrimitiveType _String = LIBRARY.createEcoreExecutorPrimitiveType(TypeId.STRING, PACKAGE, 0);
+		public static final @NonNull EcoreExecutorCollectionType _UniqueCollection = LIBRARY.createEcoreExecutorCollectionType(TypeId.UNIQUE_COLLECTION, PACKAGE, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
+		public static final @NonNull EcoreExecutorPrimitiveType _UnlimitedNatural = LIBRARY.createEcoreExecutorPrimitiveType(TypeId.UNLIMITED_NATURAL, PACKAGE, 0);
 
 		private static final @NonNull EcoreExecutorType @NonNull [] types = {
 			_Bag,

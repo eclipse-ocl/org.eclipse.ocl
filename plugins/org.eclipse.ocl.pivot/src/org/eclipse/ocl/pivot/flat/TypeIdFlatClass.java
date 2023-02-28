@@ -10,29 +10,24 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
-import java.util.Iterator;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.executor.PartialReflectiveFragment;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
-public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
+public class TypeIdFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
-	protected final @NonNull Type asType;
+	protected final @NonNull TypeId typeId;		// XXX unify
 
-	public PartialFlatClass(@NonNull FlatModel flatModel, @NonNull Type asType) {
-		super(flatModel, NameUtil.getName(asType), computeFlags(asType));
-		this.asType = asType;
+	public TypeIdFlatClass(@NonNull FlatModel flatModel, @NonNull TypeId typeId) { //, int flags) {
+		super(flatModel, typeId.getDisplayName(), 0);		// XXX
+		this.typeId = typeId;
 	}
 
 	@Override
 	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseFlatClass) {
-		return new PartialReflectiveFragment(this, baseFlatClass);
+	//	return new EcoreReflectiveFragment(this, baseFlatClass);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -45,8 +40,9 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	 */
 	@Override
 	protected @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses() {
-		Iterable<? extends org.eclipse.ocl.pivot.@NonNull Class> superClasses = ClassUtil.nullFree(((org.eclipse.ocl.pivot.Class)asType).getSuperClasses());
-		final Iterator<? extends org.eclipse.ocl.pivot.@NonNull Class> iterator = superClasses.iterator();
+		throw new UnsupportedOperationException();
+/*		List<EClass> eSuperTypes = eClassifier instanceof EClass ? ((EClass)eClassifier).getESuperTypes() : Collections.<EClass>emptyList();
+		final Iterator<EClass> iterator = eSuperTypes.iterator();
 		return new Iterable<@NonNull FlatClass>()
 		{
 			@Override
@@ -63,17 +59,17 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 
 					@Override
 					public @NonNull FlatClass next() {
-						org.eclipse.ocl.pivot.Class next = null;
 						if (!gotOne) {
 							gotOne = true;
 							if (!iterator.hasNext()) {
-								next = standardLibrary.getOclAnyType();
+								org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
+								return standardLibrary.getFlatClass(oclAnyType);
 							}
 						}
-						if (next == null) {
-							next = ClassUtil.nonNull(iterator.next());
-						}
-						return next.getFlatClass(standardLibrary);
+						EClass next = iterator.next();
+						assert next != null;
+					//	return ((EcoreFlatPackage)getFlatPackage()).getIdResolver().getInheritance(next).getFlatClass();
+						return getFlatModel().getFlatClass(next);
 					}
 
 					@Override
@@ -82,16 +78,26 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 					}
 				};
 			}
-		};
+		}; */
 	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
-		return (org.eclipse.ocl.pivot.Class)asType;			// FIXME cast
+//		assert pivotClass != null;
+//		return pivotClass;
+		throw new UnsupportedOperationException();
+	}
+
+//	public void setPivotClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {		// XXX
+//		this.pivotClass = pivotClass;
+//	}
+
+	public @NonNull TypeId getTypeId() {
+		return typeId;
 	}
 
 	@Override
 	public @NonNull String toString() {
-		return asType.toString();
+		return typeId.toString();
 	}
 }
