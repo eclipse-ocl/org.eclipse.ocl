@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -514,6 +515,7 @@ public class EnvironmentView
 	public void addAllProperties(org.eclipse.ocl.pivot.@NonNull Class type, @Nullable FeatureFilter featureFilter) {
 		if (accepts(PivotPackage.Literals.PROPERTY)
 				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want properties when looking for NAMESPACE
+			System.out.println("addAllProperties " + NameUtil.debugSimpleName(type) + " : " + type + " . " + this);
 			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
 			CompleteClass completeClass = environmentFactory.getMetamodelManager().getCompleteClass(type);
 			String name2 = name;
@@ -531,7 +533,7 @@ public class EnvironmentView
 	}
 
 	public void addAllStates(@NonNull Type type) {
-		if (accepts(PivotPackage.Literals.STATE)) {
+		if (!isQualifier && accepts(PivotPackage.Literals.STATE)) {
 			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
 			CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(type);
 			String name2 = name;
