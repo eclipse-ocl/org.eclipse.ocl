@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -72,7 +71,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.Class> implements ClassListeners.IClassListener
+public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.@NonNull Class> implements ClassListeners.IClassListener
 {
 	private static final long serialVersionUID = 1L;
 	public static final @NonNull TracingOption PARTIAL_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses");
@@ -161,7 +160,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		Set<@NonNull CompleteClassInternal> superCompleteClasses2 = superCompleteClasses;
 		if (superCompleteClasses2 == null) {
 			CompleteModelInternal completeModel = getCompleteModel();
-			superCompleteClasses2 = superCompleteClasses = new HashSet<@NonNull CompleteClassInternal>();
+			superCompleteClasses2 = superCompleteClasses = new HashSet<>();
 			for (org.eclipse.ocl.pivot.Class partialClass : this) {
 				for (org.eclipse.ocl.pivot.@NonNull Class partialSuperClass : ClassUtil.nullFree(partialClass.getSuperClasses())) {
 					CompleteClassInternal superCompleteClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(partialSuperClass));
@@ -310,6 +309,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (completeInheritance != null) {
 			completeInheritance.uninstall();
 		}
+		((CompleteClassImpl)owner).invalidate();
 	}
 
 	@Override
@@ -345,6 +345,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (completeInheritance != null) {
 			completeInheritance.uninstall();
 		}
+		((CompleteClassImpl)owner).invalidate();
 	}
 
 	public void dispose() {
@@ -463,34 +464,6 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return getCompleteClass().getEnvironmentFactory();
-	}
-
-	public @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses() {
-		final @NonNull Iterator<@NonNull CompleteClassInternal> iterator = ClassUtil.nonNull(computeSuperCompleteClasses().iterator());			// FIXME Use local cache
-		return new Iterable<@NonNull FlatClass>()
-		{
-			@Override
-			public @NonNull Iterator<@NonNull FlatClass> iterator() {
-				return new Iterator<@NonNull FlatClass>()
-				{
-					@Override
-					public boolean hasNext() {
-						return iterator.hasNext();
-					}
-
-					@Override
-					public @NonNull FlatClass next() {
-						CompleteClassInternal next = ClassUtil.nonNull(iterator.next());
-						return next.getFlatClass();
-					}
-
-					@Override
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-				};
-			}
-		};
 	}
 
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
@@ -808,7 +781,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	protected @NonNull Map<String, @NonNull PartialProperties> initMemberProperties() {
 		Map<@NonNull String, @NonNull PartialProperties> name2partialProperties2 = name2partialProperties;
 		if (name2partialProperties2 == null) {
-			name2partialProperties2 = name2partialProperties = new HashMap<@NonNull String, @NonNull PartialProperties>();
+			name2partialProperties2 = name2partialProperties = new HashMap<>();
 			List<@NonNull ElementExtension> allExtensions = null;
 			Set<@NonNull Stereotype> extendingStereotypes = null;
 			Set<@NonNull Type> extendedTypes = null;

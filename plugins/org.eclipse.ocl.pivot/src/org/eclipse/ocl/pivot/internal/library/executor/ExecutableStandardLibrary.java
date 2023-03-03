@@ -172,7 +172,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	}
 
 	@Override
-	public final @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 //		return environmentFactory.getMetamodelManager().getFlatClass(type);
 		throw new UnsupportedOperationException();
 	}

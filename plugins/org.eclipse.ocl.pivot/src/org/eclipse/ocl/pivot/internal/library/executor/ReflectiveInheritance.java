@@ -68,6 +68,6 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	}
 
 	public void uninstall() {
-		flatClass.uninstall();
+		flatClass.resetFragments();
 	}
 }

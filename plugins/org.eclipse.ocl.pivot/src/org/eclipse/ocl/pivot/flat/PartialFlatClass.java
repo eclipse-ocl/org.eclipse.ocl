@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -31,6 +33,28 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	}
 
 	@Override
+	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {
+		assert !isOclAny();
+		List<@NonNull FlatClass> superFlatClasses = null;
+		StandardLibrary standardLibrary = getStandardLibrary();
+		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : ClassUtil.nullFree(((org.eclipse.ocl.pivot.Class)asType).getSuperClasses())) {
+			if (superFlatClasses == null) {
+				superFlatClasses = new ArrayList<>();
+			}
+			FlatClass superFlatClass = asSuperClass.getFlatClass(standardLibrary);
+			if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
+				superFlatClasses.add(superFlatClass);
+			}
+		}
+		if (superFlatClasses == null) {
+			org.eclipse.ocl.pivot.@NonNull Class oclAnyClass = standardLibrary.getOclAnyType();
+			FlatClass oclAnyFlatClass = oclAnyClass.getFlatClass(standardLibrary);
+			superFlatClasses = Collections.singletonList(oclAnyFlatClass);
+		}
+		return superFlatClasses;
+	}
+
+	@Override
 	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseFlatClass) {
 		return new PartialReflectiveFragment(this, baseFlatClass);
 	}
@@ -38,51 +62,6 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	@Override
 	public @NonNull CompleteClass getCompleteClass() {
 		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Return the immediate superinheritances without reference to the fragments.
-	 */
-	@Override
-	protected @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses() {
-		Iterable<? extends org.eclipse.ocl.pivot.@NonNull Class> superClasses = ClassUtil.nullFree(((org.eclipse.ocl.pivot.Class)asType).getSuperClasses());
-		final Iterator<? extends org.eclipse.ocl.pivot.@NonNull Class> iterator = superClasses.iterator();
-		return new Iterable<@NonNull FlatClass>()
-		{
-			@Override
-			public @NonNull Iterator<@NonNull FlatClass> iterator() {
-				return new Iterator<@NonNull FlatClass>()
-				{
-					private @NonNull StandardLibrary standardLibrary = getStandardLibrary();
-					private boolean gotOne = false;
-
-					@Override
-					public boolean hasNext() {
-						return !gotOne || iterator.hasNext();
-					}
-
-					@Override
-					public @NonNull FlatClass next() {
-						org.eclipse.ocl.pivot.Class next = null;
-						if (!gotOne) {
-							gotOne = true;
-							if (!iterator.hasNext()) {
-								next = standardLibrary.getOclAnyType();
-							}
-						}
-						if (next == null) {
-							next = ClassUtil.nonNull(iterator.next());
-						}
-						return next.getFlatClass(standardLibrary);
-					}
-
-					@Override
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-				};
-			}
-		};
 	}
 
 	@Override

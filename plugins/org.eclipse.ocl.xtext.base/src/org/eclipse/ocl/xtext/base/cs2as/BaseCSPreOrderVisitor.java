@@ -93,9 +93,17 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 
 		@Override
+		public boolean canExecute() {
+			boolean canExecute = super.canExecute();
+			System.out.println("canExecute " + canExecute + " : " + csElement);
+			return canExecute;
+		}
+
+		@Override
 		public BasicContinuation<?> execute() {
 			org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.getPivot(org.eclipse.ocl.pivot.Class.class, csElement);
 			if (pivotElement != null) {
+				System.out.println("addSuperClasses " + pivotElement );
 				List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = ClassUtil.nullFree(pivotElement.getSuperClasses());
 				context.refreshList(org.eclipse.ocl.pivot.Class.class, superClasses, csElement.getOwnedSuperTypes());
 				if (superClasses.isEmpty()) {

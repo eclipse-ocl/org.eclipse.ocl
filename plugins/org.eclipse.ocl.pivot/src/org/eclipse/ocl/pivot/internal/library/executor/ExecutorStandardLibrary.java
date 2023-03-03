@@ -247,10 +247,10 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		throw new IllegalStateException("No extension package defines Enumeration type"); //$NON-NLS-1$
 	}
 
-//	@Override
-//	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-//		return getInheritance(type).getFlatClass();
-//	}
+	@Override
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+		return getInheritance(type).getFlatClass();			// XXX
+	}
 
 	@Override
 	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class asClass) {

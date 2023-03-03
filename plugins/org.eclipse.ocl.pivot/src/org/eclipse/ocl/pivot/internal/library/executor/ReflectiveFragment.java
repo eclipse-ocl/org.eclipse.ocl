@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -66,37 +65,7 @@ public abstract class ReflectiveFragment extends AbstractFragment
 				libraryFeature = PivotUtilInternal.getImplementation(localOperation);
 			}
 			else {										// Non-trivial, search up the inheritance tree for an inherited operation
-				Operation bestOverload = null;
-				FlatClass bestFlatClass = null;
-				int bestDepth = -1;
-				int minDepth = baseFlatClass.getDepth();
-				for (int depth = derivedFlatClass.getDepth()-1; depth >= minDepth; depth--) {
-					Iterable<InheritanceFragment> derivedSuperFragments = derivedFlatClass.getSuperFragments(depth);
-					for (InheritanceFragment derivedSuperFragment : derivedSuperFragments) {
-						FlatClass superFlatClass = derivedSuperFragment.getBaseFlatClass();
-						InheritanceFragment superFragment = superFlatClass.getFragment(baseFlatClass);
-						if (superFragment != null) {
-							Operation overload = superFragment.getLocalOperation(apparentOperation);
-							if (overload != null) {
-								if (bestFlatClass == null) {				// First candidate
-									bestDepth = depth;
-									bestFlatClass = superFlatClass;
-									bestOverload = overload;
-								}
-								else if (depth == bestDepth) {				// Sibling candidate
-									bestOverload = null;
-									depth = -1;
-									break;
-								}
-								else if (!bestFlatClass.isSubFlatClassOf(superFlatClass)) {	// Non-occluded child candidate
-									bestOverload = null;
-									depth = -1;
-									break;
-								}
-							}
-						}
-					}
-				}
+				Operation bestOverload = baseFlatClass.getBestOverload(derivedFlatClass, apparentOperation);
 				if (bestOverload != null) {
 					libraryFeature = PivotUtilInternal.getImplementation(bestOverload);
 				}

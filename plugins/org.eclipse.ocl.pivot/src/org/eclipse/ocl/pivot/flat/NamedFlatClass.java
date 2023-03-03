@@ -10,14 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -29,6 +24,11 @@ public class NamedFlatClass extends AbstractFlatClass		// XXX FIXME immutable me
 	public NamedFlatClass(@NonNull EcoreFlatModel flatModel, org.eclipse.ocl.pivot.@NonNull Class pivotClass) { //, int flags) {
 		super(flatModel, NameUtil.getName(pivotClass), 0);
 		this.pivotClass = pivotClass;
+	}
+
+	@Override
+	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -45,51 +45,6 @@ public class NamedFlatClass extends AbstractFlatClass		// XXX FIXME immutable me
 	@Override
 	public @NonNull EcoreFlatModel getFlatModel() {
 		return (EcoreFlatModel)flatModel;
-	}
-
-	/**
-	 * Return the immediate superinheritances without reference to the fragments.
-	 */
-	@Override
-	protected @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses() {
-		List<EClass> eSuperTypes = Collections.<EClass>emptyList();
-		final Iterator<EClass> iterator = eSuperTypes.iterator();
-		return new Iterable<@NonNull FlatClass>()
-		{
-			@Override
-			public @NonNull Iterator<@NonNull FlatClass> iterator() {
-				return new Iterator<@NonNull FlatClass>()
-				{
-					private @NonNull StandardLibrary standardLibrary = getStandardLibrary();
-					private boolean gotOne = false;
-
-					@Override
-					public boolean hasNext() {
-						return !gotOne || iterator.hasNext();
-					}
-
-					@Override
-					public @NonNull FlatClass next() {
-						if (!gotOne) {
-							gotOne = true;
-							if (!iterator.hasNext()) {
-								org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
-								return standardLibrary.getFlatClass(oclAnyType);
-							}
-						}
-						EClass next = iterator.next();
-						assert next != null;
-					//	return ((EcoreFlatPackage)getFlatPackage()).getIdResolver().getInheritance(next).getFlatClass();
-						return getFlatModel().getEcoreFlatClass(next);
-					}
-
-					@Override
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-				};
-			}
-		};
 	}
 
 	@Override

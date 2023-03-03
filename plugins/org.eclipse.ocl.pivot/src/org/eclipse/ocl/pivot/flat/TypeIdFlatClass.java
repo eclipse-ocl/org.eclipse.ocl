@@ -25,6 +25,11 @@ public class TypeIdFlatClass extends AbstractFlatClass		// XXX FIXME immutable m
 	}
 
 	@Override
+	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseFlatClass) {
 	//	return new EcoreReflectiveFragment(this, baseFlatClass);
 		throw new UnsupportedOperationException();
@@ -33,52 +38,6 @@ public class TypeIdFlatClass extends AbstractFlatClass		// XXX FIXME immutable m
 	@Override
 	public @NonNull CompleteClass getCompleteClass() {
 		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Return the immediate superinheritances without reference to the fragments.
-	 */
-	@Override
-	protected @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses() {
-		throw new UnsupportedOperationException();
-/*		List<EClass> eSuperTypes = eClassifier instanceof EClass ? ((EClass)eClassifier).getESuperTypes() : Collections.<EClass>emptyList();
-		final Iterator<EClass> iterator = eSuperTypes.iterator();
-		return new Iterable<@NonNull FlatClass>()
-		{
-			@Override
-			public @NonNull Iterator<@NonNull FlatClass> iterator() {
-				return new Iterator<@NonNull FlatClass>()
-				{
-					private @NonNull StandardLibrary standardLibrary = getStandardLibrary();
-					private boolean gotOne = false;
-
-					@Override
-					public boolean hasNext() {
-						return !gotOne || iterator.hasNext();
-					}
-
-					@Override
-					public @NonNull FlatClass next() {
-						if (!gotOne) {
-							gotOne = true;
-							if (!iterator.hasNext()) {
-								org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
-								return standardLibrary.getFlatClass(oclAnyType);
-							}
-						}
-						EClass next = iterator.next();
-						assert next != null;
-					//	return ((EcoreFlatPackage)getFlatPackage()).getIdResolver().getInheritance(next).getFlatClass();
-						return getFlatModel().getFlatClass(next);
-					}
-
-					@Override
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-				};
-			}
-		}; */
 	}
 
 	@Override

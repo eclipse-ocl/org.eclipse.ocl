@@ -1173,7 +1173,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 		CompleteClass completeClass = getCompleteClass(type);
-		return getCompleteModel().getFlatModel().getCompleteFlatClass(completeClass);
+		return completeClass.getFlatClass();
+//		return getCompleteModel().getFlatModel().getCompleteFlatClass(completeClass);
 	}
 
 	/**

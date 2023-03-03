@@ -113,18 +113,16 @@ public interface FlatClass extends Nameable
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
 	 */
 	@NonNull FragmentIterable getAllProperSuperFragments();
+
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters including this one.
 	 */
 	@NonNull FragmentIterable getAllSuperFragments();
+	@Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation);
 	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that);
 	CompleteClass getCompleteClass();
 	int getDepth();
 	@NonNull FlatModel getFlatModel();
-	@Nullable InheritanceFragment getFragment(@NonNull FlatClass that);
-	@NonNull InheritanceFragment getFragment(int fragmentNumber);
-	int getIndex(int fragmentNumber);
-	int getIndexes();
 	@NonNull Property getMemberProperty(@NonNull String name);
 	@Override
 	@NonNull String getName();
@@ -132,6 +130,10 @@ public interface FlatClass extends Nameable
 	@NonNull InheritanceFragment getSelfFragment();
 	@NonNull StandardLibrary getStandardLibrary();
 	@NonNull FragmentIterable getSuperFragments(int depth);
+
+	/**
+	 * Initialize the super-fragment hierarchy from the compile-time analysis.
+	 */
 	void initFragments(@NonNull ExecutorFragment @NonNull [] fragments, int[] depthCounts);
 	boolean isAbstract();
 	boolean isInvalid();
@@ -143,5 +145,9 @@ public interface FlatClass extends Nameable
 	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes);
 	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
 	@NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
-	void uninstall();
+
+	/**
+	 * Reset the sub-fragment hierarchy following a class mutation.
+	 */
+	void resetFragments();
 }

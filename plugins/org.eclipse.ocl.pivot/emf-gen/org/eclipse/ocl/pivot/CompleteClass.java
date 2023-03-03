@@ -78,7 +78,7 @@ public interface CompleteClass extends NamedElement
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteClass_PartialClasses()
 	 * @generated
 	 */
-	@NonNull List<org.eclipse.ocl.pivot.Class> getPartialClasses();
+	@NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getPartialClasses();
 
 	boolean conformsTo(@NonNull Type elementType);
 	boolean conformsTo(@NonNull CompleteClass thatCompleteClass);

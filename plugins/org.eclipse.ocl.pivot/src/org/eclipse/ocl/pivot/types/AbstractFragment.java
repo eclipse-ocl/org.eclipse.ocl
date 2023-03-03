@@ -39,53 +39,14 @@ public abstract class AbstractFragment implements InheritanceFragment
 			}
 		}
 		if (localOperation == null) {				// Non-trivial, search up the inheritance tree for an inherited operation
-			Operation bestOverload = null;
-			FlatClass bestFlatClass = null;
-			int bestDepth = -1;
-			int minDepth = baseFlatClass.getDepth();
-			for (int depth = derivedFlatClass.getDepth()-1; depth >= minDepth; depth--) {
-				Iterable<@NonNull InheritanceFragment> derivedSuperFragments = derivedFlatClass.getSuperFragments(depth);
-				for (InheritanceFragment derivedSuperFragment : derivedSuperFragments) {
-					FlatClass superFlatClass = derivedSuperFragment.getBaseFlatClass();
-					InheritanceFragment superFragment = superFlatClass.getFragment(baseFlatClass);
-					if (superFragment != null) {
-						Operation overload = superFragment.getLocalOperation(apparentOperation);
-						if (overload != null) {
-							if (bestFlatClass == null) {				// First candidate
-								bestDepth = depth;
-								bestFlatClass = superFlatClass;
-								bestOverload = overload;
-							}
-							else if (depth == bestDepth) {				// Sibling candidate
-								bestOverload = null;
-								depth = -1;
-								break;
-							}
-							else if (!bestFlatClass.isSubFlatClassOf(superFlatClass)) {	// Non-occluded child candidate
-								bestOverload = null;
-								depth = -1;
-								break;
-							}
-						}
-					}
-				}
-			}
+			Operation bestOverload = baseFlatClass.getBestOverload(derivedFlatClass, apparentOperation);
 			if (bestOverload != null) {
 				localOperation = bestOverload;
-			}
-			else if (bestFlatClass == null) {
-				localOperation = apparentOperation;		// FIXME Missing operation
 			}
 			else {
 				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, derivedFlatClass);
 			}
 		}
-		//		if (localOperation == null) {
-		//			localOperation = INVALID;
-		//		}
-		//		if (localOperation == null) {
-		//			localOperation = apparentOperation;
-		//		}
 		return localOperation;
 	}
 

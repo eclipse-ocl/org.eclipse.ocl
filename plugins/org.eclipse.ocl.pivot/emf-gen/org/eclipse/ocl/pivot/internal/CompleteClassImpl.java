@@ -460,10 +460,15 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return partialClasses.getCompleteInheritance();
 	}
 
+	private /*@LazyNonNull*/ CompleteFlatClass flatClass = null;
+
 	@Override
 	public final @NonNull CompleteFlatClass getFlatClass() {
-//		return partialClasses.getCompleteInheritance().getFlatClass();
-		return getCompleteModel().getFlatModel().getCompleteFlatClass(this);
+		CompleteFlatClass flatClass2 = flatClass;
+		if (flatClass2 == null) {
+			flatClass = flatClass2 = getCompleteModel().getFlatModel().createFlatClass(this);
+		}
+		return flatClass2;
 	}
 
 	@Override
@@ -624,5 +629,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public void uninstall() {
 		partialClasses.dispose();
+	}
+
+	public void invalidate() {
+		if (flatClass != null) {
+			flatClass.resetFragments();
+		}
 	}
 } //CompleteClassImpl

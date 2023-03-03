@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class CompleteFlatModel extends AbstractFlatModel
@@ -30,17 +31,15 @@ public class CompleteFlatModel extends AbstractFlatModel
 		this.completeModel = completeModel;
 	}
 
-	public @NonNull CompleteModel getCompleteModel() {
-		return completeModel;
+	public @NonNull CompleteFlatClass createFlatClass(@NonNull CompleteClassImpl completeClass) {
+		CompleteFlatClass completeFlatClass = new CompleteFlatClass(this, completeClass);
+		CompleteFlatClass old = completeClass2flatClass.put(completeClass, completeFlatClass);
+		assert old == null;
+		return completeFlatClass;
 	}
 
-	public @NonNull CompleteFlatClass getCompleteFlatClass(@NonNull CompleteClass completeClass) {
-		CompleteFlatClass flatClass = completeClass2flatClass.get(completeClass);
-		if (flatClass == null) {
-			flatClass = new CompleteFlatClass(this, completeClass);
-			completeClass2flatClass.put(completeClass, flatClass);
-		}
-		return flatClass;
+	public @NonNull CompleteModel getCompleteModel() {
+		return completeModel;
 	}
 
 	public @NonNull FlatClass getPartialFlatClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
@@ -50,6 +49,6 @@ public class CompleteFlatModel extends AbstractFlatModel
 	//		flatClass = new PartialFlatClass(this, partialClass);
 	//		partialClass2flatClass.put(partialClass, flatClass);
 	//	}
-		return getCompleteFlatClass(completeClass);
+		return completeClass.getFlatClass();
 	}
 }

@@ -10,24 +10,57 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.executor.CompleteReflectiveFragment;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
-	protected final @NonNull CompleteClass completeClass;
+	protected final @NonNull CompleteClassInternal completeClass;
 
-	public CompleteFlatClass(@NonNull CompleteFlatModel flatModel, @NonNull CompleteClass completeClass) {
+	public CompleteFlatClass(@NonNull CompleteFlatModel flatModel, @NonNull CompleteClassImpl completeClass) {
 		super(flatModel, NameUtil.getName(completeClass), computeFlags(completeClass.getPrimaryClass()));
 		this.completeClass = completeClass;
+	}
+
+	@Override
+	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {
+		assert !isOclAny();
+		List<@NonNull FlatClass> superFlatClasses = null;
+		StandardLibrary standardLibrary = getStandardLibrary();
+		CompleteModelInternal completeModel = completeClass.getCompleteModel();
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : completeClass.getPartialClasses()) {
+			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperClass : PivotUtil.getSuperClasses(partialClass)) {			// XXX getUnspecializedElement
+				if (superFlatClasses == null) {
+					superFlatClasses = new ArrayList<>();
+				}
+				CompleteClassInternal superCompleteClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(partialSuperClass));
+				FlatClass superFlatClass = superCompleteClass.getFlatClass();
+				if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
+					superFlatClasses.add(superFlatClass);
+				}
+			}
+		}
+		if (superFlatClasses == null) {
+			org.eclipse.ocl.pivot.@NonNull Class oclAnyClass = standardLibrary.getOclAnyType();
+			CompleteClass completeOclAnyClass = completeModel.getCompleteClass(oclAnyClass);
+			FlatClass oclAnyFlatClass = completeOclAnyClass.getFlatClass();
+			superFlatClasses = Collections.singletonList(oclAnyFlatClass);
+		}
+		return superFlatClasses;
 	}
 
 	@Override
@@ -38,17 +71,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	@Override
 	public @NonNull CompleteClass getCompleteClass() {
 		return completeClass;
-	}
-
-	/**
-	 * Return the immediate superinheritances without reference to the fragments.
-	 */
-	@Override
-	protected @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses() {
-		if (isOclAny()) {
-			return Collections.emptyList();
-		}
-		return ((CompleteClassInternal)getCompleteClass()).getPartialClasses().getInitialSuperFlatClasses();
 	}
 
 	@Override
@@ -63,6 +85,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 
 	@Override
 	public @NonNull String toString() {
-		return completeClass.toString();
+		return NameUtil.qualifiedNameFor(completeClass);
 	}
 }

@@ -11,10 +11,11 @@
 package org.eclipse.ocl.pivot.flat;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -37,8 +38,9 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
-public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immutable metamodels
+public abstract class AbstractFlatClass implements FlatClass
 {
 	public static int computeFlags(@NonNull Type asType) {
 		if (asType instanceof JavaType) {
@@ -90,10 +92,10 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 	private int[] indexes = null;
 
 	/**
-	 * The Inheritances of sub-types that have been installed, and which must be
-	 * uninstalled in the event of an inheritance change for this Inheritance.
+	 * The sub-FlatClasses that have been installed, and which must be
+	 * invalidated in the event of an inheritance change for this FlatClass.
 	 */
-	private @Nullable Set<@NonNull AbstractFlatClass> knownSubFlatClasses = null;
+	private @Nullable Set<@NonNull FlatClass> subFlatClasses = null;
 
 	protected AbstractFlatClass(@NonNull FlatModel flatModel, @NonNull String name, int flags) {
 		this.flatModel = flatModel;
@@ -102,41 +104,48 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		if ("OclAny".equals(name)) {
 			getClass();		// XXX
 		}
+		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags));
 	}
 
-	public void addSubFlatClass(@NonNull FlatClass subFlatClass) {
-		Set<@NonNull AbstractFlatClass> knownSubFlatClasses2 = knownSubFlatClasses;
-		if (knownSubFlatClasses2 == null) {
-			knownSubFlatClasses = knownSubFlatClasses2 = new HashSet<>();
+	private void addSubFlatClass(@NonNull FlatClass subFlatClass) {
+		Set<@NonNull FlatClass> subFlatClasses2 = subFlatClasses;
+		if (subFlatClasses2 == null) {
+			subFlatClasses = subFlatClasses2 = new HashSet<>();
 		}
-		knownSubFlatClasses2.add((AbstractFlatClass)subFlatClass);
+		subFlatClasses2.add(subFlatClass);
 	}
+
+	/**
+	 * Return the immediate super-FlatClasses without reference to the fragments.
+	 * This method is never invoked for OclAny, consequently there is always at least one direct super-FlatClass.
+	 */
+	protected abstract @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses();
 
 	protected abstract @NonNull AbstractFragment createFragment(@NonNull FlatClass baseFlatClass);
 
 	/**
-	 * Add this FlatClass and all un-installed super-FlatClasses to inheritances, returning true if this
-	 * inheritance was already installed.
+	 * Populate the keys of flatClass2superFlatClasses with FlatClasses (including this FlatClass) within
+	 * the super-FlatClass hierarchy that have no fragemnts describing thir super-FlatClasses. The corresponding
+	 * values identify the direct super-FlatClasses.
 	 */
-	private boolean gatherUninstalledFlatClasses(@NonNull List<@NonNull AbstractFlatClass> flatClasses) {
-		boolean gotOne = false;
-		if (!flatClasses.contains(this)) {
-			flatClasses.add(this);
-			if (fragments == null) {
-				for (@NonNull FlatClass superFlatClass : getInitialSuperFlatClasses()) {
-					if (((AbstractFlatClass)superFlatClass).gatherUninstalledFlatClasses(flatClasses)) {
-						gotOne = true;		// Transitively installed
-					}
-					else {
-						gotOne = true;			// Statically installed
-					}
-				}
+	private void gatherFragmentlessSuperFlatClasses(@NonNull Map<@NonNull FlatClass, @NonNull Iterable<@NonNull FlatClass>> flatClass2superFlatClasses) {
+		if ((fragments == null) && !flatClass2superFlatClasses.containsKey(this)) {
+			Iterable<@NonNull FlatClass> superFlatClasses;
+			if (isOclAny()) {
+			//	StandardLibrary standardLibrary = getStandardLibrary();
+			//	org.eclipse.ocl.pivot.@NonNull Class superClass = standardLibrary.getOclAnyType();
+			//	FlatClass superFlatClass = superClass.getFlatClass(standardLibrary);
+			//	assert this == superFlatClass;
+				superFlatClasses = Collections.emptyList();
 			}
 			else {
-				gotOne = true;					// Locally installed
+				superFlatClasses = computeDirectSuperFlatClasses();
+			}
+			flatClass2superFlatClasses.put(this, superFlatClasses);
+			for (@NonNull FlatClass superFlatClass : superFlatClasses) {
+				((AbstractFlatClass)superFlatClass).gatherFragmentlessSuperFlatClasses(flatClass2superFlatClasses);
 			}
 		}
-		return gotOne;
 	}
 
 	/**
@@ -145,7 +154,7 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 	@Override
 	public @NonNull FragmentIterable getAllProperSuperFragments() {
 		if (fragments == null) {
-			initialize();
+			initFragments();
 		}
 		@NonNull InheritanceFragment @NonNull [] fragments2 = ClassUtil.nonNullState(fragments);
 		return new FragmentIterable(fragments2, 0, fragments2.length-1);
@@ -154,9 +163,54 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 	@Override
 	public @NonNull FragmentIterable getAllSuperFragments() {
 		if (fragments == null) {
-			initialize();
+			initFragments();
 		}
 		return new FragmentIterable(ClassUtil.nonNullState(fragments));
+	}
+
+	@Override
+	public @Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation) {
+		AbstractFlatClass baseFlatClass = this;
+		Operation bestOverload = null;
+		FlatClass bestFlatClass = null;
+		int bestDepth = -1;
+		int minDepth = baseFlatClass.getDepth();
+		for (int depth = derivedFlatClass.getDepth()-1; depth >= minDepth; depth--) {
+			Iterable<@NonNull InheritanceFragment> derivedSuperFragments = derivedFlatClass.getSuperFragments(depth);
+			for (InheritanceFragment derivedSuperFragment : derivedSuperFragments) {
+				AbstractFlatClass superFlatClass = (AbstractFlatClass)derivedSuperFragment.getBaseFlatClass();
+				InheritanceFragment superFragment = superFlatClass.getFragment(baseFlatClass);
+				if (superFragment != null) {
+					Operation overload = superFragment.getLocalOperation(apparentOperation);
+					if (overload != null) {
+						if (bestFlatClass == null) {				// First candidate
+							bestDepth = depth;
+							bestFlatClass = superFlatClass;
+							bestOverload = overload;
+						}
+						else if (depth == bestDepth) {				// Sibling candidate
+							bestOverload = null;
+							depth = -1;
+							break;
+						}
+						else if (!bestFlatClass.isSubFlatClassOf(superFlatClass)) {	// Non-occluded child candidate
+							bestOverload = null;
+							depth = -1;
+							break;
+						}
+					}
+				}
+			}
+		}
+		if (bestOverload != null) {
+			return bestOverload;
+		}
+		else if (bestFlatClass == null) {
+			return apparentOperation;		// FIXME Missing operation
+		}
+		else {
+			return null;
+		}
 	}
 
 //	@Deprecated
@@ -169,32 +223,33 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		if (this == that) {
 			return this;
 		}
+		@NonNull AbstractFlatClass abstractThat = (AbstractFlatClass)that;
 		if ((flags & (OCL_ANY|OCL_VOID|OCL_INVALID)) != 0) {
 			if ((flags & OCL_ANY) != 0) {
 				return this;
 			}
 			else if ((flags & OCL_INVALID) != 0) {
-				return that;
+				return abstractThat;
 			}
 			else {
-				return that.isUndefined() ? this : that;
+				return abstractThat.isUndefined() ? this : abstractThat;
 			}
 		}
-		int thatDepth = that.getDepth();
-		if ((thatDepth ==  1) && that.isUndefined()) {
+		int thatDepth = abstractThat.getDepth();
+		if ((thatDepth ==  1) && abstractThat.isUndefined()) {
 			return this;
 		}
 		int thisDepth = getDepth();
 		int staticDepth = Math.min(thisDepth, thatDepth);
 		for ( ; staticDepth > 0; --staticDepth) {
 			int iMax = getIndex(staticDepth+1);
-			int jMax = that.getIndex(staticDepth+1);
+			int jMax = abstractThat.getIndex(staticDepth+1);
 			FlatClass commonFlatClass = null;
 			int commonFlatClasses = 0;
 			for (int i = getIndex(staticDepth); i < iMax; i++) {
 				FlatClass thisBaseFlatClass = getFragment(i).getBaseFlatClass();
-				for (int j = that.getIndex(staticDepth); j < jMax; j++) {
-					FlatClass thatBaseFlatClass = that.getFragment(j).getBaseFlatClass();
+				for (int j = abstractThat.getIndex(staticDepth); j < jMax; j++) {
+					FlatClass thatBaseFlatClass = abstractThat.getFragment(j).getBaseFlatClass();
 					if (thisBaseFlatClass == thatBaseFlatClass) {
 						commonFlatClasses++;
 						commonFlatClass = thisBaseFlatClass;
@@ -213,18 +268,13 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		return getFragment(0).getBaseFlatClass();	// Always OclAny at index 0
 	}
 
-//	@Deprecated /* @deprecated phase out to enhance modulrity */
-//	public @NonNull CompleteInheritance getCompleteInheritance() {
-//		return completeInheritance;
-//	}
-
 	@Override
 	public abstract @NonNull CompleteClass getCompleteClass();
 
 	@Override
 	public int getDepth() {
 		if (indexes == null) {
-			initialize();
+			initFragments();
 		}
 		int @Nullable [] indexes2 = indexes;
 		assert indexes2 != null;
@@ -236,8 +286,7 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		return flatModel;
 	}
 
-	@Override
-	public @Nullable InheritanceFragment getFragment(@NonNull FlatClass that) {
+	private @Nullable InheritanceFragment getFragment(@NonNull AbstractFlatClass that) {
 		int staticDepth = that.getDepth();
 		if (staticDepth <= getDepth()) {
 			int iMax = getIndex(staticDepth+1);
@@ -252,45 +301,16 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		return null;
 	}
 
-	@Override
-	public @NonNull InheritanceFragment getFragment(int fragmentNumber) {
-		if ((fragments == null) && isOclAny()) {
-			installOclAny();
-		}
+	private @NonNull InheritanceFragment getFragment(int fragmentNumber) {
 		assert fragments != null;
 		return fragments[fragmentNumber];
-	//	return new ArrayIterable<@NonNull InheritanceFragment>(fragments);
 	}
 
-	public @NonNull Iterable<@NonNull InheritanceFragment> getFragments() {
-		@NonNull InheritanceFragment[] fragments2 = fragments;
-		if (fragments2 == null) {
-			initialize();
-			fragments2 = fragments;
-			assert fragments2 != null;
-		}
-		return new FragmentIterable(fragments2);
-	//	return ClassUtil.nonNullState(fragments)[fragmentNumber];
-	}
-
-	@Override
-	public int getIndex(int fragmentNumber) {
+	private int getIndex(int fragmentNumber) {
 		int @Nullable [] indexes2 = indexes;
 		assert indexes2 != null;
 		return indexes2[fragmentNumber];
 	}
-
-	@Override
-	public int getIndexes(){
-		int @Nullable [] indexes2 = indexes;
-		assert indexes2 != null;
-		return indexes2.length;
-	}
-
-	/**
-	 * Return the immediate superinheritances without reference to the fragments.
-	 */
-	protected abstract @NonNull Iterable<@NonNull FlatClass> getInitialSuperFlatClasses();
 
 	@Override
 	public @NonNull Property getMemberProperty(@NonNull String propertyName) {
@@ -307,7 +327,7 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 	@Override
 	public @NonNull InheritanceFragment getSelfFragment() {
 		if (indexes == null) {
-			initialize();
+			initFragments();
 		}
 	/*	@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
 		assert fragments2 != null;
@@ -347,56 +367,44 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		this.indexes = indexes;
 	}
 
-	private synchronized void initialize() {
-		List<@NonNull AbstractFlatClass> uninstalledFlatClasses = new ArrayList<>();
+	/**
+	 * Initialize the super-fragment hierarchy by reflective analysis.
+	 */
+	private synchronized void initFragments() {
+		System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this);
+		Map<@NonNull FlatClass, @NonNull Iterable<@NonNull FlatClass>> flatClass2superFlatClasses = new HashMap<>();
 		// Detect missing OclAny inheritance
-		// - any installed superclass must inherit from OclAny so ok.
-		// - an all-uninstalled superclass list must include OclAny to be ok.
-		if (!gatherUninstalledFlatClasses(uninstalledFlatClasses)) {
-			//			boolean containsOclAny = false;
-			//			for (DomainInheritance anInheritance : uninstalledInheritances) {
-			//				if (anInheritance.isOclAny()) {
-			//					containsOclAny = true;
-			//					break;
-			//				}
-			//			}
-			//			if (!containsOclAny)  {	// FIXME may be an rather than the OclAny - need a way to find the partial types.
-			/*				List<ReflectiveType> uninstalledInheritances2 = new ArrayList<>();
-				gatherUninstalledInheritances(uninstalledInheritances2);
-				assert uninstalledInheritances.contains(oclAnyInheritance); */
-			//			}
-		}
+		gatherFragmentlessSuperFlatClasses(flatClass2superFlatClasses);
+		System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " fragmentLess: " + flatClass2superFlatClasses.keySet());
 		//		int oldPendingCount = uninstalledInheritances.size();
-		@SuppressWarnings("unused") List<@NonNull AbstractFlatClass> debugOldUninstalledFlatClasses = new ArrayList<>(uninstalledFlatClasses);
-		while (true) {
-			Boolean gotOne = false;
-			for (Iterator<@NonNull AbstractFlatClass> it = uninstalledFlatClasses.listIterator(); it.hasNext(); ) {
-				@NonNull AbstractFlatClass uninstalledFlatClass = it.next();
-				if (uninstalledFlatClass.isInstallable()) {
-					uninstalledFlatClass.install();
-					it.remove();
-					gotOne = true;
+		@SuppressWarnings("unused") List<@NonNull FlatClass> debugOldUninstalledFlatClasses = new ArrayList<>(flatClass2superFlatClasses.keySet());
+		while (!flatClass2superFlatClasses.isEmpty()) {
+			List<@NonNull FlatClass> flatClasses = new ArrayList<>(flatClass2superFlatClasses.keySet());
+			for (@NonNull FlatClass candidateFlatClass : flatClasses) {
+				Iterable<@NonNull FlatClass> candidateSuperFlatClasses = flatClass2superFlatClasses.get(candidateFlatClass);
+				assert candidateSuperFlatClasses != null;
+				boolean allSuperFlatClassesHaveFragments = true;
+				for (@NonNull FlatClass candidateSuperFlatClass : candidateSuperFlatClasses) {
+					if (flatClass2superFlatClasses.containsKey(candidateSuperFlatClass)) {
+						allSuperFlatClassesHaveFragments = false;
+						break;
+					}
+				}
+				if (allSuperFlatClassesHaveFragments) {
+					System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " init: " + NameUtil.debugSimpleName(candidateFlatClass) + " : " + candidateFlatClass);
+					((AbstractFlatClass)candidateFlatClass).initFragments(candidateSuperFlatClasses);
+					flatClass2superFlatClasses.remove(candidateFlatClass);
 				}
 			}
-			if (uninstalledFlatClasses.isEmpty()) {
-				break;
-			}
-			//			int newPendingCount = uninstalledInheritances.size();
-			if (!gotOne) {
-				List<@NonNull AbstractFlatClass> debugNewUninstalledFlatClasses = new ArrayList<>();
-				gatherUninstalledFlatClasses(debugNewUninstalledFlatClasses);
+			if (flatClasses.size() == flatClass2superFlatClasses.size()) {
 				StringBuilder s = new StringBuilder();
 				s.append("FlatClass loop for "); //$NON-NLS-1$
-				for (ListIterator<@NonNull AbstractFlatClass> it = uninstalledFlatClasses.listIterator(); it.hasNext(); ) {
-					@NonNull AbstractFlatClass uninstalledFlatClass = it.next();
-					if (!uninstalledFlatClass.isInstallable()) {
-						s.append("\n  "); //$NON-NLS-1$
-						s.append(uninstalledFlatClass);
-					}
+				for (@NonNull FlatClass flatClass : flatClass2superFlatClasses.keySet()) {
+					s.append("\n  "); //$NON-NLS-1$
+					s.append(flatClass);
 				}
 				throw new IllegalStateException(s.toString());
 			}
-			//			oldPendingCount = newPendingCount;
 		}
 	}
 
@@ -406,67 +414,81 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 	 *
 	 * @return true if installed, false if some superClass uninstallable
 	 */
-	private boolean install() {
-		if (fragments != null) {
-			return true;
-		}
-		//		System.out.println("Install " + this);
-		if (isOclAny()) {
-			installOclAny();
-		}
-		else {
-			List<@NonNull List<@NonNull FlatClass>> all = new ArrayList<>();
-			for (@NonNull FlatClass superFlatClass : getInitialSuperFlatClasses()) {
-				//				installIn(superInheritance, this, all);
-				int j = 0;
-				for (int i = 0; i < superFlatClass.getIndexes()-1; i++) {
-					List<@NonNull FlatClass> some = (i < all.size()) ? all.get(i) : null;
-					if (some == null) {
-						some = new ArrayList<>();
-						all.add(some);
-					}
-					int jMax = superFlatClass.getIndex(i+1);
-					for (; j < jMax; j++) {
-						InheritanceFragment fragment = superFlatClass.getFragment(j);
-						FlatClass baseFlatClass = fragment.getBaseFlatClass();
-						if (!some.contains(baseFlatClass)) {
-							some.add(baseFlatClass);
-							((AbstractFlatClass)baseFlatClass).addSubFlatClass(this);
-						}
-					}
-				}
-			}
-			int superDepths = all.size();
-			int superFlatClasses = 0;
-			for (List<FlatClass> some : all) {
-				superFlatClasses += some.size();
-			}
-			assert superDepths > 0;
-			@NonNull InheritanceFragment @NonNull [] fragments2 = fragments = new @NonNull InheritanceFragment[superFlatClasses+1];	// +1 for OclSelf
-			int @NonNull [] indexes2 = indexes = new int[superDepths+2];		// +1 for OclSelf, +1 for tail pointer
-			int j = 0;
-			indexes2[0] = 0;
+	private void initFragments(@NonNull Iterable<@NonNull FlatClass> directSuperFlatClasses) {
+		assert fragments == null;
+		assert indexes == null;
+		System.out.println("initFragments " + NameUtil.debugSimpleName(this) + " : " + this + " direct: " + directSuperFlatClasses);
+		//
+		//	Aggregate the flat-classes per depth for the direct super-flat-classes to determine the
+		//	flat-classes per depth for this flata-class.
+		//
+		List<@NonNull List<@NonNull FlatClass>> depth2superFlatClasses = new ArrayList<>();
+		for (@NonNull FlatClass directSuperFlatClass : directSuperFlatClasses) {
+			AbstractFlatClass abstractDirectSuperFlatClass = (AbstractFlatClass)directSuperFlatClass;
+			final @NonNull InheritanceFragment [] superFragments = abstractDirectSuperFlatClass.fragments;
+			final int [] superIndexes = abstractDirectSuperFlatClass.indexes;
+			assert superFragments != null;
+			assert superIndexes != null;
+			final int superDepths = superIndexes.length-1;
 			for (int i = 0; i < superDepths; i++) {
-				for (FlatClass some : all.get(i)) {
-					fragments2[j++] = createFragment(some);
+				List<@NonNull FlatClass> superFlatClasses;
+				if (i >= depth2superFlatClasses.size()) {
+					superFlatClasses = new ArrayList<>();
+					depth2superFlatClasses.add(superFlatClasses);
 				}
-				indexes2[i+1] = j;
+				else {
+					superFlatClasses = depth2superFlatClasses.get(i);
+				}
+				final int firstIndex = superIndexes[i];
+				final int lastIndex = superIndexes[i+1];
+				for (int index = firstIndex; index < lastIndex; index++) {
+					InheritanceFragment superFragment = superFragments[index];
+					AbstractFlatClass baseFlatClass = (AbstractFlatClass)superFragment.getBaseFlatClass();
+					if (!superFlatClasses.contains(baseFlatClass)) {
+						superFlatClasses.add(baseFlatClass);
+						baseFlatClass.addSubFlatClass(this);
+					}
+				}
 			}
-			indexes2[superDepths++] = j;
-			fragments2[j++] = createFragment(this);
-			indexes2[superDepths++] = j;
 		}
-		return true;
+		//
+		//	Convert the 'all' List-of-List to the 'fragments' concatenated-Array-of-Array and 'indexes' of each Array.
+		//
+		int superDepths = depth2superFlatClasses.size();
+		int fragmentsSize = 0;
+		for (List<@NonNull FlatClass> superFlatClasses : depth2superFlatClasses) {
+			fragmentsSize += superFlatClasses.size();
+		}
+		fragmentsSize++;				// Extra 'OclSelf' entry
+	//	assert superDepths > 0;
+		@NonNull InheritanceFragment @NonNull [] fragments = new @NonNull InheritanceFragment[fragmentsSize];	// +1 for OclSelf
+		int @NonNull [] indexes = new int[superDepths+2];		// +1 for OclSelf, +1 for tail pointer
+		int fragmentsIndex = 0;
+		int indexesIndex = 0;
+		indexes[indexesIndex++] = 0;
+		while (indexesIndex <= superDepths) {
+			List<@NonNull FlatClass> superFlatClasses = depth2superFlatClasses.get(indexesIndex-1);
+			Collections.sort(superFlatClasses, NameUtil.NAMEABLE_COMPARATOR);
+			for (@NonNull FlatClass superFlatClass : superFlatClasses) {
+				fragments[fragmentsIndex++] = createFragment(superFlatClass);
+			}
+			indexes[indexesIndex++] = fragmentsIndex;
+		}
+		indexes[superDepths++] = fragmentsIndex;
+		fragments[fragmentsIndex++] = createFragment(this);
+		indexes[superDepths++] = fragmentsIndex;
+		this.fragments = fragments;
+		this.indexes = indexes;
 	}
 
 	/**
 	 * Install the root OclAny FlatClass.
-	 */
+	 *
 	private final void installOclAny() {
 		assert fragments == null;
 		fragments = new @NonNull InheritanceFragment[] { createFragment(this) };
 		indexes = new int[] { 0, 1 };
-	}
+	} */
 
 	@Override
 	public boolean isAbstract() {
@@ -481,7 +503,7 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 	/**
 	 * Return true if this is installed or able to be installed. Returns false if some superclass
 	 * must be installed first.
-	 */
+	 *
 	private boolean isInstallable() {
 		if (isOclAny()) {
 			return true;
@@ -491,22 +513,13 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 			return true;
 		}
 		//		DomainInheritance oclAnyInheritance = getOclAnyInheritance();
-		for (FlatClass superFlatClass : getInitialSuperFlatClasses()) {
-			if (!((AbstractFlatClass)superFlatClass).isInstalled()) {
-				//				System.out.println("isInstallable false " + this);
+		for (@NonNull FlatClass superFlatClass : computeDirectSuperFlatClasses()) {
+			if (((AbstractFlatClass)superFlatClass).fragments == null) {
 				return false;
 			}
 		}
-		//		System.out.println("isInstallable true " + this);
 		return true;
-	}
-
-	/**
-	 * Return true if this is installed.
-	 */
-	public boolean isInstalled() {
-		return fragments != null;
-	}
+	} */
 
 	public final boolean isOclAny() {
 		return (flags & OCL_ANY) != 0;
@@ -519,10 +532,11 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 
 	@Override
 	public boolean isSubFlatClassOf(@NonNull FlatClass that) {
+		AbstractFlatClass abstractThat = (AbstractFlatClass)that;
 		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
-		int thoseFlags = ((AbstractFlatClass)that).flags & (OCL_VOID|OCL_INVALID);
+		int thoseFlags = abstractThat.flags & (OCL_VOID|OCL_INVALID);
 		if ((theseFlags == 0) && (thoseFlags == 0)) {
-			return getFragment(that) != null;
+			return getFragment(abstractThat) != null;
 		}
 		else {
 			return theseFlags >= thoseFlags;
@@ -531,10 +545,11 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 
 	@Override
 	public boolean isSuperFlatClassOf(@NonNull FlatClass that) {
+		AbstractFlatClass abstractThat = (AbstractFlatClass)that;
 		int theseFlags = flags & (OCL_VOID|OCL_INVALID);
-		int thoseFlags = ((AbstractFlatClass)that).flags & (OCL_VOID|OCL_INVALID);
+		int thoseFlags = abstractThat.flags & (OCL_VOID|OCL_INVALID);
 		if ((theseFlags == 0) && (thoseFlags == 0)) {
-			return that.getFragment(this) != null;
+			return abstractThat.getFragment(this) != null;
 		}
 		else {
 			return theseFlags <= thoseFlags;
@@ -558,7 +573,9 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		FlatClass apparentFlatClass = apparentOperation.getFlatClass(standardLibrary);
 		if (apparentFlatClass != null) {
 			int apparentDepth = apparentFlatClass.getDepth();
-			if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
+			assert indexes != null;
+			int depths = indexes.length-1;
+			if (apparentDepth+1 < depths) {				// null and invalid may fail here
 				int iMax = getIndex(apparentDepth+1);
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {
 					InheritanceFragment fragment = getFragment(i);
@@ -568,7 +585,7 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 							FlatClass apparentFlatClass1 = apparentOperation.getFlatClass(getStandardLibrary());
 							if (apparentFlatClass1 != null) {
 								int apparentDepth1 = apparentFlatClass1.getDepth();
-								if (apparentDepth1+1 < getIndexes()) {				// null and invalid may fail here
+								if (apparentDepth1+1 < depths) {				// null and invalid may fail here
 									int iMax1 = getIndex(apparentDepth+1);
 									for (int i1 = getIndex(apparentDepth); i1 < iMax1; i1++) {
 										InheritanceFragment fragment1 = getFragment(i1);
@@ -596,8 +613,10 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		getDepth();
 		FlatClass apparentFlatClass = apparentOperation.getFlatClass(standardLibrary);
 		if (apparentFlatClass != null) {
+			assert indexes != null;
+			int depths = indexes.length-1;
 			int apparentDepth = apparentFlatClass.getDepth();
-			if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
+			if (apparentDepth+1 < depths) {				// null and invalid may fail here
 				int iMax = getIndex(apparentDepth+1);
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {
 					InheritanceFragment fragment = getFragment(i);
@@ -640,31 +659,31 @@ public abstract class AbstractFlatClass implements FlatClass		// XXX FIXME immut
 		return null;
 	}
 
-	public void removeSubFlatClass(@NonNull FlatClass subFlatClass) {
-		if (knownSubFlatClasses != null) {
-			knownSubFlatClasses.remove(subFlatClass);
+	private void removeSubFlatClass(@NonNull FlatClass subFlatClass) {
+		if (subFlatClasses != null) {
+			subFlatClasses.remove(subFlatClass);
 		}
 	}
 
 	@Override
-	public void uninstall() {
+	public void resetFragments() {
 		@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
 		boolean isNonNull = fragments2 != null;		// FIXME needed for JDT 4.5, not needed for JDT 4.6M4
 		if (isNonNull && (fragments2 != null)) {
 			//			System.out.println("Uninstall " + this);
-			for (InheritanceFragment fragment : fragments2) {
+			for (@NonNull InheritanceFragment fragment : fragments2) {
 				AbstractFlatClass baseFlatClass = (AbstractFlatClass)fragment.getBaseFlatClass();
 				baseFlatClass.removeSubFlatClass(this);
 			}
 			fragments = null;
 			indexes = null;
 		}
-		if (knownSubFlatClasses != null) {
-			Set<@NonNull AbstractFlatClass> previouslyKnownSubFlatClasses = knownSubFlatClasses;
-			knownSubFlatClasses = null;
-			for (@NonNull FlatClass subFlatClass : previouslyKnownSubFlatClasses) {
+		if (subFlatClasses != null) {
+			Set<@NonNull FlatClass> previousSubFlatClasses = subFlatClasses;
+			subFlatClasses = null;
+			for (@NonNull FlatClass subFlatClass : previousSubFlatClasses) {
 				((CompleteClassInternal)subFlatClass.getCompleteClass()).uninstall();
-				subFlatClass.uninstall();
+				subFlatClass.resetFragments();
 			}
 		}
 	}
