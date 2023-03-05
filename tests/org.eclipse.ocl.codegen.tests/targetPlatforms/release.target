@@ -17,10 +17,6 @@
     <repository location="https://download.eclipse.org/modeling/mdt/ocl/updates/releases/latest"/>
   </location>
   <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-    <unit id="org.eclipse.emf.examples.library" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/modeling/emf/emf/builds/release/latest"/>
-  </location>
-  <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
     <unit id="com.google.guava" version="0.0.0"/>
     <unit id="com.google.inject" version="0.0.0"/>
     <repository location="https://download.eclipse.org/tools/orbit/downloads/latest-S"/>
