@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -466,31 +465,14 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	}
 
 	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
-		final @NonNull Iterator<@NonNull CompleteClassInternal> iterator = ClassUtil.nonNull(computeSuperCompleteClasses().iterator());			// FIXME Use local cache
-		return new Iterable<@NonNull CompleteInheritance>()
+		final @NonNull Iterable<@NonNull CompleteClassInternal> iterable = ClassUtil.nonNull(computeSuperCompleteClasses());						// FIXME Use local cache
+		return Iterables.transform(iterable, new Function<@NonNull CompleteClassInternal, @NonNull CompleteInheritance>()
 		{
 			@Override
-			public @NonNull Iterator<@NonNull CompleteInheritance> iterator() {
-				return new Iterator<@NonNull CompleteInheritance>()
-				{
-					@Override
-					public boolean hasNext() {
-						return iterator.hasNext();
-					}
-
-					@Override
-					public @NonNull CompleteInheritance next() {
-						CompleteClassInternal next = ClassUtil.nonNull(iterator.next());
-						return next.getCompleteInheritance();
-					}
-
-					@Override
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-				};
+			public @NonNull CompleteInheritance apply(@NonNull CompleteClassInternal completeClass) {
+				return completeClass.getCompleteInheritance();
 			}
-		};
+		});
 	}
 
 	public @NonNull PivotMetamodelManager getMetamodelManager() {

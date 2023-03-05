@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.executor;
 
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -27,6 +27,9 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
 
 public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 {
@@ -59,43 +62,17 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 	@Override
 	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
 		Iterable<? extends org.eclipse.ocl.pivot.@NonNull Class> superClasses = ClassUtil.nullFree(domainClass.getSuperClasses());
-		final Iterator<? extends org.eclipse.ocl.pivot.@NonNull Class> iterator = superClasses.iterator();
-		return new Iterable<@NonNull CompleteInheritance>()
+		StandardLibrary standardLibrary = evaluationPackage.getStandardLibrary();
+		if (Iterables.isEmpty(superClasses)) {
+			return Collections.singletonList(standardLibrary.getOclAnyType().getInheritance(standardLibrary));
+		}
+		return Iterables.transform(superClasses, new Function<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CompleteInheritance>()
 		{
 			@Override
-			public @NonNull Iterator<@NonNull CompleteInheritance> iterator() {
-				return new Iterator<@NonNull CompleteInheritance>()
-				{
-					private @NonNull StandardLibrary standardLibrary = evaluationPackage.getStandardLibrary();
-					private boolean gotOne = false;
-
-					@Override
-					public boolean hasNext() {
-						return !gotOne || iterator.hasNext();
-					}
-
-					@Override
-					public @NonNull CompleteInheritance next() {
-						org.eclipse.ocl.pivot.Class next = null;
-						if (!gotOne) {
-							gotOne = true;
-							if (!iterator.hasNext()) {
-								next = standardLibrary.getOclAnyType();
-							}
-						}
-						if (next == null) {
-							next = ClassUtil.nonNull(iterator.next());
-						}
-						return next.getInheritance(standardLibrary);
-					}
-
-					@Override
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-				};
+			public @NonNull CompleteInheritance apply(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+				return asClass.getInheritance(standardLibrary);
 			}
-		};
+		});
 	}
 
 	@Override
