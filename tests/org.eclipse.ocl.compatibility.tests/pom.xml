@@ -70,6 +70,7 @@
     <maven-resources-version>3.2.0</maven-resources-version>
     <maven-site-version>3.9.1</maven-site-version>
     <maven-surefire-version>3.0.0-M5</maven-surefire-version>
+    <maven-toolchains-version>1.1</maven-toolchains-version>
     <tycho-version>2.7.5</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     
@@ -115,6 +116,26 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-toolchains-plugin</artifactId>
+        <version>${maven-toolchains-version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>toolchain</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <toolchains>
+            <jdk>
+              <version>1.8</version>
+              <vendor>oracle</vendor>
+            </jdk>
+          </toolchains>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>

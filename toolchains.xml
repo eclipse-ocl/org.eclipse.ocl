@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<toolchains>
+  <!-- JDK toolchains -->
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.5</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+     <jdkHome>/opt/tools/java/oracle/jdk-5/latest/bin/java</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.8</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>/opt/tools/java/oracle/jdk-8/latest/bin/java</jdkHome>
+    </configuration>
+  </toolchain>
+</toolchains>
