@@ -186,9 +186,6 @@
         <setEntry value="org.eclipse.emf.examples.databinding.project.ui.rcp@default:default"/>
         <setEntry value="org.eclipse.emf.examples.generator.validator@default:default"/>
         <setEntry value="org.eclipse.emf.examples.jet.article2@default:default"/>
-        <setEntry value="org.eclipse.emf.examples.library.edit@default:default"/>
-        <setEntry value="org.eclipse.emf.examples.library.editor@default:default"/>
-        <setEntry value="org.eclipse.emf.examples.library@default:default"/>
         <setEntry value="org.eclipse.emf.examples@default:default"/>
         <setEntry value="org.eclipse.emf.exporter.html@default:default"/>
         <setEntry value="org.eclipse.emf.exporter@default:default"/>

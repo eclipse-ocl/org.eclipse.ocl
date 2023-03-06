@@ -38,16 +38,6 @@
 		<zip destfile="zips/royalandloyal.zip" basedir="../org.eclipse.ocl.examples.project.royalandloyal">
 			<patternset refid="zip.excludes"/>
 		</zip>
-
-		<!-- EMF examples - FIXME Bug 526320 ->
-		<eclipse.convertPath resourcePath="org.eclipse.emf.examples.library" property="projectDir"/>
-		<zip destfile="zips/library.zip" basedir="${projectDir}"/>
-			
-		<eclipse.convertPath resourcePath="org.eclipse.emf.examples.library.edit" property="projectDir"/>
-		<zip destfile="zips/libraryEdit.zip" basedir="${projectDir}"/>
-		
-		<eclipse.convertPath resourcePath="org.eclipse.emf.examples.library.editor" property="projectDir"/>
-		<zip destfile="zips/libraryEditor.zip" basedir="${projectDir}"/-->
 	</target>
 
 	<target name="clean" depends="init" description="Clean the plug-in: org.eclipse.ocl.examples.">

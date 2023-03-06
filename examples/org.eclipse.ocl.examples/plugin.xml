@@ -101,12 +101,6 @@
          <projectDescriptor name="org.eclipse.ocl.examples.extlibrary"
                contentURI="zips/extlibrary.zip"
                description="%OCL_ExtLibrary_description"/>
-         <!--projectDescriptor name="org.eclipse.emf.examples.library.edit"
-               contentURI="zips/libraryEdit.zip"
-               description="%_UI_LibraryEditProject_desc"/>
-         <projectDescriptor name="org.eclipse.emf.examples.library.editor"
-               contentURI="zips/libraryEditor.zip"
-               description="%_UI_LibraryEditorProjector_desc"/-->
       </example>
       <example id="org.eclipse.ocl.examples.project.OCLinEcore"
             wizardID="org.eclipse.ocl.examples.oclinecoretutorial"
