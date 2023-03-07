@@ -922,20 +922,28 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append(" = LIBRARY.create");
 		s.appendClassReference(null, typeClass);
 		s.append("(");
-		if (!hasEcore(asClass) || (asClass instanceof AnyType) || (asClass instanceof CollectionType) || (asClass instanceof VoidType) || (asClass instanceof InvalidType)) {
+	/*	if (!hasEcore(asClass) || (asClass instanceof AnyType) || (asClass instanceof CollectionType) || (asClass instanceof VoidType) || (asClass instanceof InvalidType)) {
 			if (isBuiltInType(asClass)) {
 				s.appendClassReference(null, TypeId.class);
 				s.append(".");
 				s.append(genModelHelper.getEcoreLiteralName(eClassifier));
+				s.append(", ");
+				s.append(genModelHelper.getQualifiedEcoreLiteralName(eClassifier));
 			}
 			else {
 				s.appendString(ClassUtil.nonNullModel(asClass.getName()));
 			}
 		}
-		else {
+		else { */
 			s.append(genModelHelper.getQualifiedEcoreLiteralName(eClassifier));
-		}
+	//	}
 		s.append(", PACKAGE, ");
+		if (isBuiltInType(asClass)) {
+			s.appendClassReference(null, TypeId.class);
+			s.append(".");
+			s.append(genModelHelper.getEcoreLiteralName(eClassifier));
+			s.append(", ");
+		}
 		appendTypeFlags(asClass);
 		if (asClass.getOwnedSignature() != null) {
 			for (TemplateParameter asTemplateParameter : asClass.getOwnedSignature().getOwnedParameters()) {

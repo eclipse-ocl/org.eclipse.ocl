@@ -120,7 +120,7 @@ public interface FlatClass extends Nameable
 	@NonNull FragmentIterable getAllSuperFragments();
 	@Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation);
 	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that);
-	CompleteClass getCompleteClass();
+	@NonNull CompleteClass getCompleteClass();
 	int getDepth();
 	@NonNull FlatModel getFlatModel();
 	@NonNull Property getMemberProperty(@NonNull String name);

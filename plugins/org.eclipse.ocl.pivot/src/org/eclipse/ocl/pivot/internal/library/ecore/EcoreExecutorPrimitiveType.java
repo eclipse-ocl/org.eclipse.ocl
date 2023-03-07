@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.library.ecore;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -26,6 +27,10 @@ public class EcoreExecutorPrimitiveType extends EcoreExecutorType implements Pri
 {
 	public EcoreExecutorPrimitiveType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags) {
 		super(typeId, evaluationPackage, flags);
+	}
+
+	public EcoreExecutorPrimitiveType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
+		super(eClassifier, evaluationPackage, typeId, flags);
 	}
 
 	@Override

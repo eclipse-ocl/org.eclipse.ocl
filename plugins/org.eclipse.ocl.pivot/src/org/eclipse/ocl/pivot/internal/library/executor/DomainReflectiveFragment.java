@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 
+@Deprecated /* @deprecated no longer used */
 public class DomainReflectiveFragment extends ReflectiveFragment
 {
 //	protected final EClassifier eClassifier;

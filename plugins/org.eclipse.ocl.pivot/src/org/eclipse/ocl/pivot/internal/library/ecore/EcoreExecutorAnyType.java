@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
@@ -23,5 +24,9 @@ public class EcoreExecutorAnyType extends EcoreExecutorType implements AnyType
 {
 	public EcoreExecutorAnyType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags) {
 		super(typeId, evaluationPackage, flags);
+	}
+
+	public EcoreExecutorAnyType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
+		super(eClassifier, evaluationPackage, typeId, flags);
 	}
 }

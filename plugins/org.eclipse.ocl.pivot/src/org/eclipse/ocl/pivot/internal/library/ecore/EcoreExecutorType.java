@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class EcoreExecutorType extends ExecutorType
 {
@@ -57,6 +58,16 @@ public class EcoreExecutorType extends ExecutorType
 	public EcoreExecutorType(/*@NonNull*/ EClassifier eClassifier, @NonNull EcoreExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
 		super(ClassUtil.nonNullModel(eClassifier.getName()), evaluationPackage, flags, typeParameters);
 		this.eClassifier = eClassifier;
+	}
+
+	/**
+	 * Construct an executable type descriptor for a known EClassifier and TypeId.
+	 */
+	public EcoreExecutorType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull TypeId typeId, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+		super(NameUtil.getName(eClassifier), evaluationPackage, flags, typeParameters);
+		this.eClassifier = eClassifier;
+	//	assert typeId == getTypeId();
+		this.typeId = typeId;
 	}
 
 	@Override

@@ -71,6 +71,6 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 
 	@Override
 	public @NonNull String toString() {
-		return asType.toString();
+		return NameUtil.qualifiedNameFor(asType);
 	}
 }

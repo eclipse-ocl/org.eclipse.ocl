@@ -156,7 +156,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 		return typeParameters;
 	}
 
-	@Deprecated
+//	@Deprecated
 	public void initFragments(@NonNull ExecutorFragment @NonNull [] fragments, int[] depthCounts) {
 		flatClass.initFragments(fragments, depthCounts);;
 	}

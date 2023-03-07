@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -26,6 +27,10 @@ public class EcoreExecutorInvalidType extends EcoreExecutorType implements Inval
 {
 	public EcoreExecutorInvalidType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
 		super(typeId, evaluationPackage, flags | OCL_INVALID, typeParameters);
+	}
+
+	public EcoreExecutorInvalidType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
+		super(eClassifier, evaluationPackage, typeId, flags);
 	}
 
 	/**

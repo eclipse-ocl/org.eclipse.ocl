@@ -23,7 +23,6 @@ import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenClass;
 import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier;
-import org.eclipse.emf.codegen.ecore.genmodel.GenEnum;
 import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
@@ -1346,14 +1345,9 @@ public class OCLinEcoreTablesUtils
 	protected @NonNull Boolean hasEcore(@NonNull Type type) {
 		String typeName = type.getName();
 		if (typeName != null) {
-			List<@NonNull GenClass> genClasses = ClassUtil.nullFree(genPackage.getGenClasses());
-			GenClass genClass = getGenClassifier(genClasses, typeName);
-			if (genClass != null) {
-				return true;
-			}
-			List<@NonNull GenEnum> genEnums = ClassUtil.nullFree(genPackage.getGenEnums());
-			GenEnum genEnum = getGenClassifier(genEnums, typeName);
-			if (genEnum != null) {
+			List<@NonNull GenClassifier> genClassifiers = ClassUtil.nullFree(genPackage.getGenClassifiers());
+			GenClassifier genClassifier = getGenClassifier(genClassifiers, typeName);
+			if (genClassifier != null) {
 				return true;
 			}
 		}

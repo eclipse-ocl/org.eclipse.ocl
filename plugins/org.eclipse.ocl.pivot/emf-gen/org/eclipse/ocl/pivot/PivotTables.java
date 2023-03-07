@@ -21,6 +21,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import java.lang.String;
 import org.eclipse.jdt.annotation.NonNull;
 // import org.eclipse.ocl.pivot.ParameterTypes;
 // import org.eclipse.ocl.pivot.PivotTables;
@@ -380,7 +381,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull EcoreExecutorType _DynamicProperty = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.DYNAMIC_PROPERTY, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _DynamicType = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.DYNAMIC_TYPE, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _DynamicValueSpecification = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.DYNAMIC_VALUE_SPECIFICATION, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorType _EcoreObject = LIBRARY.createEcoreExecutorType("EcoreObject", PACKAGE, 0);
+		public static final @NonNull EcoreExecutorType _EcoreObject = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.ECORE_OBJECT, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _Element = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.ELEMENT, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _ElementExtension = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.ELEMENT_EXTENSION, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _ElementLiteralExp = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.ELEMENT_LITERAL_EXP, PACKAGE, 0);
@@ -407,7 +408,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull EcoreExecutorType _LetExp = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.LET_EXP, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _LetVariable = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.LET_VARIABLE, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _Library = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.LIBRARY, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorType _LibraryFeature = LIBRARY.createEcoreExecutorType("LibraryFeature", PACKAGE, 0);
+		public static final @NonNull EcoreExecutorType _LibraryFeature = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.LIBRARY_FEATURE, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _LiteralExp = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.LITERAL_EXP, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _LoopExp = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.LOOP_EXP, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _MapLiteralExp = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.MAP_LITERAL_EXP, PACKAGE, 0);
@@ -424,7 +425,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull EcoreExecutorType _NullLiteralExp = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.NULL_LITERAL_EXP, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _NumericLiteralExp = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.NUMERIC_LITERAL_EXP, PACKAGE, 0 | ExecutorType.ABSTRACT);
 		public static final @NonNull EcoreExecutorType _OCLExpression = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.OCL_EXPRESSION, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _Object = LIBRARY.createEcoreExecutorType("Object", PACKAGE, 0);
+		public static final @NonNull EcoreExecutorType _Object = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.OBJECT, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _Operation = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.OPERATION, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _OperationCallExp = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.OPERATION_CALL_EXP, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _OppositePropertyCallExp = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP, PACKAGE, 0);
@@ -468,7 +469,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull EcoreExecutorType _TemplateParameterSubstitution = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _TemplateSignature = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.TEMPLATE_SIGNATURE, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _TemplateableElement = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.TEMPLATEABLE_ELEMENT, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull EcoreExecutorType _Throwable = LIBRARY.createEcoreExecutorType("Throwable", PACKAGE, 0);
+		public static final @NonNull EcoreExecutorType _Throwable = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.THROWABLE, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _Transition = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.TRANSITION, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorEnumeration _TransitionKind = LIBRARY.createEcoreExecutorEnumeration(PivotPackage.Literals.TRANSITION_KIND, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorType _Trigger = LIBRARY.createEcoreExecutorType(PivotPackage.Literals.TRIGGER, PACKAGE, 0);

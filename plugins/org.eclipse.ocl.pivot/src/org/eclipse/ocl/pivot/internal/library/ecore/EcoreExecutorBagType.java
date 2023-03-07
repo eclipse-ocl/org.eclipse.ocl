@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
@@ -24,5 +25,9 @@ public class EcoreExecutorBagType extends EcoreExecutorCollectionType implements
 {
 	public EcoreExecutorBagType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter typeParameter) {
 		super(typeId, evaluationPackage, flags, typeParameter);
+	}
+
+	public EcoreExecutorBagType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags, @NonNull ExecutorTypeParameter typeParameter) {
+		super(eClassifier, evaluationPackage, typeId, flags, typeParameter);
 	}
 }

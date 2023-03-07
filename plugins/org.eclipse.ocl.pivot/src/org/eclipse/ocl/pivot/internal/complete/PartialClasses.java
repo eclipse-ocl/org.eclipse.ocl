@@ -71,7 +71,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.@NonNull Class> implements ClassListeners.IClassListener
+public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot./*@NonNull*/Class> implements ClassListeners.IClassListener
 {
 	private static final long serialVersionUID = 1L;
 	public static final @NonNull TracingOption PARTIAL_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses");

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -26,6 +27,10 @@ public class EcoreExecutorBooleanType extends EcoreExecutorPrimitiveType impleme
 {
 	public EcoreExecutorBooleanType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags) {
 		super(typeId, evaluationPackage, flags);
+	}
+
+	public EcoreExecutorBooleanType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
+		super(eClassifier, evaluationPackage, typeId, flags);
 	}
 
 	/**

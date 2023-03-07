@@ -42,7 +42,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		List<@NonNull FlatClass> superFlatClasses = null;
 		StandardLibrary standardLibrary = getStandardLibrary();
 		CompleteModelInternal completeModel = completeClass.getCompleteModel();
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : completeClass.getPartialClasses()) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperClass : PivotUtil.getSuperClasses(partialClass)) {			// XXX getUnspecializedElement
 				if (superFlatClasses == null) {
 					superFlatClasses = new ArrayList<>();

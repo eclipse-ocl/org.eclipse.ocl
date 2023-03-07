@@ -31,8 +31,8 @@ import com.google.common.collect.Lists;
  */
 public class ExecutorFragment extends AbstractFragment
 {
-	private @NonNull ExecutorOperation[] operations;
-	private @NonNull ExecutorProperty[] properties;
+	private @NonNull ExecutorOperation @Nullable [] operations = null;
+	private @NonNull ExecutorProperty @Nullable [] properties = null;
 
 	public ExecutorFragment(@NonNull ExecutorType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
 		this(derivedInheritance.getFlatClass(), baseInheritance.getFlatClass());
@@ -40,14 +40,13 @@ public class ExecutorFragment extends AbstractFragment
 
 	public ExecutorFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
 		super(derivedFlatClass, baseFlatClass);
-		this.operations = null;
-		this.properties = null;
 	}
 
 	@Override
 	public @NonNull LibraryFeature getImplementation(@NonNull Operation staticOperation) {
 		int index = staticOperation.getIndex();
 		if (index >= 0) {
+			assert operations != null;
 			return ClassUtil.nonNullState(operations[index].implementation);
 		}
 		else {
@@ -59,6 +58,7 @@ public class ExecutorFragment extends AbstractFragment
 	public @Nullable Operation getLocalOperation(@NonNull Operation staticOperation) {
 		int index = staticOperation.getIndex();
 		if (index >= 0) {
+			assert operations != null;
 			return operations[index];
 		}
 		else {
