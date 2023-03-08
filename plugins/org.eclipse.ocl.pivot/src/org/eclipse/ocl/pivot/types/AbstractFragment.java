@@ -19,8 +19,8 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 public abstract class AbstractFragment implements InheritanceFragment
 {
-	public final @NonNull FlatClass derivedFlatClass;
-	public final @NonNull FlatClass baseFlatClass;
+	protected final @NonNull FlatClass derivedFlatClass;
+	protected final @NonNull FlatClass baseFlatClass;
 
 	public AbstractFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
 		this.derivedFlatClass = derivedFlatClass;

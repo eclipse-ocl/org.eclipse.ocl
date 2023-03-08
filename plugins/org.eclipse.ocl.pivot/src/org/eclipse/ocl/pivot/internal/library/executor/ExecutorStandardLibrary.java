@@ -223,9 +223,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 
 	public @NonNull ExecutorTypeParameter createExecutorTypeParameter(int index, @NonNull String name) {
 		ExecutorTypeParameter executorTypeParameter = new ExecutorTypeParameter(index, name);
-		EcoreFlatModel flatModel = getFlatModel();
-		FlatClass flatClass = flatModel.getFlatClass(executorTypeParameter);
-		executorTypeParameter.setFlatClass(flatClass);
+	//	EcoreFlatModel flatModel = getFlatModel();
+	//	FlatClass flatClass = flatModel.getFlatClass(executorTypeParameter);
+	//	executorTypeParameter.setFlatClass(flatClass);
 		return executorTypeParameter;
 	}
 

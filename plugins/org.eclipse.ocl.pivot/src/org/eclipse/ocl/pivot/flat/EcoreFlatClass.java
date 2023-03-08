@@ -17,22 +17,19 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveFragment;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
-public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
+public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable metamodels
 {
-	protected final @NonNull EClassifier eClassifier;		// XXX unify
-	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
+	protected final @NonNull EClassifier eClassifier;
 
-	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) { //, int flags) {
-		super(flatModel, NameUtil.getName(eClassifier), 0);
+	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		super(flatModel, asClass);
 		this.eClassifier = eClassifier;
-		this.asClass = asClass;
 	}
 
 	@Override
@@ -65,11 +62,6 @@ public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable me
 		return new EcoreReflectiveFragment(this, baseFlatClass);
 	}
 
-	@Override
-	public @NonNull CompleteClass getCompleteClass() {
-		throw new UnsupportedOperationException();
-	}
-
 	public @NonNull EClassifier getEClassifier() {
 		return eClassifier;
 	}
@@ -77,11 +69,6 @@ public class EcoreFlatClass extends AbstractFlatClass		// XXX FIXME immutable me
 	@Override
 	public @NonNull EcoreFlatModel getFlatModel() {
 		return (EcoreFlatModel)flatModel;
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
-		return asClass;
 	}
 
 	@Override

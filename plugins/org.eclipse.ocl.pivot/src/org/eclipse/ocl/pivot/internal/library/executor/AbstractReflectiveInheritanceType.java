@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
-public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheritance implements org.eclipse.ocl.pivot.Class
+public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheritance
 {
 	public AbstractReflectiveInheritanceType(@NonNull String name, int flags) {
 		super(name, flags);

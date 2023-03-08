@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
@@ -84,6 +85,11 @@ public class ExecutorTypeParameter extends AbstractExecutorType implements Execu
 
 	@Override
 	public TemplateSignature getOwningSignature() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setFlatClass(@NonNull FlatClass flatClass) {
 		throw new UnsupportedOperationException();
 	}
 

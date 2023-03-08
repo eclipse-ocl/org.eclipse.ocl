@@ -117,8 +117,7 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
-	@NonNull
-	public List<Property> getOwnedProperties() {
+	public final @NonNull List<Property> getOwnedProperties() {
 		throw new UnsupportedOperationException();
 	}
 

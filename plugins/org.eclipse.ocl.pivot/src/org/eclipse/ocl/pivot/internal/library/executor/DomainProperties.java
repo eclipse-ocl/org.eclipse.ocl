@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+@Deprecated /* @deprecated no longer used */
 public class DomainProperties
 {
 	protected final @NonNull FlatClass flatClass;

@@ -30,8 +30,8 @@ import com.google.common.collect.Iterators;
 
 public class PartialProperties implements Iterable<@NonNull Property>
 {
-	//resolution = null, partials = null or empty => empty
-	// resolution = X, partials = null or empty or [X} => X
+	// resolution = null, partials = null or empty => empty
+	// resolution = X, partials = null or empty or {X} => X
 	// resolution = null, partials not empty => lazy unresolved 'ambiguity'
 	private boolean isResolved = false;
 	private @Nullable Property resolution = null;
@@ -44,8 +44,7 @@ public class PartialProperties implements Iterable<@NonNull Property>
 
 	public synchronized void didAddProperty(@NonNull Property pivotProperty) {
 		List<@NonNull Property> partials2 = partials;
-		@Nullable
-		Property resolution2 = resolution;
+		@Nullable Property resolution2 = resolution;
 		if (partials2 == null) {
 			if (resolution2 == null) {
 				resolution2 = resolution = pivotProperty;

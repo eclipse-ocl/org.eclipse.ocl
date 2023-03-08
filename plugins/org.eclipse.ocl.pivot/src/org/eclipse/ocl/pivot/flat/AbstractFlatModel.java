@@ -10,32 +10,28 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.TemplateParameter;
 
 public abstract class AbstractFlatModel implements FlatModel		// XXX FIXME immutable metamodels
 {
 	protected final @NonNull StandardLibrary standardLibrary;
 	protected final @NonNull String name;
-	private final @NonNull Map<@NonNull TemplateParameter, @NonNull FlatClass> flatTemplateParameters =  new HashMap<>();
+//	private final @NonNull Map<@NonNull TemplateParameter, @NonNull FlatClass> flatTemplateParameters =  new HashMap<>();
 
 	protected AbstractFlatModel(@NonNull StandardLibrary standardLibrary, @NonNull String name) {
 		this.standardLibrary = standardLibrary;
 		this.name = name;
 	}
 
-	public @NonNull FlatClass getFlatClass(@NonNull TemplateParameter templateParameter) {
+/*	public @NonNull FlatClass getFlatClass(@NonNull TemplateParameter templateParameter) {
 		FlatClass flatClass = flatTemplateParameters.get(templateParameter);
 		if (flatClass == null) {
 			flatClass = new PartialFlatClass(this, templateParameter);		// XXX
 			flatTemplateParameters.put(templateParameter, flatClass);
 		}
 		return flatClass;
-	}
+	} */
 
 	@Override
 	public @NonNull String getName() {

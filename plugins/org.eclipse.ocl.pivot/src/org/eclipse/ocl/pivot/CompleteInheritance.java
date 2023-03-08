@@ -58,7 +58,7 @@ public interface CompleteInheritance extends Nameable
 //	int getIndex(int fragmentNumber);
 //	int getIndexes();
 	@Nullable Operation getMemberOperation(@NonNull OperationId id);
-	@Nullable Property getMemberProperty(@NonNull String name);
+//	@Nullable Property getMemberProperty(@NonNull String name);
 
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 

@@ -22,7 +22,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
@@ -32,7 +31,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
-import org.eclipse.ocl.pivot.internal.library.executor.DomainProperties;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -44,7 +42,7 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	protected final @NonNull EcoreReflectivePackage evaluationPackage;
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull TemplateParameters typeParameters;
-	private /*@LazyNonNull*/ DomainProperties allProperties;
+//	private /*@LazyNonNull*/ DomainProperties allProperties;
 
 	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		super(NameUtil.getName(eClassifier), flags);
@@ -169,14 +167,14 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		throw new UnsupportedOperationException();					// FIXME
 	}
 
-	@Override
-	public @Nullable Property getMemberProperty(@NonNull String name) {
-		DomainProperties allProperties2 = allProperties;
-		if (allProperties2 == null) {
-			allProperties = allProperties2 = new DomainProperties(getFlatClass());
-		}
-		return allProperties2.getMemberProperty(name);
-	}
+//	@Override
+//	public @Nullable Property getMemberProperty(@NonNull String name) {
+//		DomainProperties allProperties2 = allProperties;
+//		if (allProperties2 == null) {
+//			allProperties = allProperties2 = new DomainProperties(getFlatClass());
+//		}
+//		return allProperties2.getMemberProperty(name);
+//	}
 
 	@Override
 	public @NonNull String getMetaTypeName() {
@@ -186,11 +184,6 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	@Override
 	public @NonNull List<Constraint> getOwnedInvariants() {
 		throw new UnsupportedOperationException();			// FIXME
-	}
-
-	@Override
-	public @NonNull List<Property> getOwnedProperties() {
-		throw new UnsupportedOperationException();		// FIXME
 	}
 
 	@Override

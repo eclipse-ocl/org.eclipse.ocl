@@ -15,7 +15,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
@@ -63,10 +62,10 @@ public class AbstractExecutorType extends AbstractInheritance implements Type
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public @Nullable Property getMemberProperty(@NonNull String name) {
-		throw new UnsupportedOperationException();
-	}
+//	@Override
+//	public @Nullable Property getMemberProperty(@NonNull String name) {
+//		throw new UnsupportedOperationException();
+//	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType( @NonNull StandardLibrary standardLibrary) {

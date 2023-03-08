@@ -91,20 +91,20 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 		return completeClass.getOperation(operationId);
 	}
 
-	@Override
-	public @Nullable Property getMemberProperty(@NonNull String propertyName) {
-		return completeClass.getProperty(propertyName);
-	}
+//	@Override
+//	public @Nullable Property getMemberProperty(@NonNull String propertyName) {
+//		return completeClass.getProperty(propertyName);
+//	}
 
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return completeClass.getPrimaryClass().getMetaTypeName();
 	}
 
-	@Override
-	public @NonNull List<Property> getOwnedProperties() {
-		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedProperties());			// FIXME Use local cache
-	}
+//	@Override
+//	public @NonNull List<Property> getOwnedProperties() {
+//		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedProperties());			// FIXME Use local cache
+//	}
 
 	@Override
 	public @NonNull List<Operation> getOwnedOperations() {

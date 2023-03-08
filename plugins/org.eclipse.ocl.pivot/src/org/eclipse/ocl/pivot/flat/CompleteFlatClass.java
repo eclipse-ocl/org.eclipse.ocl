@@ -16,14 +16,12 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.executor.CompleteReflectiveFragment;
 import org.eclipse.ocl.pivot.types.AbstractFragment;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -73,10 +71,10 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		return completeClass;
 	}
 
-	@Override
-	public @NonNull Property getMemberProperty(@NonNull String propertyName) {
-		return ClassUtil.nonNullState(completeClass.getProperty(propertyName));		// XXX Use local cache
-	}
+//	@Override
+//	public @NonNull Property getMemberProperty(@NonNull String propertyName) {
+//		return ClassUtil.nonNullState(completeClass.getProperty(propertyName));		// XXX Use local cache
+//	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {

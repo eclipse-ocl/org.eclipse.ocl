@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
@@ -42,7 +41,7 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 
 	protected final org.eclipse.ocl.pivot.@NonNull Package evaluationPackage;
 	private final @NonNull TemplateParameters typeParameters;
-	private /*@LazyNonNull*/ DomainProperties allProperties;
+//	private /*@LazyNonNull*/ DomainProperties allProperties;
 
 	public ExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
 		super(name, flags);
@@ -89,14 +88,14 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 		throw new UnsupportedOperationException();					// FIXME
 	}
 
-	@Override
-	public @Nullable Property getMemberProperty(@NonNull String name) {
-		DomainProperties allProperties2 = allProperties;
-		if (allProperties2 == null) {
-			allProperties = allProperties2 = new DomainProperties(getFlatClass());
-		}
-		return allProperties2.getMemberProperty(name);
-	}
+//	@Override
+//	public @Nullable Property getMemberProperty(@NonNull String name) {
+//		DomainProperties allProperties2 = allProperties;
+//		if (allProperties2 == null) {
+//			allProperties = allProperties2 = new DomainProperties(getFlatClass());
+//		}
+//		return allProperties2.getMemberProperty(name);
+//	}
 
 	@Override
 	public @NonNull String getMetaTypeName() {
@@ -113,10 +112,10 @@ public abstract class ExecutorType extends AbstractExecutorClass implements Exec
 		throw new UnsupportedOperationException();			// FIXME
 	}
 
-	@Override
-	public @NonNull List<Property> getOwnedProperties() {
-		return IterableAsImmutableList.asList(flatClass.getSelfFragment().getLocalProperties());
-	}
+//	@Override
+//	public @NonNull List<Property> getOwnedProperties() {
+//		return IterableAsImmutableList.asList(flatClass.getSelfFragment().getLocalProperties());
+//	}
 
 	@Override
 	public @NonNull List<Operation> getOwnedOperations() {

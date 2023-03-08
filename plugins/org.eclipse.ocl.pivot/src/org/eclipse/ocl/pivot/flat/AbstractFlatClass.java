@@ -75,8 +75,8 @@ public abstract class AbstractFlatClass implements FlatClass
 	protected final @NonNull FlatModel flatModel;
 	protected final @NonNull String name;
 	protected final int flags;
-	//	protected @Nullable Map<String, DomainOperation> operationMap = null;
-	//	protected @Nullable Map<String, DomainProperty> propertyMap = null;
+	// private @Nullable Map<@NonNull String, @NonNull Operation> name2operation = null;
+	private @Nullable Map<@NonNull String, @NonNull Object>  name2propertyOrProperties = null;	// Property or List<Property>
 
 	/**
 	 * Depth ordered inheritance fragments. OclAny at depth 0, OclSelf at depth size-1.
@@ -113,6 +113,39 @@ public abstract class AbstractFlatClass implements FlatClass
 			subFlatClasses = subFlatClasses2 = new HashSet<>();
 		}
 		subFlatClasses2.add(subFlatClass);
+	}
+
+	@Override
+	public @Nullable Property basicGetMemberProperty(@NonNull String propertyName) {
+		if (fragments == null) {
+			initFragments();
+		}
+		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = name2propertyOrProperties;
+		if (name2propertyOrProperties2 == null) {
+			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
+			assert fragments != null;
+			for (@NonNull InheritanceFragment fragment : fragments) {
+				for (@NonNull Property property : fragment.getLocalProperties()) {
+					String name = NameUtil.getName(property);
+					Object old = name2propertyOrProperties2.put(name, property);
+					if (old != null) {
+						List<@NonNull Property> properties;
+						if (old instanceof Property) {
+							properties = new ArrayList<>();
+							name2propertyOrProperties2.put(name, properties);
+						}
+						else {
+							@SuppressWarnings("unchecked")
+							List<@NonNull Property> castOld = (List<@NonNull Property>)old;
+							properties = castOld;
+						}
+						properties.add(property);
+					}
+				}
+			}
+		}
+		Object propertyOrProperties = name2propertyOrProperties2.get(propertyName);
+		return propertyOrProperties instanceof Property ? (Property)propertyOrProperties : null;
 	}
 
 	/**
@@ -310,11 +343,6 @@ public abstract class AbstractFlatClass implements FlatClass
 		int @Nullable [] indexes2 = indexes;
 		assert indexes2 != null;
 		return indexes2[fragmentNumber];
-	}
-
-	@Override
-	public @NonNull Property getMemberProperty(@NonNull String propertyName) {
-		throw new UnsupportedOperationException();		// XXX Use local cache
 	}
 
 	@Override
@@ -678,6 +706,8 @@ public abstract class AbstractFlatClass implements FlatClass
 			fragments = null;
 			indexes = null;
 		}
+	//	name2operation = null;
+		name2propertyOrProperties = null;
 		if (subFlatClasses != null) {
 			Set<@NonNull FlatClass> previousSubFlatClasses = subFlatClasses;
 			subFlatClasses = null;

@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -29,7 +28,7 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 {
 	protected final @NonNull DomainReflectivePackage evaluationPackage;
 	protected final org.eclipse.ocl.pivot.@NonNull Class domainClass;
-	private /*@LazyNonNull*/ DomainProperties allProperties;
+//	private /*@LazyNonNull*/ DomainProperties allProperties;
 
 	public DomainReflectiveType(@NonNull DomainReflectivePackage evaluationPackage, org.eclipse.ocl.pivot.@NonNull Class domainClass) {
 		super(ClassUtil.nonNullModel(domainClass.getName()), computeFlags(domainClass));
@@ -105,14 +104,14 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 		throw new UnsupportedOperationException();					// FIXME
 	}
 
-	@Override
-	public @Nullable Property getMemberProperty(@NonNull String name) {
-		DomainProperties allProperties2 = allProperties;
-		if (allProperties2 == null) {
-			allProperties = allProperties2 = new DomainProperties(getFlatClass());
-		}
-		return allProperties2.getMemberProperty(name);
-	}
+//	@Override
+//	public @Nullable Property getMemberProperty(@NonNull String name) {
+//		DomainProperties allProperties2 = allProperties;
+//		if (allProperties2 == null) {
+//			allProperties = allProperties2 = new DomainProperties(getFlatClass());
+//		}
+//		return allProperties2.getMemberProperty(name);
+//	}
 
 	@Override
 	public @NonNull String getMetaTypeName() {
@@ -129,10 +128,10 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 		return domainClass.getOwnedOperations();
 	}
 
-	@Override
-	public @NonNull List<Property> getOwnedProperties() {
-		return domainClass.getOwnedProperties();
-	}
+//	@Override
+//	public @NonNull List<Property> getOwnedProperties() {
+//		return domainClass.getOwnedProperties();
+//	}
 
 	@Override
 	public @NonNull List<Constraint> getOwnedConstraints() {
