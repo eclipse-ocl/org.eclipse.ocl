@@ -10,9 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
@@ -24,8 +30,19 @@ public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME i
 	}
 
 	@Override
+	protected @Nullable List<@NonNull Property> computeDirectProperties() {
+		org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asClass);
+		return gatherDirectProperties(unspecializedType, null);
+	}
+
+	@Override
 	public @NonNull CompleteClass getCompleteClass() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+		throw new UnsupportedOperationException();				// XXX
 	}
 
 	@Override

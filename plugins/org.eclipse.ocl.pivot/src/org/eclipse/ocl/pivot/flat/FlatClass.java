@@ -107,7 +107,7 @@ public interface FlatClass extends Nameable
 	 */
 	public static final int ABSTRACT = 1 << 5;
 
-	@Nullable Property basicGetMemberProperty(@NonNull String name);
+	@Nullable Property getProperty(@NonNull String name);
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
 	 */
@@ -119,6 +119,7 @@ public interface FlatClass extends Nameable
 	@NonNull FragmentIterable getAllSuperFragments();
 	@Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation);
 	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that);
+	@Deprecated // XXX eliminate unsound iheritance
 	@NonNull CompleteClass getCompleteClass();
 	int getDepth();
 	@NonNull FlatModel getFlatModel();
@@ -126,6 +127,7 @@ public interface FlatClass extends Nameable
 	@NonNull String getName();
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 	@NonNull FlatFragment getSelfFragment();
+	@NonNull Property @NonNull [] getSelfProperties();
 	@NonNull StandardLibrary getStandardLibrary();
 	@NonNull FragmentIterable getSuperFragments(int depth);
 

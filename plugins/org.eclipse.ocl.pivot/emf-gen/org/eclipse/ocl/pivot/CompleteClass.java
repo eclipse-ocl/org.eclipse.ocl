@@ -102,7 +102,7 @@ public interface CompleteClass extends NamedElement
 	@Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName);
 	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter);
 	@NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name);
-	@Nullable Property getProperty(@Nullable String propertyName);
+	@Nullable Property getProperty(@NonNull String propertyName);
 	@NonNull Iterable<@NonNull State>  getStates();
 	@NonNull Iterable<@NonNull State>  getStates(@Nullable String name);
 	@NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses();

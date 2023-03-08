@@ -34,6 +34,8 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.values.SetValue;
 
+import com.google.common.collect.Lists;
+
 public class AbstractExecutorClass extends AbstractExecutorType implements org.eclipse.ocl.pivot.Class
 {
 	public AbstractExecutorClass(@NonNull String name, int flags) {
@@ -118,7 +120,8 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 
 	@Override
 	public final @NonNull List<Property> getOwnedProperties() {
-		throw new UnsupportedOperationException();
+		@NonNull Property @NonNull [] asProperties = flatClass.getSelfProperties();
+		return Lists.newArrayList(asProperties);
 	}
 
 	@Override
@@ -146,7 +149,8 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 
 	@Override
 	public TemplateableElement getUnspecializedElement() {
-		throw new UnsupportedOperationException();
+	//	throw new UnsupportedOperationException();
+		return this;
 	}
 
 	@Override

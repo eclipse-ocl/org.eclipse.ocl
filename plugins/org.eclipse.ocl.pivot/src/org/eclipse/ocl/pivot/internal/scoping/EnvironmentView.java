@@ -58,7 +58,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -515,20 +514,21 @@ public class EnvironmentView
 	public void addAllProperties(org.eclipse.ocl.pivot.@NonNull Class type, @Nullable FeatureFilter featureFilter) {
 		if (accepts(PivotPackage.Literals.PROPERTY)
 				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want properties when looking for NAMESPACE
-			System.out.println("addAllProperties " + NameUtil.debugSimpleName(type) + " : " + type + " . " + this);
+		//	System.out.println("addAllProperties " + NameUtil.debugSimpleName(type) + " : " + type + " . " + this);
 			assert environmentFactory.getMetamodelManager().isTypeServeable(type);
 			CompleteClass completeClass = environmentFactory.getMetamodelManager().getCompleteClass(type);
-			String name2 = name;
-			if (name2 != null) {
-				for (@NonNull Property property : completeClass.getProperties(featureFilter, name2)) {
+		//	String name2 = name;
+		//	if (name2 != null) {
+				for (@NonNull Property property : completeClass.getProperties(featureFilter, name)) {
 					addNamedElement(property);
 				}
-			}
-			else {
-				for (@NonNull Property property : completeClass.getProperties(featureFilter)) {
-					addNamedElement(property);
-				}
-			}
+		//	}
+		//	else {
+		//		for (@NonNull Property property : completeClass.getProperties(featureFilter)) {
+		//			addNamedElement(property);
+		//		}
+		//	}
+		//	System.out.println("addAllProperties " + NameUtil.debugSimpleName(type) + " : " + type + " . " + this);
 		}
 	}
 

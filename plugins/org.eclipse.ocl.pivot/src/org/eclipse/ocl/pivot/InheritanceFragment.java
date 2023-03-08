@@ -60,6 +60,7 @@ public interface InheritanceFragment
 	/**
 	 * Return the properties within this fragment in property index order.
 	 */
+	@Deprecated /* @deprecated no longer used */
 	@NonNull Property @NonNull [] getLocalProperties();
 
 	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses();

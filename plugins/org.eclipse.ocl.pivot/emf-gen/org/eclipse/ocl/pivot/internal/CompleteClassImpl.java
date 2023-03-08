@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 
@@ -571,27 +572,31 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property pivotProperty) {
-		return partialClasses.getProperties(pivotProperty);
+//		return partialClasses.getProperties(pivotProperty);
+		return getFlatClass().getProperties(null, NameUtil.getName(pivotProperty));		// XXX surely the property we first thought of
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {
-		return partialClasses.getProperties(featureFilter);
+//		return partialClasses.getProperties(featureFilter, null);
+		return getFlatClass().getProperties(featureFilter, null);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-		return partialClasses.getProperties(featureFilter, name);
+		return getFlatClass().getProperties(featureFilter, name);
 	}
 
 	@Override
 	public @Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName) {
-		return partialClasses.getProperties(propertyName);
+//		return partialClasses.getProperties(propertyName);
+		return getFlatClass().getProperties(null, propertyName);
 	}
 
 	@Override
-	public @Nullable Property getProperty(@Nullable String propertyName) {
-		return partialClasses.getProperty(propertyName);
+	public @Nullable Property getProperty(@NonNull String propertyName) {
+	//	return partialClasses.getProperty(propertyName);
+		return getFlatClass().getProperty(propertyName);
 	}
 
 	public @NonNull StandardLibraryInternal getStandardLibrary() {
@@ -631,9 +636,15 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		partialClasses.dispose();
 	}
 
-	public void invalidate() {
+	public void resetFragments() {
 		if (flatClass != null) {
 			flatClass.resetFragments();
+		}
+	}
+
+	public void resetProperties() {
+		if (flatClass != null) {
+			flatClass.resetProperties();
 		}
 	}
 } //CompleteClassImpl

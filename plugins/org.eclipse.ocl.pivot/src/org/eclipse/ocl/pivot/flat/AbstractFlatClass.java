@@ -28,13 +28,16 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
+import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
 import org.eclipse.ocl.pivot.internal.library.executor.JavaType;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractFlatClass implements FlatClass
 {
@@ -74,7 +77,13 @@ public abstract class AbstractFlatClass implements FlatClass
 	protected final @NonNull String name;
 	protected final int flags;
 	// private @Nullable Map<@NonNull String, @NonNull Operation> name2operation = null;
-	private @Nullable Map<@NonNull String, @NonNull Object>  name2propertyOrProperties = null;	// Property or List<Property>
+
+	/**
+	 * Cached mapping from a property name to the Property or PartialProperties that has that name within
+	 * the FlatClass hierarchy. The PartialProperties holds the ambiguity until a lazy resolution replaces it
+	 * by a Property or null
+	 */
+	private @Nullable Map<@NonNull String, @Nullable Object> name2propertyOrProperties = null;	// Property or PartialProperties
 
 	/**
 	 * Depth ordered inheritance fragments. OclAny at depth 0, OclSelf at depth size-1.
@@ -99,10 +108,32 @@ public abstract class AbstractFlatClass implements FlatClass
 		this.flatModel = flatModel;
 		this.name = name;
 		this.flags = flags;
-		if ("OclAny".equals(name)) {
-			getClass();		// XXX
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags));
+	}
+
+	protected void addProperty(@NonNull Property property) {
+		String name = NameUtil.getName(property);
+		assert name2propertyOrProperties != null;
+		Object old = name2propertyOrProperties.put(name, property);
+		if (old == null) {
+			;
 		}
-		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags));
+		else if (old == property) {
+			;																	// XXX FIXME should not have inherited legacy duplicates
+		}
+		else {
+			PartialProperties partialProperties;
+			if (old instanceof PartialProperties) {
+				partialProperties = (PartialProperties)old;
+			}
+			else {
+				partialProperties = new PartialProperties(getEnvironmentFactory());		// XXX avoid EnvironmentFactory for partial Ecore
+				partialProperties.didAddProperty((Property)old);
+			}
+			partialProperties.didAddProperty(property);
+			assert name2propertyOrProperties != null;
+			name2propertyOrProperties.put(name, partialProperties);
+		}
 	}
 
 	private void addSubFlatClass(@NonNull FlatClass subFlatClass) {
@@ -113,45 +144,11 @@ public abstract class AbstractFlatClass implements FlatClass
 		subFlatClasses2.add(subFlatClass);
 	}
 
-	@Override
-	public @Nullable Property basicGetMemberProperty(@NonNull String propertyName) {
-		if (fragments == null) {
-			initFragments();
-		}
-		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = name2propertyOrProperties;
-		if (name2propertyOrProperties2 == null) {
-			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
-			assert fragments != null;
-			for (@NonNull FlatFragment fragment : fragments) {
-				@NonNull Property @Nullable [] fragmentProperties = fragment.basicGetProperties();
-				if (fragmentProperties == null) {
-					fragmentProperties = computeDirectProperties();
-					fragment.initProperties(fragmentProperties);
-				}
-				for (@NonNull Property property : fragmentProperties) {
-					String name = NameUtil.getName(property);
-					Object old = name2propertyOrProperties2.put(name, property);
-					if (old != null) {
-						List<@NonNull Property> properties;
-						if (old instanceof Property) {
-							properties = new ArrayList<>();
-							name2propertyOrProperties2.put(name, properties);
-						}
-						else {
-							@SuppressWarnings("unchecked")
-							List<@NonNull Property> castOld = (List<@NonNull Property>)old;
-							properties = castOld;
-						}
-						properties.add(property);
-					}
-				}
-			}
-		}
-		Object propertyOrProperties = name2propertyOrProperties2.get(propertyName);
-		return propertyOrProperties instanceof Property ? (Property)propertyOrProperties : null;
-	}
-
-	protected abstract @NonNull Property @NonNull [] computeDirectProperties();
+	/**
+	 * Return the properties defined for this flat class, which may be need merging for a complete class.
+	 * FIXME super flat class properties should not be returned, but are due to legacy static initialization.
+	 */
+	protected abstract @Nullable List<@NonNull Property> computeDirectProperties();
 
 	/**
 	 * Return the immediate super-FlatClasses without reference to the fragments.
@@ -161,6 +158,17 @@ public abstract class AbstractFlatClass implements FlatClass
 
 	protected /* final */ @NonNull FlatFragment createFragment(@NonNull FlatClass baseFlatClass) {
 		return new FlatFragment(this, baseFlatClass);
+	}
+
+	protected @Nullable List<@NonNull Property> gatherDirectProperties(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Property> asProperties) {
+		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;		// FIXME This is much than PartialClasses.initMemberProperties
+		for (@NonNull Property partialProperty : PivotUtil.getOwnedProperties(asClass)) {
+			if (asProperties == null) {
+				asProperties = new ArrayList<>();
+			}
+			asProperties.add(partialProperty);	// This is a simple list of ingredients; merge is callers responsibility wrt the name.
+		}
+		return asProperties;
 	}
 
 	/**
@@ -253,11 +261,6 @@ public abstract class AbstractFlatClass implements FlatClass
 		}
 	}
 
-//	@Deprecated
-//	public @NonNull CompleteInheritance getCommonInheritance(@NonNull CompleteInheritance thatInheritance) {
-//		return getCommonFlatClass(thatInheritance.getFlatClass()).completeInheritance;
-//	}
-
 	@Override
 	public @NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that) {
 		if (this == that) {
@@ -321,6 +324,8 @@ public abstract class AbstractFlatClass implements FlatClass
 		return indexes2.length-2;
 	}
 
+	protected abstract @NonNull EnvironmentFactoryInternal getEnvironmentFactory();
+
 	@Override
 	public @NonNull FlatModel getFlatModel() {
 		return flatModel;
@@ -357,7 +362,42 @@ public abstract class AbstractFlatClass implements FlatClass
 		return name;
 	}
 
-//	public abstract org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
+	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
+		if (name2propertyOrProperties == null) {
+			if (fragments == null) {
+				initFragments();
+			}
+			initProperties();
+		}
+		if (name != null) {
+			Property asProperty = resolvePropertyOrProperties(featureFilter, name);
+			return (asProperty != null) ? Collections.singletonList(asProperty) : Collections.emptyList();
+		}
+		else {
+			List<@NonNull Property> asProperties = new ArrayList<>();
+			assert name2propertyOrProperties != null;
+			for (@NonNull String key : name2propertyOrProperties.keySet()) {
+				Property asProperty = resolvePropertyOrProperties(featureFilter, key);
+				if (asProperty != null) {
+					asProperties.add(asProperty);
+				}
+			}
+			return asProperties;
+		}
+	}
+
+	@Override
+	public @Nullable Property getProperty(@NonNull String propertyName) {
+		if (name2propertyOrProperties == null) {
+			if (fragments == null) {
+				initFragments();
+			}
+			initProperties();
+		}
+		assert name2propertyOrProperties != null;
+		Object propertyOrProperties = name2propertyOrProperties.get(propertyName);
+		return propertyOrProperties instanceof Property ? (Property)propertyOrProperties : null;
+	}
 
 	@Override
 	public @NonNull FlatFragment getSelfFragment() {
@@ -375,6 +415,12 @@ public abstract class AbstractFlatClass implements FlatClass
 	}
 
 	@Override
+	public @NonNull Property @NonNull [] getSelfProperties() {
+		@NonNull Property [] selfProperties = getSelfFragment().basicGetProperties();
+		return selfProperties != null ? selfProperties : NO_PROPERTIES;
+	}
+
+	@Override
 	public @NonNull StandardLibrary getStandardLibrary() {
 		return flatModel.getStandardLibrary();
 	}
@@ -383,13 +429,6 @@ public abstract class AbstractFlatClass implements FlatClass
 	public final @NonNull FragmentIterable getSuperFragments(int depth) {
 		return new FragmentIterable(ClassUtil.nonNullState(fragments), indexes[depth], indexes[depth+1]);
 	}
-
-/*	@Override
-	public final @NonNull FragmentIterable getSuperFragments(int depth) {
-		int @Nullable [] indexes2 = indexes;
-		assert indexes2 != null;
-		return new FragmentIterable(ClassUtil.nonNullState(fragments), indexes2[depth], indexes2[depth+1]);
-	} */
 
 	@Override
 	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts) {
@@ -406,11 +445,11 @@ public abstract class AbstractFlatClass implements FlatClass
 	 * Initialize the super-fragment hierarchy by reflective analysis.
 	 */
 	private synchronized void initFragments() {
-		System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this);
+	//	System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this);
 		Map<@NonNull FlatClass, @NonNull Iterable<@NonNull FlatClass>> flatClass2superFlatClasses = new HashMap<>();
 		// Detect missing OclAny inheritance
 		gatherFragmentlessSuperFlatClasses(flatClass2superFlatClasses);
-		System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " fragmentLess: " + flatClass2superFlatClasses.keySet());
+	//	System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " fragmentLess: " + flatClass2superFlatClasses.keySet());
 		//		int oldPendingCount = uninstalledInheritances.size();
 		@SuppressWarnings("unused") List<@NonNull FlatClass> debugOldUninstalledFlatClasses = new ArrayList<>(flatClass2superFlatClasses.keySet());
 		while (!flatClass2superFlatClasses.isEmpty()) {
@@ -426,7 +465,7 @@ public abstract class AbstractFlatClass implements FlatClass
 					}
 				}
 				if (allSuperFlatClassesHaveFragments) {
-					System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " init: " + NameUtil.debugSimpleName(candidateFlatClass) + " : " + candidateFlatClass);
+				//	System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this + " init: " + NameUtil.debugSimpleName(candidateFlatClass) + " : " + candidateFlatClass);
 					((AbstractFlatClass)candidateFlatClass).initFragments(candidateSuperFlatClasses);
 					flatClass2superFlatClasses.remove(candidateFlatClass);
 				}
@@ -452,7 +491,7 @@ public abstract class AbstractFlatClass implements FlatClass
 	private void initFragments(@NonNull Iterable<@NonNull FlatClass> directSuperFlatClasses) {
 		assert fragments == null;
 		assert indexes == null;
-		System.out.println("initFragments " + NameUtil.debugSimpleName(this) + " : " + this + " direct: " + directSuperFlatClasses);
+	//	System.out.println("initFragments " + NameUtil.debugSimpleName(this) + " : " + this + " direct: " + directSuperFlatClasses);
 		//
 		//	Aggregate the flat-classes per depth for the direct super-flat-classes to determine the
 		//	flat-classes per depth for this flata-class.
@@ -516,14 +555,27 @@ public abstract class AbstractFlatClass implements FlatClass
 		this.indexes = indexes;
 	}
 
-	/**
-	 * Install the root OclAny FlatClass.
-	 *
-	private final void installOclAny() {
-		assert fragments == null;
-		fragments = new @NonNull FlatFragment[] { createFragment(this) };
-		indexes = new int[] { 0, 1 };
-	} */
+	private synchronized void initProperties() {
+		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
+		if (name2propertyOrProperties2 == null) {
+			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
+			assert fragments != null;
+			for (@NonNull FlatFragment fragment : fragments) {
+				@NonNull Property @Nullable [] fragmentProperties = fragment.basicGetProperties();
+				if (fragmentProperties == null) {
+					List<@NonNull Property> asProperties = ((AbstractFlatClass)fragment.getBaseFlatClass()).computeDirectProperties();
+					fragmentProperties = fragment.basicGetProperties();
+					if (fragmentProperties == null) {			// XXX may recurse
+						fragmentProperties = asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
+						fragment.initProperties(fragmentProperties);
+					}
+				}
+				for (@NonNull Property property : fragmentProperties) {
+					addProperty(property);
+				}
+			}
+		}
+	}
 
 	@Override
 	public boolean isAbstract() {
@@ -714,14 +766,33 @@ public abstract class AbstractFlatClass implements FlatClass
 			indexes = null;
 		}
 	//	name2operation = null;
-		name2propertyOrProperties = null;
+		resetProperties();
 		if (subFlatClasses != null) {
 			Set<@NonNull FlatClass> previousSubFlatClasses = subFlatClasses;
 			subFlatClasses = null;
 			for (@NonNull FlatClass subFlatClass : previousSubFlatClasses) {
-				((CompleteClassInternal)subFlatClass.getCompleteClass()).uninstall();
 				subFlatClass.resetFragments();
 			}
 		}
+	}
+
+	public void resetProperties() {
+		name2propertyOrProperties = null;
+	}
+
+	private @Nullable Property resolvePropertyOrProperties(@Nullable FeatureFilter featureFilter, @NonNull String name) {
+		assert name2propertyOrProperties != null;
+		Object asPropertyOrProperties = name2propertyOrProperties.get(name);
+		Property asProperty;
+		if (asPropertyOrProperties instanceof PartialProperties) {
+			asProperty = ((PartialProperties)asPropertyOrProperties).get();
+		}
+		else {
+			asProperty = (Property)asPropertyOrProperties;
+		}
+		if ((asProperty != null) && (featureFilter != null) && !featureFilter.accept(asProperty)) {
+			asProperty = null;
+		}
+		return asProperty;
 	}
 }

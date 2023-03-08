@@ -1859,7 +1859,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		FlatClass flatClass = standardLibrary.getFlatClass(domainType);
 	//	CompleteInheritance inheritance = standardLibrary.getInheritance(domainType);
-		Property memberProperty = flatClass.basicGetMemberProperty(id.getName());
+		Property memberProperty = flatClass.getProperty(id.getName());
 		if (memberProperty == null) {
 			throw new UnsupportedOperationException();
 		}

@@ -34,11 +34,16 @@ import com.google.common.collect.Lists;
 public class FlatFragment extends AbstractFragment
 {
 	private @NonNull Operation @Nullable [] operations = null;
+
+	/**
+	 * The properties defined by the derivedFlatClass of this fragment. Initially null,
+	 * non null once initialized.
+	 * FIXME legacy static initialization has some super properties too.
+	 */
 	private @NonNull Property @Nullable [] properties = null;
 
 	protected @Nullable Map<@NonNull Operation, @NonNull LibraryFeature> operationMap = null;
 	protected @Nullable Map<@NonNull Operation, @NonNull Operation> apparentOperation2actualOperation = null;
-	private @Nullable Map<@NonNull Property, @NonNull LibraryFeature> zzpropertyMap = null;
 
 	public FlatFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
 		super(derivedFlatClass, baseFlatClass);
@@ -124,28 +129,10 @@ public class FlatFragment extends AbstractFragment
 	}
 
 	@Override
+	@Deprecated /* @deprecated no longer used */
 	public final @NonNull Property @NonNull [] getLocalProperties() {
-		@NonNull Property @Nullable [] properties2 = properties;
-		if (properties2 == null) {
-			properties = properties2 = ((AbstractFlatClass)derivedFlatClass).computeDirectProperties();		// Optimize to reuse single super map if no local ops
-		}
-/*
-
-			return Lists.<@NonNull Property>newArrayList(properties2);
-		}
-		else {
-			Map<@NonNull Property, @NonNull LibraryFeature> propertyMap2 = propertyMap;
-			if (propertyMap2 == null) {
-				synchronized (this) {
-					propertyMap2 = propertyMap;
-					if (propertyMap2 == null) {
-						propertyMap = propertyMap2 = ((AbstractFlatClass)derivedFlatClass).initProperties();		// Optimize to reuse single super map if no local ops
-					}
-				}
-			}
-			return propertyMap2.keySet();
-		} */
-		return properties2;
+		assert properties != null;
+		return properties;
 	}
 
 	@Override

@@ -55,9 +55,6 @@ public class EcoreFlatModel extends AbstractFlatModel
 			flatClass = new EcoreFlatClass(this, eClassifier, type);
 			eClassifier2flatClass.put(eClassifier, flatClass);
 		}
-		else {
-			assert false;
-		}
 		return flatClass;
 	}
 }

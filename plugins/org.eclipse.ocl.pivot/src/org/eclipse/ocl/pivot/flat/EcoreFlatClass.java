@@ -33,7 +33,7 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		this.eClassifier = eClassifier;
 	}
 
-	@Override
+/*	@Override
 	protected @NonNull Property @NonNull [] computeDirectProperties() {
 		if (!(eClassifier instanceof EClass) ) {
 			return NO_PROPERTIES;
@@ -50,10 +50,10 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 			array[i] = propertyAndImplementation;
 		}
 		return array;
-	}
+	} */
 
 	@Override
-	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {
+	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {	// This occurs before AS superclasses are defined
 		assert !isOclAny();
 		List<@NonNull FlatClass> superFlatClasses = null;
 		if (eClassifier instanceof EClass) {
@@ -89,6 +89,28 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 	@Override
 	public @NonNull EcoreFlatModel getFlatModel() {
 		return (EcoreFlatModel)flatModel;
+	}
+
+	@Override
+	public @NonNull Property @NonNull [] getSelfProperties() {
+		FlatFragment selfFragment = getSelfFragment();
+		@NonNull Property [] selfProperties = selfFragment.basicGetProperties();
+		if (selfProperties == null) {
+			if (eClassifier instanceof EClass) {
+				int propertyIndex = 0;
+				List<EStructuralFeature> eStructuralFeatures = ((EClass)eClassifier).getEStructuralFeatures();
+				selfProperties = new @NonNull Property[eStructuralFeatures.size()];
+				for (EStructuralFeature eStructuralFeature : eStructuralFeatures) {
+					EcoreExecutorProperty asProperty = new EcoreExecutorProperty(eStructuralFeature, asClass, propertyIndex);
+					selfProperties[propertyIndex++] = asProperty;
+				}
+			}
+			if (selfProperties == null) {
+				selfProperties = NO_PROPERTIES;
+			}
+			selfFragment.initProperties(selfProperties);
+		}
+		return selfProperties;
 	}
 
 	@Override
