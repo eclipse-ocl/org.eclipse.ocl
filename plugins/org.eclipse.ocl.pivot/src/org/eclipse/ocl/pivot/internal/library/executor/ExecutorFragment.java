@@ -10,86 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.executor;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-
-import com.google.common.collect.Lists;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 
 /**
  * An ExecutorFragment provides the description of the properties and operations defined by some class when accessed by the same
  * or another class. The descriptions are normally built by direct static construction from auto-generated code, with instnaces defined
  * in isolation during construction then cross-references defined later by calls to init().
  */
-public class ExecutorFragment extends AbstractFragment
+public class ExecutorFragment extends FlatFragment
 {
-	private @NonNull ExecutorOperation @Nullable [] operations = null;
-	private @NonNull ExecutorProperty @Nullable [] properties = null;
-
 	public ExecutorFragment(@NonNull ExecutorType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
-		this(derivedInheritance.getFlatClass(), baseInheritance.getFlatClass());
-	}
-
-	public ExecutorFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
-		super(derivedFlatClass, baseFlatClass);
-	}
-
-	@Override
-	public @NonNull LibraryFeature getImplementation(@NonNull Operation staticOperation) {
-		int index = staticOperation.getIndex();
-		if (index >= 0) {
-			assert operations != null;
-			return ClassUtil.nonNullState(operations[index].implementation);
-		}
-		else {
-			throw new UnsupportedOperationException();		// WIP
-		}
-	}
-
-	@Override
-	public @Nullable Operation getLocalOperation(@NonNull Operation staticOperation) {
-		int index = staticOperation.getIndex();
-		if (index >= 0) {
-			assert operations != null;
-			return operations[index];
-		}
-		else {
-			return null;
-		}
-	}
-
-	@Override
-	public @NonNull List<@NonNull Operation> getLocalOperations() {
-		assert operations != null;
-		return Lists.<@NonNull Operation>newArrayList(operations);
-	}
-
-	@Override
-	public @NonNull List<@NonNull Property> getLocalProperties() {
-		assert properties != null;
-		return Lists.<@NonNull Property>newArrayList(properties);
-	}
-
-	@Override
-	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses() {
-		throw new UnsupportedOperationException();		// WIP
-	}
-
-	public void initOperations(@NonNull ExecutorOperation @NonNull [] operations) {
-		assert this.operations == null;
-		this.operations = operations;
-	}
-
-	public void initProperties(@NonNull ExecutorProperty @NonNull [] properties) {
-		assert this.properties == null;
-		this.properties = properties;
+		super(derivedInheritance.getFlatClass(), baseInheritance.getFlatClass());
 	}
 }

@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.internal.library.executor.ReflectiveFragment;
 
+@Deprecated /* @deprecated no longer used */
 public abstract class PivotReflectiveFragment extends ReflectiveFragment
 {
 	public PivotReflectiveFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {

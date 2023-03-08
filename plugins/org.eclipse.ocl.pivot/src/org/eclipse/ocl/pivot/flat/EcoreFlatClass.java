@@ -16,10 +16,11 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveFragment;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -30,6 +31,25 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		super(flatModel, asClass);
 		this.eClassifier = eClassifier;
+	}
+
+	@Override
+	protected @NonNull Property @NonNull [] computeDirectProperties() {
+		if (!(eClassifier instanceof EClass) ) {
+			return NO_PROPERTIES;
+		}
+		List<EStructuralFeature> eStructuralFeatures = ((EClass) eClassifier).getEStructuralFeatures();
+		int iSize = eStructuralFeatures.size();
+		@NonNull Property @NonNull [] array = new @NonNull Property[iSize];
+		for (int i = 0; i < iSize; i++) {
+			@SuppressWarnings("null")@NonNull EStructuralFeature eFeature = eStructuralFeatures.get(i);
+		//	CompleteInheritance completeInheritance = derivedFlatClass.getCompleteInheritance();
+			org.eclipse.ocl.pivot.Class asClass = getPivotClass();
+		//	assert completeInheritance == asClass;
+			EcoreExecutorProperty propertyAndImplementation = new EcoreExecutorProperty(eFeature, asClass, i);
+			array[i] = propertyAndImplementation;
+		}
+		return array;
 	}
 
 	@Override
@@ -57,10 +77,10 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		return superFlatClasses;
 	}
 
-	@Override
-	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseFlatClass) {
-		return new EcoreReflectiveFragment(this, baseFlatClass);
-	}
+//	@Override
+//	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseFlatClass) {
+//		return new EcoreReflectiveFragment(this, baseFlatClass);
+//	}
 
 	public @NonNull EClassifier getEClassifier() {
 		return eClassifier;

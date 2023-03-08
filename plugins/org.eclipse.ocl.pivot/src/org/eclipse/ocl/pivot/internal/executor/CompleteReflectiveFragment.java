@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 
+@Deprecated /* @deprecated no longer used */
 public class CompleteReflectiveFragment extends PivotReflectiveFragment
 {
 	public CompleteReflectiveFragment(@NonNull CompleteFlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {

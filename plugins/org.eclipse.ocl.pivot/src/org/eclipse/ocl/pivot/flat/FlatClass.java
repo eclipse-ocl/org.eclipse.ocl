@@ -13,11 +13,9 @@ package org.eclipse.ocl.pivot.flat;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
@@ -25,9 +23,9 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 
 public interface FlatClass extends Nameable
 {
-	public static class FragmentIterable implements IndexableIterable<@NonNull InheritanceFragment>
+	public static class FragmentIterable implements IndexableIterable<@NonNull FlatFragment>
 	{
-		protected class Iterator implements java.util.Iterator<@NonNull InheritanceFragment>
+		protected class Iterator implements java.util.Iterator<@NonNull FlatFragment>
 		{
 			private int index = firstIndex;
 
@@ -37,7 +35,7 @@ public interface FlatClass extends Nameable
 			}
 
 			@Override
-			public @NonNull InheritanceFragment next() {
+			public @NonNull FlatFragment next() {
 				return array[index++];
 			}
 
@@ -47,29 +45,29 @@ public interface FlatClass extends Nameable
 			}
 		}
 
-		private final @NonNull InheritanceFragment @NonNull [] array;
+		private final @NonNull FlatFragment @NonNull [] array;
 		private final int firstIndex;
 		private final int lastIndex;
 
-		public FragmentIterable(@NonNull InheritanceFragment @NonNull [] array) {
+		public FragmentIterable(@NonNull FlatFragment @NonNull [] array) {
 			this.array = array;
 			this.firstIndex = 0;
 			this.lastIndex = array.length;
 		}
 
-		public FragmentIterable(@NonNull InheritanceFragment @NonNull [] array, int firstIndex, int lastIndex) {
+		public FragmentIterable(@NonNull FlatFragment @NonNull [] array, int firstIndex, int lastIndex) {
 			this.array = array;
 			this.firstIndex = firstIndex;
 			this.lastIndex = lastIndex;
 		}
 
 		@Override
-		public @NonNull InheritanceFragment get(int index) {
+		public @NonNull FlatFragment get(int index) {
 			return ClassUtil.nonNullState(array[firstIndex + index]);
 		}
 
 		@Override
-		public java.util.@NonNull Iterator<@NonNull InheritanceFragment> iterator() {
+		public java.util.@NonNull Iterator<@NonNull FlatFragment> iterator() {
 			return new Iterator();
 		}
 
@@ -127,14 +125,14 @@ public interface FlatClass extends Nameable
 	@Override
 	@NonNull String getName();
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
-	@NonNull InheritanceFragment getSelfFragment();
+	@NonNull FlatFragment getSelfFragment();
 	@NonNull StandardLibrary getStandardLibrary();
 	@NonNull FragmentIterable getSuperFragments(int depth);
 
 	/**
 	 * Initialize the super-fragment hierarchy from the compile-time analysis.
 	 */
-	void initFragments(@NonNull ExecutorFragment @NonNull [] fragments, int[] depthCounts);
+	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts);
 	boolean isAbstract();
 	boolean isInvalid();
 	boolean isOrdered();

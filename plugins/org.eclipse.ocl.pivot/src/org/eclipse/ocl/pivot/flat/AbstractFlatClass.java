@@ -22,8 +22,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
-//import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -31,17 +29,17 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.JavaType;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public abstract class AbstractFlatClass implements FlatClass
 {
+	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
+
 	public static int computeFlags(@NonNull Type asType) {
 		if (asType instanceof JavaType) {
 			return 0;			// XXX Avoid UOE from getTypeId().
@@ -81,7 +79,7 @@ public abstract class AbstractFlatClass implements FlatClass
 	/**
 	 * Depth ordered inheritance fragments. OclAny at depth 0, OclSelf at depth size-1.
 	 */
-	private @NonNull InheritanceFragment @Nullable [] fragments = null;
+	private @NonNull FlatFragment @Nullable [] fragments = null;
 
 	/**
 	 * The index in fragments at which inheritance fragments at a given depth start.
@@ -124,8 +122,13 @@ public abstract class AbstractFlatClass implements FlatClass
 		if (name2propertyOrProperties2 == null) {
 			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
 			assert fragments != null;
-			for (@NonNull InheritanceFragment fragment : fragments) {
-				for (@NonNull Property property : fragment.getLocalProperties()) {
+			for (@NonNull FlatFragment fragment : fragments) {
+				@NonNull Property @Nullable [] fragmentProperties = fragment.basicGetProperties();
+				if (fragmentProperties == null) {
+					fragmentProperties = computeDirectProperties();
+					fragment.initProperties(fragmentProperties);
+				}
+				for (@NonNull Property property : fragmentProperties) {
 					String name = NameUtil.getName(property);
 					Object old = name2propertyOrProperties2.put(name, property);
 					if (old != null) {
@@ -148,13 +151,17 @@ public abstract class AbstractFlatClass implements FlatClass
 		return propertyOrProperties instanceof Property ? (Property)propertyOrProperties : null;
 	}
 
+	protected abstract @NonNull Property @NonNull [] computeDirectProperties();
+
 	/**
 	 * Return the immediate super-FlatClasses without reference to the fragments.
 	 * This method is never invoked for OclAny, consequently there is always at least one direct super-FlatClass.
 	 */
 	protected abstract @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses();
 
-	protected abstract @NonNull AbstractFragment createFragment(@NonNull FlatClass baseFlatClass);
+	protected /* final */ @NonNull FlatFragment createFragment(@NonNull FlatClass baseFlatClass) {
+		return new FlatFragment(this, baseFlatClass);
+	}
 
 	/**
 	 * Populate the keys of flatClass2superFlatClasses with FlatClasses (including this FlatClass) within
@@ -189,7 +196,7 @@ public abstract class AbstractFlatClass implements FlatClass
 		if (fragments == null) {
 			initFragments();
 		}
-		@NonNull InheritanceFragment @NonNull [] fragments2 = ClassUtil.nonNullState(fragments);
+		@NonNull FlatFragment @NonNull [] fragments2 = ClassUtil.nonNullState(fragments);
 		return new FragmentIterable(fragments2, 0, fragments2.length-1);
 	}
 
@@ -209,10 +216,10 @@ public abstract class AbstractFlatClass implements FlatClass
 		int bestDepth = -1;
 		int minDepth = baseFlatClass.getDepth();
 		for (int depth = derivedFlatClass.getDepth()-1; depth >= minDepth; depth--) {
-			Iterable<@NonNull InheritanceFragment> derivedSuperFragments = derivedFlatClass.getSuperFragments(depth);
-			for (InheritanceFragment derivedSuperFragment : derivedSuperFragments) {
+			Iterable<@NonNull FlatFragment> derivedSuperFragments = derivedFlatClass.getSuperFragments(depth);
+			for (FlatFragment derivedSuperFragment : derivedSuperFragments) {
 				AbstractFlatClass superFlatClass = (AbstractFlatClass)derivedSuperFragment.getBaseFlatClass();
-				InheritanceFragment superFragment = superFlatClass.getFragment(baseFlatClass);
+				FlatFragment superFragment = superFlatClass.getFragment(baseFlatClass);
 				if (superFragment != null) {
 					Operation overload = superFragment.getLocalOperation(apparentOperation);
 					if (overload != null) {
@@ -319,12 +326,12 @@ public abstract class AbstractFlatClass implements FlatClass
 		return flatModel;
 	}
 
-	private @Nullable InheritanceFragment getFragment(@NonNull AbstractFlatClass that) {
+	private @Nullable FlatFragment getFragment(@NonNull AbstractFlatClass that) {
 		int staticDepth = that.getDepth();
 		if (staticDepth <= getDepth()) {
 			int iMax = getIndex(staticDepth+1);
 			for (int i = getIndex(staticDepth); i < iMax; i++) {
-				InheritanceFragment fragment = getFragment(i);
+				FlatFragment fragment = getFragment(i);
 				FlatClass baseFlatClass = fragment.getBaseFlatClass();
 				if (baseFlatClass == that) {
 					return fragment;
@@ -334,7 +341,7 @@ public abstract class AbstractFlatClass implements FlatClass
 		return null;
 	}
 
-	private @NonNull InheritanceFragment getFragment(int fragmentNumber) {
+	private @NonNull FlatFragment getFragment(int fragmentNumber) {
 		assert fragments != null;
 		return fragments[fragmentNumber];
 	}
@@ -353,13 +360,13 @@ public abstract class AbstractFlatClass implements FlatClass
 //	public abstract org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 
 	@Override
-	public @NonNull InheritanceFragment getSelfFragment() {
+	public @NonNull FlatFragment getSelfFragment() {
 		if (indexes == null) {
 			initFragments();
 		}
-	/*	@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
+	/*	@NonNull FlatFragment @Nullable [] fragments2 = fragments;
 		assert fragments2 != null;
-		InheritanceFragment fragment = getFragment(fragments2.length-1);
+		FlatFragment fragment = getFragment(fragments2.length-1);
 	//	if (fragment == null) {
 	//		throw new IllegalStateException("No self fragment"); //$NON-NLS-1$
 	//	}
@@ -385,7 +392,7 @@ public abstract class AbstractFlatClass implements FlatClass
 	} */
 
 	@Override
-	public void initFragments(@NonNull ExecutorFragment @NonNull [] fragments, int[] depthCounts) {
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts) {
 		int[] indexes = new int[depthCounts.length+1];
 		indexes[0] = 0;
 		for (int i = 0; i <  depthCounts.length; i++) {
@@ -453,7 +460,7 @@ public abstract class AbstractFlatClass implements FlatClass
 		List<@NonNull List<@NonNull FlatClass>> depth2superFlatClasses = new ArrayList<>();
 		for (@NonNull FlatClass directSuperFlatClass : directSuperFlatClasses) {
 			AbstractFlatClass abstractDirectSuperFlatClass = (AbstractFlatClass)directSuperFlatClass;
-			final @NonNull InheritanceFragment [] superFragments = abstractDirectSuperFlatClass.fragments;
+			final @NonNull FlatFragment [] superFragments = abstractDirectSuperFlatClass.fragments;
 			final int [] superIndexes = abstractDirectSuperFlatClass.indexes;
 			assert superFragments != null;
 			assert superIndexes != null;
@@ -470,7 +477,7 @@ public abstract class AbstractFlatClass implements FlatClass
 				final int firstIndex = superIndexes[i];
 				final int lastIndex = superIndexes[i+1];
 				for (int index = firstIndex; index < lastIndex; index++) {
-					InheritanceFragment superFragment = superFragments[index];
+					FlatFragment superFragment = superFragments[index];
 					AbstractFlatClass baseFlatClass = (AbstractFlatClass)superFragment.getBaseFlatClass();
 					if (!superFlatClasses.contains(baseFlatClass)) {
 						superFlatClasses.add(baseFlatClass);
@@ -489,7 +496,7 @@ public abstract class AbstractFlatClass implements FlatClass
 		}
 		fragmentsSize++;				// Extra 'OclSelf' entry
 	//	assert superDepths > 0;
-		@NonNull InheritanceFragment @NonNull [] fragments = new @NonNull InheritanceFragment[fragmentsSize];	// +1 for OclSelf
+		@NonNull FlatFragment @NonNull [] fragments = new @NonNull FlatFragment[fragmentsSize];	// +1 for OclSelf
 		int @NonNull [] indexes = new int[superDepths+2];		// +1 for OclSelf, +1 for tail pointer
 		int fragmentsIndex = 0;
 		int indexesIndex = 0;
@@ -514,7 +521,7 @@ public abstract class AbstractFlatClass implements FlatClass
 	 *
 	private final void installOclAny() {
 		assert fragments == null;
-		fragments = new @NonNull InheritanceFragment[] { createFragment(this) };
+		fragments = new @NonNull FlatFragment[] { createFragment(this) };
 		indexes = new int[] { 0, 1 };
 	} */
 
@@ -606,7 +613,7 @@ public abstract class AbstractFlatClass implements FlatClass
 			if (apparentDepth+1 < depths) {				// null and invalid may fail here
 				int iMax = getIndex(apparentDepth+1);
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {
-					InheritanceFragment fragment = getFragment(i);
+					FlatFragment fragment = getFragment(i);
 					if (fragment.getBaseFlatClass() == apparentFlatClass) {
 						Operation actualOperation = fragment.getActualOperation(apparentOperation);
 						if (standardLibrary != getStandardLibrary()) {
@@ -616,7 +623,7 @@ public abstract class AbstractFlatClass implements FlatClass
 								if (apparentDepth1+1 < depths) {				// null and invalid may fail here
 									int iMax1 = getIndex(apparentDepth+1);
 									for (int i1 = getIndex(apparentDepth); i1 < iMax1; i1++) {
-										InheritanceFragment fragment1 = getFragment(i1);
+										FlatFragment fragment1 = getFragment(i1);
 										if (fragment1.getBaseFlatClass() == apparentFlatClass) {
 											Operation actualOperation1 = fragment.getActualOperation(apparentOperation);
 											assert actualOperation1 == actualOperation;
@@ -647,7 +654,7 @@ public abstract class AbstractFlatClass implements FlatClass
 			if (apparentDepth+1 < depths) {				// null and invalid may fail here
 				int iMax = getIndex(apparentDepth+1);
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {
-					InheritanceFragment fragment = getFragment(i);
+					FlatFragment fragment = getFragment(i);
 					if (fragment.getBaseFlatClass() == apparentFlatClass) {
 						return fragment.getImplementation(apparentOperation);
 					}
@@ -695,11 +702,11 @@ public abstract class AbstractFlatClass implements FlatClass
 
 	@Override
 	public void resetFragments() {
-		@NonNull InheritanceFragment @Nullable [] fragments2 = fragments;
+		@NonNull FlatFragment @Nullable [] fragments2 = fragments;
 		boolean isNonNull = fragments2 != null;		// FIXME needed for JDT 4.5, not needed for JDT 4.6M4
 		if (isNonNull && (fragments2 != null)) {
 			//			System.out.println("Uninstall " + this);
-			for (@NonNull InheritanceFragment fragment : fragments2) {
+			for (@NonNull FlatFragment fragment : fragments2) {
 				AbstractFlatClass baseFlatClass = (AbstractFlatClass)fragment.getBaseFlatClass();
 				baseFlatClass.removeSubFlatClass(this);
 			}
