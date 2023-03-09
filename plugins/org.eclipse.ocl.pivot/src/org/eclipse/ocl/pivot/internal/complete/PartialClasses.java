@@ -30,7 +30,6 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
@@ -41,7 +40,6 @@ import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -58,7 +56,6 @@ import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -178,7 +175,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		return superCompleteClasses2;
 	}
 
-	protected @NonNull Property createExtensionProperty(@NonNull ElementExtension stereotypeInstance, org.eclipse.ocl.pivot.@NonNull Class baseType) {
+/*	protected @NonNull Property createExtensionProperty(@NonNull ElementExtension stereotypeInstance, org.eclipse.ocl.pivot.@NonNull Class baseType) {
 		Stereotype stereotype = stereotypeInstance.getStereotype();
 		Map<String, @NonNull PartialProperties> name2partialProperties2 = name2partialProperties;
 		assert name2partialProperties2 != null;
@@ -210,7 +207,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		extensionProperty.setIsRequired(isRequired);
 		extensionProperty.setIsStatic(false);
 		return extensionProperty;
-	}
+	} */
 
 	protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(@NonNull TemplateParameters templateArguments) {
 		org.eclipse.ocl.pivot.Class unspecializedType = getCompleteClass().getPrimaryClass();
@@ -728,7 +725,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		});
 	}
 
-	protected void initExtensionPropertiesFrom(org.eclipse.ocl.pivot.@NonNull Class baseType, @NonNull Stereotype stereotype) {
+/*	protected void initExtensionPropertiesFrom(org.eclipse.ocl.pivot.@NonNull Class baseType, @NonNull Stereotype stereotype) {
 		PivotMetamodelManager metamodelManager = getMetamodelManager();
 		ElementExtension elementExtension = metamodelManager.getElementExtension(baseType, stereotype);
 		Map<String, @NonNull PartialProperties> name2partialProperties2 = name2partialProperties;
@@ -739,7 +736,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (ADD_EXTENSION_PROPERTY.isActive()) {
 			ADD_EXTENSION_PROPERTY.println(NameUtil.qualifiedNameFor(extensionProperty) + " => " + NameUtil.qualifiedNameFor(extensionProperty.getType()));
 		}
-	}
+	} */
 
 	public void initMemberFeaturesFrom(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		if (name2partialOperations != null) {
@@ -791,13 +788,13 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		Map<@NonNull String, @NonNull PartialProperties> name2partialProperties2 = name2partialProperties;
 		if (name2partialProperties2 == null) {
 			name2partialProperties2 = name2partialProperties = new HashMap<@NonNull String, @NonNull PartialProperties>();
-			List<@NonNull ElementExtension> allExtensions = null;
-			Set<@NonNull Stereotype> extendingStereotypes = null;
-			Set<@NonNull Type> extendedTypes = null;
+		//	List<@NonNull ElementExtension> allExtensions = null;
+		//	Set<@NonNull Stereotype> extendingStereotypes = null;
+		//	Set<@NonNull Type> extendedTypes = null;
 			for (@NonNull CompleteClass superCompleteClass : getSuperCompleteClasses()) {
 				for (org.eclipse.ocl.pivot.@NonNull Class superType : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
 					org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
-					List<StereotypeExtender> extendedBys = unspecializedType.getExtenders();
+				/*	List<StereotypeExtender> extendedBys = unspecializedType.getExtenders();
 					if (extendedBys.size() > 0) {
 						if (extendingStereotypes == null) {
 							extendingStereotypes = new HashSet<@NonNull Stereotype>();
@@ -808,8 +805,8 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 								extendingStereotypes.add(stereotype);
 							}
 						}
-					}
-					if (unspecializedType instanceof Stereotype) {
+					} */
+				/*	if (unspecializedType instanceof Stereotype) {
 						List<@NonNull StereotypeExtender> extensionOfs = ClassUtil.nullFree(((Stereotype)unspecializedType).getOwnedExtenders());
 						if (extensionOfs.size() > 0) {
 							if (extendedTypes == null) {
@@ -822,17 +819,17 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 								}
 							}
 						}
-					}
+					} */
 					CompleteClass unspecializedCompleteClass = getCompleteModel().getCompleteClass(unspecializedType);
 					for (org.eclipse.ocl.pivot.@NonNull Class unspecializedPartialType : ClassUtil.nullFree(unspecializedCompleteClass.getPartialClasses())) {
 						initMemberPropertiesFrom(unspecializedPartialType);
-						List<@NonNull ElementExtension> extensions = ClassUtil.nullFree(unspecializedPartialType.getOwnedExtensions());
+					/*	List<@NonNull ElementExtension> extensions = ClassUtil.nullFree(unspecializedPartialType.getOwnedExtensions());
 						if (extensions.size() > 0) {
 							if (allExtensions == null) {
 								allExtensions = new ArrayList<@NonNull ElementExtension>();
 							}
 							allExtensions.addAll(extensions);
-						}
+						} */
 					}
 				}
 			}
@@ -840,14 +837,14 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			if (INIT_MEMBER_PROPERTIES.isActive()) {
 				INIT_MEMBER_PROPERTIES.println(this + " for " + pivotClass + " " + NameUtil.debugSimpleName(pivotClass));
 			}
-			if (extendingStereotypes != null) {
+		/*	if (extendingStereotypes != null) {
 				Set<@NonNull Stereotype> allStereotypes = new HashSet<@NonNull Stereotype>();
 				gatherAllStereotypes(allStereotypes, extendingStereotypes);
 				for (@NonNull Stereotype stereotype : allStereotypes) {
 					org.eclipse.ocl.pivot.@NonNull Class baseType = pivotClass;
 					initExtensionPropertiesFrom(baseType, stereotype);
 				}
-			}
+			} */
 			@SuppressWarnings("null")@NonNull String metatypeName = pivotClass.eClass().getName();
 			CompletePackageInternal rootCompletePackage = getCompleteClass().getOwningCompletePackage().getRootCompletePackage();
 			Package pivotPackage = rootCompletePackage.getPrimaryPackage();
@@ -866,9 +863,9 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 					}
 				}
 			}
-			for (@NonNull PartialProperties properties : name2partialProperties2.values()) {
+		/*	for (@NonNull PartialProperties properties : name2partialProperties2.values()) {
 				initMemberPropertiesPostProcess(getCompleteClass().getName(), properties);
-			}
+			} */
 		}
 		return name2partialProperties2;
 	}
@@ -878,18 +875,18 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (INIT_MEMBER_PROPERTIES.isActive()) {
 			INIT_MEMBER_PROPERTIES.println(this + " from " + asPrimaryType + " " + NameUtil.debugSimpleName(asPrimaryType));
 		}
-		for (ElementExtension extension : asPrimaryType.getOwnedExtensions()) {
+	/*	for (ElementExtension extension : asPrimaryType.getOwnedExtensions()) {
 			assert extension != null;
 //			initStereotypePropertiesFrom((Type)asPrimaryType, extension);
-		}
+		} */
 		for (@SuppressWarnings("null")@NonNull Property pivotProperty : asPrimaryType.getOwnedProperties()) {
 			didAddProperty(pivotProperty);
 		}
 	}
 
-	protected void initMemberPropertiesPostProcess(String name, @NonNull PartialProperties properties) {
+/*	protected void initMemberPropertiesPostProcess(String name, @NonNull PartialProperties properties) {
 		// TODO Auto-generated method stub // FIXME Prune occlusions
-	}
+	} */
 
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
 		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
