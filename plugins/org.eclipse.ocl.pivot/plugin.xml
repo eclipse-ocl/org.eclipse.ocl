@@ -145,6 +145,14 @@
       	class="org.eclipse.ocl.pivot.internal.labels.BooleanLabelGenerator"/>
       <generator for="java.lang.Class"
       	class="org.eclipse.ocl.pivot.internal.labels.ClassLabelGenerator"/>
+      <generator for="org.eclipse.ocl.pivot.CompleteClass"
+      	class="org.eclipse.ocl.pivot.internal.labels.CompleteClassLabelGenerator"/>
+      <generator for="org.eclipse.ocl.pivot.CompleteEnvironment"
+      	class="org.eclipse.ocl.pivot.internal.labels.CompleteEnvironmentLabelGenerator"/>
+      <generator for="org.eclipse.ocl.pivot.CompleteModel"
+      	class="org.eclipse.ocl.pivot.internal.labels.CompleteModelLabelGenerator"/>
+      <generator for="org.eclipse.ocl.pivot.CompletePackage"
+      	class="org.eclipse.ocl.pivot.internal.labels.CompletePackageLabelGenerator"/>
       <generator for="org.eclipse.emf.ecore.impl.DynamicEObjectImpl"
       	class="org.eclipse.ocl.pivot.internal.labels.DynamicEObjectImplLabelGenerator"/>
       <generator for="org.eclipse.emf.ecore.EAnnotation"
