@@ -12,19 +12,26 @@ package org.eclipse.ocl.pivot.flat;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
@@ -32,6 +39,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.executor.CompleteReflectiveFragment;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
@@ -41,6 +49,11 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
 	protected final @NonNull CompleteClassInternal completeClass;
+
+	/**
+	 * Lazily created map from state name to the known state.
+	 */
+	private @Nullable Map<@NonNull String, @NonNull State> name2states = null;	// ??? demote to a UMLFlatClass
 
 	public CompleteFlatClass(@NonNull CompleteFlatModel flatModel, @NonNull CompleteClassImpl completeClass) {
 		super(flatModel, NameUtil.getName(completeClass), computeFlags(completeClass.getPrimaryClass()));
@@ -154,6 +167,55 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		return completeClass.getPrimaryClass();
 	}
 
+	public @NonNull Iterable<@NonNull State> getStates() {
+		Map<@NonNull String, @NonNull State> name2states2 = name2states;
+		if (name2states2 == null) {
+			name2states2 = initStates();
+		}
+		return name2states2.values();
+	}
+
+	public @NonNull Iterable<@NonNull State> getStates(@Nullable String name) {
+		Map<@NonNull String, @NonNull State> name2states2 = name2states;
+		if (name2states2 == null) {
+			name2states2 = initStates();
+		}
+		State state = name2states2.get(name);
+		if (state == null) {
+			return PivotMetamodelManager.EMPTY_STATE_LIST;
+		}
+		else {
+			return Collections.singletonList(state);
+		}
+	}
+
+	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
+		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
+		for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+			for (org.eclipse.ocl.pivot.@NonNull Class superPartialClass : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
+				for (@NonNull Behavior behavior : ClassUtil.nullFree(superPartialClass.getOwnedBehaviors())) {
+					if (behavior instanceof StateMachine) {
+						@NonNull List<@NonNull Region> regions = ClassUtil.nullFree(((StateMachine)behavior).getOwnedRegions());
+						initStatesForRegions(name2states, regions);
+					}
+				}
+			}
+		}
+		return name2states;
+	}
+	protected void initStatesForRegions(@NonNull Map<String, State> name2states, @NonNull List<@NonNull Region> regions) {
+		for (@NonNull Region region : regions) {
+			for (@NonNull Vertex vertex : ClassUtil.nullFree(region.getOwnedSubvertexes())) {
+				if (vertex instanceof State) {
+					State state = (State) vertex;
+					name2states.put(vertex.getName(), state);
+					@NonNull List<@NonNull Region> nestedRegions = ClassUtil.nullFree(state.getOwnedRegions());
+					initStatesForRegions(name2states, nestedRegions);
+				}
+			}
+		}
+	}
+
 	@Override
 	public @NonNull String toString() {
 		return NameUtil.qualifiedNameFor(completeClass);
@@ -164,4 +226,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		completeClass.uninstall();
 		super.resetFragments();
 	}
+
+	// XXX resetStates
 }

@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.complete;
 
 import java.lang.ref.WeakReference;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +22,6 @@ import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -34,7 +32,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.State;
-import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -42,7 +39,6 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
@@ -116,7 +112,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	/**
 	 * Lazily created map from state name to the known state.
 	 */
-	private @Nullable Map<@NonNull String, @NonNull State> name2states = null;
+//	private @Nullable Map<@NonNull String, @NonNull State> name2states = null;
 
 	protected /*@NonNull*/ CompleteInheritanceImpl completeInheritance;
 
@@ -687,15 +683,17 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	}
 
 	public @NonNull Iterable<@NonNull State> getStates() {
-		Map<@NonNull String, @NonNull State> name2states2 = name2states;
+		throw new UnsupportedOperationException();
+	/*	Map<@NonNull String, @NonNull State> name2states2 = name2states;
 		if (name2states2 == null) {
 			name2states2 = initStates();
 		}
-		return name2states2.values();
+		return name2states2.values(); */
 	}
 
 	public @NonNull Iterable<@NonNull State> getStates(@Nullable String name) {
-		Map<@NonNull String, @NonNull State> name2states2 = name2states;
+		throw new UnsupportedOperationException();
+	/*	Map<@NonNull String, @NonNull State> name2states2 = name2states;
 		if (name2states2 == null) {
 			name2states2 = initStates();
 		}
@@ -705,7 +703,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		}
 		else {
 			return Collections.singletonList(state);
-		}
+		} */
 	}
 
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
@@ -885,7 +883,8 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	}
 
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
-		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
+		throw new UnsupportedOperationException();
+	/*	Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
 		for (@NonNull CompleteClass superCompleteClass : getSuperCompleteClasses()) {
 			for (org.eclipse.ocl.pivot.@NonNull Class superPartialClass : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
 				for (@NonNull Behavior behavior : ClassUtil.nullFree(superPartialClass.getOwnedBehaviors())) {
@@ -896,10 +895,11 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 				}
 			}
 		}
-		return name2states;
+		return name2states; */
 	}
 	protected void initStatesForRegions(@NonNull Map<String, State> name2states, @NonNull List<@NonNull Region> regions) {
-		for (@NonNull Region region : regions) {
+		throw new UnsupportedOperationException();
+	/*	for (@NonNull Region region : regions) {
 			for (@NonNull Vertex vertex : ClassUtil.nullFree(region.getOwnedSubvertexes())) {
 				if (vertex instanceof State) {
 					State state = (State) vertex;
@@ -908,7 +908,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 					initStatesForRegions(name2states, nestedRegions);
 				}
 			}
-		}
+		} */
 	}
 
 /*	protected @NonNull Map<String, DomainInheritance> initSuperClasses() {

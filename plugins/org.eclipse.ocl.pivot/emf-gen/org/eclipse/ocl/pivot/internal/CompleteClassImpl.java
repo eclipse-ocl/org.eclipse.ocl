@@ -605,12 +605,12 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @NonNull Iterable<@NonNull State> getStates() {
-		return partialClasses.getStates();
+		return getFlatClass().getStates();
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull State> getStates(@Nullable String name) {
-		return partialClasses.getStates(name);
+		return getFlatClass().getStates(name);
 	}
 
 	@Override
