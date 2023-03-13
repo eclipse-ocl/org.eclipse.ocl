@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
- * 
+ *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
@@ -30,7 +30,7 @@ public interface CompleteClassInternal extends CompleteClass
 	@NonNull PivotMetamodelManager getMetamodelManager();
 	@Override
 	CompletePackageInternal getOwningCompletePackage();
-	@Override
-	@NonNull PartialClasses getPartialClasses();
+//	@Override
+	@NonNull PartialClasses getLegacyPartialClasses();
 	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses();
 } // CompleteClass

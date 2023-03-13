@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.complete;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,16 +20,15 @@ import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.State;
@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
-import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -59,7 +58,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot./*@NonNull*/Class> implements ClassListeners.IClassListener
+public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivot./ *@NonNull* /Class>*/ implements ClassListeners.IClassListener
 {
 	private static final long serialVersionUID = 1L;
 	public static final @NonNull TracingOption PARTIAL_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses");
@@ -82,6 +81,9 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			return name2superclasses.get(qualifiedClassName);
 		}
 	} */
+
+	protected final @NonNull CompleteClassImpl owner;
+	private @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = new ArrayList<>();
 
 	/**
 	 * Lazily created map from operation name to map of parameter types to the list of partial operations to be treated as merged.
@@ -127,33 +129,34 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	private @Nullable /*WeakHash*/Map<TemplateParameters, WeakReference<org.eclipse.ocl.pivot.Class>> specializations = null;
 
 	public PartialClasses(@NonNull CompleteClassImpl completeClass) {
-		super(org.eclipse.ocl.pivot.Class.class, completeClass, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES.getFeatureID());
+		this.owner = completeClass;
+		owner.addClassListener(this);
 	}
 
-	@Override
+/*	@Override
 	public void addUnique(org.eclipse.ocl.pivot.Class partialClass) {
 		assert partialClass != null;
 		didAdd(partialClass);
 		super.addUnique(partialClass);
-	}
+	} */
 
-	@Override
+/*	@Override
 	public void addUnique(int index, org.eclipse.ocl.pivot.Class partialClass) {
 		assert partialClass != null;
 		didAdd(partialClass);
 		super.addUnique(index, partialClass);
-	}
+	} */
 
 	public @NonNull Set<@NonNull CompleteClassInternal> computeSuperCompleteClasses() {
 		Set<@NonNull CompleteClassInternal> superCompleteClasses2 = superCompleteClasses;
 		if (superCompleteClasses2 == null) {
 			CompleteModelInternal completeModel = getCompleteModel();
 			superCompleteClasses2 = superCompleteClasses = new HashSet<>();
-			for (org.eclipse.ocl.pivot.Class partialClass : this) {
+			for (org.eclipse.ocl.pivot.Class partialClass : partialClasses) {
 				for (org.eclipse.ocl.pivot.@NonNull Class partialSuperClass : ClassUtil.nullFree(partialClass.getSuperClasses())) {
 					CompleteClassInternal superCompleteClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(partialSuperClass));
 					superCompleteClasses2.add(superCompleteClass);
-					superCompleteClasses2.addAll(superCompleteClass.getPartialClasses().computeSuperCompleteClasses());
+					superCompleteClasses2.addAll(superCompleteClass.getLegacyPartialClasses().computeSuperCompleteClasses());
 				}
 			}
 			if (superCompleteClasses2.isEmpty()) {
@@ -235,7 +238,8 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		return specializedType;
 	}
 
-	protected void didAdd(org.eclipse.ocl.pivot.Class partialClass) {
+/*	protected void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
+		partialClasses.add(index, partialClass);
 		if (PARTIAL_CLASSES.isActive()) {
 			PARTIAL_CLASSES.println("Do-didAdd " + this + " " + partialClass);
 		}
@@ -250,9 +254,9 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 //			doRefreshPartialOperations(partialClass);
 //		}
 		dispose();			// Force lazy recomputation
-	}
+	} */
 
-	@Override
+/*	@Override
 	protected void didRemove(int index, org.eclipse.ocl.pivot.Class partialClass) {
 		assert partialClass != null;
 		if (PARTIAL_CLASSES.isActive()) {
@@ -261,7 +265,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		super.didRemove(index, partialClass);
 		((ClassImpl)partialClass).removeClassListener(this);
 		dispose();			// Force lazy recomputation
-	}
+	} */
 
 	@Override
 	public void didAddOperation(@NonNull Operation pivotOperation) {
@@ -280,6 +284,11 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	}
 
 	@Override
+	public void didAddPartialClass(int index, @NonNull Class partialClass) {
+		partialClasses.add(index, partialClass);
+	}
+
+	@Override
 	public void didAddProperty(@NonNull Property pivotProperty) {
 	/*	Map<String, @NonNull PartialProperties> name2partialProperties2 = name2partialProperties;
 		if (name2partialProperties2 != null) {
@@ -291,7 +300,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 			}
 			partials.didAddProperty(pivotProperty);
 		} */
-		((CompleteClassImpl)owner).resetProperties();
+		owner.resetProperties();
 	}
 
 	@Override
@@ -299,7 +308,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (completeInheritance != null) {
 			completeInheritance.uninstall();
 		}
-		((CompleteClassImpl)owner).resetFragments();
+		owner.resetFragments();
 	}
 
 	@Override
@@ -317,6 +326,11 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 	}
 
 	@Override
+	public void didRemovePartialClass(int index, @NonNull Class partialClass) {
+		partialClasses.remove(index);
+	}
+
+	@Override
 	public void didRemoveProperty(@NonNull Property pivotProperty) {
 	/*	Map<String, @NonNull PartialProperties> name2partialProperties2 = name2partialProperties;
 		if (name2partialProperties2 != null) {
@@ -328,7 +342,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 				}
 			}
 		} */
-		((CompleteClassImpl)owner).resetProperties();
+		owner.resetProperties();
 	}
 
 	@Override
@@ -336,7 +350,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 		if (completeInheritance != null) {
 			completeInheritance.uninstall();
 		}
-		((CompleteClassImpl)owner).resetFragments();
+		owner.resetFragments();
 	}
 
 	public void dispose() {
@@ -435,7 +449,7 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 
 	@SuppressWarnings("null")
 	public @NonNull CompleteClassInternal getCompleteClass() {
-		return (CompleteClassImpl) owner;
+		return owner;
 	}
 
 	public final @NonNull CompleteInheritanceImpl getCompleteInheritance() {
@@ -552,6 +566,10 @@ public class PartialClasses extends EObjectResolvingEList<org.eclipse.ocl.pivot.
 				}
 			});
 		return subItOps;
+	}
+
+	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getPartialClasses() {
+		return partialClasses;
 	}
 
 	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {

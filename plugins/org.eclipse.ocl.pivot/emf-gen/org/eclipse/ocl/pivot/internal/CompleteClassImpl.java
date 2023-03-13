@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
@@ -51,7 +52,6 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
@@ -360,15 +360,19 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getPartialClasses()
-	 * @generated NOT
+	 * @generated
 	 * @ordered
 	 */
-	protected final @NonNull PartialClasses partialClasses;
+	protected EList<org.eclipse.ocl.pivot.Class> partialClasses;
+
+	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
+
+	protected @NonNull PartialClasses legacyPartialClasses;
 
 	protected CompleteClassImpl()
 	{
 		super();
-		partialClasses = new PartialClasses(this);
+		this.legacyPartialClasses = new PartialClasses(this);
 	}
 
 	@Override
@@ -378,7 +382,16 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public void addClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		partialClasses.add(partialClass);
+		getPartialClasses().add(partialClass);
+		assert getPartialClasses().equals(getLegacyPartialClasses().getPartialClasses());
+	}
+
+	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
+		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
+		if (classListeners2 == null) {
+			classListeners2 = classListeners = new ClassListeners<ClassListeners.IClassListener>();
+		}
+		classListeners2.addListener(classListener);
 	}
 
 	@Override
@@ -421,7 +434,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public void dispose() {
-		partialClasses.dispose();
+		legacyPartialClasses.dispose();
 	}
 
 	@Override
@@ -436,8 +449,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass() {
-		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses2 = ClassUtil.nullFree(partialClasses);
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses2) {
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> legacyPartialClasses2 = legacyPartialClasses.getPartialClasses();
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : legacyPartialClasses2) {
 			if (partialClass instanceof DataType) {
 				org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)partialClass).getBehavioralClass();
 				if (behavioralClass != null) {
@@ -445,7 +458,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				}
 			}
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses2) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : legacyPartialClasses2) {
 			return partialClass;
 		}
 		return null;
@@ -458,7 +471,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public final @NonNull CompleteInheritanceImpl getCompleteInheritance() {
-		return partialClasses.getCompleteInheritance();
+		return legacyPartialClasses.getCompleteInheritance();
 	}
 
 	private /*@LazyNonNull*/ CompleteFlatClass flatClass = null;
@@ -483,12 +496,17 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
+	public @NonNull PartialClasses getLegacyPartialClasses() {
+		return legacyPartialClasses;
+	}
+
+	@Override
 	public @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
 		throw new UnsupportedOperationException("Not a map");
 	}
 
 	public @NonNull Iterable<Operation> getMemberOperations() {
-		return partialClasses.getOperations();
+		return legacyPartialClasses.getOperations();
 	}
 
 	@Override
@@ -498,27 +516,27 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
-		return partialClasses.getOperation(operationId);
+		return legacyPartialClasses.getOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Operation getOperation(@NonNull Operation operationId) {
-		return partialClasses.getOperation(operationId);
+		return legacyPartialClasses.getOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
-		return partialClasses.getOperationOverloads(pivotOperation);
+		return legacyPartialClasses.getOperationOverloads(pivotOperation);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter) {
-		return partialClasses.getOperations(featureFilter);
+		return legacyPartialClasses.getOperations(featureFilter);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-		return partialClasses.getOperationOverloads(featureFilter, name);
+		return legacyPartialClasses.getOperationOverloads(featureFilter, name);
 	}
 
 	/**
@@ -529,18 +547,42 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 * @generated NOT
 	 */
 	@Override
-	public @NonNull PartialClasses getPartialClasses() {
-		return partialClasses;
+	public @NonNull List<org.eclipse.ocl.pivot.Class> getPartialClasses() {
+		EList<org.eclipse.ocl.pivot.Class> partialClasses2 = partialClasses;
+		if (partialClasses2 == null)
+		{
+			partialClasses2 = partialClasses = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES.getFeatureID()) // 6
+			{
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
+					assert partialClass != null;
+					if (classListeners != null) {
+						classListeners.didAddPartialClass(index, partialClass);
+					}
+				}
+
+				@Override
+				protected void didRemove(int index, org.eclipse.ocl.pivot.Class partialClass) {
+					assert partialClass != null;
+					if (classListeners != null) {
+						classListeners.didRemovePartialClass(index, partialClass);
+					}
+				}
+			};
+		}
+		return partialClasses2;
 	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass() {
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(partialClasses)) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : legacyPartialClasses.getPartialClasses()) {
 			if (partialClass.getESObject() != null) {
 				return partialClass;
 			}
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(partialClasses)) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : legacyPartialClasses.getPartialClasses()) {
 			return partialClass;
 		}
 		throw new IllegalStateException();
@@ -572,13 +614,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @Nullable Iterable<@NonNull Property> getProperties(@NonNull Property pivotProperty) {
-//		return partialClasses.getProperties(pivotProperty);
 		return getFlatClass().getProperties(null, NameUtil.getName(pivotProperty));		// XXX surely the property we first thought of
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter) {
-//		return partialClasses.getProperties(featureFilter, null);
 		return getFlatClass().getProperties(featureFilter, null);
 	}
 
@@ -589,13 +629,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @Nullable Iterable<@NonNull Property> getProperties(@Nullable String propertyName) {
-//		return partialClasses.getProperties(propertyName);
 		return getFlatClass().getProperties(null, propertyName);
 	}
 
 	@Override
 	public @Nullable Property getProperty(@NonNull String propertyName) {
-	//	return partialClasses.getProperty(propertyName);
 		return getFlatClass().getProperty(propertyName);
 	}
 
@@ -615,7 +653,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
-		return partialClasses.getSuperCompleteClasses();
+		return legacyPartialClasses.getSuperCompleteClasses();
 	}
 
 	/*	public boolean isSuperClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {
@@ -631,9 +669,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return false;
 	} */
 
-	@Override
-	public void uninstall() {
-		partialClasses.dispose();
+	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
+		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
+		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
+			classListeners = null;
+		}
 	}
 
 	public void resetFragments() {
@@ -646,5 +686,10 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		if (flatClass != null) {
 			flatClass.resetProperties();
 		}
+	}
+
+	@Override
+	public void uninstall() {
+		legacyPartialClasses.dispose();
 	}
 } //CompleteClassImpl

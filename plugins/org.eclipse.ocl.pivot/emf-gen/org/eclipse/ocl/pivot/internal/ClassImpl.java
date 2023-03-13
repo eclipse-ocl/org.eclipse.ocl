@@ -1144,7 +1144,7 @@ implements org.eclipse.ocl.pivot.Class {
 	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
 		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
 		if (classListeners2 == null) {
-			classListeners2 = classListeners = new ClassListeners<ClassListeners.IClassListener>();
+			classListeners2 = classListeners = new ClassListeners<>();
 		}
 		classListeners2.addListener(classListener);
 	}

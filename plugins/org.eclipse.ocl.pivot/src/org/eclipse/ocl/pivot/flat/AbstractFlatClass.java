@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
 import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
 import org.eclipse.ocl.pivot.internal.library.executor.JavaType;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -39,7 +40,7 @@ import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
-public abstract class AbstractFlatClass implements FlatClass
+public abstract class AbstractFlatClass implements FlatClass, IClassListener
 {
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
 
@@ -158,6 +159,36 @@ public abstract class AbstractFlatClass implements FlatClass
 
 	protected /* final */ @NonNull FlatFragment createFragment(@NonNull FlatClass baseFlatClass) {
 		return new FlatFragment(this, baseFlatClass);
+	}
+
+	@Override
+	public final void didAddOperation(@NonNull Operation partialOperation) {
+		resetOperations();
+	}
+
+	@Override
+	public final void didAddProperty(@NonNull Property partialProperty) {
+		resetProperties();
+	}
+
+	@Override
+	public final void didAddSuperClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		resetFragments();
+	}
+
+	@Override
+	public final void didRemoveOperation(@NonNull Operation partialOperation) {
+		resetOperations();
+	}
+
+	@Override
+	public final void didRemoveProperty(@NonNull Property partialProperty) {
+		resetProperties();
+	}
+
+	@Override
+	public final void didRemoveSuperClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		resetFragments();
 	}
 
 	protected @Nullable List<@NonNull Property> gatherDirectProperties(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Property> asProperties) {
@@ -765,8 +796,6 @@ public abstract class AbstractFlatClass implements FlatClass
 			fragments = null;
 			indexes = null;
 		}
-	//	name2operation = null;
-		resetProperties();
 		if (subFlatClasses != null) {
 			Set<@NonNull FlatClass> previousSubFlatClasses = subFlatClasses;
 			subFlatClasses = null;
@@ -774,6 +803,15 @@ public abstract class AbstractFlatClass implements FlatClass
 				subFlatClass.resetFragments();
 			}
 		}
+		resetOperations();
+		resetProperties();
+	}
+
+	public void resetOperations() {
+	//	if (name2partialOperations != null) {
+	//		name2partialOperations.clear();
+	//		name2partialOperations = null;
+	//	}
 	}
 
 	public void resetProperties() {

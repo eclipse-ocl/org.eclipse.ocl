@@ -21,6 +21,7 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Property;
@@ -58,6 +59,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	public CompleteFlatClass(@NonNull CompleteFlatModel flatModel, @NonNull CompleteClassImpl completeClass) {
 		super(flatModel, NameUtil.getName(completeClass), computeFlags(completeClass.getPrimaryClass()));
 		this.completeClass = completeClass;
+		completeClass.addClassListener(this);
 	}
 
 	@Override
@@ -101,6 +103,16 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	@Override
 	protected @NonNull FlatFragment createFragment(@NonNull FlatClass baseFlatClass) {
 		return new CompleteReflectiveFragment(this, baseFlatClass);
+	}
+
+	@Override
+	public void didAddPartialClass(int index, @NonNull Class partialClass) {
+		resetFragments();
+	}
+
+	@Override
+	public void didRemovePartialClass(int index, @NonNull Class partialClass) {
+		resetFragments();
 	}
 
 	protected @Nullable Set<@NonNull Stereotype> gatherExtendingStereotypes(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable Set<@NonNull Stereotype> extendingStereotypes) {

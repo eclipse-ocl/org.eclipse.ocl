@@ -27,12 +27,23 @@ public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME i
 	protected PartialFlatClass(@NonNull FlatModel flatModel, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		super(flatModel, NameUtil.getName(asClass), 0);
 		this.asClass = asClass;
+	//	((ClassImpl)asClass).addClassListener(this);
 	}
 
 	@Override
 	protected @Nullable List<@NonNull Property> computeDirectProperties() {
 		org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asClass);
 		return gatherDirectProperties(unspecializedType, null);
+	}
+
+	@Override
+	public final void didAddPartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		// Partial class ignores siblings
+	}
+
+	@Override
+	public final void didRemovePartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+		// Partial class ignores siblings
 	}
 
 	@Override
