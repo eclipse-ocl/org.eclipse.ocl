@@ -43,6 +43,8 @@
 
     <tycho.scmUrl>scm:git:https://git.eclipse.org/c/ocl/org.eclipse.ocl.git</tycho.scmUrl>
     <executionEnvironment>${executionEnvironment}</executionEnvironment>
+    <!-- For launching Eclipse and running JUnit tests -->
+    <runtime-jdk-version>1.8</runtime-jdk-version>
     <source-java-version>1.8</source-java-version>
     <target-java-version>${source-java-version}</target-java-version>
     <java-source-encoding>UTF-8</java-source-encoding>
@@ -131,7 +133,7 @@
         <configuration>
           <toolchains>
             <jdk>
-              <version>1.8</version>
+              <version>${runtime-jdk-version}</version>
               <vendor>oracle</vendor>
             </jdk>
           </toolchains>
@@ -517,6 +519,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.6</executionEnvironment>
+        <runtime-jdk-version>1.6</runtime-jdk-version>
         <targetRelease>luna</targetRelease>
       </properties>
     </profile>
@@ -528,6 +531,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.7</executionEnvironment>
+        <runtime-jdk-version>1.7</runtime-jdk-version>
         <targetRelease>mars</targetRelease>
       </properties>
     </profile>
@@ -539,6 +543,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>neon</targetRelease>
       </properties>
     </profile>
@@ -550,6 +555,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>oxygen</targetRelease>
       </properties>
     </profile>
@@ -561,6 +567,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>photon</targetRelease>
       </properties>
     </profile>
@@ -572,6 +579,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>2018-09</targetRelease>
       </properties>
     </profile>
@@ -583,6 +591,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>2018-12</targetRelease>
       </properties>
     </profile>
@@ -594,6 +603,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>2019-03</targetRelease>
       </properties>
     </profile>
@@ -605,6 +615,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>2019-06</targetRelease>
       </properties>
     </profile>
@@ -616,6 +627,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>2019-09</targetRelease>
       </properties>
     </profile>
@@ -627,6 +639,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>2019-12</targetRelease>
       </properties>
     </profile>
@@ -638,6 +651,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>2020-03</targetRelease>
       </properties>
     </profile>
@@ -649,6 +663,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-1.8</executionEnvironment>
+        <runtime-jdk-version>1.8</runtime-jdk-version>
         <targetRelease>2020-06</targetRelease>
       </properties>
     </profile>
@@ -660,6 +675,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2020-09</targetRelease>
       </properties>
     </profile>
@@ -671,6 +687,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2020-12</targetRelease>
       </properties>
     </profile>
@@ -682,6 +699,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2021-03</targetRelease>
       </properties>
     </profile>
@@ -693,6 +711,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2021-06</targetRelease>
       </properties>
     </profile>
@@ -704,6 +723,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2021-09</targetRelease>
       </properties>
     </profile>
@@ -715,6 +735,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2021-12</targetRelease>
       </properties>
     </profile>
@@ -726,6 +747,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2022-03</targetRelease>
       </properties>
     </profile>
@@ -737,6 +759,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2022-06</targetRelease>
       </properties>
     </profile>
@@ -748,6 +771,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2022-09</targetRelease>
       </properties>
     </profile>
@@ -759,6 +783,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2022-12</targetRelease>
       </properties>
     </profile>
@@ -770,6 +795,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2023-03</targetRelease>
       </properties>
     </profile>
@@ -781,6 +807,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2023-06</targetRelease>
       </properties>
     </profile>
@@ -792,6 +819,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2023-09</targetRelease>
       </properties>
     </profile>
@@ -803,6 +831,7 @@
       <properties>
         <buildType></buildType>
         <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>2023-12</targetRelease>
       </properties>
     </profile>
