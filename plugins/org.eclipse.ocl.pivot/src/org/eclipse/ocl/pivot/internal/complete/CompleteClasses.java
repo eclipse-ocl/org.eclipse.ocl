@@ -297,7 +297,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 	protected void didAdd(int index, CompleteClass completeClass) {
 		assert completeClass != null;
 		super.didAdd(index, completeClass);
-		didAdd((CompleteClassInternal) completeClass);
+		didAdd((CompleteClassInternal) completeClass);			// XXX uses preceding overload
 	}
 
 	public void didAdd(@NonNull CompleteClassInternal completeClass) {
@@ -305,6 +305,9 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		if (name2completeClass2 != null) {
 			String name = completeClass.getName();
 			if (name != null) {
+				if ("Real".equals(name)) {
+					getClass();			// XXX
+				}
 				CompleteClass oldCompleteClass = name2completeClass2.put(name, completeClass);
 				assert oldCompleteClass == null;
 			}

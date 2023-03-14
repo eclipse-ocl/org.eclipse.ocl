@@ -561,6 +561,9 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 					if (classListeners != null) {
 						classListeners.didAddPartialClass(index, partialClass);
 					}
+					if (partialClass.getUnspecializedElement() == null) {
+						getCompleteModel().didAddClass(partialClass, CompleteClassImpl.this);
+					}
 				}
 
 				@Override
@@ -569,6 +572,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 					if (classListeners != null) {
 						classListeners.didRemovePartialClass(index, partialClass);
 					}
+					// XXX ?? getCompleteModel().didRemove...
 				}
 			};
 		}

@@ -613,6 +613,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass) {
 		//		assert partialClass.getUnspecializedElement() == null;
+		if ("Real".equals(partialClass.getName()) ) {
+			getClass();		// XXX
+		}
 		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
 		assert (oldCompleteClass == null) ||(oldCompleteClass == completeClass);
 	}
