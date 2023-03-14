@@ -155,7 +155,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				isNullFree = isNullFree((ENamedElement)eContainer);
 			}
 			else {
-				isNullFree = true;		// UML collections are always null-free.Make it the undeclared default.
+				isNullFree = true;		// UML collections are always null-free. Make it the undeclared default.
 			}
 		}
 		return isNullFree;
