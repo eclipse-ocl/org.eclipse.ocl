@@ -38,10 +38,13 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -308,7 +311,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				AbstractFlatClass superFlatClass = (AbstractFlatClass)derivedSuperFragment.getBaseFlatClass();
 				FlatFragment superFragment = superFlatClass.getFragment(baseFlatClass);
 				if (superFragment != null) {
-					Operation overload = superFragment.getLocalOperation(apparentOperation);
+					Operation overload = getLocalOperation(superFragment, apparentOperation);
 					if (overload != null) {
 						if (bestFlatClass == null) {				// First candidate
 							bestDepth = depth;
@@ -588,14 +591,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public final @NonNull Operation @NonNull [] getSelfOperations() {
-		@NonNull Operation [] selfOperations = getSelfFragment().getOperations();
-		return selfOperations != null ? selfOperations : NO_OPERATIONS;
+		return getSelfFragment().getOperations();
 	}
 
 	@Override
 	public final @NonNull Property @NonNull [] getSelfProperties() {
-		@NonNull Property [] selfProperties = getSelfFragment().getProperties();
-		return selfProperties != null ? selfProperties : NO_PROPERTIES;
+		return getSelfFragment().getProperties();
 	}
 
 	@Override
@@ -894,7 +895,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {
 					FlatFragment fragment = getFragment(i);
 					if (fragment.getBaseFlatClass() == apparentFlatClass) {
-						Operation actualOperation = fragment.getActualOperation(apparentOperation);
+						Operation actualOperation = getActualOperation(fragment, apparentOperation);
 						if (standardLibrary != getStandardLibrary()) {
 							FlatClass apparentFlatClass1 = apparentOperation.getFlatClass(getStandardLibrary());
 							if (apparentFlatClass1 != null) {
@@ -904,7 +905,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 									for (int i1 = getIndex(apparentDepth); i1 < iMax1; i1++) {
 										FlatFragment fragment1 = getFragment(i1);
 										if (fragment1.getBaseFlatClass() == apparentFlatClass) {
-											Operation actualOperation1 = fragment.getActualOperation(apparentOperation);
+											Operation actualOperation1 = getActualOperation(fragment, apparentOperation);
 											assert actualOperation1 == actualOperation;
 											return actualOperation;
 										}
@@ -921,6 +922,120 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return apparentOperation;	// invoke apparent op for null and invalid
 	}
 
+	/**
+	 * Return the actualOperation that has the same signature as apparentOperation.
+	 * @param fragment
+	 */
+	public static @NonNull Operation getActualOperation(@NonNull FlatFragment fragment, @NonNull Operation apparentOperation) {
+		Operation localOperation = getLocalOperation(fragment, apparentOperation);
+		if (localOperation == null) {
+			if (fragment.derivedFlatClass == fragment.baseFlatClass) {
+				localOperation = apparentOperation;
+			}
+		}
+		if (localOperation == null) {				// Non-trivial, search up the inheritance tree for an inherited operation
+			Operation bestOverload = fragment.baseFlatClass.getBestOverload(fragment.derivedFlatClass, apparentOperation);
+			if (bestOverload != null) {
+				localOperation = bestOverload;
+			}
+			else {
+				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, fragment.derivedFlatClass);
+			}
+		}
+		return localOperation;
+	}
+
+//	@Override
+	public static @Nullable Operation getLocalOperation(@NonNull FlatFragment flatFragment, @NonNull Operation baseOperation) {
+		if (flatFragment.derivedFlatClass instanceof CompleteFlatClass) {		// XXX move to FlatClass
+			CompleteFlatClass completeFlatClass = (CompleteFlatClass)flatFragment.derivedFlatClass;
+			String baseOperationName = baseOperation.getName();
+			ParametersId baseParametersId = baseOperation.getParametersId();
+			Operation bestOperation = null;
+			for (org.eclipse.ocl.pivot.Class partialClass : completeFlatClass.getCompleteClass().getPartialClasses()) {
+				for (Operation localOperation : partialClass.getOwnedOperations()) {
+					if (localOperation.getName().equals(baseOperationName) && (localOperation.getParametersId() == baseParametersId)) {
+						if (localOperation.getESObject() != null) {
+							return localOperation;
+						}
+						if (bestOperation == null) {
+							bestOperation = localOperation;
+						}
+						else if ((localOperation.getBodyExpression() != null) && (bestOperation.getBodyExpression() == null)) {
+							bestOperation = localOperation;
+						}
+					}
+				}
+			}
+			return bestOperation;					// null if not known locally, caller must try superfragments.
+		}
+		else {
+			int index = baseOperation.getIndex();
+			if (index >= 0) {
+				@NonNull
+				Operation[] fragmentOperations = flatFragment.basicGetOperations();
+				assert fragmentOperations != null;
+				return fragmentOperations[index];
+			}
+			else {
+				return null;
+			}
+		}
+	}
+
+	public static @NonNull LibraryFeature getImplementation(@NonNull FlatFragment flatFragment, @NonNull Operation apparentOperation) {
+		int index = apparentOperation.getIndex();
+		if (index >= 0) {
+			@NonNull Operation[] fragmentOperations = flatFragment.basicGetOperations();
+			assert fragmentOperations != null;
+			return ClassUtil.nonNullState(fragmentOperations[index].getImplementation());
+		}
+		else {
+			Map<@NonNull Operation, @NonNull LibraryFeature> operationMap2 = flatFragment.operationMap;
+			if (operationMap2 == null) {
+				synchronized (flatFragment) {
+					operationMap2 = flatFragment.operationMap;
+					if (operationMap2 == null) {
+						flatFragment.operationMap = operationMap2 = new HashMap<>();		// Optimize to reuse single super map if no local ops
+					}
+				}
+			}
+			LibraryFeature libraryFeature = operationMap2.get(apparentOperation);
+			if (libraryFeature != null) {
+				return libraryFeature;
+			}
+			synchronized (operationMap2) {
+				libraryFeature = operationMap2.get(apparentOperation);
+				if (libraryFeature != null) {
+					return libraryFeature;
+				}
+				Operation localOperation = AbstractFlatClass.getLocalOperation(flatFragment, apparentOperation);
+				if (localOperation == null) {
+					if (flatFragment.derivedFlatClass == flatFragment.baseFlatClass) {
+						localOperation = apparentOperation;
+					}
+				}
+				if (localOperation != null) {				// Trivial case, there is a local operation
+					libraryFeature = PivotUtilInternal.getImplementation(localOperation);
+				}
+				else {										// Non-trivial, search up the inheritance tree for an inherited operation
+					Operation bestOverload = flatFragment.baseFlatClass.getBestOverload(flatFragment.derivedFlatClass, apparentOperation);
+					if (bestOverload != null) {
+						libraryFeature = PivotUtilInternal.getImplementation(bestOverload);
+					}
+					else {
+						libraryFeature = OclAnyUnsupportedOperation.AMBIGUOUS;
+					}
+				}
+				if (libraryFeature == null) {
+					libraryFeature = OclAnyUnsupportedOperation.INSTANCE;
+				}
+				operationMap2.put(apparentOperation, libraryFeature);
+				return libraryFeature;
+			}
+		}
+	}
+
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		assert standardLibrary == getStandardLibrary();
@@ -935,7 +1050,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {
 					FlatFragment fragment = getFragment(i);
 					if (fragment.getBaseFlatClass() == apparentFlatClass) {
-						return fragment.getImplementation(apparentOperation);
+						return getImplementation(fragment, apparentOperation);
 					}
 				}
 			}

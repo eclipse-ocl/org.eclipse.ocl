@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.flat.InheritanceFragment;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -621,10 +621,10 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
 		FlatClass flatClass = getCompleteClass().getFlatClass();
-		return Iterables.transform(flatClass.getAllSuperFragments(), new Function<InheritanceFragment, @NonNull CompleteClass>()
+		return Iterables.transform(flatClass.getAllSuperFragments(), new Function<FlatFragment, @NonNull CompleteClass>()
 		{
 			@Override
-			public @NonNull CompleteClass apply(InheritanceFragment input) {
+			public @NonNull CompleteClass apply(FlatFragment input) {
 				return input.getBaseFlatClass().getCompleteClass();
 			}
 		});

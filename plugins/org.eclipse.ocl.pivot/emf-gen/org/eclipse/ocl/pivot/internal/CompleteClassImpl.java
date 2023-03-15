@@ -50,7 +50,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.flat.InheritanceFragment;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
@@ -684,10 +684,10 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses() {
 		FlatClass flatClass = getFlatClass();
-		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull InheritanceFragment, org.eclipse.ocl.pivot.@NonNull Class>()
+		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull FlatFragment, org.eclipse.ocl.pivot.@NonNull Class>()
 		{
 			@Override
-			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull InheritanceFragment input) {
+			public org.eclipse.ocl.pivot.@NonNull Class apply(@NonNull FlatFragment input) {
 				return input.getBaseFlatClass().getPivotClass();
 			}
 		});
@@ -696,10 +696,10 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getProperSuperCompleteClasses() {
 		FlatClass flatClass = getFlatClass();
-		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull InheritanceFragment, @NonNull CompleteClass>()
+		return Iterables.transform(flatClass.getAllProperSuperFragments(), new Function<@NonNull FlatFragment, @NonNull CompleteClass>()
 		{
 			@Override
-			public @NonNull CompleteClass apply(@NonNull InheritanceFragment input) {
+			public @NonNull CompleteClass apply(@NonNull FlatFragment input) {
 				return ((CompleteFlatClass)input.getBaseFlatClass()).getCompleteClass();
 			}
 		});
