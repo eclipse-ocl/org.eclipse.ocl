@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -49,7 +50,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
-	protected final @NonNull CompleteClassInternal completeClass;
+	protected final @NonNull CompleteClassImpl completeClass;
 
 	/**
 	 * Lazily created map from state name to the known state.
@@ -229,12 +230,25 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	}
 
 	@Override
+	protected void installClassListeners() {
+		assert isMutable();
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(completeClass.getPartialClasses())) {
+			((ClassImpl)partialClass).addClassListener(this);
+		}
+		completeClass.addClassListener(this);
+	}
+
+	@Override
 	public @NonNull String toString() {
 		return NameUtil.qualifiedNameFor(completeClass);
 	}
 
 	@Override
 	public void resetFragments() {
+		completeClass.removeClassListener(this);
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(completeClass.getPartialClasses())) {
+			((ClassImpl)partialClass).removeClassListener(this);
+		}
 		completeClass.uninstall();
 		super.resetFragments();
 	}

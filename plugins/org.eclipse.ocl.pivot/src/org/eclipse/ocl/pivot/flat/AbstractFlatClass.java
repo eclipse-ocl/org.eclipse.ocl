@@ -87,6 +87,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	private @Nullable Map<@NonNull String, @Nullable Object> name2propertyOrProperties = null;	// Property or PartialProperties
 
 	/**
+	 * Whether this flat class can evolve. Initally null. Set false by static initFragments from XXXTables.
+	 * Set true by reflective initFragments.
+	 */
+	private @Nullable Boolean mutable = null;
+
+	/**
 	 * Depth ordered inheritance fragments. OclAny at depth 0, OclSelf at depth size-1.
 	 */
 	private @NonNull FlatFragment @Nullable [] fragments = null;
@@ -463,6 +469,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts) {
+		assert this.mutable == null;
+		assert this.fragments == null;
+		assert this.indexes == null;
+	//	assert fragments == null;
+	//	assert indexes == null;
 		int[] indexes = new int[depthCounts.length+1];
 		indexes[0] = 0;
 		for (int i = 0; i <  depthCounts.length; i++) {
@@ -470,12 +481,15 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 		this.fragments = fragments;
 		this.indexes = indexes;
+		this.mutable = Boolean.FALSE;
 	}
 
 	/**
 	 * Initialize the super-fragment hierarchy by reflective analysis.
 	 */
 	private synchronized void initFragments() {
+		assert mutable != Boolean.FALSE;
+	//	this.mutable = Boolean.TRUE;
 	//	System.out.println("initFragments for " + NameUtil.debugSimpleName(this) + " : " + this);
 		Map<@NonNull FlatClass, @NonNull Iterable<@NonNull FlatClass>> flatClass2superFlatClasses = new HashMap<>();
 		// Detect missing OclAny inheritance
@@ -511,6 +525,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				throw new IllegalStateException(s.toString());
 			}
 		}
+		assert mutable == Boolean.TRUE;
 	}
 
 	/**
@@ -520,6 +535,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 * @return true if installed, false if some superClass uninstallable
 	 */
 	private void initFragments(@NonNull Iterable<@NonNull FlatClass> directSuperFlatClasses) {
+		assert mutable != Boolean.FALSE;
+		mutable = Boolean.TRUE;
 		assert fragments == null;
 		assert indexes == null;
 	//	System.out.println("initFragments " + NameUtil.debugSimpleName(this) + " : " + this + " direct: " + directSuperFlatClasses);
@@ -584,6 +601,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		indexes[superDepths++] = fragmentsIndex;
 		this.fragments = fragments;
 		this.indexes = indexes;
+		installClassListeners();
 	}
 
 	private synchronized void initProperties() {
@@ -607,6 +625,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			}
 		}
 	}
+
+	protected abstract void installClassListeners();
 
 	@Override
 	public boolean isAbstract() {
@@ -638,6 +658,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 		return true;
 	} */
+
+	protected final boolean isMutable() {
+		assert mutable != null;
+		return mutable.booleanValue();
+	}
 
 	public final boolean isOclAny() {
 		return (flags & OCL_ANY) != 0;
@@ -785,6 +810,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public void resetFragments() {
+		if (mutable == null) {				// 'premature' resetFragments
+			assert fragments == null;
+			assert name2propertyOrProperties == null;
+			return;
+		}
+		assert isMutable();
 		@NonNull FlatFragment @Nullable [] fragments2 = fragments;
 		boolean isNonNull = fragments2 != null;		// FIXME needed for JDT 4.5, not needed for JDT 4.6M4
 		if (isNonNull && (fragments2 != null)) {

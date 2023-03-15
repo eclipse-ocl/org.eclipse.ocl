@@ -40,130 +40,106 @@ public class ClassListeners<L extends ClassListeners.IClassListener> extends Abs
 	}
 
 	public synchronized void didAddOperation(@NonNull Operation partialOperation) {
-		boolean doFlush = false;
-		for (@NonNull WeakReference<L> ref : listeners) {
+		for (int i = listeners.size(); --i >= 0; ) {			// Down scan to avoid notional CME from recursive addition
+			@NonNull WeakReference<L> ref = listeners.get(i);
 			@Nullable L listener = ref.get();
 			if (listener != null) {
 				listener.didAddOperation(partialOperation);
 			}
 			else {
-				doFlush = true;
+				listeners.remove(i);
 			}
-		}
-		if (doFlush) {
-			doFlush();
 		}
 	}
 
 	public synchronized void didAddPartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		boolean doFlush = false;
-		for (@NonNull WeakReference<L> ref : listeners) {
+		for (int i = listeners.size(); --i >= 0; ) {			// Down scan to avoid notional CME from recursive addition
+			@NonNull WeakReference<L> ref = listeners.get(i);
 			@Nullable L listener = ref.get();
 			if (listener != null) {
 				listener.didAddPartialClass(index, partialClass);
 			}
 			else {
-				doFlush = true;
+				listeners.remove(i);
 			}
-		}
-		if (doFlush) {
-			doFlush();
 		}
 	}
 
 	public synchronized void didAddProperty(@NonNull Property partialProperty) {
-		boolean doFlush = false;
-		for (@NonNull WeakReference<L> ref : listeners) {
+		for (int i = listeners.size(); --i >= 0; ) {			// Down scan to avoid notional CME from recursive addition
+			@NonNull WeakReference<L> ref = listeners.get(i);
 			@Nullable L listener = ref.get();
 			if (listener != null) {
 				listener.didAddProperty(partialProperty);
 			}
 			else {
-				doFlush = true;
+				listeners.remove(i);
 			}
-		}
-		if (doFlush) {
-			doFlush();
 		}
 	}
 
 	public synchronized void didAddSuperClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		boolean doFlush = false;
-		for (@NonNull WeakReference<L> ref : listeners) {
+		for (int i = listeners.size(); --i >= 0; ) {			// Down scan to avoid notional CME from recursive addition
+			@NonNull WeakReference<L> ref = listeners.get(i);
 			@Nullable L listener = ref.get();
 			if (listener != null) {
 				listener.didAddSuperClass(partialClass);
 			}
 			else {
-				doFlush = true;
+				listeners.remove(i);
 			}
-		}
-		if (doFlush) {
-			doFlush();
 		}
 	}
 
 	public synchronized void didRemoveOperation(@NonNull Operation partialOperation) {
-		boolean doFlush = false;
-		for (@NonNull WeakReference<L> ref : listeners) {
+		for (int i = listeners.size(); --i >= 0; ) {			// Down scan to avoid notional CME from recursive removal
+			@NonNull WeakReference<L> ref = listeners.get(i);
 			@Nullable L listener = ref.get();
 			if (listener != null) {
 				listener.didRemoveOperation(partialOperation);
 			}
 			else {
-				doFlush = true;
+				listeners.remove(i);
 			}
-		}
-		if (doFlush) {
-			doFlush();
 		}
 	}
 
 	public synchronized void didRemovePartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		boolean doFlush = false;
-		for (@NonNull WeakReference<L> ref : listeners) {
+		for (int i = listeners.size(); --i >= 0; ) {			// Down scan to avoid notional CME from recursive removal
+			@NonNull WeakReference<L> ref = listeners.get(i);
 			@Nullable L listener = ref.get();
 			if (listener != null) {
 				listener.didRemovePartialClass(index, partialClass);
 			}
 			else {
-				doFlush = true;
+				listeners.remove(i);
 			}
-		}
-		if (doFlush) {
-			doFlush();
 		}
 	}
 
 	public synchronized void didRemoveProperty(@NonNull Property partialProperty) {
-		boolean doFlush = false;
-		for (@NonNull WeakReference<L> ref : listeners) {
+		for (int i = listeners.size(); --i >= 0; ) {			// Down scan to avoid notional CME from recursive removal
+			@NonNull WeakReference<L> ref = listeners.get(i);
 			@Nullable L listener = ref.get();
 			if (listener != null) {
 				listener.didRemoveProperty(partialProperty);
 			}
 			else {
-				doFlush = true;
+				listeners.remove(i);
 			}
-		}
-		if (doFlush) {
-			doFlush();
 		}
 	}
 
 	public synchronized void didRemoveSuperClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		boolean doFlush = false;
-		for (@NonNull WeakReference<L> ref : listeners) {
+		for (int i = listeners.size(); --i >= 0; ) {			// Down scan to avoid actual CME from recursive removal
+			@NonNull WeakReference<L> ref = listeners.get(i);
 			@Nullable L listener = ref.get();
 			if (listener != null) {
 				listener.didRemoveSuperClass(partialClass);
 			}
 			else {
-				doFlush = true;
+				listeners.remove(i);
 			}
-		}
-		if (doFlush) {
-			doFlush();
 		}
 	}
 }
