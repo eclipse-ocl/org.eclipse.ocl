@@ -1404,7 +1404,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		else {
 			@SuppressWarnings("unchecked")
-			T specializedType = (T) libraryCompleteClass.getLegacyPartialClasses().getSpecializedType(templateArguments);
+			T specializedType = (T) libraryCompleteClass.getSpecializedType(templateArguments);
 			return specializedType;
 		}
 	}

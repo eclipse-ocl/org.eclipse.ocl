@@ -10,13 +10,17 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
+import java.lang.ref.WeakReference;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -34,10 +38,16 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InheritanceFragment;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateParameters;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -48,12 +58,15 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.PartialClasses;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 
@@ -331,7 +344,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("null")
 	@Override
 	public boolean eIsSet(int featureID)
 	{
@@ -355,6 +367,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return eDynamicIsSet(featureID);
 	}
 
+	private /*@LazyNonNull*/ CompleteFlatClass flatClass = null;
+
 	/**
 	 * The cached value of the '{@link #getPartialClasses() <em>Partial Classes</em>}' reference list.
 	 * <!-- begin-user-doc -->
@@ -368,6 +382,16 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
 
 	protected @NonNull PartialClasses legacyPartialClasses;
+
+	/**
+	 * Map from actual types to specialization.
+	 * <br>
+	 * The specializations are weakly referenced so that stale specializations are garbage collected.
+	 */
+	// FIXME tests fail if keys are weak since GC is too aggressive across tests
+	// The actual types are weak keys so that parameterizations using stale types are garbage collected.
+	//
+	private @Nullable /*WeakHash*/Map<TemplateParameters, WeakReference<org.eclipse.ocl.pivot.Class>> specializations = null;
 
 	protected CompleteClassImpl()
 	{
@@ -383,7 +407,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public void addClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		getPartialClasses().add(partialClass);
-		assert getPartialClasses().equals(getLegacyPartialClasses().getPartialClasses());
+		assert getPartialClasses().equals(legacyPartialClasses.getPartialClasses());
 	}
 
 	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
@@ -413,6 +437,40 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 			return true;
 		}
 		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
+	}
+
+	protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(@NonNull TemplateParameters templateArguments) {
+		org.eclipse.ocl.pivot.Class unspecializedType = getPrimaryClass();
+		String typeName = unspecializedType.getName();
+		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
+		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+		EClass eClass = unspecializedType.eClass();
+		EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
+		org.eclipse.ocl.pivot.Class specializedType = (org.eclipse.ocl.pivot.Class) eFactoryInstance.create(eClass);
+		specializedType.setName(typeName);
+		TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
+		for (int i = 0; i < templateParameters.size(); i++) {
+			TemplateParameter formalParameter = templateParameters.get(i);
+			if (formalParameter != null) {
+				Element templateArgument = templateArguments.get(i);
+				if (templateArgument instanceof Type) {
+					Type actualType = (Type) templateArgument;
+					TemplateParameterSubstitution templateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(formalParameter, actualType);
+					templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
+				}
+			}
+		}
+		specializedType.getOwnedBindings().add(templateBinding);
+		getCompleteModel().resolveSuperClasses(specializedType, unspecializedType);
+//		if (specializedType instanceof Metaclass) {
+//			Type instanceType = (Type) templateArguments.get(0);
+//			Metaclass specializedMetaclass = (Metaclass)specializedType;
+//			specializedMetaclass.setInstanceType(instanceType);
+//		}
+		specializedType.setUnspecializedElement(unspecializedType);
+		Orphanage orphanage = getCompleteModel().getOrphanage();
+		specializedType.setOwningPackage(orphanage);
+		return specializedType;
 	}
 
 	/**
@@ -447,10 +505,47 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		return null;
 	}
 
+	public synchronized @Nullable Type findSpecializedType(@NonNull TemplateParameters templateArguments) {
+		TemplateSignature templateSignature = getPrimaryClass().getOwnedSignature();
+		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+		int iMax = templateParameters.size();
+		if (templateArguments.parametersSize() != iMax) {
+			return null;
+		}
+		Map<TemplateParameters, WeakReference<org.eclipse.ocl.pivot.Class>> specializations2 = specializations;
+		if (specializations2 == null) {
+			return null;
+		}
+		WeakReference<org.eclipse.ocl.pivot.Class> weakReference = specializations2.get(templateArguments);
+		if (weakReference == null) {
+			return null;
+		}
+		org.eclipse.ocl.pivot.Class specializedType = weakReference.get();
+		if (specializedType != null) {
+			int templateArgumentSize = templateArguments.parametersSize();
+			for (int i = 0; i < templateArgumentSize; i++) {
+				Type templateArgument = templateArguments.get(i);
+				if (templateArgument.eResource() == null) {		// If GC pending
+					specializedType = null;
+					break;
+				}
+			}
+		}
+		if (specializedType == null) {
+			synchronized (specializations2) {
+				specializedType = weakReference.get();
+				if (specializedType == null) {
+					specializations2.remove(templateArguments);
+				}
+			}
+		}
+		return specializedType;
+	}
+
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass() {
-		Iterable<org.eclipse.ocl.pivot.@NonNull Class> legacyPartialClasses2 = legacyPartialClasses.getPartialClasses();
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : legacyPartialClasses2) {
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(this);
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
 			if (partialClass instanceof DataType) {
 				org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)partialClass).getBehavioralClass();
 				if (behavioralClass != null) {
@@ -458,7 +553,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				}
 			}
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : legacyPartialClasses2) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
 			return partialClass;
 		}
 		return null;
@@ -473,8 +568,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	public final @NonNull CompleteInheritanceImpl getCompleteInheritance() {
 		return legacyPartialClasses.getCompleteInheritance();
 	}
-
-	private /*@LazyNonNull*/ CompleteFlatClass flatClass = null;
 
 	@Override
 	public final @NonNull CompleteFlatClass getFlatClass() {
@@ -493,11 +586,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return getCompleteModel().getEnvironmentFactory();
-	}
-
-	@Override
-	public @NonNull PartialClasses getLegacyPartialClasses() {
-		return legacyPartialClasses;
 	}
 
 	@Override
@@ -581,12 +669,13 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass() {
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : legacyPartialClasses.getPartialClasses()) {
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(this);
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
 			if (partialClass.getESObject() != null) {
 				return partialClass;
 			}
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : legacyPartialClasses.getPartialClasses()) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
 			return partialClass;
 		}
 		throw new IllegalStateException();
@@ -639,6 +728,49 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @Nullable Property getProperty(@NonNull String propertyName) {
 		return getFlatClass().getProperty(propertyName);
+	}
+
+	@Override
+	public synchronized org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@NonNull List<@NonNull ? extends Type> templateArguments) {
+		TemplateParameters templateArgumentsParameters = TypeUtil.createTemplateParameters(templateArguments);
+		TemplateSignature templateSignature = getPrimaryClass().getOwnedSignature();
+		List<TemplateParameter> templateSignatureParameters = templateSignature.getOwnedParameters();
+		int iMax = templateSignatureParameters.size();
+		if (templateArgumentsParameters.parametersSize() != iMax) {
+			throw new IllegalArgumentException("Incompatible template argument count");
+		}
+		Map<TemplateParameters, WeakReference<org.eclipse.ocl.pivot.Class>> specializations2 = specializations;
+		if (specializations2 == null) {
+			synchronized(this) {
+				specializations2 = specializations;
+				if (specializations2 == null) {
+					specializations2 = specializations = new /*Weak*/HashMap<TemplateParameters, WeakReference<org.eclipse.ocl.pivot.Class>>();
+				}
+			}
+		}
+		synchronized (specializations2) {
+			org.eclipse.ocl.pivot.Class specializedType = null;
+			WeakReference<org.eclipse.ocl.pivot.Class> weakReference = specializations2.get(templateArgumentsParameters);
+			if (weakReference != null) {
+				specializedType = weakReference.get();
+				if (specializedType != null) {
+					int templateArgumentSize = templateArgumentsParameters.parametersSize();
+					for (int i = 0; i < templateArgumentSize; i++) {
+						Type templateArgument = templateArgumentsParameters.get(i);
+						if (templateArgument.eResource() == null) {		// If GC pending
+							specializedType = null;
+							weakReference.clear();
+							break;
+						}
+					}
+				}
+			}
+			if (specializedType == null) {
+				specializedType = createSpecialization(templateArgumentsParameters);
+				specializations2.put(templateArgumentsParameters, new WeakReference<org.eclipse.ocl.pivot.Class>(specializedType));
+			}
+			return specializedType;
+		}
 	}
 
 	public @NonNull StandardLibraryInternal getStandardLibrary() {
