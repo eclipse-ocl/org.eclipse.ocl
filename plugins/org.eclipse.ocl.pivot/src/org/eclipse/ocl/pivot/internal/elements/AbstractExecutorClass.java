@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.values.SetValue;
 
@@ -38,8 +39,19 @@ import com.google.common.collect.Lists;
 
 public class AbstractExecutorClass extends AbstractExecutorType implements org.eclipse.ocl.pivot.Class
 {
+	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
+
 	public AbstractExecutorClass(@NonNull String name, int flags) {
 		super(name, flags);
+	}
+
+	@Override
+	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
+		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
+		if (classListeners2 == null) {
+			classListeners2 = classListeners = new ClassListeners<>();
+		}
+		classListeners2.addListener(classListener);
 	}
 
 	@Override
@@ -193,6 +205,14 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	//	@Override
 	public boolean isIsSerializable() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
+		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
+		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
+			classListeners = null;
+		}
 	}
 
 	//	@Override

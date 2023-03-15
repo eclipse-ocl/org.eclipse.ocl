@@ -1141,6 +1141,7 @@ implements org.eclipse.ocl.pivot.Class {
 		return visitor.visitClass(this);
 	}
 
+	@Override
 	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
 		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
 		if (classListeners2 == null) {
@@ -1427,6 +1428,7 @@ implements org.eclipse.ocl.pivot.Class {
 		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
 	}
 
+	@Override
 	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
 		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
 		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {

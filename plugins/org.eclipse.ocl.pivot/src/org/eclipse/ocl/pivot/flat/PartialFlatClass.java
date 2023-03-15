@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -82,12 +81,12 @@ public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME i
 	@Override
 	protected void installClassListeners() {
 		assert isMutable();
-		((ClassImpl)asClass).addClassListener(this);
+		asClass.addClassListener(this);
 	}
 
 	@Override
 	public void resetFragments() {
-		((ClassImpl)asClass).removeClassListener(this);
+		asClass.removeClassListener(this);
 		super.resetFragments();
 	}
 }
