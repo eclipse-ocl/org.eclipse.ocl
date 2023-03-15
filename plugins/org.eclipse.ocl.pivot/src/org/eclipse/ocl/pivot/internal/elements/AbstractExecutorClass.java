@@ -17,7 +17,9 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AbstractClass;
 import org.eclipse.ocl.pivot.Behavior;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
@@ -30,19 +32,33 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.values.SetValue;
 
 import com.google.common.collect.Lists;
 
-public class AbstractExecutorClass extends AbstractExecutorType implements org.eclipse.ocl.pivot.Class
+public class AbstractExecutorClass extends AbstractClass implements CompleteInheritance
 {
+	public static final int ORDERED = FlatClass.ORDERED;
+	public static final int UNIQUE = FlatClass.UNIQUE;
+	public static final int OCL_ANY = FlatClass.OCL_ANY;
+	public static final int OCL_VOID = FlatClass.OCL_VOID;
+	public static final int OCL_INVALID = FlatClass.OCL_INVALID;
+	public static final int ABSTRACT = FlatClass.ABSTRACT;
+
 	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
 
+	protected final @NonNull String name;
+	protected /*final*/ /*@NonNull*/ FlatClass flatClass = null;
+
 	public AbstractExecutorClass(@NonNull String name, int flags) {
-		super(name, flags);
+		this.name = name;
 	}
 
 	@Override
@@ -81,13 +97,26 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 //	@Override
-//	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
-//		return standardLibrary.getFlatClass(this);
-//	}
+	@Override
+	public @NonNull FlatClass getFlatClass() {
+		assert flatClass != null;
+		return flatClass;
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+		assert flatClass != null;
+		return flatClass;
+	}
 
 	@Override
 	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
 		return standardLibrary.getInheritance(this);
+	}
+
+	@Override
+	public @Nullable Operation getMemberOperation(@NonNull OperationId id) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -99,6 +128,16 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	public @NonNull String getMetaTypeName() {
 		return getTypeId().getMetaTypeName();
 		//		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public @NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -147,8 +186,18 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	@NonNull
 	public List<org.eclipse.ocl.pivot.Class> getSuperClasses() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull TypeId getTypeId() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -208,6 +257,16 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	}
 
 	@Override
+	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
+		return flatClass.lookupActualOperation(standardLibrary, apparentOperation);
+	}
+
+	@Override
+	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
+		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
+	}
+
+	@Override
 	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
 		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
 		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
@@ -218,6 +277,10 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 	//	@Override
 	public void setBehavioralClass(org.eclipse.ocl.pivot.Class value) {
 		throw new UnsupportedOperationException();
+	}
+
+	public void setFlatClass(@NonNull FlatClass flatClass) {
+		this.flatClass = flatClass;
 	}
 
 	@Override
@@ -242,6 +305,11 @@ public class AbstractExecutorClass extends AbstractExecutorType implements org.e
 
 	//	@Override
 	public void setIsSerializable(boolean value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public final void setName(String value) {
 		throw new UnsupportedOperationException();
 	}
 

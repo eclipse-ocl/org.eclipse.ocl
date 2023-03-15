@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AbstractClass;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
@@ -77,6 +78,7 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Class</b></em>'.
+ * @extends AbstractClass
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -101,9 +103,7 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  *
  * @generated
  */
-public class ClassImpl
-extends TypeImpl
-implements org.eclipse.ocl.pivot.Class {
+public class ClassImpl extends AbstractClass {
 
 	/**
 	 * The number of structural features of the '<em>Class</em>' class.
