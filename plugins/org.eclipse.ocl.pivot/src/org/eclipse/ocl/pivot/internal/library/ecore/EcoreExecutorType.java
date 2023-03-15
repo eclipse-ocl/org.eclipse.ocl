@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
@@ -24,7 +25,6 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -37,7 +37,7 @@ public class EcoreExecutorType extends ExecutorType
 	 * Construct an executable type descriptor in the absence of a known EClassifier. A subsequent
 	 * call of {@link #initFragments(FlatFragment[], int[], EClassifier)} may define an EClassifier.
 	 */
-	public EcoreExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+	public EcoreExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		super(name, evaluationPackage, flags, typeParameters);
 		this.eClassifier = null;
 	}
@@ -46,7 +46,7 @@ public class EcoreExecutorType extends ExecutorType
 	 * Construct an executable type descriptor in the absence of a known EClassifier. A subsequent
 	 * call of {@link #initFragments(FlatFragment[], int[], EClassifier)} may define an EClassifier.
 	 */
-	public EcoreExecutorType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+	public EcoreExecutorType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		super(typeId.getName(), evaluationPackage, flags, typeParameters);
 		this.eClassifier = null;
 		this.typeId = typeId;
@@ -55,7 +55,7 @@ public class EcoreExecutorType extends ExecutorType
 	/**
 	 * Construct an executable type descriptor for a known EClassifier.
 	 */
-	public EcoreExecutorType(/*@NonNull*/ EClassifier eClassifier, @NonNull EcoreExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+	public EcoreExecutorType(/*@NonNull*/ EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		super(ClassUtil.nonNullModel(eClassifier.getName()), evaluationPackage, flags, typeParameters);
 		this.eClassifier = eClassifier;
 	}
@@ -63,7 +63,7 @@ public class EcoreExecutorType extends ExecutorType
 	/**
 	 * Construct an executable type descriptor for a known EClassifier and TypeId.
 	 */
-	public EcoreExecutorType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull TypeId typeId, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+	public EcoreExecutorType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull TypeId typeId, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		super(NameUtil.getName(eClassifier), evaluationPackage, flags, typeParameters);
 		this.eClassifier = eClassifier;
 	//	assert typeId == getTypeId();

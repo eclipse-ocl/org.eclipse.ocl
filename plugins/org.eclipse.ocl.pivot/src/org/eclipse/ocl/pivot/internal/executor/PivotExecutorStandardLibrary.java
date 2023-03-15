@@ -24,8 +24,8 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutableStandardLibrary;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
@@ -42,7 +42,7 @@ public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 	private Map<Type, org.eclipse.ocl.pivot.Class> typeMap = null;
 	private Map<org.eclipse.ocl.pivot.Package, org.eclipse.ocl.pivot.Package> packageMap = null;
 
-	public PivotExecutorStandardLibrary(EcoreExecutorPackage... execPackages) {
+	public PivotExecutorStandardLibrary(ExecutorPackage... execPackages) {
 		OCLstdlibTables.PACKAGE.getClass();
 		this.environmentFactory = ASResourceFactoryRegistry.INSTANCE.createEnvironmentFactory(BasicProjectManager.createDefaultProjectManager(), null);
 		environmentFactory.getStandardLibrary().setDefaultStandardLibraryURI(LibraryConstants.STDLIB_URI);

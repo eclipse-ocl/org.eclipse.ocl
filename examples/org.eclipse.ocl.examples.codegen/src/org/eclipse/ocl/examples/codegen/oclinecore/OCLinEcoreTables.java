@@ -73,12 +73,10 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -850,9 +848,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.appendClassReference(true, ExecutorProperty.class);
 					s.append(" ");
 					prop.accept(emitLiteralVisitor);
-					s.append(" = LIBRARY.createProperty(");
+					s.append(" = LIBRARY.create");
 					String name = ClassUtil.nonNullModel(prop.getName());
 					if (prop.getImplementationClass() != null) {
+						s.append("Property(");
 						s.appendString(name);
 						s.append(", " );
 						pClass.accept(emitScopedLiteralVisitor);
@@ -862,6 +861,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					}
 					else if (hasEcore(prop)) {
 						EStructuralFeature eStructuralFeature = ClassUtil.nonNullState((EStructuralFeature)prop.getESObject());
+						s.append("Property(");
 						s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
 						s.append(", " );
 						pClass.accept(emitScopedLiteralVisitor);
@@ -871,16 +871,16 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						Property opposite = prop.getOpposite();
 						if ((opposite != null) && hasEcore(opposite)) {
 							EStructuralFeature eStructuralFeature = ClassUtil.nonNullState((EStructuralFeature)opposite.getESObject());
+							s.append("OppositeProperty(");
 							s.appendString(name);
 							s.append(", " );
 							pClass.accept(emitScopedLiteralVisitor);
-							s.append(", " + i + ", new ");
-							s.appendClassReference(null, EcoreLibraryOppositeProperty.class);
-							s.append("(");
+							s.append(", " + i + ", ");
 							s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
-							s.append("))");
+							s.append(")");
 						}
 						else {
+							s.append("Property(");
 							s.appendString(name);
 							s.append(", " );
 							pClass.accept(emitScopedLiteralVisitor);
@@ -900,12 +900,15 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		Class<?> typeClass = getEcoreExecutorClass(asClass);
 		EClassifier eClassifier = ClassUtil.nonNullState((EClassifier)asClass.getESObject());
 		s.append("		public static final ");
-		s.appendClassReference(true, typeClass);
+		if (Enumeration.class.isAssignableFrom(typeClass)) {
+			s.appendClassReference(true, EcoreExecutorEnumeration.class);
+		}
+		else {
+			s.appendClassReference(true, ExecutorType.class);
+		}
 		s.append(" ");
 		asClass.accept(emitLiteralVisitor);
-		s.append(" = LIBRARY.create");
-		s.appendClassReference(null, typeClass);
-		s.append("(");
+		s.append(" = LIBRARY.create" + typeClass.getSimpleName() + "(");
 	/*	if (!hasEcore(asClass) || (asClass instanceof AnyType) || (asClass instanceof CollectionType) || (asClass instanceof VoidType) || (asClass instanceof InvalidType)) {
 			if (isBuiltInType(asClass)) {
 				s.appendClassReference(null, TypeId.class);
@@ -955,7 +958,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		s.append("\n");
 		s.append("		private static final ");
-		s.appendClassReference(true, EcoreExecutorType.class);
+		s.appendClassReference(true, ExecutorType.class);
 		s.append(" " + atNonNull() + " [] types = {");
 		boolean isFirst = true;
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
@@ -1097,11 +1100,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				TemplateParameter asTemplateParameter = name2templateParameter.get(name);
 				assert asTemplateParameter != null;
 				s.append("		public static final ");
-				s.appendClassReference(true, ExecutorTypeParameter.class);
+				s.appendClassReference(true, TemplateParameter.class);
 				s.append(" ");
 				s.append(name);
 				s.append(" = LIBRARY.create");
-				s.appendClassReference(null, ExecutorTypeParameter.class);
+				s.appendClassReference(null, TemplateParameter.class);
 				s.append("(");
 				s.append(Integer.toString(asTemplateParameter.getTemplateParameterId().getIndex()));
 				s.append(", ");
@@ -1138,7 +1141,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		for (@NonNull TemplateParameter asTemplateParameter : PivotUtil.getOwnedParameters(templateSignature)) {
 			s.append("		@Deprecated /* @deprecated use normalized name */\n");
 			s.append("		public static final ");
-			s.appendClassReference(true, ExecutorTypeParameter.class);
+			s.appendClassReference(true, TemplateParameter.class);
 			s.append(" ");
 			TemplateSignature asTemplateSignature = asTemplateParameter.getOwningSignature();
 			TemplateableElement asTemplateableElement = asTemplateSignature.getOwningElement();

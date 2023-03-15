@@ -44,7 +44,7 @@ public abstract class ExecutorType extends AbstractExecutorClass
 	private final @NonNull TemplateParameters typeParameters;
 //	private /*@LazyNonNull*/ DomainProperties allProperties;
 
-	public ExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
+	public ExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		super(name, flags);
 		this.evaluationPackage = evaluationPackage;
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
