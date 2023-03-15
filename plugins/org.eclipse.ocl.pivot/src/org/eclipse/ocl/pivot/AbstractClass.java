@@ -12,8 +12,12 @@ package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.TypeImpl;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
+import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 public abstract class AbstractClass extends TypeImpl implements org.eclipse.ocl.pivot.Class
 {
@@ -26,6 +30,14 @@ public abstract class AbstractClass extends TypeImpl implements org.eclipse.ocl.
 			classListeners2 = classListeners = new ClassListeners<>();
 		}
 		classListeners2.addListener(classListener);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
+		return ClassifierAllInstancesOperation.allInstances(executor, returnTypeId, this);
 	}
 
 	@Override

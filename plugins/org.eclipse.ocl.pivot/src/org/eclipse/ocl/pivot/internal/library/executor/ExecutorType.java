@@ -119,7 +119,7 @@ public abstract class ExecutorType extends AbstractExecutorClass
 
 	@Override
 	public @NonNull List<Operation> getOwnedOperations() {
-		return IterableAsImmutableList.asList(flatClass.getSelfFragment().getLocalOperations());
+		return IterableAsImmutableList.asList(getFlatClass().getSelfFragment().getLocalOperations());
 	}
 
 	@Override
@@ -143,7 +143,7 @@ public abstract class ExecutorType extends AbstractExecutorClass
 
 	@Override
 	public @NonNull List<org.eclipse.ocl.pivot.Class> getSuperClasses() {
-		return IterableAsImmutableList.asList(flatClass.getSelfFragment().getSuperClasses());
+		return IterableAsImmutableList.asList(getFlatClass().getSelfFragment().getSuperClasses());
 	}
 
 //	public @NonNull TypeId getTypeId() {
@@ -157,7 +157,7 @@ public abstract class ExecutorType extends AbstractExecutorClass
 
 //	@Deprecated
 	public void initFragments(@NonNull ExecutorFragment @NonNull [] fragments, int[] depthCounts) {
-		flatClass.initFragments(fragments, depthCounts);;
+		getFlatClass().initFragments(fragments, depthCounts);;
 	}
 
 	@Override
@@ -177,7 +177,7 @@ public abstract class ExecutorType extends AbstractExecutorClass
 
 	@Override
 	public boolean isOrdered() {
-		return flatClass.isOrdered();
+		return getFlatClass().isOrdered();
 	}
 
 	@Override
@@ -187,7 +187,7 @@ public abstract class ExecutorType extends AbstractExecutorClass
 
 	@Override
 	public boolean isUnique() {
-		return flatClass.isUnique();
+		return getFlatClass().isUnique();
 	}
 
 	@Override

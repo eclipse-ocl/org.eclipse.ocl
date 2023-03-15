@@ -31,14 +31,10 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
-import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
-import org.eclipse.ocl.pivot.values.SetValue;
 
 import com.google.common.collect.Lists;
 
@@ -51,15 +47,10 @@ public class AbstractExecutorClass extends AbstractClass implements CompleteInhe
 	public static final int OCL_INVALID = FlatClass.OCL_INVALID;
 	public static final int ABSTRACT = FlatClass.ABSTRACT;
 
-	protected /*final*/ /*@NonNull*/ FlatClass flatClass = null;
+	private /*final*/ /*@NonNull*/ FlatClass flatClass = null;
 
 	public AbstractExecutorClass(@NonNull String name, int flags) {
 		setName(name);
-	}
-
-	@Override
-	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
-		return ClassifierAllInstancesOperation.allInstances(executor, returnTypeId, this);
 	}
 
 	@Override
@@ -114,7 +105,6 @@ public class AbstractExecutorClass extends AbstractClass implements CompleteInhe
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return getTypeId().getMetaTypeName();
-		//		throw new UnsupportedOperationException();
 	}
 
 	@Override
