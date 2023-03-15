@@ -20,14 +20,19 @@ import java.util.WeakHashMap;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteInheritance;
+import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
 import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
@@ -35,20 +40,25 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorAnyType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBagType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBooleanType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorCollectionType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class ExecutorStandardLibrary extends ExecutableStandardLibrary
@@ -230,13 +240,37 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return executorTypeParameter;
 	}
 
+	public @NonNull EcoreExecutorEnumerationLiteral createEnumerationLiteral(/*@NonNull*/ EEnumLiteral eEnumLiteral, @NonNull Enumeration enumeration, int ordinal) {
+		assert eEnumLiteral != null;
+		return new EcoreExecutorEnumerationLiteral(eEnumLiteral, enumeration, ordinal);
+	}
+
 	public @NonNull FlatFragment createFragment(@NonNull ExecutorType cses, @NonNull ExecutorType cses2) {
 		return new FlatFragment(cses.getFlatClass(), cses2.getFlatClass());
+	}
+
+	public @NonNull ExecutorOperation createOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type type,
+			int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
+		return new ExecutorOperation(name, parameterTypes, type, index, typeParameters, implementation);
 	}
 
 	public @NonNull EcoreExecutorPackage createPackage(/*@NonNull*/ EPackage ePackage) {
 		assert ePackage != null;
 		return new EcoreExecutorPackage(ePackage);
+	}
+
+	public @NonNull EcoreExecutorPackage createPackage(/*@NonNull*/ EPackage ePackage, @NonNull PackageId packageId) {
+		assert ePackage != null;
+		return new EcoreExecutorPackage(ePackage, packageId, this);
+	}
+
+	public @NonNull ExecutorProperty createProperty(@NonNull  String name, @NonNull Type executorType, int propertyIndex, @NonNull LibraryProperty implementation) {
+		return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, implementation);
+	}
+
+	public @NonNull ExecutorProperty createProperty(/*@NonNull*/ EStructuralFeature eFeature, @NonNull Type executorType, int propertyIndex) {
+		assert eFeature != null;
+		return new EcoreExecutorProperty(eFeature, executorType, propertyIndex);
 	}
 
 	@Override

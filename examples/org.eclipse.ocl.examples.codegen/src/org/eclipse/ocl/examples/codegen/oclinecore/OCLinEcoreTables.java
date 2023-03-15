@@ -69,7 +69,6 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
@@ -77,7 +76,6 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImplementation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
@@ -418,9 +416,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.appendClassReference(true, EcoreExecutorEnumerationLiteral.class);
 					s.append(" ");
 					asEnumerationLiteral.accept(emitLiteralVisitor);
-					s.append(" = new ");
-					s.appendClassReference(null, EcoreExecutorEnumerationLiteral.class);
-					s.append("(");
+					s.append(" = LIBRARY.createEnumerationLiteral(");
 					s.append(genModelHelper.getQualifiedEcoreLiteralName(eClassifier));
 					s.append(".getEEnumLiteral(");
 					s.appendString(PivotUtil.getName(asEnumerationLiteral));
@@ -721,9 +717,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.appendClassReference(true, ExecutorOperation.class);
 				s.append(" ");
 				op.accept(emitLiteralVisitor);
-				s.append(" = new ");
-				s.appendClassReference(null, ExecutorOperation.class);
-				s.append("(");
+				s.append(" = LIBRARY.createOperation(");
 				s.appendString(ClassUtil.nonNullModel(op.getName()));
 				s.append(", ");
 				appendParameterTypesName(op.getParameterTypes());
@@ -856,11 +850,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.appendClassReference(true, ExecutorProperty.class);
 					s.append(" ");
 					prop.accept(emitLiteralVisitor);
-					s.append(" = new ");
+					s.append(" = LIBRARY.createProperty(");
 					String name = ClassUtil.nonNullModel(prop.getName());
 					if (prop.getImplementationClass() != null) {
-						s.appendClassReference(null, ExecutorPropertyWithImplementation.class);
-						s.append("(");
 						s.appendString(name);
 						s.append(", " );
 						pClass.accept(emitScopedLiteralVisitor);
@@ -870,8 +862,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					}
 					else if (hasEcore(prop)) {
 						EStructuralFeature eStructuralFeature = ClassUtil.nonNullState((EStructuralFeature)prop.getESObject());
-						s.appendClassReference(null, EcoreExecutorProperty.class);
-						s.append("(");
 						s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
 						s.append(", " );
 						pClass.accept(emitScopedLiteralVisitor);
@@ -881,8 +871,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						Property opposite = prop.getOpposite();
 						if ((opposite != null) && hasEcore(opposite)) {
 							EStructuralFeature eStructuralFeature = ClassUtil.nonNullState((EStructuralFeature)opposite.getESObject());
-							s.appendClassReference(null, ExecutorPropertyWithImplementation.class);
-							s.append("(");
 							s.appendString(name);
 							s.append(", " );
 							pClass.accept(emitScopedLiteralVisitor);
@@ -893,8 +881,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 							s.append("))");
 						}
 						else {
-							s.appendClassReference(null, ExecutorPropertyWithImplementation.class);
-							s.append("(");
 							s.appendString(name);
 							s.append(", " );
 							pClass.accept(emitScopedLiteralVisitor);
