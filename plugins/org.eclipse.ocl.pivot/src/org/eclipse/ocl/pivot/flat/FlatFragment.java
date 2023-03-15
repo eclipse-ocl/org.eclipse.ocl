@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
@@ -107,14 +108,38 @@ public class FlatFragment extends AbstractFragment
 	}
 
 	@Override
-	public @Nullable Operation getLocalOperation(@NonNull Operation staticOperation) {
-		int index = staticOperation.getIndex();
-		if (index >= 0) {
-			assert operations != null;
-			return operations[index];
+	public final @Nullable Operation getLocalOperation(@NonNull Operation baseOperation) {
+		if (derivedFlatClass instanceof CompleteFlatClass) {		// XXX move to FlatClass
+			CompleteFlatClass completeFlatClass = (CompleteFlatClass)derivedFlatClass;
+			String baseOperationName = baseOperation.getName();
+			ParametersId baseParametersId = baseOperation.getParametersId();
+			Operation bestOperation = null;
+			for (org.eclipse.ocl.pivot.Class partialClass : completeFlatClass.getCompleteClass().getPartialClasses()) {
+				for (Operation localOperation : partialClass.getOwnedOperations()) {
+					if (localOperation.getName().equals(baseOperationName) && (localOperation.getParametersId() == baseParametersId)) {
+						if (localOperation.getESObject() != null) {
+							return localOperation;
+						}
+						if (bestOperation == null) {
+							bestOperation = localOperation;
+						}
+						else if ((localOperation.getBodyExpression() != null) && (bestOperation.getBodyExpression() == null)) {
+							bestOperation = localOperation;
+						}
+					}
+				}
+			}
+			return bestOperation;					// null if not known locally, caller must try superfragments.
 		}
 		else {
-			return null;
+			int index = baseOperation.getIndex();
+			if (index >= 0) {
+				assert operations != null;
+				return operations[index];
+			}
+			else {
+				return null;
+			}
 		}
 	}
 

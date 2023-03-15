@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.executor.CompleteReflectiveFragment;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -100,11 +99,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 			superFlatClasses = Collections.singletonList(oclAnyFlatClass);
 		}
 		return superFlatClasses;
-	}
-
-	@Override
-	protected @NonNull FlatFragment createFragment(@NonNull FlatClass baseFlatClass) {
-		return new CompleteReflectiveFragment(this, baseFlatClass);
 	}
 
 	@Override

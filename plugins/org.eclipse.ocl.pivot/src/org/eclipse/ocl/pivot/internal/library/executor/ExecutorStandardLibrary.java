@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
 import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -227,6 +228,15 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	//	FlatClass flatClass = flatModel.getFlatClass(executorTypeParameter);
 	//	executorTypeParameter.setFlatClass(flatClass);
 		return executorTypeParameter;
+	}
+
+	public @NonNull FlatFragment createFragment(@NonNull ExecutorType cses, @NonNull ExecutorType cses2) {
+		return new FlatFragment(cses.getFlatClass(), cses2.getFlatClass());
+	}
+
+	public @NonNull EcoreExecutorPackage createPackage(/*@NonNull*/ EPackage ePackage) {
+		assert ePackage != null;
+		return new EcoreExecutorPackage(ePackage);
 	}
 
 	@Override

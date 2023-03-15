@@ -17,11 +17,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.TemplateParameters;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
@@ -35,7 +35,7 @@ public class EcoreExecutorType extends ExecutorType
 
 	/**
 	 * Construct an executable type descriptor in the absence of a known EClassifier. A subsequent
-	 * call of {@link #initFragments(ExecutorFragment[], int[], EClassifier)} may define an EClassifier.
+	 * call of {@link #initFragments(FlatFragment[], int[], EClassifier)} may define an EClassifier.
 	 */
 	public EcoreExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
 		super(name, evaluationPackage, flags, typeParameters);
@@ -44,7 +44,7 @@ public class EcoreExecutorType extends ExecutorType
 
 	/**
 	 * Construct an executable type descriptor in the absence of a known EClassifier. A subsequent
-	 * call of {@link #initFragments(ExecutorFragment[], int[], EClassifier)} may define an EClassifier.
+	 * call of {@link #initFragments(FlatFragment[], int[], EClassifier)} may define an EClassifier.
 	 */
 	public EcoreExecutorType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
 		super(typeId.getName(), evaluationPackage, flags, typeParameters);
@@ -146,7 +146,7 @@ public class EcoreExecutorType extends ExecutorType
 	 * enhance an Ecore-unaware package. This occurs for the PivotTables that enhance the
 	 * OCLstdlibTables.
 	 */
-	public @NonNull EcoreExecutorType initFragments(@NonNull ExecutorFragment @NonNull [] fragments, int[] depthCounts, /*@NonNull*/ EClassifier eClassifier) {
+	public @NonNull EcoreExecutorType initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts, /*@NonNull*/ EClassifier eClassifier) {
 		assert eClassifier != null;
 		assert this.eClassifier == null;
 		assert name.equals(eClassifier.getName());

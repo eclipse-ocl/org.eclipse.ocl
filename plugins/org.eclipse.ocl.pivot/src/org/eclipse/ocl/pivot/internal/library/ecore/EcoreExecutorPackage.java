@@ -38,7 +38,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 	private @NonNull ExecutorType[] types = null;
 	private @Nullable List<org.eclipse.ocl.pivot.Package> packages = null;
 
-	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage) {
+	public EcoreExecutorPackage(@NonNull EPackage ePackage) {
 		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), IdManager.getPackageId(ePackage));
 		this.ePackage = ePackage;
 	}

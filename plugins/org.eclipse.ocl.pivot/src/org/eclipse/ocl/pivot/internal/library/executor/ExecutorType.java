@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -156,7 +157,7 @@ public abstract class ExecutorType extends AbstractExecutorClass
 	}
 
 //	@Deprecated
-	public void initFragments(@NonNull ExecutorFragment @NonNull [] fragments, int[] depthCounts) {
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts) {
 		getFlatClass().initFragments(fragments, depthCounts);;
 	}
 

@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorAnyType;
@@ -74,7 +75,6 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImplementation;
@@ -476,12 +476,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			List<org.eclipse.ocl.pivot.@NonNull Class> allSupertypesSortedByName = getAllSupertypesSortedByName(asClass);
 			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : allSupertypesSortedByName) {
 				s.append("		private static final ");
-				s.appendClassReference(true, ExecutorFragment.class);
+				s.appendClassReference(true, FlatFragment.class);
 				s.append(" ");
 				appendClassSuperClassName(asClass, asSuperClass);
-				s.append(" = new ");
-				s.appendClassReference(null, ExecutorFragment.class);
-				s.append("(");
+				s.append(" = LIBRARY.createFragment(");
 				asClass.accept(emitScopedLiteralVisitor);
 				s.append(", ");
 				asSuperClass.accept(emitQualifiedLiteralVisitor);
@@ -1035,7 +1033,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			});
 			s.append("\n");
 			s.append("		private static final ");
-			s.appendClassReference(true, ExecutorFragment.class);
+			s.appendClassReference(true, FlatFragment.class);
 			s.append(" " + atNonNull() + " [] ");
 			asClass.accept(emitLiteralVisitor);
 			s.append(" =\n");
@@ -1239,13 +1237,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 */\n");
 		s.append("	public static final ");
 		s.appendClassReference(true, EcoreExecutorPackage.class);
-		s.append(" PACKAGE = new ");
-		s.appendClassReference(null, EcoreExecutorPackage.class);
-		s.append("(" + getGenPackagePrefix() + "Package.eINSTANCE");
+		s.append(" PACKAGE = LIBRARY.createPackage(" + getGenPackagePrefix() + "Package.eINSTANCE");
 		if (asPackage.getPackageId() == IdManager.METAMODEL) {
 			s.append(", ");
 			s.appendClassReference(null, IdManager.class);
-			s.append(".METAMODEL, LIBRARY");
+			s.append(".METAMODEL");
 		}
 		s.append(");\n");
 

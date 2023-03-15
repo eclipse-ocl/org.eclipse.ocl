@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.flat.FlatFragment;
  * or another class. The descriptions are normally built by direct static construction from auto-generated code, with instnaces defined
  * in isolation during construction then cross-references defined later by calls to init().
  */
+@Deprecated /* @deprecated use FlatFragment */
 public class ExecutorFragment extends FlatFragment
 {
 	public ExecutorFragment(@NonNull ExecutorType derivedInheritance, @NonNull CompleteInheritance baseInheritance) {
