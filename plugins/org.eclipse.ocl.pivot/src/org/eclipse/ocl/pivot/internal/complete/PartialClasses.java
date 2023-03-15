@@ -82,7 +82,7 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 	 */
 //	private @Nullable Map<@NonNull String, @NonNull PartialProperties> name2partialProperties = null;
 
-	private Set<@NonNull CompleteClassInternal> superCompleteClasses = null;
+//	private Set<@NonNull CompleteClassInternal> superCompleteClasses = null;
 
 	/**
 	 * Lazily created map from class name to the superclass. This is a map from unqualified name to
@@ -314,7 +314,7 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 			name2partialProperties = null;
 		} */
 //		name2superclasses = null;
-		superCompleteClasses = null;
+//		superCompleteClasses = null;
 	}
 
 	private void gatherAllStereotypes(@NonNull Set<Stereotype> allStereotypes, @NonNull Iterable<Stereotype> moreStereotypes) {
@@ -353,7 +353,6 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 		}
 	}
 
-	@SuppressWarnings("null")
 	public @NonNull CompleteClassInternal getCompleteClass() {
 		return owner;
 	}

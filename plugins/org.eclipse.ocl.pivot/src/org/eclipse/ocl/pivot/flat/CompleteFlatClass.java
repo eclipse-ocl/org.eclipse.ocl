@@ -232,7 +232,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	@Override
 	protected void installClassListeners() {
 		assert isMutable();
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(completeClass.getPartialClasses())) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 			((ClassImpl)partialClass).addClassListener(this);
 		}
 		completeClass.addClassListener(this);
@@ -246,7 +246,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	@Override
 	public void resetFragments() {
 		completeClass.removeClassListener(this);
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : ClassUtil.nullFree(completeClass.getPartialClasses())) {
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 			((ClassImpl)partialClass).removeClassListener(this);
 		}
 		completeClass.uninstall();
