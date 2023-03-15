@@ -127,6 +127,7 @@ public interface FlatClass extends Nameable
 	@NonNull String getName();
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 	@NonNull FlatFragment getSelfFragment();
+	@NonNull Operation @NonNull [] getSelfOperations();
 	@NonNull Property @NonNull [] getSelfProperties();
 	@NonNull StandardLibrary getStandardLibrary();
 	@NonNull FragmentIterable getSuperFragments(int depth);

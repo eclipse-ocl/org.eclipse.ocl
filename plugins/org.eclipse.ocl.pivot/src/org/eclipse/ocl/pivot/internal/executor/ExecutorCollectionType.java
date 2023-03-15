@@ -10,12 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.executor;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -119,10 +116,10 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 	//		return getTypeId().getCollectionTypeId().getMetaTypeName();
 	//	}
 
-	@Override
-	public @NonNull List<Operation> getOwnedOperations() {
-		return containerType.getOwnedOperations();
-	}
+//	@Override
+//	public @NonNull List<Operation> getOwnedOperations() {
+//		return containerType.getOwnedOperations();
+//	}
 
 	@Override
 	public @NonNull CollectionTypeId getTypeId() {

@@ -44,13 +44,18 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorAnyType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBagType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBooleanType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorCollectionType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
+import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
@@ -111,10 +116,10 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return type;
 	}
 
-	public @NonNull EcoreExecutorType createEcoreExecutorBagType(/*@NonNull*/ EClassifier eClassifier,
+	public @NonNull EcoreExecutorBagType createEcoreExecutorBagType(/*@NonNull*/ EClassifier eClassifier,
 			@NonNull ExecutorPackage evaluationPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-		EcoreExecutorType type = new EcoreExecutorType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+		EcoreExecutorBagType type = new EcoreExecutorBagType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		type.setFlatClass(flatClass);
@@ -131,10 +136,10 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return type;
 	}
 
-	public @NonNull EcoreExecutorType createEcoreExecutorCollectionType(/*@NonNull*/ EClassifier eClassifier,
+	public @NonNull EcoreExecutorCollectionType createEcoreExecutorCollectionType(/*@NonNull*/ EClassifier eClassifier,
 			@NonNull ExecutorPackage evaluationPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-		EcoreExecutorType type = new EcoreExecutorType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+		EcoreExecutorCollectionType type = new EcoreExecutorCollectionType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		type.setFlatClass(flatClass);
@@ -159,10 +164,10 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return type;
 	}
 
-	public @NonNull EcoreExecutorType createEcoreExecutorOrderedSetType(/*@NonNull*/ EClassifier eClassifier,
+	public @NonNull EcoreExecutorOrderedSetType createEcoreExecutorOrderedSetType(/*@NonNull*/ EClassifier eClassifier,
 			@NonNull ExecutorPackage evaluationPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-		EcoreExecutorType type = new EcoreExecutorType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+		EcoreExecutorOrderedSetType type = new EcoreExecutorOrderedSetType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		type.setFlatClass(flatClass);
@@ -179,20 +184,20 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return type;
 	}
 
-	public @NonNull EcoreExecutorType createEcoreExecutorSequenceType(/*@NonNull*/ EClassifier eClassifier,
+	public @NonNull EcoreExecutorSequenceType createEcoreExecutorSequenceType(/*@NonNull*/ EClassifier eClassifier,
 			@NonNull ExecutorPackage evaluationPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-		EcoreExecutorType type = new EcoreExecutorType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+		EcoreExecutorSequenceType type = new EcoreExecutorSequenceType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		type.setFlatClass(flatClass);
 		return type;
 	}
 
-	public @NonNull EcoreExecutorType createEcoreExecutorSetType(/*@NonNull*/ EClassifier eClassifier,
+	public @NonNull EcoreExecutorSetType createEcoreExecutorSetType(/*@NonNull*/ EClassifier eClassifier,
 			@NonNull ExecutorPackage evaluationPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-		EcoreExecutorType type = new EcoreExecutorType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+		EcoreExecutorSetType type = new EcoreExecutorSetType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		type.setFlatClass(flatClass);

@@ -64,14 +64,19 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	}
 
 	@Override
-	protected @Nullable List<@NonNull Property> computeDirectProperties() {
+	protected @NonNull Operation @NonNull [] computeDirectOperations() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected @NonNull Property @NonNull [] computeDirectProperties() {
 		List<@NonNull Property> asProperties = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(partialClass);
 			asProperties = gatherDirectProperties(unspecializedType, asProperties);
 		}
 		asProperties = gatherMetaExtensions(asProperties);
-		return asProperties;
+		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
 	}
 
 	@Override

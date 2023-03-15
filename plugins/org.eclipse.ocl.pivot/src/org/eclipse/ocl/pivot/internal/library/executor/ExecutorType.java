@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
-import org.eclipse.ocl.pivot.utilities.IterableAsImmutableList;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
@@ -113,16 +112,6 @@ public abstract class ExecutorType extends AbstractExecutorClass
 		throw new UnsupportedOperationException();			// FIXME
 	}
 
-//	@Override
-//	public @NonNull List<Property> getOwnedProperties() {
-//		return IterableAsImmutableList.asList(flatClass.getSelfFragment().getLocalProperties());
-//	}
-
-	@Override
-	public @NonNull List<Operation> getOwnedOperations() {
-		return IterableAsImmutableList.asList(getFlatClass().getSelfFragment().getLocalOperations());
-	}
-
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getOwningPackage() {
 		return evaluationPackage;
@@ -144,7 +133,8 @@ public abstract class ExecutorType extends AbstractExecutorClass
 
 	@Override
 	public @NonNull List<org.eclipse.ocl.pivot.Class> getSuperClasses() {
-		return IterableAsImmutableList.asList(getFlatClass().getSelfFragment().getSuperClasses());
+		throw new UnsupportedOperationException();					// FIXME
+//		return IterableAsImmutableList.asList(getFlatClass().getSelfFragment().getSuperClasses());
 	}
 
 //	public @NonNull TypeId getTypeId() {

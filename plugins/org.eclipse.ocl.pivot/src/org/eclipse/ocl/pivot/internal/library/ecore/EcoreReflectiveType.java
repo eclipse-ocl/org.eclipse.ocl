@@ -186,10 +186,10 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		throw new UnsupportedOperationException();			// FIXME
 	}
 
-	@Override
-	public @NonNull List<Operation> getOwnedOperations() {
-		throw new UnsupportedOperationException();		// FIXME
-	}
+//	@Override
+//	public @NonNull List<Operation> getOwnedOperations() {
+//		throw new UnsupportedOperationException();		// FIXME
+//	}
 
 	@Override
 	public @NonNull List<Constraint> getOwnedConstraints() {

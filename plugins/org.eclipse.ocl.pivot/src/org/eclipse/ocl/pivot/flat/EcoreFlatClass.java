@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
@@ -33,12 +34,17 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		this.eClassifier = eClassifier;
 	}
 
-/*	@Override
+	@Override
+	protected @NonNull Operation @NonNull [] computeDirectOperations() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	protected @NonNull Property @NonNull [] computeDirectProperties() {
 		if (!(eClassifier instanceof EClass) ) {
 			return NO_PROPERTIES;
 		}
-		List<EStructuralFeature> eStructuralFeatures = ((EClass) eClassifier).getEStructuralFeatures();
+		List<EStructuralFeature> eStructuralFeatures = ((EClass)eClassifier).getEStructuralFeatures();
 		int iSize = eStructuralFeatures.size();
 		@NonNull Property @NonNull [] array = new @NonNull Property[iSize];
 		for (int i = 0; i < iSize; i++) {
@@ -50,7 +56,7 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 			array[i] = propertyAndImplementation;
 		}
 		return array;
-	} */
+	}
 
 	@Override
 	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {	// This occurs before AS superclasses are defined
@@ -91,7 +97,7 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		return (EcoreFlatModel)flatModel;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Property @NonNull [] getSelfProperties() {
 		FlatFragment selfFragment = getSelfFragment();
 		@NonNull Property [] selfProperties = selfFragment.basicGetProperties();
@@ -111,7 +117,7 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 			selfFragment.initProperties(selfProperties);
 		}
 		return selfProperties;
-	}
+	} */
 
 	@Override
 	public @NonNull String toString() {

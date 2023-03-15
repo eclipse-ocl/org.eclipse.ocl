@@ -106,10 +106,10 @@ public class CompleteInheritanceImpl extends ReflectiveInheritance implements Co
 //		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedProperties());			// FIXME Use local cache
 //	}
 
-	@Override
-	public @NonNull List<Operation> getOwnedOperations() {
-		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedOperations());			// FIXME Use local cache
-	}
+//	@Override
+//	public @NonNull List<Operation> getOwnedOperations() {
+//		return ClassUtil.nonNullEMF(completeClass.getPrimaryClass().getOwnedOperations());			// FIXME Use local cache
+//	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {

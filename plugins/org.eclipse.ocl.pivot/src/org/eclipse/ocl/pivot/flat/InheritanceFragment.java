@@ -8,11 +8,11 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot;
+package org.eclipse.ocl.pivot.flat;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
 /**
@@ -38,6 +38,7 @@ public interface InheritanceFragment
 	/**
 	 * Return the actualOperation that has the same signature as apparentOperation.
 	 */
+	@Deprecated /* @deprecated no longer used */
 	@NonNull Operation getActualOperation(@NonNull Operation apparentOperation);
 
 	/**
@@ -45,11 +46,13 @@ public interface InheritanceFragment
 	 * If there is no local overload, returns an inherited operation if unambiguous or OclAnyUnsupportedOperation.AMBIGUOUS
 	 * if ambiguous.
 	 */
+	@Deprecated /* @deprecated no longer used */
 	@NonNull LibraryFeature getImplementation(@NonNull Operation apparentOperation);
 
 	/**
 	 * Return the operation within this fragment that has the same signature as apparentOperation. Returns null if none.
 	 */
+	@Deprecated /* @deprecated no longer used */
 	@Nullable Operation getLocalOperation(@NonNull Operation apparentOperation);
 
 	/**
@@ -59,9 +62,6 @@ public interface InheritanceFragment
 
 	/**
 	 * Return the properties within this fragment in property index order.
-	 */
-	@Deprecated /* @deprecated no longer used */
-	@NonNull Property @NonNull [] getLocalProperties();
-
-	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses();
+	 *
+	@NonNull Property @NonNull [] getLocalProperties(); */
 }

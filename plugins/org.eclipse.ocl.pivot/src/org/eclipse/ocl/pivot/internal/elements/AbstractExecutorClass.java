@@ -136,9 +136,9 @@ public class AbstractExecutorClass extends AbstractClassImpl implements Complete
 	}
 
 	@Override
-	@NonNull
-	public List<Operation> getOwnedOperations() {
-		throw new UnsupportedOperationException();
+	public final @NonNull List<Operation> getOwnedOperations() {
+		@NonNull Operation @NonNull [] asOperations = flatClass.getSelfOperations();
+		return Lists.newArrayList(asOperations);
 	}
 
 	@Override

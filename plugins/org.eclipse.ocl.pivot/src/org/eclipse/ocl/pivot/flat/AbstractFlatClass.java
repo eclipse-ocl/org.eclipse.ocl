@@ -48,6 +48,7 @@ import com.google.common.collect.Iterables;
 
 public abstract class AbstractFlatClass implements FlatClass, IClassListener
 {
+	protected static final @NonNull Operation @NonNull [] NO_OPERATIONS = new @NonNull Operation[0];
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
 
 	public static int computeFlags(@NonNull Type asType) {
@@ -194,7 +195,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 * Return the properties defined for this flat class, which may be need merging for a complete class.
 	 * FIXME super flat class properties should not be returned, but are due to legacy static initialization.
 	 */
-	protected abstract @Nullable List<@NonNull Property> computeDirectProperties();
+	protected abstract @NonNull Property @NonNull [] computeDirectProperties();
+
+	protected abstract @NonNull Operation @NonNull [] computeDirectOperations();
 
 	/**
 	 * Return the immediate super-FlatClasses without reference to the fragments.
@@ -584,8 +587,14 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public @NonNull Property @NonNull [] getSelfProperties() {
-		@NonNull Property [] selfProperties = getSelfFragment().basicGetProperties();
+	public final @NonNull Operation @NonNull [] getSelfOperations() {
+		@NonNull Operation [] selfOperations = getSelfFragment().getOperations();
+		return selfOperations != null ? selfOperations : NO_OPERATIONS;
+	}
+
+	@Override
+	public final @NonNull Property @NonNull [] getSelfProperties() {
+		@NonNull Property [] selfProperties = getSelfFragment().getProperties();
 		return selfProperties != null ? selfProperties : NO_PROPERTIES;
 	}
 
@@ -772,15 +781,15 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
 			assert fragments != null;
 			for (@NonNull FlatFragment fragment : fragments) {
-				@NonNull Property @Nullable [] fragmentProperties = fragment.basicGetProperties();
-				if (fragmentProperties == null) {
+				@NonNull Property @Nullable [] fragmentProperties = fragment.getProperties();
+			/*	if (fragmentProperties == null) {
 					List<@NonNull Property> asProperties = ((AbstractFlatClass)fragment.getBaseFlatClass()).computeDirectProperties();
 					fragmentProperties = fragment.basicGetProperties();
 					if (fragmentProperties == null) {			// XXX may recurse
 						fragmentProperties = asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
 						fragment.initProperties(fragmentProperties);
 					}
-				}
+				} */
 				for (@NonNull Property property : fragmentProperties) {
 					addProperty(property);
 				}

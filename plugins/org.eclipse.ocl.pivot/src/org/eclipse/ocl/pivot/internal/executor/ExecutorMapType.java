@@ -10,12 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.executor;
 
-import java.util.List;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -112,10 +109,10 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	//		return getTypeId().getCollectionTypeId().getMetaTypeName();
 	//	}
 
-	@Override
-	public @NonNull List<Operation> getOwnedOperations() {
-		return containerType.getOwnedOperations();
-	}
+//	@Override
+//	public @NonNull List<Operation> getOwnedOperations() {
+//		return containerType.getOwnedOperations();
+//	}
 
 	@Override
 	public @NonNull MapTypeId getTypeId() {

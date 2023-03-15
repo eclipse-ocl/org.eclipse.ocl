@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.flat;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -32,9 +31,10 @@ public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME i
 	}
 
 	@Override
-	protected @Nullable List<@NonNull Property> computeDirectProperties() {
+	protected @NonNull Property @NonNull [] computeDirectProperties() {
 		org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asClass);
-		return gatherDirectProperties(unspecializedType, null);
+		List<@NonNull Property> asProperties = gatherDirectProperties(unspecializedType, null);
+		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
 	}
 
 	@Override

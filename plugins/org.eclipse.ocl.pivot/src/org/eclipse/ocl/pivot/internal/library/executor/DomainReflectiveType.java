@@ -123,10 +123,10 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 		return domainClass.getOwnedInvariants();
 	}
 
-	@Override
-	public @NonNull List<Operation> getOwnedOperations() {
-		return domainClass.getOwnedOperations();
-	}
+//	@Override
+//	public @NonNull List<Operation> getOwnedOperations() {
+//		return domainClass.getOwnedOperations();
+//	}
 
 //	@Override
 //	public @NonNull List<Property> getOwnedProperties() {

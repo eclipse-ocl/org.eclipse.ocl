@@ -22,8 +22,9 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
-import org.eclipse.ocl.pivot.types.AbstractFragment;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 import com.google.common.collect.Lists;
 
@@ -32,8 +33,11 @@ import com.google.common.collect.Lists;
  * or another class. The descriptions are normally built by direct static construction from auto-generated code, with instnaces defined
  * in isolation during construction then cross-references defined later by calls to init().
  */
-public class FlatFragment extends AbstractFragment
+public class FlatFragment implements InheritanceFragment
 {
+	protected final @NonNull FlatClass derivedFlatClass;
+	protected final @NonNull FlatClass baseFlatClass;
+
 	private @NonNull Operation @Nullable [] operations = null;
 
 	/**
@@ -44,14 +48,57 @@ public class FlatFragment extends AbstractFragment
 	private @NonNull Property @Nullable [] properties = null;
 
 	protected @Nullable Map<@NonNull Operation, @NonNull LibraryFeature> operationMap = null;
-	protected @Nullable Map<@NonNull Operation, @NonNull Operation> apparentOperation2actualOperation = null;
+//	protected @Nullable Map<@NonNull Operation, @NonNull Operation> apparentOperation2actualOperation = null;
 
 	public FlatFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
-		super(derivedFlatClass, baseFlatClass);
+		this.derivedFlatClass = derivedFlatClass;
+		this.baseFlatClass = baseFlatClass;
 	}
 
-	public @NonNull Property @Nullable [] basicGetProperties() {
-		return properties;
+//	public @NonNull Operation @Nullable [] basicGetOperations() {
+//		return operations;
+//	}
+
+//	public @NonNull Property @Nullable [] basicGetProperties() {
+//		return properties;
+//	}
+
+	/**
+	 * Return the actualOperation that has the same signature as apparentOperation.
+	 */
+	@Override
+	public @NonNull Operation getActualOperation(@NonNull Operation apparentOperation) {
+		Operation localOperation = getLocalOperation(apparentOperation);
+		if (localOperation == null) {
+			if (derivedFlatClass == baseFlatClass) {
+				localOperation = apparentOperation;
+			}
+		}
+		if (localOperation == null) {				// Non-trivial, search up the inheritance tree for an inherited operation
+			Operation bestOverload = baseFlatClass.getBestOverload(derivedFlatClass, apparentOperation);
+			if (bestOverload != null) {
+				localOperation = bestOverload;
+			}
+			else {
+				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, derivedFlatClass);
+			}
+		}
+		return localOperation;
+	}
+
+	@Override
+	public final @NonNull InheritanceFragment getBaseFragment() {
+		return baseFlatClass.getSelfFragment();
+	}
+
+	@Override
+	public final @NonNull FlatClass getBaseFlatClass() {
+		return baseFlatClass;
+	}
+
+	@Override
+	public final @NonNull FlatClass getDerivedFlatClass() {
+		return derivedFlatClass;
 	}
 
 	@Override
@@ -153,18 +200,6 @@ public class FlatFragment extends AbstractFragment
 		}
 	}
 
-	@Override
-	@Deprecated /* @deprecated no longer used */
-	public final @NonNull Property @NonNull [] getLocalProperties() {
-		assert properties != null;
-		return properties;
-	}
-
-	@Override
-	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses() {
-		throw new UnsupportedOperationException();		// WIP
-	}
-
 	public void initOperations(@NonNull Operation @NonNull [] operations) {
 		assert this.operations == null;
 		this.operations = operations;
@@ -173,5 +208,83 @@ public class FlatFragment extends AbstractFragment
 	public void initProperties(@NonNull Property @NonNull [] properties) {
 		assert this.properties == null;
 		this.properties = properties;
+	}
+
+	public @NonNull Operation @NonNull [] getOperations() {
+		@NonNull Operation [] operations2 = operations;
+		if (operations2 == null) {
+			operations2 = ((AbstractFlatClass)baseFlatClass).computeDirectOperations();
+			initOperations(operations2);
+		}
+		return operations2;
+	}
+
+	public @NonNull Property @NonNull [] getProperties() {
+		@NonNull Property [] properties2 = properties;
+		if (properties2 == null) {
+			properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
+			initProperties(properties2);
+		}
+		return properties2;
+	}
+
+	/**
+	 * Return true if anOperation overloads an existing operation.
+	 *
+	protected boolean isOverload(DomainOperation anOperation) {
+		int depth = derivedInheritance.getDepth();
+		for (int i = 0; i <= depth-1; i++) {
+			for (DomainInheritance superInheritance : derivedInheritance.getSuperInheritances(depth)) {
+				DomainFragment baseFragment = superInheritance.getSelfFragment();
+				for (DomainOperation baseOperation : baseFragment.getOperations()) {
+					if (isOverload(anOperation, baseOperation)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	} */
+
+	/*	public DomainOperation lookupOperation(DomainStandardLibrary standardLibrary, DomainType staticType, String operationName, DomainType[] argumentTypes) {
+	for (DomainOperation operation : getOperations()) {		// FIXME binary search
+		if (operation.getName().equals(operationName)) {
+			boolean gotIt = true;
+			IndexableIterable<? extends DomainType> parameterTypeArguments = operation.getParameterType();
+//			ExecutorTypeArgument[] parameterTypeArguments = operation.getParameterType();
+			if (parameterTypeArguments.size() == argumentTypes.length) {
+				for (int i = 0; i < parameterTypeArguments.size(); i++) {
+					DomainType argumentType = argumentTypes[i];
+					DomainType parameterTypeArgument = parameterTypeArguments.get(i);
+//					if (parameterTypeArgument instanceof ExecutorType) {
+						DomainType parameterType;
+						if (parameterTypeArgument == standardLibrary.getOclSelfType()) {
+							parameterType = staticType;
+						}
+						else {
+							parameterType = parameterTypeArgument;
+						}
+						if (!argumentType.conformsTo(standardLibrary, parameterType)) {
+							gotIt = false;
+							break;
+						}
+
+//					}
+//					else {
+//						// FIXME
+//					}
+				}
+			}
+			if (gotIt) {
+				return operation;
+			}
+		}
+	}
+	return null;
+} */
+
+	@Override
+	public @NonNull String toString() {
+		return derivedFlatClass.toString() + "__" + baseFlatClass.toString(); //$NON-NLS-1$
 	}
 }
