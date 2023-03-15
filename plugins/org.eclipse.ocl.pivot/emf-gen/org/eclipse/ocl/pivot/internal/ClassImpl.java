@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AbstractClass;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
@@ -39,7 +38,6 @@ import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -979,7 +977,8 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
 		try {
-			return getInheritance(standardLibrary).getPivotClass();
+		//	return getInheritance(standardLibrary).getPivotClass();
+			return getFlatClass(standardLibrary).getPivotClass();
 		}
 		catch (Throwable e) {
 			return this;			// WIP FIXME should never happen
