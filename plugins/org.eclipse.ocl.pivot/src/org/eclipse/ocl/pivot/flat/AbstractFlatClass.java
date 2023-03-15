@@ -26,11 +26,14 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
+import org.eclipse.ocl.pivot.internal.complete.PartialOperations;
 import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
 import org.eclipse.ocl.pivot.internal.library.executor.JavaType;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -39,6 +42,9 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 
 public abstract class AbstractFlatClass implements FlatClass, IClassListener
 {
@@ -77,7 +83,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected final @NonNull FlatModel flatModel;
 	protected final @NonNull String name;
 	protected final int flags;
-	// private @Nullable Map<@NonNull String, @NonNull Operation> name2operation = null;
+
+	/**
+	 * Lazily created map from operation name to map of parameter types to the list of partial operations to be treated as merged.
+	 */
+	private @Nullable Map<@NonNull String, @NonNull PartialOperations> name2partialOperations = null;
 
 	/**
 	 * Cached mapping from a property name to the Property or PartialProperties that has that name within
@@ -117,6 +127,35 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.flags = flags;
 	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + name + " " + Integer.toHexString(flags));
 	}
+
+	protected void addOperation(@NonNull Operation pivotOperation) {
+		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 != null) {
+			String operationName = pivotOperation.getName();
+			if (operationName != null) {
+				PartialOperations partialOperations = name2partialOperations2.get(operationName);
+				if (partialOperations == null) {
+					partialOperations = new PartialOperations(getStandardLibrary(), operationName);
+					name2partialOperations2.put(operationName, partialOperations);
+				}
+				partialOperations.didAddOperation(pivotOperation);
+			}
+		}
+	}
+
+/*	@Override
+	public void zzdidRemoveOperation(@NonNull Operation pivotOperation) {
+		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 != null) {
+			String operationName = pivotOperation.getName();
+			PartialOperations partialOperations = name2partialOperations2.get(operationName);
+			if (partialOperations != null) {
+				if (partialOperations.didRemoveOperation(pivotOperation)) {
+					name2partialOperations2.remove(operationName);
+				}
+			}
+		}
+	} */
 
 	protected void addProperty(@NonNull Property property) {
 		String name = NameUtil.getName(property);
@@ -399,6 +438,99 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return name;
 	}
 
+	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
+		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		String operationName = operationId.getName();
+		PartialOperations partialOperations = name2partialOperations2.get(operationName);
+		if (partialOperations == null) {
+			return null;
+		}
+		return partialOperations.getOperation(operationId.getParametersId(), null);
+	}
+
+	public @Nullable Operation getOperation(@NonNull Operation pivotOperation) {
+		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		String operationName = pivotOperation.getName();
+		PartialOperations partialOperations = name2partialOperations2.get(operationName);
+		if (partialOperations == null) {
+			return null;
+		}
+		return partialOperations.getOperation(pivotOperation.getParametersId(), pivotOperation.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC);
+	}
+
+	public @NonNull Iterable<String> getOperationNames() {
+		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		return name2partialOperations2.keySet();
+	}
+
+	public @Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
+		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		String operationName = pivotOperation.getName();
+		PartialOperations partialOperations = name2partialOperations2.get(operationName);
+		if (partialOperations == null) {
+			return null;
+		}
+		ParametersId parametersId = pivotOperation.getParametersId();
+		return partialOperations.getOperationOverloads(parametersId, pivotOperation.isIsStatic() ? FeatureFilter.SELECT_STATIC : FeatureFilter.SELECT_NON_STATIC);
+	}
+
+	public @NonNull Iterable<@NonNull Operation> getOperationOverloads(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
+		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		PartialOperations partialOperations = name2partialOperations2.get(name);
+		if (partialOperations == null) {
+			return PivotMetamodelManager.EMPTY_OPERATION_LIST;
+		}
+		return partialOperations.getOperationOverloads(featureFilter);
+	}
+
+	public @NonNull Iterable<@NonNull Operation> getOperations() {
+		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		Iterable<Iterable<Iterable<@NonNull Operation>>> transformed = Iterables.transform(name2partialOperations2.values(), PartialOperations.partialOperations2allOperations);
+		@NonNull Iterable<@NonNull Operation> concat = Iterables.concat(Iterables.concat(transformed));
+		return concat;
+	}
+
+	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter) {
+		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = initOperations();
+		}
+		Iterable<@NonNull PartialOperations> itMapListOps = name2partialOperations2.values();
+		@NonNull Iterable<Iterable<Iterable<@NonNull Operation>>> itItListOps = Iterables.transform(itMapListOps, PartialOperations.partialOperations2allOperations);
+		@NonNull Iterable<Iterable<@NonNull Operation>> itListOps = Iterables.concat(itItListOps);
+		@NonNull Iterable<@NonNull Operation> itOps = Iterables.concat(itListOps);
+		if (featureFilter == null) {
+			return itOps;
+		}
+		@NonNull Iterable<@NonNull Operation> subItOps = Iterables.filter(itOps,
+			new Predicate<@NonNull Operation>()
+			{
+				@Override
+				public boolean apply(@NonNull Operation domainOperation) {
+					return featureFilter.accept(domainOperation);
+				}
+			});
+		return subItOps;
+	}
+
 	public @NonNull Iterable<@NonNull Property> getProperties(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
 		if (name2propertyOrProperties == null) {
 			if (fragments == null) {
@@ -603,6 +735,36 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		this.indexes = indexes;
 		installClassListeners();
 	}
+
+	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initOperations() {
+		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = name2partialOperations = new HashMap<@NonNull String, @NonNull PartialOperations>();
+//			Set<CompleteClass> allSuperCompleteClasses = new HashSet<CompleteClass>();
+//			allSuperCompleteClasses.add(completeClass);
+//			for (CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+//				allSuperCompleteClasses.add(superCompleteClass);
+//			}
+			initOperationsInternal();
+		//	for (PartialOperations partialOperations : name2partialOperations2.values()) {
+		//		partialOperations.initMemberOperationsPostProcess();
+		//	}
+		}
+		return name2partialOperations2;
+	}
+
+	protected abstract void initOperationsInternal();
+
+/*	private void initMemberOperationsFrom(org.eclipse.ocl.pivot.@NonNull Class unspecializedPartialType) {
+	//	if (INIT_MEMBER_OPERATIONS.isActive()) {
+	//		INIT_MEMBER_OPERATIONS.println(this + " from " + unspecializedPartialType);
+	//	}
+		for (@SuppressWarnings("null")@NonNull Operation pivotOperation : unspecializedPartialType.getOwnedOperations()) {
+			if (pivotOperation.getName() != null) {		// name may be null for partially initialized Complete OCL document.
+				didAddOperation(pivotOperation);
+			}
+		}
+	} */
 
 	private synchronized void initProperties() {
 		Map<@NonNull String, @Nullable Object> name2propertyOrProperties2 = name2propertyOrProperties;
@@ -812,6 +974,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	public void resetFragments() {
 		if (mutable == null) {				// 'premature' resetFragments
 			assert fragments == null;
+			assert name2partialOperations == null;
 			assert name2propertyOrProperties == null;
 			return;
 		}
@@ -839,10 +1002,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	public void resetOperations() {
-	//	if (name2partialOperations != null) {
-	//		name2partialOperations.clear();
-	//		name2partialOperations = null;
-	//	}
+		if (name2partialOperations != null) {
+			name2partialOperations.clear();
+			name2partialOperations = null;
+		}
 	}
 
 	public void resetProperties() {

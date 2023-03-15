@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal.complete;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -29,25 +28,19 @@ import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivot./ *@NonNull* /Class>*/ implements ClassListeners.IClassListener
 {
-	private static final long serialVersionUID = 1L;
+//	private static final long serialVersionUID = 1L;
 	public static final @NonNull TracingOption PARTIAL_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "partialClasses");
 //	static { PARTIAL_CLASSES.setState(true); }
 
@@ -71,11 +64,6 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 
 	protected final @NonNull CompleteClassImpl owner;
 	private @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = new ArrayList<>();
-
-	/**
-	 * Lazily created map from operation name to map of parameter types to the list of partial operations to be treated as merged.
-	 */
-	private @Nullable Map<@NonNull String, @NonNull PartialOperations> name2partialOperations = null;
 
 	/**
 	 * Lazily created map from property name to the list of properties to be treated as merged.
@@ -212,7 +200,7 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 
 	@Override
 	public void didAddOperation(@NonNull Operation pivotOperation) {
-		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+	/*	Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 != null) {
 			String operationName = pivotOperation.getName();
 			if (operationName != null) {
@@ -223,7 +211,8 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 				}
 				partialOperations.didAddOperation(pivotOperation);
 			}
-		}
+		} */
+		owner.resetOperations();
 	}
 
 	@Override
@@ -256,7 +245,7 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 
 	@Override
 	public void didRemoveOperation(@NonNull Operation pivotOperation) {
-		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+	/*	Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 != null) {
 			String operationName = pivotOperation.getName();
 			PartialOperations partialOperations = name2partialOperations2.get(operationName);
@@ -265,7 +254,8 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 					name2partialOperations2.remove(operationName);
 				}
 			}
-		}
+		} */
+		owner.resetOperations();
 	}
 
 	@Override
@@ -303,11 +293,11 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 			owningCompletePackage.getPartialPackages().uninstalled(completeClass);
 		}
 		completeInheritance = null;
-		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
+	/*	Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 != null) {
 			name2partialOperations2.clear();
 			name2partialOperations = null;
-		}
+		} */
 	/*	Map<String, @NonNull PartialProperties> name2partialProperties2 = name2partialProperties;
 		if (name2partialProperties2 != null) {
 			name2partialProperties2.clear();
@@ -380,7 +370,7 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 		return getCompleteClass().getMetamodelManager();
 	}
 
-	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
+/*	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
 		Map<String, PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
 			name2partialOperations2 = initMemberOperations();
@@ -471,7 +461,7 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 				}
 			});
 		return subItOps;
-	}
+	} */
 
 	public @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getPartialClasses() {
 		return partialClasses;
@@ -654,16 +644,16 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 		} */
 	}
 
-	public void initMemberFeaturesFrom(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
+/*	public void initMemberFeaturesFrom(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		if (name2partialOperations != null) {
 			initMemberOperationsFrom(pivotType);
 		}
 	//	if (name2partialProperties != null) {
 	//		initMemberPropertiesFrom(pivotType);		// FIXME invalidate is safer
 	//	}
-	}
+	} */
 
-	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initMemberOperations() {
+/*	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initMemberOperations() {
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
 			name2partialOperations2 = name2partialOperations = new HashMap<@NonNull String, @NonNull PartialOperations>();
@@ -698,10 +688,10 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 				didAddOperation(pivotOperation);
 			}
 		}
-	}
+	} */
 
-	protected @NonNull Map<String, @NonNull PartialProperties> initMemberProperties() {
-/*		Map<@NonNull String, @NonNull PartialProperties> name2partialProperties2 = name2partialProperties;
+/*	protected @NonNull Map<String, @NonNull PartialProperties> initMemberProperties() {
+		Map<@NonNull String, @NonNull PartialProperties> name2partialProperties2 = name2partialProperties;
 		if (name2partialProperties2 == null) {
 			name2partialProperties2 = name2partialProperties = new HashMap<>();
 			List<@NonNull ElementExtension> allExtensions = null;
@@ -783,7 +773,7 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 				initMemberPropertiesPostProcess(getCompleteClass().getName(), properties);
 			}
 		}
-		return name2partialProperties2; */
+		return name2partialProperties2;
 		throw new UnsupportedOperationException();
 	}
 
@@ -803,7 +793,7 @@ public class PartialClasses /*extends EObjectResolvingEList<org.eclipse.ocl.pivo
 
 	protected void initMemberPropertiesPostProcess(String name, @NonNull PartialProperties properties) {
 		// TODO Auto-generated method stub // FIXME Prune occlusions
-	}
+	} */
 
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
 		throw new UnsupportedOperationException();

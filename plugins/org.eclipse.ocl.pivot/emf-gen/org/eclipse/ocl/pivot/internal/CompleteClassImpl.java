@@ -379,7 +379,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	 */
 	protected EList<org.eclipse.ocl.pivot.Class> partialClasses;
 
-	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
+	private @Nullable ClassListeners<ClassListeners.@NonNull IClassListener> classListeners = null;
 
 	protected @NonNull PartialClasses legacyPartialClasses;
 
@@ -391,7 +391,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	// FIXME tests fail if keys are weak since GC is too aggressive across tests
 	// The actual types are weak keys so that parameterizations using stale types are garbage collected.
 	//
-	private @Nullable /*WeakHash*/Map<TemplateParameters, WeakReference<org.eclipse.ocl.pivot.Class>> specializations = null;
+	private @Nullable /*WeakHash*/Map<@NonNull TemplateParameters, WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations = null;
 
 	protected CompleteClassImpl()
 	{
@@ -411,9 +411,9 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
-		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
+		ClassListeners<ClassListeners.@NonNull IClassListener> classListeners2 = classListeners;
 		if (classListeners2 == null) {
-			classListeners2 = classListeners = new ClassListeners<ClassListeners.IClassListener>();
+			classListeners2 = classListeners = new ClassListeners<>();
 		}
 		classListeners2.addListener(classListener);
 	}
@@ -593,8 +593,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		throw new UnsupportedOperationException("Not a map");
 	}
 
-	public @NonNull Iterable<Operation> getMemberOperations() {
-		return legacyPartialClasses.getOperations();
+	public @NonNull Iterable<@NonNull Operation> getMemberOperations() {
+		return getFlatClass().getOperations();
 	}
 
 	@Override
@@ -604,27 +604,27 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
-		return legacyPartialClasses.getOperation(operationId);
+		return getFlatClass().getOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Operation getOperation(@NonNull Operation operationId) {
-		return legacyPartialClasses.getOperation(operationId);
+		return getFlatClass().getOperation(operationId);
 	}
 
 	@Override
 	public @Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
-		return legacyPartialClasses.getOperationOverloads(pivotOperation);
+		return getFlatClass().getOperationOverloads(pivotOperation);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter) {
-		return legacyPartialClasses.getOperations(featureFilter);
+		return getFlatClass().getOperations(featureFilter);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-		return legacyPartialClasses.getOperationOverloads(featureFilter, name);
+		return getFlatClass().getOperationOverloads(featureFilter, name);
 	}
 
 	/**
@@ -739,18 +739,18 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		if (templateArgumentsParameters.parametersSize() != iMax) {
 			throw new IllegalArgumentException("Incompatible template argument count");
 		}
-		Map<TemplateParameters, WeakReference<org.eclipse.ocl.pivot.Class>> specializations2 = specializations;
+		Map<@NonNull TemplateParameters, WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations2 = specializations;
 		if (specializations2 == null) {
 			synchronized(this) {
 				specializations2 = specializations;
 				if (specializations2 == null) {
-					specializations2 = specializations = new /*Weak*/HashMap<TemplateParameters, WeakReference<org.eclipse.ocl.pivot.Class>>();
+					specializations2 = specializations = new /*Weak*/HashMap<>();
 				}
 			}
 		}
 		synchronized (specializations2) {
 			org.eclipse.ocl.pivot.Class specializedType = null;
-			WeakReference<org.eclipse.ocl.pivot.Class> weakReference = specializations2.get(templateArgumentsParameters);
+			WeakReference<org.eclipse.ocl.pivot.@NonNull Class> weakReference = specializations2.get(templateArgumentsParameters);
 			if (weakReference != null) {
 				specializedType = weakReference.get();
 				if (specializedType != null) {
@@ -767,7 +767,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 			}
 			if (specializedType == null) {
 				specializedType = createSpecialization(templateArgumentsParameters);
-				specializations2.put(templateArgumentsParameters, new WeakReference<org.eclipse.ocl.pivot.Class>(specializedType));
+				specializations2.put(templateArgumentsParameters, new WeakReference<>(specializedType));
 			}
 			return specializedType;
 		}
@@ -815,6 +815,12 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	public void resetFragments() {
 		if (flatClass != null) {
 			flatClass.resetFragments();
+		}
+	}
+
+	public void resetOperations() {
+		if (flatClass != null) {
+			flatClass.resetOperations();
 		}
 	}
 

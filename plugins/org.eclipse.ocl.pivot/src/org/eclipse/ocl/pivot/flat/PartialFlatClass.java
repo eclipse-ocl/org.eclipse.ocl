@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -60,6 +61,22 @@ public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME i
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
 		return asClass;
+	}
+
+	@Override
+	protected void initOperationsInternal() {
+		for (org.eclipse.ocl.pivot.@NonNull Class superType : PivotUtil.getSuperClasses(asClass)) {
+			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
+			//	initMemberOperationsFrom(unspecializedPartialType);
+			//	if (INIT_MEMBER_OPERATIONS.isActive()) {
+			//		INIT_MEMBER_OPERATIONS.println(this + " from " + unspecializedPartialType);
+			//	}
+			for (@SuppressWarnings("null")@NonNull Operation pivotOperation : unspecializedType.getOwnedOperations()) {
+				if (pivotOperation.getName() != null) {		// name may be null for partially initialized Complete OCL document.
+					addOperation(pivotOperation);
+				}
+			}
+		}
 	}
 
 	@Override

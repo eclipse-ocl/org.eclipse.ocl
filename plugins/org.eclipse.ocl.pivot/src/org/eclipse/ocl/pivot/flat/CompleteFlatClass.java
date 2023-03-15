@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -199,6 +200,28 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		}
 		else {
 			return Collections.singletonList(state);
+		}
+	}
+
+	@Override
+	protected void initOperationsInternal() {
+		for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+			for (org.eclipse.ocl.pivot.@NonNull Class superType : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
+				org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
+				CompleteClass unspecializedCompleteClass = completeClass.getCompleteModel().getCompleteClass(unspecializedType);
+				for (org.eclipse.ocl.pivot.@NonNull Class unspecializedPartialType : ClassUtil.nullFree(unspecializedCompleteClass.getPartialClasses())) {
+					assert unspecializedPartialType != null;
+				//	initMemberOperationsFrom(unspecializedPartialType);
+					//	if (INIT_MEMBER_OPERATIONS.isActive()) {
+					//		INIT_MEMBER_OPERATIONS.println(this + " from " + unspecializedPartialType);
+					//	}
+					for (@SuppressWarnings("null")@NonNull Operation pivotOperation : unspecializedPartialType.getOwnedOperations()) {
+						if (pivotOperation.getName() != null) {		// name may be null for partially initialized Complete OCL document.
+							addOperation(pivotOperation);
+						}
+					}
+				}
+			}
 		}
 	}
 
