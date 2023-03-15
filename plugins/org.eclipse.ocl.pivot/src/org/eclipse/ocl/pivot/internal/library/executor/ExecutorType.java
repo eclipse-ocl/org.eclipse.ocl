@@ -36,7 +36,7 @@ import org.eclipse.ocl.pivot.values.OCLValue;
  * An ExecutorType defines a Type using a compact representation suitable for efficient
  * execution and static construction.
  */
-public abstract class ExecutorType extends AbstractExecutorClass implements ExecutorTypeArgument
+public abstract class ExecutorType extends AbstractExecutorClass
 {
 
 	protected final org.eclipse.ocl.pivot.@NonNull Package evaluationPackage;

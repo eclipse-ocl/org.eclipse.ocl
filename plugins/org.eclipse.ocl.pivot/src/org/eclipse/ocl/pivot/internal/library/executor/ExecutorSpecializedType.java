@@ -22,19 +22,19 @@ import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
-public class ExecutorSpecializedType extends AbstractExecutorClass implements ExecutorTypeArgument
+public class ExecutorSpecializedType extends AbstractExecutorClass
 {
 	protected final @NonNull TypeId typeId;
 
 	@Deprecated			/* Let unspecializedTypeId define the name */
-	public ExecutorSpecializedType(@NonNull String name, @NonNull ExecutorTypeArgument... typeArguments) {
+	public ExecutorSpecializedType(@NonNull String name, @NonNull Type... typeArguments) {
 		this(TypeId.MAP_NAME.equals(name) ? IdManager.getMapTypeId(name) : IdManager.getCollectionTypeId(name), typeArguments);
 	}
 
 	/**
 	 * @since 1.18
 	 */
-	public ExecutorSpecializedType(@NonNull TypeId unspecializedTypeId, @NonNull ExecutorTypeArgument... typeArguments) {
+	public ExecutorSpecializedType(@NonNull TypeId unspecializedTypeId, @NonNull Type... typeArguments) {
 		super(unspecializedTypeId.getDisplayName(), 0);
 		BindingsId bindingsId = null;
 		if (unspecializedTypeId == TypeId.MAP) {

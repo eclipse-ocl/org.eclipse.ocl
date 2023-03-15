@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
-public class ExecutorTupleType extends AbstractExecutorClass implements ExecutorTypeArgument
+public class ExecutorTupleType extends AbstractExecutorClass
 {
 	protected final @NonNull TypeId typeId;
 

@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -52,22 +51,10 @@ public class AbstractExecutorClass extends AbstractClass implements CompleteInhe
 	public static final int OCL_INVALID = FlatClass.OCL_INVALID;
 	public static final int ABSTRACT = FlatClass.ABSTRACT;
 
-	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
-
-	protected final @NonNull String name;
 	protected /*final*/ /*@NonNull*/ FlatClass flatClass = null;
 
 	public AbstractExecutorClass(@NonNull String name, int flags) {
-		this.name = name;
-	}
-
-	@Override
-	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
-		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
-		if (classListeners2 == null) {
-			classListeners2 = classListeners = new ClassListeners<>();
-		}
-		classListeners2.addListener(classListener);
+		setName(name);
 	}
 
 	@Override
@@ -128,11 +115,6 @@ public class AbstractExecutorClass extends AbstractClass implements CompleteInhe
 	public @NonNull String getMetaTypeName() {
 		return getTypeId().getMetaTypeName();
 		//		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	@Override
@@ -266,14 +248,6 @@ public class AbstractExecutorClass extends AbstractClass implements CompleteInhe
 		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
 	}
 
-	@Override
-	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
-		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
-		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
-			classListeners = null;
-		}
-	}
-
 	//	@Override
 	public void setBehavioralClass(org.eclipse.ocl.pivot.Class value) {
 		throw new UnsupportedOperationException();
@@ -305,11 +279,6 @@ public class AbstractExecutorClass extends AbstractClass implements CompleteInhe
 
 	//	@Override
 	public void setIsSerializable(boolean value) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public final void setName(String value) {
 		throw new UnsupportedOperationException();
 	}
 

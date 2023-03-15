@@ -58,7 +58,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -1134,20 +1133,10 @@ public class ClassImpl extends AbstractClass {
 
 	private TypeId typeId = null;
 	private TypeId normalizedTypeId = null;
-	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
 
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitClass(this);
-	}
-
-	@Override
-	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
-		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
-		if (classListeners2 == null) {
-			classListeners2 = classListeners = new ClassListeners<>();
-		}
-		classListeners2.addListener(classListener);
 	}
 
 	public @NonNull TypeId computeId() {
@@ -1426,14 +1415,6 @@ public class ClassImpl extends AbstractClass {
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		FlatClass flatClass = getFlatClass(standardLibrary);
 		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
-	}
-
-	@Override
-	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
-		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
-		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
-			classListeners = null;
-		}
 	}
 
 	@Override

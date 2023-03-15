@@ -20,11 +20,11 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
-public class ExecutorLambdaType extends AbstractExecutorClass implements ExecutorTypeArgument
+public class ExecutorLambdaType extends AbstractExecutorClass
 {
 	protected final @NonNull TypeId typeId;
 
-	public ExecutorLambdaType(@NonNull String name, @NonNull ExecutorTypeArgument @NonNull ... typeArguments) {
+	public ExecutorLambdaType(@NonNull String name, @NonNull Type @NonNull ... typeArguments) {
 		super(name, 0);
 		typeId = IdManager.getLambdaTypeId(name, IdManager.getParametersId(typeArguments));
 	}
