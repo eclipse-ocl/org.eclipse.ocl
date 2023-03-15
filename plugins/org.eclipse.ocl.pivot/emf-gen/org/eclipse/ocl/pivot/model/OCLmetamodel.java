@@ -290,6 +290,7 @@ public class OCLmetamodel extends ASResourceImpl
 			root.getOwnedImports().add(createImport(null, _ocl));
 		}
 
+		private final @NonNull Class _AbstractClass = createClass(PivotPackage.Literals.ABSTRACT_CLASS);
 		private final @NonNull Class _Annotation = createClass(PivotPackage.Literals.ANNOTATION);
 		private final @NonNull Class _AnyType = createClass(PivotPackage.Literals.ANY_TYPE);
 		private final @NonNull Class _AssociationClass = createClass(PivotPackage.Literals.ASSOCIATION_CLASS);
@@ -683,6 +684,13 @@ public class OCLmetamodel extends ASResourceImpl
 			Class type;
 
 			ownedClasses = pivot.getOwnedClasses();
+			type = _AbstractClass;
+			type.setIsAbstract(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Type);
+			superClasses.add(_Namespace);
+			superClasses.add(_TemplateableElement);
+			ownedClasses.add(type);
 			type = _Annotation;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_NamedElement);
@@ -727,9 +735,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _Class;
 			superClasses = type.getSuperClasses();
-			superClasses.add(_Type);
-			superClasses.add(_Namespace);
-			superClasses.add(_TemplateableElement);
+			superClasses.add(_AbstractClass);
 			ownedClasses.add(type);
 			type = _CollectionItem;
 			superClasses = type.getSuperClasses();
@@ -4783,6 +4789,7 @@ public class OCLmetamodel extends ASResourceImpl
 		}
 
 		private void installComments() {
+			installComment(_AbstractClass, "AbstractClass is WIP towards sharing FlatClass functionality with Class/CompleteClass/EcoreExecutorType");
 			installComment(_AssociationClass, "A link is a tuple of values that refer to typed objects.  An Association classifies a set of links, each of which is an instance of the Association.  Each value in the link refers to an instance of the type of the corresponding end of the Association.\n\nA model element that has both Association and Class properties. An AssociationClass can be seen as an Association that also has Class properties, or as a Class that also has Association properties. It not only connects a set of Classifiers but also defines a set of Features that belong to the Association itself and not to any of the associated Classifiers.");
 			installComment(_Behavior, "Behavior is a specification of how its context BehavioredClassifier changes state over time. This specification may be either a definition of possible behavior execution or emergent behavior, or a selective illustration of an interesting subset of possible executions. The latter form is typically used for capturing examples, such as a trace of a particular execution.");
 			installComment(_Class, "A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.\n\nA Classifier represents a classification of instances according to their Features.\n\nStructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier.");

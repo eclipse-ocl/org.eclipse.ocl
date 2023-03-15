@@ -93,6 +93,12 @@
       </eAnnotations>
     </eLiterals>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-AbstractClass" name="AbstractClass"
+      abstract="true" eSuperTypes="#T-pivot-Type #T-pivot-Namespace #T-pivot-TemplateableElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="AbstractClass is WIP towards sharing FlatClass functionality with Class/CompleteClass/EcoreExecutorType"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Annotation" name="Annotation"
       eSuperTypes="#T-pivot-NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Annotation-ownedContents"
@@ -207,7 +213,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CallOperationAction-operation"
         name="operation" lowerBound="1" eType="#T-pivot-Operation"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Class" name="Class" eSuperTypes="#T-pivot-Type #T-pivot-Namespace #T-pivot-TemplateableElement">
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Class" name="Class" eSuperTypes="#T-pivot-AbstractClass">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.&#xA;&#xA;A Classifier represents a classification of instances according to their Features.&#xA;&#xA;StructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier."/>
     </eAnnotations>

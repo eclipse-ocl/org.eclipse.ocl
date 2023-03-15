@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.AbstractClass;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociationClass;
@@ -207,6 +208,11 @@ extends AdapterFactoryImpl {
 	 */
 	protected PivotSwitch<@Nullable Adapter> modelSwitch = new PivotSwitch<@Nullable Adapter>()
 		{
+			@Override
+			public Adapter caseAbstractClass(AbstractClass object)
+			{
+				return createAbstractClassAdapter();
+			}
 			@Override
 			public Adapter caseAnnotation(Annotation object)
 			{
@@ -885,6 +891,21 @@ extends AdapterFactoryImpl {
 	@Override
 	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject)target);
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.AbstractClass <em>Abstract Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.AbstractClass
+	 * @generated
+	 */
+	public Adapter createAbstractClassAdapter()
+	{
+		return null;
 	}
 
 	/**

@@ -10,6 +10,9 @@
         <values>true</values>
       </ownedDetails>
     </ownedAnnotations>
+    <ownedClasses xmi:id="nXcfR" isAbstract="true" name="AbstractClass" superClasses="#rrwsa #MzHoc #5r5y9">
+      <ownedComments body="AbstractClass is WIP towards sharing FlatClass functionality with Class/CompleteClass/EcoreExecutorType"/>
+    </ownedClasses>
     <ownedClasses xmi:id="g7Mr0" name="Annotation" superClasses="#0kVqz">
       <ownedProperties xmi:id="XjKgo" isComposite="true" name="ownedContents" opposite="#5Kk3e" type="#R+Drm"/>
       <ownedProperties xmi:id="V,KBZ" isComposite="true" name="ownedDetails" opposite="#s7tlS" type="#ehjA2"/>
@@ -65,7 +68,7 @@
       <ownedProperties xmi:id="vrBiI" name="operation" opposite="#AwSDc" type="#Yz,F1"/>
       <ownedProperties xmi:id="hlb5z" isImplicit="true" isRequired="false" name="MessageExp" opposite="#Ijz5s" type="#HRils"/>
     </ownedClasses>
-    <ownedClasses xmi:id="pDcbe" name="Class" superClasses="#rrwsa #MzHoc #5r5y9">
+    <ownedClasses xmi:id="pDcbe" name="Class" superClasses="#nXcfR">
       <ownedComments body="A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.&#xA;&#xA;A Classifier represents a classification of instances according to their Features.&#xA;&#xA;StructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier."/>
       <ownedInvariants xmi:id="i93Le" isCallable="true" name="NameIsNotNull">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="name &lt;> null&#xA;"/>

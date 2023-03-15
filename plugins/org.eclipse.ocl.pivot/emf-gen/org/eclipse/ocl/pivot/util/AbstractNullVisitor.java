@@ -38,6 +38,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitAbstractClass(org.eclipse.ocl.pivot.@NonNull AbstractClass object) {
+		return null;
+	}
+
+	@Override
 	public R visitAnnotation(org.eclipse.ocl.pivot.@NonNull Annotation object) {
 		return null;
 	}

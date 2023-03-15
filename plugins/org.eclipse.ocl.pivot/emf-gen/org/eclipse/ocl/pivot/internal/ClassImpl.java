@@ -75,16 +75,11 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Class</b></em>'.
- * @extends AbstractClass
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedConstraints <em>Owned Constraints</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedBindings <em>Owned Bindings</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedSignature <em>Owned Signature</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getUnspecializedElement <em>Unspecialized Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getExtenders <em>Extenders</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getInstanceClassName <em>Instance Class Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#isIsAbstract <em>Is Abstract</em>}</li>
@@ -100,7 +95,7 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  *
  * @generated
  */
-public class ClassImpl extends AbstractClass {
+public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivot.Class {
 
 	/**
 	 * The number of structural features of the '<em>Class</em>' class.
@@ -109,7 +104,7 @@ public class ClassImpl extends AbstractClass {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CLASS_FEATURE_COUNT = TypeImpl.TYPE_FEATURE_COUNT + 15;
+	public static final int CLASS_FEATURE_COUNT = AbstractClassImpl.ABSTRACT_CLASS_FEATURE_COUNT + 11;
 
 	/**
 	 * The number of operations of the '<em>Class</em>' class.
@@ -118,47 +113,7 @@ public class ClassImpl extends AbstractClass {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CLASS_OPERATION_COUNT = TypeImpl.TYPE_OPERATION_COUNT + 2;
-
-	/**
-	 * The cached value of the '{@link #getOwnedConstraints() <em>Owned Constraints</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwnedConstraints()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Constraint> ownedConstraints;
-
-	/**
-	 * The cached value of the '{@link #getOwnedBindings() <em>Owned Bindings</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwnedBindings()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<TemplateBinding> ownedBindings;
-
-	/**
-	 * The cached value of the '{@link #getOwnedSignature() <em>Owned Signature</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwnedSignature()
-	 * @generated
-	 * @ordered
-	 */
-	protected TemplateSignature ownedSignature;
-
-	/**
-	 * The cached value of the '{@link #getUnspecializedElement() <em>Unspecialized Element</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUnspecializedElement()
-	 * @generated
-	 * @ordered
-	 */
-	protected TemplateableElement unspecializedElement;
+	public static final int CLASS_OPERATION_COUNT = AbstractClassImpl.ABSTRACT_CLASS_OPERATION_COUNT + 2;
 
 	/**
 	 * The cached value of the '{@link #getExtenders() <em>Extenders</em>}' reference list.
@@ -317,101 +272,6 @@ public class ClassImpl extends AbstractClass {
 	@Override
 	protected EClass eStaticClass() {
 		return PivotPackage.Literals.CLASS;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	@SuppressWarnings("null")
-	public @NonNull List<Constraint> getOwnedConstraints()
-	{
-		if (ownedConstraints == null)
-		{
-			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, 5);
-		}
-		return ownedConstraints;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public TemplateSignature getOwnedSignature()
-	{
-		return ownedSignature;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetOwnedSignature(TemplateSignature newOwnedSignature, NotificationChain msgs)
-	{
-		TemplateSignature oldOwnedSignature = ownedSignature;
-		ownedSignature = newOwnedSignature;
-		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedSignature, newOwnedSignature);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwnedSignature(TemplateSignature newOwnedSignature)
-	{
-		if (newOwnedSignature != ownedSignature)
-		{
-			NotificationChain msgs = null;
-			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 5, TemplateSignature.class, msgs);
-			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 5, TemplateSignature.class, msgs);
-			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedSignature, newOwnedSignature));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public List<TemplateBinding> getOwnedBindings()
-	{
-		if (ownedBindings == null)
-		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 6, 5);
-		}
-		return ownedBindings;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
-	{
-		TemplateableElement oldUnspecializedElement = unspecializedElement;
-		unspecializedElement = newUnspecializedElement;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldUnspecializedElement, unspecializedElement));
 	}
 
 	/**
@@ -1038,64 +898,6 @@ public class ClassImpl extends AbstractClass {
 				return superClasses != null && !superClasses.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-	{
-		if (baseClass == Namespace.class)
-		{
-			switch (derivedFeatureID)
-			{
-				case 5: return 5;
-				default: return -1;
-			}
-		}
-		if (baseClass == TemplateableElement.class)
-		{
-			switch (derivedFeatureID)
-			{
-				case 6: return 4;
-				case 7: return 5;
-				case 8: return 6;
-				default: return -1;
-			}
-		}
-		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-	{
-		if (baseClass == Namespace.class)
-		{
-			switch (baseFeatureID)
-			{
-				case 5: return 5;
-				default: return -1;
-			}
-		}
-		if (baseClass == TemplateableElement.class)
-		{
-			switch (baseFeatureID)
-			{
-				case 4: return 6;
-				case 5: return 7;
-				case 6: return 8;
-				default: return -1;
-			}
-		}
-		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**

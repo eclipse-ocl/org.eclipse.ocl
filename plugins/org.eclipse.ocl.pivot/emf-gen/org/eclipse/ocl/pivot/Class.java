@@ -60,7 +60,7 @@ import org.eclipse.ocl.pivot.values.SetValue;
  * @generated
  */
 public interface Class
-extends Type, Namespace, TemplateableElement {
+extends AbstractClass {
 
 	/**
 	 * Returns the value of the '<em><b>Extenders</b></em>' reference list.

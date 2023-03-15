@@ -17,7 +17,6 @@ import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AbstractClass;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteInheritance;
@@ -34,11 +33,12 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.AbstractClassImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
 import com.google.common.collect.Lists;
 
-public class AbstractExecutorClass extends AbstractClass implements CompleteInheritance
+public class AbstractExecutorClass extends AbstractClassImpl implements CompleteInheritance
 {
 	public static final int ORDERED = FlatClass.ORDERED;
 	public static final int UNIQUE = FlatClass.UNIQUE;

@@ -41,6 +41,7 @@ public interface Visitor<R>
 	 */
 	R visiting(org.eclipse.ocl.pivot.util.@NonNull Visitable visitable);
 
+	R visitAbstractClass(org.eclipse.ocl.pivot.@NonNull AbstractClass object);
 	R visitAnnotation(org.eclipse.ocl.pivot.@NonNull Annotation object);
 	R visitAnyType(org.eclipse.ocl.pivot.@NonNull AnyType object);
 	R visitAssociationClass(org.eclipse.ocl.pivot.@NonNull AssociationClass object);
