@@ -710,15 +710,15 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		return ownedCompletePackages.getOwnedCompletePackage(completeURIorName);
 	}
 
-	private CompleteFlatModel completeFlatModel = null;
+	private @Nullable CompleteFlatModel flatModel = null;
 
 	@Override
 	public @NonNull CompleteFlatModel getFlatModel() {
-		CompleteFlatModel completeFlatModel2 = completeFlatModel;
-		if (completeFlatModel2 == null) {
-			completeFlatModel = completeFlatModel2 = new CompleteFlatModel(getStandardLibrary(), this);
+		CompleteFlatModel flatModel2 = flatModel;
+		if (flatModel2 == null) {
+			flatModel = flatModel2 = new CompleteFlatModel(getStandardLibrary(), this);
 		}
-		return completeFlatModel2;
+		return flatModel2;
 	}
 
 	@Override

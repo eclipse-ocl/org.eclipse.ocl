@@ -1119,7 +1119,6 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			Type type = key2type.get(value);
 			if (type == null) {
 				type = standardLibrary.getMetaclass((AbstractExecutorClass)value);
-				assert type != null;
 				key2type.put(value, type);
 			}
 			return PivotUtil.getClass(type, standardLibrary);
@@ -1129,11 +1128,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			assert eClass != null;
 			Type type = key2type.get(eClass);
 			if (type == null) {
-				org.eclipse.ocl.pivot.Class type2 = getType(eClass);
-				type = type2.getFlatClass(standardLibrary).getPivotClass();
-				assert type == type2;							// XXX Why use FlatClass at all ??? -- already getPrimary
-			//	type = getInheritance(eClass).getPivotClass();
-				assert type != null;
+				type = getType(eClass);
 				key2type.put(eClass, type);
 			}
 			return PivotUtil.getClass(type, standardLibrary);
