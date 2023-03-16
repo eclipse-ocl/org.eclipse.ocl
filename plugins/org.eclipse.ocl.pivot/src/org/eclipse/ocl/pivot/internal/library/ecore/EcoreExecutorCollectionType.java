@@ -19,19 +19,16 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * @since 1.18
  */
-public class EcoreExecutorCollectionType extends EcoreExecutorType implements CollectionType
+public class EcoreExecutorCollectionType extends ExecutorType implements CollectionType
 //Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class.
 {
-//	public EcoreExecutorCollectionType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter typeParameter) {
-//		super(typeId, evaluationPackage, flags, typeParameter);
-//	}
-
 	public EcoreExecutorCollectionType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		super(eClassifier, evaluationPackage, typeId, flags, typeParameter);
 	}

@@ -52,9 +52,6 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 
 	public ReflectiveInheritance(@NonNull String name, int flags, ExecutorTypeParameter... typeParameters) {
 		super(name, flags);
-		if ("Animal".equals(name)) {
-			getClass();		// XXX
-		}
 	}
 
 	@Override
@@ -68,7 +65,7 @@ public abstract class ReflectiveInheritance extends AbstractExecutorClass
 	}
 
 	public void uninstall() {
-		throw new UnsupportedOperationException();
+	//	throw new UnsupportedOperationException();
 	//	flatClass.resetFragments();
 	}
 }

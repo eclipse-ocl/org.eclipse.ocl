@@ -25,10 +25,6 @@ import org.eclipse.ocl.pivot.values.SetValue;
  */
 public class EcoreExecutorBooleanType extends EcoreExecutorPrimitiveType implements BooleanType
 {
-	public EcoreExecutorBooleanType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags) {
-		super(typeId, evaluationPackage, flags);
-	}
-
 	public EcoreExecutorBooleanType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		super(eClassifier, evaluationPackage, typeId, flags);
 	}

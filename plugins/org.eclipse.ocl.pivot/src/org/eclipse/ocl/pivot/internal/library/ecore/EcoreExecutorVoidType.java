@@ -19,16 +19,12 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation;
 import org.eclipse.ocl.pivot.values.SetValue;
 
-public class EcoreExecutorVoidType extends EcoreExecutorType implements VoidType
+public class EcoreExecutorVoidType extends ExecutorType implements VoidType
 {
-	public EcoreExecutorVoidType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull ExecutorTypeParameter @NonNull ... typeParameters) {
-		super(typeId, evaluationPackage, flags | OCL_VOID, typeParameters);
-	}
-
 	public EcoreExecutorVoidType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		super(eClassifier, evaluationPackage, typeId, flags);
 	}

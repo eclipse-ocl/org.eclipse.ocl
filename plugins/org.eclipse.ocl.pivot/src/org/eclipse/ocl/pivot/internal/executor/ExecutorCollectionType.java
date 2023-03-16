@@ -13,11 +13,14 @@ package org.eclipse.ocl.pivot.internal.executor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -25,8 +28,9 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
-public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType implements CollectionType
+public /*abstract*/ class ExecutorCollectionType extends AbstractExecutorClass implements CollectionType
 {
+	protected final org.eclipse.ocl.pivot.@NonNull Class containerType;
 	protected final @NonNull Type elementType;
 	protected final boolean isNullFree;
 	protected final @NonNull IntegerValue lower;
@@ -35,7 +39,8 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 
 	public ExecutorCollectionType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
 			@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		super(name, containerType);
+		super(name, 0);
+		this.containerType = containerType;
 		this.elementType = elementType;
 		this.isNullFree = isNullFree;
 		this.lower = lower != null ? lower : ValueUtil.ZERO_VALUE;
@@ -161,6 +166,26 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 	}
 
 	@Override
+	public boolean isOrdered() {
+		return containerType.isOrdered();
+	}
+
+	@Override
+	public boolean isUnique() {
+		return containerType.isUnique();
+	}
+
+	@Override
+	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
+		return containerType.lookupActualOperation(standardLibrary, apparentOperation);
+	}
+
+	@Override
+	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
+		return containerType.lookupImplementation(standardLibrary, apparentOperation);
+	}
+
+	@Override
 	public void setElementType(Type value) {
 		throw new UnsupportedOperationException();
 	}
@@ -192,7 +217,6 @@ public /*abstract*/ class ExecutorCollectionType extends AbstractSpecializedType
 
 	@Override
 	public String toString() {
-//		return String.valueOf(containerType) + "(" + String.valueOf(elementType) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 		StringBuilder s = new StringBuilder();
 		s.append(containerType);
 		s.append("(");

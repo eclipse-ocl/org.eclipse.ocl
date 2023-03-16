@@ -31,6 +31,7 @@ import org.eclipse.jdt.annotation.NonNull;
 // import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyTables;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.TemplateParameters;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.DataTypeId;
@@ -45,14 +46,10 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorFragment;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImplementation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -84,7 +81,7 @@ public class CodegencompanyTables extends AbstractTables
 	/**
 	 *	The package descriptor for the package.
 	 */
-	public static final @NonNull EcoreExecutorPackage PACKAGE = new EcoreExecutorPackage(CodegencompanyPackage.eINSTANCE);
+	public static final @NonNull EcoreExecutorPackage PACKAGE = LIBRARY.createPackage(CodegencompanyPackage.eINSTANCE);
 
 	/**
 	 *	Constants used by auto-generated code.
@@ -164,12 +161,12 @@ public class CodegencompanyTables extends AbstractTables
 			TypeParameters.init();
 		}
 
-		public static final @NonNull EcoreExecutorType _Bug418716 = LIBRARY.createEcoreExecutorType(CodegencompanyPackage.Literals.BUG418716, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorType _Company = LIBRARY.createEcoreExecutorType(CodegencompanyPackage.Literals.COMPANY, PACKAGE, 0);
+		public static final @NonNull ExecutorType _Bug418716 = LIBRARY.createExecutorType(CodegencompanyPackage.Literals.BUG418716, PACKAGE, 0);
+		public static final @NonNull ExecutorType _Company = LIBRARY.createExecutorType(CodegencompanyPackage.Literals.COMPANY, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorEnumeration _CompanySizeKind = LIBRARY.createEcoreExecutorEnumeration(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND, PACKAGE, 0);
-		public static final @NonNull EcoreExecutorType _Employee = LIBRARY.createEcoreExecutorType(CodegencompanyPackage.Literals.EMPLOYEE, PACKAGE, 0);
+		public static final @NonNull ExecutorType _Employee = LIBRARY.createExecutorType(CodegencompanyPackage.Literals.EMPLOYEE, PACKAGE, 0);
 
-		private static final @NonNull EcoreExecutorType @NonNull [] types = {
+		private static final @NonNull ExecutorType @NonNull [] types = {
 			_Bug418716,
 			_Company,
 			_CompanySizeKind,
@@ -199,23 +196,23 @@ public class CodegencompanyTables extends AbstractTables
 			Types.init();
 		}
 
-		private static final @NonNull ExecutorFragment _Bug418716__Bug418716 = new ExecutorFragment(Types._Bug418716, CodegencompanyTables.Types._Bug418716);
-		private static final @NonNull ExecutorFragment _Bug418716__OclAny = new ExecutorFragment(Types._Bug418716, OCLstdlibTables.Types._OclAny);
-		private static final @NonNull ExecutorFragment _Bug418716__OclElement = new ExecutorFragment(Types._Bug418716, OCLstdlibTables.Types._OclElement);
+		private static final @NonNull FlatFragment _Bug418716__Bug418716 = LIBRARY.createFragment(Types._Bug418716, CodegencompanyTables.Types._Bug418716);
+		private static final @NonNull FlatFragment _Bug418716__OclAny = LIBRARY.createFragment(Types._Bug418716, OCLstdlibTables.Types._OclAny);
+		private static final @NonNull FlatFragment _Bug418716__OclElement = LIBRARY.createFragment(Types._Bug418716, OCLstdlibTables.Types._OclElement);
 
-		private static final @NonNull ExecutorFragment _Company__Company = new ExecutorFragment(Types._Company, CodegencompanyTables.Types._Company);
-		private static final @NonNull ExecutorFragment _Company__OclAny = new ExecutorFragment(Types._Company, OCLstdlibTables.Types._OclAny);
-		private static final @NonNull ExecutorFragment _Company__OclElement = new ExecutorFragment(Types._Company, OCLstdlibTables.Types._OclElement);
+		private static final @NonNull FlatFragment _Company__Company = LIBRARY.createFragment(Types._Company, CodegencompanyTables.Types._Company);
+		private static final @NonNull FlatFragment _Company__OclAny = LIBRARY.createFragment(Types._Company, OCLstdlibTables.Types._OclAny);
+		private static final @NonNull FlatFragment _Company__OclElement = LIBRARY.createFragment(Types._Company, OCLstdlibTables.Types._OclElement);
 
-		private static final @NonNull ExecutorFragment _CompanySizeKind__CompanySizeKind = new ExecutorFragment(Types._CompanySizeKind, CodegencompanyTables.Types._CompanySizeKind);
-		private static final @NonNull ExecutorFragment _CompanySizeKind__OclAny = new ExecutorFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclAny);
-		private static final @NonNull ExecutorFragment _CompanySizeKind__OclElement = new ExecutorFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclElement);
-		private static final @NonNull ExecutorFragment _CompanySizeKind__OclEnumeration = new ExecutorFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclEnumeration);
-		private static final @NonNull ExecutorFragment _CompanySizeKind__OclType = new ExecutorFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclType);
+		private static final @NonNull FlatFragment _CompanySizeKind__CompanySizeKind = LIBRARY.createFragment(Types._CompanySizeKind, CodegencompanyTables.Types._CompanySizeKind);
+		private static final @NonNull FlatFragment _CompanySizeKind__OclAny = LIBRARY.createFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclAny);
+		private static final @NonNull FlatFragment _CompanySizeKind__OclElement = LIBRARY.createFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclElement);
+		private static final @NonNull FlatFragment _CompanySizeKind__OclEnumeration = LIBRARY.createFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclEnumeration);
+		private static final @NonNull FlatFragment _CompanySizeKind__OclType = LIBRARY.createFragment(Types._CompanySizeKind, OCLstdlibTables.Types._OclType);
 
-		private static final @NonNull ExecutorFragment _Employee__Employee = new ExecutorFragment(Types._Employee, CodegencompanyTables.Types._Employee);
-		private static final @NonNull ExecutorFragment _Employee__OclAny = new ExecutorFragment(Types._Employee, OCLstdlibTables.Types._OclAny);
-		private static final @NonNull ExecutorFragment _Employee__OclElement = new ExecutorFragment(Types._Employee, OCLstdlibTables.Types._OclElement);
+		private static final @NonNull FlatFragment _Employee__Employee = LIBRARY.createFragment(Types._Employee, CodegencompanyTables.Types._Employee);
+		private static final @NonNull FlatFragment _Employee__OclAny = LIBRARY.createFragment(Types._Employee, OCLstdlibTables.Types._OclAny);
+		private static final @NonNull FlatFragment _Employee__OclElement = LIBRARY.createFragment(Types._Employee, OCLstdlibTables.Types._OclElement);
 
 		static {
 			Init.initEnd();
@@ -265,9 +262,9 @@ public class CodegencompanyTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull ExecutorOperation _Employee__hasNameAsOperation = new ExecutorOperation("hasNameAsOperation", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Employee,
+		public static final @NonNull ExecutorOperation _Employee__hasNameAsOperation = LIBRARY.createOperation("hasNameAsOperation", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Employee,
 			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull ExecutorOperation _Employee__reportsTo = new ExecutorOperation("reportsTo", Parameters._Employee, Types._Employee,
+		public static final @NonNull ExecutorOperation _Employee__reportsTo = LIBRARY.createOperation("reportsTo", Parameters._Employee, Types._Employee,
 			1, TemplateParameters.EMPTY_LIST, null);
 
 		static {
@@ -293,24 +290,24 @@ public class CodegencompanyTables extends AbstractTables
 			Operations.init();
 		}
 
-		public static final @NonNull ExecutorProperty _Bug418716__AttributeWithInitital = new EcoreExecutorProperty(CodegencompanyPackage.Literals.BUG418716__ATTRIBUTE_WITH_INITITAL, Types._Bug418716, 0);
-		public static final @NonNull ExecutorProperty _Bug418716__AttributeWithoutInitital = new EcoreExecutorProperty(CodegencompanyPackage.Literals.BUG418716__ATTRIBUTE_WITHOUT_INITITAL, Types._Bug418716, 1);
+		public static final @NonNull ExecutorProperty _Bug418716__AttributeWithInitital = LIBRARY.createProperty(CodegencompanyPackage.Literals.BUG418716__ATTRIBUTE_WITH_INITITAL, Types._Bug418716, 0);
+		public static final @NonNull ExecutorProperty _Bug418716__AttributeWithoutInitital = LIBRARY.createProperty(CodegencompanyPackage.Literals.BUG418716__ATTRIBUTE_WITHOUT_INITITAL, Types._Bug418716, 1);
 
-		public static final @NonNull ExecutorProperty _Company__employees = new EcoreExecutorProperty(CodegencompanyPackage.Literals.COMPANY__EMPLOYEES, Types._Company, 0);
-		public static final @NonNull ExecutorProperty _Company__name = new EcoreExecutorProperty(CodegencompanyPackage.Literals.COMPANY__NAME, Types._Company, 1);
-		public static final @NonNull ExecutorProperty _Company__size = new EcoreExecutorProperty(CodegencompanyPackage.Literals.COMPANY__SIZE, Types._Company, 2);
+		public static final @NonNull ExecutorProperty _Company__employees = LIBRARY.createProperty(CodegencompanyPackage.Literals.COMPANY__EMPLOYEES, Types._Company, 0);
+		public static final @NonNull ExecutorProperty _Company__name = LIBRARY.createProperty(CodegencompanyPackage.Literals.COMPANY__NAME, Types._Company, 1);
+		public static final @NonNull ExecutorProperty _Company__size = LIBRARY.createProperty(CodegencompanyPackage.Literals.COMPANY__SIZE, Types._Company, 2);
 
-		public static final @NonNull ExecutorProperty _Employee__allReports = new EcoreExecutorProperty(CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS, Types._Employee, 0);
-		public static final @NonNull ExecutorProperty _Employee__company = new EcoreExecutorProperty(CodegencompanyPackage.Literals.EMPLOYEE__COMPANY, Types._Employee, 1);
-		public static final @NonNull ExecutorProperty _Employee__directReports = new EcoreExecutorProperty(CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS, Types._Employee, 2);
-		public static final @NonNull ExecutorProperty _Employee__hasNameAsAttribute = new EcoreExecutorProperty(CodegencompanyPackage.Literals.EMPLOYEE__HAS_NAME_AS_ATTRIBUTE, Types._Employee, 3);
-		public static final @NonNull ExecutorProperty _Employee__manager = new EcoreExecutorProperty(CodegencompanyPackage.Literals.EMPLOYEE__MANAGER, Types._Employee, 4);
-		public static final @NonNull ExecutorProperty _Employee__name = new EcoreExecutorProperty(CodegencompanyPackage.Literals.EMPLOYEE__NAME, Types._Employee, 5);
-		public static final @NonNull ExecutorProperty _Employee__reportingChain = new EcoreExecutorProperty(CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN, Types._Employee, 6);
-		public static final @NonNull ExecutorProperty _Employee__Employee__allReports = new ExecutorPropertyWithImplementation("Employee", Types._Employee, 7, new EcoreLibraryOppositeProperty(CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS));
-		public static final @NonNull ExecutorProperty _Employee__Employee__directReports = new ExecutorPropertyWithImplementation("Employee", Types._Employee, 8, new EcoreLibraryOppositeProperty(CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS));
-		public static final @NonNull ExecutorProperty _Employee__Employee__manager = new ExecutorPropertyWithImplementation("Employee", Types._Employee, 9, new EcoreLibraryOppositeProperty(CodegencompanyPackage.Literals.EMPLOYEE__MANAGER));
-		public static final @NonNull ExecutorProperty _Employee__Employee__reportingChain = new ExecutorPropertyWithImplementation("Employee", Types._Employee, 10, new EcoreLibraryOppositeProperty(CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN));
+		public static final @NonNull ExecutorProperty _Employee__allReports = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS, Types._Employee, 0);
+		public static final @NonNull ExecutorProperty _Employee__company = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__COMPANY, Types._Employee, 1);
+		public static final @NonNull ExecutorProperty _Employee__directReports = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS, Types._Employee, 2);
+		public static final @NonNull ExecutorProperty _Employee__hasNameAsAttribute = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__HAS_NAME_AS_ATTRIBUTE, Types._Employee, 3);
+		public static final @NonNull ExecutorProperty _Employee__manager = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__MANAGER, Types._Employee, 4);
+		public static final @NonNull ExecutorProperty _Employee__name = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__NAME, Types._Employee, 5);
+		public static final @NonNull ExecutorProperty _Employee__reportingChain = LIBRARY.createProperty(CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN, Types._Employee, 6);
+		public static final @NonNull ExecutorProperty _Employee__Employee__allReports = LIBRARY.createOppositeProperty("Employee", Types._Employee, 7, CodegencompanyPackage.Literals.EMPLOYEE__ALL_REPORTS);
+		public static final @NonNull ExecutorProperty _Employee__Employee__directReports = LIBRARY.createOppositeProperty("Employee", Types._Employee, 8, CodegencompanyPackage.Literals.EMPLOYEE__DIRECT_REPORTS);
+		public static final @NonNull ExecutorProperty _Employee__Employee__manager = LIBRARY.createOppositeProperty("Employee", Types._Employee, 9, CodegencompanyPackage.Literals.EMPLOYEE__MANAGER);
+		public static final @NonNull ExecutorProperty _Employee__Employee__reportingChain = LIBRARY.createOppositeProperty("Employee", Types._Employee, 10, CodegencompanyPackage.Literals.EMPLOYEE__REPORTING_CHAIN);
 		static {
 			Init.initEnd();
 		}
@@ -330,7 +327,7 @@ public class CodegencompanyTables extends AbstractTables
 			Properties.init();
 		}
 
-		private static final @NonNull ExecutorFragment @NonNull [] _Bug418716 =
+		private static final @NonNull FlatFragment @NonNull [] _Bug418716 =
 			{
 				Fragments._Bug418716__OclAny /* 0 */,
 				Fragments._Bug418716__OclElement /* 1 */,
@@ -338,7 +335,7 @@ public class CodegencompanyTables extends AbstractTables
 			};
 		private static final int @NonNull [] __Bug418716 = { 1,1,1 };
 
-		private static final @NonNull ExecutorFragment @NonNull [] _Company =
+		private static final @NonNull FlatFragment @NonNull [] _Company =
 			{
 				Fragments._Company__OclAny /* 0 */,
 				Fragments._Company__OclElement /* 1 */,
@@ -346,7 +343,7 @@ public class CodegencompanyTables extends AbstractTables
 			};
 		private static final int @NonNull [] __Company = { 1,1,1 };
 
-		private static final @NonNull ExecutorFragment @NonNull [] _CompanySizeKind =
+		private static final @NonNull FlatFragment @NonNull [] _CompanySizeKind =
 			{
 				Fragments._CompanySizeKind__OclAny /* 0 */,
 				Fragments._CompanySizeKind__OclElement /* 1 */,
@@ -356,7 +353,7 @@ public class CodegencompanyTables extends AbstractTables
 			};
 		private static final int @NonNull [] __CompanySizeKind = { 1,1,1,1,1 };
 
-		private static final @NonNull ExecutorFragment @NonNull [] _Employee =
+		private static final @NonNull FlatFragment @NonNull [] _Employee =
 			{
 				Fragments._Employee__OclAny /* 0 */,
 				Fragments._Employee__OclElement /* 1 */,
@@ -631,9 +628,9 @@ public class CodegencompanyTables extends AbstractTables
 			FragmentProperties.init();
 		}
 
-		public static final @NonNull EcoreExecutorEnumerationLiteral _CompanySizeKind__small = new EcoreExecutorEnumerationLiteral(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND.getEEnumLiteral("small"), Types._CompanySizeKind, 0);
-		public static final @NonNull EcoreExecutorEnumerationLiteral _CompanySizeKind__medium = new EcoreExecutorEnumerationLiteral(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND.getEEnumLiteral("medium"), Types._CompanySizeKind, 1);
-		public static final @NonNull EcoreExecutorEnumerationLiteral _CompanySizeKind__large = new EcoreExecutorEnumerationLiteral(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND.getEEnumLiteral("large"), Types._CompanySizeKind, 2);
+		public static final @NonNull EcoreExecutorEnumerationLiteral _CompanySizeKind__small = LIBRARY.createEnumerationLiteral(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND.getEEnumLiteral("small"), Types._CompanySizeKind, 0);
+		public static final @NonNull EcoreExecutorEnumerationLiteral _CompanySizeKind__medium = LIBRARY.createEnumerationLiteral(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND.getEEnumLiteral("medium"), Types._CompanySizeKind, 1);
+		public static final @NonNull EcoreExecutorEnumerationLiteral _CompanySizeKind__large = LIBRARY.createEnumerationLiteral(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND.getEEnumLiteral("large"), Types._CompanySizeKind, 2);
 		private static final @NonNull EcoreExecutorEnumerationLiteral @NonNull [] _CompanySizeKind = {
 			_CompanySizeKind__small,
 			_CompanySizeKind__medium,

@@ -15,17 +15,14 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 
 /**
  * @since 1.18
  */
-public class EcoreExecutorAnyType extends EcoreExecutorType implements AnyType
+public class EcoreExecutorAnyType extends ExecutorType implements AnyType
 // Initialization of OCLstdlibTables gives a NoSuchFieldError if this is a nested class.
 {
-	public EcoreExecutorAnyType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags) {
-		super(typeId, evaluationPackage, flags);
-	}
-
 	public EcoreExecutorAnyType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		super(eClassifier, evaluationPackage, typeId, flags);
 	}

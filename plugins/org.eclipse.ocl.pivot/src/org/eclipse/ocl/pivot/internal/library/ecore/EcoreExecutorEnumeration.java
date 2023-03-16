@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
+import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.library.enumeration.EnumerationAllInstancesOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.values.SetValue;
@@ -29,7 +30,7 @@ import org.eclipse.osgi.util.NLS;
 
 import com.google.common.collect.Lists;
 
-public class EcoreExecutorEnumeration extends EcoreExecutorType implements Enumeration
+public class EcoreExecutorEnumeration extends ExecutorType implements Enumeration
 {
 	private List<EnumerationLiteral> literals = null;
 
@@ -37,7 +38,7 @@ public class EcoreExecutorEnumeration extends EcoreExecutorType implements Enume
 	 * Construct an executable type descriptor for a known EClassifier.
 	 */
 	public EcoreExecutorEnumeration(/*@NonNull*/ EEnum eEnum, @NonNull EcoreExecutorPackage evaluationPackage, int flags) {
-		super(eEnum, evaluationPackage, flags);
+		super(eEnum, evaluationPackage, null, flags);
 	}
 
 	/**

@@ -71,7 +71,6 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
@@ -1330,7 +1329,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		else if (asClass instanceof VoidType) {
 			return EcoreExecutorVoidType.class;
 		}
-		return EcoreExecutorType.class;
+		return ExecutorType.class;
 	}
 
 	public @NonNull String getTablesClassName() {

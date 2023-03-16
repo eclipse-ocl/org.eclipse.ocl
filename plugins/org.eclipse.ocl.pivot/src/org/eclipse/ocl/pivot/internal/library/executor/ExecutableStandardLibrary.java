@@ -132,6 +132,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 
 	@Override
 	public synchronized @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	//	assert false;
 		IntegerValue lower2 = lower;
 		UnlimitedNaturalValue upper2 = upper;
 		if (lower2 == null) {
@@ -154,6 +155,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			String name = ClassUtil.nonNullModel(genericType.getName());
 			if (genericType instanceof BagType) {
 				specializedType = new ExecutorBagType(name, genericType, elementType, isNullFree, lower, upper);
+			//	specializedType = new EcoreExecutorBagType(eClassifier, evaluationPackage, typeId,flags, typeParameter);
 			}
 			else if (genericType instanceof OrderedSetType) {
 				specializedType = new ExecutorOrderedSetType(name, genericType, elementType, isNullFree, lower, upper);

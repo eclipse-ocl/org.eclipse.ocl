@@ -12,6 +12,10 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
@@ -26,9 +30,12 @@ import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
@@ -36,17 +43,22 @@ import org.eclipse.ocl.pivot.values.OCLValue;
  * An ExecutorType defines a Type using a compact representation suitable for efficient
  * execution and static construction.
  */
-public abstract class ExecutorType extends AbstractExecutorClass
+public class ExecutorType extends AbstractExecutorClass
 {
-
 	protected final org.eclipse.ocl.pivot.@NonNull Package evaluationPackage;
 	private final @NonNull TemplateParameters typeParameters;
-//	private /*@LazyNonNull*/ DomainProperties allProperties;
+	protected @Nullable EClassifier eClassifier;
+	private @Nullable TypeId typeId;
 
-	public ExecutorType(@NonNull String name, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
-		super(name, flags);
+	/**
+	 * Construct an executable type descriptor for a known EClassifier and TypeId.
+	 */
+	public ExecutorType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
+		super(NameUtil.getName(eClassifier), flags);
 		this.evaluationPackage = evaluationPackage;
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
+		this.eClassifier = eClassifier;
+		this.typeId = typeId;
 	}
 
 	@Override
@@ -63,6 +75,29 @@ public abstract class ExecutorType extends AbstractExecutorClass
 	}
 
 	@Override
+	public @NonNull EObject createInstance() {
+		EClassifier eClassifier2 = eClassifier;
+		if (eClassifier2 instanceof EClass) {
+			EClass eClass = (EClass)eClassifier2;
+			EObject element = eClass.getEPackage().getEFactoryInstance().create(eClass);
+//			TypeId typeId = IdManager.getTypeId(eClass);
+			return /*ValuesUtil.createObjectValue(typeId, */ClassUtil.nonNullEMF(element); //);
+		}
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @Nullable Object createInstance(@NonNull String value) {
+		EClassifier eClassifier2 = eClassifier;
+		if (eClassifier2 instanceof EDataType) {
+			EDataType eDataType = (EDataType) eClassifier2;
+			Object element = eDataType.getEPackage().getEFactoryInstance().createFromString(eDataType, value);
+			return /*ValuesUtil.valueOf(*/ClassUtil.nonNullEMF(element); //);
+		}
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.Class flattenedType() {
 		return this;
 	}
@@ -76,6 +111,15 @@ public abstract class ExecutorType extends AbstractExecutorClass
 		FlatClass secondFlatClass = type.getFlatClass(idResolver.getStandardLibrary());
 		FlatClass commonFlatClass = firstFlatClass.getCommonFlatClass(secondFlatClass);
 		return commonFlatClass.getPivotClass();
+	}
+
+	public final EClassifier getEClassifier() {
+		return eClassifier;
+	}
+
+	@Override
+	public EObject getESObject() {
+		return eClassifier;
 	}
 
 	@Override
@@ -99,7 +143,12 @@ public abstract class ExecutorType extends AbstractExecutorClass
 
 	@Override
 	public @NonNull String getMetaTypeName() {
-		throw new UnsupportedOperationException();
+		if (eClassifier != null) {					// FIXME Enforce @NonNull
+			return ClassUtil.nonNullModel(ClassUtil.nonNullState(eClassifier).getName());
+		}
+		else {
+			return getTypeId().getMetaTypeName();
+		}
 	}
 
 	@Override
@@ -137,16 +186,54 @@ public abstract class ExecutorType extends AbstractExecutorClass
 //		return IterableAsImmutableList.asList(getFlatClass().getSelfFragment().getSuperClasses());
 	}
 
-//	public @NonNull TypeId getTypeId() {
-//		throw new UnsupportedOperationException();					// FIXME
-//	}
-
 	@Override
 	public @NonNull TemplateParameters getTypeParameters() {
 		return typeParameters;
 	}
 
-//	@Deprecated
+	@Override
+	public @NonNull TypeId getTypeId() {
+		TypeId typeId2 = typeId;
+		if (typeId2 == null) {
+			synchronized (this) {
+				typeId2 = typeId;
+				if (typeId2 == null) {
+					EClassifier eClassifier2 = eClassifier;
+					if (eClassifier2 != null) {
+						typeId2 = IdManager.getTypeId(eClassifier2);
+					}
+					else {
+						PackageId packageTypeId = evaluationPackage.getPackageId(); //IdManager.getPackageId(evaluationPackage);
+						TemplateParameters typeParameters = getTypeParameters();
+						if (eClassifier instanceof EDataType) {
+							typeId2 = packageTypeId.getDataTypeId(name, typeParameters.parametersSize());
+						}
+						else {
+							typeId2 = packageTypeId.getClassId(name, typeParameters.parametersSize());
+						}
+					}
+					typeId = typeId2;
+				}
+			}
+		}
+		return typeId2;
+	}
+
+	/**
+	 * Define the EClassifier associated with an executable type. This initialization may
+	 * be performed once to allow an Ecore-aware package of type descriptors to re-use and
+	 * enhance an Ecore-unaware package. This occurs for the PivotTables that enhance the
+	 * OCLstdlibTables.
+	 */
+	public @NonNull ExecutorType initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts, /*@NonNull*/ EClassifier eClassifier) {
+		assert eClassifier != null;
+		assert this.eClassifier == null;
+		assert name.equals(eClassifier.getName());
+		this.eClassifier = ClassUtil.nonNullState(eClassifier);
+		initFragments(fragments, depthCounts);
+		return this;
+	}
+
 	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts) {
 		getFlatClass().initFragments(fragments, depthCounts);;
 	}
