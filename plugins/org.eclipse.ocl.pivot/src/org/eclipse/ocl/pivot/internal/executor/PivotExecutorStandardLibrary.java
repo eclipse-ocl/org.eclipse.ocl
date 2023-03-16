@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutableStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -106,9 +105,9 @@ public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	@Override
-	public Type getOclType(@NonNull String typeName) {
-		ExecutorType type = PivotTables.PACKAGE.getOwnedClass(typeName);
-		return type != null ? type.getPivotClass() : null;
+	public org.eclipse.ocl.pivot.@NonNull Class getOclType(@NonNull String typeName) {
+		org.eclipse.ocl.pivot.Class type = PivotTables.PACKAGE.getOwnedClass(typeName);
+		return type;// != null ? type.getPivotClass() : null;
 	}
 
 	@SuppressWarnings("null")

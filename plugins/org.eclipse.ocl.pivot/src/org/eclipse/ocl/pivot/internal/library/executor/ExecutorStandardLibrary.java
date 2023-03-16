@@ -105,6 +105,21 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		//		}
 	}
 
+	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClassifier eClassifier,
+			@NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
+		return createClass(eClassifier, evaluationPackage, null, flags, typeParameters);
+	}
+
+	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClassifier eClassifier,
+			@NonNull ExecutorPackage evaluationPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
+		assert eClassifier != null;
+		ExecutorType type = new ExecutorType(eClassifier, evaluationPackage, typeId, flags, typeParameters);
+		EcoreFlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
+		type.setFlatClass(flatClass);
+		return type;
+	}
+
 	public @NonNull EcoreExecutorAnyType createEcoreExecutorAnyType(/*@NonNull*/ EClassifier eClassifier,
 			@NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
@@ -239,11 +254,13 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return new EcoreExecutorEnumerationLiteral(eEnumLiteral, enumeration, ordinal);
 	}
 
+	@Deprecated
 	public @NonNull ExecutorType createExecutorType(/*@NonNull*/ EClassifier eClassifier,
 			@NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		return createExecutorType(eClassifier, evaluationPackage, null, flags, typeParameters);
 	}
 
+	@Deprecated
 	public @NonNull ExecutorType createExecutorType(/*@NonNull*/ EClassifier eClassifier,
 			@NonNull ExecutorPackage evaluationPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		assert eClassifier != null;
@@ -254,8 +271,8 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return type;
 	}
 
-	public @NonNull FlatFragment createFragment(@NonNull ExecutorType cses, @NonNull ExecutorType cses2) {
-		return new FlatFragment(cses.getFlatClass(), cses2.getFlatClass());
+	public @NonNull FlatFragment createFragment(org.eclipse.ocl.pivot.@NonNull Class cses, org.eclipse.ocl.pivot.@NonNull Class cses2) {
+		return new FlatFragment(cses.getFlatClass(this), cses2.getFlatClass(this));
 	}
 
 	public @NonNull ExecutorOperation createOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type type,
@@ -363,9 +380,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 			EcoreExecutorPackage ecoreExecutorPackage = nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
 			if (ecoreExecutorPackage != null) {
 				String name = asClass.getName();
-				CompleteInheritance executorType = ecoreExecutorPackage.getOwnedClass(name);
+				org.eclipse.ocl.pivot.Class executorType = ecoreExecutorPackage.getOwnedClass(name);
 				if (executorType != null) {
-					return executorType;
+					return (CompleteInheritance) executorType;
 				}
 				Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
 				if (extensions2 != null) {
@@ -380,7 +397,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 					}
 				}
 				if (executorType != null) {
-					return executorType;
+					return (CompleteInheritance) executorType;
 				}
 			}
 			asPackageMap2 = asPackageMap;

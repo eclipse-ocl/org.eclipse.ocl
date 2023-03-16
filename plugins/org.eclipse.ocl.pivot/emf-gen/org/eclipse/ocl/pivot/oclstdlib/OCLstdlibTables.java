@@ -216,35 +216,35 @@ public class OCLstdlibTables extends AbstractTables
 			TypeParameters.init();
 		}
 
-		public static final @NonNull ExecutorType _Bag = LIBRARY.createEcoreExecutorBagType(OCLstdlibPackage.Literals.BAG, PACKAGE, TypeId.BAG, 0, TypeParameters._0_T);
-		public static final @NonNull ExecutorType _Boolean = LIBRARY.createEcoreExecutorBooleanType(OCLstdlibPackage.Literals.BOOLEAN, PACKAGE, TypeId.BOOLEAN, 0);
-		public static final @NonNull ExecutorType _Collection = LIBRARY.createEcoreExecutorCollectionType(OCLstdlibPackage.Literals.COLLECTION, PACKAGE, TypeId.COLLECTION, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
-		public static final @NonNull ExecutorType _Integer = LIBRARY.createEcoreExecutorPrimitiveType(OCLstdlibPackage.Literals.INTEGER, PACKAGE, TypeId.INTEGER, 0);
-		public static final @NonNull ExecutorType _Map = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.MAP, PACKAGE, TypeId.MAP, 0, TypeParameters._0_K, TypeParameters._1_V);
-		public static final @NonNull ExecutorType _OclAny = LIBRARY.createEcoreExecutorAnyType(OCLstdlibPackage.Literals.OCL_ANY, PACKAGE, TypeId.OCL_ANY, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclComparable = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_COMPARABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclElement = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_ELEMENT, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclEnumeration = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_ENUMERATION, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclInvalid = LIBRARY.createEcoreExecutorInvalidType(OCLstdlibPackage.Literals.OCL_INVALID, PACKAGE, TypeId.OCL_INVALID, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclLambda = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_LAMBDA, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclMessage = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_MESSAGE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclSelf = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_SELF, PACKAGE, TypeId.OCL_SELF, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclState = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_STATE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclStereotype = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_STEREOTYPE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclSummable = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_SUMMABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclTuple = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_TUPLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclType = LIBRARY.createEcoreExecutorType(OCLstdlibPackage.Literals.OCL_TYPE, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OclVoid = LIBRARY.createEcoreExecutorVoidType(OCLstdlibPackage.Literals.OCL_VOID, PACKAGE, TypeId.OCL_VOID, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _OrderedCollection = LIBRARY.createEcoreExecutorCollectionType(OCLstdlibPackage.Literals.ORDERED_COLLECTION, PACKAGE, TypeId.ORDERED_COLLECTION, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
-		public static final @NonNull ExecutorType _OrderedSet = LIBRARY.createEcoreExecutorOrderedSetType(OCLstdlibPackage.Literals.ORDERED_SET, PACKAGE, TypeId.ORDERED_SET, ExecutorType.ORDERED | ExecutorType.UNIQUE, TypeParameters._0_T);
-		public static final @NonNull ExecutorType _Real = LIBRARY.createEcoreExecutorPrimitiveType(OCLstdlibPackage.Literals.REAL, PACKAGE, TypeId.REAL, 0);
-		public static final @NonNull ExecutorType _Sequence = LIBRARY.createEcoreExecutorSequenceType(OCLstdlibPackage.Literals.SEQUENCE, PACKAGE, TypeId.SEQUENCE, ExecutorType.ORDERED, TypeParameters._0_T);
-		public static final @NonNull ExecutorType _Set = LIBRARY.createEcoreExecutorSetType(OCLstdlibPackage.Literals.SET, PACKAGE, TypeId.SET, ExecutorType.UNIQUE, TypeParameters._0_T);
-		public static final @NonNull ExecutorType _String = LIBRARY.createEcoreExecutorPrimitiveType(OCLstdlibPackage.Literals.STRING, PACKAGE, TypeId.STRING, 0);
-		public static final @NonNull ExecutorType _UniqueCollection = LIBRARY.createEcoreExecutorCollectionType(OCLstdlibPackage.Literals.UNIQUE_COLLECTION, PACKAGE, TypeId.UNIQUE_COLLECTION, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
-		public static final @NonNull ExecutorType _UnlimitedNatural = LIBRARY.createEcoreExecutorPrimitiveType(OCLstdlibPackage.Literals.UNLIMITED_NATURAL, PACKAGE, TypeId.UNLIMITED_NATURAL, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Bag = LIBRARY.createEcoreExecutorBagType(OCLstdlibPackage.Literals.BAG, PACKAGE, TypeId.BAG, 0, TypeParameters._0_T);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Boolean = LIBRARY.createEcoreExecutorBooleanType(OCLstdlibPackage.Literals.BOOLEAN, PACKAGE, TypeId.BOOLEAN, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Collection = LIBRARY.createEcoreExecutorCollectionType(OCLstdlibPackage.Literals.COLLECTION, PACKAGE, TypeId.COLLECTION, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Integer = LIBRARY.createEcoreExecutorPrimitiveType(OCLstdlibPackage.Literals.INTEGER, PACKAGE, TypeId.INTEGER, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Map = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.MAP, PACKAGE, TypeId.MAP, 0, TypeParameters._0_K, TypeParameters._1_V);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclAny = LIBRARY.createEcoreExecutorAnyType(OCLstdlibPackage.Literals.OCL_ANY, PACKAGE, TypeId.OCL_ANY, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclComparable = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_COMPARABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclElement = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_ELEMENT, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclEnumeration = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_ENUMERATION, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclInvalid = LIBRARY.createEcoreExecutorInvalidType(OCLstdlibPackage.Literals.OCL_INVALID, PACKAGE, TypeId.OCL_INVALID, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclLambda = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_LAMBDA, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclMessage = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_MESSAGE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclSelf = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_SELF, PACKAGE, TypeId.OCL_SELF, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclState = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_STATE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclStereotype = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_STEREOTYPE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclSummable = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_SUMMABLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclTuple = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_TUPLE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclType = LIBRARY.createExecutorType(OCLstdlibPackage.Literals.OCL_TYPE, PACKAGE, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OclVoid = LIBRARY.createEcoreExecutorVoidType(OCLstdlibPackage.Literals.OCL_VOID, PACKAGE, TypeId.OCL_VOID, 0 | ExecutorType.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OrderedCollection = LIBRARY.createEcoreExecutorCollectionType(OCLstdlibPackage.Literals.ORDERED_COLLECTION, PACKAGE, TypeId.ORDERED_COLLECTION, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _OrderedSet = LIBRARY.createEcoreExecutorOrderedSetType(OCLstdlibPackage.Literals.ORDERED_SET, PACKAGE, TypeId.ORDERED_SET, ExecutorType.ORDERED | ExecutorType.UNIQUE, TypeParameters._0_T);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Real = LIBRARY.createEcoreExecutorPrimitiveType(OCLstdlibPackage.Literals.REAL, PACKAGE, TypeId.REAL, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Sequence = LIBRARY.createEcoreExecutorSequenceType(OCLstdlibPackage.Literals.SEQUENCE, PACKAGE, TypeId.SEQUENCE, ExecutorType.ORDERED, TypeParameters._0_T);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Set = LIBRARY.createEcoreExecutorSetType(OCLstdlibPackage.Literals.SET, PACKAGE, TypeId.SET, ExecutorType.UNIQUE, TypeParameters._0_T);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _String = LIBRARY.createEcoreExecutorPrimitiveType(OCLstdlibPackage.Literals.STRING, PACKAGE, TypeId.STRING, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _UniqueCollection = LIBRARY.createEcoreExecutorCollectionType(OCLstdlibPackage.Literals.UNIQUE_COLLECTION, PACKAGE, TypeId.UNIQUE_COLLECTION, 0 | ExecutorType.ABSTRACT, TypeParameters._0_T);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _UnlimitedNatural = LIBRARY.createEcoreExecutorPrimitiveType(OCLstdlibPackage.Literals.UNLIMITED_NATURAL, PACKAGE, TypeId.UNLIMITED_NATURAL, 0);
 
-		private static final @NonNull ExecutorType @NonNull [] types = {
+		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] types = {
 			_Bag,
 			_Boolean,
 			_Collection,

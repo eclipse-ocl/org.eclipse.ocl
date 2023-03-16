@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -1174,6 +1175,11 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 			}
 		}
 		return unspecializedElement;
+	}
+
+	@Override
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

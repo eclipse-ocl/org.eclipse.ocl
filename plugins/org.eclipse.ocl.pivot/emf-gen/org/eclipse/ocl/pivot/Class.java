@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -350,5 +351,7 @@ extends AbstractClass {
 	void addClassListener(@NonNull IClassListener partialFlatClass);
 
 	void removeClassListener(@NonNull IClassListener partialFlatClass);
+
+	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts);
 
 } // Class

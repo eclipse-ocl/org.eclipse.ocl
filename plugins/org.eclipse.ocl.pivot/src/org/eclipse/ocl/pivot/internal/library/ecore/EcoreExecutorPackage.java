@@ -25,7 +25,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -35,7 +34,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 {
 	protected final EPackage ePackage;
 	private ExecutorStandardLibrary standardLibrary = null;
-	private @NonNull ExecutorType[] types = null;
+	private org.eclipse.ocl.pivot.@NonNull Class[] types = null;
 	private @Nullable List<org.eclipse.ocl.pivot.Package> packages = null;
 
 	public EcoreExecutorPackage(@NonNull EPackage ePackage) {
@@ -114,7 +113,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 	}
 
 	@Override
-	public @Nullable ExecutorType getOwnedClass(String typeName) {
+	public org.eclipse.ocl.pivot.@Nullable Class getOwnedClass(String typeName) {
 		int index = Arrays.binarySearch(types, new StringNameable(typeName), NameUtil.NameableComparator.INSTANCE);
 		if (index >= 0) {
 			return types[index];
@@ -122,7 +121,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 		//	Should be sorted, but do linear search just in case
 		for (org.eclipse.ocl.pivot.@NonNull Class type : types) {
 			if (type.getName().equals(typeName)) {
-				return (ExecutorType) type;
+				return type;
 			}
 		}
 		return null;
@@ -133,7 +132,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 		return standardLibrary;
 	}
 
-	public void init(@Nullable ExecutorStandardLibrary standardLibrary, @NonNull ExecutorType @NonNull [] types) {
+	public void init(@Nullable ExecutorStandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] types) {
 		assert (this.standardLibrary == null) || (this.standardLibrary == standardLibrary);
 		assert this.types == null;
 		this.standardLibrary = standardLibrary;

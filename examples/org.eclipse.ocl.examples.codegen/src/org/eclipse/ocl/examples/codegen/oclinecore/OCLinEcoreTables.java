@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -75,7 +76,6 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -274,17 +274,17 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	protected void appendTypeFlags(@NonNull Type type) {
 		if (type instanceof OrderedSetType) {
-			s.appendClassReference(null, ExecutorType.class);
+			s.appendClassReference(null, FlatClass.class);
 			s.append(".ORDERED | ");
-			s.appendClassReference(null, ExecutorType.class);
+			s.appendClassReference(null, FlatClass.class);
 			s.append(".UNIQUE");
 		}
 		else if (type instanceof SetType) {
-			s.appendClassReference(null, ExecutorType.class);
+			s.appendClassReference(null, FlatClass.class);
 			s.append(".UNIQUE");
 		}
 		else if (type instanceof SequenceType) {
-			s.appendClassReference(null, ExecutorType.class);
+			s.appendClassReference(null, FlatClass.class);
 			s.append(".ORDERED");
 		}
 		else {
@@ -292,7 +292,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		if ((type instanceof org.eclipse.ocl.pivot.Class) && ((org.eclipse.ocl.pivot.Class)type).isIsAbstract()) {
 			s.append(" | ");
-			s.appendClassReference(null, ExecutorType.class);
+			s.appendClassReference(null, FlatClass.class);
 			s.append(".ABSTRACT");
 		}
 	}
@@ -903,7 +903,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.appendClassReference(true, EcoreExecutorEnumeration.class);
 		}
 		else {
-			s.appendClassReference(true, ExecutorType.class);
+			s.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);
 		}
 		s.append(" ");
 		asClass.accept(emitLiteralVisitor);
@@ -957,7 +957,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		s.append("\n");
 		s.append("		private static final ");
-		s.appendClassReference(true, ExecutorType.class);
+		s.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);
 		s.append(" " + atNonNull() + " [] types = {");
 		boolean isFirst = true;
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
@@ -1329,7 +1329,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		else if (asClass instanceof VoidType) {
 			return EcoreExecutorVoidType.class;
 		}
-		return ExecutorType.class;
+		return org.eclipse.ocl.pivot.Class.class;
 	}
 
 	public @NonNull String getTablesClassName() {

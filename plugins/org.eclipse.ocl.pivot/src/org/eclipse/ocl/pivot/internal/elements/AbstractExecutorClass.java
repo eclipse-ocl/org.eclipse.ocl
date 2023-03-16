@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.AbstractClassImpl;
@@ -39,7 +40,7 @@ import org.eclipse.ocl.pivot.library.LibraryFeature;
 
 import com.google.common.collect.Lists;
 
-public class AbstractExecutorClass extends AbstractClassImpl implements CompleteInheritance
+public abstract class AbstractExecutorClass extends AbstractClassImpl implements CompleteInheritance
 {
 	public static final int ORDERED = FlatClass.ORDERED;
 	public static final int UNIQUE = FlatClass.UNIQUE;
@@ -187,6 +188,11 @@ public class AbstractExecutorClass extends AbstractClassImpl implements Complete
 	public TemplateableElement getUnspecializedElement() {
 	//	throw new UnsupportedOperationException();
 		return this;
+	}
+
+	@Override
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
