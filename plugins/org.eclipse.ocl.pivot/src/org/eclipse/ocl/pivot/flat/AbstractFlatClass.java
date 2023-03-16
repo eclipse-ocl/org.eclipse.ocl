@@ -48,6 +48,10 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
+/**
+ * AbstractFlatClass provides the basic implementation of a FlatClass with name-to-property and name-to-operation
+ * lookup caches resulting from aggregation of the fragments for each contributing class.
+ */
 public abstract class AbstractFlatClass implements FlatClass, IClassListener
 {
 	protected static final @NonNull Operation @NonNull [] NO_OPERATIONS = new @NonNull Operation[0];
@@ -242,7 +246,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	protected @Nullable List<@NonNull Property> gatherDirectProperties(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Property> asProperties) {
-		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;		// FIXME This is much than PartialClasses.initMemberProperties
+		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;		// FIXME This is much less than PartialClasses.initMemberProperties
 		for (@NonNull Property partialProperty : PivotUtil.getOwnedProperties(asClass)) {
 			if (asProperties == null) {
 				asProperties = new ArrayList<>();

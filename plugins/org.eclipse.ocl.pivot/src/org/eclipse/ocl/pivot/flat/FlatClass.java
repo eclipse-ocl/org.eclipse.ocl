@@ -21,6 +21,10 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
+/**
+ * A FlatClass caches the diverse vertical (supertype) and, for CompleteFlatClass, horizontal (partial) classes
+ * to provide a single fast lookup for features.
+ */
 public interface FlatClass extends Nameable
 {
 	public static class FragmentIterable implements IndexableIterable<@NonNull FlatFragment>

@@ -75,7 +75,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(partialClass);
 			asProperties = gatherDirectProperties(unspecializedType, asProperties);
 		}
-		asProperties = gatherMetaExtensions(asProperties);
+		asProperties = gatherMetaExtensions(asProperties);			// XXX Is this an obsolete misunderstanding of Sterotype meta-levels ??
 		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
 	}
 

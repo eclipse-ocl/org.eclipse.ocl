@@ -24,6 +24,9 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
+/**
+ * An EcoreFlatClass identifies an EClassifoer and a corresponding Pivot Class as the client for which caches are provided.
+ */
 public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable metamodels
 {
 	protected final @NonNull EClassifier eClassifier;
@@ -42,12 +45,9 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		int iSize = eStructuralFeatures.size();
 		@NonNull Property @NonNull [] array = new @NonNull Property[iSize];
 		for (int i = 0; i < iSize; i++) {
-			@SuppressWarnings("null")@NonNull EStructuralFeature eFeature = eStructuralFeatures.get(i);
-		//	CompleteInheritance completeInheritance = derivedFlatClass.getCompleteInheritance();
-			org.eclipse.ocl.pivot.Class asClass = getPivotClass();
-		//	assert completeInheritance == asClass;
-			EcoreExecutorProperty propertyAndImplementation = new EcoreExecutorProperty(eFeature, asClass, i);
-			array[i] = propertyAndImplementation;
+			EStructuralFeature eFeature = eStructuralFeatures.get(i);
+			assert eFeature != null;
+			array[i] = new EcoreExecutorProperty(eFeature, asClass, i);
 		}
 		return array;
 	}
@@ -77,11 +77,6 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		return superFlatClasses;
 	}
 
-//	@Override
-//	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseFlatClass) {
-//		return new EcoreReflectiveFragment(this, baseFlatClass);
-//	}
-
 	public @NonNull EClassifier getEClassifier() {
 		return eClassifier;
 	}
@@ -90,28 +85,6 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 	public @NonNull EcoreFlatModel getFlatModel() {
 		return (EcoreFlatModel)flatModel;
 	}
-
-/*	@Override
-	public @NonNull Property @NonNull [] getSelfProperties() {
-		FlatFragment selfFragment = getSelfFragment();
-		@NonNull Property [] selfProperties = selfFragment.basicGetProperties();
-		if (selfProperties == null) {
-			if (eClassifier instanceof EClass) {
-				int propertyIndex = 0;
-				List<EStructuralFeature> eStructuralFeatures = ((EClass)eClassifier).getEStructuralFeatures();
-				selfProperties = new @NonNull Property[eStructuralFeatures.size()];
-				for (EStructuralFeature eStructuralFeature : eStructuralFeatures) {
-					EcoreExecutorProperty asProperty = new EcoreExecutorProperty(eStructuralFeature, asClass, propertyIndex);
-					selfProperties[propertyIndex++] = asProperty;
-				}
-			}
-			if (selfProperties == null) {
-				selfProperties = NO_PROPERTIES;
-			}
-			selfFragment.initProperties(selfProperties);
-		}
-		return selfProperties;
-	} */
 
 	@Override
 	public @NonNull String toString() {

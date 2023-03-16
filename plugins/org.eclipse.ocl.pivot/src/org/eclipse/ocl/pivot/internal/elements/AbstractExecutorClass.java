@@ -55,20 +55,18 @@ public class AbstractExecutorClass extends AbstractClassImpl implements Complete
 	}
 
 	@Override
-	@NonNull
-	public EObject createInstance() {
+	public @NonNull EObject createInstance() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	@Nullable
-	public Object createInstance(@NonNull String value) {
+	public @Nullable Object createInstance(@NonNull String value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	protected final EClass eStaticClass() {							// FIXME Bug 577889 The direct CGed Executor has no eClass()
-		throw new UnsupportedOperationException();
+	protected final EClass eStaticClass() {
+		return super.eStaticClass();		// FIXME Bug 577889 The direct CGed Executor has no eClass()
 	}
 
 	public org.eclipse.ocl.pivot.Class getBehavioralClass() {
@@ -80,7 +78,6 @@ public class AbstractExecutorClass extends AbstractClassImpl implements Complete
 		throw new UnsupportedOperationException();
 	}
 
-//	@Override
 	@Override
 	public @NonNull FlatClass getFlatClass() {
 		assert flatClass != null;

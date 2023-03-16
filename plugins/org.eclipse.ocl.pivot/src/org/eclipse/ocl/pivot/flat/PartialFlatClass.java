@@ -22,6 +22,12 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
+/**
+ * A PartialFlatClass identifies a Pivot Class as the client for which caches are provided.
+ * <br>
+ * This calls is not yet used by itself since current usage always provides a EClassifier
+ * for the more refined EcoreFlatClass.
+ */
 public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
 	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
@@ -39,8 +45,7 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 
 	@Override
 	protected @NonNull Property @NonNull [] computeDirectProperties() {
-		org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asClass);
-		List<@NonNull Property> asProperties = gatherDirectProperties(unspecializedType, null);
+		List<@NonNull Property> asProperties = gatherDirectProperties(asClass, null);
 		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
 	}
 
