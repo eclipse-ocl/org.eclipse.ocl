@@ -28,9 +28,9 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public class EcoreExecutorCollectionType extends EcoreExecutorType implements CollectionType
 //Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class.
 {
-	public EcoreExecutorCollectionType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter typeParameter) {
-		super(typeId, evaluationPackage, flags, typeParameter);
-	}
+//	public EcoreExecutorCollectionType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter typeParameter) {
+//		super(typeId, evaluationPackage, flags, typeParameter);
+//	}
 
 	public EcoreExecutorCollectionType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		super(eClassifier, evaluationPackage, typeId, flags, typeParameter);

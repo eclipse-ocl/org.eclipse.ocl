@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.executor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
@@ -26,6 +27,11 @@ public abstract class AbstractSpecializedType extends AbstractExecutorClass
 	}
 
 	public org.eclipse.ocl.pivot.Class getContainerType() {
+		return containerType;
+	}
+
+	@Override
+	public TemplateableElement getUnspecializedElement() {
 		return containerType;
 	}
 

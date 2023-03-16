@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -122,13 +123,13 @@ public class EnvironmentView
 			throw new UnsupportedOperationException();
 		}
 
-		public abstract int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull T o1, @NonNull T o2);
+		public abstract int compare(@NonNull StandardLibrary standardLibrary, @NonNull T o1, @NonNull T o2);
 	}
 
 	private static final class ImplicitDisambiguator extends Disambiguator<@NonNull Object>
 	{
 		@Override
-		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Object match1, @NonNull Object match2) {
+		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Object match1, @NonNull Object match2) {
 			boolean match1IsImplicit = (match1 instanceof Property) && ((Property)match1).isIsImplicit();
 			boolean match2IsImplicit = (match2 instanceof Property) && ((Property)match2).isIsImplicit();
 			if (!match1IsImplicit) {
@@ -143,7 +144,7 @@ public class EnvironmentView
 	private static final class MetamodelMergeDisambiguator extends Disambiguator<@NonNull Feature>
 	{
 		@Override
-		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Feature match1, @NonNull Feature match2) {
+		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Feature match1, @NonNull Feature match2) {
 			org.eclipse.ocl.pivot.Package p1 = PivotUtil.getContainingPackage(match1);
 			org.eclipse.ocl.pivot.Package p2 = PivotUtil.getContainingPackage(match2);
 			if (p1 == null) {
@@ -152,7 +153,7 @@ public class EnvironmentView
 			if (p2 == null) {
 				return 0;
 			}
-			CompleteModel completeModel = environmentFactory.getCompleteModel();
+			CompleteModel completeModel = standardLibrary.getFlatModel().getCompleteModel();
 			CompletePackage s1 = completeModel.getCompletePackage(p1);
 			CompletePackage s2 = completeModel.getCompletePackage(p2);
 			if (s1 != s2) {
@@ -167,7 +168,7 @@ public class EnvironmentView
 	private static final class OperationDisambiguator extends Disambiguator<@NonNull Operation>
 	{
 		@Override
-		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Operation match1, @NonNull Operation match2) {
+		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Operation match1, @NonNull Operation match2) {
 			if (isRedefinitionOf(match1, match2)) {
 				return 1;				// match2 inferior
 			}
@@ -196,8 +197,8 @@ public class EnvironmentView
 	private static final class MergedPackageDisambiguator extends Disambiguator<org.eclipse.ocl.pivot.@NonNull Package>
 	{
 		@Override
-		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, org.eclipse.ocl.pivot.@NonNull Package match1, org.eclipse.ocl.pivot.@NonNull Package match2) {
-			CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+		public int compare(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Package match1, org.eclipse.ocl.pivot.@NonNull Package match2) {
+			CompleteModelInternal completeModel = (CompleteModelInternal) standardLibrary.getFlatModel().getCompleteModel();
 			CompletePackageInternal completePackage1 = completeModel.getCompletePackage(match1);
 			CompletePackageInternal completePackage2 = completeModel.getCompletePackage(match2);
 			if (completePackage1 == completePackage2) {
@@ -210,7 +211,7 @@ public class EnvironmentView
 	private static final class PropertyDisambiguator extends Disambiguator<@NonNull Property>
 	{
 		@Override
-		public int compare(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Property match1, @NonNull Property match2) {
+		public int compare(@NonNull StandardLibrary standardLibrary, @NonNull Property match1, @NonNull Property match2) {
 			if (isRedefinitionOf(match1, match2)) {
 				return 1;				// match2 inferior
 			}
@@ -1039,7 +1040,7 @@ public class EnvironmentView
 									assert comparators != null;
 									for (Comparator<Object> comparator : comparators) {
 										if (comparator instanceof Disambiguator<?>) {
-											verdict = ((Disambiguator<@NonNull Object>)comparator).compare(environmentFactory, iValue, jValue);
+											verdict = ((Disambiguator<@NonNull Object>)comparator).compare(environmentFactory.getStandardLibrary(), iValue, jValue);
 										}
 										else {
 											verdict = comparator.compare(iValue, jValue);

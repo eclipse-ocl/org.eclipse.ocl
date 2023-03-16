@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -168,6 +169,9 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			}
 			map.put(typeParameters, new WeakReference<>(specializedType));
 		}
+		/*Partial*/FlatModel flatModel = getFlatModel();
+		FlatClass flatClass = flatModel.getFlatClass(genericType);
+		specializedType.setFlatClass(flatClass);
 		return specializedType;
 	}
 

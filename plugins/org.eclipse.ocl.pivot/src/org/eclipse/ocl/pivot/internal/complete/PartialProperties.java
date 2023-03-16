@@ -20,10 +20,10 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.Disambiguator;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 import com.google.common.collect.Iterators;
@@ -36,10 +36,10 @@ public class PartialProperties implements Iterable<@NonNull Property>
 	private boolean isResolved = false;
 	private @Nullable Property resolution = null;
 	private @Nullable List<@NonNull Property> partials = null;
-	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
+	protected final @NonNull StandardLibrary standardLibrary;
 
-	public PartialProperties(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		this.environmentFactory = environmentFactory;
+	public PartialProperties(@NonNull StandardLibrary standardLibrary) {
+		this.standardLibrary = standardLibrary;
 	}
 
 	public synchronized void didAddProperty(@NonNull Property pivotProperty) {
@@ -101,7 +101,8 @@ public class PartialProperties implements Iterable<@NonNull Property>
 		for (@NonNull Property property : values) {
 			org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
 			if (owningType != null) {
-				Type domainType = environmentFactory.getMetamodelManager().getPrimaryType(owningType);
+			//	Type domainType = environmentFactory.getMetamodelManager().getPrimaryType(owningType);
+				Type domainType = standardLibrary.getFlatModel().getPrimaryType(owningType);
 				if (!primaryProperties.containsKey(domainType)) {
 					primaryProperties.put(domainType, property);	// FIXME something more deterministic than first
 				}
@@ -189,7 +190,7 @@ public class PartialProperties implements Iterable<@NonNull Property>
 						if (disambiguators != null) {
 							for (Comparator<Object> comparator : disambiguators) {
 								if (comparator instanceof Disambiguator<?>) {
-									verdict = ((Disambiguator<@NonNull Object>)comparator).compare(environmentFactory, iValue, jValue);
+									verdict = ((Disambiguator<@NonNull Object>)comparator).compare(standardLibrary, iValue, jValue);
 								}
 								else {
 									verdict = comparator.compare(iValue, jValue);

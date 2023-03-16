@@ -35,11 +35,11 @@ import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutableStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -110,10 +110,10 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType,  @Nullable Object value) {
-		if (value instanceof ExecutorTypeParameter) {	// FIXME Bug 577889 The direct CGed Executor has no eClass() so use getMetaclass()
+		if (value instanceof AbstractExecutorClass) {	// FIXME Bug 577889 The direct CGed Executor has no eClass() so use getMetaclass()
 			Type type = key2type.get(value);
 			if (type == null) {
-				type = standardLibrary.getMetaclass((ExecutorTypeParameter)value);
+				type = standardLibrary.getMetaclass((AbstractExecutorClass)value);
 				assert type != null;
 				key2type.put(value, type);
 			}

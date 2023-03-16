@@ -11,12 +11,15 @@
 package org.eclipse.ocl.pivot.flat;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 
 public interface FlatModel extends Nameable
 {
-//	void addFlatPackage(@NonNull FlatPackage flatPackage);
-//	@NonNull CompleteFlatPackage getFlatPackage(@NonNull CompletePackage completePackage);
+	@NonNull CompleteModel getCompleteModel();
+	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	@NonNull StandardLibrary getStandardLibrary();
+	@NonNull Type getPrimaryType(org.eclipse.ocl.pivot.@NonNull Class asClass);
 }

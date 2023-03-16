@@ -23,9 +23,9 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 public class EcoreExecutorSequenceType extends EcoreExecutorCollectionType implements SequenceType
 //Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class.
 {
-	public EcoreExecutorSequenceType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter typeParameter) {
-		super(typeId, evaluationPackage, flags, typeParameter);
-	}
+//	public EcoreExecutorSequenceType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter typeParameter) {
+//		super(typeId, evaluationPackage, flags, typeParameter);
+//	}
 
 	public EcoreExecutorSequenceType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		super(eClassifier, evaluationPackage, typeId, flags, typeParameter);

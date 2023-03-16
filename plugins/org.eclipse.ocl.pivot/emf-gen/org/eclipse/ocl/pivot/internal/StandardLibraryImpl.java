@@ -555,7 +555,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 
 	@Override
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-		return getFlatModel().getPartialFlatClass(type);
+		return getFlatModel().getFlatClass(type);
 	}
 
 	@Override

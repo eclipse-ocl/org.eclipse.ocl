@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -62,6 +63,11 @@ public class AbstractExecutorClass extends AbstractClassImpl implements Complete
 	@Override
 	@Nullable
 	public Object createInstance(@NonNull String value) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected final EClass eStaticClass() {							// FIXME Bug 577889 The direct CGed Executor has no eClass()
 		throw new UnsupportedOperationException();
 	}
 

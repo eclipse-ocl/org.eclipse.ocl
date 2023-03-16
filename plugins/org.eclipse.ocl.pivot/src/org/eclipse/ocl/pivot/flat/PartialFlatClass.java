@@ -10,24 +10,31 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
-public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
+public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable metamodels
 {
 	protected final org.eclipse.ocl.pivot.@NonNull Class asClass;
 
 	protected PartialFlatClass(@NonNull FlatModel flatModel, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		super(flatModel, NameUtil.getName(asClass), 0);
 		this.asClass = asClass;
-	//	((ClassImpl)asClass).addClassListener(this);
+		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;
+	}
+
+	@Override
+	protected @NonNull Operation @NonNull [] computeDirectOperations() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -35,6 +42,29 @@ public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME i
 		org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asClass);
 		List<@NonNull Property> asProperties = gatherDirectProperties(unspecializedType, null);
 		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
+	}
+
+	@Override
+	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {	// This occurs before AS superclasses are defined
+		assert !isOclAny();
+		List<@NonNull FlatClass> superFlatClasses = null;
+		FlatModel flatModel2 = getFlatModel();
+		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : PivotUtil.getSuperClasses(asClass)) {
+			if (superFlatClasses == null) {
+				superFlatClasses = new ArrayList<>();
+			}
+			FlatClass superFlatClass = flatModel2.getFlatClass(asSuperClass);
+			if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
+				superFlatClasses.add(superFlatClass);
+			}
+		}
+		if (superFlatClasses == null) {
+			StandardLibrary standardLibrary = getStandardLibrary();
+			org.eclipse.ocl.pivot.@NonNull Class oclAnyClass = standardLibrary.getOclAnyType();
+			FlatClass oclAnyFlatClass = oclAnyClass.getFlatClass(standardLibrary);
+			superFlatClasses = Collections.singletonList(oclAnyFlatClass);
+		}
+		return superFlatClasses;
 	}
 
 	@Override
@@ -50,11 +80,6 @@ public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME i
 	@Override
 	public @NonNull CompleteClass getCompleteClass() {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		throw new UnsupportedOperationException();				// XXX
 	}
 
 	@Override
@@ -88,5 +113,10 @@ public abstract class PartialFlatClass extends AbstractFlatClass		// XXX FIXME i
 	public void resetFragments() {
 		asClass.removeClassListener(this);
 		super.resetFragments();
+	}
+
+	@Override
+	public @NonNull String toString() {
+		return NameUtil.qualifiedNameFor(asClass);
 	}
 }

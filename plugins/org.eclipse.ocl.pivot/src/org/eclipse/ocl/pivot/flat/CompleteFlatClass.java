@@ -144,7 +144,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		org.eclipse.ocl.pivot.Package pivotPackage = rootCompletePackage.getPrimaryPackage();
 		if (pivotPackage != null) {
 			org.eclipse.ocl.pivot.Class pivotClass = completeClass.getPrimaryClass();
-			EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
+			EnvironmentFactoryInternal environmentFactory = completeClass.getEnvironmentFactory();
 			PackageId metapackageId = environmentFactory.getTechnology().getMetapackageId(environmentFactory, pivotPackage);
 			org.eclipse.ocl.pivot.Package metapackage = ((IdResolver.IdResolverExtension)environmentFactory.getIdResolver()).basicGetPackage(metapackageId);
 			if (metapackage != null) {
@@ -170,10 +170,10 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		return completeClass;
 	}
 
-	@Override
-	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return completeClass.getEnvironmentFactory();
-	}
+//	@Override
+//	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
+//		return completeClass.getEnvironmentFactory();
+//	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
@@ -261,11 +261,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	}
 
 	@Override
-	public @NonNull String toString() {
-		return NameUtil.qualifiedNameFor(completeClass);
-	}
-
-	@Override
 	public void resetFragments() {
 		completeClass.removeClassListener(this);
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
@@ -276,4 +271,9 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	}
 
 	// XXX resetStates
+
+	@Override
+	public @NonNull String toString() {
+		return NameUtil.qualifiedNameFor(completeClass);
+	}
 }

@@ -14,10 +14,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class CompleteFlatModel extends AbstractFlatModel
@@ -38,11 +41,13 @@ public class CompleteFlatModel extends AbstractFlatModel
 		return completeFlatClass;
 	}
 
+	@Override
 	public @NonNull CompleteModel getCompleteModel() {
 		return completeModel;
 	}
 
-	public @NonNull FlatClass getPartialFlatClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+	@Override
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		CompleteClass completeClass = completeModel.getCompleteClass(partialClass);
 	//	PartialFlatClass flatClass = partialClass2flatClass.get(partialClass);
 	//	if (flatClass == null) {
@@ -50,5 +55,10 @@ public class CompleteFlatModel extends AbstractFlatModel
 	//		partialClass2flatClass.put(partialClass, flatClass);
 	//	}
 		return completeClass.getFlatClass();
+	}
+
+	@Override
+	public @NonNull Type getPrimaryType(@NonNull Class owningType) {
+		return ((CompleteModelInternal)completeModel).getCompleteClass(owningType).getPrimaryClass();
 	}
 }

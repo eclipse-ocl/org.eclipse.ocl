@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
@@ -32,11 +31,6 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		super(flatModel, asClass);
 		this.eClassifier = eClassifier;
-	}
-
-	@Override
-	protected @NonNull Operation @NonNull [] computeDirectOperations() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

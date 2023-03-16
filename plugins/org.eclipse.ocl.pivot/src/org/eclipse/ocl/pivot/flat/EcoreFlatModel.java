@@ -14,18 +14,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveType;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
-public class EcoreFlatModel extends AbstractFlatModel
+public class EcoreFlatModel extends PartialFlatModel
 {
 	private final @NonNull Map<@NonNull EClassifier, @NonNull EcoreFlatClass> eClassifier2flatClass =  new HashMap<>();
 
 	public EcoreFlatModel(@NonNull StandardLibrary standardLibrary) {
-		super(standardLibrary, "");
+		super(standardLibrary);
 	}
 
 	public @NonNull FlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier) {
@@ -36,25 +37,30 @@ public class EcoreFlatModel extends AbstractFlatModel
 	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EcoreExecutorType type) {
 		EClassifier eClassifier = type.getEClassifier();
 		assert eClassifier != null;
-		EcoreFlatClass flatClass = eClassifier2flatClass.get(eClassifier);
-		if (flatClass == null) {
-			flatClass = new EcoreFlatClass(this, eClassifier, type);
-			eClassifier2flatClass.put(eClassifier, flatClass);
-		}
-		else {
-			assert false;
-		}
-		return flatClass;
+		return getEcoreFlatClass(eClassifier, type);
 	}
 
 	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EcoreReflectiveType type) {
 		EClassifier eClassifier = type.getEClassifier();
 		assert eClassifier != null;
+		return getEcoreFlatClass(eClassifier, type);
+	}
+
+	private @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		EcoreFlatClass flatClass = eClassifier2flatClass.get(eClassifier);
 		if (flatClass == null) {
-			flatClass = new EcoreFlatClass(this, eClassifier, type);
+			flatClass = new EcoreFlatClass(this, eClassifier, asClass);
 			eClassifier2flatClass.put(eClassifier, flatClass);
 		}
 		return flatClass;
+	}
+
+	@Override
+	public @NonNull PartialFlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		EObject esObject = asClass.getESObject();
+		if (esObject instanceof EClassifier) {
+			return getEcoreFlatClass((EClassifier)esObject, asClass);
+		}
+		return super.getFlatClass(asClass);
 	}
 }
