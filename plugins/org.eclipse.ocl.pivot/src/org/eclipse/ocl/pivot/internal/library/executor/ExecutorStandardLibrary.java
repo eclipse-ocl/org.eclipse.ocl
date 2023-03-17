@@ -37,13 +37,13 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
 import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorAnyType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBagType;
@@ -64,11 +65,9 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreLibraryOppositeProperty;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -203,15 +202,22 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return type;
 	}
 
-	public @NonNull Operation createOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type type,
+	public @NonNull Operation createOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, org.eclipse.ocl.pivot.@NonNull Class asClass,
 			int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
-		return new ExecutorOperation(name, parameterTypes, type, index, typeParameters, implementation);
+		return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
 	}
 
-	public @NonNull Property createOppositeProperty(@NonNull String name, @NonNull Type executorType, int propertyIndex, /*@NonNull*/ EStructuralFeature eFeature) {
+	public @NonNull Property createOppositeProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex, /*@NonNull*/ EStructuralFeature eFeature) {
 		assert eFeature != null;
-		EcoreLibraryOppositeProperty oppositeProperty = new EcoreLibraryOppositeProperty(eFeature);
-		return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, oppositeProperty);
+	//	EcoreLibraryOppositeProperty oppositeProperty = new EcoreLibraryOppositeProperty(eFeature);
+	//	return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, oppositeProperty);
+		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+		asProperty.setName(eFeature.getName());
+		asProperty.setESObject(eFeature);
+	//	asProperty.setIndex(propertyIndex);
+	//	asProperty.setImplementation(implementation);
+	//	asClass.getOwnedProperties().add(asProperty);
+		return asProperty;
 	}
 
 	public @NonNull OrderedSetType createOrderedSetType(/*@NonNull*/ EClassifier eClassifier,
@@ -244,13 +250,26 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return type;
 	}
 
-	public @NonNull Property createProperty(@NonNull String name, @NonNull Type executorType, int propertyIndex, @NonNull LibraryProperty implementation) {
-		return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, implementation);
+	public @NonNull Property createProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex, @NonNull LibraryProperty implementation) {
+	//	return new ExecutorPropertyWithImplementation(name, asClass, propertyIndex, implementation);
+		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+		asProperty.setName(name);
+	//	asProperty.setIndex(propertyIndex);
+		asProperty.setImplementation(implementation);
+	//	asClass.getOwnedProperties().add(asProperty);
+		return asProperty;
 	}
 
-	public @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, @NonNull Type executorType, int propertyIndex) {
+	public @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex) {
 		assert eFeature != null;
-		return new EcoreExecutorProperty(eFeature, executorType, propertyIndex);
+	//	return new EcoreExecutorProperty(eFeature, asClass, propertyIndex);
+		PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+		asProperty.setName(eFeature.getName());
+		asProperty.setESObject(eFeature);
+	//	asProperty.setIndex(propertyIndex);
+	//	asProperty.setImplementation(implementation);
+	//	asClass.getOwnedProperties().add(asProperty);
+		return asProperty;
 	}
 
 	public @NonNull SequenceType createSequenceType(/*@NonNull*/ EClassifier eClassifier,

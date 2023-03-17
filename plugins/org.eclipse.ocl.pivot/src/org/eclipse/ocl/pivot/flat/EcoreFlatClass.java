@@ -21,9 +21,10 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
+import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -74,7 +75,14 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		for (int i = 0; i < iSize; i++) {
 			EStructuralFeature eFeature = eStructuralFeatures.get(i);
 			assert eFeature != null;
-			array[i] = new EcoreExecutorProperty(eFeature, asClass, i);
+		//	EcoreExecutorProperty asProperty = new EcoreExecutorProperty(eFeature, asClass, i);
+			PropertyImpl asProperty = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+			asProperty.setName(eFeature.getName());
+			asProperty.setESObject(eFeature);
+		//	asProperty.setIndex(propertyIndex);
+		//	asProperty.setImplementation(implementation);
+		//	asClass.getOwnedProperties().add(asProperty);
+			array[i] = asProperty;
 		}
 		return array;
 	}
