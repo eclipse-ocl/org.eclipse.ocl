@@ -17,8 +17,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreReflectiveType;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class EcoreFlatModel extends PartialFlatModel
@@ -34,16 +32,10 @@ public class EcoreFlatModel extends PartialFlatModel
 		return ClassUtil.nonNullState(flatClass);
 	}
 
-	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull ExecutorType type) {
-		EClassifier eClassifier = type.getEClassifier();
+	public @NonNull EcoreFlatClass getEcoreFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		EClassifier eClassifier = (EClassifier)asClass.getESObject();
 		assert eClassifier != null;
-		return getEcoreFlatClass(eClassifier, type);
-	}
-
-	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EcoreReflectiveType type) {
-		EClassifier eClassifier = type.getEClassifier();
-		assert eClassifier != null;
-		return getEcoreFlatClass(eClassifier, type);
+		return getEcoreFlatClass(eClassifier, asClass);
 	}
 
 	private @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) {

@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.ClassId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -37,7 +38,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 // import org.eclipse.ocl.pivot.internal.lookup.LookupPackage;
 // import org.eclipse.ocl.pivot.internal.lookup.LookupTables;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
@@ -114,10 +114,10 @@ public class LookupTables extends AbstractTables
 			TypeParameters.init();
 		}
 
-		public static final @NonNull ExecutorType _Executor = LIBRARY.createEcoreExecutorType(LookupPackage.Literals.EXECUTOR, PACKAGE, 0 | ExecutorType.ABSTRACT);
-		public static final @NonNull ExecutorType _LookupEnvironment = LIBRARY.createEcoreExecutorType(LookupPackage.Literals.LOOKUP_ENVIRONMENT, PACKAGE, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Executor = LIBRARY.createClass(LookupPackage.Literals.EXECUTOR, PACKAGE, 0 | FlatClass.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _LookupEnvironment = LIBRARY.createClass(LookupPackage.Literals.LOOKUP_ENVIRONMENT, PACKAGE, 0);
 
-		private static final @NonNull ExecutorType @NonNull [] types = {
+		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] types = {
 			_Executor,
 			_LookupEnvironment
 		};

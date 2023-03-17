@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -161,12 +160,12 @@ public class CodegencompanyTables extends AbstractTables
 			TypeParameters.init();
 		}
 
-		public static final @NonNull ExecutorType _Bug418716 = LIBRARY.createExecutorType(CodegencompanyPackage.Literals.BUG418716, PACKAGE, 0);
-		public static final @NonNull ExecutorType _Company = LIBRARY.createExecutorType(CodegencompanyPackage.Literals.COMPANY, PACKAGE, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Bug418716 = LIBRARY.createClass(CodegencompanyPackage.Literals.BUG418716, PACKAGE, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Company = LIBRARY.createClass(CodegencompanyPackage.Literals.COMPANY, PACKAGE, 0);
 		public static final @NonNull EcoreExecutorEnumeration _CompanySizeKind = LIBRARY.createEcoreExecutorEnumeration(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND, PACKAGE, 0);
-		public static final @NonNull ExecutorType _Employee = LIBRARY.createExecutorType(CodegencompanyPackage.Literals.EMPLOYEE, PACKAGE, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Employee = LIBRARY.createClass(CodegencompanyPackage.Literals.EMPLOYEE, PACKAGE, 0);
 
-		private static final @NonNull ExecutorType @NonNull [] types = {
+		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] types = {
 			_Bug418716,
 			_Company,
 			_CompanySizeKind,
