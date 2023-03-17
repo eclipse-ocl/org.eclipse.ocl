@@ -20,9 +20,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -51,30 +49,6 @@ public class EcoreExecutorPackage extends PackageImpl
 	private org.eclipse.ocl.pivot.@NonNull Class[] types = null;
 	private @Nullable List<org.eclipse.ocl.pivot.@NonNull Package> packages = null;
 
-	public EcoreExecutorPackage(@NonNull EPackage ePackage) {
-		setName(ePackage.getName());
-		setNsPrefix(ePackage.getNsPrefix());
-		setURI(ePackage.getNsURI());
-		setPackageId(IdManager.getPackageId(ePackage));
-		setESObject(ePackage);
-	}
-
-	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage, @NonNull PackageId packageId) {
-		setName(ePackage.getName());
-		setNsPrefix(ePackage.getNsPrefix());
-		setURI(ePackage.getNsURI());
-		setPackageId(packageId);
-		setESObject(ePackage);
-	}
-
-	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage, @NonNull PackageId packageId, @NonNull ExecutorStandardLibrary standardLibrary) {
-		setName(ePackage.getName());
-		setNsPrefix(ePackage.getNsPrefix());
-		setURI(ePackage.getNsURI());
-		setPackageId(packageId);
-		setESObject(ePackage);
-		this.standardLibrary = standardLibrary;
-	}
 
 	@Override
 	public final EPackage getEPackage() {

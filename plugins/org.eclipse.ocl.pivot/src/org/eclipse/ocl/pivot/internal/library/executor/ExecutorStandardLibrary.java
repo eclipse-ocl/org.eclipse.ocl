@@ -51,8 +51,10 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorAnyType;
@@ -63,7 +65,6 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
@@ -232,12 +233,26 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 
 	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage) {
 		assert ePackage != null;
-		return new EcoreExecutorPackage(ePackage);
+	//	return new EcoreExecutorPackage(ePackage);
+		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
+		asPackage.setName(ePackage.getName());
+		asPackage.setNsPrefix(ePackage.getNsPrefix());
+		asPackage.setURI(ePackage.getNsURI());
+		asPackage.setPackageId(IdManager.getPackageId(ePackage));
+		asPackage.setESObject(ePackage);
+		return asPackage;
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage, @NonNull PackageId packageId) {
 		assert ePackage != null;
-		return new EcoreExecutorPackage(ePackage, packageId, this);
+	//	return new EcoreExecutorPackage(ePackage, packageId, this);
+		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
+		asPackage.setName(ePackage.getName());
+		asPackage.setNsPrefix(ePackage.getNsPrefix());
+		asPackage.setURI(ePackage.getNsURI());
+		asPackage.setPackageId(packageId);
+		asPackage.setESObject(ePackage);
+		return asPackage;
 	}
 
 	public @NonNull PrimitiveType createPrimitiveType(/*@NonNull*/ EClassifier eClassifier,
@@ -490,7 +505,10 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		((EcoreExecutorEnumeration)asEnumeration).initLiterals(asEnumerationLiterals);
 	}
 
-	public void initPackage(@NonNull Package asPackage, @NonNull Class @NonNull [] types) {
-		((EcoreExecutorPackage)asPackage).init(this, types);
+	public void initPackage(@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
+		List<Class> ownedClasses = asPackage.getOwnedClasses();
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
+			ownedClasses.add(asClass);
+		}
 	}
 }
