@@ -16,8 +16,11 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty;
@@ -34,6 +37,30 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 	public EcoreFlatClass(@NonNull EcoreFlatModel flatModel, @NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		super(flatModel, asClass);
 		this.eClassifier = eClassifier;
+	}
+
+	@Override
+	protected @NonNull Operation @NonNull [] computeDirectOperations() {
+		if (!(eClassifier instanceof EClass) ) {
+			return NO_OPERATIONS;
+		}
+		List<EOperation> eOperations = ((EClass)eClassifier).getEOperations();
+		int iSize = eOperations.size();
+		@NonNull Operation @NonNull [] array = new @NonNull Operation[iSize];
+		for (int i = 0; i < iSize; i++) {
+			EOperation eOperation = eOperations.get(i);
+			assert eOperation != null;
+			for (EParameter eParameter : eOperation.getEParameters()) {
+				EClassifier eClassifier = eParameter.getEType();
+				//
+			}
+
+		//	ParameterTypes parameterTypes = TypeUtil.createParameterTypes(CodegencompanyTables.Types._Employee);
+
+		//	array[i] = new ExecutorOperation(eOperation, asClass, i);
+			throw new UnsupportedOperationException();
+		}
+		return array;
 	}
 
 	@Override

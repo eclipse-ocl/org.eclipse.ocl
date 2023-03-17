@@ -40,7 +40,8 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 
 	@Override
 	protected @NonNull Operation @NonNull [] computeDirectOperations() {
-		throw new UnsupportedOperationException();
+		List<@NonNull Operation> asOperations = gatherDirectOperations(asClass, null);
+		return asOperations != null ? asOperations.toArray(new @NonNull Operation[asOperations.size()]) : NO_OPERATIONS;
 	}
 
 	@Override

@@ -65,7 +65,12 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 
 	@Override
 	protected @NonNull Operation @NonNull [] computeDirectOperations() {
-		throw new UnsupportedOperationException();
+		List<@NonNull Operation> asOperations = null;
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
+			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(partialClass);
+			asOperations = gatherDirectOperations(unspecializedType, asOperations);
+		}
+		return asOperations != null ? asOperations.toArray(new @NonNull Operation[asOperations.size()]) : NO_OPERATIONS;
 	}
 
 	@Override

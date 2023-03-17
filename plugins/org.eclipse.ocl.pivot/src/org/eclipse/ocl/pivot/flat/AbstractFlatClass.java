@@ -245,6 +245,17 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		resetFragments();
 	}
 
+	protected @Nullable List<@NonNull Operation> gatherDirectOperations(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Operation> asOperations) {
+		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;
+		for (@NonNull Operation partialOperation : PivotUtil.getOwnedOperations(asClass)) {
+			if (asOperations == null) {
+				asOperations = new ArrayList<>();
+			}
+			asOperations.add(partialOperation);	// This is a simple list of ingredients; merge is callers responsibility wrt the name.
+		}
+		return asOperations;
+	}
+
 	protected @Nullable List<@NonNull Property> gatherDirectProperties(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Property> asProperties) {
 		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;		// FIXME This is much less than PartialClasses.initMemberProperties
 		for (@NonNull Property partialProperty : PivotUtil.getOwnedProperties(asClass)) {
