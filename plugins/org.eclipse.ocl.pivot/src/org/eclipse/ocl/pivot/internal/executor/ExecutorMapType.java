@@ -13,18 +13,23 @@ package org.eclipse.ocl.pivot.internal.executor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
+import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
+import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * @since 1.18
  */
-public class ExecutorMapType extends AbstractSpecializedType implements MapType
+public class ExecutorMapType extends AbstractExecutorClass implements MapType
 {
+	protected final org.eclipse.ocl.pivot.@NonNull Class containerType;
 	protected final @NonNull Type keyType;
 	/**
 	 * @since 1.18
@@ -48,7 +53,8 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	 */
 	public ExecutorMapType(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class containerType,
 			@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		super(name, containerType);
+		super(name, 0);
+		this.containerType = containerType;
 		this.keyType = keyType;
 		this.keyValuesAreNullFree = keyValuesAreNullFree;
 		this.valueType = valueType;
@@ -104,19 +110,14 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 		return keyType;
 	}
 
-	//	@Override
-	//	public @NonNull String getMetaTypeName() {
-	//		return getTypeId().getCollectionTypeId().getMetaTypeName();
-	//	}
-
-//	@Override
-//	public @NonNull List<Operation> getOwnedOperations() {
-//		return containerType.getOwnedOperations();
-//	}
-
 	@Override
 	public @NonNull MapTypeId getTypeId() {
 		return typeId;
+	}
+
+	@Override
+	public TemplateableElement getUnspecializedElement() {
+		return containerType;
 	}
 
 	/**
@@ -149,8 +150,28 @@ public class ExecutorMapType extends AbstractSpecializedType implements MapType
 	}
 
 	@Override
+	public boolean isOrdered() {
+		return containerType.isOrdered();
+	}
+
+	@Override
+	public boolean isUnique() {
+		return containerType.isUnique();
+	}
+
+	@Override
 	public boolean isValuesAreNullFree() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
+		return containerType.lookupActualOperation(standardLibrary, apparentOperation);
+	}
+
+	@Override
+	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
+		return containerType.lookupImplementation(standardLibrary, apparentOperation);
 	}
 
 	@Override

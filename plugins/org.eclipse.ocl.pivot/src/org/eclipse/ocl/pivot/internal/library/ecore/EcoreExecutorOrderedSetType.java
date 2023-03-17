@@ -23,10 +23,6 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 public class EcoreExecutorOrderedSetType extends EcoreExecutorCollectionType implements OrderedSetType
 //Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class.
 {
-//	public EcoreExecutorOrderedSetType(@NonNull BuiltInTypeId typeId, @NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter typeParameter) {
-//		super(typeId, evaluationPackage, flags, typeParameter);
-//	}
-
 	public EcoreExecutorOrderedSetType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		super(eClassifier, evaluationPackage, typeId, flags, typeParameter);
 	}

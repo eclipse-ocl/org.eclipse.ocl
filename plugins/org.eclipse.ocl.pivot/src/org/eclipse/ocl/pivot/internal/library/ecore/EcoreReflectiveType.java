@@ -12,7 +12,9 @@ package org.eclipse.ocl.pivot.internal.library.ecore;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -30,19 +32,19 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.AbstractReflectiveInheritanceType;
+import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
+import org.eclipse.ocl.pivot.values.OCLValue;
 
-public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
+public class EcoreReflectiveType extends AbstractExecutorClass
 {
 	public static final @NonNull List<CompleteInheritance> EMPTY_INHERITANCES = Collections.emptyList();
 	protected final @NonNull EcoreReflectivePackage evaluationPackage;
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull TemplateParameters typeParameters;
-//	private /*@LazyNonNull*/ DomainProperties allProperties;
 
 	public EcoreReflectiveType(@NonNull EcoreReflectivePackage evaluationPackage, int flags, @NonNull EClassifier eClassifier, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		super(NameUtil.getName(eClassifier), flags);
@@ -63,11 +65,6 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
 		return thatFlatClass.isSuperFlatClassOf(thisFlatClass);
 	}
-
-//	@Override
-//	protected @NonNull AbstractFragment createFragment(@NonNull FlatClass baseInheritance) {
-//		return new EcoreReflectiveFragment(this, baseInheritance);
-//	}
 
 	@Override
 	public @NonNull EObject createInstance() {
@@ -91,6 +88,11 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.Class flattenedType() {
+		return this;
+	}
+
+	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		if (this == type) {
 			return this.getPivotClass();
@@ -110,47 +112,10 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		return eClassifier;
 	}
 
-/*	@Override
-	public @NonNull Iterable<@NonNull ? extends CompleteInheritance> getInitialSuperInheritances() {
-		List<EClass> eSuperTypes = eClassifier instanceof EClass ? ((EClass)eClassifier).getESuperTypes() : Collections.<EClass>emptyList();
-		final Iterator<EClass> iterator = eSuperTypes.iterator();
-		return new Iterable<@NonNull CompleteInheritance>()
-		{
-			@Override
-			public @NonNull Iterator<@NonNull CompleteInheritance> iterator() {
-				return new Iterator<@NonNull CompleteInheritance>()
-				{
-					private boolean gotOne = false;
-
-					@Override
-					public boolean hasNext() {
-						return !gotOne || iterator.hasNext();
-					}
-
-					@Override
-					public @NonNull CompleteInheritance next() {
-						if (!gotOne) {
-							gotOne = true;
-							if (!iterator.hasNext()) {
-								StandardLibrary standardLibrary = evaluationPackage.getStandardLibrary();
-								org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
-								return standardLibrary.getInheritance(oclAnyType);
-							}
-						}
-						EClass next = iterator.next();
-						assert next != null;
-						IdResolver idResolver = evaluationPackage.getIdResolver();
-						return idResolver.getInheritance(next);
-					}
-
-					@Override
-					public void remove() {
-						throw new UnsupportedOperationException();
-					}
-				};
-			}
-		};
-	} */
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
+		return getPivotClass();
+	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getOwningPackage() {
@@ -167,32 +132,18 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 		throw new UnsupportedOperationException();					// FIXME
 	}
 
-//	@Override
-//	public @Nullable Property getMemberProperty(@NonNull String name) {
-//		DomainProperties allProperties2 = allProperties;
-//		if (allProperties2 == null) {
-//			allProperties = allProperties2 = new DomainProperties(getFlatClass());
-//		}
-//		return allProperties2.getMemberProperty(name);
-//	}
-
 	@Override
 	public @NonNull String getMetaTypeName() {
 		return ClassUtil.nonNullPivot(eClassifier.getName());
 	}
 
 	@Override
-	public @NonNull List<Constraint> getOwnedInvariants() {
+	public @NonNull List<Constraint> getOwnedConstraints() {
 		throw new UnsupportedOperationException();			// FIXME
 	}
 
-//	@Override
-//	public @NonNull List<Operation> getOwnedOperations() {
-//		throw new UnsupportedOperationException();		// FIXME
-//	}
-
 	@Override
-	public @NonNull List<Constraint> getOwnedConstraints() {
+	public @NonNull List<Constraint> getOwnedInvariants() {
 		throw new UnsupportedOperationException();			// FIXME
 	}
 
@@ -212,6 +163,21 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class isClass() {
+		return getPivotClass();
+	}
+
+	@Override
+	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
+		return getPivotClass() == type;
+	}
+
+	@Override
+	public boolean isEqualToUnspecializedType(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
+		return getPivotClass() == type;
+	}
+
+	@Override
 	public boolean isOrdered() {
 		return getFlatClass().isOrdered();
 	}
@@ -219,5 +185,30 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	@Override
 	public boolean isUnique() {
 		return getFlatClass().isUnique();
+	}
+
+	@Override
+	public @Nullable TemplateParameter isTemplateParameter() {
+		return null;
+	}
+
+	@Override
+	public boolean oclEquals(@NonNull OCLValue thatValue) {
+		if (!(thatValue instanceof Type)) {
+			return false;
+		}
+		TypeId thisTypeId = getTypeId();
+		TypeId thatTypeId = ((Type)thatValue).getTypeId();
+		return thisTypeId.equals(thatTypeId);
+	}
+
+	@Override
+	public int oclHashCode() {
+		return getTypeId().hashCode();
+	}
+
+	@Override
+	public boolean validateNameIsNotNull(DiagnosticChain diagnostics, Map<Object, Object> context) {
+		throw new UnsupportedOperationException();
 	}
 }
