@@ -407,7 +407,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public void addClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		getPartialClasses().add(partialClass);
-		assert getPartialClasses().equals(legacyPartialClasses.getPartialClasses());
 	}
 
 	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
@@ -789,21 +788,15 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @NonNull Iterable<@NonNull CompleteClass> getSuperCompleteClasses() {
-		return legacyPartialClasses.getSuperCompleteClasses();
-	}
-
-	/*	public boolean isSuperClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {
-		CompleteClass unspecializedSecondType = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(secondType.getPivotClass()));	// FIXME cast
-		if (unspecializedFirstType == unspecializedSecondType) {
-			return true;
-		}
-		for (CompleteClass superClass : getSuperCompleteClasses(unspecializedSecondType)) {
-			if ((superClass != null) && isSuperClassOf(unspecializedFirstType, superClass)) {
-				return true;
+		FlatClass flatClass = getFlatClass();
+		return Iterables.transform(flatClass.getAllSuperFragments(), new Function<FlatFragment, @NonNull CompleteClass>()
+		{
+			@Override
+			public @NonNull CompleteClass apply(FlatFragment input) {
+				return input.getBaseFlatClass().getCompleteClass();
 			}
-		}
-		return false;
-	} */
+		});
+	}
 
 	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
 		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;

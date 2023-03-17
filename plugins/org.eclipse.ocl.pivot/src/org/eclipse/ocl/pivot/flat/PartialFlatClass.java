@@ -109,6 +109,43 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 		}
 	}
 
+/*	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initMemberOperations() {
+		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
+		if (name2partialOperations2 == null) {
+			name2partialOperations2 = name2partialOperations = new HashMap<@NonNull String, @NonNull PartialOperations>();
+//			Set<CompleteClass> allSuperCompleteClasses = new HashSet<CompleteClass>();
+//			allSuperCompleteClasses.add(completeClass);
+//			for (CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
+//				allSuperCompleteClasses.add(superCompleteClass);
+//			}
+			for (@NonNull CompleteClass superCompleteClass : getSuperCompleteClasses()) {
+				for (org.eclipse.ocl.pivot.@NonNull Class superType : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
+					org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
+					CompleteClass unspecializedCompleteClass = getCompleteModel().getCompleteClass(unspecializedType);
+					for (org.eclipse.ocl.pivot.@NonNull Class unspecializedPartialType : ClassUtil.nullFree(unspecializedCompleteClass.getPartialClasses())) {
+						assert unspecializedPartialType != null;
+						initMemberOperationsFrom(unspecializedPartialType);
+					}
+				}
+			}
+			for (PartialOperations partialOperations : name2partialOperations2.values()) {
+				partialOperations.initMemberOperationsPostProcess();
+			}
+		}
+		return name2partialOperations2;
+	}
+
+	private void initMemberOperationsFrom(org.eclipse.ocl.pivot.@NonNull Class type) {
+		if (INIT_MEMBER_OPERATIONS.isActive()) {
+			INIT_MEMBER_OPERATIONS.println(this + " from " + type);
+		}
+		for (@SuppressWarnings("null")@NonNull Operation pivotOperation : type.getOwnedOperations()) {
+			if (pivotOperation.getName() != null) {		// name may be null for partially initialized Complete OCL document.
+				didAddOperation(pivotOperation);
+			}
+		}
+	} */
+
 	@Override
 	protected void installClassListeners() {
 		assert isMutable();
