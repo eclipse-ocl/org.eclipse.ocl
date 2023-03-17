@@ -573,6 +573,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 			CompletePackageInternal completePackage = getOwningCompletePackage();
 			completeInheritance2 = completePackage.getCompleteInheritance(this);
 			completeInheritance = completeInheritance2;
+			throw new UnsupportedOperationException();			// XXX
 		}
 		return completeInheritance2;
 	}
