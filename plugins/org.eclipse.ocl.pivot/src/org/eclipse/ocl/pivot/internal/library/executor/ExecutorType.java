@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
@@ -28,7 +27,6 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
@@ -104,7 +102,7 @@ public class ExecutorType extends AbstractExecutorClass
 	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		if (this == type) {
-			return this.getPivotClass();
+			return this;
 		}
 		FlatClass firstFlatClass = this.getFlatClass();
 		FlatClass secondFlatClass = type.getFlatClass(idResolver.getStandardLibrary());
@@ -119,11 +117,6 @@ public class ExecutorType extends AbstractExecutorClass
 	@Override
 	public EObject getESObject() {
 		return eClassifier;
-	}
-
-	@Override
-	public @Nullable Operation getMemberOperation(@NonNull OperationId operationId) {
-		throw new UnsupportedOperationException();					// FIXME
 	}
 
 //	@Override
@@ -163,11 +156,6 @@ public class ExecutorType extends AbstractExecutorClass
 	@Override
 	public @NonNull List<Constraint> getOwnedConstraints() {
 		throw new UnsupportedOperationException();			// FIXME
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
-		return this;
 	}
 
 	public @NonNull StandardLibrary getStandardLibrary() {

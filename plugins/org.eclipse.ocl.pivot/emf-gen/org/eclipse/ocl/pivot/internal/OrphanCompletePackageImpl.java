@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -162,11 +161,6 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		completeClass.getPartialClasses().add(orphanClass);
 		class2orphanCompleteClass.put(orphanClass, new WeakReference<OrphanCompleteClassImpl>(completeClass));
 		return completeClass;
-	}
-
-	@Override
-	public @NonNull CompleteInheritanceImpl getCompleteInheritance(@NonNull CompleteClassInternal completeClass) {
-		return new CompleteInheritanceImpl(completeClass);
 	}
 
 	@Override

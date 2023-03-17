@@ -20,7 +20,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Class;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -33,14 +32,13 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
-import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.AbstractClassImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 
 import com.google.common.collect.Lists;
 
-public abstract class AbstractExecutorClass extends AbstractClassImpl implements CompleteInheritance
+public abstract class AbstractExecutorClass extends AbstractClassImpl
 {
 	public static final int ORDERED = FlatClass.ORDERED;
 	public static final int UNIQUE = FlatClass.UNIQUE;
@@ -79,7 +77,7 @@ public abstract class AbstractExecutorClass extends AbstractClassImpl implements
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
+//	@Override
 	public @NonNull FlatClass getFlatClass() {
 		assert flatClass != null;
 		return flatClass;
@@ -89,11 +87,6 @@ public abstract class AbstractExecutorClass extends AbstractClassImpl implements
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		assert flatClass != null;
 		return flatClass;
-	}
-
-	@Override
-	public @Nullable Operation getMemberOperation(@NonNull OperationId id) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -153,11 +146,6 @@ public abstract class AbstractExecutorClass extends AbstractClassImpl implements
 
 	@Override
 	public org.eclipse.ocl.pivot.Package getOwningPackage() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
 		throw new UnsupportedOperationException();
 	}
 

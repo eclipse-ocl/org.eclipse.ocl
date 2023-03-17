@@ -1575,17 +1575,6 @@ implements Operation {
 		return standardLibrary.getFlatClass(owningType);
 	}
 
-/*	@Override
-	public @Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		org.eclipse.ocl.pivot.Class owningType = getOwningClass();
-		if (owningType != null) {
-			return standardLibrary.getInheritance(owningType);
-		}
-		else {
-			return null;
-		}
-	} */
-
 	@Override
 	public @NonNull ParametersId getParametersId() {
 		return getOperationId().getParametersId();

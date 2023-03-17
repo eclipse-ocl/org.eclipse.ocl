@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -21,16 +20,13 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -41,7 +37,6 @@ import org.eclipse.ocl.pivot.values.OCLValue;
 
 public class EcoreReflectiveType extends AbstractExecutorClass
 {
-	public static final @NonNull List<CompleteInheritance> EMPTY_INHERITANCES = Collections.emptyList();
 	protected final @NonNull EcoreReflectivePackage evaluationPackage;
 	protected final @NonNull EClassifier eClassifier;
 	protected final @NonNull TemplateParameters typeParameters;
@@ -95,7 +90,7 @@ public class EcoreReflectiveType extends AbstractExecutorClass
 	@Override
 	public @NonNull Type getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
 		if (this == type) {
-			return this.getPivotClass();
+			return this;
 		}
 		FlatClass firstFlatClass = this.getFlatClass();
 		FlatClass secondFlatClass = type.getFlatClass(idResolver.getStandardLibrary());
@@ -114,7 +109,7 @@ public class EcoreReflectiveType extends AbstractExecutorClass
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
-		return getPivotClass();
+		return this;
 	}
 
 	@Override
@@ -125,11 +120,6 @@ public class EcoreReflectiveType extends AbstractExecutorClass
 	@Override
 	public @NonNull List<org.eclipse.ocl.pivot.Class> getSuperClasses() {
 		throw new UnsupportedOperationException();		// FIXME
-	}
-
-	@Override
-	public @Nullable Operation getMemberOperation(@NonNull OperationId operationId) {
-		throw new UnsupportedOperationException();					// FIXME
 	}
 
 	@Override
@@ -148,13 +138,8 @@ public class EcoreReflectiveType extends AbstractExecutorClass
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
-		return this;
-	}
-
-	@Override
 	public @NonNull TypeId getTypeId() {
-		return getOwningPackage().getPackageId().getClassId(name, getPivotClass().getTypeParameters().parametersSize());			// FIXME DataTypeId alternative
+		return getOwningPackage().getPackageId().getClassId(name, getTypeParameters().parametersSize());			// FIXME DataTypeId alternative
 	}
 
 	@Override
@@ -164,17 +149,17 @@ public class EcoreReflectiveType extends AbstractExecutorClass
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class isClass() {
-		return getPivotClass();
+		return this;
 	}
 
 	@Override
 	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		return getPivotClass() == type;
+		return this == type;
 	}
 
 	@Override
 	public boolean isEqualToUnspecializedType(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
-		return getPivotClass() == type;
+		return this == type;
 	}
 
 	@Override

@@ -16,7 +16,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Class;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -25,14 +24,13 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorNamedElement;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
-public class ExecutorTypeParameter extends AbstractExecutorNamedElement implements CompleteInheritance, TemplateParameter
+public class ExecutorTypeParameter extends AbstractExecutorNamedElement implements TemplateParameter
 {
 	private final @NonNull TemplateParameterId typeid;		// FIXME probably only need the index
 	protected /*final*/ /*@NonNull*/ FlatClass flatClass = null;
@@ -71,7 +69,6 @@ public class ExecutorTypeParameter extends AbstractExecutorNamedElement implemen
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
 	public @NonNull FlatClass getFlatClass() {
 		assert flatClass != null;
 		return flatClass;
@@ -84,22 +81,12 @@ public class ExecutorTypeParameter extends AbstractExecutorNamedElement implemen
 	}
 
 	@Override
-	public @Nullable Operation getMemberOperation(@NonNull OperationId id) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType( @NonNull StandardLibrary standardLibrary) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public TemplateSignature getOwningSignature() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
 		throw new UnsupportedOperationException();
 	}
 

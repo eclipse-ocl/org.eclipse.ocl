@@ -81,7 +81,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			TemplateParameter formalParameter = ClassUtil.nonNull(templateParameters.get(0));
 			assert formalParameter != null;
 			Type elementType = typeParameters.getElementType();
-			TemplateParameterSubstitution templateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(formalParameter, elementType);
+			TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(formalParameter, elementType);
 			templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 			specializedType.getOwnedBindings().add(templateBinding);
 			getCompleteModel().resolveSuperClasses(specializedType, unspecializedType);
@@ -199,8 +199,8 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			assert valueFormalParameter != null;
 			Type keyType = typeParameters.getKeyType();
 			Type valueType = typeParameters.getValueType();
-			TemplateParameterSubstitution keyTemplateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(keyFormalParameter, keyType);
-			TemplateParameterSubstitution valueTemplateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(valueFormalParameter, valueType);
+			TemplateParameterSubstitution keyTemplateParameterSubstitution = createTemplateParameterSubstitution(keyFormalParameter, keyType);
+			TemplateParameterSubstitution valueTemplateParameterSubstitution = createTemplateParameterSubstitution(valueFormalParameter, valueType);
 			templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
 			templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
 			specializedMapType.getOwnedBindings().add(templateBinding);
@@ -282,6 +282,13 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 				return specializedType;
 			}
 		}
+	}
+
+	public static @NonNull TemplateParameterSubstitution createTemplateParameterSubstitution(@NonNull TemplateParameter formalParameter, @NonNull Type type) {
+		TemplateParameterSubstitution templateParameterSubstitution = PivotFactory.eINSTANCE.createTemplateParameterSubstitution();
+		templateParameterSubstitution.setFormal(formalParameter);
+		templateParameterSubstitution.setActual(type);
+		return templateParameterSubstitution;
 	}
 
 	protected @Nullable Map<String, CompleteClassInternal> name2completeClass = null;

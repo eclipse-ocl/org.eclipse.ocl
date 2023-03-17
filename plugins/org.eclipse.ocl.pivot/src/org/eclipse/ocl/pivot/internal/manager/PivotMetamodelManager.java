@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
-//import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -1531,7 +1530,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	@Override
 	public @NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation) {
 		FlatClass flatClass = pivotOperation.getFlatClass(standardLibrary);
-	//	CompleteInheritance pivotClass = pivotOperation.getInheritance(standardLibrary);
 		if (flatClass != null) {					// Null for an EAnnotation element
 			CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getPivotClass());		// XXX why use FlatClass at all ??
 			Operation operation = completeClass.getOperation(pivotOperation);

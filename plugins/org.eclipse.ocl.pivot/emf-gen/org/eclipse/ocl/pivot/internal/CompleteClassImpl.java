@@ -53,7 +53,7 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
+import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
@@ -380,8 +380,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	private @Nullable ClassListeners<ClassListeners.@NonNull IClassListener> classListeners = null;
 
-	private @Nullable CompleteInheritanceImpl completeInheritance;
-
 	/**
 	 * Map from actual types to specialization.
 	 * <br>
@@ -453,7 +451,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				Element templateArgument = templateArguments.get(i);
 				if (templateArgument instanceof Type) {
 					Type actualType = (Type) templateArgument;
-					TemplateParameterSubstitution templateParameterSubstitution = CompleteInheritanceImpl.createTemplateParameterSubstitution(formalParameter, actualType);
+					TemplateParameterSubstitution templateParameterSubstitution = CompleteClasses.createTemplateParameterSubstitution(formalParameter, actualType);
 					templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 				}
 			}
@@ -494,7 +492,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		if (owningCompletePackage != null) {
 			owningCompletePackage.getPartialPackages().uninstalled(this);
 		}
-		completeInheritance = null;
 	}
 
 	@Override

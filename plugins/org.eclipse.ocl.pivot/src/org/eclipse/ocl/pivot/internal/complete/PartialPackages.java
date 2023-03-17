@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.complete;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
@@ -45,11 +44,6 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 	 * Map of (nested) package-name to package server.
 	 */
 	private Map<String, CompletePackage> name2nestedCompletePackage = null;
-
-	/**
-	 * Lazily created map of nested class-name to its inheritance.
-	 */
-	protected final @NonNull Map<String, CompleteInheritanceImpl> name2inheritance = new HashMap<String, CompleteInheritanceImpl>();
 
 	public PartialPackages(@NonNull CompletePackageImpl owner) {
 		super(org.eclipse.ocl.pivot.Package.class, owner, PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES.getFeatureID());
@@ -155,23 +149,8 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 
 	@Override
 	public void didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		CompleteInheritanceImpl completeInheritance = name2inheritance.remove(partialClass.getName());
 		//		System.out.println("PartialPackage.didRemoveClass " + partialClass);
 		getCompletePackage().didRemoveClass(partialClass);
-		if (completeInheritance != null) {
-			completeInheritance.uninstall();
-		}
-	}
-
-	public @NonNull CompleteInheritanceImpl getCompleteInheritance(@NonNull CompleteClassInternal completeClass) {
-		String name = completeClass.getName();
-		CompleteInheritanceImpl completeInheritance = name2inheritance.get(name);
-		if (completeInheritance == null) {
-			completeInheritance = new CompleteInheritanceImpl(completeClass);
-			//			System.out.println("PartialPackage.add " + completeClass);
-			name2inheritance.put(name, completeInheritance);
-		}
-		return completeInheritance;
 	}
 
 	public @NonNull CompleteModelInternal getCompleteModel() {
@@ -192,9 +171,5 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 
 	public void uninstalled(@NonNull CompleteClassInternal completeClass) {
 		//		System.out.println("PartialPackages.uninstalled " + completeClass + " " + NameUtil.debugFullName(completeClass));
-		CompleteInheritanceImpl inheritance = name2inheritance.remove(completeClass.getName());
-		if (inheritance != null) {
-			inheritance.uninstall();
-		}
 	}
 }
