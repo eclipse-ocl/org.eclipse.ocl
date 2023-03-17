@@ -624,12 +624,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts) {
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
 		assert this.mutable == null;
 		assert this.fragments == null;
 		assert this.indexes == null;
-	//	assert fragments == null;
-	//	assert indexes == null;
 		int[] indexes = new int[depthCounts.length+1];
 		indexes[0] = 0;
 		for (int i = 0; i <  depthCounts.length; i++) {

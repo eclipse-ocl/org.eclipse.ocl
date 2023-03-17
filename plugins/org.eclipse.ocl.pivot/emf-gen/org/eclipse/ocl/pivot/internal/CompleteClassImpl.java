@@ -56,7 +56,6 @@ import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.complete.PartialClasses;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -381,7 +380,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	private @Nullable ClassListeners<ClassListeners.@NonNull IClassListener> classListeners = null;
 
-	protected @NonNull PartialClasses legacyPartialClasses;
+	private @Nullable CompleteInheritanceImpl completeInheritance;
 
 	/**
 	 * Map from actual types to specialization.
@@ -396,7 +395,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	protected CompleteClassImpl()
 	{
 		super();
-		this.legacyPartialClasses = new PartialClasses(this);
+	//	this.legacyPartialClasses = new PartialClasses(this);
 	}
 
 	@Override
@@ -491,7 +490,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public void dispose() {
-		legacyPartialClasses.dispose();
+		CompletePackageInternal owningCompletePackage = getOwningCompletePackage();
+		if (owningCompletePackage != null) {
+			owningCompletePackage.getPartialPackages().uninstalled(this);
+		}
+		completeInheritance = null;
 	}
 
 	@Override
@@ -565,7 +568,13 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public final @NonNull CompleteInheritanceImpl getCompleteInheritance() {
-		return legacyPartialClasses.getCompleteInheritance();
+		CompleteInheritanceImpl completeInheritance2 = completeInheritance;
+		if (completeInheritance2 == null) {
+			CompletePackageInternal completePackage = getOwningCompletePackage();
+			completeInheritance2 = completePackage.getCompleteInheritance(this);
+			completeInheritance = completeInheritance2;
+		}
+		return completeInheritance2;
 	}
 
 	@Override
@@ -825,6 +834,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public void uninstall() {
-		legacyPartialClasses.dispose();
+		dispose();
 	}
 } //CompleteClassImpl

@@ -139,7 +139,7 @@ public interface FlatClass extends Nameable
 	/**
 	 * Initialize the super-fragment hierarchy from the compile-time analysis.
 	 */
-	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts);
+	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts);
 	boolean isAbstract();
 	boolean isInvalid();
 	boolean isOrdered();
