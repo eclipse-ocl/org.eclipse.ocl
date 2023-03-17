@@ -91,7 +91,7 @@ public class EcoreExecutorEnumeration extends ExecutorType implements Enumeratio
 		throw new UnsupportedOperationException();
 	}
 
-	public EcoreExecutorEnumeration initLiterals(EcoreExecutorEnumerationLiteral[] literals) {
+	public EcoreExecutorEnumeration initLiterals(EnumerationLiteral[] literals) {
 		assert this.literals == null;
 		this.literals = Lists.<EnumerationLiteral>newArrayList(literals);
 		return this;

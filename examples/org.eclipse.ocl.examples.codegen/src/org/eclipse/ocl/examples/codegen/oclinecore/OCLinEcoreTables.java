@@ -60,20 +60,6 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorAnyType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBagType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorBooleanType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorCollectionType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorOperation;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorProperty;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -409,7 +395,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				for (int i = 0; i < asEnumerationLiterals.size(); i++) {
 					EnumerationLiteral asEnumerationLiteral = ClassUtil.nonNullModel(asEnumerationLiterals.get(i));
 					s.append("		public static final ");
-					s.appendClassReference(true, EcoreExecutorEnumerationLiteral.class);
+					s.appendClassReference(true, EnumerationLiteral.class);
 					s.append(" ");
 					asEnumerationLiteral.accept(emitLiteralVisitor);
 					s.append(" = LIBRARY.createEnumerationLiteral(");
@@ -421,7 +407,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append(", " + i + ");\n");
 				}
 				s.append("		private static final ");
-				s.appendClassReference(true, EcoreExecutorEnumerationLiteral.class);
+				s.appendClassReference(true, EnumerationLiteral.class);
 				s.append(" " + atNonNull() + " [] ");
 				asClass.accept(emitLiteralVisitor);
 				s.append(" = {");
@@ -445,9 +431,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		static {\n");
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
 			if (asClass instanceof Enumeration) {
-				s.append("			");
+				s.append("			LIBRARY.initLiterals(");
 				asClass.accept(emitScopedLiteralVisitor);
-				s.append(".initLiterals(");
+				s.append(", ");
 				asClass.accept(emitLiteralVisitor);
 				s.append(");\n");
 			}
@@ -502,7 +488,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					List<@NonNull Operation> sortedOperations = classOperations.get(asSuperClass);
 					assert sortedOperations != null;
 					s.append("		private static final ");
-					s.appendClassReference(true, ExecutorOperation.class);
+					s.appendClassReference(true, Operation.class);
 					s.append(" " + atNonNull() + " [] ");
 					appendClassSuperClassName(asClass, asSuperClass);
 					s.append(" = ");
@@ -567,7 +553,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				assert sortedProperties != null;
 				s.append("\n");
 				s.append("		private static final ");
-				s.appendClassReference(true, ExecutorProperty.class);
+				s.appendClassReference(true, Property.class);
 				s.append(" " + atNonNull() + " [] ");
 				asClass.accept(emitLiteralVisitor);
 				s.append(" = ");
@@ -710,7 +696,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				Operation op = sortedOperations.get(i);
 				TemplateSignature ownedTemplateSignature = op.getOwnedSignature();
 				s.append("		public static final ");
-				s.appendClassReference(true, ExecutorOperation.class);
+				s.appendClassReference(true, Operation.class);
 				s.append(" ");
 				op.accept(emitLiteralVisitor);
 				s.append(" = LIBRARY.createOperation(");
@@ -843,7 +829,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					}
 					isFirst = false;
 					s.append("		public static final ");
-					s.appendClassReference(true, ExecutorProperty.class);
+					s.appendClassReference(true, Property.class);
 					s.append(" ");
 					prop.accept(emitLiteralVisitor);
 					s.append(" = LIBRARY.create");
@@ -899,7 +885,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		EClassifier eClassifier = ClassUtil.nonNullState((EClassifier)asClass.getESObject());
 		s.append("		public static final ");
 		if (Enumeration.class.isAssignableFrom(typeClass)) {
-			s.appendClassReference(true, EcoreExecutorEnumeration.class);
+			s.appendClassReference(true, Enumeration.class);
 		}
 		else {
 			s.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);
@@ -1292,41 +1278,41 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	protected @NonNull Class<?> getEcoreExecutorClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		if (asClass instanceof AnyType) {
-			return EcoreExecutorAnyType.class;
+			return AnyType.class;
 		}
 		else if (asClass instanceof CollectionType) {
 			if (asClass instanceof BagType) {
-				return EcoreExecutorBagType.class;
+				return BagType.class;
 			}
 			else if (asClass instanceof OrderedSetType) {
-				return EcoreExecutorOrderedSetType.class;
+				return OrderedSetType.class;
 			}
 			else if (asClass instanceof SequenceType) {
-				return EcoreExecutorSequenceType.class;
+				return SequenceType.class;
 			}
 			else if (asClass instanceof SetType) {
-				return EcoreExecutorSetType.class;
+				return SetType.class;
 			}
 			else {
-				return EcoreExecutorCollectionType.class;
+				return CollectionType.class;
 			}
 		}
 		else if (asClass instanceof Enumeration) {
-			return EcoreExecutorEnumeration.class;
+			return Enumeration.class;
 		}
 		else if (asClass instanceof InvalidType) {
-			return EcoreExecutorInvalidType.class;
+			return InvalidType.class;
 		}
 		else if (asClass instanceof PrimitiveType) {
 			if (asClass instanceof BooleanType) {
-				return EcoreExecutorBooleanType.class;
+				return BooleanType.class;
 			}
 			else {
-				return EcoreExecutorPrimitiveType.class;
+				return PrimitiveType.class;
 			}
 		}
 		else if (asClass instanceof VoidType) {
-			return EcoreExecutorVoidType.class;
+			return VoidType.class;
 		}
 		return org.eclipse.ocl.pivot.Class.class;
 	}
