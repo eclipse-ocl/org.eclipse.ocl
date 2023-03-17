@@ -122,7 +122,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	//	org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral.class,
 	//	org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType.class,
 		org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager.class,
-		org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage.class,
+	//	org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage.class,
 	//	org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorProperty.class,
 	//	org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorType.class,
 	//	org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorVoidType.class,

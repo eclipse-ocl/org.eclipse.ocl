@@ -23,44 +23,62 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 
 import com.google.common.collect.Lists;
 
-public class EcoreExecutorPackage extends ExecutorPackage
+public class EcoreExecutorPackage extends PackageImpl
 {
-	protected final EPackage ePackage;
+	public static final class StringNameable implements Nameable
+	{
+		private final String typeName;
+
+		public StringNameable(String typeName) {
+			this.typeName = typeName;
+		}
+
+		@Override
+		public String getName() {
+			return typeName;
+		}
+	}
+
+//	protected final EPackage ePackage;
 	private ExecutorStandardLibrary standardLibrary = null;
 	private org.eclipse.ocl.pivot.@NonNull Class[] types = null;
 	private @Nullable List<org.eclipse.ocl.pivot.@NonNull Package> packages = null;
 
 	public EcoreExecutorPackage(@NonNull EPackage ePackage) {
-		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), IdManager.getPackageId(ePackage));
-		this.ePackage = ePackage;
+		setName(ePackage.getName());
+		setNsPrefix(ePackage.getNsPrefix());
+		setURI(ePackage.getNsURI());
+		setPackageId(IdManager.getPackageId(ePackage));
+		setESObject(ePackage);
 	}
 
 	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage, @NonNull PackageId packageId) {
-		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), packageId);
-		this.ePackage = ePackage;
+		setName(ePackage.getName());
+		setNsPrefix(ePackage.getNsPrefix());
+		setURI(ePackage.getNsURI());
+		setPackageId(packageId);
+		setESObject(ePackage);
 	}
 
 	public EcoreExecutorPackage(/*@NonNull*/ EPackage ePackage, @NonNull PackageId packageId, @NonNull ExecutorStandardLibrary standardLibrary) {
-		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), packageId);
-		this.ePackage = ePackage;
+		setName(ePackage.getName());
+		setNsPrefix(ePackage.getNsPrefix());
+		setURI(ePackage.getNsURI());
+		setPackageId(packageId);
+		setESObject(ePackage);
 		this.standardLibrary = standardLibrary;
 	}
 
 	@Override
 	public final EPackage getEPackage() {
-		return ePackage;
-	}
-
-	@Override
-	public EObject getESObject() {
-		return ePackage;
+		return (EPackage)getESObject();
 	}
 
 //	public @NonNull EcoreFlatModel getFlatModel() {
@@ -81,7 +99,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 				packages2 = packages;
 				if (packages2 == null) {
 					packages2 = packages = new ArrayList<>();
-					for (EPackage eSubPackage : ePackage.getESubpackages()) {
+					for (EPackage eSubPackage : getEPackage().getESubpackages()) {
 						assert eSubPackage != null;
 						org.eclipse.ocl.pivot.Package subPackage = standardLibrary.getPackage(eSubPackage);
 						if (subPackage != null) {
@@ -96,7 +114,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 
 	@Override
 	public org.eclipse.ocl.pivot.Package getOwningPackage() {
-		EPackage eSuperPackage = ePackage.getESuperPackage();
+		EPackage eSuperPackage = getEPackage().getESuperPackage();
 		if (eSuperPackage == null) {
 			return null;
 		}

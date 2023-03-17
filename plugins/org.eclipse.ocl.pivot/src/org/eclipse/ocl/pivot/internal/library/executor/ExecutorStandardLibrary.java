@@ -79,9 +79,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
 
-	public ExecutorStandardLibrary(EcoreExecutorPackage... execPackages) {
+	public ExecutorStandardLibrary(org.eclipse.ocl.pivot.@NonNull Package... execPackages) {
 	//	OCLstdlibTables.PACKAGE.getClass();
-		for (EcoreExecutorPackage execPackage : execPackages) {
+		for (org.eclipse.ocl.pivot.@NonNull Package execPackage : execPackages) {
 			assert execPackage != null;
 			addPackage(execPackage, null);
 		}
@@ -100,7 +100,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		list.add(extensionPackage);
 	}
 
-	public synchronized void addPackage(@NonNull EcoreExecutorPackage execPackage, @Nullable EcoreExecutorPackage extendedPackage) {
+	public synchronized void addPackage(org.eclipse.ocl.pivot.@NonNull Package execPackage, org.eclipse.ocl.pivot.@Nullable Package extendedPackage) {
 		String uri = execPackage.getURI();
 		assert uri != null;
 		String internedURI = uri.intern();
