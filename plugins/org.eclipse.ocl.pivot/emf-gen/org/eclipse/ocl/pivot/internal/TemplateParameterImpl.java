@@ -26,7 +26,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Operation;
@@ -377,15 +376,9 @@ public class TemplateParameterImpl
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.getLowerBound(this, standardLibrary.getOclAnyType());
-		return standardLibrary.getInheritance(lowerBound);
-	}
-
-	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getNormalizedType(@NonNull StandardLibrary standardLibrary) {
 		try {
-			return getInheritance(standardLibrary).getPivotClass();
+			return getFlatClass(standardLibrary).getPivotClass();
 		}
 		catch (Throwable e) {
 			return standardLibrary.getOclAnyType();			// FIXME should never happen

@@ -10,11 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.library.ecore;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -23,10 +20,10 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CompleteInheritance;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
+import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
@@ -35,9 +32,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutableStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
@@ -50,7 +45,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 {
 	//	protected @NonNull Map<ElementId, DomainElement> id2element = new HashMap<>();
-	private @NonNull Map<EClassifier, WeakReference<CompleteInheritance>> typeMap = new WeakHashMap<>();
+//	private @NonNull Map<EClassifier, WeakReference<EcoreFlatClass>> typeMap = new WeakHashMap<>();		// XXX duplicates EcoreFlatModel
 
 	public EcoreIdResolver(@NonNull Iterable<? extends EObject> roots, @NonNull ExecutorStandardLibrary standardLibrary) {
 		super(standardLibrary);
@@ -80,8 +75,9 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	}
 
 	@Override
-	public synchronized @NonNull CompleteInheritance getInheritance(@NonNull EClassifier eClassifier) {
-		CompleteInheritance type = weakGet(typeMap, eClassifier);
+	public synchronized @NonNull EcoreFlatClass getFlatClass(@NonNull EClassifier eClassifier) {
+		return ((EcoreFlatModel)standardLibrary.getFlatModel()).getEcoreFlatClass(eClassifier);
+	/*	EcoreFlatClass type = weakGet(typeMap, eClassifier);	// XXX duplicates EcoreFlatModel
 		if (type == null) {
 			EPackage ePackage = eClassifier.getEPackage();
 			assert ePackage != null;
@@ -96,12 +92,12 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 			if (execPackage != null) {
 				org.eclipse.ocl.pivot.Class domainType = execPackage.getOwnedClass(eClassifier.getName());
 				if (domainType != null) {
-					type = standardLibrary.getInheritance(domainType);
+					type = (EcoreFlatClass) standardLibrary.getFlatClass(domainType);
 					typeMap.put(eClassifier, new WeakReference<>(type));
 				}
 			}
 		}
-		return ClassUtil.nonNullState(type);
+		return ClassUtil.nonNullState(type); */
 	}
 
 	@Override
@@ -127,7 +123,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getType(@NonNull EClassifier eClassifier) {
-		return getInheritance(eClassifier).getPivotClass();
+		return getFlatClass(eClassifier).getPivotClass();
 	}
 
 	@Override

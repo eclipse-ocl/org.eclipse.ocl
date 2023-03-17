@@ -12,7 +12,6 @@ package org.eclipse.ocl.pivot.internal.library.executor;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -100,7 +99,7 @@ public class JavaType extends AbstractExecutorClass
 		return null;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
 		if (Comparable.class.isAssignableFrom(javaClass)) {
 			return standardLibrary.getOclComparableType().getInheritance(standardLibrary);
@@ -108,7 +107,7 @@ public class JavaType extends AbstractExecutorClass
 		else {
 			return standardLibrary.getOclAnyType().getInheritance(standardLibrary);
 		}
-	}
+	} */
 
 	@Override
 	@NonNull

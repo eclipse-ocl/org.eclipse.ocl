@@ -84,12 +84,6 @@ public class ExecutorTypeParameter extends AbstractExecutorNamedElement implemen
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance( @NonNull StandardLibrary standardLibrary) {
-		//		return standardLibrary.getInheritance(this);
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public @Nullable Operation getMemberOperation(@NonNull OperationId id) {
 		throw new UnsupportedOperationException();
 	}

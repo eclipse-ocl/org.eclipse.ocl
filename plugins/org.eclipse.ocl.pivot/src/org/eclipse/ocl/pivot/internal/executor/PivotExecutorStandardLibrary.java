@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -75,11 +74,6 @@ public class PivotExecutorStandardLibrary extends ExecutableStandardLibrary
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEnumerationType() {
 		return environmentFactory.getStandardLibrary().getEnumerationType();
-	}
-
-	@Override
-	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type) {
-		return environmentFactory.getMetamodelManager().getInheritance(type);
 	}
 
 	public @NonNull PivotMetamodelManager getMetamodelManager() {

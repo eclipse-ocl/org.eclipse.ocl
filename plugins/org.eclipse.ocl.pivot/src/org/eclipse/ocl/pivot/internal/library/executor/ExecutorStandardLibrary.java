@@ -25,10 +25,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Enumeration;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.Property;
@@ -346,31 +343,27 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	@Override
-	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-		return getInheritance(type).getFlatClass();			// XXX
-	}
-
-	@Override
-	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		if (asClass instanceof CompleteInheritance) {
-			return (CompleteInheritance) asClass;
-		}
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {	// XXX review duplication
+		return getFlatModel().getFlatClass(asClass);
+	//	if (asClass instanceof CompleteInheritance) {
+	//		return (CompleteInheritance) asClass;
+	//	}
 		/*		if (type instanceof DomainMetaclass) {
 			DomainType instanceType = ClassUtil.nonNullPivot(((DomainMetaclass)type).getInstanceType());
 			org.eclipse.ocl.pivot.Class metaclass = getMetaclass(instanceType);
 			DomainType containerType = metaclass;//.getContainerType();
 			return containerType.getInheritance(this);
 		} */
-		if (asClass instanceof CollectionType) {
+/*		if (asClass instanceof CollectionType) {
 			Type containerType = ((CollectionType)asClass).getContainerType();
 			if (containerType != asClass) {
-				return containerType.getInheritance(this);
+				return containerType.getFlatClass(this);
 			}
 		}
 		if (asClass instanceof MapType) {
 			Type containerType = ((MapType)asClass).getContainerType();
 			if (containerType != asClass) {
-				return containerType.getInheritance(this);
+				return containerType.getFlatClass(this);
 			}
 		}
 		org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
@@ -382,7 +375,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 				String name = asClass.getName();
 				org.eclipse.ocl.pivot.Class executorType = ecoreExecutorPackage.getOwnedClass(name);
 				if (executorType != null) {
-					return (CompleteInheritance) executorType;
+					return executorType.getFlatClass(this);
 				}
 				Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
 				if (extensions2 != null) {
@@ -397,7 +390,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 					}
 				}
 				if (executorType != null) {
-					return (CompleteInheritance) executorType;
+					return executorType.getFlatClass(this);
 				}
 			}
 			asPackageMap2 = asPackageMap;
@@ -411,8 +404,8 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 				executorPackage = new DomainReflectivePackage(this, asPackage);
 				asPackageMap2.put(asPackage, new WeakReference<>(executorPackage));
 			}
-			return executorPackage.getInheritance(asClass);
-		}
+			return executorPackage.getFlatClass(asClass);
+		} */
 	}
 
 	@Override

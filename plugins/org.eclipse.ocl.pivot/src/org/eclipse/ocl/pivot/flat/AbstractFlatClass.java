@@ -197,6 +197,24 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		subFlatClasses2.add(subFlatClass);
 	}
 
+	@Override
+	public @Nullable Operation basicGetOperation(@NonNull OperationId id) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @Nullable Property basicGetProperty(@NonNull String propertyName) {
+		if (name2propertyOrProperties == null) {
+			if (fragments == null) {
+				initFragments();
+			}
+			initProperties();
+		}
+		assert name2propertyOrProperties != null;
+		Object propertyOrProperties = name2propertyOrProperties.get(propertyName);
+		return propertyOrProperties instanceof Property ? (Property)propertyOrProperties : null;
+	}
+
 	/**
 	 * Return the properties defined for this flat class, which may be need merging for a complete class.
 	 * FIXME super flat class properties should not be returned, but are due to legacy static initialization.
@@ -573,19 +591,6 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			}
 			return asProperties;
 		}
-	}
-
-	@Override
-	public @Nullable Property getProperty(@NonNull String propertyName) {
-		if (name2propertyOrProperties == null) {
-			if (fragments == null) {
-				initFragments();
-			}
-			initProperties();
-		}
-		assert name2propertyOrProperties != null;
-		Object propertyOrProperties = name2propertyOrProperties.get(propertyName);
-		return propertyOrProperties instanceof Property ? (Property)propertyOrProperties : null;
 	}
 
 	@Override

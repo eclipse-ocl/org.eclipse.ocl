@@ -15,7 +15,6 @@ import java.util.Map;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
@@ -41,11 +40,6 @@ public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheri
 
 	@Override
 	public org.eclipse.ocl.pivot.Class flattenedType() {
-		return this;
-	}
-
-	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
 		return this;
 	}
 

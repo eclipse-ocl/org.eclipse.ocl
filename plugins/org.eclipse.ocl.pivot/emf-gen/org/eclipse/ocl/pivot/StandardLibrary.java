@@ -132,7 +132,7 @@ public interface StandardLibrary extends Element
 	/**
 	 * Return the Inheritance dispatch table for a given type.
 	 */
-	@NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type);
+//	@NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type);
 	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
 
 	/**

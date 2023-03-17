@@ -45,7 +45,7 @@ import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteInheritance;
+//import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -92,7 +92,6 @@ import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteInheritanceImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
@@ -902,7 +901,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return filter;
 	}
 
-	public @Nullable ExpressionInOCL getBodyExpression(@NonNull Operation operation) {
+/*	public @Nullable ExpressionInOCL getBodyExpression(@NonNull Operation operation) {
 		ExpressionInOCL bodyExpression = null;
 		for (@SuppressWarnings("null")@NonNull Operation domainOperation : getOperationOverloads(operation)) {
 			LanguageExpression anExpression = domainOperation.getBodyExpression();
@@ -923,7 +922,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			}
 		}
 		return bodyExpression;
-	}
+	} */
 
 	public @NonNull CollectionType getCollectionType(boolean isOrdered, boolean isUnique) {
 		if (isOrdered) {
@@ -1354,14 +1353,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return precedenceManager.getInfixPrecedence(operatorName);
 	}
 
-	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type) {
-		org.eclipse.ocl.pivot.Class type1 = getPrimaryClass(type);
-		org.eclipse.ocl.pivot.Class unspecializedType = (org.eclipse.ocl.pivot.Class) type1.getUnspecializedElement();
-		org.eclipse.ocl.pivot.Class theType = unspecializedType != null ? unspecializedType : type1;
-		CompleteInheritanceImpl completeInheritance = getCompleteClass(theType).getCompleteInheritance();
-		return completeInheritance;
-	}
-
 	public @NonNull List<@NonNull Library> getLibraries() { return asLibraries; }
 	public @Nullable Resource getLibraryResource() { return asLibraryResource; }
 
@@ -1464,15 +1455,15 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	public @Nullable Type getOclType(@NonNull String typeName) {
 		org.eclipse.ocl.pivot.Class pivotType = getASClass(typeName);
-		return pivotType != null ? getInheritance(pivotType).getPivotClass() : null;
+		return pivotType != null ? getPrimaryType(pivotType) : null;
 	}
 
 	public @NonNull Iterable<? extends Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
-		CompleteInheritance pivotClass = pivotOperation.getInheritance(standardLibrary);
-		if (pivotClass == null) {
+		FlatClass flatClass = pivotOperation.getFlatClass(standardLibrary);
+		if (flatClass == null) {
 			throw new IllegalStateException("Missing owning type");
 		}
-		CompleteClass completeClass = completeModel.getCompleteClass(pivotClass.getPivotClass());
+		CompleteClass completeClass = completeModel.getCompleteClass(flatClass.getPivotClass());
 		Iterable<? extends Operation> operationOverloads = completeClass.getOperationOverloads(pivotOperation);
 		if (operationOverloads != null) {
 			return operationOverloads;

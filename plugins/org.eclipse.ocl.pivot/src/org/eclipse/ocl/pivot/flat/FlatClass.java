@@ -16,6 +16,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
@@ -111,7 +112,8 @@ public interface FlatClass extends Nameable
 	 */
 	public static final int ABSTRACT = 1 << 5;
 
-	@Nullable Property getProperty(@NonNull String name);
+	@Nullable Operation basicGetOperation(@NonNull OperationId id);
+	@Nullable Property basicGetProperty(@NonNull String name);
 	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
 	 */

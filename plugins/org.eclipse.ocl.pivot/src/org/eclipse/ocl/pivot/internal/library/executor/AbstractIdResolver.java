@@ -44,7 +44,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -1239,7 +1238,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			assert typeKey != null;
 			Type type = key2type.get(typeKey);
 			if (type == null) {
-				type = getInheritance(typeKey).getPivotClass();
+				type = getFlatClass(typeKey).getPivotClass();
 				assert type != null;
 				key2type.put(typeKey, type);
 			}
@@ -1839,8 +1838,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		if (domainType == null) {
 			throw new UnsupportedOperationException();
 		}
-		CompleteInheritance inheritance = standardLibrary.getInheritance(domainType);
-		Operation memberOperation = inheritance.getMemberOperation(id);
+		FlatClass flatClass = standardLibrary.getFlatClass(domainType);
+		Operation memberOperation = flatClass.basicGetOperation(id);
 		if (memberOperation == null) {
 			throw new UnsupportedOperationException();
 		}
@@ -1864,7 +1863,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		FlatClass flatClass = standardLibrary.getFlatClass(domainType);
 	//	CompleteInheritance inheritance = standardLibrary.getInheritance(domainType);
-		Property memberProperty = flatClass.getProperty(id.getName());
+		Property memberProperty = flatClass.basicGetProperty(id.getName());
 		if (memberProperty == null) {
 			throw new UnsupportedOperationException();
 		}

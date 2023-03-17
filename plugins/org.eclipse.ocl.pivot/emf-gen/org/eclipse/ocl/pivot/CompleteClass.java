@@ -89,7 +89,6 @@ public interface CompleteClass extends NamedElement
 	@Nullable MapType findMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters);
 	org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass();
-	@NonNull CompleteInheritance getCompleteInheritance();
 	@NonNull FlatClass getFlatClass();
 	@NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 	@Nullable Operation getOperation(@NonNull OperationId operationId);

@@ -27,7 +27,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -595,12 +594,6 @@ implements DataType {
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class behavioralType = getBehavioralClass();
 		return standardLibrary.getFlatClass(behavioralType != null ? behavioralType : this);
-	}
-
-	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		org.eclipse.ocl.pivot.Class behavioralType = getBehavioralClass();
-		return standardLibrary.getInheritance(behavioralType != null ? behavioralType : this);
 	}
 
 	/**

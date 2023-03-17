@@ -567,18 +567,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public final @NonNull CompleteInheritanceImpl getCompleteInheritance() {
-		CompleteInheritanceImpl completeInheritance2 = completeInheritance;
-		if (completeInheritance2 == null) {
-			CompletePackageInternal completePackage = getOwningCompletePackage();
-			completeInheritance2 = completePackage.getCompleteInheritance(this);
-			completeInheritance = completeInheritance2;
-			throw new UnsupportedOperationException();			// XXX
-		}
-		return completeInheritance2;
-	}
-
-	@Override
 	public final @NonNull CompleteFlatClass getFlatClass() {
 		CompleteFlatClass flatClass2 = flatClass;
 		if (flatClass2 == null) {
@@ -736,7 +724,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public @Nullable Property getProperty(@NonNull String propertyName) {
-		return getFlatClass().getProperty(propertyName);
+		return getFlatClass().basicGetProperty(propertyName);
 	}
 
 	@Override

@@ -34,6 +34,7 @@ public class DomainReflectiveType extends AbstractReflectiveInheritanceType
 		super(ClassUtil.nonNullModel(domainClass.getName()), computeFlags(domainClass));
 		this.evaluationPackage = evaluationPackage;
 		this.domainClass = domainClass;
+		throw new UnsupportedOperationException();		// XXX
 	}
 
 //	@Override

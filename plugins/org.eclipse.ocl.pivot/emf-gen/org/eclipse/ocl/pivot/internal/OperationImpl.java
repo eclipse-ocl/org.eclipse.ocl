@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -1576,7 +1575,7 @@ implements Operation {
 		return standardLibrary.getFlatClass(owningType);
 	}
 
-	@Override
+/*	@Override
 	public @Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class owningType = getOwningClass();
 		if (owningType != null) {
@@ -1585,7 +1584,7 @@ implements Operation {
 		else {
 			return null;
 		}
-	}
+	} */
 
 	@Override
 	public @NonNull ParametersId getParametersId() {

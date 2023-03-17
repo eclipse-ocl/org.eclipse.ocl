@@ -33,7 +33,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -1729,17 +1728,6 @@ implements Property {
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class owningType = getOwningClass();
 		return standardLibrary.getFlatClass(owningType);
-	}
-
-	@Override
-	public @Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		org.eclipse.ocl.pivot.Class owningType = getOwningClass();
-		if (owningType != null) {
-			return standardLibrary.getInheritance(owningType);
-		}
-		else {
-			return null;
-		}
 	}
 
 	private PropertyId propertyId = null;

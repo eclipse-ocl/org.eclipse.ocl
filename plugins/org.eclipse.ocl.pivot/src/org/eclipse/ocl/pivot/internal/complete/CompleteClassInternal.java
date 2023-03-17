@@ -26,8 +26,6 @@ public interface CompleteClassInternal extends CompleteClass
 	boolean didRemoveClass(org.eclipse.ocl.pivot.@NonNull Class partialClass);
 	void dispose();
 	void uninstall();
-	@Override
-	@NonNull CompleteInheritanceImpl getCompleteInheritance();
 	@NonNull CompleteModelInternal getCompleteModel();
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 	@NonNull PivotMetamodelManager getMetamodelManager();

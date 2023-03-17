@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -134,12 +133,6 @@ public class TupleTypeImpl
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		Type tupleType = standardLibrary.getOclTupleType();
 		return tupleType.getFlatClass(standardLibrary);
-	}
-
-	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		Type tupleType = standardLibrary.getOclTupleType();
-		return tupleType.getInheritance(standardLibrary);
 	}
 
 	@Override

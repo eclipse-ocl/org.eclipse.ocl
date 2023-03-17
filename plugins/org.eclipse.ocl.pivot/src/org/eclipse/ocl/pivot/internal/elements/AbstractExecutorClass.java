@@ -92,11 +92,6 @@ public abstract class AbstractExecutorClass extends AbstractClassImpl implements
 	}
 
 	@Override
-	public @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		return standardLibrary.getInheritance(this);
-	}
-
-	@Override
 	public @Nullable Operation getMemberOperation(@NonNull OperationId id) {
 		throw new UnsupportedOperationException();
 	}

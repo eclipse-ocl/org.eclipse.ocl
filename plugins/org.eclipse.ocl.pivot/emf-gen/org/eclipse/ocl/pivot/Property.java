@@ -530,8 +530,6 @@ public interface Property extends Feature {
 	/**
 	 * Return the Inheritance dispatch table for the owning type, or null for an orphan property owned by an Annotation.
 	 */
-	@Deprecated /* @deprecated no longer use */
-	@Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary);
 	@Deprecated /* @deprecated not used */
 	@NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary);
 

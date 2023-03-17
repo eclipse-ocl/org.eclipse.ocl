@@ -15,9 +15,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -186,11 +184,6 @@ public class AbstractExecutorOperation extends AbstractExecutorFeature implement
 
 	@Override
 	public int getIndex() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
 		throw new UnsupportedOperationException();
 	}
 

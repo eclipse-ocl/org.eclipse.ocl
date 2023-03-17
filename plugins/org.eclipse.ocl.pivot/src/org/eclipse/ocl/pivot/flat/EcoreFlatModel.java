@@ -29,7 +29,7 @@ public class EcoreFlatModel extends PartialFlatModel
 		super(standardLibrary);
 	}
 
-	public @NonNull FlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier) {
+	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier) {
 		EcoreFlatClass flatClass = eClassifier2flatClass.get(eClassifier);
 		return ClassUtil.nonNullState(flatClass);
 	}

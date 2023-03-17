@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -561,11 +560,6 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	@Override
 	public @NonNull CompleteFlatModel getFlatModel() {
 		return getCompleteModel().getFlatModel();
-	}
-
-	@Override
-	public @NonNull CompleteInheritance getInheritance(org.eclipse.ocl.pivot.@NonNull Class type) {
-		return environmentFactory.getMetamodelManager().getInheritance(type);
 	}
 
 	@Override

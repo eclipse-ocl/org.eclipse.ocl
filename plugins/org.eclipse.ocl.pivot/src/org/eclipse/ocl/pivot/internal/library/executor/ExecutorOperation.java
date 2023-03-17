@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteInheritance;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Parameter;
@@ -63,11 +62,6 @@ public class ExecutorOperation extends AbstractExecutorOperation
 	@Override
 	public final @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		return type.getFlatClass(standardLibrary);
-	}
-
-	@Override
-	public final @NonNull CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary) {
-		return (CompleteInheritance) type;
 	}
 
 	@Override

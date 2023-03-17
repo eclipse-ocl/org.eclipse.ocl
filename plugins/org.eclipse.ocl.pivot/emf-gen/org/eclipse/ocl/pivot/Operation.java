@@ -369,7 +369,6 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	/**
 	 * Return the Inheritance dispatch table for the owning type, or null for am orphan property owned by an Annotation.
 	 */
-	@Nullable CompleteInheritance getInheritance(@NonNull StandardLibrary standardLibrary);
 	@Nullable FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary);
 
 	@NonNull OperationId getOperationId();
