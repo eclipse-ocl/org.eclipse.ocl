@@ -68,7 +68,6 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumeration;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorEnumerationLiteral;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorInvalidType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorOrderedSetType;
-import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorPrimitiveType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSequenceType;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorSetType;
@@ -976,7 +975,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		 *	Install the type descriptors in the package descriptor.\n");
 		s.append("		 */\n");
 		s.append("		static {\n");
-		s.append("			PACKAGE.init(LIBRARY, types);\n");
+		s.append("			LIBRARY.initPackage(PACKAGE, types);\n");
 		org.eclipse.ocl.pivot.Package extendedPackage = getExtendedPackage(asPackage);
 		if (extendedPackage != null) {
 			s.append("			LIBRARY.addExtension(");
@@ -1224,7 +1223,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 *	The package descriptor for the package.\n");
 		s.append("	 */\n");
 		s.append("	public static final ");
-		s.appendClassReference(true, EcoreExecutorPackage.class);
+		s.appendClassReference(true, org.eclipse.ocl.pivot.Package.class);
 		s.append(" PACKAGE = LIBRARY.createPackage(" + getGenPackagePrefix() + "Package.eINSTANCE");
 		if (asPackage.getPackageId() == IdManager.METAMODEL) {
 			s.append(", ");

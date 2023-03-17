@@ -25,8 +25,10 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -62,8 +64,8 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 {
-	private @NonNull Map<@NonNull String, @NonNull WeakReference<@NonNull EcoreExecutorPackage>> ePackageMap = new WeakHashMap<>();		// Keys are interned
-	private /*@LazyNonNull*/ Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions = null;
+	private @NonNull Map<@NonNull String, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> ePackageMap = new WeakHashMap<>();		// Keys are interned
+	private /*@LazyNonNull*/ Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
 
@@ -75,12 +77,12 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		}
 	}
 
-	public void addExtension(@NonNull EcoreExecutorPackage basePackage, @NonNull EcoreExecutorPackage extensionPackage) {
-		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
+	public void addExtension(org.eclipse.ocl.pivot.@NonNull Package basePackage, org.eclipse.ocl.pivot.@NonNull Package extensionPackage) {
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 == null) {
 			extensions = extensions2 = new HashMap<>();
 		}
-		List<@NonNull EcoreExecutorPackage> list = extensions2.get(basePackage);
+		List<org.eclipse.ocl.pivot.@NonNull Package> list = extensions2.get(basePackage);
 		if (list == null) {
 			list = new ArrayList<>();
 			extensions2.put(basePackage, list);
@@ -93,7 +95,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		assert uri != null;
 		String internedURI = uri.intern();
 		@SuppressWarnings("unused")
-		WeakReference<@NonNull EcoreExecutorPackage> oldExecPackage = ePackageMap.put(internedURI, new WeakReference<>(execPackage));
+		WeakReference<org.eclipse.ocl.pivot.@NonNull Package> oldExecPackage = ePackageMap.put(internedURI, new WeakReference<>(execPackage));
 		//		if ((oldExecPackage != null) && (oldExecPackage != execPackage)) {
 		//			Iterable<ExecutorType> newTypes = execPackage.getOwnedType();
 		//			for (DomainType oldType : oldExecPackage.getOwnedType()) {
@@ -103,14 +105,14 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
-		return createClass(eClassifier, evaluationPackage, null, flags, typeParameters);
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
+		return createClass(eClassifier, asPackage, null, flags, typeParameters);
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		assert eClassifier != null;
-		org.eclipse.ocl.pivot.Class type = new ExecutorType(eClassifier, evaluationPackage, typeId, flags, typeParameters);
+		org.eclipse.ocl.pivot.Class type = new ExecutorType(eClassifier, asPackage, typeId, flags, typeParameters);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		((AbstractExecutorClass)type).setFlatClass(flatClass);
@@ -118,9 +120,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull EcoreExecutorAnyType createEcoreExecutorAnyType(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
-		EcoreExecutorAnyType type = new EcoreExecutorAnyType(eClassifier, evaluationPackage, typeId, flags);
+		EcoreExecutorAnyType type = new EcoreExecutorAnyType(eClassifier, asPackage, typeId, flags);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		((AbstractExecutorClass)type).setFlatClass(flatClass);
@@ -128,9 +130,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull EcoreExecutorBagType createEcoreExecutorBagType(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-		EcoreExecutorBagType type = new EcoreExecutorBagType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+		EcoreExecutorBagType type = new EcoreExecutorBagType(eClassifier, asPackage, typeId, flags, typeParameter);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		((AbstractExecutorClass)type).setFlatClass(flatClass);
@@ -138,9 +140,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull EcoreExecutorBooleanType createEcoreExecutorBooleanType(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
-		EcoreExecutorBooleanType type = new EcoreExecutorBooleanType(eClassifier, evaluationPackage, typeId, flags);
+		EcoreExecutorBooleanType type = new EcoreExecutorBooleanType(eClassifier, asPackage, typeId, flags);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		((AbstractExecutorClass)type).setFlatClass(flatClass);
@@ -148,17 +150,17 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull EcoreExecutorCollectionType createEcoreExecutorCollectionType(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-		EcoreExecutorCollectionType type = new EcoreExecutorCollectionType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+		EcoreExecutorCollectionType type = new EcoreExecutorCollectionType(eClassifier, asPackage, typeId, flags, typeParameter);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		((AbstractExecutorClass)type).setFlatClass(flatClass);
 		return type;
 	}
 
-	public @NonNull EcoreExecutorEnumeration createEcoreExecutorEnumeration(/*@NonNull*/ EEnum eEnum, @NonNull EcoreExecutorPackage evaluationPackage, int flags) {
-		EcoreExecutorEnumeration type = new EcoreExecutorEnumeration(eEnum, evaluationPackage, flags);
+	public @NonNull EcoreExecutorEnumeration createEcoreExecutorEnumeration(/*@NonNull*/ EEnum eEnum, org.eclipse.ocl.pivot.@NonNull Package asPackage, int flags) {
+		EcoreExecutorEnumeration type = new EcoreExecutorEnumeration(eEnum, asPackage, flags);
 		EcoreFlatModel flatModel = getFlatModel();
 		EcoreFlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		((AbstractExecutorClass)type).setFlatClass(flatClass);
@@ -166,9 +168,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull EcoreExecutorInvalidType createEcoreExecutorInvalidType(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
-		EcoreExecutorInvalidType type = new EcoreExecutorInvalidType(eClassifier, evaluationPackage, typeId, flags);
+		EcoreExecutorInvalidType type = new EcoreExecutorInvalidType(eClassifier, asPackage, typeId, flags);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		((AbstractExecutorClass)type).setFlatClass(flatClass);
@@ -176,9 +178,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull EcoreExecutorOrderedSetType createEcoreExecutorOrderedSetType(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-		EcoreExecutorOrderedSetType type = new EcoreExecutorOrderedSetType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+		EcoreExecutorOrderedSetType type = new EcoreExecutorOrderedSetType(eClassifier, asPackage, typeId, flags, typeParameter);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		type.setFlatClass(flatClass);
@@ -186,9 +188,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull EcoreExecutorPrimitiveType createEcoreExecutorPrimitiveType(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
-		EcoreExecutorPrimitiveType type = new EcoreExecutorPrimitiveType(eClassifier, evaluationPackage, typeId, flags);
+		EcoreExecutorPrimitiveType type = new EcoreExecutorPrimitiveType(eClassifier, asPackage, typeId, flags);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		((AbstractExecutorClass)type).setFlatClass(flatClass);
@@ -196,9 +198,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull EcoreExecutorSequenceType createEcoreExecutorSequenceType(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-		EcoreExecutorSequenceType type = new EcoreExecutorSequenceType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+		EcoreExecutorSequenceType type = new EcoreExecutorSequenceType(eClassifier, asPackage, typeId, flags, typeParameter);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		((AbstractExecutorClass)type).setFlatClass(flatClass);
@@ -206,9 +208,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull EcoreExecutorSetType createEcoreExecutorSetType(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-		EcoreExecutorSetType type = new EcoreExecutorSetType(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+		EcoreExecutorSetType type = new EcoreExecutorSetType(eClassifier, asPackage, typeId, flags, typeParameter);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		((AbstractExecutorClass)type).setFlatClass(flatClass);
@@ -216,9 +218,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull EcoreExecutorVoidType createEcoreExecutorVoidType(/*@NonNull*/ EClassifier eClassifier,
-			@NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
-		EcoreExecutorVoidType type = new EcoreExecutorVoidType(eClassifier, evaluationPackage, typeId, flags);
+		EcoreExecutorVoidType type = new EcoreExecutorVoidType(eClassifier, asPackage, typeId, flags);
 		EcoreFlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getEcoreFlatClass(type);
 		type.setFlatClass(flatClass);
@@ -283,7 +285,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getClassType() {
-		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 == null) {
 			throw new IllegalStateException("No extension package registered to define Class type"); //$NON-NLS-1$
 		}
@@ -299,7 +301,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEnumerationType() {
-		Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 == null) {
 			throw new IllegalStateException("No extension package registered to define Enumeration type"); //$NON-NLS-1$
 		}
@@ -391,7 +393,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 
 	@Override
 	public org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI) {
-		WeakReference<EcoreExecutorPackage> weakReference = ePackageMap.get(nsURI.intern());
+		WeakReference<org.eclipse.ocl.pivot.@NonNull Package> weakReference = ePackageMap.get(nsURI.intern());
 		if (weakReference == null) {
 			return null;
 		}
@@ -419,17 +421,17 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		throw new UnsupportedOperationException();
 	}
 
-	public synchronized @Nullable EcoreExecutorPackage getPackage(@NonNull EPackage ePackage) {
+	public synchronized org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EPackage ePackage) {
 		String nsURI = ePackage.getNsURI();
 		return nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
 	}
 
 	@Override
 	public synchronized org.eclipse.ocl.pivot.Class getOclType(@NonNull String typeName) {
-		for (@NonNull WeakReference<@NonNull EcoreExecutorPackage> dPackage : ePackageMap.values()) {
+		for (@NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package> dPackage : ePackageMap.values()) {
 			// FIXME			if (OCLstdlibTables.PACKAGE.getNsURI().equals(dPackage.getNsURI())) {
 		//	if (dPackage != null) {
-				EcoreExecutorPackage packageRef = dPackage.get();
+				org.eclipse.ocl.pivot.Package packageRef = dPackage.get();
 				if (packageRef != null) {
 					org.eclipse.ocl.pivot.Class type = packageRef.getOwnedClass(typeName);
 					if (type != null) {
@@ -443,10 +445,10 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getPivotType(@NonNull String className) {
-		Map<EcoreExecutorPackage, List<EcoreExecutorPackage>> extensions2 = extensions;
+		Map<org.eclipse.ocl.pivot.@NonNull Package, List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 != null) {
-			for (@SuppressWarnings("null")@NonNull List<EcoreExecutorPackage> packages : extensions2.values()) {
-				for (@SuppressWarnings("null")@NonNull EcoreExecutorPackage extensionPackage : packages) {
+			for (@SuppressWarnings("null")@NonNull List<org.eclipse.ocl.pivot.@NonNull Package> packages : extensions2.values()) {
+				for (org.eclipse.ocl.pivot.@NonNull Package extensionPackage : packages) {
 					org.eclipse.ocl.pivot.Class executorType = extensionPackage.getOwnedClass(className);
 					if (executorType != null) {
 						return executorType;
@@ -455,5 +457,9 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 			}
 		}
 		return null;
+	}
+
+	public void initPackage(@NonNull Package asPackage, @NonNull Class @NonNull [] types) {
+		((EcoreExecutorPackage)asPackage).init(this, types);
 	}
 }

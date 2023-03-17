@@ -15,7 +15,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 
 /**
  * @since 1.18
@@ -23,7 +22,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 public class EcoreExecutorSetType extends EcoreExecutorCollectionType implements SetType
 //Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class.
 {
-	public EcoreExecutorSetType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
-		super(eClassifier, evaluationPackage, typeId, flags, typeParameter);
+	public EcoreExecutorSetType(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
+		super(eClassifier, asPackage, typeId, flags, typeParameter);
 	}
 }

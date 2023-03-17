@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 
 /**
@@ -23,7 +22,7 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 public class EcoreExecutorAnyType extends ExecutorType implements AnyType
 // Initialization of OCLstdlibTables gives a NoSuchFieldError if this is a nested class.
 {
-	public EcoreExecutorAnyType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
-		super(eClassifier, evaluationPackage, typeId, flags);
+	public EcoreExecutorAnyType(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
+		super(eClassifier, asPackage, typeId, flags);
 	}
 }

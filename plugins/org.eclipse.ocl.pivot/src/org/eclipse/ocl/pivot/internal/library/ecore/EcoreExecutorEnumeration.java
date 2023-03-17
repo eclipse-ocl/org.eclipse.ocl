@@ -37,8 +37,8 @@ public class EcoreExecutorEnumeration extends ExecutorType implements Enumeratio
 	/**
 	 * Construct an executable type descriptor for a known EClassifier.
 	 */
-	public EcoreExecutorEnumeration(/*@NonNull*/ EEnum eEnum, @NonNull EcoreExecutorPackage evaluationPackage, int flags) {
-		super(eEnum, evaluationPackage, null, flags);
+	public EcoreExecutorEnumeration(/*@NonNull*/ EEnum eEnum, org.eclipse.ocl.pivot.@NonNull Package asPackage, int flags) {
+		super(eEnum, asPackage, null, flags);
 	}
 
 	/**

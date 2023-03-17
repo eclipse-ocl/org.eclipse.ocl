@@ -44,7 +44,7 @@ import org.eclipse.ocl.pivot.values.OCLValue;
  */
 public class ExecutorType extends AbstractExecutorClass
 {
-	protected final org.eclipse.ocl.pivot.@NonNull Package evaluationPackage;
+	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	private final @NonNull TemplateParameters typeParameters;
 	protected @Nullable EClassifier eClassifier;
 	private @Nullable TypeId typeId;
@@ -52,9 +52,9 @@ public class ExecutorType extends AbstractExecutorClass
 	/**
 	 * Construct an executable type descriptor for a known EClassifier and TypeId.
 	 */
-	public ExecutorType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
+	public ExecutorType(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Package asPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		super(NameUtil.getName(eClassifier), flags);
-		this.evaluationPackage = evaluationPackage;
+		this.asPackage = asPackage;
 		this.typeParameters = TypeUtil.createTemplateParameters(typeParameters);
 		this.eClassifier = eClassifier;
 		this.typeId = typeId;
@@ -157,7 +157,7 @@ public class ExecutorType extends AbstractExecutorClass
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getOwningPackage() {
-		return evaluationPackage;
+		return asPackage;
 	}
 
 	@Override
@@ -197,7 +197,7 @@ public class ExecutorType extends AbstractExecutorClass
 						typeId2 = IdManager.getTypeId(eClassifier2);
 					}
 					else {
-						PackageId packageTypeId = evaluationPackage.getPackageId(); //IdManager.getPackageId(evaluationPackage);
+						PackageId packageTypeId = asPackage.getPackageId(); //IdManager.getPackageId(evaluationPackage);
 						TemplateParameters typeParameters = getTypeParameters();
 						if (eClassifier instanceof EDataType) {
 							typeId2 = packageTypeId.getDataTypeId(name, typeParameters.parametersSize());
@@ -280,8 +280,8 @@ public class ExecutorType extends AbstractExecutorClass
 
 	@Override
 	public String toString() {
-		if (evaluationPackage.getPackageId() != IdManager.METAMODEL) {
-			return String.valueOf(evaluationPackage) + "::" + String.valueOf(name); //$NON-NLS-1$
+		if (asPackage.getPackageId() != IdManager.METAMODEL) {
+			return String.valueOf(asPackage) + "::" + String.valueOf(name); //$NON-NLS-1$
 		}
 		else {
 			return String.valueOf(name);

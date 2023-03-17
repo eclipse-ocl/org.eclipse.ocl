@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 
 /**
@@ -26,8 +25,8 @@ import org.eclipse.ocl.pivot.internal.library.executor.ExecutorType;
 public class EcoreExecutorPrimitiveType extends ExecutorType implements PrimitiveType
 //Initialization of OCLstdlibTables gives a NoSuchFieldError if EcoreExecutorAnyType is a nested class.
 {
-	public EcoreExecutorPrimitiveType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
-		super(eClassifier, evaluationPackage, typeId, flags);
+	public EcoreExecutorPrimitiveType(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
+		super(eClassifier, asPackage, typeId, flags);
 	}
 
 	@Override

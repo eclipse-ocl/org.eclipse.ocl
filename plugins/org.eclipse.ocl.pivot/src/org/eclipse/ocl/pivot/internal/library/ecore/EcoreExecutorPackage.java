@@ -35,7 +35,7 @@ public class EcoreExecutorPackage extends ExecutorPackage
 	protected final EPackage ePackage;
 	private ExecutorStandardLibrary standardLibrary = null;
 	private org.eclipse.ocl.pivot.@NonNull Class[] types = null;
-	private @Nullable List<org.eclipse.ocl.pivot.Package> packages = null;
+	private @Nullable List<org.eclipse.ocl.pivot.@NonNull Package> packages = null;
 
 	public EcoreExecutorPackage(@NonNull EPackage ePackage) {
 		super(ClassUtil.nonNullEMF(ePackage.getName()), ePackage.getNsPrefix(), ePackage.getNsURI(), IdManager.getPackageId(ePackage));
@@ -69,20 +69,21 @@ public class EcoreExecutorPackage extends ExecutorPackage
 
 	public @NonNull IdResolver getIdResolver() {
 		@NonNull List<EObject> emptyList = Collections.<EObject>emptyList();
+		assert standardLibrary != null;
 		return new EcoreIdResolver(emptyList, standardLibrary);
 	}
 
 	@Override
 	public @NonNull List<org.eclipse.ocl.pivot.Package> getOwnedPackages() {
-		List<org.eclipse.ocl.pivot.Package> packages2 = packages;
+		List<org.eclipse.ocl.pivot.@NonNull Package> packages2 = packages;
 		if (packages2 == null) {
 			synchronized (this) {
 				packages2 = packages;
 				if (packages2 == null) {
-					packages2 = packages = new ArrayList<org.eclipse.ocl.pivot.Package>();
+					packages2 = packages = new ArrayList<>();
 					for (EPackage eSubPackage : ePackage.getESubpackages()) {
 						assert eSubPackage != null;
-						EcoreExecutorPackage subPackage = standardLibrary.getPackage(eSubPackage);
+						org.eclipse.ocl.pivot.Package subPackage = standardLibrary.getPackage(eSubPackage);
 						if (subPackage != null) {
 							packages2.add(subPackage);
 						}

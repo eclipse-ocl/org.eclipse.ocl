@@ -16,7 +16,6 @@ import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorPackage;
 import org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation;
 import org.eclipse.ocl.pivot.values.SetValue;
 
@@ -25,8 +24,8 @@ import org.eclipse.ocl.pivot.values.SetValue;
  */
 public class EcoreExecutorBooleanType extends EcoreExecutorPrimitiveType implements BooleanType
 {
-	public EcoreExecutorBooleanType(@NonNull EClassifier eClassifier, @NonNull ExecutorPackage evaluationPackage, @NonNull BuiltInTypeId typeId, int flags) {
-		super(eClassifier, evaluationPackage, typeId, flags);
+	public EcoreExecutorBooleanType(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
+		super(eClassifier, asPackage, typeId, flags);
 	}
 
 	/**
