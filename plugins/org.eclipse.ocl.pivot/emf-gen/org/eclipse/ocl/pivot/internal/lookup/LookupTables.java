@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 // import org.eclipse.ocl.pivot.internal.lookup.LookupPackage;
 // import org.eclipse.ocl.pivot.internal.lookup.LookupTables;
@@ -175,7 +174,7 @@ public class LookupTables extends AbstractTables
 			Fragments.init();
 		}
 
-		public static final @NonNull ParameterTypes _Collection__0_NE__ = TypeUtil.createParameterTypes(new ExecutorSpecializedType(TypeId.COLLECTION, TypeParameters._0_NE));
+		public static final @NonNull ParameterTypes _Collection__0_NE__ = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.COLLECTION, TypeParameters._0_NE));
 		public static final @NonNull ParameterTypes _NamedElement = TypeUtil.createParameterTypes(PivotTables.Types._NamedElement);
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ParameterTypes _Collection__LookupEnvironment_addElements_NE__ = _Collection__0_NE__;

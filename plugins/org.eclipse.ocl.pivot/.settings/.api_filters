@@ -2016,20 +2016,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/executor/ExecutorMapType.java" type="org.eclipse.ocl.pivot.internal.executor.ExecutorMapType">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.executor.ExecutorMapType"/>
-                <message_argument value="keyValuesAreNullFree"/>
-            </message_arguments>
-        </filter>
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.executor.ExecutorMapType"/>
-                <message_argument value="valuesAreNullFree"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/messages/PivotMessagesInternal.java" type="org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal">
         <filter id="336658481">
             <message_arguments>

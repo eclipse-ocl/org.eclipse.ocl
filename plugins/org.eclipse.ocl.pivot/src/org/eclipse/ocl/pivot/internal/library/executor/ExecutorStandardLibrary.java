@@ -219,6 +219,10 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asClass;
 	}
 
+	public @NonNull Type createLambdaType(@NonNull String name, @NonNull Type @NonNull ... typeArguments) {
+		return new ExecutorLambdaType(name, typeArguments);
+	}
+
 	public @NonNull Operation createOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, org.eclipse.ocl.pivot.@NonNull Class asClass,
 			int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
@@ -340,6 +344,10 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		SetTypeImpl asClass = (SetTypeImpl)PivotFactory.eINSTANCE.createSetType();
 		initClass(asClass, eClassifier, typeId, flags, typeParameter);
 		return asClass;
+	}
+
+	public @NonNull Type createSpecializedType(@NonNull TypeId unspecializedTypeId, @NonNull Type... typeArguments) {
+		return new ExecutorSpecializedType(unspecializedTypeId, typeArguments);
 	}
 
 	public @NonNull TemplateParameter createTemplateParameter(int index, @NonNull String name) {
