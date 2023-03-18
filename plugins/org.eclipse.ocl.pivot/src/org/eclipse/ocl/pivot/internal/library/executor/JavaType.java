@@ -128,10 +128,9 @@ public class JavaType extends AbstractExecutorClass
 	}
 
 	@Override
-	@NonNull
-	public LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
+	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		FlatClass flatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
-		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
+		return flatClass.lookupImplementation(apparentOperation);
 	}
 
 	@Override

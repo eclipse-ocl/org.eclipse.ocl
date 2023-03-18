@@ -446,6 +446,11 @@ public class TemplateParameterImpl
 		return this;
 	}
 
+	public void setTemplateParameterId(@NonNull TemplateParameterId templateParameterId) {
+		assert this.templateParameterId == null;
+		this.templateParameterId = templateParameterId;
+	}
+
 	@Override
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp expr, @Nullable Type selfType) {
 		assert expr != null;

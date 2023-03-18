@@ -21,8 +21,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.EnumerationId;
+import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
 
 public class EcoreReflectiveEnumeration extends EcoreReflectiveType implements Enumeration
 {
@@ -56,7 +58,14 @@ public class EcoreReflectiveEnumeration extends EcoreReflectiveType implements E
 		if (literals2 == null) {
 			literals = literals2 = new ArrayList<EnumerationLiteral>();
 			for (EEnumLiteral eEnumLiteral : ((EEnum) eClassifier).getELiterals()) {
-				literals2.add(new EcoreExecutorEnumerationLiteral(eEnumLiteral, this, eEnumLiteral.getValue()));
+				int ordinal = eEnumLiteral.getValue();
+			//	EcoreExecutorEnumerationLiteral asEnumerationLiteral = new EcoreExecutorEnumerationLiteral(eEnumLiteral, this, ordinal);
+				EnumerationLiteralImpl asEnumerationLiteral = (EnumerationLiteralImpl)PivotFactory.eINSTANCE.createEnumerationLiteral();
+				asEnumerationLiteral.setName(eEnumLiteral.getName());
+				asEnumerationLiteral.setESObject(eEnumLiteral);
+			//	asEnumerationLiteral.setOrdinal(ordinal);
+			//	asEnumeration.getOwnedLiterals().add(asEnumerationLiteral);
+				literals2.add(asEnumerationLiteral);
 			}
 		}
 		return literals2;

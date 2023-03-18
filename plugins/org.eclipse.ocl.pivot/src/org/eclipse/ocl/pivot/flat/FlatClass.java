@@ -150,7 +150,7 @@ public interface FlatClass extends Nameable
 	boolean isUnique();
 	boolean isUndefined();
 	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes);
-	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
+	@NonNull LibraryFeature lookupImplementation(@NonNull Operation apparentOperation);
 	@NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
 
 	/**

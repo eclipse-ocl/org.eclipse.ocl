@@ -40,13 +40,6 @@ import com.google.common.collect.Lists;
 
 public abstract class AbstractExecutorClass extends AbstractClassImpl
 {
-	public static final int ORDERED = FlatClass.ORDERED;
-	public static final int UNIQUE = FlatClass.UNIQUE;
-	public static final int OCL_ANY = FlatClass.OCL_ANY;
-	public static final int OCL_VOID = FlatClass.OCL_VOID;
-	public static final int OCL_INVALID = FlatClass.OCL_INVALID;
-	public static final int ABSTRACT = FlatClass.ABSTRACT;
-
 	private /*final*/ /*@NonNull*/ FlatClass flatClass = null;
 
 	public AbstractExecutorClass(@NonNull String name, int flags) {
@@ -227,7 +220,7 @@ public abstract class AbstractExecutorClass extends AbstractClassImpl
 
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
+		return flatClass.lookupImplementation(apparentOperation);
 	}
 
 	//	@Override

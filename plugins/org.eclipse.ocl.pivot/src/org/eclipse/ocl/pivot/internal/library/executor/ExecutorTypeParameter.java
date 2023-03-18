@@ -124,8 +124,8 @@ public class ExecutorTypeParameter extends AbstractExecutorNamedElement implemen
 		return flatClass.lookupActualOperation(standardLibrary, apparentOperation);
 	}
 
-	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
-		return flatClass.lookupImplementation(standardLibrary, apparentOperation);
+	public @NonNull LibraryFeature lookupImplementation(@NonNull Operation apparentOperation) {
+		return flatClass.lookupImplementation(apparentOperation);
 	}
 
 	@Override

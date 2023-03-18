@@ -352,6 +352,6 @@ extends AbstractClass {
 
 	void removeClassListener(@NonNull IClassListener partialFlatClass);
 
-	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int[] depthCounts);
+	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull[] depthCounts);
 
 } // Class
