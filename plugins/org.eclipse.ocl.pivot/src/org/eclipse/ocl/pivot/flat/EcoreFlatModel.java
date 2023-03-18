@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class EcoreFlatModel extends PartialFlatModel
 {
@@ -49,7 +50,7 @@ public class EcoreFlatModel extends PartialFlatModel
 
 	@Override
 	public @NonNull PartialFlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		EObject esObject = asClass.getESObject();
+		EObject esObject = PivotUtil.getUnspecializedTemplateableElement(asClass).getESObject();
 		if (esObject instanceof EClassifier) {
 			return getEcoreFlatClass((EClassifier)esObject, asClass);
 		}

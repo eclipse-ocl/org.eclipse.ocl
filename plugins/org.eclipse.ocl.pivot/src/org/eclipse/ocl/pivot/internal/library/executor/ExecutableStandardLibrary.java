@@ -65,18 +65,19 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
 	 */
-	@Deprecated
+	@Deprecated		// XXX Use an Orphanage
 	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable CollectionType>>> collectionSpecializations = new /*Weak*/HashMap<>();	// Keys are not singletons
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each map type.
 	 */
-	@Deprecated
+	@Deprecated		// XXX Use an Orphanage
 	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>>> mapSpecializations = new /*Weak*/HashMap<>();		// Keys are not singletons
 
 	/**
 	 * Shared cache of the lazily created lazily deleted tuples.
 	 */
+	@Deprecated		// XXX Use an Orphanage
 	private @NonNull Map<@NonNull TupleTypeId, @NonNull WeakReference<@NonNull TupleType>> tupleTypeMap = new WeakHashMap<>();		// Keys are singletons
 
 	/**
@@ -149,7 +150,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			specializedType = weakGet(map, typeParameters);
 		}
 		if (specializedType == null) {
-			String name = ClassUtil.nonNullModel(genericType.getName());
+		//	String name = ClassUtil.nonNullModel(genericType.getName());
 			if (genericType instanceof BagType) {
 			//	specializedType = new ExecutorBagType(name, genericType, elementType, isNullFree, lower, upper);
 				specializedType = PivotUtil.createBagType((BagType)genericType, elementType);
@@ -178,10 +179,10 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 				specializedType.setUpperValue(upper);
 			}
 			map.put(typeParameters, new WeakReference<>(specializedType));
+			/*Partial*/FlatModel flatModel = getFlatModel();
+			FlatClass flatClass = flatModel.getFlatClass(genericType);
+			((CollectionTypeImpl)specializedType).setFlatClass(flatClass);
 		}
-		/*Partial*/FlatModel flatModel = getFlatModel();
-		FlatClass flatClass = flatModel.getFlatClass(genericType);
-		((CollectionTypeImpl)specializedType).setFlatClass(flatClass);
 		return specializedType;
 	}
 

@@ -32,7 +32,7 @@ public class PartialFlatModel extends AbstractFlatModel
 	@Override
 	public @NonNull PartialFlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		throw new UnsupportedOperationException();			// XXX
-	/*	PartialFlatClass flatClass = asClass2flatClass.get(asClass);
+	/*	PartialFlatClass flatClass = asClass2flatClass.get(asClass);		// Used by Ecore specializations
 		if (flatClass == null) {
 			flatClass = new PartialFlatClass(this, asClass);
 			asClass2flatClass.put(asClass, flatClass);
