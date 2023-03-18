@@ -36,16 +36,18 @@ import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
@@ -881,10 +883,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected void declareType(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		Class<?> typeClass = getEcoreExecutorClass(asClass);
+		EClass eClass = getEcoreExecutorClass(asClass);
+	//	assert typeClass == asClass.getClass();
 		EClassifier eClassifier = ClassUtil.nonNullState((EClassifier)asClass.getESObject());
 		s.append("		public static final ");
-		if (Enumeration.class.isAssignableFrom(typeClass)) {
+		if (asClass instanceof Enumeration) {
 			s.appendClassReference(true, Enumeration.class);
 		}
 		else {
@@ -892,7 +895,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		s.append(" ");
 		asClass.accept(emitLiteralVisitor);
-		s.append(" = LIBRARY.create" + typeClass.getSimpleName() + "(");
+		s.append(" = LIBRARY.createClass(");
+		String qualifiedEcoreLiteralName = genModelHelper.getFullyQualifiedEcoreLiteralName(eClass);
+		int lastIndex = qualifiedEcoreLiteralName.lastIndexOf(".");
+		int lastLastIndex = qualifiedEcoreLiteralName.substring(0, lastIndex).lastIndexOf(".",lastIndex);
+		s.appendClassReference(null, qualifiedEcoreLiteralName.substring(0, lastLastIndex));
+		s.append(qualifiedEcoreLiteralName.substring(lastLastIndex));
+		s.append(", ");
 	/*	if (!hasEcore(asClass) || (asClass instanceof AnyType) || (asClass instanceof CollectionType) || (asClass instanceof VoidType) || (asClass instanceof InvalidType)) {
 			if (isBuiltInType(asClass)) {
 				s.appendClassReference(null, TypeId.class);
@@ -913,8 +922,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.appendClassReference(null, TypeId.class);
 			s.append(".");
 			s.append(genModelHelper.getEcoreLiteralName(eClassifier));
-			s.append(", ");
 		}
+		else {
+			s.append("null");
+		}
+		s.append(", ");
 		appendTypeFlags(asClass);
 		if (asClass.getOwnedSignature() != null) {
 			for (TemplateParameter asTemplateParameter : asClass.getOwnedSignature().getOwnedParameters()) {
@@ -1276,45 +1288,49 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		return genPackage.getPrefix();
 	}
 
-	protected @NonNull Class<?> getEcoreExecutorClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+	@SuppressWarnings("null")
+	protected @NonNull EClass getEcoreExecutorClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		if (asClass instanceof AnyType) {
-			return AnyType.class;
+			return PivotPackage.Literals.ANY_TYPE;
 		}
-		else if (asClass instanceof CollectionType) {
+		else if (asClass instanceof IterableType) {
 			if (asClass instanceof BagType) {
-				return BagType.class;
+				return PivotPackage.Literals.BAG_TYPE;
+			}
+			else if (asClass instanceof MapType) {
+				return PivotPackage.Literals.MAP_TYPE;
 			}
 			else if (asClass instanceof OrderedSetType) {
-				return OrderedSetType.class;
+				return PivotPackage.Literals.ORDERED_SET_TYPE;
 			}
 			else if (asClass instanceof SequenceType) {
-				return SequenceType.class;
+				return PivotPackage.Literals.SEQUENCE_TYPE;
 			}
 			else if (asClass instanceof SetType) {
-				return SetType.class;
+				return PivotPackage.Literals.SET_TYPE;
 			}
 			else {
-				return CollectionType.class;
+				return PivotPackage.Literals.COLLECTION_TYPE;
 			}
 		}
 		else if (asClass instanceof Enumeration) {
-			return Enumeration.class;
+			return PivotPackage.Literals.ENUMERATION;
 		}
 		else if (asClass instanceof InvalidType) {
-			return InvalidType.class;
+			return PivotPackage.Literals.INVALID_TYPE;
 		}
 		else if (asClass instanceof PrimitiveType) {
 			if (asClass instanceof BooleanType) {
-				return BooleanType.class;
+				return PivotPackage.Literals.BOOLEAN_TYPE;
 			}
 			else {
-				return PrimitiveType.class;
+				return PivotPackage.Literals.PRIMITIVE_TYPE;
 			}
 		}
 		else if (asClass instanceof VoidType) {
-			return VoidType.class;
+			return PivotPackage.Literals.VOID_TYPE;
 		}
-		return org.eclipse.ocl.pivot.Class.class;
+		return PivotPackage.Literals.CLASS;
 	}
 
 	public @NonNull String getTablesClassName() {

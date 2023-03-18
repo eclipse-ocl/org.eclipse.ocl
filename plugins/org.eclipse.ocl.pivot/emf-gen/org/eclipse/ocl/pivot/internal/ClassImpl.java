@@ -1220,9 +1220,6 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 
 	@Override
 	public void setName(String newName) {
-		if ("Real".equals(newName)) {
-			getClass();		// XXX
-		}
 		String oldName = name;
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {

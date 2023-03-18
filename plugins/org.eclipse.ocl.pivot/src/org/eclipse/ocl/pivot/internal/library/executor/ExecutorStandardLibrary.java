@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
@@ -54,6 +55,7 @@ import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.AnyTypeImpl;
@@ -64,6 +66,8 @@ import org.eclipse.ocl.pivot.internal.CollectionTypeImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
 import org.eclipse.ocl.pivot.internal.InvalidTypeImpl;
+import org.eclipse.ocl.pivot.internal.LambdaTypeImpl;
+import org.eclipse.ocl.pivot.internal.MapTypeImpl;
 import org.eclipse.ocl.pivot.internal.OperationImpl;
 import org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
@@ -120,6 +124,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		//		}
 	}
 
+	@Deprecated
 	public @NonNull AnyType createAnyType(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
@@ -135,6 +140,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asClass;
 	}
 
+	@Deprecated
 	public @NonNull BagType createBagType(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
@@ -151,6 +157,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asClass;
 	}
 
+	@Deprecated
 	public @NonNull BooleanType createBooleanType(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
@@ -166,11 +173,13 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asClass;
 	}
 
+	@Deprecated
 	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, int flags, @NonNull TemplateParameter @NonNull ... typeParameters) {
 		return createClass(eClassifier, asPackage, null, flags, typeParameters);
 	}
 
+	@Deprecated
 	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable ... typeParameters) {
 		assert eClassifier != null;
@@ -179,11 +188,35 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asClass;
 	}
 
+	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClass eMetaClass, /*@NonNull*/ EClassifier eClassifier,
+			org.eclipse.ocl.pivot.@NonNull Package asPackage, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable ... typeParameters) {
+		assert eMetaClass != null;
+		assert eClassifier != null;
+		ClassImpl asClass = (ClassImpl)PivotFactory.eINSTANCE.create(eMetaClass);
+		initClass(asClass, eClassifier, typeId, flags, typeParameters);
+		return asClass;
+	}
+
+	@Deprecated
 	public @NonNull CollectionType createCollectionType(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
-	//	EcoreExecutorCollectionType type = new EcoreExecutorCollectionType(eClassifier, asPackage, typeId, flags, typeParameter);
-		CollectionTypeImpl asClass = (CollectionTypeImpl)PivotFactory.eINSTANCE.createCollectionType();
+		CollectionTypeImpl asClass;
+		if (typeId == TypeId.BAG) {
+			asClass = (CollectionTypeImpl)PivotFactory.eINSTANCE.createBagType();
+		}
+		else if (typeId == TypeId.ORDERED_SET) {
+			asClass = (CollectionTypeImpl)PivotFactory.eINSTANCE.createOrderedSetType();
+		}
+		else if (typeId == TypeId.SEQUENCE) {
+			asClass = (CollectionTypeImpl)PivotFactory.eINSTANCE.createSequenceType();
+		}
+		else if (typeId == TypeId.SET) {
+			asClass = (CollectionTypeImpl)PivotFactory.eINSTANCE.createSetType();
+		}
+		else {
+			asClass = (CollectionTypeImpl)PivotFactory.eINSTANCE.createCollectionType();
+		}
 		initClass(asClass, eClassifier, typeId, flags, typeParameter);
 		return asClass;
 	}
@@ -211,6 +244,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return new FlatFragment(cses.getFlatClass(this), cses2.getFlatClass(this));
 	}
 
+	@Deprecated
 	public @NonNull InvalidType createInvalidType(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
@@ -220,7 +254,27 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull Type createLambdaType(@NonNull String name, @NonNull Type @NonNull ... typeArguments) {
-		return new ExecutorLambdaType(name, typeArguments);
+	//	return new ExecutorLambdaType(name, typeArguments);
+		LambdaTypeImpl asClass = (LambdaTypeImpl)PivotFactory.eINSTANCE.createLambdaType();
+		asClass.setName(name);
+		TypeId typeId = IdManager.getLambdaTypeId(name, IdManager.getParametersId(typeArguments));
+		asClass.setTypeId(typeId);
+		asClass.setNormalizedTypeId(typeId);
+	//	initTemplateParameters(asClass, typeArguments);
+	//	EcoreFlatModel flatModel = getFlatModel();
+	//	FlatClass flatClass = flatModel.getEcoreFlatClass(asClass);
+	//	asClass.setFlatClass(flatClass);
+		return asClass;
+	}
+
+	public org.eclipse.ocl.pivot.@NonNull Class createMapType(/*@NonNull*/ EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Package asPackage,
+			@NonNull MapTypeId typeId, int  flags, @NonNull TemplateParameter keyParameter, @NonNull TemplateParameter valueParameter) {
+	// TODO Auto-generated method stub
+		assert eClassifier != null;
+	//	EcoreExecutorCollectionType type = new EcoreExecutorCollectionType(eClassifier, asPackage, typeId, flags, typeParameter);
+		MapTypeImpl asClass = (MapTypeImpl)PivotFactory.eINSTANCE.createMapType();
+		initClass(asClass, eClassifier, typeId, flags, keyParameter, valueParameter);
+		return asClass;
 	}
 
 	public @NonNull Operation createOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, org.eclipse.ocl.pivot.@NonNull Class asClass,
@@ -268,6 +322,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asProperty;
 	}
 
+	@Deprecated
 	public @NonNull OrderedSetType createOrderedSetType(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
@@ -300,6 +355,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asPackage;
 	}
 
+	@Deprecated
 	public @NonNull PrimitiveType createPrimitiveType(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
@@ -330,6 +386,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asProperty;
 	}
 
+	@Deprecated
 	public @NonNull SequenceType createSequenceType(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
@@ -338,6 +395,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asClass;
 	}
 
+	@Deprecated
 	public @NonNull SetType createSetType(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CollectionTypeId typeId, int flags, @NonNull TemplateParameter typeParameter) {
 		assert eClassifier != null;
@@ -362,6 +420,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asTemplateParameter;
 	}
 
+	@Deprecated
 	public @NonNull VoidType createVoidType(/*@NonNull*/ EClassifier eClassifier,
 			org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull BuiltInTypeId typeId, int flags) {
 		assert eClassifier != null;
