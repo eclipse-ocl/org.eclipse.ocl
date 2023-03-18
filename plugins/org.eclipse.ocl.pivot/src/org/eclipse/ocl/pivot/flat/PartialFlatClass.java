@@ -151,7 +151,8 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 		List<Operation> asOperations = asClass.getOwnedOperations();
 		assert asOperations.size() == 0;
 		for (@NonNull Operation asOperation : operations) {
-		//	asOperations.add(asOperation);
+		//	asOperation.toString();			// XXX
+			asOperations.add(asOperation);
 		}
 	}
 

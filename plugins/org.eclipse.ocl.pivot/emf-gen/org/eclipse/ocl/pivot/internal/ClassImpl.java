@@ -1234,6 +1234,11 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 		}
 	}
 
+	public void setNormalizedTypeId(@Nullable TypeId typeId) {
+		assert this.normalizedTypeId == null;
+		this.normalizedTypeId = typeId;
+	}
+
 	public void setTypeId(@NonNull TypeId typeId) {
 		assert this.typeId == null;
 		this.typeId = typeId;

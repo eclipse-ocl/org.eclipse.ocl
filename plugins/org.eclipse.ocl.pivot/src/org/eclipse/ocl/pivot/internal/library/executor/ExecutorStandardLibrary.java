@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -63,8 +64,10 @@ import org.eclipse.ocl.pivot.internal.CollectionTypeImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
 import org.eclipse.ocl.pivot.internal.InvalidTypeImpl;
+import org.eclipse.ocl.pivot.internal.OperationImpl;
 import org.eclipse.ocl.pivot.internal.OrderedSetTypeImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
+import org.eclipse.ocl.pivot.internal.ParameterImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.SequenceTypeImpl;
@@ -218,7 +221,34 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 
 	public @NonNull Operation createOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, org.eclipse.ocl.pivot.@NonNull Class asClass,
 			int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
-		return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
+	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
+		OperationImpl asOperation = (OperationImpl)PivotFactory.eINSTANCE.createOperation();
+		asOperation.setName(name);
+	//	asOperation.setESObject(eOperation);
+	//	asOperation.setIndex(index);
+		asOperation.setImplementation(implementation);
+		for (int i = 0; i < parameterTypes.size(); i++) {
+			@NonNull Type parameterType = parameterTypes.get(i);
+			ParameterImpl asParameter = (ParameterImpl)PivotFactory.eINSTANCE.createParameter();
+			asParameter.setName("_" + i);
+			asParameter.setType(parameterType);
+			asOperation.getOwnedParameters().add(asParameter);
+		}
+		if (typeParameters.parametersSize() > 0) {
+			TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
+			List<TemplateParameter> asTemplateParameters = templateSignature.getOwnedParameters();
+			for (int i = 0; i < typeParameters.parametersSize(); i++) {
+				Type type = typeParameters.get(i);		// XXX
+				TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
+				asTemplateParameter.setName("_" + i);
+			//	asTemplateParameter.setType(type);
+			//	asTemplateParameter.setTemplateParameterId(templateParameter.getTemplateParameterId());
+				asTemplateParameters.add(asTemplateParameter);
+			}
+			asOperation.setOwnedSignature(templateSignature);
+		}
+	//	asClass.getOwnedOperations().add(asOperation);
+		return asOperation;
 	}
 
 	public @NonNull Property createOppositeProperty(@NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asClass, int propertyIndex, /*@NonNull*/ EStructuralFeature eFeature) {
@@ -313,11 +343,15 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	}
 
 	public @NonNull TemplateParameter createTemplateParameter(int index, @NonNull String name) {
-		ExecutorTypeParameter executorTypeParameter = new ExecutorTypeParameter(index, name);
+	//	ExecutorTypeParameter executorTypeParameter = new ExecutorTypeParameter(index, name);
+		TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
+		asTemplateParameter.setName(name);
+		asTemplateParameter.setTemplateParameterId(IdManager.getTemplateParameterId(index));
+	//	asTemplateParameter.setIndex(index);
 	//	EcoreFlatModel flatModel = getFlatModel();
 	//	FlatClass flatClass = flatModel.getFlatClass(executorTypeParameter);
 	//	executorTypeParameter.setFlatClass(flatClass);
-		return executorTypeParameter;
+		return asTemplateParameter;
 	}
 
 	public @NonNull VoidType createVoidType(/*@NonNull*/ EClassifier eClassifier,
@@ -510,6 +544,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		asClass.setName(eClassifier.getName());
 		if (typeId != null) {
 			asClass.setTypeId(typeId);
+			asClass.setNormalizedTypeId(typeId);
 		}
 		asClass.setIsAbstract((flags & FlatClass.ABSTRACT) != 0);
 		initTemplateParameters(asClass, typeParameters);

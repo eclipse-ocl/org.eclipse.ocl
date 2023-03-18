@@ -389,9 +389,10 @@ public class TemplateParameterImpl
 
 	@Override
 	public @NonNull TemplateParameterId getTemplateParameterId() {
-		assert eContainer() != null;
+	//	assert eContainer() != null;			// protos have no eContainer
 		TemplateParameterId templateParameterId2 = templateParameterId;
 		if (templateParameterId2 == null) {
+			assert eContainer() != null;
 			synchronized (this) {
 				templateParameterId2 = templateParameterId;
 				if (templateParameterId2 == null) {

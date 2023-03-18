@@ -541,6 +541,10 @@ public final class IdManager
 	 * @since 1.18
 	 */
 	public static @NonNull TemplateParameterId getTemplateParameterIndexId(@NonNull TemplateParameter templateParameter) {
+		TemplateParameterId templateParameterId = templateParameter.getTemplateParameterId();
+		if (templateParameterId != null) {
+			return templateParameterId;
+		}
 		List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(templateParameter);
 		assert templateParameters != null;
 		int index = templateParameters.indexOf(templateParameter);
