@@ -10,13 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
-import java.util.Map;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.library.LibraryFeature;
 
 /**
  * A FlatFragment provides the description of the properties and operations defined by some class when accessed by the same
@@ -46,8 +43,6 @@ public /*final*/ class FlatFragment
 	 * FIXME legacy static initialization has some super properties too.
 	 */
 	private @NonNull Property @Nullable [] properties = null;
-
-	protected @Nullable Map<@NonNull Operation, @NonNull LibraryFeature> operationMap = null;
 
 	public FlatFragment(@NonNull FlatClass derivedFlatClass, @NonNull FlatClass baseFlatClass) {
 		this.derivedFlatClass = derivedFlatClass;
@@ -86,27 +81,30 @@ public /*final*/ class FlatFragment
 	public void initOperations(@NonNull Operation @NonNull [] operations) {
 		assert this.operations == null;
 		this.operations = operations;
+		if (derivedFlatClass == baseFlatClass) {
+			((AbstractFlatClass)derivedFlatClass).initSelfOperations(operations);
+		}
 	}
 
 	public void initProperties(@NonNull Property @NonNull [] properties) {
 		assert this.properties == null;
 		this.properties = properties;
+		assert derivedFlatClass == baseFlatClass;
+		((AbstractFlatClass)derivedFlatClass).initSelfProperties(properties);
 	}
 
 	public @NonNull Operation @NonNull [] getOperations() {
-		@NonNull Operation [] operations2 = operations;
+		@NonNull Operation [] operations2 = this.operations;
 		if (operations2 == null) {
-			operations2 = ((AbstractFlatClass)baseFlatClass).computeDirectOperations();
-			initOperations(operations2);
+			this.operations = operations2 = ((AbstractFlatClass)baseFlatClass).computeDirectOperations();
 		}
 		return operations2;
 	}
 
 	public @NonNull Property @NonNull [] getProperties() {
-		@NonNull Property [] properties2 = properties;
+		@NonNull Property [] properties2 = this.properties;
 		if (properties2 == null) {
-			properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
-			initProperties(properties2);
+			this.properties = properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
 		}
 		return properties2;
 	}

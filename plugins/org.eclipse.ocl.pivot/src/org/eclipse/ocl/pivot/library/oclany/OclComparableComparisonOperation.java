@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.library.oclany;
 
+import java.util.Date;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
@@ -42,6 +44,9 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 	 */
 	@Override
 	public @NonNull Boolean evaluate(@NonNull Executor executor, @Nullable Object left, @Nullable Object right) {
+		if (left instanceof Date) {
+			getClass();		// XXX
+		}
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		IdResolver idResolver = executor.getIdResolver();
 		FlatClass leftFlatClass = idResolver.getDynamicTypeOf(left).getFlatClass(standardLibrary);
@@ -50,19 +55,18 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 		FlatClass comparableFlatClass = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
 		FlatClass selfFlatClass = standardLibrary.getOclSelfType().getFlatClass(standardLibrary);
 		Operation staticOperation = comparableFlatClass.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfFlatClass);
-		int intComparison;
 		LibraryBinaryOperation.LibraryBinaryOperationExtension implementation = null;
 		try {
 			if (staticOperation != null) {
-				implementation = (LibraryBinaryOperation.LibraryBinaryOperationExtension) commonFlatClass.lookupImplementation(standardLibrary, staticOperation);
+				implementation = (LibraryBinaryOperation.LibraryBinaryOperationExtension)commonFlatClass.lookupImplementation(staticOperation);
 			}
 		} catch (Exception e) {
 			throw new InvalidValueException(e, "No 'compareTo' implementation"); //$NON-NLS-1$
 		}
 		if (implementation != null) {
 			Object comparison = implementation.evaluate(executor, TypeId.INTEGER, left, right);
-			intComparison = ValueUtil.asInteger(comparison);
-			return getResultValue(intComparison) != false;			// FIXME redundant test to suppress warning
+			Integer intComparison = ValueUtil.asInteger(comparison);
+			return Boolean.valueOf(getResultValue(intComparison));
 		}
 		else {
 			throw new InvalidValueException("Unsupported compareTo for ''{0}''", left != null ? left.getClass().getName() : NULL_STRING); //$NON-NLS-1$

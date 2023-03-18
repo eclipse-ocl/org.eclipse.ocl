@@ -147,6 +147,24 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	} */
 
 	@Override
+	public void initSelfOperations(@NonNull Operation @NonNull [] operations) {
+		List<Operation> asOperations = asClass.getOwnedOperations();
+		assert asOperations.size() == 0;
+		for (@NonNull Operation asOperation : operations) {
+		//	asOperations.add(asOperation);
+		}
+	}
+
+	@Override
+	public void initSelfProperties(@NonNull Property @NonNull [] properties) {
+		List<Property> asProperties = asClass.getOwnedProperties();
+		assert asProperties.size() == 0;
+		for (@NonNull Property asProperty : properties) {
+			asProperties.add(asProperty);
+		}
+	}
+
+	@Override
 	protected void installClassListeners() {
 		assert isMutable();
 		asClass.addClassListener(this);

@@ -103,6 +103,14 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	 */
 	private @Nullable Map<@NonNull String, @Nullable Object> name2propertyOrProperties = null;	// Property or PartialProperties
 
+
+	/**
+	 * Map from invoked operation to its resolved implementation. Theis map is lazily populated with each
+	 * enry computed on the first invocation.
+	 */
+	private @Nullable Map<@NonNull Operation, @NonNull LibraryFeature> operationMap = null;
+
+
 	/**
 	 * Whether this flat class can evolve. Initally null. Set false by static initFragments from XXXTables.
 	 * Set true by reflective initFragments.
@@ -465,6 +473,53 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return fragments[fragmentNumber];
 	}
 
+	private @NonNull LibraryFeature getImplementation(@NonNull FlatFragment flatFragment, @NonNull Operation apparentOperation) {
+		int index = apparentOperation.getIndex();
+		assert index < 0;
+		Map<@NonNull Operation, @NonNull LibraryFeature> operationMap2 = operationMap;
+		if (operationMap2 == null) {
+			synchronized (this) {
+				operationMap2 = operationMap;
+				if (operationMap2 == null) {
+					operationMap = operationMap2 = new HashMap<>();		// Optimize to reuse single super map if no local ops
+				}
+			}
+		}
+		LibraryFeature libraryFeature = operationMap2.get(apparentOperation);
+		if (libraryFeature != null) {
+			return libraryFeature;
+		}
+		synchronized (operationMap2) {
+			libraryFeature = operationMap2.get(apparentOperation);
+			if (libraryFeature != null) {
+				return libraryFeature;
+			}
+			Operation localOperation = getLocalOperation(flatFragment, apparentOperation);
+			if (localOperation == null) {
+				if (flatFragment.derivedFlatClass == flatFragment.baseFlatClass) {
+					localOperation = apparentOperation;
+				}
+			}
+			if (localOperation != null) {				// Trivial case, there is a local operation
+				libraryFeature = PivotUtilInternal.getImplementation(localOperation);
+			}
+			else {										// Non-trivial, search up the inheritance tree for an inherited operation
+				Operation bestOverload = flatFragment.baseFlatClass.getBestOverload(flatFragment.derivedFlatClass, apparentOperation);
+				if (bestOverload != null) {
+					libraryFeature = PivotUtilInternal.getImplementation(bestOverload);
+				}
+				else {
+					libraryFeature = OclAnyUnsupportedOperation.AMBIGUOUS;
+				}
+			}
+			if (libraryFeature == null) {
+				libraryFeature = OclAnyUnsupportedOperation.INSTANCE;
+			}
+			operationMap2.put(apparentOperation, libraryFeature);
+			return libraryFeature;
+		}
+	}
+
 	private int getIndex(int fragmentNumber) {
 		int @Nullable [] indexes2 = indexes;
 		assert indexes2 != null;
@@ -815,6 +870,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 	}
 
+	public abstract void initSelfOperations(@NonNull Operation @NonNull [] operations);
+
+	public abstract void initSelfProperties(@NonNull Property @NonNull [] properties);
+
 	protected abstract void installClassListeners();
 
 	@Override
@@ -1000,59 +1059,15 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 	}
 
-	public static @NonNull LibraryFeature getImplementation(@NonNull FlatFragment flatFragment, @NonNull Operation apparentOperation) {
-		int index = apparentOperation.getIndex();
-		assert index < 0;
-		Map<@NonNull Operation, @NonNull LibraryFeature> operationMap2 = flatFragment.operationMap;
-		if (operationMap2 == null) {
-			synchronized (flatFragment) {
-				operationMap2 = flatFragment.operationMap;
-				if (operationMap2 == null) {
-					flatFragment.operationMap = operationMap2 = new HashMap<>();		// Optimize to reuse single super map if no local ops
-				}
-			}
-		}
-		LibraryFeature libraryFeature = operationMap2.get(apparentOperation);
-		if (libraryFeature != null) {
-			return libraryFeature;
-		}
-		synchronized (operationMap2) {
-			libraryFeature = operationMap2.get(apparentOperation);
-			if (libraryFeature != null) {
-				return libraryFeature;
-			}
-			Operation localOperation = AbstractFlatClass.getLocalOperation(flatFragment, apparentOperation);
-			if (localOperation == null) {
-				if (flatFragment.derivedFlatClass == flatFragment.baseFlatClass) {
-					localOperation = apparentOperation;
-				}
-			}
-			if (localOperation != null) {				// Trivial case, there is a local operation
-				libraryFeature = PivotUtilInternal.getImplementation(localOperation);
-			}
-			else {										// Non-trivial, search up the inheritance tree for an inherited operation
-				Operation bestOverload = flatFragment.baseFlatClass.getBestOverload(flatFragment.derivedFlatClass, apparentOperation);
-				if (bestOverload != null) {
-					libraryFeature = PivotUtilInternal.getImplementation(bestOverload);
-				}
-				else {
-					libraryFeature = OclAnyUnsupportedOperation.AMBIGUOUS;
-				}
-			}
-			if (libraryFeature == null) {
-				libraryFeature = OclAnyUnsupportedOperation.INSTANCE;
-			}
-			operationMap2.put(apparentOperation, libraryFeature);
-			return libraryFeature;
-		}
-	}
-
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull Operation apparentOperation) {
 		StandardLibrary standardLibrary = getStandardLibrary();
-		getDepth();
+	//	getDepth();
 		FlatClass apparentFlatClass = apparentOperation.getFlatClass(standardLibrary);
 		if (apparentFlatClass != null) {
+			if (indexes == null) {
+				initFragments();
+			}
 			assert indexes != null;
 			int depths = indexes.length-1;
 			int apparentDepth = apparentFlatClass.getDepth();

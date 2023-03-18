@@ -229,6 +229,16 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		}
 	}
 
+	@Override
+	public void initSelfOperations(@NonNull Operation @NonNull [] operations) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void initSelfProperties(@NonNull Property @NonNull [] properties) {
+		throw new UnsupportedOperationException();
+	}
+
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
 		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
 		for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
