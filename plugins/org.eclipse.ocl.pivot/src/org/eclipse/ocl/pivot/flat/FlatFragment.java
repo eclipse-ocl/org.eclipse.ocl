@@ -78,21 +78,6 @@ public /*final*/ class FlatFragment
 		return derivedFlatClass;
 	}
 
-	public void initOperations(@NonNull Operation @NonNull [] operations) {
-		assert this.operations == null;
-		this.operations = operations;
-		if (derivedFlatClass == baseFlatClass) {
-			((AbstractFlatClass)derivedFlatClass).initSelfOperations(operations);
-		}
-	}
-
-	public void initProperties(@NonNull Property @NonNull [] properties) {
-		assert this.properties == null;
-		this.properties = properties;
-		assert derivedFlatClass == baseFlatClass;
-		((AbstractFlatClass)derivedFlatClass).initSelfProperties(properties);
-	}
-
 	public @NonNull Operation @NonNull [] getOperations() {
 		@NonNull Operation [] operations2 = this.operations;
 		if (operations2 == null) {
@@ -107,6 +92,16 @@ public /*final*/ class FlatFragment
 			this.properties = properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
 		}
 		return properties2;
+	}
+
+	public void initOperations(@NonNull Operation @NonNull [] operations) {
+		assert this.operations == null;
+		this.operations = operations;
+	}
+
+	public void initProperties(@NonNull Property @NonNull [] properties) {
+		assert this.properties == null;
+		this.properties = properties;
 	}
 
 	@Override

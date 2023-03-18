@@ -247,7 +247,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 			}
 			asOperation.setOwnedSignature(templateSignature);
 		}
-	//	asClass.getOwnedOperations().add(asOperation);
+		asClass.getOwnedOperations().add(asOperation);
 		return asOperation;
 	}
 
@@ -260,7 +260,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		asProperty.setESObject(eFeature);
 	//	asProperty.setIndex(propertyIndex);
 	//	asProperty.setImplementation(implementation);
-	//	asClass.getOwnedProperties().add(asProperty);
+		asClass.getOwnedProperties().add(asProperty);
 		return asProperty;
 	}
 
@@ -310,7 +310,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		asProperty.setName(name);
 	//	asProperty.setIndex(propertyIndex);
 		asProperty.setImplementation(implementation);
-	//	asClass.getOwnedProperties().add(asProperty);
+		asClass.getOwnedProperties().add(asProperty);
 		return asProperty;
 	}
 
@@ -322,7 +322,7 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		asProperty.setName(eFeature.getName());
 	//	asProperty.setIndex(propertyIndex);
 	//	asProperty.setImplementation(implementation);
-	//	asClass.getOwnedProperties().add(asProperty);
+		asClass.getOwnedProperties().add(asProperty);
 		return asProperty;
 	}
 

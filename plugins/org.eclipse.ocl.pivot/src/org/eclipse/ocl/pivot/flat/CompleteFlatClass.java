@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
@@ -175,10 +176,29 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		return completeClass;
 	}
 
-//	@Override
-//	protected @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-//		return completeClass.getEnvironmentFactory();
-//	}
+	@Override
+	protected @Nullable Operation getFragmentOperation(@NonNull FlatFragment flatFragment, @NonNull Operation asOperation) {
+		assert this == flatFragment.derivedFlatClass;
+		String baseOperationName = asOperation.getName();
+		ParametersId baseParametersId = asOperation.getParametersId();
+		Operation bestOperation = null;
+		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
+			for (@NonNull Operation localOperation : PivotUtil.getOwnedOperations(partialClass)) {
+				if (localOperation.getName().equals(baseOperationName) && (localOperation.getParametersId() == baseParametersId)) {
+					if (localOperation.getESObject() != null) {
+						return localOperation;
+					}
+					if (bestOperation == null) {
+						bestOperation = localOperation;
+					}
+					else if ((localOperation.getBodyExpression() != null) && (bestOperation.getBodyExpression() == null)) {
+						bestOperation = localOperation;
+					}
+				}
+			}
+		}
+		return bestOperation;					// null if not known locally, caller must try superfragments.
+	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
@@ -227,16 +247,6 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 				}
 			}
 		}
-	}
-
-	@Override
-	public void initSelfOperations(@NonNull Operation @NonNull [] operations) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void initSelfProperties(@NonNull Property @NonNull [] properties) {
-		throw new UnsupportedOperationException();
 	}
 
 	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {

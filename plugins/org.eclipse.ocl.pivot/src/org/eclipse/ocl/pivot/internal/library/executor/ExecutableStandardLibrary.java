@@ -43,13 +43,9 @@ import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.internal.CollectionTypeImpl;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorElement;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorBagType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorCollectionType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorMapType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorOrderedSetType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorSequenceType;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorSetType;
 import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
@@ -70,7 +66,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
 	 */
-	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable ExecutorCollectionType>>> collectionSpecializations = new /*Weak*/HashMap<>();	// Keys are not singletons
+	private @NonNull Map<@NonNull Type, @NonNull Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable CollectionType>>> collectionSpecializations = new /*Weak*/HashMap<>();	// Keys are not singletons
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each map type.
@@ -142,8 +138,8 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 			upper2 = ValueUtil.UNLIMITED_VALUE;
 		}
 		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower2, upper2);
-		ExecutorCollectionType specializedType = null;
-		Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable ExecutorCollectionType>> map = collectionSpecializations.get(genericType);
+		CollectionType specializedType = null;
+		Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable CollectionType>> map = collectionSpecializations.get(genericType);
 		if (map == null) {
 			map = new WeakHashMap<>();
 			collectionSpecializations.put(genericType, map);
@@ -154,26 +150,37 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		if (specializedType == null) {
 			String name = ClassUtil.nonNullModel(genericType.getName());
 			if (genericType instanceof BagType) {
-				specializedType = new ExecutorBagType(name, genericType, elementType, isNullFree, lower, upper);
-			//	specializedType = new EcoreExecutorBagType(eClassifier, evaluationPackage, typeId,flags, typeParameter);
+			//	specializedType = new ExecutorBagType(name, genericType, elementType, isNullFree, lower, upper);
+				specializedType = PivotUtil.createBagType((BagType)genericType, elementType);
 			}
 			else if (genericType instanceof OrderedSetType) {
-				specializedType = new ExecutorOrderedSetType(name, genericType, elementType, isNullFree, lower, upper);
+			//	specializedType = new ExecutorOrderedSetType(name, genericType, elementType, isNullFree, lower, upper);
+				specializedType = PivotUtil.createOrderedSetType((OrderedSetType)genericType, elementType);
 			}
 			else if (genericType instanceof SequenceType) {
-				specializedType = new ExecutorSequenceType(name, genericType, elementType, isNullFree, lower, upper);
+			//	specializedType = new ExecutorSequenceType(name, genericType, elementType, isNullFree, lower, upper);
+				specializedType = PivotUtil.createSequenceType((SequenceType)genericType, elementType);
 			}
 			else if (genericType instanceof SetType) {
-				specializedType = new ExecutorSetType(name, genericType, elementType, isNullFree, lower, upper);
+			//	specializedType = new ExecutorSetType(name, genericType, elementType, isNullFree, lower, upper);
+				specializedType = PivotUtil.createSetType((SetType)genericType, elementType);
 			}
 			else {
-				specializedType = new ExecutorCollectionType(name, genericType, elementType, isNullFree, lower, upper);
+			//	specializedType = new ExecutorCollectionType(name, genericType, elementType, isNullFree, lower, upper);
+				specializedType = PivotUtil.createCollectionType((CollectionType)genericType, elementType);
+			}
+			specializedType.setIsNullFree(isNullFree);
+			if (lower != null) {
+				specializedType.setLowerValue(lower);
+			}
+			if (upper != null) {
+				specializedType.setUpperValue(upper);
 			}
 			map.put(typeParameters, new WeakReference<>(specializedType));
 		}
 		/*Partial*/FlatModel flatModel = getFlatModel();
 		FlatClass flatClass = flatModel.getFlatClass(genericType);
-		specializedType.setFlatClass(flatClass);
+		((CollectionTypeImpl)specializedType).setFlatClass(flatClass);
 		return specializedType;
 	}
 

@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -89,6 +90,21 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	}
 
 	@Override
+	protected @Nullable Operation getFragmentOperation(@NonNull FlatFragment flatFragment, @NonNull Operation asOperation) {
+		assert this == flatFragment.derivedFlatClass;
+		int index = asOperation.getIndex();
+		if (index >= 0) {
+			@NonNull
+			Operation[] fragmentOperations = flatFragment.basicGetOperations();
+			assert fragmentOperations != null;
+			return fragmentOperations[index];
+		}
+		else {
+			return null;
+		}
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
 		return asClass;
 	}
@@ -145,25 +161,6 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 			}
 		}
 	} */
-
-	@Override
-	public void initSelfOperations(@NonNull Operation @NonNull [] operations) {
-		List<Operation> asOperations = asClass.getOwnedOperations();
-		assert asOperations.size() == 0;
-		for (@NonNull Operation asOperation : operations) {
-		//	asOperation.toString();			// XXX
-			asOperations.add(asOperation);
-		}
-	}
-
-	@Override
-	public void initSelfProperties(@NonNull Property @NonNull [] properties) {
-		List<Property> asProperties = asClass.getOwnedProperties();
-		assert asProperties.size() == 0;
-		for (@NonNull Property asProperty : properties) {
-			asProperties.add(asProperty);
-		}
-	}
 
 	@Override
 	protected void installClassListeners() {

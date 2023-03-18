@@ -610,6 +610,8 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclIsTypeOf() {
 		MyOCL ocl = createOCL();
+		ocl.assertQueryFalse(null, "null.oclIsTypeOf(Set(String))");
+// XXX
 		ocl.assertQueryInvalid(null, "invalid.oclIsTypeOf(OclInvalid)");
 		ocl.assertQueryInvalid(null, "invalid.oclIsTypeOf(OclVoid)");
 		ocl.assertQueryInvalid(null, "invalid.oclIsTypeOf(OclAny)");

@@ -319,6 +319,29 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	/**
+	 * Return the actualOperation that has the same signature as apparentOperation.
+	 */
+	private @NonNull Operation getActualOperation(@NonNull FlatFragment flatFragment, @NonNull Operation apparentOperation) {
+		assert this == flatFragment.derivedFlatClass;
+		Operation localOperation = getFragmentOperation(flatFragment, apparentOperation);
+		if (localOperation == null) {
+			if (this == flatFragment.baseFlatClass) {
+				localOperation = apparentOperation;
+			}
+		}
+		if (localOperation == null) {				// Non-trivial, search up the inheritance tree for an inherited operation
+			Operation bestOverload = flatFragment.baseFlatClass.getBestOverload(this, apparentOperation);
+			if (bestOverload != null) {
+				localOperation = bestOverload;
+			}
+			else {
+				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, this);
+			}
+		}
+		return localOperation;
+	}
+
+	/**
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-adapters excluding this one.
 	 */
 	@Override
@@ -351,7 +374,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				AbstractFlatClass superFlatClass = (AbstractFlatClass)derivedSuperFragment.getBaseFlatClass();
 				FlatFragment superFragment = superFlatClass.getFragment(baseFlatClass);
 				if (superFragment != null) {
-					Operation overload = getLocalOperation(superFragment, apparentOperation);
+					AbstractFlatClass derivedFlatClass2 = (AbstractFlatClass)superFragment.derivedFlatClass;
+					Operation overload = derivedFlatClass2.getFragmentOperation(superFragment, apparentOperation);
 					if (overload != null) {
 						if (bestFlatClass == null) {				// First candidate
 							bestDepth = depth;
@@ -473,6 +497,11 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return fragments[fragmentNumber];
 	}
 
+	/**
+	 * Return the possibly overloaded declaration of asOperation from flatFragment, or null.
+	 */
+	protected abstract @Nullable Operation getFragmentOperation(@NonNull FlatFragment flatFragment, @NonNull Operation asOperation);
+
 	private @NonNull LibraryFeature getImplementation(@NonNull FlatFragment flatFragment, @NonNull Operation apparentOperation) {
 		int index = apparentOperation.getIndex();
 		assert index < 0;
@@ -494,9 +523,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			if (libraryFeature != null) {
 				return libraryFeature;
 			}
-			Operation localOperation = getLocalOperation(flatFragment, apparentOperation);
+			AbstractFlatClass derivedFlatClass = (AbstractFlatClass)flatFragment.derivedFlatClass;
+			Operation localOperation = derivedFlatClass.getFragmentOperation(flatFragment, apparentOperation);
 			if (localOperation == null) {
-				if (flatFragment.derivedFlatClass == flatFragment.baseFlatClass) {
+				if (derivedFlatClass == flatFragment.baseFlatClass) {
 					localOperation = apparentOperation;
 				}
 			}
@@ -504,7 +534,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				libraryFeature = PivotUtilInternal.getImplementation(localOperation);
 			}
 			else {										// Non-trivial, search up the inheritance tree for an inherited operation
-				Operation bestOverload = flatFragment.baseFlatClass.getBestOverload(flatFragment.derivedFlatClass, apparentOperation);
+				Operation bestOverload = flatFragment.baseFlatClass.getBestOverload(derivedFlatClass, apparentOperation);
 				if (bestOverload != null) {
 					libraryFeature = PivotUtilInternal.getImplementation(bestOverload);
 				}
@@ -854,25 +884,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			name2propertyOrProperties = name2propertyOrProperties2 = new HashMap<>();
 			assert fragments != null;
 			for (@NonNull FlatFragment fragment : fragments) {
-				@NonNull Property @Nullable [] fragmentProperties = fragment.getProperties();
-			/*	if (fragmentProperties == null) {
-					List<@NonNull Property> asProperties = ((AbstractFlatClass)fragment.getBaseFlatClass()).computeDirectProperties();
-					fragmentProperties = fragment.basicGetProperties();
-					if (fragmentProperties == null) {			// XXX may recurse
-						fragmentProperties = asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
-						fragment.initProperties(fragmentProperties);
-					}
-				} */
-				for (@NonNull Property property : fragmentProperties) {
+				for (@NonNull Property property : fragment.getProperties()) {
 					addProperty(property);
 				}
 			}
 		}
 	}
-
-	public abstract void initSelfOperations(@NonNull Operation @NonNull [] operations);
-
-	public abstract void initSelfProperties(@NonNull Property @NonNull [] properties);
 
 	protected abstract void installClassListeners();
 
@@ -996,67 +1013,6 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			}
 		}
 		return apparentOperation;	// invoke apparent op for null and invalid
-	}
-
-	/**
-	 * Return the actualOperation that has the same signature as apparentOperation.
-	 * @param fragment
-	 */
-	public static @NonNull Operation getActualOperation(@NonNull FlatFragment fragment, @NonNull Operation apparentOperation) {
-		Operation localOperation = getLocalOperation(fragment, apparentOperation);
-		if (localOperation == null) {
-			if (fragment.derivedFlatClass == fragment.baseFlatClass) {
-				localOperation = apparentOperation;
-			}
-		}
-		if (localOperation == null) {				// Non-trivial, search up the inheritance tree for an inherited operation
-			Operation bestOverload = fragment.baseFlatClass.getBestOverload(fragment.derivedFlatClass, apparentOperation);
-			if (bestOverload != null) {
-				localOperation = bestOverload;
-			}
-			else {
-				throw new InvalidValueException(PivotMessages.AmbiguousOperation, apparentOperation, fragment.derivedFlatClass);
-			}
-		}
-		return localOperation;
-	}
-
-//	@Override
-	public static @Nullable Operation getLocalOperation(@NonNull FlatFragment flatFragment, @NonNull Operation baseOperation) {
-		if (flatFragment.derivedFlatClass instanceof CompleteFlatClass) {		// XXX move to FlatClass
-			CompleteFlatClass completeFlatClass = (CompleteFlatClass)flatFragment.derivedFlatClass;
-			String baseOperationName = baseOperation.getName();
-			ParametersId baseParametersId = baseOperation.getParametersId();
-			Operation bestOperation = null;
-			for (org.eclipse.ocl.pivot.Class partialClass : completeFlatClass.getCompleteClass().getPartialClasses()) {
-				for (Operation localOperation : partialClass.getOwnedOperations()) {
-					if (localOperation.getName().equals(baseOperationName) && (localOperation.getParametersId() == baseParametersId)) {
-						if (localOperation.getESObject() != null) {
-							return localOperation;
-						}
-						if (bestOperation == null) {
-							bestOperation = localOperation;
-						}
-						else if ((localOperation.getBodyExpression() != null) && (bestOperation.getBodyExpression() == null)) {
-							bestOperation = localOperation;
-						}
-					}
-				}
-			}
-			return bestOperation;					// null if not known locally, caller must try superfragments.
-		}
-		else {
-			int index = baseOperation.getIndex();
-			if (index >= 0) {
-				@NonNull
-				Operation[] fragmentOperations = flatFragment.basicGetOperations();
-				assert fragmentOperations != null;
-				return fragmentOperations[index];
-			}
-			else {
-				return null;
-			}
-		}
 	}
 
 	@Override
