@@ -895,13 +895,24 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		s.append(" ");
 		asClass.accept(emitLiteralVisitor);
-		s.append(" = LIBRARY.createClass(");
-		String qualifiedEcoreLiteralName = genModelHelper.getFullyQualifiedEcoreLiteralName(eClass);
-		int lastIndex = qualifiedEcoreLiteralName.lastIndexOf(".");
-		int lastLastIndex = qualifiedEcoreLiteralName.substring(0, lastIndex).lastIndexOf(".",lastIndex);
-		s.appendClassReference(null, qualifiedEcoreLiteralName.substring(0, lastLastIndex));
-		s.append(qualifiedEcoreLiteralName.substring(lastLastIndex));
-		s.append(", ");
+		s.append(" = LIBRARY.create");
+		if (asClass instanceof Enumeration) {
+			s.append("Enumeration");
+		}
+		else {
+			s.append("Class");
+		}
+		s.append("(");
+		if (asClass instanceof Enumeration) {
+		}
+		else {
+			String qualifiedEcoreLiteralName = genModelHelper.getFullyQualifiedEcoreLiteralName(eClass);
+			int lastIndex = qualifiedEcoreLiteralName.lastIndexOf(".");
+			int lastLastIndex = qualifiedEcoreLiteralName.substring(0, lastIndex).lastIndexOf(".",lastIndex);
+			s.appendClassReference(null, qualifiedEcoreLiteralName.substring(0, lastLastIndex));
+			s.append(qualifiedEcoreLiteralName.substring(lastLastIndex));
+			s.append(", ");
+		}
 	/*	if (!hasEcore(asClass) || (asClass instanceof AnyType) || (asClass instanceof CollectionType) || (asClass instanceof VoidType) || (asClass instanceof InvalidType)) {
 			if (isBuiltInType(asClass)) {
 				s.appendClassReference(null, TypeId.class);
@@ -917,25 +928,30 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		else { */
 			s.append(genModelHelper.getQualifiedEcoreLiteralName(eClassifier));
 	//	}
-		s.append(", PACKAGE, ");
-		if (isBuiltInType(asClass)) {
-			s.appendClassReference(null, TypeId.class);
-			s.append(".");
-			s.append(genModelHelper.getEcoreLiteralName(eClassifier));
+		s.append(", PACKAGE");
+		if (asClass instanceof Enumeration) {
 		}
 		else {
-			s.append("null");
-		}
-		s.append(", ");
-		appendTypeFlags(asClass);
-		if (asClass.getOwnedSignature() != null) {
-			for (TemplateParameter asTemplateParameter : asClass.getOwnedSignature().getOwnedParameters()) {
-				if (asTemplateParameter != null) {
-					s.append(", ");
-					asTemplateParameter.accept(emitScopedLiteralVisitor);
-				//	s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
-				//	s.append(".");
-				//	s.append(getTemplateParameterName(asTemplateParameter));
+			s.append(", ");
+			if (isBuiltInType(asClass)) {
+				s.appendClassReference(null, TypeId.class);
+				s.append(".");
+				s.append(genModelHelper.getEcoreLiteralName(eClassifier));
+				s.append(", ");
+			}
+			else {
+				s.append("null, ");
+			}
+			appendTypeFlags(asClass);
+			if (asClass.getOwnedSignature() != null) {
+				for (TemplateParameter asTemplateParameter : asClass.getOwnedSignature().getOwnedParameters()) {
+					if (asTemplateParameter != null) {
+						s.append(", ");
+						asTemplateParameter.accept(emitScopedLiteralVisitor);
+					//	s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
+					//	s.append(".");
+					//	s.append(getTemplateParameterName(asTemplateParameter));
+					}
 				}
 			}
 		}
@@ -1227,6 +1243,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append(", ");
 			s.appendClassReference(null, IdManager.class);
 			s.append(".METAMODEL");
+		}
+		else {
+			s.append(", null");
 		}
 		s.append(");\n");
 

@@ -551,7 +551,6 @@ public final class IdManager
 		return getTemplateParameterId(index);
 	}
 
-	@Deprecated /* @deprecated change to private and probably inlined */
 	public static @NonNull TemplateParameterId getTemplateParameterId(int index) {
 		assert index >= 0;
 		if (index >= templateParameterNormalizedIds.size()) {

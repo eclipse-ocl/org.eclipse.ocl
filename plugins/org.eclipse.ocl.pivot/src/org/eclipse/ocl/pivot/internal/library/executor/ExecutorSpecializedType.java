@@ -26,11 +26,6 @@ public class ExecutorSpecializedType extends AbstractExecutorClass
 {
 	protected final @NonNull TypeId typeId;
 
-	@Deprecated			/* Let unspecializedTypeId define the name */
-	public ExecutorSpecializedType(@NonNull String name, @NonNull Type... typeArguments) {
-		this(TypeId.MAP_NAME.equals(name) ? IdManager.getMapTypeId(name) : IdManager.getCollectionTypeId(name), typeArguments);
-	}
-
 	/**
 	 * @since 1.18
 	 */
