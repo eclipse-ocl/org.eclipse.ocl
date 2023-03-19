@@ -144,7 +144,6 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <configuration>
-          <includePackedArtifacts>true</includePackedArtifacts>
           <resolver>p2</resolver>
           <!-- See Bug 541797, org.eclipse.equinox.http.jetty seemed to need JavaSE-1.8 to be explicit.
            Since moving to a Java 11-build environment, it no longer appears to be necessary. -->
