@@ -15,13 +15,11 @@ import java.util.Map;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
@@ -69,8 +67,8 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		if (PARTIAL_PACKAGES.isActive()) {
 			PARTIAL_PACKAGES.println("Do-didAdd " + this + " " + partialPackage);
 		}
-		Model partialModel = PivotUtil.getContainingModel(partialPackage);
-		assert (partialModel == null) || getCompleteModel().getPartialModels().contains(partialModel);		// Null during Ecore2AS
+	//	Model partialModel = PivotUtil.getContainingModel(partialPackage);
+	//	assert (partialModel == null) || getCompleteModel().getPartialModels().contains(partialModel);		// Null during Ecore2AS, not true for QVTd tx chain
 		((PackageImpl)partialPackage).addPackageListener(this);
 		getCompletePackage().didAddPartialPackage(partialPackage);
 		for (org.eclipse.ocl.pivot.Package nestedPackage : partialPackage.getOwnedPackages()) {
