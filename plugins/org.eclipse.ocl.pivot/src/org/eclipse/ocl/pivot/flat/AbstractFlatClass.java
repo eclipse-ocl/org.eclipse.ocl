@@ -1018,8 +1018,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	@Override
 	public @NonNull LibraryFeature lookupImplementation(@NonNull Operation apparentOperation) {
 		StandardLibrary standardLibrary = getStandardLibrary();
-	//	getDepth();
-		FlatClass apparentFlatClass = apparentOperation.getFlatClass(standardLibrary);
+		FlatClass apparentFlatClass = apparentOperation.getFlatClass(standardLibrary);		// Base of the operation hierarchy
 		if (apparentFlatClass != null) {
 			if (indexes == null) {
 				initFragments();

@@ -190,18 +190,6 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asProperty;
 	}
 
-	@Deprecated
-	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage) {
-		assert ePackage != null;
-		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
-		asPackage.setName(ePackage.getName());
-		asPackage.setNsPrefix(ePackage.getNsPrefix());
-		asPackage.setURI(ePackage.getNsURI());
-		asPackage.setPackageId(IdManager.getPackageId(ePackage));
-		asPackage.setESObject(ePackage);
-		return asPackage;
-	}
-
 	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage, @Nullable PackageId packageId) {
 		assert ePackage != null;
 		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();

@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -707,9 +708,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			CompletePackageInternal primitiveCompletePackage = ownedCompleteModel.getPrimitiveCompletePackage();
 			return primitiveCompletePackage.getCompleteClass((PrimitiveType)pivotType);
 		}
-		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getUnspecializedElement() != null)) {
+		else if ((pivotType instanceof IterableType) && (((IterableType)pivotType).getUnspecializedElement() != null)) {
 			CompletePackageInternal orphanCompletePackage = ownedCompleteModel.getOrphanCompletePackage();
-			return orphanCompletePackage.getCompleteClass((CollectionType)pivotType);
+			return orphanCompletePackage.getCompleteClass((IterableType)pivotType);
 		}
 		else if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
 			org.eclipse.ocl.pivot.Package pivotPackage = ((org.eclipse.ocl.pivot.Class)pivotType).getOwningPackage();

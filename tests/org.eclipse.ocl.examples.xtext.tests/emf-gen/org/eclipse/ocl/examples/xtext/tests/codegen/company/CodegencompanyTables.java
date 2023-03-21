@@ -80,7 +80,7 @@ public class CodegencompanyTables extends AbstractTables
 	/**
 	 *	The package descriptor for the package.
 	 */
-	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(CodegencompanyPackage.eINSTANCE);
+	public static final org.eclipse.ocl.pivot.@NonNull Package PACKAGE = LIBRARY.createPackage(CodegencompanyPackage.eINSTANCE, null);
 
 	/**
 	 *	Constants used by auto-generated code.
