@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
-import org.eclipse.ocl.pivot.internal.library.executor.ExecutableStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -183,7 +182,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 
 	@Override
 	public synchronized @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return ((ExecutableStandardLibrary)standardLibrary).getTupleType(typeId, this);
+		return ((ExecutorStandardLibrary)standardLibrary).getTupleType(typeId, this);
 	}
 
 	public @NonNull TupleType getTupleType(@NonNull TypedElement @NonNull ... parts) {
