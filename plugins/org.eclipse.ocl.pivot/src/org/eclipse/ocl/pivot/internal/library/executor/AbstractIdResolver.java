@@ -87,7 +87,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorTuplePart;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
@@ -1202,7 +1201,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		TypedElement tupleProperty = weakGet(typeMap, type);
 		if (tupleProperty == null) {
-			tupleProperty = new ExecutorTuplePart(type, internedName);
+			tupleProperty = PivotUtil.createProperty(internedName, type);
 			typeMap.put(type, new WeakReference<>(tupleProperty));
 		}
 		return tupleProperty;
