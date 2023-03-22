@@ -486,46 +486,10 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
-			s.append("LIBRARY.createSpecializedType(");
-			String name = PivotUtil.getName(type);
-			String typeIdName = null;
-			if (TypeId.BAG_NAME.equals(name)) {
-				typeIdName = "BAG";
-			}
-			else if (TypeId.COLLECTION_NAME.equals(name)) {
-				typeIdName = "COLLECTION";
-			}
-			else if (TypeId.ORDERED_COLLECTION_NAME.equals(name)) {
-				typeIdName = "ORDERED_COLLECTION";
-			}
-			else if (TypeId.ORDERED_SET_NAME.equals(name)) {
-				typeIdName = "ORDERED_SET";
-			}
-			else if (TypeId.SEQUENCE_NAME.equals(name)) {
-				typeIdName = "SEQUENCE";
-			}
-			else if (TypeId.SET_NAME.equals(name)) {
-				typeIdName = "SET";
-			}
-			else if (TypeId.UNIQUE_COLLECTION_NAME.equals(name)) {
-				typeIdName = "UNIQUE_COLLECTION";
-			}
-			if (typeIdName != null) {
-				s.appendClassReference(null, TypeId.class);
-				s.append(".");
-				s.append(typeIdName);
-			}
-			else {
-				s.appendString(name);		// Never happens
-			}
+			s.append("LIBRARY.getCollectionType(");
+			emitQualifiedLiteralVisitor.visit(type);
 			s.append(", ");
 			type.getElementType().accept(this);
-		//	s.append(", ");
-		//	standardLibrary.getBooleanType().accept(this);
-		//	s.append(", ");
-		//	standardLibrary.getIntegerType().accept(this);
-		//	s.append(", ");
-		//	standardLibrary.getUnlimitedNaturalType().accept(this);
 			s.append(")");
 			return null;
 		}
@@ -558,28 +522,12 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType type) {
-			s.append("LIBRARY.createSpecializedType(");
-			String name = PivotUtil.getName(type);
-			String typeIdName = null;
-			if (TypeId.MAP_NAME.equals(name)) {
-				typeIdName = "MAP";
-			}
-			if (typeIdName != null) {
-				s.appendClassReference(null, TypeId.class);
-				s.append(".");
-				s.append(typeIdName);
-			}
-			else {
-				s.appendString(name);		// Never happens
-			}
+			s.append("LIBRARY.getMapType(");
+			emitQualifiedLiteralVisitor.visit(type);
 			s.append(", ");
 			type.getKeyType().accept(this);
-		//	s.append(", ");
-		//	standardLibrary.getBooleanType().accept(this);
 			s.append(", ");
 			type.getValueType().accept(this);
-		//	s.append(", ");
-		//	standardLibrary.getBooleanType().accept(this);
 			s.append(")");
 			return null;
 		}
@@ -652,7 +600,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
 			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(type);
-			appendTablesPackageQualification(type);
+			appendTablesPackageQualification(unspecializedType);
 			appendTablesSubackageQualification(AbstractGenModelHelper.TYPES_PACKAGE_NAME);
 			s.append("_");
 			s.appendAndEncodeName(unspecializedType);
@@ -684,7 +632,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType asMapType) {
 			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asMapType);
-			appendTablesPackageQualification(asMapType);
+			appendTablesPackageQualification(unspecializedType);
 			appendTablesSubackageQualification("Types");
 			s.append("_");
 			s.appendAndEncodeName(unspecializedType);

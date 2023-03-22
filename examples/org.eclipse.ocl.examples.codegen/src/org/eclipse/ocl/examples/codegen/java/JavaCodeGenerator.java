@@ -134,7 +134,7 @@ public abstract class JavaCodeGenerator extends AbstractCodeGenerator
 	//	org.eclipse.ocl.pivot.internal.library.executor.ExecutorPropertyWithImplementation.class,
 		org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleIterationManager.class,
 		org.eclipse.ocl.pivot.internal.library.executor.ExecutorSingleMapIterationManager.class,
-		org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType.class,
+	//	org.eclipse.ocl.pivot.internal.library.executor.ExecutorSpecializedType.class,
 		org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary.class,
 	//	org.eclipse.ocl.pivot.internal.library.executor.ExecutorType.class,
 		org.eclipse.ocl.pivot.internal.library.executor.ExecutorTypeParameter.class,

@@ -17,9 +17,13 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
@@ -30,9 +34,14 @@ import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ClassImpl;
+import org.eclipse.ocl.pivot.internal.EnumerationImpl;
+import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutableStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
@@ -59,12 +68,79 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		String nsURI = ePackage.getNsURI();
 		org.eclipse.ocl.pivot.Package asPackage = nsURI2package.get(nsURI);
 		if (asPackage == null) {
-			PackageId packageId = IdManager.getPackageId(ePackage);
-			asPackage = new EcoreReflectivePackage(ePackage, this, packageId);
+			asPackage = createPackage(ePackage);			// XXX Re-use avoid duplicating Ecore2AS
+			PackageId packageId = asPackage.getPackageId();
 			nsURI2package.put(nsURI, asPackage);
 			if (packageId instanceof RootPackageId) {
 				roots2package.put(((RootPackageId)packageId).getName(), asPackage);
 			}
+		}
+		return asPackage;
+	}
+
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> computeClasses(org.eclipse.ocl.pivot.@NonNull Package evaluationPackage, @NonNull EPackage ePackage) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = new ArrayList<>();
+		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
+			if (eClassifier != null) {
+				ClassImpl asClass;
+				if (eClassifier instanceof EEnum) {
+					EnumerationImpl asEnumeration = (EnumerationImpl) PivotFactory.eINSTANCE.createEnumeration();
+					for (@NonNull EnumerationLiteral asEnumerationLiteral : computeEnumerationLiterals((EEnum)eClassifier)) {
+						asEnumeration.getOwnedLiterals().add(asEnumerationLiteral);
+					}
+					asClass = asEnumeration;
+				}
+				else {
+					asClass = (ClassImpl) PivotFactory.eINSTANCE.createClass();
+				}
+				asClass.setName(eClassifier.getName());
+				asClass.setESObject(eClassifier);
+				EcoreFlatModel flatModel = (EcoreFlatModel)getStandardLibrary().getFlatModel();
+				EcoreFlatClass flatClass = flatModel.getEcoreFlatClass(asClass);
+				asClass.setFlatClass(flatClass);
+				asClasses.add(asClass);
+			}
+		}
+		return asClasses;
+	}
+
+	protected @NonNull Iterable<@NonNull EnumerationLiteral> computeEnumerationLiterals(@NonNull EEnum eEnum) {
+		List<@NonNull EnumerationLiteral> asEnumerationLiterals = new ArrayList<>();
+		for (EEnumLiteral eEnumLiteral : eEnum.getELiterals()) {
+			if (eEnumLiteral != null) {
+				EnumerationLiteralImpl asEnumerationLiteral = (EnumerationLiteralImpl)PivotFactory.eINSTANCE.createEnumerationLiteral();
+				asEnumerationLiteral.setName(eEnumLiteral.getName());
+				asEnumerationLiteral.setESObject(eEnumLiteral);
+				asEnumerationLiterals.add(asEnumerationLiteral);
+			}
+		}
+		return asEnumerationLiterals;
+	}
+
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> computeNestedPackages(@NonNull EPackage ePackage) {
+		List<org.eclipse.ocl.pivot.@NonNull Package> nestedPackages = new ArrayList<>();
+		for (EPackage eSubPackage : ePackage.getESubpackages()) {
+			if (eSubPackage != null) {
+				org.eclipse.ocl.pivot.Package asPackage = createPackage(eSubPackage);
+				nestedPackages.add(asPackage);
+			}
+		}
+		return nestedPackages;
+	}
+
+	protected org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull EPackage ePackage) {
+		PackageId packageId = IdManager.getPackageId(ePackage);
+		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
+		asPackage.setName(ClassUtil.nonNullEMF(ePackage.getName()));
+		asPackage.setNsPrefix(ePackage.getNsPrefix());
+		asPackage.setURI(ePackage.getNsURI());
+		asPackage.setPackageId(packageId);
+		asPackage.setESObject(ePackage);
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : computeClasses(asPackage, ePackage)) {
+			asPackage.getOwnedClasses().add(asClass);
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Package asSubPackage : computeNestedPackages(ePackage)) {
+			asPackage.getOwnedPackages().add(asSubPackage);
 		}
 		return asPackage;
 	}

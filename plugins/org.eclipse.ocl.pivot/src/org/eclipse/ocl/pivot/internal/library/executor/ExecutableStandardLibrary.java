@@ -126,6 +126,10 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		return OCLstdlibTables.Types._Collection;
 	}
 
+	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType) {
+		return getCollectionType(genericType, elementType, false, null, null);
+	}
+
 	@Override
 	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(genericType, elementType, false, lower, upper);

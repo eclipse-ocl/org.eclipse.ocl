@@ -175,7 +175,7 @@ public class LookupTables extends AbstractTables
 			Fragments.init();
 		}
 
-		public static final @NonNull ParameterTypes _Collection__0_NE__ = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.COLLECTION, TypeParameters._0_NE));
+		public static final @NonNull ParameterTypes _Collection__0_NE__ = TypeUtil.createParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._Collection, TypeParameters._0_NE));
 		public static final @NonNull ParameterTypes _NamedElement = TypeUtil.createParameterTypes(PivotTables.Types._NamedElement);
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ParameterTypes _Collection__LookupEnvironment_addElements_NE__ = _Collection__0_NE__;

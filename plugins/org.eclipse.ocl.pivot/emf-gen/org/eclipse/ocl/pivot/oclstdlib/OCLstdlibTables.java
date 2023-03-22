@@ -429,11 +429,11 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ParameterTypes _1_TT = TypeUtil.createParameterTypes(TypeParameters._1_TT);
 		public static final @NonNull ParameterTypes _1_V = TypeUtil.createParameterTypes(TypeParameters._1_V);
 		public static final @NonNull ParameterTypes _Boolean = TypeUtil.createParameterTypes(OCLstdlibTables.Types._Boolean);
-		public static final @NonNull ParameterTypes _Collection = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.COLLECTION, TypeParameters._0_T));
-		public static final @NonNull ParameterTypes _Collection__0_K__ = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.COLLECTION, TypeParameters._0_K));
-		public static final @NonNull ParameterTypes _Collection__0_T__ = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.COLLECTION, TypeParameters._0_T));
-		public static final @NonNull ParameterTypes _Collection__1_T2__ = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.COLLECTION, TypeParameters._1_T2));
-		public static final @NonNull ParameterTypes _Collection__2_K2__ = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.COLLECTION, TypeParameters._2_K2));
+		public static final @NonNull ParameterTypes _Collection = TypeUtil.createParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._Collection, TypeParameters._0_T));
+		public static final @NonNull ParameterTypes _Collection__0_K__ = TypeUtil.createParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._Collection, TypeParameters._0_K));
+		public static final @NonNull ParameterTypes _Collection__0_T__ = TypeUtil.createParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._Collection, TypeParameters._0_T));
+		public static final @NonNull ParameterTypes _Collection__1_T2__ = TypeUtil.createParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._Collection, TypeParameters._1_T2));
+		public static final @NonNull ParameterTypes _Collection__2_K2__ = TypeUtil.createParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._Collection, TypeParameters._2_K2));
 		public static final @NonNull ParameterTypes _Integer = TypeUtil.createParameterTypes(OCLstdlibTables.Types._Integer);
 		public static final @NonNull ParameterTypes _Integer___0_T = TypeUtil.createParameterTypes(OCLstdlibTables.Types._Integer, TypeParameters._0_T);
 		public static final @NonNull ParameterTypes _Integer___Integer = TypeUtil.createParameterTypes(OCLstdlibTables.Types._Integer, OCLstdlibTables.Types._Integer);
@@ -449,18 +449,18 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ParameterTypes _Lambda_0_T_OrderedSet__0_T__ = TypeUtil.createParameterTypes(LIBRARY.createLambdaType("Lambda", TypeParameters._0_T));
 		public static final @NonNull ParameterTypes _Lambda_0_T_Set = TypeUtil.createParameterTypes(LIBRARY.createLambdaType("Lambda", TypeParameters._0_T));
 		public static final @NonNull ParameterTypes _Lambda_0_T_Set__0_T__ = TypeUtil.createParameterTypes(LIBRARY.createLambdaType("Lambda", TypeParameters._0_T));
-		public static final @NonNull ParameterTypes _Map__2_K2_3_V2__ = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.MAP, TypeParameters._2_K2, TypeParameters._3_V2));
+		public static final @NonNull ParameterTypes _Map__2_K2_3_V2__ = TypeUtil.createParameterTypes(LIBRARY.getMapType(OCLstdlibTables.Types._Map, TypeParameters._2_K2, TypeParameters._3_V2));
 		public static final @NonNull ParameterTypes _OclSelf = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclSelf);
 		public static final @NonNull ParameterTypes _OclState = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclState);
 		public static final @NonNull ParameterTypes _OclStereotype = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclStereotype);
 		public static final @NonNull ParameterTypes _OclType = TypeUtil.createParameterTypes(OCLstdlibTables.Types._OclType);
-		public static final @NonNull ParameterTypes _OrderedCollection__0_T__ = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.ORDERED_COLLECTION, TypeParameters._0_T));
+		public static final @NonNull ParameterTypes _OrderedCollection__0_T__ = TypeUtil.createParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._OrderedCollection, TypeParameters._0_T));
 		public static final @NonNull ParameterTypes _String = TypeUtil.createParameterTypes(OCLstdlibTables.Types._String);
 		public static final @NonNull ParameterTypes _String___Boolean = TypeUtil.createParameterTypes(OCLstdlibTables.Types._String, OCLstdlibTables.Types._Boolean);
 		public static final @NonNull ParameterTypes _String___String = TypeUtil.createParameterTypes(OCLstdlibTables.Types._String, OCLstdlibTables.Types._String);
-		public static final @NonNull ParameterTypes _UniqueCollection = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.UNIQUE_COLLECTION, TypeParameters._0_T));
-		public static final @NonNull ParameterTypes _UniqueCollection__0_T__ = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.UNIQUE_COLLECTION, TypeParameters._0_T));
-		public static final @NonNull ParameterTypes _UniqueCollection__OclAny__ = TypeUtil.createParameterTypes(LIBRARY.createSpecializedType(TypeId.UNIQUE_COLLECTION, OCLstdlibTables.Types._OclAny));
+		public static final @NonNull ParameterTypes _UniqueCollection = TypeUtil.createParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._UniqueCollection, TypeParameters._0_T));
+		public static final @NonNull ParameterTypes _UniqueCollection__0_T__ = TypeUtil.createParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._UniqueCollection, TypeParameters._0_T));
+		public static final @NonNull ParameterTypes _UniqueCollection__OclAny__ = TypeUtil.createParameterTypes(LIBRARY.getCollectionType(OCLstdlibTables.Types._UniqueCollection, OCLstdlibTables.Types._OclAny));
 		@Deprecated /* @deprecated use normalized name */
 		public static final @NonNull ParameterTypes _Bag_T = _0_T;
 		@Deprecated /* @deprecated use normalized name */

@@ -224,10 +224,6 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 		return asProperty;
 	}
 
-	public @NonNull Type createSpecializedType(@NonNull TypeId unspecializedTypeId, @NonNull Type... typeArguments) {
-		return new ExecutorSpecializedType(unspecializedTypeId, typeArguments);
-	}
-
 	public @NonNull TemplateParameter createTemplateParameter(int index, @NonNull String name) {
 	//	ExecutorTypeParameter executorTypeParameter = new ExecutorTypeParameter(index, name);
 		TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
