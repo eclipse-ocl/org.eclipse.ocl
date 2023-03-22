@@ -55,6 +55,7 @@ import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.ParameterImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.TemplateParameterImpl;
+import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -237,6 +238,22 @@ public class ExecutorStandardLibrary extends ExecutableStandardLibrary
 	//	FlatClass flatClass = flatModel.getFlatClass(executorTypeParameter);
 	//	executorTypeParameter.setFlatClass(flatClass);
 		return asTemplateParameter;
+	}
+
+	public @NonNull Property createTuplePart(@NonNull String name, @NonNull Type type) {
+		PropertyImpl asTuplePart = (PropertyImpl)PivotFactory.eINSTANCE.createProperty();
+		asTuplePart.setName(name);
+		asTuplePart.setType(type);
+		return asTuplePart;
+	}
+
+	public @NonNull Type createTupleType(@NonNull String name, @NonNull Property... parts) {
+		TupleTypeImpl asTupleType = (TupleTypeImpl)PivotFactory.eINSTANCE.createTupleType();
+		asTupleType.setName(name);
+		for (@NonNull Property part : parts) {
+			asTupleType.getOwnedProperties().add(part);
+		}
+		return asTupleType;
 	}
 
 	@Override

@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
@@ -587,14 +586,15 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitTupleType(@NonNull TupleType tupleType) {
-			s.append("new ");
-			s.appendClassReference(null, ExecutorTupleType.class);
-			s.append("(");
+			s.append("LIBRARY.createTupleType(");
 			s.appendString(ClassUtil.nonNullModel(tupleType.getName()));
-			s.append(", ");
 			for (Property part : tupleType.getOwnedProperties()) {
 				s.append(", ");
+				s.append("LIBRARY.createTuplePart(");
+				s.appendString(ClassUtil.nonNullModel(part.getName()));
+				s.append(", ");
 				part.getType().accept(this);
+				s.append(")");
 			}
 			s.append(")");
 			return null;

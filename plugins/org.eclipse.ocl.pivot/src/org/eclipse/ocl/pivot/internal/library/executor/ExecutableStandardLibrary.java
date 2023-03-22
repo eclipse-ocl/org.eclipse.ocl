@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -40,12 +41,14 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatModel;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
+import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.CollectionTypeImpl;
+import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorElement;
-import org.eclipse.ocl.pivot.internal.executor.ExecutorTupleType;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
@@ -508,7 +511,7 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 		throw new UnsupportedOperationException();
 	}
 
-	public synchronized @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
+	public synchronized @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId, @NonNull IdResolver idResolver) {
 		WeakReference<@NonNull TupleType> ref = tupleTypeMap.get(typeId);
 		if (ref != null) {
 			TupleType domainTupleType = ref.get();
@@ -516,9 +519,18 @@ public abstract class ExecutableStandardLibrary extends AbstractExecutorElement 
 				return domainTupleType;
 			}
 		}
-		TupleType domainTupleType = new ExecutorTupleType(typeId);
-		tupleTypeMap.put(typeId, new WeakReference<>(domainTupleType));
-		return domainTupleType;
+		TupleType tupleType = new TupleTypeImpl(typeId);
+		@NonNull TuplePartId[] partIds = typeId.getPartIds();
+		List<Property> ownedAttributes = tupleType.getOwnedProperties();
+		for (@NonNull TuplePartId partId : partIds) {
+			Type partType = idResolver.getType(partId.getTypeId());
+		//	Type partType2 = metamodelManager.getPrimaryType(partType);
+			Property property = PivotUtil.createProperty(NameUtil.getSafeName(partId), partType);
+			ownedAttributes.add(property);
+		}
+	//	TupleType domainTupleType = new ExecutorTupleType(typeId);
+	//	tupleTypeMap.put(typeId, new WeakReference<>(domainTupleType));
+		return tupleType;
 	}
 
 	@Override
