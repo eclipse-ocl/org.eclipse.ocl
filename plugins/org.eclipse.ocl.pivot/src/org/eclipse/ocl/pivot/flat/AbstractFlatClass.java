@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.JavaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -32,7 +33,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
 import org.eclipse.ocl.pivot.internal.complete.PartialOperations;
 import org.eclipse.ocl.pivot.internal.complete.PartialProperties;
-import org.eclipse.ocl.pivot.internal.library.executor.JavaType;
+//import org.eclipse.ocl.pivot.internal.library.executor.JavaType;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -58,9 +59,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
 
 	public static int computeFlags(@NonNull Type asType) {
-		if (asType instanceof JavaType) {
-			return 0;			// XXX Avoid UOE from getTypeId().
-		}
+		assert !(asType instanceof JavaType);
+//			return 0;			// XXX Avoid UOE from getTypeId().
+//		}
 		int flags = 0;
 		if (asType instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)asType;

@@ -66,6 +66,7 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.JavaType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LetExp;
@@ -467,6 +468,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseIteratorVariable(IteratorVariable object)
 			{
 				return createIteratorVariableAdapter();
+			}
+			@Override
+			public Adapter caseJavaType(JavaType object)
+			{
+				return createJavaTypeAdapter();
 			}
 			@Override
 			public Adapter caseLambdaType(LambdaType object)
@@ -1436,6 +1442,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createIteratorVariableAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.JavaType <em>Java Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.JavaType
+	 * @generated
+	 */
+	public Adapter createJavaTypeAdapter()
 	{
 		return null;
 	}

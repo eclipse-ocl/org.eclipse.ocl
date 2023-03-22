@@ -343,6 +343,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _Iteration = createClass(PivotPackage.Literals.ITERATION);
 		private final @NonNull Class _IteratorExp = createClass(PivotPackage.Literals.ITERATOR_EXP);
 		private final @NonNull Class _IteratorVariable = createClass(PivotPackage.Literals.ITERATOR_VARIABLE);
+		private final @NonNull DataType _JavaClass = createDataType(PivotPackage.Literals.JAVA_CLASS);
+		private final @NonNull Class _JavaType = createClass(PivotPackage.Literals.JAVA_TYPE);
 		private final @NonNull Class _LambdaType = createClass(PivotPackage.Literals.LAMBDA_TYPE);
 		private final @NonNull Class _LanguageExpression = createClass(PivotPackage.Literals.LANGUAGE_EXPRESSION);
 		private final @NonNull Class _LetExp = createClass(PivotPackage.Literals.LET_EXP);
@@ -909,6 +911,14 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _IteratorVariable;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Variable);
+			ownedClasses.add(type);
+			type = _JavaClass;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type);
+			type = _JavaType;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Class);
 			ownedClasses.add(type);
 			type = _LambdaType;
 			superClasses = type.getSuperClasses();
@@ -2536,6 +2546,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Iteration_ownedIterators = createProperty(PivotPackage.Literals.ITERATION__OWNED_ITERATORS, _OrderedSet_Parameter_T);
 		private final @NonNull Property pr_Iteration_LoopExp_referredIteration = createProperty("LoopExp", _Bag_LoopExp_F);
 		private final @NonNull Property pr_IteratorVariable_LoopExp_ownedCoIterators = createProperty("LoopExp", _LoopExp);
+		private final @NonNull Property pr_JavaType_javaClass = createProperty(PivotPackage.Literals.JAVA_TYPE__JAVA_CLASS, _JavaClass);
 		private final @NonNull Property pr_LambdaType_contextType = createProperty(PivotPackage.Literals.LAMBDA_TYPE__CONTEXT_TYPE, _Type);
 		private final @NonNull Property pr_LambdaType_parameterType = createProperty(PivotPackage.Literals.LAMBDA_TYPE__PARAMETER_TYPE, _Sequence_Type_T);
 		private final @NonNull Property pr_LambdaType_resultType = createProperty(PivotPackage.Literals.LAMBDA_TYPE__RESULT_TYPE, _Type);
@@ -3386,6 +3397,10 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_LoopExp_ownedCoIterators);
+
+			ownedProperties = _JavaType.getOwnedProperties();
+			ownedProperties.add(property = pr_JavaType_javaClass);
+			property.setIsResolveProxies(true);
 
 			ownedProperties = _LambdaType.getOwnedProperties();
 			ownedProperties.add(property = pr_LambdaType_contextType);
@@ -4827,6 +4842,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_InstanceSpecification_classes, "The Classifier or Classifiers of the represented instance. If multiple Classifiers are specified, the instance is classified by all of them.");
 			installComment(pr_InstanceSpecification_ownedSlots, "A Slot giving the value or values of a StructuralFeature of the instance. An InstanceSpecification can have one Slot per StructuralFeature of its Classifiers, including inherited features. It is not necessary to model a Slot for every StructuralFeature, in which case the InstanceSpecification is a partial description.");
 			installComment(pr_InstanceSpecification_ownedSpecification, "A specification of how to compute, derive, or construct the instance.");
+			installComment(_JavaType, "JavaType supports the use of a Java class as part of a foreign operation or property call.");
 			installComment(pr_MapType_entryClass, "A type for an entry that may allow an external syntax serialization as a set-of-entryClass.");
 			installComment(_Model, "A model captures a view of a physical system. It is an abstraction of the physical system, with a certain purpose. This purpose determines what is to be included in the model and what is irrelevant. Thus the model completely describes those aspects of the physical system that are relevant to the purpose of the model, at the appropriate level of detail.");
 			installComment(_NamedElement, "A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression.");

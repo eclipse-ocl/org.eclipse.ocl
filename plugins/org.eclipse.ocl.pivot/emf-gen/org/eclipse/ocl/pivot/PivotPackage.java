@@ -1440,6 +1440,27 @@ extends EPackage
 	EOperation getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.JavaType <em>Java Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Java Type</em>'.
+	 * @see org.eclipse.ocl.pivot.JavaType
+	 * @generated
+	 */
+	EClass getJavaType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.JavaType#getJavaClass <em>Java Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Java Class</em>'.
+	 * @see org.eclipse.ocl.pivot.JavaType#getJavaClass()
+	 * @see #getJavaType()
+	 * @generated
+	 */
+	EAttribute getJavaType_JavaClass();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateAnyHasOneIterator(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Any Has One Iterator</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5799,6 +5820,16 @@ extends EPackage
 	EDataType getInteger();
 
 	/**
+	 * Returns the meta object for data type '{@link java.lang.Class <em>Java Class</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>Java Class</em>'.
+	 * @see java.lang.Class
+	 * @generated
+	 */
+	EDataType getJavaClass();
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.library.LibraryFeature <em>Library Feature</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7011,6 +7042,24 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.JavaTypeImpl <em>Java Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.JavaTypeImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getJavaType()
+		 * @generated
+		 */
+		EClass JAVA_TYPE = eINSTANCE.getJavaType();
+
+		/**
+		 * The meta object literal for the '<em><b>Java Class</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute JAVA_TYPE__JAVA_CLASS = eINSTANCE.getJavaType_JavaClass();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Any Has One Iterator</b></em>' operation.
@@ -10523,6 +10572,16 @@ extends EPackage
 		 * @generated
 		 */
 		EDataType INTEGER = eINSTANCE.getInteger();
+
+		/**
+		 * The meta object literal for the '<em>Java Class</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.lang.Class
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getJavaClass()
+		 * @generated
+		 */
+		EDataType JAVA_CLASS = eINSTANCE.getJavaClass();
 
 		/**
 		 * The meta object literal for the '<em>Library Feature</em>' data type.

@@ -566,6 +566,15 @@ extends EFactory {
 	@NonNull IteratorVariable createIteratorVariable();
 
 	/**
+	 * Returns a new object of class '<em>Java Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Java Type</em>'.
+	 * @generated
+	 */
+	JavaType createJavaType();
+
+	/**
 	 * Returns a new object of class '<em>Lambda Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

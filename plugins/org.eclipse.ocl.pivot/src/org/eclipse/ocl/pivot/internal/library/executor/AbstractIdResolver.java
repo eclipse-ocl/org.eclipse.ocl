@@ -48,8 +48,10 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.JavaType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -86,6 +88,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
+import org.eclipse.ocl.pivot.internal.JavaTypeImpl;
 import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
@@ -937,7 +940,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			type = standardLibrary.getStringType();
 		}
 		else { */
-		JavaType javaType = new JavaType(javaClass);
+		JavaTypeImpl javaType = (JavaTypeImpl) PivotFactory.eINSTANCE.createJavaType();
+		javaType.setName(javaClass.getSimpleName());
+		javaType.setJavaClass(javaClass);
 
 
 		org.eclipse.ocl.pivot.Class oclType;

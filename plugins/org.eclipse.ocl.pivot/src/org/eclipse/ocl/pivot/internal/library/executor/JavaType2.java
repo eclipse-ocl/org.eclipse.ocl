@@ -25,11 +25,11 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * JavaType supports the usage of Java Class to define the type of an object.
  */
-public class JavaType extends AbstractExecutorClass
+public class JavaType2 extends AbstractExecutorClass
 {
 	protected final @NonNull Class<?> javaClass;
 
-	public JavaType(@NonNull Class<?> javaClass) {
+	public JavaType2(@NonNull Class<?> javaClass) {
 		super(ClassUtil.nonNullState(javaClass.getName()), 0);
 		this.javaClass = javaClass;
 	}
@@ -44,10 +44,10 @@ public class JavaType extends AbstractExecutorClass
 		if (this == type) {
 			return this;
 		}
-		if (!(type instanceof JavaType)) {
+		if (!(type instanceof JavaType2)) {
 			return idResolver.getStandardLibrary().getOclAnyType();
 		}
-		Class<?> commonClass = getCommonClass1(javaClass, ((JavaType)type).javaClass);
+		Class<?> commonClass = getCommonClass1(javaClass, ((JavaType2)type).javaClass);
 		if (commonClass != null) {
 			return idResolver.getJavaType(commonClass);
 		}

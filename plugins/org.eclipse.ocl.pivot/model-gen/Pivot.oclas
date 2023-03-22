@@ -490,6 +490,11 @@
       </ownedInvariants>
       <ownedProperties xmi:id="sbNVd" isImplicit="true" isRequired="false" name="LoopExp" opposite="#Oa7sP" type="#KhrnS"/>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:DataType" xmi:id="nvTLe" instanceClassName="java.lang.Class" name="JavaClass" superClasses="&_0;#jbMkR"/>
+    <ownedClasses xmi:id="tgTu7" name="JavaType" superClasses="#pDcbe">
+      <ownedComments body="JavaType supports the use of a Java class as part of a foreign operation or property call."/>
+      <ownedProperties xmi:id="HiXyq" name="javaClass" type="#nvTLe"/>
+    </ownedClasses>
     <ownedClasses xmi:id="S9Pb5" name="LambdaType" superClasses="#1mHCJ">
       <ownedProperties xmi:id="rwWeu" name="contextType" opposite="#X5F8c" type="#rrwsa"/>
       <ownedProperties xmi:id="l0V,d" name="parameterType" opposite="#tU,ip" type="#r5PCb"/>

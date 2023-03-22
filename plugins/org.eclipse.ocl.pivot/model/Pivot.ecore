@@ -25,6 +25,8 @@
       <details key="documentation" value="Integer is a primitive type representing integer values."/>
     </eAnnotations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-JavaClass" name="JavaClass"
+      instanceClassName="java.lang.Class"/>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-LibraryFeature" name="LibraryFeature"
       instanceClassName="org.eclipse.ocl.pivot.library.LibraryFeature"/>
   <eClassifiers xsi:type="ecore:EDataType" xmi:id="T-pivot-Object" name="Object" instanceClassName="java.lang.Object"/>
@@ -1399,6 +1401,14 @@
         </eGenericType>
       </eParameters>
     </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-JavaType" name="JavaType"
+      eSuperTypes="#T-pivot-Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="JavaType supports the use of a Java class as part of a foreign operation or property call."/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-JavaType-javaClass"
+        name="javaClass" lowerBound="1" eType="#T-pivot-JavaClass"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LambdaType" name="LambdaType"
       eSuperTypes="#T-pivot-DataType">

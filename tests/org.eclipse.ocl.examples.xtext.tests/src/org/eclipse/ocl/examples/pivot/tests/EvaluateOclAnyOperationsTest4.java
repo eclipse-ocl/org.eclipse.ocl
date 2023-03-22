@@ -288,6 +288,9 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void testNotEqual() {
 //		BaseLinkingService.DEBUG_RETRY.setState(true);
 		MyOCL ocl = createOCL();
+		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
+		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-25'} <> ecore::EDate{value='2000-01-24'}");
+// XXX
 		ocl.assertQueryFalse(null, "Boolean <> Boolean");
 		ocl.assertQueryTrue(null, "Boolean <> Integer");
 		ocl.assertQueryFalse(null, "OclVoid <> OclVoid");
