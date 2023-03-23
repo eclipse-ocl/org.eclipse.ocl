@@ -21,7 +21,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
-		var Package pkg = root.ownedPackages.findPackage();
+		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
 		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());
 		'''
 		«FOR pkge : sortedPackages»
