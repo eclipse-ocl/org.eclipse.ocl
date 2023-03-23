@@ -89,7 +89,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.JavaTypeImpl;
-import org.eclipse.ocl.pivot.internal.elements.AbstractExecutorClass;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
@@ -1118,14 +1117,14 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		if (value instanceof Enumeration) {
 			return standardLibrary.getEnumerationType();
 		}
-		else if (value instanceof AbstractExecutorClass) {	// FIXME Bug 577889 The direct CGed Executor has no eClass() so use getMetaclass()
+	/*	else if (value instanceof AbstractExecutorClass) {	// FIXME Bug 577889 The direct CGed Executor has no eClass() so use getMetaclass()
 			Type type = key2type.get(value);
 			if (type == null) {
 				type = standardLibrary.getMetaclass((AbstractExecutorClass)value);
 				key2type.put(value, type);
 			}
 			return PivotUtil.getClass(type, standardLibrary);
-		}
+		} */
 		else if (value instanceof EObject) {
 			EClass eClass = ((EObject)value).eClass();
 			assert eClass != null;

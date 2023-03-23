@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
@@ -30,7 +31,9 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.Visitor;
 
@@ -434,6 +437,66 @@ public class JavaTypeImpl extends ClassImpl implements JavaType
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
+		if (this == type) {
+			return this;
+		}
+		if (!(type instanceof JavaType)) {
+			return idResolver.getStandardLibrary().getOclAnyType();
+		}
+		Class<?> commonClass = getCommonClass1(javaClass, ((JavaType)type).getJavaClass());
+		if (commonClass != null) {
+			return idResolver.getJavaType(commonClass);
+		}
+		else {
+			return idResolver.getStandardLibrary().getOclAnyType();
+		}
+	}
+	private static @Nullable Class<?> getCommonClass1(@NonNull Class<?> thisClass, @NonNull Class<?> thatClass) {
+		Class<?> commonClass = getCommonClass2(thisClass, thatClass);
+		if (commonClass != null) {
+			return commonClass;
+		}
+		Class<?> superclass = thisClass.getSuperclass();
+		if (superclass != null) {
+			commonClass = getCommonClass1(superclass, thatClass);
+			if (commonClass != null) {
+				return commonClass;
+			}
+		}
+		for (Class<?> superInterface : thisClass.getInterfaces()) {
+			if (superInterface != null) {
+				commonClass = getCommonClass1(superInterface, thatClass);
+				if (commonClass != null) {
+					return commonClass;
+				}
+			}
+		}
+		return null;
+	}
+	private static @Nullable Class<?> getCommonClass2(@NonNull Class<?> thisClass, @NonNull Class<?> thatClass) {
+		if (thisClass == thatClass) {
+			return thisClass;
+		}
+		Class<?> superclass = thatClass.getSuperclass();
+		if (superclass != null) {
+			Class<?> commonClass = getCommonClass2(thisClass, superclass);
+			if (commonClass != null) {
+				return commonClass;
+			}
+		}
+		for (Class<?> superInterface : thatClass.getInterfaces()) {
+			if (superInterface != null) {
+				Class<?> commonClass = getCommonClass2(thisClass, superInterface);
+				if (commonClass != null) {
+					return commonClass;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		if (Comparable.class.isAssignableFrom(javaClass)) {
 			return standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
@@ -441,7 +504,11 @@ public class JavaTypeImpl extends ClassImpl implements JavaType
 		else {
 			return standardLibrary.getOclAnyType().getFlatClass(standardLibrary);
 		}
-	//	return super.getFlatClass(standardLibrary);
+	}
+
+	@Override
+	public boolean isEqualTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType) {
+		return this == thatType;
 	}
 
 	@Override

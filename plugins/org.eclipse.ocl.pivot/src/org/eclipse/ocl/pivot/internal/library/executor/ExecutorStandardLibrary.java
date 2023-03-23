@@ -106,7 +106,7 @@ import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
-public class ExecutorStandardLibrary implements Element, CompleteEnvironment, StandardLibraryExtension
+public class ExecutorStandardLibrary implements CompleteEnvironment, StandardLibraryExtension
 {
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
