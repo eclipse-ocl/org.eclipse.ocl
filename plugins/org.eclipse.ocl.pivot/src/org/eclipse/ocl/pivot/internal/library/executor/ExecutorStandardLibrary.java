@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.ParameterTypes;
@@ -576,77 +577,79 @@ public class ExecutorStandardLibrary implements CompleteEnvironment, StandardLib
 		}
 		throw new IllegalStateException("No extension package defines Enumeration type"); //$NON-NLS-1$
 	}
+
 	@Override
-		public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {	// XXX review duplication
-			return getFlatModel().getFlatClass(asClass);
-		//	if (asClass instanceof CompleteInheritance) {
-		//		return (CompleteInheritance) asClass;
-		//	}
-			/*		if (type instanceof DomainMetaclass) {
-				DomainType instanceType = ClassUtil.nonNullPivot(((DomainMetaclass)type).getInstanceType());
-				org.eclipse.ocl.pivot.Class metaclass = getMetaclass(instanceType);
-				DomainType containerType = metaclass;//.getContainerType();
-				return containerType.getInheritance(this);
-			} */
-	/*		if (asClass instanceof CollectionType) {
-				Type containerType = ((CollectionType)asClass).getContainerType();
-				if (containerType != asClass) {
-					return containerType.getFlatClass(this);
-				}
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {	// XXX review duplication
+		return getFlatModel().getFlatClass(asClass);
+	//	if (asClass instanceof CompleteInheritance) {
+	//		return (CompleteInheritance) asClass;
+	//	}
+		/*		if (type instanceof DomainMetaclass) {
+			DomainType instanceType = ClassUtil.nonNullPivot(((DomainMetaclass)type).getInstanceType());
+			org.eclipse.ocl.pivot.Class metaclass = getMetaclass(instanceType);
+			DomainType containerType = metaclass;//.getContainerType();
+			return containerType.getInheritance(this);
+		} */
+/*		if (asClass instanceof CollectionType) {
+			Type containerType = ((CollectionType)asClass).getContainerType();
+			if (containerType != asClass) {
+				return containerType.getFlatClass(this);
 			}
-			if (asClass instanceof MapType) {
-				Type containerType = ((MapType)asClass).getContainerType();
-				if (containerType != asClass) {
-					return containerType.getFlatClass(this);
-				}
+		}
+		if (asClass instanceof MapType) {
+			Type containerType = ((MapType)asClass).getContainerType();
+			if (containerType != asClass) {
+				return containerType.getFlatClass(this);
 			}
-			org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
-			Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<@NonNull DomainReflectivePackage>> asPackageMap2;
-			synchronized (this) {
-				String nsURI = asPackage.getURI();
-				EcoreExecutorPackage ecoreExecutorPackage = nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
-				if (ecoreExecutorPackage != null) {
-					String name = asClass.getName();
-					org.eclipse.ocl.pivot.Class executorType = ecoreExecutorPackage.getOwnedClass(name);
-					if (executorType != null) {
-						return executorType.getFlatClass(this);
-					}
-					Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
-					if (extensions2 != null) {
-						List<@NonNull EcoreExecutorPackage> packages = extensions2.get(ecoreExecutorPackage);
-						if (packages != null) {
-							for (@NonNull EcoreExecutorPackage extensionPackage : packages) {
-								executorType = extensionPackage.getOwnedClass(name);
-								if (executorType != null) {
-									break;
-								}
+		}
+		org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
+		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<@NonNull DomainReflectivePackage>> asPackageMap2;
+		synchronized (this) {
+			String nsURI = asPackage.getURI();
+			EcoreExecutorPackage ecoreExecutorPackage = nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
+			if (ecoreExecutorPackage != null) {
+				String name = asClass.getName();
+				org.eclipse.ocl.pivot.Class executorType = ecoreExecutorPackage.getOwnedClass(name);
+				if (executorType != null) {
+					return executorType.getFlatClass(this);
+				}
+				Map<@NonNull EcoreExecutorPackage, @NonNull List<@NonNull EcoreExecutorPackage>> extensions2 = extensions;
+				if (extensions2 != null) {
+					List<@NonNull EcoreExecutorPackage> packages = extensions2.get(ecoreExecutorPackage);
+					if (packages != null) {
+						for (@NonNull EcoreExecutorPackage extensionPackage : packages) {
+							executorType = extensionPackage.getOwnedClass(name);
+							if (executorType != null) {
+								break;
 							}
 						}
 					}
-					if (executorType != null) {
-						return executorType.getFlatClass(this);
-					}
 				}
-				asPackageMap2 = asPackageMap;
-				if (asPackageMap2 == null) {
-					asPackageMap2 = asPackageMap = new WeakHashMap<>();
+				if (executorType != null) {
+					return executorType.getFlatClass(this);
 				}
 			}
-			synchronized (asPackageMap2) {
-				DomainReflectivePackage executorPackage = weakGet(asPackageMap2, asPackage);
-				if (executorPackage == null) {
-					executorPackage = new DomainReflectivePackage(this, asPackage);
-					asPackageMap2.put(asPackage, new WeakReference<>(executorPackage));
-				}
-				return executorPackage.getFlatClass(asClass);
-			} */
+			asPackageMap2 = asPackageMap;
+			if (asPackageMap2 == null) {
+				asPackageMap2 = asPackageMap = new WeakHashMap<>();
+			}
 		}
+		synchronized (asPackageMap2) {
+			DomainReflectivePackage executorPackage = weakGet(asPackageMap2, asPackage);
+			if (executorPackage == null) {
+				executorPackage = new DomainReflectivePackage(this, asPackage);
+				asPackageMap2.put(asPackage, new WeakReference<>(executorPackage));
+			}
+			return executorPackage.getFlatClass(asClass);
+		} */
+	}
+
 	@Override
 	public @NonNull EcoreFlatModel getFlatModel() {
 		EcoreFlatModel ecoreFlatModel2 = ecoreFlatModel;
 		if (ecoreFlatModel2 == null) {
 			ecoreFlatModel = ecoreFlatModel2 = new EcoreFlatModel(this);
-	//		throw new UnsupportedOperationException();
+		//	throw new UnsupportedOperationException();
 		}
 		return ecoreFlatModel2;
 	}
@@ -1088,18 +1091,27 @@ public class ExecutorStandardLibrary implements CompleteEnvironment, StandardLib
 		FlatClass flatClass = flatModel.getEcoreFlatClass(asClass);
 		asClass.setFlatClass(flatClass);
 	}
+
 	public void initLiterals(@NonNull Enumeration asEnumeration, @NonNull EnumerationLiteral @NonNull [] asEnumerationLiterals) {
 		List<EnumerationLiteral> asLiterals = asEnumeration.getOwnedLiterals();
 		for (@NonNull EnumerationLiteral asEnumerationLiteral : asEnumerationLiterals) {
 			asLiterals.add(asEnumerationLiteral);
 		}
 	}
+
 	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
+		Object eContainer = asPackage.eContainer();
+		assert eContainer == null;
+		Model asModel = PivotFactory.eINSTANCE.createModel();
+		asModel.setExternalURI(asPackage.getURI());
+		asModel.getOwnedPackages().add(asPackage);
+		EcoreFlatModel flatModel = (EcoreFlatModel)asModel.initFlatModel(this);
 		List<org.eclipse.ocl.pivot.Class> ownedClasses = asPackage.getOwnedClasses();
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
 			ownedClasses.add(asClass);
 		}
 	}
+
 	private <T extends CollectionType> void initTemplateParameters(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter @Nullable... templateParameters) {
 		if ((templateParameters != null) && (templateParameters.length > 0)) {
 			TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
@@ -1113,6 +1125,7 @@ public class ExecutorStandardLibrary implements CompleteEnvironment, StandardLib
 			pivotType.setOwnedSignature(templateSignature);
 		}
 	}
+
 	public void resetSeverities() {
 		validationKey2severity = null;
 	}

@@ -12,15 +12,25 @@ package org.eclipse.ocl.pivot.flat;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class PartialFlatModel extends AbstractFlatModel
 {
+	protected final /*@NonNull*/ Model model;
 //	private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull PartialFlatClass> asClass2flatClass =  new HashMap<>();
 
+	@Deprecated
 	public PartialFlatModel(@NonNull StandardLibrary standardLibrary) {
 		super(standardLibrary, "");
+		this.model = null;
+	}
+
+	public PartialFlatModel(@NonNull Model model, @NonNull StandardLibrary standardLibrary) {
+		super(standardLibrary, PivotUtil.getName(model));
+		this.model = model;
 	}
 
 	@Override
@@ -40,6 +50,11 @@ public class PartialFlatModel extends AbstractFlatModel
 			assert false;
 		}
 		return flatClass; */
+	}
+
+	public @NonNull Model getModel() {
+		assert model != null;
+		return model;
 	}
 
 	@Override

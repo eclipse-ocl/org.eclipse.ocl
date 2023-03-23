@@ -152,27 +152,6 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	@Override
 	public synchronized @NonNull EcoreFlatClass getFlatClass(@NonNull EClassifier eClassifier) {
 		return ((EcoreFlatModel)standardLibrary.getFlatModel()).getEcoreFlatClass(eClassifier);
-	/*	EcoreFlatClass type = weakGet(typeMap, eClassifier);	// XXX duplicates EcoreFlatModel
-		if (type == null) {
-			EPackage ePackage = eClassifier.getEPackage();
-			assert ePackage != null;
-			ExecutorPackage execPackage = ((ExecutorStandardLibrary)standardLibrary).getPackage(ePackage);
-			if (execPackage == null) {
-				PackageId packageId = IdManager.getPackageId(ePackage);
-				Element domainPackage = packageId.accept(this);
-				if (domainPackage instanceof ExecutorPackage) {
-					execPackage = (ExecutorPackage) domainPackage;
-				}
-			}
-			if (execPackage != null) {
-				org.eclipse.ocl.pivot.Class domainType = execPackage.getOwnedClass(eClassifier.getName());
-				if (domainType != null) {
-					type = (EcoreFlatClass) standardLibrary.getFlatClass(domainType);
-					typeMap.put(eClassifier, new WeakReference<>(type));
-				}
-			}
-		}
-		return ClassUtil.nonNullState(type); */
 	}
 
 	@Override

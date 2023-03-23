@@ -16,6 +16,7 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -24,8 +25,13 @@ public class EcoreFlatModel extends PartialFlatModel
 {
 	private final @NonNull Map<@NonNull EClassifier, @NonNull EcoreFlatClass> eClassifier2flatClass =  new HashMap<>();
 
+	@Deprecated
 	public EcoreFlatModel(@NonNull StandardLibrary standardLibrary) {
 		super(standardLibrary);
+	}
+
+	public EcoreFlatModel(@NonNull Model model, @NonNull StandardLibrary standardLibrary) {
+		super(model, standardLibrary);
 	}
 
 	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier) {
