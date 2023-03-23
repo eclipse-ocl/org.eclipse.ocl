@@ -27,6 +27,10 @@ public class CompleteFlatModel extends AbstractFlatModel
 		this.completeModel = completeModel;
 	}
 
+	public @NonNull CompleteFlatClass createFlatClass(@NonNull CompleteClass completeClass) {
+		return new CompleteFlatClass(this, completeClass);
+	}
+
 	@Override
 	public @NonNull CompleteModel getCompleteModel() {
 		return completeModel;

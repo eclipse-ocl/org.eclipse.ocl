@@ -569,7 +569,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		CompleteFlatClass flatClass2 = flatClass;
 		if (flatClass2 == null) {
 			CompleteFlatModel completeFlatModel = getCompleteModel().getFlatModel();
-			flatClass = flatClass2 = new CompleteFlatClass(completeFlatModel, this);
+			flatClass = flatClass2 = completeFlatModel.createFlatClass(this);
 		}
 		return flatClass2;
 	}
