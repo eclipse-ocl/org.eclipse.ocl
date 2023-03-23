@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.flat;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -44,7 +43,7 @@ public class PartialFlatModel extends AbstractFlatModel
 	}
 
 	@Override
-	public @NonNull Type getPrimaryType(@NonNull Class owningType) {
+	public @NonNull Type getPrimaryType(org.eclipse.ocl.pivot.@NonNull Class owningType) {
 		throw new UnsupportedOperationException();
 	}
 }

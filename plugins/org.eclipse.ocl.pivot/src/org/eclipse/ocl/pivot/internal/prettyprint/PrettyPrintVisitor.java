@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -75,7 +74,7 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 	}
 
 	@Override
-	public Object visitClass(@NonNull Class object) {
+	public Object visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
 		if (context.showNames()) {
 			context.appendParent(context.getScope(), object, "::");
 		}

@@ -21,7 +21,6 @@ import java.util.Set;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Operation;
@@ -113,12 +112,12 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	}
 
 	@Override
-	public void didAddPartialClass(int index, @NonNull Class partialClass) {
+	public void didAddPartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		resetFragments();
 	}
 
 	@Override
-	public void didRemovePartialClass(int index, @NonNull Class partialClass) {
+	public void didRemovePartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		resetFragments();
 	}
 

@@ -49,6 +49,7 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
+import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -388,7 +389,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	// FIXME tests fail if keys are weak since GC is too aggressive across tests
 	// The actual types are weak keys so that parameterizations using stale types are garbage collected.
 	//
-	private @Nullable /*WeakHash*/Map<@NonNull TemplateParameters, WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations = null;
+	private @Nullable /*WeakHash*/Map<@NonNull TemplateParameters, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations = null;
 
 	protected CompleteClassImpl()
 	{
@@ -511,11 +512,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		if (templateArguments.parametersSize() != iMax) {
 			return null;
 		}
-		Map<TemplateParameters, WeakReference<org.eclipse.ocl.pivot.Class>> specializations2 = specializations;
+		Map<@NonNull TemplateParameters, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations2 = specializations;
 		if (specializations2 == null) {
 			return null;
 		}
-		WeakReference<org.eclipse.ocl.pivot.Class> weakReference = specializations2.get(templateArguments);
+		WeakReference<org.eclipse.ocl.pivot.@NonNull Class> weakReference = specializations2.get(templateArguments);
 		if (weakReference == null) {
 			return null;
 		}
@@ -567,7 +568,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	public final @NonNull CompleteFlatClass getFlatClass() {
 		CompleteFlatClass flatClass2 = flatClass;
 		if (flatClass2 == null) {
-			flatClass = flatClass2 = getCompleteModel().getFlatModel().createFlatClass(this);
+			CompleteFlatModel completeFlatModel = getCompleteModel().getFlatModel();
+			flatClass = flatClass2 = new CompleteFlatClass(completeFlatModel, this);
 		}
 		return flatClass2;
 	}
@@ -733,7 +735,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		if (templateArgumentsParameters.parametersSize() != iMax) {
 			throw new IllegalArgumentException("Incompatible template argument count");
 		}
-		Map<@NonNull TemplateParameters, WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations2 = specializations;
+		Map<@NonNull TemplateParameters, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations2 = specializations;
 		if (specializations2 == null) {
 			synchronized(this) {
 				specializations2 = specializations;
@@ -794,7 +796,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
-		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
+		ClassListeners<ClassListeners.@NonNull IClassListener> classListeners2 = classListeners;
 		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
 			classListeners = null;
 		}

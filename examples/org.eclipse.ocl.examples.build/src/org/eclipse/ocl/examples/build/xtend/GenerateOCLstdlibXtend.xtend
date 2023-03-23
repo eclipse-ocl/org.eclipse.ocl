@@ -12,7 +12,6 @@ package org.eclipse.ocl.examples.build.xtend
 
 import org.eclipse.ocl.pivot.DataType
 import org.eclipse.ocl.pivot.Model
-import org.eclipse.ocl.pivot.Package
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
@@ -41,7 +40,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 	protected override String declarePrimitiveTypes(/*@NonNull*/ Model root) {
 		var pkge2primitiveTypes = root.getSortedPrimitiveTypes();
 		if (pkge2primitiveTypes.isEmpty()) return "";
-		var Package pkg = root.ownedPackages.findPackage();
+		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
 		var sortedPackages = root.getSortedPackages(pkge2primitiveTypes.keySet());
 		'''
 			«FOR pkge : sortedPackages»

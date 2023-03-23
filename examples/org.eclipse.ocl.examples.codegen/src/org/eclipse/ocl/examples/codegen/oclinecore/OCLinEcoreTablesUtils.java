@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -743,7 +742,7 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected @NonNull Set<? extends org.eclipse.ocl.pivot.@NonNull Class> getActiveTypes(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
+		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
 		Type elementType = metamodelManager.getASClass("Element");
 		if (oclstdlibPackage == asPackage) {
@@ -833,7 +832,7 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected org.eclipse.ocl.pivot.@Nullable Package getExtendedPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
+		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotMetamodel = metamodelManager.getASmetamodel();
 		if (oclstdlibPackage == asPackage) {
 			return null;

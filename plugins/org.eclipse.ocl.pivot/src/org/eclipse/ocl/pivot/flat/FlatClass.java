@@ -125,7 +125,7 @@ public interface FlatClass extends Nameable
 	@NonNull FragmentIterable getAllSuperFragments();
 	@Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation);
 	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass that);
-	@Deprecated // XXX eliminate unsound iheritance
+	@Deprecated // XXX eliminate unsound inheritance
 	@NonNull CompleteClass getCompleteClass();
 	int getDepth();
 	@NonNull FlatModel getFlatModel();

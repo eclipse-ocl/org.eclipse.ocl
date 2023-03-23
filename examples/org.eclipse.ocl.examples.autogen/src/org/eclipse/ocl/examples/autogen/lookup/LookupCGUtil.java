@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -29,11 +28,11 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 
 public class LookupCGUtil {
 
-	
-	
-	public static List<@NonNull Package> getTargetPackages(GenPackage genPackage, EnvironmentFactory envFact, String oclDocFilePath, String oclDocProjectName) {
-		
-		List<@NonNull Package> result = new ArrayList<@NonNull Package>();
+
+
+	public static List<org.eclipse.ocl.pivot.@NonNull Package> getTargetPackages(GenPackage genPackage, EnvironmentFactory envFact, String oclDocFilePath, String oclDocProjectName) {
+
+		List<org.eclipse.ocl.pivot.@NonNull Package> result = new ArrayList<>();
 		URI projectResourceURI = URI.createPlatformResourceURI("/" + oclDocProjectName + "/", true);
 		@NonNull URI nameResoURI = URI.createURI(oclDocFilePath).resolve(projectResourceURI);
 		OCL ocl = envFact.createOCL();
@@ -41,8 +40,8 @@ public class LookupCGUtil {
 			Resource resource = ClassUtil.nonNullState(ocl.parse(nameResoURI));
 			for (EObject root : resource.getContents()) {
 				if (root instanceof Model) {
-					
-					Package asPackage = ClassUtil.nonNullState(getPackage(genPackage, genPackage.getPrefix(), envFact));
+
+					org.eclipse.ocl.pivot.Package asPackage = ClassUtil.nonNullState(getPackage(genPackage, genPackage.getPrefix(), envFact));
 					for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Package oclDocPackage : ((Model)root).getOwnedPackages()) {
 						if (samePrimaryPackage(oclDocPackage, asPackage, envFact)) {
 							result.add(oclDocPackage);
@@ -67,7 +66,7 @@ public class LookupCGUtil {
 		}
 		return null;
 	}
-	
+
 	private static boolean samePrimaryPackage(org.eclipse.ocl.pivot.@NonNull Package p1, org.eclipse.ocl.pivot.@NonNull Package p2, @NonNull EnvironmentFactory envFactory) {
 		MetamodelManager mm = envFactory.getMetamodelManager();
 		return mm.getPrimaryPackage(p1).equals(mm.getPrimaryPackage(p2));

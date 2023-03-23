@@ -17,7 +17,6 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -258,7 +257,7 @@ public class InheritanceTests extends PivotTestSuite
 		try {
 			FlatClass integerTypeFlatClass = standardLibrary.getFlatClass(standardLibrary.getIntegerType());
 			assertEquals(3, integerTypeFlatClass.getDepth());
-			List<Class> superClasses = standardLibrary.getRealType().getSuperClasses();
+			List<org.eclipse.ocl.pivot.Class> superClasses = standardLibrary.getRealType().getSuperClasses();
 			try {
 				superClasses.clear();
 				superClasses.add(standardLibrary.getOclAnyType());

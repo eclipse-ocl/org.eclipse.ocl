@@ -18,7 +18,6 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
@@ -57,7 +56,7 @@ public class ExpressionInOCLAttribution extends AbstractAttribution
 			if (!environmentView.hasFinalResult()) {
 				Type userType = /*type instanceof Metaclass<?> ? ((Metaclass<?>)type).getInstanceType() :*/ type;// FIXME is this really right - needed by test_stereotypeM2Navigation for implicit self of an base_xxx
 				if (userType instanceof org.eclipse.ocl.pivot.Class) {
-					Package contextPackage = ((org.eclipse.ocl.pivot.Class)userType).getOwningPackage();
+					org.eclipse.ocl.pivot.Package contextPackage = ((org.eclipse.ocl.pivot.Class)userType).getOwningPackage();
 					if (contextPackage != null) {
 						if (targetExpression.eContainer() == null) {			// If this a root ExpressionInOCL; an embedded expression being independently parsed
 							Model model = PivotUtil.getContainingModel(type);

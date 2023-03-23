@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BagType;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
@@ -51,7 +50,6 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
@@ -810,7 +808,7 @@ public class ExecutorStandardLibrary implements CompleteEnvironment, StandardLib
 	 * @since 1.1
 	 */
 	@Override
-	public @NonNull Class getOclStereotypeType() {
+	public org.eclipse.ocl.pivot.@NonNull Class getOclStereotypeType() {
 		return OCLstdlibTables.Types._OclStereotype;
 	}
 
@@ -1096,8 +1094,8 @@ public class ExecutorStandardLibrary implements CompleteEnvironment, StandardLib
 			asLiterals.add(asEnumerationLiteral);
 		}
 	}
-	public void initPackage(@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
-		List<Class> ownedClasses = asPackage.getOwnedClasses();
+	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@NonNull Class @NonNull [] asClasses) {
+		List<org.eclipse.ocl.pivot.Class> ownedClasses = asPackage.getOwnedClasses();
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
 			ownedClasses.add(asClass);
 		}

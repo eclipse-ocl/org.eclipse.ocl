@@ -52,7 +52,6 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -376,7 +375,7 @@ public class PivotHelper
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Package createPackage(@NonNull String name, @Nullable String nsPrefix, @Nullable String nsURI) {
-		Package asPackage = PivotFactory.eINSTANCE.createPackage();
+		org.eclipse.ocl.pivot.Package asPackage = PivotFactory.eINSTANCE.createPackage();
 		asPackage.setName(name);
 		if (nsPrefix != null) {
 			asPackage.setNsPrefix(nsPrefix);
