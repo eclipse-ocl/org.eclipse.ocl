@@ -79,16 +79,6 @@ extends EPackage
 	@SuppressWarnings("null")@NonNull PivotPackage eINSTANCE = org.eclipse.ocl.pivot.internal.PivotPackageImpl.init();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.AbstractClass <em>Abstract Class</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Abstract Class</em>'.
-	 * @see org.eclipse.ocl.pivot.AbstractClass
-	 * @generated
-	 */
-	EClass getAbstractClass();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Annotation <em>Annotation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5923,16 +5913,6 @@ extends EPackage
 	 * @generated
 	 */
 	interface Literals {
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.AbstractClassImpl <em>Abstract Class</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.AbstractClassImpl
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getAbstractClass()
-		 * @generated
-		 */
-		EClass ABSTRACT_CLASS = eINSTANCE.getAbstractClass();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.AnnotationImpl <em>Annotation</em>}' class.

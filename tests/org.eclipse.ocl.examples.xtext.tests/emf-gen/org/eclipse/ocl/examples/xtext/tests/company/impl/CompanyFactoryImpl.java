@@ -10,7 +10,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.tests.company.*;
 import org.eclipse.ocl.examples.xtext.tests.company.Bug418716;
 import org.eclipse.ocl.examples.xtext.tests.company.Company;
 import org.eclipse.ocl.examples.xtext.tests.company.CompanyFactory;

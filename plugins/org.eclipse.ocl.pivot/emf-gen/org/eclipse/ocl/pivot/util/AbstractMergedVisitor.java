@@ -30,11 +30,6 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
-	public R visitAbstractClass(org.eclipse.ocl.pivot.@NonNull AbstractClass object) {
-		return visiting(object);
-	}
-
-	@Override
 	public R visitAnnotation(org.eclipse.ocl.pivot.@NonNull Annotation object) {
 		return visiting(object);
 	}

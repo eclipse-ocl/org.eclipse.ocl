@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.xtext.tests.bug477283.a.asub.*;
 import org.eclipse.ocl.examples.xtext.tests.bug477283.a.asub.ASub;
 import org.eclipse.ocl.examples.xtext.tests.bug477283.a.asub.Bug477283subFactory;
 import org.eclipse.ocl.examples.xtext.tests.bug477283.a.asub.Bug477283subPackage;

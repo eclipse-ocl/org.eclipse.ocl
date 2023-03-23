@@ -69,7 +69,6 @@
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-String"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-Throwable"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-UnlimitedNatural"/>
-    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-AbstractClass"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-Annotation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Annotation-ownedContents"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Annotation-ownedDetails"/>

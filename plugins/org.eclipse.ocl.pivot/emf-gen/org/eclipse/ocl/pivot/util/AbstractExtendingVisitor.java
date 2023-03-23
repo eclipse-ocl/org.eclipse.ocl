@@ -38,11 +38,6 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
-	public R visitAbstractClass(org.eclipse.ocl.pivot.@NonNull AbstractClass object) {
-		return visitType(object);
-	}
-
-	@Override
 	public R visitAnnotation(org.eclipse.ocl.pivot.@NonNull Annotation object) {
 		return visitNamedElement(object);
 	}
@@ -94,7 +89,7 @@ public abstract class AbstractExtendingVisitor<R, C>
 
 	@Override
 	public R visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
-		return visitAbstractClass(object);
+		return visitType(object);
 	}
 
 	@Override

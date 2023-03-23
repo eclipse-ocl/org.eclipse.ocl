@@ -10,6 +10,7 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
+import java.lang.Class;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;

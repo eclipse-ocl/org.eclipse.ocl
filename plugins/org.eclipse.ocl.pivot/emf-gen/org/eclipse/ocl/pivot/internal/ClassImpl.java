@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -52,13 +53,16 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
@@ -78,6 +82,10 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedConstraints <em>Owned Constraints</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedBindings <em>Owned Bindings</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedSignature <em>Owned Signature</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getUnspecializedElement <em>Unspecialized Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getExtenders <em>Extenders</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getInstanceClassName <em>Instance Class Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#isIsAbstract <em>Is Abstract</em>}</li>
@@ -93,7 +101,7 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  *
  * @generated
  */
-public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivot.Class {
+public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 
 	/**
 	 * The number of structural features of the '<em>Class</em>' class.
@@ -102,7 +110,7 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CLASS_FEATURE_COUNT = AbstractClassImpl.ABSTRACT_CLASS_FEATURE_COUNT + 11;
+	public static final int CLASS_FEATURE_COUNT = TypeImpl.TYPE_FEATURE_COUNT + 15;
 
 	/**
 	 * The number of operations of the '<em>Class</em>' class.
@@ -111,7 +119,47 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CLASS_OPERATION_COUNT = AbstractClassImpl.ABSTRACT_CLASS_OPERATION_COUNT + 2;
+	public static final int CLASS_OPERATION_COUNT = TypeImpl.TYPE_OPERATION_COUNT + 2;
+
+	/**
+	 * The cached value of the '{@link #getOwnedConstraints() <em>Owned Constraints</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedConstraints()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Constraint> ownedConstraints;
+
+	/**
+	 * The cached value of the '{@link #getOwnedBindings() <em>Owned Bindings</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedBindings()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<TemplateBinding> ownedBindings;
+
+	/**
+	 * The cached value of the '{@link #getOwnedSignature() <em>Owned Signature</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedSignature()
+	 * @generated
+	 * @ordered
+	 */
+	protected TemplateSignature ownedSignature;
+
+	/**
+	 * The cached value of the '{@link #getUnspecializedElement() <em>Unspecialized Element</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUnspecializedElement()
+	 * @generated
+	 * @ordered
+	 */
+	protected TemplateableElement unspecializedElement;
 
 	/**
 	 * The cached value of the '{@link #getExtenders() <em>Extenders</em>}' reference list.
@@ -270,6 +318,86 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 	@Override
 	protected EClass eStaticClass() {
 		return PivotPackage.Literals.CLASS;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<Constraint> getOwnedConstraints()
+	{
+		if (ownedConstraints == null)
+		{
+			ownedConstraints = new EObjectContainmentEList<Constraint>(Constraint.class, this, 5);
+		}
+		return ownedConstraints;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<TemplateBinding> getOwnedBindings()
+	{
+		if (ownedBindings == null)
+		{
+			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 6, 5);
+		}
+		return ownedBindings;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public TemplateSignature getOwnedSignature()
+	{
+		return ownedSignature;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwnedSignature(TemplateSignature newOwnedSignature, NotificationChain msgs)
+	{
+		TemplateSignature oldOwnedSignature = ownedSignature;
+		ownedSignature = newOwnedSignature;
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedSignature, newOwnedSignature);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwnedSignature(TemplateSignature newOwnedSignature)
+	{
+		if (newOwnedSignature != ownedSignature)
+		{
+			NotificationChain msgs = null;
+			if (ownedSignature != null)
+				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 5, TemplateSignature.class, msgs);
+			if (newOwnedSignature != null)
+				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 5, TemplateSignature.class, msgs);
+			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -904,6 +1032,64 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 	 * @generated
 	 */
 	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+	{
+		if (baseClass == Namespace.class)
+		{
+			switch (derivedFeatureID)
+			{
+				case 5: return 5;
+				default: return -1;
+			}
+		}
+		if (baseClass == TemplateableElement.class)
+		{
+			switch (derivedFeatureID)
+			{
+				case 6: return 4;
+				case 7: return 5;
+				case 8: return 6;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+	{
+		if (baseClass == Namespace.class)
+		{
+			switch (baseFeatureID)
+			{
+				case 5: return 5;
+				default: return -1;
+			}
+		}
+		if (baseClass == TemplateableElement.class)
+		{
+			switch (baseFeatureID)
+			{
+				case 4: return 6;
+				case 5: return 7;
+				case 6: return 8;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
 	{
@@ -932,10 +1118,29 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 	private @Nullable TypeId typeId = null;
 	private @Nullable TypeId normalizedTypeId = null;
 	private @Nullable FlatClass flatClass = null;
+	private @Nullable ClassListeners<ClassListeners.IClassListener> classListeners = null;
 
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitClass(this);
+	}
+
+//	@Override
+	@Override
+	public synchronized void addClassListener(ClassListeners.@NonNull IClassListener classListener) {
+		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
+		if (classListeners2 == null) {
+			classListeners2 = classListeners = new ClassListeners<>();
+		}
+		classListeners2.addListener(classListener);
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
+		return ClassifierAllInstancesOperation.allInstances(executor, returnTypeId, this);
 	}
 
 	public @NonNull TypeId computeId() {
@@ -1176,6 +1381,20 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 		return unspecializedElement;
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
+	{
+		TemplateableElement oldUnspecializedElement = unspecializedElement;
+		unspecializedElement = newUnspecializedElement;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldUnspecializedElement, unspecializedElement));
+	}
+
 	@Override
 	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
 		getFlatClass().initFragments(fragments, depthCounts);;
@@ -1211,6 +1430,14 @@ public class ClassImpl extends AbstractClassImpl implements org.eclipse.ocl.pivo
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		FlatClass flatClass = getFlatClass(standardLibrary);
 		return flatClass.lookupImplementation(apparentOperation);
+	}
+
+	@Override
+	public synchronized void removeClassListener(ClassListeners.@NonNull IClassListener classListener) {
+		ClassListeners<ClassListeners.IClassListener> classListeners2 = classListeners;
+		if ((classListeners2 != null) && classListeners2.removeListener(classListener)) {
+			classListeners = null;
+		}
 	}
 
 	public void setFlatClass(@NonNull FlatClass flatClass) {

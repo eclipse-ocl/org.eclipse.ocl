@@ -55,11 +55,6 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
-	public R visitAbstractClass(org.eclipse.ocl.pivot.@NonNull AbstractClass object) {
-		return delegate.visitAbstractClass(object);
-	}
-
-	@Override
 	public R visitAnnotation(org.eclipse.ocl.pivot.@NonNull Annotation object) {
 		return delegate.visitAnnotation(object);
 	}
