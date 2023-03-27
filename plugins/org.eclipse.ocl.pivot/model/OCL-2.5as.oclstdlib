@@ -781,7 +781,7 @@ One can also use qualification by OclAny (name of the type) to explicitly refer 
 
 Operations of OclAny, where the instance of OclAny is called object.
 **/
-abstract type OclAny : AnyType {
+abstract type OclAny : AnyType => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/**
 	True if oclText[self] is the same object as object2. Infix operator.

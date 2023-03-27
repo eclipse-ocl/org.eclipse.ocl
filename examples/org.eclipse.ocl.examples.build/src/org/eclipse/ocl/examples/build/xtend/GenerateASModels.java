@@ -401,13 +401,6 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 	}
 
 	protected void mergeClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull CompleteClass completeClass) {
-	//	org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class) completeType2type.get(completeClass);
-	//	assert asClass != null;
-		//
-		//	Gather the partial aggregates.
-		//
-	//	boolean isAbstract = false;
-	//	boolean isInterface = false;
 		String instanceClassName = asClass.getInstanceClassName();
 		List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = PivotUtilInternal.getSuperClassesList(asClass);
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
@@ -442,112 +435,11 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 			asClass.setInstanceClassName(instanceClassName);
 		}
 		ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)superClasses, superClassComparator);
-		//
-		//	Populate from the aggregates.
-		/*
-		asClass.setIsAbstract(isAbstract);
-		asClass.setIsInterface(isInterface);
-		if (instanceClassName != null) {
-			asClass.setInstanceClassName(instanceClassName);
-		}
-		if (superClasses != null) {
-			List<org.eclipse.ocl.pivot.@NonNull Class> asSuperClasses = PivotUtilInternal.getSuperClassesList(asClass);
-			for (org.eclipse.ocl.pivot.@NonNull Class superClass : superClasses) {
-			//	CompleteClassInternal superCompleteClass = environmentFactory.getCompleteModel().getCompleteClass(superClass);
-				org.eclipse.ocl.pivot.Class unspecializedSuperClass = PivotUtil.getUnspecializedTemplateableElement(superClass);
-				org.eclipse.ocl.pivot.Class asSuperClass = (org.eclipse.ocl.pivot.Class) completeType2type.get(unspecializedSuperClass);
-				if (unspecializedSuperClass != superClass) {
-					if (superClass instanceof CollectionType) {
-						CollectionType superCollectionType = (CollectionType)superClass;
-						Type elementType = superCollectionType.getElementType();
-						Type asElementType = completeType2type.get(elementType);
-						asSuperClass = environmentFactory.getCompleteEnvironment().getCollectionType(asSuperClass, asElementType, superCollectionType.isIsNullFree(), superCollectionType.getLowerValue(), superCollectionType.getUpperValue());
-					}
-					else if (superClass instanceof MapType) {
-						MapType superMapType = (MapType)superClass;
-						Type keyType = superMapType.getKeyType();
-						Type valueType = superMapType.getValueType();
-						Type asKeyType = completeType2type.get(keyType);
-						Type asValueType = completeType2type.get(valueType);
-						asSuperClass = environmentFactory.getCompleteEnvironment().getMapType(asSuperClass, asKeyType, superMapType.isKeysAreNullFree(), asValueType, superMapType.isValuesAreNullFree());
-					}
-					else {
-						throw new UnsupportedOperationException();
-					}
-				}
-				if (asSuperClass == null) {
-					asSuperClass = superClass;			// A specialization
-				}
-				if (!asSuperClasses.contains(asSuperClass)) {
-					asSuperClasses.add(asSuperClass);
-				}
-			}
-		} */
 	}
 
 	protected void mergePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CompletePackage completePackage) {
-	/*	org.eclipse.ocl.pivot.Package asPackage = helper.createPackage(NameUtil.getName(completePackage), completePackage.getNsPrefix(), uri);
-		asPackages.add(asPackage);
-		List<@NonNull TemplateSignature> templateSignatures = new ArrayList<>();
-		Map<@NonNull NamedElement, @NonNull Type> completeType2type = new HashMap<>();
-		//
-		//	Create the empty classes and discover the template signatures.
-		//
-		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = new ArrayList<>();
-		Iterable<@NonNull CompleteClass> completeClasses = PivotUtil.getOwnedCompleteClasses(completePackage);
-		for (@NonNull CompleteClass completeClass : completeClasses) {
-			EClass eClass = completeClass.getPrimaryClass().eClass();
-			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)PivotFactory.eINSTANCE.create(eClass);
-			asClass.setName(NameUtil.getName(completeClass));
-			asClasses.add(asClass);
-			completeType2type.put(completeClass, asClass);
-			for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
-				completeType2type.put(partialClass, asClass);
-				TemplateSignature templateSignature = partialClass.getOwnedSignature();
-				if (templateSignature != null) {
-					List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(templateSignature);
-					if (templateParameters != null) {
-						templateSignatures.add(templateSignature);
-					}
-				}
-				// XXX Operation TemplateSignature
-			}
-		}
-		Collections.sort(asClasses, NameUtil.NAMEABLE_COMPARATOR);
-		asPackage.getOwnedClasses().addAll(asClasses);
-		//
-		//	Parameterize the classes.
-		//
-		for (@NonNull TemplateSignature templateSignature : templateSignatures) {
-			TemplateableElement templateableElement = templateSignature.getOwningElement();
-			TemplateableElement asTemplateableElement = (TemplateableElement)completeType2type.get(templateableElement);
-			if (asTemplateableElement != null) {
-				List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(templateSignature);
-				assert templateParameters != null;
-				@NonNull TemplateParameter[] asTemplateParameters = new @NonNull TemplateParameter[templateParameters.size()];
-				for (int i = 0; i < templateParameters.size(); i++) {
-					@NonNull TemplateParameter templateParameter = templateParameters.get(i);
-					List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses = templateParameter.getConstrainingClasses();
-					org.eclipse.ocl.pivot.@NonNull Class [] asConstrainingClasses = new org.eclipse.ocl.pivot.@NonNull Class[constrainingClasses.size()];
-					for (int j = 0; j < constrainingClasses.size(); j++) {
-						org.eclipse.ocl.pivot.@NonNull Class constrainingClass = constrainingClasses.get(i);
-						org.eclipse.ocl.pivot.Class asConstrainingClass = (org.eclipse.ocl.pivot.Class)completeType2type.get(constrainingClass);
-						asConstrainingClasses[i] = asConstrainingClass != null ? asConstrainingClass : constrainingClass;
-					}
-					TemplateParameter asTemplateParameter = PivotUtil.createTemplateParameter(NameUtil.getName(templateParameter), asConstrainingClasses);
-					asTemplateParameters[i] = asTemplateParameter;
-					completeType2type.put(templateParameter, asTemplateParameter);
-				}
-				/*TemplateSignature asTemplateSignature =* / PivotUtil.createTemplateSignature(asTemplateableElement, asTemplateParameters);
-			}
-		} */
-		//
-		//	Populate the classes.
-		//
-		Iterable<@NonNull CompleteClass> ownedCompleteClasses = PivotUtil.getOwnedCompleteClasses(completePackage);
-		List<@NonNull CompleteClass> savedOwnedCompleteClasses = Lists.newArrayList(ownedCompleteClasses);
-		for (@NonNull CompleteClass completeClass : ownedCompleteClasses) {
-			if ("OclInvalid".equals(completeClass.getName())) {
+		for (@NonNull CompleteClass completeClass : PivotUtil.getOwnedCompleteClasses(completePackage)) {
+			if ("OclAny".equals(completeClass.getName())) {
 				getClass();		// XXX
 			}
 			org.eclipse.ocl.pivot.Class asClass = null;
@@ -559,29 +451,18 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 			}
 			if (asClass == null) {
 				org.eclipse.ocl.pivot.Class primaryClass = completeClass.getPrimaryClass();
-			//	PivotUtilInternal.resetContainer(primaryClass);
-			//	asClass = primaryClass;
 				asClass = (org.eclipse.ocl.pivot.Class) PivotFactory.eINSTANCE.create(primaryClass.eClass());
 				asClass.setName(primaryClass.getName());
 				asPackage.getOwnedClasses().add(asClass);
-			//	asClass = (org.eclipse.ocl.pivot.Class) PivotFactory.eINSTANCE.create(primaryClass.eClass());
-			//	asClass.setName(NameUtil.getName(primaryClass));
 			}
 			mergeClass(asClass, completeClass);
 		}
 	}
 
 	protected @Nullable ASResource  mergeResources(@NonNull URI mergedURI, @NonNull ASResource asResource1, @NonNull ASResource asResource2) {
-	//	PivotHelper helper = new PivotHelper(environmentFactory);
 		ASResource asResource = asResource1;
 		Model asModel = PivotUtil.getModel(asResource);
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
-	//	for (CompletePackage completePackage : completeModel.getAllCompletePackages()) {
-	//		if (PivotConstants.METAMODEL_NAME.equals(completePackage.getURI())) {
-	//			mergePackage(asModel.getOwnedPackages(), helper, completePackage);
-	//		}
-	//	}
-
 		for (CompletePackage completePackage : completeModel.getAllCompletePackages()) {
 			if (PivotConstants.METAMODEL_NAME.equals(completePackage.getURI())) {
 				org.eclipse.ocl.pivot.Package asPackage = null;
@@ -591,22 +472,14 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 						break;
 					}
 				}
-				if (asPackage == null) {
-					org.eclipse.ocl.pivot.Package primaryPackage = completePackage.getPrimaryPackage();
-					PivotUtilInternal.resetContainer(primaryPackage);
-					asPackage = primaryPackage;
-					asModel.getOwnedPackages().add(asPackage);
-				//	asClass = (org.eclipse.ocl.pivot.Class) PivotFactory.eINSTANCE.create(primaryClass.eClass());
-				//	asClass.setName(NameUtil.getName(primaryClass));
-				}
+				assert asPackage != null;
+				//	org.eclipse.ocl.pivot.Package primaryPackage = completePackage.getPrimaryPackage();
+				//	PivotUtilInternal.resetContainer(primaryPackage);
+				//	asPackage = primaryPackage;
+				//	asModel.getOwnedPackages().add(asPackage);
 				mergePackage(asPackage, completePackage);
 			}
 		}
-
-
-
-
-
 		return asResource;
 	}
 

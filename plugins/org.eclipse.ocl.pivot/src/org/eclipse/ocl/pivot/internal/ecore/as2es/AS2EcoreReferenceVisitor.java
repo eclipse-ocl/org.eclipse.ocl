@@ -309,7 +309,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eGenericTypes.clear();
 		for (org.eclipse.ocl.pivot.Class pivotObject : superClasses) {
 			// Skip OCL's pseudo-supertypes.
-			if ((pivotObject != oclAnyType) /*&& (pivotObject != oclElementType) && (pivotObject != oclTypeType)*/) {			// XXX
+		//	if ((pivotObject != oclAnyType) /*&& (pivotObject != oclElementType) && (pivotObject != oclTypeType)*/) {			// XXX
 				EObject superEClass = typeRefVisitor.safeVisit(pivotObject);
 				if (superEClass != null) {
 					if (superEClass instanceof EGenericType) {
@@ -320,7 +320,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					}
 				}
 				// else error
-			}
+		//	}
 		}
 	}
 

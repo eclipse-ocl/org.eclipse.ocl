@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pivot:Model [
-<!ENTITY _0 "Pivot.ecore.oclas">
+<!ENTITY _0 "Pivotas.ecore.oclas">
 ]>
 <pivot:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot"
-    xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore.merged.oclas" name="Pivot.ecore.merged.oclas"
+    xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/org.eclipse.ocl.pivot/model/Pivotas.ecore.merged.oclas" name="Pivotas.ecore.merged.oclas"
     xmiidVersion="1">
   <ownedPackages xsi:type="pivot:Library" xmi:id="S673I" URI="http://www.eclipse.org/ocl/2023/Library" name="ocl" nsPrefix="ocl">
     <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">

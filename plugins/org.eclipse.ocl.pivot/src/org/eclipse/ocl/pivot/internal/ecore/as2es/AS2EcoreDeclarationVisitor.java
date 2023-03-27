@@ -341,7 +341,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		Class<?> instanceClass = null;
 		String name = pivotAnyType.getName();
 		if (TypeId.OCL_ANY_NAME.equals(name)) {
-	//		instanceClass = Object.class;
+			instanceClass = Object.class;
 		}
 		eClass.setInstanceClass(instanceClass);
 		eClass.setAbstract(true);
