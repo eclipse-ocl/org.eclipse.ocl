@@ -769,7 +769,7 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	static property valueType : V[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 }
 
-	/**
+/**
 	The number of elements in the collection oclText[self].essions.
 OclAny is itself an instance of the metatype AnyType.
 
