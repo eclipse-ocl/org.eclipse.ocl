@@ -20,8 +20,9 @@
   <modelPluginVariables>org.eclipse.ocl.pivot</modelPluginVariables>
   <modelPluginVariables>org.eclipse.ocl.examples.codegen</modelPluginVariables>
   <modelPluginVariables>org.eclipse.jdt.annotation</modelPluginVariables>
-  <genPackages prefix="OCLAS" basePackage="org.eclipse.ocl.as" disposableProviderFactory="true"
-      generateExampleClass="false" contentTypeIdentifier="org.eclipse.ocl.oclas" ecorePackage="../model-gen/oclas.ecore#/">
+  <genPackages prefix="OCLAS" basePackage="org.eclipse.ocl" disposableProviderFactory="true"
+      classPackageSuffix="internal" generateExampleClass="false" contentTypeIdentifier="org.eclipse.ocl.oclas"
+      ecorePackage="../model-gen/oclas.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="../model-gen/oclas.ecore#//AssociativityKind"/>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="../model-gen/oclas.ecore#//CollectionKind"/>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="../model-gen/oclas.ecore#//PseudostateKind"/>

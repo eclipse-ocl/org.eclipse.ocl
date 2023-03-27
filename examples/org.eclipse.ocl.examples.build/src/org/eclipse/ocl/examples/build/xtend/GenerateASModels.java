@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
@@ -453,6 +454,8 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 				org.eclipse.ocl.pivot.Class primaryClass = completeClass.getPrimaryClass();
 				asClass = (org.eclipse.ocl.pivot.Class) PivotFactory.eINSTANCE.create(primaryClass.eClass());
 				asClass.setName(primaryClass.getName());
+			//	asClass = EcoreUtil.copy(primaryClass);
+			//	asClass.getSuperClasses().clear();
 				asPackage.getOwnedClasses().add(asClass);
 			}
 			mergeClass(asClass, completeClass);
@@ -460,16 +463,23 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 	}
 
 	protected @Nullable ASResource  mergeResources(@NonNull URI mergedURI, @NonNull ASResource asResource1, @NonNull ASResource asResource2) {
-		ASResource asResource = asResource1;
+		ASResource asResource = asResource1;	// XXX pivot rather than oclstdlib once pivot has collection types
 		Model asModel = PivotUtil.getModel(asResource);
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		for (CompletePackage completePackage : completeModel.getAllCompletePackages()) {
 			if (PivotConstants.METAMODEL_NAME.equals(completePackage.getURI())) {
 				org.eclipse.ocl.pivot.Package asPackage = null;
+				String name = null;
 				for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : PivotUtil.getPartialPackages(completePackage)) {
 					if (partialPackage.eContainer() == asModel) {
-						asPackage = partialPackage;
-						break;
+						if (asPackage == null) {
+							asPackage = partialPackage;
+						}
+					}
+					if (partialPackage.eClass() == PivotPackage.Literals.PACKAGE) {
+						if (name == null) {
+							name = partialPackage.getName();
+						}
 					}
 				}
 				assert asPackage != null;
@@ -478,6 +488,9 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 				//	asPackage = primaryPackage;
 				//	asModel.getOwnedPackages().add(asPackage);
 				mergePackage(asPackage, completePackage);
+				if (name != null) {
+			//		asPackage.setName(name);
+				}
 			}
 		}
 		return asResource;
