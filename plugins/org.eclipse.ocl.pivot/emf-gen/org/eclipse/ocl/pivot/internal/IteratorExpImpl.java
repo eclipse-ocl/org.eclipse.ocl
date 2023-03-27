@@ -23,6 +23,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.MapType;
@@ -38,7 +39,6 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -136,7 +136,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		}
 		Diagnostic diagnostic = null;
 		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(this);
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		try {
 			org.eclipse.ocl.pivot.Class oclComparableType = standardLibrary.getOclComparableType();
 			FlatClass comparableFlatClass = oclComparableType.getFlatClass(standardLibrary);

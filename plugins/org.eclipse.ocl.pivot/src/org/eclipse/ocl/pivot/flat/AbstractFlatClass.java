@@ -852,7 +852,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initOperations() {
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
-			name2partialOperations2 = name2partialOperations = new HashMap<@NonNull String, @NonNull PartialOperations>();
+			name2partialOperations2 = name2partialOperations = new HashMap<>();
 //			Set<CompleteClass> allSuperCompleteClasses = new HashSet<CompleteClass>();
 //			allSuperCompleteClasses.add(completeClass);
 //			for (CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {

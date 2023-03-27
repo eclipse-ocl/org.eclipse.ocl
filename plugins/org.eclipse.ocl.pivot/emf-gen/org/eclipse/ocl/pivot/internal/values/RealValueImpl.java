@@ -20,7 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.RealLiteralExp;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -305,7 +305,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue {
 		return integerValue;
 	}
 
-	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull Type getType(@NonNull CompleteStandardLibrary standardLibrary) {
 		return standardLibrary.getRealType();
 	}
 

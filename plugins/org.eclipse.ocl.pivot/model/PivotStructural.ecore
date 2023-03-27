@@ -247,7 +247,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCompleteModel" lowerBound="1"
         eType="#//CompleteModel" containment="true" eOpposite="#//CompleteModel/owningCompleteEnvironment"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedStandardLibrary" lowerBound="1"
-        eType="#//StandardLibrary" containment="true" eOpposite="#//StandardLibrary/owningCompleteEnvironment"/>
+        eType="#//CompleteStandardLibrary" containment="true" eOpposite="#//CompleteStandardLibrary/owningCompleteEnvironment"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CompleteModel" eSuperTypes="#//NamedElement">
     <eOperations name="getOwnedCompletePackage" eType="#//CompletePackage">
@@ -302,6 +302,10 @@
         <details key="nullFree" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompleteStandardLibrary" eSuperTypes="#//StandardLibrary">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owningCompleteEnvironment"
+        eType="#//CompleteEnvironment" eOpposite="#//CompleteEnvironment/ownedStandardLibrary"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConnectionPointReference" eSuperTypes="#//Vertex">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -814,6 +818,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrderedSetType" eSuperTypes="#//CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" name="OrphanCompletePackage" eSuperTypes="#//CompletePackage"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Orphanage" eSuperTypes="#//Package"/>
   <eClassifiers xsi:type="ecore:EClass" name="Package" eSuperTypes="#//Namespace">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.&#xA;Package specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.&#xA;A package is used to group elements, and provides a namespace for the grouped elements."/>
@@ -1123,10 +1128,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StandardLibrary" eSuperTypes="#//Element">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="owningCompleteEnvironment"
-        eType="#//CompleteEnvironment" eOpposite="#//CompleteEnvironment/ownedStandardLibrary"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StandardLibrary" abstract="true" eSuperTypes="#//Element"/>
   <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="#//Namespace #//Vertex">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A State models a situation during which some (usually implicit) invariant condition holds."/>
@@ -1443,6 +1445,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInit" eType="#//OCLExpression"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TuplePart" instanceClassName="org.eclipse.ocl.pivot.types.TuplePart"
+      abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="TupleType" eSuperTypes="#//DataType"/>
   <eClassifiers xsi:type="ecore:EClass" name="Type" abstract="true" eSuperTypes="#//NamedElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1459,7 +1463,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="TypeExp" eSuperTypes="#//OCLExpression #//ReferringElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredType" eType="#//Type"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TypedElement" abstract="true" eSuperTypes="#//NamedElement">
+  <eClassifiers xsi:type="ecore:EClass" name="TypedElement" abstract="true" eSuperTypes="#//NamedElement #//TuplePart">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A TypedElement is a NamedElement that may have a Type specified for it."/>
     </eAnnotations>

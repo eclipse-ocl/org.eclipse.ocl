@@ -20,7 +20,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -150,6 +149,7 @@ implements CollectionType {
 	 */
 	protected CollectionTypeImpl() {
 		super();
+	//	System.out.println("CollectionTypeImpl " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -660,8 +660,7 @@ implements CollectionType {
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		CompleteEnvironment environment = idResolver.getEnvironment();
-		StandardLibrary standardLibrary = environment.getOwnedStandardLibrary();
+		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
 		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
 		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
 		FlatClass commonFlatClass = thisFlatClass.getCommonFlatClass(thatFlatClass);
@@ -674,23 +673,23 @@ implements CollectionType {
 			Type commonElementType = thisElementType.getCommonType(idResolver, thatElementType);
 			if (!commonFlatClass.isAbstract()) {
 				CollectionType commonCollectionType = (CollectionType)commonType;
-				return environment.getCollectionType(commonCollectionType, commonElementType, commonIsNullFree, null, null);
+				return standardLibrary.getCollectionType(commonCollectionType, commonElementType, commonIsNullFree, null, null);
 			}
 			else {
 				if (isOrdered() && thatCollectionType.isOrdered()) {
 					if (isUnique() && thatCollectionType.isUnique()) {
-						return environment.getOrderedSetType(commonElementType, commonIsNullFree, null, null);
+						return standardLibrary.getOrderedSetType(commonElementType, commonIsNullFree, null, null);
 					}
 					else {
-						return environment.getSequenceType(commonElementType, commonIsNullFree, null, null);
+						return standardLibrary.getSequenceType(commonElementType, commonIsNullFree, null, null);
 					}
 				}
 				else {
 					if (isUnique() && thatCollectionType.isUnique()) {
-						return environment.getSetType(commonElementType, commonIsNullFree, null, null);
+						return standardLibrary.getSetType(commonElementType, commonIsNullFree, null, null);
 					}
 					else {
-						return environment.getBagType(commonElementType, commonIsNullFree, null, null);
+						return standardLibrary.getBagType(commonElementType, commonIsNullFree, null, null);
 					}
 				}
 			}

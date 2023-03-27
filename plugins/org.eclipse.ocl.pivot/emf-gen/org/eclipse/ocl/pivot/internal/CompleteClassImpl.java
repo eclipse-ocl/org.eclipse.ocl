@@ -28,19 +28,18 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -54,11 +53,8 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
@@ -67,8 +63,6 @@ import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -417,7 +411,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public boolean conformsTo(@NonNull Type elementType) {
-		StandardLibrary standardLibrary = getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = getStandardLibrary();
 		FlatClass thisFlatClass = getFlatClass();
 		FlatClass thatFlatClass = elementType.getFlatClass(standardLibrary);
 		if (thisFlatClass == thatFlatClass) {
@@ -452,7 +446,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 				Element templateArgument = templateArguments.get(i);
 				if (templateArgument instanceof Type) {
 					Type actualType = (Type) templateArgument;
-					TemplateParameterSubstitution templateParameterSubstitution = CompleteClasses.createTemplateParameterSubstitution(formalParameter, actualType);
+					TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, actualType);
 					templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 				}
 			}
@@ -465,7 +459,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 //			specializedMetaclass.setInstanceType(instanceType);
 //		}
 		specializedType.setUnspecializedElement(unspecializedType);
-		Orphanage orphanage = getCompleteModel().getOrphanage();
+		Orphanage orphanage = getCompleteModel().getSharedOrphanage();
 		specializedType.setOwningPackage(orphanage);
 		return specializedType;
 	}
@@ -493,16 +487,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		if (owningCompletePackage != null) {
 			owningCompletePackage.getPartialPackages().uninstalled(this);
 		}
-	}
-
-	@Override
-	public @Nullable CollectionType findCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return null;
-	}
-
-	@Override
-	public @Nullable MapType findMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return null;
 	}
 
 	public synchronized @Nullable Type findSpecializedType(@NonNull TemplateParameters templateArguments) {
@@ -560,11 +544,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		throw new UnsupportedOperationException("Not a collection");
-	}
-
-	@Override
 	public final @NonNull CompleteFlatClass getFlatClass() {
 		CompleteFlatClass flatClass2 = flatClass;
 		if (flatClass2 == null) {
@@ -582,11 +561,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	@Override
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return getCompleteModel().getEnvironmentFactory();
-	}
-
-	@Override
-	public @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		throw new UnsupportedOperationException("Not a map");
 	}
 
 	public @NonNull Iterable<@NonNull Operation> getMemberOperations() {
@@ -769,7 +743,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		}
 	}
 
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return getCompleteModel().getStandardLibrary();
 	}
 

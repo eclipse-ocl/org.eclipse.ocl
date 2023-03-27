@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -706,5 +707,10 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	public @NonNull MapType getContainerType() {
 		TemplateableElement unspecializedElement2 = unspecializedElement;
 		return unspecializedElement2 != null ? (MapType)unspecializedElement2 : this;
+	}
+
+	@Override
+	public @NonNull MapTypeId getTypeId() {
+		return (MapTypeId) super.getTypeId();
 	}
 } //MapTypeImpl

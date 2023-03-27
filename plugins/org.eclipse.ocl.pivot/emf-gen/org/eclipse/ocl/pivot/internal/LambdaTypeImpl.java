@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -605,7 +606,7 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 			synchronized (this) {
 				parametersId2 = parametersId;
 				if (parametersId2 == null) {
-					List<Type> parameterTypes = getParameterType();
+					List<? extends Type> parameterTypes = getParameterTypes();
 					@NonNull TypeId @NonNull [] typeIds = new @NonNull TypeId[2+parameterTypes.size()];
 					typeIds[0] = getContextType().getTypeId();
 					typeIds[1] = getResultType().getTypeId();
@@ -622,5 +623,28 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	@Override
 	public @NonNull List<? extends Type> getParameterTypes() {
 		return getParameterType();
+	}
+
+	@Override
+	public @NonNull LambdaTypeId getTypeId() {
+		return (LambdaTypeId) super.getTypeId();
+	}
+
+	@Override
+	public boolean isWellContained() {
+		Type type = getContextType();
+		if ((type == null) || !type.isWellContained()) {
+			return false;
+		}
+		type = getResultType();
+		if ((type == null) || !type.isWellContained()) {
+			return false;
+		}
+		for (Type asType : getParameterTypes()) {
+			if ((asType == null) || !asType.isWellContained()) {
+				return false;
+			}
+		}
+		return super.isWellContained();
 	}
 } //LambdaTypeImpl

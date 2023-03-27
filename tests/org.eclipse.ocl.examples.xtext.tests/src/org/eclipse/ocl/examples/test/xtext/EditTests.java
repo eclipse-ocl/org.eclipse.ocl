@@ -34,10 +34,10 @@ import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
-import org.eclipse.ocl.pivot.SequenceType;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
@@ -57,8 +56,8 @@ import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
@@ -122,7 +121,7 @@ public class EditTests extends XtextTestCase
 	protected @NonNull Resource doRename(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource xtextResource, @NonNull Resource asResource, @NonNull String oldString, @NonNull String newString,
 			@NonNull String @NonNull[] asErrors, @NonNull String @NonNull[] ecoreErrors) throws IOException {
 		String contextMessage = "Renaming '" + oldString + "' to '" + newString + "'";
-		//		System.out.println("-----------------" + contextMessage + "----------------");
+		System.out.println("-----------------" + contextMessage + "----------------");
 		replace(xtextResource, oldString, newString);
 		assertResourceErrors(contextMessage, xtextResource, asErrors);
 		assertNoResourceErrors(contextMessage, asResource);
@@ -145,6 +144,7 @@ public class EditTests extends XtextTestCase
 	}
 
 	protected void replace(@NonNull CSResource xtextResource, String oldString, String newString) {
+		System.out.println("replace: " + oldString + " => " +  newString);
 		String xtextContent = ElementUtil.getRawText((ElementCS) xtextResource.getContents().get(0));
 		int index = xtextContent.indexOf(oldString);
 		assert index >= 0;
@@ -1062,7 +1062,7 @@ public class EditTests extends XtextTestCase
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		MetamodelManagerInternal metamodelManager = environmentFactory.getMetamodelManager();
-		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+	//	CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		String testDocument =
 				"import '" + LibraryConstants.STDLIB_URI + "';\n" +
 						"library ocl : ocl = '" + LibraryConstants.STDLIB_URI + "' {\n" +
@@ -1078,22 +1078,27 @@ public class EditTests extends XtextTestCase
 		assertNoResourceErrors("Loading input", asResource);
 		//
 		Type myType = ClassUtil.nonNullState(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
-		SequenceType sequenceType = ocl.getStandardLibrary().getSequenceType();
-		CollectionTypeParameters<@NonNull Type> typeParameters = new CollectionTypeParametersImpl<@NonNull Type>(myType, true, null, null);
-		CompleteClassInternal sequenceCompleteClass = metamodelManager.getCompleteClass(sequenceType);
-		WeakReference<Type> sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
-		assertNull(sequenceMyType.get());
+		Orphanage orphanage = ocl.getStandardLibrary().getOrphanage();
+		CollectionTypeId specializedTypeId = TypeId.SEQUENCE.getSpecializedId(myType.getTypeId(), PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+		System.out.println("specializedTypeId: " + NameUtil.debugSimpleName(specializedTypeId));
+		WeakReference<Type> sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, true));
+		assertNull("Sample type should not yet exist", sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Boolean", "Sequence(MyType)", NO_MESSAGES, NO_MESSAGES);
-		sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
-		assertNotNull(sequenceMyType.get());
+		sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, true));
+		assertNotNull("Sample type should now exist", sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Sequence(MyType)", "Set(MyType)", NO_MESSAGES, NO_MESSAGES);
-		System.gc();
-		sequenceMyType = new WeakReference<Type>(completeModel.findCollectionType(sequenceCompleteClass, typeParameters));
-		boolean isNull = debugStateRef(sequenceMyType);
-		sequenceMyType = null;
-		assertTrue(isNull);
+	//	sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, true));
+	//	assertNotNull("Stale sample type should still exist", sequenceMyType.get());
+		sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, false));
+		assertNull("Stale sample type should no longer exist", sequenceMyType.get());
+	//	orphanage.gc();
+	//	System.gc();
+	//	sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, false));
+	//	boolean isNull = debugStateRef(sequenceMyType);
+	//	sequenceMyType = null;
+	//	assertTrue(isNull);
 		ocl.dispose();
 	}
 

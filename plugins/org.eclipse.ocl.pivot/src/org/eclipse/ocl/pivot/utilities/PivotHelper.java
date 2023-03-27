@@ -62,7 +62,7 @@ import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
@@ -92,7 +92,7 @@ import com.google.common.collect.Lists;
 public class PivotHelper
 {
 	protected final @NonNull EnvironmentFactory environmentFactory;
-	protected final @NonNull StandardLibrary standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	private final @NonNull PivotMetamodelManager metamodelManager;
 
 	public PivotHelper(@NonNull EnvironmentFactory environmentFactory) {
@@ -557,7 +557,7 @@ public class PivotHelper
 		return metamodelManager;
 	}
 
-	public @NonNull StandardLibrary getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return standardLibrary;
 	}
 

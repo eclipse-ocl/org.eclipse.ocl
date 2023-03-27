@@ -11,51 +11,11 @@
 package org.eclipse.ocl.examples.build.xtend
 
 import org.eclipse.ocl.pivot.Model
-import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
 
 class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 {
-	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
-		var pkge2classTypes = root.getSortedClassTypes();
-		if (pkge2classTypes.isEmpty()) return "";
-		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
-		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());
-		'''
-		«FOR pkge : sortedPackages»
-
-			«IF pkg == pkge»
-				«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
-				«ENDFOR»
-			«ELSE»
-				«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
-				«ENDFOR»
-			«ENDIF»
-		«ENDFOR»
-		'''
-	}
-
-	protected override String declareEnumerations(/*@NonNull*/ Model root) {
-		var pkge2enumerations = root.getSortedEnumerations();
-		if (pkge2enumerations.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2enumerations.keySet());
-		'''
-
-		«FOR pkge : sortedPackages»
-			«FOR enumeration : ClassUtil.nullFree(pkge2enumerations.get(pkge))»
-				«var enumerationName = enumeration.getPrefixedSymbolName("_" + enumeration.partialName())»
-				private final @NonNull Enumeration «enumerationName» = createEnumeration(«getEcoreLiteral(enumeration)»);
-				«FOR enumerationLiteral : enumeration.ownedLiterals»
-					private final @NonNull EnumerationLiteral «enumerationLiteral.getPrefixedSymbolName("el_"+enumerationName+"_"+enumerationLiteral.name)» = createEnumerationLiteral(«getEcoreLiteral(enumerationLiteral)»);
-				«ENDFOR»
-			«ENDFOR»
-		«ENDFOR»
-		'''
-	}
-
 	protected override String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var Model root = thisModel;
 		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
@@ -96,7 +56,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
 			import org.eclipse.ocl.pivot.AnyType;
-			import org.eclipse.ocl.pivot.BagType;
 			import org.eclipse.ocl.pivot.BooleanType;
 			import org.eclipse.ocl.pivot.Class;
 			import org.eclipse.ocl.pivot.CollectionType;
@@ -105,16 +64,13 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.EnumerationLiteral;
 			import org.eclipse.ocl.pivot.Model;
 			import org.eclipse.ocl.pivot.Operation;
-			import org.eclipse.ocl.pivot.OrderedSetType;
+			import org.eclipse.ocl.pivot.Orphanage;
 			import org.eclipse.ocl.pivot.Package;
 			import org.eclipse.ocl.pivot.Parameter;
-			import org.eclipse.ocl.pivot.PivotPackage;
 			import org.eclipse.ocl.pivot.Property;
-			import org.eclipse.ocl.pivot.SequenceType;
-			import org.eclipse.ocl.pivot.SetType;
+			import org.eclipse.ocl.pivot.StandardLibrary;
 			import org.eclipse.ocl.pivot.TemplateParameter;
 			import org.eclipse.ocl.pivot.ids.IdManager;
-			import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
@@ -151,13 +107,12 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				 */
 				public static final @NonNull URI PIVOT_AS_URI = URI.createURI("«uri»" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 
-				public static @NonNull Package create(@NonNull StandardLibraryInternal standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-					«javaClassName» resource = new ReadOnly(PIVOT_AS_URI);
+				public static @NonNull Package create(@NonNull StandardLibrary standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+					«javaClassName» metamodelResource = new ReadOnly(PIVOT_AS_URI);
 					Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
 					assert standardLibraryPackage != null;
-					Contents contents = new Contents(standardLibraryPackage, name, nsPrefix, nsURI);
+					Contents contents = new Contents(metamodelResource, standardLibraryPackage, name, nsPrefix, nsURI);
 					Model model = contents.getModel();
-					resource.getContents().add(model);
 					@SuppressWarnings("null")@NonNull Package pkge = model.getOwnedPackages().get(0);
 					return pkge;
 				}
@@ -168,14 +123,13 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				 *  is used as the default when no overriding copy is registered. 
 				 */
 				public static @NonNull «javaClassName» getDefault() {
-					«javaClassName» metamodel = INSTANCE;
-					if (metamodel == null) {
-						metamodel = INSTANCE = new ReadOnly(PIVOT_AS_URI);
-						Contents contents = new Contents(OCLstdlib.getDefaultPackage(), "«pkg.name»", "«pkg.nsPrefix»", PIVOT_URI);
-						metamodel.getContents().add(contents.getModel());
-						metamodel.setSaveable(false);
+					«javaClassName» metamodelResource = INSTANCE;
+					if (metamodelResource == null) {
+						metamodelResource = INSTANCE = new ReadOnly(PIVOT_AS_URI);
+						Contents contents = new Contents(metamodelResource, OCLstdlib.getDefaultPackage(), "«pkg.name»", "«pkg.nsPrefix»", PIVOT_URI);
+						metamodelResource.setSaveable(false);
 					}
-					return metamodel;
+					return metamodelResource;
 				}
 
 				/**
@@ -239,10 +193,10 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			
 				protected static class LibraryContents extends AbstractContents
 				{
-					protected final @NonNull Package standardLibrary;
+					protected final @NonNull Package libraryPackage;
 			
-					protected LibraryContents(@NonNull Package standardLibrary) {
-						this.standardLibrary = standardLibrary;
+					protected LibraryContents(@NonNull Package libraryPackage) {
+						this.libraryPackage = libraryPackage;
 					}
 				}
 			
@@ -288,7 +242,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 
 					@Override
 					public boolean isCompatibleWith(@NonNull String metamodelURI) {
-						return PIVOT_URI.equals(metamodelURI);
+						return org.eclipse.ocl.pivot.model.OCLmetamodel.PIVOT_URI.equals(metamodelURI);
 					}
 			
 					/**
@@ -325,52 +279,23 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == root.getOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 
-					protected Contents(@NonNull Package standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-						super(standardLibrary);
+					protected Contents(@NonNull «javaClassName» metamodelResource, @NonNull Package libraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+						super(libraryPackage);
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
+						metamodelResource.getContents().add(«root.getSymbolName()»);
 						«FOR pkge : root.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«FOR comment : pkge.ownedComments»
+							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»
-						«root.installPackages()»
-						«root.installClassTypes()»
-						«root.installPrimitiveTypes()»
-						«root.installEnumerations()»
-						«root.installCollectionTypes()»
-						«root.installLambdaTypes()»
-						«root.installTupleTypes()»
-						«root.installOperations()»
-						«root.installIterations()»
-						«root.installCoercions()»
-						«root.installProperties()»
-						«root.installTemplateBindings()»
-						«root.installPrecedences()»
-						«root.installComments()»
+						«ENDFOR»
+						«root.installAll()»
 					}
 					
 					public @NonNull Model getModel() {
 						return «root.getSymbolName()»;
 					}
-					«root.defineExternals()»
-					«root.definePackages()»
-					«root.declareClassTypes(excludedEClassifierNames)»
-					«root.declarePrimitiveTypes()»
-					«root.declareEnumerations()»
-					«root.defineTemplateParameters()»
-					«root.declareCollectionTypes()»
-					«root.declareTupleTypes()»
-					«root.defineClassTypes()»
-					«root.definePrimitiveTypes()»
-					«root.defineEnumerations()»
-					«root.defineCollectionTypes()»
-					«root.defineTupleTypes()»
-					«root.defineLambdaTypes()»
-					«root.defineOperations()»
-					«root.defineIterations()»
-					«root.defineCoercions()»
-					«root.defineProperties()»
-					«root.defineTemplateBindings()»
-					«root.definePrecedences()»
-					«root.defineComments()»
+					«root.defineAll(excludedEClassifierNames)»
 				}
 			}
 		'''

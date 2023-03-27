@@ -12,7 +12,10 @@ package org.eclipse.ocl.pivot.library.collection;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -27,5 +30,10 @@ public class CollectionUnionOperation extends AbstractSimpleBinaryOperation
 		CollectionValue leftCollectionValue = asCollectionValue(left);
 		CollectionValue rightCollectionValue = asCollectionValue(right);
 		return leftCollectionValue.union(rightCollectionValue);
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		return resolveSourceAndArgumentsAsCollectionReturnType(environmentFactory, callExp, returnType);
 	}
 }

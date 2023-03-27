@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2022 Willink Transformations and others.
+ * Copyright (c) 2011, 2023 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -68,16 +68,17 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cMultiplicityBoundsCSParserRuleCall_1_0 = (RuleCall)cAlternatives_1.eContents().get(0);
 		private final RuleCall cMultiplicityStringCSParserRuleCall_1_1 = (RuleCall)cAlternatives_1.eContents().get(1);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Keyword cVerticalLineQuestionMarkKeyword_2_0 = (Keyword)cAlternatives_2.eContents().get(0);
+		private final Assignment cIsNonNullFreeAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final Keyword cIsNonNullFreeVerticalLineQuestionMarkKeyword_2_0_0 = (Keyword)cIsNonNullFreeAssignment_2_0.eContents().get(0);
 		private final Assignment cIsNullFreeAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
 		private final Keyword cIsNullFree1Keyword_2_1_0 = (Keyword)cIsNullFreeAssignment_2_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 
 		//MultiplicityCS:
-		//	'[' (MultiplicityBoundsCS | MultiplicityStringCS) ('|?' | isNullFree?='|1')? ']';
+		//	'[' (MultiplicityBoundsCS | MultiplicityStringCS) (isNonNullFree?='|?' | isNullFree?='|1')? ']';
 		@Override public ParserRule getRule() { return rule; }
 
-		//'[' (MultiplicityBoundsCS | MultiplicityStringCS) ('|?' | isNullFree?='|1')? ']'
+		//'[' (MultiplicityBoundsCS | MultiplicityStringCS) (isNonNullFree?='|?' | isNullFree?='|1')? ']'
 		public Group getGroup() { return cGroup; }
 
 		//'['
@@ -92,11 +93,14 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 		//MultiplicityStringCS
 		public RuleCall getMultiplicityStringCSParserRuleCall_1_1() { return cMultiplicityStringCSParserRuleCall_1_1; }
 
-		//('|?' | isNullFree?='|1')?
+		//(isNonNullFree?='|?' | isNullFree?='|1')?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 
+		//isNonNullFree?='|?'
+		public Assignment getIsNonNullFreeAssignment_2_0() { return cIsNonNullFreeAssignment_2_0; }
+
 		//'|?'
-		public Keyword getVerticalLineQuestionMarkKeyword_2_0() { return cVerticalLineQuestionMarkKeyword_2_0; }
+		public Keyword getIsNonNullFreeVerticalLineQuestionMarkKeyword_2_0_0() { return cIsNonNullFreeVerticalLineQuestionMarkKeyword_2_0_0; }
 
 		//isNullFree?='|1'
 		public Assignment getIsNullFreeAssignment_2_1() { return cIsNullFreeAssignment_2_1; }
@@ -765,7 +769,7 @@ public class BaseGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MultiplicityCS:
-	//	'[' (MultiplicityBoundsCS | MultiplicityStringCS) ('|?' | isNullFree?='|1')? ']';
+	//	'[' (MultiplicityBoundsCS | MultiplicityStringCS) (isNonNullFree?='|?' | isNullFree?='|1')? ']';
 	public MultiplicityCSElements getMultiplicityCSAccess() {
 		return pMultiplicityCS;
 	}

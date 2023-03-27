@@ -27,7 +27,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
@@ -240,7 +239,7 @@ public class CGLibrary extends ASResourceImpl
 		private Contents(@NonNull String asURI)
 		{
 			model = createModel(asURI);
-			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL);
+			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL, null);
 			installPackages();
 			installPrimitiveTypes();
 			installOperations();
@@ -252,11 +251,11 @@ public class CGLibrary extends ASResourceImpl
 		}
 
 		private final @NonNull Package _ocl = getPackage(org.eclipse.ocl.pivot.model.OCLstdlib.getDefaultModel(), "ocl");
-		private final @NonNull Class _Boolean = getPrimitiveType(_ocl, "Boolean");
-		private final @NonNull Class _Integer = getPrimitiveType(_ocl, "Integer");
-		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
+		private final @NonNull Class _Boolean = getClass(_ocl, "Boolean");
+		private final @NonNull Class _Integer = getClass(_ocl, "Integer");
+		private final @NonNull Class _OclAny = getClass(_ocl, "OclAny");
 		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
-		private final @NonNull Class _String = getPrimitiveType(_ocl, "String");
+		private final @NonNull Class _String = getClass(_ocl, "String");
 
 		private void installPackages() {
 			model.getOwnedPackages().add(ocl);

@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -980,7 +981,8 @@ public abstract class UML2AS extends AbstractExternal2AS
 						}
 						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 						UnlimitedNaturalValue upperValue = upper == -1 ? ValueUtil.UNLIMITED_VALUE : ValueUtil.unlimitedNaturalValueOf(upper);
-						pivotType = environmentFactory.getMetamodelManager().getCollectionType(isOrdered, isUnique, pivotType, isNullFree == Boolean.TRUE, lowerValue, upperValue);
+						CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+						pivotType = standardLibrary.getCollectionType(genericCollectionType, pivotType, isNullFree == Boolean.TRUE, lowerValue, upperValue);
 					}
 				}
 				pivotElement.setType(pivotType);

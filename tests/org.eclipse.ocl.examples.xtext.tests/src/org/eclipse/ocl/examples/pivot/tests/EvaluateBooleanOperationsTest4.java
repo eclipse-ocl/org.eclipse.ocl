@@ -281,7 +281,9 @@ public class EvaluateBooleanOperationsTest4 extends PivotTestSuite
 	@Test public void testBooleanOr() {
 		TestOCL ocl = createOCL();
 		org.eclipse.ocl.pivot.Class classType = ocl.getStandardLibrary().getClassType();
-		//
+		ocl.assertQueryInvalid(null, "let a : Boolean = null in a or Sequence{true}->at(0)");
+// XXX
+	//
 		ocl.assertQueryFalse(null, "false or false");
 		ocl.assertQueryTrue(null, "false or true");
 		ocl.assertQueryTrue(null, "true or false");

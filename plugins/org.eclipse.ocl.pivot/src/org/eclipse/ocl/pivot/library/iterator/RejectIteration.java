@@ -56,7 +56,7 @@ public class RejectIteration extends AbstractIteration
 	 */
 	@Override
 	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
-		return resolveCollectionSourceReturnType(environmentFactory, callExp, returnType);
+		return resolveSourceAsCollectionReturnType(environmentFactory, callExp, returnType);
 	}
 
 	@Override

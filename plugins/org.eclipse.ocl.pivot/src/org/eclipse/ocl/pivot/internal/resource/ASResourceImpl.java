@@ -316,7 +316,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 1.18
 	 */
 	@Override
-	protected @NonNull PivotXMIHelperImpl createXMLHelper() {
+	protected @NonNull PivotXMIHelperImpl createXMLHelper() {		// XXX split load/save functionality; PivotXMIHelperImpl designed for save
 		return new PivotXMIHelperImpl(this);
 	}
 

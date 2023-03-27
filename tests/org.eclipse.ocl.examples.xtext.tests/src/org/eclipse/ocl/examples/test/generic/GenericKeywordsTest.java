@@ -21,7 +21,7 @@ import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -50,7 +50,7 @@ public abstract class GenericKeywordsTest extends PivotTestSuite
 		public MyOCL(@NonNull TestFileSystem testFileSystem, @NonNull String testPackageName, @NonNull String name, @Nullable ResourceSet externalResourceSet) {
 			super(testFileSystem, testPackageName, name, OCL.NO_PROJECTS, externalResourceSet);
 			MetamodelManager metamodelManager = getMetamodelManager();
-			StandardLibrary standardLibrary = metamodelManager.getStandardLibrary();
+			CompleteStandardLibrary standardLibrary = metamodelManager.getStandardLibrary();
 
 			// create a little test model for a Smalltalk-like collection class that
 			// defines operations corresponding to OCL iterators

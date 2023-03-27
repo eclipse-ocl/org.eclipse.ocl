@@ -19,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TupleType;
@@ -45,7 +46,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 
 	public PivotIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		super(environmentFactory.getMetamodelManager().getCompleteEnvironment());
+		super(environmentFactory.getStandardLibrary());
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 	}
@@ -87,15 +88,14 @@ public class PivotIdResolver extends AbstractIdResolver
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		if (value instanceof ElementExtension) {
 			Stereotype asStereotype = ((ElementExtension)value).getStereotype();
-			return asStereotype != null ? asStereotype : metamodelManager.getStandardLibrary().getOclInvalidType();
+			return asStereotype != null ? asStereotype : standardLibrary.getOclInvalidType();
 		}
 		return super.getStaticTypeOfValue(staticType, value);
 	}
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		TupleTypeManager tupleManager = metamodelManager.getCompleteModel().getTupleManager();
-		return tupleManager.getTupleType(this, typeId);
+		return standardLibrary.getTupleType(this, typeId);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class PivotIdResolver extends AbstractIdResolver
 			logger.error("Failed to convert '" + eType + "'", e);
 		}
 		//		return new DomainInvalidTypeImpl(standardLibrary, "No object created by Ecore2AS");
-		return metamodelManager.getStandardLibrary().getOclInvalidType();
+		return standardLibrary.getOclInvalidType();
 	}
 
 	@Override
@@ -174,7 +174,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		String completeURIorName = id.getName();
 		org.eclipse.ocl.pivot.Package rootPackage = standardLibrary.getRootPackage(completeURIorName);
 		if (rootPackage == null) {
-			Orphanage orphanage = metamodelManager.getCompleteModel().getOrphanage();
+			Orphanage orphanage = metamodelManager.getCompleteModel().getSharedOrphanage();
 			rootPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), completeURIorName);
 			if (rootPackage == null) {
 				return null;

@@ -147,7 +147,13 @@ public class Ecore2AS extends AbstractExternal2AS
 		boolean isNullFree;
 		EAnnotation eAnnotation = eObject.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 		if (eAnnotation != null) {
-			isNullFree = Boolean.valueOf(eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE));
+			String isNullFreeValue = eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE);
+			if (isNullFreeValue != null) {
+				isNullFree = Boolean.valueOf(isNullFreeValue);
+			}
+			else {
+				isNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
+			}
 		}
 		else {
 			EObject eContainer = eObject.eContainer();
@@ -155,7 +161,7 @@ public class Ecore2AS extends AbstractExternal2AS
 				isNullFree = isNullFree((ENamedElement)eContainer);
 			}
 			else {
-				isNullFree = true;		// UML collections are always null-free. Make it the undeclared default.
+				isNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE; // true;		// UML collections are always null-free. Make it the undeclared default.
 			}
 		}
 		return isNullFree;
@@ -945,7 +951,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		org.eclipse.ocl.pivot.Class unspecializedPivotClass = unspecializedPivotType.isClass();
 		assert unspecializedPivotClass != null;			// FIXME
-		return metamodelManager.getLibraryType(unspecializedPivotClass, templateArguments);
+		return standardLibrary.getLibraryType(unspecializedPivotClass, templateArguments);
 	}
 
 	/**

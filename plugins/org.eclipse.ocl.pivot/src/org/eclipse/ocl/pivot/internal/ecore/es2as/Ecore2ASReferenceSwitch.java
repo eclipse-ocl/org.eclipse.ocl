@@ -39,6 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -52,7 +53,6 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
@@ -89,7 +89,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 
 	protected final @NonNull Ecore2AS converter;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	private final @NonNull Property oclInvalidProperty;
 
 	public Ecore2ASReferenceSwitch(@NonNull Ecore2AS converter) {
@@ -118,7 +118,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			return this;
 		}
 		doSwitchAll(org.eclipse.ocl.pivot.Class.class, ClassUtil.<org.eclipse.ocl.pivot.Class>nullFree(pivotElement.getSuperClasses()), eClass.getEGenericSuperTypes());
-		if (pivotElement.getSuperClasses().isEmpty() && !(pivotElement instanceof AnyType) && !pivotElement .isIsInterface()) {
+		if (pivotElement.getSuperClasses().isEmpty() && !(pivotElement instanceof AnyType) /*&& !pivotElement .isIsInterface()*/) {	// CompaniesCS2AS.qvtc's Visiatbale needs OclElement
 			org.eclipse.ocl.pivot.Class superType = pivotElement instanceof Stereotype ? standardLibrary.getOclStereotypeType() : standardLibrary.getOclElementType();
 			pivotElement.getSuperClasses().add(superType);
 		}
@@ -324,7 +324,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 							}
 							else {
 								isRequired = true;
-								pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, false, lowerValue, upperValue);
+								CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+								pivotType = standardLibrary.getCollectionType(genericCollectionType, pivotType, false, lowerValue, upperValue);
 							}
 						}
 						else {
@@ -431,7 +432,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						if (valueProperty.getType() == null) {
 							return oclInvalidProperty;			// Retry later once type defined
 						}
-						pivotType = metamodelManager.getMapType((org.eclipse.ocl.pivot.Class)pivotType);
+						pivotType = standardLibrary.getMapOfEntryType((org.eclipse.ocl.pivot.Class)pivotType);
 					}
 					else {
 						boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);
@@ -439,7 +440,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						boolean isUnique = eTypedElement.isUnique();
 						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 						UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-						pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, isNullFree, lowerValue, upperValue);
+						CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+						pivotType = standardLibrary.getCollectionType(genericCollectionType, pivotType, isNullFree, lowerValue, upperValue);
 					}
 				}
 			}
@@ -542,8 +544,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				if ((keyType != null) && (valueType != null)) {
 					boolean keysAreNullFree = keyFeature.isRequired();
 					boolean valuesAreNullFree = valueFeature.isRequired();
-					org.eclipse.ocl.pivot.Class mapMetatype = standardLibrary.getMapType();
-					return metamodelManager.getCompleteEnvironment().getMapType(mapMetatype, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+					return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 				}
 			}
 		}

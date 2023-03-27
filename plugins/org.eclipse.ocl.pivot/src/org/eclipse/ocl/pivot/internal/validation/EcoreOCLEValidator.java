@@ -51,7 +51,7 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
@@ -885,7 +885,7 @@ public class EcoreOCLEValidator implements EValidator
 		if (asElement == null) {
 			return  false;
 		}
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
 		Type requiredType = null;
 		Constraint asConstraint = null;

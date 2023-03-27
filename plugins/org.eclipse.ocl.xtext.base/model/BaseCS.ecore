@@ -102,8 +102,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="MultiplicityCS" abstract="true" eSuperTypes="#//ElementCS">
     <eOperations name="getLower" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eOperations name="getUpper" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNonNullFree" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        unsettable="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isNullFree" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-        defaultValueLiteral="false"/>
+        unsettable="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MultiplicityStringCS" eSuperTypes="#//MultiplicityCS">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringBounds" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-String"

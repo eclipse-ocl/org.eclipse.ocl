@@ -463,8 +463,8 @@
         name="ownedCompleteModel" lowerBound="1" eType="#T-pivot-CompleteModel" containment="true"
         eOpposite="#F-pivot-CompleteModel-owningCompleteEnvironment"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteEnvironment-ownedStandardLibrary"
-        name="ownedStandardLibrary" lowerBound="1" eType="#T-pivot-StandardLibrary"
-        containment="true" eOpposite="#F-pivot-StandardLibrary-owningCompleteEnvironment"/>
+        name="ownedStandardLibrary" lowerBound="1" eType="#T-pivot-CompleteStandardLibrary"
+        containment="true" eOpposite="#F-pivot-CompleteStandardLibrary-owningCompleteEnvironment"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CompleteModel" name="CompleteModel"
       eSuperTypes="#T-pivot-NamedElement">
@@ -502,6 +502,11 @@
         name="owningCompletePackage" eType="#T-pivot-CompletePackage" eOpposite="#F-pivot-CompletePackage-ownedCompletePackages"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompletePackage-partialPackages"
         name="partialPackages" ordered="false" upperBound="-1" eType="#T-pivot-Package"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CompleteStandardLibrary" name="CompleteStandardLibrary"
+      eSuperTypes="#T-pivot-StandardLibrary">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteStandardLibrary-owningCompleteEnvironment"
+        name="owningCompleteEnvironment" eType="#T-pivot-CompleteEnvironment" eOpposite="#F-pivot-CompleteEnvironment-ownedStandardLibrary"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ConnectionPointReference"
       name="ConnectionPointReference" eSuperTypes="#T-pivot-Vertex">
@@ -2047,6 +2052,8 @@
       eSuperTypes="#T-pivot-CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OrphanCompletePackage" name="OrphanCompletePackage"
       eSuperTypes="#T-pivot-CompletePackage"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Orphanage" name="Orphanage"
+      eSuperTypes="#T-pivot-Package"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Package" name="Package" eSuperTypes="#T-pivot-Namespace">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.&#xA;Package specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.&#xA;A package is used to group elements, and provides a namespace for the grouped elements."/>
@@ -2665,10 +2672,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-StandardLibrary" name="StandardLibrary"
-      eSuperTypes="#T-pivot-Element">
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-StandardLibrary-owningCompleteEnvironment"
-        name="owningCompleteEnvironment" eType="#T-pivot-CompleteEnvironment" eOpposite="#F-pivot-CompleteEnvironment-ownedStandardLibrary"/>
-  </eClassifiers>
+      abstract="true" eSuperTypes="#T-pivot-Element"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-State" name="State" eSuperTypes="#T-pivot-Namespace #T-pivot-Vertex">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A State models a situation during which some (usually implicit) invariant condition holds."/>
@@ -3049,6 +3053,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TupleLiteralPart-ownedInit"
         name="ownedInit" eType="#T-pivot-OCLExpression" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TuplePart" name="TuplePart"
+      instanceClassName="org.eclipse.ocl.pivot.types.TuplePart" abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TupleType" name="TupleType"
       eSuperTypes="#T-pivot-DataType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Type" name="Type" abstract="true"
@@ -3079,7 +3085,7 @@
         name="referredType" eType="#T-pivot-Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TypedElement" name="TypedElement"
-      abstract="true" eSuperTypes="#T-pivot-NamedElement">
+      abstract="true" eSuperTypes="#T-pivot-NamedElement #T-pivot-TuplePart">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A TypedElement is a NamedElement that may have a Type specified for it."/>
     </eAnnotations>

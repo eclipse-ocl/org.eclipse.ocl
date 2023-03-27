@@ -191,4 +191,19 @@ public interface PivotConstants
 	static final @NonNull String OCL_DELEGATE_URI_PIVOT = OCLConstants.OCL_DELEGATE_URI_PIVOT;
 
 	static final @NonNull String OCL_DELEGATE_URI_DEBUG = OCLConstants.OCL_DELEGATE_URI_DEBUG;
+
+	/**
+	 * Whether the default semantics for Collection elements is null free. See discussion in Bug 581851.
+	 */
+	static final boolean DEFAULT_COLLECTIONS_ARE_NULL_FREE = true;			// Legacy MultiplicityCS.isNullFree default is false
+
+	/**
+	 * Whether the default semantics for Map keys is null free.
+	 */
+	static final boolean DEFAULT_MAP_KEYS_ARE_NULL_FREE = true;
+
+	/**
+	 * Whether the default semantics for Map values is null free.
+	 */
+	static final boolean DEFAULT_MAP_VALUES_ARE_NULL_FREE = true;
 }

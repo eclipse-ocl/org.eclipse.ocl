@@ -103,4 +103,9 @@ public interface TemplateableElement
 	 */
 	void setUnspecializedElement(TemplateableElement value);
 
+	/**
+	 * Return true if this TemplateableElement and all transitively referenced types have a non-null eResource().
+	 */
+	boolean isWellContained();
+
 } // TemplateableElement

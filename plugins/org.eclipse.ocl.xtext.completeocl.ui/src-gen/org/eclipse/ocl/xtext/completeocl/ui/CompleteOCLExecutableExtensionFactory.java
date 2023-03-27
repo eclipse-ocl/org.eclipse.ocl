@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2022 Willink Transformations and others.
+ * Copyright (c) 2011, 2023 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -10,11 +10,12 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.completeocl.ui;
 
-import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
+
+import org.eclipse.ocl.xtext.completeocl.ui.internal.CompleteOCLActivator;
 
 /**
  * This class was generated. Customizations should only happen in a newly

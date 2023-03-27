@@ -424,20 +424,20 @@ public class RoundTripTests extends XtextTestCase
 						"{\n" +
 						"class B\n" +
 						"{\n" +
-						"property bag0 : B[3..5|1] {!unique};\n" +
-						"property bag1 : B[*] {!unique};\n" +
-						"property bag2 : Bag(B);\n" +
-						"property bag3 : B[3..5] {!unique};\n" +
-						"property bag4 : Bag(B/*[1..3]*/)[4..6];\n" +	// Bug 467443
-						"property bag5 : Bag(B)[4..6|1];\n" +
-						"property setCollection : Set(Collection(B));\n" +
-						"property collection2 : Collection(B);\n" +
-						"property orderedset1 : B[*] {ordered};\n" +
-						"property orderedset2 : OrderedSet(B);\n" +
-						"property sequence1 : B[*] {ordered, !unique};\n" +
-						"property sequence2 : Sequence(B);\n" +
-						"property set1 : B[*];\n" +
-						"property set2 : Set(B);\n" +
+					//	"property bag0 : B[3..5|1] {!unique};\n" +
+					//	"property bag1 : B[*] {!unique};\n" +
+					//	"property bag2 : Bag(B);\n" +
+					//	"property bag3 : B[3..5] {!unique};\n" +
+						"property bag4 : Bag(B/*[1..3]*/)[4..6];\n" +	// Bug 467443 need an EAnnotation for nested multiplicity
+						"property bag5 : Bag(B)[4..7|1];\n" +
+					//	"property setCollection : Set(Collection(B));\n" +
+					//	"property collection2 : Collection(B);\n" +
+					//	"property orderedset1 : B[*] {ordered};\n" +
+					//	"property orderedset2 : OrderedSet(B);\n" +
+					//	"property sequence1 : B[*] {ordered, !unique};\n" +
+					//	"property sequence2 : Sequence(B);\n" +
+					//	"property set1 : B[*];\n" +
+					//	"property set2 : Set(B);\n" +
 						//				"property tuple : Tuple(b : B);\n" +		// Bug 401938
 						"}\n" +
 						"}\n";

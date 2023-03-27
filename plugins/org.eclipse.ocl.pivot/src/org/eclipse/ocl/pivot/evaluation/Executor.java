@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -52,8 +51,6 @@ public interface Executor extends Evaluator
 	}
 	@Override
 	@Nullable Object evaluate(@NonNull OCLExpression body);
-	@Override
-	@NonNull CompleteEnvironment getCompleteEnvironment();
 	//	@Override
 	@NonNull EnvironmentFactory getEnvironmentFactory();
 	@Override

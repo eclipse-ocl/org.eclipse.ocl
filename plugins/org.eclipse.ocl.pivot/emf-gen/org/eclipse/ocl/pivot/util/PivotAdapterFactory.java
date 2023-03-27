@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociationClass;
@@ -90,6 +91,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -114,7 +116,7 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StateMachine;
@@ -143,6 +145,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
@@ -312,6 +315,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseCompletePackage(CompletePackage object)
 			{
 				return createCompletePackageAdapter();
+			}
+			@Override
+			public Adapter caseCompleteStandardLibrary(CompleteStandardLibrary object)
+			{
+				return createCompleteStandardLibraryAdapter();
 			}
 			@Override
 			public Adapter caseConnectionPointReference(ConnectionPointReference object)
@@ -599,6 +607,11 @@ extends AdapterFactoryImpl {
 				return createOrphanCompletePackageAdapter();
 			}
 			@Override
+			public Adapter caseOrphanage(Orphanage object)
+			{
+				return createOrphanageAdapter();
+			}
+			@Override
 			public Adapter casePackage(org.eclipse.ocl.pivot.Package object)
 			{
 				return createPackageAdapter();
@@ -802,6 +815,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseTupleLiteralPart(TupleLiteralPart object)
 			{
 				return createTupleLiteralPartAdapter();
+			}
+			@Override
+			public Adapter caseTuplePart(TuplePart object)
+			{
+				return createTuplePartAdapter();
 			}
 			@Override
 			public Adapter caseTupleType(TupleType object)
@@ -1748,6 +1766,21 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.Orphanage <em>Orphanage</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.Orphanage
+	 * @generated
+	 */
+	public Adapter createOrphanageAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.PrimitiveType <em>Primitive Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2065,6 +2098,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTupleLiteralPartAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.types.TuplePart <em>Tuple Part</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.types.TuplePart
+	 * @generated
+	 */
+	public Adapter createTuplePartAdapter()
+	{
 		return null;
 	}
 
@@ -2581,6 +2629,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCompletePackageAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary <em>Complete Standard Library</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.CompleteStandardLibrary
+	 * @generated
+	 */
+	public Adapter createCompleteStandardLibraryAdapter()
 	{
 		return null;
 	}

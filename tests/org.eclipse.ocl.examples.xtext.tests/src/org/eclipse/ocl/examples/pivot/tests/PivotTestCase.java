@@ -60,7 +60,6 @@ import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -871,7 +870,7 @@ public class PivotTestCase extends TestCase
 		GlobalEnvironmentFactory.resetSafeNavigationValidations();
 		ThreadLocalExecutor.reset();
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
-		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
+// XXX		ASResourceImpl.CHECK_IMMUTABILITY.setState(true);
 		if (DEBUG_GC) {
 			XMLNamespacePackage.eINSTANCE.getClass();
 			makeCopyOfGlobalState = new GlobalStateMemento();

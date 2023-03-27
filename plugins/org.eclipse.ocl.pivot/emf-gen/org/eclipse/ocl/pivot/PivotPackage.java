@@ -2231,17 +2231,6 @@ extends EPackage
 	EClass getStandardLibrary();
 
 	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.StandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Owning Complete Environment</em>'.
-	 * @see org.eclipse.ocl.pivot.StandardLibrary#getOwningCompleteEnvironment()
-	 * @see #getStandardLibrary()
-	 * @generated
-	 */
-	EReference getStandardLibrary_OwningCompleteEnvironment();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.MessageType <em>Message Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2461,6 +2450,16 @@ extends EPackage
 	 * @generated
 	 */
 	EClass getOrphanCompletePackage();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Orphanage <em>Orphanage</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Orphanage</em>'.
+	 * @see org.eclipse.ocl.pivot.Orphanage
+	 * @generated
+	 */
+	EClass getOrphanage();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.PrimitiveType <em>Primitive Type</em>}'.
@@ -3407,6 +3406,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.types.TuplePart <em>Tuple Part</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Tuple Part</em>'.
+	 * @see org.eclipse.ocl.pivot.types.TuplePart
+	 * @generated
+	 */
+	EClass getTuplePart();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TupleType <em>Tuple Type</em>}'.
@@ -5199,6 +5208,27 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getCompletePackage__GetOwnedCompleteClass__String();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary <em>Complete Standard Library</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Complete Standard Library</em>'.
+	 * @see org.eclipse.ocl.pivot.CompleteStandardLibrary
+	 * @generated
+	 */
+	EClass getCompleteStandardLibrary();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Owning Complete Environment</em>'.
+	 * @see org.eclipse.ocl.pivot.CompleteStandardLibrary#getOwningCompleteEnvironment()
+	 * @see #getCompleteStandardLibrary()
+	 * @generated
+	 */
+	EReference getCompleteStandardLibrary_OwningCompleteEnvironment();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.ConnectionPointReference <em>Connection Point Reference</em>}'.
@@ -7671,14 +7701,6 @@ extends EPackage
 		EClass STANDARD_LIBRARY = eINSTANCE.getStandardLibrary();
 
 		/**
-		 * The meta object literal for the '<em><b>Owning Complete Environment</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT = eINSTANCE.getStandardLibrary_OwningCompleteEnvironment();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.MessageTypeImpl <em>Message Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7860,6 +7882,16 @@ extends EPackage
 		 * @generated
 		 */
 		EClass ORPHAN_COMPLETE_PACKAGE = eINSTANCE.getOrphanCompletePackage();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.OrphanageImpl <em>Orphanage</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.OrphanageImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOrphanage()
+		 * @generated
+		 */
+		EClass ORPHANAGE = eINSTANCE.getOrphanage();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl <em>Primitive Type</em>}' class.
@@ -8625,6 +8657,16 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.types.TuplePart <em>Tuple Part</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.types.TuplePart
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTuplePart()
+		 * @generated
+		 */
+		EClass TUPLE_PART = eINSTANCE.getTuplePart();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TupleTypeImpl <em>Tuple Type</em>}' class.
@@ -10043,6 +10085,24 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation COMPLETE_PACKAGE___GET_OWNED_COMPLETE_CLASS__STRING = eINSTANCE.getCompletePackage__GetOwnedCompleteClass__String();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl <em>Complete Standard Library</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getCompleteStandardLibrary()
+		 * @generated
+		 */
+		EClass COMPLETE_STANDARD_LIBRARY = eINSTANCE.getCompleteStandardLibrary();
+
+		/**
+		 * The meta object literal for the '<em><b>Owning Complete Environment</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT = eINSTANCE.getCompleteStandardLibrary_OwningCompleteEnvironment();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.ConnectionPointReferenceImpl <em>Connection Point Reference</em>}' class.

@@ -22,11 +22,11 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -130,7 +130,7 @@ public class FinalAnalysis
 			return Collections.singletonList(operation);
 		}
 		List<@NonNull Operation> results = new ArrayList<>();
-		StandardLibraryInternal standardLibrary = completeModel.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
 		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
 			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);
@@ -172,7 +172,7 @@ public class FinalAnalysis
 			return operation;
 		}
 		Operation candidate = null;
-		StandardLibraryInternal standardLibrary = completeModel.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
 		FlatClass requiredFlatClass = completeClass.getFlatClass();
 		for (@NonNull Operation override : overrides) {
 			FlatClass overrideFlatClass = override.getFlatClass(standardLibrary);

@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -1612,5 +1613,29 @@ implements Operation {
 			}
 		}
 		return operationId2;
+	}
+
+	@Override
+	public boolean isWellContained() {
+		Type type = getType();
+		if ((type == null) || !type.isWellContained()) {
+			return false;
+		}
+		for (Parameter asParameter : getOwnedParameters()) {
+			type = asParameter.getType();
+			if ((type == null) || !type.isWellContained()) {
+				return false;
+			}
+		}
+		for (TemplateBinding templateBinding : getOwnedBindings()) {
+			for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
+				Type actual = templateParameterSubstitution.getActual();
+				Type formal = templateParameterSubstitution.getFormal();
+				if ((actual == null) || (formal == null) || !actual.isWellContained() || !formal.isWellContained()) {
+					return false;
+				}
+			}
+		}
+		return eResource() != null;
 	}
 } //OperationImpl

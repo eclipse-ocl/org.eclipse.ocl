@@ -43,8 +43,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -252,7 +253,6 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	@SuppressWarnings("serial")
 	private static class MyList extends ArrayList<Object> {}	// Private list to ensure that My List is never confused with a user List
 
-	protected final @NonNull CompleteEnvironment environment;
 	protected final @NonNull StandardLibrary standardLibrary;
 	private final @NonNull Set<@NonNull EObject> directRoots = new HashSet<>();
 	private boolean directRootsProcessed = false;
@@ -288,9 +288,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 */
 	protected final @NonNull Stack<@Nullable Type> staticTypeStack = new Stack<>();
 
-	public AbstractIdResolver(@NonNull CompleteEnvironment environment) {
-		this.environment = environment;
-		this.standardLibrary = environment.getOwnedStandardLibrary();
+	public AbstractIdResolver(@NonNull StandardLibrary standardLibrary) {
+		this.standardLibrary = standardLibrary;
 	}
 
 	protected abstract org.eclipse.ocl.pivot.@NonNull Package addEPackage(@NonNull EPackage ePackage);
@@ -506,7 +505,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				enumerator2enumerationLiteralId2 = enumerator2enumerationLiteralId;
 				if (enumerator2enumerationLiteralId2 == null) {
 					enumerator2enumerationLiteralId = enumerator2enumerationLiteralId2 = new HashMap<>();
-					for (@NonNull CompletePackage dPackage : standardLibrary.getAllCompletePackages()) {
+					for (@NonNull CompletePackage dPackage : ((CompleteStandardLibrary)standardLibrary).getAllCompletePackages()) {
 						for (org.eclipse.ocl.pivot.Class dType : dPackage.getAllClasses()) {
 							if (dType instanceof Enumeration) {
 								for (EnumerationLiteral dEnumerationLiteral : ((Enumeration) dType).getOwnedLiterals()) {
@@ -794,17 +793,20 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionTypeId typeId) {
-		return getCollectionType(typeId, false, null, null);
+		return getCollectionType(typeId, null, null, null);
 	}
 
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionTypeId typeId, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionTypeId typeId, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		CollectionTypeId generalizedId = typeId.getGeneralizedId();
-		if ((typeId == generalizedId) && !isNullFree && (lower == null) && (upper == null)) {
+		if ((typeId == generalizedId) && PivotUtil.hasDefaultCollectionValueBindings(isNullFree, lower, upper)) {
 			if (generalizedId == TypeId.BAG) {
 				return standardLibrary.getBagType();
 			}
 			else if (generalizedId == TypeId.COLLECTION) {
 				return standardLibrary.getCollectionType();
+			}
+			else if (generalizedId == TypeId.ORDERED_COLLECTION) {
+				return standardLibrary.getOrderedCollectionType();
 			}
 			else if (generalizedId == TypeId.ORDERED_SET) {
 				return standardLibrary.getOrderedSetType();
@@ -826,19 +828,25 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			TypeId elementTypeId = typeId.getElementTypeId();
 			Type elementType = getType(elementTypeId);
 			if (generalizedId == TypeId.BAG) {
-				return environment.getBagType(elementType, isNullFree, lower, upper);
+				return standardLibrary.getBagType(elementType, isNullFree, lower, upper);
 			}
 			else if (generalizedId == TypeId.COLLECTION) {
-				return environment.getCollectionType(standardLibrary.getCollectionType(), elementType, isNullFree, lower, upper);
+				return standardLibrary.getCollectionType(standardLibrary.getCollectionType(), elementType, isNullFree, lower, upper);
+			}
+			else if (generalizedId == TypeId.ORDERED_COLLECTION) {
+				return standardLibrary.getCollectionType(standardLibrary.getOrderedCollectionType(), elementType, isNullFree, lower, upper);
 			}
 			else if (generalizedId == TypeId.ORDERED_SET) {
-				return environment.getOrderedSetType(elementType, isNullFree, lower, upper);
+				return standardLibrary.getOrderedSetType(elementType, isNullFree, lower, upper);
 			}
 			else if (generalizedId == TypeId.SEQUENCE) {
-				return environment.getSequenceType(elementType, isNullFree, lower, upper);
+				return standardLibrary.getSequenceType(elementType, isNullFree, lower, upper);
 			}
 			else if (generalizedId == TypeId.SET) {
-				return environment.getSetType(elementType, isNullFree, lower, upper);
+				return standardLibrary.getSetType(elementType, isNullFree, lower, upper);
+			}
+			else if (generalizedId == TypeId.UNIQUE_COLLECTION) {
+				return standardLibrary.getCollectionType(standardLibrary.getUniqueCollectionType(), elementType, isNullFree, lower, upper);
 			}
 			else {
 				throw new UnsupportedOperationException();
@@ -922,11 +930,6 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	}
 
 	@Override
-	public @NonNull CompleteEnvironment getEnvironment() {
-		return environment;
-	}
-
-	@Override
 	public synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Class<?> javaClass) {
 		Type type = key2type.get(javaClass);
 		if (type instanceof JavaType) {
@@ -982,7 +985,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			Type keyType = getType(keyTypeId);
 			Type valueType = getType(valueTypeId);
 			if (generalizedId == TypeId.MAP) {
-				return environment.getMapType(standardLibrary.getMapType(), keyType, keysAreNullFree, valueType, valuesAreNullFree);
+				return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 			}
 			else {
 				throw new UnsupportedOperationException();
@@ -1688,9 +1691,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public @NonNull Type visitClassId(@NonNull ClassId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
 		assert parentPackage != null;
-		Type nestedType = environment.getNestedType(parentPackage, id.getName());
+		Type nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, id.getName());
+			nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 			throw new UnsupportedOperationException();
 		}
 		return nestedType;
@@ -1703,7 +1706,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		}
 		CollectionTypeId collectionTypeId = id.getGeneralizedId();
 		org.eclipse.ocl.pivot.Class collectionType = getCollectionType(collectionTypeId);
-		return environment.getCollectionType(collectionType, elementType, false, null, null);
+		return standardLibrary.getCollectionType((CollectionType) collectionType, elementType, false, null, null);
 	}
 
 	@Override
@@ -1715,9 +1718,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public @NonNull Type visitDataTypeId(@NonNull DataTypeId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
 		assert parentPackage != null;
-		Type nestedType = environment.getNestedType(parentPackage, id.getName());
+		Type nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, id.getName());
+			nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 			if (nestedType == null) {
 				throw new UnsupportedOperationException();
 			}
@@ -1729,9 +1732,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public @NonNull Enumeration visitEnumerationId(@NonNull EnumerationId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
 		assert parentPackage != null;
-		Type nestedType = environment.getNestedType(parentPackage, id.getName());
+		Type nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, id.getName());
+			nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 			throw new UnsupportedOperationException();
 		}
 		if (!(nestedType instanceof Enumeration)) {
@@ -1772,7 +1775,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public org.eclipse.ocl.pivot.@NonNull Package visitNestedPackageId(@NonNull NestedPackageId packageId) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) packageId.getParent().accept(this);
 		assert parentPackage != null;
-		org.eclipse.ocl.pivot.Package nestedPackage = environment.getNestedPackage(parentPackage, packageId.getName());
+		org.eclipse.ocl.pivot.Package nestedPackage = standardLibrary.getNestedPackage(parentPackage, packageId.getName());
 		if (nestedPackage == null) {
 			throw new UnsupportedOperationException();
 		}

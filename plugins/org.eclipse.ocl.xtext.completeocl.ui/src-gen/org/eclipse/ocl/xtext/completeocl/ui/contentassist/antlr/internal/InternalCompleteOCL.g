@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2022 Willink Transformations and others.
+ * Copyright (c) 2011, 2023 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -4361,11 +4361,9 @@ rule__MultiplicityCS__Alternatives_2
     }
 :
 (
-{ before(grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0()); }
-
-	'|?'
-
-{ after(grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0()); }
+{ before(grammarAccess.getMultiplicityCSAccess().getIsNonNullFreeAssignment_2_0()); }
+(rule__MultiplicityCS__IsNonNullFreeAssignment_2_0)
+{ after(grammarAccess.getMultiplicityCSAccess().getIsNonNullFreeAssignment_2_0()); }
 )
 
     |(
@@ -19369,6 +19367,29 @@ rule__MultiplicityBoundsCS__UpperBoundAssignment_1_1
 (
 { before(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundUPPERParserRuleCall_1_1_0()); }
 	ruleUPPER{ after(grammarAccess.getMultiplicityBoundsCSAccess().getUpperBoundUPPERParserRuleCall_1_1_0()); }
+)
+
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__MultiplicityCS__IsNonNullFreeAssignment_2_0
+    @init {
+		int stackSize = keepStackSize();
+    }
+:
+(
+{ before(grammarAccess.getMultiplicityCSAccess().getIsNonNullFreeVerticalLineQuestionMarkKeyword_2_0_0()); }
+(
+{ before(grammarAccess.getMultiplicityCSAccess().getIsNonNullFreeVerticalLineQuestionMarkKeyword_2_0_0()); }
+
+	'|?'
+
+{ after(grammarAccess.getMultiplicityCSAccess().getIsNonNullFreeVerticalLineQuestionMarkKeyword_2_0_0()); }
+)
+
+{ after(grammarAccess.getMultiplicityCSAccess().getIsNonNullFreeVerticalLineQuestionMarkKeyword_2_0_0()); }
 )
 
 ;

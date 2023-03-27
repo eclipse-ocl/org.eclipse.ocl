@@ -6,3 +6,4 @@
 /.antlr-generator-3.2.0-patch.jar
 /latex-gen/
 /model-ref/
+/.polyglot.build.properties

@@ -21,7 +21,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 
 public interface MetamodelManager
 {
@@ -48,7 +48,7 @@ public interface MetamodelManager
 
 	@NonNull Property getPrimaryProperty(@NonNull Property pivotProperty);
 
-	@NonNull StandardLibrary getStandardLibrary();
+	@NonNull CompleteStandardLibrary getStandardLibrary();
 
 	/**
 	 * Convert the specification of an OCL expression from textual CS form to parsed executable AS form. The textual form typically

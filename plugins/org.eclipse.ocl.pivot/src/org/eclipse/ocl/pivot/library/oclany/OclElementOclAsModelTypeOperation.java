@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
  * OclElementOclAsModelTypeOperation realises the OclElement::oclAsModelType() library operation.
- * 
+ *
  * @since 1.1
  */
 public class OclElementOclAsModelTypeOperation extends AbstractUntypedBinaryOperation

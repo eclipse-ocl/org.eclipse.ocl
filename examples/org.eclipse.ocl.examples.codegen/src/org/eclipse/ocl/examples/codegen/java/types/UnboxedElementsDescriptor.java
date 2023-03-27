@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -30,10 +30,10 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class UnboxedElementsDescriptor extends AbstractCollectionDescriptor implements UnboxedDescriptor
 {
-	protected final @NonNull StandardLibrary standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final @NonNull Type type;
 
-	public UnboxedElementsDescriptor(@NonNull CollectionTypeId collectionTypeId, @NonNull StandardLibrary standardLibrary, @NonNull Type type) {
+	public UnboxedElementsDescriptor(@NonNull CollectionTypeId collectionTypeId, @NonNull CompleteStandardLibrary standardLibrary, @NonNull Type type) {
 		super(collectionTypeId);
 		this.standardLibrary = standardLibrary;
 		this.type = type;

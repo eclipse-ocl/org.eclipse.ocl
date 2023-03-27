@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 
 /**
@@ -101,4 +102,7 @@ public interface LambdaType extends DataType
 
 	@NonNull ParametersId getParametersId();
 	@NonNull List<? extends Type> getParameterTypes();
+
+	@Override
+	@NonNull LambdaTypeId getTypeId();
 } // LambdaType

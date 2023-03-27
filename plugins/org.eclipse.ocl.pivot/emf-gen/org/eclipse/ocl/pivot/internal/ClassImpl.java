@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
@@ -46,6 +47,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -1267,6 +1269,10 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				@Override
 				public void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
 					assert partialClass != null;
+					Orphanage orphanage = partialClass.basicGetSharedOrphanage();
+					if (orphanage != null) {
+						orphanage.addReference(partialClass, ClassImpl.this);
+					}
 					if (classListeners != null) {
 						classListeners.didAddSuperClass(partialClass);
 					}
@@ -1275,6 +1281,10 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				@Override
 				protected void didRemove(int index, org.eclipse.ocl.pivot.Class partialClass) {
 					assert partialClass != null;
+					Orphanage orphanage = partialClass.basicGetSharedOrphanage();
+					if (orphanage != null) {
+						orphanage.removeReference(partialClass, ClassImpl.this);
+					}
 					if (classListeners != null) {
 						classListeners.didRemoveSuperClass(partialClass);
 					}
@@ -1359,6 +1369,13 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 		return typeId2;
 	}
 
+	public @NonNull TypeId immutableGetTypeId() {
+		if (typeId != null) {
+			return typeId;
+		}
+		return computeId();
+	}
+
 	@Override
 	public @NonNull TemplateParameters getTypeParameters() {
 		return TemplateSignatureImpl.getTypeParameters(getOwnedSignature());
@@ -1418,6 +1435,20 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @Nullable TemplateParameter isTemplateParameter() {
 		return null;
+	}
+
+	@Override
+	public boolean isWellContained() {
+		for (TemplateBinding templateBinding : getOwnedBindings()) {
+			for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
+				Type actual = templateParameterSubstitution.getActual();
+				Type formal = templateParameterSubstitution.getFormal();
+				if ((actual == null) || (formal == null) || !actual.isWellContained() || !formal.isWellContained()) {
+					return false;
+				}
+			}
+		}
+		return super.isWellContained();
 	}
 
 	@Override

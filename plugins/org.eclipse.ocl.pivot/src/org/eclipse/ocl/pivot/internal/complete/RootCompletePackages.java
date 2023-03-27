@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 
 public class RootCompletePackages extends AbstractCompletePackages
 {
@@ -38,7 +38,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 	}
 
 	protected @NonNull CompletePackageInternal createRootCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
-		if (Orphanage.isTypeOrphanage(pivotPackage)) {
+		if (OrphanageImpl.isOrphanage(pivotPackage)) {
 			return getCompleteModel().getOrphanCompletePackage();
 		}
 		else {

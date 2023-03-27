@@ -107,8 +107,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
 		Type referenceType = referenceClass;// != null ? PivotUtil.getBehavioralType(referenceClass) : null;
 		Type candidateType = candidateClass;// != null ? PivotUtil.getBehavioralType(candidateClass) : null;
-		Type specializedReferenceType = referenceType != null ? completeModel.getSpecializedType(referenceType, referenceBindings) : null;
-		Type specializedCandidateType = candidateType != null ? completeModel.getSpecializedType(candidateType, candidateBindings) : null;
+		Type specializedReferenceType = referenceType != null ? environmentFactory.getStandardLibrary().getSpecializedType(referenceType, referenceBindings) : null;
+		Type specializedCandidateType = candidateType != null ? environmentFactory.getStandardLibrary().getSpecializedType(candidateType, candidateBindings) : null;
 		if ((reference instanceof Iteration) && (candidate instanceof Iteration) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
 			int iteratorCountDelta = ((Iteration)candidate).getOwnedIterators().size() - ((Iteration)reference).getOwnedIterators().size();
 			if (iteratorCountDelta != 0) {
@@ -144,8 +144,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 			Parameter candidateParameter = candidateParameters.get(i);
 			referenceType = PivotUtilInternal.getType(referenceParameter);//.behavioralType();
 			candidateType = PivotUtilInternal.getType(candidateParameter);//.behavioralType();
-			specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
-			specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
+			specializedReferenceType = environmentFactory.getStandardLibrary().getSpecializedType(referenceType, referenceBindings);
+			specializedCandidateType = environmentFactory.getStandardLibrary().getSpecializedType(candidateType, candidateBindings);
 			if (argumentType != specializedReferenceType) {
 				referenceConversions++;
 			}

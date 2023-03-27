@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2022 Willink Transformations and others.
+ * Copyright (c) 2011, 2023 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -151,7 +151,7 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	 *     MultiplicityCS returns MultiplicityBoundsCS
 	 *
 	 * Constraint:
-	 *     (lowerBound=LOWER upperBound=UPPER? isNullFree?='|1'?)
+	 *     (lowerBound=LOWER upperBound=UPPER? (isNonNullFree?='|?' | isNullFree?='|1')?)
 	 * </pre>
 	 */
 	protected void sequence_MultiplicityBoundsCS_MultiplicityCS(ISerializationContext context, MultiplicityBoundsCS semanticObject) {
@@ -165,7 +165,7 @@ public abstract class AbstractBaseSemanticSequencer extends AbstractDelegatingSe
 	 *     MultiplicityCS returns MultiplicityStringCS
 	 *
 	 * Constraint:
-	 *     ((stringBounds='*' | stringBounds='+' | stringBounds='?') isNullFree?='|1'?)
+	 *     ((stringBounds='*' | stringBounds='+' | stringBounds='?') (isNonNullFree?='|?' | isNullFree?='|1')?)
 	 * </pre>
 	 */
 	protected void sequence_MultiplicityCS_MultiplicityStringCS(ISerializationContext context, MultiplicityStringCS semanticObject) {

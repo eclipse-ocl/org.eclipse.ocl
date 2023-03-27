@@ -26,12 +26,12 @@ import org.eclipse.ocl.pivot.values.SetValue;
 public class OclAnyOclAsSetOperation extends AbstractUnaryOperation
 {
 	public static final @NonNull OclAnyOclAsSetOperation INSTANCE = new OclAnyOclAsSetOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @NonNull SetValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue);
 	}
 
 	/**
