@@ -11,14 +11,13 @@
 package org.eclipse.ocl.examples.build.xtend
 
 import org.eclipse.ocl.pivot.DataType
-import org.eclipse.ocl.pivot.Model
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
 
 class GenerateASModelsXtend extends GenerateASModels
 {
-	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
+/*	protected override String declareClassTypes(/*@NonNull* / Model root, /*@NonNull* / Collection</*@NonNull* / String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
 		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
@@ -35,26 +34,7 @@ class GenerateASModelsXtend extends GenerateASModels
 			«ENDFOR»
 		«ENDFOR»
 		'''
-	}
-
-	protected override String declarePrimitiveTypes(/*@NonNull*/ Model root) {
-		var pkge2primitiveTypes = root.getSortedPrimitiveTypes();
-		if (pkge2primitiveTypes.isEmpty()) return "";
-		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
-		var sortedPackages = root.getSortedPackages(pkge2primitiveTypes.keySet());
-		'''
-			«FOR pkge : sortedPackages»
-
-				«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
-					«IF pkg == pkge && !excludedEClassifierNames.contains(type.name)»
-						private final @NonNull PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = createPrimitiveType(«getEcoreLiteral(type)»);
-					«ELSE»
-						private final @NonNull PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = createPrimitiveType("«type.name»");
-					«ENDIF»
-				«ENDFOR»
-			«ENDFOR»
-		'''
-	}
+	} */
 
 	protected def String defineConstantType(DataType type) {'''
 		«IF "Boolean".equals(type.name)»
@@ -306,7 +286,7 @@ class GenerateASModelsXtend extends GenerateASModels
 
 					@Override
 					public boolean isCompatibleWith(@NonNull String metamodelURI) {
-						return OCLmetamodel.PIVOT_URI.equals(metamodelURI);
+						return org.eclipse.ocl.pivot.model.OCLmetamodel.PIVOT_URI.equals(metamodelURI);
 					}
 			
 					/**
@@ -366,50 +346,17 @@ class GenerateASModelsXtend extends GenerateASModels
 						«thisModel.getSymbolName()» = createModel(asURI);
 						«FOR pkge : thisModel.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«FOR comment : pkge.ownedComments»
+							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»
-						«thisModel.installPackages()»
-						«thisModel.installClassTypes()»
-						«thisModel.installPrimitiveTypes()»
-						«thisModel.installEnumerations()»
-						«thisModel.installCollectionTypes()»
-						«thisModel.installMapTypes()»
-						«thisModel.installLambdaTypes()»
-						«thisModel.installTupleTypes()»
-						«thisModel.installOperations()»
-						«thisModel.installIterations()»
-						«thisModel.installCoercions()»
-						«thisModel.installProperties()»
-						«thisModel.installTemplateBindings()»
-						«thisModel.installPrecedences()»
-						«thisModel.installComments()»
+						«ENDFOR»
+						«thisModel.installAll()»
 					}
 			
 					public @NonNull Model getModel() {
 						return «thisModel.getSymbolName()»;
 					}
-					«thisModel.defineExternals()»
-					«thisModel.definePackages()»
-					«thisModel.declareClassTypes(excludedEClassifierNames)»
-					«thisModel.declarePrimitiveTypes()»
-					«thisModel.declareEnumerations()»
-					«thisModel.defineTemplateParameters()»
-					«thisModel.declareTupleTypes()»
-					«thisModel.declareCollectionTypes()»
-					«thisModel.declareMapTypes()»
-					«thisModel.defineClassTypes()»
-					«thisModel.definePrimitiveTypes()»
-					«thisModel.defineEnumerations()»
-					«thisModel.defineCollectionTypes()»
-					«thisModel.defineMapTypes()»
-					«thisModel.defineTupleTypes()»
-					«thisModel.defineLambdaTypes()»
-					«thisModel.defineOperations()»
-					«thisModel.defineIterations()»
-					«thisModel.defineCoercions()»
-					«thisModel.defineProperties()»
-					«thisModel.defineTemplateBindings()»
-					«thisModel.definePrecedences()»
-					«thisModel.defineComments()»
+					«thisModel.defineAll(excludedEClassifierNames)»
 				}
 			}
 		'''

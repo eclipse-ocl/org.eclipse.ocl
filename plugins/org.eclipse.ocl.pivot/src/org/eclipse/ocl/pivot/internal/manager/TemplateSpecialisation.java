@@ -17,9 +17,9 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
@@ -92,13 +92,11 @@ public class TemplateSpecialisation
 		return false;
 	}
 
-	protected final @NonNull CompleteEnvironment environment;
-	//	protected final @NonNull DomainStandardLibrary standardLibrary;
+	protected final @NonNull StandardLibrary standardLibrary;
 	protected /*@LazyNonNull*/ Map<TemplateParameter, Type> bindings = null;
 
-	public TemplateSpecialisation(@NonNull CompleteEnvironment environment) {
-		this.environment = environment;
-		//		this.standardLibrary = environment.getStandardLibrary();
+	public TemplateSpecialisation(@NonNull StandardLibrary standardLibrary) {
+		this.standardLibrary = standardLibrary;
 	}
 
 	/**
@@ -116,10 +114,10 @@ public class TemplateSpecialisation
 			CollectionType collectionType = (CollectionType)referencedType;
 			Type elementType = getResolution(collectionType.getElementType());
 			if (elementType == null) {
-				elementType = environment.getOwnedStandardLibrary().getOclAnyType();
+				elementType = standardLibrary.getOclAnyType();
 			}
 			org.eclipse.ocl.pivot.Class containerType = ClassUtil.nonNullState(collectionType.getContainerType());
-			return environment.getCollectionType(containerType, elementType, false, collectionType.getLowerValue(), collectionType.getUpperValue());	// FIXME isNullFree
+			return standardLibrary.getCollectionType((CollectionType) containerType, elementType, false, collectionType.getLowerValue(), collectionType.getUpperValue());	// FIXME isNullFree
 		}
 		if (referencedType instanceof TupleType) {
 			//			DomainTupleType tupleType = (DomainTupleType)referencedType;

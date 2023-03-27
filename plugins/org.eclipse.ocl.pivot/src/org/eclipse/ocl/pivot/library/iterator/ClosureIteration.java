@@ -16,13 +16,13 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -73,9 +73,9 @@ public class ClosureIteration extends AbstractIteration
 						CollectionType returnCollectionType = (CollectionType)returnType;
 						if (returnCollectionType.isIsNullFree() != isNullFree) {
 							@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
-							PivotMetamodelManager metamodelManager = (PivotMetamodelManager)environmentFactory.getMetamodelManager();
-							returnType = metamodelManager.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique(),
-								elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
+							CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+							CollectionType genericCollectionType = standardLibrary.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
+							returnType = standardLibrary.getCollectionType(genericCollectionType, elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
 						}
 					}
 				}

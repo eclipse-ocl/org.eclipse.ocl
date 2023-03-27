@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -38,7 +39,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -114,13 +114,17 @@ public class OCLstdlibTests extends XtextTestCase
 		//	Check similar content
 		//
 		Map<String,Element> fileMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(asResource));
-		//		for (String moniker : fileMoniker2asMap.keySet()) {
-		//			System.out.println("File : " + moniker);
-		//		}
+	//	List<String> keySet1 = new ArrayList<>(fileMoniker2asMap.keySet());
+	//	Collections.sort(keySet1);
+	//	for (String moniker : keySet1) {
+	//		System.out.println("File : " + moniker);
+	//	}
 		Map<String,Element> javaMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(javaResource));
-		//		for (String moniker : javaMoniker2asMap.keySet()) {
-		//			System.out.println("Java : " + moniker);
-		//		}
+	//	List<String> keySet2 = new ArrayList<>(javaMoniker2asMap.keySet());
+	//	Collections.sort(keySet2);
+	//	for (String moniker : keySet2) {
+	//		System.out.println("Java : " + moniker);
+	//	}
 		//		assertEquals(fileMoniker2asMap.size(), javaMoniker2asMap.size());
 		for (String moniker : fileMoniker2asMap.keySet()) {
 			Element fileElement = fileMoniker2asMap.get(moniker);
@@ -408,7 +412,7 @@ public class OCLstdlibTests extends XtextTestCase
 		//
 		//	Load OCLmetamodel as pre-code-generated Java.
 		//
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		Library asLibrary = (Library) standardLibrary.getPackage();
 		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, asLibrary.getName(), asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
 		Resource javaResource = oclMetamodel.eResource();
@@ -433,7 +437,7 @@ public class OCLstdlibTests extends XtextTestCase
 		//
 		//	Load OCLmetamodel as pre-code-generated Java.
 		//
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		Library asLibrary = (Library) standardLibrary.getPackage();
 		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, asLibrary.getName(), asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
 		Resource javaResource = oclMetamodel.eResource();

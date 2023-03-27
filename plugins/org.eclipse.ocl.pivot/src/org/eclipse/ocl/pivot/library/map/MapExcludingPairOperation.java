@@ -12,7 +12,10 @@ package org.eclipse.ocl.pivot.library.map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.AbstractSimpleTernaryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.MapValue;
 
 /**
@@ -26,5 +29,10 @@ public class MapExcludingPairOperation extends AbstractSimpleTernaryOperation
 	public @NonNull MapValue evaluate(@Nullable Object first, @Nullable Object key, @Nullable Object value) {
 		MapValue mapValue = asMapValue(first);
 		return mapValue.excluding(key, value);
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		return resolveSourceAsMapReturnType(environmentFactory, callExp, returnType);
 	}
 }

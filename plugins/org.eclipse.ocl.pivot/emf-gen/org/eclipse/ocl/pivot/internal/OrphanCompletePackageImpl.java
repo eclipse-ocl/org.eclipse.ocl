@@ -11,30 +11,21 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -119,31 +110,11 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	}
 
 	@Override
-	public void assertSamePackage(org.eclipse.ocl.pivot.@Nullable Package domainPackage) {
-		assert domainPackage != null;
-		org.eclipse.ocl.pivot.Package parentPackage = domainPackage.getOwningPackage();
+	public void assertSamePackage(org.eclipse.ocl.pivot.@Nullable Package asPackage) {
+		assert asPackage != null;
+		org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
 		assert parentPackage == null;
-		assert Orphanage.isTypeOrphanage(domainPackage);
-	}
-
-	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		TemplateSignature templateSignature = containerType.getOwnedSignature();
-		if (templateSignature == null) {
-			throw new IllegalArgumentException("Collection type must have a template signature");
-		}
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-		if (templateParameters.size() != 1) {
-			throw new IllegalArgumentException("Collection type must have exactly one template parameter");
-		}
-		boolean isUnspecialized = elementType == templateParameters.get(0);
-		if (isUnspecialized) {
-			return containerType;
-		}
-		org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal completeClass = getCompleteModel().getCompleteClass(containerType);
-		@SuppressWarnings("unchecked")
-		T specializedType = (T) getCompleteModel().getCollectionType(completeClass, TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper));
-		return specializedType;
+		assert OrphanageImpl.isOrphanage(asPackage);
 	}
 
 	@Override

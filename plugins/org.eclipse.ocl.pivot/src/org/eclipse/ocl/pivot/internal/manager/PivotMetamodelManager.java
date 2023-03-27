@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -61,7 +62,6 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NullLiteralExp;
@@ -79,7 +79,6 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
@@ -87,13 +86,13 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
@@ -218,7 +217,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public static final @NonNull List<@NonNull Property> EMPTY_PROPERTY_LIST = Collections.<@NonNull Property>emptyList();
 	public static final @NonNull List<@NonNull State> EMPTY_STATE_LIST = Collections.<@NonNull State>emptyList();
 	public static final @NonNull List<@NonNull TemplateParameter> EMPTY_TEMPLATE_PARAMETER_LIST = Collections.emptyList();
-	private static final @NonNull List<TemplateParameter> EMPTY_TEMPLATE_PARAMETER_LIST2 = Collections.emptyList();
 	public static final @NonNull List<@NonNull Type> EMPTY_TYPE_LIST = Collections.<@NonNull Type>emptyList();
 
 	/**
@@ -244,7 +242,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	private final @NonNull StandardLibraryInternal standardLibrary;
+	private final @NonNull CompleteStandardLibrary standardLibrary;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
 
 	/**
@@ -419,8 +417,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			org.eclipse.ocl.pivot.Class candidateClass = candidate.getOwningClass();
 			Type referenceType = referenceClass != null ? PivotUtil.getBehavioralType(referenceClass) : null;
 			Type candidateType = candidateClass != null ? PivotUtil.getBehavioralType(candidateClass) : null;
-			Type specializedReferenceType = referenceType != null ? completeModel.getSpecializedType(referenceType, referenceBindings) : null;
-			Type specializedCandidateType = candidateType != null ? completeModel.getSpecializedType(candidateType, candidateBindings) : null;
+			Type specializedReferenceType = referenceType != null ? standardLibrary.getSpecializedType(referenceType, referenceBindings) : null;
+			Type specializedCandidateType = candidateType != null ? standardLibrary.getSpecializedType(candidateType, candidateBindings) : null;
 			if ((referenceType != candidateType) && (specializedReferenceType != null) && (specializedCandidateType != null)) {
 				if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
 					return 1;
@@ -448,8 +446,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			else {
 				Type referenceType = ClassUtil.nonNullState(PivotUtil.getType(referenceParameter));
 				Type candidateType = ClassUtil.nonNullState(PivotUtil.getType(candidateParameter));
-				Type specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
-				Type specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
+				Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
+				Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
 				if (referenceType != candidateType) {
 					if (!conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
 						referenceConformsToCandidate = false;
@@ -465,8 +463,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 		Type referenceType = ClassUtil.nonNullModel(reference.getOwningClass());
 		Type candidateType = ClassUtil.nonNullModel(candidate.getOwningClass());
-		Type specializedReferenceType = completeModel.getSpecializedType(referenceType, referenceBindings);
-		Type specializedCandidateType = completeModel.getSpecializedType(candidateType, candidateBindings);
+		Type specializedReferenceType = standardLibrary.getSpecializedType(referenceType, referenceBindings);
+		Type specializedCandidateType = standardLibrary.getSpecializedType(candidateType, candidateBindings);
 		if (referenceType != candidateType) {
 			if (conformsTo(specializedReferenceType, referenceBindings, specializedCandidateType, candidateBindings)) {
 				return 1;
@@ -538,7 +536,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		oppositeProperty.setName(oppositeName);
 		oppositeProperty.setIsImplicit(true);
 		if (!((NumberValue)upper).equals(ValueUtil.ONE_VALUE)) {
-			oppositeProperty.setType(getCollectionType(isOrdered, isUnique, localType, false, lower, upper));
+			CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+			oppositeProperty.setType(standardLibrary.getCollectionType(genericCollectionType, localType, null, lower, upper));
 			oppositeProperty.setIsRequired(true);
 		}
 		else {
@@ -590,10 +589,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 	}
 
-	public @NonNull Orphanage createOrphanage() {
-		return Orphanage.getOrphanage(asResourceSet);
-	}
-
 	/**
 	 * Return a parserContext suitable for parsing OCL expressions in the context of a pivot element.
 	 *
@@ -639,7 +634,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public @NonNull WildcardType createWildcardType(org.eclipse.ocl.pivot.@Nullable Class lowerBound, org.eclipse.ocl.pivot.@Nullable Class upperBound) {		// FIXME move to PivotHelper
-		WildcardType wildcardType = Orphanage.getOrphanWildcardType(environmentFactory.getCompleteModel().getOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
+		WildcardType wildcardType = OrphanageImpl.getOrphanWildcardType(environmentFactory.getCompleteModel().getSharedOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
 	//	wildcardType.setName("?");			// Name is not significant
 	//	wildcardType.setLowerBound(lowerBound != null ? lowerBound : standardLibrary.getOclAnyType());
 	//	wildcardType.setUpperBound(upperBound != null ? upperBound : standardLibrary.getOclVoidType());
@@ -923,54 +918,14 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return bodyExpression;
 	} */
 
-	public @NonNull CollectionType getCollectionType(boolean isOrdered, boolean isUnique) {
-		if (isOrdered) {
-			if (isUnique) {
-				return standardLibrary.getOrderedSetType();
-			}
-			else {
-				return standardLibrary.getSequenceType();
-			}
-		}
-		else {
-			if (isUnique) {
-				return standardLibrary.getSetType();
-			}
-			else {
-				return standardLibrary.getBagType();
-			}
-		}
-	}
-
-	public @NonNull CollectionType getCollectionType(boolean isOrdered, boolean isUnique, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return completeEnvironment.getCollectionType(getCollectionType(isOrdered, isUnique), elementType, isNullFree, lower, upper);
-	}
-
-	/**
-	 * @deprecated add isNullFree argument
-	 */
-	@Deprecated
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull String collectionTypeName, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(collectionTypeName, elementType, false, lower, upper);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull String collectionTypeName, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		if (elementType.eIsProxy()) {
-			return standardLibrary.getOclInvalidType();
-		}
-		return completeEnvironment.getCollectionType(standardLibrary.getRequiredLibraryType(collectionTypeName), elementType, isNullFree, lower, upper);
-	}
-
 	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
 		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
-			TupleTypeManager tupleManager = completeModel.getTupleManager();
-			Type commonType = tupleManager.getCommonType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
-			if (commonType == null) {
-				commonType = standardLibrary.getOclAnyType();
+			Type commonTupleType = standardLibrary.getCommonTupleType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
+			if (commonTupleType == null) {
+				return standardLibrary.getOclAnyType();
 			}
-			return commonType;
+			return commonTupleType;
 		}
 		if ((leftType instanceof CollectionType) && (rightType instanceof CollectionType)) {
 			FlatClass leftFlatClass = leftType.getFlatClass(standardLibrary);
@@ -983,7 +938,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			Type rightElementType = ClassUtil.nonNullModel(rightCollectionType.getElementType());
 			Type commonElementType = getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
 			boolean commonIsNullFree = leftCollectionType.isIsNullFree() && rightCollectionType.isIsNullFree();
-			return completeEnvironment.getCollectionType(commonCollectionType, commonElementType, commonIsNullFree, null, null);
+			return standardLibrary.getCollectionType((CollectionType) commonCollectionType, commonElementType, commonIsNullFree, null, null);
 		}
 		if (conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions)) {
 			return rightType;
@@ -1111,7 +1066,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
 		completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
 		Model thatModel = PivotUtil.getContainingModel(thatClass);
+		assert thatModel != null;
 		if (thisModel == thatModel) {
+			return thatClass;
+		}
+		if (OrphanageImpl.isOrphanage(thatModel)) {		// Shared orphans can be modified to add opposites
 			return thatClass;
 		}
 		org.eclipse.ocl.pivot.Package thatPackage = PivotUtil.getOwningPackage(thatClass);
@@ -1355,50 +1314,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public @NonNull List<@NonNull Library> getLibraries() { return asLibraries; }
 	public @Nullable Resource getLibraryResource() { return asLibraryResource; }
 
-	public org.eclipse.ocl.pivot.@Nullable Class getLibraryType(@NonNull String string, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		org.eclipse.ocl.pivot.Class libraryType = standardLibrary.getRequiredLibraryType(string);
-		return getLibraryType(libraryType, templateArguments);
-	}
-
-	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		//		assert !(libraryType instanceof CollectionType);
-		assert libraryType == PivotUtil.getUnspecializedTemplateableElement(libraryType);
-		TemplateSignature templateSignature = libraryType.getOwnedSignature();
-		List<TemplateParameter> templateParameters = templateSignature != null ? templateSignature.getOwnedParameters() : EMPTY_TEMPLATE_PARAMETER_LIST2;
-		if (templateParameters.isEmpty()) {
-			return libraryType;
-		}
-		if (templateArguments.size() != templateParameters.size()) {
-			throw new IllegalArgumentException("Incorrect template bindings for template type " + libraryType.getName());
-		}
-		boolean isUnspecialized = isUnspecialized(templateParameters, templateArguments);
-		if (isUnspecialized) {
-			return libraryType;
-		}
-		CompleteClassInternal libraryCompleteClass = getCompleteClass(libraryType);
-		org.eclipse.ocl.pivot.Class pivotClass = libraryCompleteClass.getPrimaryClass();
-		if (pivotClass instanceof CollectionType) {
-			assert pivotClass instanceof CollectionType;
-			assert templateArguments.size() == 1;
-			@NonNull Type templateArgument = templateArguments.get(0);
-			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getCollectionType(libraryCompleteClass, TypeUtil.createCollectionTypeParameters(templateArgument, true, null, null));
-			return specializedType;
-		}
-		else if (pivotClass instanceof MapType) {
-			assert pivotClass instanceof MapType;
-			assert templateArguments.size() == 2;
-			@NonNull Type keyTemplateArgument = templateArguments.get(0);
-			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getMapType(libraryCompleteClass, TypeUtil.createMapTypeParameters(keyTemplateArgument, true, valueTemplateArgument, true));
-			return specializedType;
-		}
-		else {
-			@SuppressWarnings("unchecked")
-			T specializedType = (T) libraryCompleteClass.getSpecializedType(templateArguments);
-			return specializedType;
-		}
-	}
-
 	public @NonNull Iterable<Constraint> getLocalInvariants(org.eclipse.ocl.pivot.@NonNull Class type) {
 		type = PivotUtil.getUnspecializedTemplateableElement(type);
 		return new CompleteElementInvariantsIterable(getAllTypes(type));
@@ -1406,31 +1321,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	public @Nullable EObject getLockingObject() {
 		return lockingAnnotation;
-	}
-
-	/**
-	 * @since 1.6
-	 */
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull String mapTypeName, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		if (keyType.eIsProxy() || valueType.eIsProxy()) {
-			return standardLibrary.getOclInvalidType();
-		}
-		return completeEnvironment.getMapType(standardLibrary.getRequiredLibraryType(mapTypeName), keyType, keysAreNullFree, valueType, valuesAreNullFree);
-	}
-
-	@Deprecated /* @deprected provide null-free arguments */
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull String mapTypeName, @NonNull Type keyType, @NonNull Type valueType) {
-		return getMapType(mapTypeName, keyType, true, valueType, true);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		if (entryClass.eIsProxy()) {
-			return standardLibrary.getOclInvalidType();
-		}
-		return completeEnvironment.getMapType(standardLibrary.getMapType(), entryClass);
 	}
 
 	public @NonNull Iterable<@NonNull Operation> getMemberOperations(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic) {
@@ -1582,13 +1472,15 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public @NonNull Property getPrimaryProperty(@NonNull Property pivotProperty) {
-		if (pivotProperty.eContainer() instanceof TupleType) {		// FIXME Find a better way
+ 		if (pivotProperty.eContainer() instanceof TupleType) {		// FIXME Find a better way
 			return pivotProperty;
 		}
 		if (pivotProperty.isIsImplicit()) {
 			Property opposite = pivotProperty.getOpposite();
 			if ((opposite != null) && !opposite.isIsImplicit()) {
-				return PivotUtil.getOpposite(getPrimaryProperty(opposite));
+				Property primaryOpposite = getPrimaryProperty(opposite);
+				Property primaryOppositeOpposite = primaryOpposite.getOpposite();
+				return primaryOppositeOpposite != null ? primaryOppositeOpposite : pivotProperty;		// OclInvalid::oclBadProperty has no opposite
 			}
 		}
 		org.eclipse.ocl.pivot.Class pivotClass = pivotProperty.getOwningClass();
@@ -1712,7 +1604,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	@Override
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return standardLibrary;
 	}
 
@@ -1829,10 +1721,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			newOpposite.setIsRequired(false);
 		}
 		else {
-			newOpposite.setType(getCollectionType(
-				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED,
-				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE,
-				thisClass, false,
+			CollectionType genericCollectionType = standardLibrary.getCollectionType(PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED, PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE);
+			newOpposite.setType(standardLibrary.getCollectionType(genericCollectionType, thisClass,
+				PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE,
 				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE,
 				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE));
 			newOpposite.setIsRequired(true);
@@ -1933,17 +1824,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		//		}
 		if (type.eContainer() instanceof TemplateParameterSubstitution) {
 			return false;
-		}
-		return true;
-	}
-
-	protected boolean isUnspecialized(@NonNull List<TemplateParameter> templateParameters, @NonNull List<? extends Type> templateArguments) {
-		int iMax = templateParameters.size();
-		assert templateArguments.size() == iMax;
-		for (int i = 0; i < iMax; i++) {
-			if (templateArguments.get(i) != templateParameters.get(i)) {
-				return false;
-			}
 		}
 		return true;
 	}

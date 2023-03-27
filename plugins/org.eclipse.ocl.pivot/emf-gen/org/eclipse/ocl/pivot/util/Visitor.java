@@ -62,6 +62,7 @@ public interface Visitor<R>
 	R visitCompleteEnvironment(org.eclipse.ocl.pivot.@NonNull CompleteEnvironment object);
 	R visitCompleteModel(org.eclipse.ocl.pivot.@NonNull CompleteModel object);
 	R visitCompletePackage(org.eclipse.ocl.pivot.@NonNull CompletePackage object);
+	R visitCompleteStandardLibrary(org.eclipse.ocl.pivot.@NonNull CompleteStandardLibrary object);
 	R visitConnectionPointReference(org.eclipse.ocl.pivot.@NonNull ConnectionPointReference object);
 	R visitConstraint(org.eclipse.ocl.pivot.@NonNull Constraint object);
 	R visitDataType(org.eclipse.ocl.pivot.@NonNull DataType object);
@@ -117,6 +118,7 @@ public interface Visitor<R>
 	R visitOppositePropertyCallExp(org.eclipse.ocl.pivot.@NonNull OppositePropertyCallExp object);
 	R visitOrderedSetType(org.eclipse.ocl.pivot.@NonNull OrderedSetType object);
 	R visitOrphanCompletePackage(org.eclipse.ocl.pivot.@NonNull OrphanCompletePackage object);
+	R visitOrphanage(org.eclipse.ocl.pivot.@NonNull Orphanage object);
 	R visitPackage(org.eclipse.ocl.pivot.@NonNull Package object);
 	R visitParameter(org.eclipse.ocl.pivot.@NonNull Parameter object);
 	R visitParameterVariable(org.eclipse.ocl.pivot.@NonNull ParameterVariable object);

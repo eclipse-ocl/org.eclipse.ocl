@@ -32,7 +32,7 @@ public abstract class AbstractBaseFormatter extends AbstractDeclarativeFormatter
 
 	protected void configureMultiplicityCS(FormattingConfig c, MultiplicityCSElements a) {
 		c.setNoSpace().around(a.getLeftSquareBracketKeyword_0());
-		c.setNoSpace().around(a.getVerticalLineQuestionMarkKeyword_2_0());
+		c.setNoSpace().around(a.getIsNonNullFreeVerticalLineQuestionMarkKeyword_2_0_0());
 		c.setNoSpace().around(a.getIsNullFree1Keyword_2_1_0());
 		c.setNoSpace().before(a.getRightSquareBracketKeyword_3());
 	    c.setIndentation(a.getLeftSquareBracketKeyword_0(), a.getRightSquareBracketKeyword_3());

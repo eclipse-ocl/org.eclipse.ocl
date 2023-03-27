@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
@@ -78,7 +79,6 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
@@ -243,7 +243,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	/*protected final @NonNull PivotNameResolver nameResolver;*/
 
 	/**
@@ -1437,6 +1437,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected @Nullable Type resolvePropertyReturnType(@NonNull NavigationCallExp callExp, @NonNull NameExpCS csNameExp, @NonNull Property property) {
+		if ("ownedParameters".equals(property.getName())) {
+			getClass();			// XXX)
+		}
 		Type formalType = property.getType();
 		if (formalType == null) {
 			return null;
@@ -1606,7 +1609,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (commonType == null) {
 				commonType = standardLibrary.getOclVoidType();
 			}
-			Type type = metamodelManager.getCollectionType(collectionTypeName, commonType, isNullFree, null, null);
+			org.eclipse.ocl.pivot.Class genericType = standardLibrary.getRequiredLibraryType(collectionTypeName);
+			Type type = standardLibrary.getCollectionType((CollectionType) genericType, commonType, isNullFree, null, null);
 			helper.setType(expression, type, true, null);
 			expression.setKind(TypeUtil.getCollectionKind((CollectionType) type));
 		}
@@ -1948,9 +1952,14 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						}
 					}
 					variable.setOwnedInit(initExpression);
+					assert initType != null;
 					if (variableType == null) {
-						variableType = initType;
+						variableType = initType;		// Infer let-variable from init
 					}
+					/* An explicit let-variable type is precisely the user's intent. We should not infer a stronger type from the initializer.
+					else if (!(initType instanceof InvalidType) && !(initType instanceof VoidType) && metamodelManager.conformsTo(initType, TemplateParameterSubstitutions.EMPTY, variableType, TemplateParameterSubstitutions.EMPTY)) {
+						variableType = initType;		// If init type is stronger use init as ler-variable type
+					} */
 					boolean isRequired = variableIsRequired != null ? variableIsRequired.booleanValue() : initIsRequired;
 					helper.setType(variable, variableType, isRequired, initTypeValue);
 					if (lastLetExp != null) {
@@ -2076,7 +2085,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			else if (inferValueType && (valuesAreNullFree == null)) {
 				valuesAreNullFree = true;
 			}
-			Type type = metamodelManager.getMapType(mapTypeName, keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
+			Type type = standardLibrary.getMapType(keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
 			helper.setType(expression, type, true, null);
 		}
 		return expression;
@@ -2271,7 +2280,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			String tupleTypeName = "Tuple"; //ownedCollectionType.getName();
 			List<@NonNull TupleLiteralPart> parts = ClassUtil.nullFree(expression.getOwnedParts());
 			assert parts != null;
-			Type type = standardLibrary.getCompleteModel().getTupleType(tupleTypeName, parts, null);
+			Type type = standardLibrary.getTupleType(tupleTypeName, parts, null);
 			helper.setType(expression, type, true, null);
 		}
 		return expression;

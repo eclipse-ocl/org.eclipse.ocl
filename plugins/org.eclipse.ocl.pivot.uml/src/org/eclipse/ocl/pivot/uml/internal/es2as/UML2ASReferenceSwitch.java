@@ -24,6 +24,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociationClass;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -37,8 +39,6 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -57,7 +57,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 
 	protected final @NonNull UML2AS converter;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	private Set<EClass> doneWarnings = null;
 
 	public UML2ASReferenceSwitch(@NonNull UML2AS converter) {
@@ -446,8 +446,8 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 				}
 			}
 		}
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return metamodelManager.getCollectionType(isOrdered, isUnique, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
+		CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+		return standardLibrary.getCollectionType(genericCollectionType, asClass, null, ValueUtil.integerValueOf(umlProperty.getLower()), null);
 	}
 
 	private boolean getToAssociationEndIsRequired(org.eclipse.uml2.uml.@NonNull Property umlProperty, @NonNull List<org.eclipse.uml2.uml.@NonNull Property> umlMemberEnds) {
@@ -481,8 +481,8 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 		if (!isMultivalued) {
 			return asClass;
 		}
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return metamodelManager.getCollectionType(isOrdered, true, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
+		CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, true);
+		return standardLibrary.getCollectionType(genericCollectionType, asClass, null, ValueUtil.integerValueOf(umlProperty.getLower()), null);
 	}
 
 	protected org.eclipse.uml2.uml.Property getOtherEnd(org.eclipse.uml2.uml.@NonNull Property umlProperty) {

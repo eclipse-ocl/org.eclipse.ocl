@@ -42,11 +42,11 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -293,7 +293,7 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		String className = javaClass.getSimpleName();
 		assert className != null;
 		RootPackageId javaPackageId = IdManager.getRootPackageId(packageName);
-		Orphanage orphanage = metamodelManager.getCompleteModel().getOrphanage();
+		Orphanage orphanage = metamodelManager.getCompleteModel().getSharedOrphanage();
 		org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), packageName);
 		if (asPackage == null) {
 			asPackage = PivotUtil.createPackage(packageName, packageName, packageName, javaPackageId);

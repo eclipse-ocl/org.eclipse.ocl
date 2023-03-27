@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -40,7 +39,7 @@ import org.eclipse.ocl.pivot.values.SetValue;
  * IdResolver supports discovery/creation of rich Pivot-based objects from limited
  * descriptors such as ElementIds, or from Ecore objects or from Java objects.
  */
-public interface IdResolver extends IdVisitor<Element>
+public interface IdResolver extends IdVisitor<@Nullable Element>
 {
 	/**
 	 * @since 1.1
@@ -125,8 +124,6 @@ public interface IdResolver extends IdVisitor<Element>
 	@Nullable Type getDynamicTypeOf(@Nullable Object @NonNull ... values);
 
 	@Nullable Type getDynamicTypeOf(@NonNull Iterable<?> values);
-
-	@NonNull CompleteEnvironment getEnvironment();
 
 	@NonNull EcoreFlatClass getFlatClass(@NonNull EClassifier eClassifier);
 

@@ -98,6 +98,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//MultiplicityBoundsCS/upperBound"/>
     </genClasses>
     <genClasses image="false" ecoreClass="BaseCS.ecore#//MultiplicityCS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//MultiplicityCS/isNonNullFree"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseCS.ecore#//MultiplicityCS/isNullFree"/>
       <genOperations ecoreOperation="BaseCS.ecore#//MultiplicityCS/getLower"/>
       <genOperations ecoreOperation="BaseCS.ecore#//MultiplicityCS/getUpper"/>

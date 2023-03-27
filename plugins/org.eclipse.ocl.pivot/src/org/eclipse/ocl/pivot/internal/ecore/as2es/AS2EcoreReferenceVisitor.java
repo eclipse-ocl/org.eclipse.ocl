@@ -37,6 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -47,7 +48,6 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -90,7 +90,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		super(context);
 		typeRefVisitor = new AS2EcoreTypeRefVisitor(context, false);
 		requiredTypeRefVisitor = new AS2EcoreTypeRefVisitor(context, true);
-		StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 		oclAnyType = standardLibrary.getOclAnyType();
 		oclElementType = standardLibrary.getOclElementType();
 		oclTypeType = standardLibrary.getOclTypeType();
@@ -150,8 +150,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					}
 					else if (redefiningType != null) {
 						CollectionType redefinedCollectionType = (CollectionType)redefinedType;
-						optionalType = new OptionalType(context.getMetamodelManager().getCollectionType(redefinedCollectionType.isOrdered(), redefinedCollectionType.isUnique(),
-							redefiningType, redefinedCollectionType.isIsNullFree(),
+						CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
+						CollectionType genericCollectionType = standardLibrary.getCollectionType(redefinedCollectionType.isOrdered(), redefinedCollectionType.isUnique());
+						optionalType = new OptionalType(standardLibrary.getCollectionType(genericCollectionType, redefiningType, redefinedCollectionType.isIsNullFree(),
 							redefinedCollectionType.getLowerValue(), redefinedCollectionType.getUpperValue()), redefinedProperty.isIsRequired());
 					}
 				}
@@ -308,8 +309,8 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eTypes.clear();
 		eGenericTypes.clear();
 		for (org.eclipse.ocl.pivot.Class pivotObject : superClasses) {
-			// Skip OCL's pseudo-supertypes.
-		//	if ((pivotObject != oclAnyType) /*&& (pivotObject != oclElementType) && (pivotObject != oclTypeType)*/) {			// XXX
+			// XXX Skip OCL's pseudo-supertypes.
+			if ((pivotObject != oclAnyType) && (pivotObject != oclElementType) && (pivotObject != oclTypeType)) {			// XXX
 				EObject superEClass = typeRefVisitor.safeVisit(pivotObject);
 				if (superEClass != null) {
 					if (superEClass instanceof EGenericType) {
@@ -320,7 +321,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					}
 				}
 				// else error
-		//	}
+			}
 		}
 	}
 
@@ -408,12 +409,15 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			} catch (InvalidValueException e) {
 				logger.error("Illegal upper bound", e);
 			}
-			boolean prevailingCollectionIsNullFree = true;
+			boolean prevailingCollectionIsNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
 			for (EObject eContainer = eTypedElement; (eContainer = eContainer.eContainer()) != null; ) {
 				if (eContainer instanceof ENamedElement) {
 					EAnnotation eAnnotation = ((ENamedElement)eContainer).getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 					if (eAnnotation != null) {
-						prevailingCollectionIsNullFree = Boolean.valueOf(eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE));
+						String isNullFreeValue = eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE);
+						if (isNullFreeValue != null) {
+							prevailingCollectionIsNullFree = Boolean.valueOf(isNullFreeValue);
+						}
 						break;
 					}
 				}

@@ -29,7 +29,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -553,7 +553,7 @@ public class OCL
 		return ((EnvironmentFactoryInternalExtension)environmentFactory).parseSpecification(specification);
 	}
 
-	public @NonNull StandardLibrary getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return environmentFactory.getStandardLibrary();
 	}
 

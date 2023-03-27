@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -145,7 +144,6 @@ public abstract class ExecutorManager implements ExecutorExtension
 		}
 	};
 
-	protected final @NonNull CompleteEnvironment environment;
 	protected final @NonNull StandardLibrary standardLibrary;
 
 	/**
@@ -166,10 +164,9 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 */
 	public static int CONSTRUCTION_COUNT = 0;
 
-	public ExecutorManager(@NonNull CompleteEnvironment environment) {
+	public ExecutorManager(@NonNull StandardLibrary standardLibrary) {
 		CONSTRUCTION_COUNT++;
-		this.environment = environment;
-		this.standardLibrary = environment.getOwnedStandardLibrary();
+		this.standardLibrary = standardLibrary;
 //		System.out.println("Create " + NameUtil.debugSimpleName(this));
 	}
 
@@ -240,11 +237,6 @@ public abstract class ExecutorManager implements ExecutorExtension
 //		System.out.println("Finalize " + NameUtil.debugSimpleName(this));
 //		super.finalize();
 //	}
-
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return environment;
-	}
 
 	@Override
 	public int getDiagnosticSeverity(int severityPreference, @Nullable Object resultValue) {

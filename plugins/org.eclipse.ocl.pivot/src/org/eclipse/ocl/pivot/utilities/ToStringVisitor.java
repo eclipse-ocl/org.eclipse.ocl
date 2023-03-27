@@ -384,11 +384,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 				}
 			}
 			if (collectionType != null) {
-				Number lower = collectionType.getLower();
-				Number upper = collectionType.getUpper();
-				long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
-				long upperValue = (upper != null) && !(upper instanceof Unlimited) ? upper.longValue() : -1l;
-				if (SHOW_ALL_MULTIPLICITIES || (lowerValue != 0) || (upperValue != -1) || !collectionType.isIsNullFree()) {
+				if (SHOW_ALL_MULTIPLICITIES || !PivotUtil.hasDefaultCollectionValueBindings(collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue())) {
+					Number lower = collectionType.getLower();
+					Number upper = collectionType.getUpper();
+					long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
+					long upperValue = (upper != null) && !(upper instanceof Unlimited) ? upper.longValue() : -1l;
 					StringUtil.appendMultiplicity(context, lowerValue, upperValue, collectionType.isIsNullFree());
 				}
 			}
@@ -606,7 +606,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitComment(@NonNull Comment comment) {
 		append("/* ");
-		append(comment.getBody());
+		append(comment.getBody().trim().replace("\n", " "));
 		append(" */");
 		return null;
 	}
@@ -728,7 +728,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			return safeVisit(bodyExpression);
 		}
 		else {
-			append(expression.getBody());
+			append(expression.getBody().trim().replace("\n"," "));
 			return null;
 		}
 	}

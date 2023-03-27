@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -176,12 +177,28 @@ implements TypedElement {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public void setType(Type newType) {
+	private void setTypeGen(Type newType) {
 		Type oldType = type;
 		type = newType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldType, type));
+	}
+	@Override
+	public void setType(Type newType) {
+		Type oldType = type;
+		if (oldType != null) {
+			Orphanage orphanage = oldType.basicGetSharedOrphanage();
+			if (orphanage != null) {
+				orphanage.removeReference(oldType, this);
+			}
+		}
+		if (newType != null) {
+			Orphanage orphanage = newType.basicGetSharedOrphanage();
+			if (orphanage != null) {
+				orphanage.addReference(newType, this);
+			}
+		}
+		setTypeGen(newType);
 	}
 
 	/**

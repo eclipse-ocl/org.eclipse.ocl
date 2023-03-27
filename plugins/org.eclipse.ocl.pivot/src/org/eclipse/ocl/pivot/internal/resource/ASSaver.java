@@ -30,7 +30,7 @@ import org.eclipse.ocl.pivot.Operation;
 //import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -148,7 +148,7 @@ public class ASSaver extends AbstractASSaver
 	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Resource resource) {
 		org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
 		if (localOrphanage2 == null) {
-			localOrphanage = localOrphanage2 = Orphanage.createLocalOrphanPackage(PivotUtil.getModel(resource));
+			localOrphanage = localOrphanage2 = OrphanageImpl.createLocalOrphanage(PivotUtil.getModel(resource));
 		}
 		return localOrphanage2;
 	}
@@ -208,8 +208,8 @@ public class ASSaver extends AbstractASSaver
 						root = (Model) eRoot;
 					}
 					if (localOrphanage2 == null) {
-						for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eRoot).getOwnedPackages()) {
-							if (Orphanage.isTypeOrphanage(asPackage)) {
+						for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages((Model)eRoot)) {
+							if (OrphanageImpl.isOrphanage(asPackage)) {
 								localOrphanage = localOrphanage2 = asPackage;
 								for (org.eclipse.ocl.pivot.Class asType : localOrphanage2.getOwnedClasses()) {
 									if (PivotConstants.ORPHANAGE_NAME.equals(asType.getName())) {
@@ -224,7 +224,7 @@ public class ASSaver extends AbstractASSaver
 						}
 					}
 				}
-				if ((eRoot instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eRoot)) {	// FIXME Obsolete
+				if ((eRoot instanceof org.eclipse.ocl.pivot.Package) && OrphanageImpl.isOrphanage((org.eclipse.ocl.pivot.Package)eRoot)) {	// FIXME Obsolete
 					localOrphanage = localOrphanage2 = (org.eclipse.ocl.pivot.Package)eRoot;
 					for (org.eclipse.ocl.pivot.Class asType : localOrphanage2.getOwnedClasses()) {
 						if (PivotConstants.ORPHANAGE_NAME.equals(asType.getName())) {

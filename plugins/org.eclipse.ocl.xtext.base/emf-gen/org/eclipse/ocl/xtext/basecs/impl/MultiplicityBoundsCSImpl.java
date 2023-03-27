@@ -126,7 +126,7 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 		int oldLowerBound = lowerBound;
 		lowerBound = newLowerBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldLowerBound, lowerBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldLowerBound, lowerBound));
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 		Integer oldUpperBound = upperBound;
 		upperBound = newUpperBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldUpperBound, upperBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, 5, oldUpperBound, upperBound));
 	}
 
 	/**
@@ -174,9 +174,9 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case 3:
-				return getLowerBound();
 			case 4:
+				return getLowerBound();
+			case 5:
 				return getUpperBound();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -192,10 +192,10 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case 3:
+			case 4:
 				setLowerBound((Integer)newValue);
 				return;
-			case 4:
+			case 5:
 				setUpperBound((Integer)newValue);
 				return;
 		}
@@ -212,10 +212,10 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case 3:
+			case 4:
 				setLowerBound(LOWER_BOUND_EDEFAULT);
 				return;
-			case 4:
+			case 5:
 				setUpperBound(UPPER_BOUND_EDEFAULT);
 				return;
 		}
@@ -232,9 +232,9 @@ public class MultiplicityBoundsCSImpl extends MultiplicityCSImpl implements Mult
 	{
 		switch (featureID)
 		{
-			case 3:
-				return lowerBound != LOWER_BOUND_EDEFAULT;
 			case 4:
+				return lowerBound != LOWER_BOUND_EDEFAULT;
+			case 5:
 				return UPPER_BOUND_EDEFAULT == null ? upperBound != null : !UPPER_BOUND_EDEFAULT.equals(upperBound);
 		}
 		return super.eIsSet(featureID);

@@ -456,7 +456,7 @@ public class PivotUtil
 		return pivotType;
 	}
 
-	public static @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation) {
+	public static @NonNull Iteration createIteration(@NonNull String name, /*@NonNull*/ Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation) {
 		Iteration pivotIteration = PivotFactory.eINSTANCE.createIteration();
 		pivotIteration.setName(name);
 		pivotIteration.setType(type);
@@ -545,7 +545,7 @@ public class PivotUtil
 		return asNavigationCallExp;
 	}
 
-	public static @NonNull Operation createOperation(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
+	public static @NonNull Operation createOperation(@NonNull String name, /*@NonNull*/ Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
 		Operation pivotOperation = PivotFactory.eINSTANCE.createOperation();
 		pivotOperation.setName(name);
 		pivotOperation.setType(type);
@@ -554,7 +554,7 @@ public class PivotUtil
 		return pivotOperation;
 	}
 
-	public static @NonNull Operation createOperation(/*@NonNull*/ EOperation eOperation, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
+	public static @NonNull Operation createOperation(/*@NonNull*/ EOperation eOperation, /*@NonNull*/ Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
 		Operation pivotOperation = PivotFactory.eINSTANCE.createOperation();
 		pivotOperation.setName(eOperation.getName());
 		pivotOperation.setType(type);
@@ -650,7 +650,7 @@ public class PivotUtil
 		return asPackage;
 	}
 
-	public static @NonNull Parameter createParameter(@NonNull String name, @NonNull Type asType, boolean isRequired) {
+	public static @NonNull Parameter createParameter(@NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
 		Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 		asParameter.setName(name);
 		asParameter.setType(asType);
@@ -683,7 +683,7 @@ public class PivotUtil
 		return pivotType;
 	}
 
-	public static @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, @NonNull Type type) {
+	public static @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, /*@NonNull*/ Type type) {
 		Property pivotProperty = PivotFactory.eINSTANCE.createProperty();
 		pivotProperty.setName(eFeature.getName());
 		pivotProperty.setType(type);
@@ -691,7 +691,7 @@ public class PivotUtil
 		return pivotProperty;
 	}
 
-	public static @NonNull Property createProperty(@NonNull String name, @NonNull Type type) {
+	public static @NonNull Property createProperty(@NonNull String name, /*@NonNull*/ Type type) {
 		Property pivotProperty = PivotFactory.eINSTANCE.createProperty();
 		pivotProperty.setName(name);
 		pivotProperty.setType(type);
@@ -1075,7 +1075,7 @@ public class PivotUtil
 						boolean isNullFree = collectionType.isIsNullFree();
 						IntegerValue lowerValue = collectionType.getLowerValue();
 						UnlimitedNaturalValue upperValue = collectionType.getUpperValue();
-						return environmentFactory.getCompleteEnvironment().getCollectionType(unspecializedElement, behavioralElementType, isNullFree, lowerValue, upperValue);
+						return environmentFactory.getStandardLibrary().getCollectionType(unspecializedElement, behavioralElementType, isNullFree, lowerValue, upperValue);
 					}
 				}
 			}
@@ -1094,6 +1094,10 @@ public class PivotUtil
 	public static @Nullable Type getBehavioralType(@Nullable TypedElement element) {
 		Type type = element != null ? PivotUtilInternal.getType(element) : null;
 		return type != null ? getBehavioralType(type) : null;
+	}
+
+	public static @NonNull String getBody(@NonNull Comment asComment) {
+		return ClassUtil.nonNullState(asComment.getBody());
 	}
 
 	/**
@@ -2015,6 +2019,17 @@ public class PivotUtil
 	 */
 	public static @NonNull Type getValueType(@NonNull MapType mapType) {
 		return ClassUtil.nonNullState(mapType.getValueType());
+	}
+
+	public static boolean hasDefaultCollectionValueBindings(@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		return ((isNullFree == null) || (isNullFree == PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE))
+		 && ((lower == null) || (lower == ValueUtil.ZERO_VALUE))
+		 && ((upper == null) || (upper == ValueUtil.UNLIMITED_VALUE));
+	}
+
+	public static boolean hasDefaultMapValueBindings(@Nullable Boolean keysAreNullFree, @Nullable Boolean valuesAreNullFree) {
+		return ((keysAreNullFree == null) || (keysAreNullFree == PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE))
+		 && ((valuesAreNullFree == null) || (valuesAreNullFree == PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE));
 	}
 
 	public static @NonNull Operation initOperation(@NonNull Operation asOperation, @NonNull ExpressionInOCL asExpressionInOCL) {

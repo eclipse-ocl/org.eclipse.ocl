@@ -29,9 +29,9 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.codegen.oclinecore.OCLinEcoreTablesUtils;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
@@ -122,21 +121,12 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	@Override
 	protected String getExternalReference(@NonNull Element element) {
 		if ((element instanceof Library) && (element.eResource() instanceof OCLstdlib)) {
-			return "standardLibrary";
+			return "libraryPackage";
 		}
 		return super.getExternalReference(element);
 	}
 
 	protected abstract String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames);
-
-	protected String getEcoreLiteral(@NonNull EnumerationLiteral elem) {
-		return nameQueries.getEcoreLiteral(elem);
-	}
-
-	@Override
-	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Package elem) {
-		return nameQueries.getEcoreLiteral(elem);
-	}
 
 	@Override
 	protected @NonNull String getNameLiteral(@NonNull Operation operation) {
@@ -146,11 +136,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	@Override
 	protected @NonNull String getNameLiteral(@NonNull Property property) {
 		return nameQueries.getEcoreLiteral(property);
-	}
-
-	@Override
-	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
-		return super.getSortedCollectionTypes(root, collectionTypeComparator);
 	}
 
 	@Override
@@ -209,7 +194,8 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			log.info("Generating '" + fileName + "'");
 			assert asRoot instanceof Model;
 			Model asModel = (Model)asRoot;
-			StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+			initModel1(asModel);
+			CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 			addExternalReference(standardLibrary.getBooleanType(), asModel);
 			addExternalReference(standardLibrary.getIntegerType(), asModel);
 			addExternalReference(standardLibrary.getOclAnyType(), asModel);
@@ -218,7 +204,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			addExternalReference(standardLibrary.getRealType(), asModel);
 			addExternalReference(standardLibrary.getStringType(), asModel);
 			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asModel);
-			initModel(asModel, saver);
+			initModel2(saver);
 			String metamodel = generateMetamodel(Collections.emptyList());
 			MergeWriter fw = new MergeWriter(fileName);
 			if (metamodel != null) {

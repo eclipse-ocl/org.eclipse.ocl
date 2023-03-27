@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Detail;
@@ -86,7 +87,6 @@ import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -346,7 +346,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		else if (instanceClass != null) {
 			try {
 				PivotMetamodelManager metamodelManager = converter.getMetamodelManager();
-				StandardLibraryInternal standardLibrary = metamodelManager.getStandardLibrary();
+				CompleteStandardLibrary standardLibrary = metamodelManager.getStandardLibrary();
 				PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
 				if (behavioralClass == null) {
 					instanceClass.getDeclaredMethod("compareTo", instanceClass);

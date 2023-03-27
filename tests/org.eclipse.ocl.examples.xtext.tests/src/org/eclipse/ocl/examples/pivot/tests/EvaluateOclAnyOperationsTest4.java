@@ -21,9 +21,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -175,7 +174,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 
 	@Test public void testGreaterThan() {
 		MyOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
 		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-25'} > ecore::EDate{value='2000-01-24'}");
 		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-24'} > ecore::EDate{value='2000-01-24'}");
@@ -203,7 +202,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 
 	@Test public void testGreaterThanOrEqual() {
 		MyOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
 		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-25'} >= ecore::EDate{value='2000-01-24'}");
 		ocl.assertQueryTrue(null, "ecore::EDate{value='2000-01-24'} >= ecore::EDate{value='2000-01-24'}");
@@ -231,7 +230,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 
 	@Test public void testLessThan() {
 		MyOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
 		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-25'} < ecore::EDate{value='2000-01-24'}");
 		ocl.assertQueryFalse(null, "ecore::EDate{value='2000-01-24'} < ecore::EDate{value='2000-01-24'}");
@@ -259,7 +258,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 
 	@Test public void testLessThanOrEqual() {
 		MyOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.loadEPackage("ecore", EcorePackage.eINSTANCE);
 		ocl.assertQueryFalse(null, "ecore::EDate{'2000-01-25'} <= ecore::EDate{'2000-01-24'}");
 		ocl.assertQueryTrue(null, "ecore::EDate{'2000-01-24'} <= ecore::EDate{value='2000-01-24'}");
@@ -370,7 +369,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclAsSet_implicit() {
 		MyOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertQueryResults(null, "Set{true}", "true->select(true)");
 		ocl.assertQueryResults(null, "Set{true}", "Set{true}->select(true)");
 		ocl.assertQueryResults(null, "Set{}", "null->select(true)");
@@ -390,7 +389,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		//
 		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
 		ocl.assertQueryEquals(null, booleanType, "true.oclType()");
-		Type collectionType = ocl.getCompleteEnvironment().getSetType(booleanType, false, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_ONE_VALUE);
+		Type collectionType = standardLibrary.getSetType(booleanType, false, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_ONE_VALUE);
 		ocl.assertQueryEquals(null, collectionType, "true->oclType()");		// Set{true}
 		ocl.dispose();
 	}
@@ -737,7 +736,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType_Boolean() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
 		org.eclipse.ocl.pivot.Class classType = standardLibrary.getClassType();
 		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
@@ -767,7 +766,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType_Classifier() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		@NonNull Type packageType = ClassUtil.nonNullState(environmentFactory.getASClass("Package"));
 		ocl.assertQueryEquals(ocl.pkg1, packageType, "self.oclType()");
 		ocl.assertQueryEquals(ocl.pkg1, "Package", "self.oclType().name");
@@ -788,11 +787,10 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_oclType_Collection() {
 		MyOCL ocl = createOCL();
-		CompleteEnvironment completeEnvironment = ocl.getCompleteEnvironment();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertQueryEquals(null, 1, "Set{1}->oclType().ownedOperations?->select(name = 'flatten')->size()");
-		ocl.assertQueryEquals(null, completeEnvironment.getSetType(standardLibrary.getOclVoidType(), false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_ZERO_VALUE), "Set{}->oclType()");
-		ocl.assertQueryEquals(null, completeEnvironment.getSetType(standardLibrary.getIntegerType(), false, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_ONE_VALUE), "Set{1}->oclType()");
+		ocl.assertQueryEquals(null, standardLibrary.getSetType(standardLibrary.getOclVoidType(), false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_ZERO_VALUE), "Set{}->oclType()");
+		ocl.assertQueryEquals(null, standardLibrary.getSetType(standardLibrary.getIntegerType(), false, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_ONE_VALUE), "Set{1}->oclType()");
 		ocl.assertQueryResults(null, "Bag{'Integer'}", "Set{1}.oclType().name");
 		ocl.assertQueryEquals(null, "Set", "Set{1}->oclType().name");
 		ocl.assertSemanticErrorQuery(null, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Integer", "allInstances");
@@ -814,7 +812,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType_Enumeration() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		@NonNull Type collectionKindType = ClassUtil.nonNullState(environmentFactory.getASClass("CollectionKind"));
 		org.eclipse.ocl.pivot.Class enumerationType = standardLibrary.getEnumerationType();
 		//    	ocl.assertQueryEquals(null, metamodelManager.getPivotType("EnumerationLiteral"), "CollectionKind::Set.oclType()");
@@ -839,7 +837,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType_Numeric() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
 		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
 		ocl.assertQueryEquals(null, integerType, "Integer");
@@ -864,7 +862,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType_OclAny() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class anyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class anyTypeClass = environmentFactory.getASClass("AnyType");
 		ocl.assertQueryEquals(null, standardLibrary.getOclVoidType(), "null.oclType()");
@@ -887,7 +885,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType_OclInvalid() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class invalidType = standardLibrary.getOclInvalidType();
 		org.eclipse.ocl.pivot.Class invalidTypeClass = environmentFactory.getASClass("InvalidType");
 		ocl.assertQueryInvalid(null, "invalid.oclType()");
@@ -908,7 +906,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType_OclVoid() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class voidTypeClass = environmentFactory.getASClass("VoidType");
 		org.eclipse.ocl.pivot.Class nullType = standardLibrary.getOclVoidType();
 		ocl.assertQueryEquals(null, nullType, "null.oclType()");
@@ -929,7 +927,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType_Tuple() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class tupleTypeClass = environmentFactory.getASClass("TupleType");
 		TuplePartId partId = IdManager.getTuplePartId(0, "a", TypeId.INTEGER);
 		TupleTypeId tupleId = IdManager.getTupleTypeId("Tuple", partId);
@@ -952,7 +950,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclType() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class classType = standardLibrary.getClassType();
 		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
 		org.eclipse.ocl.pivot.Class booleanMetaType = environmentFactory.getASClass("BooleanType");
@@ -974,7 +972,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 	@Test public void test_oclTypes() {
 		MyOCL ocl = createOCL();
 		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class primitiveType = environmentFactory.getASClass("PrimitiveType");
 		org.eclipse.ocl.pivot.Class classType = environmentFactory.getASClass("Class");
 		org.eclipse.ocl.pivot.Class booleanMetaType = environmentFactory.getASClass("BooleanType");

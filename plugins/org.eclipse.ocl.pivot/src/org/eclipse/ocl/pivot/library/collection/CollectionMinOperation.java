@@ -12,12 +12,9 @@ package org.eclipse.ocl.pivot.library.collection;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.library.numeric.NumericMinOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -45,15 +42,5 @@ public class CollectionMinOperation extends AbstractSimpleUnaryOperation
         	throw new InvalidValueException(PivotMessages.EmptyCollection, collectionValue.getKind(), "min"); //$NON-NLS-1$
 		}
 		return result;
-	}
-
-	/**
-	 *	Special case processing for return types based on the source collection element types.
-	 *
-	 * @since 1.18
-	 */
-	@Override
-	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
-		return resolveCollectionSourceReturnType(environmentFactory, callExp, returnType);
 	}
 }

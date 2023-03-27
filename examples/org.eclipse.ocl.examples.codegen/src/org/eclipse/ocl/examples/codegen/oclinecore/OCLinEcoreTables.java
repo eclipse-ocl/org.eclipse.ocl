@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.IterableType;
-import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
@@ -55,7 +54,6 @@ import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -255,7 +253,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		else {
 			s.appendClassReference(null, TypeUtil.class);
-			s.append(".EMPTY_PARAMETER_TYPES");
+			s.append(".EMPTY_PARAMETER_TYPESx2x");
 		}
 	}
 
@@ -750,7 +748,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			}
 		}
 		s.append("	/**\n");
-		s.append("	 *	The parameter lists shared by operations.\n");
+		s.append("	 *	The parameter type lists shared by operations.\n");
 		s.append("	 *\n");
 		s.append("	 * @noextend This class is not intended to be subclassed by clients.\n");
 		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
@@ -759,7 +757,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	public static class " + AbstractGenModelHelper.PARAMETERS_PACKAGE_NAME + " {\n");
 		appendInitializationStart(AbstractGenModelHelper.PARAMETERS_PACKAGE_NAME);
 		if (name2list.size() > 0) {
-			s.append("\n");
 			List<@NonNull String> sortedNames = new ArrayList<>(name2list.keySet());
 			Collections.sort(sortedNames);
 			for (@NonNull String name : sortedNames) {
@@ -767,12 +764,12 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				assert types != null;
 				if (types.size() > 0) {				// Bug 471118 avoid deprecated _ identifier
 					s.append("		public static final ");
-					s.appendClassReference(true, ParameterTypes.class);
-					s.append(" ");
+					s.appendClassReference(true, Object.class);
+					s.append("[] ");
 					s.append(name);
-					s.append(" = ");
-					s.appendClassReference(null, TypeUtil.class);
-					s.append(".createParameterTypes(");
+					s.append(" = new ");
+					s.appendClassReference(true, Object.class);
+					s.append("[] {");
 					for (int i = 0; i < types.size(); i++) {
 						if (i > 0) {
 							s.append(", ");
@@ -780,28 +777,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						Type type = types.get(i);
 						type.accept(declareParameterTypeVisitor);
 					}
-					s.append(");\n");
-				}
-			}
-		}
-		if (allLists.size() > 0) {
-		//	s.append("\n");
-			List<@NonNull ParameterTypes> sortedLists = new ArrayList<>(allLists);
-			Collections.sort(sortedLists, legacyTemplateBindingNameComparator);
-			for (@NonNull ParameterTypes types : sortedLists) {
-				if (types.size() > 0) {				// Bug 471118 avoid deprecated _ identifier
-					String legacyTemplateBindingsName = getLegacyTemplateBindingsName(types);
-					String templateBindingsName = getTemplateBindingsName(types);
-					if (!legacyTemplateBindingsName.equals(templateBindingsName) && !(types.get(0) instanceof LambdaType)) {		// legacy never defined LambdaType
-						s.append("		@Deprecated /* @deprecated use normalized name */\n");
-						s.append("		public static final ");
-						s.appendClassReference(true, ParameterTypes.class);
-						s.append(" ");
-						s.append(legacyTemplateBindingsName);
-						s.append(" = ");
-						s.append(templateBindingsName);
-						s.append(";\n");
-					}
+					s.append("};\n");
 				}
 			}
 		}
@@ -1124,7 +1100,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(");\n");
 			}
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
+	/*	for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
 			TemplateSignature templateSignature = asClass.getOwnedSignature();
 			if (templateSignature != null) {
 				declareTypeParameters(templateSignature);
@@ -1135,7 +1111,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					declareTypeParameters(templateSignature);
 				}
 			}
-		}
+		} */
 		appendInitializationEnd(false);
 		s.append("	}\n");
 	}
@@ -1149,9 +1125,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 	}
 
-	protected void declareTypeParameters(@NonNull TemplateSignature templateSignature) {
+/*	protected void declareTypeParameters(@NonNull TemplateSignature templateSignature) {
 		for (@NonNull TemplateParameter asTemplateParameter : PivotUtil.getOwnedParameters(templateSignature)) {
-			s.append("		@Deprecated /* @deprecated use normalized name */\n");
+			s.append("		@Deprecated /* @deprecated use normalized name * /\n");
 			s.append("		public static final ");
 			s.appendClassReference(true, TemplateParameter.class);
 			s.append(" ");
@@ -1180,7 +1156,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			asTemplateParameter.accept(emitLiteralVisitor);
 			s.append(";\n");
 		}
-	}
+	} */
 
 	protected String deresolveFileName(@Nullable String uri) {
 		if (uri != null) {

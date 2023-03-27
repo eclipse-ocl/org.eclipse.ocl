@@ -10,7 +10,6 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +22,12 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -40,31 +38,22 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -167,10 +156,10 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public NotificationChain basicSetOwnedStandardLibrary(StandardLibrary newOwnedStandardLibrary, NotificationChain msgs)
+	public NotificationChain basicSetOwnedStandardLibrary(CompleteStandardLibrary newOwnedStandardLibrary, NotificationChain msgs)
 	{
-		StandardLibrary oldOwnedStandardLibrary = ownedStandardLibrary;
-		ownedStandardLibrary = (StandardLibraryInternal) newOwnedStandardLibrary;
+		CompleteStandardLibrary oldOwnedStandardLibrary = ownedStandardLibrary;
+		ownedStandardLibrary = newOwnedStandardLibrary;
 		if (eNotificationRequired())
 		{
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY.getFeatureID(), oldOwnedStandardLibrary, newOwnedStandardLibrary);
@@ -185,15 +174,15 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	 * @generated
 	 */
 	@Override
-	public void setOwnedStandardLibrary(StandardLibrary newOwnedStandardLibrary)
+	public void setOwnedStandardLibrary(CompleteStandardLibrary newOwnedStandardLibrary)
 	{
 		if (newOwnedStandardLibrary != ownedStandardLibrary)
 		{
 			NotificationChain msgs = null;
 			if (ownedStandardLibrary != null)
-				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, 4, StandardLibrary.class, msgs);
+				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, 4, CompleteStandardLibrary.class, msgs);
 			if (newOwnedStandardLibrary != null)
-				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, 4, StandardLibrary.class, msgs);
+				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, 4, CompleteStandardLibrary.class, msgs);
 			msgs = basicSetOwnedStandardLibrary(newOwnedStandardLibrary, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -225,7 +214,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			case 5:
 				if (ownedStandardLibrary != null)
 					msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
-				return basicSetOwnedStandardLibrary((StandardLibrary)otherEnd, msgs);
+				return basicSetOwnedStandardLibrary((CompleteStandardLibrary)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -313,7 +302,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				setOwnedCompleteModel((CompleteModel)newValue);
 				return;
 			case 5:
-				setOwnedStandardLibrary((StandardLibrary)newValue);
+				setOwnedStandardLibrary((CompleteStandardLibrary)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -345,7 +334,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				setOwnedCompleteModel((CompleteModel)null);
 				return;
 			case 5:
-				setOwnedStandardLibrary((StandardLibrary)null);
+				setOwnedStandardLibrary((CompleteStandardLibrary)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -386,21 +375,12 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 	protected /*final @NonNull*/ EnvironmentFactoryInternal environmentFactory;
 	protected /*final @NonNull*/ CompleteModelInternal ownedCompleteModel;
-	protected /*final @NonNull*/ StandardLibraryInternal ownedStandardLibrary;
+	protected /*final @NonNull*/ CompleteStandardLibrary ownedStandardLibrary;
 	protected final @NonNull Map<org.eclipse.ocl.pivot.Class, CompleteClassInternal> class2completeClass = new WeakHashMap<org.eclipse.ocl.pivot.Class, CompleteClassInternal>();
 
-	/**
-	 * The known lambda types.
-	 */
-	private LambdaTypeManager lambdaManager = null;			// Lazily created
-
-	/**
-	 * The known tuple types.
-	 */
-	private @Nullable TupleTypeManager tupleManager = null;			// Lazily created
 	private boolean isCodeGeneration = false;
 
-	@Override
+/*	@Override
 	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement) {
 		if (pivotElement.getUnspecializedElement() != null) {
 			assert pivotElement.getUnspecializedElement().getUnspecializedElement() == null;
@@ -410,7 +390,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			|| (pivotElement instanceof TupleType);
 		}
 		pivotElement.setOwningPackage(ownedCompleteModel.getOrphanage());
-	}
+	} */
 
 	@Override
 	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
@@ -629,70 +609,13 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public void dispose() {
 		class2completeClass.clear();
-		if (lambdaManager != null) {
-			lambdaManager.dispose();
-			lambdaManager = null;
-		}
-		if (tupleManager != null) {
-			tupleManager.dispose();
-			tupleManager = null;
-		}
-	}
-
-	@Override
-	public @Nullable CollectionType findCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return completeClass.findCollectionType(typeParameters);
-	}
-
-	@Override
-	public @Nullable MapType findMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return completeClass.findMapType(typeParameters);
-	}
-
-	@Override
-	public @NonNull CollectionType getBagType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getBagType(), elementType, false, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getBagType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return completeClass.getCollectionType(typeParameters);
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getCollectionType((CollectionType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(elementType), isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getCollectionType((CollectionType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(elementType), false, lower, upper);
-	}
-
-	@Override
-	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
-		if (isUnspecializedType(completeClass, elementType)) {
-			return containerType;
-		}
-		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper);
-		@SuppressWarnings("unchecked")
-		T specializedType = (T) completeClass.getCollectionType(typeParameters);
-		return specializedType;
+		((OrphanageImpl)((CompleteStandardLibraryImpl)getOwnedStandardLibrary()).getOrphanage()).dispose();
 	}
 
 	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
 		if (pivotType instanceof TemplateParameter) {
-			pivotType = PivotUtil.getLowerBound((TemplateParameter) pivotType, getOwnedStandardLibrary().getOclAnyType());
+			pivotType = PivotUtil.getLowerBound((TemplateParameter) pivotType, ownedStandardLibrary.getOclAnyType());
 		}
 		if (pivotType instanceof ElementExtension) {
 			Stereotype stereotype = ((ElementExtension)pivotType).getStereotype();
@@ -735,218 +658,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return ClassUtil.nonNullState(environmentFactory);
 	}
 
-	public @NonNull LambdaTypeManager getLambdaManager() {
-		LambdaTypeManager lambdaManager2 = lambdaManager;
-		if (lambdaManager2 == null) {
-			lambdaManager2 = lambdaManager = new LambdaTypeManager(this);
-		}
-		return lambdaManager2;
-	}
-
 	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
-			@Nullable TemplateParameterSubstitutions bindings) {
-		LambdaTypeManager lambdaManager = getLambdaManager();
-		return lambdaManager.getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
-	}
-
-	@Override
-	public @NonNull MapType getMapType(@NonNull CompleteClassInternal completeClass, @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return completeClass.getMapType(typeParameters);
-	}
-
-	@Override
-	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, @NonNull Type valueType) {
-		return getMapType(containerType, keyType, true, valueType, true);
-	}
-
-	@Override
-	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getMapType((MapType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(keyType), keysAreNullFree, metamodelManager.getPrimaryType(valueType), valuesAreNullFree);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	@Override
-	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getMapType((MapType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryClass(entryClass));
-	}
-
-	@Override
-	public @NonNull MapType getMapType(@NonNull MapType containerType, @NonNull Type keyType, @NonNull Type valueType) {
-		return getMapType(containerType, keyType, true, valueType, true);
-	}
-
-	/**
-	 * @since 1.6
-	 */
-	@Override
-	public @NonNull MapType getMapType(@NonNull MapType containerType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
-		if (isUnspecializedType(completeClass, keyType, valueType)) {
-			return containerType;
-		}
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
-		MapType specializedType = ownedCompleteModel.getMapType(completeClass, typeParameters);
-		return specializedType;
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public @NonNull MapType getMapType(@NonNull MapType containerType, org.eclipse.ocl.pivot.@NonNull Class entryType) {
-		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		TemplateSignature templateSignature = containerType.getOwnedSignature();
-		if (templateSignature == null) {
-			throw new IllegalArgumentException("Map type must have a template signature");
-		}
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-		if (templateParameters.size() != 2) {
-			throw new IllegalArgumentException("Map type must have exactly two template parameter");
-		}
-		//	boolean isUnspecialized = (keyType == templateParameters.get(0)) && (valueType == templateParameters.get(1));
-		//	if (isUnspecialized) {
-		//		return containerType;
-		//	}
-		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryType);
-		MapType specializedType = ownedCompleteModel.getMapType(completeClass, typeParameters);
-		return specializedType;
-	}
-
-	//	@Override
-	//	public @NonNull MetamodelManager getMetamodelManager() {
-	//		assert metamodelManager != null;
-	//		return metamodelManager;
-	//	}
-
-	@Override
-	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
-		CompletePackage memberPackage = completePackage.getOwnedCompletePackage(name);
-		return memberPackage != null ? memberPackage.getPrimaryPackage() : null;
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.Class getNestedType(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
-		return completePackage.getMemberType(name);
-	}
-
-	@Override
-	public @NonNull CollectionType getOrderedSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getOrderedSetType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getOrderedSetType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getOrderedSetType(), elementType, false, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSequenceType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSequenceType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSequenceType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSequenceType(), elementType, false, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSetType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSetType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSetType(), elementType, false, lower, upper);
-	}
-
-	@Override
-	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions) {
-		if ((substitutions == null) || substitutions.isEmpty()) {
-			return type;
-		}
-		TemplateParameter asTemplateParameter = type.isTemplateParameter();
-		if (asTemplateParameter != null) {
-			Type boundType = substitutions.get(asTemplateParameter);
-			org.eclipse.ocl.pivot.Class asClass = boundType != null ? boundType.isClass() : null;
-			return asClass != null ? asClass : type;
-		}
-		else if (type instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)type;
-			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(collectionType);
-			if (!substitutions.isEmpty()) {
-				TemplateParameter templateParameter = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
-				Type templateArgument = substitutions.get(templateParameter);
-				if (templateArgument == null) {
-					templateArgument = templateParameter;
-				}
-				if (templateArgument != null) {
-					return getCollectionType(unspecializedType, templateArgument, null, null);
-				}
-			}
-			return collectionType;
-		}
-		else if (type instanceof TupleType) {
-			return getTupleManager().getTupleType((TupleType) type, substitutions);
-		}
-		else if (type instanceof LambdaType) {
-			LambdaType lambdaType = (LambdaType)type;
-			String typeName = ClassUtil.nonNullModel(lambdaType.getName());
-			Type contextType = ClassUtil.nonNullModel(lambdaType.getContextType());
-			@NonNull List<@NonNull Type> parameterType = PivotUtil.getParameterType(lambdaType);
-			Type resultType = ClassUtil.nonNullModel(lambdaType.getResultType());
-			return getLambdaManager().getLambdaType(typeName, contextType, parameterType, resultType, substitutions);
-		}
-		else if (type instanceof org.eclipse.ocl.pivot.Class) {
-			//
-			//	Get the bindings of the type.
-			//
-			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement((org.eclipse.ocl.pivot.Class)type);
-			//
-			//	Prepare the template argument list, one template argument per template parameter.
-			//
-			TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
-			if (templateSignature != null) {
-				List<@NonNull TemplateParameter> templateParameters = ClassUtil.nullFree(templateSignature.getOwnedParameters());
-				List<@NonNull Type> templateArguments = new ArrayList<@NonNull Type>(templateParameters.size());
-				for (@NonNull TemplateParameter templateParameter : templateParameters) {
-					Type templateArgument = substitutions.get(templateParameter);
-					templateArguments.add(templateArgument != null ? templateArgument : templateParameter);
-				}
-				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				return metamodelManager.getLibraryType(unspecializedType, templateArguments);
-			}
-		}
-		return type;
-	}
-
-	@Override
-	public @NonNull StandardLibraryInternal getOwnedStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getOwnedStandardLibrary() {
 		return ClassUtil.nonNullState(ownedStandardLibrary);
-	}
-
-	@Override
-	public @NonNull TupleTypeManager getTupleManager() {
-		TupleTypeManager tupleManager2 = tupleManager;
-		if (tupleManager2 == null) {
-			tupleManager = tupleManager2 = new TupleTypeManager(this);
-		}
-		return tupleManager2;
-	}
-
-	@Override
-	public @NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
-			@Nullable TemplateParameterSubstitutions bindings) {
-		return getTupleManager().getTupleType(typeName, parts, bindings);
 	}
 
 	@Override
@@ -954,7 +668,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		this.environmentFactory = environmentFactory;
 		CompleteModelInternal completeModelInternal = ((CompleteModelInternal)PivotFactory.eINSTANCE.createCompleteModel()).init(this);
 		setOwnedCompleteModel(completeModelInternal);
-		setOwnedStandardLibrary(((StandardLibraryInternal)PivotFactory.eINSTANCE.createStandardLibrary()).init(completeModelInternal));
+		setOwnedStandardLibrary(PivotFactory.eINSTANCE.createCompleteStandardLibrary().init(completeModelInternal));
 		return this;
 	}
 

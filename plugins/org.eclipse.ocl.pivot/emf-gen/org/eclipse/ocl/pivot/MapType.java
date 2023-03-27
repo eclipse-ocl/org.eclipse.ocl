@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 
 /**
  * <!-- begin-user-doc -->
@@ -169,5 +170,11 @@ public interface MapType extends IterableType
 	 * @since 1.14
 	 */
 	default @NonNull MapType getContainerType() { return this; } // A slightly better default that abstrct / UsupporteOperationException
+
+	/**
+	 * Return a unique StandardLibrary-independent identifier for this type.
+	 */
+	@Override
+	@NonNull MapTypeId getTypeId();
 
 } // MapType

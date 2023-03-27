@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -1725,7 +1725,7 @@ implements Property {
 	}
 
 	@Override
-	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull FlatClass getFlatClass(@NonNull CompleteStandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class owningType = getOwningClass();
 		return standardLibrary.getFlatClass(owningType);
 	}

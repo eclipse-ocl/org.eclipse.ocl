@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 
 public abstract class AbstractConversion
@@ -27,7 +27,7 @@ public abstract class AbstractConversion
 	public static interface Predicate<T extends EObject>
 	{
 		boolean filter(@NonNull T element);
-	}	
+	}
 
 	protected static <T> @Nullable T basicGet(@NonNull EObject eObject, @NonNull EAttribute eFeature, @NonNull Class<T> resultClass) {
 		if (!eObject.eIsSet(eFeature)) {
@@ -58,11 +58,11 @@ public abstract class AbstractConversion
 				return false;
 		return true;
 	}
-	
+
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	protected AbstractConversion(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		this.environmentFactory = environmentFactory;
@@ -70,16 +70,16 @@ public abstract class AbstractConversion
 		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 	}
-	
+
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return environmentFactory;
 	}
-	
+
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
 		return metamodelManager;
 	}
 
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return standardLibrary;
 	}
 

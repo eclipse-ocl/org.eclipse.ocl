@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 
 /**
  * The LibraryValidator defines the behaviour of library-feature-specific validators. An
@@ -24,5 +24,5 @@ import org.eclipse.ocl.pivot.StandardLibrary;
  */
 public interface LibraryValidator
 {
-	@Nullable Diagnostic validate(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp);
+	@Nullable Diagnostic validate(@NonNull CompleteStandardLibrary standardLibrary, @NonNull CallExp callExp);
 }

@@ -16,11 +16,13 @@ import java.util.List;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -38,8 +40,10 @@ import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
+import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -73,6 +77,9 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 			if (packageId instanceof RootPackageId) {
 				roots2package.put(((RootPackageId)packageId).getName(), asPackage);
 			}
+			URI asURI = PivotUtilInternal.getASURI(URI.createURI(nsURI));
+			Resource asResource = EcoreASResourceFactory.getInstance().createResource(asURI);
+			asResource.getContents().add(asPackage);
 		}
 		return asPackage;
 	}
@@ -161,7 +168,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 
 	@Override
 	public synchronized @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return ((ExecutorStandardLibrary)standardLibrary).getTupleType(typeId, this);
+		return ((ExecutorStandardLibrary)standardLibrary).getTupleType(this, typeId);
 	}
 
 	public @NonNull TupleType getTupleType(@NonNull TypedElement @NonNull ... parts) {

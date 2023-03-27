@@ -291,6 +291,7 @@ public abstract class LUSSIDs
 	 * and if necessessary from the local context.
 	 */
 	protected int assignLUSSID(@NonNull AS2ID as2id, @NonNull Element element, boolean isReferenced, boolean normalizeTemplateParameters) {
+	//	System.out.println("assignLUSSID " + NameUtil.debugSimpleName(asResource) + " - " + NameUtil.debugSimpleName(element));
 		assert asResource == element.eResource();
 		int savedDepth = debugDepth;
 		assert debugDepth < 30;

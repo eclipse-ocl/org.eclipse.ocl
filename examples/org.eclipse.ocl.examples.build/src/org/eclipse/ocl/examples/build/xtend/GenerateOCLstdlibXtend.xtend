@@ -11,51 +11,12 @@
 package org.eclipse.ocl.examples.build.xtend
 
 import org.eclipse.ocl.pivot.DataType
-import org.eclipse.ocl.pivot.Model
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
 
 class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
-	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
-		var pkge2classTypes = root.getSortedClassTypes();
-		if (pkge2classTypes.isEmpty()) return "";
-		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
-		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());
-		'''
-		«FOR pkge : sortedPackages»
-
-			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-				«IF pkg == pkge && !excludedEClassifierNames.contains(type.name)»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
-				«ELSE»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
-				«ENDIF»
-			«ENDFOR»
-		«ENDFOR»
-		'''
-	}
-
-	protected override String declarePrimitiveTypes(/*@NonNull*/ Model root) {
-		var pkge2primitiveTypes = root.getSortedPrimitiveTypes();
-		if (pkge2primitiveTypes.isEmpty()) return "";
-		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
-		var sortedPackages = root.getSortedPackages(pkge2primitiveTypes.keySet());
-		'''
-			«FOR pkge : sortedPackages»
-
-				«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
-					«IF pkg == pkge && !excludedEClassifierNames.contains(type.name)»
-						private final @NonNull PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = createPrimitiveType(«getEcoreLiteral(type)»);
-					«ELSE»
-						private final @NonNull PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = createPrimitiveType("«type.name»");
-					«ENDIF»
-				«ENDFOR»
-			«ENDFOR»
-		'''
-	}
-
 	protected def String defineConstantType(DataType type) {'''
 		«IF "Boolean".equals(type.name)»
 			private void PrimitiveType «type.getPrefixedSymbolName("_"+type.partialName())» = OCLstdlib._Boolean;«ELSEIF "Classifier".equals(type.name)»
@@ -104,37 +65,28 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.emf.ecore.resource.ResourceSet;
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
-			import org.eclipse.ocl.pivot.AnyType;
 			import org.eclipse.ocl.pivot.AssociativityKind;
-			import org.eclipse.ocl.pivot.BagType;
 			import org.eclipse.ocl.pivot.Class;
 			import org.eclipse.ocl.pivot.CollectionType;
-			import org.eclipse.ocl.pivot.InvalidType;
 			import org.eclipse.ocl.pivot.Iteration;
 			import org.eclipse.ocl.pivot.LambdaType;
 			import org.eclipse.ocl.pivot.Library;
 			import org.eclipse.ocl.pivot.MapType;
 			import org.eclipse.ocl.pivot.Model;
 			import org.eclipse.ocl.pivot.Operation;
-			import org.eclipse.ocl.pivot.OrderedSetType;
 			import org.eclipse.ocl.pivot.Package;
 			import org.eclipse.ocl.pivot.Parameter;
 			import org.eclipse.ocl.pivot.Precedence;
 			import org.eclipse.ocl.pivot.PrimitiveType;
 			import org.eclipse.ocl.pivot.Property;
-			import org.eclipse.ocl.pivot.SelfType;
-			import org.eclipse.ocl.pivot.SequenceType;
-			import org.eclipse.ocl.pivot.SetType;
 			import org.eclipse.ocl.pivot.TemplateParameter;
 			import org.eclipse.ocl.pivot.TupleType;
-			import org.eclipse.ocl.pivot.VoidType;
 			import org.eclipse.ocl.pivot.ids.IdManager;
 			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 			import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-			import org.eclipse.ocl.pivot.model.OCLmetamodel;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			«IF ((externalPackages !== null) && !externalPackages.isEmpty())»
@@ -194,9 +146,9 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				public static @NonNull «javaClassName» getDefault() {
 					«javaClassName» oclstdlib = INSTANCE;
 					if (oclstdlib == null) {
-						Contents contents = new Contents("«lib.getURI»");
 						String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-						oclstdlib = INSTANCE = new ReadOnly(asURI, contents.getModel());
+						oclstdlib = INSTANCE = new ReadOnly(asURI);
+						Contents contents = new Contents(oclstdlib, "«lib.getURI»");
 						oclstdlib.setSaveable(false);
 					}
 					return oclstdlib;
@@ -212,7 +164,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					assert model != null;
 					return model;
 				}
-				«IF (externalPackages.size() == 2)»
+				«IF (externalPackages.size() >= 0)»
 
 				/**
 				 * Return the default «uri» standard Library package.
@@ -286,8 +238,8 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 */
 				protected static class ReadOnly extends «javaClassName» implements ImmutableResource
 				{
-					protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
-						super(asURI, libraryModel);
+					protected ReadOnly(@NonNull String asURI) {
+						super(asURI);
 					}
 			
 					/**
@@ -306,7 +258,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 
 					@Override
 					public boolean isCompatibleWith(@NonNull String metamodelURI) {
-						return OCLmetamodel.PIVOT_URI.equals(metamodelURI);
+						return org.eclipse.ocl.pivot.model.OCLmetamodel.PIVOT_URI.equals(metamodelURI);
 					}
 			
 					/**
@@ -341,19 +293,19 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 *  and package name, prefix and namespace URI.
 				 */
 				public static @NonNull «javaClassName» create(@NonNull String asURI) {
-					Contents contents = new Contents(asURI);
-					return new «javaClassName»(asURI, contents.getModel());
+					«javaClassName» oclstdlib = new «javaClassName»(asURI);
+					Contents contents = new Contents(oclstdlib, asURI);
+					return oclstdlib;
 				}
 			
 				/**
 				 *	Construct an OCL Standard Library with specified resource URI and library content.
 				 */
-				private «javaClassName»(@NonNull String asURI, @NonNull Model libraryModel) {
+				private «javaClassName»(@NonNull String asURI) {
 					super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 					assert PivotUtilInternal.isASURI(asURI);
-					getContents().add(libraryModel);
 				}
-			
+							
 				private static class Contents extends AbstractContents
 				{
 					private final @NonNull Model «thisModel.getPrefixedSymbolName("model")»;
@@ -361,55 +313,23 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 			
-					private Contents(@NonNull String asURI)
+					private Contents(@NonNull Resource resource, @NonNull String asURI)
 					{
 						«thisModel.getSymbolName()» = createModel(asURI);
+						resource.getContents().add(«thisModel.getSymbolName()»);
 						«FOR pkge : thisModel.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«FOR comment : pkge.ownedComments»
+							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»
-						«thisModel.installPackages()»
-						«thisModel.installClassTypes()»
-						«thisModel.installPrimitiveTypes()»
-						«thisModel.installEnumerations()»
-						«thisModel.installCollectionTypes()»
-						«thisModel.installMapTypes()»
-						«thisModel.installLambdaTypes()»
-						«thisModel.installTupleTypes()»
-						«thisModel.installOperations()»
-						«thisModel.installIterations()»
-						«thisModel.installCoercions()»
-						«thisModel.installProperties()»
-						«thisModel.installTemplateBindings()»
-						«thisModel.installPrecedences()»
-						«thisModel.installComments()»
+						«ENDFOR»
+						«thisModel.installAll()»
 					}
 			
 					public @NonNull Model getModel() {
 						return «thisModel.getSymbolName()»;
 					}
-					«thisModel.defineExternals()»
-					«thisModel.definePackages()»
-					«thisModel.declareClassTypes(excludedEClassifierNames)»
-					«thisModel.declarePrimitiveTypes()»
-					«thisModel.declareEnumerations()»
-					«thisModel.defineTemplateParameters()»
-					«thisModel.declareTupleTypes()»
-					«thisModel.declareCollectionTypes()»
-					«thisModel.declareMapTypes()»
-					«thisModel.defineClassTypes()»
-					«thisModel.definePrimitiveTypes()»
-					«thisModel.defineEnumerations()»
-					«thisModel.defineCollectionTypes()»
-					«thisModel.defineMapTypes()»
-					«thisModel.defineTupleTypes()»
-					«thisModel.defineLambdaTypes()»
-					«thisModel.defineOperations()»
-					«thisModel.defineIterations()»
-					«thisModel.defineCoercions()»
-					«thisModel.defineProperties()»
-					«thisModel.defineTemplateBindings()»
-					«thisModel.definePrecedences()»
-					«thisModel.defineComments()»
+					«thisModel.defineAll(excludedEClassifierNames)»
 				}
 			}
 		'''

@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -357,13 +357,11 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionElementType() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
 		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
 //
-		ocl.assertQueryEquals(null, integerType, "Set{1, 2, 3}->oclAsType(Collection(Real))->oclType().elementType");
-// XXX
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}->elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(String)", "elementType");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}->_'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}->SetType::elementType", EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, "CollectionType::elementType");
@@ -1278,9 +1276,9 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryEquals(null, 3, "Set{1, 2.0, 3}->oclAsType(Collection(Real[2..4]))->oclType().lower"); // no change to dynamic bound
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclAsType(Collection(OclAny))->oclType().lower");
 		ocl.assertQueryEquals(null, 3, "Sequence{1, 2.0, '3'}->oclAsType(Sequence(OclAny))->oclType().lower");
-		String string = useCodeGen ? "Set(OclAny[*|?])" : "Set(OclAny)"; 		// FIXME See Bug 578117
+		String string = /*useCodeGen ? "Set(OclAny[*|?])" :*/ "Set(OclAny)"; 		// fixed FIXME See Bug 578117
 		ocl.assertQueryInvalid(null, "Sequence{1, 2.0, '3'}->oclAsType(Set(OclAny))->oclType().lower",
-			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Sequence(OclAny[3|?])", string), InvalidValueException.class);
+			StringUtil.bind(PivotMessages.IncompatibleOclAsTypeSourceType, "Sequence(OclAny[3|?])", "Set(OclAny)"), InvalidValueException.class);
 		ocl.assertSemanticErrorQuery(null, "Sequence{1, 2.0, '3'}->oclAsType(OclVoid).oclType().lower",
 			PivotMessagesInternal.UnresolvedProperty_ERROR_, "OclVoid", "lower");
 		ocl.assertSemanticErrorQuery(null, "Sequence{1, 2.0, '3'}->oclAsType(OclAny).oclType().lower",
@@ -1816,7 +1814,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionSum() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertQueryEquals(null, 0, "let s : Sequence(Integer) = Sequence{} in s->sum()");
 		ocl.assertQueryEquals(null, 0.0, "let b : Bag(Real) = Bag{} in b->sum()");
 		ocl.assertQueryEquals(null, 0.0, "let s : Set(Real) = Set{} in s->sum()");

@@ -144,4 +144,15 @@ public class TupleTypeImpl
 	public @NonNull TupleTypeId getTypeId() {
 		return (TupleTypeId) super.getTypeId();
 	}
+
+	@Override
+	public boolean isWellContained() {
+		for (Property asPart : getOwnedProperties()) {
+			Type type = asPart.getType();
+			if ((type == null) || !type.isWellContained()) {
+				return false;
+			}
+		}
+		return super.isWellContained();
+	}
 } //TupleTypeImpl

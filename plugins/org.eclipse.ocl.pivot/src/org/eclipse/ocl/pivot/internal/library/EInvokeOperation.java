@@ -21,8 +21,11 @@ import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -30,6 +33,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
@@ -159,6 +163,16 @@ public class EInvokeOperation extends AbstractOperation
 		}
 		else {
 			return null;
+		}
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		if (returnType instanceof CollectionType) {
+			return resolveSourceAndArgumentsAsCollectionReturnType(environmentFactory, callExp, returnType);
+		}
+		else {
+			return returnType;
 		}
 	}
 }

@@ -44,7 +44,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS.Factory;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -274,7 +275,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			}
 			csMultiplicity = csMultiplicityBounds;
 		}
-		csMultiplicity.setIsNullFree(isNullFree);
+		ElementUtil.setIsNullFree(csMultiplicity, isNullFree);
 		return csMultiplicity;
 	}
 
@@ -337,7 +338,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			if (eContainer instanceof Model) {
 				break;				// Skip root Model
 			}
-			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isTypeOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
+			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && OrphanageImpl.isOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
 				break;				// Skip orphan package
 			}
 			if (eContainer instanceof TemplateSignature) {

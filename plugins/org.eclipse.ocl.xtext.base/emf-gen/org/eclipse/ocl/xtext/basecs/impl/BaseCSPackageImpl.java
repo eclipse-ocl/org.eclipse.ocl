@@ -1127,9 +1127,20 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 	 * @generated
 	 */
 	@Override
-	public EAttribute getMultiplicityCS_IsNullFree()
+	public EAttribute getMultiplicityCS_IsNonNullFree()
 	{
 		return (EAttribute)multiplicityCSEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getMultiplicityCS_IsNullFree()
+	{
+		return (EAttribute)multiplicityCSEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -2252,14 +2263,15 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		createEReference(modelElementRefCSEClass, 4);
 
 		multiplicityBoundsCSEClass = createEClass(19);
-		createEAttribute(multiplicityBoundsCSEClass, 3);
 		createEAttribute(multiplicityBoundsCSEClass, 4);
+		createEAttribute(multiplicityBoundsCSEClass, 5);
 
 		multiplicityCSEClass = createEClass(20);
 		createEAttribute(multiplicityCSEClass, 2);
+		createEAttribute(multiplicityCSEClass, 3);
 
 		multiplicityStringCSEClass = createEClass(21);
-		createEAttribute(multiplicityStringCSEClass, 3);
+		createEAttribute(multiplicityStringCSEClass, 4);
 
 		namedElementCSEClass = createEClass(22);
 		createEAttribute(namedElementCSEClass, 5);
@@ -2559,7 +2571,8 @@ public class BaseCSPackageImpl extends EPackageImpl implements BaseCSPackage {
 		initEAttribute(getMultiplicityBoundsCS_UpperBound(), ecorePackage.getEIntegerObject(), "upperBound", null, 0, 1, MultiplicityBoundsCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(multiplicityCSEClass, MultiplicityCS.class, "MultiplicityCS", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEAttribute(getMultiplicityCS_IsNullFree(), ecorePackage.getEBoolean(), "isNullFree", "false", 0, 1, MultiplicityCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEAttribute(getMultiplicityCS_IsNonNullFree(), ecorePackage.getEBoolean(), "isNonNullFree", null, 0, 1, MultiplicityCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getMultiplicityCS_IsNullFree(), ecorePackage.getEBoolean(), "isNullFree", null, 0, 1, MultiplicityCS.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		addEOperation(multiplicityCSEClass, ecorePackage.getEInt(), "getLower", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 

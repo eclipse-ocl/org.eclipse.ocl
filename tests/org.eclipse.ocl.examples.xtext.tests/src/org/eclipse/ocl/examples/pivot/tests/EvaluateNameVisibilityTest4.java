@@ -36,7 +36,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -115,7 +115,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 */
 	@Test public void test_bad_navigation() throws InvocationTargetException {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertQueryEquals(standardLibrary.getPackage(), "Boolean", "let types = self.ownedClasses?->select(name = 'Boolean') in let type = if types->notEmpty() then types->any(true) else null endif in type?.name");
 		ocl.assertQueryNull(standardLibrary.getPackage(), "let types = self.ownedClasses?->select(name = 'notAclass') in let type = if types->notEmpty() then types->any(true) else null endif in type?.name");
 		ocl.assertSemanticErrorQuery(null, "let a : Type = null in a.Package", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Type", "Package");
@@ -148,7 +148,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 
 	@Test public void test_implicit_source() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		if (!useCodeGen) {			// FIXME CG consistent boxing
 			ocl.assertQueryTrue(standardLibrary.getPackage(), "ownedClasses?->select(name = 'Integer') = Set{Integer}");
 			ocl.assertQueryTrue(standardLibrary.getPackage(), "let name : String = 'String' in ownedClasses?->select(name = 'Integer') = Set{Integer}");
@@ -161,7 +161,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 
 	@Test public void test_safe_aggregate_navigation() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertQueryInvalid(standardLibrary.getPackage(), "ownedClasses->including(null)->select(name = 'Integer')", StringUtil.bind(PivotMessages.NullNavigation, "source", "NamedElement::name"), InvalidValueException.class);
 		ocl.assertQueryResults(standardLibrary.getPackage(), "Set{Integer}", "ownedClasses?->select(name = 'Integer')");
 		if (!useCodeGen) {		// FIXME boxing
@@ -177,7 +177,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 
 	@Test public void test_safe_object_navigation() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertValidationErrorQuery(ocl.getContextType(standardLibrary.getPackage()), "let parent : OclElement[1] = oclContainer()?.oclAsType(OclElement) in parent", PivotMessages.ValidationConstraintIsNotSatisfied_ERROR_, "LetVariable::CompatibleNullityForInitializer", "parent : OclElement[1] = self.oclContainer()?.oclAsType(OclElement)");
 		ocl.assertQueryEquals(standardLibrary.getPackage(), standardLibrary.getPackage().eContainer(), "let parent : OclElement[?] = oclContainer()?.oclAsType(OclElement) in parent");
 		ocl.assertQueryNull(standardLibrary.getPackage(), "let grandparent : OclElement[?] = oclContainer()?.oclContainer()?.oclAsType(OclElement) in grandparent");
@@ -245,7 +245,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 	 */
 	@Test public void test_cg_let_implies() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		String textQuery =
 				"let bodyConstraint : Constraint = null\n" +
 						"in bodyConstraint <> null implies\n" +
@@ -259,7 +259,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 
 	@Test public void test_let_implies_let_implies() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		String textQuery =
 				"let bodyConstraint : Constraint = oclType().ownedInvariants?->any(name = 'body')\n" +
 						"in bodyConstraint <> null implies\n" +
@@ -283,7 +283,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 
 	@Test public void test_cg_implies_calls() throws ParserException {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ExpressionInOCL query = ocl.createQuery(standardLibrary.getOclVoidType(), "self->any(true)");
 		String textQuery =
 				"name = 'closure' implies\n" +
@@ -294,7 +294,7 @@ public class EvaluateNameVisibilityTest4 extends PivotFruitTestSuite
 
 	@Test public void test_cg_caught_if() throws ParserException {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ExpressionInOCL query = ocl.createQuery(standardLibrary.getOclVoidType(), "self->any(true)");
 		String textQuery =
 				"name = 'closure' implies\n" +

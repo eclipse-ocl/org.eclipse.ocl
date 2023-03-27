@@ -143,6 +143,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitCompleteStandardLibrary(org.eclipse.ocl.pivot.@NonNull CompleteStandardLibrary object) {
+		return visitStandardLibrary(object);
+	}
+
+	@Override
 	public R visitConnectionPointReference(org.eclipse.ocl.pivot.@NonNull ConnectionPointReference object) {
 		return visitVertex(object);
 	}
@@ -415,6 +420,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	@Override
 	public R visitOrphanCompletePackage(org.eclipse.ocl.pivot.@NonNull OrphanCompletePackage object) {
 		return visitCompletePackage(object);
+	}
+
+	@Override
+	public R visitOrphanage(org.eclipse.ocl.pivot.@NonNull Orphanage object) {
+		return visitPackage(object);
 	}
 
 	@Override

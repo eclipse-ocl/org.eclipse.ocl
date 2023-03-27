@@ -606,14 +606,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/StandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.StandardLibraryImpl">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="StandardLibraryInternal"/>
-                <message_argument value="StandardLibraryImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TemplateParameterSubstitutionImpl.java" type="org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl">
         <filter id="338792546">
             <message_arguments>

@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionKind;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
@@ -31,7 +32,6 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.StandardLibrary.StandardLibraryExtension;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
@@ -42,13 +42,9 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
-import org.eclipse.ocl.pivot.internal.values.MapTypeParametersImpl;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.types.TemplateParametersImpl;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class TypeUtil
@@ -57,6 +53,7 @@ public class TypeUtil
 	 * @since 1.1
 	 */
 	public static @NonNull ParameterTypes EMPTY_PARAMETER_TYPES = createParameterTypes();
+	public static @NonNull Object @NonNull [] EMPTY_PARAMETER_TYPESx2x = new @NonNull Object [] {};
 
 	public static boolean conformsToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
 		Type firstContainerType = firstCollectionType.getContainerType();
@@ -128,46 +125,13 @@ public class TypeUtil
 		return true;
 	}
 
-	public static boolean conformsToTupleType(@NonNull StandardLibrary standardLibrary, @NonNull TupleType firstTupleType, @NonNull TupleType secondTupleType) {
+	public static boolean conformsToTupleType(@NonNull CompleteStandardLibrary standardLibrary, @NonNull TupleType firstTupleType, @NonNull TupleType secondTupleType) {
 		if (isEqualToTupleType(standardLibrary, firstTupleType, secondTupleType)) {
 			return true;
 		}
 		FlatClass firstFlatClass = firstTupleType.getFlatClass(standardLibrary);
 		FlatClass secondFlatClass = secondTupleType.getFlatClass(standardLibrary);
 		return firstFlatClass.isSuperFlatClassOf(secondFlatClass);
-	}
-
-	/**
-	 * @deprecated add isNullFree argument
-	 */
-	@Deprecated
-	public static @NonNull CollectionTypeParameters<@NonNull Type> createCollectionTypeParameters(@NonNull Type elementType,
-			@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, false, lower, upper);
-	}
-
-	public static @NonNull CollectionTypeParameters<@NonNull Type> createCollectionTypeParameters(@NonNull Type elementType, boolean isNullFree,
-			@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, isNullFree, lower, upper);
-	}
-
-	@Deprecated /* @deprecated use nullFrees */
-	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(@NonNull Type keyType, @NonNull Type valueType) {
-		return createMapTypeParameters(keyType, true, valueType, true);
-	}
-
-	/**
-	 * @since 1.6
-	 */
-	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		return new MapTypeParametersImpl<@NonNull Type, @NonNull Type>(keyType, keysAreNullFree, valueType, valuesAreNullFree);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		return new MapTypeParametersImpl<@NonNull Type, @NonNull Type>(entryClass);
 	}
 
 	public static @NonNull ParameterTypes createParameterTypes(@NonNull Type @NonNull ... parameterTypes) {
@@ -293,7 +257,7 @@ public class TypeUtil
 			return standardLibrary.getOclComparableType();
 		}
 		else if (typeId == TypeId.OCL_ENUMERATION) {
-			return (standardLibrary instanceof StandardLibraryExtension) ? ((StandardLibraryExtension)standardLibrary).getOclEnumerationType() : null;
+			return standardLibrary.getOclEnumerationType();
 		}
 		else if (typeId == TypeId.OCL_SELF) {
 			return standardLibrary.getOclSelfType();

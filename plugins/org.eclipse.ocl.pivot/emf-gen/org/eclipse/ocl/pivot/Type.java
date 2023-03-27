@@ -55,6 +55,11 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	Type specializeIn(CallExp expr, Type selfType);
 
 	/**
+	 * Return the shared Orphanage that contains this type or null if not in a shared Orphanage.
+	 */
+	@Nullable Orphanage basicGetSharedOrphanage();
+
+	/**
 	 * Return true if this type conform to thatType within standardLibrary.
 	 */
 	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);
@@ -78,6 +83,8 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * Return a unique StandardLibrary-independent TemplateParameter-independent identifier for this type.
 	 *
 	 * @since 1.18
+	 *
+	 * XXX This method is widely used but the overload never differs to getTypeId() in regular OCL standalone tests.
 	 */
 	default @NonNull TypeId getNormalizedTypeId() { return getTypeId(); }
 
@@ -97,5 +104,9 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 */
 //	boolean isInvalid();
 
+	/**
+	 * Return true if this type and all transitively referenced types have a non-null eResource().
+	 */
+	boolean isWellContained();
 //	@NonNull Type specializeIn(@NonNull CallExp expr, @Nullable Type selfType);
 } // Type

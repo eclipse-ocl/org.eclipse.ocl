@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionRange;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -107,14 +106,6 @@ public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVi
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
 		return delegate.evaluate(body);
-	}
-
-	/** @deprecated moved to Evaluator
-	 * @since 1.1*/
-	@Deprecated
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return delegate.getCompleteEnvironment();
 	}
 
 	/**

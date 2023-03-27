@@ -17,7 +17,7 @@ MultiplicityBoundsCS returns MultiplicityBoundsCS:
 	 lowerBound=LOWER ('..' upperBound=UPPER)?;
 
 MultiplicityCS returns MultiplicityCS:
-	'[' (MultiplicityBoundsCS | MultiplicityStringCS) ('|?' | isNullFree?='|1')? ']';
+	'[' (MultiplicityBoundsCS | MultiplicityStringCS) (isNonNullFree?='|?' | isNullFree?='|1')? ']';
 
 MultiplicityStringCS returns MultiplicityStringCS:
 	stringBounds=('*'|'+'|'?');

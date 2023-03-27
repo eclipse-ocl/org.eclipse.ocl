@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -41,24 +40,22 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteURIs;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.merge.Merger;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -93,7 +90,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 			if (diff != 0) {			// Non-interface first
 				return diff;
 			}
-			StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+			CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			FlatClass f1 = o1.getFlatClass(standardLibrary);
 			FlatClass f2 = o2.getFlatClass(standardLibrary);
 			int d1 = f1.getDepth();
@@ -142,11 +139,6 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 	}
 
 	@Override
-	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
-		return super.getSortedCollectionTypes(root, contentAnalysis.monikerComparator);
-	}
-
-	@Override
 	protected @NonNull Model getThisModel() {
 		return ClassUtil.nonNullState(thisModel);
 	}
@@ -167,7 +159,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 		URI mergedFileURI = URI.createPlatformResourceURI(sourceFile + ".merged.oclas", true);
 		log.info("Loading OCL library '" + stdlibFileURI);
 		OCLInternal ocl = getOCL();
-		ResourceSet resourceSet = ocl.getResourceSet();
+	//	ResourceSet resourceSet = ocl.getResourceSet();
 		try {
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
 			ASResource asResource1 = loadOCLstdlibFile(stdlibFileURI, issues);
@@ -186,8 +178,8 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
-			asResource.setURI(mergedFileURI);
-			PivotUtil.getModel(asResource).setExternalURI(mergedFileURI.toString());
+		//	asResource.setURI(mergedFileURI);
+		//	PivotUtil.getModel(asResource).setExternalURI(mergedFileURI.toString());
 			asResource.setSaveable(true);
 			asResource.save(options);		// XXX early debug save
 			Model pivotModel = (Model)ClassUtil.nonNullState(asResource.getContents().get(0));
@@ -400,7 +392,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 		return asResource;
 	}
 
-	protected void mergeClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull CompleteClass completeClass) {
+/*	protected void mergeClass(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull CompleteClass completeClass) {
 		String instanceClassName = asClass.getInstanceClassName();
 		List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = PivotUtilInternal.getSuperClassesList(asClass);
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
@@ -435,9 +427,9 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 			asClass.setInstanceClassName(instanceClassName);
 		}
 		ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)superClasses, superClassComparator);
-	}
+	} */
 
-	protected void mergePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CompletePackage completePackage) {
+/*	protected void mergePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull CompletePackage completePackage) {
 		for (@NonNull CompleteClass completeClass : PivotUtil.getOwnedCompleteClasses(completePackage)) {
 			if ("OclAny".equals(completeClass.getName())) {
 				getClass();		// XXX
@@ -453,31 +445,55 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 				org.eclipse.ocl.pivot.Class primaryClass = completeClass.getPrimaryClass();
 				asClass = (org.eclipse.ocl.pivot.Class) PivotFactory.eINSTANCE.create(primaryClass.eClass());
 				asClass.setName(primaryClass.getName());
+			//	asClass = EcoreUtil.copy(primaryClass);
+			//	asClass.getSuperClasses().clear();
 				asPackage.getOwnedClasses().add(asClass);
 			}
 			mergeClass(asClass, completeClass);
 		}
-	}
+	} */
 
 	protected @Nullable ASResource  mergeResources(@NonNull URI mergedURI, @NonNull ASResource asResource1, @NonNull ASResource asResource2) {
-		ASResource asResource = asResource1;
-		Model asModel = PivotUtil.getModel(asResource);
+	//	ASResource asResource = asResource1;	// XXX pivot rather than oclstdlib once pivot has collection types
+		Model asModel1 = PivotUtil.getModel(asResource1);
+		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
+		ASResource asResource = (ASResource) asResourceSet.createResource(mergedURI);
+	//	asResourceSet.getResources().remove(asResource);
+	//	ResourceSet resourceSet = new ResourceSetImpl();
+	//	resourceSet.getResources().add(asResource);
+		Model asModel = PivotUtil.createModel(mergedURI.toString());
+		asResource.getContents().add(asModel);
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		for (CompletePackage completePackage : completeModel.getAllCompletePackages()) {
 			if (PivotConstants.METAMODEL_NAME.equals(completePackage.getURI())) {
 				org.eclipse.ocl.pivot.Package asPackage = null;
+				String name = null;
 				for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : PivotUtil.getPartialPackages(completePackage)) {
-					if (partialPackage.eContainer() == asModel) {
-						asPackage = partialPackage;
-						break;
+					if (partialPackage.eContainer() == asModel1) {
+						if (asPackage == null) {
+							asPackage = partialPackage;
+						}
+					}
+					if (partialPackage.eClass() == PivotPackage.Literals.PACKAGE) {
+						if (name == null) {
+							name = partialPackage.getName();
+						}
 					}
 				}
 				assert asPackage != null;
+				assert environmentFactory != null;
+			//	ASResourceImpl.SKIP_CHECK_BAD_REFERENCES = true;		// XXX
+
+				Merger merger = new Merger(environmentFactory);
+				org.eclipse.ocl.pivot.Package mergedPackage = merger.merge(asModel.getOwnedPackages(), completePackage.getPartialPackages());
 				//	org.eclipse.ocl.pivot.Package primaryPackage = completePackage.getPrimaryPackage();
 				//	PivotUtilInternal.resetContainer(primaryPackage);
 				//	asPackage = primaryPackage;
-				//	asModel.getOwnedPackages().add(asPackage);
-				mergePackage(asPackage, completePackage);
+				//	asModel.getOwnedPackages().add(mergedPackage);
+			//	mergePackage(asPackage, completePackage);
+				if (name != null) {
+			//		asPackage.setName(name);
+				}
 			}
 		}
 		return asResource;
