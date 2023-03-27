@@ -212,4 +212,12 @@
             genModel="model/Queries.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated oclas -->
+      <package
+            uri="http://www.eclipse.org/ocl/2023/Library"
+            class="org.eclipse.ocl.as.ocl.OCLASPackage"
+            genModel="model/oclas.genmodel"/>
+   </extension>
+
 </plugin>

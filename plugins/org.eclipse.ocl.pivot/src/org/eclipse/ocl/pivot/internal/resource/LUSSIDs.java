@@ -438,7 +438,7 @@ public abstract class LUSSIDs
 			String newXMIID = computeXMIID(lussid.intValue());
 			String oldXMIID = asResource.getID(element);
 			EObject oldElement = asResource.basicGetEObjectByID(newXMIID);
-			if ((oldElement instanceof Element) && ((oldElement != element) || !oldXMIID.equals(newXMIID))) {
+			if ((oldElement instanceof Element) && (oldElement.eResource() == element.eResource()) && ((oldElement != element) || !oldXMIID.equals(newXMIID))) {
 				if (xmiid2collisions2 == null) {
 					xmiid2collisions = xmiid2collisions2 = new HashMap<>();
 				}

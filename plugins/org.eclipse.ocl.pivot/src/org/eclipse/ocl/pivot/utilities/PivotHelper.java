@@ -109,6 +109,12 @@ public class PivotHelper
 		return asBoolean;
 	}
 
+	public org.eclipse.ocl.pivot.@NonNull Class createClass(@NonNull String name) {
+		org.eclipse.ocl.pivot.Class asClass = PivotFactory.eINSTANCE.createClass();
+		asClass.setName(name);
+		return asClass;
+	}
+
 	/**
 	 * @since 1.4
 	 */

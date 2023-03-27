@@ -1993,6 +1993,10 @@ public class PivotUtil
 		return ClassUtil.nonNullState((TupleType)tupleLiteralExp.getType());
 	}
 
+	public static @NonNull String getURI(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		return ClassUtil.nonNullState(asPackage.getURI());
+	}
+
 	public static @NonNull <T extends TemplateableElement> T getUnspecializedTemplateableElement(@NonNull T templateableElement) {
 		//		if (templateableElement == null) {
 		//			return null;
