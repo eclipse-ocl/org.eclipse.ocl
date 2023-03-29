@@ -10,19 +10,10 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.merge;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -35,7 +26,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public class MergerCreateVisitor extends AbstractExtendingVisitor<@Nullable Element, @NonNull Merger>
 {
 
-	interface Partitioner<P extends Element,K,C extends Element>
+/*	interface Partitioner<P extends Element,K,C extends Element>
 	{
 		@NonNull Map<@NonNull K, @NonNull List<@NonNull C>> partition(@NonNull Iterable<@NonNull P> partialElements);
 	}
@@ -88,20 +79,20 @@ public class MergerCreateVisitor extends AbstractExtendingVisitor<@Nullable Elem
 		}
 	}
 
-	private @NonNull PackageOwnedClassPartitioner packageOwnedClassPartitioner = new PackageOwnedClassPartitioner();
+	private @NonNull PackageOwnedClassPartitioner packageOwnedClassPartitioner = new PackageOwnedClassPartitioner(); */
 //	private @NonNull Map<@NonNull EClass, @NonNull Integer> eClass2depth = new HashMap<>();
 
 	public MergerCreateVisitor(@NonNull Merger context) {
 		super(context);
 	}
 
-	private <E extends Element> @NonNull E createElement(@NonNull Iterable<@NonNull E> elements) {
+/*	private <E extends Element> @NonNull E createElement(@NonNull Iterable<@NonNull E> elements) {
 		EClass largestEClass = computeCommonEClass(elements);
 		@SuppressWarnings("unchecked")
 		E mergedElement = (E)PivotFactory.eINSTANCE.create(largestEClass);
 		context.putPartialElements(mergedElement, elements);
 		return mergedElement;
-	}
+	} */
 
 	private boolean mergeAbstract(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses) {
 		boolean mergedAbstract = false;
@@ -158,7 +149,7 @@ public class MergerCreateVisitor extends AbstractExtendingVisitor<@Nullable Elem
 		return super.visitClass(mergedClass);
 	}
 
-	@Override
+/*	@Override
 	public @Nullable Element visitElement(@NonNull Element mergedParent) {
 		Iterable<@NonNull Element> partialParents = context.getPartialElements(mergedParent);
 		for (@NonNull EReference eContainment : mergedParent.eClass().getEAllContainments()) {
@@ -185,9 +176,9 @@ public class MergerCreateVisitor extends AbstractExtendingVisitor<@Nullable Elem
 	//		}
 	//	}
 		return null;
-	}
+	} */
 
-	@Override
+/*	@Override
 	public @Nullable Element visitPackage(org.eclipse.ocl.pivot.@NonNull Package mergedPackage) {
 		Iterable<org.eclipse.ocl.pivot.@NonNull Package> partialPackages = context.getPartialElements(mergedPackage);
 		mergedPackage.setName(mergeName(partialPackages));
@@ -203,5 +194,5 @@ public class MergerCreateVisitor extends AbstractExtendingVisitor<@Nullable Elem
 			Iterable<org.eclipse.ocl.pivot.@NonNull Class> classes = name2classes.get(name);
 		}
 		return super.visitPackage(mergedPackage);
-	}
+	} */
 }

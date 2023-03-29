@@ -27,13 +27,13 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
  * The MergerGroupVisitor supports the grouping of the nested list of partial elements from each is-many
  * partial element to form a list of to-be-merged partial elements for each merged element.
  */
-public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull Iterable<@NonNull Iterable<@NonNull ? extends Element>>, @NonNull Merger>
+public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull IterableOfIterable<@NonNull Element>, @NonNull Merger>
 {
 
 	interface Partitioner<E extends Element>
 	{
 	//	@NonNull Map<@NonNull K, @NonNull List<@NonNull C>> partition(@NonNull Iterable<@NonNull P> partialElements);
-		public @NonNull Iterable<@NonNull Iterable<@NonNull ? extends Element>> partition(@NonNull Iterable<@NonNull Iterable<@NonNull E>> ungroupedPartialElements);
+		public @NonNull IterableOfIterable<@NonNull Element> partition(@NonNull IterableOfIterable<@NonNull E> ungroupedPartialElements);
 	}
 
 	abstract class AbstractPartitioner<E extends Element> implements Partitioner<E>
@@ -70,9 +70,9 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull Iterab
 		} */
 
 		@Override
-		public @NonNull Iterable<@NonNull Iterable<@NonNull ? extends Element>> partition(@NonNull Iterable<@NonNull Iterable<@NonNull E>> ungroupedPartialElements) {
+		public @NonNull IterableOfIterable<@NonNull Element> partition(@NonNull IterableOfIterable<@NonNull E> ungroupedPartialElements) {
 			Map<@NonNull String, @NonNull List<@NonNull E>> name2groupedElements = new HashMap<>();
-			for (@NonNull Iterable<@NonNull E> partialElements : ungroupedPartialElements) {
+			for (@NonNull Iterable<@NonNull E> partialElements : ungroupedPartialElements.getOuterIterable()) {
 				for (@NonNull E partialElement : partialElements) {
 					String name = NameUtil.getName(partialElement);
 					List<@NonNull E> groupedElements = name2groupedElements.get(name);
@@ -84,7 +84,7 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull Iterab
 					}
 				}
 			}
-			List<@NonNull Iterable<@NonNull ? extends Element>> groupedPartialElements = new ArrayList<>();
+			IterableOfIterable<@NonNull E> groupedPartialElements = new IterableOfIterable<>();
 			List<@NonNull String> names = new ArrayList<>(name2groupedElements.keySet());
 			Collections.sort(names);
 			for (@NonNull String name : names) {
@@ -92,7 +92,7 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull Iterab
 				assert groupedElements != null;
 				groupedPartialElements.add(groupedElements);
 			}
-			return groupedPartialElements;
+			return (IterableOfIterable<@NonNull Element>)groupedPartialElements;
 		}
 	}
 
@@ -166,7 +166,7 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull Iterab
 	} */
 
 	@Override
-	public @NonNull Iterable<@NonNull Iterable<@NonNull ? extends Element>> visiting(@NonNull Visitable visitable) {
+	public @NonNull IterableOfIterable<@NonNull Element> visiting(@NonNull Visitable visitable) {
 		throw new UnsupportedOperationException("Unsupported " + visitable.eClass().getName() + " for " + getClass().getSimpleName());
 	//	return null;
 	}
@@ -210,9 +210,9 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull Iterab
 	} */
 
 	@Override
-	public @NonNull Iterable<@NonNull Iterable<@NonNull ? extends Element>> visitNamedElement(@NonNull NamedElement protoNamedElement) {
-		Iterable<@NonNull Iterable<@NonNull NamedElement>> ungroupedPartialElements = context.getUngroupedPartialElements(protoNamedElement);
-		Iterable<@NonNull Iterable<@NonNull ? extends Element>> groupedPartialElements = namePartitioner.partition(ungroupedPartialElements);
+	public @NonNull IterableOfIterable<@NonNull Element> visitNamedElement(@NonNull NamedElement protoNamedElement) {
+		IterableOfIterable<@NonNull NamedElement> ungroupedPartialElements = context.getUngroupedPartialElements(protoNamedElement);
+		IterableOfIterable<@NonNull Element> groupedPartialElements = namePartitioner.partition(ungroupedPartialElements);
 		return groupedPartialElements;
 	}
 

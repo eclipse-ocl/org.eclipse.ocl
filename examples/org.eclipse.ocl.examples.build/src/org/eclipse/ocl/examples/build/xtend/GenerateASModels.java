@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.merge.Merger;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
@@ -483,11 +484,14 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 					}
 				}
 				assert asPackage != null;
+				assert environmentFactory != null;
+				Merger merger = new Merger(environmentFactory);
+				org.eclipse.ocl.pivot.Package mergedPackage = merger.merge(completePackage.getPartialPackages());
 				//	org.eclipse.ocl.pivot.Package primaryPackage = completePackage.getPrimaryPackage();
 				//	PivotUtilInternal.resetContainer(primaryPackage);
 				//	asPackage = primaryPackage;
 				//	asModel.getOwnedPackages().add(asPackage);
-				mergePackage(asPackage, completePackage);
+			//	mergePackage(asPackage, completePackage);
 				if (name != null) {
 			//		asPackage.setName(name);
 				}

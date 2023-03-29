@@ -23,8 +23,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
-import com.google.common.collect.Iterables;
-
 /**
  * The Merger supports the creation of a merged model from one or more partial models.
  */
@@ -38,7 +36,7 @@ public class Merger
 	/**
 	 * The lists of incoming partial elements to  be grouped to support a many-child.
 	 */
-	private @NonNull Map<@NonNull Element, @NonNull Iterable<@NonNull Iterable<@NonNull Element>>> protoElement2partialElements = new HashMap<>();
+	private @NonNull Map<@NonNull Element, @NonNull IterableOfIterable<@NonNull Element>> protoElement2partialElements = new HashMap<>();
 
 	/**
 	 * The outgoing merged element created for each incoming partial element.
@@ -56,6 +54,13 @@ public class Merger
 		this.updateVisitor = createUpdateVisitor();
 	}
 
+	private void addPartialElements(@NonNull Element mergedChild, @NonNull Iterable<@NonNull Element> partialChildren) {
+		mergedElement2partialElements.put(mergedChild, partialChildren);
+		for (@NonNull Element partialChild : partialChildren) {
+			partialElement2mergedElement.put(partialChild, mergedChild);
+		}
+	}
+
 	protected @NonNull MergerGroupVisitor createGroupVisitor() {
 		return new MergerGroupVisitor(this);
 	}
@@ -65,36 +70,50 @@ public class Merger
 	}
 
 	public <E extends Element> @NonNull Iterable<@NonNull E> getPartialElements(@NonNull E mergedElement) {
-		Iterable<@NonNull E> partialElements = (Iterable<@NonNull E>) mergedElement2partialElements.get(mergedElement);
+		@SuppressWarnings("unchecked")
+		Iterable<@NonNull E> partialElements = (Iterable<@NonNull E>)mergedElement2partialElements.get(mergedElement);
 		assert partialElements != null;
 		return partialElements;
 	}
 
-	public <E extends Element> @NonNull Iterable<@NonNull Iterable<@NonNull E>> getUngroupedPartialElements(@NonNull E protoElement) {
-		return (@NonNull Iterable<@NonNull Iterable<@NonNull E>>)(Object)protoElement2partialElements.get(protoElement);
+	public <E extends Element> @NonNull IterableOfIterable<@NonNull E> getUngroupedPartialElements(@NonNull E protoElement) {
+		@SuppressWarnings("unchecked")
+		IterableOfIterable<@NonNull E> ungroupedPartialElements = (IterableOfIterable<@NonNull E>)protoElement2partialElements.get(protoElement);
+		assert ungroupedPartialElements != null;
+		return ungroupedPartialElements;
 	}
 
-	public @Nullable Element mergeElements(@NonNull Element mergedParent, @NonNull Iterable<@NonNull Element> partialParents) {
+	public <E extends Element> @NonNull E merge(@NonNull Iterable<@NonNull E> partialElements) {
+		EClass eClass = eSuperClassHelper.getCommonEClass(partialElements);
+		@SuppressWarnings("unchecked")
+		E mergedElement = (E)PivotFactory.eINSTANCE.create(eClass);
+		mergeElements(mergedElement, partialElements);
+		return mergedElement;
+	}
+
+	private <E extends Element> void mergeElements(@NonNull E mergedParent, @NonNull Iterable<@NonNull E> partialParents) {
 	//	Iterable<@NonNull Element> partialParents = context.getPartialElements(mergedParent);
 		EClass parentEClass = eSuperClassHelper.getCommonEClass(partialParents);
-		for (@NonNull EReference eContainment : parentEClass.getEAllContainments()) {
+		assert parentEClass == mergedParent.eClass();
+		for (EReference eContainment : parentEClass.getEAllContainments()) {
+			assert eContainment != null;
 			if (eContainment.isMany()) {
 				@SuppressWarnings("unchecked")
 				List<@NonNull Element> mergedChildren = (List<@NonNull Element>)mergedParent.eGet(eContainment);
-				List<@Nullable Iterable<@NonNull Element>> ungroupedPartialChildren = new ArrayList<>();
-				for (@NonNull Element partialParent : partialParents) {
+				IterableOfIterable<@NonNull Element> ungroupedPartialChildren = new IterableOfIterable<>();
+				for (@NonNull E partialParent : partialParents) {
 					@SuppressWarnings("unchecked")
-					List<@NonNull Element> partialChildren = (List<@NonNull Element>)partialParent.eGet(eContainment);
+					List<@NonNull Element> partialChildren = (@NonNull List<@NonNull Element>)partialParent.eGet(eContainment);
 					ungroupedPartialChildren.add(partialChildren);
 				}
-				EClass childEClass = eSuperClassHelper.getCommonEClass(Iterables.concat(ungroupedPartialChildren));
+				EClass childEClass = eSuperClassHelper.getCommonEClass(ungroupedPartialChildren.getInnerIterable());
 				Element protoChildElement = (Element)PivotFactory.eINSTANCE.create(childEClass);
 				protoElement2partialElements.put(protoChildElement, ungroupedPartialChildren);
-				Iterable<@Nullable Iterable<@NonNull ? extends Element>> groupedPartialChildren = protoChildElement.accept(groupVisitor);
-				for (@NonNull Iterable<@NonNull Element> partialChildren : groupedPartialChildren) {
+				IterableOfIterable<@NonNull Element> groupedPartialChildren = protoChildElement.accept(groupVisitor);
+				for (@NonNull Iterable<@NonNull Element> partialChildren : groupedPartialChildren.getOuterIterable()) {
 					Element mergedChild = (Element)PivotFactory.eINSTANCE.create(childEClass);
 					mergedChildren.add(mergedChild);
-					mergedElement2partialElements.put(mergedChild, partialChildren);
+					addPartialElements(mergedChild, partialChildren);
 				}
 
 			}
@@ -108,7 +127,7 @@ public class Merger
 				EClass childEClass = eSuperClassHelper.getCommonEClass(partialChildren);
 				Element mergedChild = (Element)PivotFactory.eINSTANCE.create(childEClass);
 				mergedParent.eSet(eContainment, mergedChild);
-				mergedElement2partialElements.put(mergedChild, partialChildren);
+				addPartialElements(mergedChild, partialChildren);
 			}
 		}
 	//	List<?> owns = cgElement instanceof CGValuedElement ? ((CGValuedElement)cgElement).getOwns() : null;
@@ -117,11 +136,10 @@ public class Merger
 	//			cgChild.accept(this);
 	//		}
 	//	}
-		return null;
+	//	return null;
 	}
 
-
-/*	protected void mergeClass(@NonNull PivotHelper helper, @NonNull CompleteClass completeClass,
+	/*	protected void mergeClass(@NonNull PivotHelper helper, @NonNull CompleteClass completeClass,
 			@NonNull Map<@NonNull NamedElement, @NonNull Type> completeType2type) {
 		org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class) completeType2type.get(completeClass);
 		assert asClass != null;
@@ -279,7 +297,13 @@ public class Merger
 		return asResource;
 	} */
 
+//	private void mergeModels(@NonNull Model mergedModel, @NonNull Iterable<@NonNull Model> partialModels) {
+//		mergeElements(mergedModel, partialModels);
+//	}
+
 	public <E extends Element> void putPartialElements(@NonNull E mergedElement, @NonNull Iterable<@NonNull E> partialElements) {
-		mergedElement2partialElements.put(mergedElement, partialElements);
+		@SuppressWarnings("unchecked")
+		Iterable<@NonNull Element> castPartialElements = (Iterable<@NonNull Element>)partialElements;
+		mergedElement2partialElements.put(mergedElement, castPartialElements);
 	}
 }
