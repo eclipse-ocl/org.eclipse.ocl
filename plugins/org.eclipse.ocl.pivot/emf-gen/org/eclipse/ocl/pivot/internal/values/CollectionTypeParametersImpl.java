@@ -15,6 +15,8 @@ import java.util.NoSuchElementException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -52,6 +54,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 	private final boolean isNullFree;
 	private final @NonNull IntegerValue lower;
 	private final @NonNull UnlimitedNaturalValue upper;
+	private @Nullable CollectionTypeId typeId;
 
 	public CollectionTypeParametersImpl(@NonNull T elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		this.elementType = elementType;
@@ -86,6 +89,16 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public @NonNull CollectionTypeId getCollectionTypeId() {
+		CollectionTypeId typeId2 = typeId;
+		if (typeId2 == null) {
+			TypeId elementTypeId = elementType.getTypeId();
+			typeId = typeId2 = TypeId.COLLECTION.getSpecializedId(elementTypeId, isNullFree, lower, upper);		// XXX Use correct collection type
+		}
+		return typeId2;
 	}
 
 	@Override

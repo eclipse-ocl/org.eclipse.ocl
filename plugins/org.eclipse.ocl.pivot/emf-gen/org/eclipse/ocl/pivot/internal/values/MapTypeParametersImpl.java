@@ -16,6 +16,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -53,6 +55,7 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 	private final boolean keysAreNullFree;
 	private final @NonNull V valueType;
 	private final boolean valuesAreNullFree;
+	private @Nullable MapTypeId typeId;
 
 	@Deprecated /* @deprecated use nullFrees */
 	public MapTypeParametersImpl(@NonNull K keyType, @NonNull V valueType) {
@@ -125,6 +128,17 @@ public class MapTypeParametersImpl<K extends Type, V extends Type> implements Ma
 	@Override
 	public @NonNull K getKeyType() {
 		return keyType;
+	}
+
+	@Override
+	public @NonNull MapTypeId getMapTypeId() {
+		MapTypeId typeId2 = typeId;
+		if (typeId2 == null) {
+			TypeId keyTypeId = keyType.getTypeId();
+			TypeId valueTypeId = valueType.getTypeId();
+			typeId = typeId2 = TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, keysAreNullFree, valuesAreNullFree);
+		}
+		return typeId2;
 	}
 
 	@Override

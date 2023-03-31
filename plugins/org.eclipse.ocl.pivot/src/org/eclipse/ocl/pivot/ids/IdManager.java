@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.ids;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,7 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl.BindingsIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedCollectionTypeIdImpl.CollectionTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl.LambdaTypeIdSingletonScope;
@@ -61,6 +63,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 /**
  * IdManager supervises the thread-safe allocation of unique hierarchical identifier to each metamodel element.
@@ -405,7 +408,62 @@ public final class IdManager
 	}
 
 	/**
-	 * Return the named tuple typeId with the defined parts (which are alphabetically ordered by part name).
+	 * Return the named tuple typeId with the defined part name/type pairs.
+	 */
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String tupleName, @NonNull Iterable<@NonNull ? extends TypedElement> parts) {
+		//
+		//	Create the tuple part ids
+		//
+		List<@NonNull TypedElement> sortedParts = Lists.newArrayList(parts);
+		Collections.sort(sortedParts, NameUtil.NAMEABLE_COMPARATOR);
+		int partsCount = sortedParts.size();
+		@NonNull TuplePartId[] sortedPartIds = new @NonNull TuplePartId[partsCount];
+		for (int i = 0; i < partsCount; i++) {
+			@NonNull TypedElement part = sortedParts.get(i);
+			@NonNull String partName = PivotUtil.getName(part);
+			Type partType = part.getType();
+			if (partType != null) {
+				TypeId partTypeId = partType.getTypeId();
+				TuplePartId tuplePartId = IdManager.getTuplePartId(i, partName, partTypeId);
+				sortedPartIds[i] = tuplePartId;
+			}
+		}
+		//
+		//	Create the tuple type id (and then specialize it)
+		//
+		TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(tupleName, sortedPartIds);
+		return tupleTypeId;
+	}
+
+	/**
+	 * Return the named tuple typeId with the defined part name/type pairs.
+	 */
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts) {
+		//
+		//	Create the tuple part ids
+		//
+		int partsCount = parts.size();
+		List<@NonNull String> sortedPartNames = new ArrayList<>(parts.keySet());
+		Collections.sort(sortedPartNames);
+		@NonNull TuplePartId[] sortedPartIds = new @NonNull TuplePartId[partsCount];
+		for (int i = 0; i < partsCount; i++) {
+			@NonNull String partName = sortedPartNames.get(i);
+			Type partType = parts.get(partName);
+			if (partType != null) {
+				TypeId partTypeId = partType.getTypeId();
+				TuplePartId tuplePartId = IdManager.getTuplePartId(i, partName, partTypeId);
+				sortedPartIds[i] = tuplePartId;
+			}
+		}
+		//
+		//	Create the tuple type id (and then specialize it)
+		//
+		TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(tupleName, sortedPartIds);
+		return tupleTypeId;
+	}
+
+	/**
+	 * Return the named tuple typeId with the defined part ids (which are alphabetically ordered by part name).
 	 */
 	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String name, @NonNull TuplePartId @NonNull [] parts) {
 		return tupleTypes.getSingleton(PRIVATE_INSTANCE, name, parts);

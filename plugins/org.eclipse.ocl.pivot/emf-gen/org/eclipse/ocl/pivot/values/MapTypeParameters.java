@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.values;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 
 public interface MapTypeParameters<K extends Type, V extends Type> extends Iterable<Object>
 {
@@ -24,6 +25,7 @@ public interface MapTypeParameters<K extends Type, V extends Type> extends Itera
 	}
 
 	@NonNull K getKeyType();
+	@NonNull MapTypeId getMapTypeId();
 	@NonNull V getValueType();
 	/**
 	 * @since 1.6
