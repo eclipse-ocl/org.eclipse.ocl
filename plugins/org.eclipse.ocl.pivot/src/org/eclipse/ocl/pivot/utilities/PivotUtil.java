@@ -1096,6 +1096,10 @@ public class PivotUtil
 		return type != null ? getBehavioralType(type) : null;
 	}
 
+	public static @NonNull String getBody(@NonNull Comment asComment) {
+		return ClassUtil.nonNullState(asComment.getBody());
+	}
+
 	/**
 	 * @since 1.7
 	 */

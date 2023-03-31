@@ -545,9 +545,11 @@ public class ExecutorStandardLibrary implements CompleteEnvironment, StandardLib
 				specializedType.setUpperValue(upper);
 			}
 			map.put(typeParameters, new WeakReference<>(specializedType));
-			/*Partial*/FlatModel flatModel = getFlatModel();
-			FlatClass flatClass = flatModel.getFlatClass(genericType);
-			((CollectionTypeImpl)specializedType).setFlatClass(flatClass);
+			if (genericType.getESObject() != null) {			// XXX Temporary fudge till Library properly initialized
+				/*Partial*/FlatModel flatModel = getFlatModel();
+				FlatClass flatClass = flatModel.getFlatClass(genericType);
+				((CollectionTypeImpl)specializedType).setFlatClass(flatClass);
+			}
 		}
 		return specializedType;
 	}

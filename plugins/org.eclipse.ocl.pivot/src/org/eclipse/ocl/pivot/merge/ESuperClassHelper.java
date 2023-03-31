@@ -10,14 +10,19 @@
 *******************************************************************************/
 package org.eclipse.ocl.pivot.merge;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 /**
  * An ESuperClassHelper maintains a lazy cache of super classes.
@@ -87,7 +92,7 @@ public class ESuperClassHelper
 		Set<@NonNull EClass> eSuperClasses = eClass2eSuperClasses.get(eClass);
 		if (eSuperClasses == null) {
 			eClass2eSuperClasses.put(eClass, CYCLIC_GUARD);
-			eSuperClasses = new HashSet<>();
+			eSuperClasses = new UniqueList<>();
 		//	int maxSuperDepth = -1;
 			for (EClass eSuperClass : eClass.getESuperTypes()) {
 				assert eSuperClass != null;
@@ -106,5 +111,32 @@ public class ESuperClassHelper
 			throw new IllegalStateException("Cyclic superEClasses for " + eClass);
 		}
 		return eSuperClasses;
+	}
+
+	@Override
+	public @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		boolean isFirstOuter = true;
+		List<@NonNull EClass> eClasses = new ArrayList<>(eClass2eSuperClasses.keySet());
+		Collections.sort(eClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+		for (@NonNull EClass eClass : eClasses) {
+			Set<@NonNull EClass> eSuperClasses = eClass2eSuperClasses.get(eClass);
+			assert eSuperClasses != null;
+			if (!isFirstOuter) {
+				s.append("\n");
+			}
+			s.append(eClass.getName());
+			s.append(" : ");
+			boolean isFirstInner = true;
+			for (@NonNull EClass eSuperClass : eSuperClasses) {
+				if (!isFirstInner) {
+					s.append(",");
+				}
+				s.append(eSuperClass.getName());
+				isFirstInner = false;
+			}
+			isFirstOuter = false;
+		}
+		return s.toString();
 	}
 }

@@ -17,60 +17,79 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * The MergerGroupVisitor supports the grouping of the nested list of partial elements from each is-many
  * partial element to form a list of to-be-merged partial elements for each merged element.
  */
-public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull IterableOfIterable<@NonNull Element>, @NonNull Merger>
+public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOfList<@NonNull Element>, @NonNull Merger>
 {
-
 	interface Partitioner<E extends Element>
 	{
-	//	@NonNull Map<@NonNull K, @NonNull List<@NonNull C>> partition(@NonNull Iterable<@NonNull P> partialElements);
-		public @NonNull IterableOfIterable<@NonNull Element> partition(@NonNull IterableOfIterable<@NonNull E> ungroupedPartialElements);
+		public @NonNull ListOfList<@NonNull Element> partition(@NonNull ListOfList<@NonNull E> ungroupedPartialElements);
 	}
 
-	abstract class AbstractPartitioner<E extends Element> implements Partitioner<E>
+	private static abstract class AbstractPartitioner<E extends Element, K> implements Partitioner<E>
 	{
-	//	protected abstract @NonNull Iterable<@NonNull C> getChildren(@NonNull P parentPartialElement);
-	}
+		protected abstract @NonNull K getKey(@NonNull E partialElement);
 
-
-	class NamePartitioner<E extends NamedElement> extends AbstractPartitioner<E>
-	{
-	/*	protected @NonNull Map<@NonNull String, @NonNull List<@NonNull C>> partitionByName(@NonNull Iterable<@NonNull P> partialParents) {
-			Map<@NonNull String, @NonNull List<@NonNull C>> name2elements = new HashMap<>();
-			for (@NonNull P partialParent : partialParents) {
-				Iterable<@NonNull C> partialChildren = getChildren(partialParent);
-				for (@NonNull C partialChild : partialChildren) {
-					String name = NameUtil.getName(partialChild);
-					List<@NonNull C> childElements = name2elements.get(name);
-					if (childElements == null) {
-						childElements = new ArrayList<>();
+		@Override
+		public @NonNull ListOfList<@NonNull Element> partition(@NonNull ListOfList<@NonNull E> ungroupedPartialElements) {
+			Map<@NonNull K, @NonNull List<@NonNull Element>> key2groupedElements = new HashMap<>();
+			for (@NonNull Iterable<@NonNull E> partialElements : ungroupedPartialElements.getOuterIterable()) {
+				for (@NonNull E partialElement : partialElements) {
+					K key = getKey(partialElement);
+					List<@NonNull Element> groupedElements = key2groupedElements.get(key);
+					if (groupedElements == null) {
+						groupedElements = new ArrayList<>();
+						key2groupedElements.put(key, groupedElements);
 					}
-					if (!childElements.contains(partialChild)) {
-						childElements.add(partialChild);
+					if (!groupedElements.contains(partialElement)) {
+						groupedElements.add(partialElement);
 					}
 				}
 			}
-			List<@NonNull String> names = new ArrayList<>(name2elements.keySet());
-			Collections.sort(names);
-			for (@NonNull String name : names) {
-				List<@NonNull C> elements = name2elements.get(name);
-				assert elements != null;
-				createElement(elements);
+			ListOfList<@NonNull Element> groupedPartialElements = new ListOfList<>();
+			List<@NonNull K> keys = new ArrayList<>(key2groupedElements.keySet());
+			sort(keys);
+			for (@NonNull K key : keys) {
+				List<@NonNull Element> groupedElements = key2groupedElements.get(key);
+				assert groupedElements != null;
+				groupedPartialElements.add(groupedElements);
 			}
-			return name2elements;
-		} */
+			return groupedPartialElements;
+		}
+
+		protected abstract void sort(@NonNull List<@NonNull K> keys);
+	}
+
+	private static class CommentPartitioner extends AbstractPartitioner<@NonNull Comment, @NonNull String>
+	{
 
 		@Override
-		public @NonNull IterableOfIterable<@NonNull Element> partition(@NonNull IterableOfIterable<@NonNull E> ungroupedPartialElements) {
+		protected @NonNull String getKey(@NonNull Comment partialElement) {
+			return PivotUtil.getBody(partialElement);
+		}
+
+		@Override
+		protected void sort(@NonNull List<@NonNull String> keys) {
+			Collections.sort(keys);
+		}
+	}
+
+	private static class NamePartitioner<E extends NamedElement> extends AbstractPartitioner<E, @NonNull String>
+	{
+	/*	@Override
+		public @NonNull ListOfList<@NonNull Element> partition(@NonNull ListOfList<@NonNull E> ungroupedPartialElements) {
 			Map<@NonNull String, @NonNull List<@NonNull E>> name2groupedElements = new HashMap<>();
 			for (@NonNull Iterable<@NonNull E> partialElements : ungroupedPartialElements.getOuterIterable()) {
 				for (@NonNull E partialElement : partialElements) {
@@ -78,13 +97,14 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull Iterab
 					List<@NonNull E> groupedElements = name2groupedElements.get(name);
 					if (groupedElements == null) {
 						groupedElements = new ArrayList<>();
+						name2groupedElements.put(name, groupedElements);
 					}
 					if (!groupedElements.contains(partialElement)) {
 						groupedElements.add(partialElement);
 					}
 				}
 			}
-			IterableOfIterable<@NonNull E> groupedPartialElements = new IterableOfIterable<>();
+			ListOfList<@NonNull E> groupedPartialElements = new ListOfList<>();
 			List<@NonNull String> names = new ArrayList<>(name2groupedElements.keySet());
 			Collections.sort(names);
 			for (@NonNull String name : names) {
@@ -92,145 +112,92 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull Iterab
 				assert groupedElements != null;
 				groupedPartialElements.add(groupedElements);
 			}
-			return (IterableOfIterable<@NonNull Element>)groupedPartialElements;
+			return (ListOfList<@NonNull Element>)groupedPartialElements;
+		} */
+
+		@Override
+		protected @NonNull String getKey(@NonNull E partialElement) {
+			return NameUtil.getName(partialElement);
+		}
+
+		@Override
+		protected void sort(@NonNull List<@NonNull String> keys) {
+			Collections.sort(keys);
 		}
 	}
 
-/*	class PackageOwnedClassPartitioner extends AbstractNamePartitioner<org.eclipse.ocl.pivot.@NonNull Package, org.eclipse.ocl.pivot.@NonNull Class>
+	private static class OperationPartitioner extends AbstractPartitioner<@NonNull Operation, OperationId>
 	{
+	/*	@Override
+		public @NonNull ListOfList<@NonNull Element> partition(@NonNull ListOfList<@NonNull Operation> ungroupedPartialElements) {
+			Map<@NonNull OperationId, @NonNull List<@NonNull Operation>> operationId2groupedElements = new HashMap<>();
+			for (@NonNull Iterable<@NonNull Operation> partialElements : ungroupedPartialElements.getOuterIterable()) {
+				for (@NonNull Operation partialElement : partialElements) {
+					OperationId operationId = partialElement.getOperationId();
+					List<@NonNull Operation> groupedElements = operationId2groupedElements.get(operationId);
+					if (groupedElements == null) {
+						groupedElements = new ArrayList<>();
+						operationId2groupedElements.put(operationId, groupedElements);
+					}
+					if (!groupedElements.contains(partialElement)) {
+						groupedElements.add(partialElement);
+					}
+				}
+			}
+			ListOfList<@NonNull Operation> groupedPartialElements = new ListOfList<>();
+			List<@NonNull OperationId> operationIds = new ArrayList<>(operationId2groupedElements.keySet());
+			Collections.sort(operationIds, NameUtil.TO_STRING_COMPARATOR);
+			for (@NonNull OperationId operationId : operationIds) {
+				List<@NonNull Operation> groupedElements = operationId2groupedElements.get(operationId);
+				assert groupedElements != null;
+				groupedPartialElements.add(groupedElements);
+			}
+			return (ListOfList<@NonNull Element>)(Object)groupedPartialElements;
+		} */
 
 		@Override
-		protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getChildren(org.eclipse.ocl.pivot.@NonNull Package parentPartialElement) {
-			return parentPartialElement.getOwnedClasses();
+		protected @NonNull OperationId getKey(@NonNull Operation partialElement) {
+			return partialElement.getOperationId();
 		}
 
 		@Override
-		public @NonNull Map<@NonNull String, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> partition(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> partialElements) {
-			return partitionByName(partialElements);
+		protected void sort(@NonNull List<@NonNull OperationId> keys) {
+			Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
 		}
-	} */
+	}
 
+	private @NonNull CommentPartitioner commentPartitioner = new CommentPartitioner();
 	private @NonNull NamePartitioner<@NonNull NamedElement> namePartitioner = new NamePartitioner<>();
-//	private @NonNull Map<@NonNull EClass, @NonNull Integer> eClass2depth = new HashMap<>();
+	private @NonNull OperationPartitioner operationPartitioner = new OperationPartitioner();
 
 	public MergerGroupVisitor(@NonNull Merger context) {
 		super(context);
 	}
 
-/*	private <E extends Element> @NonNull E createElement(@NonNull Iterable<@NonNull E> elements) {
-		EClass largestEClass = computeCommonEClass(elements);
-		@SuppressWarnings("unchecked")
-		E mergedElement = (E)PivotFactory.eINSTANCE.create(largestEClass);
-		context.putPartialElements(mergedElement, elements);
-		return mergedElement;
-	}
-
-	private boolean mergeAbstract(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses) {
-		boolean mergedAbstract = false;
-		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
-			if (partialClass.isIsAbstract()) {
-				mergedAbstract = true;
-			}
-		}
-		return mergedAbstract;
-	}
-
-	private @NonNull String mergeName(@NonNull Iterable<@NonNull ? extends NamedElement> partialElements) {
-		String mergedName = null;
-		for (@NonNull NamedElement partialElement : partialElements) {
-			String partialName = NameUtil.getName(partialElement);
-			if (mergedName == null) {
-				mergedName = partialName;
-			}
-			else {
-				assert partialName.equals(mergedName);
-			}
-		}
-		assert mergedName != null;
-		return mergedName;
-	}
-
-	private @NonNull String mergeURI(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package> partialPackages) {
-		String mergedURI = null;
-		for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : partialPackages) {
-			String partialName = PivotUtil.getURI(partialPackage);
-			if (mergedURI == null) {
-				mergedURI = partialName;
-			}
-			else {
-				assert partialName.equals(mergedURI);
-			}
-		}
-		assert mergedURI != null;
-		return mergedURI;
-	} */
-
 	@Override
-	public @NonNull IterableOfIterable<@NonNull Element> visiting(@NonNull Visitable visitable) {
+	public @NonNull ListOfList<@NonNull Element> visiting(@NonNull Visitable visitable) {
 		throw new UnsupportedOperationException("Unsupported " + visitable.eClass().getName() + " for " + getClass().getSimpleName());
 	//	return null;
 	}
 
-/*	@Override
-	public @Nullable Element visitClass(org.eclipse.ocl.pivot.@NonNull Class mergedClass) {
-		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = context.getPartialElements(mergedClass);
-		mergedClass.setName(mergeName(partialClasses));
-		// NsPrefix
-		mergedClass.setIsAbstract(mergeAbstract(partialClasses));
-		return super.visitClass(mergedClass);
-	} */
-
-/*	@Override
-	public @Nullable Element visitElement(@NonNull Element mergedParent) {
-		Iterable<@NonNull Element> partialParents = context.getPartialElements(mergedParent);
-		for (@NonNull EReference eContainment : mergedParent.eClass().getEAllContainments()) {
-			List<@NonNull Element> allPartialChildren = new ArrayList<>();
-			for (@NonNull Element partialParent : partialParents) {
-				Object partialChildOrChildren = partialParent.eGet(eContainment);
-				if (eContainment.isMany()) {
-					@SuppressWarnings("unchecked")
-					List<@NonNull Element> partialChildren = (List<@NonNull Element>)partialChildOrChildren;
-					allPartialChildren.addAll(partialChildren);
-				}
-				else {
-					assert partialChildOrChildren != null;
-					Element partialChild = (Element)partialChildOrChildren;
-					allPartialChildren.add(partialChild);
-				}
-				Iterable<@NonNull Element> partialParents = context.getPartialElements(mergedParent);
-			}
-		}
-	//	List<?> owns = cgElement instanceof CGValuedElement ? ((CGValuedElement)cgElement).getOwns() : null;
-	//	for (CGElement cgChild : cgElement.getChildren()) {
-	//		if ((owns == null) || !owns.contains(cgChild)) {
-	//			cgChild.accept(this);
-	//		}
-	//	}
-		return null;
-	} */
-
 	@Override
-	public @NonNull IterableOfIterable<@NonNull Element> visitNamedElement(@NonNull NamedElement protoNamedElement) {
-		IterableOfIterable<@NonNull NamedElement> ungroupedPartialElements = context.getUngroupedPartialElements(protoNamedElement);
-		IterableOfIterable<@NonNull Element> groupedPartialElements = namePartitioner.partition(ungroupedPartialElements);
+	public @NonNull ListOfList<@NonNull Element> visitNamedElement(@NonNull NamedElement protoNamedElement) {
+		ListOfList<@NonNull NamedElement> ungroupedPartialElements = context.getUngroupedPartialElements(protoNamedElement);
+		ListOfList<@NonNull Element> groupedPartialElements = namePartitioner.partition(ungroupedPartialElements);
 		return groupedPartialElements;
 	}
 
-/*	@Override
-	public @Nullable Iterable<@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package>> visitPackage(org.eclipse.ocl.pivot.@NonNull Package protoPackage) {
-		Iterable<@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Package>> ungroupedPartialPackages = context.getUngroupedPartialElements(protoPackage);
-		mergedPackage.setName(mergeName(partialPackages));
-		// NsPrefix
-		mergedPackage.setURI(mergeURI(partialPackages));
+	@Override
+	public @NonNull ListOfList<@NonNull Element> visitComment(@NonNull Comment protoComment) {
+		ListOfList<@NonNull Comment> ungroupedPartialElements = context.getUngroupedPartialElements(protoComment);
+		ListOfList<@NonNull Element> groupedPartialElements = commentPartitioner.partition(ungroupedPartialElements);
+		return groupedPartialElements;
+	}
 
-		//merged
-
-		Map<@NonNull String, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> name2classes = packageOwnedClassPartitioner.partitionByName(ungroupedPartialPackages);
-		List<@NonNull String> names = new ArrayList<>(name2classes.keySet());
-		Collections.sort(names);
-		for (@NonNull String name : names) {
-			Iterable<org.eclipse.ocl.pivot.@NonNull Class> classes = name2classes.get(name);
-		}
-		return super.visitPackage(mergedPackage);
-	} */
+	@Override
+	public @NonNull ListOfList<@NonNull Element> visitOperation(@NonNull Operation protoOperation) {
+		ListOfList<@NonNull Operation> ungroupedPartialElements = context.getUngroupedPartialElements(protoOperation);
+		ListOfList<@NonNull Element> groupedPartialElements = operationPartitioner.partition(ungroupedPartialElements);
+		return groupedPartialElements;
+	}
 }

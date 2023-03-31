@@ -145,6 +145,7 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getMapType();
 
 	@NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, @NonNull Type valueType);
+	@NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
 
 	/**
 	 * Return the metaclass to which classType conforms.

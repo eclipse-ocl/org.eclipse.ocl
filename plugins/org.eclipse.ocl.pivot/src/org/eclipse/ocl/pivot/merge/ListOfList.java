@@ -18,23 +18,46 @@ import org.eclipse.jdt.annotation.NonNull;
 import com.google.common.collect.Iterables;
 
 /**
- * An IterableOfIterable is just an Iterable of Iterable but solves problems of nested downcasting from E to Element.
+ * An ListOfList is just a List of List but solves problems of nested downcasting from E to Element.
  */
-public class IterableOfIterable<E>
+public class ListOfList<E>
 {
-	private @NonNull List<@NonNull Iterable<@NonNull E>> outerIterable = new ArrayList<>();
+	private @NonNull List<@NonNull List<E>> outerIterable = new ArrayList<>();
 
-	public IterableOfIterable() {}
+	public ListOfList() {}
 
-	public void add(@NonNull Iterable<@NonNull E> innerIterable) {
+	public void add(@NonNull List<E> innerIterable) {
 		outerIterable.add(innerIterable);
 	}
 
-	public @NonNull Iterable<@NonNull E> getInnerIterable() {
+	public @NonNull Iterable<E> getInnerIterable() {
 		return Iterables.concat(outerIterable);
 	}
 
-	public @NonNull Iterable<@NonNull Iterable<@NonNull E>> getOuterIterable() {
+	public @NonNull List<@NonNull List<E>> getOuterIterable() {
 		return outerIterable;
+	}
+
+	@Override
+	public @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		boolean isFirstOuter = true;
+		for (@NonNull List<E> innerIterable : outerIterable) {
+			if (!isFirstOuter) {
+				s.append(",");
+			}
+			s.append("[");
+			boolean isFirstInner = true;
+			for (E element : innerIterable) {
+				if (!isFirstInner) {
+					s.append(",");
+				}
+				s.append(String.valueOf(element));
+				isFirstInner = false;
+			}
+			s.append("]");
+			isFirstOuter = false;
+		}
+		return s.toString();
 	}
 }
