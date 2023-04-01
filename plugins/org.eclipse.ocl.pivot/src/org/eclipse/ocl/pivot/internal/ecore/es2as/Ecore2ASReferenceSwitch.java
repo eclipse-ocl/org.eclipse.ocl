@@ -431,7 +431,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						if (valueProperty.getType() == null) {
 							return oclInvalidProperty;			// Retry later once type defined
 						}
-						pivotType = metamodelManager.getMapType((org.eclipse.ocl.pivot.Class)pivotType);
+						pivotType = standardLibrary.getMapType((org.eclipse.ocl.pivot.Class)pivotType);
 					}
 					else {
 						boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);
@@ -542,8 +542,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				if ((keyType != null) && (valueType != null)) {
 					boolean keysAreNullFree = keyFeature.isRequired();
 					boolean valuesAreNullFree = valueFeature.isRequired();
-					org.eclipse.ocl.pivot.Class mapMetatype = standardLibrary.getMapType();
-					return metamodelManager.getCompleteEnvironment().getMapType(mapMetatype, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+					return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 				}
 			}
 		}

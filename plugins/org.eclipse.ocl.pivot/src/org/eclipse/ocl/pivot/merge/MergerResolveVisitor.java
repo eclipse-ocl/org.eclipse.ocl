@@ -77,12 +77,11 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EOb
 		if (unspecializedElement == null) {
 			return super.visitMapType(asMapType);
 		}
-		MapType mergedMapType = (MapType)unspecializedElement.accept(this);
 		Type mergedKeyType = (Type)asMapType.getKeyType().accept(this);
 		Type mergedValueType = (Type)asMapType.getValueType().accept(this);
 		boolean isKeysAreNullFree = asMapType.isKeysAreNullFree();
 		boolean isValuesAreNullFree = asMapType.isValuesAreNullFree();
-		return context.getMapType(mergedMapType, mergedKeyType, isKeysAreNullFree, mergedValueType, isValuesAreNullFree);
+		return context.getMapType(mergedKeyType, isKeysAreNullFree, mergedValueType, isValuesAreNullFree);
 	}
 
 	@Override

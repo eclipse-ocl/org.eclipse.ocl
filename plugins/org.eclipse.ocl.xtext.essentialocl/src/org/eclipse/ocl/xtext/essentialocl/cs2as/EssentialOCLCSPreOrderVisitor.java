@@ -15,6 +15,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -143,7 +144,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			PivotMetamodelManager metamodelManager = context.getMetamodelManager();
+			StandardLibraryInternal standardLibrary = context.getStandardLibrary();
 			TypedRefCS csKeyType = csElement.getOwnedKeyType();
 			TypedRefCS csValueType = csElement.getOwnedValueType();
 			Type type = null;
@@ -155,11 +156,11 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 				Type keyType = PivotUtil.getPivot(Type.class, csKeyType);
 				Type valueType = PivotUtil.getPivot(Type.class, csValueType);
 				if ((keyType != null) && (valueType != null)) {
-					type = metamodelManager.getMapType(name, keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
+					type = standardLibrary.getMapType(keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
 				}
 			}
 			if (type == null) {
-				type = metamodelManager.getStandardLibrary().getLibraryType(name);
+				type = standardLibrary.getLibraryType(name);
 			}
 			context.installPivotTypeWithMultiplicity(type, csElement);
 			return null;

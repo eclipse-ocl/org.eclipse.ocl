@@ -2076,7 +2076,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			else if (inferValueType && (valuesAreNullFree == null)) {
 				valuesAreNullFree = true;
 			}
-			Type type = metamodelManager.getMapType(mapTypeName, keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
+			Type type = standardLibrary.getMapType(keyType, keysAreNullFree != Boolean.FALSE, valueType, valuesAreNullFree != Boolean.FALSE);
 			helper.setType(expression, type, true, null);
 		}
 		return expression;

@@ -27,7 +27,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -491,10 +490,10 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class entryClass = (org.eclipse.ocl.pivot.Class)pivotType;
 				if (java.util.Map.Entry.class.getName().equals(entryClass.getInstanceClassName())) {
-					EnvironmentFactoryInternal environmentFactory = context.getEnvironmentFactory();
-					org.eclipse.ocl.pivot.Class mapClass = environmentFactory.getStandardLibrary().getMapType();
-					MapType mapType = environmentFactory.getCompleteEnvironment().getMapType(mapClass, entryClass);
-					mapType.setEntryClass(entryClass);
+					org.eclipse.ocl.pivot.Class mapType = context.getStandardLibrary().getMapType(entryClass);
+					if (mapType instanceof MapType) {
+						((MapType)mapType).setEntryClass(entryClass);
+					}
 					context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
 					return null;
 				}

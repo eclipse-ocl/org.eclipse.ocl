@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.CollectionTypeParametersImpl;
@@ -138,17 +139,17 @@ public class TypeUtil
 	}
 
 	/**
-	 * @deprecated add isNullFree argument
-	 */
-	@Deprecated
+	 * @zdeprecated add isNullFree argument
+	 *
+	@zDeprecated
 	public static @NonNull CollectionTypeParameters<@NonNull Type> createCollectionTypeParameters(@NonNull Type elementType,
 			@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, false, lower, upper);
-	}
+	} */
 
-	public static @NonNull CollectionTypeParameters<@NonNull Type> createCollectionTypeParameters(@NonNull Type elementType, boolean isNullFree,
-			@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return new CollectionTypeParametersImpl<@NonNull Type>(elementType, isNullFree, lower, upper);
+	public static @NonNull CollectionTypeParameters<@NonNull Type> createCollectionTypeParameters(@NonNull CollectionTypeId genericTypeId, @NonNull Type elementType,
+			boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		return new CollectionTypeParametersImpl<@NonNull Type>(genericTypeId, elementType, isNullFree, lower, upper);
 	}
 
 	@Deprecated /* @deprecated use nullFrees */

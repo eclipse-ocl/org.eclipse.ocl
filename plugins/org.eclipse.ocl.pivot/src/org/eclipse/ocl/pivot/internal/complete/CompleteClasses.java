@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -27,25 +26,20 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.manager.MiniCollectionTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.MiniMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 
 public class CompleteClasses extends EObjectContainmentWithInverseEList<CompleteClass>
 {
-	private static final Logger logger = Logger.getLogger(CompleteClasses.class);
-
 	public static final @NonNull TracingOption COMPLETE_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "completeClasses");
 	//	static { COMPLETE_CLASSES.setState(true); }
 	private static final long serialVersionUID = 1L;
@@ -66,41 +60,6 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 //		private @Nullable /*WeakHash*/Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable CollectionType>> collections = null;
 		private final @NonNull MiniCollectionTypeManager collections;
 
-/*<<<<<<< ewillink/581543
-		protected @NonNull CollectionType createSpecialization(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-			org.eclipse.ocl.pivot.Class unspecializedType = getPrimaryClass();
-			String typeName = unspecializedType.getName();
-			TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
-			List<@NonNull TemplateParameter> templateParameters = ClassUtil.nullFree(templateSignature.getOwnedParameters());
-			EClass eClass = unspecializedType.eClass();
-			EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-			CollectionType specializedType = (CollectionType) eFactoryInstance.create(eClass);
-			specializedType.setName(typeName);
-			TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
-			TemplateParameter formalParameter = ClassUtil.nonNull(templateParameters.get(0));
-			assert formalParameter != null;
-			Type elementType = typeParameters.getElementType();
-			TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(formalParameter, elementType);
-			templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
-			specializedType.getOwnedBindings().add(templateBinding);
-			getCompleteModel().resolveSuperClasses(specializedType, unspecializedType);
-			CollectionType specializedCollectionType = specializedType;
-			specializedCollectionType.setIsNullFree(typeParameters.isNullFree());
-			try {
-				specializedCollectionType.setLowerValue(typeParameters.getLower());
-			} catch (InvalidValueException e) {
-				logger.error("Out of range lower bound", e);
-			}
-			try {
-				specializedCollectionType.setUpperValue(typeParameters.getUpper());
-			} catch (InvalidValueException e) {
-				logger.error("Out of range upper bound", e);
-			}
-			specializedType.setUnspecializedElement(unspecializedType);
-			Orphanage orphanage = getCompleteModel().getOrphanage();
-			specializedType.setOwningPackage(orphanage);
-			return specializedType;
-======= */
 		protected CollectionCompleteClassImpl() {
 			this.collections = new MiniCollectionTypeManager(true)
 			{
@@ -136,97 +95,6 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 		public synchronized @NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
 			return collections.getCollectionType(typeParameters);
 		}
-	}
-
-	protected static class MapCompleteClassImpl extends CompleteClassImpl
-	{
-		/**
-		 * Map from actual types to specialization.
-		 * <br>
-		 * The specializations are weakly referenced so that stale specializations are garbage collected.
-		 */
-		// FIXME tests fail if keys are weak since GC is too aggressive across tests
-		// The actual types are weak keys so that parameterizations using stale types are garbage collected.
-		// No. The problem is that MapTypeParameters is not a singleton since it passes key/value types. Attempting to use
-		// a SingletonScope needs to use the IdResolver to convert the TemplateParameterId to its type which seemed reluctant
-		// to work, and failing to GC within the scope of this CompleteClass is not a disaster. May change once CompleteClass goes.
-		//
-		//	private @Nullable /*WeakHash*/Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>> maps = null;
-		private final @NonNull MiniMapTypeManager maps;
-
-/*<<<<<<< ewillink/581543
-		protected @NonNull MapType createSpecialization(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-			org.eclipse.ocl.pivot.Class unspecializedType = getPrimaryClass();
-			String typeName = unspecializedType.getName();
-			TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			EClass eClass = unspecializedType.eClass();
-			EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-			MapType specializedMapType = (MapType) eFactoryInstance.create(eClass);
-			specializedMapType.setName(typeName);
-			TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
-			TemplateParameter keyFormalParameter = templateParameters.get(0);
-			TemplateParameter valueFormalParameter = templateParameters.get(1);
-			assert keyFormalParameter != null;
-			assert valueFormalParameter != null;
-			Type keyType = typeParameters.getKeyType();
-			Type valueType = typeParameters.getValueType();
-			TemplateParameterSubstitution keyTemplateParameterSubstitution = createTemplateParameterSubstitution(keyFormalParameter, keyType);
-			TemplateParameterSubstitution valueTemplateParameterSubstitution = createTemplateParameterSubstitution(valueFormalParameter, valueType);
-			templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
-			templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
-			specializedMapType.getOwnedBindings().add(templateBinding);
-			getCompleteModel().resolveSuperClasses(specializedMapType, unspecializedType);
-			specializedMapType.setKeysAreNullFree(typeParameters.isKeysAreNullFree());
-			specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
-			specializedMapType.setUnspecializedElement(unspecializedType);
-			Orphanage orphanage = getCompleteModel().getOrphanage();
-			specializedMapType.setOwningPackage(orphanage);
-			specializedMapType.setEntryClass(typeParameters.getEntryClass());
-			return specializedMapType;
-======= */
-		protected MapCompleteClassImpl() {
-			this.maps = new MiniMapTypeManager(true)
-			{
-				@Override
-				protected void addOrphanClass(@NonNull MapType mapType) {
-					Orphanage orphanage = getCompleteModel().getOrphanage();
-					mapType.setOwningPackage(orphanage);
-				}
-
-				@Override
-				protected @NonNull MapType getUnspecializedType() {
-					return (MapType)getPrimaryClass();
-				}
-
-				@Override
-				protected void resolveSuperClasses(@NonNull MapType specializedMapType, @NonNull MapType unspecializedMapType) {
-					getCompleteModel().resolveSuperClasses(specializedMapType, unspecializedMapType);
-				}
-			};
-		}
-
-		@Override
-		public @Nullable MapType findMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-			TemplateSignature templateSignature = getPrimaryClass().getOwnedSignature();
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			if (templateParameters.size() != 1) {
-				return null;
-			}
-			return maps.basicGetMapType(typeParameters.getMapTypeId());
-		}
-
-		@Override
-		public @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-			return maps.getMapType(typeParameters);
-		}
-	}
-
-	public static @NonNull TemplateParameterSubstitution createTemplateParameterSubstitution(@NonNull TemplateParameter formalParameter, @NonNull Type type) {
-		TemplateParameterSubstitution templateParameterSubstitution = PivotFactory.eINSTANCE.createTemplateParameterSubstitution();
-		templateParameterSubstitution.setFormal(formalParameter);
-		templateParameterSubstitution.setActual(type);
-		return templateParameterSubstitution;
 	}
 
 	protected @Nullable Map<String, CompleteClassInternal> name2completeClass = null;
@@ -346,9 +214,6 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 					}
 					else if (partialClass instanceof CollectionType) {
 						completeClass = new CollectionCompleteClassImpl();
-					}
-					else if (partialClass instanceof MapType) {
-						completeClass = new MapCompleteClassImpl();
 					}
 					else {
 						completeClass = (CompleteClassInternal) PivotFactory.eINSTANCE.createCompleteClass();

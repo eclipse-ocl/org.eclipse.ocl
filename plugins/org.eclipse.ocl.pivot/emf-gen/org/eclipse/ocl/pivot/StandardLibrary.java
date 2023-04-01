@@ -17,8 +17,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatModel;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 
@@ -79,6 +81,8 @@ public interface StandardLibrary extends Element
 	 * @generated
 	 */
 	void setOwningCompleteEnvironment(CompleteEnvironment value);
+
+	@Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId);
 
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
 
@@ -144,8 +148,10 @@ public interface StandardLibrary extends Element
 
 	org.eclipse.ocl.pivot.@NonNull Class getMapType();
 
-	@NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, @NonNull Type valueType);
-	@NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
+	org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
+
+	org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
+	@NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 
 	/**
 	 * Return the metaclass to which classType conforms.

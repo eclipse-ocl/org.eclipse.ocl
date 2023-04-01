@@ -86,6 +86,7 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
@@ -1381,7 +1382,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			assert pivotClass instanceof CollectionType;
 			assert templateArguments.size() == 1;
 			@NonNull Type templateArgument = templateArguments.get(0);
-			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getCollectionType(libraryCompleteClass, TypeUtil.createCollectionTypeParameters(templateArgument, true, null, null));
+			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getCollectionType(libraryCompleteClass, TypeUtil.createCollectionTypeParameters((CollectionTypeId) libraryType.getTypeId(), templateArgument, true, null, null));
 			return specializedType;
 		}
 		else if (pivotClass instanceof MapType) {
@@ -1389,7 +1390,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			assert templateArguments.size() == 2;
 			@NonNull Type keyTemplateArgument = templateArguments.get(0);
 			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getMapType(libraryCompleteClass, TypeUtil.createMapTypeParameters(keyTemplateArgument, true, valueTemplateArgument, true));
+			@SuppressWarnings("unchecked") T specializedType = (T) standardLibrary.getMapType(TypeUtil.createMapTypeParameters(keyTemplateArgument, true, valueTemplateArgument, true));
 			return specializedType;
 		}
 		else {
@@ -1406,31 +1407,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	public @Nullable EObject getLockingObject() {
 		return lockingAnnotation;
-	}
-
-	/**
-	 * @since 1.6
-	 */
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull String mapTypeName, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		if (keyType.eIsProxy() || valueType.eIsProxy()) {
-			return standardLibrary.getOclInvalidType();
-		}
-		return completeEnvironment.getMapType(standardLibrary.getRequiredLibraryType(mapTypeName), keyType, keysAreNullFree, valueType, valuesAreNullFree);
-	}
-
-	@Deprecated /* @deprected provide null-free arguments */
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull String mapTypeName, @NonNull Type keyType, @NonNull Type valueType) {
-		return getMapType(mapTypeName, keyType, true, valueType, true);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		if (entryClass.eIsProxy()) {
-			return standardLibrary.getOclInvalidType();
-		}
-		return completeEnvironment.getMapType(standardLibrary.getMapType(), entryClass);
 	}
 
 	public @NonNull Iterable<@NonNull Operation> getMemberOperations(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic) {

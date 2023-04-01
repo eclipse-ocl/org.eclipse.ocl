@@ -29,8 +29,8 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -114,17 +114,17 @@ public abstract class MiniCollectionTypeManager
 		List<@NonNull TemplateParameter> templateParameters = ClassUtil.nullFree(templateSignature.getOwnedParameters());
 		EClass eClass = unspecializedType.eClass();
 		EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-		CollectionType specializedType = (CollectionType) eFactoryInstance.create(eClass);
-		specializedType.setName(typeName);
+		CollectionType specializedCollectionType = (CollectionType) eFactoryInstance.create(eClass);
+		specializedCollectionType.setName(typeName);
 		TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
 		TemplateParameter formalParameter = ClassUtil.nonNull(templateParameters.get(0));
 		assert formalParameter != null;
 		Type elementType = typeParameters.getElementType();
-		TemplateParameterSubstitution templateParameterSubstitution = CompleteClasses.createTemplateParameterSubstitution(formalParameter, elementType);
+		TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, elementType);
 		templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
-		specializedType.getOwnedBindings().add(templateBinding);
-		resolveSuperClasses(specializedType, unspecializedType);
-		CollectionType specializedCollectionType = specializedType;
+		specializedCollectionType.getOwnedBindings().add(templateBinding);
+		resolveSuperClasses(specializedCollectionType, unspecializedType);
+	//	specializedCollectionType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
 		specializedCollectionType.setIsNullFree(typeParameters.isNullFree());
 		try {
 			specializedCollectionType.setLowerValue(typeParameters.getLower());
@@ -136,9 +136,9 @@ public abstract class MiniCollectionTypeManager
 		} catch (InvalidValueException e) {
 			logger.error("Out of range upper bound", e);
 		}
-		specializedType.setUnspecializedElement(unspecializedType);
-		addOrphanClass(specializedType);
-		return specializedType;
+		specializedCollectionType.setUnspecializedElement(unspecializedType);
+		addOrphanClass(specializedCollectionType);
+		return specializedCollectionType;
 	}
 
 	public void dispose() {
@@ -160,4 +160,63 @@ public abstract class MiniCollectionTypeManager
 	protected abstract @NonNull CollectionType getUnspecializedType();
 
 	protected abstract void resolveSuperClasses(@NonNull CollectionType specializedCollectionType, @NonNull CollectionType unspecializedCollectionType);
+
+/*	@Override
+	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
+		List<TemplateBinding> specializedTemplateBindings = specializedClass.getOwnedBindings();
+		for (org.eclipse.ocl.pivot.Class superClass : unspecializedClass.getSuperClasses()) {
+			List<TemplateBinding> superTemplateBindings = superClass.getOwnedBindings();
+			if (superTemplateBindings.size() > 0) {
+				List<TemplateParameterSubstitution> superSpecializedTemplateParameterSubstitutions = new ArrayList<TemplateParameterSubstitution>();
+				for (TemplateBinding superTemplateBinding : superTemplateBindings) {
+					for (TemplateParameterSubstitution superParameterSubstitution : superTemplateBinding.getOwnedSubstitutions()) {
+						TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution = null;
+						Type superActual = superParameterSubstitution.getActual();
+						for (TemplateBinding specializedTemplateBinding : specializedTemplateBindings) {
+							for (TemplateParameterSubstitution specializedParameterSubstitution : specializedTemplateBinding.getOwnedSubstitutions()) {
+								if (specializedParameterSubstitution.getFormal() == superActual) {
+									Type specializedActual = ClassUtil.nonNullModel(specializedParameterSubstitution.getActual());
+									TemplateParameter superFormal = ClassUtil.nonNullModel(superParameterSubstitution.getFormal());
+									superSpecializedTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(superFormal, specializedActual);
+									break;
+								}
+							}
+							if (superSpecializedTemplateParameterSubstitution != null) {
+								break;
+							}
+						}
+						if (superSpecializedTemplateParameterSubstitution != null) {
+							superSpecializedTemplateParameterSubstitutions.add(superSpecializedTemplateParameterSubstitution);
+						}
+					}
+				}
+				org.eclipse.ocl.pivot.@NonNull Class unspecializedSuperClass = PivotUtil.getUnspecializedTemplateableElement(superClass);
+				CompleteClassInternal superCompleteClass = environmentFactory.getMetamodelManager().getCompleteClass(unspecializedSuperClass);
+				org.eclipse.ocl.pivot.Class superPivotClass = superCompleteClass.getPrimaryClass();
+				if (superPivotClass instanceof CollectionType) {
+					if (superSpecializedTemplateParameterSubstitutions.size() == 1) {
+						Type templateArgument = superSpecializedTemplateParameterSubstitutions.get(0).getActual();
+						if (templateArgument != null) {
+							org.eclipse.ocl.pivot.Class specializedSuperClass = /*completeEnvironment.* /getCollectionType(superCompleteClass, TypeUtil.createCollectionTypeParameters(templateArgument, false, null, null));
+							specializedClass.getSuperClasses().add(specializedSuperClass);
+						}
+					}
+				}
+				else {
+					List<@NonNull Type> superTemplateArgumentList = new ArrayList<@NonNull Type>(superSpecializedTemplateParameterSubstitutions.size());
+					for (TemplateParameterSubstitution superSpecializedTemplateParameterSubstitution : superSpecializedTemplateParameterSubstitutions) {
+						Type actual = superSpecializedTemplateParameterSubstitution.getActual();
+						if (actual != null) {
+							superTemplateArgumentList.add(actual);
+						}
+					}
+					org.eclipse.ocl.pivot.Class specializedSuperType = superCompleteClass.getSpecializedType(superTemplateArgumentList);
+					specializedClass.getSuperClasses().add(specializedSuperType);
+				}
+			}
+			else {
+				specializedClass.getSuperClasses().add(superClass);
+			}
+		}
+	} */
 }

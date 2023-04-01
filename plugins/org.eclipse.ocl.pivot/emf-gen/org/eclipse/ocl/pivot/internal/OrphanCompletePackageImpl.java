@@ -142,7 +142,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		}
 		org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal completeClass = getCompleteModel().getCompleteClass(containerType);
 		@SuppressWarnings("unchecked")
-		T specializedType = (T) getCompleteModel().getCollectionType(completeClass, TypeUtil.createCollectionTypeParameters(elementType, isNullFree, lower, upper));
+		T specializedType = (T) getCompleteModel().getCollectionType(completeClass, TypeUtil.createCollectionTypeParameters(containerType.getTypeId(), elementType, isNullFree, lower, upper));
 		return specializedType;
 	}
 

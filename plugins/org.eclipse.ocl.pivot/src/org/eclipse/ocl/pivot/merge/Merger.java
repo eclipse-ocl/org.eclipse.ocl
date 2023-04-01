@@ -26,7 +26,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
@@ -67,7 +66,7 @@ public class Merger
 	 */
 	private @NonNull Map<@NonNull Element, @NonNull List<@NonNull Element>> mergedElement2partialElements = new HashMap<>();
 
-	@Deprecated /* @deprecated prgamatic re-use pending a rationalized Orphanage */
+	@Deprecated /* @deprecated pragmatic re-use pending a rationalized Orphanage */
 	private @NonNull ExecutorStandardLibrary orphanManager = new ExecutorStandardLibrary();
 
 	public Merger(@NonNull EnvironmentFactory environmentFactory) {
@@ -96,8 +95,8 @@ public class Merger
 		return orphanManager.getCollectionType(genericType, elementType, isNullFree, lower, upper);
 	}
 
-	public @NonNull MapType getMapType(@NonNull MapType genericType, @NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		return orphanManager.getMapType(genericType, keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
+	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		return orphanManager.getMapType(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 	}
 
 //	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts) {

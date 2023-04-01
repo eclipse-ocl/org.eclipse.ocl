@@ -45,6 +45,7 @@ public interface StandardLibraryInternal extends StandardLibrary.StandardLibrary
 	 */
 	void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes);
 	void dispose();
+	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
 	@Override
 	@NonNull BagType getBagType();
 	@Nullable PrimitiveType getBehavioralClass(@NonNull Class<?> javaClass);
@@ -71,7 +72,6 @@ public interface StandardLibraryInternal extends StandardLibrary.StandardLibrary
 	@NonNull CollectionType getOrderedCollectionType();
 	@Override
 	@NonNull OrderedSetType getOrderedSetType();
-	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
 	@Override
 	@NonNull PrimitiveType getRealType();
 	org.eclipse.ocl.pivot.@NonNull Class getRequiredLibraryType(@NonNull String typeName);

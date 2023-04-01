@@ -52,10 +52,14 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
+import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
@@ -69,6 +73,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.osgi.util.NLS;
 
@@ -411,6 +416,25 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	protected /*final*/ /*@NonNull*/ CompleteModelInternal completeModel;
 	protected /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
 
+	/**
+	 * Map from actual types to specialization.
+	 * <br>
+	 * The specializations are weakly referenced so that stale specializations are garbage collected.
+	 */
+	// FIXME tests fail if keys are weak since GC is too aggressive across tests
+	// The actual types are weak keys so that parameterizations using stale types are garbage collected.
+	// No. The problem is that MapTypeParameters is not a singleton since it passes key/value types. Attempting to use
+	// a SingletonScope needs to use the IdResolver to convert the TemplateParameterId to its type which seemed reluctant
+	// to work, and failing to GC within the scope of this CompleteClass is not a disaster. May change once CompleteClass goes.
+	//
+	//	private @Nullable /*WeakHash*/Map<@NonNull MapTypeParameters<@NonNull Type, @NonNull Type>, @NonNull WeakReference<@Nullable MapType>> maps = null;
+	private @Nullable MapTypeManager mapTypeManager = null;
+
+	@Override
+	public @Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId) {
+		return getMapTypeManager().basicGetMapType(mapTypeId);
+	}
+
 	@Override
 	public @Nullable AnyType basicGetOclAnyType() {
 		return oclAnyType;
@@ -590,19 +614,56 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		return mapType2;
 	}
 
+	/**
+	 * @since 1.7
+	 */
 	@Override
-	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType,
-			@NonNull Type keyType, @NonNull Type valueType) {
-		return getMapType(containerType, keyType, true, valueType, true);
+	public org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+		if (entryClass.eIsProxy()) {
+			return getOclInvalidType();
+		}
+		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		org.eclipse.ocl.pivot.@NonNull Class entryType = metamodelManager.getPrimaryClass(entryClass);
+		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryType);
+		MapType specializedType = getMapType(typeParameters);
+		return specializedType;
 	}
 
-	//	@Override
 	/**
 	 * @since 1.6
 	 */
-	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class containerType,
-			@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		return environmentFactory.getCompleteEnvironment().getMapType(containerType, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		if (keyType.eIsProxy() || valueType.eIsProxy()) {
+			return getOclInvalidType();
+		}
+		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		return getMapTypeManager().getMapType(typeParameters);
+	}
+
+	@Override
+	public @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
+		return getMapTypeManager().getMapType(typeParameters);
+	}
+
+	private @NonNull MapTypeManager getMapTypeManager() {
+		MapTypeManager mapTypeManager2 = mapTypeManager;
+		if (mapTypeManager2 == null) {
+			this.mapTypeManager = mapTypeManager2 = new MapTypeManager(true)
+			{
+				@Override
+				protected void addOrphanClass(@NonNull MapType mapType) {
+					Orphanage orphanage = getCompleteModel().getOrphanage();
+					mapType.setOwningPackage(orphanage);
+				}
+
+				@Override
+				protected @NonNull MapType getUnspecializedType() {
+					return StandardLibraryImpl.this.getMapType();
+				}
+			};
+		}
+		return mapTypeManager2;
 	}
 
 	@Override

@@ -28,13 +28,13 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteClasses;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 
 /**
- * MiniMapTypeManager abstracts the legacy CompleteClasses.MapCompleteClassImpl functionality for re-use by an Orphanage.
+ * MapTypeManager abstracts the legacy CompleteClasses.MapCompleteClassImpl functionality for re-use by an Orphanage.
  */
-public abstract class MiniMapTypeManager
+public abstract class MapTypeManager
 {
 	protected final boolean useWeakReferences;
 
@@ -43,7 +43,7 @@ public abstract class MiniMapTypeManager
 	 */
 	private final @NonNull Map<@NonNull MapTypeId, @NonNull Object> mapTypes;
 
-	protected MiniMapTypeManager(boolean useWeakReferences) {
+	protected MapTypeManager(boolean useWeakReferences) {
 		this.useWeakReferences = useWeakReferences;
 		this.mapTypes = useWeakReferences ? new WeakHashMap<>() : new HashMap<>();
 	}
@@ -89,12 +89,13 @@ public abstract class MiniMapTypeManager
 		assert valueFormalParameter != null;
 		Type keyType = typeParameters.getKeyType();
 		Type valueType = typeParameters.getValueType();
-		TemplateParameterSubstitution keyTemplateParameterSubstitution = CompleteClasses.createTemplateParameterSubstitution(keyFormalParameter, keyType);
-		TemplateParameterSubstitution valueTemplateParameterSubstitution = CompleteClasses.createTemplateParameterSubstitution(valueFormalParameter, valueType);
+		TemplateParameterSubstitution keyTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(keyFormalParameter, keyType);
+		TemplateParameterSubstitution valueTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(valueFormalParameter, valueType);
 		templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
 		templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
 		specializedMapType.getOwnedBindings().add(templateBinding);
-		resolveSuperClasses(specializedMapType, unspecializedType);
+	//	resolveSuperClasses(specializedMapType, unspecializedType);
+		specializedMapType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
 		specializedMapType.setKeysAreNullFree(typeParameters.isKeysAreNullFree());
 		specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
 		specializedMapType.setUnspecializedElement(unspecializedType);
@@ -121,5 +122,5 @@ public abstract class MiniMapTypeManager
 
 	protected abstract @NonNull MapType getUnspecializedType();
 
-	protected abstract void resolveSuperClasses(@NonNull MapType specializedMapType, @NonNull MapType unspecializedMapType);
+//	protected abstract void resolveSuperClasses(@NonNull MapType specializedMapType, @NonNull MapType unspecializedMapType);
 }

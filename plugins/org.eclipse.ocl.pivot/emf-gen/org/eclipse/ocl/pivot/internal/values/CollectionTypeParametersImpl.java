@@ -50,18 +50,20 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 	}
 
 	private final int hashCode;
+	private final @NonNull CollectionTypeId genericTypeId;
 	private final @NonNull T elementType;
 	private final boolean isNullFree;
 	private final @NonNull IntegerValue lower;
 	private final @NonNull UnlimitedNaturalValue upper;
 	private @Nullable CollectionTypeId typeId;
 
-	public CollectionTypeParametersImpl(@NonNull T elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public CollectionTypeParametersImpl(@NonNull CollectionTypeId genericTypeId, @NonNull T elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		this.genericTypeId = genericTypeId;
 		this.elementType = elementType;
 		this.isNullFree = isNullFree;
 		this.lower = lower != null ? lower : ValueUtil.ZERO_VALUE;
 		this.upper = upper != null ? upper : ValueUtil.UNLIMITED_VALUE;
-		int hash = elementType.getTypeId().hashCode() + (isNullFree ? 9876 : 0);
+		int hash = genericTypeId.hashCode() + elementType.getTypeId().hashCode() + (isNullFree ? 9876 : 0);
 		hash = 111 * hash + this.lower.hashCode();
 		hash = 111 * hash + this.upper.hashCode();
 		hashCode = hash;
@@ -77,6 +79,9 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 			return false;
 		}
 		if (this.isNullFree != that.isNullFree) {
+			return false;
+		}
+		if (this.genericTypeId != that.genericTypeId) {
 			return false;
 		}
 		if (this.elementType.getTypeId() != that.elementType.getTypeId()) {
@@ -96,7 +101,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 		CollectionTypeId typeId2 = typeId;
 		if (typeId2 == null) {
 			TypeId elementTypeId = elementType.getTypeId();
-			typeId = typeId2 = TypeId.COLLECTION.getSpecializedId(elementTypeId, isNullFree, lower, upper);		// XXX Use correct collection type
+			typeId = typeId2 = genericTypeId.getSpecializedId(elementTypeId, isNullFree, lower, upper);		// XXX Use correct collection type
 		}
 		return typeId2;
 	}
@@ -138,6 +143,7 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
+		s.append(genericTypeId);
 		s.append('(');
 		s.append(elementType);
 		s.append(',');
