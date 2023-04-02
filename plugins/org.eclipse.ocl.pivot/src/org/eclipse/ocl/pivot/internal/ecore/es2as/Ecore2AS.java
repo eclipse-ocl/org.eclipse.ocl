@@ -945,7 +945,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 		org.eclipse.ocl.pivot.Class unspecializedPivotClass = unspecializedPivotType.isClass();
 		assert unspecializedPivotClass != null;			// FIXME
-		return metamodelManager.getLibraryType(unspecializedPivotClass, templateArguments);
+		return standardLibrary.getLibraryType(unspecializedPivotClass, templateArguments);
 	}
 
 	/**

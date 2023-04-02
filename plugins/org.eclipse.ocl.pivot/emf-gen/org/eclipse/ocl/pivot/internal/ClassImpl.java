@@ -1359,6 +1359,13 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 		return typeId2;
 	}
 
+	public @NonNull TypeId immutableGetTypeId() {
+		if (typeId != null) {
+			return typeId;
+		}
+		return computeId();
+	}
+
 	@Override
 	public @NonNull TemplateParameters getTypeParameters() {
 		return TemplateSignatureImpl.getTypeParameters(getOwnedSignature());

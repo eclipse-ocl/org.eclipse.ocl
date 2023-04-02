@@ -147,7 +147,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						parameterTypes.add(parameterType);
 					}
 				}
-				LambdaType lambdaType = context.getMetamodelManager().getCompleteModel().getLambdaType(name, contextType, parameterTypes, resultType, null);
+				LambdaType lambdaType = context.getStandardLibrary().getLambdaType(name, contextType, parameterTypes, resultType, null);
 				context.installPivotTypeWithMultiplicity(lambdaType, csElement);
 			}
 			return null;
@@ -395,7 +395,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						}
 					}
 				}
-				TupleType tupleType = context.getMetamodelManager().getCompleteModel().getTupleType(name, parts, null);
+				TupleType tupleType = context.getStandardLibrary().getTupleType(name, parts, null);
 				context.installPivotTypeWithMultiplicity(tupleType, csElement);
 				List<Property> tupleParts = tupleType.getOwnedProperties();
 				for (TuplePartCS csTuplePart : csElement.getOwnedParts()) {

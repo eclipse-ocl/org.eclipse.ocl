@@ -15,13 +15,17 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 
 public abstract class AbstractTypeManager
 {
-	protected final boolean useWeakReferences;
+	protected final @NonNull StandardLibrary standardLibrary;
+	protected final boolean useWeakReferences;			// See Bug 581760
 
-	protected AbstractTypeManager(boolean useWeakReferences) {
+	protected AbstractTypeManager(@NonNull StandardLibrary standardLibrary, boolean useWeakReferences) {
+		this.standardLibrary = standardLibrary;
 		this.useWeakReferences = useWeakReferences;
 	}
 
 	public void dispose() {}
 
-	protected abstract @NonNull StandardLibrary getStandardLibrary();
+	protected final @NonNull StandardLibrary getStandardLibrary() {
+		return standardLibrary;
+	}
 }

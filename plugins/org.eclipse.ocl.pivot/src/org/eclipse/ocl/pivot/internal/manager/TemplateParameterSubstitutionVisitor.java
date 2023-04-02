@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -240,7 +241,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 				partIds.add(tuplePartId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.nonNullModel(type.getName()), partIds);
-			specializedTupleType = metamodelManager.getCompleteModel().getTupleManager().getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), tupleTypeId);
+			specializedTupleType = environmentFactory.getStandardLibrary().getTupleType(metamodelManager.getEnvironmentFactory().getIdResolver(), tupleTypeId);
 			return specializedTupleType;
 		}
 		else {
@@ -253,7 +254,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 					partMap.put(PivotUtil.getName(part), type3);
 				}
 			}
-			return metamodelManager.getCompleteModel().getTupleManager().getTupleType(NameUtil.getSafeName(type), partMap);
+			return environmentFactory.getStandardLibrary().getTupleType(NameUtil.getSafeName(type), partMap);
 		}
 	}
 
@@ -287,7 +288,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	public @NonNull Type specializeType(@NonNull Type type) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
 		TemplateParameter asTemplateParameter = type.isTemplateParameter();
 		if (asTemplateParameter != null) {
 			int index = asTemplateParameter.getTemplateParameterId().getIndex();
@@ -302,7 +303,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 			Type elementType = ClassUtil.nonNullModel(collectionType.getElementType());
 			Type specializedElementType = specializeType(elementType);
 			CollectionType unspecializedCollectionType = PivotUtil.getUnspecializedTemplateableElement(collectionType);
-			return environmentFactory.getStandardLibrary().getCollectionType(unspecializedCollectionType, specializedElementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
+			return standardLibrary.getCollectionType(unspecializedCollectionType, specializedElementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
 		}
 		else if (type instanceof MapType) {
 			MapType mapType = (MapType)type;
@@ -310,7 +311,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 			Type valueType = ClassUtil.nonNullModel(mapType.getValueType());
 			Type specializedKeyType = specializeType(keyType);
 			Type specializedValueType = specializeType(valueType);
-			return environmentFactory.getStandardLibrary().getMapType(specializedKeyType, mapType.isKeysAreNullFree(), specializedValueType, mapType.isValuesAreNullFree());
+			return standardLibrary.getMapType(specializedKeyType, mapType.isKeysAreNullFree(), specializedValueType, mapType.isValuesAreNullFree());
 		}
 		else if (type instanceof TupleType) {
 			return getSpecializedTupleType((TupleType) type);
@@ -326,7 +327,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 				}
 			}
 			Type specializedResultType = specializeType(ClassUtil.nonNullModel(lambdaType.getResultType()));
-			return metamodelManager.getCompleteModel().getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
+			return standardLibrary.getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType, null);
 		}
 		else {
 			//
@@ -352,13 +353,13 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 							}
 						}
 						if (actualType == null) {
-							actualType = metamodelManager.getStandardLibrary().getOclAnyType();
+							actualType = standardLibrary.getOclAnyType();
 						}
 						templateArguments.add(actualType);
 					}
 				}
 			//	if (hasActual) {
-					return metamodelManager.getLibraryType(unspecializedType, templateArguments);
+					return standardLibrary.getLibraryType(unspecializedType, templateArguments);
 			//	}
 			//	else {
 			//		return unspecializedType;
@@ -371,7 +372,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 					Type actualType = specializeType(ownedTemplateParameter);
 					templateArguments.add(actualType);
 				}
-				return metamodelManager.getLibraryType(unspecializedType, templateArguments);
+				return standardLibrary.getLibraryType(unspecializedType, templateArguments);
 			}
 		}
 		return type;

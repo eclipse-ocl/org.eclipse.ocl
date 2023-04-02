@@ -33,17 +33,17 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 
 /**
- * MapTypeManager abstracts the legacy CompleteClasses.MapCompleteClassImpl functionality for re-use by an Orphanage.
+ * MapTypeManager manages the MapTypes created within an Orphanage.
  */
-public abstract class MapTypeManager extends AbstractTypeManager
+public class MapTypeManager extends AbstractTypeManager
 {
 	/*
 	 * Map from MapTypeId to Map specialization optionally using weak references.
 	 */
 	private final @NonNull Map<@NonNull MapTypeId, @NonNull Object> mapTypes;
 
-	protected MapTypeManager(boolean useWeakReferences) {
-		super(useWeakReferences);
+	public MapTypeManager(@NonNull StandardLibrary standardLibrary, boolean useWeakReferences) {
+		super(standardLibrary, useWeakReferences);
 		this.mapTypes = useWeakReferences ? new WeakHashMap<>() : new HashMap<>();
 	}
 
@@ -72,7 +72,7 @@ public abstract class MapTypeManager extends AbstractTypeManager
 
 	protected @NonNull MapType createSpecialization(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
 		StandardLibrary standardLibrary = getStandardLibrary();
-		MapType unspecializedType = (MapType)standardLibrary.getMapType();
+		MapType unspecializedType = standardLibrary.getMapType();
 		String typeName = unspecializedType.getName();
 		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
 		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();

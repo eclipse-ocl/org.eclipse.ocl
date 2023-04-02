@@ -30,15 +30,17 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.internal.CollectionTypeImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
 /**
- * MiniCollectionTypeManager abstracts the legacy CompleteClasses.CollectionCompleteClassImpl functionality for re-use by an Orphanage.
+ * CollectionTypeManager manages the CollectionTypes created within an Orphanage.
  */
-public abstract class CollectionTypeManager extends AbstractTypeManager
+public class CollectionTypeManager extends AbstractTypeManager
 {
 	private static final Logger logger = Logger.getLogger(CollectionTypeManager.class);
 
@@ -47,8 +49,8 @@ public abstract class CollectionTypeManager extends AbstractTypeManager
 	 */
 	private final @NonNull Map<@NonNull CollectionTypeId, @NonNull Object> collectionTypes;
 
-	protected CollectionTypeManager(boolean useWeakReferences) {
-		super(useWeakReferences);
+	public CollectionTypeManager(@NonNull StandardLibrary standardLibrary, boolean useWeakReferences) {
+		super(standardLibrary, useWeakReferences);
 		this.collectionTypes = useWeakReferences ? new WeakHashMap<>() : new HashMap<>();
 	}
 
@@ -107,6 +109,12 @@ public abstract class CollectionTypeManager extends AbstractTypeManager
 		}
 		specializedCollectionType.setUnspecializedElement(unspecializedType);
 		standardLibrary.addOrphanClass(specializedCollectionType);
+		specializedCollectionType.getTypeId();		// XXX
+		String s = specializedCollectionType.toString();
+		System.out.println(NameUtil.debugSimpleName(specializedCollectionType) + " : " + specializedCollectionType);
+		if ("Collection(Families::FamilyMember[*|?])".equals(s)) {
+			getClass();		// XXX
+		}
 		return specializedCollectionType;
 	}
 
@@ -121,12 +129,15 @@ public abstract class CollectionTypeManager extends AbstractTypeManager
 			CollectionType specializedType = basicGetCollectionType(collectionTypeId);
 			if (specializedType == null) {
 				specializedType = createSpecialization(typeParameters);
+				Type elementType = specializedType.getElementType();
+		//		assert (elementType != null) && (elementType.eResource() != null);			// XXX
 				collectionTypes.put(collectionTypeId, useWeakReferences ? new WeakReference<@Nullable CollectionType>(specializedType) : specializedType);
+				assert collectionTypeId == ((CollectionTypeImpl)specializedType).immutableGetTypeId();		// XXX
+				if (basicGetCollectionType(collectionTypeId) != specializedType) {
+					basicGetCollectionType(collectionTypeId);
+				}
 			}
 			return specializedType;
 		}
 	}
-
-	@Override
-	protected abstract @NonNull StandardLibrary getStandardLibrary();
 }

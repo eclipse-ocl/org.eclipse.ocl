@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -242,6 +243,7 @@ public class ASSaverNew extends AbstractASSaver
 						if (!copier.containsKey(eSource)) {
 							assert eSource != null;
 							EObject localEObject = copier.copy(eSource);
+							System.out.println(NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
 							if (moreObjects == null) {
 								moreObjects = new ArrayList<>();
 							}

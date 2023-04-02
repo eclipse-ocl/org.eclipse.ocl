@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal.complete;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -32,7 +31,6 @@ public interface CompleteEnvironmentInternal extends CompleteEnvironment
 	//	@NonNull PivotStandardLibrary getStandardLibrary();
 	@Override
 	@NonNull StandardLibraryInternal getOwnedStandardLibrary();
-	@NonNull TupleTypeManager getTupleManager();
 	@NonNull CompleteEnvironmentInternal init(@NonNull EnvironmentFactoryInternal environmentFactory);
 	boolean isCodeGeneration();
 	void setCodeGeneration(boolean isCodeGeneration);

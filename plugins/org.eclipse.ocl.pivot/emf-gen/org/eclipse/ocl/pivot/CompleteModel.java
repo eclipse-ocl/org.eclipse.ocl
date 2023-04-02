@@ -143,7 +143,6 @@ public interface CompleteModel extends NamedElement
 	@Nullable CompletePackage getCompletePackageByURI(@NonNull String packageURI);
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackagesWithUris();
 	@NonNull CompleteFlatModel getFlatModel();
-	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType);
 	org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName);
 
 } // CompleteModel
