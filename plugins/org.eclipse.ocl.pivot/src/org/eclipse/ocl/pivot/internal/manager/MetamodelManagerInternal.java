@@ -33,9 +33,7 @@ import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public interface MetamodelManagerInternal extends MetamodelManager
 {
@@ -78,8 +76,6 @@ public interface MetamodelManagerInternal extends MetamodelManager
 
 	@NonNull Iterable<Constraint> getAllInvariants(@NonNull Type pivotType);
 
-	org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull String collectionTypeName, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
-
 	@NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType);
 
 	@Override
@@ -91,7 +87,6 @@ public interface MetamodelManagerInternal extends MetamodelManager
 	@NonNull EnvironmentFactoryInternal getEnvironmentFactory();
 
 	@Nullable GenPackage getGenPackage(@NonNull String nsURI);
-
 
 	org.eclipse.ocl.pivot.@Nullable Class getPrimaryType(@NonNull String nsURI, @NonNull String path, String... extraPath);
 

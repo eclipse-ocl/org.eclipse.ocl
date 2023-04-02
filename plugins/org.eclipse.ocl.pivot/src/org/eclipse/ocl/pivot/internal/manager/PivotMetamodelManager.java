@@ -539,7 +539,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		oppositeProperty.setName(oppositeName);
 		oppositeProperty.setIsImplicit(true);
 		if (!((NumberValue)upper).equals(ValueUtil.ONE_VALUE)) {
-			oppositeProperty.setType(getCollectionType(isOrdered, isUnique, localType, false, lower, upper));
+			CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+			oppositeProperty.setType(standardLibrary.getCollectionType(genericCollectionType, localType, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, lower, upper));
 			oppositeProperty.setIsRequired(true);
 		}
 		else {
@@ -924,45 +925,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return bodyExpression;
 	} */
 
-	public @NonNull CollectionType getCollectionType(boolean isOrdered, boolean isUnique) {
-		if (isOrdered) {
-			if (isUnique) {
-				return standardLibrary.getOrderedSetType();
-			}
-			else {
-				return standardLibrary.getSequenceType();
-			}
-		}
-		else {
-			if (isUnique) {
-				return standardLibrary.getSetType();
-			}
-			else {
-				return standardLibrary.getBagType();
-			}
-		}
-	}
-
-	public @NonNull CollectionType getCollectionType(boolean isOrdered, boolean isUnique, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return completeEnvironment.getCollectionType(getCollectionType(isOrdered, isUnique), elementType, isNullFree, lower, upper);
-	}
-
-	/**
-	 * @deprecated add isNullFree argument
-	 */
-	@Deprecated
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull String collectionTypeName, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(collectionTypeName, elementType, false, lower, upper);
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull String collectionTypeName, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		if (elementType.eIsProxy()) {
-			return standardLibrary.getOclInvalidType();
-		}
-		return completeEnvironment.getCollectionType(standardLibrary.getRequiredLibraryType(collectionTypeName), elementType, isNullFree, lower, upper);
-	}
-
 	public @NonNull Type getCommonType(@NonNull Type leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull Type rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
 		if ((leftType instanceof TupleType) && (rightType instanceof TupleType)) {
@@ -984,7 +946,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			Type rightElementType = ClassUtil.nonNullModel(rightCollectionType.getElementType());
 			Type commonElementType = getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
 			boolean commonIsNullFree = leftCollectionType.isIsNullFree() && rightCollectionType.isIsNullFree();
-			return completeEnvironment.getCollectionType(commonCollectionType, commonElementType, commonIsNullFree, null, null);
+			return standardLibrary.getCollectionType((CollectionType) commonCollectionType, commonElementType, commonIsNullFree, null, null);
 		}
 		if (conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions)) {
 			return rightType;
@@ -1382,7 +1344,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			assert pivotClass instanceof CollectionType;
 			assert templateArguments.size() == 1;
 			@NonNull Type templateArgument = templateArguments.get(0);
-			@SuppressWarnings("unchecked") T specializedType = (T) completeModel.getCollectionType(libraryCompleteClass, TypeUtil.createCollectionTypeParameters((CollectionTypeId) libraryType.getTypeId(), templateArgument, true, null, null));
+			@SuppressWarnings("unchecked") T specializedType = (T) standardLibrary.getCollectionType(TypeUtil.createCollectionTypeParameters((CollectionTypeId) libraryType.getTypeId(), templateArgument, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null));
 			return specializedType;
 		}
 		else if (pivotClass instanceof MapType) {
@@ -1390,7 +1352,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			assert templateArguments.size() == 2;
 			@NonNull Type keyTemplateArgument = templateArguments.get(0);
 			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) standardLibrary.getMapType(TypeUtil.createMapTypeParameters(keyTemplateArgument, true, valueTemplateArgument, true));
+			@SuppressWarnings("unchecked") T specializedType = (T) standardLibrary.getMapType(TypeUtil.createMapTypeParameters(keyTemplateArgument, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueTemplateArgument, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE));
 			return specializedType;
 		}
 		else {
@@ -1805,10 +1767,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 			newOpposite.setIsRequired(false);
 		}
 		else {
-			newOpposite.setType(getCollectionType(
-				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED,
-				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE,
-				thisClass, false,
+			CollectionType genericCollectionType = standardLibrary.getCollectionType(PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_ORDERED, PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UNIQUE);
+			newOpposite.setType(standardLibrary.getCollectionType(genericCollectionType, thisClass,
+				PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE,
 				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_LOWER_VALUE,
 				PivotConstantsInternal.DEFAULT_IMPLICIT_OPPOSITE_UPPER_VALUE));
 			newOpposite.setIsRequired(true);

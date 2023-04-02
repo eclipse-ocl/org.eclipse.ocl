@@ -21,16 +21,14 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 
 /**
- * MiniTupleTypeManager abstract the legacy LambdaTypeManager functionality for re-use by an Orphanage.
+ * AbstractLambdaTypeManager abstract the legacy LambdaTypeManager functionality for re-use by an Orphanage.
  */
-public abstract class MiniLambdaTypeManager
+public abstract class AbstractLambdaTypeManager extends AbstractTypeManager
 {
-	protected final org.eclipse.ocl.pivot.@NonNull Class oclLambdaType;
-	protected final boolean useWeakReferences;
-
 	/**
 	 * Map from from context type via first parameter type, which may be null, to list of lambda types sharing context and first parameter types.
 	 */
@@ -38,19 +36,18 @@ public abstract class MiniLambdaTypeManager
 	// FIXME Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
-	protected MiniLambdaTypeManager(org.eclipse.ocl.pivot.@NonNull Class oclLambdaType, boolean useWeakReferences) {
-		this.oclLambdaType = oclLambdaType;
-		this.useWeakReferences = useWeakReferences;
+	protected AbstractLambdaTypeManager(boolean useWeakReferences) {
+		super(useWeakReferences);
 		this.lambdaTypes = useWeakReferences ? new WeakHashMap<>() : new HashMap<>();
 	}
 
-	protected abstract void addOrphanClass(@NonNull LambdaType lambdaType);
-
+	@Override
 	public void dispose() {
 		lambdaTypes.clear();
 	}
 
 	protected @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
+		StandardLibrary standardLibrary = getStandardLibrary();
 		Map<@Nullable Type, @NonNull List<@NonNull Object>> contextMap = lambdaTypes.get(contextType);
 		if (contextMap == null) {
 			contextMap = new HashMap<>();
@@ -96,8 +93,8 @@ public abstract class MiniLambdaTypeManager
 		lambdaType.setContextType(contextType);
 		lambdaType.getParameterType().addAll(parameterTypes);
 		lambdaType.setResultType(resultType);
-		lambdaType.getSuperClasses().add(oclLambdaType);
-		addOrphanClass(lambdaType);
+		lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
+		standardLibrary.addOrphanClass(lambdaType);
 		lambdasList.add(useWeakReferences ? new WeakReference<@NonNull LambdaType>(lambdaType) : lambdaType);
 		return lambdaType;
 	}

@@ -150,8 +150,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					}
 					else if (redefiningType != null) {
 						CollectionType redefinedCollectionType = (CollectionType)redefinedType;
-						optionalType = new OptionalType(context.getMetamodelManager().getCollectionType(redefinedCollectionType.isOrdered(), redefinedCollectionType.isUnique(),
-							redefiningType, redefinedCollectionType.isIsNullFree(),
+						StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+						CollectionType genericCollectionType = standardLibrary.getCollectionType(redefinedCollectionType.isOrdered(), redefinedCollectionType.isUnique());
+						optionalType = new OptionalType(standardLibrary.getCollectionType(genericCollectionType, redefiningType, redefinedCollectionType.isIsNullFree(),
 							redefinedCollectionType.getLowerValue(), redefinedCollectionType.getUpperValue()), redefinedProperty.isIsRequired());
 					}
 				}

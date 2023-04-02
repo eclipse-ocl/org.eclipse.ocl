@@ -60,9 +60,8 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -399,7 +398,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	private @Nullable TupleTypeManager tupleManager = null;			// Lazily created
 	private boolean isCodeGeneration = false;
 
-	@Override
+/*	@Override
 	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement) {
 		if (pivotElement.getUnspecializedElement() != null) {
 			assert pivotElement.getUnspecializedElement().getUnspecializedElement() == null;
@@ -409,7 +408,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			|| (pivotElement instanceof TupleType);
 		}
 		pivotElement.setOwningPackage(ownedCompleteModel.getOrphanage());
-	}
+	} */
 
 	@Override
 	public boolean conformsTo(@NonNull Type firstType, @NonNull TemplateParameterSubstitutions firstSubstitutions,
@@ -639,54 +638,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public @Nullable CollectionType findCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return completeClass.findCollectionType(typeParameters);
-	}
-
-	@Override
-	public @NonNull CollectionType getBagType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getBagType(), elementType, false, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getBagType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull CompleteClassInternal completeClass, @NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return completeClass.getCollectionType(typeParameters);
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getCollectionType((CollectionType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(elementType), isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		return getCollectionType((CollectionType)metamodelManager.getPrimaryClass(containerType), metamodelManager.getPrimaryType(elementType), false, lower, upper);
-	}
-
-	@Override
-	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		CompleteClassInternal completeClass = ownedCompleteModel.getCompleteClass(containerType);
-		if (isUnspecializedType(completeClass, elementType)) {
-			return containerType;
-		}
-		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(containerType.getTypeId(), elementType, isNullFree, lower, upper);
-		@SuppressWarnings("unchecked")
-		T specializedType = (T) completeClass.getCollectionType(typeParameters);
-		return specializedType;
-	}
-
-	@Override
 	public @NonNull CompleteClassInternal getCompleteClass(@NonNull Type pivotType) {
 		if (pivotType instanceof TemplateParameter) {
-			pivotType = PivotUtil.getLowerBound((TemplateParameter) pivotType, getOwnedStandardLibrary().getOclAnyType());
+			pivotType = PivotUtil.getLowerBound((TemplateParameter) pivotType, ownedStandardLibrary.getOclAnyType());
 		}
 		if (pivotType instanceof ElementExtension) {
 			Stereotype stereotype = ((ElementExtension)pivotType).getStereotype();
@@ -744,12 +698,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		return lambdaManager.getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
 	}
 
-	//	@Override
-	//	public @NonNull MetamodelManager getMetamodelManager() {
-	//		assert metamodelManager != null;
-	//		return metamodelManager;
-	//	}
-
 	@Override
 	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
@@ -763,36 +711,6 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
 		return completePackage.getMemberType(name);
-	}
-
-	@Override
-	public @NonNull CollectionType getOrderedSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getOrderedSetType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getOrderedSetType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getOrderedSetType(), elementType, false, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSequenceType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSequenceType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSequenceType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSequenceType(), elementType, false, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSetType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSetType(@NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(ownedStandardLibrary.getSetType(), elementType, false, lower, upper);
 	}
 
 	@Override
@@ -816,7 +734,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 					templateArgument = templateParameter;
 				}
 				if (templateArgument != null) {
-					return getCollectionType(unspecializedType, templateArgument, null, null);
+					return ownedStandardLibrary.getCollectionType(unspecializedType, templateArgument, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null);
 				}
 			}
 			return collectionType;

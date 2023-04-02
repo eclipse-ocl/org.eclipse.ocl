@@ -17,8 +17,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatModel;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
+import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -82,6 +84,10 @@ public interface StandardLibrary extends Element
 	 */
 	void setOwningCompleteEnvironment(CompleteEnvironment value);
 
+	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass);
+
+	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId);
+
 	@Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId);
 
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
@@ -92,7 +98,13 @@ public interface StandardLibrary extends Element
 	 *
 	 * @return the <tt>Bag(T)</tt> type (an instance of BagType)
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getBagType();
+	@NonNull CollectionType getBagType();
+
+	/**
+	 * Return the specialized bag type for the specializing elementType with isNullFree content and optional lower and upper bounds.
+	 * May return an InvalidType if elementType is a proxy.
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
@@ -116,14 +128,28 @@ public interface StandardLibrary extends Element
 	 *
 	 * @return the <tt>Collection(T)</tt> type (an instance of CollectionType)
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getCollectionType();
+	@NonNull CollectionType getCollectionType();
 
 	/**
-	 * @deprecated add isNullFree argument
+	 * Return the unspecialized CollectionType for the given unspecialized CollectionTypeId.
 	 */
-	@Deprecated
-	@NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
-	@NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeId genericTypeId);
+
+	/**
+	 * Return the unspecialized ordered/not-ordered. unique/not-unique CollectionType.
+	 */
+	@NonNull CollectionType getCollectionType(boolean isOrdered, boolean isUnique);
+
+	/**
+	 * Return the specialized collection type for the unspecialized containerType, specializing elementType with isNullFree content and optional lower and upper bounds.
+	 * May return an InvalidType if elementType is a proxy.
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+
+	/**
+	 * Return the specialized collection type for a collection type descriptor.
+	 */
+	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters);
 
 	/**
 	 * Obtains the single instance of the EnumerationType metatype, named
@@ -146,11 +172,27 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getIntegerType();
 
-	org.eclipse.ocl.pivot.@NonNull Class getMapType();
+	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
+
+	/**
+	 * Obtains the generic instance of the MapType metatype, named
+	 * <tt>Map(T)</tt>.
+	 *
+	 * @return the <tt>Map(T)</tt> type (an instance of MapType)
+	 */
+	@NonNull MapType getMapType();
 
 	org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
 
+	/**
+	 *  Return the specialized map type for the specializing keyType and valueType with keyValuesAreNullFree and valuesAreNullFree content.
+	 *  May return an InvalidType if keyType or valueType is a proxy.
+	 */
 	org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
+
+	/**
+	 * Return the specialized map type for a map type descriptor.
+	 */
 	@NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 
 	/**
@@ -213,6 +255,14 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getOclInvalidType();
 
 	/**
+	 * Obtains the single instance of the LambdaType metatype, named
+	 * <tt>OclLambda</tt>.
+	 *
+	 * @return the <tt>OclLambda</tt> type (an instance of LambdaType)
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getOclLambdaType();
+
+	/**
 	 * Obtains the generic instance of the MessageType metatype, named
 	 * <tt>OclMessage</tt>.
 	 *
@@ -271,7 +321,7 @@ public interface StandardLibrary extends Element
 	 *
 	 * @return the <tt>OrderedCollection(T)</tt> type (an instance of CollectionType)
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getOrderedCollectionType();
+	@NonNull CollectionType getOrderedCollectionType();
 
 	/**
 	 * Obtains the generic instance of the OrderedSetType metatype, named
@@ -279,7 +329,13 @@ public interface StandardLibrary extends Element
 	 *
 	 * @return the <tt>OrderedSet(T)</tt> type (an instance of OrderedSetType)
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType();
+	@NonNull CollectionType getOrderedSetType();
+
+	/**
+	 * Return the specialized ordered set type for the specializing elementType with isNullFree content and optional lower and upper bounds.
+	 * May return an InvalidType if elementType is a proxy.
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
 	 * Obtains the package containing the library types
@@ -304,7 +360,13 @@ public interface StandardLibrary extends Element
 	 *
 	 * @return the <tt>Sequence(T)</tt> type (an instance of SequenceType)
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getSequenceType();
+	@NonNull CollectionType getSequenceType();
+
+	/**
+	 * Return the specialized sequence type for the specializing elementType with isNullFree content and optional lower and upper bounds.
+	 * May return an InvalidType if elementType is a proxy.
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getSequenceType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
 	 * Obtains the generic instance of the SetType metatype, named
@@ -312,7 +374,13 @@ public interface StandardLibrary extends Element
 	 *
 	 * @return the <tt>Set(T)</tt> type (an instance of SetType)
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getSetType();
+	@NonNull CollectionType getSetType();
+
+	/**
+	 * Return the specialized set type for the specializing elementType with isNullFree content and optional lower and upper bounds.
+	 * May return an InvalidType if elementType is a proxy.
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
@@ -340,4 +408,6 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getUnlimitedNaturalType();
 
 	@NonNull FlatModel getFlatModel();
+
+	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 } // StandardLibrary

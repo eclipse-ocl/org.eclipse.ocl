@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -65,7 +64,6 @@ import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -492,11 +490,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 		}
 	}
 
-	@Override
-	public @Nullable CollectionType findCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return null;
-	}
-
 	public synchronized @Nullable Type findSpecializedType(@NonNull TemplateParameters templateArguments) {
 		TemplateSignature templateSignature = getPrimaryClass().getOwnedSignature();
 		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
@@ -549,11 +542,6 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 			return partialClass;
 		}
 		return null;
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		throw new UnsupportedOperationException("Not a collection");
 	}
 
 	@Override

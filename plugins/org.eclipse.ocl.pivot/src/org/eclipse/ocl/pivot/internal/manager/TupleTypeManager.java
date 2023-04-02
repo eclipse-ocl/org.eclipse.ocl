@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -41,7 +42,7 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 /**
  * TupleTypeManager encapsulates the knowledge about known tuple types.
  */
-public class TupleTypeManager extends MiniTupleTypeManager
+public class TupleTypeManager extends AbstractTupleTypeManager
 {
 	protected static class TupleIdResolver extends PivotIdResolver
 	{
@@ -114,16 +115,11 @@ public class TupleTypeManager extends MiniTupleTypeManager
 //	private final @NonNull IdResolver idResolver;
 
 	public TupleTypeManager(@NonNull CompleteEnvironmentInternal completeEnvironment) {
-		super(completeEnvironment.getEnvironmentFactory().getStandardLibrary().getOclTupleType(), false);
+		super(false);
 		this.completeEnvironment = completeEnvironment;
 		this.environmentFactory = completeEnvironment.getEnvironmentFactory();
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 //		this.idResolver = allCompleteClasses.getEnvironmentFactory().getIdResolver();
-	}
-
-	@Override
-	protected void addOrphanClass(@NonNull TupleType tupleType) {
-		completeEnvironment.addOrphanClass(tupleType);
 	}
 
 	public @Nullable Type getCommonType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
@@ -167,6 +163,11 @@ public class TupleTypeManager extends MiniTupleTypeManager
 	@Override
 	protected @NonNull Type getPartType(@NonNull Type partType) {
 		return metamodelManager.getPrimaryType(partType);
+	}
+
+	@Override
+	protected @NonNull StandardLibrary getStandardLibrary() {
+		return metamodelManager.getStandardLibrary();
 	}
 
 	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Collection<@NonNull? extends TypedElement> parts,

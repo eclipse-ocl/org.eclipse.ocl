@@ -362,7 +362,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
 //
-		ocl.assertQueryEquals(null, integerType, "Set{1, 2, 3}->oclAsType(Collection(Real))->oclType().elementType");
+		ocl.assertQueryEquals(null, stringType, "Set{'1'}->oclType().elementType");
 // XXX
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}->elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Set(String)", "elementType");
 		ocl.assertSemanticErrorQuery(null, "Set{'1'}->_'Collection'::elementType", PivotMessagesInternal.UnresolvedProperty_ERROR_, "Collection", "elementType");

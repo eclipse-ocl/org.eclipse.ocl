@@ -97,23 +97,28 @@ public class CollectionTypeParametersImpl<T extends Type> implements CollectionT
 	}
 
 	@Override
-	public @NonNull CollectionTypeId getCollectionTypeId() {
+	public @NonNull T getElementType() {
+		return elementType;
+	}
+
+	@Override
+	public @NonNull CollectionTypeId getGenericTypeId() {
+		return genericTypeId;
+	}
+
+	@Override
+	public @NonNull IntegerValue getLower() {
+		return lower;
+	}
+
+	@Override
+	public @NonNull CollectionTypeId getSpecializedTypeId() {
 		CollectionTypeId typeId2 = typeId;
 		if (typeId2 == null) {
 			TypeId elementTypeId = elementType.getTypeId();
 			typeId = typeId2 = genericTypeId.getSpecializedId(elementTypeId, isNullFree, lower, upper);		// XXX Use correct collection type
 		}
 		return typeId2;
-	}
-
-	@Override
-	public @NonNull T getElementType() {
-		return elementType;
-	}
-
-	@Override
-	public @NonNull IntegerValue getLower() {
-		return lower;
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -34,21 +35,17 @@ import org.eclipse.ocl.pivot.values.MapTypeParameters;
 /**
  * MapTypeManager abstracts the legacy CompleteClasses.MapCompleteClassImpl functionality for re-use by an Orphanage.
  */
-public abstract class MapTypeManager
+public abstract class MapTypeManager extends AbstractTypeManager
 {
-	protected final boolean useWeakReferences;
-
 	/*
 	 * Map from MapTypeId to Map specialization optionally using weak references.
 	 */
 	private final @NonNull Map<@NonNull MapTypeId, @NonNull Object> mapTypes;
 
 	protected MapTypeManager(boolean useWeakReferences) {
-		this.useWeakReferences = useWeakReferences;
+		super(useWeakReferences);
 		this.mapTypes = useWeakReferences ? new WeakHashMap<>() : new HashMap<>();
 	}
-
-	protected abstract void addOrphanClass(@NonNull MapType mapType);
 
 	public synchronized @Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId) {
 		if (!useWeakReferences) {
@@ -74,7 +71,8 @@ public abstract class MapTypeManager
 	}
 
 	protected @NonNull MapType createSpecialization(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		MapType unspecializedType = getUnspecializedType();
+		StandardLibrary standardLibrary = getStandardLibrary();
+		MapType unspecializedType = (MapType)standardLibrary.getMapType();
 		String typeName = unspecializedType.getName();
 		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
 		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
@@ -100,10 +98,11 @@ public abstract class MapTypeManager
 		specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
 		specializedMapType.setUnspecializedElement(unspecializedType);
 		specializedMapType.setEntryClass(typeParameters.getEntryClass());
-		addOrphanClass(specializedMapType);
+		standardLibrary.addOrphanClass(specializedMapType);
 		return specializedMapType;
 	}
 
+	@Override
 	public void dispose() {
 		mapTypes.clear();
 	}
@@ -119,8 +118,4 @@ public abstract class MapTypeManager
 			return specializedType;
 		}
 	}
-
-	protected abstract @NonNull MapType getUnspecializedType();
-
-//	protected abstract void resolveSuperClasses(@NonNull MapType specializedMapType, @NonNull MapType unspecializedMapType);
 }

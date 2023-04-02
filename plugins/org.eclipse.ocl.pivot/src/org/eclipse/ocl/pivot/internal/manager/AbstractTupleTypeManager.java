@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -34,25 +35,19 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
- * MiniTupleTypeManager abstract the legacy TupleTypeManager functionality for re-use by an Orphanage.
+ * AbstractTupleTypeManager abstract the legacy TupleTypeManager functionality for re-use by an Orphanage.
  */
-public abstract class MiniTupleTypeManager
+public abstract class AbstractTupleTypeManager extends AbstractTypeManager
 {
-	protected final org.eclipse.ocl.pivot.@NonNull Class oclTupleType;
-	protected final boolean useWeakReferences;
-
 	/**
 	 * Map from the tuple typeId to the tuple type.
 	 */
 	private @NonNull Map<@NonNull TupleTypeId, @NonNull Object> tupleId2tupleOrWeakTuple;
 
-	protected MiniTupleTypeManager(org.eclipse.ocl.pivot.@NonNull Class oclTupleType, boolean useWeakReferences) {
-		this.oclTupleType = oclTupleType;
-		this.useWeakReferences = useWeakReferences;
+	protected AbstractTupleTypeManager(boolean useWeakReferences) {
+		super(useWeakReferences);
 		this.tupleId2tupleOrWeakTuple = useWeakReferences ? new WeakHashMap<>() : new HashMap<>();
 	}
-
-	protected abstract void addOrphanClass(@NonNull TupleType tupleType);
 
 	private @Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId) {
 		if (useWeakReferences) {
@@ -65,6 +60,7 @@ public abstract class MiniTupleTypeManager
 		}
 	}
 
+	@Override
 	public void dispose() {
 		tupleId2tupleOrWeakTuple.clear();
 	}
@@ -86,9 +82,10 @@ public abstract class MiniTupleTypeManager
 						Property property = PivotUtil.createProperty(NameUtil.getSafeName(partId), partType2);
 						ownedAttributes.add(property);
 					}
-					tupleType.getSuperClasses().add(oclTupleType);
+					StandardLibrary standardLibrary = getStandardLibrary();
+					tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
 					putTupleType(tupleTypeId, tupleType);
-					addOrphanClass(tupleType);
+					standardLibrary.addOrphanClass(tupleType);
 				}
 			}
 		}
@@ -111,8 +108,9 @@ public abstract class MiniTupleTypeManager
 						ownedAttributes.add(property);
 					}
 					ECollections.sort(ownedAttributes, NameUtil.NAMEABLE_COMPARATOR);
-					tupleType.getSuperClasses().add(oclTupleType);
-					addOrphanClass(tupleType);
+					StandardLibrary standardLibrary = getStandardLibrary();
+					tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
+					standardLibrary.addOrphanClass(tupleType);
 					putTupleType(tupleTypeId, tupleType);
 				}
 			}

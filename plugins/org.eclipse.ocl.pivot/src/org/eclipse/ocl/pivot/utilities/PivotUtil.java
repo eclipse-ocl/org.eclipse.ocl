@@ -1075,7 +1075,7 @@ public class PivotUtil
 						boolean isNullFree = collectionType.isIsNullFree();
 						IntegerValue lowerValue = collectionType.getLowerValue();
 						UnlimitedNaturalValue upperValue = collectionType.getUpperValue();
-						return environmentFactory.getCompleteEnvironment().getCollectionType(unspecializedElement, behavioralElementType, isNullFree, lowerValue, upperValue);
+						return environmentFactory.getStandardLibrary().getCollectionType(unspecializedElement, behavioralElementType, isNullFree, lowerValue, upperValue);
 					}
 				}
 			}

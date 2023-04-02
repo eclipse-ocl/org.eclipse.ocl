@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2020 Willink Transformations and others.
+ * Copyright (c) 2011, 2018 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -8,18 +8,20 @@
  * Contributors:
  *     E.D.Willink - initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.values;
+package org.eclipse.ocl.pivot.internal.manager;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.StandardLibrary;
 
-public interface CollectionTypeParameters<T extends Type> extends Iterable<Object>
+public abstract class AbstractTypeManager
 {
-	@NonNull T getElementType();
-	@NonNull CollectionTypeId getGenericTypeId();
-	@NonNull IntegerValue getLower();
-	@NonNull CollectionTypeId getSpecializedTypeId();
-	@NonNull UnlimitedNaturalValue getUpper();
-	boolean isNullFree();
+	protected final boolean useWeakReferences;
+
+	protected AbstractTypeManager(boolean useWeakReferences) {
+		this.useWeakReferences = useWeakReferences;
+	}
+
+	public void dispose() {}
+
+	protected abstract @NonNull StandardLibrary getStandardLibrary();
 }

@@ -1606,7 +1606,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (commonType == null) {
 				commonType = standardLibrary.getOclVoidType();
 			}
-			Type type = metamodelManager.getCollectionType(collectionTypeName, commonType, isNullFree, null, null);
+			org.eclipse.ocl.pivot.Class genericType = standardLibrary.getRequiredLibraryType(collectionTypeName);
+			Type type = standardLibrary.getCollectionType((CollectionType) genericType, commonType, isNullFree, null, null);
 			helper.setType(expression, type, true, null);
 			expression.setKind(TypeUtil.getCollectionKind((CollectionType) type));
 		}

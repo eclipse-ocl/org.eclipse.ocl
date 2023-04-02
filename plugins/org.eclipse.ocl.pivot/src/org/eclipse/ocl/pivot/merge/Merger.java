@@ -91,7 +91,7 @@ public class Merger
 		return new MergerResolveVisitor(this);
 	}
 
-	public @NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return orphanManager.getCollectionType(genericType, elementType, isNullFree, lower, upper);
 	}
 

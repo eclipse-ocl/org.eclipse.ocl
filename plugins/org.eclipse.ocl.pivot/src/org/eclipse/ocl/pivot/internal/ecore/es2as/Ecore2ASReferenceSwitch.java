@@ -324,7 +324,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 							}
 							else {
 								isRequired = true;
-								pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, false, lowerValue, upperValue);
+								CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+								pivotType = standardLibrary.getCollectionType(genericCollectionType, pivotType, false, lowerValue, upperValue);
 							}
 						}
 						else {
@@ -439,7 +440,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						boolean isUnique = eTypedElement.isUnique();
 						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 						UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-						pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, isNullFree, lowerValue, upperValue);
+						CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+						pivotType = standardLibrary.getCollectionType(genericCollectionType, pivotType, isNullFree, lowerValue, upperValue);
 					}
 				}
 			}

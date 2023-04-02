@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -23,18 +24,13 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 /**
  * LambdaTypeManager encapsulates the knowledge about known lambda types.
  */
-public class LambdaTypeManager extends MiniLambdaTypeManager
+public class LambdaTypeManager extends AbstractLambdaTypeManager
 {
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
 
 	public LambdaTypeManager(@NonNull CompleteEnvironmentInternal completeEnvironment) {
-		super(completeEnvironment.getOwnedStandardLibrary().getOclLambdaType(), false);
+		super(false);
 		this.completeEnvironment = completeEnvironment;
-	}
-
-	@Override
-	protected void addOrphanClass(@NonNull LambdaType lambdaType) {
-		completeEnvironment.addOrphanClass(lambdaType);
 	}
 
 	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
@@ -51,5 +47,10 @@ public class LambdaTypeManager extends MiniLambdaTypeManager
 			Type specializedResultType = completeEnvironment.getSpecializedType(resultType, bindings);
 			return getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
 		}
+	}
+
+	@Override
+	protected @NonNull StandardLibrary getStandardLibrary() {
+		return completeEnvironment.getOwnedStandardLibrary();
 	}
 }

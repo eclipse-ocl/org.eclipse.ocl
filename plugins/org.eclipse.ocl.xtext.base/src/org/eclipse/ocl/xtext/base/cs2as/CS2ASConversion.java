@@ -794,7 +794,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 			IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 			UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-			CollectionType pivotCollectionType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, isNullFree, lowerValue, upperValue);
+			CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
+			org.eclipse.ocl.pivot.@NonNull Class pivotCollectionType = standardLibrary.getCollectionType(genericCollectionType, pivotType, isNullFree, lowerValue, upperValue);
 			installPivotReference(csElement, pivotCollectionType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
 		}
 	}
@@ -1348,7 +1349,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				if (csMultiplicity != null) {
 					isNullFree = csMultiplicity.isIsNullFree();
 				}
-				specializedPivotElement = templateArgument != null ? completeEnvironment.getCollectionType((CollectionType) unspecializedPivotElement, templateArgument, isNullFree, null, null) : unspecializedPivotElement;
+				specializedPivotElement = templateArgument != null ? standardLibrary.getCollectionType((CollectionType) unspecializedPivotElement, templateArgument, isNullFree, null, null) : unspecializedPivotElement;
 			}
 			else {
 				List<@NonNull Type> templateArguments = new ArrayList<@NonNull Type>();

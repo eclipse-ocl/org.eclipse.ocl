@@ -57,13 +57,13 @@ public interface StandardLibraryInternal extends StandardLibrary.StandardLibrary
 	@NonNull String getDefaultStandardLibraryURI();
 	@Override
 	@NonNull PrimitiveType getIntegerType();
-	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
 	@Override
 	@NonNull AnyType getOclAnyType();
 	@Override
 	@NonNull Property getOclInvalidProperty();
 	@Override
 	@NonNull InvalidType getOclInvalidType();
+	@Override
 	org.eclipse.ocl.pivot.@NonNull Class getOclLambdaType();
 	org.eclipse.ocl.pivot.@NonNull Class getOclTypeType();
 	@Override

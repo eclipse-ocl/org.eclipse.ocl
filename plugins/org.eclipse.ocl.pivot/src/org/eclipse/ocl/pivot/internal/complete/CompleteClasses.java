@@ -12,90 +12,27 @@ package org.eclipse.ocl.pivot.internal.complete;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.CompleteClassImpl;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
-import org.eclipse.ocl.pivot.internal.manager.MiniCollectionTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 
 public class CompleteClasses extends EObjectContainmentWithInverseEList<CompleteClass>
 {
 	public static final @NonNull TracingOption COMPLETE_CLASSES = new TracingOption(PivotPlugin.PLUGIN_ID, "completeClasses");
 	//	static { COMPLETE_CLASSES.setState(true); }
 	private static final long serialVersionUID = 1L;
-
-	protected static class CollectionCompleteClassImpl extends CompleteClassImpl
-	{
-		/**
-		 * Map from actual types to specialization.
-		 * <br>
-		 * The specializations are weakly referenced so that stale specializations are garbage collected.
-		 */
-		// FIXME tests fail if keys are weak since GC is too aggressive across tests
-		// The actual types are weak keys so that parameterizations using stale types are garbage collected.
-		// No. The problem is that CollectionTypeParameters is not a singleton since it passes an element type. Attempting to use
-		// a SingletonScope needs to use the IdResolver to convert the TemplateParameterId to its type which seemed reluctant
-		// to work, and failing to GC within the scope of this CompleteClass is not a disaster. May change once CompleteClass goes.
-		//
-//		private @Nullable /*WeakHash*/Map<@NonNull CollectionTypeParameters<@NonNull Type>, @NonNull WeakReference<@Nullable CollectionType>> collections = null;
-		private final @NonNull MiniCollectionTypeManager collections;
-
-		protected CollectionCompleteClassImpl() {
-			this.collections = new MiniCollectionTypeManager(true)
-			{
-				@Override
-				protected void addOrphanClass(@NonNull CollectionType mapType) {
-					Orphanage orphanage = getCompleteModel().getOrphanage();
-					mapType.setOwningPackage(orphanage);
-				}
-
-				@Override
-				protected @NonNull CollectionType getUnspecializedType() {
-					return (CollectionType)getPrimaryClass();
-				}
-
-				@Override
-				protected void resolveSuperClasses(@NonNull CollectionType specializedCollectionType, @NonNull CollectionType unspecializedCollectionType) {
-					getCompleteModel().resolveSuperClasses(specializedCollectionType, unspecializedCollectionType);
-				}
-			};
-		}
-
-		@Override
-		public synchronized @Nullable CollectionType findCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-			TemplateSignature templateSignature = getPrimaryClass().getOwnedSignature();
-			List<@NonNull TemplateParameter> templateParameters = ClassUtil.nullFree(templateSignature.getOwnedParameters());
-			if (templateParameters.size() != 1) {
-				return null;
-			}
-			return collections.basicGetCollectionType(typeParameters.getCollectionTypeId());
-		}
-
-		@Override
-		public synchronized @NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-			return collections.getCollectionType(typeParameters);
-		}
-	}
 
 	protected @Nullable Map<String, CompleteClassInternal> name2completeClass = null;
 
@@ -209,15 +146,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 			if (completeClass == null) {
 				completeClass = name2completeClass2.get(name);
 				if (completeClass == null) {
-					if (partialClass.getOwnedSignature() == null) {
-						completeClass = (CompleteClassInternal) PivotFactory.eINSTANCE.createCompleteClass();
-					}
-					else if (partialClass instanceof CollectionType) {
-						completeClass = new CollectionCompleteClassImpl();
-					}
-					else {
-						completeClass = (CompleteClassInternal) PivotFactory.eINSTANCE.createCompleteClass();
-					}
+					completeClass = (CompleteClassInternal) PivotFactory.eINSTANCE.createCompleteClass();
 					completeClass.setName(name);
 					add(completeClass);
 				}

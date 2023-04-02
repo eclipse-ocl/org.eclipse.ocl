@@ -11,10 +11,12 @@
 package org.eclipse.ocl.xtext.essentialocl.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Precedence;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
@@ -62,7 +64,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			PivotMetamodelManager metamodelManager = context.getMetamodelManager();
+			StandardLibrary standardLibrary = context.getStandardLibrary();
 			TypedRefCS csElementType = csElement.getOwnedType();
 			Type type = null;
 			String name = csElement.getName();
@@ -85,7 +87,8 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 						lowerValue = null;
 						upperValue = null;
 					}
-					type = metamodelManager.getCollectionType(name, elementType, isNullFree, lowerValue, upperValue);
+					org.eclipse.ocl.pivot.Class genericType = ((StandardLibraryImpl)standardLibrary).getRequiredLibraryType(name);
+					type = standardLibrary.getCollectionType((CollectionType) genericType, elementType, isNullFree, lowerValue, upperValue);
 					MultiplicityCS csMultiplicity = csElement.getOwnedMultiplicity();
 					if (csMultiplicity != null) {
 						int upper = csMultiplicity.getUpper();
@@ -93,13 +96,13 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 							isNullFree = csMultiplicity.isIsNullFree();
 							lowerValue = ValueUtil.integerValueOf(csMultiplicity.getLower());
 							upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-							type = metamodelManager.getCollectionType(TypeId.SET_NAME, type, isNullFree, lowerValue, upperValue);
+							type = standardLibrary.getCollectionType((CollectionType) standardLibrary.getSetType(), type, isNullFree, lowerValue, upperValue);
 						}
 					}
 				}
 			}
 			if (type == null) {
-				type = metamodelManager.getStandardLibrary().getLibraryType(name);
+				type = standardLibrary.getLibraryType(name);
 			}
 			csElement.setPivot(type);
 			return null;
