@@ -408,18 +408,7 @@ public class ExecutorStandardLibrary extends AbstractStandardLibraryImpl impleme
 	}
 
 	@Override
-	public @NonNull MapType getMapType() {
-		return (MapType)OCLstdlibTables.Types._Map;
-	}
-
-	@Deprecated /* @deprecated used by auto-gen code for now */
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
-		assert genericType == (MapType)OCLstdlibTables.Types._Map;
-		return getMapType(keyType, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueType, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
-	}
-
-	@Override
-	public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+	public @NonNull MapType getMapOfEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		throw new UnsupportedOperationException();				// Only happens for Entry classes
 	/*	MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryClass);
 		MapType specializedType = null;
@@ -439,6 +428,17 @@ public class ExecutorStandardLibrary extends AbstractStandardLibraryImpl impleme
 			map.put(typeParameters, new WeakReference<>(specializedType));
 		}
 		return specializedType; */
+	}
+
+	@Override
+	public @NonNull MapType getMapType() {
+		return (MapType)OCLstdlibTables.Types._Map;
+	}
+
+	@Deprecated /* @deprecated used by auto-gen code for now */
+	public org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
+		assert genericType == (MapType)OCLstdlibTables.Types._Map;
+		return getMapType(keyType, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueType, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
 	}
 
 	@Override

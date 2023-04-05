@@ -432,7 +432,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						if (valueProperty.getType() == null) {
 							return oclInvalidProperty;			// Retry later once type defined
 						}
-						pivotType = standardLibrary.getMapType((org.eclipse.ocl.pivot.Class)pivotType);
+						pivotType = standardLibrary.getMapOfEntryType((org.eclipse.ocl.pivot.Class)pivotType);
 					}
 					else {
 						boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);

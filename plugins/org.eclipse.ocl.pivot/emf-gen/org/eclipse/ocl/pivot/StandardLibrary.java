@@ -182,7 +182,7 @@ public interface StandardLibrary extends Element
 	 */
 	@NonNull MapType getMapType();
 
-	org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
+	org.eclipse.ocl.pivot.@NonNull Class getMapOfEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
 
 	/**
 	 *  Return the specialized map type for the specializing keyType and valueType with keyValuesAreNullFree and valuesAreNullFree content.

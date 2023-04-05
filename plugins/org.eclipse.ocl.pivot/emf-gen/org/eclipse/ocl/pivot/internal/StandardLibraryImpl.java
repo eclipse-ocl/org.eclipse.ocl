@@ -719,7 +719,7 @@ public class StandardLibraryImpl extends AbstractStandardLibraryImpl implements 
 	 * @since 1.7
 	 */
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+	public org.eclipse.ocl.pivot.@NonNull Class getMapOfEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		if (entryClass.eIsProxy()) {
 			return getOclInvalidType();
 		}

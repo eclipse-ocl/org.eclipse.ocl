@@ -490,7 +490,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class entryClass = (org.eclipse.ocl.pivot.Class)pivotType;
 				if (java.util.Map.Entry.class.getName().equals(entryClass.getInstanceClassName())) {
-					org.eclipse.ocl.pivot.Class mapType = context.getStandardLibrary().getMapType(entryClass);
+					org.eclipse.ocl.pivot.Class mapType = context.getStandardLibrary().getMapOfEntryType(entryClass);
 					if (mapType instanceof MapType) {
 						((MapType)mapType).setEntryClass(entryClass);
 					}
