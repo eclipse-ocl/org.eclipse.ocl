@@ -78,6 +78,8 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * Return a unique StandardLibrary-independent TemplateParameter-independent identifier for this type.
 	 *
 	 * @since 1.18
+	 *
+	 * XXX This method is widely used but the overload never differs to getTypeId() in regular OCL standalone tests.
 	 */
 	default @NonNull TypeId getNormalizedTypeId() { return getTypeId(); }
 
