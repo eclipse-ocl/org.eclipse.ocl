@@ -412,6 +412,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull SetType _Set_Set_T = createSetType(OCLstdlibPackage.Literals.SET, tp_Set_T);
 		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T = createCollectionType(OCLstdlibPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T);
 
+		private final @NonNull BagType _Bag_Bag_T_T = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Bag_collect_V_T = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Bag_collectNested_V_T = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_Bag_flatten_T2_T = createBagType(_Bag_Bag_T);
@@ -434,6 +435,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_Bag_selectByKind_TT_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Bag_selectByType_TT_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Collection_T_F = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Collection_T_T = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Collection_collect_V_T = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Collection_collectNested_V_T = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Collection_excludesAll_T2_T = createCollectionType(_Collection_Collection_T);
@@ -484,6 +486,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _OrderedCollection_Bag_T_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_Collection_T_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_Integer_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
+		private final @NonNull CollectionType _OrderedCollection_OrderedSet_T_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_OrderedSet_T_T = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_OrderedSet_collect_V_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_OrderedSet_collectNested_V_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
@@ -501,6 +504,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _OrderedCollection_String_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_UniqueCollection_T_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull OrderedSetType _OrderedSet_Collection_T_T = createOrderedSetType(_OrderedSet_OrderedSet_T);
+		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_T_T = createOrderedSetType(_OrderedSet_OrderedSet_T);
 		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_flatten_T2_T = createOrderedSetType(_OrderedSet_OrderedSet_T);
 		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_selectByKind_TT_T = createOrderedSetType(_OrderedSet_OrderedSet_T);
 		private final @NonNull OrderedSetType _OrderedSet_OrderedSet_selectByType_TT_T = createOrderedSetType(_OrderedSet_OrderedSet_T);
@@ -512,6 +516,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull SequenceType _Sequence_Integer_T = createSequenceType(_Sequence_Sequence_T);
 		private final @NonNull SequenceType _Sequence_OrderedSet_collect_V_T = createSequenceType(_Sequence_Sequence_T);
 		private final @NonNull SequenceType _Sequence_OrderedSet_collectNested_V_T = createSequenceType(_Sequence_Sequence_T);
+		private final @NonNull SequenceType _Sequence_Sequence_T_T = createSequenceType(_Sequence_Sequence_T);
 		private final @NonNull SequenceType _Sequence_Sequence_collect_V_T = createSequenceType(_Sequence_Sequence_T);
 		private final @NonNull SequenceType _Sequence_Sequence_collectNested_V_T = createSequenceType(_Sequence_Sequence_T);
 		private final @NonNull SequenceType _Sequence_Sequence_flatten_T2_T = createSequenceType(_Sequence_Sequence_T);
@@ -524,6 +529,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull SetType _Set_OclElement_T = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_OclSelf_F = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_OclSelf_T = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_Set_T_T = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_Set_flatten_T2_T = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_Set_selectByKind_TT_T = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_Set_selectByType_TT_T = createSetType(_Set_Set_T);
@@ -536,6 +542,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_OclAny_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_OclElement_F = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_OclSelf_F = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_OrderedSet_T_F = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_OrderedSet_T_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_OrderedSet_flatten_T2_F = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_OrderedSet_selectByKind_TT_F = createCollectionType(_UniqueCollection_UniqueCollection_T);
@@ -548,6 +555,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_Set_selectByType_TT_F = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_Tuple_F = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T_F = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_UniqueCollection_T_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
 
 		private final @NonNull MapType _Map_Map_K_Map_V = createMapType(OCLstdlibPackage.Literals.MAP, tp_Map_K, tp_Map_V);
 		private final @NonNull MapType _Map_Collection_T_F_Collection_collectBy_V_F = createMapType(_Map_Map_K_Map_V);
@@ -557,6 +565,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull MapType _Map_Map_includingMap_K2_T_Map_includingMap_V2_T = createMapType(_Map_Map_K_Map_V);
 		private final @NonNull MapType _Map_Map_K_F_Map_collectBy_V2_F = createMapType(_Map_Map_K_Map_V);
 		private final @NonNull MapType _Map_Map_K_F_Map_collectNested_V2_F = createMapType(_Map_Map_K_Map_V);
+		private final @NonNull MapType _Map_Map_K_F_Map_V_F = createMapType(_Map_Map_K_Map_V);
 
 		private void installClassTypes() {
 			List<Class> ownedClasses;
@@ -742,6 +751,11 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type);
 
 			ownedClasses = orphanPackage.getOwnedClasses();
+			type = _Bag_Bag_T_T;
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_Bag_T_F);
+			ownedClasses.add(type);
 			type = _Bag_Bag_collect_V_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -837,6 +851,11 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
 			type = _Collection_Collection_T_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type);
+			type = _Collection_Collection_T_T;
+			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -1056,6 +1075,10 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Integer_F);
 			ownedClasses.add(type);
+			type = _OrderedCollection_OrderedSet_T_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_OrderedSet_T_F);
+			ownedClasses.add(type);
 			type = _OrderedCollection_OrderedSet_T_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -1128,6 +1151,12 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OrderedCollection_Collection_T_F);
 			superClasses.add(_UniqueCollection_Collection_T_F);
 			ownedClasses.add(type);
+			type = _OrderedSet_OrderedSet_T_T;
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OrderedCollection_OrderedSet_T_F);
+			superClasses.add(_UniqueCollection_OrderedSet_T_F);
+			ownedClasses.add(type);
 			type = _OrderedSet_OrderedSet_flatten_T2_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -1189,6 +1218,11 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OrderedCollection_OrderedSet_collectNested_V_F);
 			ownedClasses.add(type);
+			type = _Sequence_Sequence_T_T;
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OrderedCollection_Sequence_T_F);
+			ownedClasses.add(type);
 			type = _Sequence_Sequence_collect_V_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -1248,6 +1282,11 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_OclSelf_F);
 			ownedClasses.add(type);
+			type = _Set_Set_T_T;
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_UniqueCollection_Set_T_F);
+			ownedClasses.add(type);
 			type = _Set_Set_flatten_T2_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -1303,6 +1342,10 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_OclSelf_F);
 			ownedClasses.add(type);
+			type = _UniqueCollection_OrderedSet_T_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_OrderedSet_T_F);
+			ownedClasses.add(type);
 			type = _UniqueCollection_OrderedSet_T_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -1353,6 +1396,11 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_UniqueCollection_T_F);
 			ownedClasses.add(type);
+			type = _UniqueCollection_UniqueCollection_T_T;
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_UniqueCollection_T_F);
+			ownedClasses.add(type);
 		}
 
 		private void installMapTypes() {
@@ -1396,6 +1444,12 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
 			type = _Map_Map_K_F_Map_collectNested_V2_F;
+			type.setKeysAreNullFree(false);
+			type.setValuesAreNullFree(false);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type);
+			type = _Map_Map_K_F_Map_V_F;
 			type.setKeysAreNullFree(false);
 			type.setValuesAreNullFree(false);
 			superClasses = type.getSuperClasses();
@@ -1547,7 +1601,7 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_OrderedSet_T_OrderedSet);
 			type.setContextType(tp_OrderedSet_T);
-			type.setResultType(_OrderedSet_OrderedSet_T);
+			type.setResultType(_OrderedSet_OrderedSet_T_T);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_OrderedSet_T_OrderedSet_collectNested_V);
@@ -1597,7 +1651,7 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_Set_T_Set);
 			type.setContextType(tp_Set_T);
-			type.setResultType(_Set_Set_T);
+			type.setResultType(_Set_Set_T_T);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclLambda);
 			orphanTypes.add(type = _Lambda_Set_T_Set_collectNested_V);
@@ -1697,11 +1751,11 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_UnlimitedNatural_toInteger = createOperation("toInteger", _Integer, "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation.INSTANCE);
 		private final @NonNull Operation op_Bag__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Bag__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		private final @NonNull Operation op_Bag_excluding = createOperation("excluding", _Bag_Bag_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		private final @NonNull Operation op_Bag_excludingAll = createOperation("excludingAll", _Bag_Bag_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_Bag_excluding = createOperation("excluding", _Bag_Bag_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+		private final @NonNull Operation op_Bag_excludingAll = createOperation("excludingAll", _Bag_Bag_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_Bag_flatten = createOperation("flatten", _Bag_Bag_flatten_T2_T, "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_Bag_flatten_T2);
-		private final @NonNull Operation op_Bag_including = createOperation("including", _Bag_Bag_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		private final @NonNull Operation op_Bag_includingAll = createOperation("includingAll", _Bag_Bag_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_Bag_including = createOperation("including", _Bag_Bag_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+		private final @NonNull Operation op_Bag_includingAll = createOperation("includingAll", _Bag_Bag_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_Bag_selectByKind = createOperation("selectByKind", _Bag_Bag_selectByKind_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_Bag_selectByKind_TT);
 		private final @NonNull Operation op_Bag_selectByType = createOperation("selectByType", _Bag_Bag_selectByType_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Bag_selectByType_TT);
 		private final @NonNull Operation op_BooleanType_allInstances = createOperation("allInstances", _Set_OclSelf_T, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
@@ -1715,13 +1769,13 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Collection_count = createOperation("count", _Integer, "org.eclipse.ocl.pivot.library.collection.CollectionCountOperation", org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_excludes = createOperation("excludes", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_excludesAll = createOperation("excludesAll", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE, tp_Collection_excludesAll_T2);
-		private final @NonNull Operation op_Collection_excluding = createOperation("excluding", _Collection_Collection_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		private final @NonNull Operation op_Collection_excludingAll = createOperation("excludingAll", _Collection_Collection_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_Collection_excluding = createOperation("excluding", _Collection_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+		private final @NonNull Operation op_Collection_excludingAll = createOperation("excludingAll", _Collection_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_flatten = createOperation("flatten", _Collection_Collection_flatten_T2_T, "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_Collection_flatten_T2);
 		private final @NonNull Operation op_Collection_includes = createOperation("includes", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_includesAll = createOperation("includesAll", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE, tp_Collection_includesAll_T2);
-		private final @NonNull Operation op_Collection_including = createOperation("including", _Collection_Collection_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		private final @NonNull Operation op_Collection_includingAll = createOperation("includingAll", _Collection_Collection_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_Collection_including = createOperation("including", _Collection_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+		private final @NonNull Operation op_Collection_includingAll = createOperation("includingAll", _Collection_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_intersection = createOperation("intersection", _Bag_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_intersection_1 = createOperation("intersection", _Set_Collection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_isEmpty = createOperation("isEmpty", _Boolean, "org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation", org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
@@ -1841,52 +1895,52 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OrderedCollection_first = createOperation("first", tp_OrderedCollection_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedCollection_indexOf = createOperation("indexOf", _Integer, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedCollection_last = createOperation("last", tp_OrderedCollection_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet__neg_ = createOperation("-", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet__neg_ = createOperation("-", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet_append = createOperation("append", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet_appendAll = createOperation("appendAll", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet_excluding = createOperation("excluding", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet_excludingAll = createOperation("excludingAll", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_append = createOperation("append", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_appendAll = createOperation("appendAll", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_excluding = createOperation("excluding", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_excludingAll = createOperation("excludingAll", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet_flatten = createOperation("flatten", _OrderedSet_OrderedSet_flatten_T2_T, "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_OrderedSet_flatten_T2);
-		private final @NonNull Operation op_OrderedSet_including = createOperation("including", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet_includingAll = createOperation("includingAll", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet_insertAt = createOperation("insertAt", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet_prepend = createOperation("prepend", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet_prependAll = createOperation("prependAll", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet_reverse = createOperation("reverse", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_including = createOperation("including", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_includingAll = createOperation("includingAll", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_insertAt = createOperation("insertAt", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_prepend = createOperation("prepend", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_prependAll = createOperation("prependAll", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_reverse = createOperation("reverse", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet_selectByKind = createOperation("selectByKind", _OrderedSet_OrderedSet_selectByKind_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_OrderedSet_selectByKind_TT);
 		private final @NonNull Operation op_OrderedSet_selectByType = createOperation("selectByType", _OrderedSet_OrderedSet_selectByType_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_OrderedSet_selectByType_TT);
-		private final @NonNull Operation op_OrderedSet_subOrderedSet = createOperation("subOrderedSet", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet_subOrderedSet = createOperation("subOrderedSet", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		private final @NonNull Operation op_Sequence_append = createOperation("append", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
-		private final @NonNull Operation op_Sequence_appendAll = createOperation("appendAll", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
-		private final @NonNull Operation op_Sequence_excluding = createOperation("excluding", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		private final @NonNull Operation op_Sequence_excludingAll = createOperation("excludingAll", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_append = createOperation("append", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_appendAll = createOperation("appendAll", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_excluding = createOperation("excluding", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_excludingAll = createOperation("excludingAll", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence_flatten = createOperation("flatten", _Sequence_Sequence_flatten_T2_T, "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_Sequence_flatten_T2);
-		private final @NonNull Operation op_Sequence_including = createOperation("including", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		private final @NonNull Operation op_Sequence_includingAll = createOperation("includingAll", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-		private final @NonNull Operation op_Sequence_insertAt = createOperation("insertAt", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
-		private final @NonNull Operation op_Sequence_prepend = createOperation("prepend", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
-		private final @NonNull Operation op_Sequence_prependAll = createOperation("prependAll", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
-		private final @NonNull Operation op_Sequence_reverse = createOperation("reverse", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_including = createOperation("including", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_includingAll = createOperation("includingAll", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_insertAt = createOperation("insertAt", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_prepend = createOperation("prepend", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_prependAll = createOperation("prependAll", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_reverse = createOperation("reverse", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence_selectByKind = createOperation("selectByKind", _Sequence_Sequence_selectByKind_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_Sequence_selectByKind_TT);
 		private final @NonNull Operation op_Sequence_selectByType = createOperation("selectByType", _Sequence_Sequence_selectByType_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Sequence_selectByType_TT);
-		private final @NonNull Operation op_Sequence_subSequence = createOperation("subSequence", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation", org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
-		private final @NonNull Operation op_Set__neg_ = createOperation("-", _Set_Set_T, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence_subSequence = createOperation("subSequence", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation", org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
+		private final @NonNull Operation op_Set__neg_ = createOperation("-", _Set_Set_T_T, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
 		private final @NonNull Operation op_Set__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Set__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		private final @NonNull Operation op_Set_excluding = createOperation("excluding", _Set_Set_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		private final @NonNull Operation op_Set_excludingAll = createOperation("excludingAll", _Set_Set_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_Set_excluding = createOperation("excluding", _Set_Set_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+		private final @NonNull Operation op_Set_excludingAll = createOperation("excludingAll", _Set_Set_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_Set_flatten = createOperation("flatten", _Set_Set_flatten_T2_T, "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation", org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE, tp_Set_flatten_T2);
-		private final @NonNull Operation op_Set_including = createOperation("including", _Set_Set_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		private final @NonNull Operation op_Set_includingAll = createOperation("includingAll", _Set_Set_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+		private final @NonNull Operation op_Set_including = createOperation("including", _Set_Set_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+		private final @NonNull Operation op_Set_includingAll = createOperation("includingAll", _Set_Set_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		private final @NonNull Operation op_Set_selectByKind = createOperation("selectByKind", _Set_Set_selectByKind_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_Set_selectByKind_TT);
 		private final @NonNull Operation op_Set_selectByType = createOperation("selectByType", _Set_Set_selectByType_TT_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Set_selectByType_TT);
 		private final @NonNull Operation op_Stereotype_allInstances = createOperation("allInstances", _Set_OclSelf_T, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 		private final @NonNull Operation op_Type_conformsTo = createOperation("conformsTo", _Boolean, "org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation", org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
-		private final @NonNull Operation op_UniqueCollection__neg_ = createOperation("-", _UniqueCollection_UniqueCollection_T, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+		private final @NonNull Operation op_UniqueCollection__neg_ = createOperation("-", _UniqueCollection_UniqueCollection_T_T, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
 		private final @NonNull Operation op_UniqueCollection_intersection = createOperation("intersection", _Set_UniqueCollection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		private final @NonNull Operation op_UniqueCollection_symmetricDifference = createOperation("symmetricDifference", _Set_UniqueCollection_T_T, "org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation", org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
 		private final @NonNull Operation op_UniqueCollection_union = createOperation("union", _Set_UniqueCollection_T_T, "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
@@ -2194,7 +2248,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("object", tp_Collection_T, false));
 			ownedOperations.add(operation = op_Collection_excludingAll);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("objects", _Collection_Collection_T, true));
+			ownedParameters.add(parameter = createParameter("objects", _Collection_Collection_T_T, true));
 			ownedOperations.add(operation = op_Collection_flatten);
 			ownedOperations.add(operation = op_Collection_includes);
 			ownedParameters = operation.getOwnedParameters();
@@ -2207,10 +2261,10 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("object", tp_Collection_T, false));
 			ownedOperations.add(operation = op_Collection_includingAll);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("objects", _Collection_Collection_T, true));
+			ownedParameters.add(parameter = createParameter("objects", _Collection_Collection_T_T, true));
 			ownedOperations.add(operation = op_Collection_intersection);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("c", _Collection_Collection_T, true));
+			ownedParameters.add(parameter = createParameter("c", _Collection_Collection_T_T, true));
 			ownedOperations.add(operation = op_Collection_intersection_1);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("u", _UniqueCollection_Collection_T_T, true));
@@ -2233,7 +2287,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_Collection_sum);
 			ownedOperations.add(operation = op_Collection_union);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("c", _Collection_Collection_T, true));
+			ownedParameters.add(parameter = createParameter("c", _Collection_Collection_T_T, true));
 
 			ownedOperations = _Enumeration.getOwnedOperations();
 			ownedOperations.add(operation = op_Enumeration_allInstances);
@@ -2720,7 +2774,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("s", _UniqueCollection_OclAny_T, true));
 			ownedOperations.add(operation = op_UniqueCollection_union);
 			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("s", _UniqueCollection_UniqueCollection_T, true));
+			ownedParameters.add(parameter = createParameter("s", _UniqueCollection_UniqueCollection_T_T, true));
 
 			ownedOperations = _VoidType.getOwnedOperations();
 			ownedOperations.add(operation = op_VoidType_allInstances);
@@ -2729,8 +2783,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Iteration it_Bag_closure = createIteration("closure", _Set_Bag_T_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		private final @NonNull Iteration it_Bag_collectNested = createIteration("collectNested", _Bag_Bag_collectNested_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Bag_collectNested_V);
 		private final @NonNull Iteration it_Bag_collect = createIteration("collect", _Bag_Bag_collect_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Bag_collect_V);
-		private final @NonNull Iteration it_Bag_reject = createIteration("reject", _Bag_Bag_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		private final @NonNull Iteration it_Bag_select = createIteration("select", _Bag_Bag_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+		private final @NonNull Iteration it_Bag_reject = createIteration("reject", _Bag_Bag_T_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+		private final @NonNull Iteration it_Bag_select = createIteration("select", _Bag_Bag_T_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		private final @NonNull Iteration it_Bag_sortedBy = createIteration("sortedBy", _Sequence_Bag_T_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_any = createIteration("any", tp_Collection_T, "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_collectBy = createIteration("collectBy", _Map_Collection_T_F_Collection_collectBy_V_F, "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Collection_collectBy_V);
@@ -2745,8 +2799,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Iteration it_Collection_isUnique = createIteration("isUnique", _Boolean, "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_iterate = createIteration("iterate", tp_Collection_iterate_Tacc, "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE, tp_Collection_iterate_Tacc);
 		private final @NonNull Iteration it_Collection_one = createIteration("one", _Boolean, "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
-		private final @NonNull Iteration it_Collection_reject = createIteration("reject", _Collection_Collection_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		private final @NonNull Iteration it_Collection_select = createIteration("select", _Collection_Collection_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+		private final @NonNull Iteration it_Collection_reject = createIteration("reject", _Collection_Collection_T_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+		private final @NonNull Iteration it_Collection_select = createIteration("select", _Collection_Collection_T_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		private final @NonNull Iteration it_Collection_sortedBy = createIteration("sortedBy", _Sequence_Collection_T_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_any = createIteration("any", tp_Map_K, "org.eclipse.ocl.pivot.library.iterator.AnyIteration", org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_collectBy = createIteration("collectBy", _Map_Map_K_F_Map_collectBy_V2_F, "org.eclipse.ocl.pivot.library.iterator.CollectByIteration", org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE, tp_Map_collectBy_V2);
@@ -2761,25 +2815,25 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Iteration it_Map_isUnique = createIteration("isUnique", _Boolean, "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration", org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
 		private final @NonNull Iteration it_Map_iterate = createIteration("iterate", tp_Map_iterate_Tacc, "org.eclipse.ocl.pivot.library.iterator.IterateIteration", org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE, tp_Map_iterate_Tacc);
 		private final @NonNull Iteration it_Map_one = createIteration("one", _Boolean, "org.eclipse.ocl.pivot.library.iterator.OneIteration", org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
-		private final @NonNull Iteration it_Map_reject = createIteration("reject", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.iterator.MapRejectIteration", org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
-		private final @NonNull Iteration it_Map_select = createIteration("select", _Map_Map_K_Map_V, "org.eclipse.ocl.pivot.library.iterator.MapSelectIteration", org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
-		private final @NonNull Iteration it_OrderedSet_closure = createIteration("closure", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+		private final @NonNull Iteration it_Map_reject = createIteration("reject", _Map_Map_K_F_Map_V_F, "org.eclipse.ocl.pivot.library.iterator.MapRejectIteration", org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
+		private final @NonNull Iteration it_Map_select = createIteration("select", _Map_Map_K_F_Map_V_F, "org.eclipse.ocl.pivot.library.iterator.MapSelectIteration", org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
+		private final @NonNull Iteration it_OrderedSet_closure = createIteration("closure", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		private final @NonNull Iteration it_OrderedSet_collectNested = createIteration("collectNested", _Sequence_OrderedSet_collectNested_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_OrderedSet_collectNested_V);
 		private final @NonNull Iteration it_OrderedSet_collect = createIteration("collect", _Sequence_OrderedSet_collect_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_OrderedSet_collect_V);
-		private final @NonNull Iteration it_OrderedSet_reject = createIteration("reject", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		private final @NonNull Iteration it_OrderedSet_select = createIteration("select", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-		private final @NonNull Iteration it_OrderedSet_sortedBy = createIteration("sortedBy", _OrderedSet_OrderedSet_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+		private final @NonNull Iteration it_OrderedSet_reject = createIteration("reject", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+		private final @NonNull Iteration it_OrderedSet_select = createIteration("select", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+		private final @NonNull Iteration it_OrderedSet_sortedBy = createIteration("sortedBy", _OrderedSet_OrderedSet_T_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		private final @NonNull Iteration it_Sequence_closure = createIteration("closure", _OrderedSet_Sequence_T_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		private final @NonNull Iteration it_Sequence_collectNested = createIteration("collectNested", _Sequence_Sequence_collectNested_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Sequence_collectNested_V);
 		private final @NonNull Iteration it_Sequence_collect = createIteration("collect", _Sequence_Sequence_collect_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Sequence_collect_V);
-		private final @NonNull Iteration it_Sequence_reject = createIteration("reject", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		private final @NonNull Iteration it_Sequence_select = createIteration("select", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-		private final @NonNull Iteration it_Sequence_sortedBy = createIteration("sortedBy", _Sequence_Sequence_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		private final @NonNull Iteration it_Set_closure = createIteration("closure", _Set_Set_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+		private final @NonNull Iteration it_Sequence_reject = createIteration("reject", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+		private final @NonNull Iteration it_Sequence_select = createIteration("select", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+		private final @NonNull Iteration it_Sequence_sortedBy = createIteration("sortedBy", _Sequence_Sequence_T_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+		private final @NonNull Iteration it_Set_closure = createIteration("closure", _Set_Set_T_T, "org.eclipse.ocl.pivot.library.iterator.ClosureIteration", org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		private final @NonNull Iteration it_Set_collectNested = createIteration("collectNested", _Bag_Set_collectNested_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration", org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE, tp_Set_collectNested_V);
 		private final @NonNull Iteration it_Set_collect = createIteration("collect", _Bag_Set_collect_V_T, "org.eclipse.ocl.pivot.library.iterator.CollectIteration", org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE, tp_Set_collect_V);
-		private final @NonNull Iteration it_Set_reject = createIteration("reject", _Set_Set_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		private final @NonNull Iteration it_Set_select = createIteration("select", _Set_Set_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+		private final @NonNull Iteration it_Set_reject = createIteration("reject", _Set_Set_T_T, "org.eclipse.ocl.pivot.library.iterator.RejectIteration", org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+		private final @NonNull Iteration it_Set_select = createIteration("select", _Set_Set_T_T, "org.eclipse.ocl.pivot.library.iterator.SelectIteration", org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		private final @NonNull Iteration it_Set_sortedBy = createIteration("sortedBy", _OrderedSet_Set_T_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		private final @NonNull Iteration it_UniqueCollection_sortedBy = createIteration("sortedBy", _OrderedSet_UniqueCollection_T_T, "org.eclipse.ocl.pivot.library.iterator.SortedByIteration", org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 
@@ -3277,6 +3331,7 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private void installTemplateBindings() {
+			addBinding(_Bag_Bag_T_T, tp_Bag_T);
 			addBinding(_Bag_Bag_collectNested_V_T, tp_Bag_collectNested_V);
 			addBinding(_Bag_Bag_collect_V_T, tp_Bag_collect_V);
 			addBinding(_Bag_Bag_flatten_T2_T, tp_Bag_flatten_T2);
@@ -3300,6 +3355,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Collection_Bag_selectByType_TT_F, tp_Bag_selectByType_TT);
 			addBinding(_Collection_CollectionType_F, _CollectionType);
 			addBinding(_Collection_Collection_T_F, tp_Collection_T);
+			addBinding(_Collection_Collection_T_T, tp_Collection_T);
 			addBinding(_Collection_Collection_collectNested_V_T, tp_Collection_collectNested_V);
 			addBinding(_Collection_Collection_collect_V_T, tp_Collection_collect_V);
 			addBinding(_Collection_Collection_excludesAll_T2_T, tp_Collection_excludesAll_T2);
@@ -3348,6 +3404,8 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Collection_UniqueCollection_T_T, tp_UniqueCollection_T);
 			addBinding(_Map_Collection_T_F_Collection_collectBy_V_F, tp_Collection_T);
 			addBinding(_Map_Collection_T_F_Collection_collectBy_V_F, tp_Collection_collectBy_V);
+			addBinding(_Map_Map_K_F_Map_V_F, tp_Map_K);
+			addBinding(_Map_Map_K_F_Map_V_F, tp_Map_V);
 			addBinding(_Map_Map_K_F_Map_collectBy_V2_F, tp_Map_K);
 			addBinding(_Map_Map_K_F_Map_collectBy_V2_F, tp_Map_collectBy_V2);
 			addBinding(_Map_Map_K_F_Map_collectNested_V2_F, tp_Map_K);
@@ -3363,6 +3421,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_OrderedCollection_Bag_T_F, tp_Bag_T);
 			addBinding(_OrderedCollection_Collection_T_F, tp_Collection_T);
 			addBinding(_OrderedCollection_Integer_F, _Integer);
+			addBinding(_OrderedCollection_OrderedSet_T_F, tp_OrderedSet_T);
 			addBinding(_OrderedCollection_OrderedSet_T_T, tp_OrderedSet_T);
 			addBinding(_OrderedCollection_OrderedSet_collectNested_V_F, tp_OrderedSet_collectNested_V);
 			addBinding(_OrderedCollection_OrderedSet_collect_V_F, tp_OrderedSet_collect_V);
@@ -3380,6 +3439,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_OrderedCollection_String_F, _String);
 			addBinding(_OrderedCollection_UniqueCollection_T_F, tp_UniqueCollection_T);
 			addBinding(_OrderedSet_Collection_T_T, tp_Collection_T);
+			addBinding(_OrderedSet_OrderedSet_T_T, tp_OrderedSet_T);
 			addBinding(_OrderedSet_OrderedSet_flatten_T2_T, tp_OrderedSet_flatten_T2);
 			addBinding(_OrderedSet_OrderedSet_selectByKind_TT_T, tp_OrderedSet_selectByKind_TT);
 			addBinding(_OrderedSet_OrderedSet_selectByType_TT_T, tp_OrderedSet_selectByType_TT);
@@ -3391,6 +3451,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Sequence_Integer_T, _Integer);
 			addBinding(_Sequence_OrderedSet_collectNested_V_T, tp_OrderedSet_collectNested_V);
 			addBinding(_Sequence_OrderedSet_collect_V_T, tp_OrderedSet_collect_V);
+			addBinding(_Sequence_Sequence_T_T, tp_Sequence_T);
 			addBinding(_Sequence_Sequence_collectNested_V_T, tp_Sequence_collectNested_V);
 			addBinding(_Sequence_Sequence_collect_V_T, tp_Sequence_collect_V);
 			addBinding(_Sequence_Sequence_flatten_T2_T, tp_Sequence_flatten_T2);
@@ -3403,6 +3464,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Set_OclElement_T, _OclElement);
 			addBinding(_Set_OclSelf_F, _OclSelf);
 			addBinding(_Set_OclSelf_T, _OclSelf);
+			addBinding(_Set_Set_T_T, tp_Set_T);
 			addBinding(_Set_Set_flatten_T2_T, tp_Set_flatten_T2);
 			addBinding(_Set_Set_selectByKind_TT_T, tp_Set_selectByKind_TT);
 			addBinding(_Set_Set_selectByType_TT_T, tp_Set_selectByType_TT);
@@ -3415,6 +3477,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_UniqueCollection_OclAny_T, _OclAny);
 			addBinding(_UniqueCollection_OclElement_F, _OclElement);
 			addBinding(_UniqueCollection_OclSelf_F, _OclSelf);
+			addBinding(_UniqueCollection_OrderedSet_T_F, tp_OrderedSet_T);
 			addBinding(_UniqueCollection_OrderedSet_T_T, tp_OrderedSet_T);
 			addBinding(_UniqueCollection_OrderedSet_flatten_T2_F, tp_OrderedSet_flatten_T2);
 			addBinding(_UniqueCollection_OrderedSet_selectByKind_TT_F, tp_OrderedSet_selectByKind_TT);
@@ -3427,6 +3490,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_UniqueCollection_Set_selectByType_TT_F, tp_Set_selectByType_TT);
 			addBinding(_UniqueCollection_Tuple_F, _Tuple);
 			addBinding(_UniqueCollection_UniqueCollection_T_F, tp_UniqueCollection_T);
+			addBinding(_UniqueCollection_UniqueCollection_T_T, tp_UniqueCollection_T);
 		}
 
 		private void installPrecedences() {
