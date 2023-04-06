@@ -40,6 +40,7 @@ import org.eclipse.ocl.examples.codegen.java.ImportUtils;
 import org.eclipse.ocl.examples.codegen.java.JavaImportNameManager;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -64,7 +65,6 @@ import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
@@ -658,7 +658,7 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull CodeGenString s;
 	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final org.eclipse.ocl.pivot.@NonNull Package asPackage;
 	protected final @NonNull DeclareParameterTypeVisitor declareParameterTypeVisitor;
 	protected final @NonNull EmitLiteralVisitor emitLiteralVisitor;				// emit _ZZZ

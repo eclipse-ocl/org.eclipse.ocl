@@ -45,8 +45,12 @@ public interface StandardLibrary extends Element
 	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass);
 
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId);
-
 	@Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId);
+	@Nullable AnyType basicGetOclAnyType();
+	@Nullable Operation basicGetOclInvalidOperation();
+	@Nullable Property basicGetOclInvalidProperty();
+	@Nullable InvalidType basicGetOclInvalidType();
+	void dispose();
 
 	/**
 	 * Obtains the generic instance of the BagType metatype, named
@@ -61,6 +65,8 @@ public interface StandardLibrary extends Element
 	 * May return an InvalidType if elementType is a proxy.
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+
+	@Nullable PrimitiveType getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
@@ -163,6 +169,10 @@ public interface StandardLibrary extends Element
 	 * Return the metaclass to which classType conforms.
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType);
+
+	org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
+
+	Type getNestedType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 
 	/**
 	 * Returns the meta-type of a given type.
@@ -276,6 +286,8 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@NonNull Class getOclTupleType();
 
 	Type getOclType(@NonNull String typeName);
+
+	org.eclipse.ocl.pivot.@NonNull Class getOclTypeType();
 
 	/**
 	 * Obtains the single instance of the VoidType metatype, named

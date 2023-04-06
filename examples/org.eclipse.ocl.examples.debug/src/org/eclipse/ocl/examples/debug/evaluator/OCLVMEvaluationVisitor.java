@@ -18,10 +18,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.debug.vm.evaluator.VMEvaluationStepper;
 import org.eclipse.ocl.examples.debug.vm.evaluator.VMEvaluationVisitor;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -64,13 +63,6 @@ public class OCLVMEvaluationVisitor extends AbstractMergedVisitor<@Nullable Obje
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
 		return evaluationVisitor.evaluate(body);
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return context.getCompleteEnvironment();
 	}
 
 	/** @deprecated moved to Evaluator */

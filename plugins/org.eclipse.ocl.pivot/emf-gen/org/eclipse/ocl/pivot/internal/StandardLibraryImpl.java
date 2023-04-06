@@ -16,14 +16,15 @@ import java.util.List;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
@@ -136,10 +137,12 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		return mapTypeManager.basicGetMapType(mapTypeId);
 	}
 
+	@Override
 	public @Nullable Operation basicGetOclInvalidOperation() {
 		return oclInvalidOperation;
 	}
 
+	@Override
 	public @Nullable Property basicGetOclInvalidProperty() {
 		return oclInvalidProperty;
 	}
@@ -149,6 +152,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		return isOrdered ? isUnique ? getOrderedSetType() : getSequenceType() : isUnique ? getSetType() : getBagType();
 	}
 
+	@Override
 	public void dispose() {
 		resetLibrary();
 	}
@@ -164,6 +168,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getBagType(), elementType, isNullFree, lower, upper);
+	}
+
+	@Override
+	public @Nullable PrimitiveType getBehavioralClass(@NonNull Class<?> instanceClass) {
+		return (PrimitiveType)PivotUtil.getBehavioralClass(this, instanceClass);
 	}
 
 	@Override

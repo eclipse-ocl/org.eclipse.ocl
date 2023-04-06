@@ -32,8 +32,6 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -49,7 +47,6 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -64,7 +61,6 @@ import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
@@ -73,6 +69,7 @@ import org.eclipse.ocl.pivot.internal.OperationImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.ParameterImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
+import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.TemplateParameterImpl;
 import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -91,7 +88,7 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
-public class ExecutorStandardLibrary extends StandardLibraryImpl implements CompleteEnvironment
+public class ExecutorStandardLibrary extends StandardLibraryImpl
 {
 	/**
 	 * OperationParameterDecoder decodes the type 'stream' used to define an operation paramter list in the
@@ -260,6 +257,16 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl implements Comp
 	@Override
 	public @NonNull List<Element> allOwnedElements() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @Nullable AnyType basicGetOclAnyType() {
+		return (AnyType)OCLstdlibTables.Types._OclAny;
+	}
+
+	@Override
+	public @Nullable InvalidType basicGetOclInvalidType() {
+		return (InvalidType)OCLstdlibTables.Types._OclInvalid;
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClass eMetaClass, /*@NonNull*/ EClassifier eClassifier,
@@ -445,11 +452,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl implements Comp
 	protected @NonNull HashMap<@Nullable Object, StatusCodes.@Nullable Severity> createValidationKey2severityMap() {
 		return PivotValidationOptions.createValidationKey2severityMap();
 	}
-
-//	@Override
-//	public @NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages() {
-//		throw new UnsupportedOperationException();
-//	}
 
 	@Override
 	public @NonNull BagType getBagType() {
@@ -687,6 +689,12 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl implements Comp
 		}
 		return null;
 	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getOclTypeType() {
+		throw new UnsupportedOperationException();				// XXX FIX this irregularity
+	}
+
 	@Override
 	public @NonNull VoidType getOclVoidType() {
 		return (VoidType)OCLstdlibTables.Types._OclVoid;
@@ -706,21 +714,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl implements Comp
 	public @NonNull OrderedSetType getOrderedSetType() {
 		return (OrderedSetType)OCLstdlibTables.Types._OrderedSet;
 	}
-
-	@Override
-	public @NonNull CompleteModel getOwnedCompleteModel() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull CompleteStandardLibrary getOwnedStandardLibrary() {
-		throw new UnsupportedOperationException();
-	}
-
-//	@Override
-//	public CompleteEnvironment getOwningCompleteEnvironment() {
-//		throw new UnsupportedOperationException();
-//	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getPackage() {
@@ -780,10 +773,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl implements Comp
 		return (PrimitiveType)OCLstdlibTables.Types._String;
 	}
 
-//	public @NonNull Element getTemplateParameter(@NonNull TemplateParameterId id, Element context) {
-//		throw new UnsupportedOperationException();
-//	}
-
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts) {
 		throw new UnsupportedOperationException();
@@ -809,11 +798,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl implements Comp
 	public @NonNull PrimitiveType getUnlimitedNaturalType() {
 		return (PrimitiveType)OCLstdlibTables.Types._UnlimitedNatural;
 	}
-
-//	@Override
-//	public Element getValue(Type stereotype, String propertyName) {
-//		throw new UnsupportedOperationException();
-//	}
 
 	private void initClass(@NonNull ClassImpl asClass, @NonNull EClassifier eClassifier, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable... typeParameters) {
 		asClass.setESObject(eClassifier);
@@ -888,21 +872,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl implements Comp
 	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
 		specializedClass.getSuperClasses().addAll(unspecializedClass.getSuperClasses());		// XXX
 	}
-
-	@Override
-	public void setOwnedCompleteModel(CompleteModel value) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setOwnedStandardLibrary(CompleteStandardLibrary value) {
-		throw new UnsupportedOperationException();
-	}
-
-//	@Override
-//	public void setOwningCompleteEnvironment(CompleteEnvironment value) {
-//		throw new UnsupportedOperationException();
-//	}
 
 	/**
 	 * Return the map.get(key).get() entry if there is one or null if not, removing any stale

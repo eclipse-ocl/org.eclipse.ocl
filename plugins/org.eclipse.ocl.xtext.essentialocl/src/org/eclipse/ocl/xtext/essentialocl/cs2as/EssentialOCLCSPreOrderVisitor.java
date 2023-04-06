@@ -12,12 +12,11 @@ package org.eclipse.ocl.xtext.essentialocl.cs2as;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -96,7 +95,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 							isNullFree = csMultiplicity.isIsNullFree();
 							lowerValue = ValueUtil.integerValueOf(csMultiplicity.getLower());
 							upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-							type = standardLibrary.getCollectionType((CollectionType) standardLibrary.getSetType(), type, isNullFree, lowerValue, upperValue);
+							type = standardLibrary.getCollectionType(standardLibrary.getSetType(), type, isNullFree, lowerValue, upperValue);
 						}
 					}
 				}
@@ -147,7 +146,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+			CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 			TypedRefCS csKeyType = csElement.getOwnedKeyType();
 			TypedRefCS csValueType = csElement.getOwnedValueType();
 			Type type = null;

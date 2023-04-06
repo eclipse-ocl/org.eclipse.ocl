@@ -44,7 +44,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
@@ -254,7 +253,6 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	@SuppressWarnings("serial")
 	private static class MyList extends ArrayList<Object> {}	// Private list to ensure that My List is never confused with a user List
 
-	protected final @NonNull CompleteEnvironment environment;
 	protected final @NonNull StandardLibrary standardLibrary;
 	private final @NonNull Set<@NonNull EObject> directRoots = new HashSet<>();
 	private boolean directRootsProcessed = false;
@@ -290,8 +288,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 */
 	protected final @NonNull Stack<@Nullable Type> staticTypeStack = new Stack<>();
 
-	public AbstractIdResolver(@NonNull CompleteEnvironment environment, @NonNull StandardLibrary standardLibrary) {
-		this.environment = environment;
+	public AbstractIdResolver(@NonNull StandardLibrary standardLibrary) {
 		this.standardLibrary = standardLibrary;
 	}
 
@@ -1694,9 +1691,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public @NonNull Type visitClassId(@NonNull ClassId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
 		assert parentPackage != null;
-		Type nestedType = environment.getNestedType(parentPackage, id.getName());
+		Type nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, id.getName());
+			nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 			throw new UnsupportedOperationException();
 		}
 		return nestedType;
@@ -1721,9 +1718,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public @NonNull Type visitDataTypeId(@NonNull DataTypeId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
 		assert parentPackage != null;
-		Type nestedType = environment.getNestedType(parentPackage, id.getName());
+		Type nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, id.getName());
+			nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 			if (nestedType == null) {
 				throw new UnsupportedOperationException();
 			}
@@ -1735,9 +1732,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public @NonNull Enumeration visitEnumerationId(@NonNull EnumerationId id) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) id.getParent().accept(this);
 		assert parentPackage != null;
-		Type nestedType = environment.getNestedType(parentPackage, id.getName());
+		Type nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 		if (nestedType == null) {
-			nestedType = environment.getNestedType(parentPackage, id.getName());
+			nestedType = standardLibrary.getNestedType(parentPackage, id.getName());
 			throw new UnsupportedOperationException();
 		}
 		if (!(nestedType instanceof Enumeration)) {
@@ -1778,7 +1775,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	public org.eclipse.ocl.pivot.@NonNull Package visitNestedPackageId(@NonNull NestedPackageId packageId) {
 		org.eclipse.ocl.pivot.Package parentPackage = (org.eclipse.ocl.pivot.Package) packageId.getParent().accept(this);
 		assert parentPackage != null;
-		org.eclipse.ocl.pivot.Package nestedPackage = environment.getNestedPackage(parentPackage, packageId.getName());
+		org.eclipse.ocl.pivot.Package nestedPackage = standardLibrary.getNestedPackage(parentPackage, packageId.getName());
 		if (nestedPackage == null) {
 			throw new UnsupportedOperationException();
 		}

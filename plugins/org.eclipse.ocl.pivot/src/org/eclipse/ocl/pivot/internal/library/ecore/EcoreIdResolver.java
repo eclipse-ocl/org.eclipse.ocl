@@ -56,7 +56,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 //	private @NonNull Map<EClassifier, WeakReference<EcoreFlatClass>> typeMap = new WeakHashMap<>();		// XXX duplicates EcoreFlatModel
 
 	public EcoreIdResolver(@NonNull Iterable<? extends EObject> roots, @NonNull ExecutorStandardLibrary standardLibrary) {
-		super(standardLibrary, standardLibrary);
+		super(standardLibrary);
 		for (@SuppressWarnings("null")@NonNull EObject root : roots) {
 			addRoot(root);
 		}

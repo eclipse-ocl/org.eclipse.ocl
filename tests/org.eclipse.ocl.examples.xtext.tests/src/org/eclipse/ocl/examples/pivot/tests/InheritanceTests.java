@@ -17,11 +17,11 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -68,7 +68,7 @@ public class InheritanceTests extends PivotTestSuite
 
 	public void test_Inheritance_Boolean() {
 		TestOCL ocl = createOCL();
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		try {
 			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
 			PrimitiveType booleanType = standardLibrary.getBooleanType();
@@ -91,7 +91,7 @@ public class InheritanceTests extends PivotTestSuite
 
 	public void test_Inheritance_OclAny() {
 		TestOCL ocl = createOCL();
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		try {
 			AnyType oclAnyType = standardLibrary.getOclAnyType();
 			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(oclAnyType);
@@ -109,7 +109,7 @@ public class InheritanceTests extends PivotTestSuite
 
 	public void test_Inheritance_Set() {
 		TestOCL ocl = createOCL();
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		try {
 			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
 			//		InheritanceInheritance collectionInheritance = metamodelManager.getStandardLibrary().getInheritance(metamodelManager.getStandardLibrary().getCollectionType());
@@ -141,7 +141,7 @@ public class InheritanceTests extends PivotTestSuite
 
 	public void test_Inheritance_IfExp() {
 		TestOCL ocl = createOCL();
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		try {
 			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
 			FlatClass ifFlatClass = standardLibrary.getFlatClass(ClassUtil.nonNullState(standardLibrary.getASClass("IfExp")));
@@ -174,7 +174,7 @@ public class InheritanceTests extends PivotTestSuite
 
 	public void test_Inheritance_UnlimitedNatural() {
 		TestOCL ocl = createOCL();
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		try {
 			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
 			//			DomainInheritance realTypeInheritance = standardLibrary.getInheritance(standardLibrary.getRealType());
@@ -205,7 +205,7 @@ public class InheritanceTests extends PivotTestSuite
 	 */
 	public void test_Inheritance_Loop() {
 		TestOCL ocl = createOCL();
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		standardLibrary.setDefaultStandardLibraryURI(installLibraryClone());
 		try {
 			FlatClass integerTypeFlatClass = standardLibrary.getFlatClass(standardLibrary.getIntegerType());
@@ -229,7 +229,7 @@ public class InheritanceTests extends PivotTestSuite
 	 */
 	public void test_Inheritance_Addition() {
 		TestOCL ocl = createOCL();
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		standardLibrary.setDefaultStandardLibraryURI(installLibraryClone());
 		try {
 			FlatClass integerTypeFlatClass = standardLibrary.getFlatClass(standardLibrary.getIntegerType());
@@ -252,7 +252,7 @@ public class InheritanceTests extends PivotTestSuite
 	 */
 	public void test_Inheritance_Removal() {
 		TestOCL ocl = createOCL();
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		standardLibrary.setDefaultStandardLibraryURI(installLibraryClone());
 		try {
 			FlatClass integerTypeFlatClass = standardLibrary.getFlatClass(standardLibrary.getIntegerType());

@@ -34,11 +34,10 @@ import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
@@ -1062,7 +1061,7 @@ public class EditTests extends XtextTestCase
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		MetamodelManagerInternal metamodelManager = environmentFactory.getMetamodelManager();
-		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
+	//	CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		String testDocument =
 				"import '" + LibraryConstants.STDLIB_URI + "';\n" +
 						"library ocl : ocl = '" + LibraryConstants.STDLIB_URI + "' {\n" +
@@ -1078,7 +1077,7 @@ public class EditTests extends XtextTestCase
 		assertNoResourceErrors("Loading input", asResource);
 		//
 		Type myType = ClassUtil.nonNullState(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		CollectionTypeId specializedTypeId = TypeId.SEQUENCE.getSpecializedId(myType.getTypeId(), true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 		WeakReference<Type> sequenceMyType = new WeakReference<Type>(standardLibrary.basicGetCollectionType(specializedTypeId));
 		assertNull(sequenceMyType.get());

@@ -468,7 +468,7 @@ implements PropertyCallExp {
 		org.eclipse.ocl.pivot.Class referencedType = referredProperty.getOwningClass();
 		if (TemplateSpecialisation.needsSpecialisation(referencedType)) {
 			Executor executor = PivotUtil.getExecutor(this);
-			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getCompleteEnvironment());
+			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getStandardLibrary());
 			Type resultType = getType();
 			//			if (resultType instanceof DomainMetaclass) {
 			//				resultType = ((DomainMetaclass)resultType).getInstanceType();
@@ -483,7 +483,7 @@ implements PropertyCallExp {
 		}
 		else {
 			Executor executor = PivotUtil.getExecutor(this);
-			return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
+			return executor.getStandardLibrary().getOclInvalidType();
 		}
 	}
 
@@ -503,7 +503,7 @@ implements PropertyCallExp {
 		Type specializedType = referencedType;
 		if ((referencedType != null) && TemplateSpecialisation.needsSpecialisation(referencedType)) {
 			Executor executor = PivotUtil.getExecutor(this);
-			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getCompleteEnvironment());
+			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getStandardLibrary());
 			Type resultType = getType();
 			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
 			specializedType = templateSpecialization.getSpecialisation(referencedType);
@@ -513,7 +513,7 @@ implements PropertyCallExp {
 		}
 		else {
 			Executor executor = PivotUtil.getExecutor(this);
-			return executor.getCompleteEnvironment().getOwnedStandardLibrary().getOclInvalidType();
+			return executor.getStandardLibrary().getOclInvalidType();
 		}
 	}
 

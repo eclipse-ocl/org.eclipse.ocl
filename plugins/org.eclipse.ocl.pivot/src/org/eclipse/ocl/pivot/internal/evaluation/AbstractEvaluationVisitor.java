@@ -17,19 +17,17 @@ import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationLogger;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -56,7 +54,7 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 	 * @since 1.1
 	 */
 	protected final @NonNull IdResolver idResolver;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	protected @NonNull EvaluationVisitor undecoratedVisitor;
 
@@ -100,13 +98,6 @@ extends AbstractExtendingVisitor<@Nullable Object, ExecutorInternal.@NonNull Exe
 	@Deprecated
 	protected @NonNull Map<String, Pattern> createRegexCache() {
 		throw new UnsupportedOperationException();
-	}
-
-	/** @deprecated moved to Evaluator */
-	@Deprecated
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return context.getCompleteEnvironment();
 	}
 
 	/** @deprecated moved to Evaluator */

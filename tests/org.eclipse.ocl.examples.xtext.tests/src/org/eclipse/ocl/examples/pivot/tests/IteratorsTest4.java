@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotTables;
@@ -46,7 +46,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
@@ -324,8 +323,7 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_closureValidation_typeConformance_154695() {
 		MyOCL ocl = createOCL();
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
-		CompleteEnvironment completeEnvironment = ocl.getCompleteEnvironment();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		Resource fakeResource = new XMIResourceFactoryImpl().createResource(URI.createURI("fake"));
 		Model fakeRoot = PivotUtil.createModel(null);
 		org.eclipse.ocl.pivot.Package fakePkg = PivotUtil.createOwnedPackage(fakeRoot, "fake");

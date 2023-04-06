@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Model;
@@ -53,7 +54,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteURIs;
 import org.eclipse.ocl.pivot.internal.complete.PartialModels;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -687,7 +687,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return completeEnvironment.getOwnedStandardLibrary();
 	}
 

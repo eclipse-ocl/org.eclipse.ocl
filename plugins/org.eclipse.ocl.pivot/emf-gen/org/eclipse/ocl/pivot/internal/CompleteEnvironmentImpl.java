@@ -27,7 +27,7 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -49,8 +48,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
-import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -162,7 +159,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	public NotificationChain basicSetOwnedStandardLibrary(CompleteStandardLibrary newOwnedStandardLibrary, NotificationChain msgs)
 	{
 		CompleteStandardLibrary oldOwnedStandardLibrary = ownedStandardLibrary;
-		ownedStandardLibrary = (StandardLibraryInternal) newOwnedStandardLibrary;
+		ownedStandardLibrary = newOwnedStandardLibrary;
 		if (eNotificationRequired())
 		{
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY.getFeatureID(), oldOwnedStandardLibrary, newOwnedStandardLibrary);
@@ -378,7 +375,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 	protected /*final @NonNull*/ EnvironmentFactoryInternal environmentFactory;
 	protected /*final @NonNull*/ CompleteModelInternal ownedCompleteModel;
-	protected /*final @NonNull*/ StandardLibraryInternal ownedStandardLibrary;
+	protected /*final @NonNull*/ CompleteStandardLibrary ownedStandardLibrary;
 	protected final @NonNull Map<org.eclipse.ocl.pivot.Class, CompleteClassInternal> class2completeClass = new WeakHashMap<org.eclipse.ocl.pivot.Class, CompleteClassInternal>();
 
 	private boolean isCodeGeneration = false;
@@ -663,22 +660,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
-		CompletePackage memberPackage = completePackage.getOwnedCompletePackage(name);
-		return memberPackage != null ? memberPackage.getPrimaryPackage() : null;
-	}
-
-	@Override
-	public org.eclipse.ocl.pivot.Class getNestedType(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
-		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
-		return completePackage.getMemberType(name);
-	}
-
-	@Override
-	public @NonNull StandardLibraryInternal getOwnedStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getOwnedStandardLibrary() {
 		return ClassUtil.nonNullState(ownedStandardLibrary);
 	}
 
@@ -687,7 +669,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		this.environmentFactory = environmentFactory;
 		CompleteModelInternal completeModelInternal = ((CompleteModelInternal)PivotFactory.eINSTANCE.createCompleteModel()).init(this);
 		setOwnedCompleteModel(completeModelInternal);
-		setOwnedStandardLibrary(((StandardLibraryInternal)PivotFactory.eINSTANCE.createCompleteStandardLibrary()).init(completeModelInternal));
+		setOwnedStandardLibrary(PivotFactory.eINSTANCE.createCompleteStandardLibrary().init(completeModelInternal));
 		return this;
 	}
 

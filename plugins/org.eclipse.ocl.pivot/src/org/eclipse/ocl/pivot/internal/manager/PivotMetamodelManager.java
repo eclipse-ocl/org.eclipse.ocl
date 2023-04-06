@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -91,7 +92,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.ConstrainedOperation;
@@ -241,7 +241,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-	private final @NonNull StandardLibraryInternal standardLibrary;
+	private final @NonNull CompleteStandardLibrary standardLibrary;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
 
 	/**
@@ -1601,7 +1601,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	@Override
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return standardLibrary;
 	}
 

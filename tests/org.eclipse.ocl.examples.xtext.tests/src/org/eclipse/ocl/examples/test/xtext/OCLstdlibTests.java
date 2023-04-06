@@ -29,6 +29,7 @@ import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -38,7 +39,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -408,7 +408,7 @@ public class OCLstdlibTests extends XtextTestCase
 		//
 		//	Load OCLmetamodel as pre-code-generated Java.
 		//
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		Library asLibrary = (Library) standardLibrary.getPackage();
 		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, asLibrary.getName(), asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
 		Resource javaResource = oclMetamodel.eResource();
@@ -433,7 +433,7 @@ public class OCLstdlibTests extends XtextTestCase
 		//
 		//	Load OCLmetamodel as pre-code-generated Java.
 		//
-		StandardLibraryInternal standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		Library asLibrary = (Library) standardLibrary.getPackage();
 		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, asLibrary.getName(), asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
 		Resource javaResource = oclMetamodel.eResource();

@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -43,7 +42,6 @@ import org.eclipse.ocl.pivot.evaluation.IndentingLogger;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.IdResolver.IdResolverExtension;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -232,11 +230,6 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 			evaluationCache2 = evaluationCache = createEvaluationCache();
 		}
 		return evaluationCache2.getCachedEvaluationResult(implementation, caller, sourceAndArgumentValues);
-	}
-
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return environmentFactory.getCompleteEnvironment();
 	}
 
 	@Override
@@ -438,7 +431,7 @@ public abstract class AbstractExecutor implements ExecutorInternal.ExecutorInter
 		//
 		Operation actualOperation;
 		org.eclipse.ocl.pivot.Class actualSourceClass = null;
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		if (actualSourceType != null) {
 			actualSourceClass = actualSourceType.isClass();
 			if (actualSourceClass == null)  {

@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IterateExp;
@@ -52,7 +53,6 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
@@ -288,7 +288,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	public @NonNull Type specializeType(@NonNull Type type) {
-		StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		TemplateParameter asTemplateParameter = type.isTemplateParameter();
 		if (asTemplateParameter != null) {
 			int index = asTemplateParameter.getTemplateParameterId().getIndex();

@@ -84,8 +84,4 @@ public interface CompleteEnvironment extends Element
 	 * @generated
 	 */
 	void setOwnedStandardLibrary(CompleteStandardLibrary value);
-
-	org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
-
-	Type getNestedType(org.eclipse.ocl.pivot.@NonNull Package parentPackage, @NonNull String name);
 } // CompleteEnvironment

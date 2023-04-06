@@ -42,6 +42,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -49,7 +50,6 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteURIs;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
@@ -91,7 +91,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 			if (diff != 0) {			// Non-interface first
 				return diff;
 			}
-			StandardLibraryInternal standardLibrary = environmentFactory.getStandardLibrary();
+			CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			FlatClass f1 = o1.getFlatClass(standardLibrary);
 			FlatClass f2 = o2.getFlatClass(standardLibrary);
 			int d1 = f1.getDepth();

@@ -45,7 +45,7 @@ public class PivotIdResolver extends AbstractIdResolver
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 
 	public PivotIdResolver(@NonNull EnvironmentFactoryInternal environmentFactory) {
-		super(environmentFactory.getMetamodelManager().getCompleteEnvironment(), environmentFactory.getStandardLibrary());
+		super(environmentFactory.getStandardLibrary());
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 	}

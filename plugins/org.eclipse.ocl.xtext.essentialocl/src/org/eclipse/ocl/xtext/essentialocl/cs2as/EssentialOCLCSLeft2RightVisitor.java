@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
@@ -78,7 +79,6 @@ import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
@@ -243,7 +243,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	protected final @NonNull EnvironmentFactoryInternalExtension environmentFactory;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	/*protected final @NonNull PivotNameResolver nameResolver;*/
 
 	/**

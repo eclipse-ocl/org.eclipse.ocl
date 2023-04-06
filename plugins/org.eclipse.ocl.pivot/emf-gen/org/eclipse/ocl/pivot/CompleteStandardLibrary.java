@@ -10,7 +10,10 @@
  */
 package org.eclipse.ocl.pivot;
 
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 
 
 /**
@@ -57,5 +60,17 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 */
 	void setOwningCompleteEnvironment(CompleteEnvironment value);
 
+	/**
+	 * @since 1.17
+	 */
+	void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes);
+	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
 	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
+	@NonNull CompleteModelInternal getCompleteModel();
+	@NonNull String getDefaultStandardLibraryURI();
+	org.eclipse.ocl.pivot.@NonNull Class getRequiredLibraryType(@NonNull String typeName);
+	@NonNull CompleteStandardLibrary init(@NonNull CompleteModelInternal completeModel);
+	boolean isExplicitDefaultStandardLibraryURI();
+	@Nullable Resource loadDefaultLibrary(@Nullable String uri);
+	void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI);
 } // StandardLibrary

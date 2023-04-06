@@ -16,13 +16,11 @@ import java.util.regex.Pattern;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.AssociationClassCallExp;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionRange;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -40,6 +38,7 @@ import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ShadowExp;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
@@ -107,14 +106,6 @@ public abstract class AbstractEvaluationVisitorDecorator<EV extends EvaluationVi
 	@Override
 	public @Nullable Object evaluate(@NonNull OCLExpression body) {
 		return delegate.evaluate(body);
-	}
-
-	/** @deprecated moved to Evaluator
-	 * @since 1.1*/
-	@Deprecated
-	@Override
-	public @NonNull CompleteEnvironment getCompleteEnvironment() {
-		return delegate.getCompleteEnvironment();
 	}
 
 	/**

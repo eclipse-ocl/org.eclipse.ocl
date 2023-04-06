@@ -37,6 +37,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -47,7 +48,6 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
@@ -90,7 +90,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		super(context);
 		typeRefVisitor = new AS2EcoreTypeRefVisitor(context, false);
 		requiredTypeRefVisitor = new AS2EcoreTypeRefVisitor(context, true);
-		StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 		oclAnyType = standardLibrary.getOclAnyType();
 		oclElementType = standardLibrary.getOclElementType();
 		oclTypeType = standardLibrary.getOclTypeType();
@@ -150,7 +150,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					}
 					else if (redefiningType != null) {
 						CollectionType redefinedCollectionType = (CollectionType)redefinedType;
-						StandardLibraryInternal standardLibrary = context.getStandardLibrary();
+						CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 						CollectionType genericCollectionType = standardLibrary.getCollectionType(redefinedCollectionType.isOrdered(), redefinedCollectionType.isUnique());
 						optionalType = new OptionalType(standardLibrary.getCollectionType(genericCollectionType, redefiningType, redefinedCollectionType.isIsNullFree(),
 							redefinedCollectionType.getLowerValue(), redefinedCollectionType.getUpperValue()), redefinedProperty.isIsRequired());

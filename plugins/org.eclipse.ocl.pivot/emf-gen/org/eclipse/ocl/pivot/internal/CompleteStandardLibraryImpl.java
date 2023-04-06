@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -48,7 +49,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -65,7 +65,6 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotIdResolver;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -90,7 +89,6 @@ import org.eclipse.osgi.util.NLS;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Standard Library</b></em>'.
- * @extends org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -101,7 +99,7 @@ import org.eclipse.osgi.util.NLS;
  *
  * @generated
  */
-public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements CompleteStandardLibrary, org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal
+public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements CompleteStandardLibrary
 {
 	/**
 	 * The number of structural features of the '<em>Complete Standard Library</em>' class.
@@ -372,7 +370,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return visitor.visitCompleteStandardLibrary(this);
 	}
 
-	private static final Logger logger = Logger.getLogger(StandardLibraryInternal.class);
+	private static final Logger logger = Logger.getLogger(CompleteStandardLibrary.class);
 	private static final @NonNull List<TemplateParameter> EMPTY_TEMPLATE_PARAMETER_LIST2 = Collections.emptyList();
 
 	/**
@@ -543,11 +541,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			bagType2 = bagType = resolveRequiredTemplateableType(BagType.class, TypeId.BAG_NAME, 1);
 		}
 		return bagType2;
-	}
-
-	@Override
-	public @Nullable PrimitiveType getBehavioralClass(@NonNull Class<?> instanceClass) {
-		return (PrimitiveType)PivotUtil.getBehavioralClass(this, instanceClass);
 	}
 
 	@Override
@@ -731,6 +724,21 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type classType) {
 		return environmentFactory.getMetamodelManager().getMetaclass(classType);
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
+		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
+		CompletePackage memberPackage = completePackage.getOwnedCompletePackage(name);
+		return memberPackage != null ? memberPackage.getPrimaryPackage() : null;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.Class getNestedType(org.eclipse.ocl.pivot.@NonNull Package domainPackage, @NonNull String name) {
+		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
+		CompletePackage completePackage = metamodelManager.getCompletePackage(domainPackage);
+		return completePackage.getMemberType(name);
 	}
 
 	@Override
@@ -1053,7 +1061,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull StandardLibraryInternal  init(@NonNull CompleteModelInternal completeModel) {
+	public @NonNull CompleteStandardLibrary init(@NonNull CompleteModelInternal completeModel) {
 		this.completeModel = completeModel;
 		this.environmentFactory = completeModel.getEnvironmentFactory();
 		return this;

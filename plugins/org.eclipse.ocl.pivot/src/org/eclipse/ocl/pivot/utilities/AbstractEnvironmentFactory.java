@@ -35,6 +35,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -64,7 +65,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
 import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
@@ -115,7 +115,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	protected final boolean externalResourceSetWasNull;
 	private /*@LazyNonNull*/ PivotMetamodelManager metamodelManager = null;
 	private final @NonNull CompleteEnvironmentInternal completeEnvironment;
-	private final @NonNull StandardLibraryInternal standardLibrary;
+	private final @NonNull CompleteStandardLibrary standardLibrary;
 	private @Nullable ICSI2ASMapping csi2asMapping;
 	/**
 	 * The known packages.
@@ -918,7 +918,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	}
 
 	@Override
-	public @NonNull StandardLibraryInternal getStandardLibrary() {
+	public @NonNull CompleteStandardLibrary getStandardLibrary() {
 		return standardLibrary;
 	}
 

@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionRange;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -56,7 +57,6 @@ import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
@@ -65,7 +65,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -355,7 +354,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	protected final @NonNull OCLinEcoreGlobalContext globalContext;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final @NonNull CodeGenAnalyzer cgAnalyzer;
 	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull PivotHelper asHelper;

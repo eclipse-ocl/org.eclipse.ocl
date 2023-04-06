@@ -39,6 +39,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
@@ -52,7 +53,6 @@ import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
@@ -89,7 +89,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 
 	protected final @NonNull Ecore2AS converter;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
-	protected final @NonNull StandardLibraryInternal standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	private final @NonNull Property oclInvalidProperty;
 
 	public Ecore2ASReferenceSwitch(@NonNull Ecore2AS converter) {
