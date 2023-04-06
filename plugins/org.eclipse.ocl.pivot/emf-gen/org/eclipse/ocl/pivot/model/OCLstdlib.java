@@ -59,9 +59,11 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -203,9 +205,6 @@ public class OCLstdlib extends ASResourceImpl
 	 */
 	protected static class ReadOnly extends OCLstdlib implements ImmutableResource
 	{
-		protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
-			super(asURI, libraryModel);
-		}
 		protected ReadOnly(@NonNull String asURI) {
 			super(asURI);
 		}
@@ -261,18 +260,14 @@ public class OCLstdlib extends ASResourceImpl
 	 *  and package name, prefix and namespace URI.
 	 */
 	public static @NonNull OCLstdlib create(@NonNull String asURI) {
-		OCLstdlib ocLstdlib = new OCLstdlib(asURI);
-		Contents contents = new Contents(ocLstdlib, asURI);
-		return ocLstdlib;
+		OCLstdlib oclstdlib = new OCLstdlib(asURI);
+		Contents contents = new Contents(oclstdlib, asURI);
+		return oclstdlib;
 	}
 
 	/**
 	 *	Construct an OCL Standard Library with specified resource URI and library content.
 	 */
-	private OCLstdlib(@NonNull String asURI, @NonNull Model libraryModel) {
-		this(asURI);
-		getContents().add(libraryModel);
-	}
 	private OCLstdlib(@NonNull String asURI) {
 		super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 		assert PivotUtilInternal.isASURI(asURI);
@@ -289,8 +284,7 @@ public class OCLstdlib extends ASResourceImpl
 			model = createModel(asURI);
 			resource.getContents().add(model);
 			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL, OCLstdlibPackage.eINSTANCE);
-			orphanPackage = /*Orphanage.createLocalOrphanPackage(model);//*/ createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
-		//	orphanPackage.eResource().getContents().add(model);
+			orphanPackage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
 			installPackages();
 			installClassTypes();
 			installPrimitiveTypes();

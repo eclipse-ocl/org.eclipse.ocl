@@ -20,15 +20,16 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
+import org.eclipse.ocl.pivot.internal.MapTypeImpl;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 
@@ -86,6 +87,8 @@ public class MapTypeManager extends AbstractTypeManager
 		assert valueFormalParameter != null;
 		Type keyType = typeParameters.getKeyType();
 		Type valueType = typeParameters.getValueType();
+		assert (keyType != null) && (keyType.eResource() != null);
+		assert (valueType != null) && (valueType.eResource() != null);
 		TemplateParameterSubstitution keyTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(keyFormalParameter, keyType);
 		TemplateParameterSubstitution valueTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(valueFormalParameter, valueType);
 		templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
@@ -113,6 +116,7 @@ public class MapTypeManager extends AbstractTypeManager
 			if (specializedType == null) {
 				specializedType = createSpecialization(typeParameters);
 				mapTypes.put(mapTypeId, useWeakReferences ? new WeakReference<@Nullable MapType>(specializedType) : specializedType);
+				assert mapTypeId == ((MapTypeImpl)specializedType).immutableGetTypeId();		// XXX
 			}
 			return specializedType;
 		}

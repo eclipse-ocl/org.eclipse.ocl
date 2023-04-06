@@ -194,9 +194,9 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				public static @NonNull «javaClassName» getDefault() {
 					«javaClassName» oclstdlib = INSTANCE;
 					if (oclstdlib == null) {
-						Contents contents = new Contents("«lib.getURI»");
 						String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-						oclstdlib = INSTANCE = new ReadOnly(asURI, contents.getModel());
+						oclstdlib = INSTANCE = new ReadOnly(asURI);
+						Contents contents = new Contents(oclstdlib, "«lib.getURI»");
 						oclstdlib.setSaveable(false);
 					}
 					return oclstdlib;
@@ -286,8 +286,8 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 */
 				protected static class ReadOnly extends «javaClassName» implements ImmutableResource
 				{
-					protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
-						super(asURI, libraryModel);
+					protected ReadOnly(@NonNull String asURI) {
+						super(asURI);
 					}
 			
 					/**
@@ -341,17 +341,17 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				 *  and package name, prefix and namespace URI.
 				 */
 				public static @NonNull «javaClassName» create(@NonNull String asURI) {
-					Contents contents = new Contents(asURI);
-					return new «javaClassName»(asURI, contents.getModel());
+					«javaClassName» oclstdlib = new «javaClassName»(asURI);
+					Contents contents = new Contents(oclstdlib, asURI);
+					return oclstdlib;
 				}
 			
 				/**
 				 *	Construct an OCL Standard Library with specified resource URI and library content.
 				 */
-				private «javaClassName»(@NonNull String asURI, @NonNull Model libraryModel) {
+				private «javaClassName»(@NonNull String asURI) {
 					super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 					assert PivotUtilInternal.isASURI(asURI);
-					getContents().add(libraryModel);
 				}
 			
 				private static class Contents extends AbstractContents
@@ -361,9 +361,10 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 			
-					private Contents(@NonNull String asURI)
+					private Contents(@NonNull  Resource resource, @NonNull String asURI)
 					{
 						«thisModel.getSymbolName()» = createModel(asURI);
+						resource.getContents().add(«thisModel.getSymbolName()»);
 						«FOR pkge : thisModel.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDFOR»

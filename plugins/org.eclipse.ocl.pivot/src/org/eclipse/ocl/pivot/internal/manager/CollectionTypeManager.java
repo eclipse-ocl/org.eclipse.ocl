@@ -128,13 +128,7 @@ public class CollectionTypeManager extends AbstractTypeManager
 			if (specializedType == null) {
 				specializedType = createSpecialization(typeParameters);
 				Type elementType = specializedType.getElementType();
-				assert (elementType != null);
-				if (elementType.eResource() == null) {			// XXX
-			//		System.out.println("getCollectionType: " + NameUtil.debugSimpleName(specializedType) + " : " + specializedType);
-					getClass();		// XXX
-				//	assert false;
-				}
-				assert (elementType != null) && (elementType.eResource() != null);			// XXX
+				assert (elementType != null) && (elementType.eResource() != null);
 				collectionTypes.put(collectionTypeId, useWeakReferences ? new WeakReference<@Nullable CollectionType>(specializedType) : specializedType);
 				assert collectionTypeId == ((CollectionTypeImpl)specializedType).immutableGetTypeId();		// XXX
 				if (basicGetCollectionType(collectionTypeId) != specializedType) {
