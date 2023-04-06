@@ -21,9 +21,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -134,7 +134,7 @@ public class CollectionTypeManager extends AbstractTypeManager
 					getClass();		// XXX
 				//	assert false;
 				}
-		//		assert (elementType != null) && (elementType.eResource() != null);			// XXX
+				assert (elementType != null) && (elementType.eResource() != null);			// XXX
 				collectionTypes.put(collectionTypeId, useWeakReferences ? new WeakReference<@Nullable CollectionType>(specializedType) : specializedType);
 				assert collectionTypeId == ((CollectionTypeImpl)specializedType).immutableGetTypeId();		// XXX
 				if (basicGetCollectionType(collectionTypeId) != specializedType) {

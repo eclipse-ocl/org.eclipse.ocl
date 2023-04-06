@@ -59,11 +59,9 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -115,9 +113,9 @@ public class OCLstdlib extends ASResourceImpl
 	public static @NonNull OCLstdlib getDefault() {
 		OCLstdlib oclstdlib = INSTANCE;
 		if (oclstdlib == null) {
-			Contents contents = new Contents("http://www.eclipse.org/ocl/2015/Library");
 			String asURI = STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-			oclstdlib = INSTANCE = new ReadOnly(asURI, contents.getModel());
+			oclstdlib = INSTANCE = new ReadOnly(asURI);
+			Contents contents = new Contents(oclstdlib, "http://www.eclipse.org/ocl/2015/Library");
 			oclstdlib.setSaveable(false);
 		}
 		return oclstdlib;
@@ -208,6 +206,9 @@ public class OCLstdlib extends ASResourceImpl
 		protected ReadOnly(@NonNull String asURI, @NonNull Model libraryModel) {
 			super(asURI, libraryModel);
 		}
+		protected ReadOnly(@NonNull String asURI) {
+			super(asURI);
+		}
 
 		/**
 		 * Overridden to inhibit entry of the shared instance in any ResourceSet.
@@ -260,17 +261,21 @@ public class OCLstdlib extends ASResourceImpl
 	 *  and package name, prefix and namespace URI.
 	 */
 	public static @NonNull OCLstdlib create(@NonNull String asURI) {
-		Contents contents = new Contents(asURI);
-		return new OCLstdlib(asURI, contents.getModel());
+		OCLstdlib ocLstdlib = new OCLstdlib(asURI);
+		Contents contents = new Contents(ocLstdlib, asURI);
+		return ocLstdlib;
 	}
 
 	/**
 	 *	Construct an OCL Standard Library with specified resource URI and library content.
 	 */
 	private OCLstdlib(@NonNull String asURI, @NonNull Model libraryModel) {
+		this(asURI);
+		getContents().add(libraryModel);
+	}
+	private OCLstdlib(@NonNull String asURI) {
 		super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 		assert PivotUtilInternal.isASURI(asURI);
-		getContents().add(libraryModel);
 	}
 
 	private static class Contents extends AbstractContents
@@ -279,11 +284,13 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Library ocl;
 		private final @NonNull Package orphanPackage;
 
-		private Contents(@NonNull String asURI)
+		private Contents(@NonNull  Resource resource, @NonNull String asURI)
 		{
 			model = createModel(asURI);
+			resource.getContents().add(model);
 			ocl = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", IdManager.METAMODEL, OCLstdlibPackage.eINSTANCE);
-			orphanPackage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
+			orphanPackage = /*Orphanage.createLocalOrphanPackage(model);//*/ createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
+		//	orphanPackage.eResource().getContents().add(model);
 			installPackages();
 			installClassTypes();
 			installPrimitiveTypes();

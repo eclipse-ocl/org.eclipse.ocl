@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -191,7 +192,8 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		}
 	}
 
-	private @NonNull Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+//	private @NonNull Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+	private final @NonNull Orphanage orphanage = Orphanage.createSharedOrphanage(new ResourceSetImpl());
 
 	/**
 	 * Configuration of validation preferences.
@@ -211,6 +213,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 
 	public ExecutorStandardLibrary(org.eclipse.ocl.pivot.@NonNull Package... execPackages) {
 	//	OCLstdlibTables.PACKAGE.getClass();
+		orphanage.eResource().getContents().add(this);
 		for (org.eclipse.ocl.pivot.@NonNull Package execPackage : execPackages) {
 			assert execPackage != null;
 			addPackage(execPackage, null);
@@ -826,6 +829,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		Model asModel = PivotFactory.eINSTANCE.createModel();
 		asModel.setExternalURI(asPackage.getURI());
 		asModel.getOwnedPackages().add(asPackage);
+		orphanage.eResource().getContents().add(asModel);
 		EcoreFlatModel flatModel = (EcoreFlatModel)asModel.initFlatModel(this);
 		List<org.eclipse.ocl.pivot.Class> ownedClasses = asPackage.getOwnedClasses();
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
