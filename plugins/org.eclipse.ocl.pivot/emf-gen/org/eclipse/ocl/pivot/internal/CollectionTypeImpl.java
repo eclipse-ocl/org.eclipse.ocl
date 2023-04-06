@@ -17,11 +17,9 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -29,6 +27,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -660,8 +659,7 @@ implements CollectionType {
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getCommonType(@NonNull IdResolver idResolver, @NonNull Type type) {
-		CompleteEnvironment environment = idResolver.getEnvironment();
-		StandardLibrary standardLibrary = environment.getOwnedStandardLibrary();
+		StandardLibrary standardLibrary = idResolver.getStandardLibrary();
 		FlatClass thisFlatClass = this.getFlatClass(standardLibrary);
 		FlatClass thatFlatClass = type.getFlatClass(standardLibrary);
 		FlatClass commonFlatClass = thisFlatClass.getCommonFlatClass(thatFlatClass);
