@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -544,7 +544,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapIncludingPair() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with true, 'c' with true}", "Map{'a' with true, 'b' with true}->including('c', true)");
 		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with false}", "Map{'a' with true, 'b' with true}->including('b', false)");
 		ocl.assertQueryResults(null, "Map{'a' with true, 'b' with 'c'}", "Map{'a' with true, 'b' with true}->including('b', 'c')");
@@ -588,7 +588,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapKeyType() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
 		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
@@ -745,7 +745,7 @@ public class EvaluateMapOperationsTest4 extends PivotTestSuite
 
 	@Test public void testMapValueType() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
 		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();

@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociationClass;
@@ -114,7 +115,7 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StateMachine;
@@ -312,6 +313,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseCompletePackage(CompletePackage object)
 			{
 				return createCompletePackageAdapter();
+			}
+			@Override
+			public Adapter caseCompleteStandardLibrary(CompleteStandardLibrary object)
+			{
+				return createCompleteStandardLibraryAdapter();
 			}
 			@Override
 			public Adapter caseConnectionPointReference(ConnectionPointReference object)
@@ -2581,6 +2587,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCompletePackageAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary <em>Complete Standard Library</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.CompleteStandardLibrary
+	 * @generated
+	 */
+	public Adapter createCompleteStandardLibraryAdapter()
 	{
 		return null;
 	}

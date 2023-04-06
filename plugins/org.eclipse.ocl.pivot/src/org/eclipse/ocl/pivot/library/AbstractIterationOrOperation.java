@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -39,7 +39,7 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 				if (sourceType instanceof CollectionType) {
 					CollectionType sourceCollectionType = (CollectionType)sourceType;
 					Type elementType = PivotUtil.getElementType(sourceCollectionType);
-					StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+					CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 					CollectionType genericCollectionType = standardLibrary.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
 					returnType = standardLibrary.getCollectionType(genericCollectionType, elementType,
 						sourceCollectionType.isIsNullFree(), sourceCollectionType.getLowerValue(), sourceCollectionType.getUpperValue());
@@ -74,7 +74,7 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 				CollectionType collectionType = (CollectionType)returnType;
 				if ((sourceType instanceof CollectionType) && ((CollectionType)sourceType).isIsNullFree() && !collectionType.isIsNullFree()) {
 					@SuppressWarnings("null")@NonNull Type elementType = collectionType.getElementType();
-					StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+					CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 					CollectionType genericCollectionType = standardLibrary.getCollectionType(collectionType.isOrdered(), collectionType.isUnique());
 					returnType = standardLibrary.getCollectionType(genericCollectionType, elementType,
 						true, collectionType.getLowerValue(), collectionType.getUpperValue());

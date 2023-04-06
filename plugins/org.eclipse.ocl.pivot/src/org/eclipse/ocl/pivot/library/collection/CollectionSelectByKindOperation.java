@@ -29,12 +29,12 @@ import org.eclipse.ocl.pivot.values.CollectionValue;
 public class CollectionSelectByKindOperation extends AbstractUntypedBinaryOperation
 {
 	public static final @NonNull CollectionSelectByKindOperation INSTANCE = new CollectionSelectByKindOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @NonNull CollectionValue evaluate(@NonNull Evaluator evaluator, @Nullable Object sourceVal, @Nullable Object argVal) {
-		return evaluate(getExecutor(evaluator), sourceVal, argVal); 
+		return evaluate(getExecutor(evaluator), sourceVal, argVal);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class CollectionSelectByKindOperation extends AbstractUntypedBinaryOperat
 	public @NonNull CollectionValue evaluate(@NonNull Executor executor, @Nullable Object sourceVal, @Nullable Object argVal) {
 		CollectionValue collectionValue = asCollectionValue(sourceVal);
 		Type requiredElementType = asType(argVal);
-    	StandardLibrary standardLibrary = executor.getStandardLibrary();
+		StandardLibrary standardLibrary = executor.getStandardLibrary();
 		boolean changedContents = false;
 		Collection<Object> newElements = new ArrayList<Object>();
         IdResolver idResolver = executor.getIdResolver();

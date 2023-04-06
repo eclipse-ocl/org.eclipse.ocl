@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -357,7 +357,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionElementType() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
 		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
 		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
@@ -1816,7 +1816,7 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 
 	@Test public void testCollectionSum() {
 		TestOCL ocl = createOCL();
-		StandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 		ocl.assertQueryEquals(null, 0, "let s : Sequence(Integer) = Sequence{} in s->sum()");
 		ocl.assertQueryEquals(null, 0.0, "let b : Bag(Real) = Bag{} in b->sum()");
 		ocl.assertQueryEquals(null, 0.0, "let s : Set(Real) = Set{} in s->sum()");

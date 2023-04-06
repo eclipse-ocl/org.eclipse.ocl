@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2010, 2021 Willink Transformations and others.
+ * Copyright (c) 2010, 2022 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -31,58 +31,22 @@ import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
-
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Standard Library</b></em>'.
+ * A representation of the model object '<em><b>Abstract Standard Library</b></em>'.
  * <!-- end-user-doc -->
  *
- * <p>
- * The following features are supported:
- * </p>
- * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.StandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}</li>
- * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getStandardLibrary()
  * @generated
  */
 public interface StandardLibrary extends Element
 {
-	/**
-	 * Returns the value of the '<em><b>Owning Complete Environment</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary <em>Owned Standard Library</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Owning Complete Environment</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Owning Complete Environment</em>' container reference.
-	 * @see #setOwningCompleteEnvironment(CompleteEnvironment)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getStandardLibrary_OwningCompleteEnvironment()
-	 * @see org.eclipse.ocl.pivot.CompleteEnvironment#getOwnedStandardLibrary
-	 * @generated
-	 */
-	CompleteEnvironment getOwningCompleteEnvironment();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.StandardLibrary#getOwningCompleteEnvironment <em>Owning Complete Environment</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owning Complete Environment</em>' container reference.
-	 * @see #getOwningCompleteEnvironment()
-	 * @generated
-	 */
-	void setOwningCompleteEnvironment(CompleteEnvironment value);
-
 	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass);
 
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId);
 
 	@Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId);
-
-	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
 
 	/**
 	 * Obtains the generic instance of the BagType metatype, named
@@ -433,4 +397,4 @@ public interface StandardLibrary extends Element
 	@NonNull FlatModel getFlatModel();
 
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
-} // StandardLibrary
+} // AbstractStandardLibrary

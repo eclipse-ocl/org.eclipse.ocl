@@ -14,9 +14,9 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
+import org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
@@ -64,7 +64,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 
 		@Override
 		public BasicContinuation<?> execute() {
-			StandardLibrary standardLibrary = context.getStandardLibrary();
+			CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 			TypedRefCS csElementType = csElement.getOwnedType();
 			Type type = null;
 			String name = csElement.getName();
@@ -87,7 +87,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 						lowerValue = null;
 						upperValue = null;
 					}
-					org.eclipse.ocl.pivot.Class genericType = ((StandardLibraryImpl)standardLibrary).getRequiredLibraryType(name);
+					org.eclipse.ocl.pivot.Class genericType = ((CompleteStandardLibraryImpl)standardLibrary).getRequiredLibraryType(name);
 					type = standardLibrary.getCollectionType((CollectionType) genericType, elementType, isNullFree, lowerValue, upperValue);
 					MultiplicityCS csMultiplicity = csElement.getOwnedMultiplicity();
 					if (csMultiplicity != null) {

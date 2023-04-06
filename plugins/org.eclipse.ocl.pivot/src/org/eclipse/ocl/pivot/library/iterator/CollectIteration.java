@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -101,7 +101,7 @@ public class CollectIteration extends AbstractIteration
 			boolean isOrdered = (returnType instanceof CollectionType) && ((CollectionType)returnType).isOrdered();
 			boolean isNullFree = asType instanceof CollectionType && ((CollectionType)asType).isIsNullFree();
 			boolean isRequired = !(asType instanceof CollectionType) && (body != null) && body.isIsRequired();
-			StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+			CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, false);
 			returnType = standardLibrary.getCollectionType(genericCollectionType, elementType, isNullFree || isRequired, null, null);	// FIXME null, null
 		}

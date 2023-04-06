@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OperationCallExp;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -58,7 +58,7 @@ public class CollectionIncludingOperation extends AbstractSimpleBinaryOperation
 							CollectionType returnCollectionType = (CollectionType)returnType;
 							if (returnCollectionType.isIsNullFree() != isNullFree) {
 								@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
-								StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+								CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 								CollectionType genericCollectionType = standardLibrary.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
 								returnType = standardLibrary.getCollectionType(genericCollectionType, elementType,
 									isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());

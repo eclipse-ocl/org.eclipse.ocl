@@ -21,9 +21,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.CollectionTypeImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -77,7 +76,6 @@ public class CollectionTypeManager extends AbstractTypeManager
 	}
 
 	protected @NonNull CollectionType createSpecialization(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		StandardLibrary standardLibrary = getStandardLibrary();
 		CollectionTypeId genericTypeId = typeParameters.getGenericTypeId();
 		CollectionType unspecializedType = standardLibrary.getCollectionType(genericTypeId);
 		String typeName = unspecializedType.getName();
@@ -132,7 +130,7 @@ public class CollectionTypeManager extends AbstractTypeManager
 				Type elementType = specializedType.getElementType();
 				assert (elementType != null);
 				if (elementType.eResource() == null) {			// XXX
-					System.out.println("getCollectionType: " + NameUtil.debugSimpleName(specializedType) + " : " + specializedType);
+			//		System.out.println("getCollectionType: " + NameUtil.debugSimpleName(specializedType) + " : " + specializedType);
 					getClass();		// XXX
 				//	assert false;
 				}

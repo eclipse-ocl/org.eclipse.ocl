@@ -19,10 +19,10 @@ import java.util.regex.Pattern;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -166,10 +166,10 @@ public abstract class ExecutorManager implements ExecutorExtension
 	 */
 	public static int CONSTRUCTION_COUNT = 0;
 
-	public ExecutorManager(@NonNull CompleteEnvironment environment) {
+	public ExecutorManager(@NonNull CompleteEnvironment environment, @NonNull StandardLibrary standardLibrary) {
 		CONSTRUCTION_COUNT++;
 		this.environment = environment;
-		this.standardLibrary = environment.getOwnedStandardLibrary();
+		this.standardLibrary = standardLibrary;
 //		System.out.println("Create " + NameUtil.debugSimpleName(this));
 	}
 

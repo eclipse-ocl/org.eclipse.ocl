@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
@@ -157,7 +157,7 @@ public interface Query
 	/**
 	 * Obtains the OCL result type of the query.  This may be a classifier
 	 * in the user model, or it may represent a pre-defined OCL data type
-	 * such as {@link StandardLibrary#getBooleanType() Boolean}.
+	 * such as {@link CompleteStandardLibrary#getBooleanType() Boolean}.
 	 * 
 	 * @return the query's result type
 	 */

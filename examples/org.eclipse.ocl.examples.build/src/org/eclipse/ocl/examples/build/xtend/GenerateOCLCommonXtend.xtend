@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.values.Unlimited
 import org.eclipse.ocl.pivot.utilities.PivotConstants
 import org.eclipse.ocl.pivot.ids.TypeId
 import org.eclipse.ocl.pivot.utilities.NameUtil
+import org.eclipse.ocl.pivot.Library
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -279,11 +280,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			«FOR name : externals»«var element = ClassUtil.nonNullState(name2external.get(name))»
 			«IF element instanceof Package»
-			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			/*1*/private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			«ELSEIF element instanceof Library»
+			/*4*/private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof PrimitiveType»
-			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			/*2*/private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSE»
-			private final @NonNull «element.eClass().getName()» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			/*3*/private final @NonNull «element.eClass().getName()» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ENDIF»
 			«ENDFOR»
 		'''

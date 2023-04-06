@@ -19,9 +19,9 @@ import java.util.WeakHashMap;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -64,7 +64,6 @@ public class LambdaTypeManager extends AbstractTypeManager
 	}
 
 	protected @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
-		StandardLibrary standardLibrary = getStandardLibrary();
 		Map<@Nullable Type, @NonNull List<@NonNull Object>> contextMap = lambdaTypes.get(contextType);
 		if (contextMap == null) {
 			contextMap = new HashMap<>();

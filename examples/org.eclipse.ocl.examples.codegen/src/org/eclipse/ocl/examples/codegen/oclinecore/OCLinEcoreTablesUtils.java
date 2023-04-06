@@ -441,55 +441,15 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-			//			TemplateParameter owningTemplateParameter = type.isTemplateParameter();
-			//			if (owningTemplateParameter == null) {
 			type.accept(emitQualifiedLiteralVisitor);
-			/*			}
-			else if (owningTemplateParameter.getSignature().getTemplate() instanceof org.eclipse.ocl.pivot.Class) {
-				org.eclipse.ocl.pivot.Class containerType = (org.eclipse.ocl.pivot.Class) owningTemplateParameter.getSignature().getTemplate();
-				assert containerType != null;
-				String prefix = getQualifiedTablesClassName(containerType);
-				if (prefix.length() <= 0) {
-					s.append("(");
-					s.appendClassReference(DomainType.class);
-					s.append(")null/*containerType._package.name/");
-				}
-				else {
-					s.appendClassReference(prefix);
-					s.append(".TypeParameters.");
-					s.appendScopedTypeName(containerType);
-					s.append("_");
-					s.appendParameterName(type);
-				}
-			}
-			else if (owningTemplateParameter.getSignature().getTemplate() instanceof Operation) {
-				Operation containerOperation  = (Operation) owningTemplateParameter.getSignature().getTemplate();
-				org.eclipse.ocl.pivot.Class containerType = containerOperation.getOwningClass();
-				assert containerType != null;
-				String prefix = getQualifiedTablesClassName(containerType);
-				if (prefix.length() <= 0) {
-					s.append("(");
-					s.appendClassReference(DomainType.class);
-					s.append(")null/*containerOperation.owningType._package.name/");
-				}
-				else {
-					s.appendClassReference(prefix);
-					s.append(".TypeParameters._");
-					containerOperation.accept(emitLiteralVisitor);
-					s.append("_");
-					s.appendParameterName(type);
-				}
-			} */
 			return null;
 		}
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
-			s.append("LIBRARY.getCollectionType(");
 			emitQualifiedLiteralVisitor.visit(type);
 			s.append(", ");
 			type.getElementType().accept(this);
-			s.append(")");
 			return null;
 		}
 
@@ -507,7 +467,6 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitLambdaType(@NonNull LambdaType lambdaType) {
-			s.append("LIBRARY.createLambdaType(");
 			s.appendString(PivotUtil.getName(lambdaType));		// Never happens
 			s.append(", ");
 			lambdaType.getContextType().accept(this);
@@ -515,42 +474,34 @@ public class OCLinEcoreTablesUtils
 				s.append(", ");
 				parameterType.accept(this);
 			}
-			s.append(")");
 			return null;
 		}
 
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType type) {
-			s.append("LIBRARY.getMapType(");
 			emitQualifiedLiteralVisitor.visit(type);
 			s.append(", ");
 			type.getKeyType().accept(this);
 			s.append(", ");
 			type.getValueType().accept(this);
-			s.append(")");
 			return null;
 		}
 
 		@Override
 		public @Nullable Object visitTupleType(@NonNull TupleType tupleType) {
-			s.append("LIBRARY.createTupleType(");
 			s.appendString(ClassUtil.nonNullModel(tupleType.getName()));
 			for (Property part : tupleType.getOwnedProperties()) {
 				s.append(", ");
-				s.append("LIBRARY.createTuplePart(");
 				s.appendString(ClassUtil.nonNullModel(part.getName()));
 				s.append(", ");
 				part.getType().accept(this);
-				s.append(")");
 			}
-			s.append(")");
 			return null;
 		}
 
 		@Override
 		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter asTemplateParameter) {
-			asTemplateParameter.accept(emitQualifiedLiteralVisitor);
-		//	s.append(Integer.toString(asTemplateParameter.getTemplateParameterId().getIndex()));
+			s.append(Integer.toString(asTemplateParameter.getTemplateParameterId().getIndex()));
 			return null;
 		}
 	}

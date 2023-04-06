@@ -239,10 +239,10 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			
 				protected static class LibraryContents extends AbstractContents
 				{
-					protected final @NonNull Package standardLibrary;
+					protected final @NonNull Package libraryPackage;
 			
-					protected LibraryContents(@NonNull Package standardLibrary) {
-						this.standardLibrary = standardLibrary;
+					protected LibraryContents(@NonNull Package libraryPackage) {
+						this.libraryPackage = libraryPackage;
 					}
 				}
 			
@@ -325,8 +325,8 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == root.getOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 
-					protected Contents(@NonNull Package standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-						super(standardLibrary);
+					protected Contents(@NonNull Package libraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+						super(libraryPackage);
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
 						«FOR pkge : root.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);

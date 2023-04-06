@@ -62,6 +62,7 @@ public interface Visitor<R>
 	R visitCompleteEnvironment(org.eclipse.ocl.pivot.@NonNull CompleteEnvironment object);
 	R visitCompleteModel(org.eclipse.ocl.pivot.@NonNull CompleteModel object);
 	R visitCompletePackage(org.eclipse.ocl.pivot.@NonNull CompletePackage object);
+	R visitCompleteStandardLibrary(org.eclipse.ocl.pivot.@NonNull CompleteStandardLibrary object);
 	R visitConnectionPointReference(org.eclipse.ocl.pivot.@NonNull ConnectionPointReference object);
 	R visitConstraint(org.eclipse.ocl.pivot.@NonNull Constraint object);
 	R visitDataType(org.eclipse.ocl.pivot.@NonNull DataType object);

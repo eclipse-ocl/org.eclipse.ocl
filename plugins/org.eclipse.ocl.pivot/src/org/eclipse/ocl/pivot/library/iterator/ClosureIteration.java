@@ -16,7 +16,7 @@ import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.OCLExpression;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -73,7 +73,7 @@ public class ClosureIteration extends AbstractIteration
 						CollectionType returnCollectionType = (CollectionType)returnType;
 						if (returnCollectionType.isIsNullFree() != isNullFree) {
 							@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
-							StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+							CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 							CollectionType genericCollectionType = standardLibrary.getCollectionType(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
 							returnType = standardLibrary.getCollectionType(genericCollectionType, elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
 						}

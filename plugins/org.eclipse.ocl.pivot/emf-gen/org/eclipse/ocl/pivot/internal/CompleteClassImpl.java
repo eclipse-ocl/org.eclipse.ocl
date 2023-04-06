@@ -38,7 +38,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -412,7 +412,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 
 	@Override
 	public boolean conformsTo(@NonNull Type elementType) {
-		StandardLibrary standardLibrary = getStandardLibrary();
+		CompleteStandardLibrary standardLibrary = getStandardLibrary();
 		FlatClass thisFlatClass = getFlatClass();
 		FlatClass thatFlatClass = elementType.getFlatClass(standardLibrary);
 		if (thisFlatClass == thatFlatClass) {

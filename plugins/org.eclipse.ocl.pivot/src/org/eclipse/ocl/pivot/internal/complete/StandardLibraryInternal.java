@@ -18,12 +18,12 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 
 /**
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface StandardLibraryInternal extends StandardLibrary
+public interface StandardLibraryInternal extends CompleteStandardLibrary
 {
 	/**
 	 * @since 1.17

@@ -49,7 +49,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -283,7 +283,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				}
 			}
 			if (allReferences.size() > 0) {
-				StandardLibrary standardLibrary = context.environmentFactory.getStandardLibrary();
+				CompleteStandardLibrary standardLibrary = context.environmentFactory.getStandardLibrary();
 				allReferences.add(standardLibrary.getOclAnyType());
 				allReferences.add(standardLibrary.getOclElementType());
 			}

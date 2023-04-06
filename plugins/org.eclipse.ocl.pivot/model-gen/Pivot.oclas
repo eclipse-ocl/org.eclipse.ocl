@@ -166,7 +166,7 @@
     </ownedClasses>
     <ownedClasses xmi:id="LqaWx" name="CompleteEnvironment" superClasses="#t5rpa">
       <ownedProperties xmi:id="Cv6PO" isComposite="true" name="ownedCompleteModel" opposite="#Tjqfq" type="#hzOMU"/>
-      <ownedProperties xmi:id="Qrg5Y" isComposite="true" name="ownedStandardLibrary" opposite="#pt2se" type="#v6b4D"/>
+      <ownedProperties xmi:id="Qrg5Y" isComposite="true" name="ownedStandardLibrary" opposite="#U772W" type="#2w6uT"/>
     </ownedClasses>
     <ownedClasses xmi:id="hzOMU" name="CompleteModel" superClasses="#0kVqz">
       <ownedOperations xmi:id="W9Wm," isRequired="false" name="getOwnedCompletePackage" type="#+gDEJ">
@@ -189,6 +189,9 @@
       <ownedProperties xmi:id="SgDQD" isRequired="false" name="owningCompleteModel" opposite="#AQg0n" type="#hzOMU"/>
       <ownedProperties xmi:id="vpFYN" isRequired="false" name="owningCompletePackage" opposite="#pXZYG" type="#+gDEJ"/>
       <ownedProperties xmi:id="slBkJ" name="partialPackages" opposite="#CUgnW" type="#4WjM+"/>
+    </ownedClasses>
+    <ownedClasses xmi:id="2w6uT" name="CompleteStandardLibrary" superClasses="#v6b4D">
+      <ownedProperties xmi:id="U772W" isRequired="false" name="owningCompleteEnvironment" opposite="#Qrg5Y" type="#LqaWx"/>
     </ownedClasses>
     <ownedClasses xmi:id="KXGhD" name="ConnectionPointReference" superClasses="#VVKEz">
       <ownedComments body="A ConnectionPointReference represents a usage (as part of a submachine State) of an entry/exit point Pseudostate defined in the StateMachine referenced by the submachine State."/>
@@ -606,9 +609,8 @@
       <ownedProperties xmi:id="n0An," isImplicit="true" name="CompleteModel" opposite="#AF1+9" type="#zUrgD"/>
     </ownedClasses>
     <ownedClasses xmi:id="4w3oz" instanceClassName="org.eclipse.ocl.pivot.utilities.MorePivotable" isAbstract="true" isInterface="true"
-        name="MorePivotable" superClasses="&_0;#zfDWR"/>
-    <ownedClasses xmi:id="W4DIM" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable" isAbstract="true" isInterface="true" name="Nameable"
-        superClasses="&_0;#zfDWR"/>
+        name="MorePivotable"/>
+    <ownedClasses xmi:id="W4DIM" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable" isAbstract="true" isInterface="true" name="Nameable"/>
     <ownedClasses xmi:id="0kVqz" isAbstract="true" name="NamedElement" superClasses="#t5rpa">
       <ownedComments body="A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression."/>
       <ownedProperties xmi:id="HeJg3" isRequired="false" name="name" type="#CPVxu">
@@ -782,8 +784,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit = null&#xA;&#xA;"/>
       </ownedInvariants>
     </ownedClasses>
-    <ownedClasses xmi:id="NgpYx" instanceClassName="org.eclipse.ocl.pivot.utilities.Pivotable" isAbstract="true" isInterface="true" name="Pivotable"
-        superClasses="&_0;#zfDWR"/>
+    <ownedClasses xmi:id="NgpYx" instanceClassName="org.eclipse.ocl.pivot.utilities.Pivotable" isAbstract="true" isInterface="true" name="Pivotable"/>
     <ownedClasses xmi:id="7Wa4a" name="Precedence" superClasses="#0kVqz">
       <ownedProperties xmi:id="B4T3O" defaultValueString="left" isRequired="false" name="associativity" type="#,Swbo"/>
       <ownedProperties xmi:id="1q9Jp" defaultValueString="0" name="order" type="#vCSey"/>
@@ -922,7 +923,7 @@
     <ownedClasses xmi:id="drJ4W" name="RealLiteralExp" superClasses="#MFRWm">
       <ownedProperties xmi:id="Xj4U0" name="realSymbol" type="#PVdsa"/>
     </ownedClasses>
-    <ownedClasses xmi:id="dXAFV" isAbstract="true" isInterface="true" name="ReferringElement" superClasses="&_0;#zfDWR">
+    <ownedClasses xmi:id="dXAFV" isAbstract="true" isInterface="true" name="ReferringElement">
       <ownedOperations xmi:id="TgreS" name="getReferredElement" type="#t5rpa"/>
     </ownedClasses>
     <ownedClasses xmi:id="lqBOs" name="Region" superClasses="#MzHoc">
@@ -1021,9 +1022,7 @@
         <ownedComments body="The InstanceSpecification that owns this Slot."/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xmi:id="v6b4D" name="StandardLibrary" superClasses="#t5rpa">
-      <ownedProperties xmi:id="pt2se" isRequired="false" name="owningCompleteEnvironment" opposite="#Qrg5Y" type="#LqaWx"/>
-    </ownedClasses>
+    <ownedClasses xmi:id="v6b4D" isAbstract="true" name="StandardLibrary" superClasses="#t5rpa"/>
     <ownedClasses xmi:id="CwtUf" name="State" superClasses="#MzHoc #VVKEz">
       <ownedComments body="A State models a situation during which some (usually implicit) invariant condition holds."/>
       <ownedProperties xmi:id="PEoKN" isDerived="true" isReadOnly="true" isTransient="true" isVolatile="true" name="isComposite" type="#ZuwnB">
@@ -1342,8 +1341,7 @@
         <ownedComments body="The Region that contains this Vertex."/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xmi:id="WyWDC" instanceClassName="org.eclipse.ocl.pivot.util.Visitable" isAbstract="true" isInterface="true" name="Visitable"
-        superClasses="&_0;#zfDWR"/>
+    <ownedClasses xmi:id="WyWDC" instanceClassName="org.eclipse.ocl.pivot.util.Visitable" isAbstract="true" isInterface="true" name="Visitable"/>
     <ownedClasses xmi:id="fad2o" name="VoidType" superClasses="#pDcbe"/>
     <ownedClasses xmi:id="lfR8C" name="WildcardType" superClasses="#pDcbe">
       <ownedProperties xmi:id="mvH+v" isRequired="false" name="lowerBound" opposite="#WU9EG" type="#rrwsa"/>

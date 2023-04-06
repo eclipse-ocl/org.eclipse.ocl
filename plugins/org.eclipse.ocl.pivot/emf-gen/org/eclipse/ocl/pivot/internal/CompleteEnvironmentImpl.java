@@ -38,7 +38,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -159,9 +159,9 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	public NotificationChain basicSetOwnedStandardLibrary(StandardLibrary newOwnedStandardLibrary, NotificationChain msgs)
+	public NotificationChain basicSetOwnedStandardLibrary(CompleteStandardLibrary newOwnedStandardLibrary, NotificationChain msgs)
 	{
-		StandardLibrary oldOwnedStandardLibrary = ownedStandardLibrary;
+		CompleteStandardLibrary oldOwnedStandardLibrary = ownedStandardLibrary;
 		ownedStandardLibrary = (StandardLibraryInternal) newOwnedStandardLibrary;
 		if (eNotificationRequired())
 		{
@@ -177,15 +177,15 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	 * @generated
 	 */
 	@Override
-	public void setOwnedStandardLibrary(StandardLibrary newOwnedStandardLibrary)
+	public void setOwnedStandardLibrary(CompleteStandardLibrary newOwnedStandardLibrary)
 	{
 		if (newOwnedStandardLibrary != ownedStandardLibrary)
 		{
 			NotificationChain msgs = null;
 			if (ownedStandardLibrary != null)
-				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, 4, StandardLibrary.class, msgs);
+				msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, 4, CompleteStandardLibrary.class, msgs);
 			if (newOwnedStandardLibrary != null)
-				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, 4, StandardLibrary.class, msgs);
+				msgs = ((InternalEObject)newOwnedStandardLibrary).eInverseAdd(this, 4, CompleteStandardLibrary.class, msgs);
 			msgs = basicSetOwnedStandardLibrary(newOwnedStandardLibrary, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -217,7 +217,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			case 5:
 				if (ownedStandardLibrary != null)
 					msgs = ((InternalEObject)ownedStandardLibrary).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
-				return basicSetOwnedStandardLibrary((StandardLibrary)otherEnd, msgs);
+				return basicSetOwnedStandardLibrary((CompleteStandardLibrary)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -305,7 +305,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				setOwnedCompleteModel((CompleteModel)newValue);
 				return;
 			case 5:
-				setOwnedStandardLibrary((StandardLibrary)newValue);
+				setOwnedStandardLibrary((CompleteStandardLibrary)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -337,7 +337,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 				setOwnedCompleteModel((CompleteModel)null);
 				return;
 			case 5:
-				setOwnedStandardLibrary((StandardLibrary)null);
+				setOwnedStandardLibrary((CompleteStandardLibrary)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -612,8 +612,8 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public void dispose() {
 		class2completeClass.clear();
-		((StandardLibraryImpl)getOwnedStandardLibrary()).disposeLambdas();
-		((StandardLibraryImpl)getOwnedStandardLibrary()).disposeTuples();
+		((CompleteStandardLibraryImpl)getOwnedStandardLibrary()).disposeLambdas();
+		((CompleteStandardLibraryImpl)getOwnedStandardLibrary()).disposeTuples();
 	}
 
 	@Override
@@ -687,7 +687,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 		this.environmentFactory = environmentFactory;
 		CompleteModelInternal completeModelInternal = ((CompleteModelInternal)PivotFactory.eINSTANCE.createCompleteModel()).init(this);
 		setOwnedCompleteModel(completeModelInternal);
-		setOwnedStandardLibrary(((StandardLibraryInternal)PivotFactory.eINSTANCE.createStandardLibrary()).init(completeModelInternal));
+		setOwnedStandardLibrary(((StandardLibraryInternal)PivotFactory.eINSTANCE.createCompleteStandardLibrary()).init(completeModelInternal));
 		return this;
 	}
 

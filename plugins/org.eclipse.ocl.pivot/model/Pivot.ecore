@@ -463,8 +463,8 @@
         name="ownedCompleteModel" lowerBound="1" eType="#T-pivot-CompleteModel" containment="true"
         eOpposite="#F-pivot-CompleteModel-owningCompleteEnvironment"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteEnvironment-ownedStandardLibrary"
-        name="ownedStandardLibrary" lowerBound="1" eType="#T-pivot-StandardLibrary"
-        containment="true" eOpposite="#F-pivot-StandardLibrary-owningCompleteEnvironment"/>
+        name="ownedStandardLibrary" lowerBound="1" eType="#T-pivot-CompleteStandardLibrary"
+        containment="true" eOpposite="#F-pivot-CompleteStandardLibrary-owningCompleteEnvironment"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CompleteModel" name="CompleteModel"
       eSuperTypes="#T-pivot-NamedElement">
@@ -502,6 +502,11 @@
         name="owningCompletePackage" eType="#T-pivot-CompletePackage" eOpposite="#F-pivot-CompletePackage-ownedCompletePackages"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompletePackage-partialPackages"
         name="partialPackages" ordered="false" upperBound="-1" eType="#T-pivot-Package"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CompleteStandardLibrary" name="CompleteStandardLibrary"
+      eSuperTypes="#T-pivot-StandardLibrary">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteStandardLibrary-owningCompleteEnvironment"
+        name="owningCompleteEnvironment" eType="#T-pivot-CompleteEnvironment" eOpposite="#F-pivot-CompleteEnvironment-ownedStandardLibrary"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ConnectionPointReference"
       name="ConnectionPointReference" eSuperTypes="#T-pivot-Vertex">
@@ -2665,10 +2670,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-StandardLibrary" name="StandardLibrary"
-      eSuperTypes="#T-pivot-Element">
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-StandardLibrary-owningCompleteEnvironment"
-        name="owningCompleteEnvironment" eType="#T-pivot-CompleteEnvironment" eOpposite="#F-pivot-CompleteEnvironment-ownedStandardLibrary"/>
-  </eClassifiers>
+      abstract="true" eSuperTypes="#T-pivot-Element"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-State" name="State" eSuperTypes="#T-pivot-Namespace #T-pivot-Vertex">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A State models a situation during which some (usually implicit) invariant condition holds."/>

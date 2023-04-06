@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -138,7 +138,7 @@ public class UnlimitedValueImpl extends NumberValueImpl implements UnlimitedValu
 		throw new InvalidValueException(PivotMessages.InvalidReal, null, null, this);
 	}
 
-	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull Type getType(@NonNull CompleteStandardLibrary standardLibrary) {
 		return standardLibrary.getUnlimitedNaturalType();
 	}
 

@@ -22,7 +22,7 @@ import org.eclipse.ocl.examples.codegen.generator.CodeGenerator;
 import org.eclipse.ocl.examples.codegen.generator.TypeDescriptor;
 import org.eclipse.ocl.examples.codegen.java.JavaLocalContext;
 import org.eclipse.ocl.examples.codegen.java.JavaStream;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -36,11 +36,11 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  */
 public class UnboxedMapDescriptor extends /*AbstractCollectionDescriptor*/AbstractDescriptor implements EcoreDescriptor, UnboxedDescriptor, MapDescriptor
 {
-	protected final @NonNull StandardLibrary standardLibrary;
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	protected final @NonNull Type keyType;
 	protected final @NonNull Type valueType;
 
-	public UnboxedMapDescriptor(@NonNull MapTypeId mapTypeId, @NonNull StandardLibrary standardLibrary, @NonNull Type keyType, @NonNull Type valueType) {
+	public UnboxedMapDescriptor(@NonNull MapTypeId mapTypeId, @NonNull CompleteStandardLibrary standardLibrary, @NonNull Type keyType, @NonNull Type valueType) {
 		super(mapTypeId);
 		this.standardLibrary = standardLibrary;
 		this.keyType = keyType;

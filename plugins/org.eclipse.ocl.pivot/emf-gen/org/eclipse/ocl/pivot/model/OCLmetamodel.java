@@ -156,10 +156,10 @@ public class OCLmetamodel extends ASResourceImpl
 
 	protected static class LibraryContents extends AbstractContents
 	{
-		protected final @NonNull Package standardLibrary;
+		protected final @NonNull Package libraryPackage;
 
-		protected LibraryContents(@NonNull Package standardLibrary) {
-			this.standardLibrary = standardLibrary;
+		protected LibraryContents(@NonNull Package libraryPackage) {
+			this.libraryPackage = libraryPackage;
 		}
 	}
 
@@ -241,8 +241,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Package pivot;
 		private final @NonNull Package orphanPackage;
 
-		protected Contents(@NonNull Package standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-			super(standardLibrary);
+		protected Contents(@NonNull Package libraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+			super(libraryPackage);
 			root = createModel("http://www.eclipse.org/ocl/2015/Pivot");
 			pivot = createPackage("pivot", "pivot", "http://www.eclipse.org/ocl/2015/Pivot", IdManager.METAMODEL, PivotPackage.eINSTANCE);
 			orphanPackage = createPackage("$$", "orphanage", "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
@@ -260,29 +260,29 @@ public class OCLmetamodel extends ASResourceImpl
 			return root;
 		}
 
-		private final @NonNull Package _ocl = standardLibrary;
-		private final @NonNull BagType _Bag = getBagType(_ocl, "Bag");
-		private final @NonNull Class _Boolean = getBooleanType(_ocl, "Boolean");
-		private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
-		private final @NonNull Class _Integer = getPrimitiveType(_ocl, "Integer");
-		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
-		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
-		private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
-		private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
-		private final @NonNull OrderedSetType _OrderedSet = getOrderedSetType(_ocl, "OrderedSet");
-		private final @NonNull Class _Real = getPrimitiveType(_ocl, "Real");
-		private final @NonNull SequenceType _Sequence = getSequenceType(_ocl, "Sequence");
-		private final @NonNull SetType _Set = getSetType(_ocl, "Set");
-		private final @NonNull Class _String = getPrimitiveType(_ocl, "String");
-		private final @NonNull CollectionType _UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
-		private final @NonNull Class _UnlimitedNatural = getPrimitiveType(_ocl, "UnlimitedNatural");
-		private final @NonNull TemplateParameter _Bag_T = getTemplateParameter(_Bag, 0);
-		private final @NonNull TemplateParameter _Collection_T = getTemplateParameter(_Collection, 0);
-		private final @NonNull TemplateParameter _OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
-		private final @NonNull TemplateParameter _OrderedSet_T = getTemplateParameter(_OrderedSet, 0);
-		private final @NonNull TemplateParameter _Sequence_T = getTemplateParameter(_Sequence, 0);
-		private final @NonNull TemplateParameter _Set_T = getTemplateParameter(_Set, 0);
-		private final @NonNull TemplateParameter _UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
+		/*4*/private final @NonNull Package _ocl = libraryPackage;
+		/*3*/private final @NonNull BagType _Bag = getBagType(_ocl, "Bag");
+		/*2*/private final @NonNull Class _Boolean = getBooleanType(_ocl, "Boolean");
+		/*3*/private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
+		/*2*/private final @NonNull Class _Integer = getPrimitiveType(_ocl, "Integer");
+		/*3*/private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
+		/*3*/private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
+		/*3*/private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
+		/*3*/private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
+		/*3*/private final @NonNull OrderedSetType _OrderedSet = getOrderedSetType(_ocl, "OrderedSet");
+		/*2*/private final @NonNull Class _Real = getPrimitiveType(_ocl, "Real");
+		/*3*/private final @NonNull SequenceType _Sequence = getSequenceType(_ocl, "Sequence");
+		/*3*/private final @NonNull SetType _Set = getSetType(_ocl, "Set");
+		/*2*/private final @NonNull Class _String = getPrimitiveType(_ocl, "String");
+		/*3*/private final @NonNull CollectionType _UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
+		/*2*/private final @NonNull Class _UnlimitedNatural = getPrimitiveType(_ocl, "UnlimitedNatural");
+		/*3*/private final @NonNull TemplateParameter _Bag_T = getTemplateParameter(_Bag, 0);
+		/*3*/private final @NonNull TemplateParameter _Collection_T = getTemplateParameter(_Collection, 0);
+		/*3*/private final @NonNull TemplateParameter _OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
+		/*3*/private final @NonNull TemplateParameter _OrderedSet_T = getTemplateParameter(_OrderedSet, 0);
+		/*3*/private final @NonNull TemplateParameter _Sequence_T = getTemplateParameter(_Sequence, 0);
+		/*3*/private final @NonNull TemplateParameter _Set_T = getTemplateParameter(_Set, 0);
+		/*3*/private final @NonNull TemplateParameter _UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
 
 		private void installPackages() {
 			root.getOwnedPackages().add(pivot);
@@ -311,6 +311,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _CompleteEnvironment = createClass(PivotPackage.Literals.COMPLETE_ENVIRONMENT);
 		private final @NonNull Class _CompleteModel = createClass(PivotPackage.Literals.COMPLETE_MODEL);
 		private final @NonNull Class _CompletePackage = createClass(PivotPackage.Literals.COMPLETE_PACKAGE);
+		private final @NonNull Class _CompleteStandardLibrary = createClass(PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY);
 		private final @NonNull Class _ConnectionPointReference = createClass(PivotPackage.Literals.CONNECTION_POINT_REFERENCE);
 		private final @NonNull Class _Constraint = createClass(PivotPackage.Literals.CONSTRAINT);
 		private final @NonNull Class _DataType = createClass(PivotPackage.Literals.DATA_TYPE);
@@ -774,6 +775,10 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_NamedElement);
 			ownedClasses.add(type);
+			type = _CompleteStandardLibrary;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_StandardLibrary);
+			ownedClasses.add(type);
 			type = _ConnectionPointReference;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Vertex);
@@ -1144,6 +1149,7 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_Element);
 			ownedClasses.add(type);
 			type = _StandardLibrary;
+			type.setIsAbstract(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Element);
 			ownedClasses.add(type);
@@ -2460,7 +2466,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_CompleteClass_owningCompletePackage = createProperty(PivotPackage.Literals.COMPLETE_CLASS__OWNING_COMPLETE_PACKAGE, _CompletePackage);
 		private final @NonNull Property pr_CompleteClass_partialClasses = createProperty(PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES, _Set_Class_T);
 		private final @NonNull Property pr_CompleteEnvironment_ownedCompleteModel = createProperty(PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_COMPLETE_MODEL, _CompleteModel);
-		private final @NonNull Property pr_CompleteEnvironment_ownedStandardLibrary = createProperty(PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, _StandardLibrary);
+		private final @NonNull Property pr_CompleteEnvironment_ownedStandardLibrary = createProperty(PivotPackage.Literals.COMPLETE_ENVIRONMENT__OWNED_STANDARD_LIBRARY, _CompleteStandardLibrary);
 		private final @NonNull Property pr_CompleteModel_orphanCompletePackage = createProperty(PivotPackage.Literals.COMPLETE_MODEL__ORPHAN_COMPLETE_PACKAGE, _OrphanCompletePackage);
 		private final @NonNull Property pr_CompleteModel_ownedCompletePackages = createProperty(PivotPackage.Literals.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES, _Set_CompletePackage_T);
 		private final @NonNull Property pr_CompleteModel_owningCompleteEnvironment = createProperty(PivotPackage.Literals.COMPLETE_MODEL__OWNING_COMPLETE_ENVIRONMENT, _CompleteEnvironment);
@@ -2471,6 +2477,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_CompletePackage_owningCompleteModel = createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL, _CompleteModel);
 		private final @NonNull Property pr_CompletePackage_owningCompletePackage = createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE, _CompletePackage);
 		private final @NonNull Property pr_CompletePackage_partialPackages = createProperty(PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES, _Set_Package_T);
+		private final @NonNull Property pr_CompleteStandardLibrary_owningCompleteEnvironment = createProperty(PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT, _CompleteEnvironment);
 		private final @NonNull Property pr_ConnectionPointReference_entries = createProperty(PivotPackage.Literals.CONNECTION_POINT_REFERENCE__ENTRIES, _Set_Pseudostate_T);
 		private final @NonNull Property pr_ConnectionPointReference_exits = createProperty(PivotPackage.Literals.CONNECTION_POINT_REFERENCE__EXITS, _Set_Pseudostate_T);
 		private final @NonNull Property pr_ConnectionPointReference_owningState = createProperty(PivotPackage.Literals.CONNECTION_POINT_REFERENCE__OWNING_STATE, _State);
@@ -2706,7 +2713,6 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Slot_definingProperty = createProperty(PivotPackage.Literals.SLOT__DEFINING_PROPERTY, _Property);
 		private final @NonNull Property pr_Slot_ownedValues = createProperty(PivotPackage.Literals.SLOT__OWNED_VALUES, _OrderedSet_ValueSpecification_T);
 		private final @NonNull Property pr_Slot_owningInstance = createProperty(PivotPackage.Literals.SLOT__OWNING_INSTANCE, _InstanceSpecification);
-		private final @NonNull Property pr_StandardLibrary_owningCompleteEnvironment = createProperty(PivotPackage.Literals.STANDARD_LIBRARY__OWNING_COMPLETE_ENVIRONMENT, _CompleteEnvironment);
 		private final @NonNull Property pr_State_isComposite = createProperty(PivotPackage.Literals.STATE__IS_COMPOSITE, _Boolean);
 		private final @NonNull Property pr_State_isOrthogonal = createProperty(PivotPackage.Literals.STATE__IS_ORTHOGONAL, _Boolean);
 		private final @NonNull Property pr_State_isSimple = createProperty(PivotPackage.Literals.STATE__IS_SIMPLE, _Boolean);
@@ -3031,7 +3037,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_CompleteEnvironment_ownedStandardLibrary);
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
-			property.setOpposite(pr_StandardLibrary_owningCompleteEnvironment);
+			property.setOpposite(pr_CompleteStandardLibrary_owningCompleteEnvironment);
 
 			ownedProperties = _CompleteModel.getOwnedProperties();
 			ownedProperties.add(property = pr_CompleteModel_orphanCompletePackage);
@@ -3078,6 +3084,12 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_CompletePackage_partialPackages);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Package_CompletePackage_partialPackages);
+
+			ownedProperties = _CompleteStandardLibrary.getOwnedProperties();
+			ownedProperties.add(property = pr_CompleteStandardLibrary_owningCompleteEnvironment);
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_CompleteEnvironment_ownedStandardLibrary);
 
 			ownedProperties = _ConnectionPointReference.getOwnedProperties();
 			ownedProperties.add(property = pr_ConnectionPointReference_entries);
@@ -4116,12 +4128,6 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_Slot_owningInstance);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_InstanceSpecification_ownedSlots);
-
-			ownedProperties = _StandardLibrary.getOwnedProperties();
-			ownedProperties.add(property = pr_StandardLibrary_owningCompleteEnvironment);
-			property.setIsRequired(false);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_CompleteEnvironment_ownedStandardLibrary);
 
 			ownedProperties = _State.getOwnedProperties();
 			ownedProperties.add(property = pr_State_isComposite);

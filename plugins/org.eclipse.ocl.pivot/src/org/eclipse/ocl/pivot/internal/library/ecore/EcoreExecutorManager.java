@@ -62,7 +62,7 @@ public class EcoreExecutorManager extends ExecutorManager
 	 * @param standardLibrary the OCL facilities
 	 */
 	public EcoreExecutorManager(@Nullable Object contextObject, @NonNull ExecutorStandardLibrary standardLibrary) {
-		super(standardLibrary);
+		super(standardLibrary, standardLibrary);
 		this.contextObject = contextObject;
 	}
 

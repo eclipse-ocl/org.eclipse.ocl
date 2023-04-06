@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
@@ -213,7 +213,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	/**
 	 * Return the (OCL) Standard Library that provides the build-in language facilities such as the OclAny and Set types.
 	 */
-	@NonNull StandardLibrary getStandardLibrary();
+	@NonNull CompleteStandardLibrary getStandardLibrary();
 
 	/**
 	 * Return true if this EnvironmentFactory's life cycle has completed.

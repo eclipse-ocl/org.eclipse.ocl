@@ -43,6 +43,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompletePackage;
@@ -54,7 +55,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -289,9 +290,9 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 */
 	protected final @NonNull Stack<@Nullable Type> staticTypeStack = new Stack<>();
 
-	public AbstractIdResolver(@NonNull CompleteEnvironment environment) {
+	public AbstractIdResolver(@NonNull CompleteEnvironment environment, @NonNull StandardLibrary standardLibrary) {
 		this.environment = environment;
-		this.standardLibrary = environment.getOwnedStandardLibrary();
+		this.standardLibrary = standardLibrary;
 	}
 
 	protected abstract org.eclipse.ocl.pivot.@NonNull Package addEPackage(@NonNull EPackage ePackage);
@@ -507,7 +508,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				enumerator2enumerationLiteralId2 = enumerator2enumerationLiteralId;
 				if (enumerator2enumerationLiteralId2 == null) {
 					enumerator2enumerationLiteralId = enumerator2enumerationLiteralId2 = new HashMap<>();
-					for (@NonNull CompletePackage dPackage : standardLibrary.getAllCompletePackages()) {
+					for (@NonNull CompletePackage dPackage : ((CompleteStandardLibrary)standardLibrary).getAllCompletePackages()) {
 						for (org.eclipse.ocl.pivot.Class dType : dPackage.getAllClasses()) {
 							if (dType instanceof Enumeration) {
 								for (EnumerationLiteral dEnumerationLiteral : ((Enumeration) dType).getOwnedLiterals()) {
@@ -848,7 +849,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				return standardLibrary.getSetType(elementType, isNullFree, lower, upper);
 			}
 			else if (generalizedId == TypeId.UNIQUE_COLLECTION) {
-				return standardLibrary.getCollectionType((CollectionType)standardLibrary.getUniqueCollectionType(), elementType, isNullFree, lower, upper);
+				return standardLibrary.getCollectionType(standardLibrary.getUniqueCollectionType(), elementType, isNullFree, lower, upper);
 			}
 			else {
 				throw new UnsupportedOperationException();

@@ -56,7 +56,7 @@ import org.eclipse.ocl.pivot.PrimitiveLiteralExp;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
@@ -130,7 +130,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	 */
 	protected static class StatusAnalyzer extends AbstractExtendingVisitor<@Nullable Boolean, @NonNull OCLinEcoreCodeGenerator>
 	{
-		protected final @NonNull StandardLibrary standardLibrary;
+		protected final @NonNull CompleteStandardLibrary standardLibrary;
 		private @NonNull Map<@NonNull VariableDeclaration, @Nullable Boolean> variable2verdict = new HashMap<>();
 		private @NonNull List<@NonNull OCLExpression> canBeOclAnyExpressions = new ArrayList<>();
 		private @NonNull List<@NonNull OperationCallExp> impliesExpressions = new ArrayList<>();

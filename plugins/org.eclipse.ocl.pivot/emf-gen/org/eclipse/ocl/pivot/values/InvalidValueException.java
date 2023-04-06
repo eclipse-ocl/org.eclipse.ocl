@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
@@ -182,7 +182,7 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 		throw this; //return obj instanceof InvalidValueException;
 	}
 
-	public @NonNull Type getType(@NonNull StandardLibrary standardLibrary) {
+	public @NonNull Type getType(@NonNull CompleteStandardLibrary standardLibrary) {
 		return standardLibrary.getOclInvalidType();
 	}
 

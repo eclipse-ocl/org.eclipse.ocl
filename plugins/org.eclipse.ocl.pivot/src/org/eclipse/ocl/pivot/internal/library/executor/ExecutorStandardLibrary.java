@@ -34,7 +34,6 @@ import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -43,13 +42,14 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
@@ -74,7 +75,6 @@ import org.eclipse.ocl.pivot.internal.ParameterImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.TemplateParameterImpl;
 import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
-import org.eclipse.ocl.pivot.internal.manager.AbstractStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -85,13 +85,115 @@ import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
-public class ExecutorStandardLibrary extends AbstractStandardLibraryImpl implements CompleteEnvironment
+public class ExecutorStandardLibrary extends StandardLibraryImpl implements CompleteEnvironment
 {
+	/**
+	 * OperationParameterDecoder decodes the type 'stream' used to define an operation paramter list in the
+	 * compact XXXTables formulation.
+	 */
+	protected static class OperationParameterDecoder
+	{
+		protected final @NonNull ExecutorStandardLibrary standardLibrary;
+		protected final @NonNull Operation asOperation;
+		protected final @NonNull Object @NonNull [] parameterTypes;
+		private int parameterTypesIndex = 0;
+
+		public OperationParameterDecoder(@NonNull ExecutorStandardLibrary standardLibrary, @NonNull Operation asOperation, @NonNull Object @NonNull [] parameterTypes) {
+			this.standardLibrary = standardLibrary;
+			this.asOperation = asOperation;
+			this.parameterTypes = parameterTypes;
+		}
+
+		public void decode() {
+			List<Parameter> asParameters = asOperation.getOwnedParameters();
+			while (parameterTypesIndex < parameterTypes.length) {
+				Type parameterType = decodeNextType();
+				Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
+				asParameter.setName("_" + asParameters.size());
+				asParameter.setType(parameterType);
+				asParameters.add(asParameter);
+			}
+			assert parameterTypesIndex == parameterTypes.length;
+		}
+
+		protected org.eclipse.ocl.pivot.@NonNull Class decodeClassType(org.eclipse.ocl.pivot.@NonNull Class genericClass) {
+			List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(genericClass);
+			if (templateParameters == null) {
+				return genericClass;
+			}
+			throw new UnsupportedOperationException();		// could be done, but not needed
+		}
+
+		protected org.eclipse.ocl.pivot.@NonNull Class decodeCollectionType(@NonNull CollectionType genericClass) {
+			List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(genericClass);
+			if (templateParameters == null) {
+				return genericClass;
+			}
+			Type elementType = decodeNextType();
+			return standardLibrary.getCollectionType(genericClass, elementType, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null);
+		}
+
+		protected org.eclipse.ocl.pivot.@NonNull Class decodeLambdaType(@NonNull Operation asOperation, @NonNull String name) {
+			int parameterIndex = (Integer)parameterTypes[parameterTypesIndex++];
+			LambdaTypeImpl asClass = (LambdaTypeImpl)PivotFactory.eINSTANCE.createLambdaType();
+			asClass.setName(name);
+			TypeId typeId = decodeTemplateParameter(asOperation, parameterIndex).getTypeId();
+			asClass.setTypeId(typeId);
+			asClass.setNormalizedTypeId(typeId);
+		//	initTemplateParameters(asClass, typeArguments);
+		//	EcoreFlatModel flatModel = getFlatModel();
+		//	FlatClass flatClass = flatModel.getEcoreFlatClass(asClass);
+		//	asClass.setFlatClass(flatClass);
+			return asClass;
+		}
+
+		protected org.eclipse.ocl.pivot.@NonNull Class decodeMapType(@NonNull MapType genericClass) {
+			List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(genericClass);
+			if (templateParameters == null) {
+				return genericClass;
+			}
+			Type keyType = decodeNextType();
+			Type valueType = decodeNextType();
+			return standardLibrary.getMapType(keyType, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueType, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
+		}
+
+		protected @NonNull Type decodeNextType() {
+			@NonNull Object parameterKey = parameterTypes[parameterTypesIndex++];
+			if (parameterKey instanceof Integer) {
+				return decodeTemplateParameter(asOperation, (int)parameterKey);
+			}
+			else if (parameterKey instanceof CollectionType) {
+				return decodeCollectionType((CollectionType)parameterKey);
+			}
+			else if (parameterKey instanceof MapType) {
+				return decodeMapType((MapType)parameterKey);
+			}
+			else if (parameterKey instanceof org.eclipse.ocl.pivot.Class) {
+				return decodeClassType((org.eclipse.ocl.pivot.Class)parameterKey);
+			}
+			else if ("Lambda".equals(parameterKey)) {
+				return decodeLambdaType(asOperation, (String)parameterKey);
+			}
+			else {
+				throw new UnsupportedOperationException();
+			}
+		}
+
+		protected @NonNull TemplateParameter decodeTemplateParameter(@NonNull Operation asOperation, int parameterIndex) {
+			List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(asOperation);
+			assert templateParameters != null;
+			TemplateParameter templateParameter = templateParameters.get(parameterIndex);
+			assert templateParameter != null;
+			return templateParameter;
+		}
+	}
+
 	private @NonNull Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
 
 	/**
@@ -204,6 +306,7 @@ public class ExecutorStandardLibrary extends AbstractStandardLibraryImpl impleme
 		return asClass;
 	}
 
+	@Deprecated
 	public @NonNull Operation createOperation(@NonNull String name, @NonNull ParameterTypes parameterTypes, org.eclipse.ocl.pivot.@NonNull Class asClass,
 			int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
@@ -233,6 +336,35 @@ public class ExecutorStandardLibrary extends AbstractStandardLibraryImpl impleme
 			asOperation.setOwnedSignature(templateSignature);
 		}
 		asClass.getOwnedOperations().add(asOperation);
+		return asOperation;
+	}
+
+	public @NonNull Operation createOperation(@NonNull String name, @NonNull Object @Nullable [] parameterTypes, org.eclipse.ocl.pivot.@NonNull Class asClass,
+			int index, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
+	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
+		OperationImpl asOperation = (OperationImpl)PivotFactory.eINSTANCE.createOperation();
+		asOperation.setName(name);
+	//	asOperation.setESObject(eOperation);
+	//	asOperation.setIndex(index);
+		asOperation.setImplementation(implementation);
+		if (typeParameters.parametersSize() > 0) {
+			TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
+			List<TemplateParameter> asTemplateParameters = templateSignature.getOwnedParameters();
+			for (int i = 0; i < typeParameters.parametersSize(); i++) {
+			//	Type type = typeParameters.get(i);		// XXX
+				TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
+				asTemplateParameter.setName("_" + i);
+			//	asTemplateParameter.setType(type);
+			//	asTemplateParameter.setTemplateParameterId(templateParameter.getTemplateParameterId());
+				asTemplateParameters.add(asTemplateParameter);
+			}
+			asOperation.setOwnedSignature(templateSignature);
+		}
+		asClass.getOwnedOperations().add(asOperation);
+		if (parameterTypes != null) {
+			OperationParameterDecoder operationParameterDecoder = new OperationParameterDecoder(this, asOperation, parameterTypes);
+			operationParameterDecoder.decode();
+		}
 		return asOperation;
 	}
 
@@ -314,10 +446,10 @@ public class ExecutorStandardLibrary extends AbstractStandardLibraryImpl impleme
 		return PivotValidationOptions.createValidationKey2severityMap();
 	}
 
-	@Override
-	public @NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages() {
-		throw new UnsupportedOperationException();
-	}
+//	@Override
+//	public @NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages() {
+//		throw new UnsupportedOperationException();
+//	}
 
 	@Override
 	public @NonNull BagType getBagType() {
@@ -350,7 +482,7 @@ public class ExecutorStandardLibrary extends AbstractStandardLibraryImpl impleme
 		return (CollectionType)OCLstdlibTables.Types._Collection;
 	}
 
-	// Short argument list with defaults used by auto-gen
+	@Deprecated // Short argument list with defaults used by auto-gen
 	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType) {
 		return getCollectionType((CollectionType)genericType, elementType, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null);
 	}
@@ -581,14 +713,14 @@ public class ExecutorStandardLibrary extends AbstractStandardLibraryImpl impleme
 	}
 
 	@Override
-	public @NonNull StandardLibrary getOwnedStandardLibrary() {
-		return this;
-	}
-
-	@Override
-	public CompleteEnvironment getOwningCompleteEnvironment() {
+	public @NonNull CompleteStandardLibrary getOwnedStandardLibrary() {
 		throw new UnsupportedOperationException();
 	}
+
+//	@Override
+//	public CompleteEnvironment getOwningCompleteEnvironment() {
+//		throw new UnsupportedOperationException();
+//	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getPackage() {
@@ -763,14 +895,14 @@ public class ExecutorStandardLibrary extends AbstractStandardLibraryImpl impleme
 	}
 
 	@Override
-	public void setOwnedStandardLibrary(StandardLibrary value) {
+	public void setOwnedStandardLibrary(CompleteStandardLibrary value) {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public void setOwningCompleteEnvironment(CompleteEnvironment value) {
-		throw new UnsupportedOperationException();
-	}
+//	@Override
+//	public void setOwningCompleteEnvironment(CompleteEnvironment value) {
+//		throw new UnsupportedOperationException();
+//	}
 
 	/**
 	 * Return the map.get(key).get() entry if there is one or null if not, removing any stale
