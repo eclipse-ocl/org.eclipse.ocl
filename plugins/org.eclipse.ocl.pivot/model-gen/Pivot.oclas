@@ -609,8 +609,9 @@
       <ownedProperties xmi:id="n0An," isImplicit="true" name="CompleteModel" opposite="#AF1+9" type="#zUrgD"/>
     </ownedClasses>
     <ownedClasses xmi:id="4w3oz" instanceClassName="org.eclipse.ocl.pivot.utilities.MorePivotable" isAbstract="true" isInterface="true"
-        name="MorePivotable"/>
-    <ownedClasses xmi:id="W4DIM" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable" isAbstract="true" isInterface="true" name="Nameable"/>
+        name="MorePivotable" superClasses="&_0;#zfDWR"/>
+    <ownedClasses xmi:id="W4DIM" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable" isAbstract="true" isInterface="true" name="Nameable"
+        superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="0kVqz" isAbstract="true" name="NamedElement" superClasses="#t5rpa">
       <ownedComments body="A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression."/>
       <ownedProperties xmi:id="HeJg3" isRequired="false" name="name" type="#CPVxu">
@@ -784,7 +785,8 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit = null&#xA;&#xA;"/>
       </ownedInvariants>
     </ownedClasses>
-    <ownedClasses xmi:id="NgpYx" instanceClassName="org.eclipse.ocl.pivot.utilities.Pivotable" isAbstract="true" isInterface="true" name="Pivotable"/>
+    <ownedClasses xmi:id="NgpYx" instanceClassName="org.eclipse.ocl.pivot.utilities.Pivotable" isAbstract="true" isInterface="true" name="Pivotable"
+        superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="7Wa4a" name="Precedence" superClasses="#0kVqz">
       <ownedProperties xmi:id="B4T3O" defaultValueString="left" isRequired="false" name="associativity" type="#,Swbo"/>
       <ownedProperties xmi:id="1q9Jp" defaultValueString="0" name="order" type="#vCSey"/>
@@ -923,7 +925,7 @@
     <ownedClasses xmi:id="drJ4W" name="RealLiteralExp" superClasses="#MFRWm">
       <ownedProperties xmi:id="Xj4U0" name="realSymbol" type="#PVdsa"/>
     </ownedClasses>
-    <ownedClasses xmi:id="dXAFV" isAbstract="true" isInterface="true" name="ReferringElement">
+    <ownedClasses xmi:id="dXAFV" isAbstract="true" isInterface="true" name="ReferringElement" superClasses="&_0;#zfDWR">
       <ownedOperations xmi:id="TgreS" name="getReferredElement" type="#t5rpa"/>
     </ownedClasses>
     <ownedClasses xmi:id="lqBOs" name="Region" superClasses="#MzHoc">
@@ -1341,7 +1343,8 @@
         <ownedComments body="The Region that contains this Vertex."/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xmi:id="WyWDC" instanceClassName="org.eclipse.ocl.pivot.util.Visitable" isAbstract="true" isInterface="true" name="Visitable"/>
+    <ownedClasses xmi:id="WyWDC" instanceClassName="org.eclipse.ocl.pivot.util.Visitable" isAbstract="true" isInterface="true" name="Visitable"
+        superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="fad2o" name="VoidType" superClasses="#pDcbe"/>
     <ownedClasses xmi:id="lfR8C" name="WildcardType" superClasses="#pDcbe">
       <ownedProperties xmi:id="mvH+v" isRequired="false" name="lowerBound" opposite="#WU9EG" type="#rrwsa"/>
