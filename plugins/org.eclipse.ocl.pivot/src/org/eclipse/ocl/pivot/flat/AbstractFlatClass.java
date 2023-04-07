@@ -20,12 +20,12 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.JavaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
@@ -852,7 +852,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initOperations() {
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 == null) {
-			name2partialOperations2 = name2partialOperations = new HashMap<@NonNull String, @NonNull PartialOperations>();
+			name2partialOperations2 = name2partialOperations = new HashMap<>();
 //			Set<CompleteClass> allSuperCompleteClasses = new HashSet<CompleteClass>();
 //			allSuperCompleteClasses.add(completeClass);
 //			for (CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {

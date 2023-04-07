@@ -118,7 +118,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			return this;
 		}
 		doSwitchAll(org.eclipse.ocl.pivot.Class.class, ClassUtil.<org.eclipse.ocl.pivot.Class>nullFree(pivotElement.getSuperClasses()), eClass.getEGenericSuperTypes());
-		if (pivotElement.getSuperClasses().isEmpty() && !(pivotElement instanceof AnyType) && !pivotElement .isIsInterface()) {
+		if (pivotElement.getSuperClasses().isEmpty() && !(pivotElement instanceof AnyType) /*&& !pivotElement .isIsInterface()*/) {	// CompaniesCS2AS.qvtc's Visiatbale needs OclElement
 			org.eclipse.ocl.pivot.Class superType = pivotElement instanceof Stereotype ? standardLibrary.getOclStereotypeType() : standardLibrary.getOclElementType();
 			pivotElement.getSuperClasses().add(superType);
 		}
