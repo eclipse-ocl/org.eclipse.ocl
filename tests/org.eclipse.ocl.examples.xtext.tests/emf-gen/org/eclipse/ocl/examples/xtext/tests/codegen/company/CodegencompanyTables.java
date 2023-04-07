@@ -23,7 +23,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.xtext.tests.codegen.company;
 
-import java.lang.String;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
@@ -32,7 +31,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameters;
@@ -113,7 +111,6 @@ public class CodegencompanyTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_medium = CodegencompanyTables.ENUMid_CompanySizeKind.getEnumerationLiteralId("medium");
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_small = CodegencompanyTables.ENUMid_CompanySizeKind.getEnumerationLiteralId("small");
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Employee = TypeId.ORDERED_SET.getSpecializedId(CodegencompanyTables.CLSSid_Employee, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Employee_0 = TypeId.ORDERED_SET.getSpecializedId(CodegencompanyTables.CLSSid_Employee, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull OrderedSetValue OrderedSet = ValueUtil.createOrderedSetOfEach(CodegencompanyTables.ORD_NULLid);
 	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid_ = IdManager.getTuplePartId(0, "range", CodegencompanyTables.SEQ_PRIMid_Integer);
 	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid__0 = IdManager.getTuplePartId(1, "size", CodegencompanyTables.ENUMid_CompanySizeKind);
@@ -224,7 +221,7 @@ public class CodegencompanyTables extends AbstractTables
 	}
 
 	/**
-	 *	The parameter lists shared by operations.
+	 *	The parameter type lists shared by operations.
 	 *
 	 * @noextend This class is not intended to be subclassed by clients.
 	 * @noinstantiate This class is not intended to be instantiated by clients.
@@ -235,8 +232,7 @@ public class CodegencompanyTables extends AbstractTables
 			Init.initStart();
 			Fragments.init();
 		}
-
-		public static final @NonNull ParameterTypes _Employee = TypeUtil.createParameterTypes(CodegencompanyTables.Types._Employee);
+		public static final @NonNull Object[] _Employee = new @NonNull Object[] {CodegencompanyTables.Types._Employee};
 
 		static {
 			Init.initEnd();
@@ -261,7 +257,7 @@ public class CodegencompanyTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation("hasNameAsOperation", TypeUtil.EMPTY_PARAMETER_TYPES, Types._Employee,
+		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation("hasNameAsOperation", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Employee,
 			0, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _Employee__reportsTo = LIBRARY.createOperation("reportsTo", Parameters._Employee, Types._Employee,
 			1, TemplateParameters.EMPTY_LIST, null);
