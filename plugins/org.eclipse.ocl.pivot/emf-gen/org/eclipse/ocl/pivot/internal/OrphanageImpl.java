@@ -1,14 +1,14 @@
-/*******************************************************************************
- * Copyright (c) 2011, 2023 Willink Transformations and others.
+/**
+ * Copyright (c) 2010, 2022 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *     E.D.Willink - initial API and implementation
- *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.manager;
+ *   E.D.Willink - Initial API and implementation
+ */
+package org.eclipse.ocl.pivot.internal;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,6 +25,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.AbstractEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -34,21 +35,27 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.ElementId;
-import org.eclipse.ocl.pivot.internal.PackageImpl;
+import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Orphanage</b></em>'.
+*
  * An Orphanage is a special purpose Package that transitively contains all metamodel elemants that
  * have no ancestral Package to contains them. There are specific type managers for Collection, Lambda,
  * Map and Tuple types. The managers weakly contain elements such as type specializations that
@@ -63,45 +70,138 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  * Each saved ASResource has a local orphanage that contains a selective copy of the shared orphanage so that
  * all references are terminated locally. ASSaver creates this copy via PivotSaveImpl.init(). The local orphanages
  * use a regular Package to avod the need for Orphange support in XMI.
+ *
+ * <!-- end-user-doc -->
+ *
+ * @generated
  */
-public class Orphanage extends PackageImpl
+public class OrphanageImpl extends PackageImpl implements Orphanage
 {
 	/**
-	 * The OrphanResource tailors the inherited ASResource functionality to support the single Resource shared by all
-	 * same-OCL consumers. It is not saved and so has no xmi:ids but it does have LUSSIDs
-	 * in order to contribute to the signatures of operations.
+	 * The number of structural features of the '<em>Orphanage</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
 	 */
-	protected static class OrphanResource extends ASResourceImpl
+	public static final int ORPHANAGE_FEATURE_COUNT = PackageImpl.PACKAGE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Orphanage</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ORPHANAGE_OPERATION_COUNT = PackageImpl.PACKAGE_OPERATION_COUNT + 0;
+
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected OrphanageImpl()
 	{
-		protected OrphanResource(@NonNull URI uri) {
-			super(uri, OCLASResourceFactory.getInstance());
-			setUpdating(true);
-			setSaveable(false);
-		}
+		super();
+	}
 
-		@Override
-		protected void doUnload() {
-			if (contents != null) {
-				for (EObject aContent : contents) {
-					if (aContent instanceof Orphanage) {
-						((Orphanage)aContent).dispose();
-					}
+	@Deprecated
+	public OrphanageImpl(@NonNull String orphanageName, @NonNull String orphanageUri, @NonNull String orphanagePrefix) {
+		super();
+		setName(orphanageName);
+		setURI(orphanageUri);
+		setNsPrefix(orphanagePrefix);
+	}
+
+	public OrphanageImpl(@NonNull StandardLibrary standardLibrary, @NonNull String orphanageName, @NonNull String orphanageUri, @NonNull String orphanagePrefix) {
+		super();
+		setName(orphanageName);
+		setURI(orphanageUri);
+		setNsPrefix(orphanagePrefix);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EClass eStaticClass()
+	{
+		return PivotPackage.Literals.ORPHANAGE;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
+	public <R> R accept(@NonNull Visitor<R> visitor) {
+		return visitor.visitOrphanage(this);
+	}
+
+	@Override
+	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
+		orphanClass.setOwningPackage(this);
+	//	getOwnedClasses().add(orphanClass);		// FIXME why doesn't this always work?
+	}
+
+	@Override
+	public void addPackageListener(@NonNull PartialPackages partialPackages) {
+		super.addPackageListener(partialPackages);
+	}
+
+	@Override
+	public void dispose() {
+		if (ownedClasses != null) {
+			((WeakEList<?>)ownedClasses).dispose();
+		}
+		if (ownedPackages != null) {
+			((WeakEList<?>)ownedPackages).dispose();
+		}
+	}
+
+	@Override
+	public @NonNull EList<org.eclipse.ocl.pivot.Class> getOwnedClasses() {
+		EList<org.eclipse.ocl.pivot.Class> ownedClasses2 = ownedClasses;
+		if (ownedClasses2 == null)
+		{
+			ownedClasses2 = ownedClasses = new WeakEList<org.eclipse.ocl.pivot.Class>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_TYPE, PivotPackage.TYPE__PACKAGE*/)
+					{
+						@Override
+						protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Class object) {
+							return object.getTypeId();
+						}
+
+					};
+		}
+		return ownedClasses2;
+	}
+
+	/**
+	 * @since 1.18
+	 */
+	@Override
+	public @NonNull EList<org.eclipse.ocl.pivot.Package> getOwnedPackages() {
+		EList<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
+		if (ownedPackages2 == null)
+		{
+			ownedPackages2 = ownedPackages = new WeakEList<org.eclipse.ocl.pivot.Package>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_PACKAGE, PivotPackage.PACKAGE__OWNING_PACKAGE*/)
+			{
+				@Override
+				protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Package object) {
+					return object.getPackageId();
 				}
-				contents = null;
-			}
-			//			super.doUnload();
-		}
 
-		@Override
-		public String getURIFragment(EObject eObject) {
-			// The OrphanResource cannot be saved so has no LUSSID-based xmi:ids, but Xtext serialization needs a URI
-			return superGetURIFragment(eObject);
+			};
 		}
+		return ownedPackages2;
+	}
 
-		@Override
-		public boolean isOrphanage() {
-			return true;
-		}
+	@Override
+	public void removePackageListener(@NonNull PartialPackages partialPackages) {
+		super.removePackageListener(partialPackages);
 	}
 
 	/**
@@ -397,10 +497,47 @@ public class Orphanage extends PackageImpl
 			return weakMap.toString();
 		}
 	}
+	/**
+	 * The OrphanResource tailors the inherited ASResource functionality to support the single Resource shared by all
+	 * same-OCL consumers. It is not saved and so has no xmi:ids but it does have LUSSIDs
+	 * in order to contribute to the signatures of operations.
+	 */
+	protected static class OrphanResource extends ASResourceImpl
+	{
+		protected OrphanResource(@NonNull URI uri) {
+			super(uri, OCLASResourceFactory.getInstance());
+			setUpdating(true);
+			setSaveable(false);
+		}
+
+		@Override
+		protected void doUnload() {
+			if (contents != null) {
+				for (EObject aContent : contents) {
+					if (aContent instanceof OrphanageImpl) {
+						((OrphanageImpl)aContent).dispose();
+					}
+				}
+				contents = null;
+			}
+			//			super.doUnload();
+		}
+
+		@Override
+		public String getURIFragment(EObject eObject) {
+			// The OrphanResource cannot be saved so has no LUSSID-based xmi:ids, but Xtext serialization needs a URI
+			return superGetURIFragment(eObject);
+		}
+
+		@Override
+		public boolean isOrphanage() {
+			return true;
+		}
+	}
 
 	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.nonNullEMF(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
 	@Deprecated /* @deprecated The global Orphanage is never used */
-	private static Orphanage ORPHAN_PACKAGE = null;
+	private static OrphanageImpl ORPHAN_PACKAGE = null;
 
 	/**
 	 * Return the orphan package within asModel, or null if none.
@@ -468,7 +605,7 @@ public class Orphanage extends PackageImpl
 	}
 
 	public static @NonNull Orphanage createOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
-		Orphanage orphanage = new Orphanage(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+		Orphanage orphanage = new OrphanageImpl(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
@@ -484,7 +621,7 @@ public class Orphanage extends PackageImpl
 	 */
 	@Deprecated
 	private static @NonNull Orphanage createSharedOrphanage(@NonNull ResourceSet resourceSet) {
-		Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+		Orphanage orphanage = new OrphanageImpl(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
@@ -499,7 +636,7 @@ public class Orphanage extends PackageImpl
 	 * @since 1.18
 	 */
 	public static @NonNull Orphanage createSharedOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
-		Orphanage orphanage = new Orphanage(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+		Orphanage orphanage = new OrphanageImpl(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
@@ -562,7 +699,7 @@ public class Orphanage extends PackageImpl
 			assert false : "Use of the global Orphanage is deprecated";
 			Orphanage instance2 = ORPHAN_PACKAGE;
 			if (instance2 == null) {
-				instance2 = ORPHAN_PACKAGE = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+				instance2 = ORPHAN_PACKAGE = new OrphanageImpl(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
 			}
 			return instance2;
 		}
@@ -615,7 +752,7 @@ public class Orphanage extends PackageImpl
 	 */
 	public static boolean isOrphanage(@NonNull Model asModel) {
 		String uri = asModel.getExternalURI();
-		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
+		return isOrphanage(uri);
 	}
 
 	/**
@@ -625,77 +762,12 @@ public class Orphanage extends PackageImpl
 	 */
 	public static boolean isOrphanage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		String uri = asPackage.getURI();
+		boolean isOrphanage = isOrphanage(uri);
+	//	assert isOrphanage == asPackage instanceof Orphanage;
+		return isOrphanage;
+	}
+
+	public static boolean isOrphanage(String uri) {
 		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
 	}
-
-
-	@Deprecated
-	public Orphanage(@NonNull String name, @NonNull String nsURI) {
-		//		super(uri);
-		//		setLoaded(true);
-		setName(name);
-		setURI(nsURI);
-		throw new UnsupportedOperationException();
-	}
-
-	protected final /*@NonNull*/ StandardLibrary standardLibrary;
-
-	public Orphanage(@NonNull StandardLibrary standardLibrary, @NonNull String name, @NonNull String nsURI) {
-		//		super(uri);
-		//		setLoaded(true);
-		setName(name);
-		setURI(nsURI);
-		this.standardLibrary = standardLibrary;
-	}
-
-	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
-		orphanClass.setOwningPackage(this);
-	//	getOwnedClasses().add(orphanClass);		// FIXME why doesn't this always work?
-	}
-
-	public void dispose() {
-		if (ownedClasses != null) {
-			((WeakEList<?>)ownedClasses).dispose();
-		}
-		if (ownedPackages != null) {
-			((WeakEList<?>)ownedPackages).dispose();
-		}
-	}
-
-	@Override
-	public @NonNull EList<org.eclipse.ocl.pivot.Class> getOwnedClasses() {
-		EList<org.eclipse.ocl.pivot.Class> ownedClasses2 = ownedClasses;
-		if (ownedClasses2 == null)
-		{
-			ownedClasses2 = ownedClasses = new WeakEList<org.eclipse.ocl.pivot.Class>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_TYPE, PivotPackage.TYPE__PACKAGE*/)
-					{
-						@Override
-						protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Class object) {
-							return object.getTypeId();
-						}
-
-					};
-		}
-		return ownedClasses2;
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Override
-	public @NonNull EList<org.eclipse.ocl.pivot.Package> getOwnedPackages() {
-		EList<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
-		if (ownedPackages2 == null)
-		{
-			ownedPackages2 = ownedPackages = new WeakEList<org.eclipse.ocl.pivot.Package>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_PACKAGE, PivotPackage.PACKAGE__OWNING_PACKAGE*/)
-			{
-				@Override
-				protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Package object) {
-					return object.getPackageId();
-				}
-
-			};
-		}
-		return ownedPackages2;
-	}
-}
+} //OrphanageImpl

@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -63,9 +64,9 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.ASSaverNew;
 import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
@@ -736,7 +737,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			return;
 		}
 		Model containingModel = PivotUtil.getContainingModel(reference);
-		if ((containingModel == root) || external2name.containsKey(reference) || Orphanage.isOrphanage(containingModel)) {
+		if ((containingModel == root) || external2name.containsKey(reference) || OrphanageImpl.isOrphanage(containingModel)) {
 			return;
 		}
 		if (reference instanceof Model) {
@@ -1279,10 +1280,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			else if (localOrphan instanceof TemplateParameterSubstitution) {
 			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
+			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && OrphanageImpl.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
 				s.append("orphanClass");
 			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {
+			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && OrphanageImpl.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {
 				s.append("orphanPackage");
 			}
 			else {
@@ -1296,7 +1297,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					nameQueries.putSymbolName(sharedOrphan, symbolName);
 				}
 				else if (localOrphan == localOrphanage) {
-					Orphanage sharedOrphanage = Orphanage.getOrphanage(environmentFactory.getCompleteModel().getSharedOrphanage());
+					Orphanage sharedOrphanage = OrphanageImpl.getOrphanage(environmentFactory.getCompleteModel().getSharedOrphanage());
 					nameQueries.putSymbolName(sharedOrphanage, symbolName);
 				}
 				else {

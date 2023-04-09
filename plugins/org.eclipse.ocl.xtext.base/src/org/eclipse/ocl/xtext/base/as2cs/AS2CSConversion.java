@@ -44,7 +44,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
@@ -337,7 +337,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			if (eContainer instanceof Model) {
 				break;				// Skip root Model
 			}
-			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
+			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && OrphanageImpl.isOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
 				break;				// Skip orphan package
 			}
 			if (eContainer instanceof TemplateSignature) {

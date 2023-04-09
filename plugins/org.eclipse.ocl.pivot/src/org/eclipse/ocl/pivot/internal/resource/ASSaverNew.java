@@ -32,11 +32,12 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -223,9 +224,9 @@ public class ASSaverNew extends AbstractASSaver
 	 */
 	public void localizeOrphans() {
 		Model asModel = PivotUtil.getModel(resource);
-		org.eclipse.ocl.pivot.Package localOrphanage = Orphanage.basicGetOrphanage(asModel);
+		org.eclipse.ocl.pivot.Package localOrphanage = OrphanageImpl.basicGetOrphanage(asModel);
 		ResourceSet resourceSet = resource.getResourceSet();
-		Orphanage sharedOrphanage = resourceSet != null ? Orphanage.basicGetSharedOrphanage(resourceSet) : null;
+		Orphanage sharedOrphanage = resourceSet != null ? OrphanageImpl.basicGetSharedOrphanage(resourceSet) : null;
 		if ((localOrphanage != null) && (sharedOrphanage != null)) {
 			loadOrphanage(localOrphanage, sharedOrphanage);
 		}
@@ -239,7 +240,7 @@ public class ASSaverNew extends AbstractASSaver
 				for (EObject eContainer = eObject; eContainer != null; eContainer = eContainer.eContainer()) {
 					if (eContainer == sharedOrphanage) {
 						if (localOrphanage == null) {
-							localOrphanage = Orphanage.createLocalOrphanage(asModel);
+							localOrphanage = OrphanageImpl.createLocalOrphanage(asModel);
 						}
 						EObject eSource = eObject;
 						if (eObject instanceof Property) {				// If Tuple Property referenced (before Tuple)

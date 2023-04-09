@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 
 public abstract class AbstractTypeManager

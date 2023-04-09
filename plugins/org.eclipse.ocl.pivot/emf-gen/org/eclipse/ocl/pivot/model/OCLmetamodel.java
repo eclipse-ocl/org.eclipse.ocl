@@ -373,6 +373,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _OppositePropertyCallExp;
 		private Class _OrderedSetType;
 		private Class _OrphanCompletePackage;
+		private Class _Orphanage;
 		private Class _Package;
 		private Class _Parameter;
 		private Class _ParameterVariable;
@@ -553,6 +554,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type = _OppositePropertyCallExp = createClass(pivot, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP));
 			ownedClasses.add(type = _OrderedSetType = createClass(pivot, PivotPackage.Literals.ORDERED_SET_TYPE));
 			ownedClasses.add(type = _OrphanCompletePackage = createClass(pivot, PivotPackage.Literals.ORPHAN_COMPLETE_PACKAGE));
+			ownedClasses.add(type = _Orphanage = createClass(pivot, PivotPackage.Literals.ORPHANAGE));
 			ownedClasses.add(type = _Package = createClass(pivot, PivotPackage.Literals.PACKAGE));
 			installComment(type, "A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.\nPackage specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.\nA package is used to group elements, and provides a namespace for the grouped elements.");
 			ownedClasses.add(type = _Parameter = createClass(pivot, PivotPackage.Literals.PARAMETER));
@@ -737,6 +739,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_OppositePropertyCallExp, _NavigationCallExp);
 			addSuperClass(_OrderedSetType, _CollectionType);
 			addSuperClass(_OrphanCompletePackage, _CompletePackage);
+			addSuperClass(_Orphanage, _Package);
 			addSuperClass(_Package, _Namespace);
 			addSuperClass(_Parameter, _VariableDeclaration);
 			addSuperClass(_ParameterVariable, _Variable);

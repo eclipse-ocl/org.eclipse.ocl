@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.ConnectionPointReference;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -81,6 +82,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -105,7 +107,6 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StateMachine;
@@ -246,50 +247,51 @@ implements PivotFactory {
 			case 76: return createOppositePropertyCallExp();
 			case 77: return createOrderedSetType();
 			case 78: return createOrphanCompletePackage();
-			case 79: return createPackage();
-			case 80: return createParameter();
-			case 81: return createParameterVariable();
-			case 83: return createPrecedence();
-			case 84: return createPrimitiveCompletePackage();
-			case 86: return createPrimitiveType();
-			case 87: return createProfile();
-			case 88: return createProfileApplication();
-			case 89: return createProperty();
-			case 90: return createPropertyCallExp();
-			case 91: return createPseudostate();
-			case 92: return createRealLiteralExp();
-			case 94: return createRegion();
-			case 95: return createResultVariable();
-			case 96: return createSelfType();
-			case 97: return createSendSignalAction();
-			case 98: return createSequenceType();
-			case 99: return createSetType();
-			case 100: return createShadowExp();
-			case 101: return createShadowPart();
-			case 102: return createSignal();
-			case 103: return createSlot();
-			case 105: return createState();
-			case 106: return createStateExp();
-			case 107: return createStateMachine();
-			case 108: return createStereotype();
-			case 109: return createStereotypeExtender();
-			case 110: return createStringLiteralExp();
-			case 111: return createTemplateBinding();
-			case 112: return createTemplateParameter();
-			case 113: return createTemplateParameterSubstitution();
-			case 114: return createTemplateSignature();
-			case 116: return createTransition();
-			case 117: return createTrigger();
-			case 118: return createTupleLiteralExp();
-			case 119: return createTupleLiteralPart();
-			case 120: return createTupleType();
-			case 122: return createTypeExp();
-			case 124: return createUnlimitedNaturalLiteralExp();
-			case 125: return createUnspecifiedValueExp();
-			case 127: return createVariable();
-			case 129: return createVariableExp();
-			case 132: return createVoidType();
-			case 133: return createWildcardType();
+			case 79: return createOrphanage();
+			case 80: return createPackage();
+			case 81: return createParameter();
+			case 82: return createParameterVariable();
+			case 84: return createPrecedence();
+			case 85: return createPrimitiveCompletePackage();
+			case 87: return createPrimitiveType();
+			case 88: return createProfile();
+			case 89: return createProfileApplication();
+			case 90: return createProperty();
+			case 91: return createPropertyCallExp();
+			case 92: return createPseudostate();
+			case 93: return createRealLiteralExp();
+			case 95: return createRegion();
+			case 96: return createResultVariable();
+			case 97: return createSelfType();
+			case 98: return createSendSignalAction();
+			case 99: return createSequenceType();
+			case 100: return createSetType();
+			case 101: return createShadowExp();
+			case 102: return createShadowPart();
+			case 103: return createSignal();
+			case 104: return createSlot();
+			case 106: return createState();
+			case 107: return createStateExp();
+			case 108: return createStateMachine();
+			case 109: return createStereotype();
+			case 110: return createStereotypeExtender();
+			case 111: return createStringLiteralExp();
+			case 112: return createTemplateBinding();
+			case 113: return createTemplateParameter();
+			case 114: return createTemplateParameterSubstitution();
+			case 115: return createTemplateSignature();
+			case 117: return createTransition();
+			case 118: return createTrigger();
+			case 119: return createTupleLiteralExp();
+			case 120: return createTupleLiteralPart();
+			case 121: return createTupleType();
+			case 123: return createTypeExp();
+			case 125: return createUnlimitedNaturalLiteralExp();
+			case 126: return createUnspecifiedValueExp();
+			case 128: return createVariable();
+			case 130: return createVariableExp();
+			case 133: return createVoidType();
+			case 134: return createWildcardType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -304,33 +306,33 @@ implements PivotFactory {
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case 134:
-				return createAssociativityKindFromString(eDataType, initialValue);
 			case 135:
-				return createCollectionKindFromString(eDataType, initialValue);
+				return createAssociativityKindFromString(eDataType, initialValue);
 			case 136:
-				return createPseudostateKindFromString(eDataType, initialValue);
+				return createCollectionKindFromString(eDataType, initialValue);
 			case 137:
-				return createTransitionKindFromString(eDataType, initialValue);
+				return createPseudostateKindFromString(eDataType, initialValue);
 			case 138:
-				return createBooleanFromString(eDataType, initialValue);
+				return createTransitionKindFromString(eDataType, initialValue);
 			case 139:
-				return createEcoreObjectFromString(eDataType, initialValue);
+				return createBooleanFromString(eDataType, initialValue);
 			case 140:
-				return createIntegerFromString(eDataType, initialValue);
+				return createEcoreObjectFromString(eDataType, initialValue);
 			case 141:
-				return createJavaClassFromString(eDataType, initialValue);
+				return createIntegerFromString(eDataType, initialValue);
 			case 142:
-				return createLibraryFeatureFromString(eDataType, initialValue);
+				return createJavaClassFromString(eDataType, initialValue);
 			case 143:
-				return createObjectFromString(eDataType, initialValue);
+				return createLibraryFeatureFromString(eDataType, initialValue);
 			case 144:
-				return createRealFromString(eDataType, initialValue);
+				return createObjectFromString(eDataType, initialValue);
 			case 145:
-				return createStringFromString(eDataType, initialValue);
+				return createRealFromString(eDataType, initialValue);
 			case 146:
-				return createThrowableFromString(eDataType, initialValue);
+				return createStringFromString(eDataType, initialValue);
 			case 147:
+				return createThrowableFromString(eDataType, initialValue);
+			case 148:
 				return createUnlimitedNaturalFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -346,33 +348,33 @@ implements PivotFactory {
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case 134:
-				return convertAssociativityKindToString(eDataType, instanceValue);
 			case 135:
-				return convertCollectionKindToString(eDataType, instanceValue);
+				return convertAssociativityKindToString(eDataType, instanceValue);
 			case 136:
-				return convertPseudostateKindToString(eDataType, instanceValue);
+				return convertCollectionKindToString(eDataType, instanceValue);
 			case 137:
-				return convertTransitionKindToString(eDataType, instanceValue);
+				return convertPseudostateKindToString(eDataType, instanceValue);
 			case 138:
-				return convertBooleanToString(eDataType, instanceValue);
+				return convertTransitionKindToString(eDataType, instanceValue);
 			case 139:
-				return convertEcoreObjectToString(eDataType, instanceValue);
+				return convertBooleanToString(eDataType, instanceValue);
 			case 140:
-				return convertIntegerToString(eDataType, instanceValue);
+				return convertEcoreObjectToString(eDataType, instanceValue);
 			case 141:
-				return convertJavaClassToString(eDataType, instanceValue);
+				return convertIntegerToString(eDataType, instanceValue);
 			case 142:
-				return convertLibraryFeatureToString(eDataType, instanceValue);
+				return convertJavaClassToString(eDataType, instanceValue);
 			case 143:
-				return convertObjectToString(eDataType, instanceValue);
+				return convertLibraryFeatureToString(eDataType, instanceValue);
 			case 144:
-				return convertRealToString(eDataType, instanceValue);
+				return convertObjectToString(eDataType, instanceValue);
 			case 145:
-				return convertStringToString(eDataType, instanceValue);
+				return convertRealToString(eDataType, instanceValue);
 			case 146:
-				return convertThrowableToString(eDataType, instanceValue);
+				return convertStringToString(eDataType, instanceValue);
 			case 147:
+				return convertThrowableToString(eDataType, instanceValue);
+			case 148:
 				return convertUnlimitedNaturalToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1272,6 +1274,18 @@ implements PivotFactory {
 	{
 		OrphanCompletePackageImpl orphanCompletePackage = new OrphanCompletePackageImpl();
 		return orphanCompletePackage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull Orphanage createOrphanage()
+	{
+		OrphanageImpl orphanage = new OrphanageImpl();
+		return orphanage;
 	}
 
 	/**

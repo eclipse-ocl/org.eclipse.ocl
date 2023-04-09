@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -67,13 +68,13 @@ import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
 import org.eclipse.ocl.pivot.internal.LambdaTypeImpl;
 import org.eclipse.ocl.pivot.internal.OperationImpl;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.ParameterImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.TemplateParameterImpl;
 import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
@@ -193,7 +194,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 //	private @NonNull Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
-	private final @NonNull Orphanage orphanage = Orphanage.createSharedOrphanage(this, new ResourceSetImpl());
+	private final @NonNull Orphanage orphanage = OrphanageImpl.createSharedOrphanage(this, new ResourceSetImpl());
 
 	/**
 	 * Configuration of validation preferences.

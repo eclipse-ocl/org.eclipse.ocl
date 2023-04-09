@@ -744,6 +744,7 @@
     <ownedClasses xmi:id="WaoLl" name="OrphanCompletePackage" superClasses="#+gDEJ">
       <ownedProperties xmi:id="pwEaB" isImplicit="true" name="CompleteModel" opposite="#aU0xR" type="#zUrgD"/>
     </ownedClasses>
+    <ownedClasses xmi:id="oL5q5" name="Orphanage" superClasses="#3ONqN"/>
     <ownedClasses xmi:id="3ONqN" name="Package" superClasses="#MzHoc">
       <ownedComments body="A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.&#xA;Package specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.&#xA;A package is used to group elements, and provides a namespace for the grouped elements."/>
       <ownedProperties xmi:id=",KgOn" isRequired="false" name="URI" type="#CPVxu">

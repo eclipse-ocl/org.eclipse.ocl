@@ -423,6 +423,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitOrphanage(org.eclipse.ocl.pivot.@NonNull Orphanage object) {
+		return visitPackage(object);
+	}
+
+	@Override
 	public R visitPackage(org.eclipse.ocl.pivot.@NonNull Package object) {
 		return visitNamespace(object);
 	}

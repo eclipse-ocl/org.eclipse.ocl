@@ -118,6 +118,7 @@ public interface Visitor<R>
 	R visitOppositePropertyCallExp(org.eclipse.ocl.pivot.@NonNull OppositePropertyCallExp object);
 	R visitOrderedSetType(org.eclipse.ocl.pivot.@NonNull OrderedSetType object);
 	R visitOrphanCompletePackage(org.eclipse.ocl.pivot.@NonNull OrphanCompletePackage object);
+	R visitOrphanage(org.eclipse.ocl.pivot.@NonNull Orphanage object);
 	R visitPackage(org.eclipse.ocl.pivot.@NonNull Package object);
 	R visitParameter(org.eclipse.ocl.pivot.@NonNull Parameter object);
 	R visitParameterVariable(org.eclipse.ocl.pivot.@NonNull ParameterVariable object);

@@ -50,6 +50,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -62,8 +63,8 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VariableDeclaration;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.context.AbstractBase2ASConversion;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -1311,7 +1312,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
 			if (csActualParameter instanceof WildcardTypeRefCS) {
 				Orphanage orphanage = environmentFactory.getCompleteModel().getSharedOrphanage();
-				templateParameterSubstitution.setActual(Orphanage.getOrphanWildcardType(orphanage));
+				templateParameterSubstitution.setActual(OrphanageImpl.getOrphanWildcardType(orphanage));
 			}
 			else {
 				Type pivotActualParameter = PivotUtil.getPivot(Type.class, csActualParameter);
