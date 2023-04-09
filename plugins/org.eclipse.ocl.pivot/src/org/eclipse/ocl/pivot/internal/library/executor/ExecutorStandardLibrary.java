@@ -709,6 +709,11 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
+	public @NonNull Orphanage getOrphanage() {
+		return orphanage;
+	}
+
+	@Override
 	public @NonNull CollectionType getOrderedCollectionType() {
 		return (CollectionType) OCLstdlibTables.Types._OrderedCollection;
 	}

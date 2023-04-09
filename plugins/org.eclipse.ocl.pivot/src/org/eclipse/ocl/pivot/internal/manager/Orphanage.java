@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2022 Willink Transformations and others.
+ * Copyright (c) 2011, 2023 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -48,7 +48,9 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
- * An Orphanage provides a Package that weakly contains elements such as type specializations that
+ * An Orphanage is a special purpose Package that transitively contains all metamodel elemants that
+ * have no ancestral Package to contains them. There are specific type managers for Collection, Lambda,
+ * Map and Tuple types. The managers weakly contain elements such as type specializations that
  * should require a container for the purposes of validation, but which should be eligible for
  * garbage collection whenever no longer in use.
  * <br>

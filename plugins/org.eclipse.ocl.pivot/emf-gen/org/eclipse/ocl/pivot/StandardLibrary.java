@@ -25,6 +25,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
@@ -42,6 +43,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public interface StandardLibrary extends Element
 {
+	@Deprecated // use getOrphanage() or start somewhere else
 	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass);
 
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId);
@@ -159,6 +161,8 @@ public interface StandardLibrary extends Element
 	 *  May return an InvalidType if keyType or valueType is a proxy.
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
+
+	@NonNull Orphanage getOrphanage();
 
 	/**
 	 * Return the specialized map type for a map type descriptor.
