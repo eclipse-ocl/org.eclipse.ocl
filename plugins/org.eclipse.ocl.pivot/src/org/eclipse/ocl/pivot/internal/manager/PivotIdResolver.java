@@ -173,7 +173,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		String completeURIorName = id.getName();
 		org.eclipse.ocl.pivot.Package rootPackage = standardLibrary.getRootPackage(completeURIorName);
 		if (rootPackage == null) {
-			Orphanage orphanage = metamodelManager.getCompleteModel().getOrphanage();
+			Orphanage orphanage = metamodelManager.getCompleteModel().getSharedOrphanage();
 			rootPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), completeURIorName);
 			if (rootPackage == null) {
 				return null;

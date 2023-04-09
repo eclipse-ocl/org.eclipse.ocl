@@ -193,7 +193,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 //	private @NonNull Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
-	private final @NonNull Orphanage orphanage = Orphanage.createSharedOrphanage(new ResourceSetImpl());
+	private final @NonNull Orphanage orphanage = Orphanage.createSharedOrphanage(this, new ResourceSetImpl());
 
 	/**
 	 * Configuration of validation preferences.
@@ -704,7 +704,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
-	public @NonNull Orphanage getOrphanage() {
+	public @NonNull Orphanage getSharedOrphanage() {
 		return orphanage;
 	}
 

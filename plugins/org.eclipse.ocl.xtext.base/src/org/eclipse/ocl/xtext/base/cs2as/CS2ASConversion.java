@@ -348,7 +348,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 		allPivotResources.addAll(metamodelManager.getLibraries());			// Library elements are not dead
 		allPivotResources.addAll(cs2asResourceMap.keySet());				// Incoming elements are not dead
-		allPivotResources.remove(metamodelManager.getCompleteModel().getOrphanage().eResource());			// FIXME redundant ??
+		allPivotResources.remove(metamodelManager.getCompleteModel().getSharedOrphanage().eResource());			// FIXME redundant ??
 		@SuppressWarnings("serial")
 		Map<EObject, Collection<Setting>> referencesToOrphans = new EcoreUtil.CrossReferencer(allPivotResources)
 		{
@@ -1310,7 +1310,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 			TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
 			if (csActualParameter instanceof WildcardTypeRefCS) {
-				Orphanage orphanage = environmentFactory.getCompleteModel().getOrphanage();
+				Orphanage orphanage = environmentFactory.getCompleteModel().getSharedOrphanage();
 				templateParameterSubstitution.setActual(Orphanage.getOrphanWildcardType(orphanage));
 			}
 			else {

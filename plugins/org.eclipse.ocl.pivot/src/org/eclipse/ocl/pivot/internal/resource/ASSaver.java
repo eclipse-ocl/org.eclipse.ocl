@@ -148,7 +148,7 @@ public class ASSaver extends AbstractASSaver
 	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Resource resource) {
 		org.eclipse.ocl.pivot.Package localOrphanage2 = localOrphanage;
 		if (localOrphanage2 == null) {
-			localOrphanage = localOrphanage2 = Orphanage.createLocalOrphanPackage(PivotUtil.getModel(resource));
+			localOrphanage = localOrphanage2 = Orphanage.createLocalOrphanage(PivotUtil.getModel(resource));
 		}
 		return localOrphanage2;
 	}

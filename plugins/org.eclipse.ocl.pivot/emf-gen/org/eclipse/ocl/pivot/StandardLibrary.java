@@ -141,6 +141,10 @@ public interface StandardLibrary extends Element
 
 //	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType);
 
+	org.eclipse.ocl.pivot.@Nullable Class getLibraryType(@NonNull String string, @NonNull List<@NonNull ? extends Type> templateArguments);
+
+	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments);
+
 	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
 
 	/**
@@ -158,8 +162,6 @@ public interface StandardLibrary extends Element
 	 *  May return an InvalidType if keyType or valueType is a proxy.
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
-
-	@NonNull Orphanage getOrphanage();
 
 	/**
 	 * Return the specialized map type for a map type descriptor.
@@ -367,9 +369,7 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
-	org.eclipse.ocl.pivot.@Nullable Class getLibraryType(@NonNull String string, @NonNull List<@NonNull ? extends Type> templateArguments);
-
-	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments);
+	@NonNull Orphanage getSharedOrphanage();
 
 	@NonNull Type getSpecializedType(@NonNull Type referenceType, @Nullable TemplateParameterSubstitutions referenceBindings);
 

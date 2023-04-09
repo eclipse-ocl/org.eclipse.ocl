@@ -872,11 +872,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull Orphanage getOrphanage() {
-		return getCompleteModel().getOrphanage();
-	}
-
-	@Override
 	public @NonNull CollectionType getOrderedCollectionType() {
 		CollectionType orderedCollectionType2 = orderedCollectionType;
 		if (orderedCollectionType2 == null) {
@@ -963,6 +958,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			setType2 = setType = resolveRequiredTemplateableType(SetType.class, TypeId.SET_NAME, 1);
 		}
 		return setType2;
+	}
+
+	@Override
+	public @NonNull Orphanage getSharedOrphanage() {
+		return getCompleteModel().getSharedOrphanage();
 	}
 
 	@Override

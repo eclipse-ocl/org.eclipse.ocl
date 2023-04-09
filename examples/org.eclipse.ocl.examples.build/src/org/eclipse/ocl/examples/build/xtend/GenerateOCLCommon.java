@@ -1296,7 +1296,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					nameQueries.putSymbolName(sharedOrphan, symbolName);
 				}
 				else if (localOrphan == localOrphanage) {
-					Orphanage sharedOrphanage = Orphanage.getOrphanage(environmentFactory.getCompleteModel().getOrphanage());
+					Orphanage sharedOrphanage = Orphanage.getOrphanage(environmentFactory.getCompleteModel().getSharedOrphanage());
 					nameQueries.putSymbolName(sharedOrphanage, symbolName);
 				}
 				else {

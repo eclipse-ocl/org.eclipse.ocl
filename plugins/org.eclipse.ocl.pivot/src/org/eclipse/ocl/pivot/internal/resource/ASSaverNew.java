@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -222,10 +223,11 @@ public class ASSaverNew extends AbstractASSaver
 	 */
 	public void localizeOrphans() {
 		Model asModel = PivotUtil.getModel(resource);
-		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetOrphanPackage(asModel);
-		Orphanage sharedOrphanage = Orphanage.getOrphanage(resource.getResourceSet());
-		if (localOrphanPackage != null) {
-			loadOrphanage(localOrphanPackage, sharedOrphanage);
+		org.eclipse.ocl.pivot.Package localOrphanage = Orphanage.basicGetOrphanage(asModel);
+		ResourceSet resourceSet = resource.getResourceSet();
+		Orphanage sharedOrphanage = resourceSet != null ? Orphanage.basicGetSharedOrphanage(resourceSet) : null;
+		if ((localOrphanage != null) && (sharedOrphanage != null)) {
+			loadOrphanage(localOrphanage, sharedOrphanage);
 		}
 		Collection<@NonNull EObject> moreObjects = resource.getContents();
 		while (moreObjects != null) {
@@ -236,8 +238,8 @@ public class ASSaverNew extends AbstractASSaver
 				EObject localEObject = eObject;
 				for (EObject eContainer = eObject; eContainer != null; eContainer = eContainer.eContainer()) {
 					if (eContainer == sharedOrphanage) {
-						if (localOrphanPackage == null) {
-							localOrphanPackage = Orphanage.createLocalOrphanPackage(asModel);
+						if (localOrphanage == null) {
+							localOrphanage = Orphanage.createLocalOrphanage(asModel);
 						}
 						EObject eSource = eObject;
 						if (eObject instanceof Property) {				// If Tuple Property referenced (before Tuple)
@@ -253,7 +255,7 @@ public class ASSaverNew extends AbstractASSaver
 							}
 							moreObjects.add(eSource);
 							if (localEObject instanceof org.eclipse.ocl.pivot.Class) {
-								localOrphanPackage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localEObject);
+								localOrphanage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localEObject);
 							}
 							else if (eSource instanceof Operation) {
 								throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
@@ -265,7 +267,7 @@ public class ASSaverNew extends AbstractASSaver
 						}
 						break;
 					}
-					else if (eContainer == localOrphanPackage) {
+					else if (eContainer == localOrphanage) {
 						break;
 					}
 				}
@@ -296,8 +298,8 @@ public class ASSaverNew extends AbstractASSaver
 			}
 		}
 		copier.copyReferences();
-		if (localOrphanPackage != null) {
-			ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanPackage.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
+		if (localOrphanage != null) {
+			ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanage.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
 		}
 		Map<EObject, Collection<Setting>> references2 = EcoreUtil.CrossReferencer.find(Collections.singletonList(asModel));
 		for (EObject eObject : references2.keySet()) {

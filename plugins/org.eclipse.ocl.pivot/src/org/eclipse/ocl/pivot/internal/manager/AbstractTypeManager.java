@@ -28,7 +28,7 @@ public abstract class AbstractTypeManager
 	public void dispose() {}
 
 	public @NonNull Orphanage getOrphanage() {
-		return standardLibrary.getOrphanage(); // orphanage;
+		return standardLibrary.getSharedOrphanage(); // orphanage;
 	}
 
 	protected final @NonNull StandardLibrary getStandardLibrary() {

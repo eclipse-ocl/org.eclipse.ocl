@@ -633,7 +633,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	}
 
 	public @NonNull WildcardType createWildcardType(org.eclipse.ocl.pivot.@Nullable Class lowerBound, org.eclipse.ocl.pivot.@Nullable Class upperBound) {		// FIXME move to PivotHelper
-		WildcardType wildcardType = Orphanage.getOrphanWildcardType(environmentFactory.getCompleteModel().getOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
+		WildcardType wildcardType = Orphanage.getOrphanWildcardType(environmentFactory.getCompleteModel().getSharedOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
 	//	wildcardType.setName("?");			// Name is not significant
 	//	wildcardType.setLowerBound(lowerBound != null ? lowerBound : standardLibrary.getOclAnyType());
 	//	wildcardType.setUpperBound(upperBound != null ? upperBound : standardLibrary.getOclVoidType());

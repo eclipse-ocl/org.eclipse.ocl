@@ -549,11 +549,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull Orphanage getOrphanage() {
+	public @NonNull Orphanage getSharedOrphanage() {
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 == null) {
 			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-			orphanage2 = orphanage = Orphanage.getOrphanage(/*environmentFactory.getStandardLibrary(),*/ metamodelManager.getASResourceSet());
+			orphanage2 = orphanage = Orphanage.getSharedOrphanage(environmentFactory.getStandardLibrary(), metamodelManager.getASResourceSet());
 			PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
 			orphanage2.addPackageListener(partialPackages);
 			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {

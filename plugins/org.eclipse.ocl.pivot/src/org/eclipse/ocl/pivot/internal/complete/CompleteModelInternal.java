@@ -51,10 +51,10 @@ public interface CompleteModelInternal extends CompleteModel
 	void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 	void didRemoveNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);
 	void didRemovePartialModel(@NonNull Model partialModel);
-	@Nullable String getCompleteURI(@Nullable String nsURI);
-	@NonNull Orphanage getOrphanage();
-	@NonNull CompleteStandardLibrary getStandardLibrary();
 	@Override
 	@NonNull CompleteEnvironmentInternal getCompleteEnvironment();
+	@Nullable String getCompleteURI(@Nullable String nsURI);
+	@NonNull Orphanage getSharedOrphanage();
+	@NonNull CompleteStandardLibrary getStandardLibrary();
 	@NonNull CompleteModelInternal init(@NonNull CompleteEnvironmentInternal completeEnvironment);
 }
