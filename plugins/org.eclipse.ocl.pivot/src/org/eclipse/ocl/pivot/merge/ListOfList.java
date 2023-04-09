@@ -30,6 +30,7 @@ public class ListOfList<E>
 		outerIterable.add(innerIterable);
 	}
 
+	@SuppressWarnings("null")
 	public @NonNull Iterable<E> getInnerIterable() {
 		return Iterables.concat(outerIterable);
 	}

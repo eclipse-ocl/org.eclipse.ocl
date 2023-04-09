@@ -40,13 +40,21 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Orphanage;
+import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
+import org.eclipse.ocl.pivot.internal.ReflectiveStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteURIs;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
@@ -64,6 +72,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 
@@ -71,6 +80,151 @@ import com.google.common.collect.Lists;
 
 public abstract class GenerateASModels extends GenerateOCLCommonXtend
 {
+	/**
+	 * The MergingStandardLibrary lazily discovers library types on demand thereby accommodating the progressive vreation by the merger.
+	 */
+	protected static class MergingStandardLibrary extends ReflectiveStandardLibraryImpl
+	{
+		protected final @NonNull Model asModel;
+
+		protected MergingStandardLibrary(@NonNull Model asModel) {
+			this.asModel = asModel;
+		}
+
+		@Override
+		public @Nullable Type getCommonTupleType(
+				@NonNull TupleType leftType,
+				@NonNull TemplateParameterSubstitutions leftSubstitutions,
+				@NonNull TupleType rightType,
+				@NonNull TemplateParameterSubstitutions rightSubstitutions) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public org.eclipse.ocl.pivot.@NonNull Class getMapOfEntryType(
+				org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(
+				@NonNull Type classType) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Package getNestedPackage(@NonNull Package parentPackage,
+				@NonNull String name) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Type getNestedType(@NonNull Package parentPackage,
+				@NonNull String name) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Package getNsURIPackage(@NonNull String nsURI) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Type getOclType(@NonNull String typeName) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull Orphanage getOrphanage() {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull Package getPackage() {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Package getRootPackage(@NonNull String name) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull TupleType getTupleType(@NonNull TupleType type,
+				@Nullable TemplateParameterSubstitutions usageBindings) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public @NonNull FlatModel getFlatModel() {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
+		//	specializedClass.getSuperClasses().addAll(unspecializedClass.getSuperClasses());		// XXX promote
+		}
+
+		@Override
+		protected boolean isUnspecialized(
+				@NonNull CollectionType genericType,
+				@NonNull Type elementType, @Nullable Boolean isNullFree,
+				@Nullable IntegerValue lower,
+				@Nullable UnlimitedNaturalValue upper) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		protected boolean isUnspecialized(@NonNull Type keyType,
+				@Nullable Boolean keysAreNullFree, @NonNull Type valueType,
+				@Nullable Boolean valuesAreNullFree) {
+			// TODO Auto-generated method stub
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String name) {
+			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(asModel)) {
+				org.eclipse.ocl.pivot.@Nullable Class asClass = getLibraryType(asPackage, name);
+				if (asClass != null) {
+					return asClass;
+				}
+			}
+			return null;
+		}
+
+		private org.eclipse.ocl.pivot.@Nullable Class getLibraryType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
+			if (asPackage instanceof Orphanage) {
+				return null;
+			}
+			for (org.eclipse.ocl.pivot.@NonNull Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
+				if (name.equals(asClass.getName())) {
+					return asClass;
+				}
+			}
+			for (org.eclipse.ocl.pivot.@NonNull Package asNestedPackage : PivotUtil.getOwnedPackages(asPackage)) {
+				org.eclipse.ocl.pivot.@Nullable Class asClass = getLibraryType(asNestedPackage, name);
+				if (asClass != null) {
+					return asClass;
+				}
+			}
+			return null;
+		}
+	}
+
 	protected String stdlibFile;
 	protected String ecoreFile;
 //	protected String libraryName;
@@ -175,6 +329,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 				return;
 			}
 			Map<String, Object> options = new HashMap<String, Object>();
+			options.put(ASResource.OPTION_LOCALIZE_ORPHANS, Boolean.FALSE);
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
@@ -245,7 +400,11 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 						eClass.getEOperations().clear();
 						//						eClass.getEStructuralFeatures().clear();
 					}
-					eClassifier.getEAnnotations().clear();
+					EAnnotation oclAnnotation = eClassifier.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
+					if (oclAnnotation != null) {
+						eClassifier.getEAnnotations().remove(oclAnnotation);
+					}
+				//	eClassifier.getEAnnotations().clear();
 					//				EAnnotation eAnnotation = eClassifier.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
 					//				if (eAnnotation != null) {
 					//					eClassifier.getEAnnotations().remove(eAnnotation);
@@ -314,7 +473,11 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 						((EDataType)eClassifier).setInstanceClass(Object.class);
 					}
 				}
-				ePackage.getEAnnotations().clear();
+				EAnnotation oclAnnotation = ePackage.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
+				if (oclAnnotation != null) {
+					ePackage.getEAnnotations().remove(oclAnnotation);
+				}
+			//	ePackage.getEAnnotations().clear();
 				//			EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
 				//			if (eAnnotation != null) {
 				//				ePackage.getEAnnotations().remove(eAnnotation);
@@ -461,39 +624,39 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 	//	asResourceSet.getResources().remove(asResource);
 	//	ResourceSet resourceSet = new ResourceSetImpl();
 	//	resourceSet.getResources().add(asResource);
-		Model asModel = PivotUtil.createModel(mergedURI.toString());
-		asResource.getContents().add(asModel);
+		Model mergedModel = PivotUtil.createModel(mergedURI.toString());
+		asResource.getContents().add(mergedModel);
+		Orphanage mergedOrphanage = OrphanageImpl.createOrphanage(new MergingStandardLibrary(mergedModel));
+		mergedModel.getOwnedPackages().add(mergedOrphanage);
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		for (CompletePackage completePackage : completeModel.getAllCompletePackages()) {
 			if (PivotConstants.METAMODEL_NAME.equals(completePackage.getURI())) {
-				org.eclipse.ocl.pivot.Package asPackage = null;
-				String name = null;
+				List<org.eclipse.ocl.pivot.Package> asPackages = new ArrayList<>();
+			//	String name = null;
 				for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : PivotUtil.getPartialPackages(completePackage)) {
-					if (partialPackage.eContainer() == asModel1) {
-						if (asPackage == null) {
-							asPackage = partialPackage;
-						}
-					}
 					if (partialPackage.eClass() == PivotPackage.Literals.PACKAGE) {
-						if (name == null) {
-							name = partialPackage.getName();
-						}
+						asPackages.add(partialPackage);
 					}
 				}
-				assert asPackage != null;
+				for (org.eclipse.ocl.pivot.@NonNull Package partialPackage : PivotUtil.getPartialPackages(completePackage)) {
+					if (partialPackage.eClass() != PivotPackage.Literals.PACKAGE) {
+						asPackages.add(partialPackage);
+					}
+				}
+			//	assert asPackage != null;
 				assert environmentFactory != null;
 			//	ASResourceImpl.SKIP_CHECK_BAD_REFERENCES = true;		// XXX
 
-				Merger merger = new Merger(environmentFactory);
-				org.eclipse.ocl.pivot.Package mergedPackage = merger.merge(asModel.getOwnedPackages(), completePackage.getPartialPackages());
+				Merger merger = new Merger(environmentFactory, mergedOrphanage);
+				org.eclipse.ocl.pivot.Package mergedPackage = merger.merge(mergedModel.getOwnedPackages(), asPackages);
 				//	org.eclipse.ocl.pivot.Package primaryPackage = completePackage.getPrimaryPackage();
 				//	PivotUtilInternal.resetContainer(primaryPackage);
 				//	asPackage = primaryPackage;
 				//	asModel.getOwnedPackages().add(mergedPackage);
 			//	mergePackage(asPackage, completePackage);
-				if (name != null) {
+			//	if (name != null) {
 			//		asPackage.setName(name);
-				}
+			//	}
 			}
 		}
 		return asResource;

@@ -394,6 +394,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _Pseudostate;
 		private Class _RealLiteralExp;
 		private Class _ReferringElement;
+		private Class _ReflectiveStandardLibrary;
 		private Class _Region;
 		private Class _ResultVariable;
 		private Class _SelfType;
@@ -584,6 +585,8 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _RealLiteralExp = createClass(pivot, PivotPackage.Literals.REAL_LITERAL_EXP);
 			type = _ReferringElement = createClass(pivot, PivotPackage.Literals.REFERRING_ELEMENT);
 			type.setIsAbstract(true);
+			type = _ReflectiveStandardLibrary = createClass(pivot, PivotPackage.Literals.REFLECTIVE_STANDARD_LIBRARY);
+			type.setIsAbstract(true);
 			type = _Region = createClass(pivot, PivotPackage.Literals.REGION);
 			installComment(type, "A Region is a top-level part of a StateMachine or a composite State, that serves as a container for the Vertices and Transitions of the StateMachine. A StateMachine or composite State may contain multiple Regions representing behaviors that may occur in parallel.");
 			type = _ResultVariable = createClass(pivot, PivotPackage.Literals.RESULT_VARIABLE);
@@ -676,7 +679,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_CompleteEnvironment, _Element);
 			addSuperClass(_CompleteModel, _NamedElement);
 			addSuperClass(_CompletePackage, _NamedElement);
-			addSuperClass(_CompleteStandardLibrary, _StandardLibrary);
+			addSuperClass(_CompleteStandardLibrary, _ReflectiveStandardLibrary);
 			addSuperClass(_ConnectionPointReference, _Vertex);
 			addSuperClass(_Constraint, _NamedElement);
 			addSuperClass(_DataType, _Class);
@@ -762,6 +765,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_Pseudostate, _Vertex);
 			addSuperClass(_RealLiteralExp, _NumericLiteralExp);
 			addSuperClass(_ReferringElement, _OclElement);
+			addSuperClass(_ReflectiveStandardLibrary, _StandardLibrary);
 			addSuperClass(_Region, _Namespace);
 			addSuperClass(_ResultVariable, _Variable);
 			addSuperClass(_SelfType, _Class);

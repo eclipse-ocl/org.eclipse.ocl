@@ -21,8 +21,8 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated oclas -->
       <package
-            uri="http://www.eclipse.org/ocl/2023/Library"
-            class="org.eclipse.ocl.ocl.OCLASPackage"
+            uri="http://www.eclipse.org/ocl/2015/PivotAS"
+            class="org.eclipse.ocl.pivotas.OCLASPackage"
             genModel="model/oclas.genmodel"/>
    </extension>
 

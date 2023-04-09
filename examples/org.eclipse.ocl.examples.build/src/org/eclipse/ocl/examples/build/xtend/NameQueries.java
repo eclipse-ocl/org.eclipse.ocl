@@ -58,7 +58,7 @@ public class NameQueries
 
 	public NameQueries(@NonNull MetamodelManagerInternal metamodelManager) {
 		this.metamodelManager = metamodelManager;
-		this.genModelHelper = new EcoreGenModelHelper((PivotMetamodelManager)metamodelManager);
+		this.genModelHelper = new EcoreGenModelHelper((PivotMetamodelManager)metamodelManager, null);
 	}
 
 	public @Nullable String basicGetSymbolName(@NonNull Object elem) {

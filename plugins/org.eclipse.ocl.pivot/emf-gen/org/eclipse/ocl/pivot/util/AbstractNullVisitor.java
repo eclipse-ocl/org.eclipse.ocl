@@ -493,6 +493,11 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 	}
 
 	@Override
+	public R visitReflectiveStandardLibrary(org.eclipse.ocl.pivot.@NonNull ReflectiveStandardLibrary object) {
+		return null;
+	}
+
+	@Override
 	public R visitRegion(org.eclipse.ocl.pivot.@NonNull Region object) {
 		return null;
 	}

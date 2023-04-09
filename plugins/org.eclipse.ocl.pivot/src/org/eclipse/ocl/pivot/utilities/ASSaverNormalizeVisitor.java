@@ -15,7 +15,6 @@ import java.util.Comparator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASSaver;
@@ -103,9 +102,7 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, Ab
 
 	@Override
 	public Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package object) {
-		if (!(object instanceof OrphanageImpl)) {			// The Orphanage is not assignable/sortable
-			ClassUtil.sort(ClassUtil.nullFree(object.getOwnedClasses()), TypeComparator.INSTANCE);
-		}
+		ClassUtil.sort(ClassUtil.nullFree(object.getOwnedClasses()), TypeComparator.INSTANCE);
 		return null;
 	}
 

@@ -78,11 +78,6 @@ public class TupleTypeImpl
 
 	private /*final @NonNull*/ TupleTypeId tupleTypeId;		// FIXME Redundant, but PivotSaver has to 'clone' these using EcoreUtil.Copier
 
-	public TupleTypeImpl(@NonNull TupleTypeId tupleTypeId) {
-		this.tupleTypeId = tupleTypeId;
-		setName(tupleTypeId.getName());
-	}
-
 	@Override
 	public @NonNull TypeId computeId() {
 		TupleTypeId tupleTypeId2 = tupleTypeId;
@@ -143,6 +138,13 @@ public class TupleTypeImpl
 	@Override
 	public @NonNull TupleTypeId getTypeId() {
 		return (TupleTypeId) super.getTypeId();
+	}
+
+	public void init(@NonNull TupleTypeId tupleTypeId, org.eclipse.ocl.pivot.@NonNull Class oclTupleType, @NonNull List<@NonNull Property> asParts) {
+		this.tupleTypeId = tupleTypeId;
+		setName(tupleTypeId.getName());
+		getSuperClasses().add(oclTupleType);
+		getOwnedProperties().addAll(asParts);
 	}
 
 	@Override

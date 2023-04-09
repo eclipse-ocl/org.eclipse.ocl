@@ -10,18 +10,26 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.merge;
 
-import org.eclipse.emf.ecore.EObject;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Orphanage;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TuplePart;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -29,70 +37,111 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * The MergerResolveVisitor is used during the second merge pass to convert the target of a reference within the partial models
  * to the corresponding target with the merged model.
  */
-public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EObject, @NonNull Merger>
+public class MergerResolveVisitor extends AbstractExtendingVisitor<@NonNull Element, @NonNull Merger>
 {
-	public MergerResolveVisitor(@NonNull Merger context) {
+	protected final @NonNull Orphanage orphanage;
+
+	public MergerResolveVisitor(@NonNull Merger context, @NonNull Orphanage orphanage) {
 		super(context);
+		this.orphanage = orphanage;
 	}
 
 	@Override
-	public @Nullable EObject visiting(@NonNull Visitable visitable) {
-		System.out.println("Unsupported " + visitable.eClass().getName() + " for " + getClass().getSimpleName());
-		return null;
+	public @NonNull Element visiting(@NonNull Visitable visitable) {
+		throw new UnsupportedOperationException("Unsupported " + visitable.eClass().getName() + " for " + getClass().getSimpleName());
+	//	System.out.println("Unsupported " + visitable.eClass().getName() + " for " + getClass().getSimpleName());
+	//	return null;
 	}
 
 	@Override
-	public @Nullable EObject visitCollectionType(@NonNull CollectionType asCollectionType) {
+	public @NonNull CollectionType visitCollectionType(@NonNull CollectionType asCollectionType) {
 		TemplateableElement unspecializedElement = asCollectionType.getUnspecializedElement();
 		if (unspecializedElement == null) {
-			return super.visitCollectionType(asCollectionType);
+			return (CollectionType)super.visitCollectionType(asCollectionType);
 		}
 		CollectionType mergedCollectionType = (CollectionType)unspecializedElement.accept(this);
 		Type mergedElementType = (Type)asCollectionType.getElementType().accept(this);
+		if (mergedElementType == null) {		// XXX
+			mergedElementType = (Type)asCollectionType.getElementType().accept(this);		// XXX
+			return null;
+		}
 		boolean isNullFree = asCollectionType.isIsNullFree();
 		IntegerValue lowerValue = asCollectionType.getLowerValue();
 		UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
-		return context.getCollectionType(mergedCollectionType, mergedElementType, isNullFree, lowerValue, upperValue);
+		return orphanage.getCollectionType(mergedCollectionType, mergedElementType, isNullFree, lowerValue, upperValue);
 	}
 
 	@Override
-	public @Nullable EObject visitElement(@NonNull Element partialElement) {
-		return context.getMergedElement(partialElement);
+	public @NonNull Element visitElement(@NonNull Element partialElement) {
+		Element mergedElement = context.getMergedElement(partialElement);
+		return ClassUtil.nonNullState(mergedElement);
 	}
 
 	@Override
-	public @Nullable EObject visitLambdaType(@NonNull LambdaType asLambdaType) {
-		TemplateableElement unspecializedElement = asLambdaType.getUnspecializedElement();
-		if (unspecializedElement == null) {
-			return super.visitLambdaType(asLambdaType);
-		}
+	public @NonNull LambdaType visitLambdaType(@NonNull LambdaType asLambdaType) {
+	//	TemplateableElement unspecializedElement = asLambdaType.getUnspecializedElement();
+	//	if (unspecializedElement == null) {
+	//		return (LambdaType) super.visitLambdaType(asLambdaType);
+	//	}
 	//	throw new UnsupportedOperationException();
 	//	return super.visitLambdaType(object);
-		return null;
+	//	return null;
+		Type mergedContextType = (Type)asLambdaType.getContextType().accept(this);
+		@NonNull List<@NonNull Type> mergedParameterTypes	= new ArrayList<>();
+		for (@NonNull Type parameterType : PivotUtil.getParameterType(asLambdaType)) {
+			mergedParameterTypes.add((Type)parameterType.accept(this));
+		}
+		Type mergedResultType = (Type)asLambdaType.getResultType().accept(this);
+		return orphanage.getLambdaType(orphanage.getStandardLibrary().getOclLambdaType(), mergedContextType, mergedParameterTypes, mergedResultType);
 	}
 
 	@Override
-	public @Nullable EObject visitMapType(@NonNull MapType asMapType) {
+	public @NonNull MapType visitMapType(@NonNull MapType asMapType) {
 		TemplateableElement unspecializedElement = asMapType.getUnspecializedElement();
 		if (unspecializedElement == null) {
-			return super.visitMapType(asMapType);
+			return (MapType)super.visitMapType(asMapType);
 		}
+		MapType mergedMapType = (MapType)unspecializedElement.accept(this);
 		Type mergedKeyType = (Type)asMapType.getKeyType().accept(this);
 		Type mergedValueType = (Type)asMapType.getValueType().accept(this);
 		boolean isKeysAreNullFree = asMapType.isKeysAreNullFree();
 		boolean isValuesAreNullFree = asMapType.isValuesAreNullFree();
-		return context.getMapType(mergedKeyType, isKeysAreNullFree, mergedValueType, isValuesAreNullFree);
+		return orphanage.getMapType(mergedMapType, mergedKeyType, isKeysAreNullFree, mergedValueType, isValuesAreNullFree);
 	}
 
 	@Override
-	public @Nullable EObject visitTupleType(@NonNull TupleType asTupleType) {
-/*		Map<@NonNull String, @NonNull Type> tupleParts = new HashMap<>();
-		for (@NonNull Property asProperty : PivotUtil.getOwnedProperties(asTupleType)) {
-			Type mergedType = (Type)asProperty.getType().accept(this);
-			assert mergedType != null;
-			tupleParts.put(NameUtil.getName(asProperty), mergedType);
+	public @NonNull Property visitProperty(@NonNull Property asProperty) {
+		Property mergedProperty = (Property)context.getMergedElement(asProperty);
+		if (mergedProperty == null) {
+			if ("pivotas::Behavior::State".equals(asProperty.toString())) {
+				getClass();		// XXX
+			}
+			Property asOpposite = asProperty.getOpposite();
+			Property mergedOpposite = (Property)context.getMergedElement(asOpposite);
+			StringBuilder s = new StringBuilder();
+			s.append("visitProperty " + NameUtil.debugSimpleName(mergedOpposite));
+			s.append("\n\t" + NameUtil.debugSimpleName(asProperty) + " : " + asProperty);
+			s.append("\n\t" + NameUtil.debugSimpleName(asOpposite) + " : " + asOpposite);
+			System.out.println(s.toString());
 		}
-		return context.getTupleType("Tuple", tupleParts); */
-		return context.getTupleType(asTupleType.getTypeId());
+//		assert mergedProperty != null;
+		return mergedProperty != null ? mergedProperty : asProperty;
+	}
+
+	@Override
+	public @NonNull TupleType visitTupleType(@NonNull TupleType asTupleType) {
+	//	TemplateableElement unspecializedElement = asTupleType.getUnspecializedElement();
+	//	if (unspecializedElement == null) {
+	//		return super.visitTupleType(asTupleType);
+	//	}
+	//	TupleType mergedTupleType = (TupleType)unspecializedElement.accept(this);
+		List<@NonNull Property> tupleParts = PivotUtilInternal.getOwnedPropertiesList(asTupleType);
+		@NonNull TuplePart[] mergedTupleParts = new @NonNull TuplePart[tupleParts.size()];
+		int i = 0;
+		for (@NonNull Property asProperty : tupleParts) {
+			Type mergedType = (Type)asProperty.getType().accept(this);
+			mergedTupleParts[i++] = new TuplePart.TuplePartImpl(NameUtil.getName(asProperty), mergedType);
+		}
+		return orphanage.getTupleType(orphanage.getStandardLibrary().getOclTupleType(), mergedTupleParts);
 	}
 }

@@ -106,6 +106,7 @@ import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.Pseudostate;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ReferringElement;
+import org.eclipse.ocl.pivot.ReflectiveStandardLibrary;
 import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
@@ -685,6 +686,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseReferringElement(ReferringElement object)
 			{
 				return createReferringElementAdapter();
+			}
+			@Override
+			public Adapter caseReflectiveStandardLibrary(ReflectiveStandardLibrary object)
+			{
+				return createReflectiveStandardLibraryAdapter();
 			}
 			@Override
 			public Adapter caseRegion(Region object)
@@ -1878,6 +1884,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createReferringElementAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.ReflectiveStandardLibrary <em>Reflective Standard Library</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.ReflectiveStandardLibrary
+	 * @generated
+	 */
+	public Adapter createReflectiveStandardLibraryAdapter()
 	{
 		return null;
 	}

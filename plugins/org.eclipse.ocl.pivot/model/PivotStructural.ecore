@@ -303,7 +303,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CompleteStandardLibrary" eSuperTypes="#//StandardLibrary">
+  <eClassifiers xsi:type="ecore:EClass" name="CompleteStandardLibrary" eSuperTypes="#//ReflectiveStandardLibrary">
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningCompleteEnvironment"
         eType="#//CompleteEnvironment" eOpposite="#//CompleteEnvironment/ownedStandardLibrary"/>
   </eClassifiers>
@@ -1038,6 +1038,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="ReferringElement" abstract="true" interface="true">
     <eOperations name="getReferredElement" lowerBound="1" eType="#//Element"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReflectiveStandardLibrary" abstract="true"
+      eSuperTypes="#//StandardLibrary"/>
   <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//Namespace">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Region is a top-level part of a StateMachine or a composite State, that serves as a container for the Vertices and Transitions of the StateMachine. A StateMachine or composite State may contain multiple Regions representing behaviors that may occur in parallel."/>

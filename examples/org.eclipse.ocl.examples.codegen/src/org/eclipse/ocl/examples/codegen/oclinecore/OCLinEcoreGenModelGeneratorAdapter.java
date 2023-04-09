@@ -75,6 +75,7 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
@@ -390,7 +391,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			edits.add(new AddModelPluginVariable(modelPluginVariable));
 		}
 
-		protected void convertConstraintToOperation(@NonNull Ecore2AS ecore2as, @NonNull GenModel genModel, @NonNull EClass eClass, @NonNull String key, @NonNull String body, @Nullable String message) {
+		protected void convertConstraintToOperation(@NonNull External2AS ecore2as, @NonNull GenModel genModel, @NonNull EClass eClass, @NonNull String key, @NonNull String body, @Nullable String message) {
 			org.eclipse.ocl.pivot.Class pType = ecore2as.getCreated(org.eclipse.ocl.pivot.Class.class, eClass);
 			if (pType != null) {
 				List<Constraint> ownedInvariants = pType.getOwnedInvariants();
@@ -413,7 +414,9 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 							names = names.length() == 0 ? prefixedName : names + " " + prefixedName;
 							EOperation eOperation = AS2Ecore.createConstraintEOperation(rule, prefixedName, null);
 							addEOperation(eClass, eOperation);
-							ecore2as.addMapping(eOperation, rule);
+							if (ecore2as instanceof Ecore2AS) {
+								((Ecore2AS)ecore2as).addMapping(eOperation, rule);
+							}
 							if (message != null) {
 								body = PivotUtil.createTupleValuedConstraint(body, null, message);
 							}
@@ -432,7 +435,11 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				removeEAnnotation(ecorePackage.getEAnnotation(PivotConstants.IMPORT_ANNOTATION_SOURCE));
 				Resource ecoreResource = ecorePackage.eResource();
 				if (ecoreResource != null) {
-					Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, metamodelManager.getEnvironmentFactory());
+					EnvironmentFactoryInternal environmentFactory = metamodelManager.getEnvironmentFactory();
+					External2AS ecore2as = Ecore2AS.findAdapter(ecoreResource, environmentFactory);
+					if (ecore2as == null) {
+						ecore2as = new Ecore2AS(ecoreResource, environmentFactory);
+					}
 					for (GenClass genClass : genPackage.getGenClasses()) {
 						EClass eClass = genClass.getEcoreClass();
 						if (eClass != null) {

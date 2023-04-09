@@ -132,6 +132,7 @@ public interface Visitor<R>
 	R visitPropertyCallExp(org.eclipse.ocl.pivot.@NonNull PropertyCallExp object);
 	R visitPseudostate(org.eclipse.ocl.pivot.@NonNull Pseudostate object);
 	R visitRealLiteralExp(org.eclipse.ocl.pivot.@NonNull RealLiteralExp object);
+	R visitReflectiveStandardLibrary(org.eclipse.ocl.pivot.@NonNull ReflectiveStandardLibrary object);
 	R visitRegion(org.eclipse.ocl.pivot.@NonNull Region object);
 	R visitResultVariable(org.eclipse.ocl.pivot.@NonNull ResultVariable object);
 	R visitSelfType(org.eclipse.ocl.pivot.@NonNull SelfType object);

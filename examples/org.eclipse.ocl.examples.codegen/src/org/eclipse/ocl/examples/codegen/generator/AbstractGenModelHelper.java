@@ -70,7 +70,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 			return new UMLGenModelHelper(metamodelManager);
 		}
 		else {
-			return new EcoreGenModelHelper(metamodelManager);
+			return new EcoreGenModelHelper(metamodelManager, genModel);
 		}
 	}
 

@@ -123,12 +123,15 @@ public final class PivotSaveImpl extends XMISaveImpl
 				}
 			}
 		}
-		asSaver.localizeOrphans();
 		Map<@NonNull Object, @Nullable Object> saveOptions = new HashMap<>();
 		if (options != null) {
 			for (Object key : options.keySet()) {
 				saveOptions.put(String.valueOf(key), options.get(key));
 			}
+		}
+		Object optionLocalizeContents = saveOptions.get(ASResource.OPTION_LOCALIZE_ORPHANS);
+		if ((optionLocalizeContents == null) || Boolean.valueOf(optionLocalizeContents.toString())) {
+			asSaver.localizeOrphans();
 		}
 		Object optionNormalizeContents = saveOptions.get(ASResource.OPTION_NORMALIZE_CONTENTS);
 		if ((optionNormalizeContents != null) && Boolean.valueOf(optionNormalizeContents.toString())) {

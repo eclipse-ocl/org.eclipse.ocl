@@ -2712,6 +2712,16 @@ extends EPackage
 	EOperation getReferringElement__GetReferredElement();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.ReflectiveStandardLibrary <em>Reflective Standard Library</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Reflective Standard Library</em>'.
+	 * @see org.eclipse.ocl.pivot.ReflectiveStandardLibrary
+	 * @generated
+	 */
+	EClass getReflectiveStandardLibrary();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Region <em>Region</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8098,6 +8108,16 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation REFERRING_ELEMENT___GET_REFERRED_ELEMENT = eINSTANCE.getReferringElement__GetReferredElement();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.ReflectiveStandardLibraryImpl <em>Reflective Standard Library</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.ReflectiveStandardLibraryImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getReflectiveStandardLibrary()
+		 * @generated
+		 */
+		EClass REFLECTIVE_STANDARD_LIBRARY = eINSTANCE.getReflectiveStandardLibrary();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.RegionImpl <em>Region</em>}' class.

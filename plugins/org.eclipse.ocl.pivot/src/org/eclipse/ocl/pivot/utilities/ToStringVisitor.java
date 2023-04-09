@@ -606,7 +606,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitComment(@NonNull Comment comment) {
 		append("/* ");
-		append(comment.getBody().trim().replace("\n", " "));
+		append(String.valueOf(comment.getBody()).trim().replace("\n", " "));
 		append(" */");
 		return null;
 	}
@@ -1127,7 +1127,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		if (asResource != null) {
 			PivotMetamodelManager metamodelManager = PivotUtilInternal.findMetamodelManager(asResource);
 			if (metamodelManager != null) {
-				append("(" + metamodelManager.getPrecedenceManager().getOrder(precedence) + ")");
+				append("(" + metamodelManager.getPrecedenceManager().basicGetOrder(precedence) + ")");
 			}
 		}
 		return null;

@@ -6,7 +6,7 @@
     modelPluginID="org.eclipse.ocl.pivot" templateDirectory="/org.eclipse.ocl.examples.codegen/templates"
     forceOverwrite="true" modelName="OCLAS" modelPluginClass="org.eclipse.ocl.pivot.util.PivotPlugin"
     nonNLSMarkers="true" rootExtendsClass="org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl"
-    suppressEMFTypes="true" suppressEMFModelTags="true" codeFormatting="true" booleanFlagsField="eFlags2"
+    suppressEMFTypes="true" suppressEMFModelTags="true" codeFormatting="true" booleanFlagsField="eFlags"
     booleanFlagsReservedBits="8" importerID="org.eclipse.emf.importer.ecore" bundleManifest="false"
     minimalReflectiveMethods="false" complianceLevel="8.0" copyrightFields="false"
     editPluginID="org.eclipse.ocl.pivot.edit" editorPluginID="org.eclipse.ocl.pivot.editor"

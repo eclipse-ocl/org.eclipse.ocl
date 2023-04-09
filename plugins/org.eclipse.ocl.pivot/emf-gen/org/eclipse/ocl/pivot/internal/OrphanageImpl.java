@@ -11,13 +11,12 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.util.ECollections;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -256,6 +255,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 *
 	 * @since 1.18
 	 */
+	@Deprecated /* @deprecated use StandardLibrary */
 	public static @NonNull Orphanage createLocalOrphanage(@NonNull Model asModel) {
 		Orphanage orphanage = PivotFactory.eINSTANCE.createOrphanage();
 		orphanage.setName(PivotConstants.ORPHANAGE_NAME);
@@ -265,35 +265,9 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return orphanage;
 	}
 
-	/**
-	 * Return the Orphanage for a resourceSet if non-null. Obsolete deprecated functionality returns a global Orphanage if null.
-	 */
-	public static @NonNull Orphanage createLocalOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
-		for (Resource aResource : resourceSet.getResources()) {
-			for (EObject eContent : aResource.getContents()) {
-				if (eContent instanceof Model) {
-					for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eContent).getOwnedPackages()) {
-						if (asPackage instanceof Orphanage) {
-							assert false;
-							return (Orphanage) asPackage;
-						}
-					}
-				}
-			}
-		}
-		return createOrphanage(standardLibrary, resourceSet);
-	}
-
-	public static @NonNull Orphanage createOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
+	public static @NonNull OrphanageImpl createOrphanage(@NonNull StandardLibrary standardLibrary) {
 		OrphanageImpl orphanage = (OrphanageImpl)PivotFactory.eINSTANCE.createOrphanage();
 		orphanage.init(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
-		Model orphanModel = PivotFactory.eINSTANCE.createModel();
-		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
-		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
-		orphanModel.getOwnedPackages().add(orphanage);
-		Resource orphanageResource = new OrphanResource(ORPHANAGE_URI);
-		orphanageResource.getContents().add(orphanModel);
-		resourceSet.getResources().add(orphanageResource);
 		return orphanage;
 	}
 
@@ -317,8 +291,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 * @since 1.18
 	 */
 	public static @NonNull Orphanage createSharedOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
-		OrphanageImpl orphanage = (OrphanageImpl)PivotFactory.eINSTANCE.createOrphanage();
-		orphanage.init(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
+		OrphanageImpl orphanage = createOrphanage(standardLibrary);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
@@ -806,19 +779,19 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 					tupleType = null;
 				}
 				if (tupleType == null) {
-					tupleType = new TupleTypeImpl(tupleTypeId);
-					EList<@NonNull Property> ownedAttributes = (EList<@NonNull Property>)tupleType.getOwnedProperties();
+					tupleType = PivotFactory.eINSTANCE.createTupleType();
+					List<@NonNull Property> asParts = new ArrayList<>();
 					for (@NonNull TuplePart part : parts) {
 						String partName = NameUtil.getName(part);
 						Type partType = part.getType();
 						assert partType != null;
 						Property asPart = PivotFactory.eINSTANCE.createProperty();
-						ownedAttributes.add(asPart);
+						asParts.add(asPart);
 						asPart.setName(partName);
 						asPart.setType(partType);
 					}
-					ECollections.sort(ownedAttributes, NameUtil.NAMEABLE_COMPARATOR);
-					tupleType.getSuperClasses().add(oclTupleType);
+					Collections.sort(asParts, NameUtil.NAMEABLE_COMPARATOR);
+					((TupleTypeImpl)tupleType).init(tupleTypeId, oclTupleType, asParts);
 					addOrphanClass(tupleType);
 				}
 			}

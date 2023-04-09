@@ -504,7 +504,7 @@
         name="partialPackages" ordered="false" upperBound="-1" eType="#T-pivot-Package"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CompleteStandardLibrary" name="CompleteStandardLibrary"
-      eSuperTypes="#T-pivot-StandardLibrary">
+      eSuperTypes="#T-pivot-ReflectiveStandardLibrary">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-CompleteStandardLibrary-owningCompleteEnvironment"
         name="owningCompleteEnvironment" eType="#T-pivot-CompleteEnvironment" eOpposite="#F-pivot-CompleteEnvironment-ownedStandardLibrary"/>
   </eClassifiers>
@@ -2390,6 +2390,8 @@
       abstract="true" interface="true">
     <eOperations name="getReferredElement" lowerBound="1" eType="#T-pivot-Element"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ReflectiveStandardLibrary"
+      name="ReflectiveStandardLibrary" abstract="true" eSuperTypes="#T-pivot-StandardLibrary"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Region" name="Region" eSuperTypes="#T-pivot-Namespace">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Region is a top-level part of a StateMachine or a composite State, that serves as a container for the Vertices and Transitions of the StateMachine. A StateMachine or composite State may contain multiple Regions representing behaviors that may occur in parallel."/>

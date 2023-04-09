@@ -362,7 +362,7 @@ public interface StandardLibrary extends Element
 	@NonNull TupleType getTupleType(@NonNull String typeName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
 			@Nullable TemplateParameterSubstitutions bindings);
 
-	@NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts);
+	@NonNull TupleType getTupleType(@NonNull Map<@NonNull String, @NonNull ? extends Type> parts);
 
 	@NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateParameterSubstitutions usageBindings);
 

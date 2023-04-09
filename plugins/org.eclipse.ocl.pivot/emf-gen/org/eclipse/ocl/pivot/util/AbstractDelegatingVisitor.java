@@ -510,6 +510,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitReflectiveStandardLibrary(org.eclipse.ocl.pivot.@NonNull ReflectiveStandardLibrary object) {
+		return delegate.visitReflectiveStandardLibrary(object);
+	}
+
+	@Override
 	public R visitRegion(org.eclipse.ocl.pivot.@NonNull Region object) {
 		return delegate.visitRegion(object);
 	}

@@ -11,7 +11,10 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
@@ -29,6 +32,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -369,7 +373,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (tupleType == null) {
 			@NonNull TuplePartId[] partIds = tupleTypeId.getPartIds();
 			int partCount = partIds.length;
-			@NonNull TuplePart[] tupleParts = new org.eclipse.ocl.pivot.utilities.TuplePart[partCount];
+			@NonNull TuplePart[] tupleParts = new @NonNull TuplePart[partCount];
 			for (int i = 0; i < partCount;i++) {
 				@NonNull TuplePartId partId = partIds[i];
 				Type partType = idResolver.getType(partId.getTypeId());
@@ -378,6 +382,32 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 			tupleType = getOrphanage().getTupleType(getOclTupleType(), tupleParts);
 		}
+		return tupleType;
+	}
+
+	@Override
+	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
+			@Nullable TemplateParameterSubstitutions bindings) {
+		Map<@NonNull String, @NonNull Type> partMap = new HashMap<>();
+		for (@NonNull TypedElement part : parts) {
+			Type type1 = part.getType();
+			if (type1 != null) {
+				Type type2 = getPrimaryType(type1);
+				Type type3 = getSpecializedType(type2, bindings);
+				partMap.put(PivotUtil.getName(part), type3);
+			}
+		}
+		return getTupleType(partMap);
+	}
+
+	@Override
+	public @NonNull TupleType getTupleType(@NonNull Map<@NonNull String, @NonNull ? extends Type> parts) {
+		@NonNull TuplePart[] tupleParts = new @NonNull TuplePart[parts.size()];
+		int i = 0;
+		for (Map.Entry<@NonNull String, @NonNull ? extends Type> entry : parts.entrySet()) {
+			tupleParts[i++] = new TuplePart.TuplePartImpl(entry.getKey(), entry.getValue());
+		}
+		TupleType tupleType = getOrphanage().getTupleType(getOclTupleType(), tupleParts);
 		return tupleType;
 	}
 

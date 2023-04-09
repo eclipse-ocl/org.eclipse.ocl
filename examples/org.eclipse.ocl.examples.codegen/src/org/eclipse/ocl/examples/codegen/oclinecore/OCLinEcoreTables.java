@@ -822,7 +822,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						s.append(prop.getImplementationClass());
 						s.append(".INSTANCE)");
 					}
-					else if (hasEcore(prop)) {
+					else if (hasEcore(prop) && (prop.getESObject() != null)) {				// XXX Fudge for oclBadProperty
 						EStructuralFeature eStructuralFeature = ClassUtil.nonNullState((EStructuralFeature)prop.getESObject());
 						s.append("Property(");
 						s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
@@ -832,7 +832,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 						//						}
 					} else {
 						Property opposite = prop.getOpposite();
-						if ((opposite != null) && hasEcore(opposite)) {
+						if ((opposite != null) && hasEcore(opposite) && (opposite.getESObject() != null)) {				// XXX Fudge for oclBadProperty
 							EStructuralFeature eStructuralFeature = ClassUtil.nonNullState((EStructuralFeature)opposite.getESObject());
 							s.append("OppositeProperty(");
 							s.appendString(name);

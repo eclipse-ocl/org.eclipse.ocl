@@ -116,6 +116,7 @@ import org.eclipse.ocl.pivot.Pseudostate;
 import org.eclipse.ocl.pivot.PseudostateKind;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.ReferringElement;
+import org.eclipse.ocl.pivot.ReflectiveStandardLibrary;
 import org.eclipse.ocl.pivot.Region;
 import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
@@ -1265,114 +1266,116 @@ extends EObjectValidator {
 			case 94:
 				return validateReferringElement((ReferringElement)value, diagnostics, context);
 			case 95:
-				return validateRegion((Region)value, diagnostics, context);
+				return validateReflectiveStandardLibrary((ReflectiveStandardLibrary)value, diagnostics, context);
 			case 96:
-				return validateResultVariable((ResultVariable)value, diagnostics, context);
+				return validateRegion((Region)value, diagnostics, context);
 			case 97:
-				return validateSelfType((SelfType)value, diagnostics, context);
+				return validateResultVariable((ResultVariable)value, diagnostics, context);
 			case 98:
-				return validateSendSignalAction((SendSignalAction)value, diagnostics, context);
+				return validateSelfType((SelfType)value, diagnostics, context);
 			case 99:
-				return validateSequenceType((SequenceType)value, diagnostics, context);
+				return validateSendSignalAction((SendSignalAction)value, diagnostics, context);
 			case 100:
-				return validateSetType((SetType)value, diagnostics, context);
+				return validateSequenceType((SequenceType)value, diagnostics, context);
 			case 101:
-				return validateShadowExp((ShadowExp)value, diagnostics, context);
+				return validateSetType((SetType)value, diagnostics, context);
 			case 102:
-				return validateShadowPart((ShadowPart)value, diagnostics, context);
+				return validateShadowExp((ShadowExp)value, diagnostics, context);
 			case 103:
-				return validateSignal((Signal)value, diagnostics, context);
+				return validateShadowPart((ShadowPart)value, diagnostics, context);
 			case 104:
-				return validateSlot((Slot)value, diagnostics, context);
+				return validateSignal((Signal)value, diagnostics, context);
 			case 105:
-				return validateStandardLibrary((StandardLibrary)value, diagnostics, context);
+				return validateSlot((Slot)value, diagnostics, context);
 			case 106:
-				return validateState((State)value, diagnostics, context);
+				return validateStandardLibrary((StandardLibrary)value, diagnostics, context);
 			case 107:
-				return validateStateExp((StateExp)value, diagnostics, context);
+				return validateState((State)value, diagnostics, context);
 			case 108:
-				return validateStateMachine((StateMachine)value, diagnostics, context);
+				return validateStateExp((StateExp)value, diagnostics, context);
 			case 109:
-				return validateStereotype((Stereotype)value, diagnostics, context);
+				return validateStateMachine((StateMachine)value, diagnostics, context);
 			case 110:
-				return validateStereotypeExtender((StereotypeExtender)value, diagnostics, context);
+				return validateStereotype((Stereotype)value, diagnostics, context);
 			case 111:
-				return validateStringLiteralExp((StringLiteralExp)value, diagnostics, context);
+				return validateStereotypeExtender((StereotypeExtender)value, diagnostics, context);
 			case 112:
-				return validateTemplateBinding((TemplateBinding)value, diagnostics, context);
+				return validateStringLiteralExp((StringLiteralExp)value, diagnostics, context);
 			case 113:
-				return validateTemplateParameter((TemplateParameter)value, diagnostics, context);
+				return validateTemplateBinding((TemplateBinding)value, diagnostics, context);
 			case 114:
-				return validateTemplateParameterSubstitution((TemplateParameterSubstitution)value, diagnostics, context);
+				return validateTemplateParameter((TemplateParameter)value, diagnostics, context);
 			case 115:
-				return validateTemplateSignature((TemplateSignature)value, diagnostics, context);
+				return validateTemplateParameterSubstitution((TemplateParameterSubstitution)value, diagnostics, context);
 			case 116:
-				return validateTemplateableElement((TemplateableElement)value, diagnostics, context);
+				return validateTemplateSignature((TemplateSignature)value, diagnostics, context);
 			case 117:
-				return validateTransition((Transition)value, diagnostics, context);
+				return validateTemplateableElement((TemplateableElement)value, diagnostics, context);
 			case 118:
-				return validateTrigger((Trigger)value, diagnostics, context);
+				return validateTransition((Transition)value, diagnostics, context);
 			case 119:
-				return validateTupleLiteralExp((TupleLiteralExp)value, diagnostics, context);
+				return validateTrigger((Trigger)value, diagnostics, context);
 			case 120:
-				return validateTupleLiteralPart((TupleLiteralPart)value, diagnostics, context);
+				return validateTupleLiteralExp((TupleLiteralExp)value, diagnostics, context);
 			case 121:
-				return validateTuplePart((TuplePart)value, diagnostics, context);
+				return validateTupleLiteralPart((TupleLiteralPart)value, diagnostics, context);
 			case 122:
-				return validateTupleType((TupleType)value, diagnostics, context);
+				return validateTuplePart((TuplePart)value, diagnostics, context);
 			case 123:
-				return validateType((Type)value, diagnostics, context);
+				return validateTupleType((TupleType)value, diagnostics, context);
 			case 124:
-				return validateTypeExp((TypeExp)value, diagnostics, context);
+				return validateType((Type)value, diagnostics, context);
 			case 125:
-				return validateTypedElement((TypedElement)value, diagnostics, context);
+				return validateTypeExp((TypeExp)value, diagnostics, context);
 			case 126:
-				return validateUnlimitedNaturalLiteralExp((UnlimitedNaturalLiteralExp)value, diagnostics, context);
+				return validateTypedElement((TypedElement)value, diagnostics, context);
 			case 127:
-				return validateUnspecifiedValueExp((UnspecifiedValueExp)value, diagnostics, context);
+				return validateUnlimitedNaturalLiteralExp((UnlimitedNaturalLiteralExp)value, diagnostics, context);
 			case 128:
-				return validateValueSpecification((ValueSpecification)value, diagnostics, context);
+				return validateUnspecifiedValueExp((UnspecifiedValueExp)value, diagnostics, context);
 			case 129:
-				return validateVariable((Variable)value, diagnostics, context);
+				return validateValueSpecification((ValueSpecification)value, diagnostics, context);
 			case 130:
-				return validateVariableDeclaration((VariableDeclaration)value, diagnostics, context);
+				return validateVariable((Variable)value, diagnostics, context);
 			case 131:
-				return validateVariableExp((VariableExp)value, diagnostics, context);
+				return validateVariableDeclaration((VariableDeclaration)value, diagnostics, context);
 			case 132:
-				return validateVertex((Vertex)value, diagnostics, context);
+				return validateVariableExp((VariableExp)value, diagnostics, context);
 			case 133:
-				return validateVisitable((Visitable)value, diagnostics, context);
+				return validateVertex((Vertex)value, diagnostics, context);
 			case 134:
-				return validateVoidType((VoidType)value, diagnostics, context);
+				return validateVisitable((Visitable)value, diagnostics, context);
 			case 135:
-				return validateWildcardType((WildcardType)value, diagnostics, context);
+				return validateVoidType((VoidType)value, diagnostics, context);
 			case 136:
-				return validateAssociativityKind((AssociativityKind)value, diagnostics, context);
+				return validateWildcardType((WildcardType)value, diagnostics, context);
 			case 137:
-				return validateCollectionKind((CollectionKind)value, diagnostics, context);
+				return validateAssociativityKind((AssociativityKind)value, diagnostics, context);
 			case 138:
-				return validatePseudostateKind((PseudostateKind)value, diagnostics, context);
+				return validateCollectionKind((CollectionKind)value, diagnostics, context);
 			case 139:
-				return validateTransitionKind((TransitionKind)value, diagnostics, context);
+				return validatePseudostateKind((PseudostateKind)value, diagnostics, context);
 			case 140:
-				return validateBoolean((Boolean)value, diagnostics, context);
+				return validateTransitionKind((TransitionKind)value, diagnostics, context);
 			case 141:
-				return validateEcoreObject((EObject)value, diagnostics, context);
+				return validateBoolean((Boolean)value, diagnostics, context);
 			case 142:
-				return validateInteger((Number)value, diagnostics, context);
+				return validateEcoreObject((EObject)value, diagnostics, context);
 			case 143:
-				return validateJavaClass((Class)value, diagnostics, context);
+				return validateInteger((Number)value, diagnostics, context);
 			case 144:
-				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
+				return validateJavaClass((Class)value, diagnostics, context);
 			case 145:
-				return validateObject(value, diagnostics, context);
+				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
 			case 146:
-				return validateReal((Number)value, diagnostics, context);
+				return validateObject(value, diagnostics, context);
 			case 147:
-				return validateString((String)value, diagnostics, context);
+				return validateReal((Number)value, diagnostics, context);
 			case 148:
-				return validateThrowable((Throwable)value, diagnostics, context);
+				return validateString((String)value, diagnostics, context);
 			case 149:
+				return validateThrowable((Throwable)value, diagnostics, context);
+			case 150:
 				return validateUnlimitedNatural((Number)value, diagnostics, context);
 			default:
 				return true;
@@ -4303,6 +4306,16 @@ extends EObjectValidator {
 	public boolean validateReferringElement(ReferringElement referringElement, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return validate_EveryDefaultConstraint(referringElement, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateReflectiveStandardLibrary(ReflectiveStandardLibrary reflectiveStandardLibrary, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint(reflectiveStandardLibrary, diagnostics, context);
 	}
 
 	/**

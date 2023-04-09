@@ -190,7 +190,7 @@
       <ownedProperties xmi:id="vpFYN" isRequired="false" name="owningCompletePackage" opposite="#pXZYG" type="#+gDEJ"/>
       <ownedProperties xmi:id="slBkJ" name="partialPackages" opposite="#CUgnW" type="#4WjM+"/>
     </ownedClasses>
-    <ownedClasses xmi:id="2w6uT" name="CompleteStandardLibrary" superClasses="#v6b4D">
+    <ownedClasses xmi:id="2w6uT" name="CompleteStandardLibrary" superClasses="#0wz9h">
       <ownedProperties xmi:id="U772W" isRequired="false" name="owningCompleteEnvironment" opposite="#Qrg5Y" type="#LqaWx"/>
     </ownedClasses>
     <ownedClasses xmi:id="KXGhD" name="ConnectionPointReference" superClasses="#VVKEz">
@@ -929,6 +929,7 @@
     <ownedClasses xmi:id="dXAFV" isAbstract="true" isInterface="true" name="ReferringElement" superClasses="&_0;#zfDWR">
       <ownedOperations xmi:id="TgreS" name="getReferredElement" type="#t5rpa"/>
     </ownedClasses>
+    <ownedClasses xmi:id="0wz9h" isAbstract="true" name="ReflectiveStandardLibrary" superClasses="#v6b4D"/>
     <ownedClasses xmi:id="lqBOs" name="Region" superClasses="#MzHoc">
       <ownedComments body="A Region is a top-level part of a StateMachine or a composite State, that serves as a container for the Vertices and Transitions of the StateMachine. A StateMachine or composite State may contain multiple Regions representing behaviors that may occur in parallel."/>
       <ownedProperties xmi:id="24ICH" isRequired="false" name="extendedRegion" opposite="#YqUAP" type="#lqBOs">

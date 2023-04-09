@@ -485,6 +485,11 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
+	public R visitReflectiveStandardLibrary(org.eclipse.ocl.pivot.@NonNull ReflectiveStandardLibrary object) {
+		return visiting(object);
+	}
+
+	@Override
 	public R visitRegion(org.eclipse.ocl.pivot.@NonNull Region object) {
 		return visiting(object);
 	}

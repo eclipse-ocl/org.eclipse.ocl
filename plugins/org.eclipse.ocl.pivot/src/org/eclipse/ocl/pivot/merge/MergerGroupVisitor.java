@@ -17,10 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -40,21 +42,23 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOf
 
 	private static abstract class AbstractPartitioner<E extends Element, K> implements Partitioner<E>
 	{
-		protected abstract @NonNull K getKey(@NonNull E partialElement);
+		protected abstract @Nullable K getKey(@NonNull E partialElement);
 
 		@Override
 		public @NonNull ListOfList<@NonNull Element> partition(@NonNull ListOfList<@NonNull E> ungroupedPartialElements) {
 			Map<@NonNull K, @NonNull List<@NonNull Element>> key2groupedElements = new HashMap<>();
 			for (@NonNull Iterable<@NonNull E> partialElements : ungroupedPartialElements.getOuterIterable()) {
 				for (@NonNull E partialElement : partialElements) {
-					K key = getKey(partialElement);
-					List<@NonNull Element> groupedElements = key2groupedElements.get(key);
-					if (groupedElements == null) {
-						groupedElements = new ArrayList<>();
-						key2groupedElements.put(key, groupedElements);
-					}
-					if (!groupedElements.contains(partialElement)) {
-						groupedElements.add(partialElement);
+					@Nullable K key = getKey(partialElement);
+					if (key != null) {
+						List<@NonNull Element> groupedElements = key2groupedElements.get(key);
+						if (groupedElements == null) {
+							groupedElements = new ArrayList<>();
+							key2groupedElements.put(key, groupedElements);
+						}
+						if (!groupedElements.contains(partialElement)) {
+							groupedElements.add(partialElement);
+						}
 					}
 				}
 			}
@@ -74,7 +78,6 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOf
 
 	private static class CommentPartitioner extends AbstractPartitioner<@NonNull Comment, @NonNull String>
 	{
-
 		@Override
 		protected @NonNull String getKey(@NonNull Comment partialElement) {
 			return PivotUtil.getBody(partialElement);
@@ -88,33 +91,6 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOf
 
 	private static class NamePartitioner<E extends NamedElement> extends AbstractPartitioner<E, @NonNull String>
 	{
-	/*	@Override
-		public @NonNull ListOfList<@NonNull Element> partition(@NonNull ListOfList<@NonNull E> ungroupedPartialElements) {
-			Map<@NonNull String, @NonNull List<@NonNull E>> name2groupedElements = new HashMap<>();
-			for (@NonNull Iterable<@NonNull E> partialElements : ungroupedPartialElements.getOuterIterable()) {
-				for (@NonNull E partialElement : partialElements) {
-					String name = NameUtil.getName(partialElement);
-					List<@NonNull E> groupedElements = name2groupedElements.get(name);
-					if (groupedElements == null) {
-						groupedElements = new ArrayList<>();
-						name2groupedElements.put(name, groupedElements);
-					}
-					if (!groupedElements.contains(partialElement)) {
-						groupedElements.add(partialElement);
-					}
-				}
-			}
-			ListOfList<@NonNull E> groupedPartialElements = new ListOfList<>();
-			List<@NonNull String> names = new ArrayList<>(name2groupedElements.keySet());
-			Collections.sort(names);
-			for (@NonNull String name : names) {
-				List<@NonNull E> groupedElements = name2groupedElements.get(name);
-				assert groupedElements != null;
-				groupedPartialElements.add(groupedElements);
-			}
-			return (ListOfList<@NonNull Element>)groupedPartialElements;
-		} */
-
 		@Override
 		protected @NonNull String getKey(@NonNull E partialElement) {
 			return NameUtil.getName(partialElement);
@@ -128,33 +104,6 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOf
 
 	private static class OperationPartitioner extends AbstractPartitioner<@NonNull Operation, OperationId>
 	{
-	/*	@Override
-		public @NonNull ListOfList<@NonNull Element> partition(@NonNull ListOfList<@NonNull Operation> ungroupedPartialElements) {
-			Map<@NonNull OperationId, @NonNull List<@NonNull Operation>> operationId2groupedElements = new HashMap<>();
-			for (@NonNull Iterable<@NonNull Operation> partialElements : ungroupedPartialElements.getOuterIterable()) {
-				for (@NonNull Operation partialElement : partialElements) {
-					OperationId operationId = partialElement.getOperationId();
-					List<@NonNull Operation> groupedElements = operationId2groupedElements.get(operationId);
-					if (groupedElements == null) {
-						groupedElements = new ArrayList<>();
-						operationId2groupedElements.put(operationId, groupedElements);
-					}
-					if (!groupedElements.contains(partialElement)) {
-						groupedElements.add(partialElement);
-					}
-				}
-			}
-			ListOfList<@NonNull Operation> groupedPartialElements = new ListOfList<>();
-			List<@NonNull OperationId> operationIds = new ArrayList<>(operationId2groupedElements.keySet());
-			Collections.sort(operationIds, NameUtil.TO_STRING_COMPARATOR);
-			for (@NonNull OperationId operationId : operationIds) {
-				List<@NonNull Operation> groupedElements = operationId2groupedElements.get(operationId);
-				assert groupedElements != null;
-				groupedPartialElements.add(groupedElements);
-			}
-			return (ListOfList<@NonNull Element>)(Object)groupedPartialElements;
-		} */
-
 		@Override
 		protected @NonNull OperationId getKey(@NonNull Operation partialElement) {
 			return partialElement.getOperationId();
@@ -166,9 +115,34 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOf
 		}
 	}
 
+	private static class PropertyPartitioner extends AbstractPartitioner<@NonNull Property, @NonNull String>
+	{
+		@Override
+		protected @Nullable String getKey(@NonNull Property partialElement) {
+			String name = NameUtil.getName(partialElement);
+			if ("Property".equals(name)) {
+				getClass();			// XXX
+			}
+			if (partialElement.getOwningClass() == partialElement.getType()) {
+				getClass();			// XXX
+		//		return null;
+			}
+			if (partialElement.isIsImplicit()) {
+				return null;
+			}
+			return name;
+		}
+
+		@Override
+		protected void sort(@NonNull List<@NonNull String> keys) {
+			Collections.sort(keys);
+		}
+	}
+
 	private @NonNull CommentPartitioner commentPartitioner = new CommentPartitioner();
 	private @NonNull NamePartitioner<@NonNull NamedElement> namePartitioner = new NamePartitioner<>();
 	private @NonNull OperationPartitioner operationPartitioner = new OperationPartitioner();
+	private @NonNull PropertyPartitioner propertyPartitioner = new PropertyPartitioner();
 
 	public MergerGroupVisitor(@NonNull Merger context) {
 		super(context);
@@ -181,16 +155,16 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOf
 	}
 
 	@Override
-	public @NonNull ListOfList<@NonNull Element> visitNamedElement(@NonNull NamedElement protoNamedElement) {
-		ListOfList<@NonNull NamedElement> ungroupedPartialElements = context.getUngroupedPartialElements(protoNamedElement);
-		ListOfList<@NonNull Element> groupedPartialElements = namePartitioner.partition(ungroupedPartialElements);
+	public @NonNull ListOfList<@NonNull Element> visitComment(@NonNull Comment protoComment) {
+		ListOfList<@NonNull Comment> ungroupedPartialElements = context.getUngroupedPartialElements(protoComment);
+		ListOfList<@NonNull Element> groupedPartialElements = commentPartitioner.partition(ungroupedPartialElements);
 		return groupedPartialElements;
 	}
 
 	@Override
-	public @NonNull ListOfList<@NonNull Element> visitComment(@NonNull Comment protoComment) {
-		ListOfList<@NonNull Comment> ungroupedPartialElements = context.getUngroupedPartialElements(protoComment);
-		ListOfList<@NonNull Element> groupedPartialElements = commentPartitioner.partition(ungroupedPartialElements);
+	public @NonNull ListOfList<@NonNull Element> visitNamedElement(@NonNull NamedElement protoNamedElement) {
+		ListOfList<@NonNull NamedElement> ungroupedPartialElements = context.getUngroupedPartialElements(protoNamedElement);
+		ListOfList<@NonNull Element> groupedPartialElements = namePartitioner.partition(ungroupedPartialElements);
 		return groupedPartialElements;
 	}
 
@@ -199,5 +173,16 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOf
 		ListOfList<@NonNull Operation> ungroupedPartialElements = context.getUngroupedPartialElements(protoOperation);
 		ListOfList<@NonNull Element> groupedPartialElements = operationPartitioner.partition(ungroupedPartialElements);
 		return groupedPartialElements;
+	}
+
+	@Override
+	public @NonNull ListOfList<@NonNull Element> visitProperty(@NonNull Property protoProperty) {
+		ListOfList<@NonNull Property> ungroupedPartialElements = context.getUngroupedPartialElements(protoProperty);
+		ListOfList<@NonNull Element> groupedPartialElements = propertyPartitioner.partition(ungroupedPartialElements);
+		return groupedPartialElements;
+	//	if (ungroupedPartialElements.toString().contains("opposite")) {
+	//		getClass();		// XXX
+	//	}
+	//	return super.visitProperty(protoProperty);
 	}
 }

@@ -48,6 +48,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Detail;
@@ -471,6 +472,12 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		eClass.setInterface(true);
 		context.defer(pivotCollectionType);		// Defer superclass resolution
 		return eClass;
+	}
+
+	@Override
+	public Object visitComment(@NonNull Comment object) {
+		// TODO Auto-generated method stub
+		return super.visitComment(object);
 	}
 
 	@Override

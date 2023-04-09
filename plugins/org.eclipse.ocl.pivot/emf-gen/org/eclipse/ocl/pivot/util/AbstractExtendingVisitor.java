@@ -144,7 +144,7 @@ public abstract class AbstractExtendingVisitor<R, C>
 
 	@Override
 	public R visitCompleteStandardLibrary(org.eclipse.ocl.pivot.@NonNull CompleteStandardLibrary object) {
-		return visitStandardLibrary(object);
+		return visitReflectiveStandardLibrary(object);
 	}
 
 	@Override
@@ -490,6 +490,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	@Override
 	public R visitRealLiteralExp(org.eclipse.ocl.pivot.@NonNull RealLiteralExp object) {
 		return visitNumericLiteralExp(object);
+	}
+
+	@Override
+	public R visitReflectiveStandardLibrary(org.eclipse.ocl.pivot.@NonNull ReflectiveStandardLibrary object) {
+		return visitStandardLibrary(object);
 	}
 
 	@Override

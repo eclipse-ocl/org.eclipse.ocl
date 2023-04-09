@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
  * @see org.eclipse.ocl.pivot.PivotPackage#getCompleteStandardLibrary()
  * @generated
  */
-public interface CompleteStandardLibrary extends StandardLibrary
+public interface CompleteStandardLibrary extends ReflectiveStandardLibrary
 {
 	/**
 	 * Returns the value of the '<em><b>Owning Complete Environment</b></em>' container reference.

@@ -35,11 +35,13 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -81,7 +83,7 @@ public class ASSaverNew extends AbstractASSaver
 			if (eReference.isMany() && (eReference.getEOpposite() == null)) {
 				@SuppressWarnings("unchecked")
 				List<EObject> copyValues = (List<EObject>)copyEObject.eGet(eReference);
-				copyValues.clear();						// Avoid dupicate superclasses when reloading
+				copyValues.clear();						// Avoid duplicate superclasses when reloading
 			}
 			super.copyReference(eReference, eObject, copyEObject);
 		}
@@ -224,6 +226,7 @@ public class ASSaverNew extends AbstractASSaver
 	 */
 	public void localizeOrphans() {
 		Model asModel = PivotUtil.getModel(resource);
+	//	System.out.println("localizeOrphans " + NameUtil.debugSimpleName(asModel) + " : " + asModel);
 		org.eclipse.ocl.pivot.Package localOrphanage = OrphanageImpl.basicGetOrphanage(asModel);
 		ResourceSet resourceSet = resource.getResourceSet();
 		Orphanage sharedOrphanage = resourceSet != null ? OrphanageImpl.basicGetSharedOrphanage(resourceSet) : null;
@@ -237,6 +240,7 @@ public class ASSaverNew extends AbstractASSaver
 			for (EObject eObject : references.keySet()) {
 				assert eObject != null;
 				EObject localEObject = eObject;
+			//	System.out.println("localizeOrphans0 " + NameUtil.debugSimpleName(eObject) + " : " + eObject);
 				for (EObject eContainer = eObject; eContainer != null; eContainer = eContainer.eContainer()) {
 					if (eContainer == sharedOrphanage) {
 						if (localOrphanage == null) {
@@ -250,7 +254,7 @@ public class ASSaverNew extends AbstractASSaver
 						if (localEObject == null) {
 							assert eSource != null;
 							localEObject = copier.copy(eSource);
-						//	System.out.println(NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
+						//	System.out.println("localizeOrphans1" + NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
 							if (moreObjects == null) {
 								moreObjects = new ArrayList<>();
 							}
@@ -273,6 +277,7 @@ public class ASSaverNew extends AbstractASSaver
 					}
 				}
 				if (localEObject != eObject) {
+				//	System.out.println("localizeOrphans2" + NameUtil.debugSimpleName(eObject) + " : " + eObject + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
 					Collection<Setting> settings = references.get(eObject);
 					assert settings != null;
 					for (Setting setting : settings) {

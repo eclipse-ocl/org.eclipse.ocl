@@ -100,8 +100,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	 */
 	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		External2AS adapter = findAdapter(resource, environmentFactory);
-		Ecore2AS castAdapter = (Ecore2AS) adapter;
-		return castAdapter;
+		return adapter instanceof Ecore2AS ? (Ecore2AS) adapter : null;
 	}
 
 	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
