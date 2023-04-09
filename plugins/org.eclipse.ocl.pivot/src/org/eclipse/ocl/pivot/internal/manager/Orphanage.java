@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
@@ -402,27 +403,15 @@ public class Orphanage extends PackageImpl
 	private static Orphanage ORPHAN_PACKAGE = null;
 
 	/**
-	 * @since 1.18
+	 * Return the orphan package within asModel, or null if none.
 	 */
-	public static org.eclipse.ocl.pivot.@Nullable Package basicGetLocalOrphanPackage(@NonNull Model asModel) {
+	public static org.eclipse.ocl.pivot.@Nullable Package basicGetOrphanPackage(@NonNull Model asModel) {
 		for (org.eclipse.ocl.pivot.Package asPackage : PivotUtil.getOwnedPackages(asModel)) {
 			if (isOrphanage(asPackage)) {
 				return asPackage;
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	@Deprecated
-	public static org.eclipse.ocl.pivot.@NonNull Package createLocalOrphanage() {
-		org.eclipse.ocl.pivot.Package orphanage = PivotFactory.eINSTANCE.createPackage();
-		orphanage.setName(PivotConstants.ORPHANAGE_NAME);
-		orphanage.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
-		orphanage.setURI(PivotConstants.ORPHANAGE_URI);
-		return orphanage;
 	}
 
 	/**
@@ -440,8 +429,40 @@ public class Orphanage extends PackageImpl
 	}
 
 	/**
+	 * Return the Orphanage for a resourceSet if non-null. Obsolete deprecated functionality returns a global Orphanage if null.
+	 */
+	public static @NonNull Orphanage createLocalOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
+		for (Resource aResource : resourceSet.getResources()) {
+			for (EObject eContent : aResource.getContents()) {
+				if (eContent instanceof Model) {
+					for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eContent).getOwnedPackages()) {
+						if (asPackage instanceof Orphanage) {
+							assert false;
+							return (Orphanage) asPackage;
+						}
+					}
+				}
+			}
+		}
+		return createOrphanage(standardLibrary, resourceSet);
+	}
+
+	public static @NonNull Orphanage createOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
+		Orphanage orphanage = new Orphanage(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
+		Model orphanModel = PivotFactory.eINSTANCE.createModel();
+		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
+		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
+		orphanModel.getOwnedPackages().add(orphanage);
+		Resource orphanageResource = new OrphanResource(ORPHANAGE_URI);
+		orphanageResource.getContents().add(orphanModel);
+		resourceSet.getResources().add(orphanageResource);
+		return orphanage;
+	}
+
+	/**
 	 * @since 1.18
 	 */
+	@Deprecated
 	public static @NonNull Orphanage createSharedOrphanage(@NonNull ResourceSet resourceSet) {
 		Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
@@ -500,6 +521,7 @@ public class Orphanage extends PackageImpl
 	/**
 	 * Return the Orphanage for a resourceSet if non-null. Obsolete deprecated functionality returns a global Orphanage if null.
 	 */
+	@Deprecated
 	public static @NonNull Orphanage getOrphanage(@Nullable ResourceSet resourceSet) {
 		if (resourceSet == null) {
 			assert false : "Use of the global Orphanage is deprecated";
@@ -553,20 +575,16 @@ public class Orphanage extends PackageImpl
 		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
 	}
 
-	/**
-	 * Return true if asPackage is a local or shared orphanage for synthesized model elements.
-	 */
-	@Deprecated /* @deprected use isOrphanage() */
-	public static boolean isTypeOrphanage(org.eclipse.ocl.pivot.@Nullable Package asPackage) {
-		if (asPackage == null) {
-			return false;
-		}
-		else {
-			return isOrphanage(asPackage);
-		}
+
+	@Deprecated
+	public Orphanage(@NonNull String name, @NonNull String nsURI) {
+		//		super(uri);
+		//		setLoaded(true);
+		setName(name);
+		setURI(nsURI);
 	}
 
-	public Orphanage(@NonNull String name, @NonNull String nsURI) {
+	public Orphanage(@NonNull StandardLibrary standardLibrary, @NonNull String name, @NonNull String nsURI) {
 		//		super(uri);
 		//		setLoaded(true);
 		setName(name);

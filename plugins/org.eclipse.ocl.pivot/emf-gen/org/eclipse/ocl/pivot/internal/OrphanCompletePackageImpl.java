@@ -111,11 +111,11 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 	}
 
 	@Override
-	public void assertSamePackage(org.eclipse.ocl.pivot.@Nullable Package domainPackage) {
-		assert domainPackage != null;
-		org.eclipse.ocl.pivot.Package parentPackage = domainPackage.getOwningPackage();
+	public void assertSamePackage(org.eclipse.ocl.pivot.@Nullable Package asPackage) {
+		assert asPackage != null;
+		org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
 		assert parentPackage == null;
-		assert Orphanage.isTypeOrphanage(domainPackage);
+		assert Orphanage.isOrphanage(asPackage);
 	}
 
 	@Override

@@ -588,10 +588,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		}
 	}
 
-	public @NonNull Orphanage createOrphanage() {
-		return Orphanage.getOrphanage(asResourceSet);
-	}
-
 	/**
 	 * Return a parserContext suitable for parsing OCL expressions in the context of a pivot element.
 	 *

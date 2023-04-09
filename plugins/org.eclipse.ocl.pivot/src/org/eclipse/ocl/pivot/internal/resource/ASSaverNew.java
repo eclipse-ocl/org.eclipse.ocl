@@ -219,7 +219,7 @@ public class ASSaverNew extends AbstractASSaver
 	 */
 	public void localizeOrphans() {
 		Model asModel = PivotUtil.getModel(resource);
-		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetLocalOrphanPackage(asModel);
+		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetOrphanPackage(asModel);
 		Orphanage sharedOrphanage = Orphanage.getOrphanage(resource.getResourceSet());
 		if (localOrphanPackage != null) {
 			loadOrphanage(localOrphanPackage, sharedOrphanage);
