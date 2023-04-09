@@ -43,9 +43,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public interface StandardLibrary extends Element
 {
-	@Deprecated // use getOrphanage() or start somewhere else
-	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass);
-
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId);
 	@Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId);
 	@Nullable AnyType basicGetOclAnyType();

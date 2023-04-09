@@ -573,6 +573,11 @@ public class Orphanage extends PackageImpl
 		setURI(nsURI);
 	}
 
+	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
+		orphanClass.setOwningPackage(this);
+	//	getOwnedClasses().add(orphanClass);		// FIXME why doesn't this always work?
+	}
+
 	public void dispose() {
 		if (ownedClasses != null) {
 			((WeakEList<?>)ownedClasses).dispose();

@@ -20,8 +20,8 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -86,7 +86,7 @@ public class TupleTypeManager extends AbstractTypeManager
 					}
 					tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
 					putTupleType(tupleTypeId, tupleType);
-					standardLibrary.addOrphanClass(tupleType);
+					getOrphanage().addOrphanClass(tupleType);
 				}
 			}
 		}
@@ -110,7 +110,7 @@ public class TupleTypeManager extends AbstractTypeManager
 					}
 					ECollections.sort(ownedAttributes, NameUtil.NAMEABLE_COMPARATOR);
 					tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
-					standardLibrary.addOrphanClass(tupleType);
+					getOrphanage().addOrphanClass(tupleType);
 					putTupleType(tupleTypeId, tupleType);
 				}
 			}

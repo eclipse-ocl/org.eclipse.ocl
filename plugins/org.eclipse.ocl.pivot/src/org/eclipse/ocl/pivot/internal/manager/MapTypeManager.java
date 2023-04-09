@@ -100,7 +100,7 @@ public class MapTypeManager extends AbstractTypeManager
 		specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
 		specializedMapType.setUnspecializedElement(unspecializedType);
 		specializedMapType.setEntryClass(typeParameters.getEntryClass());
-		standardLibrary.addOrphanClass(specializedMapType);
+		getOrphanage().addOrphanClass(specializedMapType);
 		return specializedMapType;
 	}
 

@@ -489,12 +489,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	protected /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
 
 	@Override
-	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
-		Orphanage orphanage = getCompleteModel().getOrphanage();
-		orphanClass.setOwningPackage(orphanage);
-	}
-
-	@Override
 	public @Nullable AnyType basicGetOclAnyType() {
 		return oclAnyType;
 	}

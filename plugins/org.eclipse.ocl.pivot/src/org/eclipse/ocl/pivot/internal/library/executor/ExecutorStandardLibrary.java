@@ -238,11 +238,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		list.add(extensionPackage);
 	}
 
-	@Override
-	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
-		orphanage.getOwnedClasses().add(orphanClass);
-	}
-
 	public synchronized void addPackage(org.eclipse.ocl.pivot.@NonNull Package execPackage, org.eclipse.ocl.pivot.@Nullable Package extendedPackage) {
 		String uri = execPackage.getURI();
 		assert uri != null;

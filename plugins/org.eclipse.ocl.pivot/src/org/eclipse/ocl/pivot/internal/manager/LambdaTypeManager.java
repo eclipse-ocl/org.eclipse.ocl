@@ -19,9 +19,9 @@ import java.util.WeakHashMap;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
@@ -110,7 +110,7 @@ public class LambdaTypeManager extends AbstractTypeManager
 		lambdaType.getParameterType().addAll(parameterTypes);
 		lambdaType.setResultType(resultType);
 		lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
-		standardLibrary.addOrphanClass(lambdaType);
+		getOrphanage().addOrphanClass(lambdaType);
 		lambdasList.add(useWeakReferences ? new WeakReference<@NonNull LambdaType>(lambdaType) : lambdaType);
 		return lambdaType;
 	}
