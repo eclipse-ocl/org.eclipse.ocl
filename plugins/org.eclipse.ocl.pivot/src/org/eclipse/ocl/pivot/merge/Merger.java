@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotIdResolver;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.merge.EAssociationHelper.EAssociation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -42,6 +43,8 @@ import com.google.common.collect.Iterables;
 
 /**
  * The Merger supports the creation of a merged model from one or more partial models.
+ * <br>
+ * The merging uses the Ecore metamodel to merge the actual models.
  */
 public class Merger
 {
@@ -101,12 +104,16 @@ public class Merger
 
 //	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts) {
 	//	CompleteModelInternal completeModel = (CompleteModelInternal)environmentFactory.getCompleteModel();
-//		return orphanManager.getTupleType(tupleName, parts);
+//		return standardLibrary.getTupleType(tupleName, parts);
 //	}
 
 	public @Nullable EObject getTupleType(@NonNull TupleTypeId tupleTypeId) {
 		PivotIdResolver idResolver = new PivotIdResolver((EnvironmentFactoryInternal) environmentFactory) {};	// XXX
 		return standardLibrary.getTupleType(idResolver, tupleTypeId);
+	}
+
+	public @Nullable EObject getTupleType(@NonNull String string, @NonNull Map<@NonNull String, @NonNull Type> tupleParts) {
+		return standardLibrary.getTupleType(string, tupleParts);
 	}
 
 	public @Nullable Element getMergedElement(@NonNull Element partialElement) {
@@ -136,6 +143,7 @@ public class Merger
 		addPartialElements(mergedElement, (@NonNull List<@NonNull Element>)partialElements);
 		resolveAttributeSlots();
 		resolveReferenceSlots();
+		resolvePossibleBidirectionalSlots();
 		return mergedElement;
 	}
 
@@ -169,7 +177,7 @@ public class Merger
 				}
 				else {
 				//	throw new IllegalStateException("Merger:mergeString mismatching \"" + partialValue + "\" and \"" + mergedValue + "\"");
-					System.err.println("Merger:mergeString mismatching " + eAttribute.getEContainingClass().getName() + "." + eAttribute.getName() + "\"" + partialValue + "\" and \"" + mergedValue + "\"");
+					System.err.println("Merger:mergeString mismatching " + eAttribute.getEContainingClass().getName() + "." + eAttribute.getName() + " \"" + partialValue + "\" and \"" + mergedValue + "\"");
 				}
 			}
 		}
@@ -243,6 +251,9 @@ public class Merger
 				eAssociationHelper.add(eReference);
 				if (eReference.isContainment() && !eReference.isDerived() && !eReference.isTransient() && !eReference.isVolatile()) {
 					if (eReference.isMany()) {
+						if ("Property".equals(eReference.getName())) {
+							getClass();		// XXX
+						}
 						@SuppressWarnings("unchecked")
 						List<@NonNull Element> mergedChildren = (List<@NonNull Element>)mergedParent.eGet(eReference);
 						ListOfList<@NonNull Element> ungroupedPartialChildren = new ListOfList<>();
@@ -349,6 +360,61 @@ public class Merger
 		}
 	}
 
+	private void resolvePossibleBidirectionalSlot(@NonNull Element mergedSource, @NonNull EReference eReference, @NonNull List<@NonNull Element> partialParents) {
+		System.out.println("resolvePossibleBidirectionalSlot " + NameUtil.debugSimpleName(mergedSource) + "." + eReference.getName() + " : " + partialParents);
+		assert !eReference.isContainment();
+		assert !eReference.isMany();
+		assert eReference.getEOpposite() == null;
+		assert eReference.getEType() == eReference.getEContainingClass();
+		if (partialParents.size() == 1) {
+			@NonNull Element partialSource = partialParents.get(0);
+			Element partialTarget = (Element)partialSource.eGet(eReference);
+			if (partialTarget != null) {
+				Element mergedTarget = (Element)partialTarget.accept(resolveVisitor);
+				if (mergedTarget == null) {
+					mergedTarget = partialTarget;
+				}
+				mergedSource.eSet(eReference, mergedTarget);
+			}
+		}
+		else {
+			@Nullable Element mergedTarget = null;
+			if (partialParents.toString().contains("CollectionType::elementType")) {
+				getClass();		// XXX
+			}
+			for (@NonNull Element partialSource : partialParents) {
+				Element partialTarget = (Element)partialSource.eGet(eReference);
+				Element resolvedTarget = (Element)partialSource.accept(resolveVisitor);
+				Element resolvedTarget2 = (Element)partialTarget.accept(resolveVisitor);
+				if (resolvedTarget == null) {
+					resolvedTarget = partialSource;
+				}
+				if (partialTarget != null) {
+					resolvedTarget = (Element)partialTarget.accept(resolveVisitor);
+					if (resolvedTarget == null) {
+						resolvedTarget = partialTarget;
+					}
+				}
+				if (resolvedTarget != null) {
+					if (mergedTarget == null) {
+						mergedTarget = resolvedTarget;
+					}
+					else if (mergedTarget != resolvedTarget) {
+					/*	if (eReference.getEOpposite() == null)	{		// Pseudo-Association where Ecore prohibits EReference cycle
+							resolvedTarget = (Element)partialSource.accept(resolveVisitor);
+							if (resolvedTarget == null) {
+								resolvedTarget = partialSource;
+							}
+						} */
+					//	throw new IllegalStateException("Merge:populate inconsistent \"" + resolvedTarget + "\" and \"" + mergedTarget + "\"");
+						System.err.println("Merge:resolveSingleReferenceSlot inconsistent \"" + resolvedTarget + "\" and \"" + mergedTarget + "\"");
+					}
+				}
+			}
+			mergedSource.eSet(eReference, mergedTarget);
+		}
+	}
+
 	private void resolveSingleAttributeSlot(@NonNull Element mergedParent, @NonNull EAttribute eAttribute, @NonNull List<@NonNull Element> partialParents) {
 	//	System.out.println("resolveSingleAttributeSlot " + NameUtil.debugSimpleName(mergedParent) + "." + eAttribute.getName() + " : " + partialParents);
 		assert !eAttribute.isMany();
@@ -396,27 +462,52 @@ public class Merger
 			}
 		}
 		else {
-			@Nullable Element mergedElement = null;
-			for (@NonNull Element partialParent : partialParents) {
-				Element resolvedElement = null;
-				Element partialElement = (Element)partialParent.eGet(eReference);
-				if (partialElement != null) {
-					resolvedElement = (Element)partialElement.accept(resolveVisitor);
-					if (resolvedElement == null) {
-						resolvedElement = partialElement;
+			@Nullable Element mergedTarget = null;
+			for (@NonNull Element partialSource : partialParents) {
+				Element resolvedTarget = null;
+				Element partialTarget = (Element)partialSource.eGet(eReference);
+				if (partialTarget != null) {
+					resolvedTarget = (Element)partialTarget.accept(resolveVisitor);
+					if (resolvedTarget == null) {
+						resolvedTarget = partialTarget;
 					}
 				}
-				if (resolvedElement != null) {
-					if (mergedElement == null) {
-						mergedElement = resolvedElement;
+				if (resolvedTarget != null) {
+					if (mergedTarget == null) {
+						mergedTarget = resolvedTarget;
 					}
-					else if (mergedElement != resolvedElement) {
-					//	throw new IllegalStateException("Merge:populate inconsistent \"" + resolvedElement + "\" and \"" + mergedElement + "\"");
-						System.err.println("Merge:resolveSingleReferenceSlot inconsistent \"" + resolvedElement + "\" and \"" + mergedElement + "\"");
+					else if (mergedTarget != resolvedTarget) {
+					//	throw new IllegalStateException("Merge:populate inconsistent \"" + resolvedTarget + "\" and \"" + mergedTarget + "\"");
+						System.err.println("Merge:resolveSingleReferenceSlot inconsistent \"" + resolvedTarget + "\" and \"" + mergedTarget + "\"");
 					}
 				}
 			}
-			mergedParent.eSet(eReference, mergedElement);
+			mergedParent.eSet(eReference, mergedTarget);
+		}
+	}
+
+	/**
+	 * Traverse the merged containment tree to resolve all reference slots (other than containments).
+	 */
+	private <E extends Element> void resolvePossibleBidirectionalSlots(/*@NonNull E mergedParent, @NonNull Iterable<@NonNull E> partialParents*/) {
+		for (@NonNull Element mergedParent : mergedElement2partialElements.keySet()) {
+			List<@NonNull Element> partialParents = mergedElement2partialElements.get(mergedParent);
+			assert partialParents != null;
+			EClass eClass = mergedParent.eClass();
+			assert eClass != null;
+			for (EStructuralFeature eStructuralFeature : eClass.getEAllStructuralFeatures()) {
+				assert eStructuralFeature != null;
+				if ((eStructuralFeature instanceof EReference) && !eStructuralFeature.isDerived() && !eStructuralFeature.isTransient() && !eStructuralFeature.isVolatile()) {
+					EReference eReference = (EReference)eStructuralFeature;
+					if (!eReference.isContainment() && !eReference.isContainer()) {
+						EAssociation eAssociation = eAssociationHelper.get(eReference);
+						if ((eAssociation != null) && (eReference.getEOpposite() == null)) {
+							assert !eStructuralFeature.isMany();
+							resolvePossibleBidirectionalSlot(mergedParent, eReference,  partialParents);
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -424,8 +515,6 @@ public class Merger
 	 * Traverse the merged containment tree to resolve all reference slots (other than containments).
 	 */
 	private <E extends Element> void resolveReferenceSlots(/*@NonNull E mergedParent, @NonNull Iterable<@NonNull E> partialParents*/) {
-	//	List<@NonNull Element> keyList = new ArrayList<>(mergedElement2partialElements.keySet());
-	//	Collections.sort(keyList, NameUtil.TO_STRING_COMPARATOR);			// Make execution predictable
 		for (@NonNull Element mergedParent : mergedElement2partialElements.keySet()) {
 			List<@NonNull Element> partialParents = mergedElement2partialElements.get(mergedParent);
 			assert partialParents != null;

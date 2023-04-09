@@ -33,10 +33,10 @@ public class EAssociationHelper
 	public static class EAssociation implements Nameable
 	{
 		protected final @NonNull EReference first;
-		protected final @NonNull EReference second;
+		protected final @Nullable EReference second;
 		private final @NonNull String name;
 
-		public EAssociation(@NonNull EReference first, @NonNull String firstName, @NonNull EReference second, @NonNull String secondName) {
+		public EAssociation(@NonNull EReference first, @NonNull String firstName, @Nullable EReference second, @NonNull String secondName) {
 			this.first = first;
 			this.second = second;
 			this.name = firstName + " <> " + secondName;
@@ -60,28 +60,47 @@ public class EAssociationHelper
 	private final @NonNull Map<@NonNull EReference, @NonNull EAssociation> eReference2eAssociation = new HashMap<>();
 
 	public @Nullable EAssociation add(@NonNull EReference eReference) {
+		// XXX detectavoid multiple invocation
 		if (eReference.isContainer() || eReference.isContainment()) {
 			return null;
 		}
 		EReference eOpposite = eReference.getEOpposite();
 		if (eOpposite == null) {
-			return null;
+			if (eReference.isMany()) {
+				return null;
+			}
+			if (eReference.getEContainingClass() != eReference.getEReferenceType()) {
+				return null;
+			}
+			getClass();			// XXX
+		//	return null;
 		}
-		EAssociation eAssociation;
+		EAssociation eAssociation = eReference2eAssociation.get(eReference);
+		if (eAssociation != null) {
+			return eAssociation;
+		}
 		String n1 = getQualifiedName(new StringBuilder(), eReference);
-		String n2 = getQualifiedName(new StringBuilder(), eOpposite);
-		int diff = n1.compareTo(n2);
-		if (diff > 0) {			// 0 is eRef
-			eAssociation = new EAssociation(eOpposite, n2, eReference, n1);
-		}
-		else if (diff == 0) {
-			throw new UnsupportedOperationException("Unexpected self-reference " + n1);	// Ecore doesn't support this case
+		String n2;
+		if (eOpposite != null) {
+			n2 = getQualifiedName(new StringBuilder(), eOpposite);
+			int diff = n1.compareTo(n2);
+			if (diff > 0) {			// 0 is eRef
+				eAssociation = new EAssociation(eOpposite, n2, eReference, n1);
+			}
+			else if (diff == 0) {
+				throw new UnsupportedOperationException("Unexpected self-reference " + n1);	// Ecore doesn't support this case
+			}
 		}
 		else {
+			n2 = "";
+		}
+		if (eAssociation == null) {
 			eAssociation = new EAssociation(eReference, n1, eOpposite, n2);
 		}
 		eReference2eAssociation.put(eReference, eAssociation);
-		eReference2eAssociation.put(eOpposite, eAssociation);
+		if (eOpposite != null) {
+			eReference2eAssociation.put(eOpposite, eAssociation);
+		}
 		return eAssociation;
 	}
 

@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.merge;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -17,11 +20,14 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -85,14 +91,22 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EOb
 	}
 
 	@Override
+	public @Nullable EObject visitProperty(@NonNull Property object) {
+		if ("opposite".equals(object.getName())) {
+			getClass();		// XXX
+		}
+		return super.visitProperty(object);
+	}
+
+	@Override
 	public @Nullable EObject visitTupleType(@NonNull TupleType asTupleType) {
-/*		Map<@NonNull String, @NonNull Type> tupleParts = new HashMap<>();
+		Map<@NonNull String, @NonNull Type> tupleParts = new HashMap<>();
 		for (@NonNull Property asProperty : PivotUtil.getOwnedProperties(asTupleType)) {
 			Type mergedType = (Type)asProperty.getType().accept(this);
 			assert mergedType != null;
 			tupleParts.put(NameUtil.getName(asProperty), mergedType);
 		}
-		return context.getTupleType("Tuple", tupleParts); */
-		return context.getTupleType(asTupleType.getTypeId());
+		return context.getTupleType("Tuple", tupleParts);
+	//	return context.getTupleType(asTupleType.getTypeId());
 	}
 }
