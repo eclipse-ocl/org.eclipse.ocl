@@ -68,7 +68,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ENDFOR»
 			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
 			«IF type.getOwnedSignature() === null»
-			private final @NonNull «type.eClass.name» «typeName» = create«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
+			private final @NonNull «type.eClass.name» «typeName» = get«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()»«FOR templateBinding : type.ownedBindings»«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions», «templateParameterSubstitution.actual.getSymbolName()»«ENDFOR»«ENDFOR»);
 			«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -109,8 +109,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ENDFOR»
 			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 				«IF type.getOwnedSignature() === null»
-					private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
-					eClass.name»(«type.getUnspecializedElement().getSymbolName()»);
+					private final @NonNull «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = get«type.
+					eClass.name»(«type.getUnspecializedElement().getSymbolName()»«FOR templateBinding : type.ownedBindings»«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions», «templateParameterSubstitution.actual.getSymbolName()»«ENDFOR»«ENDFOR»);
 				«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -224,11 +224,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						type.setIsNullFree(true);
 						«ENDIF»
 						«type.emitSuperClasses("type")»
-						«FOR templateBinding : type.ownedBindings»
-							«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions»
-								addBinding(type, «templateParameterSubstitution.actual.getSymbolName()»);
-							«ENDFOR»
-						«ENDFOR»
 						ownedClasses.add(type);
 					«ENDFOR»
 				«ENDFOR»
@@ -419,11 +414,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						type.setValuesAreNullFree(false);
 						«ENDIF»
 						«type.emitSuperClasses("type")»
-						«FOR templateBinding : type.ownedBindings»
-							«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions»
-								addBinding(type, «templateParameterSubstitution.actual.getSymbolName()»);
-							«ENDFOR»
-						«ENDFOR»
 						ownedClasses.add(type);
 					«ENDFOR»
 				«ENDFOR»

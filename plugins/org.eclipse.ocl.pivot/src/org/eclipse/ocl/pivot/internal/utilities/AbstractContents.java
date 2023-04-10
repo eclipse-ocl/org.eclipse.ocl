@@ -63,6 +63,7 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated
 	protected static void addBinding(@NonNull TemplateableElement specializedType, @NonNull Type actualType) {
 		TemplateableElement unspecializedType = specializedType.getUnspecializedElement();
 		List<TemplateBinding> templateBindings = specializedType.getOwnedBindings();
@@ -386,6 +387,12 @@ public abstract class AbstractContents extends PivotUtil
 		return (BagType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
+	protected @NonNull BagType getBagType(@NonNull BagType unspecializedType, @NonNull Type elementType) {
+		BagType type = createBagType(unspecializedType);
+		addBinding(type, elementType);
+		return type;
+	}
+
 	/**
 	 * @since 1.18
 	 */
@@ -401,12 +408,25 @@ public abstract class AbstractContents extends PivotUtil
 		return (CollectionType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
+	protected @NonNull CollectionType getCollectionType(@NonNull CollectionType unspecializedType, @NonNull Type elementType) {
+		CollectionType type = createCollectionType(unspecializedType);
+		addBinding(type, elementType);
+		return type;
+	}
+
 	protected @NonNull InvalidType getInvalidType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
 		return (InvalidType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
 	protected @NonNull Library getLibrary(@NonNull Model asModel, @NonNull String name) {
 		return (Library) ClassUtil.nonNullState(NameUtil.getNameable(asModel.getOwnedPackages(), name));
+	}
+
+	protected @NonNull MapType getMapType(@NonNull MapType unspecializedType, @NonNull Type keyType, @NonNull Type valueType) {
+		MapType type = createMapType(unspecializedType);
+		addBinding(type, keyType);
+		addBinding(type, valueType);
+		return type;
 	}
 
 	protected @NonNull Model getModel(@NonNull String modelURI) {
@@ -417,6 +437,12 @@ public abstract class AbstractContents extends PivotUtil
 
 	protected @NonNull OrderedSetType getOrderedSetType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
 		return (OrderedSetType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
+	}
+
+	protected @NonNull OrderedSetType getOrderedSetType(@NonNull OrderedSetType unspecializedType, @NonNull Type elementType) {
+		OrderedSetType type = createOrderedSetType(unspecializedType);
+		addBinding(type, elementType);
+		return type;
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Package getPackage(@NonNull Model asModel, @NonNull String name) {
@@ -445,8 +471,20 @@ public abstract class AbstractContents extends PivotUtil
 		return (SequenceType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
+	protected @NonNull SequenceType getSequenceType(@NonNull SequenceType unspecializedType, @NonNull Type elementType) {
+		SequenceType type = createSequenceType(unspecializedType);
+		addBinding(type, elementType);
+		return type;
+	}
+
 	protected @NonNull SetType getSetType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
 		return (SetType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
+	}
+
+	protected @NonNull SetType getSetType(@NonNull SetType unspecializedType, @NonNull Type elementType) {
+		SetType type = createSetType(unspecializedType);
+		addBinding(type, elementType);
+		return type;
 	}
 
 	protected @NonNull TemplateParameter getTemplateParameter(@NonNull TemplateableElement templateableElement, int index) {
