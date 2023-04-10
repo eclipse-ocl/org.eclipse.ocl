@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -151,7 +150,7 @@ implements CollectionType {
 	 */
 	protected CollectionTypeImpl() {
 		super();
-		System.out.println("CollectionTypeImpl " + NameUtil.debugSimpleName(this));
+	//	System.out.println("CollectionTypeImpl " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -774,7 +773,7 @@ implements CollectionType {
 
 	@Override
 	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
-		System.out.println("eBasicSetContainer " + NameUtil.debugSimpleName(this) + " - " + NameUtil.debugSimpleName(newContainer));
+	//	System.out.println("eBasicSetContainer " + NameUtil.debugSimpleName(this) + " - " + NameUtil.debugSimpleName(newContainer));
 		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
 } //CollectionTypeImpl

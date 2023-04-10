@@ -42,20 +42,20 @@ public class CollectionTypeManager extends AbstractTypeManager
 	private static final Logger logger = Logger.getLogger(CollectionTypeManager.class);
 
 	/*
-	 * Map from CollectionTypeId to Map specialization optionally using weak references.
+	 * Map from CollectionTypeId to Map specialization.
 	 */
-	private final @NonNull Map<@NonNull CollectionTypeId, @NonNull Object> collectionTypes;
+	private final @NonNull Map<@NonNull CollectionTypeId, @NonNull CollectionType> typeId2collectionType;
 
 	public CollectionTypeManager(@NonNull Orphanage orphanage) {
 		super(orphanage);
-		this.collectionTypes = new HashMap<>();
+		this.typeId2collectionType = new HashMap<>();
 	}
 
 	public synchronized @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId) {
-		return (CollectionType)collectionTypes.get(collectionTypeId);
+		return typeId2collectionType.get(collectionTypeId);
 	}
 
-	protected @NonNull CollectionType createSpecialization(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
+	private @NonNull CollectionType createSpecialization(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
 		CollectionTypeId genericTypeId = typeParameters.getGenericTypeId();
 		CollectionType unspecializedType = standardLibrary.getCollectionType(genericTypeId);
 		String typeName = unspecializedType.getName();
@@ -63,57 +63,57 @@ public class CollectionTypeManager extends AbstractTypeManager
 		List<@NonNull TemplateParameter> templateParameters = ClassUtil.nullFree(templateSignature.getOwnedParameters());
 		EClass eClass = unspecializedType.eClass();
 		EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-		CollectionType specializedCollectionType = (CollectionType) eFactoryInstance.create(eClass);
-		specializedCollectionType.setName(typeName);
+		CollectionType specializedType = (CollectionType) eFactoryInstance.create(eClass);
+		specializedType.setName(typeName);
 		TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
 		TemplateParameter formalParameter = ClassUtil.nonNull(templateParameters.get(0));
 		assert formalParameter != null;
 		Type elementType = typeParameters.getElementType();
 		TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, elementType);
 		templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
-		specializedCollectionType.getOwnedBindings().add(templateBinding);
-		standardLibrary.resolveSuperClasses(specializedCollectionType, unspecializedType);
-	//	specializedCollectionType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
-		specializedCollectionType.setIsNullFree(typeParameters.isNullFree());
+		specializedType.getOwnedBindings().add(templateBinding);
+		standardLibrary.resolveSuperClasses(specializedType, unspecializedType);
+	//	specializedType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
+		specializedType.setIsNullFree(typeParameters.isNullFree());
 		try {
-			specializedCollectionType.setLowerValue(typeParameters.getLower());
+			specializedType.setLowerValue(typeParameters.getLower());
 		} catch (InvalidValueException e) {
 			logger.error("Out of range lower bound", e);
 		}
 		try {
-			specializedCollectionType.setUpperValue(typeParameters.getUpper());
+			specializedType.setUpperValue(typeParameters.getUpper());
 		} catch (InvalidValueException e) {
 			logger.error("Out of range upper bound", e);
 		}
-		specializedCollectionType.setUnspecializedElement(unspecializedType);
-		orphanage.addOrphanClass(specializedCollectionType);
-		specializedCollectionType.getTypeId();		// XXX
-		String s = specializedCollectionType.toString();
-//		System.out.println("createSpecialization: " + NameUtil.debugSimpleName(specializedCollectionType) + " : " + specializedCollectionType);
+		specializedType.setUnspecializedElement(unspecializedType);
+		specializedType.getTypeId();		// XXX
+		String s = specializedType.toString();
+//		System.out.println("createSpecialization: " + NameUtil.debugSimpleName(specializedType) + " : " + specializedType);
 		if ("Collection(Families::FamilyMember[*|?])".equals(s)) {
 			getClass();		// XXX
 		}
-		return specializedCollectionType;
+		return specializedType;
 	}
 
 	@Override
 	public void dispose() {
-		collectionTypes.clear();
+		typeId2collectionType.clear();
 	}
 
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
 		CollectionTypeId collectionTypeId = typeParameters.getSpecializedTypeId();
-		synchronized (collectionTypes) {
+		synchronized (typeId2collectionType) {
 			CollectionType specializedType = basicGetCollectionType(collectionTypeId);
 			if (specializedType == null) {
 				specializedType = createSpecialization(typeParameters);
 				Type elementType = specializedType.getElementType();
 				assert (elementType != null) && (elementType.eResource() != null);
-				collectionTypes.put(collectionTypeId, specializedType);
+				typeId2collectionType.put(collectionTypeId, specializedType);
 				assert collectionTypeId == ((CollectionTypeImpl)specializedType).immutableGetTypeId();		// XXX
 				if (basicGetCollectionType(collectionTypeId) != specializedType) {
 					basicGetCollectionType(collectionTypeId);
 				}
+				orphanage.addOrphanClass(specializedType);
 			}
 			return specializedType;
 		}

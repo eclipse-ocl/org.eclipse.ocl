@@ -37,28 +37,28 @@ import org.eclipse.ocl.pivot.values.MapTypeParameters;
 public class MapTypeManager extends AbstractTypeManager
 {
 	/*
-	 * Map from MapTypeId to Map specialization optionally using weak references.
+	 * Map from MapTypeId to Map specialization.
 	 */
-	private final @NonNull Map<@NonNull MapTypeId, @NonNull Object> mapTypes;
+	private final @NonNull Map<@NonNull MapTypeId, @NonNull MapType> typeId2mapType;
 
 	public MapTypeManager(@NonNull Orphanage orphanage) {
 		super(orphanage);
-		this.mapTypes = new HashMap<>();
+		this.typeId2mapType = new HashMap<>();
 	}
 
 	public synchronized @Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId) {
-		return (MapType)mapTypes.get(mapTypeId);
+		return typeId2mapType.get(mapTypeId);
 	}
 
-	protected @NonNull MapType createSpecialization(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
+	private @NonNull MapType createSpecialization(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
 		MapType unspecializedType = standardLibrary.getMapType();
 		String typeName = unspecializedType.getName();
 		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
 		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
 		EClass eClass = unspecializedType.eClass();
 		EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-		MapType specializedMapType = (MapType) eFactoryInstance.create(eClass);
-		specializedMapType.setName(typeName);
+		MapType specializedType = (MapType) eFactoryInstance.create(eClass);
+		specializedType.setName(typeName);
 		TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
 		TemplateParameter keyFormalParameter = templateParameters.get(0);
 		TemplateParameter valueFormalParameter = templateParameters.get(1);
@@ -72,30 +72,30 @@ public class MapTypeManager extends AbstractTypeManager
 		TemplateParameterSubstitution valueTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(valueFormalParameter, valueType);
 		templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
 		templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
-		specializedMapType.getOwnedBindings().add(templateBinding);
+		specializedType.getOwnedBindings().add(templateBinding);
 	//	resolveSuperClasses(specializedMapType, unspecializedType);
-		specializedMapType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
-		specializedMapType.setKeysAreNullFree(typeParameters.isKeysAreNullFree());
-		specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
-		specializedMapType.setUnspecializedElement(unspecializedType);
-		specializedMapType.setEntryClass(typeParameters.getEntryClass());
-		orphanage.addOrphanClass(specializedMapType);
-		return specializedMapType;
+		specializedType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
+		specializedType.setKeysAreNullFree(typeParameters.isKeysAreNullFree());
+		specializedType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
+		specializedType.setUnspecializedElement(unspecializedType);
+		specializedType.setEntryClass(typeParameters.getEntryClass());
+		return specializedType;
 	}
 
 	@Override
 	public void dispose() {
-		mapTypes.clear();
+		typeId2mapType.clear();
 	}
 
 	public @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
 		MapTypeId mapTypeId = typeParameters.getMapTypeId();
-		synchronized (mapTypes) {
+		synchronized (typeId2mapType) {
 			MapType specializedType = basicGetMapType(mapTypeId);
 			if (specializedType == null) {
 				specializedType = createSpecialization(typeParameters);
-				mapTypes.put(mapTypeId, specializedType);
+				typeId2mapType.put(mapTypeId, specializedType);
 				assert mapTypeId == ((MapTypeImpl)specializedType).immutableGetTypeId();		// XXX
+				orphanage.addOrphanClass(specializedType);
 			}
 			return specializedType;
 		}

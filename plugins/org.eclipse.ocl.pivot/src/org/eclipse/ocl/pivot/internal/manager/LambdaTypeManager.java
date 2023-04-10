@@ -31,34 +31,36 @@ public class LambdaTypeManager extends AbstractTypeManager
 	/**
 	 * Map from from context type via first parameter type, which may be null, to list of lambda types sharing context and first parameter types.
 	 */
-	private final @NonNull Map<@NonNull Type, @NonNull Map<@Nullable Type, @NonNull List<@NonNull Object>>> lambdaTypes;
+	private final @NonNull Map<@NonNull Type, @NonNull Map<@Nullable Type, @NonNull List<@NonNull LambdaType>>> lambdaTypes;	// XXX Simplify
+	private final @NonNull Map<@NonNull LambdaTypeId, @NonNull LambdaType> typeId2lambdaType;
 	// FIXME Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
 	public LambdaTypeManager(@NonNull Orphanage orphanage) {
 		super(orphanage);
 		this.lambdaTypes = new HashMap<>();
+		this.typeId2lambdaType = new HashMap<>();
 	}
 
 	public @Nullable LambdaType basicGetLambdaType(@NonNull LambdaTypeId lambdaTypeId) {
-		// TODO Auto-generated method stub
-		return null;				// XXX new typeId lookup
+		return typeId2lambdaType.get(lambdaTypeId);
 	}
 
 	@Override
 	public void dispose() {
 		lambdaTypes.clear();
+		typeId2lambdaType.clear();
 	}
 
 	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
-		Map<@Nullable Type, @NonNull List<@NonNull Object>> contextMap = lambdaTypes.get(contextType);
+		Map<@Nullable Type, @NonNull List<@NonNull LambdaType>> contextMap = lambdaTypes.get(contextType);
 		if (contextMap == null) {
 			contextMap = new HashMap<>();
 			lambdaTypes.put(contextType, contextMap);
 		}
 		int iMax = parameterTypes.size();
 		Type firstParameterType = iMax > 0 ? parameterTypes.get(0) : null;
-		List<@NonNull Object> lambdasList = contextMap.get(firstParameterType);
+		List<@NonNull LambdaType> lambdasList = contextMap.get(firstParameterType);
 		if (lambdasList == null) {
 			lambdasList = new ArrayList<>();
 			contextMap.put(firstParameterType, lambdasList);
@@ -90,6 +92,9 @@ public class LambdaTypeManager extends AbstractTypeManager
 		lambdaType.setResultType(resultType);
 		lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
 		lambdasList.add(lambdaType);
+		LambdaTypeId typeId = lambdaType.getTypeId();
+		LambdaType old = typeId2lambdaType.put(typeId, lambdaType);
+		assert old == null;
 		orphanage.addOrphanClass(lambdaType);
 		return lambdaType;
 	}

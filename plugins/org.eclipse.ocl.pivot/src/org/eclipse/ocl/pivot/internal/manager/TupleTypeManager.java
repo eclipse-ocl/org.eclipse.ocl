@@ -40,20 +40,20 @@ public class TupleTypeManager extends AbstractTypeManager
 	/**
 	 * Map from the tuple typeId to the tuple type.
 	 */
-	private @NonNull Map<@NonNull TupleTypeId, @NonNull Object> tupleId2tupleOrWeakTuple;
+	private @NonNull Map<@NonNull TupleTypeId, @NonNull TupleType> typeId2tupleTuple;
 
 	public TupleTypeManager(@NonNull Orphanage orphanage) {
 		super(orphanage);
-		this.tupleId2tupleOrWeakTuple = new HashMap<>();
+		this.typeId2tupleTuple = new HashMap<>();
 	}
 
 	public @Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId) {
-		return (TupleType)tupleId2tupleOrWeakTuple.get(tupleTypeId);
+		return typeId2tupleTuple.get(tupleTypeId);
 	}
 
 	@Override
 	public void dispose() {
-		tupleId2tupleOrWeakTuple.clear();
+		typeId2tupleTuple.clear();
 	}
 
 	protected @NonNull Type getPrimaryType(@NonNull Type asType) {
@@ -63,7 +63,7 @@ public class TupleTypeManager extends AbstractTypeManager
 	public @NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId) {
 		TupleType tupleType = basicGetTupleType(tupleTypeId);
 		if (tupleType == null) {
-			synchronized (tupleId2tupleOrWeakTuple) {
+			synchronized (typeId2tupleTuple) {
 				tupleType = basicGetTupleType(tupleTypeId);
 				if (tupleType == null) {
 					tupleType = new TupleTypeImpl(tupleTypeId);
@@ -76,7 +76,7 @@ public class TupleTypeManager extends AbstractTypeManager
 						ownedAttributes.add(property);
 					}
 					tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
-					putTupleType(tupleTypeId, tupleType);
+					typeId2tupleTuple.put(tupleTypeId, tupleType);
 					orphanage.addOrphanClass(tupleType);
 				}
 			}
@@ -84,11 +84,11 @@ public class TupleTypeManager extends AbstractTypeManager
 		return tupleType;
 	}
 
-	public @NonNull TupleType getTupleType(@NonNull Iterable<@NonNull ? extends TypedElement> parts) {
+	public @NonNull TupleType getTupleType(@NonNull Iterable<@NonNull ? extends TypedElement> parts) {	// XXX Redirect to TupleTypeId
 		@NonNull TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(TypeId.TUPLE_NAME, parts);
 		TupleType tupleType = basicGetTupleType(tupleTypeId);
 		if (tupleType == null) {
-			synchronized (tupleId2tupleOrWeakTuple) {
+			synchronized (typeId2tupleTuple) {
 				tupleType = basicGetTupleType(tupleTypeId);
 				if (tupleType == null) {
 					tupleType = new TupleTypeImpl(tupleTypeId);
@@ -101,15 +101,11 @@ public class TupleTypeManager extends AbstractTypeManager
 					}
 					ECollections.sort(ownedAttributes, NameUtil.NAMEABLE_COMPARATOR);
 					tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
-					getOrphanage().addOrphanClass(tupleType);
-					putTupleType(tupleTypeId, tupleType);
+					typeId2tupleTuple.put(tupleTypeId, tupleType);
+					orphanage.addOrphanClass(tupleType);
 				}
 			}
 		}
 		return tupleType;
-	}
-
-	private void putTupleType(@NonNull TupleTypeId tupleTypeId, @NonNull TupleType tupleType) {
-		tupleId2tupleOrWeakTuple.put(tupleTypeId, tupleType);
 	}
 }
