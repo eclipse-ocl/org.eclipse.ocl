@@ -10,37 +10,22 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.NoSuchElementException;
-import java.util.WeakHashMap;
 
-import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.AbstractEList;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.WildcardType;
-import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
@@ -143,8 +128,11 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
+		System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass));
 		orphanClass.setOwningPackage(this);
 	//	getOwnedClasses().add(orphanClass);		// FIXME why doesn't this always work?
+		assert orphanClass.eContainer() == this;
+		assert getOwnedClasses().contains(orphanClass);
 	}
 
 	@Override
@@ -154,20 +142,20 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public void dispose() {
-		if (ownedClasses != null) {
+	/*	if (ownedClasses != null) {
 			((WeakEList<?>)ownedClasses).dispose();
 		}
 		if (ownedPackages != null) {
 			((WeakEList<?>)ownedPackages).dispose();
-		}
+		} */
 	}
 
-	@Override
+/*	@Override
 	public @NonNull EList<org.eclipse.ocl.pivot.Class> getOwnedClasses() {
 		EList<org.eclipse.ocl.pivot.Class> ownedClasses2 = ownedClasses;
 		if (ownedClasses2 == null)
 		{
-			ownedClasses2 = ownedClasses = new WeakEList<org.eclipse.ocl.pivot.Class>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_TYPE, PivotPackage.TYPE__PACKAGE*/)
+			ownedClasses2 = ownedClasses = new WeakEList<org.eclipse.ocl.pivot.Class>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_TYPE, PivotPackage.TYPE__PACKAGE* /)
 					{
 						@Override
 						protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Class object) {
@@ -177,17 +165,17 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 					};
 		}
 		return ownedClasses2;
-	}
+	} */
 
 	/**
 	 * @since 1.18
-	 */
+	 *
 	@Override
 	public @NonNull EList<org.eclipse.ocl.pivot.Package> getOwnedPackages() {
 		EList<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
 		if (ownedPackages2 == null)
 		{
-			ownedPackages2 = ownedPackages = new WeakEList<org.eclipse.ocl.pivot.Package>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_PACKAGE, PivotPackage.PACKAGE__OWNING_PACKAGE*/)
+			ownedPackages2 = ownedPackages = new WeakEList<org.eclipse.ocl.pivot.Package>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_PACKAGE, PivotPackage.PACKAGE__OWNING_PACKAGE* /)
 			{
 				@Override
 				protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Package object) {
@@ -197,7 +185,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			};
 		}
 		return ownedPackages2;
-	}
+	} */
 
 	@Override
 	public void removePackageListener(@NonNull PartialPackages partialPackages) {
@@ -212,12 +200,12 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 * <br>
 	 * A cached sorted list copy of the map is created on demand and may be shared by multiple iterators. However it must not be modified
 	 * since its staleness is detected by a simple size comparison with the map.
-	 */
+	 *
 	private static abstract class WeakEList<T extends NamedElement> extends AbstractEList<T> implements InternalEList<T>
 	{
 		/**
 		 * A simple immutable iterator that caches the list image on construction to avoid changes.
-		 */
+		 *
 		protected static class ListIterator<T> implements java.util.ListIterator<T>
 		{
 			protected final @NonNull List<Map.@NonNull Entry<@NonNull T, @NonNull Integer>> list;
@@ -289,17 +277,17 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 		/**
 		 * Map of content-value to list-index.
-		 */
+		 *
 		private final @NonNull WeakHashMap<@NonNull T, @NonNull Integer> weakMap = new WeakHashMap<>();
 
 		/**
 		 * Incrementing counter used to sort the list into a predictable order.
-		 */
+		 *
 		private int counter = 0;
 
 		/**
 		 * The most recent ordered view of the weakMap.
-		 */
+		 *
 		private @Nullable List<@NonNull Entry<@NonNull T, @NonNull Integer>> weakList = null;
 
 		@Override
@@ -341,8 +329,17 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 					weakList = null;
 				}
 			}
+			if (hasInverse()) {
+	//	        inverseAdd(object, null);
+		    }
 			return notifications;
 		}
+
+		//		  @Override
+				  protected boolean hasInverse()
+				  {
+				    return true;
+				  }
 
 		protected abstract @NonNull ElementId getElementId(T object);
 
@@ -496,7 +493,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		public String toString() {
 			return weakMap.toString();
 		}
-	}
+	} */
+
 	/**
 	 * The OrphanResource tailors the inherited ASResource functionality to support the single Resource shared by all
 	 * same-OCL consumers. It is not saved and so has no xmi:ids but it does have LUSSIDs
@@ -576,8 +574,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 *
 	 * @since 1.18
 	 */
-	public static org.eclipse.ocl.pivot.@NonNull Package createLocalOrphanage(@NonNull Model asModel) {
-		org.eclipse.ocl.pivot.Package orphanage = PivotFactory.eINSTANCE.createPackage();
+	public static @NonNull Orphanage createLocalOrphanage(@NonNull Model asModel) {
+		Orphanage orphanage = PivotFactory.eINSTANCE.createOrphanage();
 		orphanage.setName(PivotConstants.ORPHANAGE_NAME);
 		orphanage.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
 		orphanage.setURI(PivotConstants.ORPHANAGE_URI);
@@ -763,7 +761,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	public static boolean isOrphanage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		String uri = asPackage.getURI();
 		boolean isOrphanage = isOrphanage(uri);
-	//	assert isOrphanage == asPackage instanceof Orphanage;
+		assert isOrphanage == asPackage instanceof Orphanage;
 		return isOrphanage;
 	}
 

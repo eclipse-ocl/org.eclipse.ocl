@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -96,6 +97,13 @@ public abstract class AbstractContents extends PivotUtil
 
 	protected static void addSuperClass(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, org.eclipse.ocl.pivot./*@NonNull*/ Class asSuperClass) {
 		asClass.getSuperClasses().add(asSuperClass);
+	}
+
+
+	protected final @NonNull Orphanage orphanage;
+
+	protected AbstractContents() {
+		this.orphanage = createOrphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_PREFIX, PivotConstants.ORPHANAGE_URI); //, null, null);
 	}
 
 	protected @NonNull AnyType createAnyType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass) {
@@ -209,6 +217,7 @@ public abstract class AbstractContents extends PivotUtil
 		specializedType.setLower(unspecializedType.getLower());
 		specializedType.setUpper(unspecializedType.getUpper());
 		specializedType.setUnspecializedElement(unspecializedType);
+	//	orphanage.addOrphanClass(specializedType);
 		return specializedType;
 	}
 
@@ -362,6 +371,7 @@ public abstract class AbstractContents extends PivotUtil
 		MapType specializedType = PivotFactory.eINSTANCE.createMapType();
 		specializedType.setName(unspecializedType.getName());
 		specializedType.setUnspecializedElement(unspecializedType);
+	//	orphanage.addOrphanClass(specializedType);
 		return specializedType;
 	}
 
@@ -427,6 +437,18 @@ public abstract class AbstractContents extends PivotUtil
 		OrderedSetType asType = createOrderedSetType(eClass, templateParameter, isNullFree, lower, upper);
 		asPackage.getOwnedClasses().add(asType);;
 		return asType;
+	}
+
+	private @NonNull Orphanage createOrphanage(@NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {//, @Nullable PackageId packageId, @Nullable EPackage ePackage) {
+		Orphanage asPackage = PivotFactory.eINSTANCE.createOrphanage();
+		asPackage.setName(name);
+		asPackage.setNsPrefix(nsPrefix);
+	//	if (packageId != null) {
+	//		((PackageImpl)pivotPackage).setPackageId(packageId);  // FIXME Add to API
+	//	}
+		asPackage.setURI(nsURI);
+	//	((PivotObjectImpl)pivotPackage).setESObject(ePackage);
+		return asPackage;
 	}
 
 	/**

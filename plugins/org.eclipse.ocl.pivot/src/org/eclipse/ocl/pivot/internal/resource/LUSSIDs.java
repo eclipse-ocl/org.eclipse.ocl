@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -291,6 +292,7 @@ public abstract class LUSSIDs
 	 * and if necessessary from the local context.
 	 */
 	protected int assignLUSSID(@NonNull AS2ID as2id, @NonNull Element element, boolean isReferenced, boolean normalizeTemplateParameters) {
+		System.out.println("assignLUSSID " + NameUtil.debugSimpleName(asResource) + " - " + NameUtil.debugSimpleName(element));
 		assert asResource == element.eResource();
 		int savedDepth = debugDepth;
 		assert debugDepth < 30;

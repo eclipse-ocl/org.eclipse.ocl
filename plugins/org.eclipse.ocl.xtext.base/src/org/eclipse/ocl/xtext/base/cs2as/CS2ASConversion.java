@@ -341,17 +341,17 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//		Resource orphanResource = orphanPackage.eResource();
 		final Collection<Notifier> prunableResources = new ArrayList<Notifier>(cs2asResourceMap.values());
 		//		prunableResources.add(orphanResource);
-		Collection<Notifier> allPivotResources = new ArrayList<Notifier>(metamodelManager.getASResourceSet().getResources());
+		Collection<Notifier> allResources = new ArrayList<Notifier>(metamodelManager.getASResourceSet().getResources());
 		//		allPivotResources.removeAll(prunableResources);					// Dead elements in orphanage or pivot of CS can be pruned
 		EObject lockingObject = metamodelManager.getLockingObject();
 		if (lockingObject != null) {
-			allPivotResources.add(lockingObject);						// Locked elements are not dead
+			allResources.add(lockingObject);						// Locked elements are not dead
 		}
-		allPivotResources.addAll(metamodelManager.getLibraries());			// Library elements are not dead
-		allPivotResources.addAll(cs2asResourceMap.keySet());				// Incoming elements are not dead
-		allPivotResources.remove(metamodelManager.getCompleteModel().getSharedOrphanage().eResource());			// FIXME redundant ??
+		allResources.addAll(metamodelManager.getLibraries());			// Library elements are not dead
+		allResources.addAll(cs2asResourceMap.keySet());				// Incoming elements are not dead
+		allResources.remove(metamodelManager.getCompleteModel().getSharedOrphanage().eResource());			// FIXME redundant ??
 		@SuppressWarnings("serial")
-		Map<EObject, Collection<Setting>> referencesToOrphans = new EcoreUtil.CrossReferencer(allPivotResources)
+		Map<EObject, Collection<Setting>> referencesToOrphans = new EcoreUtil.CrossReferencer(allResources)
 		{
 			{ crossReference(); }
 			@Override
