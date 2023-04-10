@@ -84,6 +84,10 @@ public abstract class AbstractContents extends PivotUtil
 		parameterSubstitutions.add(templateParameterSubstitution);
 	}
 
+	protected static void addSuperClass(org.eclipse.ocl.pivot.@NonNull Class asClass, org.eclipse.ocl.pivot.@NonNull Class asSuperClass) {
+		asClass.getSuperClasses().add(asSuperClass);
+	}
+
 	/* @deprecated no longer used. Replaced by EClass literal and TemplateParameter */
 	@Deprecated
 	protected @NonNull BagType createBagType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {

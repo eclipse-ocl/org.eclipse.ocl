@@ -342,7 +342,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«root.installIterations()»
 						«root.installCoercions()»
 						«root.installProperties()»
-						«root.installTemplateBindings()»
 						«root.installPrecedences()»
 						«root.installComments()»
 					}
@@ -368,7 +367,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					«root.defineIterations()»
 					«root.defineCoercions()»
 					«root.defineProperties()»
-					«root.defineTemplateBindings()»
 					«root.definePrecedences()»
 					«root.defineComments()»
 				}

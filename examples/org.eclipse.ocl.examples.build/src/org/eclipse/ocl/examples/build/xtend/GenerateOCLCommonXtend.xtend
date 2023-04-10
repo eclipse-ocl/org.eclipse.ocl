@@ -173,7 +173,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			private void installClassTypes() {
 				List<Class> ownedClasses;
-				List<Class> superClasses;
 				Class type;
 				«FOR pkge : sortedPackages»
 
@@ -206,7 +205,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			private void installCollectionTypes() {
 				List<Class> ownedClasses;
-				List<Class> superClasses;
 				CollectionType type;
 				«FOR pkge : sortedPackages»
 
@@ -226,6 +224,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						type.setIsNullFree(true);
 						«ENDIF»
 						«type.emitSuperClasses("type")»
+						«FOR templateBinding : type.ownedBindings»
+							«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions»
+								addBinding(type, «templateParameterSubstitution.actual.getSymbolName()»);
+							«ENDFOR»
+						«ENDFOR»
 						ownedClasses.add(type);
 					«ENDFOR»
 				«ENDFOR»
@@ -382,7 +385,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			private void installLambdaTypes() {
 				final List<Class> orphanTypes = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
 				LambdaType type;
-				List<Class> superClasses;
 				«FOR type : allLambdaTypes»
 					orphanTypes.add(type = «type.getSymbolName()»);
 					type.setContextType(«type.contextType.getSymbolName()»);
@@ -404,7 +406,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			private void installMapTypes() {
 				List<Class> ownedClasses;
-				List<Class> superClasses;
 				MapType type;
 				«FOR pkge : sortedPackages»
 
@@ -418,6 +419,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						type.setValuesAreNullFree(false);
 						«ENDIF»
 						«type.emitSuperClasses("type")»
+						«FOR templateBinding : type.ownedBindings»
+							«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions»
+								addBinding(type, «templateParameterSubstitution.actual.getSymbolName()»);
+							«ENDFOR»
+						«ENDFOR»
 						ownedClasses.add(type);
 					«ENDFOR»
 				«ENDFOR»
@@ -641,23 +647,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String defineTemplateBindings(/*@NonNull*/ Model root) {
-		var allTemplateableElements = root.getSortedTemplateableElements(symbolNameComparator);
-		if (allTemplateableElements.isEmpty()) return "";
-		'''
-
-			private void installTemplateBindings() {
-				«FOR templateableElement : allTemplateableElements»
-					«FOR templateBinding : templateableElement.ownedBindings»
-						«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions»
-							addBinding(«templateableElement.getSymbolName()», «templateParameterSubstitution.actual.getSymbolName()»);
-						«ENDFOR»
-					«ENDFOR»
-				«ENDFOR»
-			}
-		'''
-	}
-
 	protected def String defineTemplateParameters(/*@NonNull*/ Model root) {
 		var allTemplateParameters = root.getSortedTemplateParameters();
 		if (allTemplateParameters.isEmpty()) return "";
@@ -680,7 +669,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			private void installTupleTypes() {
 				final List<Class> orphanTypes = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
 				TupleType type;
-				List<Class> superClasses;
 				«FOR type : allTupleTypes»
 					orphanTypes.add(type = «type.getSymbolName()»);
 					«FOR property : type.getSortedProperties()»
@@ -725,19 +713,16 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var superClasses = type.getSuperclassesInPackage();
 		'''
 			«IF superClasses.size() > 0»
-				superClasses = «typeName».getSuperClasses();
 				«FOR superClass : superClasses»
-					superClasses.add(«superClass.getSymbolName()»);
+					addSuperClass(«typeName», «superClass.getSymbolName()»);
 				«ENDFOR»
 			«ELSEIF (type instanceof MapType)»
-				superClasses = «typeName».getSuperClasses();
-				superClasses.add(_OclAny);
+				addSuperClass(«typeName», _OclAny);
 			«ELSEIF (type instanceof AnyType)»
 			«ELSEIF TypeId.OCL_ELEMENT_NAME.equals(type.getName())»
 			«ELSEIF PivotConstants.ORPHANAGE_NAME.equals(type.getName())»
 			«ELSE»
-				superClasses = «typeName».getSuperClasses();
-				superClasses.add(_OclElement);
+				addSuperClass(«typeName», _OclElement);
 			«ENDIF»
 		'''
 	}
@@ -817,12 +802,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2properties = root.getSortedProperties();
 		if (pkge2properties.isEmpty()) return "";
 		'''installProperties();'''
-	}
-	
-	protected def String installTemplateBindings(/*@NonNull*/ Model root) {
-		var allTemplateableElements = root.getSortedTemplateableElements();
-		if (allTemplateableElements.isEmpty()) return "";
-		'''installTemplateBindings();'''
 	}
 
 	protected def String installTupleTypes(/*@NonNull*/ Model root) {

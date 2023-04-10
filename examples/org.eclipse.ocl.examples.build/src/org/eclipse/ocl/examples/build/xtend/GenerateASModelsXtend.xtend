@@ -379,7 +379,6 @@ class GenerateASModelsXtend extends GenerateASModels
 						«thisModel.installIterations()»
 						«thisModel.installCoercions()»
 						«thisModel.installProperties()»
-						«thisModel.installTemplateBindings()»
 						«thisModel.installPrecedences()»
 						«thisModel.installComments()»
 					}
@@ -407,7 +406,6 @@ class GenerateASModelsXtend extends GenerateASModels
 					«thisModel.defineIterations()»
 					«thisModel.defineCoercions()»
 					«thisModel.defineProperties()»
-					«thisModel.defineTemplateBindings()»
 					«thisModel.definePrecedences()»
 					«thisModel.defineComments()»
 				}
