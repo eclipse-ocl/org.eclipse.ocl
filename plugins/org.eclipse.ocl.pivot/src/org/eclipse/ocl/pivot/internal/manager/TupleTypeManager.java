@@ -10,16 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
@@ -44,20 +43,13 @@ public class TupleTypeManager extends AbstractTypeManager
 	 */
 	private @NonNull Map<@NonNull TupleTypeId, @NonNull Object> tupleId2tupleOrWeakTuple;
 
-	public TupleTypeManager(@NonNull StandardLibrary standardLibrary, boolean useWeakReferences) {
-		super(standardLibrary, useWeakReferences);
-		this.tupleId2tupleOrWeakTuple = useWeakReferences ? new WeakHashMap<>() : new HashMap<>();
+	public TupleTypeManager(@NonNull Orphanage orphanage, @NonNull StandardLibrary standardLibrary) {
+		super(orphanage, standardLibrary);
+		this.tupleId2tupleOrWeakTuple = new HashMap<>();
 	}
 
 	private @Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId) {
-		if (useWeakReferences) {
-			@SuppressWarnings("unchecked")
-			WeakReference<@NonNull TupleType> ref = (WeakReference<@NonNull TupleType>)tupleId2tupleOrWeakTuple.get(tupleTypeId);
-			return ref != null ?  ref.get() : null;
-		}
-		else {
-			return (TupleType)tupleId2tupleOrWeakTuple.get(tupleTypeId);
-		}
+		return (TupleType)tupleId2tupleOrWeakTuple.get(tupleTypeId);
 	}
 
 	@Override
@@ -119,11 +111,6 @@ public class TupleTypeManager extends AbstractTypeManager
 	}
 
 	private void putTupleType(@NonNull TupleTypeId tupleTypeId, @NonNull TupleType tupleType) {
-		if (useWeakReferences) {
-			tupleId2tupleOrWeakTuple.put(tupleTypeId, new WeakReference<@NonNull TupleType>(tupleType));
-		}
-		else {
-			tupleId2tupleOrWeakTuple.put(tupleTypeId, tupleType);
-		}
+		tupleId2tupleOrWeakTuple.put(tupleTypeId, tupleType);
 	}
 }

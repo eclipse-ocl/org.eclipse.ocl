@@ -10,16 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
@@ -37,9 +36,9 @@ public class LambdaTypeManager extends AbstractTypeManager
 	// FIXME Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
-	public LambdaTypeManager(@NonNull StandardLibrary standardLibrary, boolean useWeakReferences) {
-		super(standardLibrary, useWeakReferences);
-		this.lambdaTypes = useWeakReferences ? new WeakHashMap<>() : new HashMap<>();
+	public LambdaTypeManager(@NonNull Orphanage orphanage, @NonNull StandardLibrary standardLibrary) {
+		super(orphanage, standardLibrary);
+		this.lambdaTypes = new HashMap<>();
 	}
 
 	@Override
@@ -77,16 +76,8 @@ public class LambdaTypeManager extends AbstractTypeManager
 			contextMap.put(firstParameterType, lambdasList);
 		}
 		for (@NonNull Object lambdasElement : lambdasList) {
-			LambdaType candidateLambda;
-			if (useWeakReferences) {
-				@SuppressWarnings("unchecked")
-				WeakReference<@NonNull LambdaType> ref = (WeakReference<@NonNull LambdaType>)lambdasElement;
-				candidateLambda = ref.get();
-			}
-			else {
-				candidateLambda = (LambdaType)lambdasElement;
-			}
-			if ((candidateLambda != null) && (resultType == candidateLambda.getResultType())) {
+			LambdaType candidateLambda = (LambdaType)lambdasElement;
+			if (resultType == candidateLambda.getResultType()) {
 				List<? extends Type> candidateTypes = candidateLambda.getParameterType();
 				if (iMax == candidateTypes.size()) {
 					boolean gotIt = true;
@@ -111,7 +102,7 @@ public class LambdaTypeManager extends AbstractTypeManager
 		lambdaType.setResultType(resultType);
 		lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
 		getOrphanage().addOrphanClass(lambdaType);
-		lambdasList.add(useWeakReferences ? new WeakReference<@NonNull LambdaType>(lambdaType) : lambdaType);
+		lambdasList.add(lambdaType);
 		return lambdaType;
 	}
 }

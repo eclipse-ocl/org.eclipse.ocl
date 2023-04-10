@@ -10,17 +10,16 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
@@ -43,32 +42,13 @@ public class MapTypeManager extends AbstractTypeManager
 	 */
 	private final @NonNull Map<@NonNull MapTypeId, @NonNull Object> mapTypes;
 
-	public MapTypeManager(@NonNull StandardLibrary standardLibrary, boolean useWeakReferences) {
-		super(standardLibrary, useWeakReferences);
-		this.mapTypes = useWeakReferences ? new WeakHashMap<>() : new HashMap<>();
+	public MapTypeManager(@NonNull Orphanage orphanage, @NonNull StandardLibrary standardLibrary) {
+		super(orphanage, standardLibrary);
+		this.mapTypes = new HashMap<>();
 	}
 
 	public synchronized @Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId) {
-		if (!useWeakReferences) {
-			return (MapType)mapTypes.get(mapTypeId);
-		}
-		@SuppressWarnings("unchecked")
-		WeakReference<@NonNull MapType> ref = (WeakReference<@NonNull MapType>)mapTypes.get(mapTypeId);
-		if (ref == null) {
-			return null;
-		}
-		MapType mapType = ref.get();
-		if (mapType != null) {
-			Type keyType = mapType.getKeyType();
-			Type valueType = mapType.getValueType();
-			if ((keyType != null) && (valueType != null) && (keyType.eResource() != null) && (valueType.eResource() != null)) {
-				return mapType;
-			}
-			mapType = null;		// Eliminate entry for stale type
-			ref.clear();
-		}
-		mapTypes.remove(mapTypeId);
-		return null;
+		return (MapType)mapTypes.get(mapTypeId);
 	}
 
 	protected @NonNull MapType createSpecialization(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
@@ -115,7 +95,7 @@ public class MapTypeManager extends AbstractTypeManager
 			MapType specializedType = basicGetMapType(mapTypeId);
 			if (specializedType == null) {
 				specializedType = createSpecialization(typeParameters);
-				mapTypes.put(mapTypeId, useWeakReferences ? new WeakReference<@Nullable MapType>(specializedType) : specializedType);
+				mapTypes.put(mapTypeId, specializedType);
 				assert mapTypeId == ((MapTypeImpl)specializedType).immutableGetTypeId();		// XXX
 			}
 			return specializedType;

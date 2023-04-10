@@ -18,7 +18,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LambdaType;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -31,15 +30,8 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
-import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.CollectionTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -87,11 +79,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	protected StandardLibraryImpl()
 	{
-		//	OCLstdlibTables.PACKAGE.getClass();
-		this.collectionTypeManager = new CollectionTypeManager(this, true);
-		this.lambdaTypeManager = new LambdaTypeManager(this, true);
-		this.mapTypeManager = new MapTypeManager(this, true);
-		this.tupleTypeManager = new TupleTypeManager(this, true);
 	}
 
 	/**
@@ -107,35 +94,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	private @Nullable Operation oclInvalidOperation = null;
 	private @Nullable Property oclInvalidProperty = null;
-	/**
-	 * Shared cache of the lazily created, lazily deleted, specializations of each collection type.
-	 */
-	private final @NonNull CollectionTypeManager collectionTypeManager;
-
-	/**
-	 * Shared cache of the lazily created, lazily deleted, specializations of each map type.
-	 */
-	private final @NonNull MapTypeManager mapTypeManager;
-
-	/**
-	 * Shared cache of the lazily created, lazily deleted, specializations of each lambda type.
-	 */
-	private final @NonNull LambdaTypeManager lambdaTypeManager;
-
-	/**
-	 * Shared cache of the lazily created, lazily deleted, tuples.
-	 */
-	private final @NonNull TupleTypeManager tupleTypeManager;
-
-	@Override
-	public @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId) {
-		return collectionTypeManager.basicGetCollectionType(collectionTypeId);
-	}
-
-	@Override
-	public @Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId) {
-		return mapTypeManager.basicGetMapType(mapTypeId);
-	}
 
 	@Override
 	public @Nullable Operation basicGetOclInvalidOperation() {
@@ -157,14 +115,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		resetLibrary();
 	}
 
-	public void disposeLambdas() {
-		lambdaTypeManager.dispose();
-	}
-
-	public void disposeTuples() {
-		tupleTypeManager.dispose();
-	}
-
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getBagType(), elementType, isNullFree, lower, upper);
@@ -176,23 +126,23 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId unspecializedTypeId) {
-		if (unspecializedTypeId == TypeId.BAG) {
+	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId genericTypeId) {
+		if (genericTypeId == TypeId.BAG) {
 			return getBagType();
 		}
-		else if (unspecializedTypeId == TypeId.ORDERED_SET) {
+		else if (genericTypeId == TypeId.ORDERED_SET) {
 			return getOrderedSetType();
 		}
-		else if (unspecializedTypeId  == TypeId.SEQUENCE) {
+		else if (genericTypeId  == TypeId.SEQUENCE) {
 			return getSequenceType();
 		}
-		else if (unspecializedTypeId == TypeId.SET) {
+		else if (genericTypeId == TypeId.SET) {
 			return getSetType();
 		}
-		else if (unspecializedTypeId == TypeId.ORDERED_COLLECTION) {
+		else if (genericTypeId == TypeId.ORDERED_COLLECTION) {
 			return getOrderedCollectionType();
 		}
-		else if (unspecializedTypeId == TypeId.UNIQUE_COLLECTION) {
+		else if (genericTypeId == TypeId.UNIQUE_COLLECTION) {
 			return getUniqueCollectionType();
 		}
 		else {
@@ -210,23 +160,12 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return containerType;
 		}
 		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(containerType.getTypeId(), elementType, isNullFree, lower, upper);
-		return getCollectionType(typeParameters);
-	}
-
-	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return collectionTypeManager.getCollectionType(typeParameters);
+		return getOrphanage().getCollectionType(typeParameters);
 	}
 
 	@Override
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		return getFlatModel().getFlatClass(asClass);
-	}
-
-	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes,
-			@NonNull Type resultType, @Nullable TemplateParameterSubstitutions bindings) {
-		return lambdaTypeManager.getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
 	}
 
 	@Override
@@ -238,12 +177,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return getMapType();
 		}
 		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
-		return getMapType(typeParameters);
-	}
-
-	@Override
-	public @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return mapTypeManager.getMapType(typeParameters);
+		return getOrphanage().getMapType(typeParameters);
 	}
 
 	@Override
@@ -356,7 +290,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			Type contextType = ClassUtil.nonNullModel(lambdaType.getContextType());
 			@NonNull List<@NonNull Type> parameterType = PivotUtil.getParameterType(lambdaType);
 			Type resultType = ClassUtil.nonNullModel(lambdaType.getResultType());
-			return getLambdaType(typeName, contextType, parameterType, resultType, substitutions);
+			return getOrphanage().getLambdaType(typeName, contextType, parameterType, resultType, substitutions);
 		}
 		else if (type instanceof org.eclipse.ocl.pivot.Class) {
 			//
@@ -378,11 +312,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 		}
 		return type;
-	}
-
-	@Override
-	public @NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId) {
-		return tupleTypeManager.getTupleType(idResolver, tupleTypeId);
 	}
 
 	protected abstract boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,

@@ -34,7 +34,7 @@ import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -1077,18 +1077,18 @@ public class EditTests extends XtextTestCase
 		assertNoResourceErrors("Loading input", asResource);
 		//
 		Type myType = ClassUtil.nonNullState(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
-		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
+		Orphanage orphanage = ocl.getStandardLibrary().getOrphanage();
 		CollectionTypeId specializedTypeId = TypeId.SEQUENCE.getSpecializedId(myType.getTypeId(), true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-		WeakReference<Type> sequenceMyType = new WeakReference<Type>(standardLibrary.basicGetCollectionType(specializedTypeId));
+		WeakReference<Type> sequenceMyType = new WeakReference<Type>(orphanage.basicGetCollectionType(specializedTypeId));
 		assertNull(sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Boolean", "Sequence(MyType)", NO_MESSAGES, NO_MESSAGES);
-		sequenceMyType = new WeakReference<Type>(standardLibrary.basicGetCollectionType(specializedTypeId));
+		sequenceMyType = new WeakReference<Type>(orphanage.basicGetCollectionType(specializedTypeId));
 		assertNotNull(sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Sequence(MyType)", "Set(MyType)", NO_MESSAGES, NO_MESSAGES);
 		System.gc();
-		sequenceMyType = new WeakReference<Type>(standardLibrary.basicGetCollectionType(specializedTypeId));
+		sequenceMyType = new WeakReference<Type>(orphanage.basicGetCollectionType(specializedTypeId));
 		boolean isNull = debugStateRef(sequenceMyType);
 		sequenceMyType = null;
 		assertTrue(isNull);

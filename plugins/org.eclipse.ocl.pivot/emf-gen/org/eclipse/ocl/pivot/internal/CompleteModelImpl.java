@@ -744,7 +744,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					if (superSpecializedTemplateParameterSubstitutions.size() == 1) {
 						Type templateArgument = superSpecializedTemplateParameterSubstitutions.get(0).getActual();
 						if (templateArgument != null) {
-							org.eclipse.ocl.pivot.Class specializedSuperClass = getStandardLibrary().getCollectionType(TypeUtil.createCollectionTypeParameters((CollectionTypeId)unspecializedSuperClass.getTypeId(), templateArgument, false, null, null));
+							org.eclipse.ocl.pivot.Class specializedSuperClass = getStandardLibrary().getOrphanage().getCollectionType(TypeUtil.createCollectionTypeParameters((CollectionTypeId)unspecializedSuperClass.getTypeId(), templateArgument, false, null, null));
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}
 					}

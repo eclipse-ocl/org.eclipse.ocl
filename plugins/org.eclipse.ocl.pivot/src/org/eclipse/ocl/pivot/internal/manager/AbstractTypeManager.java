@@ -16,20 +16,18 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 
 public abstract class AbstractTypeManager
 {
+	protected final @NonNull Orphanage orphanage;
 	protected final @NonNull StandardLibrary standardLibrary;
-//	protected final @NonNull Orphanage orphanage;
-	protected final boolean useWeakReferences;			// See Bug 581760
 
-	protected AbstractTypeManager(@NonNull StandardLibrary standardLibrary, boolean useWeakReferences) {
+	protected AbstractTypeManager(@NonNull Orphanage orphanage, @NonNull StandardLibrary standardLibrary) {
+		this.orphanage = orphanage;
 		this.standardLibrary = standardLibrary;
-		this.useWeakReferences = useWeakReferences;
-//		this.orphanage = standardLibrary.getOrphanage();
 	}
 
 	public void dispose() {}
 
 	public @NonNull Orphanage getOrphanage() {
-		return standardLibrary.getSharedOrphanage(); // orphanage;
+		return orphanage;
 	}
 
 	protected final @NonNull StandardLibrary getStandardLibrary() {

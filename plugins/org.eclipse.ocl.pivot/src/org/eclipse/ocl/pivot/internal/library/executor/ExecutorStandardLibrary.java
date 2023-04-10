@@ -705,7 +705,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
-	public @NonNull Orphanage getSharedOrphanage() {
+	public @NonNull Orphanage getOrphanage() {
 		return orphanage;
 	}
 

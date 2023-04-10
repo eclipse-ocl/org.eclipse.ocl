@@ -21,13 +21,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
-import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -42,8 +37,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public interface StandardLibrary extends Element
 {
-	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId);
-	@Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId);
 	@Nullable AnyType basicGetOclAnyType();
 	@Nullable Operation basicGetOclInvalidOperation();
 	@Nullable Property basicGetOclInvalidProperty();
@@ -106,11 +99,6 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
-	/**
-	 * Return the specialized collection type for a collection type descriptor.
-	 */
-	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters);
-
 	@Nullable Type getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
 
@@ -135,16 +123,13 @@ public interface StandardLibrary extends Element
 	 */
 	@NonNull PrimitiveType getIntegerType();
 
-	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
-			@Nullable TemplateParameterSubstitutions bindings);
-
-//	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType);
-
 	org.eclipse.ocl.pivot.@Nullable Class getLibraryType(@NonNull String string, @NonNull List<@NonNull ? extends Type> templateArguments);
 
 	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments);
 
 	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
+
+	org.eclipse.ocl.pivot.@NonNull Class getMapOfEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
 
 	/**
 	 * Obtains the generic instance of the MapType metatype, named
@@ -154,18 +139,11 @@ public interface StandardLibrary extends Element
 	 */
 	@NonNull MapType getMapType();
 
-	org.eclipse.ocl.pivot.@NonNull Class getMapOfEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
-
 	/**
 	 *  Return the specialized map type for the specializing keyType and valueType with keyValuesAreNullFree and valuesAreNullFree content.
 	 *  May return an InvalidType if keyType or valueType is a proxy.
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
-
-	/**
-	 * Return the specialized map type for a map type descriptor.
-	 */
-	@NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 
 	/**
 	 * Return the metaclass to which classType conforms.
@@ -368,7 +346,7 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
-	@NonNull Orphanage getSharedOrphanage();
+	@NonNull Orphanage getOrphanage();
 
 	@NonNull Type getSpecializedType(@NonNull Type referenceType, @Nullable TemplateParameterSubstitutions referenceBindings);
 
@@ -386,8 +364,6 @@ public interface StandardLibrary extends Element
 	@NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts);
 
 	@NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateParameterSubstitutions usageBindings);
-
-	@NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId);
 
 	/**
 	 * Obtains the generic instance of the UniqueCollection metatype, named

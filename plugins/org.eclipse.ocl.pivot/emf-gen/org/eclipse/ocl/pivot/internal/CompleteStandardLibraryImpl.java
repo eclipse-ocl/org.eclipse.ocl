@@ -600,7 +600,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			commonPartIds.add(commonPartId);
 		}
 		TupleTypeId commonTupleTypeId = IdManager.getTupleTypeId(TypeId.TUPLE_NAME, commonPartIds);
-		return getTupleType(environmentFactory.getIdResolver(), commonTupleTypeId);
+		return getOrphanage().getTupleType(environmentFactory.getIdResolver(), commonTupleTypeId);
 	}
 
 	@Override
@@ -674,7 +674,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			assert pivotClass instanceof CollectionType;
 			assert templateArguments.size() == 1;
 			@NonNull Type templateArgument = templateArguments.get(0);
-			@SuppressWarnings("unchecked") T specializedType = (T) getCollectionType(TypeUtil.createCollectionTypeParameters((CollectionTypeId) libraryType.getTypeId(), templateArgument, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null));
+			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getCollectionType(TypeUtil.createCollectionTypeParameters((CollectionTypeId) libraryType.getTypeId(), templateArgument, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null));
 			return specializedType;
 		}
 		else if (pivotClass instanceof MapType) {
@@ -682,7 +682,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			assert templateArguments.size() == 2;
 			@NonNull Type keyTemplateArgument = templateArguments.get(0);
 			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) getMapType(TypeUtil.createMapTypeParameters(keyTemplateArgument, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueTemplateArgument, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE));
+			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getMapType(TypeUtil.createMapTypeParameters(keyTemplateArgument, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueTemplateArgument, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE));
 			return specializedType;
 		}
 		else {
@@ -712,7 +712,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		org.eclipse.ocl.pivot.@NonNull Class entryType = metamodelManager.getPrimaryClass(entryClass);
 		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryType);
-		return getMapType(typeParameters);
+		return getOrphanage().getMapType(typeParameters);
 	}
 
 	@Override
@@ -890,6 +890,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
+	public @NonNull Orphanage getOrphanage() {
+		return getCompleteModel().getSharedOrphanage();
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getPackage() {
 		org.eclipse.ocl.pivot.Package libraryPackage2 = libraryPackage;
 		if (libraryPackage2 == null) {
@@ -961,11 +966,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull Orphanage getSharedOrphanage() {
-		return getCompleteModel().getSharedOrphanage();
-	}
-
-	@Override
 	public @NonNull PrimitiveType getStringType() {
 		PrimitiveType stringType2 = stringType;
 		if (stringType2 == null) {
@@ -1017,7 +1017,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 				partIds.add(tuplePartId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.nonNullModel(type.getName()), partIds);
-			specializedTupleType = getTupleType(environmentFactory.getIdResolver(), tupleTypeId);
+			specializedTupleType = getOrphanage().getTupleType(environmentFactory.getIdResolver(), tupleTypeId);
 			return specializedTupleType;
 		}
 		else {
@@ -1037,7 +1037,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		//
 		//	Finally create the (specialize) tuple type
 		//
-		TupleType tupleType = getTupleType(pivotIdResolver /*metamodelManager.getIdResolver()*/, tupleTypeId);
+		TupleType tupleType = getOrphanage().getTupleType(pivotIdResolver /*metamodelManager.getIdResolver()*/, tupleTypeId);
 		return tupleType;
 	}
 

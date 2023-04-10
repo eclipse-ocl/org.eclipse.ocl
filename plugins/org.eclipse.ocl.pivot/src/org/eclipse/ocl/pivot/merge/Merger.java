@@ -67,7 +67,7 @@ public class Merger
 	private @NonNull Map<@NonNull Element, @NonNull List<@NonNull Element>> mergedElement2partialElements = new HashMap<>();
 
 	@Deprecated /* @deprecated pragmatic re-use pending a rationalized Orphanage */
-	private @NonNull ExecutorStandardLibrary orphanManager = new ExecutorStandardLibrary();
+	private @NonNull ExecutorStandardLibrary standardLibrary = new ExecutorStandardLibrary();
 
 	public Merger(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
@@ -92,11 +92,11 @@ public class Merger
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return orphanManager.getCollectionType(genericType, elementType, isNullFree, lower, upper);
+		return standardLibrary.getCollectionType(genericType, elementType, isNullFree, lower, upper);
 	}
 
 	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		return orphanManager.getMapType(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
+		return standardLibrary.getMapType(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 	}
 
 //	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts) {
@@ -106,7 +106,7 @@ public class Merger
 
 	public @Nullable EObject getTupleType(@NonNull TupleTypeId tupleTypeId) {
 		PivotIdResolver idResolver = new PivotIdResolver((EnvironmentFactoryInternal) environmentFactory) {};	// XXX
-		return orphanManager.getTupleType(idResolver, tupleTypeId);
+		return standardLibrary.getOrphanage().getTupleType(idResolver, tupleTypeId);
 	}
 
 	public @Nullable Element getMergedElement(@NonNull Element partialElement) {

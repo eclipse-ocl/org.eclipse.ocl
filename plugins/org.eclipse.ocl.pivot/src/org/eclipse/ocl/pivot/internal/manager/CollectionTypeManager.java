@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
-import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
@@ -22,6 +20,7 @@ import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
@@ -48,31 +47,13 @@ public class CollectionTypeManager extends AbstractTypeManager
 	 */
 	private final @NonNull Map<@NonNull CollectionTypeId, @NonNull Object> collectionTypes;
 
-	public CollectionTypeManager(@NonNull StandardLibrary standardLibrary, boolean useWeakReferences) {
-		super(standardLibrary, useWeakReferences);
-		this.collectionTypes = useWeakReferences ? new WeakHashMap<>() : new HashMap<>();
+	public CollectionTypeManager(@NonNull Orphanage orphanage, @NonNull StandardLibrary standardLibrary) {
+		super(orphanage, standardLibrary);
+		this.collectionTypes = new HashMap<>();
 	}
 
 	public synchronized @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId) {
-		if (!useWeakReferences) {
-			return (CollectionType)collectionTypes.get(collectionTypeId);
-		}
-		@SuppressWarnings("unchecked")
-		WeakReference<@NonNull CollectionType> ref = (WeakReference<@NonNull CollectionType>)collectionTypes.get(collectionTypeId);
-		if (ref == null) {
-			return null;
-		}
-		CollectionType collectionType = ref.get();
-		if (collectionType != null) {
-			Type elementType = collectionType.getElementType();
-			if ((elementType != null) && (elementType.eResource() != null)) {		// If no GC pending
-				return collectionType;
-			}
-			elementType = null;		// Eliminate entry for stale type
-			ref.clear();
-		}
-		collectionTypes.remove(collectionTypeId);
-		return null;
+		return (CollectionType)collectionTypes.get(collectionTypeId);
 	}
 
 	protected @NonNull CollectionType createSpecialization(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
@@ -129,7 +110,7 @@ public class CollectionTypeManager extends AbstractTypeManager
 				specializedType = createSpecialization(typeParameters);
 				Type elementType = specializedType.getElementType();
 				assert (elementType != null) && (elementType.eResource() != null);
-				collectionTypes.put(collectionTypeId, useWeakReferences ? new WeakReference<@Nullable CollectionType>(specializedType) : specializedType);
+				collectionTypes.put(collectionTypeId, specializedType);
 				assert collectionTypeId == ((CollectionTypeImpl)specializedType).immutableGetTypeId();		// XXX
 				if (basicGetCollectionType(collectionTypeId) != specializedType) {
 					basicGetCollectionType(collectionTypeId);

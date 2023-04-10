@@ -88,14 +88,14 @@ public class PivotIdResolver extends AbstractIdResolver
 	public org.eclipse.ocl.pivot.@NonNull Class getStaticTypeOfValue(@Nullable Type staticType, @Nullable Object value) {
 		if (value instanceof ElementExtension) {
 			Stereotype asStereotype = ((ElementExtension)value).getStereotype();
-			return asStereotype != null ? asStereotype : metamodelManager.getStandardLibrary().getOclInvalidType();
+			return asStereotype != null ? asStereotype : standardLibrary.getOclInvalidType();
 		}
 		return super.getStaticTypeOfValue(staticType, value);
 	}
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return standardLibrary.getTupleType(this, typeId);
+		return standardLibrary.getOrphanage().getTupleType(this, typeId);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class PivotIdResolver extends AbstractIdResolver
 			logger.error("Failed to convert '" + eType + "'", e);
 		}
 		//		return new DomainInvalidTypeImpl(standardLibrary, "No object created by Ecore2AS");
-		return metamodelManager.getStandardLibrary().getOclInvalidType();
+		return standardLibrary.getOclInvalidType();
 	}
 
 	@Override
