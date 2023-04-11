@@ -59,6 +59,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -744,7 +745,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					if (superSpecializedTemplateParameterSubstitutions.size() == 1) {
 						Type templateArgument = superSpecializedTemplateParameterSubstitutions.get(0).getActual();
 						if (templateArgument != null) {
-							org.eclipse.ocl.pivot.Class specializedSuperClass = getStandardLibrary().getOrphanage().getCollectionType(TypeUtil.createCollectionTypeParameters((CollectionTypeId)unspecializedSuperClass.getTypeId(), templateArgument, false, null, null));
+							org.eclipse.ocl.pivot.Class specializedSuperClass = getStandardLibrary().getOrphanage().getCollectionType(TypeUtil.createCollectionTypeParameters((CollectionTypeId)unspecializedSuperClass.getTypeId(), templateArgument, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null));
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}
 					}
