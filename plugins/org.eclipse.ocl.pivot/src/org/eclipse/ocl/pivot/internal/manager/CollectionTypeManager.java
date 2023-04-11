@@ -87,7 +87,7 @@ public class CollectionTypeManager extends AbstractTypeManager
 			logger.error("Out of range upper bound", e);
 		}
 		specializedCollectionType.setUnspecializedElement(unspecializedType);
-		getOrphanage().addOrphanClass(specializedCollectionType);
+		orphanage.addOrphanClass(specializedCollectionType);
 		specializedCollectionType.getTypeId();		// XXX
 		String s = specializedCollectionType.toString();
 //		System.out.println("createSpecialization: " + NameUtil.debugSimpleName(specializedCollectionType) + " : " + specializedCollectionType);

@@ -80,7 +80,7 @@ public class MapTypeManager extends AbstractTypeManager
 		specializedMapType.setValuesAreNullFree(typeParameters.isValuesAreNullFree());
 		specializedMapType.setUnspecializedElement(unspecializedType);
 		specializedMapType.setEntryClass(typeParameters.getEntryClass());
-		getOrphanage().addOrphanClass(specializedMapType);
+		orphanage.addOrphanClass(specializedMapType);
 		return specializedMapType;
 	}
 

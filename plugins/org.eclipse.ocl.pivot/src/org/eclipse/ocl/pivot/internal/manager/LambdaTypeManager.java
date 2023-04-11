@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 
 /**
  * LambdaTypeManager manages the LambdaTypes created within an Orphanage.
@@ -46,23 +45,7 @@ public class LambdaTypeManager extends AbstractTypeManager
 		lambdaTypes.clear();
 	}
 
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
-			@Nullable TemplateParameterSubstitutions bindings) {
-		if (bindings == null) {
-			return getLambdaType(typeName, contextType, parameterTypes, resultType);
-		}
-		else {
-			Type specializedContextType = standardLibrary.getSpecializedType(contextType, bindings);
-			List<@NonNull Type> specializedParameterTypes = new ArrayList<>();
-			for (@NonNull Type parameterType : parameterTypes) {
-				specializedParameterTypes.add(standardLibrary.getSpecializedType(parameterType, bindings));
-			}
-			Type specializedResultType = standardLibrary.getSpecializedType(resultType, bindings);
-			return getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
-		}
-	}
-
-	protected @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
+	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
 		Map<@Nullable Type, @NonNull List<@NonNull Object>> contextMap = lambdaTypes.get(contextType);
 		if (contextMap == null) {
 			contextMap = new HashMap<>();
@@ -101,8 +84,8 @@ public class LambdaTypeManager extends AbstractTypeManager
 		lambdaType.getParameterType().addAll(parameterTypes);
 		lambdaType.setResultType(resultType);
 		lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
-		getOrphanage().addOrphanClass(lambdaType);
 		lambdasList.add(lambdaType);
+		orphanage.addOrphanClass(lambdaType);
 		return lambdaType;
 	}
 }

@@ -78,7 +78,7 @@ public class TupleTypeManager extends AbstractTypeManager
 					}
 					tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
 					putTupleType(tupleTypeId, tupleType);
-					getOrphanage().addOrphanClass(tupleType);
+					orphanage.addOrphanClass(tupleType);
 				}
 			}
 		}

@@ -10,6 +10,7 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
@@ -517,10 +518,29 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return collectionTypeManager2;
 	}
 
+//	@Override
+//	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes,
+//			@NonNull Type resultType, @Nullable TemplateParameterSubstitutions bindings) {
+//		return getLambdaTypeManager().getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
+//	}
+
 	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes,
-			@NonNull Type resultType, @Nullable TemplateParameterSubstitutions bindings) {
-		return getLambdaTypeManager().getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
+	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
+			@Nullable TemplateParameterSubstitutions bindings) {
+		if (bindings == null) {
+			return getLambdaTypeManager().getLambdaType(typeName, contextType, parameterTypes, resultType);
+		}
+		else {
+			StandardLibrary standardLibrary2 = standardLibrary;
+			assert standardLibrary2 != null;
+			Type specializedContextType = standardLibrary2.getSpecializedType(contextType, bindings);
+			List<@NonNull Type> specializedParameterTypes = new ArrayList<>();
+			for (@NonNull Type parameterType : parameterTypes) {
+				specializedParameterTypes.add(standardLibrary2.getSpecializedType(parameterType, bindings));
+			}
+			Type specializedResultType = standardLibrary2.getSpecializedType(resultType, bindings);
+			return getLambdaTypeManager().getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
+		}
 	}
 
 	private @NonNull LambdaTypeManager getLambdaTypeManager() {
