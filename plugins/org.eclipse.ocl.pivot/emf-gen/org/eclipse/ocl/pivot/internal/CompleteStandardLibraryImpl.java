@@ -1141,7 +1141,12 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	public @Nullable Resource loadDefaultLibrary(@Nullable String uri) {
-		return environmentFactory.getMetamodelManager().loadDefaultLibrary(uri);
+		try {
+			return environmentFactory.getMetamodelManager().loadDefaultLibrary(uri);
+		}
+		finally {			// XXX phase out redundant check
+			assert ((CompleteModelImpl)environmentFactory.getCompleteModel()).getSharedOrphanage().getStandardLibrary() == this;
+		}
 	}
 
 	@Override

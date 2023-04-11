@@ -567,6 +567,11 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
+	public @NonNull StandardLibrary getStandardLibrary() {
+		return ClassUtil.nonNullState(standardLibrary);
+	}
+
+	@Override
 	public @NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId) {
 		return getTupleTypeManager().getTupleType(idResolver, tupleTypeId);
 	}

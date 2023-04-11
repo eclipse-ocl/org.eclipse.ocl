@@ -55,5 +55,7 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 
 	@NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId);
 
+	@NonNull StandardLibrary getStandardLibrary();
+
 	void removePackageListener(@NonNull PartialPackages partialPackages);
 } // Orphanage

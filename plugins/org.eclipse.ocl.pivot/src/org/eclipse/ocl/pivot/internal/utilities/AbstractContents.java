@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -55,6 +56,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.LibraryImpl;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -439,15 +441,12 @@ public abstract class AbstractContents extends PivotUtil
 		return asType;
 	}
 
-	private @NonNull Orphanage createOrphanage(@NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {//, @Nullable PackageId packageId, @Nullable EPackage ePackage) {
-		Orphanage asPackage = PivotFactory.eINSTANCE.createOrphanage();
-		asPackage.setName(name);
-		asPackage.setNsPrefix(nsPrefix);
-	//	if (packageId != null) {
-	//		((PackageImpl)pivotPackage).setPackageId(packageId);  // FIXME Add to API
-	//	}
-		asPackage.setURI(nsURI);
-	//	((PivotObjectImpl)pivotPackage).setESObject(ePackage);
+	@Deprecated		// XXX should evolve to pass StandardLibrary
+	private @NonNull Orphanage createOrphanage(@NonNull String name, @NonNull String nsPrefix, @NonNull String nsURI) {//, @Nullable PackageId packageId, @Nullable EPackage ePackage) {
+		OrphanageImpl asPackage = (OrphanageImpl) PivotFactory.eINSTANCE.createOrphanage();
+		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(null);
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		asPackage.init(standardLibrary, name, nsURI, nsPrefix);
 		return asPackage;
 	}
 
