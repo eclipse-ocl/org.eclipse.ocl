@@ -367,6 +367,9 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						resource.getContents().add(«thisModel.getSymbolName()»);
 						«FOR pkge : thisModel.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«FOR comment : pkge.ownedComments»
+							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
+						«ENDFOR»
 						«ENDFOR»
 						«thisModel.installPackages()»
 						«thisModel.installClassTypes()»
@@ -378,10 +381,8 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«thisModel.installTupleTypes()»
 						«thisModel.installOperations()»
 						«thisModel.installIterations()»
-						«thisModel.installCoercions()»
 						«thisModel.installProperties()»
 						«thisModel.installPrecedences()»
-						«thisModel.installComments()»
 					}
 			
 					public @NonNull Model getModel() {
@@ -396,6 +397,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					«thisModel.declareTupleTypes()»
 					«thisModel.declareCollectionTypes()»
 					«thisModel.declareMapTypes()»
+					«thisModel.definePrecedences()»
 					«thisModel.defineClassTypes()»
 					«thisModel.definePrimitiveTypes()»
 					«thisModel.defineEnumerations()»
@@ -405,10 +407,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					«thisModel.defineLambdaTypes()»
 					«thisModel.defineOperations()»
 					«thisModel.defineIterations()»
-					«thisModel.defineCoercions()»
 					«thisModel.defineProperties()»
-					«thisModel.definePrecedences()»
-					«thisModel.defineComments()»
 				}
 			}
 		'''

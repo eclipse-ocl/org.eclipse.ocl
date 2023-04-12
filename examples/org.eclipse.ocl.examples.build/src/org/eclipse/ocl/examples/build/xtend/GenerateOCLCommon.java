@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
@@ -49,7 +50,6 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -204,7 +204,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> package2sortedPrimitiveTypes = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Property>> package2sortedProperties = new HashMap<>();
 		private final @NonNull List<@NonNull Operation> sortedCoercions = new ArrayList<>();
-		private final @NonNull List<@NonNull Element> sortedCommentedElements = new ArrayList<>();
 		private final @NonNull List<@NonNull LambdaType> sortedLambdaTypes = new ArrayList<>();
 		private final @NonNull List<@NonNull Library> sortedLibraries = new ArrayList<>();
 		private final @NonNull List<@NonNull Library> sortedLibrariesWithPrecedence = new ArrayList<>();
@@ -236,7 +235,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				((Element)eObject).accept(this);
 			}
 			Collections.sort(sortedCoercions, monikerComparator);
-			Collections.sort(sortedCommentedElements, monikerComparator);
 			Collections.sort(sortedLambdaTypes, monikerComparator);
 			Collections.sort(sortedLibraries, monikerComparator);
 			Collections.sort(sortedLibrariesWithPrecedence, monikerComparator);
@@ -373,10 +371,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitComment(@NonNull Comment asComment) {
-			Element owningElement = asComment.getOwningElement();
-			if (!externalClasses.contains(owningElement)) {
-				sortedCommentedElements.add(owningElement);
-			}
 			return null;
 		}
 
@@ -898,10 +892,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return contentAnalysis.package2sortedCollectionTypes;
 	}
 
-	protected @NonNull List<@NonNull Element> getSortedCommentedElements(@NonNull Model root) {
-		return contentAnalysis.sortedCommentedElements;
-	}
-
 	protected @NonNull List<@NonNull Comment> getSortedComments(@NonNull Element element) {
 		List<Comment> sortedElements = new ArrayList<>(element.getOwnedComments());
 		Collections.sort(sortedElements, commentComparator);
@@ -1260,5 +1250,19 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		this.environmentFactory = environmentFactory;
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		nameQueries = new NameQueries(metamodelManager);
+	}
+
+	protected @NonNull Iterable<@NonNull Property> sortedOpposites(@NonNull List<Property> properties) {
+		ArrayList<@NonNull Property> withOpposites = new ArrayList<>();
+		for (@NonNull Property property : properties) {
+			Property opposite = property.getOpposite();
+			if (opposite != null) {
+				if (!withOpposites.contains(property) && !withOpposites.contains(opposite)) {
+					withOpposites.add(property);
+				//	withOpposites.add(opposite);
+				}
+			}
+		}
+		return withOpposites;
 	}
 }

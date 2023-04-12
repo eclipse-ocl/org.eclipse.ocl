@@ -330,6 +330,9 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
 						«FOR pkge : root.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«FOR comment : pkge.ownedComments»
+							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
+						«ENDFOR»
 						«ENDFOR»
 						«root.installPackages()»
 						«root.installClassTypes()»
@@ -340,10 +343,8 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«root.installTupleTypes()»
 						«root.installOperations()»
 						«root.installIterations()»
-						«root.installCoercions()»
 						«root.installProperties()»
 						«root.installPrecedences()»
-						«root.installComments()»
 					}
 					
 					public @NonNull Model getModel() {
@@ -357,6 +358,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					«root.defineTemplateParameters()»
 					«root.declareCollectionTypes()»
 					«root.declareTupleTypes()»
+					«root.definePrecedences()»
 					«root.defineClassTypes()»
 					«root.definePrimitiveTypes()»
 					«root.defineEnumerations()»
@@ -365,10 +367,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					«root.defineLambdaTypes()»
 					«root.defineOperations()»
 					«root.defineIterations()»
-					«root.defineCoercions()»
 					«root.defineProperties()»
-					«root.definePrecedences()»
-					«root.defineComments()»
 				}
 			}
 		'''

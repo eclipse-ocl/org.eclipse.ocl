@@ -1467,13 +1467,15 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	@Override
 	public @NonNull Property getPrimaryProperty(@NonNull Property pivotProperty) {
-		if (pivotProperty.eContainer() instanceof TupleType) {		// FIXME Find a better way
+ 		if (pivotProperty.eContainer() instanceof TupleType) {		// FIXME Find a better way
 			return pivotProperty;
 		}
 		if (pivotProperty.isIsImplicit()) {
 			Property opposite = pivotProperty.getOpposite();
 			if ((opposite != null) && !opposite.isIsImplicit()) {
-				return PivotUtil.getOpposite(getPrimaryProperty(opposite));
+				Property primaryOpposite = getPrimaryProperty(opposite);
+				Property primaryOppositeOpposite = primaryOpposite.getOpposite();
+				return primaryOppositeOpposite != null ? primaryOppositeOpposite : pivotProperty;		// OclInvalid::oclBadProperty has no opposite
 			}
 		}
 		org.eclipse.ocl.pivot.Class pivotClass = pivotProperty.getOwningClass();

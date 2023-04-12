@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
 public abstract class AbstractContents extends PivotUtil
@@ -387,8 +388,18 @@ public abstract class AbstractContents extends PivotUtil
 		return (BagType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
+	@Deprecated
 	protected @NonNull BagType getBagType(@NonNull BagType unspecializedType, @NonNull Type elementType) {
 		BagType type = createBagType(unspecializedType);
+		addBinding(type, elementType);
+		return type;
+	}
+
+	protected @NonNull BagType getBagType(@NonNull BagType unspecializedType, boolean isNullFree, int lower, int upper, @NonNull Type elementType) {
+		BagType type = createBagType(unspecializedType);
+		type.setIsNullFree(isNullFree);
+		type.setLowerValue(ValueUtil.integerValueOf(lower));
+		type.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 		addBinding(type, elementType);
 		return type;
 	}
@@ -408,8 +419,18 @@ public abstract class AbstractContents extends PivotUtil
 		return (CollectionType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
+	@Deprecated
 	protected @NonNull CollectionType getCollectionType(@NonNull CollectionType unspecializedType, @NonNull Type elementType) {
 		CollectionType type = createCollectionType(unspecializedType);
+		addBinding(type, elementType);
+		return type;
+	}
+
+	protected @NonNull CollectionType getCollectionType(@NonNull CollectionType unspecializedType, boolean isNullFree, int lower, int upper, @NonNull Type elementType) {
+		CollectionType type = createCollectionType(unspecializedType);
+		type.setIsNullFree(isNullFree);
+		type.setLowerValue(ValueUtil.integerValueOf(lower));
+		type.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 		addBinding(type, elementType);
 		return type;
 	}
@@ -439,8 +460,18 @@ public abstract class AbstractContents extends PivotUtil
 		return (OrderedSetType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
+	@Deprecated
 	protected @NonNull OrderedSetType getOrderedSetType(@NonNull OrderedSetType unspecializedType, @NonNull Type elementType) {
 		OrderedSetType type = createOrderedSetType(unspecializedType);
+		addBinding(type, elementType);
+		return type;
+	}
+
+	protected @NonNull OrderedSetType getOrderedSetType(@NonNull OrderedSetType unspecializedType, boolean isNullFree, int lower, int upper, @NonNull Type elementType) {
+		OrderedSetType type = createOrderedSetType(unspecializedType);
+		type.setIsNullFree(isNullFree);
+		type.setLowerValue(ValueUtil.integerValueOf(lower));
+		type.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 		addBinding(type, elementType);
 		return type;
 	}
@@ -471,8 +502,18 @@ public abstract class AbstractContents extends PivotUtil
 		return (SequenceType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
+	@Deprecated
 	protected @NonNull SequenceType getSequenceType(@NonNull SequenceType unspecializedType, @NonNull Type elementType) {
 		SequenceType type = createSequenceType(unspecializedType);
+		addBinding(type, elementType);
+		return type;
+	}
+
+	protected @NonNull SequenceType getSequenceType(@NonNull SequenceType unspecializedType, boolean isNullFree, int lower, int upper, @NonNull Type elementType) {
+		SequenceType type = createSequenceType(unspecializedType);
+		type.setIsNullFree(isNullFree);
+		type.setLowerValue(ValueUtil.integerValueOf(lower));
+		type.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 		addBinding(type, elementType);
 		return type;
 	}
@@ -481,8 +522,18 @@ public abstract class AbstractContents extends PivotUtil
 		return (SetType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
+	@Deprecated
 	protected @NonNull SetType getSetType(@NonNull SetType unspecializedType, @NonNull Type elementType) {
 		SetType type = createSetType(unspecializedType);
+		addBinding(type, elementType);
+		return type;
+	}
+
+	protected @NonNull SetType getSetType(@NonNull SetType unspecializedType, boolean isNullFree, int lower, int upper, @NonNull Type elementType) {
+		SetType type = createSetType(unspecializedType);
+		type.setIsNullFree(isNullFree);
+		type.setLowerValue(ValueUtil.integerValueOf(lower));
+		type.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 		addBinding(type, elementType);
 		return type;
 	}

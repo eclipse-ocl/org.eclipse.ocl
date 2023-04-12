@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants
 import org.eclipse.ocl.pivot.ids.TypeId
 import org.eclipse.ocl.pivot.utilities.NameUtil
 import org.eclipse.ocl.pivot.Library
+import java.util.List
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -68,7 +69,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ENDFOR»
 			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
 			«IF type.getOwnedSignature() === null»
-			private final @NonNull «type.eClass.name» «typeName» = get«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()»«FOR templateBinding : type.ownedBindings»«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions», «templateParameterSubstitution.actual.getSymbolName()»«ENDFOR»«ENDFOR»);
+			private final @NonNull «type.eClass.name» «typeName» = get«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»«FOR templateBinding : type.ownedBindings»«FOR templateParameterSubstitution : templateBinding.ownedSubstitutions», «templateParameterSubstitution.actual.getSymbolName()»«ENDFOR»«ENDFOR»);
 			«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -144,27 +145,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String defineCoercions(/*@NonNull*/ Model root) {
-		var allCoercions = root.getSortedCoercions();
-		if (allCoercions.isEmpty()) return "";
-		'''
-
-			private void installCoercions() {
-				List<Operation> ownedCoercions;
-				Operation coercion;
-				«FOR type : allCoercions.getSortedOwningTypes()»
-					ownedCoercions = «type.getSymbolName()».getCoercions();
-					«FOR coercion : (type as PrimitiveType).getSortedCoercions(allCoercions)»
-						ownedCoercions.add(coercion = «coercion.getSymbolName()»);
-						«IF coercion.bodyExpression !== null»
-							createBodyExpression(operation, «coercion.type.getSymbolName()», "«coercion.bodyExpression.javaString()»");
-						«ENDIF»
-					«ENDFOR»
-				«ENDFOR»
-			}
-		'''
-	}
-
 	protected def String defineClassTypes(/*@NonNull*/ Model root) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
@@ -190,6 +170,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«ENDIF»
 				«ENDIF»
 				ownedClasses.add(type);
+				«FOR comment : type.ownedComments»
+					installComment(type, "«comment.javaString()»");
+				«ENDFOR»
 				«ENDFOR»
 				«ENDFOR»
 			}
@@ -214,31 +197,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						«IF type.isAbstract»
 						type.setIsAbstract(true);
 						«ENDIF»
-						«IF type.lower.intValue() != 0»
-						type.setLower(«type.lower.intValue()»);
-						«ENDIF»
-						«IF !(type.upper instanceof Unlimited)»
-						type.setUpper(«type.upper.intValue()»);
-						«ENDIF»
-						«IF type.isNullFree»
-						type.setIsNullFree(true);
-						«ENDIF»
 						«type.emitSuperClasses("type")»
 						ownedClasses.add(type);
+						«FOR comment : type.ownedComments»
+							installComment(type, "«comment.javaString()»");
+						«ENDFOR»
 					«ENDFOR»
-				«ENDFOR»
-			}
-		'''
-	}
-
-	protected def String defineComments(/*@NonNull*/ Model root) {
-		'''
-
-			private void installComments() {
-				«FOR pElement : root.getSortedCommentedElements()»
-				«FOR pComment : pElement.getSortedComments()»
-					installComment(«pElement.getSymbolName()», "«pComment.javaString()»");
-				«ENDFOR»
 				«ENDFOR»
 			}
 		'''
@@ -262,9 +226,15 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						enumerationLiterals = type.getOwnedLiterals();
 						«FOR enumerationLiteral : enumeration.ownedLiterals»
 							enumerationLiterals.add(«enumerationLiteral.getSymbolName()»);
+							«FOR comment : enumerationLiteral.ownedComments»
+								installComment(«enumerationLiteral.getSymbolName()», "«comment.javaString()»");
+							«ENDFOR»
 						«ENDFOR»
 						type.getSuperClasses().add(_OclEnumeration);
 						ownedClasses.add(type);
+						«FOR comment : enumeration.ownedComments»
+							installComment(type, "«comment.javaString()»");
+						«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -297,14 +267,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var org.eclipse.ocl.pivot.Class oldType  = null;
 		'''
 
-			«FOR pkge : sortedPackages»
-				«FOR iteration : ClassUtil.nullFree(pkge2iterations.get(pkge))»
-				private final @NonNull Iteration «iteration.getPrefixedSymbolName("it_" + iteration.partialName())» = createIteration("«iteration.
-				name»", «iteration.type.getSymbolName()», «IF iteration.implementationClass !== null»"«iteration.
-				implementationClass»", «iteration.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF iteration.getOwnedSignature() !== null»«FOR templateParameter : iteration.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
-				«ENDFOR»
-			«ENDFOR»
-
 			private void installIterations() {
 				List<Operation> ownedIterations;
 				List<Parameter> ownedParameters;
@@ -316,7 +278,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 						ownedIterations = «(oldType = newType).getSymbolName()».getOwnedOperations();
 					«ENDIF»
-					ownedIterations.add(iteration = «iteration.getSymbolName()»);
+					ownedIterations.add(iteration = createIteration("«iteration.name»", «iteration.type.getSymbolName()», «IF iteration.implementationClass !== null»"«iteration.
+									implementationClass»", «iteration.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF iteration.getOwnedSignature() !== null»«FOR templateParameter : iteration.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»));
 					«IF iteration.isInvalidating»
 						iteration.setIsInvalidating(true);
 					«ENDIF»
@@ -359,6 +322,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 							«ENDIF»
 						«ENDFOR»
 					«ENDIF»
+					«FOR comment : iteration.ownedComments»
+						installComment(iteration, "«comment.javaString()»");
+					«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -373,21 +339,24 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 
 			«FOR type : allLambdaTypes»
-				private final @NonNull LambdaType «type.getPrefixedSymbolName("_" + type.partialName())» = createLambdaType("«type.
-				name»");
+				private LambdaType «type.getPrefixedSymbolName("_" + type.partialName())»;
 			«ENDFOR»
 			
 			private void installLambdaTypes() {
 				final List<Class> orphanTypes = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
 				LambdaType type;
 				«FOR type : allLambdaTypes»
-					orphanTypes.add(type = «type.getSymbolName()»);
+					type = «type.getPrefixedSymbolName("_" + type.partialName())» = createLambdaType("«type.name»");
+					orphanTypes.add(type);
 					type.setContextType(«type.contextType.getSymbolName()»);
 					«FOR parameterType : type.parameterType»
 						type.getParameterType().add(«parameterType.getSymbolName()»);
 					«ENDFOR»
 					type.setResultType(«type.resultType.getSymbolName()»);
 					«type.emitSuperClasses("type")»
+					«FOR comment : type.ownedComments»
+						installComment(type, "«comment.javaString()»");
+					«ENDFOR»
 				«ENDFOR»
 			}
 		'''
@@ -415,6 +384,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						«ENDIF»
 						«type.emitSuperClasses("type")»
 						ownedClasses.add(type);
+						«FOR comment : type.ownedComments»
+							installComment(type, "«comment.javaString()»");
+						«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -426,15 +398,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		if (pkge2operations.isEmpty()) return "";
 		var sortedPackages = root.getSortedPackages(pkge2operations.keySet());
 		var org.eclipse.ocl.pivot.Class oldType  = null;
+		var allCoercions = root.getSortedCoercions();
 		'''
-
-			«FOR pkge : sortedPackages»
-				«FOR operation : ClassUtil.nullFree(pkge2operations.get(pkge))»
-				private final @NonNull Operation «operation.getPrefixedSymbolName("op_" + operation.partialName())» = createOperation(«operation.
-				getNameLiteral()», «operation.type.getSymbolName()», «IF operation.implementationClass !== null»"«operation.
-				implementationClass»", «operation.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF operation.getOwnedSignature() !== null»«FOR templateParameter : operation.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
-				«ENDFOR»
-			«ENDFOR»
 
 			private void installOperations() {
 				List<Operation> ownedOperations;
@@ -447,7 +412,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 						ownedOperations = «(oldType = newType).getSymbolName()».getOwnedOperations();
 					«ENDIF»
-					ownedOperations.add(operation = «operation.getSymbolName()»);
+					ownedOperations.add(operation = createOperation(«operation.
+				getNameLiteral()», «operation.type.getSymbolName()», «IF operation.implementationClass !== null»"«operation.
+				implementationClass»", «operation.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF operation.getOwnedSignature() !== null»«FOR templateParameter : operation.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»));
 					«IF operation.isInvalidating»
 						operation.setIsInvalidating(true);
 					«ENDIF»
@@ -463,6 +430,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF operation.isValidating»
 						operation.setIsValidating(true);
 					«ENDIF»
+					«IF operation.precedence !== null»
+						operation.setPrecedence(«operation.precedence.getSymbolName()»);
+					«ENDIF»
 					«IF operation.bodyExpression !== null»
 						createBodyExpression(operation, «operation.owningClass.getSymbolName()», "«operation.bodyExpression.javaString()»", «operation.type.getSymbolName()»);
 					«ENDIF»
@@ -475,6 +445,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 							«ENDIF»
 						«ENDFOR»
 					«ENDIF»
+					«IF (newType instanceof PrimitiveType) && ((newType as PrimitiveType).coercions.contains(operation))»
+						«newType.getSymbolName()».getCoercions().add(operation);
+					«ENDIF»
+					«FOR comment : operation.ownedComments»
+						installComment(operation, "«comment.javaString()»");
+					«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -509,6 +485,17 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 			«IF (allLibraries.size() > 0) || (allOperations.size() > 0)»
 
+				«IF allLibraries.size() > 0»
+					«FOR lib : allLibraries»
+					«var allPrecedences = lib.getSortedPrecedences()»
+					«IF (allPrecedences !== null) && (allPrecedences.size() > 0)»
+						«FOR precedence : allPrecedences»
+							private final @NonNull Precedence «precedence.getPrefixedSymbolName("prec_" + precedence.partialName())» = createPrecedence("«precedence.name»", AssociativityKind.«precedence.associativity.toString().toUpperCase()»);
+						«ENDFOR»
+					«ENDIF»
+					«ENDFOR»
+				«ENDIF»
+
 				private void installPrecedences() {
 					«IF allLibraries.size() > 0»
 						List<Precedence> ownedPrecedences;
@@ -516,10 +503,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						«FOR lib : allLibraries»
 						«var allPrecedences = lib.getSortedPrecedences()»
 						«IF (allPrecedences !== null) && (allPrecedences.size() > 0)»
-							«FOR precedence : allPrecedences»
-								final Precedence «precedence.getPrefixedSymbolName("prec_" + precedence.partialName())» = createPrecedence("«precedence.name»", AssociativityKind.«precedence.associativity.toString().toUpperCase()»);
-							«ENDFOR»
-
 							ownedPrecedences = «lib.getSymbolName()».getOwnedPrecedences();
 							«FOR precedence : lib.ownedPrecedences»
 								ownedPrecedences.add(«precedence.getSymbolName()»);
@@ -527,10 +510,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						«ENDIF»
 						«ENDFOR»
 					«ENDIF»
-
-					«FOR operation : allOperations»
-						«operation.getSymbolName()».setPrecedence(«operation.precedence.getSymbolName()»);
-					«ENDFOR»
 				}
 			«ENDIF»
 		'''
@@ -555,6 +534,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 							type.getSuperClasses().add(«superClass.getSymbolName()»);
 						«ENDFOR»
 						ownedClasses.add(type);
+						«FOR comment : type.ownedComments»
+							installComment(type, "«comment.javaString()»");
+						«ENDFOR»
 					«ENDFOR»
 				«ENDFOR»
 			}
@@ -568,70 +550,71 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var org.eclipse.ocl.pivot.Class oldType  = null;
 		'''
 
-			«FOR pkge : sortedPackages»
-
-				«FOR property : ClassUtil.nullFree(pkge2properties.get(pkge))»
-				private final @NonNull Property «property.getPrefixedSymbolName("pr_" + property.partialName())» = createProperty(«property.getNameLiteral()», «property.type.getSymbolName()»);
-				«ENDFOR»
-			«ENDFOR»
-
 			private void installProperties() {
 				List<Property> ownedProperties;
 				Property property;
-				«FOR pkge : sortedPackages»
-					«FOR property : ClassUtil.nullFree(pkge2properties.get(pkge))»«var newType = property.getOwningClass()»
-					«IF newType != oldType»
+				«FOR pkge : sortedPackages»«var properties = ClassUtil.nullFree(pkge2properties.get(pkge))»
+				«FOR property : properties»«var newType = property.getOwningClass()»
+				«IF newType != oldType»
 
-						ownedProperties = «(oldType = newType).getSymbolName()».getOwnedProperties();
-					«ENDIF»
-					ownedProperties.add(property = «property.getSymbolName()»);
-					«IF property.isComposite»
-						property.setIsComposite(true);
-					«ENDIF»
-					«IF property.isDerived»
-						property.setIsDerived(true);
-					«ENDIF»
-					«IF property.isID»
-						property.setIsID(true);
-					«ENDIF»
-					«IF property.isImplicit»
-						property.setIsImplicit(true);
-					«ENDIF»
-					«IF property.isReadOnly»
-						property.setIsReadOnly(true);
-					«ENDIF»
-					«IF !property.isRequired»
-						property.setIsRequired(false);
-					«ENDIF»
-					«IF property.isResolveProxies»
-						property.setIsResolveProxies(true);
-					«ENDIF»
-					«IF property.isStatic»
-						property.setIsStatic(true);
-					«ENDIF»
-					«IF property.isTransient»
-						property.setIsTransient(true);
-					«ENDIF»
-					«IF false /*property.isTypeof*/»
-						property.setIsTypeof(true);
-					«ENDIF»
-					«IF property.isUnsettable»
-						property.setIsUnsettable(true);
-					«ENDIF»
-					«IF property.isVolatile»
-						property.setIsVolatile(true);
-					«ENDIF»
-					«IF property.defaultValueString !== null»
-						property.setDefaultValueString("«property.defaultValueString»");
-					«ENDIF»
-					«IF property.opposite !== null»
-						property.setOpposite(«property.opposite.getSymbolName()»);
-					«ENDIF»
-					«IF property.implementationClass !== null»
-						property.setImplementationClass("«property.implementationClass»");
-						property.setImplementation(«property.implementationClass».INSTANCE);
-					«ENDIF»
-					«ENDFOR»
+					ownedProperties = «(oldType = newType).getSymbolName()».getOwnedProperties();
+				«ENDIF»
+				ownedProperties.add(property = createProperty(«property.getNameLiteral()», «property.type.getSymbolName()»));
+				«IF property.isComposite»
+					property.setIsComposite(true);
+				«ENDIF»
+				«IF property.isDerived»
+					property.setIsDerived(true);
+				«ENDIF»
+				«IF property.isID»
+					property.setIsID(true);
+				«ENDIF»
+				«IF property.isImplicit»
+					property.setIsImplicit(true);
+				«ENDIF»
+				«IF property.isReadOnly»
+					property.setIsReadOnly(true);
+				«ENDIF»
+				«IF !property.isRequired»
+					property.setIsRequired(false);
+				«ENDIF»
+				«IF property.isResolveProxies»
+					property.setIsResolveProxies(true);
+				«ENDIF»
+				«IF property.isStatic»
+					property.setIsStatic(true);
+				«ENDIF»
+				«IF property.isTransient»
+					property.setIsTransient(true);
+				«ENDIF»
+				«IF false /*property.isTypeof*/»
+					property.setIsTypeof(true);
+				«ENDIF»
+				«IF property.isUnsettable»
+					property.setIsUnsettable(true);
+				«ENDIF»
+				«IF property.isVolatile»
+					property.setIsVolatile(true);
+				«ENDIF»
+				«IF property.defaultValueString !== null»
+					property.setDefaultValueString("«property.defaultValueString»");
+				«ENDIF»
+				«IF property.implementationClass !== null»
+					property.setImplementationClass("«property.implementationClass»");
+					property.setImplementation(«property.implementationClass».INSTANCE);
+				«ENDIF»
+				«FOR comment : property.ownedComments»
+					installComment(property, "«comment.javaString()»");
+				«ENDFOR»
+				«IF property.getOpposite() !== null»
+				@NonNull Property «property.getPrefixedSymbolName("pr_" + property.partialName())» = property;
+				«ENDIF»
+				«ENDFOR»
+
+				«var sortedOppositeProperties = sortedOpposites(properties)»«FOR property : sortedOppositeProperties»«var newType = property.getOwningClass()»
+				«property.getSymbolName()».setOpposite(«property.opposite.getSymbolName()»);
+				«property.opposite.getSymbolName()».setOpposite(«property.getSymbolName()»);
+				«ENDFOR»
 				«ENDFOR»
 			}
 		'''
@@ -668,6 +651,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						«ENDIF»
 					«ENDFOR»
 					«type.emitSuperClasses("type")»
+					«FOR comment : type.ownedComments»
+						installComment(type, "«comment.javaString()»");
+					«ENDFOR»
 				«ENDFOR»
 			}
 		'''
@@ -733,10 +719,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2collectionTypes = root.getSortedCollectionTypes();
 		if (pkge2collectionTypes.isEmpty()) return "";
 		'''installCollectionTypes();'''
-	}
-
-	protected def String installComments(/*@NonNull*/ Model root) {
-		'''installComments();'''
 	}
 
 	protected def String installEnumerations(/*@NonNull*/ Model root) {
