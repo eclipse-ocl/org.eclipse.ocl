@@ -1613,12 +1613,4 @@ implements Operation {
 		}
 		return operationId2;
 	}
-
-	@Override
-	public void setType(Type newType) {
-		if ("org.eclipse.ocl.pivot.library.collection.SetMinusOperation".equals(implementationClass)) {
-			getClass();		// XXX
-		}
-		super.setType(newType);
-	}
 } //OperationImpl
