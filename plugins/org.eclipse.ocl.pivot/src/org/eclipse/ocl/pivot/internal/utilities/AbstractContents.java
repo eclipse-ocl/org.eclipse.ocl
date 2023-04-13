@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -214,6 +215,16 @@ public abstract class AbstractContents extends PivotUtil
 		asImport.setName(name);
 		asImport.setImportedNamespace(namespace);
 		return asImport;
+	}
+
+	protected @NonNull LambdaType createLambdaType(@NonNull String name, @NonNull TemplateParameter contextType, @NonNull Type resultType, @NonNull TemplateParameter... parameterTypes) {
+		assert contextType != null;
+		assert resultType != null;
+		LambdaType type = createLambdaType(name);
+		type.setContextType(contextType);
+		// XXX parameterTypes
+		type.setResultType(resultType);
+		return type;
 	}
 
 	protected @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation, TemplateParameter... templateParameters) {
@@ -423,6 +434,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull BagType getBagType(@NonNull BagType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert elementType != null;
 		BagType type = createBagType(unspecializedType);
 		type.setIsNullFree(isNullFree);
 		type.setLowerValue(ValueUtil.integerValueOf(lower));
@@ -454,6 +466,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull CollectionType getCollectionType(@NonNull CollectionType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert elementType != null;
 		CollectionType type = createCollectionType(unspecializedType);
 		type.setIsNullFree(isNullFree);
 		type.setLowerValue(ValueUtil.integerValueOf(lower));
@@ -479,6 +492,8 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull MapType getMapType(@NonNull MapType unspecializedType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		assert keyType != null;
+		assert valueType != null;
 		MapType type = createMapType(unspecializedType);
 		addBinding(type, keyType);
 		addBinding(type, valueType);
@@ -505,6 +520,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull OrderedSetType getOrderedSetType(@NonNull OrderedSetType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert elementType != null;
 		OrderedSetType type = createOrderedSetType(unspecializedType);
 		type.setIsNullFree(isNullFree);
 		type.setLowerValue(ValueUtil.integerValueOf(lower));
@@ -547,6 +563,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull SequenceType getSequenceType(@NonNull SequenceType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert elementType != null;
 		SequenceType type = createSequenceType(unspecializedType);
 		type.setIsNullFree(isNullFree);
 		type.setLowerValue(ValueUtil.integerValueOf(lower));
@@ -567,6 +584,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull SetType getSetType(@NonNull SetType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert elementType != null;
 		SetType type = createSetType(unspecializedType);
 		type.setIsNullFree(isNullFree);
 		type.setLowerValue(ValueUtil.integerValueOf(lower));

@@ -249,7 +249,8 @@ public class OCLmetamodel extends ASResourceImpl
 			installPackages();
 			installClassTypes();
 			installEnumerations();
-			installCollectionTypes();
+			installGenericCollectionTypes();
+			installSpecializedCollectionTypes();
 			installOperations();
 			installProperties();
 		}
@@ -258,29 +259,29 @@ public class OCLmetamodel extends ASResourceImpl
 			return root;
 		}
 
-		/*4*/private final @NonNull Package _ocl = libraryPackage;
-		/*3*/private final @NonNull BagType _Bag = getBagType(_ocl, "Bag");
-		/*2*/private final @NonNull Class _Boolean = getBooleanType(_ocl, "Boolean");
-		/*3*/private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
-		/*2*/private final @NonNull Class _Integer = getPrimitiveType(_ocl, "Integer");
-		/*3*/private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
-		/*3*/private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
-		/*3*/private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
-		/*3*/private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
-		/*3*/private final @NonNull OrderedSetType _OrderedSet = getOrderedSetType(_ocl, "OrderedSet");
-		/*2*/private final @NonNull Class _Real = getPrimitiveType(_ocl, "Real");
-		/*3*/private final @NonNull SequenceType _Sequence = getSequenceType(_ocl, "Sequence");
-		/*3*/private final @NonNull SetType _Set = getSetType(_ocl, "Set");
-		/*2*/private final @NonNull Class _String = getPrimitiveType(_ocl, "String");
-		/*3*/private final @NonNull CollectionType _UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
-		/*2*/private final @NonNull Class _UnlimitedNatural = getPrimitiveType(_ocl, "UnlimitedNatural");
-		/*3*/private final @NonNull TemplateParameter _Bag_T = getTemplateParameter(_Bag, 0);
-		/*3*/private final @NonNull TemplateParameter _Collection_T = getTemplateParameter(_Collection, 0);
-		/*3*/private final @NonNull TemplateParameter _OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
-		/*3*/private final @NonNull TemplateParameter _OrderedSet_T = getTemplateParameter(_OrderedSet, 0);
-		/*3*/private final @NonNull TemplateParameter _Sequence_T = getTemplateParameter(_Sequence, 0);
-		/*3*/private final @NonNull TemplateParameter _Set_T = getTemplateParameter(_Set, 0);
-		/*3*/private final @NonNull TemplateParameter _UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
+		private final @NonNull Package _ocl = libraryPackage;
+		private final @NonNull BagType _Bag = getBagType(_ocl, "Bag");
+		private final @NonNull Class _Boolean = getBooleanType(_ocl, "Boolean");
+		private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
+		private final @NonNull Class _Integer = getPrimitiveType(_ocl, "Integer");
+		private final @NonNull AnyType _OclAny = getAnyType(_ocl, "OclAny");
+		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
+		private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
+		private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
+		private final @NonNull OrderedSetType _OrderedSet = getOrderedSetType(_ocl, "OrderedSet");
+		private final @NonNull Class _Real = getPrimitiveType(_ocl, "Real");
+		private final @NonNull SequenceType _Sequence = getSequenceType(_ocl, "Sequence");
+		private final @NonNull SetType _Set = getSetType(_ocl, "Set");
+		private final @NonNull Class _String = getPrimitiveType(_ocl, "String");
+		private final @NonNull CollectionType _UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
+		private final @NonNull Class _UnlimitedNatural = getPrimitiveType(_ocl, "UnlimitedNatural");
+		private final @NonNull TemplateParameter _Bag_T = getTemplateParameter(_Bag, 0);
+		private final @NonNull TemplateParameter _Collection_T = getTemplateParameter(_Collection, 0);
+		private final @NonNull TemplateParameter _OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
+		private final @NonNull TemplateParameter _OrderedSet_T = getTemplateParameter(_OrderedSet, 0);
+		private final @NonNull TemplateParameter _Sequence_T = getTemplateParameter(_Sequence, 0);
+		private final @NonNull TemplateParameter _Set_T = getTemplateParameter(_Set, 0);
+		private final @NonNull TemplateParameter _UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
 
 		private void installPackages() {
 			root.getOwnedPackages().add(pivot);
@@ -848,6 +849,14 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(type, "TransitionKind is an Enumeration type used to differentiate the various kinds of Transitions.");
 		}
 
+
+		private void installGenericCollectionTypes() {
+			List<Class> ownedClasses;
+			CollectionType type;
+
+			ownedClasses = orphanPackage.getOwnedClasses();
+		}
+
 		private BagType _Bag_Annotation_F;
 		private BagType _Bag_AssociationClassCallExp_F;
 		private BagType _Bag_CallOperationAction_F;
@@ -1073,11 +1082,9 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _UniqueCollection_Variable_F;
 		private CollectionType _UniqueCollection_Vertex_F;
 
-		private void installCollectionTypes() {
+		private void installSpecializedCollectionTypes() {
 			List<Class> ownedClasses;
 			CollectionType type;
-
-			ownedClasses = orphanPackage.getOwnedClasses();
 
 			ownedClasses = orphanPackage.getOwnedClasses();
 			ownedClasses.add(type = _Bag_Annotation_F = getBagType(_Bag, _Annotation, false, 0, -1));

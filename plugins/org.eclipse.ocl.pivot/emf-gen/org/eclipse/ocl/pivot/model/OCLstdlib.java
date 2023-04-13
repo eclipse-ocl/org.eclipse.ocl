@@ -291,9 +291,11 @@ public class OCLstdlib extends ASResourceImpl
 			installTemplateParameters();
 			installClassTypes();
 			installPrimitiveTypes();
+			installGenericCollectionTypes();
+			installGenericMapTypes();
 			installTupleTypes();
-			installCollectionTypes();
-			installMapTypes();
+			installSpecializedCollectionTypes();
+			installSpecializedMapTypes();
 			installLambdaTypes();
 			installOperations();
 			installIterations();
@@ -621,6 +623,30 @@ public class OCLstdlib extends ASResourceImpl
 		private SetType _Set_Set_T;
 		private CollectionType _UniqueCollection_UniqueCollection_T;
 
+
+		private void installGenericCollectionTypes() {
+			List<Class> ownedClasses;
+			CollectionType type;
+
+			ownedClasses = ocl.getOwnedClasses();
+			ownedClasses.add(type = _Bag_Bag_T = createBagType(OCLstdlibPackage.Literals.BAG, tp_Bag_T, false, 0, -1));
+			installComment(type, "A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.\nThere is no ordering defined on the elements in a bag.\nBag is itself an instance of the metatype BagType.");
+			ownedClasses.add(type = _Collection_Collection_T = createCollectionType(OCLstdlibPackage.Literals.COLLECTION, tp_Collection_T, false, 0, -1));
+			installComment(type, "Collection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
+			ownedClasses.add(type = _OrderedCollection_OrderedCollection_T = createCollectionType(OCLstdlibPackage.Literals.ORDERED_COLLECTION, tp_OrderedCollection_T, false, 0, -1));
+			installComment(type, "The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence\ncollections for which the elements are ordered.\nThe common supertype of OrderedCollection is Collection.");
+			ownedClasses.add(type = _OrderedSet_OrderedSet_T = createOrderedSetType(OCLstdlibPackage.Literals.ORDERED_SET, tp_OrderedSet_T, false, 0, -1));
+			installComment(type, "The OrderedSet is a Set, the elements of which are ordered.\nIt contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.\nAn OrderedSet is not a subtype of Set, neither a subtype of Sequence.\nThe common supertype of Sets and OrderedSets is Collection.");
+			ownedClasses.add(type = _Sequence_Sequence_T = createSequenceType(OCLstdlibPackage.Literals.SEQUENCE, tp_Sequence_T, false, 0, -1));
+			installComment(type, "A sequence is a collection where the elements are ordered.\nAn element may be part of a sequence more than once.\nSequence is itself an instance of the metatype SequenceType.\nA Sentence is not a subtype of Bag.\nThe common supertype of Sentence and Bags is Collection.");
+			ownedClasses.add(type = _Set_Set_T = createSetType(OCLstdlibPackage.Literals.SET, tp_Set_T, false, 0, -1));
+			ownedClasses.add(type = _UniqueCollection_UniqueCollection_T = createCollectionType(OCLstdlibPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T, false, 0, -1));
+			installComment(type, "The UniqueCollection type provides the shared functionality of the OrderedSet and Set\ncollections for which the elements are unique.\nThe common supertype of UniqueCollection is Collection.");
+
+			ownedClasses = orphanPackage.getOwnedClasses();
+		}
+
+
 		private BagType _Bag_Bag_collect_V_F;
 		private BagType _Bag_Bag_collectNested_V_F;
 		private BagType _Bag_Bag_flatten_T2_F;
@@ -749,26 +775,9 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _UniqueCollection_Tuple_F;
 		private CollectionType _UniqueCollection_UniqueCollection_T_F;
 
-		private void installCollectionTypes() {
+		private void installSpecializedCollectionTypes() {
 			List<Class> ownedClasses;
 			CollectionType type;
-
-			ownedClasses = ocl.getOwnedClasses();
-			ownedClasses.add(type = _Bag_Bag_T = createBagType(OCLstdlibPackage.Literals.BAG, tp_Bag_T, false, 0, -1));
-			installComment(type, "A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.\nThere is no ordering defined on the elements in a bag.\nBag is itself an instance of the metatype BagType.");
-			ownedClasses.add(type = _Collection_Collection_T = createCollectionType(OCLstdlibPackage.Literals.COLLECTION, tp_Collection_T, false, 0, -1));
-			installComment(type, "Collection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
-			ownedClasses.add(type = _OrderedCollection_OrderedCollection_T = createCollectionType(OCLstdlibPackage.Literals.ORDERED_COLLECTION, tp_OrderedCollection_T, false, 0, -1));
-			installComment(type, "The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence\ncollections for which the elements are ordered.\nThe common supertype of OrderedCollection is Collection.");
-			ownedClasses.add(type = _OrderedSet_OrderedSet_T = createOrderedSetType(OCLstdlibPackage.Literals.ORDERED_SET, tp_OrderedSet_T, false, 0, -1));
-			installComment(type, "The OrderedSet is a Set, the elements of which are ordered.\nIt contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.\nAn OrderedSet is not a subtype of Set, neither a subtype of Sequence.\nThe common supertype of Sets and OrderedSets is Collection.");
-			ownedClasses.add(type = _Sequence_Sequence_T = createSequenceType(OCLstdlibPackage.Literals.SEQUENCE, tp_Sequence_T, false, 0, -1));
-			installComment(type, "A sequence is a collection where the elements are ordered.\nAn element may be part of a sequence more than once.\nSequence is itself an instance of the metatype SequenceType.\nA Sentence is not a subtype of Bag.\nThe common supertype of Sentence and Bags is Collection.");
-			ownedClasses.add(type = _Set_Set_T = createSetType(OCLstdlibPackage.Literals.SET, tp_Set_T, false, 0, -1));
-			ownedClasses.add(type = _UniqueCollection_UniqueCollection_T = createCollectionType(OCLstdlibPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T, false, 0, -1));
-			installComment(type, "The UniqueCollection type provides the shared functionality of the OrderedSet and Set\ncollections for which the elements are unique.\nThe common supertype of UniqueCollection is Collection.");
-
-			ownedClasses = orphanPackage.getOwnedClasses();
 
 			ownedClasses = ocl.getOwnedClasses();
 
@@ -1047,6 +1056,18 @@ public class OCLstdlib extends ASResourceImpl
 		}
 
 		private MapType _Map_Map_K_Map_V;
+
+		private void installGenericMapTypes() {
+			List<Class> ownedClasses;
+			MapType type;
+
+			ownedClasses = ocl.getOwnedClasses();
+			ownedClasses.add(type = _Map_Map_K_Map_V = createMapType(OCLstdlibPackage.Literals.MAP, tp_Map_K, true, tp_Map_V, true));
+			installComment(type, "A Map provides a Set of key values, each of which has an associated value.\nKeys and values may be null, but neither may be invalid.");
+
+			ownedClasses = orphanPackage.getOwnedClasses();
+		}
+
 		private MapType _Map_Collection_T_F_Collection_collectBy_V_F;
 		private MapType _Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T;
 		private MapType _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T;
@@ -1056,39 +1077,33 @@ public class OCLstdlib extends ASResourceImpl
 		private MapType _Map_Map_K_F_Map_collectNested_V2_F;
 		private MapType _Map_Map_K_F_Map_V_F;
 
-			private void installMapTypes() {
-				List<Class> ownedClasses;
-				MapType type;
+		private void installSpecializedMapTypes() {
+			List<Class> ownedClasses;
+			MapType type;
 
-				ownedClasses = ocl.getOwnedClasses();
-				ownedClasses.add(type = _Map_Map_K_Map_V = createMapType(OCLstdlibPackage.Literals.MAP, tp_Map_K, true, tp_Map_V, true));
-				installComment(type, "A Map provides a Set of key values, each of which has an associated value.\nKeys and values may be null, but neither may be invalid.");
+			ownedClasses = ocl.getOwnedClasses();
 
-				ownedClasses = orphanPackage.getOwnedClasses();
+			ownedClasses = orphanPackage.getOwnedClasses();
+			ownedClasses.add(type = _Map_Collection_T_F_Collection_collectBy_V_F = getMapType(_Map_Map_K_Map_V, tp_Collection_T, false, tp_Collection_collectBy_V, false));
+			ownedClasses.add(type = _Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_excludesMap_K2, true, tp_Map_excludesMap_V2, true));
+			ownedClasses.add(type = _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_excludingMap_K2, true, tp_Map_excludingMap_V2, true));
+			ownedClasses.add(type = _Map_Map_includesMap_K2_T_Map_includesMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includesMap_K2, true, tp_Map_includesMap_V2, true));
+			ownedClasses.add(type = _Map_Map_includingMap_K2_T_Map_includingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includingMap_K2, true, tp_Map_includingMap_V2, true));
+			ownedClasses.add(type = _Map_Map_K_F_Map_collectBy_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectBy_V2, false));
+			ownedClasses.add(type = _Map_Map_K_F_Map_collectNested_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectNested_V2, false));
+			ownedClasses.add(type = _Map_Map_K_F_Map_V_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_V, false));
 
-				ownedClasses = ocl.getOwnedClasses();
+			addSuperClass(_Map_Map_K_Map_V, _OclAny);
 
-				ownedClasses = orphanPackage.getOwnedClasses();
-				ownedClasses.add(type = _Map_Collection_T_F_Collection_collectBy_V_F = getMapType(_Map_Map_K_Map_V, tp_Collection_T, false, tp_Collection_collectBy_V, false));
-				ownedClasses.add(type = _Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_excludesMap_K2, true, tp_Map_excludesMap_V2, true));
-				ownedClasses.add(type = _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_excludingMap_K2, true, tp_Map_excludingMap_V2, true));
-				ownedClasses.add(type = _Map_Map_includesMap_K2_T_Map_includesMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includesMap_K2, true, tp_Map_includesMap_V2, true));
-				ownedClasses.add(type = _Map_Map_includingMap_K2_T_Map_includingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includingMap_K2, true, tp_Map_includingMap_V2, true));
-				ownedClasses.add(type = _Map_Map_K_F_Map_collectBy_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectBy_V2, false));
-				ownedClasses.add(type = _Map_Map_K_F_Map_collectNested_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectNested_V2, false));
-				ownedClasses.add(type = _Map_Map_K_F_Map_V_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_V, false));
-
-				addSuperClass(_Map_Map_K_Map_V, _OclAny);
-
-				addSuperClass(_Map_Collection_T_F_Collection_collectBy_V_F, _OclAny);
-				addSuperClass(_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T, _OclAny);
-				addSuperClass(_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T, _OclAny);
-				addSuperClass(_Map_Map_includesMap_K2_T_Map_includesMap_V2_T, _OclAny);
-				addSuperClass(_Map_Map_includingMap_K2_T_Map_includingMap_V2_T, _OclAny);
-				addSuperClass(_Map_Map_K_F_Map_collectBy_V2_F, _OclAny);
-				addSuperClass(_Map_Map_K_F_Map_collectNested_V2_F, _OclAny);
-				addSuperClass(_Map_Map_K_F_Map_V_F, _OclAny);
-			}
+			addSuperClass(_Map_Collection_T_F_Collection_collectBy_V_F, _OclAny);
+			addSuperClass(_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T, _OclAny);
+			addSuperClass(_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T, _OclAny);
+			addSuperClass(_Map_Map_includesMap_K2_T_Map_includesMap_V2_T, _OclAny);
+			addSuperClass(_Map_Map_includingMap_K2_T_Map_includingMap_V2_T, _OclAny);
+			addSuperClass(_Map_Map_K_F_Map_collectBy_V2_F, _OclAny);
+			addSuperClass(_Map_Map_K_F_Map_collectNested_V2_F, _OclAny);
+			addSuperClass(_Map_Map_K_F_Map_V_F, _OclAny);
+		}
 
 		private LambdaType _Lambda_Bag_T_Boolean;
 		private LambdaType _Lambda_Bag_T_Bag_collectNested_V;
@@ -1125,172 +1140,73 @@ public class OCLstdlib extends ASResourceImpl
 		private LambdaType _Lambda_UniqueCollection_T_OclAny;
 
 		private void installLambdaTypes() {
-			final List<Class> orphanTypes = orphanPackage.getOwnedClasses();
+			final List<Class> ownedClasses = orphanPackage.getOwnedClasses();
 			LambdaType type;
-			type = _Lambda_Bag_T_Boolean = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Bag_T);
-			type.setResultType(_Boolean);
+			ownedClasses.add(type = _Lambda_Bag_T_Boolean = createLambdaType("Lambda", tp_Bag_T, _Boolean));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Bag_T_Bag_collectNested_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Bag_T);
-			type.setResultType(tp_Bag_collectNested_V);
+			ownedClasses.add(type = _Lambda_Bag_T_Bag_collectNested_V = createLambdaType("Lambda", tp_Bag_T, tp_Bag_collectNested_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Bag_T_Bag_collect_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Bag_T);
-			type.setResultType(tp_Bag_collect_V);
+			ownedClasses.add(type = _Lambda_Bag_T_Bag_collect_V = createLambdaType("Lambda", tp_Bag_T, tp_Bag_collect_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Bag_T_OclAny = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Bag_T);
-			type.setResultType(_OclAny);
+			ownedClasses.add(type = _Lambda_Bag_T_OclAny = createLambdaType("Lambda", tp_Bag_T, _OclAny));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Bag_T_Set = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Bag_T);
-			type.setResultType(_Set_Bag_T_F);
+			ownedClasses.add(type = _Lambda_Bag_T_Set = createLambdaType("Lambda", tp_Bag_T, _Set_Bag_T_F));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Collection_T_Boolean = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Collection_T);
-			type.setResultType(_Boolean);
+			ownedClasses.add(type = _Lambda_Collection_T_Boolean = createLambdaType("Lambda", tp_Collection_T, _Boolean));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Collection_T_Collection_collectBy_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Collection_T);
-			type.setResultType(tp_Collection_collectBy_V);
+			ownedClasses.add(type = _Lambda_Collection_T_Collection_collectBy_V = createLambdaType("Lambda", tp_Collection_T, tp_Collection_collectBy_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Collection_T_Collection_collectNested_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Collection_T);
-			type.setResultType(tp_Collection_collectNested_V);
+			ownedClasses.add(type = _Lambda_Collection_T_Collection_collectNested_V = createLambdaType("Lambda", tp_Collection_T, tp_Collection_collectNested_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Collection_T_Collection_collect_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Collection_T);
-			type.setResultType(tp_Collection_collect_V);
+			ownedClasses.add(type = _Lambda_Collection_T_Collection_collect_V = createLambdaType("Lambda", tp_Collection_T, tp_Collection_collect_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Collection_T_Collection_iterate_Tacc = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Collection_T);
-			type.setResultType(tp_Collection_iterate_Tacc);
+			ownedClasses.add(type = _Lambda_Collection_T_Collection_iterate_Tacc = createLambdaType("Lambda", tp_Collection_T, tp_Collection_iterate_Tacc));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Collection_T_OclAny = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Collection_T);
-			type.setResultType(_OclAny);
+			ownedClasses.add(type = _Lambda_Collection_T_OclAny = createLambdaType("Lambda", tp_Collection_T, _OclAny));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Map_K_Boolean = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Map_K);
-			type.setResultType(_Boolean);
+			ownedClasses.add(type = _Lambda_Map_K_Boolean = createLambdaType("Lambda", tp_Map_K, _Boolean));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Map_K_Map_collectBy_V2 = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Map_K);
-			type.setResultType(tp_Map_collectBy_V2);
+			ownedClasses.add(type = _Lambda_Map_K_Map_collectBy_V2 = createLambdaType("Lambda", tp_Map_K, tp_Map_collectBy_V2));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Map_K_Map_collectNested_V2 = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Map_K);
-			type.setResultType(tp_Map_collectNested_V2);
+			ownedClasses.add(type = _Lambda_Map_K_Map_collectNested_V2 = createLambdaType("Lambda", tp_Map_K, tp_Map_collectNested_V2));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Map_K_Map_collect_V2 = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Map_K);
-			type.setResultType(tp_Map_collect_V2);
+			ownedClasses.add(type = _Lambda_Map_K_Map_collect_V2 = createLambdaType("Lambda", tp_Map_K, tp_Map_collect_V2));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Map_K_Map_iterate_Tacc = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Map_K);
-			type.setResultType(tp_Map_iterate_Tacc);
+			ownedClasses.add(type = _Lambda_Map_K_Map_iterate_Tacc = createLambdaType("Lambda", tp_Map_K, tp_Map_iterate_Tacc));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Map_K_OclAny = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Map_K);
-			type.setResultType(_OclAny);
+			ownedClasses.add(type = _Lambda_Map_K_OclAny = createLambdaType("Lambda", tp_Map_K, _OclAny));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_OrderedSet_T_Boolean = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_OrderedSet_T);
-			type.setResultType(_Boolean);
+			ownedClasses.add(type = _Lambda_OrderedSet_T_Boolean = createLambdaType("Lambda", tp_OrderedSet_T, _Boolean));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_OrderedSet_T_OclAny = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_OrderedSet_T);
-			type.setResultType(_OclAny);
+			ownedClasses.add(type = _Lambda_OrderedSet_T_OclAny = createLambdaType("Lambda", tp_OrderedSet_T, _OclAny));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_OrderedSet_T_OrderedSet = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_OrderedSet_T);
-			type.setResultType(_OrderedSet_OrderedSet_T);
+			ownedClasses.add(type = _Lambda_OrderedSet_T_OrderedSet = createLambdaType("Lambda", tp_OrderedSet_T, _OrderedSet_OrderedSet_T));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_OrderedSet_T_OrderedSet_collectNested_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_OrderedSet_T);
-			type.setResultType(tp_OrderedSet_collectNested_V);
+			ownedClasses.add(type = _Lambda_OrderedSet_T_OrderedSet_collectNested_V = createLambdaType("Lambda", tp_OrderedSet_T, tp_OrderedSet_collectNested_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_OrderedSet_T_OrderedSet_collect_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_OrderedSet_T);
-			type.setResultType(tp_OrderedSet_collect_V);
+			ownedClasses.add(type = _Lambda_OrderedSet_T_OrderedSet_collect_V = createLambdaType("Lambda", tp_OrderedSet_T, tp_OrderedSet_collect_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Sequence_T_Boolean = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Sequence_T);
-			type.setResultType(_Boolean);
+			ownedClasses.add(type = _Lambda_Sequence_T_Boolean = createLambdaType("Lambda", tp_Sequence_T, _Boolean));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Sequence_T_OclAny = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Sequence_T);
-			type.setResultType(_OclAny);
+			ownedClasses.add(type = _Lambda_Sequence_T_OclAny = createLambdaType("Lambda", tp_Sequence_T, _OclAny));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Sequence_T_OrderedSet = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Sequence_T);
-			type.setResultType(_OrderedSet_Sequence_T_F);
+			ownedClasses.add(type = _Lambda_Sequence_T_OrderedSet = createLambdaType("Lambda", tp_Sequence_T, _OrderedSet_Sequence_T_F));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Sequence_T_Sequence_collectNested_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Sequence_T);
-			type.setResultType(tp_Sequence_collectNested_V);
+			ownedClasses.add(type = _Lambda_Sequence_T_Sequence_collectNested_V = createLambdaType("Lambda", tp_Sequence_T, tp_Sequence_collectNested_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Sequence_T_Sequence_collect_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Sequence_T);
-			type.setResultType(tp_Sequence_collect_V);
+			ownedClasses.add(type = _Lambda_Sequence_T_Sequence_collect_V = createLambdaType("Lambda", tp_Sequence_T, tp_Sequence_collect_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Set_T_Boolean = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Set_T);
-			type.setResultType(_Boolean);
+			ownedClasses.add(type = _Lambda_Set_T_Boolean = createLambdaType("Lambda", tp_Set_T, _Boolean));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Set_T_OclAny = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Set_T);
-			type.setResultType(_OclAny);
+			ownedClasses.add(type = _Lambda_Set_T_OclAny = createLambdaType("Lambda", tp_Set_T, _OclAny));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Set_T_Set = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Set_T);
-			type.setResultType(_Set_Set_T);
+			ownedClasses.add(type = _Lambda_Set_T_Set = createLambdaType("Lambda", tp_Set_T, _Set_Set_T));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Set_T_Set_collectNested_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Set_T);
-			type.setResultType(tp_Set_collectNested_V);
+			ownedClasses.add(type = _Lambda_Set_T_Set_collectNested_V = createLambdaType("Lambda", tp_Set_T, tp_Set_collectNested_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_Set_T_Set_collect_V = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_Set_T);
-			type.setResultType(tp_Set_collect_V);
+			ownedClasses.add(type = _Lambda_Set_T_Set_collect_V = createLambdaType("Lambda", tp_Set_T, tp_Set_collect_V));
 			addSuperClass(type, _OclLambda);
-			type = _Lambda_UniqueCollection_T_OclAny = createLambdaType("Lambda");
-			orphanTypes.add(type);
-			type.setContextType(tp_UniqueCollection_T);
-			type.setResultType(_OclAny);
+			ownedClasses.add(type = _Lambda_UniqueCollection_T_OclAny = createLambdaType("Lambda", tp_UniqueCollection_T, _OclAny));
 			addSuperClass(type, _OclLambda);
 		}
 

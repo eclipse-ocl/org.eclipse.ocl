@@ -295,18 +295,21 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»
 						«ENDFOR»
-						«root.installPackages()»
-						«root.installPrecedences()»
-						«root.installTemplateParameters()»
-						«root.installClassTypes()»
-						«root.installPrimitiveTypes()»
-						«root.installEnumerations()»
-						«root.installTupleTypes()»
-						«root.installCollectionTypes()»
-						«root.installLambdaTypes()»
-						«root.installOperations()»
-						«root.installIterations()»
-						«root.installProperties()»
+						«thisModel.installPackages()»
+						«thisModel.installPrecedences()»
+						«thisModel.installTemplateParameters()»
+						«thisModel.installClassTypes()»
+						«thisModel.installPrimitiveTypes()»
+						«thisModel.installEnumerations()»
+						«thisModel.installGenericCollectionTypes()»
+						«thisModel.installGenericMapTypes()»
+						«thisModel.installTupleTypes()»
+						«thisModel.installSpecializedCollectionTypes()»
+						«thisModel.installSpecializedMapTypes()»
+						«thisModel.installLambdaTypes()»
+						«thisModel.installOperations()»
+						«thisModel.installIterations()»
+						«thisModel.installProperties()»
 					}
 					
 					public @NonNull Model getModel() {

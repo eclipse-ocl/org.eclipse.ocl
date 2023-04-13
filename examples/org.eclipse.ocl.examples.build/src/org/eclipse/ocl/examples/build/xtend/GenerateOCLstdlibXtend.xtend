@@ -338,9 +338,11 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«thisModel.installClassTypes()»
 						«thisModel.installPrimitiveTypes()»
 						«thisModel.installEnumerations()»
+						«thisModel.installGenericCollectionTypes()»
+						«thisModel.installGenericMapTypes()»
 						«thisModel.installTupleTypes()»
-						«thisModel.installCollectionTypes()»
-						«thisModel.installMapTypes()»
+						«thisModel.installSpecializedCollectionTypes()»
+						«thisModel.installSpecializedMapTypes()»
 						«thisModel.installLambdaTypes()»
 						«thisModel.installOperations()»
 						«thisModel.installIterations()»
