@@ -593,6 +593,11 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 
 		@Override
+		public @Nullable Object visitOrphanage(@NonNull Orphanage asOrphanage) {
+			return null;
+		}
+
+		@Override
 		public @Nullable Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 			sortedPackages.add(asPackage);
 			return null;
@@ -1283,8 +1288,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && OrphanageImpl.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
 				s.append("orphanClass");
 			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && OrphanageImpl.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {
-				s.append("orphanPackage");
+			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && OrphanageImpl.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {		// XXX
+				s.append("orphanage");			// XXXX
 			}
 			else {
 				System.out.println("Unexpected localOrphan: " + NameUtil.debugSimpleName(localOrphan));
@@ -1297,8 +1302,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					nameQueries.putSymbolName(sharedOrphan, symbolName);
 				}
 				else if (localOrphan == localOrphanage) {
-					Orphanage sharedOrphanage = OrphanageImpl.getOrphanage(environmentFactory.getCompleteModel().getSharedOrphanage());
-					nameQueries.putSymbolName(sharedOrphanage, symbolName);
+				//	Orphanage sharedOrphanage = /*OrphanageImpl.getOrphanage(*/environmentFactory.getCompleteModel().getSharedOrphanage()/*)*/;
+				//	nameQueries.putSymbolName(sharedOrphanage, symbolName);
 				}
 				else {
 					System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);

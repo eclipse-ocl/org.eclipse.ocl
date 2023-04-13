@@ -413,9 +413,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«emitPackage(pkg2)»
 				«ENDFOR»
 				«ENDIF»
-			«FOR importKey : importKeys»«val importName = import2alias.get(importKey)»
+				«IF importKeys.size() > 0»
+				«FOR importKey : importKeys»«val importName = import2alias.get(importKey)»
 				«root.getSymbolName()».getOwnedImports().add(createImport(«IF importName !== null»"«importName»"«ELSE»null«ENDIF», «importKey.getSymbolName()»));
-			«ENDFOR»
+				«ENDFOR»
+				«ENDIF»
 			}
 		'''
 	}
@@ -639,6 +641,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«ENDIF»
 				«pkg.getSymbolName()».getOwnedPackages().add(«nestedPackage.getSymbolName()»);
 			«ENDFOR»
+			«pkg.getSymbolName()».getOwnedPackages().add(orphanage);
 		'''
 	}
 
