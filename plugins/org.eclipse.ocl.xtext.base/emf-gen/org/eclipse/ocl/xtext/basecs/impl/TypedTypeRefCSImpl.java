@@ -383,4 +383,12 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 		Element referredElement = ownedPathName.getReferredElement();
 		return (Type) referredElement;
 	}
+
+	@Override
+	public void setPivot(Element newPivot) {
+		if ("UniqueCollection(UniqueCollection.T)".equals(String.valueOf(newPivot))) {
+			getClass();		// XXX
+		}
+		super.setPivot(newPivot);
+	}
 } //TypedTypeRefCSImpl

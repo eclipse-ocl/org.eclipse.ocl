@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
@@ -128,15 +127,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	}
 
 	protected abstract String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames);
-
-	protected String getEcoreLiteral(@NonNull EnumerationLiteral elem) {
-		return nameQueries.getEcoreLiteral(elem);
-	}
-
-	@Override
-	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Package elem) {
-		return nameQueries.getEcoreLiteral(elem);
-	}
 
 	@Override
 	protected @NonNull String getNameLiteral(@NonNull Operation operation) {

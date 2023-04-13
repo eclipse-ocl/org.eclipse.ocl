@@ -11,51 +11,12 @@
 package org.eclipse.ocl.examples.build.xtend
 
 import org.eclipse.ocl.pivot.DataType
-import org.eclipse.ocl.pivot.Model
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
 
 class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
-	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
-		var pkge2classTypes = root.getSortedClassTypes();
-		if (pkge2classTypes.isEmpty()) return "";
-		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
-		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());
-		'''
-		«FOR pkge : sortedPackages»
-
-			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-				«IF pkg == pkge && !excludedEClassifierNames.contains(type.name)»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
-				«ELSE»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
-				«ENDIF»
-			«ENDFOR»
-		«ENDFOR»
-		'''
-	}
-
-	protected override String declarePrimitiveTypes(/*@NonNull*/ Model root) {
-		var pkge2primitiveTypes = root.getSortedPrimitiveTypes();
-		if (pkge2primitiveTypes.isEmpty()) return "";
-		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
-		var sortedPackages = root.getSortedPackages(pkge2primitiveTypes.keySet());
-		'''
-			«FOR pkge : sortedPackages»
-
-				«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
-					«IF pkg == pkge && !excludedEClassifierNames.contains(type.name)»
-						private final @NonNull PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = createPrimitiveType(«getEcoreLiteral(type)»);
-					«ELSE»
-						private final @NonNull PrimitiveType «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = createPrimitiveType("«type.name»");
-					«ENDIF»
-				«ENDFOR»
-			«ENDFOR»
-		'''
-	}
-
 	protected def String defineConstantType(DataType type) {'''
 		«IF "Boolean".equals(type.name)»
 			private void PrimitiveType «type.getPrefixedSymbolName("_"+type.partialName())» = OCLstdlib._Boolean;«ELSEIF "Classifier".equals(type.name)»
@@ -372,17 +333,18 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«ENDFOR»
 						«ENDFOR»
 						«thisModel.installPackages()»
+						«thisModel.installPrecedences()»
+						«thisModel.installTemplateParameters()»
 						«thisModel.installClassTypes()»
 						«thisModel.installPrimitiveTypes()»
 						«thisModel.installEnumerations()»
+						«thisModel.installTupleTypes()»
 						«thisModel.installCollectionTypes()»
 						«thisModel.installMapTypes()»
 						«thisModel.installLambdaTypes()»
-						«thisModel.installTupleTypes()»
 						«thisModel.installOperations()»
 						«thisModel.installIterations()»
 						«thisModel.installProperties()»
-						«thisModel.installPrecedences()»
 					}
 			
 					public @NonNull Model getModel() {
@@ -390,20 +352,14 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					}
 					«thisModel.defineExternals()»
 					«thisModel.definePackages()»
-					«thisModel.declareClassTypes(excludedEClassifierNames)»
-					«thisModel.declarePrimitiveTypes()»
-					«thisModel.declareEnumerations()»
-					«thisModel.defineTemplateParameters()»
-					«thisModel.declareTupleTypes()»
-					«thisModel.declareCollectionTypes()»
-					«thisModel.declareMapTypes()»
 					«thisModel.definePrecedences()»
-					«thisModel.defineClassTypes()»
+					«thisModel.defineTemplateParameters()»
+					«thisModel.defineClassTypes(excludedEClassifierNames)»
 					«thisModel.definePrimitiveTypes()»
 					«thisModel.defineEnumerations()»
+					«thisModel.defineTupleTypes()»
 					«thisModel.defineCollectionTypes()»
 					«thisModel.defineMapTypes()»
-					«thisModel.defineTupleTypes()»
 					«thisModel.defineLambdaTypes()»
 					«thisModel.defineOperations()»
 					«thisModel.defineIterations()»

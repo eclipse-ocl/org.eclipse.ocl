@@ -203,7 +203,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Operation>> package2sortedOperations = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> package2sortedPrimitiveTypes = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Property>> package2sortedProperties = new HashMap<>();
-		private final @NonNull List<@NonNull Operation> sortedCoercions = new ArrayList<>();
 		private final @NonNull List<@NonNull LambdaType> sortedLambdaTypes = new ArrayList<>();
 		private final @NonNull List<@NonNull Library> sortedLibraries = new ArrayList<>();
 		private final @NonNull List<@NonNull Library> sortedLibrariesWithPrecedence = new ArrayList<>();
@@ -234,7 +233,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			for (@NonNull EObject eObject : new TreeIterable(thisModel, true)) {
 				((Element)eObject).accept(this);
 			}
-			Collections.sort(sortedCoercions, monikerComparator);
 			Collections.sort(sortedLambdaTypes, monikerComparator);
 			Collections.sort(sortedLibraries, monikerComparator);
 			Collections.sort(sortedLibrariesWithPrecedence, monikerComparator);
@@ -496,7 +494,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				package2sortedPrimitiveTypes.put(asPackage, sortedPrimitiveTypes);
 			}
 			sortedPrimitiveTypes.add(asPrimitiveType);
-			sortedCoercions.addAll(asPrimitiveType.getCoercions());
 			doSuperClasses(asPrimitiveType);
 			return null;
 		}
@@ -732,6 +729,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return nameQueries.getEcoreLiteral(elem);
 	}
 
+	protected String getEcoreLiteral(@NonNull EnumerationLiteral elem) {
+		return nameQueries.getEcoreLiteral(elem);
+	}
+
 	protected String getEcoreLiteral(org.eclipse.ocl.pivot.@NonNull Package elem) {
 		return nameQueries.getEcoreLiteral(elem);
 	}
@@ -864,22 +865,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		} else {
 			return elem.getName() + "()";
 		}
-	}
-
-	protected @NonNull List<@NonNull Operation> getSortedCoercions(@NonNull Model root) {
-		return contentAnalysis.sortedCoercions;
-	}
-
-	protected @NonNull List<@NonNull Operation> getSortedCoercions(@NonNull PrimitiveType type, @NonNull List<@NonNull Operation> allCoercions) {
-		Set<@NonNull Operation> allElements = new HashSet<>();
-		for (Operation coercion : type.getCoercions()) {
-			if (allCoercions.contains(coercion)) {
-				allElements.add(coercion);
-			}
-		}
-		List<@NonNull Operation> sortedElements = new ArrayList<>(allElements);
-		Collections.sort(sortedElements, contentAnalysis.monikerComparator);
-		return sortedElements;
 	}
 
 	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> getSortedClassTypes(@NonNull Model root) {

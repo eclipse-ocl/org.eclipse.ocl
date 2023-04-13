@@ -554,7 +554,7 @@ public class PivotUtil
 		return pivotOperation;
 	}
 
-	public static @NonNull Operation createOperation(/*@NonNull*/ EOperation eOperation, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
+	public static @NonNull Operation createOperation(/*@NonNull*/ EOperation eOperation, /*@NonNull*/ Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
 		Operation pivotOperation = PivotFactory.eINSTANCE.createOperation();
 		pivotOperation.setName(eOperation.getName());
 		pivotOperation.setType(type);
@@ -650,7 +650,7 @@ public class PivotUtil
 		return asPackage;
 	}
 
-	public static @NonNull Parameter createParameter(@NonNull String name, @NonNull Type asType, boolean isRequired) {
+	public static @NonNull Parameter createParameter(@NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
 		Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 		asParameter.setName(name);
 		asParameter.setType(asType);
@@ -683,7 +683,7 @@ public class PivotUtil
 		return pivotType;
 	}
 
-	public static @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, @NonNull Type type) {
+	public static @NonNull Property createProperty(/*@NonNull*/ EStructuralFeature eFeature, /*@NonNull*/ Type type) {
 		Property pivotProperty = PivotFactory.eINSTANCE.createProperty();
 		pivotProperty.setName(eFeature.getName());
 		pivotProperty.setType(type);
@@ -691,7 +691,7 @@ public class PivotUtil
 		return pivotProperty;
 	}
 
-	public static @NonNull Property createProperty(@NonNull String name, @NonNull Type type) {
+	public static @NonNull Property createProperty(@NonNull String name, /*@NonNull*/ Type type) {
 		Property pivotProperty = PivotFactory.eINSTANCE.createProperty();
 		pivotProperty.setName(name);
 		pivotProperty.setType(type);

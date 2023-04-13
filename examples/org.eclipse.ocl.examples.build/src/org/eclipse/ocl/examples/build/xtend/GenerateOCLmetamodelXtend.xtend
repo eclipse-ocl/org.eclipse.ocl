@@ -11,51 +11,12 @@
 package org.eclipse.ocl.examples.build.xtend
 
 import org.eclipse.ocl.pivot.Model
-import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
+import org.eclipse.ocl.pivot.EnumerationLiteral
 
 class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 {
-	protected override String declareClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
-		var pkge2classTypes = root.getSortedClassTypes();
-		if (pkge2classTypes.isEmpty()) return "";
-		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
-		var sortedPackages = root.getSortedPackages(pkge2classTypes.keySet());
-		'''
-		«FOR pkge : sortedPackages»
-
-			«IF pkg == pkge»
-				«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
-				«ENDFOR»
-			«ELSE»
-				«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-					private final @NonNull «type.eClass().name» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
-				«ENDFOR»
-			«ENDIF»
-		«ENDFOR»
-		'''
-	}
-
-	protected override String declareEnumerations(/*@NonNull*/ Model root) {
-		var pkge2enumerations = root.getSortedEnumerations();
-		if (pkge2enumerations.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2enumerations.keySet());
-		'''
-
-		«FOR pkge : sortedPackages»
-			«FOR enumeration : ClassUtil.nullFree(pkge2enumerations.get(pkge))»
-				«var enumerationName = enumeration.getPrefixedSymbolName("_" + enumeration.partialName())»
-				private final @NonNull Enumeration «enumerationName» = createEnumeration(«getEcoreLiteral(enumeration)»);
-				«FOR enumerationLiteral : enumeration.ownedLiterals»
-					private final @NonNull EnumerationLiteral «enumerationLiteral.getPrefixedSymbolName("el_"+enumerationName+"_"+enumerationLiteral.name)» = createEnumerationLiteral(«getEcoreLiteral(enumerationLiteral)»);
-				«ENDFOR»
-			«ENDFOR»
-		«ENDFOR»
-		'''
-	}
-
 	protected override String generateMetamodel(/*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var Model root = thisModel;
 		var org.eclipse.ocl.pivot.Package pkg = root.ownedPackages.findPackage();
@@ -335,16 +296,17 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«ENDFOR»
 						«ENDFOR»
 						«root.installPackages()»
+						«root.installPrecedences()»
+						«root.installTemplateParameters()»
 						«root.installClassTypes()»
 						«root.installPrimitiveTypes()»
 						«root.installEnumerations()»
+						«root.installTupleTypes()»
 						«root.installCollectionTypes()»
 						«root.installLambdaTypes()»
-						«root.installTupleTypes()»
 						«root.installOperations()»
 						«root.installIterations()»
 						«root.installProperties()»
-						«root.installPrecedences()»
 					}
 					
 					public @NonNull Model getModel() {
@@ -352,18 +314,13 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					}
 					«root.defineExternals()»
 					«root.definePackages()»
-					«root.declareClassTypes(excludedEClassifierNames)»
-					«root.declarePrimitiveTypes()»
-					«root.declareEnumerations()»
-					«root.defineTemplateParameters()»
-					«root.declareCollectionTypes()»
-					«root.declareTupleTypes()»
 					«root.definePrecedences()»
-					«root.defineClassTypes()»
+					«root.defineTemplateParameters()»
+					«root.defineClassTypes(excludedEClassifierNames)»
 					«root.definePrimitiveTypes()»
 					«root.defineEnumerations()»
-					«root.defineCollectionTypes()»
 					«root.defineTupleTypes()»
+					«root.defineCollectionTypes()»
 					«root.defineLambdaTypes()»
 					«root.defineOperations()»
 					«root.defineIterations()»
