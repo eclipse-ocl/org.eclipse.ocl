@@ -350,38 +350,13 @@ class GenerateASModelsXtend extends GenerateASModels
 							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»
 						«ENDFOR»
-						«thisModel.installPackages()»
-						«thisModel.installPrecedences()»
-						«thisModel.installTemplateParameters()»
-						«thisModel.installClassTypes()»
-						«thisModel.installPrimitiveTypes()»
-						«thisModel.installEnumerations()»
-						«thisModel.installTupleTypes()»
-						«thisModel.installCollectionTypes()»
-						«thisModel.installMapTypes()»
-						«thisModel.installLambdaTypes()»
-						«thisModel.installOperations()»
-						«thisModel.installIterations()»
-						«thisModel.installProperties()»
+						«thisModel.installAll()»
 					}
 			
 					public @NonNull Model getModel() {
 						return «thisModel.getSymbolName()»;
 					}
-					«thisModel.defineExternals()»
-					«thisModel.definePackages()»
-					«thisModel.definePrecedences()»
-					«thisModel.defineTemplateParameters()»
-					«thisModel.defineClassTypes(excludedEClassifierNames)»
-					«thisModel.definePrimitiveTypes()»
-					«thisModel.defineEnumerations()»
-					«thisModel.defineTupleTypes()»
-					«thisModel.defineCollectionTypes()»
-					«thisModel.defineMapTypes()»
-					«thisModel.defineLambdaTypes()»
-					«thisModel.defineOperations()»
-					«thisModel.defineIterations()»
-					«thisModel.defineProperties()»
+					«thisModel.defineAll(excludedEClassifierNames)»
 				}
 			}
 		'''

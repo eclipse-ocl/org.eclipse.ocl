@@ -13,6 +13,7 @@ package	org.eclipse.ocl.pivot.internal.utilities;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
@@ -22,6 +23,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Import;
@@ -34,8 +36,10 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
@@ -45,6 +49,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.PackageId;
@@ -93,6 +98,12 @@ public abstract class AbstractContents extends PivotUtil
 		asClass.getSuperClasses().add(asSuperClass);
 	}
 
+	protected @NonNull AnyType createAnyType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass) {
+		AnyType asType = createAnyType(eClass);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
 	/* @deprecated no longer used. Replaced by EClass literal and TemplateParameter */
 	@Deprecated
 	protected @NonNull BagType createBagType(@NonNull String name, @Nullable String lower, @Nullable String upper, @NonNull TemplateParameter templateParameter) {
@@ -120,6 +131,13 @@ public abstract class AbstractContents extends PivotUtil
 		return createCollectionType(PivotFactory.eINSTANCE.createBagType(), unspecializedType);
 	}
 
+	protected @NonNull BagType createBagType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass, /*@NonNull*/ TemplateParameter templateParameter, boolean isNullFree, int lower, int upper) {
+		assert templateParameter != null;
+		BagType asType = createBagType(eClass, templateParameter, isNullFree, lower, upper);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
 	/**
 	 * @since 1.16
 	 */
@@ -134,6 +152,18 @@ public abstract class AbstractContents extends PivotUtil
 		asExpression.setOwnedContext(contextVariable);
 		operation.setBodyExpression(asExpression);
 		return asExpression;
+	}
+
+	protected org.eclipse.ocl.pivot.@NonNull Class createClass(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
+		org.eclipse.ocl.pivot.Class asType = createClass(name);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
+	protected org.eclipse.ocl.pivot.@NonNull Class createClass(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass) {
+		org.eclipse.ocl.pivot.Class asType = createClass(eClass);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
 	}
 
 	/**
@@ -182,6 +212,19 @@ public abstract class AbstractContents extends PivotUtil
 		return specializedType;
 	}
 
+	protected @NonNull CollectionType createCollectionType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass, /*@NonNull*/ TemplateParameter templateParameter, boolean isNullFree, int lower, int upper) {
+		assert templateParameter != null;
+		CollectionType asType = createCollectionType(eClass, templateParameter, isNullFree, lower, upper);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
+	protected @NonNull DataType createDataType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EDataType eDataType) {
+		DataType asType = createDataType(eDataType);
+		asPackage.getOwnedClasses().add(asType);
+		return asType;
+	}
+
 	@Deprecated /* @deprecated add selfType/resultType */
 	protected @NonNull ExpressionInOCL createExpressionInOCL(@NonNull Type type, @NonNull String exprString) {
 		ExpressionInOCL asExpression = PivotFactory.eINSTANCE.createExpressionInOCL();
@@ -217,6 +260,18 @@ public abstract class AbstractContents extends PivotUtil
 		return asImport;
 	}
 
+	protected @NonNull InvalidType createInvalidType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass) {
+		InvalidType asType = createInvalidType(eClass);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
+	protected @NonNull Iteration createIteration(@NonNull String name, /*@NonNull*/ Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation, TemplateParameter... templateParameters) {
+		Iteration asIteration = createIteration(name, type, implementationClass, implementation);
+		initTemplateParameters(asIteration, templateParameters);
+		return asIteration;
+	}
+
 	protected @NonNull LambdaType createLambdaType(@NonNull String name, @NonNull TemplateParameter contextType, @NonNull Type resultType, @NonNull TemplateParameter... parameterTypes) {
 		assert contextType != null;
 		assert resultType != null;
@@ -227,10 +282,12 @@ public abstract class AbstractContents extends PivotUtil
 		return type;
 	}
 
-	protected @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation, TemplateParameter... templateParameters) {
-		Iteration asIteration = createIteration(name, type, implementationClass, implementation);
-		initTemplateParameters(asIteration, templateParameters);
-		return asIteration;
+	protected @NonNull LambdaType createLambdaType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name, /*@NonNull*/ TemplateParameter contextType, /*@NonNull*/ Type resultType, @NonNull TemplateParameter... parameterTypes) {
+		assert contextType != null;
+		assert resultType != null;
+		LambdaType asType = createLambdaType(name, contextType, resultType, parameterTypes);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
 	}
 
 	@Deprecated /* @deprecated add ePackage */
@@ -278,6 +335,7 @@ public abstract class AbstractContents extends PivotUtil
 		((PivotObjectImpl)mapType).setESObject(eClass);
 		return mapType;
 	}
+
 	protected @NonNull MapType createMapType(/*@NonNull*/ EClass eClass, @NonNull TemplateParameter keyParameter, boolean keysAreNullFree, @NonNull TemplateParameter valueParameter, boolean valuesAreNullFree) {
 		MapType mapType = PivotFactory.eINSTANCE.createMapType();
 		mapType.setName(eClass.getName());
@@ -307,6 +365,14 @@ public abstract class AbstractContents extends PivotUtil
 		return specializedType;
 	}
 
+	protected @NonNull MapType createMapType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass, /*@NonNull*/ TemplateParameter keyParameter, boolean keysAreNullFree, /*@NonNull*/ TemplateParameter valueParameter, boolean valuesAreNullFree) {
+		assert keyParameter != null;
+		assert valueParameter != null;
+		MapType asType = createMapType(eClass, keyParameter, keysAreNullFree, valueParameter, valuesAreNullFree);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
 	/**
 	 * @since 1.17
 	 */
@@ -316,9 +382,16 @@ public abstract class AbstractContents extends PivotUtil
 		return asModel;
 	}
 
-	protected @NonNull Operation createOperation(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation, TemplateParameter... templateParameters) {
+	protected @NonNull Operation createOperation(@NonNull String name, /*@NonNull*/ Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation, TemplateParameter... templateParameters) {
 		Operation asOperation = createOperation(name, type, implementationClass, implementation);
 		initTemplateParameters(asOperation, templateParameters);
+		return asOperation;
+	}
+
+	protected @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation, TemplateParameter... templateParameters) {
+		Operation asOperation = PivotFactory.eINSTANCE.createOperation();
+		initTemplateParameters(asOperation, templateParameters);
+		asClass.getOwnedOperations().add(asOperation);
 		return asOperation;
 	}
 
@@ -349,6 +422,13 @@ public abstract class AbstractContents extends PivotUtil
 		return createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), unspecializedType);
 	}
 
+	protected @NonNull OrderedSetType createOrderedSetType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass, /*@NonNull*/ TemplateParameter templateParameter, boolean isNullFree, int lower, int upper) {
+		assert templateParameter != null;
+		OrderedSetType asType = createOrderedSetType(eClass, templateParameter, isNullFree, lower, upper);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
 	/**
 	 * @since 1.17
 	 */
@@ -362,6 +442,30 @@ public abstract class AbstractContents extends PivotUtil
 		asPackage.setURI(nsURI);
 		((PivotObjectImpl)asPackage).setESObject(ePackage);
 		return asPackage;
+	}
+
+	protected @NonNull Parameter createParameter(@NonNull Operation asOperation, @NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
+		Parameter asParameter = createParameter(name, asType, isRequired);
+		asOperation.getOwnedParameters().add(asParameter);
+		return asParameter;
+	}
+
+	protected @NonNull PrimitiveType createPrimitiveType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EDataType eDataType) {
+		PrimitiveType asType = createPrimitiveType(eDataType);
+		asPackage.getOwnedClasses().add(asType);
+		return asType;
+	}
+
+	protected @NonNull Property createProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, /*@NonNull*/ Type type) {
+		Property asProperty = createProperty(name, type);
+		asClass.getOwnedProperties().add(asProperty);
+		return asProperty;
+	}
+
+	protected @NonNull SelfType createSelfType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass) {
+		SelfType asType = createSelfType(eClass);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
 	}
 
 	/**
@@ -391,6 +495,13 @@ public abstract class AbstractContents extends PivotUtil
 		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), unspecializedType);
 	}
 
+	protected @NonNull SequenceType createSequenceType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass, /*@NonNull*/ TemplateParameter templateParameter, boolean isNullFree, int lower, int upper) {
+		assert templateParameter != null;
+		SequenceType asType = createSequenceType(eClass, templateParameter, isNullFree, lower, upper);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
 	/**
 	 * @since 1.17
 	 */
@@ -418,6 +529,25 @@ public abstract class AbstractContents extends PivotUtil
 		return createCollectionType(PivotFactory.eINSTANCE.createSetType(), unspecializedType);
 	}
 
+	protected @NonNull SetType createSetType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass, /*@NonNull*/ TemplateParameter templateParameter, boolean isNullFree, int lower, int upper) {
+		assert templateParameter != null;
+		SetType asType = createSetType(eClass, templateParameter, isNullFree, lower, upper);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
+	protected @NonNull TupleType createTupleType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name, Property... properties) {
+		TupleType asType = createTupleType(name, properties);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
+	protected @NonNull VoidType createVoidType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass) {
+		VoidType asType = createVoidType(eClass);
+		asPackage.getOwnedClasses().add(asType);;
+		return asType;
+	}
+
 	protected @NonNull AnyType getAnyType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
 		return (AnyType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
@@ -440,6 +570,13 @@ public abstract class AbstractContents extends PivotUtil
 		type.setLowerValue(ValueUtil.integerValueOf(lower));
 		type.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 		addBinding(type, elementType);
+		return type;
+	}
+
+	protected @NonNull BagType getBagType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ BagType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert unspecializedType != null;
+		BagType type = getBagType(unspecializedType, elementType, isNullFree, lower, upper);
+		asPackage.getOwnedClasses().add(type);
 		return type;
 	}
 
@@ -475,6 +612,13 @@ public abstract class AbstractContents extends PivotUtil
 		return type;
 	}
 
+	protected @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ CollectionType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert unspecializedType != null;
+		CollectionType type = getCollectionType(unspecializedType, elementType, isNullFree, lower, upper);
+		asPackage.getOwnedClasses().add(type);
+		return type;
+	}
+
 	protected @NonNull InvalidType getInvalidType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
 		return (InvalidType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
@@ -502,6 +646,15 @@ public abstract class AbstractContents extends PivotUtil
 		return type;
 	}
 
+	protected @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ MapType unspecializedType, /*@NonNull*/ Type keyType, boolean keysAreNullFree, /*@NonNull*/ Type valueType, boolean valuesAreNullFree) {
+		assert unspecializedType != null;
+		assert keyType != null;
+		assert valueType != null;
+		MapType asType = getMapType(unspecializedType,  keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		asPackage.getOwnedClasses().add(asType);
+		return asType;
+	}
+
 	protected @NonNull Model getModel(@NonNull String modelURI) {
 		StandardLibraryContribution standardLibraryContribution = ClassUtil.nonNullState(StandardLibraryContribution.REGISTRY.get(modelURI));
 		Resource resource = standardLibraryContribution.getResource();
@@ -526,6 +679,13 @@ public abstract class AbstractContents extends PivotUtil
 		type.setLowerValue(ValueUtil.integerValueOf(lower));
 		type.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 		addBinding(type, elementType);
+		return type;
+	}
+
+	protected @NonNull OrderedSetType getOrderedSetType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ OrderedSetType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert unspecializedType != null;
+		OrderedSetType type = getOrderedSetType(unspecializedType, elementType, isNullFree, lower, upper);
+		asPackage.getOwnedClasses().add(type);
 		return type;
 	}
 
@@ -572,6 +732,13 @@ public abstract class AbstractContents extends PivotUtil
 		return type;
 	}
 
+	protected @NonNull SequenceType getSequenceType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ SequenceType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert unspecializedType != null;
+		SequenceType type = getSequenceType(unspecializedType, elementType, isNullFree, lower, upper);
+		asPackage.getOwnedClasses().add(type);
+		return type;
+	}
+
 	protected @NonNull SetType getSetType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
 		return (SetType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
@@ -590,6 +757,13 @@ public abstract class AbstractContents extends PivotUtil
 		type.setLowerValue(ValueUtil.integerValueOf(lower));
 		type.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 		addBinding(type, elementType);
+		return type;
+	}
+
+	protected @NonNull SetType getSetType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ SetType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert unspecializedType != null;
+		SetType type = getSetType(unspecializedType, elementType, isNullFree, lower, upper);
+		asPackage.getOwnedClasses().add(type);
 		return type;
 	}
 
@@ -623,7 +797,7 @@ public abstract class AbstractContents extends PivotUtil
 		element.getOwnedComments().add(asComment);
 	}
 
-	protected void setOpposites(@NonNull Property firstProperty, @NonNull Property secondProperty) {
+	protected void setOpposites(/*@NonNull*/ Property firstProperty, /*@NonNull*/ Property secondProperty) {
 		firstProperty.setOpposite(secondProperty);
 		secondProperty.setOpposite(firstProperty);
 	}

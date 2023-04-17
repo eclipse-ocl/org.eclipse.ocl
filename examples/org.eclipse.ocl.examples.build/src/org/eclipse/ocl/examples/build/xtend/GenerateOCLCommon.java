@@ -32,11 +32,13 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -80,6 +82,7 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.xtext.util.Strings;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 @SuppressWarnings("all")
@@ -194,31 +197,66 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 		};
 
+		protected final @NonNull Model thisModel;
+
 		private final @NonNull Map<@NonNull Element, @NonNull String> element2moniker = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> package2sortedClasses = new HashMap<>();
-		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> package2sortedCollectionTypes = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Enumeration>> package2sortedEnumerations = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Iteration>> package2sortedIterations = new HashMap<>();
-		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull MapType>> package2sortedMapTypes = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Operation>> package2sortedOperations = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> package2sortedPrimitiveTypes = new HashMap<>();
-		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Property>> package2sortedProperties = new HashMap<>();
-		private final @NonNull List<@NonNull LambdaType> sortedLambdaTypes = new ArrayList<>();
 		private final @NonNull List<@NonNull Library> sortedLibraries = new ArrayList<>();
 		private final @NonNull List<@NonNull Library> sortedLibrariesWithPrecedence = new ArrayList<>();
 		private final @NonNull List<@NonNull Operation> sortedOperationsWithPrecedence = new ArrayList<>();
 		private final @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> sortedPackages = new ArrayList<>();
-		private final @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> sortedParameterTypes = new ArrayList<>();
+		private final @NonNull List<@NonNull Property> sortedProperties = new ArrayList<>();
 		private final @NonNull List<@NonNull TemplateParameter> sortedTemplateParameters = new ArrayList<>();
-		private final @NonNull List<@NonNull TemplateSignature> sortedTemplateSignatures = new ArrayList<>();
-		private final @NonNull List<@NonNull TemplateableElement> sortedTemplateableElements = new ArrayList<>();
-		private final @NonNull List<@NonNull TupleType> sortedTupleTypes = new ArrayList<>();
 		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> internalClasses = new HashSet<>();
 		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> externalClasses = new HashSet<>();
 		private final @NonNull Set<@NonNull NamedElement> allReferences = new HashSet<>();
 
-		protected ContentAnalysis(@NonNull GenerateOCLCommon context) {
+		private final @NonNull Map<@NonNull DataType, @NonNull List<@NonNull DataType>> using2useds = new HashMap<>();
+		private final @NonNull List<@NonNull List<@NonNull DataType>> aggregateTypesPerPass = new ArrayList<>();
+
+		protected ContentAnalysis(@NonNull GenerateOCLCommon context, @NonNull Model thisModel) {
 			super(context);
+			this.thisModel = thisModel;
+		}
+
+		private void addDependency(@NonNull DataType usingElement, @NonNull Type usedType) {
+			assert (usingElement instanceof IterableType) || (usingElement instanceof LambdaType) || (usingElement instanceof TupleType);
+			if (!(usedType instanceof IterableType)
+			 && !(usedType instanceof LambdaType)
+			 && !(usedType instanceof TupleType)) {		// Ignore fixed preamable declarations
+				if (!using2useds.containsKey(usingElement)) {
+					List<@NonNull DataType> old = using2useds.put(usingElement, new ArrayList<>());
+					assert old == null;
+				}
+				return;
+			}
+			Model model1 = PivotUtil.getContainingModel(usingElement);
+			Model model2 = PivotUtil.getContainingModel(usedType);
+			assert model1 == thisModel;
+		//	assert model2 == thisModel;		-- not true for Pivot
+			PivotMetamodelManager metamodelManager = context.environmentFactory.getMetamodelManager();
+			DataType primaryUsingElement = usingElement;//metamodelManager.getPrimaryElement(usingElement);
+			DataType primaryUsedType = (DataType) usedType;//metamodelManager.getPrimaryElement(usedType);
+			@Nullable DataType primaryUsedElement = primaryUsedType;
+			List<@NonNull DataType> usedElements = using2useds.get(primaryUsingElement);
+			if (usedElements == null) {
+				usedElements = new ArrayList<>();
+				List<@NonNull DataType> old = using2useds.put(primaryUsingElement, usedElements);
+				assert old == null;
+			}
+			if ((primaryUsedElement != null) && !usedElements.contains(primaryUsedElement)) {
+			//	System.out.println("\taddDependency: " + NameUtil.debugSimpleName(primaryUsedType) + " : " + primaryUsedType + " => " + NameUtil.debugSimpleName(primaryUsedElement) + " : " + primaryUsedElement);
+				usedElements.add(primaryUsedElement);
+				assert primaryUsedElement != primaryUsingElement;
+				if (!using2useds.containsKey(primaryUsedElement)) {
+					List<@NonNull DataType> old = using2useds.put(primaryUsedElement, new ArrayList<>());
+					assert old == null;
+				}
+			}
 		}
 
 		protected void analyze(@NonNull Model thisModel) {
@@ -233,25 +271,18 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			for (@NonNull EObject eObject : new TreeIterable(thisModel, true)) {
 				((Element)eObject).accept(this);
 			}
-			Collections.sort(sortedLambdaTypes, monikerComparator);
+
 			Collections.sort(sortedLibraries, monikerComparator);
 			Collections.sort(sortedLibrariesWithPrecedence, monikerComparator);
 			Collections.sort(sortedOperationsWithPrecedence, monikerComparator);
 			Collections.sort(sortedPackages, packageComparator);
-			Collections.sort(sortedParameterTypes, monikerComparator);
-			Collections.sort(sortedTupleTypes, monikerComparator);
+			Collections.sort(sortedProperties, classPropertyComparator);
 			Collections.sort(sortedTemplateParameters, monikerComparator);
-			Collections.sort(sortedTemplateSignatures, monikerComparator);
-			Collections.sort(sortedTemplateableElements, monikerComparator);
 
 			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(thisModel)) {
 				List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = package2sortedClasses.get(asPackage);
 				if (sortedClasses != null) {
 					Collections.sort(sortedClasses, NameUtil.NAMEABLE_COMPARATOR);
-				}
-				List<@NonNull CollectionType> sortedCollectionTypes = package2sortedCollectionTypes.get(asPackage);
-				if (sortedCollectionTypes != null) {
-					Collections.sort(sortedCollectionTypes, collectionTypeComparator);
 				}
 				List<@NonNull Enumeration> sortedEnumerations = package2sortedEnumerations.get(asPackage);
 				if (sortedEnumerations != null) {
@@ -261,10 +292,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				if (sortedIterations != null) {
 					Collections.sort(sortedIterations, monikerComparator);
 				}
-				List<@NonNull MapType> sortedMapTypes = package2sortedMapTypes.get(asPackage);
-				if (sortedMapTypes != null) {
-					Collections.sort(sortedMapTypes, monikerComparator);
-				}
 				List<@NonNull Operation> sortedOperations = package2sortedOperations.get(asPackage);
 				if (sortedOperations != null) {
 					Collections.sort(sortedOperations, monikerComparator);
@@ -272,10 +299,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				List<@NonNull PrimitiveType> sortedPrimitiveTypes = package2sortedPrimitiveTypes.get(asPackage);
 				if (sortedPrimitiveTypes != null) {
 					Collections.sort(sortedPrimitiveTypes, NameUtil.NAMEABLE_COMPARATOR);
-				}
-				List<@NonNull Property> sortedProperties = package2sortedProperties.get(asPackage);
-				if (sortedProperties != null) {
-					Collections.sort(sortedProperties, classPropertyComparator);
 				}
 			}
 			if (allReferences.size() > 0) {
@@ -288,18 +311,80 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					context.addExternalReference(asNamedElement, thisModel);
 				}
 			}
+			analyzeDependencies(thisModel);
+			int pass = 0;
+			for (@NonNull List<@NonNull DataType> aggregateTypes : aggregateTypesPerPass) {
+				Collections.sort(aggregateTypes, monikerComparator);
+			//	for (@NonNull DataType aggregateType : aggregateTypes) {
+			//		System.out.println(pass + ": " + NameUtil.debugSimpleName(aggregateType) + " : " + aggregateType);
+			//	}
+				pass++;
+			}
+		}
+
+		private @NonNull String analyzeDependencies(/*@NonNull*/ Model root) {
+			Set<@NonNull DataType> keysDone = new HashSet<>();
+			Set<@NonNull NamedElement> externals = new HashSet<>(context.name2external.values());
+			for (@NonNull NamedElement external : externals) {
+				if ((external instanceof DataType) && !(external instanceof PrimitiveType)) {
+					keysDone.add((DataType)external);
+				}
+			}
+			Set<@NonNull DataType> keysToGo1 = using2useds.keySet();
+			Set<@NonNull DataType> keysToGo = new HashSet(keysToGo1);
+			keysToGo.removeAll(keysDone);
+		//	for (@NonNull NamedElement key : keysToGo) {
+		//		NamedElement primaryKey = context.environmentFactory.getMetamodelManager().getPrimaryElement(key);
+		//		assert primaryKey == key;
+			//	System.out.println("togo: " + NameUtil.debugSimpleName(key) + " : " + key);
+			//	if ("Map(includesMap.K2,includesMap.V2)".equals(key.toString())) {
+			//		getClass();			// XXX
+			//	}
+			//	List<@NonNull NamedElement> useds = using2useds.get(key);
+			//	assert useds != null;
+			//	for (@NonNull NamedElement used : useds) {
+			//		System.out.println("\t" + NameUtil.debugSimpleName(used) + " : " + used);
+			//	}
+		//	}
+			int pass = 0;
+			int more;
+			do {
+			//	System.out.println("togo = " + keysToGo.size());
+				List<@NonNull DataType> readyKeys = new ArrayList<>();
+				for (@NonNull DataType key : keysToGo) {
+					List<@NonNull DataType> useds = using2useds.get(key);
+					if (keysDone.containsAll(useds)) {
+						readyKeys.add(key);
+			//			System.out.println(pass + "\t" + NameUtil.debugSimpleName(key) + " : " + key);
+					}
+				}
+				more = readyKeys.size();
+				if (more > 0) {
+					keysToGo.removeAll(readyKeys);
+					keysDone.addAll(readyKeys);
+					aggregateTypesPerPass.add(readyKeys);
+				}
+				pass++;
+			} while (more > 0);
+			for (@NonNull DataType key : keysToGo) {
+				System.out.println("stuck: " + NameUtil.debugSimpleName(key) + " : " + key);
+				Set<@NonNull NamedElement> useds = new HashSet<>(using2useds.get(key));
+				useds.removeAll(keysDone);
+				for (@NonNull NamedElement used : useds) {
+					System.out.println("\t" + NameUtil.debugSimpleName(used) + " : " + used);
+				}
+			}
+			return "/*zzy*/";
 		}
 
 		protected void doSuperClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asClass)) {
 				allReferences.add(superClass);
+			//	addDependency(asClass, superClass);
 			}
 		}
 
 		protected void doTemplateableElement(@NonNull TemplateableElement asTemplateableElement) {
-			if (asTemplateableElement.getOwnedBindings().size() > 0) {
-				sortedTemplateableElements.add(asTemplateableElement);
-			}
 			TemplateSignature asTemplateSignature = asTemplateableElement.getOwnedSignature();
 			if (asTemplateSignature != null) {
 				sortedTemplateParameters.addAll(asTemplateSignature.getOwnedParameters());
@@ -307,6 +392,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			TemplateableElement unspecializedElement = asTemplateableElement.getUnspecializedElement();
 			if (unspecializedElement instanceof NamedElement) {
 				allReferences.add((NamedElement)unspecializedElement);
+				addDependency((DataType)asTemplateableElement, (Type)unspecializedElement);
 			}
 		}
 
@@ -317,6 +403,29 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				element2moniker.put(elem, moniker);
 			}
 			return moniker;
+		}
+
+		/**
+		 * Return true if referencingElement transitively references some template paramtrer other than those in templateParameters.
+		 */
+		protected boolean hasExternalBinding(@NonNull TemplateableElement referencingElement, @NonNull Iterable<@NonNull TemplateParameter> templateParameters) {
+			for (TemplateBinding asTemplateBinding : referencingElement.getOwnedBindings()) {
+				for (TemplateParameterSubstitution asTemplateParameterSubstitution : asTemplateBinding.getOwnedSubstitutions()) {
+					Type actual = asTemplateParameterSubstitution.getActual();
+					if (actual instanceof TemplateParameter) {
+						TemplateParameter asTemplateParameter = (TemplateParameter)actual;
+						if (!Iterables.contains(templateParameters, asTemplateParameter)) {
+							return true;
+						}
+					}
+					else if (actual instanceof TemplateableElement) {
+						if (hasExternalBinding((TemplateableElement)actual, templateParameters)) {
+							return true;
+						}
+					}
+				}
+			}
+			return false;
 		}
 
 		@Override
@@ -340,7 +449,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			sortedClasses.add(asClass);
 			if (asClass.isTemplateParameter() != null) {			// FIXME can never happen
-				sortedParameterTypes.add(asClass);
 			}
 			else if (!externalClasses.contains(asClass)){
 				CompleteClassInternal completeClass = context.metamodelManager.getCompleteClass(asClass);
@@ -355,15 +463,15 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType asCollectionType) {
-			org.eclipse.ocl.pivot.Package asPackage = asCollectionType.getOwningPackage();
-			List<@NonNull CollectionType> sortedCollectionTypes = package2sortedCollectionTypes.get(asPackage);
-			if (sortedCollectionTypes == null) {
-				sortedCollectionTypes = new ArrayList<>();
-				package2sortedCollectionTypes.put(asPackage, sortedCollectionTypes);
-			}
-			sortedCollectionTypes.add(asCollectionType);
+		//	System.out.println("analyze: " + NameUtil.debugSimpleName(asCollectionType) + " : " + asCollectionType);
 			doSuperClasses(asCollectionType);
+			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asCollectionType)) {
+				addDependency(asCollectionType, superClass);
+			}
 			doTemplateableElement(asCollectionType);
+			if (asCollectionType.getUnspecializedElement() != null) {
+				addDependency(asCollectionType, asCollectionType.getElementType());
+			}
 			return null;
 		}
 
@@ -422,8 +530,16 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitLambdaType(@NonNull LambdaType asLambdaType) {
-			sortedLambdaTypes.add(asLambdaType);
+		//	System.out.println("analyze: " + NameUtil.debugSimpleName(asLambdaType) + " : " + asLambdaType);
+			addDependency(asLambdaType, asLambdaType.getContextType());
+			addDependency(asLambdaType, asLambdaType.getResultType());
+			for (@NonNull Type asParameterType : asLambdaType.getParameterTypes()) {
+				addDependency(asLambdaType, asParameterType);
+			}
 			doSuperClasses(asLambdaType);
+			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asLambdaType)) {
+				addDependency(asLambdaType, superClass);
+			}
 			return null;
 		}
 
@@ -438,15 +554,16 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType asMapType) {
-			org.eclipse.ocl.pivot.Package asPackage = asMapType.getOwningPackage();
-			List<@NonNull MapType> sortedMapTypes = package2sortedMapTypes.get(asPackage);
-			if (sortedMapTypes == null) {
-				sortedMapTypes = new ArrayList<>();
-				package2sortedMapTypes.put(asPackage, sortedMapTypes);
-			}
-			sortedMapTypes.add(asMapType);
+		//	System.out.println("analyze: " + NameUtil.debugSimpleName(asMapType) + " : " + asMapType);
 			doTemplateableElement(asMapType);
 			doSuperClasses(asMapType);
+			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asMapType)) {
+				addDependency(asMapType, superClass);
+			}
+			if (asMapType.getUnspecializedElement() != null) {
+				addDependency(asMapType, asMapType.getKeyType());
+				addDependency(asMapType, asMapType.getValueType());
+			}
 			return null;
 		}
 
@@ -502,12 +619,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		public @Nullable Object visitProperty(@NonNull Property asProperty) {
 			org.eclipse.ocl.pivot.Class asClass = asProperty.getOwningClass();
 			if (!(asClass instanceof TupleType)) {
-				org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
-				List<@NonNull Property> sortedProperties = package2sortedProperties.get(asPackage);
-				if (sortedProperties == null) {
-					sortedProperties = new ArrayList<>();
-					package2sortedProperties.put(asPackage, sortedProperties);
-				}
+
 				sortedProperties.add(asProperty);
 				Property asOpposite = asProperty.getOpposite();
 				if (asOpposite != null) {
@@ -517,6 +629,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 					allReferences.add(asOpposite.getType());
 				}
 			}
+		//	addDependency(asProperty, asProperty.getOwningClass());
+		//	addDependency(asProperty, asProperty.getType());
 			return super.visitProperty(asProperty);
 		}
 
@@ -539,14 +653,19 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitTemplateSignature(@NonNull TemplateSignature asTemplateSignature) {
-			sortedTemplateSignatures.add(asTemplateSignature);
 			return null;
 		}
 
 		@Override
 		public @Nullable Object visitTupleType(@NonNull TupleType asTupleType) {
-			sortedTupleTypes.add(asTupleType);
+		//	System.out.println("analyze: " + NameUtil.debugSimpleName(asTupleType) + " : " + asTupleType);
 			doSuperClasses(asTupleType);
+			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asTupleType)) {
+				addDependency(asTupleType, superClass);
+			}
+			for (@NonNull Property asPart : asTupleType.getOwnedProperties()) {
+				addDependency(asTupleType, asPart.getType());
+			}
 			return null;
 		}
 
@@ -565,7 +684,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected NameQueries nameQueries;
 	protected Model thisModel;
 	private List<@NonNull Element> orphans;
-	protected final @NonNull ContentAnalysis contentAnalysis = createContentAnalysis();
+	protected ContentAnalysis contentAnalysis;
 
 	protected final @NonNull Comparator<@NonNull Comment> commentComparator = new Comparator<@NonNull Comment>()
 	{
@@ -700,8 +819,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		generatedClassNameMap.put(mapping.getFrom(), mapping.getTo());
 	}
 
-	protected @NonNull ContentAnalysis createContentAnalysis() {
-		return new ContentAnalysis(this);
+	protected @NonNull ContentAnalysis createContentAnalysis(@NonNull Model thisModel) {
+		return new ContentAnalysis(this, thisModel);
 	}
 
 	protected String declarePackageImport(org.eclipse.ocl.pivot.@NonNull Package elem) {
@@ -867,14 +986,12 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 	}
 
-	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> getSortedClassTypes(@NonNull Model root) {
-		return contentAnalysis.package2sortedClasses;
+	protected @NonNull List<@NonNull List<@NonNull DataType>> getSortedAggregateTypesPerPass(@NonNull Model root) {
+		return contentAnalysis.aggregateTypesPerPass;
 	}
 
-	protected abstract @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> getSortedCollectionTypes(@NonNull Model root);
-
-	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> getSortedCollectionTypes(@NonNull Model root, Comparator<@NonNull ? super CollectionType> comparator) {
-		return contentAnalysis.package2sortedCollectionTypes;
+	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> getSortedClassTypes(@NonNull Model root) {
+		return contentAnalysis.package2sortedClasses;
 	}
 
 	protected @NonNull List<@NonNull Comment> getSortedComments(@NonNull Element element) {
@@ -943,20 +1060,12 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return contentAnalysis.package2sortedIterations;
 	}
 
-	protected @NonNull List<@NonNull LambdaType> getSortedLambdaTypes(@NonNull Model root) {
-		return contentAnalysis.sortedLambdaTypes;
-	}
-
 	protected @NonNull List<@NonNull Library> getSortedLibraries(@NonNull Model root) {
 		return contentAnalysis.sortedLibraries;
 	}
 
 	protected @NonNull List<@NonNull Library> getSortedLibrariesWithPrecedence(@NonNull Model root) {
 		return contentAnalysis.sortedLibrariesWithPrecedence;
-	}
-
-	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull MapType>> getSortedMapTypes(@NonNull Model root) {
-		return contentAnalysis.package2sortedMapTypes;
 	}
 
 	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Operation>> getSortedOperations(@NonNull Model root) {
@@ -995,10 +1104,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return sortedElements;
 	}
 
-	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getSortedParameterTypes(@NonNull Model root) {
-		return contentAnalysis.sortedParameterTypes;
-	}
-
 	protected @NonNull List<@NonNull Precedence> getSortedPrecedences(@NonNull Library library) {
 		List<@NonNull Precedence> sortedElements = new ArrayList<>(library.getOwnedPrecedences());
 		Collections.sort(sortedElements, NameUtil.NAMEABLE_COMPARATOR);
@@ -1009,8 +1114,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return contentAnalysis.package2sortedPrimitiveTypes;
 	}
 
-	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Property>> getSortedProperties(@NonNull Model root) {
-		return contentAnalysis.package2sortedProperties;
+	protected @NonNull List<@NonNull Property> getSortedProperties(@NonNull Model root) {
+		return contentAnalysis.sortedProperties;
 	}
 
 	protected @NonNull List<@NonNull Property> getSortedProperties(org.eclipse.ocl.pivot.@NonNull Class type) {
@@ -1023,37 +1128,26 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return contentAnalysis.sortedTemplateParameters;
 	}
 
-	protected @NonNull List<@NonNull TemplateSignature> getSortedTemplateSignatures(@NonNull Model root) {
-		return contentAnalysis.sortedTemplateSignatures;
-	}
-
-	protected @NonNull List<@NonNull TemplateableElement> getSortedTemplateableElements(@NonNull Model root) {
-		return contentAnalysis.sortedTemplateableElements;
-	}
-
-	protected @NonNull List<@NonNull TemplateableElement> getSortedTemplateableElements(@NonNull Model root, @NonNull Comparator<EObject> nameComparator) {
-		List<@NonNull TemplateableElement> sortedElements = Lists.newArrayList(contentAnalysis.sortedTemplateableElements);
-		Collections.sort(sortedElements, nameComparator);
-		return sortedElements;
-	}
-
 	protected @NonNull List<@NonNull Property> getSortedTupleParts(@NonNull TupleType tupleType) {
 		List<@NonNull Property> sortedElements = Lists.newArrayList(PivotUtil.getOwnedProperties(tupleType));
 		Collections.sort(sortedElements, NameUtil.NAMEABLE_COMPARATOR);
 		return sortedElements;
 	}
 
-	protected @NonNull List<TupleType> getSortedTupleTypes(@NonNull Model root) {
-		return contentAnalysis.sortedTupleTypes;
-	}
-
 	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getSuperclassesInPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {		// Redundant filter
+		if ("BooleanType".equals(asClass.toString())) {
+			getClass();		// XXX
+		}
+		StringBuilder s = new StringBuilder();
 		List<org.eclipse.ocl.pivot.@NonNull Class> allElements = new ArrayList<>();
+		s.append("getSuperclassesInPackage " + NameUtil.debugSimpleName(asClass) + " " + asClass);
 		for (org.eclipse.ocl.pivot.@NonNull Class superclass : asClass.getSuperClasses()) {
 		//	if (getRootPackage(superclass.getOwningPackage()) == getRootPackage(type.getOwningPackage())) {
 				allElements.add(superclass);
+				s.append("\n\t" + NameUtil.debugSimpleName(superclass) + " " + superclass);
 		//	}
 		}
+	//	System.out.println(s.toString());
 		return allElements;
 	}
 
@@ -1119,8 +1213,16 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		contentAnalysis.analyze(thisModel);
 	}
 
-	public void initModel(@NonNull Model thisModel, ASSaverNew.@NonNull ASSaverWithInverse asSaver) {
+	public void initModel1(@NonNull Model thisModel) {
 		this.thisModel = thisModel;
+		this.contentAnalysis = createContentAnalysis(thisModel);
+	//	initLocalTypes();
+	//	initOrphanSymbolNames(asSaver);
+	}
+
+	public void initModel2(ASSaverNew.@NonNull ASSaverWithInverse asSaver) {
+	//	this.thisModel = thisModel;
+	//	this.contentAnalysis = createContentAnalysis(thisModel);
 		initLocalTypes();
 		initOrphanSymbolNames(asSaver);
 	}
@@ -1236,6 +1338,26 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		this.metamodelManager = environmentFactory.getMetamodelManager();
 		nameQueries = new NameQueries(metamodelManager);
 	}
+
+/*	protected @NonNull Iterable<@NonNull Property> sortedOpposites() {
+		List<@NonNull Property> withBothOpposites = new ArrayList<>();
+		for (List<@NonNull Property> properties : getSortedProperties(thisModel).values()) {
+			for (@NonNull Property property : properties) {
+				if (property.getOpposite() != null) {
+					withBothOpposites.add(property);
+				}
+			}
+		}
+		Collections.sort(withBothOpposites, contentAnalysis.monikerComparator);
+		Set<@NonNull Property> withOneOppositeSet = new HashSet<>();
+		List<@NonNull Property> withOneOpposites = new ArrayList<>();
+		for (@NonNull Property property : withBothOpposites) {
+			if (!withOneOpposites.contains(property.getOpposite()) && withOneOppositeSet.add(property)) {
+				withOneOpposites.add(property);
+			}
+		}
+		return withOneOpposites;
+	} */
 
 	protected @NonNull Iterable<@NonNull Property> sortedOpposites(@NonNull List<Property> properties) {
 		ArrayList<@NonNull Property> withOpposites = new ArrayList<>();

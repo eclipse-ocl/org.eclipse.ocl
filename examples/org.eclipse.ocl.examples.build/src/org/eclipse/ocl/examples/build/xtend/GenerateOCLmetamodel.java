@@ -139,11 +139,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	}
 
 	@Override
-	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
-		return super.getSortedCollectionTypes(root, collectionTypeComparator);
-	}
-
-	@Override
 	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> getSortedPrimitiveTypes(@NonNull Model root) {
 		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull PrimitiveType>> pkge2primitiveTypes = new HashMap<>();
 		return pkge2primitiveTypes;
@@ -199,6 +194,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			log.info("Generating '" + fileName + "'");
 			assert asRoot instanceof Model;
 			Model asModel = (Model)asRoot;
+			initModel1(asModel);
 			CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
 			addExternalReference(standardLibrary.getBooleanType(), asModel);
 			addExternalReference(standardLibrary.getIntegerType(), asModel);
@@ -208,7 +204,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			addExternalReference(standardLibrary.getRealType(), asModel);
 			addExternalReference(standardLibrary.getStringType(), asModel);
 			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asModel);
-			initModel(asModel, saver);
+			initModel2(saver);
 			String metamodel = generateMetamodel(Collections.emptyList());
 			MergeWriter fw = new MergeWriter(fileName);
 			if (metamodel != null) {

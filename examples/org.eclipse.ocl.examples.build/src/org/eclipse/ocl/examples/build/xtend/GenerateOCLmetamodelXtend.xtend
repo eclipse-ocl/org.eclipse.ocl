@@ -13,7 +13,6 @@ package org.eclipse.ocl.examples.build.xtend
 import org.eclipse.ocl.pivot.Model
 import java.util.Collection
 import java.util.GregorianCalendar
-import org.eclipse.ocl.pivot.EnumerationLiteral
 
 class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 {
@@ -295,39 +294,13 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»
 						«ENDFOR»
-						«thisModel.installPackages()»
-						«thisModel.installPrecedences()»
-						«thisModel.installTemplateParameters()»
-						«thisModel.installClassTypes()»
-						«thisModel.installPrimitiveTypes()»
-						«thisModel.installEnumerations()»
-						«thisModel.installGenericCollectionTypes()»
-						«thisModel.installGenericMapTypes()»
-						«thisModel.installTupleTypes()»
-						«thisModel.installSpecializedCollectionTypes()»
-						«thisModel.installSpecializedMapTypes()»
-						«thisModel.installLambdaTypes()»
-						«thisModel.installOperations()»
-						«thisModel.installIterations()»
-						«thisModel.installProperties()»
+						«root.installAll()»
 					}
 					
 					public @NonNull Model getModel() {
 						return «root.getSymbolName()»;
 					}
-					«root.defineExternals()»
-					«root.definePackages()»
-					«root.definePrecedences()»
-					«root.defineTemplateParameters()»
-					«root.defineClassTypes(excludedEClassifierNames)»
-					«root.definePrimitiveTypes()»
-					«root.defineEnumerations()»
-					«root.defineTupleTypes()»
-					«root.defineCollectionTypes()»
-					«root.defineLambdaTypes()»
-					«root.defineOperations()»
-					«root.defineIterations()»
-					«root.defineProperties()»
+					«root.defineAll(excludedEClassifierNames)»
 				}
 			}
 		'''

@@ -38,7 +38,6 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -97,11 +96,6 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 	}
 
 	@Override
-	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
-		return super.getSortedCollectionTypes(root, contentAnalysis.monikerComparator);
-	}
-
-	@Override
 	protected @NonNull Model getThisModel() {
 		return ClassUtil.nonNullState(thisModel);
 	}
@@ -149,7 +143,8 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			saver.localizeOrphans();
 			String fileName = folder + "/" + javaClassName + ".java";
 		//	log.info("Generating '" + fileName + "'");
-			initModel(pivotModel, saver);
+			initModel1(pivotModel);
+			initModel2(saver);
 			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel(excludedEClassifierNames);
 			MergeWriter fw = new MergeWriter(fileName);
 			fw.append(metamodel);

@@ -314,7 +314,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					super(ClassUtil.nonNullState(URI.createURI(asURI)), OCLASResourceFactory.getInstance());
 					assert PivotUtilInternal.isASURI(asURI);
 				}
-			
+							
 				private static class Contents extends AbstractContents
 				{
 					private final @NonNull Model «thisModel.getPrefixedSymbolName("model")»;
@@ -332,40 +332,13 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»
 						«ENDFOR»
-						«thisModel.installPackages()»
-						«thisModel.installPrecedences()»
-						«thisModel.installTemplateParameters()»
-						«thisModel.installClassTypes()»
-						«thisModel.installPrimitiveTypes()»
-						«thisModel.installEnumerations()»
-						«thisModel.installGenericCollectionTypes()»
-						«thisModel.installGenericMapTypes()»
-						«thisModel.installTupleTypes()»
-						«thisModel.installSpecializedCollectionTypes()»
-						«thisModel.installSpecializedMapTypes()»
-						«thisModel.installLambdaTypes()»
-						«thisModel.installOperations()»
-						«thisModel.installIterations()»
-						«thisModel.installProperties()»
+						«thisModel.installAll()»
 					}
 			
 					public @NonNull Model getModel() {
 						return «thisModel.getSymbolName()»;
 					}
-					«thisModel.defineExternals()»
-					«thisModel.definePackages()»
-					«thisModel.definePrecedences()»
-					«thisModel.defineTemplateParameters()»
-					«thisModel.defineClassTypes(excludedEClassifierNames)»
-					«thisModel.definePrimitiveTypes()»
-					«thisModel.defineEnumerations()»
-					«thisModel.defineTupleTypes()»
-					«thisModel.defineCollectionTypes()»
-					«thisModel.defineMapTypes()»
-					«thisModel.defineLambdaTypes()»
-					«thisModel.defineOperations()»
-					«thisModel.defineIterations()»
-					«thisModel.defineProperties()»
+					«thisModel.defineAll(excludedEClassifierNames)»
 				}
 			}
 		'''

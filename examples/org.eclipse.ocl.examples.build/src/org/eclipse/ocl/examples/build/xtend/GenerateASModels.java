@@ -40,7 +40,6 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.utils.StandaloneSetup;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Library;
@@ -137,11 +136,6 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 			}
 		}
 		return null;
-	}
-
-	@Override
-	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> getSortedCollectionTypes(@NonNull Model root) {
-		return super.getSortedCollectionTypes(root, contentAnalysis.monikerComparator);
 	}
 
 	@Override

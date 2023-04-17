@@ -36,9 +36,97 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants
 import org.eclipse.ocl.pivot.ids.TypeId
 import org.eclipse.ocl.pivot.utilities.NameUtil
 import org.eclipse.ocl.pivot.Library
+import org.eclipse.ocl.pivot.TupleType
+import org.eclipse.ocl.pivot.DataType
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
+	protected def String declareAggregateType(/*@NonNull*/ DataType element) {
+		switch element {
+			CollectionType: return declareCollectionType(element)
+			LambdaType: return declareLambdaType(element)
+			MapType: return declareMapType(element)
+			TupleType: return declareTupleType(element)
+			default: return "/* xyzzy " + element.eClass().name + "*/"
+		}		
+	}
+
+	protected def String declareCollectionType(/*@NonNull*/ CollectionType type) {
+		'''
+		private «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»;
+		'''
+	}
+
+	protected def String declareLambdaType(/*@NonNull*/ LambdaType type) {
+		'''
+		private LambdaType «type.getPrefixedSymbolName("_" + type.partialName())»;
+		'''
+	}
+
+	protected def String declareMapType(/*@NonNull*/ MapType type) {
+		'''
+		private «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())»;
+		'''
+	}
+
+	protected def String declareTupleType(/*@NonNull*/ TupleType type) {
+		'''
+		private TupleType «type.getPrefixedSymbolName("_" + type.partialName())»;
+		'''
+	}
+
+	protected def String defineAggregateTypes(/*@NonNull*/ Model root) {
+		'''
+		«var sortedAggregateTypesPerPass = root.getSortedAggregateTypesPerPass()»«FOR aggregateTypes : sortedAggregateTypesPerPass»«var pass = sortedAggregateTypesPerPass.indexOf(aggregateTypes)»
+
+		«FOR aggregateType : aggregateTypes»
+			«declareAggregateType(aggregateType)»
+		«ENDFOR»
+
+		private void installAggregateTypes«pass»() {
+			Class type;
+			
+			«FOR aggregateType : aggregateTypes»
+			«defineAggregateType(aggregateType)»
+			«FOR comment : getSortedComments(aggregateType)»
+			installComment(type, "«comment.javaString()»");
+			«ENDFOR»
+			«ENDFOR»
+			
+			«FOR aggregateType : aggregateTypes»
+			«aggregateType.emitSuperClasses(aggregateType.getSymbolName())»
+			«ENDFOR»
+		}
+		«ENDFOR»
+		'''
+	}
+
+	protected def String defineAggregateType(/*@NonNull*/ DataType element) {
+		switch element {
+			CollectionType: return defineCollectionType(element)
+			LambdaType: return defineLambdaType(element)
+			MapType: return defineMapType(element)
+			TupleType: return defineTupleType(element)
+			default: return "/* xyzzy " + element.eClass().name + "*/"
+		}		
+	}
+
+	protected def String defineAll(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
+		'''
+		«root.defineExternals()»
+		«root.definePackages()»
+		«root.definePrecedences()»
+		«root.defineTemplateParameters()»
+		«root.defineClassTypes(excludedEClassifierNames)»
+		«root.definePrimitiveTypes()»
+		«root.defineEnumerations()»
+		«root.defineAggregateTypes()»
+		«root.defineOperations()»
+		«root.defineIterations()»
+		«root.defineProperties()»
+		'''
+	}
+
 	protected def String defineClassTypes(/*@NonNull*/ Model root, /*@NonNull*/ Collection</*@NonNull*/ String> excludedEClassifierNames) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
@@ -62,7 +150,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»«var templateSignature = type.getOwnedSignature()»
-			ownedClasses.add(type = «type.getSymbolName()» = «emitCreateClass(type, excludedEClassifierNames.contains(type.name))»);
+			«IF excludedEClassifierNames.contains(type.name)»
+			ownedClasses.add(type = «type.getSymbolName()» = create«type.eClass().name»(«type.getOwningPackage().getSymbolName()», "«type.name»"));
+			«ELSE»
+			ownedClasses.add(type = «type.getSymbolName()» = create«type.eClass().name»(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»));
+			«ENDIF»
 			«IF type.isAbstract»
 			type.setIsAbstract(true);
 			«ENDIF»
@@ -70,7 +162,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				createTemplateSignature(type, «FOR templateParameter : templateSignature.getOwnedParameters() SEPARATOR(", ")»«templateParameter.getSymbolName()»«ENDFOR»);
 			«ENDIF»
 			«ENDIF»
-			«FOR comment : type.ownedComments»
+			«FOR comment : getSortedComments(type)»
 				installComment(type, "«comment.javaString()»");
 			«ENDFOR»
 			«ENDFOR»
@@ -87,68 +179,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String defineCollectionTypes(/*@NonNull*/ Model root) {
-		// FIXME Probably need to interleave all specialized types in reverse dependency order
-		var pkge2collectionTypes = root.getSortedCollectionTypes();
-		if (pkge2collectionTypes.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2collectionTypes.keySet());
+	protected def String defineCollectionType(/*@NonNull*/ CollectionType type) {
 		'''
-		«FOR pkge : sortedPackages»
-
-			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
-			«IF type.getOwnedSignature() !== null»
-			private «type.eClass.name» «typeName»;
-			«ENDIF»
-			«ENDFOR»
-		«ENDFOR»
-		
-		private void installGenericCollectionTypes() {
-			List<Class> ownedClasses;
-			CollectionType type;
-			«FOR pkge : sortedPackages»
-
-				ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
-				«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»
-					«IF type.getOwnedSignature() !== null»
-					ownedClasses.add(type = «type.getSymbolName()» = create«type.eClass.name»(«getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»));
-					«FOR comment : type.ownedComments»
-						installComment(type, "«comment.javaString()»");
-					«ENDFOR»
-					«ENDIF»
-				«ENDFOR»
-			«ENDFOR»
-		}
-		«FOR pkge : sortedPackages»
-
-			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
-			«IF type.getOwnedSignature() === null»
-			private «type.eClass.name» «typeName»;
-			«ENDIF»
-			«ENDFOR»
-		«ENDFOR»
-		
-		private void installSpecializedCollectionTypes() {
-			List<Class> ownedClasses;
-			CollectionType type;
-			«FOR pkge : sortedPackages»
-
-				ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
-				«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»
-					«IF type.getOwnedSignature() === null»
-					ownedClasses.add(type = «type.getSymbolName()» = get«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»));
-					«FOR comment : type.ownedComments»
-						installComment(type, "«comment.javaString()»");
-					«ENDFOR»
-					«ENDIF»
-				«ENDFOR»
-			«ENDFOR»
-			«FOR pkge : sortedPackages»
-
-				«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»
-					«type.emitSuperClasses(type.getSymbolName())»
-				«ENDFOR»
-			«ENDFOR»
-		}
+		«IF type.getOwnedSignature() !== null»
+		type = «type.getSymbolName()» = create«type.eClass.name»(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		«ELSE»
+		type = «type.getSymbolName()» = get«type.eClass.name»(«type.getOwningPackage().getSymbolName()», «type.getUnspecializedElement().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		«ENDIF»
 		'''
 	}
 
@@ -171,19 +208,19 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			List<EnumerationLiteral> enumerationLiterals;
 			EnumerationLiteral enumerationLiteral;
 			«FOR pkge : sortedPackages»
-
 				ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 				«FOR enumeration : ClassUtil.nullFree(pkge2enumerations.get(pkge))»
+
 					ownedClasses.add(type = «enumeration.getSymbolName()» = «emitCreateEnumeration(enumeration)»);
 					enumerationLiterals = type.getOwnedLiterals();
 					«FOR enumerationLiteral : enumeration.ownedLiterals»
 					enumerationLiterals.add(enumerationLiteral = «emitCreateEnumerationLiteral(enumerationLiteral)»);
-					«FOR comment : enumerationLiteral.ownedComments»
+					«FOR comment : getSortedComments(enumerationLiteral)»
 						installComment(enumerationLiteral, "«comment.javaString()»");
 					«ENDFOR»
 					«ENDFOR»
-					type.getSuperClasses().add(_OclEnumeration);
-					«FOR comment : enumeration.ownedComments»
+					«enumeration.emitSuperClasses(enumeration.getSymbolName())»
+					«FOR comment : getSortedComments(enumeration)»
 						installComment(type, "«comment.javaString()»");
 					«ENDFOR»
 				«ENDFOR»
@@ -273,7 +310,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 							«ENDIF»
 						«ENDFOR»
 					«ENDIF»
-					«FOR comment : iteration.ownedComments»
+					«FOR comment : getSortedComments(iteration)»
 						installComment(iteration, "«comment.javaString()»");
 					«ENDFOR»
 					«ENDFOR»
@@ -282,92 +319,19 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String defineLambdaTypes(/*@NonNull*/ Model root) {
-		var allLambdaTypes = root.getSortedLambdaTypes();
-		if (allLambdaTypes.isEmpty()) return "";
-		var orphanPackage = root.getOrphanPackage();
-		if (orphanPackage === null) return "";
+	protected def String defineLambdaType(/*@NonNull*/ LambdaType type) {
 		'''
-
-			«FOR type : allLambdaTypes»
-				private LambdaType «type.getPrefixedSymbolName("_" + type.partialName())»;
-			«ENDFOR»
-			
-			private void installLambdaTypes() {
-				final List<Class> ownedClasses = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
-				LambdaType type;
-				«FOR type : allLambdaTypes»
-					ownedClasses.add(type = «type.getPrefixedSymbolName("_" + type.partialName())» = createLambdaType("«type.name»", «type.contextType.getSymbolName()», «type.resultType.getSymbolName()»«FOR parameterType : type.parameterType», type.getParameterType().add(«parameterType.getSymbolName()»«ENDFOR»));
-					«type.emitSuperClasses("type")»
-					«FOR comment : type.ownedComments»
-						installComment(type, "«comment.javaString()»");
-					«ENDFOR»
-				«ENDFOR»
-			}
+		type = «type.getPrefixedSymbolName("_" + type.partialName())» = createLambdaType(«type.getOwningPackage().getSymbolName()», "«type.name»", «type.contextType.getSymbolName()», «type.resultType.getSymbolName()»«FOR parameterType : type.parameterType», type.getParameterType().add(«parameterType.getSymbolName()»«ENDFOR»);
 		'''
 	}
 
-	protected def String defineMapTypes(/*@NonNull*/ Model root) {
-		var pkge2mapTypes = root.getSortedMapTypes();
-		if (pkge2mapTypes.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2mapTypes.keySet());
+	protected def String defineMapType(/*@NonNull*/ MapType type) {
 		'''
-
-		«FOR pkge : sortedPackages»
-			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
-				«IF type.getOwnedSignature() !== null»
-					private «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())»;
-				«ENDIF»
-			«ENDFOR»
-		«ENDFOR»
-
-		private void installGenericMapTypes() {
-			List<Class> ownedClasses;
-			MapType type;
-			«FOR pkge : sortedPackages»
-
-				ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
-				«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
-					«IF type.getOwnedSignature() !== null»
-					ownedClasses.add(type = «type.getSymbolName()» = create«type.eClass.name»(«getEcoreLiteral(type)», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»));
-					«FOR comment : type.ownedComments»
-						installComment(type, "«comment.javaString()»");
-					«ENDFOR»
-					«ENDIF»
-				«ENDFOR»
-			«ENDFOR»
-		}
-
-		«FOR pkge : sortedPackages»
-			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
-				«IF type.getOwnedSignature() === null»
-					private «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())»;
-				«ENDIF»
-			«ENDFOR»
-		«ENDFOR»
-
-		private void installSpecializedMapTypes() {
-			List<Class> ownedClasses;
-			MapType type;
-			«FOR pkge : sortedPackages»
-
-				ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
-				«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
-					«IF type.getOwnedSignature() === null»
-					ownedClasses.add(type = «type.getSymbolName()» = get«type.eClass.name»(«type.getUnspecializedElement().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»));
-					«FOR comment : type.ownedComments»
-						installComment(type, "«comment.javaString()»");
-					«ENDFOR»
-					«ENDIF»
-				«ENDFOR»
-			«ENDFOR»
-			«FOR pkge : sortedPackages»
-
-				«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
-					«type.emitSuperClasses(type.getSymbolName())»
-				«ENDFOR»
-			«ENDFOR»
-		}
+		«IF type.getOwnedSignature() !== null»
+		type = «type.getSymbolName()» = create«type.eClass.name»(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
+		«ELSE»
+		type = «type.getSymbolName()» = get«type.eClass.name»(«type.getOwningPackage().getSymbolName()», «type.getUnspecializedElement().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
+		«ENDIF»
 		'''
 	}
 
@@ -425,7 +389,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					«IF (newType instanceof PrimitiveType) && ((newType as PrimitiveType).coercions.contains(operation))»
 						«newType.getSymbolName()».getCoercions().add(operation);
 					«ENDIF»
-					«FOR comment : operation.ownedComments»
+					«FOR comment : getSortedComments(operation)»
 						installComment(operation, "«comment.javaString()»");
 					«ENDFOR»
 					«ENDFOR»
@@ -512,7 +476,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
 						ownedClasses.add(type = «type.getSymbolNameWithoutNormalization()» = createPrimitiveType(«getEcoreLiteral(type)»));
-						«FOR comment : type.ownedComments»
+						«FOR comment : getSortedComments(type)»
 							installComment(type, "«comment.javaString()»");
 						«ENDFOR»
 					«ENDFOR»
@@ -530,22 +494,25 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String defineProperties(/*@NonNull*/ Model root) {
-		var pkge2properties = root.getSortedProperties();
-		if (pkge2properties.isEmpty()) return "";
-		var sortedPackages = root.getSortedPackages(pkge2properties.keySet());
+		var properties = root.getSortedProperties();
+		if (properties.isEmpty()) return "";
 		var org.eclipse.ocl.pivot.Class oldType  = null;
 		'''
 
 			private void installProperties() {
+				«FOR property : properties»
+				«IF property.getOpposite() !== null»
+				Property «property.getPrefixedSymbolName("pr_" + property.partialName())»;
+				«ENDIF»
+				«ENDFOR»
 				List<Property> ownedProperties;
 				Property property;
-				«FOR pkge : sortedPackages»«var properties = ClassUtil.nullFree(pkge2properties.get(pkge))»
 				«FOR property : properties»«var newType = property.getOwningClass()»
 				«IF newType != oldType»
 
 					ownedProperties = «(oldType = newType).getSymbolName()».getOwnedProperties();
 				«ENDIF»
-				ownedProperties.add(property = createProperty(«property.getNameLiteral()», «property.type.getSymbolName()»));
+				ownedProperties.add(property = «IF property.getOpposite() !== null»«property.getSymbolName()» = «ENDIF»createProperty(«property.getNameLiteral()», «property.type.getSymbolName()»));
 				«IF property.isComposite»
 					property.setIsComposite(true);
 				«ENDIF»
@@ -589,17 +556,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					property.setImplementationClass("«property.implementationClass»");
 					property.setImplementation(«property.implementationClass».INSTANCE);
 				«ENDIF»
-				«FOR comment : property.ownedComments»
+				«FOR comment : getSortedComments(property)»
 					installComment(property, "«comment.javaString()»");
 				«ENDFOR»
-				«IF property.getOpposite() !== null»
-				@NonNull Property «property.getPrefixedSymbolName("pr_" + property.partialName())» = property;
-				«ENDIF»
 				«ENDFOR»
 
 				«var sortedOppositeProperties = sortedOpposites(properties)»«FOR property : sortedOppositeProperties»
 				setOpposites(«property.getSymbolName()», «property.opposite.getSymbolName()»);
-				«ENDFOR»
 				«ENDFOR»
 			}
 		'''
@@ -623,47 +586,18 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
-	protected def String defineTupleTypes(/*@NonNull*/ Model root) {
-		var allTupleTypes = root.getSortedTupleTypes();
-		if (allTupleTypes.isEmpty()) return "";
-		var orphanPackage = root.getOrphanPackage();
-		if (orphanPackage === null) return "";
+	protected def String defineTupleType(/*@NonNull*/ TupleType type) {
 		'''
-
-			«FOR type : allTupleTypes»
-				private TupleType «type.getPrefixedSymbolName("_" + type.partialName())»;
-			«ENDFOR»
-
-			private void installTupleTypes() {
-				final List<Class> orphanTypes = «ClassUtil.nonNullState(orphanPackage).getSymbolName()».getOwnedClasses();
-				TupleType type;
-				«FOR type : allTupleTypes»
-					type = «type.getSymbolName()» = createTupleType("«type.name»",
-					«FOR property : type.getSortedTupleParts() BEFORE ("\t") SEPARATOR (",\n\t")»
-					createProperty("«property.name»", «property.type.getSymbolName()»)«ENDFOR»);
-					orphanTypes.add(type);
-					«FOR property : type.getSortedProperties()»
-						«IF property.implementationClass !== null»
-							«property.getSymbolName()».setImplementationClass("«property.implementationClass»");
-							«property.getSymbolName()».setImplementation(«property.implementationClass».INSTANCE);
-						«ENDIF»
-					«ENDFOR»
-					«type.emitSuperClasses("type")»
-					«FOR comment : type.ownedComments»
-						installComment(type, "«comment.javaString()»");
-					«ENDFOR»
-				«ENDFOR»
-			}
+		type = «type.getSymbolName()» = createTupleType(«type.getOwningPackage().getSymbolName()», "«type.name»",
+		«FOR property : type.getSortedTupleParts() BEFORE ("\t") SEPARATOR (",\n\t")»
+		createProperty("«property.name»", «property.type.getSymbolName()»)«ENDFOR»);
+		«FOR property : type.getSortedProperties()»
+			«IF property.implementationClass !== null»
+				«property.getSymbolName()».setImplementationClass("«property.implementationClass»");
+				«property.getSymbolName()».setImplementation(«property.implementationClass».INSTANCE);
+			«ENDIF»
+		«ENDFOR»
 		'''
-	}
-
-	protected def String emitCreateClass(org.eclipse.ocl.pivot.Class type, boolean noEClassifier) {
-		if (noEClassifier) {
-			return "create" + type.eClass().name + "(\"" + type.name + "\")";
-		}
-		else {
-			return "create" + type.eClass().name + "(" + getEcoreLiteral(type) + ")";
-		}
 	}
 
 /* 	protected def String emitCreateEnumeration(org.eclipse.ocl.pivot.Enumeration type) {
@@ -726,6 +660,23 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''
 	}
 
+	protected def String installAll(/*@NonNull*/ Model root) {
+		'''
+		«thisModel.installPackages()»
+		«thisModel.installPrecedences()»
+		«thisModel.installTemplateParameters()»
+		«thisModel.installClassTypes()»
+		«thisModel.installPrimitiveTypes()»
+		«thisModel.installEnumerations()»
+		«var sortedAggregateTypesPerPass = root.getSortedAggregateTypesPerPass()»«FOR aggregateTypes : sortedAggregateTypesPerPass»«var pass = sortedAggregateTypesPerPass.indexOf(aggregateTypes)»
+		installAggregateTypes«pass»();
+		«ENDFOR»
+		«thisModel.installOperations()»
+		«thisModel.installIterations()»
+		«thisModel.installProperties()»
+		'''
+	}
+
 	protected def String installClassTypes(/*@NonNull*/ Model root) {
 		var pkge2classTypes = root.getSortedClassTypes();
 		if (pkge2classTypes.isEmpty()) return "";
@@ -738,28 +689,10 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''installEnumerations();'''
 	}
 
-	protected def String installGenericCollectionTypes(/*@NonNull*/ Model root) {
-		var pkge2collectionTypes = root.getSortedCollectionTypes();
-		if (pkge2collectionTypes.isEmpty()) return "";
-		'''installGenericCollectionTypes();'''
-	}
-
-	protected def String installGenericMapTypes(/*@NonNull*/ Model root) {
-		var pkge2mapTypes = root.getSortedMapTypes();
-		if (pkge2mapTypes.isEmpty()) return "";
-		'''installGenericMapTypes();'''
-	}
-
 	protected def String installIterations(/*@NonNull*/ Model root) {
 		var pkge2iterations = root.getSortedIterations();
 		if (pkge2iterations.isEmpty()) return "";
 		'''installIterations();'''
-	}
-
-	protected def String installLambdaTypes(/*@NonNull*/ Model root) {
-		var allLambdaTypes = root.getSortedLambdaTypes();
-		if (allLambdaTypes.isEmpty()) return "";
-		'''installLambdaTypes();'''
 	}
 
 	protected def String installOperations(/*@NonNull*/ Model root) {
@@ -793,28 +726,10 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''installProperties();'''
 	}
 
-	protected def String installSpecializedCollectionTypes(/*@NonNull*/ Model root) {
-		var pkge2collectionTypes = root.getSortedCollectionTypes();
-		if (pkge2collectionTypes.isEmpty()) return "";
-		'''installSpecializedCollectionTypes();'''
-	}
-
-	protected def String installSpecializedMapTypes(/*@NonNull*/ Model root) {
-		var pkge2mapTypes = root.getSortedMapTypes();
-		if (pkge2mapTypes.isEmpty()) return "";
-		'''installSpecializedMapTypes();'''
-	}
-
 	protected def String installTemplateParameters(/*@NonNull*/ Model root) {
 		var allTemplateParameters = root.getSortedTemplateParameters();
 		if (allTemplateParameters.size() <= 0) return "";
 		'''installTemplateParameters();'''
-	}
-
-	protected def String installTupleTypes(/*@NonNull*/ Model root) {
-		var allTupleTypes = root.getSortedTupleTypes();
-		if (allTupleTypes.size() <= 0) return "";
-		'''installTupleTypes();'''
 	}
 
 	/**

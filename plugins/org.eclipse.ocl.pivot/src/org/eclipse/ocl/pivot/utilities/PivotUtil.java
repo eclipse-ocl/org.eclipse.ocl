@@ -456,7 +456,7 @@ public class PivotUtil
 		return pivotType;
 	}
 
-	public static @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation) {
+	public static @NonNull Iteration createIteration(@NonNull String name, /*@NonNull*/ Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation) {
 		Iteration pivotIteration = PivotFactory.eINSTANCE.createIteration();
 		pivotIteration.setName(name);
 		pivotIteration.setType(type);
@@ -545,7 +545,7 @@ public class PivotUtil
 		return asNavigationCallExp;
 	}
 
-	public static @NonNull Operation createOperation(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
+	public static @NonNull Operation createOperation(@NonNull String name, /*@NonNull*/ Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
 		Operation pivotOperation = PivotFactory.eINSTANCE.createOperation();
 		pivotOperation.setName(name);
 		pivotOperation.setType(type);
