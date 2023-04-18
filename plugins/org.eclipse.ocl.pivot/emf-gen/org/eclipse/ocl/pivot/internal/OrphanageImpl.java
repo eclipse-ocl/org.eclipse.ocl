@@ -34,6 +34,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
@@ -476,8 +477,18 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
+	public @Nullable LambdaType basicGetLambdaType(@NonNull LambdaTypeId lambdaTypeId) {
+		return lambdaTypeManager != null ? lambdaTypeManager.basicGetLambdaType(lambdaTypeId) : null;
+	}
+
+	@Override
 	public @Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId) {
-		return mapTypeManager != null ? getMapTypeManager().basicGetMapType(mapTypeId) : null;
+		return mapTypeManager != null ? mapTypeManager.basicGetMapType(mapTypeId) : null;
+	}
+
+	@Override
+	public @Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId) {
+		return tupleTypeManager != null ? tupleTypeManager.basicGetTupleType(tupleTypeId) : null;
 	}
 
 	@Override

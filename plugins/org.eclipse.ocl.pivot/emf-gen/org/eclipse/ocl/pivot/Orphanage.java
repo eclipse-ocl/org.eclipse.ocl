@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
@@ -37,7 +38,9 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass);
 	void addPackageListener(@NonNull PartialPackages partialPackages);
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId);
+	@Nullable LambdaType basicGetLambdaType(@NonNull LambdaTypeId lambdaTypeId);
 	@Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId);
+	@Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId);
 	void dispose();
 
 	/**
@@ -53,9 +56,7 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 	 */
 	@NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters);
 
-	@NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId);
-
 	@NonNull StandardLibrary getStandardLibrary();
-
+	@NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId);
 	void removePackageListener(@NonNull PartialPackages partialPackages);
 } // Orphanage
