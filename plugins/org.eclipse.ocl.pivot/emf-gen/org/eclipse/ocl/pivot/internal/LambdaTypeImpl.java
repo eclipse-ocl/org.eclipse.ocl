@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
@@ -30,12 +29,14 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -622,5 +623,10 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	@Override
 	public @NonNull List<? extends Type> getParameterTypes() {
 		return getParameterType();
+	}
+
+	@Override
+	public @NonNull LambdaTypeId getTypeId() {
+		return (LambdaTypeId) super.getTypeId();
 	}
 } //LambdaTypeImpl

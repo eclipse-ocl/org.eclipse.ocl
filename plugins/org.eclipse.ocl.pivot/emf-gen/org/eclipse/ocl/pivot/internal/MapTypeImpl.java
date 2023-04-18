@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
@@ -28,6 +27,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
@@ -706,5 +707,10 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	public @NonNull MapType getContainerType() {
 		TemplateableElement unspecializedElement2 = unspecializedElement;
 		return unspecializedElement2 != null ? (MapType)unspecializedElement2 : this;
+	}
+
+	@Override
+	public @NonNull MapTypeId getTypeId() {
+		return (MapTypeId) super.getTypeId();
 	}
 } //MapTypeImpl

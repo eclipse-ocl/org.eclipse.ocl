@@ -20,8 +20,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 
 /**
  * LambdaTypeManager manages the LambdaTypes created within an Orphanage.
@@ -35,9 +35,14 @@ public class LambdaTypeManager extends AbstractTypeManager
 	// FIXME Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
-	public LambdaTypeManager(@NonNull Orphanage orphanage, @NonNull StandardLibrary standardLibrary) {
-		super(orphanage, standardLibrary);
+	public LambdaTypeManager(@NonNull Orphanage orphanage) {
+		super(orphanage);
 		this.lambdaTypes = new HashMap<>();
+	}
+
+	public @Nullable LambdaType basicGetLambdaType(@NonNull LambdaTypeId lambdaTypeId) {
+		// TODO Auto-generated method stub
+		return null;				// XXX new typeId lookup
 	}
 
 	@Override

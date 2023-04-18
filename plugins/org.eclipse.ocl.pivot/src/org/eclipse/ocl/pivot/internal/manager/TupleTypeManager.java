@@ -20,7 +20,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -43,12 +42,12 @@ public class TupleTypeManager extends AbstractTypeManager
 	 */
 	private @NonNull Map<@NonNull TupleTypeId, @NonNull Object> tupleId2tupleOrWeakTuple;
 
-	public TupleTypeManager(@NonNull Orphanage orphanage, @NonNull StandardLibrary standardLibrary) {
-		super(orphanage, standardLibrary);
+	public TupleTypeManager(@NonNull Orphanage orphanage) {
+		super(orphanage);
 		this.tupleId2tupleOrWeakTuple = new HashMap<>();
 	}
 
-	private @Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId) {
+	public @Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId) {
 		return (TupleType)tupleId2tupleOrWeakTuple.get(tupleTypeId);
 	}
 

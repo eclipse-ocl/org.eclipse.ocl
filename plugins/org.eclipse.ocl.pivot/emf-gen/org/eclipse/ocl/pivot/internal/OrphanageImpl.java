@@ -512,8 +512,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	private @NonNull CollectionTypeManager getCollectionTypeManager() {
 		CollectionTypeManager collectionTypeManager2 = this.collectionTypeManager;
 		if (collectionTypeManager2 == null) {
-			assert standardLibrary != null;
-			this.collectionTypeManager = collectionTypeManager2 = new CollectionTypeManager(this, standardLibrary);
+			this.collectionTypeManager = collectionTypeManager2 = new CollectionTypeManager(this);
 		}
 		return collectionTypeManager2;
 	}
@@ -546,8 +545,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	private @NonNull LambdaTypeManager getLambdaTypeManager() {
 		LambdaTypeManager lambdaTypeManager2 = this.lambdaTypeManager;
 		if (lambdaTypeManager2 == null) {
-			assert standardLibrary != null;
-			this.lambdaTypeManager = lambdaTypeManager2 = new LambdaTypeManager(this, standardLibrary);
+			this.lambdaTypeManager = lambdaTypeManager2 = new LambdaTypeManager(this);
 		}
 		return lambdaTypeManager2;
 	}
@@ -560,8 +558,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	private @NonNull MapTypeManager getMapTypeManager() {
 		MapTypeManager mapTypeManager2 = this.mapTypeManager;
 		if (mapTypeManager2 == null) {
-			assert standardLibrary != null;
-			this.mapTypeManager = mapTypeManager2 = new MapTypeManager(this, standardLibrary);
+			this.mapTypeManager = mapTypeManager2 = new MapTypeManager(this);
 		}
 		return mapTypeManager2;
 	}
@@ -579,8 +576,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	private @NonNull TupleTypeManager getTupleTypeManager() {
 		TupleTypeManager tupleTypeManager2 = this.tupleTypeManager;
 		if (tupleTypeManager2 == null) {
-			assert standardLibrary != null;
-			this.tupleTypeManager = tupleTypeManager2 = new TupleTypeManager(this, standardLibrary);
+			this.tupleTypeManager = tupleTypeManager2 = new TupleTypeManager(this);
 		}
 		return tupleTypeManager2;
 	}

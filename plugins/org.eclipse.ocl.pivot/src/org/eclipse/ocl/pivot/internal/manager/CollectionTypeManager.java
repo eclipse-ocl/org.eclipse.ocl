@@ -22,7 +22,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -47,8 +46,8 @@ public class CollectionTypeManager extends AbstractTypeManager
 	 */
 	private final @NonNull Map<@NonNull CollectionTypeId, @NonNull Object> collectionTypes;
 
-	public CollectionTypeManager(@NonNull Orphanage orphanage, @NonNull StandardLibrary standardLibrary) {
-		super(orphanage, standardLibrary);
+	public CollectionTypeManager(@NonNull Orphanage orphanage) {
+		super(orphanage);
 		this.collectionTypes = new HashMap<>();
 	}
 

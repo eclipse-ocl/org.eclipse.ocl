@@ -19,18 +19,14 @@ public abstract class AbstractTypeManager
 	protected final @NonNull Orphanage orphanage;
 	protected final @NonNull StandardLibrary standardLibrary;
 
-	protected AbstractTypeManager(@NonNull Orphanage orphanage, @NonNull StandardLibrary standardLibrary) {
+	protected AbstractTypeManager(@NonNull Orphanage orphanage) {
 		this.orphanage = orphanage;
-		this.standardLibrary = standardLibrary;
+		this.standardLibrary = orphanage.getStandardLibrary();
 	}
 
 	public void dispose() {}
 
 	public @NonNull Orphanage getOrphanage() {
 		return orphanage;
-	}
-
-	protected final @NonNull StandardLibrary getStandardLibrary() {
-		return standardLibrary;
 	}
 }
