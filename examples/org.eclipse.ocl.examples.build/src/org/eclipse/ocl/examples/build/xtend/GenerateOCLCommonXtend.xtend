@@ -136,24 +136,22 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 		«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
 		«IF !excludedEClassifierNames.contains(type.name)»
-		private «type.eClass().name» «type.getPrefixedSymbolName("_"+type.partialName())»;
+		private Class «type.getPrefixedSymbolName("_"+type.partialName())»;
 		«ELSE»
-		private «type.eClass().name» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())»;
+		private Class «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())»;
 		«ENDIF»
 		«ENDFOR»
 		«ENDFOR»
 
 		private void installClassTypes() {
-			List<Class> ownedClasses;
 			Class type;
 			«FOR pkge : sortedPackages»
 
-			ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 			«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»«var templateSignature = type.getOwnedSignature()»
 			«IF excludedEClassifierNames.contains(type.name)»
-			ownedClasses.add(type = «type.getSymbolName()» = create«type.eClass().name»(«type.getOwningPackage().getSymbolName()», "«type.name»"));
+			type = «type.getSymbolName()» = createClass(«type.getOwningPackage().getSymbolName()», "«type.name»");
 			«ELSE»
-			ownedClasses.add(type = «type.getSymbolName()» = create«type.eClass().name»(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»));
+			type = «type.getSymbolName()» = createClass(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)»);
 			«ENDIF»
 			«IF type.isAbstract»
 			type.setIsAbstract(true);
@@ -182,7 +180,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	protected def String defineCollectionType(/*@NonNull*/ CollectionType type) {
 		'''
 		«IF type.getOwnedSignature() !== null»
-		type = «type.getSymbolName()» = create«type.eClass.name»(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		type = «type.getSymbolName()» = «IF !"CollectionType".equals(type.eClass.name)»(«type.eClass.name»)«ENDIF»createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
 		«ELSE»
 		type = «type.getSymbolName()» = get«type.eClass.name»(«type.getOwningPackage().getSymbolName()», «type.getUnspecializedElement().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
 		«ENDIF»
@@ -471,13 +469,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ENDFOR»
 
 			private void installPrimitiveTypes() {
-				List<Class> ownedClasses;
 				PrimitiveType type;
 				«FOR pkge : sortedPackages»
 
-					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2primitiveTypes.get(pkge))»
-						ownedClasses.add(type = «type.getSymbolNameWithoutNormalization()» = createPrimitiveType(«getEcoreLiteral(type)»));
+						type = «type.getSymbolName()» = createPrimitiveType(«pkge.getSymbolName()», «getEcoreLiteral(type)»);
 						«FOR comment : getSortedComments(type)»
 							installComment(type, "«comment.javaString()»");
 						«ENDFOR»
