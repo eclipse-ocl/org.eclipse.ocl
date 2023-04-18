@@ -38,6 +38,9 @@ import org.eclipse.ocl.pivot.utilities.NameUtil
 import org.eclipse.ocl.pivot.Library
 import org.eclipse.ocl.pivot.TupleType
 import org.eclipse.ocl.pivot.DataType
+import org.eclipse.ocl.pivot.InvalidType
+import org.eclipse.ocl.pivot.SelfType
+import org.eclipse.ocl.pivot.VoidType
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -53,7 +56,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String declareCollectionType(/*@NonNull*/ CollectionType type) {
 		'''
-		private «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»;
+		private CollectionType «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»;
 		'''
 	}
 
@@ -65,7 +68,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String declareMapType(/*@NonNull*/ MapType type) {
 		'''
-		private «type.eClass.name» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())»;
+		private MapType «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())»;
 		'''
 	}
 
@@ -180,9 +183,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	protected def String defineCollectionType(/*@NonNull*/ CollectionType type) {
 		'''
 		«IF type.getOwnedSignature() !== null»
-		type = «type.getSymbolName()» = «IF !"CollectionType".equals(type.eClass.name)»(«type.eClass.name»)«ENDIF»createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		type = «type.getSymbolName()» = createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
 		«ELSE»
-		type = «type.getSymbolName()» = get«type.eClass.name»(«type.getOwningPackage().getSymbolName()», «type.getUnspecializedElement().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		type = «type.getSymbolName()» = getCollectionType(«type.getUnspecializedElement().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
 		«ENDIF»
 		'''
 	}
@@ -237,7 +240,17 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof Library»
 			private final @NonNull Package «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			«ELSEIF element instanceof CollectionType»
+			private final @NonNull CollectionType «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSEIF element instanceof PrimitiveType»
+			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			«ELSEIF element instanceof AnyType»
+			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			«ELSEIF element instanceof InvalidType»
+			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			«ELSEIF element instanceof SelfType»
+			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
+			«ELSEIF element instanceof VoidType»
 			private final @NonNull Class «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
 			«ELSE»
 			private final @NonNull «element.eClass().getName()» «getPrefixedSymbolName(element, name)» = «element.getExternalReference()»;
@@ -319,16 +332,16 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String defineLambdaType(/*@NonNull*/ LambdaType type) {
 		'''
-		type = «type.getPrefixedSymbolName("_" + type.partialName())» = createLambdaType(«type.getOwningPackage().getSymbolName()», "«type.name»", «type.contextType.getSymbolName()», «type.resultType.getSymbolName()»«FOR parameterType : type.parameterType», type.getParameterType().add(«parameterType.getSymbolName()»«ENDFOR»);
+		type = «type.getPrefixedSymbolName("_" + type.partialName())» = getLambdaType("«type.name»", «type.contextType.getSymbolName()», «type.resultType.getSymbolName()»«FOR parameterType : type.parameterType», type.getParameterType().add(«parameterType.getSymbolName()»«ENDFOR»);
 		'''
 	}
 
 	protected def String defineMapType(/*@NonNull*/ MapType type) {
 		'''
 		«IF type.getOwnedSignature() !== null»
-		type = «type.getSymbolName()» = create«type.eClass.name»(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
+		type = «type.getSymbolName()» = createMapType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
 		«ELSE»
-		type = «type.getSymbolName()» = get«type.eClass.name»(«type.getOwningPackage().getSymbolName()», «type.getUnspecializedElement().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
+		type = «type.getSymbolName()» = getMapType(«type.getUnspecializedElement().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
 		«ENDIF»
 		'''
 	}
@@ -586,7 +599,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String defineTupleType(/*@NonNull*/ TupleType type) {
 		'''
-		type = «type.getSymbolName()» = createTupleType(«type.getOwningPackage().getSymbolName()», "«type.name»",
+		type = «type.getSymbolName()» = getTupleType("«type.name»",
 		«FOR property : type.getSortedTupleParts() BEFORE ("\t") SEPARATOR (",\n\t")»
 		createProperty("«property.name»", «property.type.getSymbolName()»)«ENDFOR»);
 		«FOR property : type.getSortedProperties()»

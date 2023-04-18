@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
@@ -769,11 +768,5 @@ implements CollectionType {
 	@Override
 	public void setUpperValue(@NonNull UnlimitedNaturalValue upper) {
 		setUpper(upper.isUnlimited() ? Unlimited.INSTANCE : upper.intValue());
-	}
-
-	@Override
-	protected void eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID) {
-	//	System.out.println("eBasicSetContainer " + NameUtil.debugSimpleName(this) + " - " + NameUtil.debugSimpleName(newContainer));
-		super.eBasicSetContainer(newContainer, newContainerFeatureID);
 	}
 } //CollectionTypeImpl

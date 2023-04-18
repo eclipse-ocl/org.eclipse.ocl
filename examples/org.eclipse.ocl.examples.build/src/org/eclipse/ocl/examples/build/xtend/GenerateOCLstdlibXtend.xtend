@@ -66,7 +66,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
 			import org.eclipse.ocl.pivot.AssociativityKind;
-			import org.eclipse.ocl.pivot.BagType;
 			import org.eclipse.ocl.pivot.Class;
 			import org.eclipse.ocl.pivot.CollectionType;
 			import org.eclipse.ocl.pivot.Iteration;
@@ -75,14 +74,12 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.MapType;
 			import org.eclipse.ocl.pivot.Model;
 			import org.eclipse.ocl.pivot.Operation;
-			import org.eclipse.ocl.pivot.OrderedSetType;
+			import org.eclipse.ocl.pivot.Orphanage;
 			import org.eclipse.ocl.pivot.Package;
 			import org.eclipse.ocl.pivot.Parameter;
 			import org.eclipse.ocl.pivot.Precedence;
 			import org.eclipse.ocl.pivot.PrimitiveType;
 			import org.eclipse.ocl.pivot.Property;
-			import org.eclipse.ocl.pivot.SequenceType;
-			import org.eclipse.ocl.pivot.SetType;
 			import org.eclipse.ocl.pivot.TemplateParameter;
 			import org.eclipse.ocl.pivot.TupleType;
 			import org.eclipse.ocl.pivot.ids.IdManager;
