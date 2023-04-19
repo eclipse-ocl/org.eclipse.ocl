@@ -83,7 +83,6 @@ import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -159,7 +158,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 			}
 			Type keyType = decodeNextType();
 			Type valueType = decodeNextType();
-			return standardLibrary.getMapType(keyType, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueType, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
+			return standardLibrary.getMapType(keyType, null, valueType, null);
 		}
 
 		protected @NonNull Type decodeNextType() {
@@ -571,7 +570,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	@Deprecated /* @deprecated used by auto-gen code for now */
 	public org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
 		assert genericType == (MapType)OCLstdlibTables.Types._Map;
-		return getMapType(keyType, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueType, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
+		return getMapType(keyType, null, valueType, null);
 	}
 
 	@Override
@@ -862,7 +861,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	}
 
 	@Override
-	protected boolean isUnspecialized(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+	protected boolean isUnspecialized(@NonNull Type keyType, @Nullable Boolean keysAreNullFree, @NonNull Type valueType, @Nullable Boolean valuesAreNullFree) {
 		if (!isUnspecialized(keysAreNullFree, valuesAreNullFree)) {
 			return false;
 		}

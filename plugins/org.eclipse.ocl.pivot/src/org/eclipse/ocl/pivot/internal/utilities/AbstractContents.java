@@ -375,34 +375,10 @@ public abstract class AbstractContents extends PivotUtil
 		return (CollectionType) ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
 
-	protected @NonNull CollectionType getCollectionType(/*@NonNull*/ CollectionType unspecializedType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
-		assert unspecializedType != null;
+	protected @NonNull CollectionType getCollectionType(/*@NonNull*/ CollectionType genericType, /*@NonNull*/ Type elementType, boolean isNullFree, int lower, int upper) {
+		assert genericType != null;
 		assert elementType != null;
-		CollectionType asType;
-		if (unspecializedType instanceof BagType) {
-			asType = PivotFactory.eINSTANCE.createBagType();
-		}
-		else if (unspecializedType instanceof OrderedSetType) {
-			asType = PivotFactory.eINSTANCE.createOrderedSetType();
-		}
-		else if (unspecializedType instanceof SequenceType) {
-			asType = PivotFactory.eINSTANCE.createSequenceType();
-		}
-		else if (unspecializedType instanceof SetType) {
-			asType = PivotFactory.eINSTANCE.createSetType();
-		}
-		else {
-			asType = PivotFactory.eINSTANCE.createCollectionType();
-		}
-		asType.setName(unspecializedType.getName());
-		asType.setUnspecializedElement(unspecializedType);
-	//	orphanage.addOrphanClass(specializedType);
-		asType.setIsNullFree(isNullFree);
-		asType.setLowerValue(ValueUtil.integerValueOf(lower));
-		asType.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
-		addBinding(asType, elementType);
-		orphanage.getOwnedClasses().add(asType);
-		return asType;
+		return orphanage.getCollectionType(genericType, elementType, isNullFree, ValueUtil.integerValueOf(lower), upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 	}
 
 	protected @NonNull LambdaType getLambdaType(@NonNull String name, /*@NonNull*/ TemplateParameter contextType, /*@NonNull*/ Type resultType, @NonNull TemplateParameter... parameterTypes) {

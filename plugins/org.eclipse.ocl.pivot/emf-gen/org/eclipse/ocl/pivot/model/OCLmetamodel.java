@@ -79,12 +79,11 @@ public class OCLmetamodel extends ASResourceImpl
 	public static final @NonNull URI PIVOT_AS_URI = URI.createURI("http://www.eclipse.org/ocl/2015/Pivot" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 
 	public static @NonNull Package create(@NonNull StandardLibrary standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-		OCLmetamodel resource = new ReadOnly(PIVOT_AS_URI);
+		OCLmetamodel metamodelResource = new ReadOnly(PIVOT_AS_URI);
 		Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
 		assert standardLibraryPackage != null;
-		Contents contents = new Contents(standardLibraryPackage, name, nsPrefix, nsURI);
+		Contents contents = new Contents(metamodelResource, standardLibraryPackage, name, nsPrefix, nsURI);
 		Model model = contents.getModel();
-		resource.getContents().add(model);
 		@SuppressWarnings("null")@NonNull Package pkge = model.getOwnedPackages().get(0);
 		return pkge;
 	}
@@ -95,14 +94,13 @@ public class OCLmetamodel extends ASResourceImpl
 	 *  is used as the default when no overriding copy is registered.
 	 */
 	public static @NonNull OCLmetamodel getDefault() {
-		OCLmetamodel metamodel = INSTANCE;
-		if (metamodel == null) {
-			metamodel = INSTANCE = new ReadOnly(PIVOT_AS_URI);
-			Contents contents = new Contents(OCLstdlib.getDefaultPackage(), "pivot", "pivot", PIVOT_URI);
-			metamodel.getContents().add(contents.getModel());
-			metamodel.setSaveable(false);
+		OCLmetamodel metamodelResource = INSTANCE;
+		if (metamodelResource == null) {
+			metamodelResource = INSTANCE = new ReadOnly(PIVOT_AS_URI);
+			Contents contents = new Contents(metamodelResource, OCLstdlib.getDefaultPackage(), "pivot", "pivot", PIVOT_URI);
+			metamodelResource.setSaveable(false);
 		}
-		return metamodel;
+		return metamodelResource;
 	}
 
 	/**
@@ -237,9 +235,10 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Model root;
 		private final @NonNull Package pivot;
 
-		protected Contents(@NonNull Package libraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+		protected Contents(@NonNull OCLmetamodel metamodelResource, @NonNull Package libraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 			super(libraryPackage);
 			root = createModel("http://www.eclipse.org/ocl/2015/Pivot");
+			metamodelResource.getContents().add(root);
 			pivot = createPackage("pivot", "pivot", "http://www.eclipse.org/ocl/2015/Pivot", IdManager.METAMODEL, PivotPackage.eINSTANCE);
 			installPackages();
 			installClassTypes();

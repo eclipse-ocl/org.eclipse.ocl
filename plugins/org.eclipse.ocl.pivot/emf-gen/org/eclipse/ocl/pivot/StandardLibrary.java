@@ -143,7 +143,7 @@ public interface StandardLibrary extends Element
 	 *  Return the specialized map type for the specializing keyType and valueType with keyValuesAreNullFree and valuesAreNullFree content.
 	 *  May return an InvalidType if keyType or valueType is a proxy.
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
+	org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, @Nullable Boolean keyValuesAreNullFree, @NonNull Type valueType, @Nullable Boolean valuesAreNullFree);
 
 	/**
 	 * Return the metaclass to which classType conforms.

@@ -78,9 +78,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.osgi.util.NLS;
@@ -681,7 +679,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			assert templateArguments.size() == 2;
 			@NonNull Type keyTemplateArgument = templateArguments.get(0);
 			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getMapType(TypeUtil.createMapTypeParameters(keyTemplateArgument, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueTemplateArgument, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE));
+			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getMapType(keyTemplateArgument, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueTemplateArgument, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
 			return specializedType;
 		}
 		else {
@@ -710,8 +708,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		org.eclipse.ocl.pivot.@NonNull Class entryType = metamodelManager.getPrimaryClass(entryClass);
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(entryType);
-		return getOrphanage().getMapType(typeParameters);
+		return getOrphanage().getMapOfEntryType(entryType);
 	}
 
 	@Override
@@ -1126,8 +1123,8 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	protected boolean isUnspecialized(@NonNull Type keyType, boolean keysAreNullFree,
-			@NonNull Type valueType, boolean valuesAreNullFree) {
+	protected boolean isUnspecialized(@NonNull Type keyType, @Nullable Boolean keysAreNullFree,
+			@NonNull Type valueType, @Nullable Boolean valuesAreNullFree) {
 		if (!isUnspecialized(keysAreNullFree, valuesAreNullFree)) {
 			return false;
 		}

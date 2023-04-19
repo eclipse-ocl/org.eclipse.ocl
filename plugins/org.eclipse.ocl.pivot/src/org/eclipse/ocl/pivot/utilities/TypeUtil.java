@@ -42,11 +42,9 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.values.MapTypeParametersImpl;
 import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.types.TemplateParametersImpl;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class TypeUtil
@@ -134,25 +132,6 @@ public class TypeUtil
 		FlatClass firstFlatClass = firstTupleType.getFlatClass(standardLibrary);
 		FlatClass secondFlatClass = secondTupleType.getFlatClass(standardLibrary);
 		return firstFlatClass.isSuperFlatClassOf(secondFlatClass);
-	}
-
-	@Deprecated /* @deprecated use nullFrees */
-	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(@NonNull Type keyType, @NonNull Type valueType) {
-		return createMapTypeParameters(keyType, true, valueType, true);
-	}
-
-	/**
-	 * @since 1.6
-	 */
-	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		return new MapTypeParametersImpl<@NonNull Type, @NonNull Type>(keyType, keysAreNullFree, valueType, valuesAreNullFree);
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public static @NonNull MapTypeParameters<@NonNull Type, @NonNull Type> createMapTypeParameters(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		return new MapTypeParametersImpl<@NonNull Type, @NonNull Type>(entryClass);
 	}
 
 	public static @NonNull ParameterTypes createParameterTypes(@NonNull Type @NonNull ... parameterTypes) {

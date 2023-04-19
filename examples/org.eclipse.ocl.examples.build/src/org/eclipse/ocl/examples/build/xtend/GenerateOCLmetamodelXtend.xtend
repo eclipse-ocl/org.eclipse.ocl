@@ -109,12 +109,11 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				public static final @NonNull URI PIVOT_AS_URI = URI.createURI("«uri»" + PivotConstants.DOT_OCL_AS_FILE_EXTENSION);
 
 				public static @NonNull Package create(@NonNull StandardLibrary standardLibrary, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
-					«javaClassName» resource = new ReadOnly(PIVOT_AS_URI);
+					«javaClassName» metamodelResource = new ReadOnly(PIVOT_AS_URI);
 					Package standardLibraryPackage = standardLibrary.getOclAnyType().getOwningPackage();
 					assert standardLibraryPackage != null;
-					Contents contents = new Contents(standardLibraryPackage, name, nsPrefix, nsURI);
+					Contents contents = new Contents(metamodelResource, standardLibraryPackage, name, nsPrefix, nsURI);
 					Model model = contents.getModel();
-					resource.getContents().add(model);
 					@SuppressWarnings("null")@NonNull Package pkge = model.getOwnedPackages().get(0);
 					return pkge;
 				}
@@ -125,14 +124,13 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				 *  is used as the default when no overriding copy is registered. 
 				 */
 				public static @NonNull «javaClassName» getDefault() {
-					«javaClassName» metamodel = INSTANCE;
-					if (metamodel == null) {
-						metamodel = INSTANCE = new ReadOnly(PIVOT_AS_URI);
-						Contents contents = new Contents(OCLstdlib.getDefaultPackage(), "«pkg.name»", "«pkg.nsPrefix»", PIVOT_URI);
-						metamodel.getContents().add(contents.getModel());
-						metamodel.setSaveable(false);
+					«javaClassName» metamodelResource = INSTANCE;
+					if (metamodelResource == null) {
+						metamodelResource = INSTANCE = new ReadOnly(PIVOT_AS_URI);
+						Contents contents = new Contents(metamodelResource, OCLstdlib.getDefaultPackage(), "«pkg.name»", "«pkg.nsPrefix»", PIVOT_URI);
+						metamodelResource.setSaveable(false);
 					}
-					return metamodel;
+					return metamodelResource;
 				}
 
 				/**
@@ -282,9 +280,10 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == root.getOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 
-					protected Contents(@NonNull Package libraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+					protected Contents(@NonNull OCLmetamodel metamodelResource, @NonNull Package libraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 						super(libraryPackage);
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
+						metamodelResource.getContents().add(«root.getSymbolName()»);
 						«FOR pkge : root.getSortedPackages()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«FOR comment : pkge.ownedComments»

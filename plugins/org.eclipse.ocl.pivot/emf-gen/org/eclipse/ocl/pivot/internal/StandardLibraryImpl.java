@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -167,15 +166,20 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, @Nullable Boolean keysAreNullFree, @NonNull Type valueType, @Nullable Boolean valuesAreNullFree) {
 		if (keyType.eIsProxy() || valueType.eIsProxy()) {
 			return getOclInvalidType();
 		}
 		if (isUnspecialized(keyType, keysAreNullFree, valueType, valuesAreNullFree)) {
 			return getMapType();
 		}
-		MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters = TypeUtil.createMapTypeParameters(keyType, keysAreNullFree, valueType, valuesAreNullFree);
-		return getOrphanage().getMapType(typeParameters);
+		if (keysAreNullFree == null) {
+			keysAreNullFree = PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE;
+		}
+		if (valuesAreNullFree == null) {
+			valuesAreNullFree = PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE;
+		}
+		return getOrphanage().getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
 	@Override
@@ -322,10 +326,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		 && ((upper == null) || (upper == ValueUtil.UNLIMITED_VALUE));
 	}
 
-	protected abstract boolean isUnspecialized(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
+	protected abstract boolean isUnspecialized(@NonNull Type keyType, @Nullable Boolean keysAreNullFree, @NonNull Type valueType, @Nullable Boolean valuesAreNullFree);
 
-	protected boolean isUnspecialized(boolean keysAreNullFree, boolean valuesAreNullFree) {
-		return (keysAreNullFree == PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE) && (valuesAreNullFree == PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
+	protected boolean isUnspecialized(@Nullable Boolean keysAreNullFree, @Nullable Boolean valuesAreNullFree) {
+		return ((keysAreNullFree == null) || (keysAreNullFree == PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE))
+		 && ((valuesAreNullFree == null) || (valuesAreNullFree == PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE));
 	}
 
 	public void resetLibrary() {

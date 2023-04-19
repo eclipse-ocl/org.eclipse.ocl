@@ -18,7 +18,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -32,6 +31,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
@@ -62,7 +61,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -451,19 +449,14 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	private @Nullable StandardLibrary standardLibrary = null;
 
 	/**
-	 * Shared cache of the lazily created, lazily deleted, specializations of each collection type.
+	 * Shared cache of the lazily created, lazily deleted, specializations of each type.
 	 */
-	private @Nullable Map<@NonNull CollectionTypeId, @NonNull CollectionType> typeId2collectionType = null;
+	private final @NonNull Map<@NonNull TypeId, @NonNull Type> typeId2type = new HashMap<>();
 
 	/**
 	 * Shared cache of the lazily created, lazily deleted, specializations of each lambda type.
 	 */
 	private @Nullable LambdaTypeManager lambdaTypeManager = null;
-
-	/**
-	 * Shared cache of the lazily created, lazily deleted, specializations of each map type.
-	 */
-	private @Nullable MapTypeManager mapTypeManager = null;
 
 	/**
 	 * Shared cache of the lazily created, lazily deleted, tuples.
@@ -486,7 +479,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId) {
-		return typeId2collectionType != null ? typeId2collectionType.get(collectionTypeId) : null;
+		return (CollectionType)typeId2type.get(collectionTypeId);
 	}
 
 	@Override
@@ -496,7 +489,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public @Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId) {
-		return mapTypeManager != null ? mapTypeManager.basicGetMapType(mapTypeId) : null;
+		return (MapType)typeId2type.get(mapTypeId);
 	}
 
 	@Override
@@ -512,10 +505,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		if (ownedPackages != null) {
 			((WeakEList<?>)ownedPackages).dispose();
 		} */
-		if (typeId2collectionType != null) {
-			typeId2collectionType.clear();
-			typeId2collectionType = null;
-		}
+		typeId2type.clear();
 	}
 
 	public void disposeLambdas() {
@@ -535,10 +525,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType,
 			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		Map<@NonNull CollectionTypeId, @NonNull CollectionType> typeId2collectionType2 = this.typeId2collectionType;
-		if (typeId2collectionType2 == null) {
-			this.typeId2collectionType = typeId2collectionType2 = new HashMap<>();
-		}
 		if (isNullFree == null) {
 			isNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
 		}
@@ -551,13 +537,25 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		CollectionTypeId genericTypeId = genericType.getTypeId();
 		TypeId elementTypeId = elementType.getTypeId();
 		CollectionTypeId specializedTypeId = genericTypeId.getSpecializedId(elementTypeId, isNullFree, lower, upper);
-		synchronized (typeId2collectionType2) {
-			CollectionType specializedType = basicGetCollectionType(specializedTypeId);
+		synchronized (typeId2type) {
+			CollectionType specializedType = (CollectionType)typeId2type.get(specializedTypeId);
 			if (specializedType == null) {
 				assert (elementType != null) && (elementType.eResource() != null);
-				EClass eClass = genericType.eClass();
-				EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-				specializedType = (CollectionType) eFactoryInstance.create(eClass);
+				if (genericTypeId == TypeId.BAG) {
+					specializedType = PivotFactory.eINSTANCE.createBagType();
+				}
+				else if (genericTypeId == TypeId.ORDERED_SET) {
+					specializedType = PivotFactory.eINSTANCE.createOrderedSetType();
+				}
+				else if (genericTypeId == TypeId.SEQUENCE) {
+					specializedType = PivotFactory.eINSTANCE.createSequenceType();
+				}
+				else if (genericTypeId == TypeId.SET) {
+					specializedType = PivotFactory.eINSTANCE.createSetType();
+				}
+				else {
+					specializedType = PivotFactory.eINSTANCE.createCollectionType();
+				}
 				specializedType.setName(genericType.getName());
 				TemplateSignature templateSignature = genericType.getOwnedSignature();
 				List<@NonNull TemplateParameter> templateParameters = ClassUtil.nullFree(templateSignature.getOwnedParameters());
@@ -581,13 +579,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 					logger.error("Out of range upper bound for " + specializedTypeId, e);
 				}
 				specializedType.setUnspecializedElement(genericType);
-//				specializedType.getTypeId();		// XXX
-//				String s = specializedType.toString();
-//				System.out.println("createSpecialization: " + NameUtil.debugSimpleName(specializedType) + " : " + specializedType);
-//				if ("Collection(Families::FamilyMember[*|?])".equals(s)) {
-//					getClass();		// XXX
-//				}
-				typeId2collectionType2.put(specializedTypeId, specializedType);
+				typeId2type.put(specializedTypeId, specializedType);
 				assert specializedTypeId == ((CollectionTypeImpl)specializedType).immutableGetTypeId();		// XXX
 				if (basicGetCollectionType(specializedTypeId) != specializedType) {
 					basicGetCollectionType(specializedTypeId);
@@ -632,16 +624,88 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
-	public @NonNull MapType getMapType(@NonNull MapTypeParameters<@NonNull Type, @NonNull Type> typeParameters) {
-		return getMapTypeManager().getMapType(typeParameters);
+	public @NonNull MapType getMapOfEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+		Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties(entryClass);
+		Property keyProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "key"));
+		Property valueProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "value"));
+		Type keyType = PivotUtil.getType(keyProperty);
+		boolean keysAreNullFree = keyProperty.isIsRequired();
+		Type valueType = PivotUtil.getType(valueProperty);
+		boolean valuesAreNullFree = valueProperty.isIsRequired();
+		TypeId keyTypeId = keyType.getTypeId();
+		TypeId valueTypeId = valueType.getTypeId();
+		MapTypeId mapTypeId = TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, keysAreNullFree, valuesAreNullFree);
+		synchronized (typeId2type) {
+			MapType specializedType = basicGetMapType(mapTypeId);
+			if (specializedType == null) {
+				MapType unspecializedType = getStandardLibrary().getMapType();
+				String typeName = unspecializedType.getName();
+				TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
+				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+				specializedType = PivotFactory.eINSTANCE.createMapType();
+				specializedType.setName(typeName);
+				TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
+				TemplateParameter keyFormalParameter = templateParameters.get(0);
+				TemplateParameter valueFormalParameter = templateParameters.get(1);
+				assert keyFormalParameter != null;
+				assert valueFormalParameter != null;
+				TemplateParameterSubstitution keyTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(keyFormalParameter, keyType);
+				TemplateParameterSubstitution valueTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(valueFormalParameter, valueType);
+				templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
+				templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
+				specializedType.getOwnedBindings().add(templateBinding);
+			//	resolveSuperClasses(specializedMapType, unspecializedType);
+				specializedType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
+				specializedType.setKeysAreNullFree(keysAreNullFree);
+				specializedType.setValuesAreNullFree(valuesAreNullFree);
+				specializedType.setUnspecializedElement(unspecializedType);
+				specializedType.setEntryClass(entryClass);
+				typeId2type.put(mapTypeId, specializedType);
+				assert mapTypeId == ((MapTypeImpl)specializedType).immutableGetTypeId();		// XXX
+				addOrphanClass(specializedType);
+			}
+			return specializedType;
+		}
 	}
 
-	private @NonNull MapTypeManager getMapTypeManager() {
-		MapTypeManager mapTypeManager2 = this.mapTypeManager;
-		if (mapTypeManager2 == null) {
-			this.mapTypeManager = mapTypeManager2 = new MapTypeManager(this);
+	@Override
+	public @NonNull MapType getMapType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		TypeId keyTypeId = keyType.getTypeId();
+		TypeId valueTypeId = valueType.getTypeId();
+		MapTypeId mapTypeId = TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, keysAreNullFree, valuesAreNullFree);
+		synchronized (typeId2type) {
+			MapType specializedType = (MapType)typeId2type.get(mapTypeId);
+			if (specializedType == null) {
+				assert (keyType != null) && (keyType.eResource() != null);
+				assert (valueType != null) && (valueType.eResource() != null);
+				MapType unspecializedType = getStandardLibrary().getMapType();
+				String typeName = unspecializedType.getName();
+				TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
+				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+				specializedType = PivotFactory.eINSTANCE.createMapType();
+				specializedType.setName(typeName);
+				TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
+				TemplateParameter keyFormalParameter = templateParameters.get(0);
+				TemplateParameter valueFormalParameter = templateParameters.get(1);
+				assert keyFormalParameter != null;
+				assert valueFormalParameter != null;
+				TemplateParameterSubstitution keyTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(keyFormalParameter, keyType);
+				TemplateParameterSubstitution valueTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(valueFormalParameter, valueType);
+				templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
+				templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
+				specializedType.getOwnedBindings().add(templateBinding);
+			//	resolveSuperClasses(specializedMapType, unspecializedType);
+				specializedType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
+				specializedType.setKeysAreNullFree(keysAreNullFree);
+				specializedType.setValuesAreNullFree(valuesAreNullFree);
+				specializedType.setUnspecializedElement(unspecializedType);
+			//	specializedType.setEntryClass(typeParameters.getEntryClass());
+				typeId2type.put(mapTypeId, specializedType);
+				assert mapTypeId == ((MapTypeImpl)specializedType).immutableGetTypeId();		// XXX
+				addOrphanClass(specializedType);
+			}
+			return specializedType;
 		}
-		return mapTypeManager2;
 	}
 
 	@Override
