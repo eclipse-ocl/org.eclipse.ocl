@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
-import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -455,11 +454,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 */
 	private final @NonNull Map<@NonNull TypeId, @NonNull Type> typeId2type = new HashMap<>();
 
-	/**
-	 * Shared cache of the lazily created, lazily deleted, specializations of each lambda type.
-	 */
-	private @Nullable LambdaTypeManager lambdaTypeManager = null;
-
 	@Override
 	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
 	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass));
@@ -481,7 +475,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public @Nullable LambdaType basicGetLambdaType(@NonNull LambdaTypeId lambdaTypeId) {
-		return lambdaTypeManager != null ? lambdaTypeManager.basicGetLambdaType(lambdaTypeId) : null;
+		return (LambdaType)typeId2type.get(lambdaTypeId);
 	}
 
 	@Override
@@ -503,13 +497,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			((WeakEList<?>)ownedPackages).dispose();
 		} */
 		typeId2type.clear();
-	}
-
-	public void disposeLambdas() {
-		if (lambdaTypeManager != null) {
-			lambdaTypeManager.dispose();
-			lambdaTypeManager = null;
-		}
 	}
 
 	@Override
@@ -580,37 +567,45 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-//	@Override
-//	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes,
-//			@NonNull Type resultType, @Nullable TemplateParameterSubstitutions bindings) {
-//		return getLambdaTypeManager().getLambdaType(typeName, contextType, parameterTypes, resultType, bindings);
-//	}
-
 	@Override
 	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings) {
 		if (bindings == null) {
-			return getLambdaTypeManager().getLambdaType(typeName, contextType, parameterTypes, resultType);
+			return getLambdaType(typeName, contextType, parameterTypes, resultType);
 		}
 		else {
-			StandardLibrary standardLibrary2 = standardLibrary;
-			assert standardLibrary2 != null;
-			Type specializedContextType = standardLibrary2.getSpecializedType(contextType, bindings);
+			StandardLibrary standardLibrary = getStandardLibrary();
+			Type specializedContextType = standardLibrary.getSpecializedType(contextType, bindings);
 			List<@NonNull Type> specializedParameterTypes = new ArrayList<>();
 			for (@NonNull Type parameterType : parameterTypes) {
-				specializedParameterTypes.add(standardLibrary2.getSpecializedType(parameterType, bindings));
+				specializedParameterTypes.add(standardLibrary.getSpecializedType(parameterType, bindings));
 			}
-			Type specializedResultType = standardLibrary2.getSpecializedType(resultType, bindings);
-			return getLambdaTypeManager().getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
+			Type specializedResultType = standardLibrary.getSpecializedType(resultType, bindings);
+			return getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
 		}
 	}
 
-	private @NonNull LambdaTypeManager getLambdaTypeManager() {
-		LambdaTypeManager lambdaTypeManager2 = this.lambdaTypeManager;
-		if (lambdaTypeManager2 == null) {
-			this.lambdaTypeManager = lambdaTypeManager2 = new LambdaTypeManager(this);
+	private @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
+		@NonNull TypeId @NonNull [] typeIds = new @NonNull TypeId[2+parameterTypes.size()];
+		typeIds[0] = contextType.getTypeId();
+		typeIds[1] = resultType.getTypeId();
+		for (int i = 0; i < parameterTypes.size(); i++) {
+			typeIds[2+i] = parameterTypes.get(i).getTypeId();
 		}
-		return lambdaTypeManager2;
+		LambdaTypeId lambdaTypeId = IdManager.getLambdaTypeId(TypeId.LAMBDA_NAME, typeIds);
+		LambdaType lambdaType = (LambdaType) typeId2type.get(lambdaTypeId);
+		if (lambdaType == null) {
+			lambdaType = PivotFactory.eINSTANCE.createLambdaType();
+			lambdaType.setName(typeName);
+			lambdaType.setContextType(contextType);
+			lambdaType.setResultType(resultType);
+			lambdaType.getParameterType().addAll(parameterTypes);
+			lambdaType.getSuperClasses().add(getStandardLibrary().getOclLambdaType());
+			typeId2type.put(lambdaTypeId, lambdaType);
+			assert lambdaTypeId == ((LambdaTypeImpl)lambdaType).immutableGetTypeId();		// XXX
+			addOrphanClass(lambdaType);
+		}
+		return lambdaType;
 	}
 
 	@Override
