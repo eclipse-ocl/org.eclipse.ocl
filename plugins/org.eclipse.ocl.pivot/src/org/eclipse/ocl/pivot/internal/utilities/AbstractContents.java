@@ -102,6 +102,12 @@ public abstract class AbstractContents extends PivotUtil
 		this.orphanage = createOrphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_PREFIX, PivotConstants.ORPHANAGE_URI); //, null, null);
 	}
 
+	protected @NonNull Parameter createAccumulator(@NonNull Iteration asIteration, @NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
+		Parameter asParameter = createParameter(name, asType, isRequired);
+		asIteration.getOwnedAccumulators().add(asParameter);
+		return asParameter;
+	}
+
 	/**
 	 * @since 1.16
 	 */
@@ -218,6 +224,22 @@ public abstract class AbstractContents extends PivotUtil
 		return asIteration;
 	}
 
+	protected @NonNull Iteration createIteration(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, @NonNull String name, @Nullable String implementationClass, @NonNull LibraryFeature implementation, TemplateParameter... templateParameters) {
+		Iteration asIteration = PivotFactory.eINSTANCE.createIteration();
+		asIteration.setName(name);
+		initTemplateParameters(asIteration, templateParameters);
+		asIteration.setImplementationClass(implementationClass);
+		asIteration.setImplementation(implementation);
+		asClass.getOwnedOperations().add(asIteration);
+		return asIteration;
+	}
+
+	protected @NonNull Parameter createIterator(@NonNull Iteration asIteration, @NonNull String name, /*@NonNull*/ Type asType, boolean isRequired) {
+		Parameter asParameter = createParameter(name, asType, isRequired);
+		asIteration.getOwnedIterators().add(asParameter);
+		return asParameter;
+	}
+
 	@Deprecated /* @deprecated add ePackage */
 	protected @NonNull Library createLibrary(@NonNull String name, @NonNull String nsPrefix, @NonNull String nsURI, @Nullable PackageId packageId) {
 		Library asLibrary = PivotFactory.eINSTANCE.createLibrary();
@@ -277,6 +299,16 @@ public abstract class AbstractContents extends PivotUtil
 	protected @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation, TemplateParameter... templateParameters) {
 		Operation asOperation = PivotFactory.eINSTANCE.createOperation();
 		initTemplateParameters(asOperation, templateParameters);
+		asClass.getOwnedOperations().add(asOperation);
+		return asOperation;
+	}
+
+	protected @NonNull Operation createOperation(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, @NonNull String name, @Nullable String implementationClass, @Nullable LibraryFeature implementation, TemplateParameter... templateParameters) {
+		Operation asOperation = PivotFactory.eINSTANCE.createOperation();
+		asOperation.setName(name);
+		initTemplateParameters(asOperation, templateParameters);
+		asOperation.setImplementationClass(implementationClass);
+		asOperation.setImplementation(implementation);
 		asClass.getOwnedOperations().add(asOperation);
 		return asOperation;
 	}

@@ -267,22 +267,31 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2iterations = root.getSortedIterations();
 		if (pkge2iterations.isEmpty()) return "";
 		var sortedPackages = root.getSortedPackages(pkge2iterations.keySet());
-		var org.eclipse.ocl.pivot.Class oldType  = null;
 		'''
 
-			private void installIterations() {
-				List<Operation> ownedIterations;
-				List<Parameter> ownedParameters;
+			«FOR pkge : sortedPackages»
+				«FOR iteration : ClassUtil.nullFree(pkge2iterations.get(pkge))»
+				private Iteration «iteration.getPrefixedSymbolName("it_" + iteration.partialName())»;
+				«ENDFOR»
+			«ENDFOR»
+
+			private void installIterationDeclarations() {
+				«FOR pkge : sortedPackages»
+					«FOR iteration : ClassUtil.nullFree(pkge2iterations.get(pkge))»
+					«iteration.symbolName» = createIteration(«iteration.getOwningClass().getSymbolName()», "«iteration.name»", «IF iteration.implementationClass !== null»"«iteration.
+									implementationClass»", «iteration.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF iteration.getOwnedSignature() !== null»«FOR templateParameter : iteration.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
+				«ENDFOR»
+				«ENDFOR»
+			}
+
+			private void installIterationBodies() {
 				Iteration iteration;
 				Parameter parameter;
 				«FOR pkge : sortedPackages»
-					«FOR iteration : ClassUtil.nullFree(pkge2iterations.get(pkge))»«var newType = iteration.getOwningClass()»
-					«IF newType != oldType»
+					«FOR iteration : ClassUtil.nullFree(pkge2iterations.get(pkge))»
 
-						ownedIterations = «(oldType = newType).getSymbolName()».getOwnedOperations();
-					«ENDIF»
-					ownedIterations.add(iteration = createIteration("«iteration.name»", «iteration.type.getSymbolName()», «IF iteration.implementationClass !== null»"«iteration.
-									implementationClass»", «iteration.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF iteration.getOwnedSignature() !== null»«FOR templateParameter : iteration.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»));
+					iteration = «iteration.symbolName»;
+					iteration.setType(«iteration.type.getSymbolName()»);
 					«IF iteration.isInvalidating»
 						iteration.setIsInvalidating(true);
 					«ENDIF»
@@ -299,27 +308,24 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						iteration.setIsValidating(true);
 					«ENDIF»
 					«IF iteration.ownedIterators.size() > 0»
-						ownedParameters = iteration.getOwnedIterators();
 						«FOR parameter : iteration.ownedIterators»
-							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»));
+							parameter = createIterator(iteration, "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»);
 							«IF parameter.isTypeof»
 								parameter.setIsTypeof(true);
 							«ENDIF»
 						«ENDFOR»
 					«ENDIF»
 					«IF iteration.ownedAccumulators.size() > 0»
-						ownedParameters = iteration.getOwnedAccumulators();
 						«FOR parameter : iteration.ownedAccumulators»
-							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»));
+							parameter = createAccumulator(iteration, "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»);
 							«IF parameter.isTypeof»
 								parameter.setIsTypeof(true);
 							«ENDIF»
 						«ENDFOR»
 					«ENDIF»
 					«IF iteration.ownedParameters.size() > 0»
-						ownedParameters = iteration.getOwnedParameters();
 						«FOR parameter : iteration.ownedParameters»
-							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»));
+							parameter = createParameter(iteration, "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»);
 							«IF parameter.isTypeof»
 								parameter.setIsTypeof(true);
 							«ENDIF»
@@ -354,23 +360,31 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2operations = root.getSortedOperations();
 		if (pkge2operations.isEmpty()) return "";
 		var sortedPackages = root.getSortedPackages(pkge2operations.keySet());
-		var org.eclipse.ocl.pivot.Class oldType  = null;
 		'''
+			«FOR pkge : sortedPackages»
+				«FOR operation : ClassUtil.nullFree(pkge2operations.get(pkge))»
+				private Operation «operation.getPrefixedSymbolName("op_" + operation.partialName())»;
+				«ENDFOR»
+			«ENDFOR»
 
-			private void installOperations() {
-				List<Operation> ownedOperations;
-				List<Parameter> ownedParameters;
+			private void installOperationDeclarations() {
+				«FOR pkge : sortedPackages»
+					«FOR operation : ClassUtil.nullFree(pkge2operations.get(pkge))»
+					«operation.getSymbolName()» = createOperation(«operation.getOwningClass().getSymbolName()», «operation.
+				getNameLiteral()», «IF operation.implementationClass !== null»"«operation.
+				implementationClass»", «operation.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF operation.getOwnedSignature() !== null»«FOR templateParameter : operation.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
+				«ENDFOR»
+				«ENDFOR»
+			}
+
+			private void installOperationBodies() {
 				Operation operation;
 				Parameter parameter;
 				«FOR pkge : sortedPackages»
 					«FOR operation : ClassUtil.nullFree(pkge2operations.get(pkge))»«var newType = operation.getOwningClass()»
-					«IF newType != oldType»
 
-						ownedOperations = «(oldType = newType).getSymbolName()».getOwnedOperations();
-					«ENDIF»
-					ownedOperations.add(operation = createOperation(«operation.
-				getNameLiteral()», «operation.type.getSymbolName()», «IF operation.implementationClass !== null»"«operation.
-				implementationClass»", «operation.implementationClass».INSTANCE«ELSE»null, null«ENDIF»«IF operation.getOwnedSignature() !== null»«FOR templateParameter : operation.getOwnedSignature().getOwnedParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»));
+					operation = «operation.getSymbolName()»;
+					operation.setType(«operation.type.getSymbolName()»);
 					«IF operation.isInvalidating»
 						operation.setIsInvalidating(true);
 					«ENDIF»
@@ -393,9 +407,8 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						createBodyExpression(operation, «operation.owningClass.getSymbolName()», "«operation.bodyExpression.javaString()»", «operation.type.getSymbolName()»);
 					«ENDIF»
 					«IF operation.ownedParameters.size() > 0»
-						ownedParameters = operation.getOwnedParameters();
 						«FOR parameter : operation.ownedParameters»
-							ownedParameters.add(parameter = createParameter("«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»));
+							parameter = createParameter(operation, "«parameter.name»", «parameter.type.getSymbolName()», «parameter.isRequired»);
 							«IF parameter.isTypeof»
 								parameter.setIsTypeof(true);
 							«ENDIF»
@@ -684,9 +697,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«thisModel.installClassTypes()»
 		«thisModel.installPrimitiveTypes()»
 		«thisModel.installEnumerations()»
+		«thisModel.installOperationDeclarations()»
+		«thisModel.installIterationDeclarations()»
 		«thisModel.installAggregateTypes()»
-		«thisModel.installOperations()»
-		«thisModel.installIterations()»
+		«thisModel.installOperationBodies()»
+		«thisModel.installIterationBodies()»
 		«thisModel.installProperties()»
 		'''
 	}
@@ -714,16 +729,28 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''installEnumerations();'''
 	}
 
-	protected def String installIterations(/*@NonNull*/ Model root) {
+	protected def String installIterationBodies(/*@NonNull*/ Model root) {
 		var pkge2iterations = root.getSortedIterations();
 		if (pkge2iterations.isEmpty()) return "";
-		'''installIterations();'''
+		'''installIterationBodies();'''
 	}
 
-	protected def String installOperations(/*@NonNull*/ Model root) {
+	protected def String installIterationDeclarations(/*@NonNull*/ Model root) {
+		var pkge2iterations = root.getSortedIterations();
+		if (pkge2iterations.isEmpty()) return "";
+		'''installIterationDeclarations();'''
+	}
+
+	protected def String installOperationBodies(/*@NonNull*/ Model root) {
 		var pkge2operations = root.getSortedOperations();
 		if (pkge2operations.isEmpty()) return "";
-		'''installOperations();'''
+		'''installOperationBodies();'''
+	}
+
+	protected def String installOperationDeclarations(/*@NonNull*/ Model root) {
+		var pkge2operations = root.getSortedOperations();
+		if (pkge2operations.isEmpty()) return "";
+		'''installOperationDeclarations();'''
 	}
 
 	protected def String installPackages(/*@NonNull*/ Model root) {
