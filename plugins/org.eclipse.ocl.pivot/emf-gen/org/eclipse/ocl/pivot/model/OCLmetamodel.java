@@ -244,9 +244,11 @@ public class OCLmetamodel extends ASResourceImpl
 			installPackages();
 			installClassTypes();
 			installEnumerations();
-			installAggregateTypes0();
+			installGenericAggregateTypes();
+			installOperationDeclarations();
+			installSpecializedAggregateTypes0();
 			installAggregateSuperTypes();
-			installOperations();
+			installOperationBodies();
 			installProperties();
 		}
 
@@ -1073,7 +1075,13 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _UniqueCollection_Variable_F;
 		private CollectionType _UniqueCollection_Vertex_F;
 
-		private void installAggregateTypes0() {
+		private void installGenericAggregateTypes() {
+			Class type;
+
+		}
+
+
+		private void installSpecializedAggregateTypes0() {
 			Class type;
 
 			type = _Bag_Annotation_F = getCollectionType(_Bag, _Annotation, false, 0, -1);
@@ -1545,101 +1553,163 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_UniqueCollection_Variable_F, _Collection_Variable_F);
 			addSuperClass(_UniqueCollection_Vertex_F, _Collection_Vertex_F);
 		}
+		private Operation op_CompleteModel_getOwnedCompletePackage;
+		private Operation op_CompletePackage_getOwnedCompleteClass;
+		private Operation op_Element_allOwnedElements;
+		private Operation op_Element_getValue;
+		private Operation op_OCLExpression_isNonNull;
+		private Operation op_OCLExpression_isNull;
+		private Operation op_OperationCallExp_hasOclVoidOverload;
+		private Operation op_Property_isAttribute;
+		private Operation op_PropertyCallExp_getSpecializedReferredPropertyOwningType;
+		private Operation op_PropertyCallExp_getSpecializedReferredPropertyType;
+		private Operation op_ReferringElement_getReferredElement;
+		private Operation op_SelfType_specializeIn;
+		private Operation op_Type_flattenedType;
+		private Operation op_Type_isClass;
+		private Operation op_Type_isTemplateParameter;
+		private Operation op_Type_specializeIn;
+		private Operation op_TypedElement_CompatibleBody;
+		private Operation op_ValueSpecification_booleanValue;
+		private Operation op_ValueSpecification_integerValue;
+		private Operation op_ValueSpecification_isComputable;
+		private Operation op_ValueSpecification_isNull;
+		private Operation op_ValueSpecification_stringValue;
+		private Operation op_ValueSpecification_unlimitedValue;
 
-		private void installOperations() {
-			List<Operation> ownedOperations;
-			List<Parameter> ownedParameters;
+		private void installOperationDeclarations() {
+			op_CompleteModel_getOwnedCompletePackage = createOperation(_CompleteModel, PivotPackage.Literals.COMPLETE_MODEL___GET_OWNED_COMPLETE_PACKAGE__STRING, null, null);
+			op_CompletePackage_getOwnedCompleteClass = createOperation(_CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE___GET_OWNED_COMPLETE_CLASS__STRING, null, null);
+			op_Element_allOwnedElements = createOperation(_Element, PivotPackage.Literals.ELEMENT___ALL_OWNED_ELEMENTS, null, null);
+			op_Element_getValue = createOperation(_Element, PivotPackage.Literals.ELEMENT___GET_VALUE__TYPE_STRING, null, null);
+			op_OCLExpression_isNonNull = createOperation(_OCLExpression, PivotPackage.Literals.OCL_EXPRESSION___IS_NON_NULL, null, null);
+			op_OCLExpression_isNull = createOperation(_OCLExpression, PivotPackage.Literals.OCL_EXPRESSION___IS_NULL, null, null);
+			op_OperationCallExp_hasOclVoidOverload = createOperation(_OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD, null, null);
+			op_Property_isAttribute = createOperation(_Property, PivotPackage.Literals.PROPERTY___IS_ATTRIBUTE__PROPERTY, null, null);
+			op_PropertyCallExp_getSpecializedReferredPropertyOwningType = createOperation(_PropertyCallExp, PivotPackage.Literals.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_OWNING_TYPE, null, null);
+			op_PropertyCallExp_getSpecializedReferredPropertyType = createOperation(_PropertyCallExp, PivotPackage.Literals.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_TYPE, null, null);
+			op_ReferringElement_getReferredElement = createOperation(_ReferringElement, PivotPackage.Literals.REFERRING_ELEMENT___GET_REFERRED_ELEMENT, null, null);
+			op_SelfType_specializeIn = createOperation(_SelfType, PivotPackage.Literals.SELF_TYPE___SPECIALIZE_IN__CALLEXP_TYPE, null, null);
+			op_Type_flattenedType = createOperation(_Type, PivotPackage.Literals.TYPE___FLATTENED_TYPE, null, null);
+			op_Type_isClass = createOperation(_Type, PivotPackage.Literals.TYPE___IS_CLASS, null, null);
+			op_Type_isTemplateParameter = createOperation(_Type, PivotPackage.Literals.TYPE___IS_TEMPLATE_PARAMETER, null, null);
+			op_Type_specializeIn = createOperation(_Type, PivotPackage.Literals.TYPE___SPECIALIZE_IN__CALLEXP_TYPE, null, null);
+			op_TypedElement_CompatibleBody = createOperation(_TypedElement, PivotPackage.Literals.TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION, null, null);
+			op_ValueSpecification_booleanValue = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___BOOLEAN_VALUE, null, null);
+			op_ValueSpecification_integerValue = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___INTEGER_VALUE, null, null);
+			op_ValueSpecification_isComputable = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___IS_COMPUTABLE, null, null);
+			op_ValueSpecification_isNull = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___IS_NULL, null, null);
+			op_ValueSpecification_stringValue = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___STRING_VALUE, null, null);
+			op_ValueSpecification_unlimitedValue = createOperation(_ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___UNLIMITED_VALUE, null, null);
+		}
+
+		private void installOperationBodies() {
 			Operation operation;
 			Parameter parameter;
 
-			ownedOperations = _CompleteModel.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.COMPLETE_MODEL___GET_OWNED_COMPLETE_PACKAGE__STRING, _CompletePackage, null, null));
+			operation = op_CompleteModel_getOwnedCompletePackage;
+			operation.setType(_CompletePackage);
 			operation.setIsRequired(false);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("name", _String, false));
+			parameter = createParameter(operation, "name", _String, false);
 
-			ownedOperations = _CompletePackage.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.COMPLETE_PACKAGE___GET_OWNED_COMPLETE_CLASS__STRING, _CompleteClass, null, null));
+			operation = op_CompletePackage_getOwnedCompleteClass;
+			operation.setType(_CompleteClass);
 			operation.setIsRequired(false);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("name", _String, false));
+			parameter = createParameter(operation, "name", _String, false);
 
-			ownedOperations = _Element.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.ELEMENT___ALL_OWNED_ELEMENTS, _Set_Element_T, null, null));
+			operation = op_Element_allOwnedElements;
+			operation.setType(_Set_Element_T);
 			createBodyExpression(operation, _Element, "self->closure(oclContents()->selectByKind(Element))", _Set_Element_T);
 			installComment(operation, "The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element.");
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.ELEMENT___GET_VALUE__TYPE_STRING, _Element, null, null));
+
+			operation = op_Element_getValue;
+			operation.setType(_Element);
 			operation.setIsRequired(false);
 			createBodyExpression(operation, _Element, "null", _Element);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("stereotype", _Type, true));
-			ownedParameters.add(parameter = createParameter("propertyName", _String, true));
+			parameter = createParameter(operation, "stereotype", _Type, true);
+			parameter = createParameter(operation, "propertyName", _String, true);
 
-			ownedOperations = _OCLExpression.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.OCL_EXPRESSION___IS_NON_NULL, _Boolean, null, null));
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.OCL_EXPRESSION___IS_NULL, _Boolean, null, null));
+			operation = op_OCLExpression_isNonNull;
+			operation.setType(_Boolean);
 
-			ownedOperations = _OperationCallExp.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD, _Boolean, null, null));
+			operation = op_OCLExpression_isNull;
+			operation.setType(_Boolean);
+
+			operation = op_OperationCallExp_hasOclVoidOverload;
+			operation.setType(_Boolean);
 			createBodyExpression(operation, _OperationCallExp, "false", _Boolean);
 
-			ownedOperations = _Property.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.PROPERTY___IS_ATTRIBUTE__PROPERTY, _Boolean, null, null));
+			operation = op_Property_isAttribute;
+			operation.setType(_Boolean);
 			createBodyExpression(operation, _Property, "--Type.allInstances()->exists(c| c.ownedAttribute->includes(p))\nlet container : ocl::OclElement = oclContainer() in container.oclIsKindOf(Class) and container.oclAsType(Class).ownedProperties->includes(self)", _Boolean);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("p", _Property, true));
+			parameter = createParameter(operation, "p", _Property, true);
 
-			ownedOperations = _PropertyCallExp.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_OWNING_TYPE, _Type, null, null));
+			operation = op_PropertyCallExp_getSpecializedReferredPropertyOwningType;
+			operation.setType(_Type);
 			createBodyExpression(operation, _PropertyCallExp, "referredProperty?.owningClass", _Type);
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_TYPE, _Type, null, null));
+
+			operation = op_PropertyCallExp_getSpecializedReferredPropertyType;
+			operation.setType(_Type);
 			createBodyExpression(operation, _PropertyCallExp, "referredProperty?.type.oclAsType(Class)", _Type);
 
-			ownedOperations = _ReferringElement.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.REFERRING_ELEMENT___GET_REFERRED_ELEMENT, _Element, null, null));
+			operation = op_ReferringElement_getReferredElement;
+			operation.setType(_Element);
 
-			ownedOperations = _SelfType.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.SELF_TYPE___SPECIALIZE_IN__CALLEXP_TYPE, _Type, null, null));
+			operation = op_SelfType_specializeIn;
+			operation.setType(_Type);
 			createBodyExpression(operation, _SelfType, "selfType", _Type);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("expr", _CallExp, true));
-			ownedParameters.add(parameter = createParameter("selfType", _Type, true));
+			parameter = createParameter(operation, "expr", _CallExp, true);
+			parameter = createParameter(operation, "selfType", _Type, true);
 
-			ownedOperations = _Type.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.TYPE___FLATTENED_TYPE, _Type, null, null));
+			operation = op_Type_flattenedType;
+			operation.setType(_Type);
 			operation.setIsRequired(false);
 			createBodyExpression(operation, _Type, "self", _Type);
 			installComment(operation, "Return the type to be used as the element type when this is flattened. For most types this is self.\nFor a CollectionType, it is the transitive element type.");
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.TYPE___IS_CLASS, _Class, null, null));
+
+			operation = op_Type_isClass;
+			operation.setType(_Class);
 			operation.setIsRequired(false);
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.TYPE___IS_TEMPLATE_PARAMETER, _TemplateParameter, null, null));
+
+			operation = op_Type_isTemplateParameter;
+			operation.setType(_TemplateParameter);
 			operation.setIsRequired(false);
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.TYPE___SPECIALIZE_IN__CALLEXP_TYPE, _Type, null, null));
+
+			operation = op_Type_specializeIn;
+			operation.setType(_Type);
 			createBodyExpression(operation, _Type, "self", _Type);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("expr", _CallExp, true));
-			ownedParameters.add(parameter = createParameter("selfType", _Type, true));
+			parameter = createParameter(operation, "expr", _CallExp, true);
+			parameter = createParameter(operation, "selfType", _Type, true);
 
-			ownedOperations = _TypedElement.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION, _Boolean, null, null));
+			operation = op_TypedElement_CompatibleBody;
+			operation.setType(_Boolean);
 			createBodyExpression(operation, _TypedElement, "bodySpecification.type?.conformsTo(self.type)", _Boolean);
-			ownedParameters = operation.getOwnedParameters();
-			ownedParameters.add(parameter = createParameter("bodySpecification", _ValueSpecification, true));
+			parameter = createParameter(operation, "bodySpecification", _ValueSpecification, true);
 
-			ownedOperations = _ValueSpecification.getOwnedOperations();
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___BOOLEAN_VALUE, _Boolean, null, null));
+			operation = op_ValueSpecification_booleanValue;
+			operation.setType(_Boolean);
 			installComment(operation, "The query booleanValue() gives a single Boolean value when one can be computed.");
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___INTEGER_VALUE, _Integer, null, null));
+
+			operation = op_ValueSpecification_integerValue;
+			operation.setType(_Integer);
 			operation.setIsRequired(false);
 			installComment(operation, "The query integerValue() gives a single Integer value when one can be computed.");
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___IS_COMPUTABLE, _Boolean, null, null));
+
+			operation = op_ValueSpecification_isComputable;
+			operation.setType(_Boolean);
 			installComment(operation, "The query isComputable() determines whether a value specification can be computed in a model. This operation cannot be fully defined in OCL. A conforming implementation is expected to deliver true for this operation for all ValueSpecifications that it can compute, and to compute all of those for which the operation is true. A conforming implementation is expected to be able to compute at least the value of all LiteralSpecifications.");
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___IS_NULL, _Boolean, null, null));
+
+			operation = op_ValueSpecification_isNull;
+			operation.setType(_Boolean);
 			installComment(operation, "The query isNull() returns true when it can be computed that the value is null.");
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___STRING_VALUE, _String, null, null));
+
+			operation = op_ValueSpecification_stringValue;
+			operation.setType(_String);
 			operation.setIsRequired(false);
 			installComment(operation, "The query stringValue() gives a single String value when one can be computed.");
-			ownedOperations.add(operation = createOperation(PivotPackage.Literals.VALUE_SPECIFICATION___UNLIMITED_VALUE, _UnlimitedNatural, null, null));
+
+			operation = op_ValueSpecification_unlimitedValue;
+			operation.setType(_UnlimitedNatural);
 			operation.setIsRequired(false);
 			installComment(operation, "The query unlimitedValue() gives a single UnlimitedNatural value when one can be computed.");
 		}

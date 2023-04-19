@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
@@ -51,9 +52,11 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -279,11 +282,12 @@ public class OCLstdlib extends ASResourceImpl
 			installTemplateParameters();
 			installClassTypes();
 			installPrimitiveTypes();
-			installAggregateTypes0();
+			installGenericAggregateTypes();
 			installOperationDeclarations();
 			installIterationDeclarations();
-			installAggregateTypes1();
-			installAggregateTypes2();
+			installSpecializedAggregateTypes0();
+			installSpecializedAggregateTypes1();
+			installSpecializedAggregateTypes2();
 			installAggregateSuperTypes();
 			installOperationBodies();
 			installIterationBodies();
@@ -591,6 +595,7 @@ public class OCLstdlib extends ASResourceImpl
 		private LambdaType _Lambda_Bag_T_Bag_collectNested_V;
 		private LambdaType _Lambda_Bag_T_Bag_collect_V;
 		private LambdaType _Lambda_Bag_T_OclAny;
+		private LambdaType _Lambda_Bag_T_Set;
 		private LambdaType _Lambda_Collection_T_Boolean;
 		private LambdaType _Lambda_Collection_T_Collection_collectBy_V;
 		private LambdaType _Lambda_Collection_T_Collection_collectNested_V;
@@ -605,81 +610,21 @@ public class OCLstdlib extends ASResourceImpl
 		private LambdaType _Lambda_Map_K_OclAny;
 		private LambdaType _Lambda_OrderedSet_T_Boolean;
 		private LambdaType _Lambda_OrderedSet_T_OclAny;
+		private LambdaType _Lambda_OrderedSet_T_OrderedSet;
 		private LambdaType _Lambda_OrderedSet_T_OrderedSet_collectNested_V;
 		private LambdaType _Lambda_OrderedSet_T_OrderedSet_collect_V;
 		private LambdaType _Lambda_Sequence_T_Boolean;
 		private LambdaType _Lambda_Sequence_T_OclAny;
+		private LambdaType _Lambda_Sequence_T_OrderedSet;
 		private LambdaType _Lambda_Sequence_T_Sequence_collectNested_V;
 		private LambdaType _Lambda_Sequence_T_Sequence_collect_V;
 		private LambdaType _Lambda_Set_T_Boolean;
 		private LambdaType _Lambda_Set_T_OclAny;
+		private LambdaType _Lambda_Set_T_Set;
 		private LambdaType _Lambda_Set_T_Set_collectNested_V;
 		private LambdaType _Lambda_Set_T_Set_collect_V;
 		private LambdaType _Lambda_UniqueCollection_T_OclAny;
 		private TupleType _Tuple;
-		private CollectionType _Bag_Bag_T;
-		private CollectionType _Collection_Collection_T;
-		private MapType _Map_Map_K_Map_V;
-		private CollectionType _OrderedCollection_OrderedCollection_T;
-		private CollectionType _OrderedSet_OrderedSet_T;
-		private CollectionType _Sequence_Sequence_T;
-		private CollectionType _Set_Set_T;
-		private CollectionType _UniqueCollection_UniqueCollection_T;
-
-		private void installAggregateTypes0() {
-			Class type;
-
-			type = _Lambda_Bag_T_Boolean = getLambdaType("Lambda", tp_Bag_T, _Boolean);
-			type = _Lambda_Bag_T_Bag_collectNested_V = getLambdaType("Lambda", tp_Bag_T, tp_Bag_collectNested_V);
-			type = _Lambda_Bag_T_Bag_collect_V = getLambdaType("Lambda", tp_Bag_T, tp_Bag_collect_V);
-			type = _Lambda_Bag_T_OclAny = getLambdaType("Lambda", tp_Bag_T, _OclAny);
-			type = _Lambda_Collection_T_Boolean = getLambdaType("Lambda", tp_Collection_T, _Boolean);
-			type = _Lambda_Collection_T_Collection_collectBy_V = getLambdaType("Lambda", tp_Collection_T, tp_Collection_collectBy_V);
-			type = _Lambda_Collection_T_Collection_collectNested_V = getLambdaType("Lambda", tp_Collection_T, tp_Collection_collectNested_V);
-			type = _Lambda_Collection_T_Collection_collect_V = getLambdaType("Lambda", tp_Collection_T, tp_Collection_collect_V);
-			type = _Lambda_Collection_T_Collection_iterate_Tacc = getLambdaType("Lambda", tp_Collection_T, tp_Collection_iterate_Tacc);
-			type = _Lambda_Collection_T_OclAny = getLambdaType("Lambda", tp_Collection_T, _OclAny);
-			type = _Lambda_Map_K_Boolean = getLambdaType("Lambda", tp_Map_K, _Boolean);
-			type = _Lambda_Map_K_Map_collectBy_V2 = getLambdaType("Lambda", tp_Map_K, tp_Map_collectBy_V2);
-			type = _Lambda_Map_K_Map_collectNested_V2 = getLambdaType("Lambda", tp_Map_K, tp_Map_collectNested_V2);
-			type = _Lambda_Map_K_Map_collect_V2 = getLambdaType("Lambda", tp_Map_K, tp_Map_collect_V2);
-			type = _Lambda_Map_K_Map_iterate_Tacc = getLambdaType("Lambda", tp_Map_K, tp_Map_iterate_Tacc);
-			type = _Lambda_Map_K_OclAny = getLambdaType("Lambda", tp_Map_K, _OclAny);
-			type = _Lambda_OrderedSet_T_Boolean = getLambdaType("Lambda", tp_OrderedSet_T, _Boolean);
-			type = _Lambda_OrderedSet_T_OclAny = getLambdaType("Lambda", tp_OrderedSet_T, _OclAny);
-			type = _Lambda_OrderedSet_T_OrderedSet_collectNested_V = getLambdaType("Lambda", tp_OrderedSet_T, tp_OrderedSet_collectNested_V);
-			type = _Lambda_OrderedSet_T_OrderedSet_collect_V = getLambdaType("Lambda", tp_OrderedSet_T, tp_OrderedSet_collect_V);
-			type = _Lambda_Sequence_T_Boolean = getLambdaType("Lambda", tp_Sequence_T, _Boolean);
-			type = _Lambda_Sequence_T_OclAny = getLambdaType("Lambda", tp_Sequence_T, _OclAny);
-			type = _Lambda_Sequence_T_Sequence_collectNested_V = getLambdaType("Lambda", tp_Sequence_T, tp_Sequence_collectNested_V);
-			type = _Lambda_Sequence_T_Sequence_collect_V = getLambdaType("Lambda", tp_Sequence_T, tp_Sequence_collect_V);
-			type = _Lambda_Set_T_Boolean = getLambdaType("Lambda", tp_Set_T, _Boolean);
-			type = _Lambda_Set_T_OclAny = getLambdaType("Lambda", tp_Set_T, _OclAny);
-			type = _Lambda_Set_T_Set_collectNested_V = getLambdaType("Lambda", tp_Set_T, tp_Set_collectNested_V);
-			type = _Lambda_Set_T_Set_collect_V = getLambdaType("Lambda", tp_Set_T, tp_Set_collect_V);
-			type = _Lambda_UniqueCollection_T_OclAny = getLambdaType("Lambda", tp_UniqueCollection_T, _OclAny);
-			type = _Tuple = getTupleType("Tuple",
-				createProperty("first", tp_Collection_T),
-				createProperty("second", tp_Collection_product_T2));
-			type = _Bag_Bag_T = createCollectionType(ocl, OCLstdlibPackage.Literals.BAG, tp_Bag_T, false, 0, -1);
-			installComment(type, "A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.\nThere is no ordering defined on the elements in a bag.\nBag is itself an instance of the metatype BagType.");
-			type = _Collection_Collection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.COLLECTION, tp_Collection_T, false, 0, -1);
-			installComment(type, "Collection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
-			type = _Map_Map_K_Map_V = createMapType(ocl, OCLstdlibPackage.Literals.MAP, tp_Map_K, true, tp_Map_V, true);
-			installComment(type, "A Map provides a Set of key values, each of which has an associated value.\nKeys and values may be null, but neither may be invalid.");
-			type = _OrderedCollection_OrderedCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_COLLECTION, tp_OrderedCollection_T, false, 0, -1);
-			installComment(type, "The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence\ncollections for which the elements are ordered.\nThe common supertype of OrderedCollection is Collection.");
-			type = _OrderedSet_OrderedSet_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_SET, tp_OrderedSet_T, false, 0, -1);
-			installComment(type, "The OrderedSet is a Set, the elements of which are ordered.\nIt contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.\nAn OrderedSet is not a subtype of Set, neither a subtype of Sequence.\nThe common supertype of Sets and OrderedSets is Collection.");
-			type = _Sequence_Sequence_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SEQUENCE, tp_Sequence_T, false, 0, -1);
-			installComment(type, "A sequence is a collection where the elements are ordered.\nAn element may be part of a sequence more than once.\nSequence is itself an instance of the metatype SequenceType.\nA Sentence is not a subtype of Bag.\nThe common supertype of Sentence and Bags is Collection.");
-			type = _Set_Set_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SET, tp_Set_T, false, 0, -1);
-			type = _UniqueCollection_UniqueCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T, false, 0, -1);
-			installComment(type, "The UniqueCollection type provides the shared functionality of the OrderedSet and Set\ncollections for which the elements are unique.\nThe common supertype of UniqueCollection is Collection.");
-		}
-
-		private LambdaType _Lambda_OrderedSet_T_OrderedSet;
-		private LambdaType _Lambda_Set_T_Set;
 		private CollectionType _Bag_Bag_collectNested_V_F;
 		private CollectionType _Bag_Bag_collect_V_F;
 		private CollectionType _Bag_Bag_flatten_T2_F;
@@ -694,6 +639,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Bag_OclInvalid_F;
 		private CollectionType _Bag_Set_collectNested_V_F;
 		private CollectionType _Bag_Set_collect_V_F;
+		private CollectionType _Bag_Bag_T;
 		private CollectionType _Collection_Integer_F;
 		private CollectionType _Collection_String_F;
 		private CollectionType _Collection_Tuple_F;
@@ -743,6 +689,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Collection_Set_selectByType_TT_F;
 		private CollectionType _Collection_Set_T_F;
 		private CollectionType _Collection_UniqueCollection_T_F;
+		private CollectionType _Collection_Collection_T;
 		private MapType _Map_Collection_T_F_Collection_collectBy_V_F;
 		private MapType _Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T;
 		private MapType _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T;
@@ -751,6 +698,7 @@ public class OCLstdlib extends ASResourceImpl
 		private MapType _Map_Map_K_F_Map_collectBy_V2_F;
 		private MapType _Map_Map_K_F_Map_collectNested_V2_F;
 		private MapType _Map_Map_K_F_Map_V_F;
+		private MapType _Map_Map_K_Map_V;
 		private CollectionType _OrderedCollection_Integer_F;
 		private CollectionType _OrderedCollection_String_F;
 		private CollectionType _OrderedCollection_Bag_T_F;
@@ -769,6 +717,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _OrderedCollection_Sequence_T_F;
 		private CollectionType _OrderedCollection_Set_T_F;
 		private CollectionType _OrderedCollection_UniqueCollection_T_F;
+		private CollectionType _OrderedCollection_OrderedCollection_T;
 		private CollectionType _OrderedSet_Collection_T_F;
 		private CollectionType _OrderedSet_OrderedSet_flatten_T2_F;
 		private CollectionType _OrderedSet_OrderedSet_selectByKind_TT_T;
@@ -776,6 +725,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _OrderedSet_Sequence_T_F;
 		private CollectionType _OrderedSet_Set_T_F;
 		private CollectionType _OrderedSet_UniqueCollection_T_F;
+		private CollectionType _OrderedSet_OrderedSet_T;
 		private CollectionType _Sequence_Integer_T;
 		private CollectionType _Sequence_String_T;
 		private CollectionType _Sequence_Bag_T_F;
@@ -787,6 +737,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Sequence_Sequence_flatten_T2_F;
 		private CollectionType _Sequence_Sequence_selectByKind_TT_T;
 		private CollectionType _Sequence_Sequence_selectByType_TT_T;
+		private CollectionType _Sequence_Sequence_T;
 		private CollectionType _Set_Tuple_T;
 		private CollectionType _Set_Bag_T_F;
 		private CollectionType _Set_Collection_T_F;
@@ -798,6 +749,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Set_Set_selectByKind_TT_T;
 		private CollectionType _Set_Set_selectByType_TT_T;
 		private CollectionType _Set_UniqueCollection_T_F;
+		private CollectionType _Set_Set_T;
 		private CollectionType _UniqueCollection_Tuple_F;
 		private CollectionType _UniqueCollection_Bag_T_F;
 		private CollectionType _UniqueCollection_Collection_T_F;
@@ -815,8 +767,60 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _UniqueCollection_Set_selectByType_TT_F;
 		private CollectionType _UniqueCollection_Set_T_F;
 		private CollectionType _UniqueCollection_UniqueCollection_T_F;
+		private CollectionType _UniqueCollection_UniqueCollection_T;
 
-		private void installAggregateTypes1() {
+		private void installGenericAggregateTypes() {
+			Class type;
+
+			type = _Bag_Bag_T = createCollectionType(ocl, OCLstdlibPackage.Literals.BAG, tp_Bag_T, false, 0, -1);
+			type = _Collection_Collection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.COLLECTION, tp_Collection_T, false, 0, -1);
+			type = _Map_Map_K_Map_V = createMapType(ocl, OCLstdlibPackage.Literals.MAP, tp_Map_K, true, tp_Map_V, true);
+			type = _OrderedCollection_OrderedCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_COLLECTION, tp_OrderedCollection_T, false, 0, -1);
+			type = _OrderedSet_OrderedSet_T = createCollectionType(ocl, OCLstdlibPackage.Literals.ORDERED_SET, tp_OrderedSet_T, false, 0, -1);
+			type = _Sequence_Sequence_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SEQUENCE, tp_Sequence_T, false, 0, -1);
+			type = _Set_Set_T = createCollectionType(ocl, OCLstdlibPackage.Literals.SET, tp_Set_T, false, 0, -1);
+			type = _UniqueCollection_UniqueCollection_T = createCollectionType(ocl, OCLstdlibPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T, false, 0, -1);
+		}
+
+
+		private void installSpecializedAggregateTypes0() {
+			Class type;
+
+			type = _Lambda_Bag_T_Boolean = getLambdaType("Lambda", tp_Bag_T, _Boolean);
+			type = _Lambda_Bag_T_Bag_collectNested_V = getLambdaType("Lambda", tp_Bag_T, tp_Bag_collectNested_V);
+			type = _Lambda_Bag_T_Bag_collect_V = getLambdaType("Lambda", tp_Bag_T, tp_Bag_collect_V);
+			type = _Lambda_Bag_T_OclAny = getLambdaType("Lambda", tp_Bag_T, _OclAny);
+			type = _Lambda_Collection_T_Boolean = getLambdaType("Lambda", tp_Collection_T, _Boolean);
+			type = _Lambda_Collection_T_Collection_collectBy_V = getLambdaType("Lambda", tp_Collection_T, tp_Collection_collectBy_V);
+			type = _Lambda_Collection_T_Collection_collectNested_V = getLambdaType("Lambda", tp_Collection_T, tp_Collection_collectNested_V);
+			type = _Lambda_Collection_T_Collection_collect_V = getLambdaType("Lambda", tp_Collection_T, tp_Collection_collect_V);
+			type = _Lambda_Collection_T_Collection_iterate_Tacc = getLambdaType("Lambda", tp_Collection_T, tp_Collection_iterate_Tacc);
+			type = _Lambda_Collection_T_OclAny = getLambdaType("Lambda", tp_Collection_T, _OclAny);
+			type = _Lambda_Map_K_Boolean = getLambdaType("Lambda", tp_Map_K, _Boolean);
+			type = _Lambda_Map_K_Map_collectBy_V2 = getLambdaType("Lambda", tp_Map_K, tp_Map_collectBy_V2);
+			type = _Lambda_Map_K_Map_collectNested_V2 = getLambdaType("Lambda", tp_Map_K, tp_Map_collectNested_V2);
+			type = _Lambda_Map_K_Map_collect_V2 = getLambdaType("Lambda", tp_Map_K, tp_Map_collect_V2);
+			type = _Lambda_Map_K_Map_iterate_Tacc = getLambdaType("Lambda", tp_Map_K, tp_Map_iterate_Tacc);
+			type = _Lambda_Map_K_OclAny = getLambdaType("Lambda", tp_Map_K, _OclAny);
+			type = _Lambda_OrderedSet_T_Boolean = getLambdaType("Lambda", tp_OrderedSet_T, _Boolean);
+			type = _Lambda_OrderedSet_T_OclAny = getLambdaType("Lambda", tp_OrderedSet_T, _OclAny);
+			type = _Lambda_OrderedSet_T_OrderedSet_collectNested_V = getLambdaType("Lambda", tp_OrderedSet_T, tp_OrderedSet_collectNested_V);
+			type = _Lambda_OrderedSet_T_OrderedSet_collect_V = getLambdaType("Lambda", tp_OrderedSet_T, tp_OrderedSet_collect_V);
+			type = _Lambda_Sequence_T_Boolean = getLambdaType("Lambda", tp_Sequence_T, _Boolean);
+			type = _Lambda_Sequence_T_OclAny = getLambdaType("Lambda", tp_Sequence_T, _OclAny);
+			type = _Lambda_Sequence_T_Sequence_collectNested_V = getLambdaType("Lambda", tp_Sequence_T, tp_Sequence_collectNested_V);
+			type = _Lambda_Sequence_T_Sequence_collect_V = getLambdaType("Lambda", tp_Sequence_T, tp_Sequence_collect_V);
+			type = _Lambda_Set_T_Boolean = getLambdaType("Lambda", tp_Set_T, _Boolean);
+			type = _Lambda_Set_T_OclAny = getLambdaType("Lambda", tp_Set_T, _OclAny);
+			type = _Lambda_Set_T_Set_collectNested_V = getLambdaType("Lambda", tp_Set_T, tp_Set_collectNested_V);
+			type = _Lambda_Set_T_Set_collect_V = getLambdaType("Lambda", tp_Set_T, tp_Set_collect_V);
+			type = _Lambda_UniqueCollection_T_OclAny = getLambdaType("Lambda", tp_UniqueCollection_T, _OclAny);
+			type = _Tuple = getTupleType("Tuple",
+				createProperty("first", tp_Collection_T),
+				createProperty("second", tp_Collection_product_T2));
+		}
+
+		private void installSpecializedAggregateTypes1() {
 			Class type;
 
 			type = _Lambda_OrderedSet_T_OrderedSet = getLambdaType("Lambda", tp_OrderedSet_T, _OrderedSet_OrderedSet_T);
@@ -958,10 +962,7 @@ public class OCLstdlib extends ASResourceImpl
 			type = _UniqueCollection_UniqueCollection_T_F = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_UniqueCollection_T, false, 0, -1);
 		}
 
-		private LambdaType _Lambda_Bag_T_Set;
-		private LambdaType _Lambda_Sequence_T_OrderedSet;
-
-		private void installAggregateTypes2() {
+		private void installSpecializedAggregateTypes2() {
 			Class type;
 
 			type = _Lambda_Bag_T_Set = getLambdaType("Lambda", tp_Bag_T, _Set_Bag_T_F);
@@ -973,6 +974,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Lambda_Bag_T_Bag_collectNested_V, _OclLambda);
 			addSuperClass(_Lambda_Bag_T_Bag_collect_V, _OclLambda);
 			addSuperClass(_Lambda_Bag_T_OclAny, _OclLambda);
+			addSuperClass(_Lambda_Bag_T_Set, _OclLambda);
 			addSuperClass(_Lambda_Collection_T_Boolean, _OclLambda);
 			addSuperClass(_Lambda_Collection_T_Collection_collectBy_V, _OclLambda);
 			addSuperClass(_Lambda_Collection_T_Collection_collectNested_V, _OclLambda);
@@ -987,29 +989,21 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Lambda_Map_K_OclAny, _OclLambda);
 			addSuperClass(_Lambda_OrderedSet_T_Boolean, _OclLambda);
 			addSuperClass(_Lambda_OrderedSet_T_OclAny, _OclLambda);
+			addSuperClass(_Lambda_OrderedSet_T_OrderedSet, _OclLambda);
 			addSuperClass(_Lambda_OrderedSet_T_OrderedSet_collectNested_V, _OclLambda);
 			addSuperClass(_Lambda_OrderedSet_T_OrderedSet_collect_V, _OclLambda);
 			addSuperClass(_Lambda_Sequence_T_Boolean, _OclLambda);
 			addSuperClass(_Lambda_Sequence_T_OclAny, _OclLambda);
+			addSuperClass(_Lambda_Sequence_T_OrderedSet, _OclLambda);
 			addSuperClass(_Lambda_Sequence_T_Sequence_collectNested_V, _OclLambda);
 			addSuperClass(_Lambda_Sequence_T_Sequence_collect_V, _OclLambda);
 			addSuperClass(_Lambda_Set_T_Boolean, _OclLambda);
 			addSuperClass(_Lambda_Set_T_OclAny, _OclLambda);
+			addSuperClass(_Lambda_Set_T_Set, _OclLambda);
 			addSuperClass(_Lambda_Set_T_Set_collectNested_V, _OclLambda);
 			addSuperClass(_Lambda_Set_T_Set_collect_V, _OclLambda);
 			addSuperClass(_Lambda_UniqueCollection_T_OclAny, _OclLambda);
 			addSuperClass(_Tuple, _OclTuple);
-			addSuperClass(_Bag_Bag_T, _Collection_Bag_T_F);
-			addSuperClass(_Collection_Collection_T, _OclAny);
-			addSuperClass(_Map_Map_K_Map_V, _OclAny);
-			addSuperClass(_OrderedCollection_OrderedCollection_T, _Collection_OrderedCollection_T_F);
-			addSuperClass(_OrderedSet_OrderedSet_T, _OrderedCollection_OrderedSet_T_F);
-			addSuperClass(_OrderedSet_OrderedSet_T, _UniqueCollection_OrderedSet_T_F);
-			addSuperClass(_Sequence_Sequence_T, _OrderedCollection_Sequence_T_F);
-			addSuperClass(_Set_Set_T, _UniqueCollection_Set_T_F);
-			addSuperClass(_UniqueCollection_UniqueCollection_T, _Collection_UniqueCollection_T_F);
-			addSuperClass(_Lambda_OrderedSet_T_OrderedSet, _OclLambda);
-			addSuperClass(_Lambda_Set_T_Set, _OclLambda);
 			addSuperClass(_Bag_Bag_collectNested_V_F, _Collection_Bag_collectNested_V_F);
 			addSuperClass(_Bag_Bag_collect_V_F, _Collection_Bag_collect_V_F);
 			addSuperClass(_Bag_Bag_flatten_T2_F, _Collection_Bag_flatten_T2_F);
@@ -1024,6 +1018,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Bag_OclInvalid_F, _Collection_OclInvalid_F);
 			addSuperClass(_Bag_Set_collectNested_V_F, _Collection_Set_collectNested_V_F);
 			addSuperClass(_Bag_Set_collect_V_F, _Collection_Set_collect_V_F);
+			addSuperClass(_Bag_Bag_T, _Collection_Bag_T_F);
 			addSuperClass(_Collection_Integer_F, _OclAny);
 			addSuperClass(_Collection_String_F, _OclAny);
 			addSuperClass(_Collection_Tuple_F, _OclAny);
@@ -1073,6 +1068,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Collection_Set_selectByType_TT_F, _OclAny);
 			addSuperClass(_Collection_Set_T_F, _OclAny);
 			addSuperClass(_Collection_UniqueCollection_T_F, _OclAny);
+			addSuperClass(_Collection_Collection_T, _OclAny);
 			addSuperClass(_Map_Collection_T_F_Collection_collectBy_V_F, _OclAny);
 			addSuperClass(_Map_Map_excludesMap_K2_T_Map_excludesMap_V2_T, _OclAny);
 			addSuperClass(_Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T, _OclAny);
@@ -1081,6 +1077,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Map_Map_K_F_Map_collectBy_V2_F, _OclAny);
 			addSuperClass(_Map_Map_K_F_Map_collectNested_V2_F, _OclAny);
 			addSuperClass(_Map_Map_K_F_Map_V_F, _OclAny);
+			addSuperClass(_Map_Map_K_Map_V, _OclAny);
 			addSuperClass(_OrderedCollection_Integer_F, _Collection_Integer_F);
 			addSuperClass(_OrderedCollection_String_F, _Collection_String_F);
 			addSuperClass(_OrderedCollection_Bag_T_F, _Collection_Bag_T_F);
@@ -1099,6 +1096,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_OrderedCollection_Sequence_T_F, _Collection_Sequence_T_F);
 			addSuperClass(_OrderedCollection_Set_T_F, _Collection_Set_T_F);
 			addSuperClass(_OrderedCollection_UniqueCollection_T_F, _Collection_UniqueCollection_T_F);
+			addSuperClass(_OrderedCollection_OrderedCollection_T, _Collection_OrderedCollection_T_F);
 			addSuperClass(_OrderedSet_Collection_T_F, _OrderedCollection_Collection_T_F);
 			addSuperClass(_OrderedSet_Collection_T_F, _UniqueCollection_Collection_T_F);
 			addSuperClass(_OrderedSet_OrderedSet_flatten_T2_F, _OrderedCollection_OrderedSet_flatten_T2_F);
@@ -1113,6 +1111,8 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_OrderedSet_Set_T_F, _UniqueCollection_Set_T_F);
 			addSuperClass(_OrderedSet_UniqueCollection_T_F, _OrderedCollection_UniqueCollection_T_F);
 			addSuperClass(_OrderedSet_UniqueCollection_T_F, _UniqueCollection_UniqueCollection_T_F);
+			addSuperClass(_OrderedSet_OrderedSet_T, _OrderedCollection_OrderedSet_T_F);
+			addSuperClass(_OrderedSet_OrderedSet_T, _UniqueCollection_OrderedSet_T_F);
 			addSuperClass(_Sequence_Integer_T, _OrderedCollection_Integer_F);
 			addSuperClass(_Sequence_String_T, _OrderedCollection_String_F);
 			addSuperClass(_Sequence_Bag_T_F, _OrderedCollection_Bag_T_F);
@@ -1124,6 +1124,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Sequence_Sequence_flatten_T2_F, _OrderedCollection_Sequence_flatten_T2_F);
 			addSuperClass(_Sequence_Sequence_selectByKind_TT_T, _OrderedCollection_Sequence_selectByKind_TT_F);
 			addSuperClass(_Sequence_Sequence_selectByType_TT_T, _OrderedCollection_Sequence_selectByType_TT_F);
+			addSuperClass(_Sequence_Sequence_T, _OrderedCollection_Sequence_T_F);
 			addSuperClass(_Set_Tuple_T, _UniqueCollection_Tuple_F);
 			addSuperClass(_Set_Bag_T_F, _UniqueCollection_Bag_T_F);
 			addSuperClass(_Set_Collection_T_F, _UniqueCollection_Collection_T_F);
@@ -1135,6 +1136,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Set_Set_selectByKind_TT_T, _UniqueCollection_Set_selectByKind_TT_F);
 			addSuperClass(_Set_Set_selectByType_TT_T, _UniqueCollection_Set_selectByType_TT_F);
 			addSuperClass(_Set_UniqueCollection_T_F, _UniqueCollection_UniqueCollection_T_F);
+			addSuperClass(_Set_Set_T, _UniqueCollection_Set_T_F);
 			addSuperClass(_UniqueCollection_Tuple_F, _Collection_Tuple_F);
 			addSuperClass(_UniqueCollection_Bag_T_F, _Collection_Bag_T_F);
 			addSuperClass(_UniqueCollection_Collection_T_F, _Collection_Collection_T_F);
@@ -1152,8 +1154,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_UniqueCollection_Set_selectByType_TT_F, _Collection_Set_selectByType_TT_F);
 			addSuperClass(_UniqueCollection_Set_T_F, _Collection_Set_T_F);
 			addSuperClass(_UniqueCollection_UniqueCollection_T_F, _Collection_UniqueCollection_T_F);
-			addSuperClass(_Lambda_Bag_T_Set, _OclLambda);
-			addSuperClass(_Lambda_Sequence_T_OrderedSet, _OclLambda);
+			addSuperClass(_UniqueCollection_UniqueCollection_T, _Collection_UniqueCollection_T_F);
 		}
 		private Operation op_Boolean__lt__gt_;
 		private Operation op_Boolean__eq_;

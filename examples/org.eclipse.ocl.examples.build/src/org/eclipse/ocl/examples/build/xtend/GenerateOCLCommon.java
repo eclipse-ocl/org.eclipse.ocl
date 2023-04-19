@@ -221,6 +221,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		private final @NonNull Set<@NonNull NamedElement> allReferences = new HashSet<>();
 
 		private final @NonNull Map<@NonNull DataType, @NonNull List<@NonNull DataType>> using2useds = new HashMap<>();
+		private final @NonNull List<@NonNull DataType> aggregateTypes = new ArrayList<>();
 		private final @NonNull List<@NonNull List<@NonNull DataType>> aggregateTypesPerPass = new ArrayList<>();
 
 		protected ContentAnalysis(@NonNull GenerateOCLCommon context, @NonNull Model thisModel) {
@@ -254,7 +255,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				assert old == null;
 			}
 			if ((primaryUsedElement != null) && !usedElements.contains(primaryUsedElement)) {
-				System.out.println("\taddDependency: " + NameUtil.debugSimpleName(primaryUsedType) + " : " + primaryUsedType + " => " + NameUtil.debugSimpleName(primaryUsedElement) + " : " + primaryUsedElement);
+			//	System.out.println("\taddDependency: " + NameUtil.debugSimpleName(primaryUsedType) + " : " + primaryUsedType + " => " + NameUtil.debugSimpleName(primaryUsedElement) + " : " + primaryUsedElement);
 				usedElements.add(primaryUsedElement);
 				assert primaryUsedElement != primaryUsingElement;
 				if (!using2useds.containsKey(primaryUsedElement)) {
@@ -318,6 +319,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			analyzeDependencies(thisModel);
 			int pass = 0;
+			Collections.sort(aggregateTypes, monikerComparator);
 			for (@NonNull List<@NonNull DataType> aggregateTypes : aggregateTypesPerPass) {
 				Collections.sort(aggregateTypes, monikerComparator);
 			//	for (@NonNull DataType aggregateType : aggregateTypes) {
@@ -338,6 +340,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			Set<@NonNull DataType> keysToGo1 = using2useds.keySet();
 			Set<@NonNull DataType> keysToGo = new HashSet(keysToGo1);
 			keysToGo.removeAll(keysDone);
+			aggregateTypes.addAll(keysToGo);
 		//	for (@NonNull NamedElement key : keysToGo) {
 		//		NamedElement primaryKey = context.environmentFactory.getMetamodelManager().getPrimaryElement(key);
 		//		assert primaryKey == key;
@@ -468,7 +471,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType asCollectionType) {
- 			System.out.println("analyze: " + NameUtil.debugSimpleName(asCollectionType) + " : " + asCollectionType);
+ 		//	System.out.println("analyze: " + NameUtil.debugSimpleName(asCollectionType) + " : " + asCollectionType);
 			doSuperClasses(asCollectionType);
 			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asCollectionType)) {
 			//	addDependency(asCollectionType, superClass);
@@ -1026,6 +1029,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		} else {
 			return elem.getName() + "()";
 		}
+	}
+
+	protected @NonNull List<@NonNull DataType> getSortedAggregateTypes(@NonNull Model root) {
+		return contentAnalysis.aggregateTypes;
 	}
 
 	protected @NonNull List<@NonNull List<@NonNull DataType>> getSortedAggregateTypesPerPass(@NonNull Model root) {

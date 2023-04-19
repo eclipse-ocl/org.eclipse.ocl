@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
@@ -309,6 +310,16 @@ public abstract class AbstractContents extends PivotUtil
 		initTemplateParameters(asOperation, templateParameters);
 		asOperation.setImplementationClass(implementationClass);
 		asOperation.setImplementation(implementation);
+		asClass.getOwnedOperations().add(asOperation);
+		return asOperation;
+	}
+
+	protected @NonNull Operation createOperation(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, /*@NonNull*/ EOperation eOperation, @Nullable String implementationClass, @Nullable LibraryFeature implementation) {
+		Operation asOperation = PivotFactory.eINSTANCE.createOperation();
+		asOperation.setName(eOperation.getName());
+		asOperation.setImplementationClass(implementationClass);
+		asOperation.setImplementation(implementation);
+		((PivotObjectImpl)asOperation).setESObject(eOperation);
 		asClass.getOwnedOperations().add(asOperation);
 		return asOperation;
 	}

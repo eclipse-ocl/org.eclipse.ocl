@@ -79,30 +79,43 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String defineAggregateTypes(/*@NonNull*/ Model root) {
+		var sortedAggregateTypes = root.getSortedAggregateTypes();
+		var sortedAggregateTypesPerPass = root.getSortedAggregateTypesPerPass();
 		'''
-		«var sortedAggregateTypesPerPass = root.getSortedAggregateTypesPerPass()»«FOR aggregateTypes : sortedAggregateTypesPerPass»«var pass = sortedAggregateTypesPerPass.indexOf(aggregateTypes)»
 
-		«FOR aggregateType : aggregateTypes»
+		«FOR aggregateType : sortedAggregateTypes»
 			«declareAggregateType(aggregateType)»
 		«ENDFOR»
 
-		private void installAggregateTypes«pass»() {
+		private void installGenericAggregateTypes() {
+			Class type;
+			
+			«FOR aggregateType : sortedAggregateTypes»
+			«IF aggregateType.ownedSignature !== null»
+			«defineAggregateType(aggregateType)»
+			«ENDIF»
+			«ENDFOR»
+		}
+
+		«FOR aggregateTypes : sortedAggregateTypesPerPass»«var pass = sortedAggregateTypesPerPass.indexOf(aggregateTypes)»
+
+		private void installSpecializedAggregateTypes«pass»() {
 			Class type;
 			
 			«FOR aggregateType : aggregateTypes»
+			«IF aggregateType.ownedSignature === null»
 			«defineAggregateType(aggregateType)»
 			«FOR comment : getSortedComments(aggregateType)»
 			installComment(type, "«comment.javaString()»");
 			«ENDFOR»
+			«ENDIF»
 			«ENDFOR»
 		}
 		«ENDFOR»
 
 		private void installAggregateSuperTypes() {
-			«FOR aggregateTypes : sortedAggregateTypesPerPass»
-			«FOR aggregateType : aggregateTypes»
+			«FOR aggregateType : sortedAggregateTypes»
 			«aggregateType.emitSuperClasses(aggregateType.getSymbolName())»
-			«ENDFOR»
 			«ENDFOR»
 		}
 		'''
@@ -697,23 +710,13 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«thisModel.installClassTypes()»
 		«thisModel.installPrimitiveTypes()»
 		«thisModel.installEnumerations()»
+		«thisModel.installGenericAggregateTypes()»
 		«thisModel.installOperationDeclarations()»
 		«thisModel.installIterationDeclarations()»
-		«thisModel.installAggregateTypes()»
+		«thisModel.installSpecializedAggregateTypes()»
 		«thisModel.installOperationBodies()»
 		«thisModel.installIterationBodies()»
 		«thisModel.installProperties()»
-		'''
-	}
-
-	protected def String installAggregateTypes(/*@NonNull*/ Model root) {
-		var sortedAggregateTypesPerPass = root.getSortedAggregateTypesPerPass();
-		if (sortedAggregateTypesPerPass.isEmpty()) return "";
-		'''
-		«FOR aggregateTypes : sortedAggregateTypesPerPass»«var pass = sortedAggregateTypesPerPass.indexOf(aggregateTypes)»
-		installAggregateTypes«pass»();
-		«ENDFOR»
-		installAggregateSuperTypes();
 		'''
 	}
 
@@ -727,6 +730,14 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2enumerations = root.getSortedEnumerations();
 		if (pkge2enumerations.isEmpty()) return "";
 		'''installEnumerations();'''
+	}
+
+	protected def String installGenericAggregateTypes(/*@NonNull*/ Model root) {
+		var sortedAggregateTypes = root.getSortedAggregateTypes();
+		if (sortedAggregateTypes.isEmpty()) return "";
+		'''
+		installGenericAggregateTypes();
+		'''
 	}
 
 	protected def String installIterationBodies(/*@NonNull*/ Model root) {
@@ -776,6 +787,17 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		var pkge2properties = root.getSortedProperties();
 		if (pkge2properties.isEmpty()) return "";
 		'''installProperties();'''
+	}
+
+	protected def String installSpecializedAggregateTypes(/*@NonNull*/ Model root) {
+		var sortedAggregateTypesPerPass = root.getSortedAggregateTypesPerPass();
+		if (sortedAggregateTypesPerPass.isEmpty()) return "";
+		'''
+		«FOR aggregateTypes : sortedAggregateTypesPerPass»«var pass = sortedAggregateTypesPerPass.indexOf(aggregateTypes)»
+		installSpecializedAggregateTypes«pass»();
+		«ENDFOR»
+		installAggregateSuperTypes();
+		'''
 	}
 
 	protected def String installTemplateParameters(/*@NonNull*/ Model root) {
