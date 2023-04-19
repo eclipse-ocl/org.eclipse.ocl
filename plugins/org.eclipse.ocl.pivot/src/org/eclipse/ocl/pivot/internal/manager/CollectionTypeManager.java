@@ -56,8 +56,7 @@ public class CollectionTypeManager extends AbstractTypeManager
 	}
 
 	private @NonNull CollectionType createSpecialization(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		CollectionTypeId genericTypeId = typeParameters.getGenericTypeId();
-		CollectionType unspecializedType = standardLibrary.getCollectionType(genericTypeId);
+		CollectionType unspecializedType = typeParameters.getGenericType();
 		String typeName = unspecializedType.getName();
 		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
 		List<@NonNull TemplateParameter> templateParameters = ClassUtil.nullFree(templateSignature.getOwnedParameters());

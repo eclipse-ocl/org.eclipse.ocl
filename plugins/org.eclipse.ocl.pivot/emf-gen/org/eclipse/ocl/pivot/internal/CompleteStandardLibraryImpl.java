@@ -58,7 +58,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
-import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
@@ -674,7 +673,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			assert pivotClass instanceof CollectionType;
 			assert templateArguments.size() == 1;
 			@NonNull Type templateArgument = templateArguments.get(0);
-			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getCollectionType(TypeUtil.createCollectionTypeParameters((CollectionTypeId) libraryType.getTypeId(), templateArgument, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null));
+			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getCollectionType(TypeUtil.createCollectionTypeParameters((CollectionType)libraryType, templateArgument, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null));
 			return specializedType;
 		}
 		else if (pivotClass instanceof MapType) {

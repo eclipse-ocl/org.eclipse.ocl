@@ -11,13 +11,14 @@
 package org.eclipse.ocl.pivot.values;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 
 public interface CollectionTypeParameters<T extends Type> extends Iterable<Object>
 {
 	@NonNull T getElementType();
-	@NonNull CollectionTypeId getGenericTypeId();
+	@NonNull CollectionType getGenericType();
 	@NonNull IntegerValue getLower();
 	@NonNull CollectionTypeId getSpecializedTypeId();
 	@NonNull UnlimitedNaturalValue getUpper();

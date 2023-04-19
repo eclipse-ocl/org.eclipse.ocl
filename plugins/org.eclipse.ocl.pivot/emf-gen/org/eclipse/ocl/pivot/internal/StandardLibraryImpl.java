@@ -159,7 +159,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (isUnspecialized(containerType, elementType, isNullFree, lower, upper)) {
 			return containerType;
 		}
-		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(containerType.getTypeId(), elementType, isNullFree, lower, upper);
+		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(containerType, elementType, isNullFree, lower, upper);
 		return getOrphanage().getCollectionType(typeParameters);
 	}
 
