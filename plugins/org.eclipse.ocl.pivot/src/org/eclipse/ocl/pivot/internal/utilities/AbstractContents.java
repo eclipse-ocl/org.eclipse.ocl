@@ -352,8 +352,6 @@ public abstract class AbstractContents extends PivotUtil
 			asType = PivotFactory.eINSTANCE.createCollectionType();
 		}
 		asType.setName(unspecializedType.getName());
-		asType.setLower(unspecializedType.getLower());
-		asType.setUpper(unspecializedType.getUpper());
 		asType.setUnspecializedElement(unspecializedType);
 	//	orphanage.addOrphanClass(specializedType);
 		asType.setIsNullFree(isNullFree);

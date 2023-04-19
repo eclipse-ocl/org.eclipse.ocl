@@ -567,19 +567,18 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, elementType);
 				templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 				specializedType.getOwnedBindings().add(templateBinding);
-				assert standardLibrary != null;
-				standardLibrary.resolveSuperClasses(specializedType, genericType);
+				getStandardLibrary().resolveSuperClasses(specializedType, genericType);
 			//	specializedType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
 				specializedType.setIsNullFree(isNullFree);
 				try {
 					specializedType.setLowerValue(lower);
 				} catch (InvalidValueException e) {
-					logger.error("Out of range lower bound", e);
+					logger.error("Out of range lower bound for " + specializedTypeId, e);
 				}
 				try {
 					specializedType.setUpperValue(upper);
 				} catch (InvalidValueException e) {
-					logger.error("Out of range upper bound", e);
+					logger.error("Out of range upper bound for " + specializedTypeId, e);
 				}
 				specializedType.setUnspecializedElement(genericType);
 //				specializedType.getTypeId();		// XXX
