@@ -254,7 +254,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				assert old == null;
 			}
 			if ((primaryUsedElement != null) && !usedElements.contains(primaryUsedElement)) {
-			//	System.out.println("\taddDependency: " + NameUtil.debugSimpleName(primaryUsedType) + " : " + primaryUsedType + " => " + NameUtil.debugSimpleName(primaryUsedElement) + " : " + primaryUsedElement);
+				System.out.println("\taddDependency: " + NameUtil.debugSimpleName(primaryUsedType) + " : " + primaryUsedType + " => " + NameUtil.debugSimpleName(primaryUsedElement) + " : " + primaryUsedElement);
 				usedElements.add(primaryUsedElement);
 				assert primaryUsedElement != primaryUsingElement;
 				if (!using2useds.containsKey(primaryUsedElement)) {
@@ -468,14 +468,28 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType asCollectionType) {
-		//	System.out.println("analyze: " + NameUtil.debugSimpleName(asCollectionType) + " : " + asCollectionType);
+ 			System.out.println("analyze: " + NameUtil.debugSimpleName(asCollectionType) + " : " + asCollectionType);
 			doSuperClasses(asCollectionType);
 			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asCollectionType)) {
-				addDependency(asCollectionType, superClass);
+			//	addDependency(asCollectionType, superClass);
 			}
 			doTemplateableElement(asCollectionType);
-			if (asCollectionType.getUnspecializedElement() != null) {
-				addDependency(asCollectionType, asCollectionType.getElementType());
+			CollectionType genericCollection = (CollectionType)asCollectionType.getUnspecializedElement();
+			if (genericCollection != null) {
+				addDependency(asCollectionType, genericCollection);
+				Type elementType = asCollectionType.getElementType();
+				if (elementType instanceof TemplateParameter) {
+					TemplateableElement owningElement = ((TemplateParameter) elementType).getOwningSignature().getOwningElement();
+					if (owningElement instanceof Type) {
+						addDependency(asCollectionType, (Type)owningElement);
+					}
+					else {
+						getClass();		// XXX operation/iteration
+					}
+				}
+				else {
+					addDependency(asCollectionType, elementType);
+				}
 			}
 			return null;
 		}

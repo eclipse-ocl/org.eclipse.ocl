@@ -95,12 +95,16 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			installComment(type, "«comment.javaString()»");
 			«ENDFOR»
 			«ENDFOR»
-			
+		}
+		«ENDFOR»
+
+		private void installAggregateSuperTypes() {
+			«FOR aggregateTypes : sortedAggregateTypesPerPass»
 			«FOR aggregateType : aggregateTypes»
 			«aggregateType.emitSuperClasses(aggregateType.getSymbolName())»
 			«ENDFOR»
+			«ENDFOR»
 		}
-		«ENDFOR»
 		'''
 	}
 
@@ -680,12 +684,21 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«thisModel.installClassTypes()»
 		«thisModel.installPrimitiveTypes()»
 		«thisModel.installEnumerations()»
-		«var sortedAggregateTypesPerPass = root.getSortedAggregateTypesPerPass()»«FOR aggregateTypes : sortedAggregateTypesPerPass»«var pass = sortedAggregateTypesPerPass.indexOf(aggregateTypes)»
-		installAggregateTypes«pass»();
-		«ENDFOR»
+		«thisModel.installAggregateTypes()»
 		«thisModel.installOperations()»
 		«thisModel.installIterations()»
 		«thisModel.installProperties()»
+		'''
+	}
+
+	protected def String installAggregateTypes(/*@NonNull*/ Model root) {
+		var sortedAggregateTypesPerPass = root.getSortedAggregateTypesPerPass();
+		if (sortedAggregateTypesPerPass.isEmpty()) return "";
+		'''
+		«FOR aggregateTypes : sortedAggregateTypesPerPass»«var pass = sortedAggregateTypesPerPass.indexOf(aggregateTypes)»
+		installAggregateTypes«pass»();
+		«ENDFOR»
+		installAggregateSuperTypes();
 		'''
 	}
 
