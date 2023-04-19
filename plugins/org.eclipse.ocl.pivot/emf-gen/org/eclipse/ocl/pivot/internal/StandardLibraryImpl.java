@@ -39,7 +39,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -116,7 +115,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public org.eclipse.ocl.pivot.@NonNull Class getBagType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getBagType(), elementType, isNullFree, lower, upper);
 	}
 
@@ -151,7 +150,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType containerType, @NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
 		if (containerType.eIsProxy() || elementType.eIsProxy()) {
 			return getOclInvalidType();
@@ -159,8 +158,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (isUnspecialized(containerType, elementType, isNullFree, lower, upper)) {
 			return containerType;
 		}
-		CollectionTypeParameters<@NonNull Type> typeParameters = TypeUtil.createCollectionTypeParameters(containerType, elementType, isNullFree, lower, upper);
-		return getOrphanage().getCollectionType(typeParameters);
+		return getOrphanage().getCollectionType(containerType, elementType, isNullFree, lower, upper);
 	}
 
 	@Override
@@ -232,7 +230,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getOrderedSetType(), elementType, isNullFree, lower, upper);
 	}
 
@@ -246,12 +244,12 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getSequenceType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public org.eclipse.ocl.pivot.@NonNull Class getSequenceType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getSequenceType(), elementType, isNullFree, lower, upper);
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getSetType(), elementType, isNullFree, lower, upper);
 	}
 
@@ -276,7 +274,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 					templateArgument = templateParameter;
 				}
 				if (templateArgument != null) {
-					return getCollectionType(unspecializedType, templateArgument, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null);
+					return getCollectionType(unspecializedType, templateArgument, null, null, null);
 				}
 			}
 			return collectionType;
@@ -315,10 +313,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	protected abstract boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,
-			boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
-	protected boolean isUnspecialized(boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return (isNullFree == PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE)
+	@Override
+	public boolean isUnspecialized(@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		return ((isNullFree == null) || (isNullFree == PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE))
 		 && ((lower == null) || (lower == ValueUtil.ZERO_VALUE))
 		 && ((upper == null) || (upper == ValueUtil.UNLIMITED_VALUE));
 	}

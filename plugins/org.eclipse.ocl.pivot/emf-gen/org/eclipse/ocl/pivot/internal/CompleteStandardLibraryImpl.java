@@ -673,7 +673,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			assert pivotClass instanceof CollectionType;
 			assert templateArguments.size() == 1;
 			@NonNull Type templateArgument = templateArguments.get(0);
-			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getCollectionType(TypeUtil.createCollectionTypeParameters((CollectionType)libraryType, templateArgument, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null));
+			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getCollectionType((CollectionType)libraryType, templateArgument, null, null, null);
 			return specializedType;
 		}
 		else if (pivotClass instanceof MapType) {
@@ -1076,7 +1076,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	 */
 	@Override
 	protected boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,
-			boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		if (!isUnspecialized(isNullFree, lower, upper)) {
 			return false;
 		}

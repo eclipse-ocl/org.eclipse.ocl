@@ -20,9 +20,10 @@ import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -44,9 +45,9 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 	void dispose();
 
 	/**
-	 * Return the specialized collection type for a collection type descriptor.
+	 * Return the specialized collection type for a collection type characteristics.
 	 */
-	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters);
+	@NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	@NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings);

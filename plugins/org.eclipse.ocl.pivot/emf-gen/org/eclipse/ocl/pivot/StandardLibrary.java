@@ -55,7 +55,7 @@ public interface StandardLibrary extends Element
 	 * Return the specialized bag type for the specializing elementType with isNullFree content and optional lower and upper bounds.
 	 * May return an InvalidType if elementType is a proxy.
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+	org.eclipse.ocl.pivot.@NonNull Class getBagType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	@Nullable PrimitiveType getBehavioralClass(java.lang.@NonNull Class<?> javaClass);
 
@@ -97,7 +97,7 @@ public interface StandardLibrary extends Element
 	 * Return the specialized collection type for the unspecialized containerType, specializing elementType with isNullFree content and optional lower and upper bounds.
 	 * May return an InvalidType if elementType is a proxy.
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+	org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType containerType, @NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	@Nullable Type getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions);
@@ -299,7 +299,7 @@ public interface StandardLibrary extends Element
 	 * Return the specialized ordered set type for the specializing elementType with isNullFree content and optional lower and upper bounds.
 	 * May return an InvalidType if elementType is a proxy.
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+	org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
 	 * Obtains the package containing the library types
@@ -330,7 +330,7 @@ public interface StandardLibrary extends Element
 	 * Return the specialized sequence type for the specializing elementType with isNullFree content and optional lower and upper bounds.
 	 * May return an InvalidType if elementType is a proxy.
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getSequenceType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+	org.eclipse.ocl.pivot.@NonNull Class getSequenceType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	/**
 	 * Obtains the generic instance of the SetType metatype, named
@@ -344,7 +344,7 @@ public interface StandardLibrary extends Element
 	 * Return the specialized set type for the specializing elementType with isNullFree content and optional lower and upper bounds.
 	 * May return an InvalidType if elementType is a proxy.
 	 */
-	org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+	org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	@NonNull Orphanage getOrphanage();
 
@@ -383,6 +383,8 @@ public interface StandardLibrary extends Element
 	@NonNull PrimitiveType getUnlimitedNaturalType();
 
 	@NonNull FlatModel getFlatModel();
+
+	boolean isUnspecialized(@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 } // AbstractStandardLibrary

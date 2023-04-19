@@ -537,7 +537,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		oppositeProperty.setIsImplicit(true);
 		if (!((NumberValue)upper).equals(ValueUtil.ONE_VALUE)) {
 			CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
-			oppositeProperty.setType(standardLibrary.getCollectionType(genericCollectionType, localType, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, lower, upper));
+			oppositeProperty.setType(standardLibrary.getCollectionType(genericCollectionType, localType, null, lower, upper));
 			oppositeProperty.setIsRequired(true);
 		}
 		else {

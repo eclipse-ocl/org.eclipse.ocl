@@ -135,7 +135,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 				return genericClass;
 			}
 			Type elementType = decodeNextType();
-			return standardLibrary.getCollectionType(genericClass, elementType, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null);
+			return standardLibrary.getCollectionType(genericClass, elementType, null, null, null);
 		}
 
 		protected org.eclipse.ocl.pivot.@NonNull Class decodeLambdaType(@NonNull Operation asOperation, @NonNull String name) {
@@ -485,7 +485,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 
 	@Deprecated // Short argument list with defaults used by auto-gen
 	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType) {
-		return getCollectionType((CollectionType)genericType, elementType, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, null, null);
+		return getCollectionType((CollectionType)genericType, elementType, null, null, null);
 	}
 
 	@Override
@@ -854,7 +854,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 
 	@Override
 	protected boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,
-			boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		if (!isUnspecialized(isNullFree, lower, upper)) {
 			return false;
 		}

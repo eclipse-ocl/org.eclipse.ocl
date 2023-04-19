@@ -11,10 +11,14 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -29,6 +33,10 @@ import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
@@ -37,8 +45,8 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
-import org.eclipse.ocl.pivot.internal.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
@@ -51,9 +59,12 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeParameters;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapTypeParameters;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -202,6 +213,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			return true;
 		}
 	}
+
+	private static final Logger logger = Logger.getLogger(OrphanageImpl.class);
 
 	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.nonNullEMF(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
 
@@ -440,7 +453,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	/**
 	 * Shared cache of the lazily created, lazily deleted, specializations of each collection type.
 	 */
-	private @Nullable CollectionTypeManager collectionTypeManager = null;
+	private @Nullable Map<@NonNull CollectionTypeId, @NonNull CollectionType> typeId2collectionType = null;
 
 	/**
 	 * Shared cache of the lazily created, lazily deleted, specializations of each lambda type.
@@ -473,7 +486,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId) {
-		return collectionTypeManager != null ? collectionTypeManager.basicGetCollectionType(collectionTypeId) : null;
+		return typeId2collectionType != null ? typeId2collectionType.get(collectionTypeId) : null;
 	}
 
 	@Override
@@ -499,6 +512,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		if (ownedPackages != null) {
 			((WeakEList<?>)ownedPackages).dispose();
 		} */
+		if (typeId2collectionType != null) {
+			typeId2collectionType.clear();
+			typeId2collectionType = null;
+		}
 	}
 
 	public void disposeLambdas() {
@@ -516,16 +533,70 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeParameters<@NonNull Type> typeParameters) {
-		return getCollectionTypeManager().getCollectionType(typeParameters);
-	}
-
-	private @NonNull CollectionTypeManager getCollectionTypeManager() {
-		CollectionTypeManager collectionTypeManager2 = this.collectionTypeManager;
-		if (collectionTypeManager2 == null) {
-			this.collectionTypeManager = collectionTypeManager2 = new CollectionTypeManager(this);
+	public @NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType,
+			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		Map<@NonNull CollectionTypeId, @NonNull CollectionType> typeId2collectionType2 = this.typeId2collectionType;
+		if (typeId2collectionType2 == null) {
+			this.typeId2collectionType = typeId2collectionType2 = new HashMap<>();
 		}
-		return collectionTypeManager2;
+		if (isNullFree == null) {
+			isNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
+		}
+		if (lower == null) {
+			lower = ValueUtil.ZERO_VALUE;
+		}
+		if (upper == null) {
+			upper = ValueUtil.UNLIMITED_VALUE;
+		}
+		CollectionTypeId genericTypeId = genericType.getTypeId();
+		TypeId elementTypeId = elementType.getTypeId();
+		CollectionTypeId specializedTypeId = genericTypeId.getSpecializedId(elementTypeId, isNullFree, lower, upper);
+		synchronized (typeId2collectionType2) {
+			CollectionType specializedType = basicGetCollectionType(specializedTypeId);
+			if (specializedType == null) {
+				assert (elementType != null) && (elementType.eResource() != null);
+				EClass eClass = genericType.eClass();
+				EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
+				specializedType = (CollectionType) eFactoryInstance.create(eClass);
+				specializedType.setName(genericType.getName());
+				TemplateSignature templateSignature = genericType.getOwnedSignature();
+				List<@NonNull TemplateParameter> templateParameters = ClassUtil.nullFree(templateSignature.getOwnedParameters());
+				TemplateParameter formalParameter = ClassUtil.nonNull(templateParameters.get(0));
+				assert formalParameter != null;
+				TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
+				TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, elementType);
+				templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
+				specializedType.getOwnedBindings().add(templateBinding);
+				assert standardLibrary != null;
+				standardLibrary.resolveSuperClasses(specializedType, genericType);
+			//	specializedType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
+				specializedType.setIsNullFree(isNullFree);
+				try {
+					specializedType.setLowerValue(lower);
+				} catch (InvalidValueException e) {
+					logger.error("Out of range lower bound", e);
+				}
+				try {
+					specializedType.setUpperValue(upper);
+				} catch (InvalidValueException e) {
+					logger.error("Out of range upper bound", e);
+				}
+				specializedType.setUnspecializedElement(genericType);
+//				specializedType.getTypeId();		// XXX
+//				String s = specializedType.toString();
+//				System.out.println("createSpecialization: " + NameUtil.debugSimpleName(specializedType) + " : " + specializedType);
+//				if ("Collection(Families::FamilyMember[*|?])".equals(s)) {
+//					getClass();		// XXX
+//				}
+				typeId2collectionType2.put(specializedTypeId, specializedType);
+				assert specializedTypeId == ((CollectionTypeImpl)specializedType).immutableGetTypeId();		// XXX
+				if (basicGetCollectionType(specializedTypeId) != specializedType) {
+					basicGetCollectionType(specializedTypeId);
+				}
+				addOrphanClass(specializedType);
+			}
+			return specializedType;
+		}
 	}
 
 //	@Override

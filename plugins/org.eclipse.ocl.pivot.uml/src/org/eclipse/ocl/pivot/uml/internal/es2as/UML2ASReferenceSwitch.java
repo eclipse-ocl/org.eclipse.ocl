@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.uml2.uml.util.UMLSwitch;
@@ -448,7 +447,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 			}
 		}
 		CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, isUnique);
-		return standardLibrary.getCollectionType(genericCollectionType, asClass, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, ValueUtil.integerValueOf(umlProperty.getLower()), null);
+		return standardLibrary.getCollectionType(genericCollectionType, asClass, null, ValueUtil.integerValueOf(umlProperty.getLower()), null);
 	}
 
 	private boolean getToAssociationEndIsRequired(org.eclipse.uml2.uml.@NonNull Property umlProperty, @NonNull List<org.eclipse.uml2.uml.@NonNull Property> umlMemberEnds) {
@@ -483,7 +482,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 			return asClass;
 		}
 		CollectionType genericCollectionType = standardLibrary.getCollectionType(isOrdered, true);
-		return standardLibrary.getCollectionType(genericCollectionType, asClass, PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, ValueUtil.integerValueOf(umlProperty.getLower()), null);
+		return standardLibrary.getCollectionType(genericCollectionType, asClass, null, ValueUtil.integerValueOf(umlProperty.getLower()), null);
 	}
 
 	protected org.eclipse.uml2.uml.Property getOtherEnd(org.eclipse.uml2.uml.@NonNull Property umlProperty) {
