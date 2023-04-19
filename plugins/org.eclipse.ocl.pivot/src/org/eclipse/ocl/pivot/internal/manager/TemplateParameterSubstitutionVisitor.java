@@ -241,7 +241,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 				partIds.add(tuplePartId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.nonNullModel(type.getName()), partIds);
-			specializedTupleType = environmentFactory.getStandardLibrary().getOrphanage().getTupleType(environmentFactory.getIdResolver(), tupleTypeId);
+			specializedTupleType = environmentFactory.getStandardLibrary().getTupleType(environmentFactory.getIdResolver(), tupleTypeId);
 			return specializedTupleType;
 		}
 		else {

@@ -609,8 +609,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public void dispose() {
 		class2completeClass.clear();
-		((OrphanageImpl)((CompleteStandardLibraryImpl)getOwnedStandardLibrary()).getOrphanage()).disposeLambdas();
-		((OrphanageImpl)((CompleteStandardLibraryImpl)getOwnedStandardLibrary()).getOrphanage()).disposeTuples();
+		((OrphanageImpl)((CompleteStandardLibraryImpl)getOwnedStandardLibrary()).getOrphanage()).dispose();
 	}
 
 	@Override

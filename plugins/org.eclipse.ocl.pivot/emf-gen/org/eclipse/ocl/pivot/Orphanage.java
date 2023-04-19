@@ -15,7 +15,6 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -58,6 +57,6 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 	@NonNull MapType getMapType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
 
 	@NonNull StandardLibrary getStandardLibrary();
-	@NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId);
+	@NonNull TupleType getTupleType(@NonNull Iterable<@NonNull ? extends TypedElement> parts);
 	void removePackageListener(@NonNull PartialPackages partialPackages);
 } // Orphanage

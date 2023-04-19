@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -39,16 +41,16 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.manager.LambdaTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -458,11 +460,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 */
 	private @Nullable LambdaTypeManager lambdaTypeManager = null;
 
-	/**
-	 * Shared cache of the lazily created, lazily deleted, tuples.
-	 */
-	private @Nullable TupleTypeManager tupleTypeManager = null;
-
 	@Override
 	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
 	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass));
@@ -494,7 +491,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public @Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId) {
-		return tupleTypeManager != null ? tupleTypeManager.basicGetTupleType(tupleTypeId) : null;
+		return (TupleType)typeId2type.get(tupleTypeId);
 	}
 
 	@Override
@@ -512,13 +509,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		if (lambdaTypeManager != null) {
 			lambdaTypeManager.dispose();
 			lambdaTypeManager = null;
-		}
-	}
-
-	public void disposeTuples() {
-		if (tupleTypeManager != null) {
-			tupleTypeManager.dispose();
-			tupleTypeManager = null;
 		}
 	}
 
@@ -714,16 +704,29 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId) {
-		return getTupleTypeManager().getTupleType(idResolver, tupleTypeId);
-	}
-
-	private @NonNull TupleTypeManager getTupleTypeManager() {
-		TupleTypeManager tupleTypeManager2 = this.tupleTypeManager;
-		if (tupleTypeManager2 == null) {
-			this.tupleTypeManager = tupleTypeManager2 = new TupleTypeManager(this);
+	public @NonNull TupleType getTupleType(@NonNull Iterable<@NonNull ? extends TypedElement> parts) {	// XXX Redirect to TupleTypeId
+		@NonNull TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(TypeId.TUPLE_NAME, parts);
+		TupleType tupleType = basicGetTupleType(tupleTypeId);
+		if (tupleType == null) {
+			synchronized (typeId2type) {
+				tupleType = (TupleType)typeId2type.get(tupleTypeId);
+				if (tupleType == null) {
+					tupleType = new TupleTypeImpl(tupleTypeId);
+					EList<@NonNull Property> ownedAttributes = (EList<@NonNull Property>)tupleType.getOwnedProperties();
+					for (@NonNull TypedElement part : parts) {
+						String partName = PivotUtil.getName(part);
+						Type partType = PivotUtil.getType(part);
+						Property property = PivotUtil.createProperty(partName, partType);
+						ownedAttributes.add(property);
+					}
+					ECollections.sort(ownedAttributes, NameUtil.NAMEABLE_COMPARATOR);
+					tupleType.getSuperClasses().add(getStandardLibrary().getOclTupleType());
+					typeId2type.put(tupleTypeId, tupleType);
+					addOrphanClass(tupleType);
+				}
+			}
 		}
-		return tupleTypeManager2;
+		return tupleType;
 	}
 
 	public void init(@NonNull StandardLibrary standardLibrary, @NonNull String orphanageName, @NonNull String orphanageUri, @NonNull String orphanagePrefix) {

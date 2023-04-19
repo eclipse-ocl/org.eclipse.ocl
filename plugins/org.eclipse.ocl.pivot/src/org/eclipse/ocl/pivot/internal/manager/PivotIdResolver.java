@@ -95,7 +95,7 @@ public class PivotIdResolver extends AbstractIdResolver
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return standardLibrary.getOrphanage().getTupleType(this, typeId);
+		return standardLibrary.getTupleType(this, typeId);
 	}
 
 	@Override

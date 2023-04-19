@@ -161,7 +161,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 
 	@Override
 	public synchronized @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return ((ExecutorStandardLibrary)standardLibrary).getOrphanage().getTupleType(this, typeId);
+		return ((ExecutorStandardLibrary)standardLibrary).getTupleType(this, typeId);
 	}
 
 	public @NonNull TupleType getTupleType(@NonNull TypedElement @NonNull ... parts) {

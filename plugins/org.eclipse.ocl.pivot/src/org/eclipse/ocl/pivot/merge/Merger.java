@@ -106,7 +106,7 @@ public class Merger
 
 	public @Nullable EObject getTupleType(@NonNull TupleTypeId tupleTypeId) {
 		PivotIdResolver idResolver = new PivotIdResolver((EnvironmentFactoryInternal) environmentFactory) {};	// XXX
-		return standardLibrary.getOrphanage().getTupleType(idResolver, tupleTypeId);
+		return standardLibrary.getTupleType(idResolver, tupleTypeId);
 	}
 
 	public @Nullable Element getMergedElement(@NonNull Element partialElement) {

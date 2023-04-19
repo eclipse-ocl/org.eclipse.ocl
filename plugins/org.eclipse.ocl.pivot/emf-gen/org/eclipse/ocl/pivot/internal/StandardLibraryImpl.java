@@ -30,7 +30,10 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
+import org.eclipse.ocl.pivot.ids.TuplePartId;
+import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -314,6 +317,22 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 		}
 		return type;
+	}
+
+	@Override
+	public @NonNull TupleType getTupleType(@NonNull IdResolver idResolver, @NonNull TupleTypeId tupleTypeId) {
+		TupleType tupleType = getOrphanage().basicGetTupleType(tupleTypeId);
+		if (tupleType == null) {
+			@NonNull TuplePartId[] partIds = tupleTypeId.getPartIds();
+			List<@NonNull Property> tupleParts = new ArrayList<>();
+			for (@NonNull TuplePartId partId : partIds) {
+				Type partType = idResolver.getType(partId.getTypeId());
+				Property property = PivotUtil.createProperty(NameUtil.getSafeName(partId), partType);
+				tupleParts.add(property);
+			}
+			tupleType = getOrphanage().getTupleType(tupleParts);
+		}
+		return tupleType;
 	}
 
 	protected abstract boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,

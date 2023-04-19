@@ -597,7 +597,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			commonPartIds.add(commonPartId);
 		}
 		TupleTypeId commonTupleTypeId = IdManager.getTupleTypeId(TypeId.TUPLE_NAME, commonPartIds);
-		return getOrphanage().getTupleType(environmentFactory.getIdResolver(), commonTupleTypeId);
+		return getTupleType(environmentFactory.getIdResolver(), commonTupleTypeId);
 	}
 
 	@Override
@@ -1013,7 +1013,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 				partIds.add(tuplePartId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(ClassUtil.nonNullModel(type.getName()), partIds);
-			specializedTupleType = getOrphanage().getTupleType(environmentFactory.getIdResolver(), tupleTypeId);
+			specializedTupleType = getTupleType(environmentFactory.getIdResolver(), tupleTypeId);
 			return specializedTupleType;
 		}
 		else {
@@ -1033,7 +1033,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		//
 		//	Finally create the (specialize) tuple type
 		//
-		TupleType tupleType = getOrphanage().getTupleType(pivotIdResolver /*metamodelManager.getIdResolver()*/, tupleTypeId);
+		TupleType tupleType = getTupleType(pivotIdResolver /*metamodelManager.getIdResolver()*/, tupleTypeId);
 		return tupleType;
 	}
 
