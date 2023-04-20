@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
@@ -34,15 +33,12 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.SequenceType;
-import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
@@ -50,6 +46,7 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.LibraryImpl;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
@@ -62,6 +59,8 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
+
+import com.google.common.collect.Lists;
 
 public abstract class AbstractContents extends PivotUtil
 {
@@ -381,35 +380,30 @@ public abstract class AbstractContents extends PivotUtil
 		return orphanage.getCollectionType(genericType, elementType, isNullFree, ValueUtil.integerValueOf(lower), upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 	}
 
-	protected @NonNull LambdaType getLambdaType(@NonNull String name, /*@NonNull*/ TemplateParameter contextType, /*@NonNull*/ Type resultType, @NonNull TemplateParameter... parameterTypes) {
+	protected @NonNull LambdaType getLambdaType(org.eclipse.ocl.pivot./*@NonNull*/ Class oclLambdaType, /*@NonNull*/ TemplateParameter contextType, /*@NonNull*/ Type resultType, @NonNull TemplateParameter... parameterTypes) {
+		assert oclLambdaType != null;
 		assert contextType != null;
 		assert resultType != null;
-		LambdaType asType = createLambdaType(name);
+	/*	LambdaType asType = createLambdaType(name);
 		asType.setContextType(contextType);
 		// XXX parameterTypes
 		asType.setResultType(resultType);
 		orphanage.getOwnedClasses().add(asType);
-		return asType;
+		return asType; */
+		List<@NonNull TemplateParameter> newArrayList = Lists.newArrayList(parameterTypes);
+		assert newArrayList != null;
+		return orphanage.getLambdaType(oclLambdaType, contextType, newArrayList, resultType);
 	}
 
 	protected @NonNull Library getLibrary(@NonNull Model asModel, @NonNull String name) {
 		return (Library) ClassUtil.nonNullState(NameUtil.getNameable(asModel.getOwnedPackages(), name));
 	}
 
-	protected @NonNull MapType getMapType(/*@NonNull*/ MapType unspecializedType, /*@NonNull*/ Type keyType, boolean keysAreNullFree, /*@NonNull*/ Type valueType, boolean valuesAreNullFree) {
-		assert unspecializedType != null;
+	protected @NonNull MapType getMapType(/*@NonNull*/ MapType genericType, /*@NonNull*/ Type keyType, boolean keysAreNullFree, /*@NonNull*/ Type valueType, boolean valuesAreNullFree) {
+		assert genericType != null;
 		assert keyType != null;
 		assert valueType != null;
-		MapType asType = PivotFactory.eINSTANCE.createMapType();
-		asType.setName(unspecializedType.getName());
-		asType.setUnspecializedElement(unspecializedType);
-	//	orphanage.addOrphanClass(specializedType);
-		addBinding(asType, keyType);
-		addBinding(asType, valueType);
-		asType.setKeysAreNullFree(keysAreNullFree);
-		asType.setValuesAreNullFree(valuesAreNullFree);
-		orphanage.getOwnedClasses().add(asType);
-		return asType;
+		return orphanage.getMapType(genericType, keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
 	protected @NonNull Model getModel(@NonNull String modelURI) {
@@ -430,10 +424,14 @@ public abstract class AbstractContents extends PivotUtil
 		return ClassUtil.nonNullState(templateableElement.getOwnedSignature().getOwnedParameters().get(index));
 	}
 
-	protected @NonNull TupleType getTupleType(@NonNull String name, Property... properties) {
-		TupleType asType = createTupleType(name, properties);
+	protected @NonNull TupleType getTupleType(org.eclipse.ocl.pivot./*@NonNull*/ Class oclTupleType, @NonNull Property... properties) {
+	/*	TupleType asType = createTupleType(name, properties);
 		orphanage.getOwnedClasses().add(asType);
-		return asType;
+		return asType; */
+		assert oclTupleType != null;
+		List<@NonNull TypedElement> parts = Lists.newArrayList(properties);
+		assert parts != null;
+		return orphanage.getTupleType(oclTupleType, parts);
 	}
 
 	protected <T extends CollectionType> void initTemplateParameter(@NonNull TemplateableElement asType, @NonNull TemplateParameter templateParameter) {

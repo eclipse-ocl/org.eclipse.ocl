@@ -10,7 +10,6 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +61,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -568,48 +566,34 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
-			@Nullable TemplateParameterSubstitutions bindings) {
-		if (bindings == null) {
-			return getLambdaType(typeName, contextType, parameterTypes, resultType);
-		}
-		else {
-			StandardLibrary standardLibrary = getStandardLibrary();
-			Type specializedContextType = standardLibrary.getSpecializedType(contextType, bindings);
-			List<@NonNull Type> specializedParameterTypes = new ArrayList<>();
-			for (@NonNull Type parameterType : parameterTypes) {
-				specializedParameterTypes.add(standardLibrary.getSpecializedType(parameterType, bindings));
-			}
-			Type specializedResultType = standardLibrary.getSpecializedType(resultType, bindings);
-			return getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType);
-		}
-	}
-
-	private @NonNull LambdaType getLambdaType(@NonNull String typeName, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
+	public @NonNull LambdaType getLambdaType(org.eclipse.ocl.pivot.@NonNull Class oclLambdaType, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
+		String name = TypeId.LAMBDA_NAME;
 		@NonNull TypeId @NonNull [] typeIds = new @NonNull TypeId[2+parameterTypes.size()];
 		typeIds[0] = contextType.getTypeId();
 		typeIds[1] = resultType.getTypeId();
 		for (int i = 0; i < parameterTypes.size(); i++) {
 			typeIds[2+i] = parameterTypes.get(i).getTypeId();
 		}
-		LambdaTypeId lambdaTypeId = IdManager.getLambdaTypeId(TypeId.LAMBDA_NAME, typeIds);
-		LambdaType lambdaType = (LambdaType) typeId2type.get(lambdaTypeId);
-		if (lambdaType == null) {
-			lambdaType = PivotFactory.eINSTANCE.createLambdaType();
-			lambdaType.setName(typeName);
-			lambdaType.setContextType(contextType);
-			lambdaType.setResultType(resultType);
-			lambdaType.getParameterType().addAll(parameterTypes);
-			lambdaType.getSuperClasses().add(getStandardLibrary().getOclLambdaType());
-			typeId2type.put(lambdaTypeId, lambdaType);
-			assert lambdaTypeId == ((LambdaTypeImpl)lambdaType).immutableGetTypeId();		// XXX
-			addOrphanClass(lambdaType);
+		LambdaTypeId lambdaTypeId = IdManager.getLambdaTypeId(name, typeIds);
+		synchronized (typeId2type) {
+			LambdaType lambdaType = (LambdaType) typeId2type.get(lambdaTypeId);
+			if (lambdaType == null) {
+				lambdaType = PivotFactory.eINSTANCE.createLambdaType();
+				lambdaType.setName(name);
+				lambdaType.setContextType(contextType);
+				lambdaType.setResultType(resultType);
+				lambdaType.getParameterType().addAll(parameterTypes);
+				lambdaType.getSuperClasses().add(oclLambdaType);
+				typeId2type.put(lambdaTypeId, lambdaType);
+				assert lambdaTypeId == ((LambdaTypeImpl)lambdaType).immutableGetTypeId();		// XXX
+				addOrphanClass(lambdaType);
+			}
+			return lambdaType;
 		}
-		return lambdaType;
 	}
 
 	@Override
-	public @NonNull MapType getMapOfEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+	public @NonNull MapType getMapOfEntryType(@NonNull MapType genericType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties(entryClass);
 		Property keyProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "key"));
 		Property valueProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "value"));
@@ -623,9 +607,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		synchronized (typeId2type) {
 			MapType specializedType = basicGetMapType(mapTypeId);
 			if (specializedType == null) {
-				MapType unspecializedType = getStandardLibrary().getMapType();
-				String typeName = unspecializedType.getName();
-				TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
+				String typeName = genericType.getName();
+				TemplateSignature templateSignature = genericType.getOwnedSignature();
 				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
 				specializedType = PivotFactory.eINSTANCE.createMapType();
 				specializedType.setName(typeName);
@@ -640,10 +623,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
 				specializedType.getOwnedBindings().add(templateBinding);
 			//	resolveSuperClasses(specializedMapType, unspecializedType);
-				specializedType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
+				specializedType.getSuperClasses().addAll(genericType.getSuperClasses());
 				specializedType.setKeysAreNullFree(keysAreNullFree);
 				specializedType.setValuesAreNullFree(valuesAreNullFree);
-				specializedType.setUnspecializedElement(unspecializedType);
+				specializedType.setUnspecializedElement(genericType);
 				specializedType.setEntryClass(entryClass);
 				typeId2type.put(mapTypeId, specializedType);
 				assert mapTypeId == ((MapTypeImpl)specializedType).immutableGetTypeId();		// XXX
@@ -654,7 +637,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
-	public @NonNull MapType getMapType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+	public @NonNull MapType getMapType(@NonNull MapType genericType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		TypeId keyTypeId = keyType.getTypeId();
 		TypeId valueTypeId = valueType.getTypeId();
 		MapTypeId mapTypeId = TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, keysAreNullFree, valuesAreNullFree);
@@ -663,9 +646,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			if (specializedType == null) {
 				assert (keyType != null) && (keyType.eResource() != null);
 				assert (valueType != null) && (valueType.eResource() != null);
-				MapType unspecializedType = getStandardLibrary().getMapType();
-				String typeName = unspecializedType.getName();
-				TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
+				String typeName = genericType.getName();
+				TemplateSignature templateSignature = genericType.getOwnedSignature();
 				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
 				specializedType = PivotFactory.eINSTANCE.createMapType();
 				specializedType.setName(typeName);
@@ -680,10 +662,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
 				specializedType.getOwnedBindings().add(templateBinding);
 			//	resolveSuperClasses(specializedMapType, unspecializedType);
-				specializedType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
+				specializedType.getSuperClasses().addAll(genericType.getSuperClasses());
 				specializedType.setKeysAreNullFree(keysAreNullFree);
 				specializedType.setValuesAreNullFree(valuesAreNullFree);
-				specializedType.setUnspecializedElement(unspecializedType);
+				specializedType.setUnspecializedElement(genericType);
 			//	specializedType.setEntryClass(typeParameters.getEntryClass());
 				typeId2type.put(mapTypeId, specializedType);
 				assert mapTypeId == ((MapTypeImpl)specializedType).immutableGetTypeId();		// XXX
@@ -699,7 +681,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull Iterable<@NonNull ? extends TypedElement> parts) {	// XXX Redirect to TupleTypeId
+	public @NonNull TupleType getTupleType(org.eclipse.ocl.pivot.@NonNull Class oclTupleType, @NonNull Iterable<@NonNull ? extends TypedElement> parts) {	// XXX Redirect to TupleTypeId
 		@NonNull TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(TypeId.TUPLE_NAME, parts);
 		TupleType tupleType = basicGetTupleType(tupleTypeId);
 		if (tupleType == null) {
@@ -715,7 +697,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 						ownedAttributes.add(property);
 					}
 					ECollections.sort(ownedAttributes, NameUtil.NAMEABLE_COMPARATOR);
-					tupleType.getSuperClasses().add(getStandardLibrary().getOclTupleType());
+					tupleType.getSuperClasses().add(oclTupleType);
 					typeId2type.put(tupleTypeId, tupleType);
 					addOrphanClass(tupleType);
 				}

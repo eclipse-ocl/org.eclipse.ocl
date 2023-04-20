@@ -147,7 +147,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						parameterTypes.add(parameterType);
 					}
 				}
-				LambdaType lambdaType = context.getStandardLibrary().getOrphanage().getLambdaType(name, contextType, parameterTypes, resultType, null);
+				LambdaType lambdaType = context.getStandardLibrary().getLambdaType(contextType, parameterTypes, resultType, null);
 				context.installPivotTypeWithMultiplicity(lambdaType, csElement);
 			}
 			return null;

@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -152,15 +153,15 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType containerType, @NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		if (containerType.eIsProxy() || elementType.eIsProxy()) {
+	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		assert genericType == PivotUtil.getUnspecializedTemplateableElement(genericType);
+		if (genericType.eIsProxy() || elementType.eIsProxy()) {
 			return getOclInvalidType();
 		}
-		if (isUnspecialized(containerType, elementType, isNullFree, lower, upper)) {
-			return containerType;
+		if (isUnspecialized(genericType, elementType, isNullFree, lower, upper)) {
+			return genericType;
 		}
-		return getOrphanage().getCollectionType(containerType, elementType, isNullFree, lower, upper);
+		return getOrphanage().getCollectionType(genericType, elementType, isNullFree, lower, upper);
 	}
 
 	@Override
@@ -169,12 +170,30 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
+	public @NonNull LambdaType getLambdaType(@NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
+			@Nullable TemplateParameterSubstitutions bindings) {
+		if (bindings == null) {
+			return getOrphanage().getLambdaType(getOclLambdaType(), contextType, parameterTypes, resultType);
+		}
+		else {
+			Type specializedContextType = getSpecializedType(contextType, bindings);
+			List<@NonNull Type> specializedParameterTypes = new ArrayList<>();
+			for (@NonNull Type parameterType : parameterTypes) {
+				specializedParameterTypes.add(getSpecializedType(parameterType, bindings));
+			}
+			Type specializedResultType = getSpecializedType(resultType, bindings);
+			return getOrphanage().getLambdaType(getOclLambdaType(), specializedContextType, specializedParameterTypes, specializedResultType);
+		}
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, @Nullable Boolean keysAreNullFree, @NonNull Type valueType, @Nullable Boolean valuesAreNullFree) {
 		if (keyType.eIsProxy() || valueType.eIsProxy()) {
 			return getOclInvalidType();
 		}
+		MapType genericType = getMapType();
 		if (isUnspecialized(keyType, keysAreNullFree, valueType, valuesAreNullFree)) {
-			return getMapType();
+			return genericType;
 		}
 		if (keysAreNullFree == null) {
 			keysAreNullFree = PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE;
@@ -182,7 +201,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (valuesAreNullFree == null) {
 			valuesAreNullFree = PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE;
 		}
-		return getOrphanage().getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		return getOrphanage().getMapType(genericType, keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
 	@Override
@@ -291,11 +310,10 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
-			String typeName = ClassUtil.nonNullModel(lambdaType.getName());
 			Type contextType = ClassUtil.nonNullModel(lambdaType.getContextType());
 			@NonNull List<@NonNull Type> parameterType = PivotUtil.getParameterType(lambdaType);
 			Type resultType = ClassUtil.nonNullModel(lambdaType.getResultType());
-			return getOrphanage().getLambdaType(typeName, contextType, parameterType, resultType, substitutions);
+			return getLambdaType(contextType, parameterType, resultType, substitutions);
 		}
 		else if (type instanceof org.eclipse.ocl.pivot.Class) {
 			//
@@ -330,7 +348,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 				Property property = PivotUtil.createProperty(NameUtil.getSafeName(partId), partType);
 				tupleParts.add(property);
 			}
-			tupleType = getOrphanage().getTupleType(tupleParts);
+			tupleType = getOrphanage().getTupleType(getOclTupleType(), tupleParts);
 		}
 		return tupleType;
 	}

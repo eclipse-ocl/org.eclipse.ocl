@@ -327,7 +327,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 				}
 			}
 			Type specializedResultType = specializeType(ClassUtil.nonNullModel(lambdaType.getResultType()));
-			return standardLibrary.getOrphanage().getLambdaType(typeName, specializedContextType, specializedParameterTypes, specializedResultType, null);
+			return standardLibrary.getLambdaType(specializedContextType, specializedParameterTypes, specializedResultType, null);
 		}
 		else {
 			//

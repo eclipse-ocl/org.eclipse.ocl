@@ -114,13 +114,17 @@ public class OCLstdlibTests extends XtextTestCase
 		//	Check similar content
 		//
 		Map<String,Element> fileMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(asResource));
-		//		for (String moniker : fileMoniker2asMap.keySet()) {
-		//			System.out.println("File : " + moniker);
-		//		}
+	//	List<String> keySet1 = new ArrayList<>(fileMoniker2asMap.keySet());
+	//	Collections.sort(keySet1);
+	//	for (String moniker : keySet1) {
+	//		System.out.println("File : " + moniker);
+	//	}
 		Map<String,Element> javaMoniker2asMap = computeMoniker2ASMap(Collections.singletonList(javaResource));
-		//		for (String moniker : javaMoniker2asMap.keySet()) {
-		//			System.out.println("Java : " + moniker);
-		//		}
+	//	List<String> keySet2 = new ArrayList<>(javaMoniker2asMap.keySet());
+	//	Collections.sort(keySet2);
+	//	for (String moniker : keySet2) {
+	//		System.out.println("Java : " + moniker);
+	//	}
 		//		assertEquals(fileMoniker2asMap.size(), javaMoniker2asMap.size());
 		for (String moniker : fileMoniker2asMap.keySet()) {
 			Element fileElement = fileMoniker2asMap.get(moniker);

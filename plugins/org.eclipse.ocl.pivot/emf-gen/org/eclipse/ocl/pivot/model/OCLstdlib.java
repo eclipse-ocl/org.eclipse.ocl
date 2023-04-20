@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
@@ -52,11 +51,9 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -786,36 +783,36 @@ public class OCLstdlib extends ASResourceImpl
 		private void installSpecializedAggregateTypes0() {
 			Class type;
 
-			type = _Lambda_Bag_T_Boolean = getLambdaType("Lambda", tp_Bag_T, _Boolean);
-			type = _Lambda_Bag_T_Bag_collectNested_V = getLambdaType("Lambda", tp_Bag_T, tp_Bag_collectNested_V);
-			type = _Lambda_Bag_T_Bag_collect_V = getLambdaType("Lambda", tp_Bag_T, tp_Bag_collect_V);
-			type = _Lambda_Bag_T_OclAny = getLambdaType("Lambda", tp_Bag_T, _OclAny);
-			type = _Lambda_Collection_T_Boolean = getLambdaType("Lambda", tp_Collection_T, _Boolean);
-			type = _Lambda_Collection_T_Collection_collectBy_V = getLambdaType("Lambda", tp_Collection_T, tp_Collection_collectBy_V);
-			type = _Lambda_Collection_T_Collection_collectNested_V = getLambdaType("Lambda", tp_Collection_T, tp_Collection_collectNested_V);
-			type = _Lambda_Collection_T_Collection_collect_V = getLambdaType("Lambda", tp_Collection_T, tp_Collection_collect_V);
-			type = _Lambda_Collection_T_Collection_iterate_Tacc = getLambdaType("Lambda", tp_Collection_T, tp_Collection_iterate_Tacc);
-			type = _Lambda_Collection_T_OclAny = getLambdaType("Lambda", tp_Collection_T, _OclAny);
-			type = _Lambda_Map_K_Boolean = getLambdaType("Lambda", tp_Map_K, _Boolean);
-			type = _Lambda_Map_K_Map_collectBy_V2 = getLambdaType("Lambda", tp_Map_K, tp_Map_collectBy_V2);
-			type = _Lambda_Map_K_Map_collectNested_V2 = getLambdaType("Lambda", tp_Map_K, tp_Map_collectNested_V2);
-			type = _Lambda_Map_K_Map_collect_V2 = getLambdaType("Lambda", tp_Map_K, tp_Map_collect_V2);
-			type = _Lambda_Map_K_Map_iterate_Tacc = getLambdaType("Lambda", tp_Map_K, tp_Map_iterate_Tacc);
-			type = _Lambda_Map_K_OclAny = getLambdaType("Lambda", tp_Map_K, _OclAny);
-			type = _Lambda_OrderedSet_T_Boolean = getLambdaType("Lambda", tp_OrderedSet_T, _Boolean);
-			type = _Lambda_OrderedSet_T_OclAny = getLambdaType("Lambda", tp_OrderedSet_T, _OclAny);
-			type = _Lambda_OrderedSet_T_OrderedSet_collectNested_V = getLambdaType("Lambda", tp_OrderedSet_T, tp_OrderedSet_collectNested_V);
-			type = _Lambda_OrderedSet_T_OrderedSet_collect_V = getLambdaType("Lambda", tp_OrderedSet_T, tp_OrderedSet_collect_V);
-			type = _Lambda_Sequence_T_Boolean = getLambdaType("Lambda", tp_Sequence_T, _Boolean);
-			type = _Lambda_Sequence_T_OclAny = getLambdaType("Lambda", tp_Sequence_T, _OclAny);
-			type = _Lambda_Sequence_T_Sequence_collectNested_V = getLambdaType("Lambda", tp_Sequence_T, tp_Sequence_collectNested_V);
-			type = _Lambda_Sequence_T_Sequence_collect_V = getLambdaType("Lambda", tp_Sequence_T, tp_Sequence_collect_V);
-			type = _Lambda_Set_T_Boolean = getLambdaType("Lambda", tp_Set_T, _Boolean);
-			type = _Lambda_Set_T_OclAny = getLambdaType("Lambda", tp_Set_T, _OclAny);
-			type = _Lambda_Set_T_Set_collectNested_V = getLambdaType("Lambda", tp_Set_T, tp_Set_collectNested_V);
-			type = _Lambda_Set_T_Set_collect_V = getLambdaType("Lambda", tp_Set_T, tp_Set_collect_V);
-			type = _Lambda_UniqueCollection_T_OclAny = getLambdaType("Lambda", tp_UniqueCollection_T, _OclAny);
-			type = _Tuple = getTupleType("Tuple",
+			type = _Lambda_Bag_T_Boolean = getLambdaType(_OclLambda, tp_Bag_T, _Boolean);
+			type = _Lambda_Bag_T_Bag_collectNested_V = getLambdaType(_OclLambda, tp_Bag_T, tp_Bag_collectNested_V);
+			type = _Lambda_Bag_T_Bag_collect_V = getLambdaType(_OclLambda, tp_Bag_T, tp_Bag_collect_V);
+			type = _Lambda_Bag_T_OclAny = getLambdaType(_OclLambda, tp_Bag_T, _OclAny);
+			type = _Lambda_Collection_T_Boolean = getLambdaType(_OclLambda, tp_Collection_T, _Boolean);
+			type = _Lambda_Collection_T_Collection_collectBy_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collectBy_V);
+			type = _Lambda_Collection_T_Collection_collectNested_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collectNested_V);
+			type = _Lambda_Collection_T_Collection_collect_V = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_collect_V);
+			type = _Lambda_Collection_T_Collection_iterate_Tacc = getLambdaType(_OclLambda, tp_Collection_T, tp_Collection_iterate_Tacc);
+			type = _Lambda_Collection_T_OclAny = getLambdaType(_OclLambda, tp_Collection_T, _OclAny);
+			type = _Lambda_Map_K_Boolean = getLambdaType(_OclLambda, tp_Map_K, _Boolean);
+			type = _Lambda_Map_K_Map_collectBy_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collectBy_V2);
+			type = _Lambda_Map_K_Map_collectNested_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collectNested_V2);
+			type = _Lambda_Map_K_Map_collect_V2 = getLambdaType(_OclLambda, tp_Map_K, tp_Map_collect_V2);
+			type = _Lambda_Map_K_Map_iterate_Tacc = getLambdaType(_OclLambda, tp_Map_K, tp_Map_iterate_Tacc);
+			type = _Lambda_Map_K_OclAny = getLambdaType(_OclLambda, tp_Map_K, _OclAny);
+			type = _Lambda_OrderedSet_T_Boolean = getLambdaType(_OclLambda, tp_OrderedSet_T, _Boolean);
+			type = _Lambda_OrderedSet_T_OclAny = getLambdaType(_OclLambda, tp_OrderedSet_T, _OclAny);
+			type = _Lambda_OrderedSet_T_OrderedSet_collectNested_V = getLambdaType(_OclLambda, tp_OrderedSet_T, tp_OrderedSet_collectNested_V);
+			type = _Lambda_OrderedSet_T_OrderedSet_collect_V = getLambdaType(_OclLambda, tp_OrderedSet_T, tp_OrderedSet_collect_V);
+			type = _Lambda_Sequence_T_Boolean = getLambdaType(_OclLambda, tp_Sequence_T, _Boolean);
+			type = _Lambda_Sequence_T_OclAny = getLambdaType(_OclLambda, tp_Sequence_T, _OclAny);
+			type = _Lambda_Sequence_T_Sequence_collectNested_V = getLambdaType(_OclLambda, tp_Sequence_T, tp_Sequence_collectNested_V);
+			type = _Lambda_Sequence_T_Sequence_collect_V = getLambdaType(_OclLambda, tp_Sequence_T, tp_Sequence_collect_V);
+			type = _Lambda_Set_T_Boolean = getLambdaType(_OclLambda, tp_Set_T, _Boolean);
+			type = _Lambda_Set_T_OclAny = getLambdaType(_OclLambda, tp_Set_T, _OclAny);
+			type = _Lambda_Set_T_Set_collectNested_V = getLambdaType(_OclLambda, tp_Set_T, tp_Set_collectNested_V);
+			type = _Lambda_Set_T_Set_collect_V = getLambdaType(_OclLambda, tp_Set_T, tp_Set_collect_V);
+			type = _Lambda_UniqueCollection_T_OclAny = getLambdaType(_OclLambda, tp_UniqueCollection_T, _OclAny);
+			type = _Tuple = getTupleType(_OclTuple,
 				createProperty("first", tp_Collection_T),
 				createProperty("second", tp_Collection_product_T2));
 		}
@@ -823,8 +820,8 @@ public class OCLstdlib extends ASResourceImpl
 		private void installSpecializedAggregateTypes1() {
 			Class type;
 
-			type = _Lambda_OrderedSet_T_OrderedSet = getLambdaType("Lambda", tp_OrderedSet_T, _OrderedSet_OrderedSet_T);
-			type = _Lambda_Set_T_Set = getLambdaType("Lambda", tp_Set_T, _Set_Set_T);
+			type = _Lambda_OrderedSet_T_OrderedSet = getLambdaType(_OclLambda, tp_OrderedSet_T, _OrderedSet_OrderedSet_T);
+			type = _Lambda_Set_T_Set = getLambdaType(_OclLambda, tp_Set_T, _Set_Set_T);
 			type = _Bag_Bag_collectNested_V_F = getCollectionType(_Bag_Bag_T, tp_Bag_collectNested_V, false, 0, -1);
 			type = _Bag_Bag_collect_V_F = getCollectionType(_Bag_Bag_T, tp_Bag_collect_V, false, 0, -1);
 			type = _Bag_Bag_flatten_T2_F = getCollectionType(_Bag_Bag_T, tp_Bag_flatten_T2, false, 0, -1);
@@ -965,8 +962,8 @@ public class OCLstdlib extends ASResourceImpl
 		private void installSpecializedAggregateTypes2() {
 			Class type;
 
-			type = _Lambda_Bag_T_Set = getLambdaType("Lambda", tp_Bag_T, _Set_Bag_T_F);
-			type = _Lambda_Sequence_T_OrderedSet = getLambdaType("Lambda", tp_Sequence_T, _OrderedSet_Sequence_T_F);
+			type = _Lambda_Bag_T_Set = getLambdaType(_OclLambda, tp_Bag_T, _Set_Bag_T_F);
+			type = _Lambda_Sequence_T_OrderedSet = getLambdaType(_OclLambda, tp_Sequence_T, _OrderedSet_Sequence_T_F);
 		}
 
 		private void installAggregateSuperTypes() {

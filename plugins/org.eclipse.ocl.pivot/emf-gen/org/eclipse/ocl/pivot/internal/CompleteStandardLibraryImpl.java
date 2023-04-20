@@ -679,7 +679,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			assert templateArguments.size() == 2;
 			@NonNull Type keyTemplateArgument = templateArguments.get(0);
 			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getMapType(keyTemplateArgument, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueTemplateArgument, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
+			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getMapType((MapType)libraryType, keyTemplateArgument, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueTemplateArgument, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
 			return specializedType;
 		}
 		else {
@@ -708,7 +708,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 		PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 		org.eclipse.ocl.pivot.@NonNull Class entryType = metamodelManager.getPrimaryClass(entryClass);
-		return getOrphanage().getMapOfEntryType(entryType);
+		return getOrphanage().getMapOfEntryType(getMapType(), entryType);
 	}
 
 	@Override

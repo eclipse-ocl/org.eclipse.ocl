@@ -567,12 +567,6 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		return (MapType)OCLstdlibTables.Types._Map;
 	}
 
-	@Deprecated /* @deprecated used by auto-gen code for now */
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
-		assert genericType == (MapType)OCLstdlibTables.Types._Map;
-		return getMapType(keyType, null, valueType, null);
-	}
-
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getMetaclass(@NonNull Type asInstanceType) {
 		String metaclassName = TypeUtil.getMetaclassName(asInstanceType);
