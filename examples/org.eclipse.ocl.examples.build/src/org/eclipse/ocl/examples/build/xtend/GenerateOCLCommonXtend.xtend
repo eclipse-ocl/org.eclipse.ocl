@@ -355,7 +355,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String defineLambdaType(/*@NonNull*/ LambdaType type) {
 		'''
-		type = «type.getPrefixedSymbolName("_" + type.partialName())» = getLambdaType("«type.name»", «type.contextType.getSymbolName()», «type.resultType.getSymbolName()»«FOR parameterType : type.parameterType», type.getParameterType().add(«parameterType.getSymbolName()»«ENDFOR»);
+		type = «type.getPrefixedSymbolName("_" + type.partialName())» = getLambdaType(_OclLambda, «type.contextType.getSymbolName()», «type.resultType.getSymbolName()»«FOR parameterType : type.parameterType», type.getParameterType().add(«parameterType.getSymbolName()»«ENDFOR»);
 		'''
 	}
 
@@ -629,7 +629,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 	protected def String defineTupleType(/*@NonNull*/ TupleType type) {
 		'''
-		type = «type.getSymbolName()» = getTupleType("«type.name»",
+		type = «type.getSymbolName()» = getTupleType(_OclTuple,
 		«FOR property : type.getSortedTupleParts() BEFORE ("\t") SEPARATOR (",\n\t")»
 		createProperty("«property.name»", «property.type.getSymbolName()»)«ENDFOR»);
 		«FOR property : type.getSortedProperties()»
