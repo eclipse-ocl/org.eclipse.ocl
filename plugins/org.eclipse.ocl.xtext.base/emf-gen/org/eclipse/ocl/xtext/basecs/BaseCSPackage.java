@@ -1199,6 +1199,17 @@ public interface BaseCSPackage extends EPackage {
 	EClass getMultiplicityCS();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.MultiplicityCS#isIsNonNullFree <em>Is Non Null Free</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Is Non Null Free</em>'.
+	 * @see org.eclipse.ocl.xtext.basecs.MultiplicityCS#isIsNonNullFree()
+	 * @see #getMultiplicityCS()
+	 * @generated
+	 */
+	EAttribute getMultiplicityCS_IsNonNullFree();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.xtext.basecs.MultiplicityCS#isIsNullFree <em>Is Null Free</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2709,6 +2720,14 @@ public interface BaseCSPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MULTIPLICITY_CS = eINSTANCE.getMultiplicityCS();
+
+		/**
+		 * The meta object literal for the '<em><b>Is Non Null Free</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MULTIPLICITY_CS__IS_NON_NULL_FREE = eINSTANCE.getMultiplicityCS_IsNonNullFree();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Null Free</b></em>' attribute feature.

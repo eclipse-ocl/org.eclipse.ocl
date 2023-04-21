@@ -195,7 +195,7 @@ public interface PivotConstants
 	/**
 	 * Whether the default semantics for Collection elements is null free.
 	 */
-	static final boolean DEFAULT_COLLECTIONS_ARE_NULL_FREE = true;			// XXX
+	static final boolean DEFAULT_COLLECTIONS_ARE_NULL_FREE = false;			// Legacy MultiplicityCS.isNullFree default is false
 
 	/**
 	 * Whether the default semantics for Map keys is null free.

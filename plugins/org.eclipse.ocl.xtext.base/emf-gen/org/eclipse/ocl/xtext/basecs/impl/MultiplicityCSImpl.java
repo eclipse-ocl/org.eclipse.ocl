@@ -24,6 +24,7 @@ import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.MultiplicityCSImpl#isIsNonNullFree <em>Is Non Null Free</em>}</li>
  *   <li>{@link org.eclipse.ocl.xtext.basecs.impl.MultiplicityCSImpl#isIsNullFree <em>Is Null Free</em>}</li>
  * </ul>
  *
@@ -38,7 +39,33 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	 * @generated
 	 * @ordered
 	 */
-	public static final int MULTIPLICITY_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 1;
+	public static final int MULTIPLICITY_CS_FEATURE_COUNT = ElementCSImpl.ELEMENT_CS_FEATURE_COUNT + 2;
+	/**
+	 * The default value of the '{@link #isIsNonNullFree() <em>Is Non Null Free</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsNonNullFree()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean IS_NON_NULL_FREE_EDEFAULT = false;
+	/**
+	 * The cached value of the '{@link #isIsNonNullFree() <em>Is Non Null Free</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isIsNonNullFree()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isNonNullFree = IS_NON_NULL_FREE_EDEFAULT;
+	/**
+	 * This is true if the Is Non Null Free attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isNonNullFreeESet;
 	/**
 	 * The default value of the '{@link #isIsNullFree() <em>Is Null Free</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -57,6 +84,15 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	 * @ordered
 	 */
 	protected boolean isNullFree = IS_NULL_FREE_EDEFAULT;
+
+	/**
+	 * This is true if the Is Null Free attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean isNullFreeESet;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -85,6 +121,60 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	 * @generated
 	 */
 	@Override
+	public boolean isIsNonNullFree()
+	{
+		return isNonNullFree;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setIsNonNullFree(boolean newIsNonNullFree)
+	{
+		boolean oldIsNonNullFree = isNonNullFree;
+		isNonNullFree = newIsNonNullFree;
+		boolean oldIsNonNullFreeESet = isNonNullFreeESet;
+		isNonNullFreeESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldIsNonNullFree, isNonNullFree, !oldIsNonNullFreeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void unsetIsNonNullFree()
+	{
+		boolean oldIsNonNullFree = isNonNullFree;
+		boolean oldIsNonNullFreeESet = isNonNullFreeESet;
+		isNonNullFree = IS_NON_NULL_FREE_EDEFAULT;
+		isNonNullFreeESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, 2, oldIsNonNullFree, IS_NON_NULL_FREE_EDEFAULT, oldIsNonNullFreeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isSetIsNonNullFree()
+	{
+		return isNonNullFreeESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public boolean isIsNullFree()
 	{
 		return isNullFree;
@@ -100,8 +190,37 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 	{
 		boolean oldIsNullFree = isNullFree;
 		isNullFree = newIsNullFree;
+		boolean oldIsNullFreeESet = isNullFreeESet;
+		isNullFreeESet = true;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 2, oldIsNullFree, isNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, 3, oldIsNullFree, isNullFree, !oldIsNullFreeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void unsetIsNullFree()
+	{
+		boolean oldIsNullFree = isNullFree;
+		boolean oldIsNullFreeESet = isNullFreeESet;
+		isNullFree = IS_NULL_FREE_EDEFAULT;
+		isNullFreeESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, 3, oldIsNullFree, IS_NULL_FREE_EDEFAULT, oldIsNullFreeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public boolean isSetIsNullFree()
+	{
+		return isNullFreeESet;
 	}
 
 	/**
@@ -151,6 +270,8 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 		switch (featureID)
 		{
 			case 2:
+				return isIsNonNullFree();
+			case 3:
 				return isIsNullFree();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -167,6 +288,9 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 		switch (featureID)
 		{
 			case 2:
+				setIsNonNullFree((Boolean)newValue);
+				return;
+			case 3:
 				setIsNullFree((Boolean)newValue);
 				return;
 		}
@@ -184,7 +308,10 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 		switch (featureID)
 		{
 			case 2:
-				setIsNullFree(IS_NULL_FREE_EDEFAULT);
+				unsetIsNonNullFree();
+				return;
+			case 3:
+				unsetIsNullFree();
 				return;
 		}
 		super.eUnset(featureID);
@@ -201,7 +328,9 @@ public abstract class MultiplicityCSImpl extends ElementCSImpl implements Multip
 		switch (featureID)
 		{
 			case 2:
-				return isNullFree != IS_NULL_FREE_EDEFAULT;
+				return isSetIsNonNullFree();
+			case 3:
+				return isSetIsNullFree();
 		}
 		return super.eIsSet(featureID);
 	}

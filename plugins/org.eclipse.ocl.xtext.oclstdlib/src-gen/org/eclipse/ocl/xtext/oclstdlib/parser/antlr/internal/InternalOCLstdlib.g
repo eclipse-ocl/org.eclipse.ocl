@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, 2022 Willink Transformations and others.
+ * Copyright (c) 2011, 2023 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -8713,11 +8713,22 @@ ruleMultiplicityCS returns [EObject current=null]
         $current = $this_MultiplicityStringCS_2.current;
         afterParserOrEnumRuleCall();
     }
-)(	otherlv_3='|?'
+)((
+(
+		lv_isNonNullFree_3_0=	'|?'
     {
-    	newLeafNode(otherlv_3, grammarAccess.getMultiplicityCSAccess().getVerticalLineQuestionMarkKeyword_2_0());
+        newLeafNode(lv_isNonNullFree_3_0, grammarAccess.getMultiplicityCSAccess().getIsNonNullFreeVerticalLineQuestionMarkKeyword_2_0_0());
     }
 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getMultiplicityCSRule());
+	        }
+       		setWithLastConsumed($current, "isNonNullFree", true, "|?");
+	    }
+
+)
+)
     |(
 (
 		lv_isNullFree_4_0=	'|1'

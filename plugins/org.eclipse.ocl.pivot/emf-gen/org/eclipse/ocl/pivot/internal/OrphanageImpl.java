@@ -560,7 +560,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 					basicGetCollectionType(specializedTypeId);
 				}
 				String s = specializedType.toString();
-				if (s.contains("Set(Bag(b::B)")) {
+				if (s.contains("Set(Bag(b::B")) {
 					getClass();		// XXX
 				}
 				addOrphanClass(specializedType);

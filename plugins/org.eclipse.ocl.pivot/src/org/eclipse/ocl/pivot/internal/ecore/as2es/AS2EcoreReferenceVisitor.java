@@ -434,7 +434,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 					eAnnotation.setSource(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 				}
-				eAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, prevailingCollectionIsNullFree ? "true" : "false");
+				eAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, prevailingCollectionIsNullFree ? "false" : "true");
 				eTypedElement.getEAnnotations().add(eAnnotation);
 			}
 			else {

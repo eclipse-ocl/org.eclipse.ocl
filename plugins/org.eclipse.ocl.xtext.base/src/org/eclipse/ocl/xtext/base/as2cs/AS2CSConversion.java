@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS.Factory;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
+import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.AnnotationCS;
 import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
@@ -274,7 +275,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			}
 			csMultiplicity = csMultiplicityBounds;
 		}
-		csMultiplicity.setIsNullFree(isNullFree);
+		ElementUtil.setIsNullFree(csMultiplicity, isNullFree);
 		return csMultiplicity;
 	}
 

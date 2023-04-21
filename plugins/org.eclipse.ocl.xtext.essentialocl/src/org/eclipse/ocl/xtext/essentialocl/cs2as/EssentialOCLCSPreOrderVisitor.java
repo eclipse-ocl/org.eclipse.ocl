@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -28,6 +29,7 @@ import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
 import org.eclipse.ocl.xtext.base.cs2as.SingleContinuation;
+import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ContextLessElementCS;
 import org.eclipse.ocl.xtext.basecs.MultiplicityCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
@@ -76,13 +78,13 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 					UnlimitedNaturalValue upperValue;
 					MultiplicityCS csCollectionMultiplicity = csElement.getOwnedCollectionMultiplicity();
 					if (csCollectionMultiplicity != null) {
-						isNullFree = csCollectionMultiplicity.isIsNullFree();
+						isNullFree = ElementUtil.isNullFree(csCollectionMultiplicity);
 						lowerValue = ValueUtil.integerValueOf(csCollectionMultiplicity.getLower());
 						int upper = csCollectionMultiplicity.getUpper();
 						upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
 					}
 					else {
-						isNullFree = true;
+						isNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
 						lowerValue = null;
 						upperValue = null;
 					}
@@ -92,7 +94,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 					if (csMultiplicity != null) {
 						int upper = csMultiplicity.getUpper();
 						if ((upper <= -1) || (2 <= upper)) {
-							isNullFree = csMultiplicity.isIsNullFree();
+							isNullFree = ElementUtil.isNullFree(csMultiplicity);
 							lowerValue = ValueUtil.integerValueOf(csMultiplicity.getLower());
 							upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
 							type = standardLibrary.getCollectionType(standardLibrary.getSetType(), type, isNullFree, lowerValue, upperValue);

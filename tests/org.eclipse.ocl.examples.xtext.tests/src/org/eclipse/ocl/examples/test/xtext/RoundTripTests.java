@@ -429,7 +429,7 @@ public class RoundTripTests extends XtextTestCase
 					//	"property bag2 : Bag(B);\n" +
 					//	"property bag3 : B[3..5] {!unique};\n" +
 						"property bag4 : Bag(B/*[1..3]*/)[4..6];\n" +	// Bug 467443 need an EAnnotation for nested multiplicity
-						"property bag5 : Bag(B)[4..6|1];\n" +
+						"property bag5 : Bag(B)[4..7|1];\n" +
 					//	"property setCollection : Set(Collection(B));\n" +
 					//	"property collection2 : Collection(B);\n" +
 					//	"property orderedset1 : B[*] {ordered};\n" +

@@ -778,7 +778,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		int upper = 1;
 		MultiplicityCS multiplicity = csElement.getOwnedMultiplicity();
 		if (multiplicity != null) {
-			isNullFree = multiplicity.isIsNullFree();
+			isNullFree = ElementUtil.isNullFree(multiplicity);
 			lower = multiplicity.getLower();
 			upper = multiplicity.getUpper();
 		}
@@ -1348,7 +1348,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				boolean isNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
 				MultiplicityCS csMultiplicity = ownedTemplateBinding.getOwnedMultiplicity();
 				if (csMultiplicity != null) {
-					isNullFree = csMultiplicity.isIsNullFree();
+					isNullFree = ElementUtil.isNullFree(csMultiplicity);
 				}
 				specializedPivotElement = templateArgument != null ? standardLibrary.getCollectionType((CollectionType) unspecializedPivotElement, templateArgument, isNullFree, null, null) : unspecializedPivotElement;
 			}

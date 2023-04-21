@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.attributes.RootCSAttribution;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
@@ -475,6 +476,18 @@ public class ElementUtil
 		return false;
 	}
 
+	public static boolean isNullFree(@NonNull MultiplicityCS csMultiplicity) {
+		if (csMultiplicity.isIsNonNullFree()) {
+			return false;
+		}
+		else if (csMultiplicity.isIsNullFree()) {
+			return true;
+		}
+		else {
+			return PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
+		}
+	}
+
 	public static boolean isOrdered(@NonNull TypedElementCS csTypedElement) {
 		List<String> qualifiers = csTypedElement.getQualifiers();
 		assert qualifiers != null;
@@ -530,6 +543,17 @@ public class ElementUtil
 		List<String> qualifiers = csTypedElement.getQualifiers();
 		assert qualifiers != null;
 		return getQualifier(qualifiers, "unique", "!unique", true);
+	}
+
+	public static void setIsNullFree(@NonNull MultiplicityCS csMultiplicity, boolean isNullFree) {
+		if (isNullFree) {
+			csMultiplicity.unsetIsNonNullFree();
+			csMultiplicity.setIsNullFree(true);
+		}
+		else {
+			csMultiplicity.setIsNonNullFree(true);
+			csMultiplicity.unsetIsNullFree();
+		}
 	}
 
 	public static void setLastPathElement(@NonNull PathNameCS ownedPathName, @NonNull Element asElement) {
