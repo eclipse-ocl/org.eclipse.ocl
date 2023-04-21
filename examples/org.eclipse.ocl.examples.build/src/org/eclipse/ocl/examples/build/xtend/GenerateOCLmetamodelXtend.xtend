@@ -67,7 +67,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.Orphanage;
 			import org.eclipse.ocl.pivot.Package;
 			import org.eclipse.ocl.pivot.Parameter;
-			import org.eclipse.ocl.pivot.PivotPackage;
 			import org.eclipse.ocl.pivot.Property;
 			import org.eclipse.ocl.pivot.StandardLibrary;
 			import org.eclipse.ocl.pivot.TemplateParameter;
@@ -243,7 +242,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 
 					@Override
 					public boolean isCompatibleWith(@NonNull String metamodelURI) {
-						return PIVOT_URI.equals(metamodelURI);
+						return org.eclipse.ocl.pivot.model.OCLmetamodel.PIVOT_URI.equals(metamodelURI);
 					}
 			
 					/**
@@ -280,7 +279,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == root.getOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 
-					protected Contents(@NonNull OCLmetamodel metamodelResource, @NonNull Package libraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
+					protected Contents(@NonNull «javaClassName» metamodelResource, @NonNull Package libraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
 						super(libraryPackage);
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
 						metamodelResource.getContents().add(«root.getSymbolName()»);

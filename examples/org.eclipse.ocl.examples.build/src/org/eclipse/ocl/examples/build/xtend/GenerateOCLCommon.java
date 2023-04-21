@@ -265,6 +265,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 		}
 
+		private boolean addReference(@NonNull NamedElement asElement) {
+			return allReferences.add(asElement);
+		}
+
 		protected void analyze(@NonNull Model thisModel) {
 			for (NamedElement asElement : context.external2name.keySet()) {
 				if (asElement instanceof org.eclipse.ocl.pivot.Class) {
@@ -309,8 +313,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			if (allReferences.size() > 0) {
 				CompleteStandardLibrary standardLibrary = context.environmentFactory.getStandardLibrary();
-				allReferences.add(standardLibrary.getOclAnyType());
-				allReferences.add(standardLibrary.getOclElementType());
+				addReference(standardLibrary.getOclAnyType());
+				addReference(standardLibrary.getOclElementType());
 			}
 			for (@NonNull NamedElement asNamedElement : allReferences) {
 				if (!internalClasses.contains(asNamedElement)) {
@@ -387,7 +391,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		protected void doSuperClasses(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asClass)) {
-				allReferences.add(superClass);
+				addReference(superClass);
 			//	addDependency(asClass, superClass);
 			}
 		}
@@ -399,7 +403,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			TemplateableElement unspecializedElement = asTemplateableElement.getUnspecializedElement();
 			if (unspecializedElement instanceof NamedElement) {
-				allReferences.add((NamedElement)unspecializedElement);
+				addReference((NamedElement)unspecializedElement);
 				addDependency((DataType)asTemplateableElement, (Type)unspecializedElement);
 			}
 		}
@@ -532,7 +536,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitImport(@NonNull Import asImport) {
-			allReferences.add(asImport.getImportedNamespace());
+			addReference(asImport.getImportedNamespace());
 			return null;
 		}
 
@@ -651,9 +655,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				Property asOpposite = asProperty.getOpposite();
 				if (asOpposite != null) {
 					if (PivotUtil.getContainingModel(asOpposite) == PivotUtil.getContainingModel(asProperty)) {
-						allReferences.add(asOpposite);
+						addReference(asOpposite);
 					}
-					allReferences.add(asOpposite.getType());
+					addReference(asOpposite.getType());
 				}
 			}
 		//	addDependency(asProperty, asProperty.getOwningClass());
@@ -673,8 +677,8 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution asTemplateParameterSubstitution) {
-			allReferences.add(asTemplateParameterSubstitution.getActual());
-			allReferences.add(asTemplateParameterSubstitution.getFormal());
+			addReference(asTemplateParameterSubstitution.getActual());
+			addReference(asTemplateParameterSubstitution.getFormal());
 			return null;
 		}
 
@@ -698,7 +702,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitTypedElement(@NonNull TypedElement asTypedElement) {
-			allReferences.add(asTypedElement.getType());
+			addReference(asTypedElement.getType());
 			return null;
 		}
 	}
@@ -833,6 +837,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				}
 			}
 		}
+	//	System.out.println("addExternalReference: " + name + " <=> "+ NameUtil.debugSimpleName(reference) + " : " + reference);		// XXX
 		//		if (!hasComplements) {
 		name2external.put(name, reference);
 		//		}
@@ -1054,7 +1059,12 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getSortedExternalPackages(@NonNull Model root) {
-		List<org.eclipse.ocl.pivot.@NonNull Package> externalPackages = new ArrayList<>(); //root.getOwnedPackages());
+		List<org.eclipse.ocl.pivot.@NonNull Package> externalPackages = new ArrayList<>();
+		for (org.eclipse.ocl.pivot.@NonNull Package asPackage : root.getOwnedPackages()) {
+			if (!OrphanageImpl.isOrphanage(asPackage)) {
+				externalPackages.add(asPackage);
+			}
+		}
 		for (Import asImport : root.getOwnedImports()) {
 			Namespace importedNamespace = asImport.getImportedNamespace();
 			org.eclipse.ocl.pivot.Package externalPackage = PivotUtil.getContainingPackage(importedNamespace);

@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -53,6 +52,7 @@ import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -111,6 +111,17 @@ public class OCLmetamodel extends ASResourceImpl
 		Model model = (Model)(getDefault().getContents().get(0));
 		assert model != null;
 		return model;
+	}
+
+	/**
+	 * Return the default http://www.eclipse.org/ocl/2015/Pivot metamodel Package using the default OCL Standard Library.
+	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/Pivot.ecore
+	 *  is used as the default when no overriding copy is registered.
+	 */
+	public static @NonNull Package getDefaultPackage() {
+		Package pkge = getDefaultModel().getOwnedPackages().get(0);
+		assert pkge != null;
+		return pkge;
 	}
 
 	/**
@@ -199,7 +210,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 		@Override
 		public boolean isCompatibleWith(@NonNull String metamodelURI) {
-			return PIVOT_URI.equals(metamodelURI);
+			return org.eclipse.ocl.pivot.model.OCLmetamodel.PIVOT_URI.equals(metamodelURI);
 		}
 
 		/**

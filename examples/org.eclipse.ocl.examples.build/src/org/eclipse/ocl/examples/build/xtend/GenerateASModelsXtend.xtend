@@ -286,7 +286,7 @@ class GenerateASModelsXtend extends GenerateASModels
 
 					@Override
 					public boolean isCompatibleWith(@NonNull String metamodelURI) {
-						return OCLmetamodel.PIVOT_URI.equals(metamodelURI);
+						return org.eclipse.ocl.pivot.model.OCLmetamodel.PIVOT_URI.equals(metamodelURI);
 					}
 			
 					/**

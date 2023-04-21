@@ -87,7 +87,6 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 			import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-			import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 			import org.eclipse.ocl.pivot.utilities.ClassUtil;
 			import org.eclipse.ocl.pivot.utilities.PivotConstants;
 			«IF ((externalPackages !== null) && !externalPackages.isEmpty())»
@@ -259,7 +258,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 
 					@Override
 					public boolean isCompatibleWith(@NonNull String metamodelURI) {
-						return OCLmetamodel.PIVOT_URI.equals(metamodelURI);
+						return org.eclipse.ocl.pivot.model.OCLmetamodel.PIVOT_URI.equals(metamodelURI);
 					}
 			
 					/**
@@ -314,7 +313,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanage" else pkge.getName())»;
 					«ENDFOR»
 			
-					private Contents(@NonNull  Resource resource, @NonNull String asURI)
+					private Contents(@NonNull Resource resource, @NonNull String asURI)
 					{
 						«thisModel.getSymbolName()» = createModel(asURI);
 						resource.getContents().add(«thisModel.getSymbolName()»);
