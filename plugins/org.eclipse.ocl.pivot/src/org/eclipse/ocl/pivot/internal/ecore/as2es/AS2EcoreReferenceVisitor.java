@@ -409,12 +409,15 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			} catch (InvalidValueException e) {
 				logger.error("Illegal upper bound", e);
 			}
-			boolean prevailingCollectionIsNullFree = true;
+			boolean prevailingCollectionIsNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
 			for (EObject eContainer = eTypedElement; (eContainer = eContainer.eContainer()) != null; ) {
 				if (eContainer instanceof ENamedElement) {
 					EAnnotation eAnnotation = ((ENamedElement)eContainer).getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 					if (eAnnotation != null) {
-						prevailingCollectionIsNullFree = Boolean.valueOf(eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE));
+						String isNullFreeValue = eAnnotation.getDetails().get(PivotConstants.COLLECTION_IS_NULL_FREE);
+						if (isNullFreeValue != null) {
+							prevailingCollectionIsNullFree = Boolean.valueOf(isNullFreeValue);
+						}
 						break;
 					}
 				}
@@ -431,7 +434,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 					eAnnotation.setSource(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 				}
-				eAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, prevailingCollectionIsNullFree ? "false" : "true");
+				eAnnotation.getDetails().put(PivotConstants.COLLECTION_IS_NULL_FREE, prevailingCollectionIsNullFree ? "true" : "false");
 				eTypedElement.getEAnnotations().add(eAnnotation);
 			}
 			else {

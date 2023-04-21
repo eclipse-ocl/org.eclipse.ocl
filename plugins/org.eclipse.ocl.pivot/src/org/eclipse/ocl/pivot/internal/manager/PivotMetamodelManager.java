@@ -1066,7 +1066,11 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
 		completeModel.getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
 		Model thatModel = PivotUtil.getContainingModel(thatClass);
+		assert thatModel != null;
 		if (thisModel == thatModel) {
+			return thatClass;
+		}
+		if (OrphanageImpl.isOrphanage(thatModel)) {		// Shared orphans can be modified to add opposites
 			return thatClass;
 		}
 		org.eclipse.ocl.pivot.Package thatPackage = PivotUtil.getOwningPackage(thatClass);

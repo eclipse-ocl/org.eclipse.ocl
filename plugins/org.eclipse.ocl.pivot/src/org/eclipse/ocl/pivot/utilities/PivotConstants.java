@@ -195,7 +195,7 @@ public interface PivotConstants
 	/**
 	 * Whether the default semantics for Collection elements is null free.
 	 */
-	static final boolean DEFAULT_COLLECTIONS_ARE_NULL_FREE = false;			// XXX
+	static final boolean DEFAULT_COLLECTIONS_ARE_NULL_FREE = true;			// XXX
 
 	/**
 	 * Whether the default semantics for Map keys is null free.
