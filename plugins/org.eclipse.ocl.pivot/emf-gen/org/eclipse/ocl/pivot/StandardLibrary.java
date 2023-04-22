@@ -391,7 +391,5 @@ public interface StandardLibrary extends Element
 
 	@NonNull FlatModel getFlatModel();
 
-	boolean isUnspecialized(@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
-
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 } // AbstractStandardLibrary

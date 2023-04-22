@@ -14,8 +14,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -28,7 +30,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public abstract class AbstractIterationOrOperation extends AbstractFeature implements LibraryIterationOrOperation
 {
 	/**
-	 * Special case processing for return collection types based on the source collection types and multiplicities.
+	 * Special case processing for return collection types based on the source collection type and multiplicity.
 	 */
 	protected @Nullable Type resolveCollectionAsCollectionReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
 		if (returnType instanceof CollectionType) {
@@ -64,9 +66,81 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 	}
 
 	/**
+	 * Special case processing for return collection types based on the return collection element type and source and argument nullities.
+	 */
+	protected @Nullable Type resolveSourceAndArgumentsAsCollectionReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		assert returnType != null;
+		CollectionType collectionReturnType = (CollectionType)returnType;
+		CollectionType genericCollectionType = PivotUtil.getUnspecializedTemplateableElement(collectionReturnType);
+		Type elementType = PivotUtil.getElementType(collectionReturnType);
+		boolean isNullFree = true;
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
+		Type sourceType = ownedSource.getType();
+		if ((sourceType instanceof CollectionType) && !((CollectionType)sourceType).isIsNullFree()) {
+			isNullFree = false;
+		}
+		for (OCLExpression argument : PivotUtil.getOwnedArguments((OperationCallExp)callExp)) {
+			Type type = argument.getType();
+			if ((type instanceof CollectionType) && !((CollectionType)type).isIsNullFree()) {
+				isNullFree = false;
+			}
+			else if (!argument.isIsRequired()) {
+				isNullFree = false;
+			}
+		}
+		return environmentFactory.getStandardLibrary().getCollectionType(genericCollectionType, elementType, isNullFree, null, null);
+	}
+
+	/**
+	 * Special case processing for return map types based on the return collection key/value type and source and argument nullities.
+	 */
+	protected @Nullable Type resolveSourceAndArgumentsAsMapReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		assert returnType != null;
+		MapType mapReturnType = (MapType)returnType;
+		Type keyType = PivotUtil.getKeyType(mapReturnType);
+		Type valueType = PivotUtil.getValueType(mapReturnType);
+		boolean keysAreNullFree = true;
+		boolean valuesAreNullFree = true;
+		OCLExpression ownedSource = PivotUtil.getOwnedSource(callExp);
+		Type sourceType = ownedSource.getType();
+		if ((sourceType instanceof CollectionType) && !((CollectionType)sourceType).isIsNullFree()) {
+			keysAreNullFree = false;
+			valuesAreNullFree = false;
+		}
+		else if (sourceType instanceof MapType) {
+			if (!((MapType)sourceType).isKeysAreNullFree()) {
+				keysAreNullFree = false;
+			}
+			if (!((MapType)sourceType).isValuesAreNullFree()) {
+				valuesAreNullFree = false;
+			}
+		}
+		for (OCLExpression argument : PivotUtil.getOwnedArguments((OperationCallExp)callExp)) {
+			Type type = argument.getType();
+			if ((type instanceof CollectionType) && !((CollectionType)type).isIsNullFree()) {
+				keysAreNullFree = false;
+				valuesAreNullFree = false;
+			}
+			else if (type instanceof MapType) {
+				if (!((MapType)type).isKeysAreNullFree()) {
+					keysAreNullFree = false;
+				}
+				if (!((MapType)type).isValuesAreNullFree()) {
+					valuesAreNullFree = false;
+				}
+			}
+			else if (!argument.isIsRequired()) {
+				keysAreNullFree = false;
+				valuesAreNullFree = false;
+			}
+		}
+		return environmentFactory.getStandardLibrary().getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+	}
+
+	/**
 	 * Special case processing for return collection types based on the source collection types.
 	 */
-	protected @Nullable Type resolveCollectionSourceReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+	protected @Nullable Type resolveSourceAsCollectionReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
 		if (returnType instanceof CollectionType) {
 			OCLExpression ownedSource = callExp.getOwnedSource();
 			if (ownedSource != null) {
@@ -78,6 +152,26 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 					CollectionType genericCollectionType = standardLibrary.getCollectionType(collectionType.isOrdered(), collectionType.isUnique());
 					returnType = standardLibrary.getCollectionType(genericCollectionType, elementType,
 						true, collectionType.getLowerValue(), collectionType.getUpperValue());
+				}
+			}
+		}
+		return returnType;
+	}
+
+	/**
+	 * Special case processing for return map types based on the source map type and multiplicity.
+	 */
+	protected @Nullable Type resolveSourceAsMapReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		if (returnType instanceof MapType) {
+			OCLExpression ownedSource = callExp.getOwnedSource();
+			if (ownedSource != null) {
+				Type sourceType = ownedSource.getType();
+				if (sourceType instanceof MapType) {
+					MapType sourceMapType = (MapType)sourceType;
+					Type keyType = PivotUtil.getKeyType(sourceMapType);
+					Type valueType = PivotUtil.getValueType(sourceMapType);
+					CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+					returnType = standardLibrary.getMapType(keyType, sourceMapType.isKeysAreNullFree(), valueType, sourceMapType.isValuesAreNullFree());
 				}
 			}
 		}

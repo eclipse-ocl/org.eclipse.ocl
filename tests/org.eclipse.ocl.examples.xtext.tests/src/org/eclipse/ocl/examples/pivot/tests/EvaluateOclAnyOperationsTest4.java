@@ -21,8 +21,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystem;
-import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -794,7 +794,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Bag{'Integer'}", "Set{1}.oclType().name");
 		ocl.assertQueryEquals(null, "Set", "Set{1}->oclType().name");
 		ocl.assertSemanticErrorQuery(null, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Integer", "allInstances");
-		ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer)", "allInstances");
+		ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer[*|1])", "allInstances");
 	//	ocl.assertSemanticErrorQuery(null, "Set{1}.oclType().allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Class)", "allInstances");
 		ocl.assertQueryResults(null, "Bag{}", "Set{1}.oclType().allInstances()");
 	//	ocl.assertSemanticErrorQuery(null, "Set{1}->oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Integer)", "allInstances", "");

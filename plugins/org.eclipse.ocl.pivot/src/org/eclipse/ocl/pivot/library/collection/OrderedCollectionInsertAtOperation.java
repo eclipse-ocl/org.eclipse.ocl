@@ -12,7 +12,10 @@ package org.eclipse.ocl.pivot.library.collection;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.AbstractSimpleTernaryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 
 /**
@@ -27,5 +30,10 @@ public class OrderedCollectionInsertAtOperation extends AbstractSimpleTernaryOpe
 		OrderedCollectionValue selfValue = asOrderedCollectionValue(sourceValue);
 		Integer indexValue = asInteger(firstArgumentValue);
 		return selfValue.insertAt(indexValue, secondArgumentValue);
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		return resolveSourceAndArgumentsAsCollectionReturnType(environmentFactory, callExp, returnType);
 	}
 }

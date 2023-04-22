@@ -15,10 +15,13 @@ import java.util.List;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.EvaluationEnvironment;
@@ -27,6 +30,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor.ExecutorExtension;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.library.AbstractOperation;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -87,5 +91,15 @@ public class EObjectOperation extends AbstractOperation
 			sourceAndArgumentValues[argumentIndex++] = executor.evaluate(argument);
 		}
 		return evaluate(executor, callExp, sourceAndArgumentValues);
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		if (returnType instanceof CollectionType) {
+			return resolveSourceAndArgumentsAsCollectionReturnType(environmentFactory, callExp, returnType);
+		}
+		else {
+			return returnType;
+		}
 	}
 }

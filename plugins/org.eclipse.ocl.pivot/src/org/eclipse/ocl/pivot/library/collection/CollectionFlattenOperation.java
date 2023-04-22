@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
 /**
@@ -30,6 +31,20 @@ public class CollectionFlattenOperation extends AbstractSimpleUnaryOperation
 	public @NonNull CollectionValue evaluate(@Nullable Object argument) {
 		CollectionValue collectionValue = asCollectionValue(argument);
 		return collectionValue.flatten();
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		CollectionType collectionType = (CollectionType)callExp.getOwnedSource().getType();
+		CollectionType genericCollectionType = (CollectionType) collectionType.getUnspecializedElement();
+		assert genericCollectionType != null;
+		for (Type elementType; (elementType = collectionType.getElementType()) instanceof CollectionType; ) {
+			collectionType = (CollectionType)elementType;
+		}
+		Type elementType = collectionType.getElementType();
+		assert elementType != null;
+		boolean isNullFree = collectionType.isIsNullFree();
+		return environmentFactory.getStandardLibrary().getCollectionType(genericCollectionType, elementType, isNullFree, null, null);
 	}
 
 	/**

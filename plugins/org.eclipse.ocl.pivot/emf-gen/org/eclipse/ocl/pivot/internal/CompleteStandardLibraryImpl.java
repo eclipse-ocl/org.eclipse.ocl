@@ -1074,7 +1074,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	protected boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,
 			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		if (!isUnspecialized(isNullFree, lower, upper)) {
+		if (!PivotUtil.hasDefaultCollectionValueBindings(isNullFree, lower, upper)) {
 			return false;
 		}
 		CompleteClassInternal completeClass = getCompleteModel().getCompleteClass(genericType);
@@ -1125,7 +1125,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	protected boolean isUnspecialized(@NonNull Type keyType, @Nullable Boolean keysAreNullFree,
 			@NonNull Type valueType, @Nullable Boolean valuesAreNullFree) {
-		if (!isUnspecialized(keysAreNullFree, valuesAreNullFree)) {
+		if (!PivotUtil.hasDefaultMapValueBindings(keysAreNullFree, valuesAreNullFree)) {
 			return false;
 		}
 		CompleteClassInternal completeClass = getCompleteModel().getCompleteClass(getMapType());

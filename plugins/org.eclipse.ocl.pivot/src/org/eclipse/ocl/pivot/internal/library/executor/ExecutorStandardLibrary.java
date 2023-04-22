@@ -848,7 +848,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 	@Override
 	protected boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,
 			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		if (!isUnspecialized(isNullFree, lower, upper)) {
+		if (!PivotUtil.hasDefaultCollectionValueBindings(isNullFree, lower, upper)) {
 			return false;
 		}
 		return elementType == genericType.getElementType();
@@ -856,7 +856,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 
 	@Override
 	protected boolean isUnspecialized(@NonNull Type keyType, @Nullable Boolean keysAreNullFree, @NonNull Type valueType, @Nullable Boolean valuesAreNullFree) {
-		if (!isUnspecialized(keysAreNullFree, valuesAreNullFree)) {
+		if (!PivotUtil.hasDefaultMapValueBindings(keysAreNullFree, valuesAreNullFree)) {
 			return false;
 		}
 		return (keyType == OCLstdlibTables.TypeParameters._0_K) && (valueType == OCLstdlibTables.TypeParameters._1_V);

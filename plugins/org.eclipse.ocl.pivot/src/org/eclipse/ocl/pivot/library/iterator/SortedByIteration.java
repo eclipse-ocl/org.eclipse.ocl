@@ -19,9 +19,9 @@ import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -191,7 +191,7 @@ public class SortedByIteration extends AbstractIteration
 	 */
 	@Override
 	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
-		return resolveCollectionSourceReturnType(environmentFactory, callExp, returnType);
+		return resolveSourceAsCollectionReturnType(environmentFactory, callExp, returnType);
 	}
 
 	@Override

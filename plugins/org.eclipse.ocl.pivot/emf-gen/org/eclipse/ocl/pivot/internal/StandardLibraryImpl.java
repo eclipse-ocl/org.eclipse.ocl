@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -356,19 +355,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	protected abstract boolean isUnspecialized(@NonNull CollectionType genericType, @NonNull Type elementType,
 			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
-	@Override
-	public boolean isUnspecialized(@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return ((isNullFree == null) || (isNullFree == PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE))
-		 && ((lower == null) || (lower == ValueUtil.ZERO_VALUE))
-		 && ((upper == null) || (upper == ValueUtil.UNLIMITED_VALUE));
-	}
-
 	protected abstract boolean isUnspecialized(@NonNull Type keyType, @Nullable Boolean keysAreNullFree, @NonNull Type valueType, @Nullable Boolean valuesAreNullFree);
-
-	protected boolean isUnspecialized(@Nullable Boolean keysAreNullFree, @Nullable Boolean valuesAreNullFree) {
-		return ((keysAreNullFree == null) || (keysAreNullFree == PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE))
-		 && ((valuesAreNullFree == null) || (valuesAreNullFree == PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE));
-	}
 
 	public void resetLibrary() {
 		oclInvalidOperation = null;

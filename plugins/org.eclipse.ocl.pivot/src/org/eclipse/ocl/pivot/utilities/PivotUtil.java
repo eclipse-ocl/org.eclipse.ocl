@@ -2021,6 +2021,17 @@ public class PivotUtil
 		return ClassUtil.nonNullState(mapType.getValueType());
 	}
 
+	public static boolean hasDefaultCollectionValueBindings(@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		return ((isNullFree == null) || (isNullFree == PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE))
+		 && ((lower == null) || (lower == ValueUtil.ZERO_VALUE))
+		 && ((upper == null) || (upper == ValueUtil.UNLIMITED_VALUE));
+	}
+
+	public static boolean hasDefaultMapValueBindings(@Nullable Boolean keysAreNullFree, @Nullable Boolean valuesAreNullFree) {
+		return ((keysAreNullFree == null) || (keysAreNullFree == PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE))
+		 && ((valuesAreNullFree == null) || (valuesAreNullFree == PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE));
+	}
+
 	public static @NonNull Operation initOperation(@NonNull Operation asOperation, @NonNull ExpressionInOCL asExpressionInOCL) {
 		for (Variable asParameterVariable : asExpressionInOCL.getOwnedParameters()) {
 			String parameterName = ClassUtil.nonNullState(asParameterVariable.getName());

@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -73,7 +72,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 			if (csElementType != null) {
 				Type elementType = PivotUtil.getPivot(Type.class, csElementType);
 				if (elementType != null) {
-					boolean isNullFree;
+					Boolean isNullFree;
 					IntegerValue lowerValue;
 					UnlimitedNaturalValue upperValue;
 					MultiplicityCS csCollectionMultiplicity = csElement.getOwnedCollectionMultiplicity();
@@ -84,7 +83,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 						upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
 					}
 					else {
-						isNullFree = PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE;
+						isNullFree = null;
 						lowerValue = null;
 						upperValue = null;
 					}

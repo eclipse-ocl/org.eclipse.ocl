@@ -798,7 +798,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 
 	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionTypeId typeId, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		CollectionTypeId generalizedId = typeId.getGeneralizedId();
-		if ((typeId == generalizedId) && standardLibrary.isUnspecialized(isNullFree, lower, upper)) {
+		if ((typeId == generalizedId) && PivotUtil.hasDefaultCollectionValueBindings(isNullFree, lower, upper)) {
 			if (generalizedId == TypeId.BAG) {
 				return standardLibrary.getBagType();
 			}

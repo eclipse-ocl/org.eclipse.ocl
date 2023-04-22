@@ -12,7 +12,10 @@ package org.eclipse.ocl.pivot.library.collection;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.OrderedCollectionValue;
 
 /**
@@ -26,5 +29,10 @@ public class OrderedCollectionReverseOperation extends AbstractSimpleUnaryOperat
 	public @NonNull OrderedCollectionValue evaluate(@Nullable Object argument) {
 		OrderedCollectionValue orderedCollectionValue = asOrderedCollectionValue(argument);
 		return orderedCollectionValue.reverse();
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType( @NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		return resolveCollectionAsCollectionReturnType(environmentFactory, callExp, returnType);
 	}
 }

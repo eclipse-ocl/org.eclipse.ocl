@@ -12,11 +12,14 @@ package org.eclipse.ocl.pivot.library.map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.MapValue;
 
 /**
@@ -25,12 +28,12 @@ import org.eclipse.ocl.pivot.values.MapValue;
 public class MapIncludingMapOperation extends AbstractBinaryOperation
 {
 	public static final @NonNull MapIncludingMapOperation INSTANCE = new MapIncludingMapOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable MapValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceValue, @Nullable Object argumentValue) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, argumentValue); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceValue, argumentValue);
 	}
 
 	/**
@@ -41,5 +44,10 @@ public class MapIncludingMapOperation extends AbstractBinaryOperation
 		MapValue leftMapValue = asMapValue(sourceValue);
 		MapValue rightMapValue = asMapValue(argumentValue);
 		return leftMapValue.includingMap((MapTypeId) returnTypeId, rightMapValue);
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		return resolveSourceAndArgumentsAsMapReturnType(environmentFactory, callExp, returnType);
 	}
 }

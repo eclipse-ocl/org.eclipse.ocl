@@ -622,11 +622,10 @@ public class PrettyPrinter
 				}
 				if (typeRef instanceof CollectionType) {
 					CollectionType collectionType = (CollectionType)typeRef;
-					Number lower = collectionType.getLower();
-					Number upper = collectionType.getUpper();
 					boolean isNullFree = collectionType.isIsNullFree();
-					if (options.isShowDefaultMultiplicities() || !isNullFree || ((lower != null) && (upper != null) && ((lower.longValue() != 0) || !(upper instanceof  Unlimited)))) {
-						appendMultiplicity(lower, upper, isNullFree);
+					if (options.isShowDefaultMultiplicities()
+					 || !PivotUtil.hasDefaultCollectionValueBindings(isNullFree, collectionType.getLowerValue(), collectionType.getUpperValue())) {
+						appendMultiplicity(collectionType.getLower(), collectionType.getUpper(), isNullFree);
 					}
 				}
 				append(")");

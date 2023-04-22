@@ -14,6 +14,8 @@ import java.util.Set;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -21,6 +23,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.TupleValue;
@@ -31,12 +34,12 @@ import org.eclipse.ocl.pivot.values.TupleValue;
 public class CollectionProductOperation extends AbstractBinaryOperation
 {
 	public static final @NonNull CollectionProductOperation INSTANCE = new CollectionProductOperation();
-	
+
 	/** @deprecated use Executor */
 	@Deprecated
 	@Override
 	public @Nullable CollectionValue evaluate(@NonNull Evaluator evaluator, @NonNull TypeId returnTypeId, @Nullable Object sourceVal, @Nullable Object argVal) {
-		return evaluate(getExecutor(evaluator), returnTypeId, sourceVal, argVal); 
+		return evaluate(getExecutor(evaluator), returnTypeId, sourceVal, argVal);
 	}
 
 	/**
@@ -55,5 +58,10 @@ public class CollectionProductOperation extends AbstractBinaryOperation
         else {
         	throw new InvalidValueException(PivotMessages.MissingResult, "product"); //$NON-NLS-1$
         }
+	}
+
+	@Override
+	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+		return resolveSourceAndArgumentsAsCollectionReturnType(environmentFactory, callExp, returnType);
 	}
 }
