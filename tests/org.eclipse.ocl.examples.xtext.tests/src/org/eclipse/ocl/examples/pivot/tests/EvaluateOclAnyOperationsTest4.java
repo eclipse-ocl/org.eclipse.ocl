@@ -794,7 +794,7 @@ public class EvaluateOclAnyOperationsTest4 extends PivotTestSuite
 		ocl.assertQueryResults(null, "Bag{'Integer'}", "Set{1}.oclType().name");
 		ocl.assertQueryEquals(null, "Set", "Set{1}->oclType().name");
 		ocl.assertSemanticErrorQuery(null, "Set{1}.allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Integer", "allInstances");
-		ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer[*|1])", "allInstances");
+		ocl.assertSemanticErrorQuery(null, "Set{1}->allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Set(Integer)", "allInstances");
 	//	ocl.assertSemanticErrorQuery(null, "Set{1}.oclType().allInstances()", PivotMessagesInternal.UnresolvedOperation_ERROR_, "Bag(Class)", "allInstances");
 		ocl.assertQueryResults(null, "Bag{}", "Set{1}.oclType().allInstances()");
 	//	ocl.assertSemanticErrorQuery(null, "Set{1}->oclType().allInstances()", PivotMessagesInternal.UnresolvedStaticOperationCall_ERROR_, "Set(Integer)", "allInstances", "");

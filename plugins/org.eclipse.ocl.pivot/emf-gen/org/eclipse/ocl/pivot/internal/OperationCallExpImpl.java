@@ -604,7 +604,7 @@ implements OperationCallExp {
 			 *       let
 			 *         result : Boolean[?] = let operation : Operation[?] = self.referredOperation
 			 *         in
-			 *           let parameters : OrderedSet(Parameter[*|1])[?] = operation?.ownedParameters
+			 *           let parameters : OrderedSet(Parameter)[?] = operation?.ownedParameters
 			 *           in
 			 *             let selfType : Type[?] = operation?.owningClass
 			 *             in

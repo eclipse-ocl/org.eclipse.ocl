@@ -371,7 +371,7 @@ context OperationCallExp
 /** All the arguments must conform to the parameters of the referred operation. */
 inv ArgumentTypeIsConformant:
 	let operation : Operation = self.referredOperation in
-	let parameters = operation?.ownedParameters in
+	let parameters : OrderedSet(Parameter) = operation?.ownedParameters in
 	let selfType : Type = operation?.owningClass in
 	Sequence{1..ownedArguments->size()}->forAll (i | 
 		let argument : OCLExpression = ownedArguments->at(i) in

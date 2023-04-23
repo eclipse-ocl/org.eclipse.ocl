@@ -344,28 +344,28 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			 *             endif
 			 *         else
 			 *           let
-			 *             partProperties : Set(Property[*|1]) = ownedParts.referredProperty->asSet()
+			 *             partProperties : Set(Property) = ownedParts.referredProperty->asSet()
 			 *           in
 			 *             let
-			 *               allProperties : Set(Property[*|1]) = type.oclAsType(Class)
+			 *               allProperties : Set(Property) = type.oclAsType(Class)
 			 *               ->closure(superClasses)
 			 *               .ownedProperties->asSet()
 			 *             in
 			 *               let
-			 *                 classProperties : Set(Property[*|1]) = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)
+			 *                 classProperties : Set(Property) = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)
 			 *                 ->reject(name?.startsWith('ocl'))
 			 *               in
 			 *                 let
-			 *                   requiredClassProperties : Set(Property[*|1]) = classProperties->reject(defaultValueString <> null)
+			 *                   requiredClassProperties : Set(Property) = classProperties->reject(defaultValueString <> null)
 			 *                   ->reject(isVolatile or not isRequired)
 			 *                   ->reject(type.oclIsKindOf(CollectionType))
 			 *                   ->reject(opposite <> null and opposite.isComposite)
 			 *                 in
 			 *                   let
-			 *                     extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties)
+			 *                     extraProperties : Set(NamedElement) = partProperties->excludingAll(classProperties)
 			 *                   in
 			 *                     let
-			 *                       missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties)
+			 *                       missingProperties : Set(NamedElement) = requiredClassProperties->excludingAll(partProperties)
 			 *                     in
 			 *                       if extraProperties->notEmpty()
 			 *                       then
@@ -476,7 +476,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY_closure_0, oclAsSet, ACC_closure_0);
 						@SuppressWarnings("null")
 						final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
-						/*@Thrown*/ org.eclipse.ocl.pivot.values.BagValue.@NonNull Accumulator accumulator_0 = ValueUtil.createBagAccumulatorValue(PivotTables.BAG_CLSSid_Property_0);
+						/*@Thrown*/ org.eclipse.ocl.pivot.values.BagValue.@NonNull Accumulator accumulator_0 = ValueUtil.createBagAccumulatorValue(PivotTables.BAG_CLSSid_Property);
 						@NonNull Iterator<Object> ITERATOR__1_1 = closure.iterator();
 						/*@Thrown*/ @NonNull BagValue collect_0;
 						while (true) {
