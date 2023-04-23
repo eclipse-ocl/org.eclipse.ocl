@@ -1437,6 +1437,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected @Nullable Type resolvePropertyReturnType(@NonNull NavigationCallExp callExp, @NonNull NameExpCS csNameExp, @NonNull Property property) {
+		if ("ownedParameters".equals(property.getName())) {
+			getClass();			// XXX)
+		}
 		Type formalType = property.getType();
 		if (formalType == null) {
 			return null;
@@ -1949,9 +1952,14 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						}
 					}
 					variable.setOwnedInit(initExpression);
+					assert initType != null;
 					if (variableType == null) {
-						variableType = initType;
+						variableType = initType;		// Infer let-variable from init
 					}
+					/* An explicit let-variable type is precisely the user's intent. We should not infer a stronger type from the initializer.
+					else if (!(initType instanceof InvalidType) && !(initType instanceof VoidType) && metamodelManager.conformsTo(initType, TemplateParameterSubstitutions.EMPTY, variableType, TemplateParameterSubstitutions.EMPTY)) {
+						variableType = initType;		// If init type is stronger use init as ler-variable type
+					} */
 					boolean isRequired = variableIsRequired != null ? variableIsRequired.booleanValue() : initIsRequired;
 					helper.setType(variable, variableType, isRequired, initTypeValue);
 					if (lastLetExp != null) {

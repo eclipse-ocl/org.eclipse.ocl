@@ -604,7 +604,7 @@ implements OperationCallExp {
 			 *       let
 			 *         result : Boolean[?] = let operation : Operation[?] = self.referredOperation
 			 *         in
-			 *           let parameters : OrderedSet(Parameter[*|?])[?] = operation?.ownedParameters
+			 *           let parameters : OrderedSet(Parameter[*|1])[?] = operation?.ownedParameters
 			 *           in
 			 *             let selfType : Type[?] = operation?.owningClass
 			 *             in
@@ -613,7 +613,7 @@ implements OperationCallExp {
 			 *               ->forAll(i |
 			 *                 let argument : OCLExpression[1] = ownedArguments->at(i)
 			 *                 in
-			 *                   let parameter : Parameter[?] = parameters?->at(i)
+			 *                   let parameter : Parameter[1] = parameters?->at(i)
 			 *                   in
 			 *                     let parameterType : Type[?] = parameter.type
 			 *                     in
@@ -687,7 +687,7 @@ implements OperationCallExp {
 						 *
 						 * let argument : OCLExpression[1] = ownedArguments->at(i)
 						 * in
-						 *   let parameter : Parameter[?] = parameters?->at(i)
+						 *   let parameter : Parameter[1] = parameters?->at(i)
 						 *   in
 						 *     let parameterType : Type[?] = parameter.type
 						 *     in

@@ -344,28 +344,28 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			 *             endif
 			 *         else
 			 *           let
-			 *             partProperties : Set(Property) = ownedParts.referredProperty->asSet()
+			 *             partProperties : Set(Property[*|1]) = ownedParts.referredProperty->asSet()
 			 *           in
 			 *             let
-			 *               allProperties : Set(Property) = type.oclAsType(Class)
+			 *               allProperties : Set(Property[*|1]) = type.oclAsType(Class)
 			 *               ->closure(superClasses)
 			 *               .ownedProperties->asSet()
 			 *             in
 			 *               let
-			 *                 classProperties : Set(Property) = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)
+			 *                 classProperties : Set(Property[*|1]) = allProperties->reject(isDerived or isImplicit or isStatic or isTransient)
 			 *                 ->reject(name?.startsWith('ocl'))
 			 *               in
 			 *                 let
-			 *                   requiredClassProperties : Set(Property) = classProperties->reject(defaultValueString <> null)
+			 *                   requiredClassProperties : Set(Property[*|1]) = classProperties->reject(defaultValueString <> null)
 			 *                   ->reject(isVolatile or not isRequired)
 			 *                   ->reject(type.oclIsKindOf(CollectionType))
 			 *                   ->reject(opposite <> null and opposite.isComposite)
 			 *                 in
 			 *                   let
-			 *                     extraProperties : Set(NamedElement) = partProperties->excludingAll(classProperties)
+			 *                     extraProperties : Set(NamedElement[*|1]) = partProperties->excludingAll(classProperties)
 			 *                   in
 			 *                     let
-			 *                       missingProperties : Set(NamedElement) = requiredClassProperties->excludingAll(partProperties)
+			 *                       missingProperties : Set(NamedElement[*|1]) = requiredClassProperties->excludingAll(partProperties)
 			 *                     in
 			 *                       if extraProperties->notEmpty()
 			 *                       then
