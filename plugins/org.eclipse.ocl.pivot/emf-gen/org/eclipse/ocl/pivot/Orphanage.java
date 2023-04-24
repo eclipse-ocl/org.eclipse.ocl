@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -33,13 +34,23 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public interface Orphanage extends org.eclipse.ocl.pivot.Package
 {
-	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass);
+//	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass);
 	void addPackageListener(@NonNull PartialPackages partialPackages);
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId);
 	@Nullable LambdaType basicGetLambdaType(@NonNull LambdaTypeId lambdaTypeId);
 	@Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId);
 	@Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId);
+	@Nullable Type basicGetType(@NonNull TypeId typeId, boolean retainStaleEntry);
 	void dispose();
+
+	/**
+	 * Traverse the orphange to prune all entres for types that are no longer well contained
+	 * (all transitively referenced types have a non-null eResource()).
+	 * <br>
+	 * This is an expensive operation that is only needed in long running heavily mutating applications.
+	 * Use sparingly.
+	 */
+	void gc();
 
 	/**
 	 * Return the specialized collection type for a collection type characteristics.

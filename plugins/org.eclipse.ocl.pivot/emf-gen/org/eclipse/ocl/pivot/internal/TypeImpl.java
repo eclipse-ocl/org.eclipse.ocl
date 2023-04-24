@@ -18,9 +18,9 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
@@ -280,5 +280,10 @@ implements Type {
 
 	public @NonNull TemplateParameters getTypeParameters() {
 		throw new UnsupportedOperationException();		// FIXME
+	}
+
+	@Override
+	public boolean isWellContained() {
+		return eResource() != null;
 	}
 } //TypeImpl

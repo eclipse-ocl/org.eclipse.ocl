@@ -31,7 +31,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
@@ -43,9 +42,11 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -1425,6 +1426,20 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @Nullable TemplateParameter isTemplateParameter() {
 		return null;
+	}
+
+	@Override
+	public boolean isWellContained() {
+		for (TemplateBinding templateBinding : getOwnedBindings()) {
+			for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
+				Type actual = templateParameterSubstitution.getActual();
+				Type formal = templateParameterSubstitution.getFormal();
+				if ((actual == null) || (formal == null) || !actual.isWellContained() || !formal.isWellContained()) {
+					return false;
+				}
+			}
+		}
+		return super.isWellContained();
 	}
 
 	@Override

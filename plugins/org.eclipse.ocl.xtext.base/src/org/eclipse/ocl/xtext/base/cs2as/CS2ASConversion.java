@@ -73,6 +73,7 @@ import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -1082,9 +1083,13 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	public Type refreshRequiredType(@NonNull TypedElement pivotElement, @NonNull TypedElementCS csTypedElement) {
+		System.out.println("refreshRequiredType: " + NameUtil.debugSimpleName(pivotElement) + " : " + pivotElement + " | " +  csTypedElement);
 		TypedRefCS ownedType = csTypedElement.getOwnedType();
 		Type pivotType = null;
 		boolean isRequired = false;
+	//	if (!PivotUtil.debugWellContainedness(pivotType)) {
+	//		PivotUtil.debugObjectUsage("Badly contained ", pivotType);
+	//	}
 		if (ownedType != null) {
 			boolean optionalDefaultMultiplicity2 = optionalDefaultMultiplicity;
 			pivotType = PivotUtil.getPivot(Type.class, ownedType);
@@ -1113,7 +1118,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					}
 					else {
 						isRequired = true;
-						//				if (pivotType != null) {
+						//				if (pivotType != null) {		// XXX why commented out ??
 						//					pivotType = metamodelManager.getCollectionType(ElementUtil.isOrdered(csTypedElement), ElementUtil.isUnique(csTypedElement), pivotType, ValueUtil.integerValueOf(lower), ValueUtil.unlimitedNaturalValueOf(upper));
 						//				}
 					}

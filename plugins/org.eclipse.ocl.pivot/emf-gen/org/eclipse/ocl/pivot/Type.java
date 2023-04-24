@@ -99,5 +99,9 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 */
 //	boolean isInvalid();
 
+	/**
+	 * Return true if this type and all transitively referenced types have a non-null eResource().
+	 */
+	boolean isWellContained();
 //	@NonNull Type specializeIn(@NonNull CallExp expr, @Nullable Type selfType);
 } // Type

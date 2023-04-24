@@ -179,6 +179,7 @@ implements TypedElement {
 	@Override
 	public void setType(Type newType) {
 		Type oldType = type;
+		OrphanageImpl.setType(this, oldType, newType);
 		type = newType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 7, oldType, type));

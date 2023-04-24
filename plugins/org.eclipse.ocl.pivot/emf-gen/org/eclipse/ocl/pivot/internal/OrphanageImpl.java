@@ -10,6 +10,7 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -442,9 +443,22 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
 	}
 
-	/**
-	 * Shared cache of the lazily created, lazily deleted, specializations of each collection type.
-	 */
+	public static void setType(@NonNull Element asElement, Type oldType, Type newType) {
+		if (newType != oldType) {
+			Resource eResource = asElement.eResource();
+			ResourceSet resourceSet = eResource.getResourceSet();
+			assert resourceSet != null;
+			OrphanageImpl orphanage = (OrphanageImpl) basicGetSharedOrphanage(resourceSet);
+			assert orphanage != null;
+			if (newType != null) {
+				orphanage.addReference(newType.getTypeId(), asElement);
+			}
+			if (oldType != null) {
+				orphanage.removeReference(oldType.getTypeId(), asElement);
+			}
+		}
+	}
+
 	private @Nullable StandardLibrary standardLibrary = null;
 
 	/**
@@ -452,13 +466,32 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 */
 	private final @NonNull Map<@NonNull TypeId, @NonNull Type> typeId2type = new HashMap<>();
 
-	@Override
-	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
-	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass));
+	/**
+	 * The elements that reference each orphan. An element that references more than once e.g. Map<X,X> has a duplicate entry.
+	 */
+	private final @NonNull Map<@NonNull TypeId, @NonNull List<@NonNull Element>> typeId2typeRefs = new HashMap<>();
+
+	private void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
+		TypeId typeId = orphanClass.getTypeId();
+		System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
+		Type old = typeId2type.get(typeId);
+		assert old == orphanClass;
+		assert !getOwnedClasses().contains(orphanClass);
 		orphanClass.setOwningPackage(this);
 	//	getOwnedClasses().add(orphanClass);		// FIXME why doesn't this always work? - missing inverse in bad overload
 		assert orphanClass.eContainer() == this;
 		assert getOwnedClasses().contains(orphanClass);
+	}
+
+	private void addReference(@NonNull TypeId typeId, @NonNull Element asElement) {
+		assert asElement.eResource() != null;
+		synchronized (typeId2typeRefs) {
+			List<@NonNull Element> list = typeId2typeRefs.get(typeId);
+			if (list == null) {
+				list = new ArrayList<>();
+			}
+			list.add(asElement);
+		}
 	}
 
 	@Override
@@ -468,22 +501,92 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	public @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId) {
-		return (CollectionType)typeId2type.get(collectionTypeId);
+		CollectionType collectionType = (CollectionType)typeId2type.get(collectionTypeId);
+		if (collectionType == null) {
+			return null;
+		}
+		if (collectionType.isWellContained()) {
+			return collectionType;
+		}
+		synchronized (typeId2type) {
+			if (collectionType.isWellContained()) {
+				return collectionType;
+			}
+			typeId2type.remove(collectionTypeId);
+		}
+		return null;
 	}
 
 	@Override
 	public @Nullable LambdaType basicGetLambdaType(@NonNull LambdaTypeId lambdaTypeId) {
-		return (LambdaType)typeId2type.get(lambdaTypeId);
+		LambdaType lambdaType = (LambdaType)typeId2type.get(lambdaTypeId);
+		if (lambdaType == null) {
+			return null;
+		}
+		if (lambdaType.isWellContained()) {
+			return lambdaType;
+		}
+		synchronized (typeId2type) {
+			if (lambdaType.isWellContained()) {
+				return lambdaType;
+			}
+			typeId2type.remove(lambdaTypeId);
+		}
+		return null;
 	}
 
 	@Override
 	public @Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId) {
-		return (MapType)typeId2type.get(mapTypeId);
+		MapType mapType = (MapType)typeId2type.get(mapTypeId);
+		if (mapType == null) {
+			return null;
+		}
+		if (mapType.isWellContained()) {
+			return mapType;
+		}
+		synchronized (typeId2type) {
+			if (mapType.isWellContained()) {
+				return mapType;
+			}
+			typeId2type.remove(mapTypeId);
+		}
+		return null;
 	}
 
 	@Override
 	public @Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId) {
-		return (TupleType)typeId2type.get(tupleTypeId);
+		TupleType tupleType = (TupleType)typeId2type.get(tupleTypeId);
+		if (tupleType == null) {
+			return null;
+		}
+		if (tupleType.isWellContained()) {
+			return tupleType;
+		}
+		synchronized (typeId2type) {
+			if (tupleType.isWellContained()) {
+				return tupleType;
+			}
+			typeId2type.remove(tupleTypeId);
+		}
+		return null;
+	}
+
+	@Override
+	public @Nullable Type basicGetType(@NonNull TypeId typeId, boolean retainStaleEntry) {
+		Type type = typeId2type.get(typeId);
+		if (type == null) {
+			return null;
+		}
+		if (retainStaleEntry || type.isWellContained()) {
+			return type;
+		}
+		synchronized (typeId2type) {
+			if (type.isWellContained()) {
+				return type;
+			}
+			typeId2type.remove(typeId);
+		}
+		return null;
 	}
 
 	@Override
@@ -495,6 +598,20 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			((WeakEList<?>)ownedPackages).dispose();
 		} */
 		typeId2type.clear();
+	}
+
+	@Override
+	public void gc() {
+		synchronized (typeId2type) {
+			for (TypeId typeId : new ArrayList<>(typeId2type.keySet())) {
+				Type type = typeId2type.get(typeId);
+				assert type != null;
+				if (!type.isWellContained()) {
+					typeId2type.remove(typeId);
+				}
+			}
+		typeId2type.clear();
+		}
 	}
 
 	@Override
@@ -513,25 +630,29 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		TypeId elementTypeId = elementType.getTypeId();
 		CollectionTypeId specializedTypeId = genericTypeId.getSpecializedId(elementTypeId, isNullFree, lower, upper);
 		synchronized (typeId2type) {
-			CollectionType specializedType = (CollectionType)typeId2type.get(specializedTypeId);
-			if (specializedType == null) {
+			CollectionType collectionType = (CollectionType)typeId2type.get(specializedTypeId);
+			if ((collectionType != null) && !collectionType.isWellContained()) {
+				removeOrphanClass(collectionType);
+				collectionType = null;
+			}
+			if (collectionType == null) {
 				assert (elementType != null) && (elementType.eResource() != null);
 				if (genericTypeId == TypeId.BAG) {
-					specializedType = PivotFactory.eINSTANCE.createBagType();
+					collectionType = PivotFactory.eINSTANCE.createBagType();
 				}
 				else if (genericTypeId == TypeId.ORDERED_SET) {
-					specializedType = PivotFactory.eINSTANCE.createOrderedSetType();
+					collectionType = PivotFactory.eINSTANCE.createOrderedSetType();
 				}
 				else if (genericTypeId == TypeId.SEQUENCE) {
-					specializedType = PivotFactory.eINSTANCE.createSequenceType();
+					collectionType = PivotFactory.eINSTANCE.createSequenceType();
 				}
 				else if (genericTypeId == TypeId.SET) {
-					specializedType = PivotFactory.eINSTANCE.createSetType();
+					collectionType = PivotFactory.eINSTANCE.createSetType();
 				}
 				else {
-					specializedType = PivotFactory.eINSTANCE.createCollectionType();
+					collectionType = PivotFactory.eINSTANCE.createCollectionType();
 				}
-				specializedType.setName(genericType.getName());
+				collectionType.setName(genericType.getName());
 				TemplateSignature templateSignature = genericType.getOwnedSignature();
 				List<@NonNull TemplateParameter> templateParameters = ClassUtil.nullFree(templateSignature.getOwnedParameters());
 				TemplateParameter formalParameter = ClassUtil.nonNull(templateParameters.get(0));
@@ -539,33 +660,35 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
 				TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, elementType);
 				templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
-				specializedType.getOwnedBindings().add(templateBinding);
-				getStandardLibrary().resolveSuperClasses(specializedType, genericType);
-			//	specializedType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
-				specializedType.setIsNullFree(isNullFree);
+				collectionType.getOwnedBindings().add(templateBinding);
+				getStandardLibrary().resolveSuperClasses(collectionType, genericType);
+			//	collectionType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
+				collectionType.setIsNullFree(isNullFree);
 				try {
-					specializedType.setLowerValue(lower);
+					collectionType.setLowerValue(lower);
 				} catch (InvalidValueException e) {
 					logger.error("Out of range lower bound for " + specializedTypeId, e);
 				}
 				try {
-					specializedType.setUpperValue(upper);
+					collectionType.setUpperValue(upper);
 				} catch (InvalidValueException e) {
 					logger.error("Out of range upper bound for " + specializedTypeId, e);
 				}
-				specializedType.setUnspecializedElement(genericType);
-				typeId2type.put(specializedTypeId, specializedType);
-				assert specializedTypeId == ((CollectionTypeImpl)specializedType).immutableGetTypeId();		// XXX
-				if (basicGetCollectionType(specializedTypeId) != specializedType) {
-					basicGetCollectionType(specializedTypeId);
+				collectionType.setUnspecializedElement(genericType);
+				Type old = typeId2type.put(specializedTypeId, collectionType);
+				assert old == null;
+				assert specializedTypeId == ((CollectionTypeImpl)collectionType).immutableGetTypeId();		// XXX
+				if (basicGetType(specializedTypeId, true) != collectionType) {
+					basicGetType(specializedTypeId, true);
 				}
-				String s = specializedType.toString();
+				String s = collectionType.toString();
 				if (s.contains("Set(Bag(b::B")) {
 					getClass();		// XXX
 				}
-				addOrphanClass(specializedType);
+				addOrphanClass(collectionType);
 			}
-			return specializedType;
+			assert collectionType.isWellContained();
+			return collectionType;
 		}
 	}
 
@@ -581,6 +704,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		LambdaTypeId lambdaTypeId = IdManager.getLambdaTypeId(name, typeIds);
 		synchronized (typeId2type) {
 			LambdaType lambdaType = (LambdaType) typeId2type.get(lambdaTypeId);
+			if ((lambdaType != null) && !lambdaType.isWellContained()) {
+				removeOrphanClass(lambdaType);
+				lambdaType = null;
+			}
 			if (lambdaType == null) {
 				lambdaType = PivotFactory.eINSTANCE.createLambdaType();
 				lambdaType.setName(name);
@@ -592,6 +719,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				assert lambdaTypeId == ((LambdaTypeImpl)lambdaType).immutableGetTypeId();		// XXX
 				addOrphanClass(lambdaType);
 			}
+			assert lambdaType.isWellContained();
 			return lambdaType;
 		}
 	}
@@ -609,13 +737,17 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		TypeId valueTypeId = valueType.getTypeId();
 		MapTypeId mapTypeId = TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, keysAreNullFree, valuesAreNullFree);
 		synchronized (typeId2type) {
-			MapType specializedType = basicGetMapType(mapTypeId);
-			if (specializedType == null) {
+			MapType mapType = basicGetMapType(mapTypeId);
+			if ((mapType != null) && !mapType.isWellContained()) {
+				removeOrphanClass(mapType);
+				mapType = null;
+			}
+			if (mapType == null) {
 				String typeName = genericType.getName();
 				TemplateSignature templateSignature = genericType.getOwnedSignature();
 				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-				specializedType = PivotFactory.eINSTANCE.createMapType();
-				specializedType.setName(typeName);
+				mapType = PivotFactory.eINSTANCE.createMapType();
+				mapType.setName(typeName);
 				TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
 				TemplateParameter keyFormalParameter = templateParameters.get(0);
 				TemplateParameter valueFormalParameter = templateParameters.get(1);
@@ -625,18 +757,19 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				TemplateParameterSubstitution valueTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(valueFormalParameter, valueType);
 				templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
 				templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
-				specializedType.getOwnedBindings().add(templateBinding);
-			//	resolveSuperClasses(specializedMapType, unspecializedType);
-				specializedType.getSuperClasses().addAll(genericType.getSuperClasses());
-				specializedType.setKeysAreNullFree(keysAreNullFree);
-				specializedType.setValuesAreNullFree(valuesAreNullFree);
-				specializedType.setUnspecializedElement(genericType);
-				specializedType.setEntryClass(entryClass);
-				typeId2type.put(mapTypeId, specializedType);
-				assert mapTypeId == ((MapTypeImpl)specializedType).immutableGetTypeId();		// XXX
-				addOrphanClass(specializedType);
+				mapType.getOwnedBindings().add(templateBinding);
+			//	resolveSuperClasses(specializedMapType, unmapType);
+				mapType.getSuperClasses().addAll(genericType.getSuperClasses());
+				mapType.setKeysAreNullFree(keysAreNullFree);
+				mapType.setValuesAreNullFree(valuesAreNullFree);
+				mapType.setUnspecializedElement(genericType);
+				mapType.setEntryClass(entryClass);
+				typeId2type.put(mapTypeId, mapType);
+				assert mapTypeId == ((MapTypeImpl)mapType).immutableGetTypeId();		// XXX
+				addOrphanClass(mapType);
 			}
-			return specializedType;
+			assert mapType.isWellContained();
+			return mapType;
 		}
 	}
 
@@ -646,15 +779,19 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		TypeId valueTypeId = valueType.getTypeId();
 		MapTypeId mapTypeId = TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, keysAreNullFree, valuesAreNullFree);
 		synchronized (typeId2type) {
-			MapType specializedType = (MapType)typeId2type.get(mapTypeId);
-			if (specializedType == null) {
+			MapType mapType = (MapType)typeId2type.get(mapTypeId);
+			if ((mapType != null) && !mapType.isWellContained()) {
+				removeOrphanClass(mapType);
+				mapType = null;
+			}
+			if (mapType == null) {
 				assert (keyType != null) && (keyType.eResource() != null);
 				assert (valueType != null) && (valueType.eResource() != null);
 				String typeName = genericType.getName();
 				TemplateSignature templateSignature = genericType.getOwnedSignature();
 				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-				specializedType = PivotFactory.eINSTANCE.createMapType();
-				specializedType.setName(typeName);
+				mapType = PivotFactory.eINSTANCE.createMapType();
+				mapType.setName(typeName);
 				TemplateBinding templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
 				TemplateParameter keyFormalParameter = templateParameters.get(0);
 				TemplateParameter valueFormalParameter = templateParameters.get(1);
@@ -664,18 +801,19 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				TemplateParameterSubstitution valueTemplateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(valueFormalParameter, valueType);
 				templateBinding.getOwnedSubstitutions().add(keyTemplateParameterSubstitution);
 				templateBinding.getOwnedSubstitutions().add(valueTemplateParameterSubstitution);
-				specializedType.getOwnedBindings().add(templateBinding);
-			//	resolveSuperClasses(specializedMapType, unspecializedType);
-				specializedType.getSuperClasses().addAll(genericType.getSuperClasses());
-				specializedType.setKeysAreNullFree(keysAreNullFree);
-				specializedType.setValuesAreNullFree(valuesAreNullFree);
-				specializedType.setUnspecializedElement(genericType);
-			//	specializedType.setEntryClass(typeParameters.getEntryClass());
-				typeId2type.put(mapTypeId, specializedType);
-				assert mapTypeId == ((MapTypeImpl)specializedType).immutableGetTypeId();		// XXX
-				addOrphanClass(specializedType);
+				mapType.getOwnedBindings().add(templateBinding);
+			//	resolveSuperClasses(specializedMapType, unmapType);
+				mapType.getSuperClasses().addAll(genericType.getSuperClasses());
+				mapType.setKeysAreNullFree(keysAreNullFree);
+				mapType.setValuesAreNullFree(valuesAreNullFree);
+				mapType.setUnspecializedElement(genericType);
+			//	mapType.setEntryClass(typeParameters.getEntryClass());
+				typeId2type.put(mapTypeId, mapType);
+				assert mapTypeId == ((MapTypeImpl)mapType).immutableGetTypeId();		// XXX
+				addOrphanClass(mapType);
 			}
-			return specializedType;
+			assert mapType.isWellContained();
+			return mapType;
 		}
 	}
 
@@ -691,6 +829,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		if (tupleType == null) {
 			synchronized (typeId2type) {
 				tupleType = (TupleType)typeId2type.get(tupleTypeId);
+				if ((tupleType != null) && !tupleType.isWellContained()) {
+					removeOrphanClass(tupleType);
+					tupleType = null;
+				}
 				if (tupleType == null) {
 					tupleType = new TupleTypeImpl(tupleTypeId);
 					EList<@NonNull Property> ownedAttributes = (EList<@NonNull Property>)tupleType.getOwnedProperties();
@@ -707,6 +849,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				}
 			}
 		}
+		assert tupleType.isWellContained();
 		return tupleType;
 	}
 
@@ -718,8 +861,32 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		setNsPrefix(orphanagePrefix);
 	}
 
+	private void removeOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
+		System.out.println("removeOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + orphanClass);
+		assert typeId2type.get(orphanClass.getTypeId()) == null;
+		orphanClass.setOwningPackage(null);
+	//	getOwnedClasses().remove(orphanClass);		// FIXME why doesn't this always work? - missing inverse in bad overload
+		assert orphanClass.eContainer() == null;
+		assert !getOwnedClasses().contains(orphanClass);
+	}
+
 	@Override
 	public void removePackageListener(@NonNull PartialPackages partialPackages) {
 		super.removePackageListener(partialPackages);
+	}
+
+	private void removeReference(@NonNull TypeId typeId, @NonNull Element asElement) {
+	//	assert asElement.eResource() != null;
+		synchronized (typeId2typeRefs) {
+			List<@NonNull Element> list = typeId2typeRefs.get(typeId);
+			assert list != null;
+			boolean wasRemoved = list.remove(asElement);
+			assert wasRemoved;
+			if (list.isEmpty()) {
+				synchronized (typeId2type) {
+					typeId2type.remove(typeId);
+				}
+			}
+		}
 	}
 } //OrphanageImpl

@@ -121,7 +121,7 @@ public class EditTests extends XtextTestCase
 	protected @NonNull Resource doRename(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource xtextResource, @NonNull Resource asResource, @NonNull String oldString, @NonNull String newString,
 			@NonNull String @NonNull[] asErrors, @NonNull String @NonNull[] ecoreErrors) throws IOException {
 		String contextMessage = "Renaming '" + oldString + "' to '" + newString + "'";
-		//		System.out.println("-----------------" + contextMessage + "----------------");
+		System.out.println("-----------------" + contextMessage + "----------------");
 		replace(xtextResource, oldString, newString);
 		assertResourceErrors(contextMessage, xtextResource, asErrors);
 		assertNoResourceErrors(contextMessage, asResource);
@@ -144,6 +144,7 @@ public class EditTests extends XtextTestCase
 	}
 
 	protected void replace(@NonNull CSResource xtextResource, String oldString, String newString) {
+		System.out.println("replace: " + oldString + " => " +  newString);
 		String xtextContent = ElementUtil.getRawText((ElementCS) xtextResource.getContents().get(0));
 		int index = xtextContent.indexOf(oldString);
 		assert index >= 0;
@@ -1078,20 +1079,26 @@ public class EditTests extends XtextTestCase
 		//
 		Type myType = ClassUtil.nonNullState(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
 		Orphanage orphanage = ocl.getStandardLibrary().getOrphanage();
-		CollectionTypeId specializedTypeId = TypeId.SEQUENCE.getSpecializedId(myType.getTypeId(), true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-		WeakReference<Type> sequenceMyType = new WeakReference<Type>(orphanage.basicGetCollectionType(specializedTypeId));
-		assertNull(sequenceMyType.get());
+		CollectionTypeId specializedTypeId = TypeId.SEQUENCE.getSpecializedId(myType.getTypeId(), PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+		System.out.println("specializedTypeId: " + NameUtil.debugSimpleName(specializedTypeId));
+		WeakReference<Type> sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, true));
+		assertNull("Sample type should not yet exist", sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Boolean", "Sequence(MyType)", NO_MESSAGES, NO_MESSAGES);
-		sequenceMyType = new WeakReference<Type>(orphanage.basicGetCollectionType(specializedTypeId));
-		assertNotNull(sequenceMyType.get());
+		sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, true));
+		assertNotNull("Sample type should now exist", sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Sequence(MyType)", "Set(MyType)", NO_MESSAGES, NO_MESSAGES);
-		System.gc();
-		sequenceMyType = new WeakReference<Type>(orphanage.basicGetCollectionType(specializedTypeId));
-		boolean isNull = debugStateRef(sequenceMyType);
-		sequenceMyType = null;
-		assertTrue(isNull);
+		sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, true));
+		assertNotNull("Stale sample type should still exist", sequenceMyType.get());
+		sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, false));
+		assertNull("Stale sample type should no longer exist", sequenceMyType.get());
+	//	orphanage.gc();
+	//	System.gc();
+	//	sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, false));
+	//	boolean isNull = debugStateRef(sequenceMyType);
+	//	sequenceMyType = null;
+	//	assertTrue(isNull);
 		ocl.dispose();
 	}
 

@@ -629,4 +629,22 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	public @NonNull LambdaTypeId getTypeId() {
 		return (LambdaTypeId) super.getTypeId();
 	}
+
+	@Override
+	public boolean isWellContained() {
+		Type type = getContextType();
+		if ((type == null) || !type.isWellContained()) {
+			return false;
+		}
+		type = getResultType();
+		if ((type == null) || !type.isWellContained()) {
+			return false;
+		}
+		for (Type asType : getParameterTypes()) {
+			if ((asType == null) || !asType.isWellContained()) {
+				return false;
+			}
+		}
+		return super.isWellContained();
+	}
 } //LambdaTypeImpl
