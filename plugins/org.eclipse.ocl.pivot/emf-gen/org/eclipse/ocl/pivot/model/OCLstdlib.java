@@ -51,10 +51,9 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the http://www.eclipse.org/ocl/2015/Library Standard Library
@@ -814,8 +813,8 @@ public class OCLstdlib extends ASResourceImpl
 			type = _Lambda_Set_T_Set_collect_V = getLambdaType(_OclLambda, tp_Set_T, tp_Set_collect_V);
 			type = _Lambda_UniqueCollection_T_OclAny = getLambdaType(_OclLambda, tp_UniqueCollection_T, _OclAny);
 			type = _Tuple = getTupleType(_OclTuple,
-				createProperty("first", tp_Collection_T),
-				createProperty("second", tp_Collection_product_T2));
+				createTuplePart("first", tp_Collection_T),
+				createTuplePart("second", tp_Collection_product_T2));
 		}
 
 		private void installSpecializedAggregateTypes1() {

@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl.BindingsIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedCollectionTypeIdImpl.CollectionTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl.LambdaTypeIdSingletonScope;
@@ -55,6 +54,7 @@ import org.eclipse.ocl.pivot.internal.ids.TemplateParameterIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.TuplePartIdImpl.TuplePartIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.UnspecifiedIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl;
+import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -410,17 +410,29 @@ public final class IdManager
 	/**
 	 * Return the named tuple typeId with the defined part name/type pairs.
 	 */
-	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String tupleName, @NonNull Iterable<@NonNull ? extends TypedElement> parts) {
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String tupleName, @NonNull Iterable<@NonNull ? extends TuplePart> parts) {
 		//
 		//	Create the tuple part ids
 		//
-		List<@NonNull TypedElement> sortedParts = Lists.newArrayList(parts);
+		@NonNull List<@NonNull TuplePart> sortedParts = Lists.newArrayList(parts);
 		Collections.sort(sortedParts, NameUtil.NAMEABLE_COMPARATOR);
+		return getOrderedTupleTypeId2(tupleName, sortedParts);
+	}
+	public static @NonNull TupleTypeId getOrderedTupleTypeId(@NonNull String tupleName, @NonNull TuplePart @NonNull [] parts) {
+		//
+		//	Create the tuple part ids
+		//
+		@NonNull List<@NonNull TuplePart> sortedParts = Lists.newArrayList(parts);
+		Collections.sort(sortedParts, NameUtil.NAMEABLE_COMPARATOR);
+		return getOrderedTupleTypeId2(tupleName, sortedParts);
+	}
+
+	private static @NonNull TupleTypeId getOrderedTupleTypeId2(@NonNull String tupleName, @NonNull List<@NonNull TuplePart> sortedParts) {
 		int partsCount = sortedParts.size();
 		@NonNull TuplePartId[] sortedPartIds = new @NonNull TuplePartId[partsCount];
 		for (int i = 0; i < partsCount; i++) {
-			@NonNull TypedElement part = sortedParts.get(i);
-			@NonNull String partName = PivotUtil.getName(part);
+			@NonNull TuplePart part = sortedParts.get(i);
+			@NonNull String partName = NameUtil.getName(part);
 			Type partType = part.getType();
 			if (partType != null) {
 				TypeId partTypeId = partType.getTypeId();

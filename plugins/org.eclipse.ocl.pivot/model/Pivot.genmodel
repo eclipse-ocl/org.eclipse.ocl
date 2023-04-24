@@ -968,6 +968,7 @@
         <genParameters ecoreParameter="Pivot.ecore#//TupleLiteralPart/validateTypeIsNotInvalid/context"/>
       </genOperations>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-TuplePart"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-TupleType"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-Type">
       <genOperations ecoreOperation="Pivot.ecore#//Type/flattenedType"/>

@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -54,6 +53,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -443,22 +443,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
 	}
 
-	public static void setType(@NonNull Element asElement, Type oldType, Type newType) {
-		if (newType != oldType) {
-			Resource eResource = asElement.eResource();
-			ResourceSet resourceSet = eResource.getResourceSet();
-			assert resourceSet != null;
-			OrphanageImpl orphanage = (OrphanageImpl) basicGetSharedOrphanage(resourceSet);
-			assert orphanage != null;
-			if (newType != null) {
-				orphanage.addReference(newType.getTypeId(), asElement);
-			}
-			if (oldType != null) {
-				orphanage.removeReference(oldType.getTypeId(), asElement);
-			}
-		}
-	}
-
 	private @Nullable StandardLibrary standardLibrary = null;
 
 	/**
@@ -483,20 +467,22 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		assert getOwnedClasses().contains(orphanClass);
 	}
 
-	private void addReference(@NonNull TypeId typeId, @NonNull Element asElement) {
-		assert asElement.eResource() != null;
+	@Override
+	public void addPackageListener(@NonNull PartialPackages partialPackages) {
+		super.addPackageListener(partialPackages);
+	}
+
+	@Override
+	public void addReference(@NonNull Type type, @NonNull Element asElement) {
+		TypeId typeId = type.getTypeId();
 		synchronized (typeId2typeRefs) {
 			List<@NonNull Element> list = typeId2typeRefs.get(typeId);
 			if (list == null) {
 				list = new ArrayList<>();
+				typeId2typeRefs.put(typeId, list);
 			}
 			list.add(asElement);
 		}
-	}
-
-	@Override
-	public void addPackageListener(@NonNull PartialPackages partialPackages) {
-		super.addPackageListener(partialPackages);
 	}
 
 	@Override
@@ -823,7 +809,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(org.eclipse.ocl.pivot.@NonNull Class oclTupleType, @NonNull Iterable<@NonNull ? extends TypedElement> parts) {	// XXX Redirect to TupleTypeId
+	public @NonNull TupleType getTupleType(org.eclipse.ocl.pivot.@NonNull Class oclTupleType, @NonNull TuplePart @NonNull ... parts) {
 		@NonNull TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(TypeId.TUPLE_NAME, parts);
 		TupleType tupleType = basicGetTupleType(tupleTypeId);
 		if (tupleType == null) {
@@ -836,11 +822,14 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				if (tupleType == null) {
 					tupleType = new TupleTypeImpl(tupleTypeId);
 					EList<@NonNull Property> ownedAttributes = (EList<@NonNull Property>)tupleType.getOwnedProperties();
-					for (@NonNull TypedElement part : parts) {
-						String partName = PivotUtil.getName(part);
-						Type partType = PivotUtil.getType(part);
-						Property property = PivotUtil.createProperty(partName, partType);
-						ownedAttributes.add(property);
+					for (@NonNull TuplePart part : parts) {
+						String partName = NameUtil.getName(part);
+						Type partType = part.getType();
+						assert partType != null;
+						Property asPart = PivotFactory.eINSTANCE.createProperty();
+						ownedAttributes.add(asPart);
+						asPart.setName(partName);
+						asPart.setType(partType);
 					}
 					ECollections.sort(ownedAttributes, NameUtil.NAMEABLE_COMPARATOR);
 					tupleType.getSuperClasses().add(oclTupleType);
@@ -863,7 +852,9 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	private void removeOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
 		System.out.println("removeOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + orphanClass);
-		assert typeId2type.get(orphanClass.getTypeId()) == null;
+		TypeId typeId = orphanClass.getTypeId();
+		assert typeId2type.get(typeId) != null;
+		typeId2type.remove(typeId);					// XXX this is not really necessary
 		orphanClass.setOwningPackage(null);
 	//	getOwnedClasses().remove(orphanClass);		// FIXME why doesn't this always work? - missing inverse in bad overload
 		assert orphanClass.eContainer() == null;
@@ -875,8 +866,9 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		super.removePackageListener(partialPackages);
 	}
 
-	private void removeReference(@NonNull TypeId typeId, @NonNull Element asElement) {
-	//	assert asElement.eResource() != null;
+	@Override
+	public void removeReference(@NonNull Type type, @NonNull Element asElement) {
+		TypeId typeId = type.getTypeId();
 		synchronized (typeId2typeRefs) {
 			List<@NonNull Element> list = typeId2typeRefs.get(typeId);
 			assert list != null;
@@ -885,6 +877,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			if (list.isEmpty()) {
 				synchronized (typeId2type) {
 					typeId2type.remove(typeId);
+					typeId2typeRefs.remove(typeId);
 				}
 			}
 		}

@@ -159,6 +159,7 @@ import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.OCL;
@@ -1316,60 +1317,62 @@ extends EObjectValidator {
 			case 120:
 				return validateTupleLiteralPart((TupleLiteralPart)value, diagnostics, context);
 			case 121:
-				return validateTupleType((TupleType)value, diagnostics, context);
+				return validateTuplePart((TuplePart)value, diagnostics, context);
 			case 122:
-				return validateType((Type)value, diagnostics, context);
+				return validateTupleType((TupleType)value, diagnostics, context);
 			case 123:
-				return validateTypeExp((TypeExp)value, diagnostics, context);
+				return validateType((Type)value, diagnostics, context);
 			case 124:
-				return validateTypedElement((TypedElement)value, diagnostics, context);
+				return validateTypeExp((TypeExp)value, diagnostics, context);
 			case 125:
-				return validateUnlimitedNaturalLiteralExp((UnlimitedNaturalLiteralExp)value, diagnostics, context);
+				return validateTypedElement((TypedElement)value, diagnostics, context);
 			case 126:
-				return validateUnspecifiedValueExp((UnspecifiedValueExp)value, diagnostics, context);
+				return validateUnlimitedNaturalLiteralExp((UnlimitedNaturalLiteralExp)value, diagnostics, context);
 			case 127:
-				return validateValueSpecification((ValueSpecification)value, diagnostics, context);
+				return validateUnspecifiedValueExp((UnspecifiedValueExp)value, diagnostics, context);
 			case 128:
-				return validateVariable((Variable)value, diagnostics, context);
+				return validateValueSpecification((ValueSpecification)value, diagnostics, context);
 			case 129:
-				return validateVariableDeclaration((VariableDeclaration)value, diagnostics, context);
+				return validateVariable((Variable)value, diagnostics, context);
 			case 130:
-				return validateVariableExp((VariableExp)value, diagnostics, context);
+				return validateVariableDeclaration((VariableDeclaration)value, diagnostics, context);
 			case 131:
-				return validateVertex((Vertex)value, diagnostics, context);
+				return validateVariableExp((VariableExp)value, diagnostics, context);
 			case 132:
-				return validateVisitable((Visitable)value, diagnostics, context);
+				return validateVertex((Vertex)value, diagnostics, context);
 			case 133:
-				return validateVoidType((VoidType)value, diagnostics, context);
+				return validateVisitable((Visitable)value, diagnostics, context);
 			case 134:
-				return validateWildcardType((WildcardType)value, diagnostics, context);
+				return validateVoidType((VoidType)value, diagnostics, context);
 			case 135:
-				return validateAssociativityKind((AssociativityKind)value, diagnostics, context);
+				return validateWildcardType((WildcardType)value, diagnostics, context);
 			case 136:
-				return validateCollectionKind((CollectionKind)value, diagnostics, context);
+				return validateAssociativityKind((AssociativityKind)value, diagnostics, context);
 			case 137:
-				return validatePseudostateKind((PseudostateKind)value, diagnostics, context);
+				return validateCollectionKind((CollectionKind)value, diagnostics, context);
 			case 138:
-				return validateTransitionKind((TransitionKind)value, diagnostics, context);
+				return validatePseudostateKind((PseudostateKind)value, diagnostics, context);
 			case 139:
-				return validateBoolean((Boolean)value, diagnostics, context);
+				return validateTransitionKind((TransitionKind)value, diagnostics, context);
 			case 140:
-				return validateEcoreObject((EObject)value, diagnostics, context);
+				return validateBoolean((Boolean)value, diagnostics, context);
 			case 141:
-				return validateInteger((Number)value, diagnostics, context);
+				return validateEcoreObject((EObject)value, diagnostics, context);
 			case 142:
-				return validateJavaClass((Class)value, diagnostics, context);
+				return validateInteger((Number)value, diagnostics, context);
 			case 143:
-				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
+				return validateJavaClass((Class)value, diagnostics, context);
 			case 144:
-				return validateObject(value, diagnostics, context);
+				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
 			case 145:
-				return validateReal((Number)value, diagnostics, context);
+				return validateObject(value, diagnostics, context);
 			case 146:
-				return validateString((String)value, diagnostics, context);
+				return validateReal((Number)value, diagnostics, context);
 			case 147:
-				return validateThrowable((Throwable)value, diagnostics, context);
+				return validateString((String)value, diagnostics, context);
 			case 148:
+				return validateThrowable((Throwable)value, diagnostics, context);
+			case 149:
 				return validateUnlimitedNatural((Number)value, diagnostics, context);
 			default:
 				return true;
@@ -4776,6 +4779,16 @@ extends EObjectValidator {
 	public boolean validateTupleLiteralPart_validateTypeIsNotInvalid(TupleLiteralPart tupleLiteralPart, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return tupleLiteralPart.validateTypeIsNotInvalid(diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateTuplePart(TuplePart tuplePart, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint((EObject)tuplePart, diagnostics, context);
 	}
 
 	/**

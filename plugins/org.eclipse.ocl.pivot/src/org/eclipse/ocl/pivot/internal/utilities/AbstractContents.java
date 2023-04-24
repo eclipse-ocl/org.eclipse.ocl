@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.LibraryImpl;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
@@ -52,6 +51,7 @@ import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -275,6 +275,10 @@ public abstract class AbstractContents extends PivotUtil
 		return asProperty;
 	}
 
+	public @NonNull TuplePart createTuplePart(@NonNull String name, @NonNull Type type) {
+		return new TuplePart.TuplePartImpl(name, type);
+	}
+
 	protected org.eclipse.ocl.pivot.@NonNull Class getClass(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
 		return ClassUtil.nonNullState(asPackage.getOwnedClass(name));
 	}
@@ -327,11 +331,9 @@ public abstract class AbstractContents extends PivotUtil
 		return ClassUtil.nonNullState(templateableElement.getOwnedSignature().getOwnedParameters().get(index));
 	}
 
-	protected @NonNull TupleType getTupleType(org.eclipse.ocl.pivot./*@NonNull*/ Class oclTupleType, @NonNull Property... properties) {
+	protected @NonNull TupleType getTupleType(org.eclipse.ocl.pivot./*@NonNull*/ Class oclTupleType, @NonNull TuplePart @NonNull ... properties) {
 		assert oclTupleType != null;
-		List<@NonNull TypedElement> parts = Lists.newArrayList(properties);
-		assert parts != null;
-		return orphanage.getTupleType(oclTupleType, parts);
+		return orphanage.getTupleType(oclTupleType, properties);
 	}
 
 	protected <T extends CollectionType> void initTemplateParameter(@NonNull TemplateableElement asType, @NonNull TemplateParameter templateParameter) {

@@ -421,6 +421,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _Trigger;
 		private Class _TupleLiteralExp;
 		private Class _TupleLiteralPart;
+		private Class _TuplePart;
 		private Class _TupleType;
 		private Class _Type;
 		private Class _TypeExp;
@@ -625,6 +626,8 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(type, "A Trigger specifies a specific point  at which an Event occurrence may trigger an effect in a Behavior. A Trigger may be qualified by the Port on which the Event occurred.");
 			type = _TupleLiteralExp = createClass(pivot, PivotPackage.Literals.TUPLE_LITERAL_EXP);
 			type = _TupleLiteralPart = createClass(pivot, PivotPackage.Literals.TUPLE_LITERAL_PART);
+			type = _TuplePart = createClass(pivot, PivotPackage.Literals.TUPLE_PART);
+			type.setIsAbstract(true);
 			type = _TupleType = createClass(pivot, PivotPackage.Literals.TUPLE_TYPE);
 			type = _Type = createClass(pivot, PivotPackage.Literals.TYPE);
 			type.setIsAbstract(true);
@@ -787,11 +790,13 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_Trigger, _NamedElement);
 			addSuperClass(_TupleLiteralExp, _LiteralExp);
 			addSuperClass(_TupleLiteralPart, _VariableDeclaration);
+			addSuperClass(_TuplePart, _OclElement);
 			addSuperClass(_TupleType, _DataType);
 			addSuperClass(_Type, _NamedElement);
 			addSuperClass(_TypeExp, _OCLExpression);
 			addSuperClass(_TypeExp, _ReferringElement);
 			addSuperClass(_TypedElement, _NamedElement);
+			addSuperClass(_TypedElement, _TuplePart);
 			addSuperClass(_UnlimitedNaturalLiteralExp, _NumericLiteralExp);
 			addSuperClass(_UnspecifiedValueExp, _OCLExpression);
 			addSuperClass(_ValueSpecification, _TypedElement);

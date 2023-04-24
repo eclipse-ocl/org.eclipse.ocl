@@ -1223,6 +1223,8 @@
       <ownedProperties xmi:id="M3JBq" isComposite="true" isRequired="false" name="ownedInit" opposite="#iKMCL" type="#BFtK4"/>
       <ownedProperties xmi:id="K,8sA" isImplicit="true" isRequired="false" name="TupleLiteralExp" opposite="#+L,3k" type="#HhIN2"/>
     </ownedClasses>
+    <ownedClasses xmi:id="MN2od" instanceClassName="org.eclipse.ocl.pivot.types.TuplePart" isAbstract="true" isInterface="true" name="TuplePart"
+        superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="T6Ypd" name="TupleType" superClasses="#1mHCJ"/>
     <ownedClasses xmi:id="rrwsa" isAbstract="true" name="Type" superClasses="#0kVqz">
       <ownedComments body="A Type constrains the values represented by a TypedElement."/>
@@ -1256,7 +1258,7 @@
     <ownedClasses xmi:id="0,h6K" name="TypeExp" superClasses="#BFtK4 #dXAFV">
       <ownedProperties xmi:id="nedD3" isRequired="false" name="referredType" opposite="#nSmLq" type="#rrwsa"/>
     </ownedClasses>
-    <ownedClasses xmi:id="j7EI0" isAbstract="true" name="TypedElement" superClasses="#0kVqz">
+    <ownedClasses xmi:id="j7EI0" isAbstract="true" name="TypedElement" superClasses="#0kVqz #MN2od">
       <ownedComments body="A TypedElement is a NamedElement that may have a Type specified for it."/>
       <ownedOperations xmi:id="71tyJ" name="CompatibleBody" type="#ZuwnB">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;bodySpecification.type?.conformsTo(self.type)&#xA;&#xA;"/>

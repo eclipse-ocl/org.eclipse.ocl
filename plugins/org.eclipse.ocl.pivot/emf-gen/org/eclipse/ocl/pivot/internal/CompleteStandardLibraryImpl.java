@@ -398,29 +398,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
-	 * TuplePart provides a convenient descriptor for a tuple part complying with the full EMF model protocols.
-	 */
-	public static class TuplePart extends TypedElementImpl
-	{
-		protected final @NonNull TuplePartId partId;
-
-		public TuplePart(@NonNull TuplePartId partId) {
-			this.partId = partId;
-			setName(partId.getName());
-		}
-
-		@Override
-		public @NonNull TypeId getTypeId() {
-			return partId.getTypeId();
-		}
-
-		@Override
-		public String toString() {
-			return String.valueOf(name) + " : " + String.valueOf(type);
-		}
-	}
-
-	/**
 	 * The TemplateParameterReferencesVisitor remembers the formal TemplateParameter for re-uyse during Tuple instantiation.
 	 */
 	protected static class TemplateParameterReferencesVisitor extends TemplateParameterSubstitutionVisitor

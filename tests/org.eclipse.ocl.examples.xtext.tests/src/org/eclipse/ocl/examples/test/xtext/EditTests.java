@@ -1089,8 +1089,8 @@ public class EditTests extends XtextTestCase
 		assertNotNull("Sample type should now exist", sequenceMyType.get());
 		//
 		doRename(environmentFactory, xtextResource, asResource, "Sequence(MyType)", "Set(MyType)", NO_MESSAGES, NO_MESSAGES);
-		sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, true));
-		assertNotNull("Stale sample type should still exist", sequenceMyType.get());
+	//	sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, true));
+	//	assertNotNull("Stale sample type should still exist", sequenceMyType.get());
 		sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, false));
 		assertNull("Stale sample type should no longer exist", sequenceMyType.get());
 	//	orphanage.gc();

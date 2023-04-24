@@ -20,6 +20,7 @@ import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
+import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -36,6 +37,7 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 {
 //	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass);
 	void addPackageListener(@NonNull PartialPackages partialPackages);
+	void addReference(@NonNull Type type, @NonNull Element asElement);
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId);
 	@Nullable LambdaType basicGetLambdaType(@NonNull LambdaTypeId lambdaTypeId);
 	@Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId);
@@ -66,6 +68,7 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 	@NonNull MapType getMapType(@NonNull MapType genericType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
 
 	@NonNull StandardLibrary getStandardLibrary();
-	@NonNull TupleType getTupleType(org.eclipse.ocl.pivot.@NonNull Class oclTupleType, @NonNull Iterable<@NonNull ? extends TypedElement> parts);
+	@NonNull TupleType getTupleType(org.eclipse.ocl.pivot.@NonNull Class oclTupleType, @NonNull TuplePart @NonNull ... parts);
 	void removePackageListener(@NonNull PartialPackages partialPackages);
+	void removeReference(@NonNull Type type, @NonNull Element asElement);
 } // Orphanage

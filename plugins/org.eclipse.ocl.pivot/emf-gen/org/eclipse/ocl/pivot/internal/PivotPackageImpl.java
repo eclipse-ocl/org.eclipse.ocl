@@ -160,6 +160,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.utilities.LazyXMIidAssigningResourceImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
@@ -749,6 +750,13 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	private EClass tupleLiteralPartEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass tuplePartEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -4747,6 +4755,17 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EClass getTuplePart()
+	{
+		return tuplePartEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getTupleType() {
 		return tupleTypeEClass;
 	}
@@ -7906,29 +7925,31 @@ implements PivotPackage  {
 		createEOperation(tupleLiteralPartEClass, 6);
 		createEOperation(tupleLiteralPartEClass, 7);
 
-		tupleTypeEClass = createEClass(121);
+		tuplePartEClass = createEClass(121);
 
-		typeEClass = createEClass(122);
+		tupleTypeEClass = createEClass(122);
+
+		typeEClass = createEClass(123);
 		createEOperation(typeEClass, 2);
 		createEOperation(typeEClass, 3);
 		createEOperation(typeEClass, 4);
 		createEOperation(typeEClass, 5);
 
-		typeExpEClass = createEClass(123);
+		typeExpEClass = createEClass(124);
 		createEReference(typeExpEClass, 9);
 
-		typedElementEClass = createEClass(124);
+		typedElementEClass = createEClass(125);
 		createEAttribute(typedElementEClass, 5);
 		createEAttribute(typedElementEClass, 6);
 		createEReference(typedElementEClass, 7);
 		createEOperation(typedElementEClass, 2);
 
-		unlimitedNaturalLiteralExpEClass = createEClass(125);
+		unlimitedNaturalLiteralExpEClass = createEClass(126);
 		createEAttribute(unlimitedNaturalLiteralExpEClass, 9);
 
-		unspecifiedValueExpEClass = createEClass(126);
+		unspecifiedValueExpEClass = createEClass(127);
 
-		valueSpecificationEClass = createEClass(127);
+		valueSpecificationEClass = createEClass(128);
 		createEOperation(valueSpecificationEClass, 3);
 		createEOperation(valueSpecificationEClass, 4);
 		createEOperation(valueSpecificationEClass, 5);
@@ -7936,53 +7957,53 @@ implements PivotPackage  {
 		createEOperation(valueSpecificationEClass, 7);
 		createEOperation(valueSpecificationEClass, 8);
 
-		variableEClass = createEClass(128);
+		variableEClass = createEClass(129);
 		createEAttribute(variableEClass, 9);
 		createEReference(variableEClass, 10);
 		createEReference(variableEClass, 11);
 		createEOperation(variableEClass, 6);
 
-		variableDeclarationEClass = createEClass(129);
+		variableDeclarationEClass = createEClass(130);
 		createEReference(variableDeclarationEClass, 8);
 		createEOperation(variableDeclarationEClass, 3);
 		createEOperation(variableDeclarationEClass, 4);
 		createEOperation(variableDeclarationEClass, 5);
 
-		variableExpEClass = createEClass(130);
+		variableExpEClass = createEClass(131);
 		createEAttribute(variableExpEClass, 9);
 		createEReference(variableExpEClass, 10);
 		createEOperation(variableExpEClass, 7);
 
-		vertexEClass = createEClass(131);
+		vertexEClass = createEClass(132);
 		createEReference(vertexEClass, 5);
 		createEReference(vertexEClass, 6);
 		createEReference(vertexEClass, 7);
 
-		visitableEClass = createEClass(132);
+		visitableEClass = createEClass(133);
 
-		voidTypeEClass = createEClass(133);
+		voidTypeEClass = createEClass(134);
 
-		wildcardTypeEClass = createEClass(134);
+		wildcardTypeEClass = createEClass(135);
 		createEReference(wildcardTypeEClass, 20);
 		createEReference(wildcardTypeEClass, 21);
 
 		// Create enums
-		associativityKindEEnum = createEEnum(135);
-		collectionKindEEnum = createEEnum(136);
-		pseudostateKindEEnum = createEEnum(137);
-		transitionKindEEnum = createEEnum(138);
+		associativityKindEEnum = createEEnum(136);
+		collectionKindEEnum = createEEnum(137);
+		pseudostateKindEEnum = createEEnum(138);
+		transitionKindEEnum = createEEnum(139);
 
 		// Create data types
-		booleanEDataType = createEDataType(139);
-		ecoreObjectEDataType = createEDataType(140);
-		integerEDataType = createEDataType(141);
-		javaClassEDataType = createEDataType(142);
-		libraryFeatureEDataType = createEDataType(143);
-		objectEDataType = createEDataType(144);
-		realEDataType = createEDataType(145);
-		stringEDataType = createEDataType(146);
-		throwableEDataType = createEDataType(147);
-		unlimitedNaturalEDataType = createEDataType(148);
+		booleanEDataType = createEDataType(140);
+		ecoreObjectEDataType = createEDataType(141);
+		integerEDataType = createEDataType(142);
+		javaClassEDataType = createEDataType(143);
+		libraryFeatureEDataType = createEDataType(144);
+		objectEDataType = createEDataType(145);
+		realEDataType = createEDataType(146);
+		stringEDataType = createEDataType(147);
+		throwableEDataType = createEDataType(148);
+		unlimitedNaturalEDataType = createEDataType(149);
 	}
 
 	/**
@@ -8146,6 +8167,7 @@ implements PivotPackage  {
 		typeExpEClass.getESuperTypes().add(this.getOCLExpression());
 		typeExpEClass.getESuperTypes().add(this.getReferringElement());
 		typedElementEClass.getESuperTypes().add(this.getNamedElement());
+		typedElementEClass.getESuperTypes().add(this.getTuplePart());
 		unlimitedNaturalLiteralExpEClass.getESuperTypes().add(this.getNumericLiteralExp());
 		unspecifiedValueExpEClass.getESuperTypes().add(this.getOCLExpression());
 		valueSpecificationEClass.getESuperTypes().add(this.getTypedElement());
@@ -9582,6 +9604,8 @@ implements PivotPackage  {
 		g2 = createEGenericType(ecorePackage.getEJavaObject());
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(tuplePartEClass, TuplePart.class, "TuplePart", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(tupleTypeEClass, TupleType.class, "TupleType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

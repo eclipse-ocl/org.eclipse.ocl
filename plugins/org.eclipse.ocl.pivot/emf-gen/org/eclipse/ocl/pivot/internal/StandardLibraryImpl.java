@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
+import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -341,11 +342,13 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		TupleType tupleType = getOrphanage().basicGetTupleType(tupleTypeId);
 		if (tupleType == null) {
 			@NonNull TuplePartId[] partIds = tupleTypeId.getPartIds();
-			List<@NonNull Property> tupleParts = new ArrayList<>();
-			for (@NonNull TuplePartId partId : partIds) {
+			int partCount = partIds.length;
+			@NonNull TuplePart[] tupleParts = new @NonNull TuplePart[partCount];
+			for (int i = 0; i < partCount;i++) {
+				@NonNull TuplePartId partId = partIds[i];
 				Type partType = idResolver.getType(partId.getTypeId());
-				Property property = PivotUtil.createProperty(NameUtil.getSafeName(partId), partType);
-				tupleParts.add(property);
+				TuplePart part = new TuplePart.TuplePartImpl(NameUtil.getSafeName(partId), partType);
+				tupleParts[i] = part;
 			}
 			tupleType = getOrphanage().getTupleType(getOclTupleType(), tupleParts);
 		}

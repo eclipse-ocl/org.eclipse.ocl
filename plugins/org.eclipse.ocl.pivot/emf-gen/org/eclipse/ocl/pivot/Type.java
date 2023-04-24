@@ -55,6 +55,11 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	Type specializeIn(CallExp expr, Type selfType);
 
 	/**
+	 * Return the shared Orphanage that contains this type or null if not in a shared Orphanage.
+	 */
+	@Nullable Orphanage basicGetSharedOrphanage();
+
+	/**
 	 * Return true if this type conform to thatType within standardLibrary.
 	 */
 	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);

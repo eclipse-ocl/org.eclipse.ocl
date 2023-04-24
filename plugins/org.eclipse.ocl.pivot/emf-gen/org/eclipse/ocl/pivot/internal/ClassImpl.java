@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
@@ -1268,6 +1269,10 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				@Override
 				public void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
 					assert partialClass != null;
+					Orphanage orphanage = partialClass.basicGetSharedOrphanage();
+					if (orphanage != null) {
+						orphanage.addReference(partialClass, ClassImpl.this);
+					}
 					if (classListeners != null) {
 						classListeners.didAddSuperClass(partialClass);
 					}
@@ -1276,6 +1281,10 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				@Override
 				protected void didRemove(int index, org.eclipse.ocl.pivot.Class partialClass) {
 					assert partialClass != null;
+					Orphanage orphanage = partialClass.basicGetSharedOrphanage();
+					if (orphanage != null) {
+						orphanage.removeReference(partialClass, ClassImpl.this);
+					}
 					if (classListeners != null) {
 						classListeners.didRemoveSuperClass(partialClass);
 					}
