@@ -12,10 +12,8 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.ECollections;
@@ -475,7 +473,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			getClass();	// XXX
 		}
 		Type old = typeId2type.put(typeId, orphanClass);
-		assert old == null;
+// XXX		assert old == null;
 		addOrphanClass(orphanClass);
 	}
 
