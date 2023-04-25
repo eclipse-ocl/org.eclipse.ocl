@@ -467,6 +467,16 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		assert getOwnedClasses().contains(orphanClass);
 	}
 
+	public void addOrphanClassInternal(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {	// XXX wip migrating specialized classes
+		TypeId typeId = orphanClass.getTypeId();
+		if ("OCLExpression<$0:NavigationCallExp::C>".equals(typeId.toString())) {
+			getClass();	// XXX
+		}
+		Type old = typeId2type.put(typeId, orphanClass);
+		assert old == null;
+		addOrphanClass(orphanClass);
+	}
+
 	@Override
 	public void addPackageListener(@NonNull PartialPackages partialPackages) {
 		super.addPackageListener(partialPackages);
@@ -475,6 +485,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	@Override
 	public void addReference(@NonNull Type type, @NonNull Element asElement) {
 		TypeId typeId = type.getTypeId();
+		assert typeId2type.containsKey(typeId);
 		synchronized (typeId2typeRefs) {
 			List<@NonNull Element> list = typeId2typeRefs.get(typeId);
 			if (list == null) {
