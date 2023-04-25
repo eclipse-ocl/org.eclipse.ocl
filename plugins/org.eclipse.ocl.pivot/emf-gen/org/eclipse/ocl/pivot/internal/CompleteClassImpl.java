@@ -460,7 +460,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 //		}
 		specializedType.setUnspecializedElement(unspecializedType);
 		Orphanage orphanage = getCompleteModel().getSharedOrphanage();
-		((OrphanageImpl)orphanage).addOrphanClassInternal(specializedType);
+		specializedType.setOwningPackage(orphanage);
 		return specializedType;
 	}
 

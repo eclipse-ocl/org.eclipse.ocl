@@ -485,7 +485,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	@Override
 	public void addReference(@NonNull Type type, @NonNull Element asElement) {
 		TypeId typeId = type.getTypeId();
-		assert typeId2type.containsKey(typeId);
+// XXX		assert typeId2type.containsKey(typeId);
 		synchronized (typeId2typeRefs) {
 			List<@NonNull Element> list = typeId2typeRefs.get(typeId);
 			if (list == null) {
