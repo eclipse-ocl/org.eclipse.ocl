@@ -40,14 +40,12 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
@@ -66,7 +64,6 @@ import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
@@ -1582,7 +1579,7 @@ implements Operation {
 	}
 
 	@Override
-	public @NonNull ParameterTypes getParameterTypes() {
+	public @NonNull Type @NonNull [] getParameterTypes() {
 		List<Parameter> ownedParameter = getOwnedParameters();
 		int iMax = ownedParameter.size();
 		@NonNull Type @NonNull [] types = new @NonNull Type[iMax];
@@ -1591,12 +1588,7 @@ implements Operation {
 			assert parameterType != null;
 			types[i] = parameterType;
 		}
-		return TypeUtil.createParameterTypes(types);
-	}
-
-	@Override
-	public @NonNull TemplateParameters getTypeParameters() {
-		return TemplateSignatureImpl.getTypeParameters(getOwnedSignature());
+		return types;
 	}
 
 	private OperationId operationId = null;

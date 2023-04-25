@@ -31,5 +31,5 @@ public interface CompleteClassInternal extends CompleteClass
 	@Override
 	CompletePackageInternal getOwningCompletePackage();
 	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses();
-	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@NonNull List<@NonNull ? extends Type> templateArguments);
+	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@NonNull List<@NonNull Type> templateArguments);
 } // CompleteClass

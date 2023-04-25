@@ -27,14 +27,11 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -42,19 +39,11 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
-import org.eclipse.ocl.pivot.types.TemplateParametersImpl;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class TypeUtil
 {
-	/**
-	 * @since 1.1
-	 */
-	public static @NonNull ParameterTypes EMPTY_PARAMETER_TYPES = createParameterTypes();
-	public static @NonNull Object @NonNull [] EMPTY_PARAMETER_TYPESx2x = new @NonNull Object [] {};
-
 	public static boolean conformsToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType firstCollectionType, @NonNull CollectionType secondCollectionType) {
 		Type firstContainerType = firstCollectionType.getContainerType();
 		Type secondContainerType = secondCollectionType.getContainerType();
@@ -132,18 +121,6 @@ public class TypeUtil
 		FlatClass firstFlatClass = firstTupleType.getFlatClass(standardLibrary);
 		FlatClass secondFlatClass = secondTupleType.getFlatClass(standardLibrary);
 		return firstFlatClass.isSuperFlatClassOf(secondFlatClass);
-	}
-
-	public static @NonNull ParameterTypes createParameterTypes(@NonNull Type @NonNull ... parameterTypes) {
-		return new ParameterTypesImpl(parameterTypes);
-	}
-
-	public static @NonNull TemplateParameters createTemplateParameters(@NonNull TemplateParameter @NonNull ... parameters) {
-		return new TemplateParametersImpl(parameters);
-	}
-
-	public static @NonNull TemplateParameters createTemplateParameters(@NonNull List<@NonNull ? extends Type> parameters) {
-		return new TemplateParametersImpl(parameters);
 	}
 
 	public static @NonNull Type @NonNull [] getLambdaParameterTypes(@NonNull LambdaType lambdaType) {

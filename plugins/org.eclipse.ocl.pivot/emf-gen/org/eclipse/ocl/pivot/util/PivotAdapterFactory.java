@@ -145,10 +145,10 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.Vertex;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
-import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
+import org.eclipse.ocl.pivot.utilities.TuplePart;
 
 /**
  * <!-- begin-user-doc -->
@@ -2102,13 +2102,13 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.types.TuplePart <em>Tuple Part</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.utilities.TuplePart <em>Tuple Part</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.types.TuplePart
+	 * @see org.eclipse.ocl.pivot.utilities.TuplePart
 	 * @generated
 	 */
 	public Adapter createTuplePartAdapter()

@@ -327,11 +327,6 @@ extends Type, Namespace, TemplateableElement {
 	@NonNull String getMetaTypeName();
 
 	/**
-	 * Return the ordered list of type parameters of this type.
-	 */
-	@NonNull TemplateParameters getTypeParameters();
-
-	/**
 	 * Return true if this type is a Collection type and has ordered elements.
 	 */
 	boolean isOrdered();

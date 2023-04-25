@@ -19,6 +19,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.examples.xtext.tests.codegen.company.*;
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.Bug418716;
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.CodegencompanyPackage;
 import org.eclipse.ocl.examples.xtext.tests.codegen.company.Company;

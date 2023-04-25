@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -34,7 +33,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
 // import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * OCLstdlibTables provides the dispatch tables for the ocl for use by the OCL dispatcher.
@@ -369,674 +367,674 @@ public class OCLstdlibTables extends AbstractTables
 		}
 
 		public static final @NonNull Operation _Bag___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Bag,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Bag___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._Bag,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__closure = LIBRARY.createOperation("closure", Parameters._Lambda_0_T_Set__0_T__, Types._Bag,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		public static final @NonNull Operation _Bag__collect = LIBRARY.createOperation("collect", Parameters._Lambda_0_T_1_V, Types._Bag,
-			3, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			3, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull Operation _Bag__collectNested = LIBRARY.createOperation("collectNested", Parameters._Lambda_0_T_1_V, Types._Bag,
-			4, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			4, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull Operation _Bag__excluding = LIBRARY.createOperation("excluding", Parameters._0_T, Types._Bag,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			5, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._Bag,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Bag__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Bag,
-			7, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			6, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+		public static final @NonNull Operation _Bag__flatten = LIBRARY.createOperation("flatten", null, Types._Bag,
+			7, TypeParameters._1_T2, org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Bag,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			8, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__includingAll = LIBRARY.createOperation("includingAll", Parameters._Collection__0_T__, Types._Bag,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			9, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__reject = LIBRARY.createOperation("reject", Parameters._Lambda_0_T_Boolean, Types._Bag,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			10, null, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 		public static final @NonNull Operation _Bag__select = LIBRARY.createOperation("select", Parameters._Lambda_0_T_Boolean, Types._Bag,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			11, null, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		public static final @NonNull Operation _Bag__selectByKind = LIBRARY.createOperation("selectByKind", Parameters._1_TT, Types._Bag,
-			12, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			12, TypeParameters._1_TT, org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__selectByType = LIBRARY.createOperation("selectByType", Parameters._1_TT, Types._Bag,
-			13, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+			13, TypeParameters._1_TT, org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 		public static final @NonNull Operation _Bag__sortedBy = LIBRARY.createOperation("sortedBy", Parameters._Lambda_0_T_OclAny, Types._Bag,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			14, null, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 
 		public static final @NonNull Operation _Boolean___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Boolean,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._Boolean,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__and = LIBRARY.createOperation("and", Parameters._Boolean, Types._Boolean,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__implies = LIBRARY.createOperation("implies", Parameters._Boolean, Types._Boolean,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
-		public static final @NonNull Operation _Boolean__not = LIBRARY.createOperation("not", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Boolean,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
+		public static final @NonNull Operation _Boolean__not = LIBRARY.createOperation("not", null, Types._Boolean,
+			4, null, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__or = LIBRARY.createOperation("or", Parameters._Boolean, Types._Boolean,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanOrOperation.INSTANCE);
+			5, null, org.eclipse.ocl.pivot.library.logical.BooleanOrOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__xor = LIBRARY.createOperation("xor", Parameters._Boolean, Types._Boolean,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
+			6, null, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._Boolean,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			7, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__and2 = LIBRARY.createOperation("and2", Parameters._Boolean, Types._Boolean,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2.INSTANCE);
+			8, null, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2.INSTANCE);
 		public static final @NonNull Operation _Boolean__implies2 = LIBRARY.createOperation("implies2", Parameters._Boolean, Types._Boolean,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2.INSTANCE);
-		public static final @NonNull Operation _Boolean__not2 = LIBRARY.createOperation("not2", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Boolean,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2.INSTANCE);
+			9, null, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2.INSTANCE);
+		public static final @NonNull Operation _Boolean__not2 = LIBRARY.createOperation("not2", null, Types._Boolean,
+			10, null, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2.INSTANCE);
 		public static final @NonNull Operation _Boolean__or2 = LIBRARY.createOperation("or2", Parameters._Boolean, Types._Boolean,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2.INSTANCE);
-		public static final @NonNull Operation _Boolean__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Boolean,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			11, null, org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2.INSTANCE);
+		public static final @NonNull Operation _Boolean__toString = LIBRARY.createOperation("toString", null, Types._Boolean,
+			12, null, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean__xor2 = LIBRARY.createOperation("xor2", Parameters._Boolean, Types._Boolean,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2.INSTANCE);
+			13, null, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2.INSTANCE);
 
 		public static final @NonNull Operation _Collection___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Collection,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Collection___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._Collection,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__any = LIBRARY.createOperation("any", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__asBag = LIBRARY.createOperation("asBag", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asOrderedSet = LIBRARY.createOperation("asOrderedSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asSequence = LIBRARY.createOperation("asSequence", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asSet = LIBRARY.createOperation("asSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
+		public static final @NonNull Operation _Collection__asBag = LIBRARY.createOperation("asBag", null, Types._Collection,
+			3, null, org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
+		public static final @NonNull Operation _Collection__asOrderedSet = LIBRARY.createOperation("asOrderedSet", null, Types._Collection,
+			4, null, org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
+		public static final @NonNull Operation _Collection__asSequence = LIBRARY.createOperation("asSequence", null, Types._Collection,
+			5, null, org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
+		public static final @NonNull Operation _Collection__asSet = LIBRARY.createOperation("asSet", null, Types._Collection,
+			6, null, org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__collect = LIBRARY.createOperation("collect", Parameters._Lambda_0_T_1_V, Types._Collection,
-			7, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			7, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__collectBy = LIBRARY.createOperation("collectBy", Parameters._Lambda_0_T_1_V, Types._Collection,
-			8, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
+			8, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__collectNested = LIBRARY.createOperation("collectNested", Parameters._Lambda_0_T_1_V, Types._Collection,
-			9, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			9, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__count = LIBRARY.createOperation("count", Parameters._0_T, Types._Collection,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
+			10, null, org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__excludes = LIBRARY.createOperation("excludes", Parameters._0_T, Types._Collection,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
+			11, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__excludesAll = LIBRARY.createOperation("excludesAll", Parameters._Collection__1_T2__, Types._Collection,
-			12, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE);
+			12, TypeParameters._1_T2, org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__excluding = LIBRARY.createOperation("excluding", Parameters._0_T, Types._Collection,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			13, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection, Types._Collection,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+			14, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__2_exists = LIBRARY.createOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			15, null, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__1_exists = LIBRARY.createOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			16, null, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__0_exists = LIBRARY.createOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			18, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			17, null, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+		public static final @NonNull Operation _Collection__flatten = LIBRARY.createOperation("flatten", null, Types._Collection,
+			18, TypeParameters._1_T2, org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__2_forAll = LIBRARY.createOperation("forAll", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			19, null, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__1_forAll = LIBRARY.createOperation("forAll", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			20, null, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__0_forAll = LIBRARY.createOperation("forAll", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			21, null, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__includes = LIBRARY.createOperation("includes", Parameters._0_T, Types._Collection,
-			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
+			22, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__includesAll = LIBRARY.createOperation("includesAll", Parameters._Collection__1_T2__, Types._Collection,
-			23, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE);
+			23, TypeParameters._1_T2, org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Collection,
-			24, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			24, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__includingAll = LIBRARY.createOperation("includingAll", Parameters._Collection, Types._Collection,
-			25, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			25, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__0_intersection = LIBRARY.createOperation("intersection", Parameters._Collection, Types._Collection,
-			26, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
+			26, null, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__1_intersection = LIBRARY.createOperation("intersection", Parameters._UniqueCollection__0_T__, Types._Collection,
-			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__isEmpty = LIBRARY.createOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			28, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
+			27, null, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
+		public static final @NonNull Operation _Collection__isEmpty = LIBRARY.createOperation("isEmpty", null, Types._Collection,
+			28, null, org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__isUnique = LIBRARY.createOperation("isUnique", Parameters._Lambda_0_T_OclAny, Types._Collection,
-			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
+			29, null, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__iterate = LIBRARY.createOperation("iterate", Parameters._Lambda_0_T_1_Tacc, Types._Collection,
-			30, TypeUtil.createTemplateParameters(TypeParameters._1_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__max = LIBRARY.createOperation("max", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			31, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__min = LIBRARY.createOperation("min", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMinOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__notEmpty = LIBRARY.createOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation.INSTANCE);
+			30, TypeParameters._1_Tacc, org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
+		public static final @NonNull Operation _Collection__max = LIBRARY.createOperation("max", null, Types._Collection,
+			31, null, org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
+		public static final @NonNull Operation _Collection__min = LIBRARY.createOperation("min", null, Types._Collection,
+			32, null, org.eclipse.ocl.pivot.library.collection.CollectionMinOperation.INSTANCE);
+		public static final @NonNull Operation _Collection__notEmpty = LIBRARY.createOperation("notEmpty", null, Types._Collection,
+			33, null, org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__one = LIBRARY.createOperation("one", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
+			34, null, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__product = LIBRARY.createOperation("product", Parameters._Collection__1_T2__, Types._Collection,
-			35, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionProductOperation.INSTANCE);
+			35, TypeParameters._1_T2, org.eclipse.ocl.pivot.library.collection.CollectionProductOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__reject = LIBRARY.createOperation("reject", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			36, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			36, null, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__select = LIBRARY.createOperation("select", Parameters._Lambda_0_T_Boolean, Types._Collection,
-			37, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			37, null, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__selectByKind = LIBRARY.createOperation("selectByKind", Parameters._1_TT, Types._Collection,
-			38, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			38, TypeParameters._1_TT, org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__selectByType = LIBRARY.createOperation("selectByType", Parameters._1_TT, Types._Collection,
-			39, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			40, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
+			39, TypeParameters._1_TT, org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+		public static final @NonNull Operation _Collection__size = LIBRARY.createOperation("size", null, Types._Collection,
+			40, null, org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__sortedBy = LIBRARY.createOperation("sortedBy", Parameters._Lambda_0_T_OclAny, Types._Collection,
-			41, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__sum = LIBRARY.createOperation("sum", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
-			42, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
+			41, null, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+		public static final @NonNull Operation _Collection__sum = LIBRARY.createOperation("sum", null, Types._Collection,
+			42, null, org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__union = LIBRARY.createOperation("union", Parameters._Collection, Types._Collection,
-			43, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
+			43, null, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 
 		public static final @NonNull Operation _Integer___mul_ = LIBRARY.createOperation("*", Parameters._OclSelf, Types._Integer,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
 		public static final @NonNull Operation _Integer___add_ = LIBRARY.createOperation("+", Parameters._OclSelf, Types._Integer,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation.INSTANCE);
-		public static final @NonNull Operation _Integer___neg_ = LIBRARY.createOperation("-", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation.INSTANCE);
+		public static final @NonNull Operation _Integer___neg_ = LIBRARY.createOperation("-", null, Types._Integer,
+			2, null, org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation.INSTANCE);
 		public static final @NonNull Operation _Integer___sub_ = LIBRARY.createOperation("-", Parameters._OclSelf, Types._Integer,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
 		public static final @NonNull Operation _Integer___div_ = LIBRARY.createOperation("/", Parameters._OclSelf, Types._Integer,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation.INSTANCE);
-		public static final @NonNull Operation _Integer__abs = LIBRARY.createOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
+			4, null, org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation.INSTANCE);
+		public static final @NonNull Operation _Integer__abs = LIBRARY.createOperation("abs", null, Types._Integer,
+			5, null, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
 		public static final @NonNull Operation _Integer__div = LIBRARY.createOperation("div", Parameters._Integer, Types._Integer,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericDivOperation.INSTANCE);
+			6, null, org.eclipse.ocl.pivot.library.numeric.NumericDivOperation.INSTANCE);
 		public static final @NonNull Operation _Integer__max = LIBRARY.createOperation("max", Parameters._OclSelf, Types._Integer,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
+			7, null, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
 		public static final @NonNull Operation _Integer__min = LIBRARY.createOperation("min", Parameters._OclSelf, Types._Integer,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
+			8, null, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
 		public static final @NonNull Operation _Integer__mod = LIBRARY.createOperation("mod", Parameters._Integer, Types._Integer,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericModOperation.INSTANCE);
-		public static final @NonNull Operation _Integer__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
-		public static final @NonNull Operation _Integer__toUnlimitedNatural = LIBRARY.createOperation("toUnlimitedNatural", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Integer,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.IntegerToUnlimitedNaturalOperation.INSTANCE);
+			9, null, org.eclipse.ocl.pivot.library.numeric.NumericModOperation.INSTANCE);
+		public static final @NonNull Operation _Integer__toString = LIBRARY.createOperation("toString", null, Types._Integer,
+			10, null, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+		public static final @NonNull Operation _Integer__toUnlimitedNatural = LIBRARY.createOperation("toUnlimitedNatural", null, Types._Integer,
+			11, null, org.eclipse.ocl.pivot.library.numeric.IntegerToUnlimitedNaturalOperation.INSTANCE);
 
 		public static final @NonNull Operation _Map___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Map,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Map___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._Map,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Map__any = LIBRARY.createOperation("any", Parameters._Lambda_0_K_Boolean, Types._Map,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
 		public static final @NonNull Operation _Map__at = LIBRARY.createOperation("at", Parameters._0_K, Types._Map,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
 		public static final @NonNull Operation _Map__collect = LIBRARY.createOperation("collect", Parameters._Lambda_0_K_2_V2, Types._Map,
-			4, TypeUtil.createTemplateParameters(TypeParameters._2_V2), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			4, TypeParameters._2_V2, org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull Operation _Map__collectBy = LIBRARY.createOperation("collectBy", Parameters._Lambda_0_K_2_V2, Types._Map,
-			5, TypeUtil.createTemplateParameters(TypeParameters._2_V2), org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
+			5, TypeParameters._2_V2, org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
 		public static final @NonNull Operation _Map__collectNested = LIBRARY.createOperation("collectNested", Parameters._Lambda_0_K_2_V2, Types._Map,
-			6, TypeUtil.createTemplateParameters(TypeParameters._2_V2), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			6, TypeParameters._2_V2, org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull Operation _Map__0_excludes = LIBRARY.createOperation("excludes", Parameters._0_K, Types._Map,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludesOperation.INSTANCE);
+			7, null, org.eclipse.ocl.pivot.library.map.MapExcludesOperation.INSTANCE);
 		public static final @NonNull Operation _Map__1_excludes = LIBRARY.createOperation("excludes", Parameters._0_K___1_V, Types._Map,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation.INSTANCE);
+			8, null, org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation.INSTANCE);
 		public static final @NonNull Operation _Map__excludesAll = LIBRARY.createOperation("excludesAll", Parameters._Collection__2_K2__, Types._Map,
-			9, TypeUtil.createTemplateParameters(TypeParameters._2_K2), org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation.INSTANCE);
+			9, TypeParameters._2_K2, org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation.INSTANCE);
 		public static final @NonNull Operation _Map__excludesMap = LIBRARY.createOperation("excludesMap", Parameters._Map__2_K2_3_V2__, Types._Map,
-			10, TypeUtil.createTemplateParameters(TypeParameters._2_K2, TypeParameters._3_V2), org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation.INSTANCE);
+			10, new @NonNull TemplateParameter [] {TypeParameters._2_K2, TypeParameters._3_V2}, org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation.INSTANCE);
 		public static final @NonNull Operation _Map__excludesValue = LIBRARY.createOperation("excludesValue", Parameters._1_V, Types._Map,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation.INSTANCE);
+			11, null, org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation.INSTANCE);
 		public static final @NonNull Operation _Map__0_excluding = LIBRARY.createOperation("excluding", Parameters._0_K, Types._Map,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludingOperation.INSTANCE);
+			12, null, org.eclipse.ocl.pivot.library.map.MapExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Map__1_excluding = LIBRARY.createOperation("excluding", Parameters._0_K___1_V, Types._Map,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation.INSTANCE);
+			13, null, org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation.INSTANCE);
 		public static final @NonNull Operation _Map__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_K__, Types._Map,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
+			14, null, org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
 		public static final @NonNull Operation _Map__excludingMap = LIBRARY.createOperation("excludingMap", Parameters._Map__2_K2_3_V2__, Types._Map,
-			15, TypeUtil.createTemplateParameters(TypeParameters._2_K2, TypeParameters._3_V2), org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE);
+			15, new @NonNull TemplateParameter [] {TypeParameters._2_K2, TypeParameters._3_V2}, org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE);
 		public static final @NonNull Operation _Map__2_exists = LIBRARY.createOperation("exists", Parameters._Lambda_0_K_Boolean, Types._Map,
-			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			16, null, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Operation _Map__1_exists = LIBRARY.createOperation("exists", Parameters._Lambda_0_K_Boolean, Types._Map,
-			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			17, null, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Operation _Map__0_exists = LIBRARY.createOperation("exists", Parameters._Lambda_0_K_Boolean, Types._Map,
-			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
+			18, null, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Operation _Map__2_forAll = LIBRARY.createOperation("forAll", Parameters._Lambda_0_K_Boolean, Types._Map,
-			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			19, null, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Operation _Map__1_forAll = LIBRARY.createOperation("forAll", Parameters._Lambda_0_K_Boolean, Types._Map,
-			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			20, null, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Operation _Map__0_forAll = LIBRARY.createOperation("forAll", Parameters._Lambda_0_K_Boolean, Types._Map,
-			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
+			21, null, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Operation _Map__0_includes = LIBRARY.createOperation("includes", Parameters._0_K, Types._Map,
-			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludesOperation.INSTANCE);
+			22, null, org.eclipse.ocl.pivot.library.map.MapIncludesOperation.INSTANCE);
 		public static final @NonNull Operation _Map__1_includes = LIBRARY.createOperation("includes", Parameters._0_K___1_V, Types._Map,
-			23, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation.INSTANCE);
+			23, null, org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation.INSTANCE);
 		public static final @NonNull Operation _Map__includesAll = LIBRARY.createOperation("includesAll", Parameters._Collection__2_K2__, Types._Map,
-			24, TypeUtil.createTemplateParameters(TypeParameters._2_K2), org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation.INSTANCE);
+			24, TypeParameters._2_K2, org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation.INSTANCE);
 		public static final @NonNull Operation _Map__includesMap = LIBRARY.createOperation("includesMap", Parameters._Map__2_K2_3_V2__, Types._Map,
-			25, TypeUtil.createTemplateParameters(TypeParameters._2_K2, TypeParameters._3_V2), org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation.INSTANCE);
+			25, new @NonNull TemplateParameter [] {TypeParameters._2_K2, TypeParameters._3_V2}, org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation.INSTANCE);
 		public static final @NonNull Operation _Map__includesValue = LIBRARY.createOperation("includesValue", Parameters._1_V, Types._Map,
-			26, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation.INSTANCE);
+			26, null, org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation.INSTANCE);
 		public static final @NonNull Operation _Map__including = LIBRARY.createOperation("including", Parameters._0_K___1_V, Types._Map,
-			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
+			27, null, org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
 		public static final @NonNull Operation _Map__includingMap = LIBRARY.createOperation("includingMap", Parameters._Map__2_K2_3_V2__, Types._Map,
-			28, TypeUtil.createTemplateParameters(TypeParameters._2_K2, TypeParameters._3_V2), org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE);
-		public static final @NonNull Operation _Map__isEmpty = LIBRARY.createOperation("isEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
-			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
+			28, new @NonNull TemplateParameter [] {TypeParameters._2_K2, TypeParameters._3_V2}, org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE);
+		public static final @NonNull Operation _Map__isEmpty = LIBRARY.createOperation("isEmpty", null, Types._Map,
+			29, null, org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Map__isUnique = LIBRARY.createOperation("isUnique", Parameters._Lambda_0_K_OclAny, Types._Map,
-			30, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
+			30, null, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
 		public static final @NonNull Operation _Map__iterate = LIBRARY.createOperation("iterate", Parameters._Lambda_0_K_2_Tacc, Types._Map,
-			31, TypeUtil.createTemplateParameters(TypeParameters._2_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
-		public static final @NonNull Operation _Map__keys = LIBRARY.createOperation("keys", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
-			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
-		public static final @NonNull Operation _Map__notEmpty = LIBRARY.createOperation("notEmpty", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
-			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
+			31, TypeParameters._2_Tacc, org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
+		public static final @NonNull Operation _Map__keys = LIBRARY.createOperation("keys", null, Types._Map,
+			32, null, org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
+		public static final @NonNull Operation _Map__notEmpty = LIBRARY.createOperation("notEmpty", null, Types._Map,
+			33, null, org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
 		public static final @NonNull Operation _Map__one = LIBRARY.createOperation("one", Parameters._Lambda_0_K_Boolean, Types._Map,
-			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
+			34, null, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
 		public static final @NonNull Operation _Map__reject = LIBRARY.createOperation("reject", Parameters._Lambda_0_K_Boolean, Types._Map,
-			35, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
+			35, null, org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
 		public static final @NonNull Operation _Map__select = LIBRARY.createOperation("select", Parameters._Lambda_0_K_Boolean, Types._Map,
-			36, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
-		public static final @NonNull Operation _Map__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
-			37, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapSizeOperation.INSTANCE);
-		public static final @NonNull Operation _Map__values = LIBRARY.createOperation("values", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Map,
-			38, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapValuesOperation.INSTANCE);
+			36, null, org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
+		public static final @NonNull Operation _Map__size = LIBRARY.createOperation("size", null, Types._Map,
+			37, null, org.eclipse.ocl.pivot.library.map.MapSizeOperation.INSTANCE);
+		public static final @NonNull Operation _Map__values = LIBRARY.createOperation("values", null, Types._Map,
+			38, null, org.eclipse.ocl.pivot.library.map.MapValuesOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclAny___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._OclAny,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._OclAny,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+		public static final @NonNull Operation _OclAny__oclAsSet = LIBRARY.createOperation("oclAsSet", null, Types._OclAny,
+			2, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._OclAny,
-			3, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
+			3, TypeParameters._0_TT, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclIsInState = LIBRARY.createOperation("oclIsInState", Parameters._OclState, Types._OclAny,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInStateOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
+			4, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInStateOperation.INSTANCE);
+		public static final @NonNull Operation _OclAny__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", null, Types._OclAny,
+			5, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclIsKindOf = LIBRARY.createOperation("oclIsKindOf", Parameters._OclType, Types._OclAny,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsNew = LIBRARY.createOperation("oclIsNew", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			6, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
+		public static final @NonNull Operation _OclAny__oclIsNew = LIBRARY.createOperation("oclIsNew", null, Types._OclAny,
+			7, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__oclIsTypeOf = LIBRARY.createOperation("oclIsTypeOf", Parameters._OclType, Types._OclAny,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__0_oclLog = LIBRARY.createOperation("oclLog", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
+			8, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
+		public static final @NonNull Operation _OclAny__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", null, Types._OclAny,
+			9, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
+		public static final @NonNull Operation _OclAny__0_oclLog = LIBRARY.createOperation("oclLog", null, Types._OclAny,
+			10, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny__1_oclLog = LIBRARY.createOperation("oclLog", Parameters._String, Types._OclAny,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclTypes = LIBRARY.createOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclAny,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			11, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
+		public static final @NonNull Operation _OclAny__oclType = LIBRARY.createOperation("oclType", null, Types._OclAny,
+			12, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
+		public static final @NonNull Operation _OclAny__oclTypes = LIBRARY.createOperation("oclTypes", null, Types._OclAny,
+			13, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
+		public static final @NonNull Operation _OclAny__toString = LIBRARY.createOperation("toString", null, Types._OclAny,
+			14, null, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclComparable___lt_ = LIBRARY.createOperation("<", Parameters._OclSelf, Types._OclComparable,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation.INSTANCE);
 		public static final @NonNull Operation _OclComparable___lt__eq_ = LIBRARY.createOperation("<=", Parameters._OclSelf, Types._OclComparable,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclComparable___gt_ = LIBRARY.createOperation(">", Parameters._OclSelf, Types._OclComparable,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation.INSTANCE);
 		public static final @NonNull Operation _OclComparable___gt__eq_ = LIBRARY.createOperation(">=", Parameters._OclSelf, Types._OclComparable,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclComparable__compareTo = LIBRARY.createOperation("compareTo", Parameters._OclSelf, Types._OclComparable,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation.INSTANCE);
+			4, null, org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclElement__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclElement,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclAsModelType = LIBRARY.createOperation("oclAsModelType", Parameters._0_TT, Types._OclElement,
-			1, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__0_oclBase = LIBRARY.createOperation("oclBase", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
+			1, TypeParameters._0_TT, org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE);
+		public static final @NonNull Operation _OclElement__0_oclBase = LIBRARY.createOperation("oclBase", null, Types._OclElement,
+			2, null, org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__1_oclBase = LIBRARY.createOperation("oclBase", Parameters._OclType, Types._OclElement,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclContainer = LIBRARY.createOperation("oclContainer", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclContents = LIBRARY.createOperation("oclContents", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContentsOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
+		public static final @NonNull Operation _OclElement__oclContainer = LIBRARY.createOperation("oclContainer", null, Types._OclElement,
+			4, null, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation.INSTANCE);
+		public static final @NonNull Operation _OclElement__oclContents = LIBRARY.createOperation("oclContents", null, Types._OclElement,
+			5, null, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContentsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclExtension = LIBRARY.createOperation("oclExtension", Parameters._OclStereotype, Types._OclElement,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__1_oclExtensions = LIBRARY.createOperation("oclExtensions", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
+			6, null, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation.INSTANCE);
+		public static final @NonNull Operation _OclElement__1_oclExtensions = LIBRARY.createOperation("oclExtensions", null, Types._OclElement,
+			7, null, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__0_oclExtensions = LIBRARY.createOperation("oclExtensions", Parameters._OclStereotype, Types._OclElement,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
+			8, null, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclIsModelKindOf = LIBRARY.createOperation("oclIsModelKindOf", Parameters._OclType, Types._OclElement,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclModelType = LIBRARY.createOperation("oclModelType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclModelTypes = LIBRARY.createOperation("oclModelTypes", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclElement,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation.INSTANCE);
+			9, null, org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation.INSTANCE);
+		public static final @NonNull Operation _OclElement__oclModelType = LIBRARY.createOperation("oclModelType", null, Types._OclElement,
+			10, null, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation.INSTANCE);
+		public static final @NonNull Operation _OclElement__oclModelTypes = LIBRARY.createOperation("oclModelTypes", null, Types._OclElement,
+			11, null, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclEnumeration__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclEnumeration,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclInvalid___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._OclInvalid,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._OclInvalid,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__and = LIBRARY.createOperation("and", Parameters._Boolean, Types._OclInvalid,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__implies = LIBRARY.createOperation("implies", Parameters._Boolean, Types._OclInvalid,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__or = LIBRARY.createOperation("or", Parameters._Boolean, Types._OclInvalid,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
+			4, null, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclInvalid,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
+			5, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		public static final @NonNull Operation _OclInvalid__oclAsSet = LIBRARY.createOperation("oclAsSet", null, Types._OclInvalid,
+			6, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._OclInvalid,
-			7, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclBadOperation = LIBRARY.createOperation("oclBadOperation", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
-			8, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OclInvalid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
+			7, TypeParameters._0_TT, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
+		public static final @NonNull Operation _OclInvalid__oclBadOperation = LIBRARY.createOperation("oclBadOperation", null, Types._OclInvalid,
+			8, null, null);
+		public static final @NonNull Operation _OclInvalid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", null, Types._OclInvalid,
+			9, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__oclIsKindOf = LIBRARY.createOperation("oclIsKindOf", Parameters._OclType, Types._OclInvalid,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
+			10, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid__oclIsTypeOf = LIBRARY.createOperation("oclIsTypeOf", Parameters._OclType, Types._OclInvalid,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclInvalid,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			11, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
+		public static final @NonNull Operation _OclInvalid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", null, Types._OclInvalid,
+			12, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
+		public static final @NonNull Operation _OclInvalid__oclType = LIBRARY.createOperation("oclType", null, Types._OclInvalid,
+			13, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
+		public static final @NonNull Operation _OclInvalid__toString = LIBRARY.createOperation("toString", null, Types._OclInvalid,
+			14, null, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclMessage__hasReturned = LIBRARY.createOperation("hasReturned", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__isOperationCall = LIBRARY.createOperation("isOperationCall", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__isSignalSent = LIBRARY.createOperation("isSignalSent", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__result = LIBRARY.createOperation("result", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclMessage,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		public static final @NonNull Operation _OclMessage__hasReturned = LIBRARY.createOperation("hasReturned", null, Types._OclMessage,
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		public static final @NonNull Operation _OclMessage__isOperationCall = LIBRARY.createOperation("isOperationCall", null, Types._OclMessage,
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		public static final @NonNull Operation _OclMessage__isSignalSent = LIBRARY.createOperation("isSignalSent", null, Types._OclMessage,
+			2, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+		public static final @NonNull Operation _OclMessage__result = LIBRARY.createOperation("result", null, Types._OclMessage,
+			3, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclStereotype__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclStereotype,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclSummable__sum = LIBRARY.createOperation("sum", Parameters._OclSelf, Types._OclSummable,
-			0, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OclSummable__zero = LIBRARY.createOperation("zero", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclSummable,
-			1, TemplateParameters.EMPTY_LIST, null);
+			0, null, null);
+		public static final @NonNull Operation _OclSummable__zero = LIBRARY.createOperation("zero", null, Types._OclSummable,
+			1, null, null);
 
 		public static final @NonNull Operation _OclTuple___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._OclTuple,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclTuple___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._OclTuple,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclType__conformsTo = LIBRARY.createOperation("conformsTo", Parameters._OclType, Types._OclType,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclVoid___add_ = LIBRARY.createOperation("+", Parameters._String, Types._OclVoid,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._OclVoid,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._OclVoid,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__and = LIBRARY.createOperation("and", Parameters._Boolean, Types._OclVoid,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__implies = LIBRARY.createOperation("implies", Parameters._Boolean, Types._OclVoid,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__not = LIBRARY.createOperation("not", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
+			4, null, org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation.INSTANCE);
+		public static final @NonNull Operation _OclVoid__not = LIBRARY.createOperation("not", null, Types._OclVoid,
+			5, null, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__or = LIBRARY.createOperation("or", Parameters._Boolean, Types._OclVoid,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation.INSTANCE);
+			6, null, org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__xor = LIBRARY.createOperation("xor", Parameters._Boolean, Types._OclVoid,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
+			7, null, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__allInstances = LIBRARY.createOperation("allInstances", Parameters._Integer, Types._OclVoid,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
+			8, null, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__concat = LIBRARY.createOperation("concat", Parameters._String, Types._OclVoid,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclAsSet = LIBRARY.createOperation("oclAsSet", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
+			9, null, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
+		public static final @NonNull Operation _OclVoid__oclAsSet = LIBRARY.createOperation("oclAsSet", null, Types._OclVoid,
+			10, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._OclVoid,
-			11, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
+			11, TypeParameters._0_TT, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
+		public static final @NonNull Operation _OclVoid__oclIsInvalid = LIBRARY.createOperation("oclIsInvalid", null, Types._OclVoid,
+			12, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__oclIsKindOf = LIBRARY.createOperation("oclIsKindOf", Parameters._OclType, Types._OclVoid,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
+			13, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid__oclIsTypeOf = LIBRARY.createOperation("oclIsTypeOf", Parameters._OclType, Types._OclVoid,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
-			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclType = LIBRARY.createOperation("oclType", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
-			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclTypes = LIBRARY.createOperation("oclTypes", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
-			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OclVoid,
-			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			14, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
+		public static final @NonNull Operation _OclVoid__oclIsUndefined = LIBRARY.createOperation("oclIsUndefined", null, Types._OclVoid,
+			15, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
+		public static final @NonNull Operation _OclVoid__oclType = LIBRARY.createOperation("oclType", null, Types._OclVoid,
+			16, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
+		public static final @NonNull Operation _OclVoid__oclTypes = LIBRARY.createOperation("oclTypes", null, Types._OclVoid,
+			17, null, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
+		public static final @NonNull Operation _OclVoid__toString = LIBRARY.createOperation("toString", null, Types._OclVoid,
+			18, null, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _OrderedCollection__at = LIBRARY.createOperation("at", Parameters._Integer, Types._OrderedCollection,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedCollection__first = LIBRARY.createOperation("first", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedCollection,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation.INSTANCE);
+		public static final @NonNull Operation _OrderedCollection__first = LIBRARY.createOperation("first", null, Types._OrderedCollection,
+			1, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedCollection__indexOf = LIBRARY.createOperation("indexOf", Parameters._0_T, Types._OrderedCollection,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedCollection__last = LIBRARY.createOperation("last", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedCollection,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation.INSTANCE);
+		public static final @NonNull Operation _OrderedCollection__last = LIBRARY.createOperation("last", null, Types._OrderedCollection,
+			3, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation.INSTANCE);
 
 		public static final @NonNull Operation _OrderedSet___sub_ = LIBRARY.createOperation("-", Parameters._UniqueCollection__OclAny__, Types._OrderedSet,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._OrderedSet,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._OrderedSet,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__append = LIBRARY.createOperation("append", Parameters._0_T, Types._OrderedSet,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__appendAll = LIBRARY.createOperation("appendAll", Parameters._OrderedCollection__0_T__, Types._OrderedSet,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
+			4, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__closure = LIBRARY.createOperation("closure", Parameters._Lambda_0_T_OrderedSet, Types._OrderedSet,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			5, null, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__collect = LIBRARY.createOperation("collect", Parameters._Lambda_0_T_1_V, Types._OrderedSet,
-			6, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			6, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__collectNested = LIBRARY.createOperation("collectNested", Parameters._Lambda_0_T_1_V, Types._OrderedSet,
-			7, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			7, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__excluding = LIBRARY.createOperation("excluding", Parameters._0_T, Types._OrderedSet,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			8, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._OrderedSet,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedSet,
-			10, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			9, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+		public static final @NonNull Operation _OrderedSet__flatten = LIBRARY.createOperation("flatten", null, Types._OrderedSet,
+			10, TypeParameters._1_T2, org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__including = LIBRARY.createOperation("including", Parameters._0_T, Types._OrderedSet,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			11, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__includingAll = LIBRARY.createOperation("includingAll", Parameters._Collection__0_T__, Types._OrderedSet,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			12, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__insertAt = LIBRARY.createOperation("insertAt", Parameters._Integer___0_T, Types._OrderedSet,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
+			13, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__prepend = LIBRARY.createOperation("prepend", Parameters._0_T, Types._OrderedSet,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
+			14, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__prependAll = LIBRARY.createOperation("prependAll", Parameters._OrderedCollection__0_T__, Types._OrderedSet,
-			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
+			15, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__reject = LIBRARY.createOperation("reject", Parameters._Lambda_0_T_Boolean, Types._OrderedSet,
-			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__reverse = LIBRARY.createOperation("reverse", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._OrderedSet,
-			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
+			16, null, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+		public static final @NonNull Operation _OrderedSet__reverse = LIBRARY.createOperation("reverse", null, Types._OrderedSet,
+			17, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__select = LIBRARY.createOperation("select", Parameters._Lambda_0_T_Boolean, Types._OrderedSet,
-			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			18, null, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__selectByKind = LIBRARY.createOperation("selectByKind", Parameters._1_TT, Types._OrderedSet,
-			19, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			19, TypeParameters._1_TT, org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__selectByType = LIBRARY.createOperation("selectByType", Parameters._1_TT, Types._OrderedSet,
-			20, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+			20, TypeParameters._1_TT, org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__sortedBy = LIBRARY.createOperation("sortedBy", Parameters._Lambda_0_T_OclAny, Types._OrderedSet,
-			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			21, null, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__subOrderedSet = LIBRARY.createOperation("subOrderedSet", Parameters._Integer___Integer, Types._OrderedSet,
-			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation.INSTANCE);
+			22, null, org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation.INSTANCE);
 
 		public static final @NonNull Operation _Real___mul_ = LIBRARY.createOperation("*", Parameters._OclSelf, Types._Real,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
 		public static final @NonNull Operation _Real___add_ = LIBRARY.createOperation("+", Parameters._OclSelf, Types._Real,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation.INSTANCE);
-		public static final @NonNull Operation _Real___neg_ = LIBRARY.createOperation("-", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation.INSTANCE);
+		public static final @NonNull Operation _Real___neg_ = LIBRARY.createOperation("-", null, Types._Real,
+			2, null, org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation.INSTANCE);
 		public static final @NonNull Operation _Real___sub_ = LIBRARY.createOperation("-", Parameters._OclSelf, Types._Real,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
 		public static final @NonNull Operation _Real___div_ = LIBRARY.createOperation("/", Parameters._OclSelf, Types._Real,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation.INSTANCE);
+			4, null, org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation.INSTANCE);
 		public static final @NonNull Operation _Real___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Real,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			5, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Real___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._Real,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _Real__abs = LIBRARY.createOperation("abs", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
-		public static final @NonNull Operation _Real__floor = LIBRARY.createOperation("floor", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
+			6, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+		public static final @NonNull Operation _Real__abs = LIBRARY.createOperation("abs", null, Types._Real,
+			7, null, org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
+		public static final @NonNull Operation _Real__floor = LIBRARY.createOperation("floor", null, Types._Real,
+			8, null, org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
 		public static final @NonNull Operation _Real__max = LIBRARY.createOperation("max", Parameters._OclSelf, Types._Real,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
+			9, null, org.eclipse.ocl.pivot.library.numeric.NumericMaxOperation.INSTANCE);
 		public static final @NonNull Operation _Real__min = LIBRARY.createOperation("min", Parameters._OclSelf, Types._Real,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
-		public static final @NonNull Operation _Real__round = LIBRARY.createOperation("round", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
-		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Real,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+			10, null, org.eclipse.ocl.pivot.library.numeric.NumericMinOperation.INSTANCE);
+		public static final @NonNull Operation _Real__round = LIBRARY.createOperation("round", null, Types._Real,
+			11, null, org.eclipse.ocl.pivot.library.numeric.NumericRoundOperation.INSTANCE);
+		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation("toString", null, Types._Real,
+			12, null, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _Sequence___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Sequence,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._Sequence,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__append = LIBRARY.createOperation("append", Parameters._0_T, Types._Sequence,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__appendAll = LIBRARY.createOperation("appendAll", Parameters._OrderedCollection__0_T__, Types._Sequence,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__closure = LIBRARY.createOperation("closure", Parameters._Lambda_0_T_OrderedSet__0_T__, Types._Sequence,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			4, null, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		public static final @NonNull Operation _Sequence__collect = LIBRARY.createOperation("collect", Parameters._Lambda_0_T_1_V, Types._Sequence,
-			5, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			5, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull Operation _Sequence__collectNested = LIBRARY.createOperation("collectNested", Parameters._Lambda_0_T_1_V, Types._Sequence,
-			6, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			6, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull Operation _Sequence__excluding = LIBRARY.createOperation("excluding", Parameters._0_T, Types._Sequence,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			7, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._Sequence,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Sequence,
-			9, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			8, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+		public static final @NonNull Operation _Sequence__flatten = LIBRARY.createOperation("flatten", null, Types._Sequence,
+			9, TypeParameters._1_T2, org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Sequence,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			10, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__includingAll = LIBRARY.createOperation("includingAll", Parameters._Collection__0_T__, Types._Sequence,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			11, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__insertAt = LIBRARY.createOperation("insertAt", Parameters._Integer___0_T, Types._Sequence,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
+			12, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__prepend = LIBRARY.createOperation("prepend", Parameters._0_T, Types._Sequence,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
+			13, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__prependAll = LIBRARY.createOperation("prependAll", Parameters._OrderedCollection__0_T__, Types._Sequence,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
+			14, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__reject = LIBRARY.createOperation("reject", Parameters._Lambda_0_T_Boolean, Types._Sequence,
-			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Operation _Sequence__reverse = LIBRARY.createOperation("reverse", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Sequence,
-			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
+			15, null, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+		public static final @NonNull Operation _Sequence__reverse = LIBRARY.createOperation("reverse", null, Types._Sequence,
+			16, null, org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__select = LIBRARY.createOperation("select", Parameters._Lambda_0_T_Boolean, Types._Sequence,
-			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			17, null, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		public static final @NonNull Operation _Sequence__selectByKind = LIBRARY.createOperation("selectByKind", Parameters._1_TT, Types._Sequence,
-			18, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			18, TypeParameters._1_TT, org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__selectByType = LIBRARY.createOperation("selectByType", Parameters._1_TT, Types._Sequence,
-			19, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+			19, TypeParameters._1_TT, org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence__sortedBy = LIBRARY.createOperation("sortedBy", Parameters._Lambda_0_T_OclAny, Types._Sequence,
-			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			20, null, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull Operation _Sequence__subSequence = LIBRARY.createOperation("subSequence", Parameters._Integer___Integer, Types._Sequence,
-			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
+			21, null, org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
 
 		public static final @NonNull Operation _Set___sub_ = LIBRARY.createOperation("-", Parameters._UniqueCollection__OclAny__, Types._Set,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
 		public static final @NonNull Operation _Set___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._Set,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Set___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._Set,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Set__closure = LIBRARY.createOperation("closure", Parameters._Lambda_0_T_Set, Types._Set,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		public static final @NonNull Operation _Set__collect = LIBRARY.createOperation("collect", Parameters._Lambda_0_T_1_V, Types._Set,
-			4, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
+			4, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
 		public static final @NonNull Operation _Set__collectNested = LIBRARY.createOperation("collectNested", Parameters._Lambda_0_T_1_V, Types._Set,
-			5, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
+			5, TypeParameters._1_V, org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
 		public static final @NonNull Operation _Set__excluding = LIBRARY.createOperation("excluding", Parameters._0_T, Types._Set,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
+			6, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Set__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._Set,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Set__flatten = LIBRARY.createOperation("flatten", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Set,
-			8, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
+			7, null, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
+		public static final @NonNull Operation _Set__flatten = LIBRARY.createOperation("flatten", null, Types._Set,
+			8, TypeParameters._1_T2, org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
 		public static final @NonNull Operation _Set__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Set,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
+			9, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
 		public static final @NonNull Operation _Set__includingAll = LIBRARY.createOperation("includingAll", Parameters._Collection__0_T__, Types._Set,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
+			10, null, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
 		public static final @NonNull Operation _Set__reject = LIBRARY.createOperation("reject", Parameters._Lambda_0_T_Boolean, Types._Set,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
+			11, null, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
 		public static final @NonNull Operation _Set__select = LIBRARY.createOperation("select", Parameters._Lambda_0_T_Boolean, Types._Set,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
+			12, null, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
 		public static final @NonNull Operation _Set__selectByKind = LIBRARY.createOperation("selectByKind", Parameters._1_TT, Types._Set,
-			13, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
+			13, TypeParameters._1_TT, org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
 		public static final @NonNull Operation _Set__selectByType = LIBRARY.createOperation("selectByType", Parameters._1_TT, Types._Set,
-			14, TypeUtil.createTemplateParameters(TypeParameters._1_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
+			14, TypeParameters._1_TT, org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
 		public static final @NonNull Operation _Set__sortedBy = LIBRARY.createOperation("sortedBy", Parameters._Lambda_0_T_OclAny, Types._Set,
-			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			15, null, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 
 		public static final @NonNull Operation _String___add_ = LIBRARY.createOperation("+", Parameters._String, Types._String,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		public static final @NonNull Operation _String___lt_ = LIBRARY.createOperation("<", Parameters._OclSelf, Types._String,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringLessThanOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.string.StringLessThanOperation.INSTANCE);
 		public static final @NonNull Operation _String___lt__eq_ = LIBRARY.createOperation("<=", Parameters._OclSelf, Types._String,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation.INSTANCE);
 		public static final @NonNull Operation _String___lt__gt_ = LIBRARY.createOperation("<>", Parameters._OclSelf, Types._String,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _String___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._String,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
+			4, null, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _String___gt_ = LIBRARY.createOperation(">", Parameters._OclSelf, Types._String,
-			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringGreaterThanOperation.INSTANCE);
+			5, null, org.eclipse.ocl.pivot.library.string.StringGreaterThanOperation.INSTANCE);
 		public static final @NonNull Operation _String___gt__eq_ = LIBRARY.createOperation(">=", Parameters._OclSelf, Types._String,
-			6, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation.INSTANCE);
+			6, null, org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation.INSTANCE);
 		public static final @NonNull Operation _String__at = LIBRARY.createOperation("at", Parameters._Integer, Types._String,
-			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringAtOperation.INSTANCE);
-		public static final @NonNull Operation _String__characters = LIBRARY.createOperation("characters", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			8, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringCharactersOperation.INSTANCE);
+			7, null, org.eclipse.ocl.pivot.library.string.StringAtOperation.INSTANCE);
+		public static final @NonNull Operation _String__characters = LIBRARY.createOperation("characters", null, Types._String,
+			8, null, org.eclipse.ocl.pivot.library.string.StringCharactersOperation.INSTANCE);
 		public static final @NonNull Operation _String__compareTo = LIBRARY.createOperation("compareTo", Parameters._OclSelf, Types._String,
-			9, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringCompareToOperation.INSTANCE);
+			9, null, org.eclipse.ocl.pivot.library.string.StringCompareToOperation.INSTANCE);
 		public static final @NonNull Operation _String__concat = LIBRARY.createOperation("concat", Parameters._String, Types._String,
-			10, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
+			10, null, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		public static final @NonNull Operation _String__endsWith = LIBRARY.createOperation("endsWith", Parameters._String, Types._String,
-			11, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringEndsWithOperation.INSTANCE);
+			11, null, org.eclipse.ocl.pivot.library.string.StringEndsWithOperation.INSTANCE);
 		public static final @NonNull Operation _String__equalsIgnoreCase = LIBRARY.createOperation("equalsIgnoreCase", Parameters._String, Types._String,
-			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringEqualsIgnoreCaseOperation.INSTANCE);
+			12, null, org.eclipse.ocl.pivot.library.string.StringEqualsIgnoreCaseOperation.INSTANCE);
 		public static final @NonNull Operation _String__indexOf = LIBRARY.createOperation("indexOf", Parameters._String, Types._String,
-			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringIndexOfOperation.INSTANCE);
+			13, null, org.eclipse.ocl.pivot.library.string.StringIndexOfOperation.INSTANCE);
 		public static final @NonNull Operation _String__lastIndexOf = LIBRARY.createOperation("lastIndexOf", Parameters._String, Types._String,
-			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringLastIndexOfOperation.INSTANCE);
+			14, null, org.eclipse.ocl.pivot.library.string.StringLastIndexOfOperation.INSTANCE);
 		public static final @NonNull Operation _String__matches = LIBRARY.createOperation("matches", Parameters._String, Types._String,
-			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringMatchesOperation.INSTANCE);
+			15, null, org.eclipse.ocl.pivot.library.string.StringMatchesOperation.INSTANCE);
 		public static final @NonNull Operation _String__replaceAll = LIBRARY.createOperation("replaceAll", Parameters._String___String, Types._String,
-			16, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringReplaceAllOperation.INSTANCE);
+			16, null, org.eclipse.ocl.pivot.library.string.StringReplaceAllOperation.INSTANCE);
 		public static final @NonNull Operation _String__replaceFirst = LIBRARY.createOperation("replaceFirst", Parameters._String___String, Types._String,
-			17, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringReplaceFirstOperation.INSTANCE);
-		public static final @NonNull Operation _String__size = LIBRARY.createOperation("size", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			18, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSizeOperation.INSTANCE);
+			17, null, org.eclipse.ocl.pivot.library.string.StringReplaceFirstOperation.INSTANCE);
+		public static final @NonNull Operation _String__size = LIBRARY.createOperation("size", null, Types._String,
+			18, null, org.eclipse.ocl.pivot.library.string.StringSizeOperation.INSTANCE);
 		public static final @NonNull Operation _String__startsWith = LIBRARY.createOperation("startsWith", Parameters._String, Types._String,
-			19, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringStartsWithOperation.INSTANCE);
+			19, null, org.eclipse.ocl.pivot.library.string.StringStartsWithOperation.INSTANCE);
 		public static final @NonNull Operation _String__substituteAll = LIBRARY.createOperation("substituteAll", Parameters._String___String, Types._String,
-			20, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSubstituteAllOperation.INSTANCE);
+			20, null, org.eclipse.ocl.pivot.library.string.StringSubstituteAllOperation.INSTANCE);
 		public static final @NonNull Operation _String__substituteFirst = LIBRARY.createOperation("substituteFirst", Parameters._String___String, Types._String,
-			21, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSubstituteFirstOperation.INSTANCE);
+			21, null, org.eclipse.ocl.pivot.library.string.StringSubstituteFirstOperation.INSTANCE);
 		public static final @NonNull Operation _String__substring = LIBRARY.createOperation("substring", Parameters._Integer___Integer, Types._String,
-			22, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringSubstringOperation.INSTANCE);
-		public static final @NonNull Operation _String__toBoolean = LIBRARY.createOperation("toBoolean", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			23, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToBooleanOperation.INSTANCE);
-		public static final @NonNull Operation _String__toInteger = LIBRARY.createOperation("toInteger", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			24, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToIntegerOperation.INSTANCE);
-		public static final @NonNull Operation _String__toLower = LIBRARY.createOperation("toLower", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			25, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToLowerCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__toLowerCase = LIBRARY.createOperation("toLowerCase", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			26, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToLowerCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__toReal = LIBRARY.createOperation("toReal", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToRealOperation.INSTANCE);
-		public static final @NonNull Operation _String__toString = LIBRARY.createOperation("toString", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			28, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
-		public static final @NonNull Operation _String__toUpper = LIBRARY.createOperation("toUpper", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			29, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToUpperCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__toUpperCase = LIBRARY.createOperation("toUpperCase", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			30, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringToUpperCaseOperation.INSTANCE);
-		public static final @NonNull Operation _String__0_tokenize = LIBRARY.createOperation("tokenize", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			31, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
+			22, null, org.eclipse.ocl.pivot.library.string.StringSubstringOperation.INSTANCE);
+		public static final @NonNull Operation _String__toBoolean = LIBRARY.createOperation("toBoolean", null, Types._String,
+			23, null, org.eclipse.ocl.pivot.library.string.StringToBooleanOperation.INSTANCE);
+		public static final @NonNull Operation _String__toInteger = LIBRARY.createOperation("toInteger", null, Types._String,
+			24, null, org.eclipse.ocl.pivot.library.string.StringToIntegerOperation.INSTANCE);
+		public static final @NonNull Operation _String__toLower = LIBRARY.createOperation("toLower", null, Types._String,
+			25, null, org.eclipse.ocl.pivot.library.string.StringToLowerCaseOperation.INSTANCE);
+		public static final @NonNull Operation _String__toLowerCase = LIBRARY.createOperation("toLowerCase", null, Types._String,
+			26, null, org.eclipse.ocl.pivot.library.string.StringToLowerCaseOperation.INSTANCE);
+		public static final @NonNull Operation _String__toReal = LIBRARY.createOperation("toReal", null, Types._String,
+			27, null, org.eclipse.ocl.pivot.library.string.StringToRealOperation.INSTANCE);
+		public static final @NonNull Operation _String__toString = LIBRARY.createOperation("toString", null, Types._String,
+			28, null, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
+		public static final @NonNull Operation _String__toUpper = LIBRARY.createOperation("toUpper", null, Types._String,
+			29, null, org.eclipse.ocl.pivot.library.string.StringToUpperCaseOperation.INSTANCE);
+		public static final @NonNull Operation _String__toUpperCase = LIBRARY.createOperation("toUpperCase", null, Types._String,
+			30, null, org.eclipse.ocl.pivot.library.string.StringToUpperCaseOperation.INSTANCE);
+		public static final @NonNull Operation _String__0_tokenize = LIBRARY.createOperation("tokenize", null, Types._String,
+			31, null, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
 		public static final @NonNull Operation _String__1_tokenize = LIBRARY.createOperation("tokenize", Parameters._String, Types._String,
-			32, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
+			32, null, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
 		public static final @NonNull Operation _String__2_tokenize = LIBRARY.createOperation("tokenize", Parameters._String___Boolean, Types._String,
-			33, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
-		public static final @NonNull Operation _String__trim = LIBRARY.createOperation("trim", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._String,
-			34, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTrimOperation.INSTANCE);
+			33, null, org.eclipse.ocl.pivot.library.string.StringTokenizeOperation.INSTANCE);
+		public static final @NonNull Operation _String__trim = LIBRARY.createOperation("trim", null, Types._String,
+			34, null, org.eclipse.ocl.pivot.library.string.StringTrimOperation.INSTANCE);
 
 		public static final @NonNull Operation _UniqueCollection___sub_ = LIBRARY.createOperation("-", Parameters._UniqueCollection__OclAny__, Types._UniqueCollection,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
 		public static final @NonNull Operation _UniqueCollection__intersection = LIBRARY.createOperation("intersection", Parameters._Collection__0_T__, Types._UniqueCollection,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		public static final @NonNull Operation _UniqueCollection__sortedBy = LIBRARY.createOperation("sortedBy", Parameters._Lambda_0_T_OclAny, Types._UniqueCollection,
-			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
+			2, null, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull Operation _UniqueCollection__symmetricDifference = LIBRARY.createOperation("symmetricDifference", Parameters._UniqueCollection__OclAny__, Types._UniqueCollection,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
+			3, null, org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
 		public static final @NonNull Operation _UniqueCollection__union = LIBRARY.createOperation("union", Parameters._UniqueCollection, Types._UniqueCollection,
-			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
+			4, null, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 
 		public static final @NonNull Operation _UnlimitedNatural__max = LIBRARY.createOperation("max", Parameters._OclSelf, Types._UnlimitedNatural,
-			0, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMaxOperation.INSTANCE);
+			0, null, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMaxOperation.INSTANCE);
 		public static final @NonNull Operation _UnlimitedNatural__min = LIBRARY.createOperation("min", Parameters._OclSelf, Types._UnlimitedNatural,
-			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation.INSTANCE);
+			1, null, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation.INSTANCE);
 		public static final @NonNull Operation _UnlimitedNatural__oclAsType = LIBRARY.createOperation("oclAsType", Parameters._0_TT, Types._UnlimitedNatural,
-			2, TypeUtil.createTemplateParameters(TypeParameters._0_TT), org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _UnlimitedNatural__toInteger = LIBRARY.createOperation("toInteger", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._UnlimitedNatural,
-			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation.INSTANCE);
+			2, TypeParameters._0_TT, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation.INSTANCE);
+		public static final @NonNull Operation _UnlimitedNatural__toInteger = LIBRARY.createOperation("toInteger", null, Types._UnlimitedNatural,
+			3, null, org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation.INSTANCE);
 
 		static {
 			Init.initEnd();

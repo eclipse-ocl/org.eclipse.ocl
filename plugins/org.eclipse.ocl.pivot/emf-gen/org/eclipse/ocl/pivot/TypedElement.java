@@ -12,7 +12,7 @@ package org.eclipse.ocl.pivot;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.types.TuplePart;
+import org.eclipse.ocl.pivot.utilities.TuplePart;
 
 
 

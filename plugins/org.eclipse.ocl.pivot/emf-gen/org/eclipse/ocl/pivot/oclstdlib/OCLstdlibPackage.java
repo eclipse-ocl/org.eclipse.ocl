@@ -1024,8 +1024,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 		// Create annotations
 		// http://www.eclipse.org/OCL/ASLibrary
 		createASLibraryAnnotations();
-		// http://www.eclipse.org/OCL/Collection
-		createCollectionAnnotations();
 	}
 
 	/**
@@ -1040,22 +1038,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 		  (this,
 		   source,
 		   new String[] {
-		   });
-	}
-
-	/**
-	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Collection</b>.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void createCollectionAnnotations() {
-		String source = "http://www.eclipse.org/OCL/Collection"; //$NON-NLS-1$
-		addAnnotation
-		  (getOclElement_OclContents(),
-		   source,
-		   new String[] {
-			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

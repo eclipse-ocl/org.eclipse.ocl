@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
@@ -1369,21 +1368,8 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 		return typeId2;
 	}
 
-	public @NonNull TypeId immutableGetTypeId() {
-		if (typeId != null) {
-			return typeId;
-		}
-		return computeId();
-	}
-
 	@Override
-	public @NonNull TemplateParameters getTypeParameters() {
-		return TemplateSignatureImpl.getTypeParameters(getOwnedSignature());
-	}
-
-	@Override
-	public TemplateableElement getUnspecializedElement()
-	{
+	public TemplateableElement getUnspecializedElement() {
 		if (unspecializedElement == null) {
 			for (TemplateBinding templateBinding : getOwnedBindings()) {
 				TemplateSignature signature = templateBinding.getTemplateSignature();
@@ -1404,8 +1390,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	 * @generated
 	 */
 	@Override
-	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
-	{
+	public void setUnspecializedElement(TemplateableElement newUnspecializedElement) {
 		TemplateableElement oldUnspecializedElement = unspecializedElement;
 		unspecializedElement = newUnspecializedElement;
 		if (eNotificationRequired())

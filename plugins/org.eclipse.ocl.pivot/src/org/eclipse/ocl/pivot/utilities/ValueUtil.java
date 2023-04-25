@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypeExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
@@ -79,7 +78,6 @@ import org.eclipse.ocl.pivot.internal.values.UnlimitedValueImpl;
 import org.eclipse.ocl.pivot.library.UnsupportedOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
-import org.eclipse.ocl.pivot.types.ParameterTypesImpl;
 import org.eclipse.ocl.pivot.util.PivotValidator;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -874,8 +872,6 @@ public abstract class ValueUtil
 				if (!allStaticsInitialized) {
 					allStaticsInitialized = true;
 					// org.eclipse.ocl.domain.elements
-					ParameterTypesImpl.EMPTY_LIST.getClass();
-					TemplateParameters.EMPTY_LIST.getClass();
 					// org.eclipse.ocl.domain.evaluation
 					ModelManager.NULL.getClass();
 					// org.eclipse.ocl.domain.ids

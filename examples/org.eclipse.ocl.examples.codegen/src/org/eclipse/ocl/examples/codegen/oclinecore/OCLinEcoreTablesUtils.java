@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateBinding;
@@ -61,6 +60,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
@@ -84,26 +84,6 @@ public class OCLinEcoreTablesUtils
 {
 	private static int SHOW_TABLES_PACKAGE = 1;
 	private static int SHOW_TABLES_SUBPACKAGE = 2;
-
-	public Comparator<@NonNull ParameterTypes> legacyTemplateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
-	{
-		@Override
-		public int compare(@NonNull ParameterTypes o1, @NonNull ParameterTypes o2) {
-			String n1 = getLegacyTemplateBindingsName(o1);
-			String n2 = getLegacyTemplateBindingsName(o2);
-			return n1.compareTo(n2);
-		}
-	};
-
-	public Comparator<@NonNull ParameterTypes> templateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
-	{
-		@Override
-		public int compare(@NonNull ParameterTypes o1, @NonNull ParameterTypes o2) {
-			String n1 = getTemplateBindingsName(o1);
-			String n2 = getTemplateBindingsName(o2);
-			return n1.compareTo(n2);
-		}
-	};
 
 	public static Comparator<@NonNull Nameable> nameComparator = new Comparator<@NonNull Nameable>()
 	{
@@ -665,8 +645,7 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull EmitLiteralVisitor emitScopedLiteralVisitor;		// emit YYY._ZZZ
 	protected final @NonNull EmitLiteralVisitor emitQualifiedLiteralVisitor;	// emit XXXTables.YYY._ZZZ
 	protected final @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByName;
-	protected final @NonNull Map<@NonNull ParameterTypes, String> legacyTemplateBindingsNames = new HashMap<>();
-	protected final @NonNull Map<@NonNull ParameterTypes, String> templateBindingsNames = new HashMap<>();
+	protected final @NonNull Map<@NonNull ParametersId, String> templateBindingsNames = new HashMap<>();
 	protected final @NonNull GenModelHelper genModelHelper;
 
 	protected OCLinEcoreTablesUtils(@NonNull GenPackage genPackage) {
@@ -915,64 +894,6 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
-	protected @NonNull String getLegacyTemplateBindingsName(@NonNull ParameterTypes templateBindings) {
-		String name2 = legacyTemplateBindingsNames.get(templateBindings);
-		if (name2 == null) {
-			StringBuilder s = new StringBuilder();
-			s.append("_");
-			if (templateBindings.size() > 0 ) {
-				for (int i = 0; i < templateBindings.size(); i++) {
-					if (i > 0) {
-						s.append("___");
-					}
-					Type element = templateBindings.get(i);
-					getLegacyTemplateBindingsName(s, element);
-				}
-			}
-			name2 = s.toString();
-			legacyTemplateBindingsNames.put(templateBindings, name2);
-		}
-		return name2;
-	}
-	private void getLegacyTemplateBindingsName(@NonNull StringBuilder s, @NonNull Type element) {
-		TemplateParameter templateParameter = element.isTemplateParameter();
-		if (templateParameter != null) {
-			TemplateableElement template = templateParameter.getOwningSignature().getOwningElement();
-			if (template instanceof Operation) {
-				s.append(AbstractGenModelHelper.encodeName(ClassUtil.nonNullModel(((Operation) template).getOwningClass())));
-				s.append("_");
-			}
-			s.append(AbstractGenModelHelper.encodeName(ClassUtil.nonNullModel((NamedElement) template)));
-			s.append("_");
-		}
-		s.append(AbstractGenModelHelper.encodeName(element));
-		if (element instanceof TemplateableElement) {
-			List<TemplateBinding> templateBindings = ((TemplateableElement)element).getOwnedBindings();
-			if (templateBindings.size() > 0) {
-				s.append("_");
-				for (TemplateBinding templateBinding : templateBindings) {
-					for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
-						s.append("_");
-						getLegacyTemplateBindingsName(s, ClassUtil.nonNullModel(templateParameterSubstitution.getActual()));
-					}
-				}
-				s.append("__");
-			}
-		}
-		if (element instanceof LambdaType) {
-			LambdaType lambdaType = (LambdaType)element;
-			s.append("_");
-			getLegacyTemplateBindingsName(s, ClassUtil.nonNullModel(lambdaType.getContextType()));
-			for (/*@NonNull*/ Type type : lambdaType.getParameterType()) {
-				assert type != null;
-				s.append("_");
-				getLegacyTemplateBindingsName(s, type);
-			}
-			s.append("_");
-			getLegacyTemplateBindingsName(s, ClassUtil.nonNullModel(lambdaType.getResultType()));
-		}
-	}
-
 	protected @NonNull Iterable<@NonNull Operation> getLocalOperationsSortedBySignature(org.eclipse.ocl.pivot.@NonNull Class pClass) {
 		// cls.getOperations()->sortedBy(op2 : Operation | op2.getSignature())
 		List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
@@ -1114,22 +1035,23 @@ public class OCLinEcoreTablesUtils
 		return genPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
 	}
 
-	protected @NonNull String getTemplateBindingsName(@NonNull ParameterTypes templateBindings) {
-		String name2 = templateBindingsNames.get(templateBindings);
+	protected @NonNull String getTemplateBindingsName(@NonNull Type @NonNull [] parameterTypes) {
+		ParametersId parametersId = IdManager.getParametersId(parameterTypes);
+		String name2 = templateBindingsNames.get(parametersId);
 		if (name2 == null) {
 			StringBuilder s = new StringBuilder();
 			s.append("_");
-			if (templateBindings.size() > 0 ) {
-				for (int i = 0; i < templateBindings.size(); i++) {
+			if (parameterTypes.length > 0 ) {
+				for (int i = 0; i < parameterTypes.length; i++) {
 					if (i > 0) {
 						s.append("___");
 					}
-					Type element = templateBindings.get(i);
+					Type element = parameterTypes[i];
 					getTemplateBindingsName(s, element);
 				}
 			}
 			name2 = s.toString();
-			templateBindingsNames.put(templateBindings, name2);
+			templateBindingsNames.put(parametersId, name2);
 		}
 		return name2;
 	}

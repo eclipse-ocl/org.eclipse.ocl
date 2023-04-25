@@ -3408,11 +3408,11 @@ extends EPackage
 	EOperation getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.types.TuplePart <em>Tuple Part</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.utilities.TuplePart <em>Tuple Part</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Tuple Part</em>'.
-	 * @see org.eclipse.ocl.pivot.types.TuplePart
+	 * @see org.eclipse.ocl.pivot.utilities.TuplePart
 	 * @generated
 	 */
 	EClass getTuplePart();
@@ -8659,10 +8659,10 @@ extends EPackage
 		EOperation TUPLE_LITERAL_PART___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP = eINSTANCE.getTupleLiteralPart__ValidateTypeIsNotInvalid__DiagnosticChain_Map();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.types.TuplePart <em>Tuple Part</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.utilities.TuplePart <em>Tuple Part</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.types.TuplePart
+		 * @see org.eclipse.ocl.pivot.utilities.TuplePart
 		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTuplePart()
 		 * @generated
 		 */

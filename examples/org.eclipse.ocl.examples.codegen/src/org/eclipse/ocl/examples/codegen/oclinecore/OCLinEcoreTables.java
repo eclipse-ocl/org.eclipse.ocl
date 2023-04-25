@@ -45,14 +45,12 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
-import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
@@ -65,7 +63,6 @@ import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 {
@@ -246,14 +243,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		precedingPackageName = currentPackageName;
 	}
 
-	protected void appendParameterTypesName(@NonNull ParameterTypes parameterTypes) {	// Workaround deprecated _ name
-		if (parameterTypes.size() > 0) {
+	protected void appendParameterTypesName(@NonNull Type @NonNull [] parameterTypes) {	// Workaround deprecated _ name
+		if (parameterTypes.length > 0) {
 			s.append("Parameters.");
 			s.append(getTemplateBindingsName(parameterTypes));
 		}
 		else {
-			s.appendClassReference(null, TypeUtil.class);
-			s.append(".EMPTY_PARAMETER_TYPESx2x");
+			s.append("null");
 		}
 	}
 
@@ -707,12 +703,18 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				op.getOwningClass().accept(emitScopedLiteralVisitor);
 				s.append(",\n			" + i + ", ");
 				if (ownedTemplateSignature == null) {
-					s.appendClassReference(null, TemplateParameters.class);
-					s.append(".EMPTY_LIST");
+					s.append("null");
+				}
+				else if (ownedTemplateSignature.getOwnedParameters().size() == 1) {
+					TemplateParameter parameter = ownedTemplateSignature.getOwnedParameters().get(0);
+					if (parameter != null) {
+						parameter.accept(emitScopedLiteralVisitor);
+					}
 				}
 				else {
-					s.appendClassReference(null, TypeUtil.class);
-					s.append(".createTemplateParameters(");
+					s.append("new ");
+					s.appendClassReference(true, TemplateParameter.class);
+					s.append(" [] {");
 					boolean first = true;
 					for (TemplateParameter parameter : ownedTemplateSignature.getOwnedParameters()) {
 						if (parameter != null) {
@@ -723,7 +725,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 							first = false;
 						}
 					}
-					s.append(")");
+					s.append("}");
 				}
 				s.append(", ");
 				s.append(getImplementationName(op));
@@ -735,13 +737,12 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected void declareParameterLists() {
-		Map<@NonNull String, @NonNull ParameterTypes> name2list = new HashMap<>();
-		Set<@NonNull ParameterTypes> allLists = new HashSet<>();
+		Map<@NonNull String, @NonNull Type @NonNull []> name2list = new HashMap<>();
+
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			for (Operation operation : getOperations(pClass)) {
-				ParameterTypes parameterTypes = operation.getParameterTypes();
-				allLists.add(parameterTypes);
-				if (parameterTypes.size() > 0) {
+				@NonNull Type @NonNull [] parameterTypes = operation.getParameterTypes();
+				if (parameterTypes.length > 0) {
 					String name = getTemplateBindingsName(parameterTypes);
 					name2list.put(name, parameterTypes);
 				}
@@ -760,9 +761,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			List<@NonNull String> sortedNames = new ArrayList<>(name2list.keySet());
 			Collections.sort(sortedNames);
 			for (@NonNull String name : sortedNames) {
-				ParameterTypes types = name2list.get(name);
+				@NonNull Type [] types = name2list.get(name);
 				assert types != null;
-				if (types.size() > 0) {				// Bug 471118 avoid deprecated _ identifier
+				if (types.length > 0) {				// Bug 471118 avoid deprecated _ identifier
 					s.append("		public static final ");
 					s.appendClassReference(true, Object.class);
 					s.append("[] ");
@@ -770,11 +771,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append(" = new ");
 					s.appendClassReference(true, Object.class);
 					s.append("[] {");
-					for (int i = 0; i < types.size(); i++) {
+					for (int i = 0; i < types.length; i++) {
 						if (i > 0) {
 							s.append(", ");
 						}
-						Type type = types.get(i);
+						Type type = types[i];
 						type.accept(declareParameterTypeVisitor);
 					}
 					s.append("};\n");

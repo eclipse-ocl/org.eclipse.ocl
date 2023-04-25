@@ -1445,7 +1445,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInit" eType="#//OCLExpression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TuplePart" instanceClassName="org.eclipse.ocl.pivot.types.TuplePart"
+  <eClassifiers xsi:type="ecore:EClass" name="TuplePart" instanceClassName="org.eclipse.ocl.pivot.utilities.TuplePart"
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="TupleType" eSuperTypes="#//DataType"/>
   <eClassifiers xsi:type="ecore:EClass" name="Type" abstract="true" eSuperTypes="#//NamedElement">

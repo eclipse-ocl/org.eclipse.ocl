@@ -40,10 +40,8 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Orphanage;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -621,52 +619,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@Nullable Class getLibraryType(@NonNull String string, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		org.eclipse.ocl.pivot.Class libraryType = getRequiredLibraryType(string);
-		return getLibraryType(libraryType, templateArguments);
-	}
-
-	@Override
-	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		//		assert !(libraryType instanceof CollectionType);
-		assert libraryType == PivotUtil.getUnspecializedTemplateableElement(libraryType);
-		TemplateSignature templateSignature = libraryType.getOwnedSignature();
-		List<TemplateParameter> templateParameters = templateSignature != null ? templateSignature.getOwnedParameters() : EMPTY_TEMPLATE_PARAMETER_LIST2;
-		if (templateParameters.isEmpty()) {
-			return libraryType;
-		}
-		if (templateArguments.size() != templateParameters.size()) {
-			throw new IllegalArgumentException("Incorrect template bindings for template type " + libraryType.getName());
-		}
-		boolean isUnspecialized = isUnspecialized(templateParameters, templateArguments);
-		if (isUnspecialized) {
-			return libraryType;
-		}
-		CompleteClassInternal libraryCompleteClass = getCompleteModel().getMetamodelManager().getCompleteClass(libraryType);
-		org.eclipse.ocl.pivot.Class pivotClass = libraryCompleteClass.getPrimaryClass();
-		if (pivotClass instanceof CollectionType) {
-			assert pivotClass instanceof CollectionType;
-			assert templateArguments.size() == 1;
-			@NonNull Type templateArgument = templateArguments.get(0);
-			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getCollectionType((CollectionType)libraryType, templateArgument, null, null, null);
-			return specializedType;
-		}
-		else if (pivotClass instanceof MapType) {
-			assert pivotClass instanceof MapType;
-			assert templateArguments.size() == 2;
-			@NonNull Type keyTemplateArgument = templateArguments.get(0);
-			@NonNull Type valueTemplateArgument = templateArguments.get(1);
-			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getMapType((MapType)libraryType, keyTemplateArgument, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueTemplateArgument, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
-			return specializedType;
-		}
-		else {
-			@SuppressWarnings("unchecked")
-			T specializedType = (T) libraryCompleteClass.getSpecializedType(templateArguments);
-			return specializedType;
-		}
-	}
-
-	@Override
 	public @NonNull MapType getMapType() {
 		MapType mapType2 = mapType;
 		if (mapType2 == null) {
@@ -839,12 +791,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @Nullable Element getOperationTemplateParameter(@NonNull Operation anOperation, int index) {
-		anOperation = PivotUtil.getUnspecializedTemplateableElement(anOperation);
-		return anOperation.getTypeParameters().get(index);
-	}
-
-	@Override
 	public @NonNull CollectionType getOrderedCollectionType() {
 		CollectionType orderedCollectionType2 = orderedCollectionType;
 		if (orderedCollectionType2 == null) {
@@ -910,7 +856,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName) {
-		Package rootPackage = completeModel.getRootPackage(completeURIorName);
+		org.eclipse.ocl.pivot.Package rootPackage = completeModel.getRootPackage(completeURIorName);
 		if (rootPackage == null) {
 			if (PivotConstants.METAMODEL_NAME.equals(completeURIorName)) {
 				environmentFactory.getMetamodelManager().getASmetamodel();
@@ -936,6 +882,27 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			setType2 = setType = resolveRequiredTemplateableType(SetType.class, TypeId.SET_NAME, 1);
 		}
 		return setType2;
+	}
+
+	@Override
+	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T getSpecializedType(@NonNull T genericClass, @NonNull List<@NonNull Type> templateArguments) {
+		//		assert !(libraryType instanceof CollectionType);
+		assert genericClass == PivotUtil.getUnspecializedTemplateableElement(genericClass);
+		TemplateSignature templateSignature = genericClass.getOwnedSignature();
+		List<TemplateParameter> templateParameters = templateSignature != null ? templateSignature.getOwnedParameters() : EMPTY_TEMPLATE_PARAMETER_LIST2;
+		if (templateParameters.isEmpty()) {
+			return genericClass;
+		}
+		if (templateArguments.size() != templateParameters.size()) {
+			throw new IllegalArgumentException("Incorrect template bindings for template type " + genericClass.getName());
+		}
+		boolean isUnspecialized = isUnspecialized(templateParameters, templateArguments);
+		if (isUnspecialized) {
+			return genericClass;
+		}
+		CompleteClassInternal libraryCompleteClass = getCompleteModel().getMetamodelManager().getCompleteClass(genericClass);
+		T pivotClass = (T) libraryCompleteClass.getPrimaryClass();
+		return super.getSpecializedType(pivotClass, templateArguments);
 	}
 
 	@Override

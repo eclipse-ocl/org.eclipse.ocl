@@ -23,18 +23,14 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.TypeUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -350,18 +346,5 @@ public class TemplateSignatureImpl
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitTemplateSignature(this);
-	}
-
-	public static @NonNull TemplateParameters getTypeParameters(@Nullable TemplateSignature templateSignature) {
-		if (templateSignature == null) {
-			return TemplateParameters.EMPTY_LIST;
-		}
-		List<@NonNull TemplateParameter> templateParameters = ClassUtil.nullFree(templateSignature.getOwnedParameters());
-		int iMax = templateParameters.size();
-		@NonNull TemplateParameter[] typeParameters = new @NonNull TemplateParameter[iMax];
-		for (int i = 0; i < iMax; i++) {
-			typeParameters[i] = templateParameters.get(i);
-		}
-		return TypeUtil.createTemplateParameters(typeParameters);
 	}
 } //TemplateSignatureImpl

@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -283,10 +282,6 @@ implements Type {
 	//	}
 
 	public org.eclipse.ocl.pivot.Package getPackage() {
-		throw new UnsupportedOperationException();		// FIXME
-	}
-
-	public @NonNull TemplateParameters getTypeParameters() {
 		throw new UnsupportedOperationException();		// FIXME
 	}
 

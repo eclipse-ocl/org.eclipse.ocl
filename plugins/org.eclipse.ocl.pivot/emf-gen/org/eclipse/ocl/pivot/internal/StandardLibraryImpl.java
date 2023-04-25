@@ -37,11 +37,11 @@ import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
-import org.eclipse.ocl.pivot.types.TuplePart;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TuplePart;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -280,6 +280,32 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
+	public <T extends org.eclipse.ocl.pivot.Class> @NonNull T getSpecializedType(@NonNull T genericClass, @NonNull List<@NonNull Type> templateArguments) {
+		if (genericClass instanceof CollectionType) {
+			assert genericClass instanceof CollectionType;
+			assert templateArguments.size() == 1;
+			@NonNull Type templateArgument = templateArguments.get(0);
+			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getCollectionType((CollectionType)genericClass, templateArgument, null, null, null);
+			return specializedType;
+		}
+		else if (genericClass instanceof MapType) {
+			assert genericClass instanceof MapType;
+			assert templateArguments.size() == 2;
+			@NonNull Type keyTemplateArgument = templateArguments.get(0);
+			@NonNull Type valueTemplateArgument = templateArguments.get(1);
+			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getMapType((MapType)genericClass, keyTemplateArgument, PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE, valueTemplateArgument, PivotConstants.DEFAULT_MAP_VALUES_ARE_NULL_FREE);
+			return specializedType;
+		}
+		else {
+			assert genericClass.getUnspecializedElement() == null;
+		//	org.eclipse.ocl.pivot.Class unspecializedClass = (org.eclipse.ocl.pivot.Class)pivotClass.getUnspecializedElement();
+		//	org.eclipse.ocl.pivot.Class genericClass = unspecializedClass != null ? unspecializedClass : pivotClass;
+			@SuppressWarnings("unchecked") T specializedType = (T) getOrphanage().getSpecialization(genericClass, templateArguments);
+			return specializedType;
+		}
+	}
+
+	@Override
 	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions) {
 		if ((substitutions == null) || substitutions.isEmpty()) {
 			return type;
@@ -331,7 +357,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 					Type templateArgument = substitutions.get(templateParameter);
 					templateArguments.add(templateArgument != null ? templateArgument : templateParameter);
 				}
-				return getLibraryType(unspecializedType, templateArguments);
+				return getSpecializedType(unspecializedType, templateArguments);
 			}
 		}
 		return type;
@@ -343,7 +369,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (tupleType == null) {
 			@NonNull TuplePartId[] partIds = tupleTypeId.getPartIds();
 			int partCount = partIds.length;
-			@NonNull TuplePart[] tupleParts = new @NonNull TuplePart[partCount];
+			@NonNull TuplePart[] tupleParts = new org.eclipse.ocl.pivot.utilities.TuplePart[partCount];
 			for (int i = 0; i < partCount;i++) {
 				@NonNull TuplePartId partId = partIds[i];
 				Type partType = idResolver.getType(partId.getTypeId());

@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TypeId;
 
-public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonNull LambdaTypeId> implements LambdaTypeId, WeakHashMapOfListOfWeakReference3.MatchableId<String, ParametersId>
+public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonNull LambdaTypeId> implements LambdaTypeId
 {
 	private static class LambdaTypeIdValue extends AbstractKeyAndValue<@NonNull LambdaTypeId>
 	{
@@ -157,17 +157,6 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 	@Override
 	public @NonNull ParametersId getParametersId() {
 		return parametersId;
-	}
-
-	@Override
-	public boolean matches(@NonNull String thatName, @NonNull ParametersId thatParametersId) {
-		if (parametersId != thatParametersId) {
-			return false;
-		}
-		if (!this.name.equals(thatName)) {
-			return false;
-		}
-		return true;
 	}
 
 	@Override

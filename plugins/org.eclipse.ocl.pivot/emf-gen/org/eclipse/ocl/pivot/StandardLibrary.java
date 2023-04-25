@@ -128,9 +128,6 @@ public interface StandardLibrary extends Element
 	@NonNull LambdaType getLambdaType(@NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType,
 			@Nullable TemplateParameterSubstitutions bindings);
 
-	org.eclipse.ocl.pivot.@Nullable Class getLibraryType(@NonNull String string, @NonNull List<@NonNull ? extends Type> templateArguments);
-
-	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getLibraryType(@NonNull T libraryType, @NonNull List<@NonNull ? extends Type> templateArguments);
 
 	org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName);
 
@@ -282,8 +279,6 @@ public interface StandardLibrary extends Element
 	 */
 	@NonNull VoidType getOclVoidType();
 
-	Element getOperationTemplateParameter(@NonNull Operation anOperation, int index);
-
 	/**
 	 * Obtains the generic instance of the OrderedCollection metatype, named
 	 * <tt>OrderedCollection(T)</tt>.
@@ -306,6 +301,7 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getOrderedSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
+	@NonNull Orphanage getOrphanage();
 	/**
 	 * Obtains the package containing the library types
 	 */
@@ -351,9 +347,9 @@ public interface StandardLibrary extends Element
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getSetType(@NonNull Type elementType, @Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
 
-	@NonNull Orphanage getOrphanage();
-
 	@NonNull Type getSpecializedType(@NonNull Type referenceType, @Nullable TemplateParameterSubstitutions referenceBindings);
+
+	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getSpecializedType(@NonNull T genericClass, @NonNull List<@NonNull Type> templateArguments);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named

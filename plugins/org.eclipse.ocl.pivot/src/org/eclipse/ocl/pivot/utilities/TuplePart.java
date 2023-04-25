@@ -8,11 +8,10 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
-package org.eclipse.ocl.pivot.types;
+package org.eclipse.ocl.pivot.utilities;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.utilities.Nameable;
 
 /**
  * TuplePart provides the minimal interface for constructing a TupleType witout imposing the overheads and

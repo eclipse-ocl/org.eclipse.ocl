@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
-import org.eclipse.ocl.pivot.types.TuplePart;
+import org.eclipse.ocl.pivot.utilities.TuplePart;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -66,6 +66,8 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 	 * Return the specialized map type for a map type descriptor.
 	 */
 	@NonNull MapType getMapType(@NonNull MapType genericType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
+
+	org.eclipse.ocl.pivot.@NonNull Class getSpecialization(org.eclipse.ocl.pivot.Class genericClass, @NonNull List<@NonNull ? extends Type> templateArguments);
 
 	@NonNull StandardLibrary getStandardLibrary();
 	@NonNull TupleType getTupleType(org.eclipse.ocl.pivot.@NonNull Class oclTupleType, @NonNull TuplePart @NonNull ... parts);

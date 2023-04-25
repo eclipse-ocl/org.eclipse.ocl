@@ -1223,7 +1223,7 @@
       <ownedProperties xmi:id="M3JBq" isComposite="true" isRequired="false" name="ownedInit" opposite="#iKMCL" type="#BFtK4"/>
       <ownedProperties xmi:id="K,8sA" isImplicit="true" isRequired="false" name="TupleLiteralExp" opposite="#+L,3k" type="#HhIN2"/>
     </ownedClasses>
-    <ownedClasses xmi:id="MN2od" instanceClassName="org.eclipse.ocl.pivot.types.TuplePart" isAbstract="true" isInterface="true" name="TuplePart"
+    <ownedClasses xmi:id="MN2od" instanceClassName="org.eclipse.ocl.pivot.utilities.TuplePart" isAbstract="true" isInterface="true" name="TuplePart"
         superClasses="&_0;#zfDWR"/>
     <ownedClasses xmi:id="T6Ypd" name="TupleType" superClasses="#1mHCJ"/>
     <ownedClasses xmi:id="rrwsa" isAbstract="true" name="Type" superClasses="#0kVqz">

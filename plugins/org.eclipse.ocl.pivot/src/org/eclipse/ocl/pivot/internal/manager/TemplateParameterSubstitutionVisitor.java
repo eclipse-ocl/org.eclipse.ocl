@@ -282,7 +282,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		}
 	}
 
-	public @NonNull Type specializeType(@NonNull Type type) {
+	public @NonNull Type specializeType(@NonNull Type type) {		// XXX probably a lot of duplication here redirect to StandardLibrary.getSpecialization
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		TemplateParameter asTemplateParameter = type.isTemplateParameter();
 		if (asTemplateParameter != null) {
@@ -354,7 +354,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 					}
 				}
 			//	if (hasActual) {
-					return standardLibrary.getLibraryType(unspecializedType, templateArguments);
+					return standardLibrary.getSpecializedType(unspecializedType, templateArguments);
 			//	}
 			//	else {
 			//		return unspecializedType;
@@ -367,7 +367,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 					Type actualType = specializeType(ownedTemplateParameter);
 					templateArguments.add(actualType);
 				}
-				return standardLibrary.getLibraryType(unspecializedType, templateArguments);
+				return standardLibrary.getSpecializedType(unspecializedType, templateArguments);
 			}
 		}
 		return type;
