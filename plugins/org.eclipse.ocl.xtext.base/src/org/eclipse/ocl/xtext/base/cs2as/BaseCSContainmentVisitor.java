@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -613,8 +614,9 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 
 	@Override
 	public Continuation<?> visitWildcardTypeRefCS(@NonNull WildcardTypeRefCS csElement) {
-		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.CLASS;
-		org.eclipse.ocl.pivot.Class pivotElement = context.refreshModelElement(org.eclipse.ocl.pivot.Class.class, eClass, null);
+		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.WILDCARD_TYPE;
+		WildcardType pivotElement = context.refreshModelElement(WildcardType.class, eClass, null);
+		context.getHelper().refreshName(pivotElement, csElement.toString());
 		context.installPivotReference(csElement, pivotElement, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
 		return null;
 	}

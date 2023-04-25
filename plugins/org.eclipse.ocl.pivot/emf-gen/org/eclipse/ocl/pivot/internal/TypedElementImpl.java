@@ -186,16 +186,18 @@ implements TypedElement {
 	@Override
 	public void setType(Type newType) {
 		Type oldType = type;
-		if (oldType != null) {
-			Orphanage orphanage = oldType.basicGetSharedOrphanage();
-			if (orphanage != null) {
-				orphanage.removeReference(oldType, this);
+		if (newType != oldType) {
+			if (oldType != null) {
+				Orphanage orphanage = oldType.basicGetSharedOrphanage();
+				if (orphanage != null) {
+					orphanage.removeReference(oldType, this);
+				}
 			}
-		}
-		if (newType != null) {
-			Orphanage orphanage = newType.basicGetSharedOrphanage();
-			if (orphanage != null) {
-				orphanage.addReference(newType, this);
+			if (newType != null) {
+				Orphanage orphanage = newType.basicGetSharedOrphanage();
+				if (orphanage != null) {
+					orphanage.addReference(newType, this);
+				}
 			}
 		}
 		setTypeGen(newType);
