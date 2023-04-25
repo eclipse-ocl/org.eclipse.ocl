@@ -12,8 +12,10 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.ECollections;
@@ -851,6 +853,14 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 		assert tupleType.isWellContained();
 		return tupleType;
+	}
+
+	public boolean assertHasReference1(@NonNull Type asType, @NonNull Element asElement) {
+		return true;
+	}
+
+	public boolean assertHasReference2(@NonNull Type asType, @NonNull Element asElement) {
+		return true;
 	}
 
 	public void init(@NonNull StandardLibrary standardLibrary, @NonNull String orphanageName, @NonNull String orphanageUri, @NonNull String orphanagePrefix) {

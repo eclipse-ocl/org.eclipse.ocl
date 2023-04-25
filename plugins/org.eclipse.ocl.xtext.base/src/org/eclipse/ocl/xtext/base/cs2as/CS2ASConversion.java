@@ -152,7 +152,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	/**
 	 * A typed cache for use by derived conversions.
 	 */
-	private final @NonNull Map<CacheKey<?>, Object> intermediateCache = new HashMap<CacheKey<?>, Object>();
+	private final @NonNull Map<CacheKey<?>, Object> intermediateCache = new HashMap<>();
 
 	private Map<String, org.eclipse.ocl.pivot.Package> oldPackagesByName = null;
 	private Map<String, org.eclipse.ocl.pivot.Package> oldPackagesByQualifiedName = null;	// WIP lose this since using nsURIs
@@ -281,7 +281,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	/*	private void enforceConformance(AnyType oclAny) {
 		Collection<? extends Resource> pivotResources = converter.getPivotResources();
-		Collection<Notifier> allPivotResources = new ArrayList<Notifier>(pivotResources);
+		Collection<Notifier> allPivotResources = new ArrayList<>(pivotResources);
 		allPivotResources.add(metamodelManager.getOrphanPackage());
 		for (TreeIterator<Object> tit = EcoreUtil.getAllContents(allPivotResources); tit.hasNext(); ) {
 			Object object = tit.next();
@@ -313,7 +313,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		if (documentationNodes == null) {
 			return null;
 		}
-		List<String> documentationStrings = new ArrayList<String>();
+		List<String> documentationStrings = new ArrayList<>();
 		for (LeafNode documentationNode : documentationNodes) {
 			String text = documentationNode.getText();
 			documentationStrings.add(text.substring(3, text.length()-3).trim());
@@ -340,9 +340,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//		org.eclipse.ocl.pivot.Class orphanClass = metamodelManager.getOrphanClass();
 		//		org.eclipse.ocl.pivot.Package orphanPackage = metamodelManager.getOrphanPackage();
 		//		Resource orphanResource = orphanPackage.eResource();
-		final Collection<Notifier> prunableResources = new ArrayList<Notifier>(cs2asResourceMap.values());
+		final Collection<Notifier> prunableResources = new ArrayList<>(cs2asResourceMap.values());
 		//		prunableResources.add(orphanResource);
-		Collection<Notifier> allResources = new ArrayList<Notifier>(metamodelManager.getASResourceSet().getResources());
+		Collection<Notifier> allResources = new ArrayList<>(metamodelManager.getASResourceSet().getResources());
 		//		allPivotResources.removeAll(prunableResources);					// Dead elements in orphanage or pivot of CS can be pruned
 		EObject lockingObject = metamodelManager.getLockingObject();
 		if (lockingObject != null) {
@@ -388,8 +388,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				return false;		// Don't start creating specializations to resolve proxies
 			}
 		};
-		Set<EObject> wantedOrphans = new HashSet<EObject>();
-		List<Map.Entry<EObject, Collection<EStructuralFeature.Setting>>> suspects = new ArrayList<Map.Entry<EObject, Collection<EStructuralFeature.Setting>>>();
+		Set<EObject> wantedOrphans = new HashSet<>();
+		List<Map.Entry<EObject, Collection<EStructuralFeature.Setting>>> suspects = new ArrayList<>();
 		for (Map.Entry<EObject, Collection<EStructuralFeature.Setting>> entry : referencesToOrphans.entrySet()) {
 			EObject referencedOrphan = entry.getKey();
 			Collection<EStructuralFeature.Setting> referencesToOrphan = entry.getValue();
@@ -416,7 +416,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 		while (!suspects.isEmpty()) {
 			List<Map.Entry<EObject, Collection<EStructuralFeature.Setting>>> oldSuspects = suspects;
-			suspects = new ArrayList<Map.Entry<EObject, Collection<EStructuralFeature.Setting>>>();
+			suspects = new ArrayList<>();
 			for (Map.Entry<EObject, Collection<EStructuralFeature.Setting>> entry : oldSuspects) {
 				EObject referencedOrphan = entry.getKey();
 				Collection<EStructuralFeature.Setting> referencesToOrphan = entry.getValue();
@@ -598,7 +598,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	public <T extends Element> List<T> getNewPivotElements(@NonNull Class<T> pivotClass, /*@NonNull*/ Iterable<? extends ModelElementCS> csElements) {
 		assert csElements != null;
-		List<T> newPivotElements = new ArrayList<T>();
+		List<T> newPivotElements = new ArrayList<>();
 		for (ModelElementCS csElement : csElements) {
 			@Nullable T pivotElement = PivotUtil.getPivot(pivotClass, csElement);
 			if (pivotElement != null) {
@@ -665,7 +665,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//			csTemplateBindings = getTemplateBindings((ElementCS) container);
 		//		}
 		//		else {
-		csTemplateBindings = new ArrayList<TemplateBindingCS>();
+		csTemplateBindings = new ArrayList<>();
 		//		}
 		if (csElement instanceof TypedTypeRefCS) {
 			TypedTypeRefCS csTemplateableElement = (TypedTypeRefCS)csElement;
@@ -684,7 +684,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			pivotTemplateSignatures = getTemplateSignatures((Element) container);
 		}
 		else {
-			pivotTemplateSignatures = new ArrayList<TemplateSignature>();
+			pivotTemplateSignatures = new ArrayList<>();
 		}
 		if (pivotElement instanceof TemplateableElement) {
 			TemplateableElement templateableElement = (TemplateableElement)pivotElement;
@@ -707,15 +707,15 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		refreshPivotList(Annotation.class, pivotAnnotations, csAnnotations);
 		/*		}
 		else {
-			HashSet<String> names = new HashSet<String>();
-			HashMap<String, List<Annotation>> pivotMap = new HashMap<String, List<Annotation>>();
-			HashMap<String, List<AnnotationElementCS>> csMap = new HashMap<String, List<AnnotationElementCS>>();
+			HashSet<String> names = new HashSet<>();
+			HashMap<String, List<Annotation>> pivotMap = new HashMap<>();
+			HashMap<String, List<AnnotationElementCS>> csMap = new HashMap<>();
 			for (Annotation pivotAnnotation : pivotAnnotations) {
 				String name = pivotAnnotation.getName();
 				names.add(name);
 				List<Annotation> pivotList = pivotMap.get(name);
 				if (pivotList == null) {
-					pivotList = new ArrayList<Annotation>();
+					pivotList = new ArrayList<>();
 					pivotMap.put(name, pivotList);
 				}
 				pivotList.add(pivotAnnotation);
@@ -725,7 +725,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				names.add(name);
 				List<AnnotationElementCS> csList = csMap.get(name);
 				if (csList == null) {
-					csList = new ArrayList<AnnotationElementCS>();
+					csList = new ArrayList<>();
 					csMap.put(name, csList);
 				}
 				csList.add(csAnnotation);
@@ -734,7 +734,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				List<Annotation> pivotList = pivotMap.get(name);
 				List<AnnotationElementCS> csList = csMap.get(name);
 //				refreshPivotList(Annotation.class, pivotAnnotations, csAnnotations);
-				List<Annotation> newPivotAnnotations = new ArrayList<Annotation>();
+				List<Annotation> newPivotAnnotations = new ArrayList<>();
 				for (ModelElementCS csElement : csList) {
 					Annotation pivotAnnotation = getPivotElement(Annotation.class, csElement);
 					assert pivotAnnotation != null;
@@ -876,7 +876,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 * @return continuations still to perform, null if stuck.
 	 */
 	protected @Nullable List<BasicContinuation<?>> progressContinuations(@NonNull List<BasicContinuation<?>> continuations) {
-		List<BasicContinuation<?>> moreContinuations = new ArrayList<BasicContinuation<?>>();
+		List<BasicContinuation<?>> moreContinuations = new ArrayList<>();
 		boolean madeProgress = false;
 		boolean tracingOn = CONTINUATION.isActive();
 		if (tracingOn) {
@@ -921,7 +921,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					i = 1;
 				}
 				else {
-					List<String> documentationStrings = new ArrayList<String>();
+					List<String> documentationStrings = new ArrayList<>();
 					for (ILeafNode documentationNode : documentationNodes) {
 						String text = documentationNode.getText().replace("\r", "");
 						if (text.startsWith("/*") && text.endsWith("*/")) {
@@ -1033,7 +1033,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public <T extends Element> void refreshList(@NonNull Class<T> pivotClass, List<T> pivotElements, /*@NonNull*/ List<? extends PivotableElementCS> csElements) {
 		assert csElements != null;
 		if (!pivotElements.isEmpty() ||!csElements.isEmpty()) {
-			List<T> newPivotElements = new ArrayList<T>();
+			List<T> newPivotElements = new ArrayList<>();
 			for (PivotableElementCS csElement : csElements) {
 				@Nullable T pivotElement = PivotUtil.getPivot(pivotClass, csElement);
 				if ((pivotElement == null) && (csElement instanceof ModelElementCS)) {
@@ -1358,7 +1358,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				specializedPivotElement = templateArgument != null ? standardLibrary.getCollectionType((CollectionType) unspecializedPivotElement, templateArgument, isNullFree, null, null) : unspecializedPivotElement;
 			}
 			else {
-				List<@NonNull Type> templateArguments = new ArrayList<@NonNull Type>();
+				List<@NonNull Type> templateArguments = new ArrayList<>();
 				for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : ownedTemplateBinding.getOwnedSubstitutions()) {
 					Type templateArgument = PivotUtil.getPivot(Type.class, csTemplateParameterSubstitution.getOwnedActualParameter());
 					if (templateArgument != null) {
@@ -1386,8 +1386,8 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 */
 	public boolean update(@NonNull BaseCSResource csResource) {
 		resetPivotMappings(csResource);
-		oldPackagesByName = new HashMap<String, org.eclipse.ocl.pivot.Package>();
-		oldPackagesByQualifiedName = new HashMap<String, org.eclipse.ocl.pivot.Package>();
+		oldPackagesByName = new HashMap<>();
+		oldPackagesByQualifiedName = new HashMap<>();
 		ASResource asResource = converter.csi2asMapping.getASResource(csResource);
 		boolean wasUpdating = false;
 		if (asResource != null) {
@@ -1399,7 +1399,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				}
 			}
 		}
-		List<BasicContinuation<?>> continuations = new ArrayList<BasicContinuation<?>>();
+		List<BasicContinuation<?>> continuations = new ArrayList<>();
 		//
 		//	Perform the post-order containment traversal to:
 		//
@@ -1500,9 +1500,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//
 		//	Prune obsolete packages
 		//
-		Set<org.eclipse.ocl.pivot.Package> newPackages = new HashSet<org.eclipse.ocl.pivot.Package>();
+		Set<org.eclipse.ocl.pivot.Package> newPackages = new HashSet<>();
 		gatherNewPackages(newPackages, csResource);
-		Set<org.eclipse.ocl.pivot.Package> obsoletePackages = new HashSet<org.eclipse.ocl.pivot.Package>(oldPackagesByQualifiedName.values());
+		Set<org.eclipse.ocl.pivot.Package> obsoletePackages = new HashSet<>(oldPackagesByQualifiedName.values());
 		//		for (org.eclipse.ocl.pivot.Package oldPackage : obsoletePackages) {
 		//			System.out.println("Old package @" + Integer.toHexString(oldPackage.hashCode()) + " " + oldPackage.eResource().getURI() + " " + oldPackage.getName());
 		//		}
