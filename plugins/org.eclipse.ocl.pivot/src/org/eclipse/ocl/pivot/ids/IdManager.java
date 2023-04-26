@@ -712,6 +712,7 @@ public final class IdManager
 	/**
 	 * @since 1.18
 	 */
+	@Deprecated /* @deprecated See Bug 581860 */
 	public static @NonNull WildcardId getWildcardId() {
 		WildcardId wildcardId2 = wildcardId ;
 		if (wildcardId2 == null) {

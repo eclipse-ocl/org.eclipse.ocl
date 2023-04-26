@@ -27,6 +27,7 @@ package org.eclipse.ocl.pivot;
  * @see org.eclipse.ocl.pivot.PivotPackage#getWildcardType()
  * @generated
  */
+@Deprecated /* @deprecated See Bug 581860 */
 public interface WildcardType extends org.eclipse.ocl.pivot.Class
 {
 	/**

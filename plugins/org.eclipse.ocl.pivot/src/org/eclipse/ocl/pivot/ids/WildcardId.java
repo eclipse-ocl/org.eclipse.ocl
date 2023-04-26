@@ -15,6 +15,7 @@ package org.eclipse.ocl.pivot.ids;
  *
  * @since 1.18
  */
+@Deprecated /* @deprecated See Bug 581860 */
 public interface WildcardId extends TypeId
 {
 }
