@@ -349,7 +349,7 @@ public interface StandardLibrary extends Element
 
 	@NonNull Type getSpecializedType(@NonNull Type referenceType, @Nullable TemplateParameterSubstitutions referenceBindings);
 
-	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getSpecializedType(@NonNull T genericClass, @NonNull List<@NonNull Type> templateArguments);
+	@NonNull <T extends org.eclipse.ocl.pivot.Class> T getSpecializedType(@NonNull T genericClass, @Nullable List<@NonNull TemplateParameter> partialTemplateParameters, @NonNull List<@NonNull Type> templateArguments);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named

@@ -885,7 +885,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T getSpecializedType(@NonNull T genericClass, @NonNull List<@NonNull Type> templateArguments) {
+	public @NonNull <T extends org.eclipse.ocl.pivot.Class> T getSpecializedType(@NonNull T genericClass, @Nullable List<@NonNull TemplateParameter> partialTemplateParameters, @NonNull List<@NonNull Type> templateArguments) {
 		//		assert !(libraryType instanceof CollectionType);
 		assert genericClass == PivotUtil.getUnspecializedTemplateableElement(genericClass);
 		TemplateSignature templateSignature = genericClass.getOwnedSignature();
@@ -902,7 +902,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 		CompleteClassInternal libraryCompleteClass = getCompleteModel().getMetamodelManager().getCompleteClass(genericClass);
 		T pivotClass = (T) libraryCompleteClass.getPrimaryClass();
-		return super.getSpecializedType(pivotClass, templateArguments);
+		return super.getSpecializedType(pivotClass, partialTemplateParameters, templateArguments);
 	}
 
 	@Override

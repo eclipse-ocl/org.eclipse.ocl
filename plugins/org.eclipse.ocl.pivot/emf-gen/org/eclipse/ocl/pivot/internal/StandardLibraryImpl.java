@@ -280,7 +280,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public <T extends org.eclipse.ocl.pivot.Class> @NonNull T getSpecializedType(@NonNull T genericClass, @NonNull List<@NonNull Type> templateArguments) {
+	public <T extends org.eclipse.ocl.pivot.Class> @NonNull T getSpecializedType(@NonNull T genericClass, @Nullable List<@NonNull TemplateParameter> partialTemplateParameters, @NonNull List<@NonNull Type> templateArguments) {
 		if (genericClass instanceof CollectionType) {
 			assert genericClass instanceof CollectionType;
 			assert templateArguments.size() == 1;
@@ -357,7 +357,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 					Type templateArgument = substitutions.get(templateParameter);
 					templateArguments.add(templateArgument != null ? templateArgument : templateParameter);
 				}
-				return getSpecializedType(unspecializedType, templateArguments);
+				return getSpecializedType(unspecializedType, null, templateArguments);
 			}
 		}
 		return type;

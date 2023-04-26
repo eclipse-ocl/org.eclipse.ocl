@@ -13,7 +13,9 @@ package org.eclipse.ocl.pivot.internal.complete;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -31,5 +33,5 @@ public interface CompleteClassInternal extends CompleteClass
 	@Override
 	CompletePackageInternal getOwningCompletePackage();
 	@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getProperSuperClasses();
-	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@NonNull List<@NonNull Type> templateArguments);
+	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@Nullable List<@NonNull TemplateParameter> partialTemplateParameters, @NonNull List<@NonNull Type> templateArguments);
 } // CompleteClass

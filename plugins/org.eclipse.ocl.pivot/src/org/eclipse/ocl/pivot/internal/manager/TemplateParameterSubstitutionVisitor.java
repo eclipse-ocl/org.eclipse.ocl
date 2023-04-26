@@ -354,7 +354,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 					}
 				}
 			//	if (hasActual) {
-					return standardLibrary.getSpecializedType(unspecializedType, templateArguments);
+					return standardLibrary.getSpecializedType(unspecializedType, null, templateArguments);
 			//	}
 			//	else {
 			//		return unspecializedType;
@@ -367,7 +367,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 					Type actualType = specializeType(ownedTemplateParameter);
 					templateArguments.add(actualType);
 				}
-				return standardLibrary.getSpecializedType(unspecializedType, templateArguments);
+				return standardLibrary.getSpecializedType(unspecializedType, null, templateArguments);
 			}
 		}
 		return type;

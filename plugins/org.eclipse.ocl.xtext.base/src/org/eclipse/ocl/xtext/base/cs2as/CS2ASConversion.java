@@ -1364,7 +1364,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 						templateArguments.add(templateArgument);
 					}
 				}
-				specializedPivotElement = standardLibrary.getSpecializedType(unspecializedPivotElement, templateArguments);
+				specializedPivotElement = standardLibrary.getSpecializedType(unspecializedPivotElement, null, templateArguments);
 			}
 		}
 		installPivotReference(csElement, specializedPivotElement, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__REFERRED_TYPE);

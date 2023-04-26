@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.State;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.CompleteFlatClass;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
@@ -623,7 +624,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override @Deprecated
-	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@NonNull List<@NonNull Type> templateArguments) {
+	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@Nullable List<@NonNull TemplateParameter> partialTemplateParameters, @NonNull List<@NonNull Type> templateArguments) {
 		org.eclipse.ocl.pivot.Class primaryClass = getPrimaryClass();
 		org.eclipse.ocl.pivot.Class unspecializedClass = (org.eclipse.ocl.pivot.Class)primaryClass.getUnspecializedElement();
 		org.eclipse.ocl.pivot.Class genericClass = unspecializedClass != null ? unspecializedClass : primaryClass;
