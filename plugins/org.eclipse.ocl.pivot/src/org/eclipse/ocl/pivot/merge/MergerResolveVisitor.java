@@ -21,6 +21,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -37,8 +38,11 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EObject, @NonNull Merger>
 {
-	public MergerResolveVisitor(@NonNull Merger context) {
+	protected final @NonNull StandardLibrary standardLibrary;
+
+	public MergerResolveVisitor(@NonNull Merger context, @NonNull StandardLibrary standardLibrary) {
 		super(context);
+		this.standardLibrary = standardLibrary;
 	}
 
 	@Override
@@ -58,7 +62,7 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EOb
 		boolean isNullFree = asCollectionType.isIsNullFree();
 		IntegerValue lowerValue = asCollectionType.getLowerValue();
 		UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
-		return context.getCollectionType(mergedCollectionType, mergedElementType, isNullFree, lowerValue, upperValue);
+		return standardLibrary.getCollectionType(mergedCollectionType, mergedElementType, isNullFree, lowerValue, upperValue);
 	}
 
 	@Override
@@ -87,15 +91,7 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EOb
 		Type mergedValueType = (Type)asMapType.getValueType().accept(this);
 		boolean isKeysAreNullFree = asMapType.isKeysAreNullFree();
 		boolean isValuesAreNullFree = asMapType.isValuesAreNullFree();
-		return context.getMapType(mergedKeyType, isKeysAreNullFree, mergedValueType, isValuesAreNullFree);
-	}
-
-	@Override
-	public @Nullable EObject visitProperty(@NonNull Property object) {
-		if ("opposite".equals(object.getName())) {
-			getClass();		// XXX
-		}
-		return super.visitProperty(object);
+		return standardLibrary.getMapType(mergedKeyType, isKeysAreNullFree, mergedValueType, isValuesAreNullFree);
 	}
 
 	@Override
@@ -106,7 +102,6 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EOb
 			assert mergedType != null;
 			tupleParts.put(NameUtil.getName(asProperty), mergedType);
 		}
-		return context.getTupleType(tupleParts);
-	//	return context.getTupleType(asTupleType.getTypeId());
+		return standardLibrary.getTupleType(tupleParts);
 	}
 }

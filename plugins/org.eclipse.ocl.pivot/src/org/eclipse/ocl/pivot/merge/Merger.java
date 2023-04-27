@@ -18,27 +18,19 @@ import java.util.Map;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorStandardLibrary;
-import org.eclipse.ocl.pivot.internal.manager.PivotIdResolver;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.merge.EAssociationHelper.EAssociation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 import com.google.common.collect.Iterables;
 
@@ -50,8 +42,8 @@ import com.google.common.collect.Iterables;
 public class Merger
 {
 	protected final @NonNull EnvironmentFactory environmentFactory;
-	protected final @NonNull ESuperClassHelper eSuperClassHelper = new ESuperClassHelper();
-	protected final @NonNull EAssociationHelper eAssociationHelper = new EAssociationHelper();
+	protected final @NonNull ESuperClassHelper eSuperClassHelper;
+	protected final @NonNull EAssociationHelper eAssociationHelper;
 	protected final @NonNull MergerGroupVisitor groupVisitor;
 	protected final @NonNull MergerResolveVisitor resolveVisitor;
 
@@ -70,11 +62,10 @@ public class Merger
 	 */
 	private @NonNull Map<@NonNull Element, @NonNull List<@NonNull ? extends Element>> mergedElement2partialElements = new HashMap<>();
 
-	@Deprecated /* @deprecated pragmatic re-use pending a rationalized Orphanage */
-	private @NonNull ExecutorStandardLibrary standardLibrary = new ExecutorStandardLibrary();
-
 	public Merger(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
+		this.eSuperClassHelper = new ESuperClassHelper();
+		this.eAssociationHelper = new EAssociationHelper();
 		this.groupVisitor = createGroupVisitor();
 		this.resolveVisitor = createResolveVisitorVisitor();
 	}
@@ -84,29 +75,7 @@ public class Merger
 	}
 
 	protected @NonNull MergerResolveVisitor createResolveVisitorVisitor() {
-		return new MergerResolveVisitor(this);
-	}
-
-	public org.eclipse.ocl.pivot.@NonNull Class getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return standardLibrary.getCollectionType(genericType, elementType, isNullFree, lower, upper);
-	}
-
-	public org.eclipse.ocl.pivot.@NonNull Class getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		return standardLibrary.getMapType(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
-	}
-
-//	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts) {
-	//	CompleteModelInternal completeModel = (CompleteModelInternal)environmentFactory.getCompleteModel();
-//		return standardLibrary.getTupleType(tupleName, parts);
-//	}
-
-	public @Nullable EObject getTupleType(@NonNull TupleTypeId tupleTypeId) {
-		PivotIdResolver idResolver = new PivotIdResolver((EnvironmentFactoryInternal) environmentFactory) {};	// XXX
-		return standardLibrary.getTupleType(idResolver, tupleTypeId);
-	}
-
-	public @Nullable EObject getTupleType(@NonNull Map<@NonNull String, @NonNull Type> tupleParts) {
-		return standardLibrary.getTupleType(tupleParts);
+		return new MergerResolveVisitor(this, new ExecutorStandardLibrary());
 	}
 
 	public @Nullable Element getMergedElement(@NonNull Element partialElement) {
