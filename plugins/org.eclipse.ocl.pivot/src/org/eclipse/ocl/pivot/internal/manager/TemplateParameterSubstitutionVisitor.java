@@ -249,7 +249,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 					partMap.put(PivotUtil.getName(part), type3);
 				}
 			}
-			return environmentFactory.getStandardLibrary().getTupleType(NameUtil.getSafeName(type), partMap);
+			return environmentFactory.getStandardLibrary().getTupleType(partMap);
 		}
 	}
 

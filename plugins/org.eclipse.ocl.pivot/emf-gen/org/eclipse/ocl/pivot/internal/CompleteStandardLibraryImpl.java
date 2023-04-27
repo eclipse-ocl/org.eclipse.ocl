@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -915,21 +914,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Collection<@NonNull ? extends TypedElement> parts,
-			@Nullable TemplateParameterSubstitutions bindings) {
-		Map<@NonNull String, @NonNull Type> partMap = new HashMap<>();
-		for (@NonNull TypedElement part : parts) {
-			Type type1 = part.getType();
-			if (type1 != null) {
-				Type type2 = getPrimaryType(type1);
-				Type type3 = getSpecializedType(type2, bindings);
-				partMap.put(PivotUtil.getName(part), type3);
-			}
-		}
-		return getTupleType(tupleName, partMap);
-	}
-
-	@Override
 	public @NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateParameterSubstitutions usageBindings) {	// FIXME Remove duplication, unify type/multiplicity
 		TupleType specializedTupleType = type;
 		Map<String, Type> resolutions =  null;
@@ -965,8 +949,8 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 	}
 
-	@Override
-	public @NonNull TupleType getTupleType(@NonNull String tupleName, @NonNull Map<@NonNull String, @NonNull ? extends Type> parts) {
+/*	@Override
+	public @NonNull TupleType getTupleType(@NonNull Map<@NonNull String, @NonNull Type> parts) {
 		//
 		//	Find the outgoing template parameter references
 		// FIXME this should be more readily and reliably computed in the caller
@@ -977,9 +961,9 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		//
 		//	Finally create the (specialize) tuple type
 		//
-		TupleType tupleType = getTupleType(pivotIdResolver /*metamodelManager.getIdResolver()*/, tupleTypeId);
+		TupleType tupleType = getTupleType(pivotIdResolver /*metamodelManager.getIdResolver()* /, tupleTypeId);
 		return tupleType;
-	}
+	} */
 
 	@Override
 	public @NonNull CollectionType getUniqueCollectionType() {

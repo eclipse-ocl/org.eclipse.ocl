@@ -606,7 +606,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitComment(@NonNull Comment comment) {
 		append("/* ");
-		append(comment.getBody().trim().replace("\n", " "));
+		append(String.valueOf(comment.getBody()).trim().replace("\n", " "));
 		append(" */");
 		return null;
 	}

@@ -106,7 +106,7 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EOb
 			assert mergedType != null;
 			tupleParts.put(NameUtil.getName(asProperty), mergedType);
 		}
-		return context.getTupleType("Tuple", tupleParts);
+		return context.getTupleType(tupleParts);
 	//	return context.getTupleType(asTupleType.getTypeId());
 	}
 }

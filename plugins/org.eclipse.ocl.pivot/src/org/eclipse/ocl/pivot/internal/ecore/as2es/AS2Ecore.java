@@ -237,7 +237,7 @@ public class AS2Ecore extends AbstractConversion
 				eAnnotation.setSource(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE);
 				allEAnnotations.add(eAnnotation);
 			}
-			String value = StringUtil.splice(newComments, "");
+			String value = StringUtil.splice(newComments, "\n");
 			eAnnotation.getDetails().put(PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY, value);
 		}
 		else {

@@ -12,6 +12,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AnyType" eSuperTypes="#//Class"/>
   <eClassifiers xsi:type="ecore:EClass" name="AssociationClass" eSuperTypes="#//Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A link is a tuple of values that refer to typed objects.  An Association classifies a set of links, each of which is an instance of the Association.  Each value in the link refers to an instance of the type of the corresponding end of the Association.&#xA;&#xA;A model element that has both Association and Class properties. An AssociationClass can be seen as an Association that also has Class properties, or as a Class that also has Association properties. It not only connects a set of Classifiers but also defines a set of Features that belong to the Association itself and not to any of the associated Classifiers."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="unownedAttributes" ordered="false"
         upperBound="-1" eType="#//Property" eOpposite="#//Property/associationClass"/>
   </eClassifiers>
@@ -25,22 +28,36 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Bag" instanceClassName="org.eclipse.ocl.pivot.values.Bag"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.&#xA;There is no ordering defined on the elements in a bag.&#xA;Bag is itself an instance of the metatype BagType.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//Collection">
-      <eTypeArguments/>
+      <eTypeArguments eTypeParameter="#//Bag/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BagType" eSuperTypes="#//CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" name="Behavior" abstract="true" eSuperTypes="#//Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Behavior is a specification of how its context BehavioredClassifier changes state over time. This specification may be either a definition of possible behavior execution or emergent behavior, or a selective illustration of an interesting subset of possible executions. The latter form is typically used for capturing examples, such as a trace of a particular execution."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningTransition" eType="#//Transition"
         eOpposite="#//Transition/ownedEffect"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Boolean is used for logical expressions, consisting of the predefined values true and false.&#xA;The standard type Boolean represents the common true/false values.&#xA;Boolean is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BooleanLiteralExp" eSuperTypes="#//PrimitiveLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="booleanSymbol" lowerBound="1"
         eType="#//Boolean" unsettable="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="BooleanType" eSuperTypes="#//OclElement #//PrimitiveType"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BooleanType" eSuperTypes="#//OclElement #//PrimitiveType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The standard type Boolean represents the common true/false values.&#xA;Boolean is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CallExp" abstract="true" eSuperTypes="#//OCLExpression">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" lowerBound="1"
         eType="#//Boolean" defaultValueLiteral="false"/>
@@ -54,6 +71,9 @@
         eType="#//Operation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Class" eSuperTypes="#//OclElement #//Type #//Namespace #//TemplateableElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.&#xA;&#xA;A Classifier represents a classification of instances according to their Features.&#xA;&#xA;StructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extenders" ordered="false"
         upperBound="-1" eType="#//StereotypeExtender" eOpposite="#//StereotypeExtender/class"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="instanceClassName" eType="#//String"/>
@@ -98,6 +118,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Collection" instanceClassName="java.util.Collection"
       abstract="true" interface="true" eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Collection is the abstract supertype of all collection types in the OCL Standard Library.&#xA;Each occurrence of an object in a collection is called an element.&#xA;If an object occurs twice in a collection, there are two elements.&#xA;&#xA;This sub clause defines the properties on Collections that have identical semantics for all collection subtypes.&#xA;Some operations may be defined within the subtype as well,&#xA;which means that there is an additional postcondition or a more specialized return value.&#xA;Collection is itself an instance of the metatype CollectionType.&#xA;&#xA;The definition of several common operations is different for each subtype.&#xA;These operations are not mentioned in this sub clause.&#xA;&#xA;The semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.&#xA;The semantics of those constructs is defined in Clause 10 (“Semantics Described using UML”).&#xA;In several cases the postcondition refers to other collection operations,&#xA;which in turn are defined in terms of the IterateExp or IteratorExp constructs.&#xA;&#xA;Well-formedness rules&#xA;&#xA;[1] A collection cannot contain oclText[invalid] values.&#xA;&#xA;context Collection&#xA;inv: self->forAll(not oclIsInvalid())"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elementType" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -163,6 +186,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Comment is a textual annotation that can be attached to a set of Elements."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="annotatedElements" ordered="false"
         upperBound="-1" eType="#//Element" eOpposite="#//Element/annotatingComments">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -218,6 +244,9 @@
         upperBound="-1" eType="#//Package"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConnectionPointReference" eSuperTypes="#//Vertex">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A ConnectionPointReference represents a usage (as part of a submachine State) of an entry/exit point Pseudostate defined in the StateMachine referenced by the submachine State."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="entries" ordered="false"
         upperBound="-1" eType="#//Pseudostate">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -238,6 +267,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Constraint" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Constraint is a condition or restriction expressed in natural language text or in a machine readable language for the purpose of declaring some of the semantics of an Element or set of Elements."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="constrainedElements" upperBound="-1"
         eType="#//Element">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -266,6 +298,9 @@
         upperBound="-1" eType="#//Constraint"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DataType" eSuperTypes="#//Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A DataType is a type whose instances are identified only by their value."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="behavioralClass" eType="#//Class">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="An equivalent type, such as a PrimitiveType, that defines the conformance and evaluation behavior."/>
@@ -302,6 +337,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="DynamicValueSpecification" eSuperTypes="#//ValueSpecification"/>
   <eClassifiers xsi:type="ecore:EDataType" name="EcoreObject" instanceClassName="org.eclipse.emf.ecore.EObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="Element" abstract="true" eSuperTypes="#//OclElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An Element is a constituent of a model. As such, it has the capability of owning other Elements."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="annotatingComments" ordered="false"
         upperBound="-1" eType="#//Comment" eOpposite="#//Comment/annotatedElements"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedAnnotations" upperBound="-1"
@@ -337,6 +375,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredLiteral" eType="#//EnumerationLiteral"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Enumeration" eSuperTypes="#//OclType #//DataType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="@Deprecated: Use OclEnumeration&#xA;The Enumeration type is the type of an OrderedSet of EnumerationLiteral.&#xA;&#xA;An Enumeration is a DataType whose values are enumerated in the model as EnumerationLiterals."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedLiterals" upperBound="-1"
         eType="#//EnumerationLiteral" containment="true" eOpposite="#//EnumerationLiteral/owningEnumeration">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -345,6 +386,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EnumerationLiteral" eSuperTypes="#//OclAny #//InstanceSpecification">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An EnumerationLiteral is a user-defined data value for an Enumeration.&#xA;The standard type EnumerationLiteral represents a named constant value of an Enumeration.&#xA;"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="literal" eType="#//String"
         defaultValueLiteral="0"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningEnumeration" lowerBound="1"
@@ -367,6 +411,9 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Feature" abstract="true" eSuperTypes="#//TypedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Feature declares a behavioral or structural characteristic of Classifiers."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="#//LibraryFeature"
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementationClass" eType="#//String"/>
@@ -381,7 +428,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isPre" lowerBound="1" eType="#//Boolean"
         defaultValueLiteral="false"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FinalState" eSuperTypes="#//State"/>
+  <eClassifiers xsi:type="ecore:EClass" name="FinalState" eSuperTypes="#//State">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A special kind of State, which, when entered, signifies that the enclosing Region has completed. If the enclosing Region is directly contained in a StateMachine and all other Regions in that StateMachine also are completed, then it means that the entire StateMachine behavior is completed."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IfExp" eSuperTypes="#//OCLExpression">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isElseIf" lowerBound="1"
         eType="#//Boolean" defaultValueLiteral="false">
@@ -403,6 +454,9 @@
         eType="#//Integer" defaultValueLiteral="0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InstanceSpecification" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An InstanceSpecification is a model element that represents an instance in a modeled system. An InstanceSpecification can act as a DeploymentTarget in a Deployment relationship, in the case that it represents an instance of a Node. It can also act as a DeployedArtifact, if it represents an instance of an Artifact."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="classes" ordered="false"
         upperBound="-1" eType="#//Class">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -424,7 +478,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningPackage" eType="#//Package"
         eOpposite="#//Package/ownedInstances"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Integer is a primitive type representing integer values.&#xA;The standard type Integer represents the mathematical concept of integer.&#xA;Integer is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IntegerLiteralExp" eSuperTypes="#//NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="integerSymbol" lowerBound="1"
         eType="#//Integer"/>
@@ -446,6 +504,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="IteratorVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EDataType" name="JavaClass" instanceClassName="java.lang.Class"/>
   <eClassifiers xsi:type="ecore:EClass" name="JavaType" eSuperTypes="#//Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="JavaType supports the use of a Java class as part of a foreign operation or property call."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="javaClass" lowerBound="1"
         eType="#//JavaClass"/>
   </eClassifiers>
@@ -493,6 +554,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Map" instanceClassName="java.util.Map"
       abstract="true" interface="true" eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Map provides a Set of key values, each of which has an associated value.&#xA;Keys and values may be null, but neither may be invalid."/>
+    </eAnnotations>
     <eTypeParameters name="K"/>
     <eTypeParameters name="V"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" lowerBound="1">
@@ -556,6 +620,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredSignal" eType="#//Signal"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//Namespace">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A model captures a view of a physical system. It is an abstraction of the physical system, with a certain purpose. This purpose determines what is to be included in the model and what is irrelevant. Thus the model completely describes those aspects of the physical system that are relevant to the purpose of the model, at the appropriate level of detail."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="externalURI" eType="#//String"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedImports" upperBound="-1"
         eType="#//Import" containment="true"/>
@@ -565,10 +632,13 @@
         eType="#//Integer" defaultValueLiteral="0"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MorePivotable" instanceClassName="org.eclipse.ocl.pivot.utilities.MorePivotable"
-      abstract="true" interface="true"/>
+      abstract="true" interface="true" eSuperTypes="#//OclElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Nameable" instanceClassName="org.eclipse.ocl.pivot.utilities.Nameable"
-      abstract="true" interface="true"/>
+      abstract="true" interface="true" eSuperTypes="#//OclElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true" eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A NamedElement is an Element in a model that may have a name. The name may be given directly and/or via the use of a StringExpression."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The name of the NamedElement."/>
@@ -576,6 +646,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Namespace" abstract="true" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Namespace is an Element in a model that owns and/or imports a set of NamedElements that can be identified by name."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedConstraints" ordered="false"
         upperBound="-1" eType="#//Constraint" containment="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -602,13 +675,23 @@
   <eClassifiers xsi:type="ecore:EClass" name="OclAny" instanceClassName="java.lang.Object"
       abstract="true" interface="true">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The number of elements in the collection oclText[self].essions.&#xA;OclAny is itself an instance of the metatype AnyType.&#xA;&#xA;All classes in a UML model inherit all operations defined on OclAny.&#xA;To avoid name conflicts between properties in the model and the properties inherited from OclAny,&#xA;all names on the properties of OclAny start with ‘ocl.’&#xA;Although theoretically there may still be name conflicts, they can be avoided.&#xA;One can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.&#xA;&#xA;Operations of OclAny, where the instance of OclAny is called object.&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.&#xA;True functionality is only available once converted to a Pivot model."/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclComparable" abstract="true" interface="true"
-      eSuperTypes="#//OclAny"/>
+      eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived&#xA;compareTo implementation may be sorted.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclElement" abstract="true" interface="true"
       eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined&#xA;for OclElement are therefore applicable to all user-defined types.&#xA;"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oclContainer" eType="#//OclElement">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The object for which self is a composed content or null if there is no such object.&#xA;"/>
@@ -622,9 +705,16 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclEnumeration" abstract="true" interface="true"
-      eSuperTypes="#//OclType"/>
+      eSuperTypes="#//OclType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The OclEnumeration type is the implicit supertype of any user Enumeration type.&#xA;FIXME This is probably obsolete now that static / meta-types clarified.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclInvalid" instanceClassName="org.eclipse.ocl.pivot.InvalidType"
       abstract="true" interface="true" eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclInvalid is a type that conforms to all other types.&#xA;It has one single instance, identified as  oclText[invalid].&#xA;Any property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().&#xA;OclInvalid is itself an instance of the metatype InvalidType.&#xA;"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oclBadProperty" eType="#//OclAny">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression."/>
@@ -632,24 +722,59 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclLambda" abstract="true" interface="true"
-      eSuperTypes="#//OclAny"/>
+      eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda&#xA;therefore apply to all lambda expressions.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclMessage" abstract="true" interface="true"
-      eSuperTypes="#//OclAny"/>
+      eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="OclMessage&#xA;This sub clause contains the definition of the standard type OclMessage.&#xA;As defined in this sub clause, each ocl message type is actually a template type with one parameter.&#xA;‘T’ denotes the parameter.&#xA;A concrete ocl message type is created by substituting an operation or signal for the T.&#xA;&#xA;The predefined type OclMessage is an instance of MessageType.&#xA;Every OclMessage is fully determined by either the operation, or signal given as parameter.&#xA;Note that there is conceptually an undefined (infinite) number of these types,&#xA;as each is determined by a different operation or signal.&#xA;These types are unnamed. Every type has as attributes the name of the operation or signal,&#xA;and either all formal parameters of the operation, or all attributes of the signal.&#xA;OclMessage is itself an instance of the metatype MessageType.&#xA;&#xA;OclMessage has a number of predefined operations, as shown in the OCL Standard Library.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclSelf" instanceClassName="org.eclipse.ocl.pivot.SelfType"
-      abstract="true" interface="true" eSuperTypes="#//OclAny"/>
+      abstract="true" interface="true" eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation&#xA;and Iteration signatures. Instances of OclSelf are never created.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclState" abstract="true" interface="true"
       eSuperTypes="#//OclAny"/>
   <eClassifiers xsi:type="ecore:EClass" name="OclStereotype" abstract="true" interface="true"
-      eSuperTypes="#//OclType"/>
+      eSuperTypes="#//OclType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined&#xA;for OclStereotype are therefore applicable to all UML stereotypes.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclSummable" abstract="true" interface="true"
-      eSuperTypes="#//OclAny"/>
+      eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived&#xA;sum and zero implementations may be summed."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclTuple" abstract="true" interface="true"
-      eSuperTypes="#//OclAny"/>
+      eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple&#xA;therefore apply to all tuples.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclType" abstract="true" interface="true"
-      eSuperTypes="#//OclElement"/>
+      eSuperTypes="#//OclElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclType is the implicit supertype of any UML type. Operations defined&#xA;for OclType are therefore applicable to all UML types.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclVoid" instanceClassName="org.eclipse.ocl.pivot.VoidType"
-      abstract="true" interface="true" eSuperTypes="#//OclAny"/>
+      abstract="true" interface="true" eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclVoid is a type that conforms to all other types except OclInvalid.&#xA;It has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.&#xA;Any property call applied on oclText[null] results in oclText[invalid], except for the&#xA;oclIsUndefined(), oclIsInvalid(), =(OclAny) and &lt;>(OclAny) operations.&#xA;However, by virtue of the implicit conversion to a collection literal,&#xA;an expression evaluating to oclText[null] can be used as source of collection operations (such as ‘isEmpty’).&#xA;If the source is the oclText[null] literal, it is implicitly converted to Bag{}.&#xA;&#xA;OclVoid is itself an instance of the metatype VoidType.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Operation" eSuperTypes="#//Feature #//Namespace #//TemplateableElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bodyExpression" eType="#//LanguageExpression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInvalidating" lowerBound="1"
@@ -718,24 +843,33 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrderedCollection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence&#xA;collections for which the elements are ordered.&#xA;The common supertype of OrderedCollection is Collection.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//Collection">
-      <eTypeArguments/>
+      <eTypeArguments eTypeParameter="#//OrderedCollection/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrderedSet" instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The OrderedSet is a Set, the elements of which are ordered.&#xA;It contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.&#xA;An OrderedSet is not a subtype of Set, neither a subtype of Sequence.&#xA;The common supertype of Sets and OrderedSets is Collection.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//OrderedCollection">
-      <eTypeArguments/>
+      <eTypeArguments eTypeParameter="#//OrderedSet/T"/>
     </eGenericSuperTypes>
     <eGenericSuperTypes eClassifier="#//UniqueCollection">
-      <eTypeArguments/>
+      <eTypeArguments eTypeParameter="#//OrderedSet/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrderedSetType" eSuperTypes="#//CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" name="OrphanCompletePackage" eSuperTypes="#//CompletePackage"/>
   <eClassifiers xsi:type="ecore:EClass" name="Package" eSuperTypes="#//Namespace">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.&#xA;Package specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.&#xA;A package is used to group elements, and provides a namespace for the grouped elements."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="URI" eType="#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Provides an identifier for the package that can be used for many purposes. A URI is the universally unique identification of the package following the IETF URI specification, RFC 2396 http://www.ietf.org/rfc/rfc2396.txt and it must comply with those syntax rules."/>
@@ -777,6 +911,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Parameter" eSuperTypes="#//VariableDeclaration">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Parameter is a specification of an argument used to pass information into or out of an invocation of a BehavioralFeature.  Parameters can be treated as ConnectableElements within Collaborations."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isTypeof" lowerBound="1"
         eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningOperation" eType="#//Operation"
@@ -788,7 +925,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ParameterVariable" eSuperTypes="#//Variable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Pivotable" instanceClassName="org.eclipse.ocl.pivot.utilities.Pivotable"
-      abstract="true" interface="true"/>
+      abstract="true" interface="true" eSuperTypes="#//OclElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Precedence" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="associativity" eType="#//AssociativityKind"
         defaultValueLiteral="left"/>
@@ -799,14 +936,23 @@
   <eClassifiers xsi:type="ecore:EClass" name="PrimitiveLiteralExp" abstract="true"
       eSuperTypes="#//LiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="PrimitiveType" eSuperTypes="#//DataType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A PrimitiveType defines a predefined DataType, without any substructure. A PrimitiveType may have an algebra and operations defined outside of UML, for example, mathematically."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="coercions" upperBound="-1"
         eType="#//Operation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Profile" eSuperTypes="#//Package">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A profile defines limited extensions to a reference metamodel with the purpose of adapting the metamodel to a specific platform or domain."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="profileApplications" ordered="false"
         upperBound="-1" eType="#//ProfileApplication" eOpposite="#//ProfileApplication/appliedProfile"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProfileApplication" eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A profile application is used to show which profiles have been applied to a package."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="appliedProfile" lowerBound="1"
         eType="#//Profile" eOpposite="#//Profile/profileApplications">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -827,6 +973,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Property" eSuperTypes="#//Feature">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Property is a StructuralFeature. A Property related by ownedAttribute to a Classifier (other than an association) represents an attribute and might also represent an association end. It relates an instance of the Classifier to a value or set of values of the type of the attribute. A Property related by memberEnd to an Association represents an end of the Association. The type of the Property is the type of the end of the Association. A Property has the capability of being a DeploymentTarget in a Deployment relationship. This enables modeling the deployment to hierarchical nodes that have Properties functioning as internal parts.  Property specializes ParameterableElement to specify that a Property can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="associationClass" eType="#//AssociationClass"
         eOpposite="#//AssociationClass/unownedAttributes"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultValue" eType="#//Object"
@@ -895,6 +1044,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" eType="#//Property"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Pseudostate" eSuperTypes="#//Vertex">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Pseudostate is an abstraction that encompasses different types of transient Vertices in the StateMachine graph. A StateMachine instance never comes to rest in a Pseudostate, instead, it will exit and enter the Pseudostate within a single run-to-completion step."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" lowerBound="1" eType="#//PseudostateKind"
         defaultValueLiteral="initial">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -915,6 +1067,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PseudostateKind" instanceClassName="java.lang.Object">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="PseudostateKind is an Enumeration type that is used to differentiate various kinds of Pseudostates."/>
+    </eAnnotations>
     <eLiterals name="choice" value="6"/>
     <eLiterals name="deepHistory" value="1"/>
     <eLiterals name="entryPoint" value="7"/>
@@ -926,13 +1081,21 @@
     <eLiterals name="shallowHistory" value="2"/>
     <eLiterals name="terminate" value="9"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="Real" instanceClassName="org.eclipse.ocl.pivot.values.RealValue"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Real" instanceClassName="org.eclipse.ocl.pivot.values.RealValue">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Real is a primitive type representing the mathematical concept of real.&#xA;The standard type Real represents the mathematical concept of real.&#xA;Note that Integer is a subclass of Real,&#xA;so for each parameter of type Real, you can use an integer as the actual parameter.&#xA;Real is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RealLiteralExp" eSuperTypes="#//NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realSymbol" lowerBound="1"
         eType="#//Real"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ReferringElement" abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReferringElement" abstract="true" interface="true"
+      eSuperTypes="#//OclElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Region" eSuperTypes="#//Namespace">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Region is a top-level part of a StateMachine or a composite State, that serves as a container for the Vertices and Transitions of the StateMachine. A StateMachine or composite State may contain multiple Regions representing behaviors that may occur in parallel."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extendedRegion" eType="#//Region">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The region of which this region is an extension."/>
@@ -971,9 +1134,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Sequence" instanceClassName="java.util.List"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A sequence is a collection where the elements are ordered.&#xA;An element may be part of a sequence more than once.&#xA;Sequence is itself an instance of the metatype SequenceType.&#xA;A Sentence is not a subtype of Bag.&#xA;The common supertype of Sentence and Bags is Collection.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//OrderedCollection">
-      <eTypeArguments/>
+      <eTypeArguments eTypeParameter="#//Sequence/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SequenceType" eSuperTypes="#//CollectionType"/>
@@ -981,7 +1147,7 @@
       abstract="true" interface="true">
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//UniqueCollection">
-      <eTypeArguments/>
+      <eTypeArguments eTypeParameter="#//Set/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SetType" eSuperTypes="#//CollectionType"/>
@@ -996,8 +1162,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredProperty" lowerBound="1"
         eType="#//Property"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Signal" eSuperTypes="#//Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Signal is a specification of a kind of communication between objects in which a reaction is asynchronously triggered in the receiver without a reply."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Slot" eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Slot designates that an entity modeled by an InstanceSpecification has a value or values for a specific StructuralFeature."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="definingProperty" lowerBound="1"
         eType="#//Property">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1022,6 +1195,9 @@
         eType="#//CompleteEnvironment" eOpposite="#//CompleteEnvironment/ownedStandardLibrary"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State" eSuperTypes="#//OclState #//Namespace #//Vertex">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A State models a situation during which some (usually implicit) invariant condition holds."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isComposite" lowerBound="1"
         eType="#//Boolean" changeable="false" volatile="true" transient="true" derived="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1111,6 +1287,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredState" eType="#//State"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StateMachine" eSuperTypes="#//Behavior">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="StateMachines can be used to express event-driven behaviors of parts of a system. Behavior is modeled as a traversal of a graph of Vertices interconnected by one or more joined Transition arcs that are triggered by the dispatching of successive Event occurrences. During this traversal, the StateMachine may execute a sequence of Behaviors associated with various elements of the StateMachine."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extendedStateMachines"
         ordered="false" upperBound="-1" eType="#//StateMachine">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1138,6 +1317,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Stereotype" eSuperTypes="#//OclStereotype #//Class">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A stereotype defines how an existing metaclass may be extended, and enables the use of platform or domain specific terminology or notation in place of, or in addition to, the ones used for the extended metaclass."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedExtenders" ordered="false"
         upperBound="-1" eType="#//StereotypeExtender" containment="true" eOpposite="#//StereotypeExtender/owningStereotype"/>
   </eClassifiers>
@@ -1149,12 +1331,19 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningStereotype" lowerBound="1"
         eType="#//Stereotype" eOpposite="#//Stereotype/ownedExtenders"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="String is a sequence of characters in some suitable character set used to display information about the model. Character sets may include non-Roman alphabets and characters.&#xA;The standard type String represents strings, which can be both ASCII or Unicode.&#xA;String is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StringLiteralExp" eSuperTypes="#//PrimitiveLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringSymbol" lowerBound="1"
         eType="#//String"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TemplateBinding" eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TemplateBinding is a DirectedRelationship between a TemplateableElement and a template. A TemplateBinding specifies the TemplateParameterSubstitutions of actual parameters for the formal parameters of the template."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSubstitutions" ordered="false"
         lowerBound="1" upperBound="-1" eType="#//TemplateParameterSubstitution" containment="true"
         eOpposite="#//TemplateParameterSubstitution/owningBinding">
@@ -1177,6 +1366,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TemplateParameter" eSuperTypes="#//Type">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TemplateParameter exposes a ParameterableElement as a formal parameter of a template."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="constrainingClasses" ordered="false"
         upperBound="-1" eType="#//Class"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningSignature" lowerBound="1"
@@ -1187,6 +1379,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TemplateParameterSubstitution" eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="actual" lowerBound="1"
         eType="#//Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1209,6 +1404,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TemplateSignature" eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Template Signature bundles the set of formal TemplateParameters for a template."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParameters" lowerBound="1"
         upperBound="-1" eType="#//TemplateParameter" containment="true" eOpposite="#//TemplateParameter/owningSignature">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1224,6 +1422,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TemplateableElement" abstract="true"
       eSuperTypes="#//Element">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TemplateableElement is an Element that can optionally be defined as a template and bound to other templates."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedBindings" ordered="false"
         upperBound="-1" eType="#//TemplateBinding" containment="true" eOpposite="#//TemplateBinding/owningElement">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1241,6 +1442,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Throwable" instanceClassName="java.lang.Throwable"/>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Namespace">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Transition represents an arc between exactly one source Vertex and exactly one Target vertex (the source and targets may be the same Vertex). It may form part of a compound transition, which takes the StateMachine from one steady State configuration to another, representing the full response of the StateMachine to an occurrence of an Event that triggered it."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" lowerBound="1" eType="#//TransitionKind"
         defaultValueLiteral="external">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1285,6 +1489,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TransitionKind" instanceClassName="java.lang.Object">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="TransitionKind is an Enumeration type used to differentiate the various kinds of Transitions."/>
+    </eAnnotations>
     <eLiterals name="external" value="2">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Implies that the Transition, if triggered, will exit the composite (source) State."/>
@@ -1302,6 +1509,9 @@
     </eLiterals>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Trigger" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Trigger specifies a specific point  at which an Event occurrence may trigger an effect in a Behavior. A Trigger may be qualified by the Port on which the Event occurred."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningState" eType="#//State"
         eOpposite="#//State/ownedDeferrableTriggers"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningTransition" eType="#//Transition"
@@ -1316,11 +1526,18 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TupleType" eSuperTypes="#//DataType"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Type" abstract="true" eSuperTypes="#//OclType #//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Type" abstract="true" eSuperTypes="#//OclType #//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Type constrains the values represented by a TypedElement.&#xA;The UML Type is the supertype of anything that may be used as a type.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeExp" eSuperTypes="#//OCLExpression #//ReferringElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredType" eType="#//Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypedElement" abstract="true" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A TypedElement is a NamedElement that may have a Type specified for it."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMany" lowerBound="1"
         eType="#//Boolean" changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRequired" lowerBound="1"
@@ -1333,19 +1550,30 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UniqueCollection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The UniqueCollection type provides the shared functionality of the OrderedSet and Set&#xA;collections for which the elements are unique.&#xA;The common supertype of UniqueCollection is Collection.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//Collection">
-      <eTypeArguments/>
+      <eTypeArguments eTypeParameter="#//UniqueCollection/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The standard type UnlimitedNatural is used to encode the non-negative values of a multiplicity specification.&#xA;This includes a special e[unlimited] value (*) that encodes the upper value of  a multiplicity specification.&#xA;UnlimitedNatural is itself an instance of the metatype UnlimitedNaturalType.&#xA;&#xA;Note that UnlimitedNatural is not a subclass of Integer.&#xA;&#xA;UnlimitedNatural is a primitive type representing unlimited natural values."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UnlimitedNaturalLiteralExp" eSuperTypes="#//NumericLiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unlimitedNaturalSymbol"
         lowerBound="1" eType="#//UnlimitedNatural"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UnspecifiedValueExp" eSuperTypes="#//OCLExpression"/>
   <eClassifiers xsi:type="ecore:EClass" name="ValueSpecification" abstract="true"
-      eSuperTypes="#//TypedElement"/>
+      eSuperTypes="#//TypedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A ValueSpecification is the specification of a (possibly empty) set of values. A ValueSpecification is a ParameterableElement that may be exposed as a formal TemplateParameter and provided as the actual parameter in the binding of a template."/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//VariableDeclaration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" lowerBound="1"
         eType="#//Boolean" defaultValueLiteral="false"/>
@@ -1364,6 +1592,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredVariable" eType="#//VariableDeclaration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Vertex" abstract="true" eSuperTypes="#//NamedElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A Vertex is an abstraction of a node in a StateMachine graph. It can be the source or destination of any number of Transitions."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="incomingTransitions" ordered="false"
         upperBound="-1" eType="#//Transition" changeable="false" eOpposite="#//Transition/target">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1384,7 +1615,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Visitable" instanceClassName="org.eclipse.ocl.pivot.util.Visitable"
-      abstract="true" interface="true"/>
+      abstract="true" interface="true" eSuperTypes="#//OclElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="VoidType" eSuperTypes="#//OclElement #//Class"/>
   <eClassifiers xsi:type="ecore:EClass" name="WildcardType" eSuperTypes="#//Class">
     <eStructuralFeatures xsi:type="ecore:EReference" name="lowerBound" eType="#//Type"/>

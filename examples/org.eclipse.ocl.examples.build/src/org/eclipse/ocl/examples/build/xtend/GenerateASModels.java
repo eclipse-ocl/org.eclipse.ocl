@@ -245,7 +245,11 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 						eClass.getEOperations().clear();
 						//						eClass.getEStructuralFeatures().clear();
 					}
-					eClassifier.getEAnnotations().clear();
+					EAnnotation oclAnnotation = eClassifier.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
+					if (oclAnnotation != null) {
+						eClassifier.getEAnnotations().remove(oclAnnotation);
+					}
+				//	eClassifier.getEAnnotations().clear();
 					//				EAnnotation eAnnotation = eClassifier.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
 					//				if (eAnnotation != null) {
 					//					eClassifier.getEAnnotations().remove(eAnnotation);
