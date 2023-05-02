@@ -590,12 +590,13 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+						final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
 						final /*@NonInvalid*/ @Nullable Boolean not;
-						if (!isSafe) {
+						if (!BOXED_isSafe) {
 							not = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (isSafe) {
+							if (BOXED_isSafe) {
 								not = ValueUtil.FALSE_VALUE;
 							}
 							else {
@@ -629,12 +630,13 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 								 * isRequired
 								 */
 								final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
+								final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired = isRequired;
 								//
-								if (isRequired) {					// Normal successful body evaluation result
+								if (BOXED_isRequired) {					// Normal successful body evaluation result
 									exists = ValueUtil.TRUE_VALUE;
 									break;														// Stop immediately
 								}
-								else if (!isRequired) {				// Normal unsuccessful body evaluation result
+								else if (!BOXED_isRequired) {				// Normal unsuccessful body evaluation result
 									;															// Carry on
 								}
 								else {															// Impossible badly typed result
@@ -794,8 +796,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+					final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!isSafe) {
+					if (!BOXED_isSafe) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -821,12 +824,13 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							 * isRequired
 							 */
 							final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
+							final /*@NonInvalid*/ @NonNull Boolean BOXED_isRequired = isRequired;
 							//
-							if (!isRequired) {					// Normal unsuccessful body evaluation result
+							if (!BOXED_isRequired) {					// Normal unsuccessful body evaluation result
 								forAll = ValueUtil.FALSE_VALUE;
 								break;														// Stop immediately
 							}
-							else if (isRequired) {				// Normal successful body evaluation result
+							else if (BOXED_isRequired) {				// Normal successful body evaluation result
 								;															// Carry on
 							}
 							else {															// Impossible badly typed result
@@ -901,8 +905,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+					final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!isSafe) {
+					if (!BOXED_isSafe) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {

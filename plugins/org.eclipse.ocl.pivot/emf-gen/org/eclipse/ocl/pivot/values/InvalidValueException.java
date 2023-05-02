@@ -16,11 +16,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
@@ -192,19 +192,25 @@ public class InvalidValueException extends UndefinedValueImpl implements Invalid
 	}
 
 	@Override
+	public int hashCode() {
+		return 0x22222222;
+	}
+
+	@Override
 	public int intValue() {
 		toInvalidValue();		// throws rather than returns
 		return 0;
 	}
 
 	@Override
-	public int hashCode() {
-		return 0x22222222;
+	public boolean isInvalid() {
+		return true;
 	}
 
 	@Override
-	public boolean isInvalid() {
-		return true;
+	public long longValue() {
+		toInvalidValue();		// throws rather than returns
+		return 0;
 	}
 
 	@Override

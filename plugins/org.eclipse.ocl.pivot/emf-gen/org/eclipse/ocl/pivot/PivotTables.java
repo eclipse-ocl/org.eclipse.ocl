@@ -186,6 +186,8 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Vertex = PivotTables.PACKid_$metamodel$.getClassId("Vertex", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_VoidType = PivotTables.PACKid_$metamodel$.getClassId("VoidType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_WildcardType = PivotTables.PACKid_$metamodel$.getClassId("WildcardType", 0);
+	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EBoolean = PivotTables.PACKid_$metamodel$.getDataTypeId("EBoolean", 0);
+	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EInt = PivotTables.PACKid_$metamodel$.getDataTypeId("EInt", 0);
 	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_EcoreObject = PivotTables.PACKid_$metamodel$.getDataTypeId("EcoreObject", 0);
 	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_JavaClass = PivotTables.PACKid_$metamodel$.getDataTypeId("JavaClass", 0);
 	public static final /*@NonInvalid*/ @NonNull DataTypeId DATAid_LibraryFeature = PivotTables.PACKid_$metamodel$.getDataTypeId("LibraryFeature", 0);
@@ -194,8 +196,8 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_CollectionKind = PivotTables.PACKid_$metamodel$.getEnumerationId("CollectionKind");
 	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_PseudostateKind = PivotTables.PACKid_$metamodel$.getEnumerationId("PseudostateKind");
 	public static final /*@NonInvalid*/ @NonNull EnumerationId ENUMid_TransitionKind = PivotTables.PACKid_$metamodel$.getEnumerationId("TransitionKind");
-	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_0 = ValueUtil.integerValueOf("0");
-	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_1 = ValueUtil.integerValueOf("1");
+	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_0 = ValueUtil.integerValueOf(0);
+	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_1 = ValueUtil.integerValueOf(1);
 	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid_ = IdManager.getTuplePartId(1, "status", TypeId.BOOLEAN);
 	public static final /*@NonInvalid*/ @NonNull TuplePartId PARTid__0 = IdManager.getTuplePartId(0, "message", TypeId.STRING);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -376,6 +378,8 @@ public class PivotTables extends AbstractTables
 		public static final org.eclipse.ocl.pivot.@NonNull Class _DynamicProperty = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.DYNAMIC_PROPERTY, PACKAGE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _DynamicType = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.DYNAMIC_TYPE, PACKAGE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _DynamicValueSpecification = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.DYNAMIC_VALUE_SPECIFICATION, PACKAGE, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _EBoolean = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.EBOOLEAN, PACKAGE, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _EInt = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.EINT, PACKAGE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _EcoreObject = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.ECORE_OBJECT, PACKAGE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Element = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.ELEMENT, PACKAGE, null, 0 | FlatClass.ABSTRACT);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _ElementExtension = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.ELEMENT_EXTENSION, PACKAGE, null, 0);
@@ -420,6 +424,7 @@ public class PivotTables extends AbstractTables
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Namespace = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.NAMESPACE, PACKAGE, null, 0 | FlatClass.ABSTRACT);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _NavigationCallExp = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.NAVIGATION_CALL_EXP, PACKAGE, null, 0 | FlatClass.ABSTRACT);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _NullLiteralExp = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.NULL_LITERAL_EXP, PACKAGE, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Number = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.NUMBER, PACKAGE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _NumericLiteralExp = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.NUMERIC_LITERAL_EXP, PACKAGE, null, 0 | FlatClass.ABSTRACT);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _OCLExpression = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.OCL_EXPRESSION, PACKAGE, null, 0 | FlatClass.ABSTRACT);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Object = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.OBJECT, PACKAGE, null, 0);
@@ -524,6 +529,8 @@ public class PivotTables extends AbstractTables
 			_DynamicProperty,
 			_DynamicType,
 			_DynamicValueSpecification,
+			_EBoolean,
+			_EInt,
 			_EcoreObject,
 			_Element,
 			_ElementExtension,
@@ -568,6 +575,7 @@ public class PivotTables extends AbstractTables
 			_Namespace,
 			_NavigationCallExp,
 			_NullLiteralExp,
+			_Number,
 			_NumericLiteralExp,
 			_OCLExpression,
 			_Object,
@@ -947,6 +955,17 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull FlatFragment _DynamicValueSpecification__TuplePart = LIBRARY.createFragment(Types._DynamicValueSpecification, PivotTables.Types._TuplePart);
 		private static final @NonNull FlatFragment _DynamicValueSpecification__TypedElement = LIBRARY.createFragment(Types._DynamicValueSpecification, PivotTables.Types._TypedElement);
 		private static final @NonNull FlatFragment _DynamicValueSpecification__ValueSpecification = LIBRARY.createFragment(Types._DynamicValueSpecification, PivotTables.Types._ValueSpecification);
+
+		private static final @NonNull FlatFragment _EBoolean__Boolean = LIBRARY.createFragment(Types._EBoolean, OCLstdlibTables.Types._Boolean);
+		private static final @NonNull FlatFragment _EBoolean__EBoolean = LIBRARY.createFragment(Types._EBoolean, PivotTables.Types._EBoolean);
+		private static final @NonNull FlatFragment _EBoolean__OclAny = LIBRARY.createFragment(Types._EBoolean, OCLstdlibTables.Types._OclAny);
+
+		private static final @NonNull FlatFragment _EInt__EInt = LIBRARY.createFragment(Types._EInt, PivotTables.Types._EInt);
+		private static final @NonNull FlatFragment _EInt__Integer = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._Integer);
+		private static final @NonNull FlatFragment _EInt__OclAny = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._OclAny);
+		private static final @NonNull FlatFragment _EInt__OclComparable = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._OclComparable);
+		private static final @NonNull FlatFragment _EInt__OclSummable = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._OclSummable);
+		private static final @NonNull FlatFragment _EInt__Real = LIBRARY.createFragment(Types._EInt, OCLstdlibTables.Types._Real);
 
 		private static final @NonNull FlatFragment _EcoreObject__EcoreObject = LIBRARY.createFragment(Types._EcoreObject, PivotTables.Types._EcoreObject);
 		private static final @NonNull FlatFragment _EcoreObject__OclAny = LIBRARY.createFragment(Types._EcoreObject, OCLstdlibTables.Types._OclAny);
@@ -1334,6 +1353,9 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull FlatFragment _NullLiteralExp__PrimitiveLiteralExp = LIBRARY.createFragment(Types._NullLiteralExp, PivotTables.Types._PrimitiveLiteralExp);
 		private static final @NonNull FlatFragment _NullLiteralExp__TuplePart = LIBRARY.createFragment(Types._NullLiteralExp, PivotTables.Types._TuplePart);
 		private static final @NonNull FlatFragment _NullLiteralExp__TypedElement = LIBRARY.createFragment(Types._NullLiteralExp, PivotTables.Types._TypedElement);
+
+		private static final @NonNull FlatFragment _Number__Number = LIBRARY.createFragment(Types._Number, PivotTables.Types._Number);
+		private static final @NonNull FlatFragment _Number__OclAny = LIBRARY.createFragment(Types._Number, OCLstdlibTables.Types._OclAny);
 
 		private static final @NonNull FlatFragment _NumericLiteralExp__Element = LIBRARY.createFragment(Types._NumericLiteralExp, PivotTables.Types._Element);
 		private static final @NonNull FlatFragment _NumericLiteralExp__LiteralExp = LIBRARY.createFragment(Types._NumericLiteralExp, PivotTables.Types._LiteralExp);
@@ -2997,6 +3019,25 @@ public class PivotTables extends AbstractTables
 			};
 		private static final int @NonNull [] __DynamicValueSpecification = { 1,1,2,1,1,1,1 };
 
+		private static final @NonNull FlatFragment @NonNull [] _EBoolean =
+			{
+				Fragments._EBoolean__OclAny /* 0 */,
+				Fragments._EBoolean__Boolean /* 1 */,
+				Fragments._EBoolean__EBoolean /* 2 */
+			};
+		private static final int @NonNull [] __EBoolean = { 1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _EInt =
+			{
+				Fragments._EInt__OclAny /* 0 */,
+				Fragments._EInt__OclComparable /* 1 */,
+				Fragments._EInt__OclSummable /* 1 */,
+				Fragments._EInt__Real /* 2 */,
+				Fragments._EInt__Integer /* 3 */,
+				Fragments._EInt__EInt /* 4 */
+			};
+		private static final int @NonNull [] __EInt = { 1,2,1,1,1 };
+
 		private static final @NonNull FlatFragment @NonNull [] _EcoreObject =
 			{
 				Fragments._EcoreObject__OclAny /* 0 */,
@@ -3559,6 +3600,13 @@ public class PivotTables extends AbstractTables
 				Fragments._NullLiteralExp__NullLiteralExp /* 8 */
 			};
 		private static final int @NonNull [] __NullLiteralExp = { 1,1,2,1,1,1,1,1,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Number =
+			{
+				Fragments._Number__OclAny /* 0 */,
+				Fragments._Number__Number /* 1 */
+			};
+		private static final int @NonNull [] __Number = { 1,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _NumericLiteralExp =
 			{
@@ -4449,6 +4497,8 @@ public class PivotTables extends AbstractTables
 			Types._DynamicProperty.initFragments(_DynamicProperty, __DynamicProperty);
 			Types._DynamicType.initFragments(_DynamicType, __DynamicType);
 			Types._DynamicValueSpecification.initFragments(_DynamicValueSpecification, __DynamicValueSpecification);
+			Types._EBoolean.initFragments(_EBoolean, __EBoolean);
+			Types._EInt.initFragments(_EInt, __EInt);
 			Types._EcoreObject.initFragments(_EcoreObject, __EcoreObject);
 			Types._Element.initFragments(_Element, __Element);
 			Types._ElementExtension.initFragments(_ElementExtension, __ElementExtension);
@@ -4493,6 +4543,7 @@ public class PivotTables extends AbstractTables
 			Types._Namespace.initFragments(_Namespace, __Namespace);
 			Types._NavigationCallExp.initFragments(_NavigationCallExp, __NavigationCallExp);
 			Types._NullLiteralExp.initFragments(_NullLiteralExp, __NullLiteralExp);
+			Types._Number.initFragments(_Number, __Number);
 			Types._NumericLiteralExp.initFragments(_NumericLiteralExp, __NumericLiteralExp);
 			Types._OCLExpression.initFragments(_OCLExpression, __OCLExpression);
 			Types._Object.initFragments(_Object, __Object);
@@ -6063,6 +6114,100 @@ public class PivotTables extends AbstractTables
 			PivotTables.Operations._ValueSpecification__isNull /* isNull() */,
 			PivotTables.Operations._ValueSpecification__stringValue /* stringValue() */,
 			PivotTables.Operations._ValueSpecification__unlimitedValue /* unlimitedValue() */
+		};
+
+		private static final @NonNull Operation @NonNull [] _EBoolean__EBoolean = {};
+		private static final @NonNull Operation @NonNull [] _EBoolean__Boolean = {
+			OCLstdlibTables.Operations._Boolean___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._Boolean___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._Boolean__and /* _'and'(Boolean[?]) */,
+			OCLstdlibTables.Operations._Boolean__implies /* _'implies'(Boolean[?]) */,
+			OCLstdlibTables.Operations._Boolean__not /* _'not'() */,
+			OCLstdlibTables.Operations._Boolean__or /* _'or'(Boolean[?]) */,
+			OCLstdlibTables.Operations._Boolean__xor /* _'xor'(Boolean[?]) */,
+			OCLstdlibTables.Operations._Boolean__allInstances /* allInstances(Integer[1]) */,
+			OCLstdlibTables.Operations._Boolean__and2 /* and2(Boolean[1]) */,
+			OCLstdlibTables.Operations._Boolean__implies2 /* implies2(Boolean[1]) */,
+			OCLstdlibTables.Operations._Boolean__not2 /* not2() */,
+			OCLstdlibTables.Operations._Boolean__or2 /* or2(Boolean[1]) */,
+			OCLstdlibTables.Operations._Boolean__toString /* toString() */,
+			OCLstdlibTables.Operations._Boolean__xor2 /* xor2(Boolean[1]) */
+		};
+		private static final @NonNull Operation @NonNull [] _EBoolean__OclAny = {
+			OCLstdlibTables.Operations._Boolean___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._Boolean___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._Boolean__toString /* toString() */
+		};
+
+		private static final @NonNull Operation @NonNull [] _EInt__EInt = {};
+		private static final @NonNull Operation @NonNull [] _EInt__Integer = {
+			OCLstdlibTables.Operations._Integer___mul_ /* _'*'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Integer___add_ /* _'+'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Integer___neg_ /* _'-'() */,
+			OCLstdlibTables.Operations._Integer___sub_ /* _'-'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Integer___div_ /* _'/'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Integer__abs /* abs() */,
+			OCLstdlibTables.Operations._Integer__div /* div(Integer[1]) */,
+			OCLstdlibTables.Operations._Integer__max /* max(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Integer__min /* min(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Integer__mod /* mod(Integer[1]) */,
+			OCLstdlibTables.Operations._Integer__toString /* toString() */,
+			OCLstdlibTables.Operations._Integer__toUnlimitedNatural /* toUnlimitedNatural() */
+		};
+		private static final @NonNull Operation @NonNull [] _EInt__OclAny = {
+			OCLstdlibTables.Operations._Real___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._Real___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._Integer__toString /* toString() */
+		};
+		private static final @NonNull Operation @NonNull [] _EInt__OclComparable = {
+			OCLstdlibTables.Operations._OclComparable___lt_ /* _'<'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
+		};
+		private static final @NonNull Operation @NonNull [] _EInt__OclSummable = {
+			OCLstdlibTables.Operations._OclSummable__sum /* sum(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclSummable__zero /* zero() */
+		};
+		private static final @NonNull Operation @NonNull [] _EInt__Real = {
+			OCLstdlibTables.Operations._Integer___mul_ /* _'*'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Integer___add_ /* _'+'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Integer___neg_ /* _'-'() */,
+			OCLstdlibTables.Operations._Integer___sub_ /* _'-'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Integer___div_ /* _'/'(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Real___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._Real___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._Integer__abs /* abs() */,
+			OCLstdlibTables.Operations._Real__floor /* floor() */,
+			OCLstdlibTables.Operations._Integer__max /* max(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Integer__min /* min(OclSelf[1]) */,
+			OCLstdlibTables.Operations._Real__round /* round() */,
+			OCLstdlibTables.Operations._Integer__toString /* toString() */
 		};
 
 		private static final @NonNull Operation @NonNull [] _EcoreObject__EcoreObject = {};
@@ -7993,6 +8138,25 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _NullLiteralExp__TuplePart = {};
 		private static final @NonNull Operation @NonNull [] _NullLiteralExp__TypedElement = {
 			PivotTables.Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+		};
+
+		private static final @NonNull Operation @NonNull [] _Number__Number = {};
+		private static final @NonNull Operation @NonNull [] _Number__OclAny = {
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 
 		private static final @NonNull Operation @NonNull [] _NumericLiteralExp__NumericLiteralExp = {};
@@ -10109,122 +10273,6 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _Transition__Transition = {};
-		private static final @NonNull Operation @NonNull [] _Transition__Element = {
-			PivotTables.Operations._Element__allOwnedElements /* allOwnedElements() */,
-			PivotTables.Operations._Element__getValue /* getValue(Type[1],String[1]) */
-		};
-		private static final @NonNull Operation @NonNull [] _Transition__NamedElement = {};
-		private static final @NonNull Operation @NonNull [] _Transition__Namespace = {};
-		private static final @NonNull Operation @NonNull [] _Transition__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
-			OCLstdlibTables.Operations._OclAny__toString /* toString() */
-		};
-		private static final @NonNull Operation @NonNull [] _Transition__OclElement = {
-			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
-			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
-			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
-			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
-			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
-		};
-
-		private static final @NonNull Operation @NonNull [] _TransitionKind__TransitionKind = {};
-		private static final @NonNull Operation @NonNull [] _TransitionKind__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
-			OCLstdlibTables.Operations._OclAny__toString /* toString() */
-		};
-		private static final @NonNull Operation @NonNull [] _TransitionKind__OclElement = {
-			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
-			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
-			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
-			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
-			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
-		};
-		private static final @NonNull Operation @NonNull [] _TransitionKind__OclEnumeration = {
-			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */
-		};
-		private static final @NonNull Operation @NonNull [] _TransitionKind__OclType = {
-			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
-		};
-
-		private static final @NonNull Operation @NonNull [] _Trigger__Trigger = {};
-		private static final @NonNull Operation @NonNull [] _Trigger__Element = {
-			PivotTables.Operations._Element__allOwnedElements /* allOwnedElements() */,
-			PivotTables.Operations._Element__getValue /* getValue(Type[1],String[1]) */
-		};
-		private static final @NonNull Operation @NonNull [] _Trigger__NamedElement = {};
-		private static final @NonNull Operation @NonNull [] _Trigger__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
-			OCLstdlibTables.Operations._OclAny__toString /* toString() */
-		};
-		private static final @NonNull Operation @NonNull [] _Trigger__OclElement = {
-			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
-			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
-			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
-			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
-			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
-		};
-
 		/*
 		 *	Install the operation descriptors in the fragment descriptors.
 		 */
@@ -10513,6 +10561,17 @@ public class PivotTables extends AbstractTables
 			Fragments._DynamicValueSpecification__TuplePart.initOperations(_DynamicValueSpecification__TuplePart);
 			Fragments._DynamicValueSpecification__TypedElement.initOperations(_DynamicValueSpecification__TypedElement);
 			Fragments._DynamicValueSpecification__ValueSpecification.initOperations(_DynamicValueSpecification__ValueSpecification);
+
+			Fragments._EBoolean__Boolean.initOperations(_EBoolean__Boolean);
+			Fragments._EBoolean__EBoolean.initOperations(_EBoolean__EBoolean);
+			Fragments._EBoolean__OclAny.initOperations(_EBoolean__OclAny);
+
+			Fragments._EInt__EInt.initOperations(_EInt__EInt);
+			Fragments._EInt__Integer.initOperations(_EInt__Integer);
+			Fragments._EInt__OclAny.initOperations(_EInt__OclAny);
+			Fragments._EInt__OclComparable.initOperations(_EInt__OclComparable);
+			Fragments._EInt__OclSummable.initOperations(_EInt__OclSummable);
+			Fragments._EInt__Real.initOperations(_EInt__Real);
 
 			Fragments._EcoreObject__EcoreObject.initOperations(_EcoreObject__EcoreObject);
 			Fragments._EcoreObject__OclAny.initOperations(_EcoreObject__OclAny);
@@ -10900,6 +10959,9 @@ public class PivotTables extends AbstractTables
 			Fragments._NullLiteralExp__PrimitiveLiteralExp.initOperations(_NullLiteralExp__PrimitiveLiteralExp);
 			Fragments._NullLiteralExp__TuplePart.initOperations(_NullLiteralExp__TuplePart);
 			Fragments._NullLiteralExp__TypedElement.initOperations(_NullLiteralExp__TypedElement);
+
+			Fragments._Number__Number.initOperations(_Number__Number);
+			Fragments._Number__OclAny.initOperations(_Number__OclAny);
 
 			Fragments._NumericLiteralExp__Element.initOperations(_NumericLiteralExp__Element);
 			Fragments._NumericLiteralExp__LiteralExp.initOperations(_NumericLiteralExp__LiteralExp);
@@ -11311,25 +11373,6 @@ public class PivotTables extends AbstractTables
 			Fragments._Throwable__OclAny.initOperations(_Throwable__OclAny);
 			Fragments._Throwable__Throwable.initOperations(_Throwable__Throwable);
 
-			Fragments._Transition__Element.initOperations(_Transition__Element);
-			Fragments._Transition__NamedElement.initOperations(_Transition__NamedElement);
-			Fragments._Transition__Namespace.initOperations(_Transition__Namespace);
-			Fragments._Transition__OclAny.initOperations(_Transition__OclAny);
-			Fragments._Transition__OclElement.initOperations(_Transition__OclElement);
-			Fragments._Transition__Transition.initOperations(_Transition__Transition);
-
-			Fragments._TransitionKind__OclAny.initOperations(_TransitionKind__OclAny);
-			Fragments._TransitionKind__OclElement.initOperations(_TransitionKind__OclElement);
-			Fragments._TransitionKind__OclEnumeration.initOperations(_TransitionKind__OclEnumeration);
-			Fragments._TransitionKind__OclType.initOperations(_TransitionKind__OclType);
-			Fragments._TransitionKind__TransitionKind.initOperations(_TransitionKind__TransitionKind);
-
-			Fragments._Trigger__Element.initOperations(_Trigger__Element);
-			Fragments._Trigger__NamedElement.initOperations(_Trigger__NamedElement);
-			Fragments._Trigger__OclAny.initOperations(_Trigger__OclAny);
-			Fragments._Trigger__OclElement.initOperations(_Trigger__OclElement);
-			Fragments._Trigger__Trigger.initOperations(_Trigger__Trigger);
-
 			Init.initEnd();
 		}
 
@@ -11344,6 +11387,122 @@ public class PivotTables extends AbstractTables
 			Init.initStart();
 			FragmentOperations1.init();
 		}
+
+		private static final @NonNull Operation @NonNull [] _Transition__Transition = {};
+		private static final @NonNull Operation @NonNull [] _Transition__Element = {
+			PivotTables.Operations._Element__allOwnedElements /* allOwnedElements() */,
+			PivotTables.Operations._Element__getValue /* getValue(Type[1],String[1]) */
+		};
+		private static final @NonNull Operation @NonNull [] _Transition__NamedElement = {};
+		private static final @NonNull Operation @NonNull [] _Transition__Namespace = {};
+		private static final @NonNull Operation @NonNull [] _Transition__OclAny = {
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclAny__toString /* toString() */
+		};
+		private static final @NonNull Operation @NonNull [] _Transition__OclElement = {
+			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
+			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
+			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
+			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
+			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
+		};
+
+		private static final @NonNull Operation @NonNull [] _TransitionKind__TransitionKind = {};
+		private static final @NonNull Operation @NonNull [] _TransitionKind__OclAny = {
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclAny__toString /* toString() */
+		};
+		private static final @NonNull Operation @NonNull [] _TransitionKind__OclElement = {
+			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
+			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
+			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
+			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
+			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
+		};
+		private static final @NonNull Operation @NonNull [] _TransitionKind__OclEnumeration = {
+			OCLstdlibTables.Operations._OclEnumeration__allInstances /* allInstances(Integer[1]) */
+		};
+		private static final @NonNull Operation @NonNull [] _TransitionKind__OclType = {
+			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
+		};
+
+		private static final @NonNull Operation @NonNull [] _Trigger__Trigger = {};
+		private static final @NonNull Operation @NonNull [] _Trigger__Element = {
+			PivotTables.Operations._Element__allOwnedElements /* allOwnedElements() */,
+			PivotTables.Operations._Element__getValue /* getValue(Type[1],String[1]) */
+		};
+		private static final @NonNull Operation @NonNull [] _Trigger__NamedElement = {};
+		private static final @NonNull Operation @NonNull [] _Trigger__OclAny = {
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclAny__toString /* toString() */
+		};
+		private static final @NonNull Operation @NonNull [] _Trigger__OclElement = {
+			OCLstdlibTables.Operations._OclElement__allInstances /* allInstances(Integer[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
+			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
+			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
+			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
+			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
+		};
 
 		private static final @NonNull Operation @NonNull [] _TupleLiteralExp__TupleLiteralExp = {};
 		private static final @NonNull Operation @NonNull [] _TupleLiteralExp__Element = {
@@ -12120,6 +12279,25 @@ public class PivotTables extends AbstractTables
 		 *	Install the operation descriptors in the fragment descriptors.
 		 */
 		static {
+			Fragments._Transition__Element.initOperations(_Transition__Element);
+			Fragments._Transition__NamedElement.initOperations(_Transition__NamedElement);
+			Fragments._Transition__Namespace.initOperations(_Transition__Namespace);
+			Fragments._Transition__OclAny.initOperations(_Transition__OclAny);
+			Fragments._Transition__OclElement.initOperations(_Transition__OclElement);
+			Fragments._Transition__Transition.initOperations(_Transition__Transition);
+
+			Fragments._TransitionKind__OclAny.initOperations(_TransitionKind__OclAny);
+			Fragments._TransitionKind__OclElement.initOperations(_TransitionKind__OclElement);
+			Fragments._TransitionKind__OclEnumeration.initOperations(_TransitionKind__OclEnumeration);
+			Fragments._TransitionKind__OclType.initOperations(_TransitionKind__OclType);
+			Fragments._TransitionKind__TransitionKind.initOperations(_TransitionKind__TransitionKind);
+
+			Fragments._Trigger__Element.initOperations(_Trigger__Element);
+			Fragments._Trigger__NamedElement.initOperations(_Trigger__NamedElement);
+			Fragments._Trigger__OclAny.initOperations(_Trigger__OclAny);
+			Fragments._Trigger__OclElement.initOperations(_Trigger__OclElement);
+			Fragments._Trigger__Trigger.initOperations(_Trigger__Trigger);
+
 			Fragments._TupleLiteralExp__Element.initOperations(_TupleLiteralExp__Element);
 			Fragments._TupleLiteralExp__LiteralExp.initOperations(_TupleLiteralExp__LiteralExp);
 			Fragments._TupleLiteralExp__NamedElement.initOperations(_TupleLiteralExp__NamedElement);
@@ -12862,6 +13040,10 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__ownedExtensions,
 			PivotTables.Properties._TypedElement__type
 		};
+
+		private static final @NonNull Property @NonNull [] _EBoolean = {};
+
+		private static final @NonNull Property @NonNull [] _EInt = {};
 
 		private static final @NonNull Property @NonNull [] _EcoreObject = {};
 
@@ -13629,6 +13811,8 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TypedElement__type,
 			PivotTables.Properties._OCLExpression__typeValue
 		};
+
+		private static final @NonNull Property @NonNull [] _Number = {};
 
 		private static final @NonNull Property @NonNull [] _NumericLiteralExp = {
 			PivotTables.Properties._Element__annotatingComments,
@@ -14795,6 +14979,8 @@ public class PivotTables extends AbstractTables
 			Fragments._DynamicProperty__DynamicProperty.initProperties(_DynamicProperty);
 			Fragments._DynamicType__DynamicType.initProperties(_DynamicType);
 			Fragments._DynamicValueSpecification__DynamicValueSpecification.initProperties(_DynamicValueSpecification);
+			Fragments._EBoolean__EBoolean.initProperties(_EBoolean);
+			Fragments._EInt__EInt.initProperties(_EInt);
 			Fragments._EcoreObject__EcoreObject.initProperties(_EcoreObject);
 			Fragments._Element__Element.initProperties(_Element);
 			Fragments._ElementExtension__ElementExtension.initProperties(_ElementExtension);
@@ -14839,6 +15025,7 @@ public class PivotTables extends AbstractTables
 			Fragments._Namespace__Namespace.initProperties(_Namespace);
 			Fragments._NavigationCallExp__NavigationCallExp.initProperties(_NavigationCallExp);
 			Fragments._NullLiteralExp__NullLiteralExp.initProperties(_NullLiteralExp);
+			Fragments._Number__Number.initProperties(_Number);
 			Fragments._NumericLiteralExp__NumericLiteralExp.initProperties(_NumericLiteralExp);
 			Fragments._OCLExpression__OCLExpression.initProperties(_OCLExpression);
 			Fragments._Object__Object.initProperties(_Object);

@@ -56,7 +56,8 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * The PrettyPrinter supports pretty printing.
@@ -362,9 +363,9 @@ public class PrettyPrinter
 		visitor.safeVisit(element);
 	}
 
-	public void appendMultiplicity(@Nullable Number lower, @Nullable Number upper, boolean isNullFree) {
-		StringUtil.appendMultiplicity(pendingText, lower != null ? lower.longValue() : 0,
-			(upper == null) || (upper instanceof Unlimited) ? -1 : upper.longValue(), isNullFree);
+	public void appendMultiplicity(@Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper, boolean isNullFree) {
+		StringUtil.appendMultiplicity(pendingText, lower != null ? lower.intValue() : 0,
+			(upper == null) || upper.isUnlimited() ? -1 : upper.intValue(), isNullFree);
 	}
 
 	public void appendName(NamedElement object) {

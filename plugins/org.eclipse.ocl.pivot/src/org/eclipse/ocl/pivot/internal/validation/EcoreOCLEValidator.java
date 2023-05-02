@@ -42,7 +42,9 @@ import org.eclipse.emf.ecore.util.EcoreValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -51,7 +53,6 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
@@ -999,6 +1000,12 @@ public class EcoreOCLEValidator implements EValidator
 		}
 		boolean allOk = true;
 		if (requiredType != null) {
+			if (requiredType instanceof DataType) {
+				org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)requiredType).getBehavioralClass();
+				if (behavioralClass != null) {
+					requiredType = behavioralClass;
+				}
+			}
 			Type asExpressionType = expressionInOCL.getType();
 			assert asExpressionType != null;
 			if (!environmentFactory.getMetamodelManager().conformsTo(asExpressionType, TemplateParameterSubstitutions.EMPTY, requiredType, TemplateParameterSubstitutions.EMPTY)) {

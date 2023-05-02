@@ -131,7 +131,6 @@ import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class PivotUtil
@@ -1365,9 +1364,9 @@ public class PivotUtil
 		Type type = typedElement.getType();
 		if (type instanceof CollectionType) {
 			CollectionType collectionType = (CollectionType)type;
-			Number lower = collectionType.getLower();
-			Number upper = collectionType.getUpper();
-			StringUtil.appendMultiplicity(s, lower.intValue(), upper instanceof Unlimited ? -1 : upper.intValue(), collectionType.isIsNullFree());
+			IntegerValue lower = collectionType.getLower();
+			UnlimitedNaturalValue upper = collectionType.getUpper();
+			StringUtil.appendMultiplicity(s, lower.intValue(), upper.isUnlimited() ? -1 : upper.intValue(), collectionType.isIsNullFree());
 		}
 		else {
 			s.append(typedElement.isIsRequired() ? "[1]" : "[?]");

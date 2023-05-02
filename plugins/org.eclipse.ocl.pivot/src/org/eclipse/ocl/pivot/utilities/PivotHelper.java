@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -62,7 +63,6 @@ import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
@@ -80,7 +80,9 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisit
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -121,12 +123,12 @@ public class PivotHelper
 	public @NonNull OCLExpression createCoercionCallExp(@NonNull OCLExpression asExpression, @NonNull Operation coercion) {
 		if (asExpression instanceof IntegerLiteralExp) {
 			IntegerLiteralExp asIntegerLiteralExp = (IntegerLiteralExp)asExpression;
-			Number integerSymbol = asIntegerLiteralExp.getIntegerSymbol();
-			if (integerSymbol.longValue() >= 0) {
+			IntegerValue integerSymbol = asIntegerLiteralExp.getIntegerSymbol();
+			if (integerSymbol.signum() >= 0) {
 				org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
 				Operation asCoercion = NameUtil.getNameable(integerType.getOwnedOperations(), "toUnlimitedNatural");
 				if (coercion == asCoercion) {
-					return createUnlimitedNaturalLiteralExp(integerSymbol);
+					return createUnlimitedNaturalLiteralExp(integerSymbol.asUnlimitedNaturalValue());
 				}
 			}
 		}
@@ -203,7 +205,7 @@ public class PivotHelper
 
 	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull Number integerSymbol) {
 		IntegerLiteralExp asInteger = PivotFactory.eINSTANCE.createIntegerLiteralExp();
-		asInteger.setIntegerSymbol(integerSymbol);
+		asInteger.setIntegerNumber(integerSymbol);
 		asInteger.setType(standardLibrary.getIntegerType());
 		asInteger.setIsRequired(true);
 		return asInteger;
@@ -436,7 +438,7 @@ public class PivotHelper
 
 	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull Number realSymbol) {
 		RealLiteralExp asReal = PivotFactory.eINSTANCE.createRealLiteralExp();
-		asReal.setRealSymbol(realSymbol);
+		asReal.setRealNumber(realSymbol);
 		asReal.setType(standardLibrary.getRealType());
 		asReal.setIsRequired(true);
 		return asReal;
@@ -505,7 +507,7 @@ public class PivotHelper
 		return asTypeExp;
 	}
 
-	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull Number unlimitedNaturalSymbol) {
+	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalValue unlimitedNaturalSymbol) {
 		UnlimitedNaturalLiteralExp asUnlimitedNatural = PivotFactory.eINSTANCE.createUnlimitedNaturalLiteralExp();
 		asUnlimitedNatural.setUnlimitedNaturalSymbol(unlimitedNaturalSymbol);
 		asUnlimitedNatural.setType(standardLibrary.getUnlimitedNaturalType());

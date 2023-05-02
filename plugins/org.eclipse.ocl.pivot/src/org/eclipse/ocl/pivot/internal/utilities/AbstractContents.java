@@ -126,8 +126,16 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Class createClass(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EDataType eDataType) {
-		org.eclipse.ocl.pivot.Class asType = PivotFactory.eINSTANCE.createDataType();
+		DataType asType = PivotFactory.eINSTANCE.createDataType();
 		asType.setName(eDataType.getName());
+		Class<?> instanceClass = eDataType.getInstanceClass();
+		if (instanceClass != null) {
+			asType.setInstanceClassName(eDataType.getInstanceClassName());
+			org.eclipse.ocl.pivot.Class behavioralClass = PivotUtil.getBehavioralClass(orphanage.getStandardLibrary(), instanceClass);
+			if (behavioralClass != null) {
+				asType.setBehavioralClass(behavioralClass);
+			}
+		}
 		((PivotObjectImpl)asType).setESObject(eDataType);
 		asPackage.getOwnedClasses().add(asType);
 		return asType;
@@ -156,8 +164,8 @@ public abstract class AbstractContents extends PivotUtil
 		initTemplateParameters(asType, templateParameter);
 		((PivotObjectImpl)asType).setESObject(eClass);
 		asType.setIsNullFree(isNullFree);
-		asType.setLowerValue(ValueUtil.integerValueOf(lower));
-		asType.setUpperValue(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
+		asType.setLower(ValueUtil.integerValueOf(lower));
+		asType.setUpper(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 		asPackage.getOwnedClasses().add(asType);
 		return asType;
 	}

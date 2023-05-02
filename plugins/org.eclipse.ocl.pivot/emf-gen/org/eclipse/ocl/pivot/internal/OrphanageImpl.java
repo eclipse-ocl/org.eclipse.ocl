@@ -583,12 +583,12 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			//	collectionType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
 				collectionType.setIsNullFree(isNullFree);
 				try {
-					collectionType.setLowerValue(lower);
+					collectionType.setLower(lower);
 				} catch (InvalidValueException e) {
 					logger.error("Out of range lower bound for " + specializedTypeId, e);
 				}
 				try {
-					collectionType.setUpperValue(upper);
+					collectionType.setUpper(upper);
 				} catch (InvalidValueException e) {
 					logger.error("Out of range upper bound for " + specializedTypeId, e);
 				}

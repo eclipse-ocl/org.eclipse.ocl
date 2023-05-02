@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.values.RealValue;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -38,11 +41,11 @@ public interface RealLiteralExp
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Real Symbol</em>' attribute.
-	 * @see #setRealSymbol(Number)
+	 * @see #setRealSymbol(RealValue)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getRealLiteralExp_RealSymbol()
 	 * @generated
 	 */
-	Number getRealSymbol();
+	RealValue getRealSymbol();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.RealLiteralExp#getRealSymbol <em>Real Symbol</em>}' attribute.
@@ -52,6 +55,10 @@ public interface RealLiteralExp
 	 * @see #getRealSymbol()
 	 * @generated
 	 */
-	void setRealSymbol(Number value);
+	void setRealSymbol(RealValue value);
+
+	Number getRealNumber();
+
+	void setRealNumber(@NonNull Number realSymbol);
 
 } // RealLiteralExp

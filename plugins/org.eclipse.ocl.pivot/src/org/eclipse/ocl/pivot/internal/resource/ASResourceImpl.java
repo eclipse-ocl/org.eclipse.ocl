@@ -47,6 +47,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.TracingAdapter;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 
 /**
@@ -435,7 +436,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public int getXmiidVersion() {
 		for (EObject eRoot : getContents()) {
 			if (eRoot instanceof Model) {
-				Number xmiidVersion = ((Model)eRoot).getXmiidVersion();
+				Number xmiidVersion = (Number)((Model)eRoot).getXmiidVersion();
 				if (xmiidVersion != null) {
 					return xmiidVersion.intValue();
 				}
@@ -553,7 +554,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	public void setXmiidVersion(int xmiidVersion) {
 		for (EObject eRoot : getContents()) {
 			if (eRoot instanceof Model) {
-				((Model)eRoot).setXmiidVersion(xmiidVersion);
+				((Model)eRoot).setXmiidVersion(ValueUtil.integerValueOf(xmiidVersion));
 			}
 		}
 	}

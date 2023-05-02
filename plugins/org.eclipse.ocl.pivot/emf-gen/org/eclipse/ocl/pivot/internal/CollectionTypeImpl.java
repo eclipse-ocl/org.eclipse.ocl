@@ -43,9 +43,7 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.TypeUtil;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -114,7 +112,7 @@ implements CollectionType {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Number LOWER_EDEFAULT = (Number)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0"); //$NON-NLS-1$
+	protected static final IntegerValue LOWER_EDEFAULT = (IntegerValue)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "0"); //$NON-NLS-1$
 	/**
 	 * The cached value of the '{@link #getLower() <em>Lower</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -123,7 +121,7 @@ implements CollectionType {
 	 * @generated
 	 * @ordered
 	 */
-	protected Number lower = LOWER_EDEFAULT;
+	protected IntegerValue lower = LOWER_EDEFAULT;
 	/**
 	 * The default value of the '{@link #getUpper() <em>Upper</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -132,7 +130,7 @@ implements CollectionType {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Number UPPER_EDEFAULT = (Number)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getUnlimitedNatural(), "*"); //$NON-NLS-1$
+	protected static final UnlimitedNaturalValue UPPER_EDEFAULT = (UnlimitedNaturalValue)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getUnlimitedNatural(), "*"); //$NON-NLS-1$
 	/**
 	 * The cached value of the '{@link #getUpper() <em>Upper</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -141,7 +139,7 @@ implements CollectionType {
 	 * @generated
 	 * @ordered
 	 */
-	protected Number upper = UPPER_EDEFAULT;
+	protected UnlimitedNaturalValue upper = UPPER_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -193,7 +191,7 @@ implements CollectionType {
 	 * @generated
 	 */
 	@Override
-	public Number getLower()
+	public IntegerValue getLower()
 	{
 		return lower;
 	}
@@ -204,9 +202,9 @@ implements CollectionType {
 	 * @generated
 	 */
 	@Override
-	public void setLower(Number newLower)
+	public void setLower(IntegerValue newLower)
 	{
-		Number oldLower = lower;
+		IntegerValue oldLower = lower;
 		lower = newLower;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldLower, lower));
@@ -218,7 +216,7 @@ implements CollectionType {
 	 * @generated
 	 */
 	@Override
-	public Number getUpper()
+	public UnlimitedNaturalValue getUpper()
 	{
 		return upper;
 	}
@@ -229,9 +227,9 @@ implements CollectionType {
 	 * @generated
 	 */
 	@Override
-	public void setUpper(Number newUpper)
+	public void setUpper(UnlimitedNaturalValue newUpper)
 	{
-		Number oldUpper = upper;
+		UnlimitedNaturalValue oldUpper = upper;
 		upper = newUpper;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 26, oldUpper, upper));
@@ -400,10 +398,10 @@ implements CollectionType {
 				setIsNullFree((Boolean)newValue);
 				return;
 			case 25:
-				setLower((Number)newValue);
+				setLower((IntegerValue)newValue);
 				return;
 			case 26:
-				setUpper((Number)newValue);
+				setUpper((UnlimitedNaturalValue)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -609,7 +607,7 @@ implements CollectionType {
 		else {
 			CollectionTypeId collectionTypeId = ((CollectionType)unspecializedElement2).getTypeId();
 			TypeId elementTypeId = getElementType().getTypeId();
-			return collectionTypeId.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
+			return collectionTypeId.getSpecializedId(elementTypeId, isIsNullFree(), getLower(), getUpper());
 		}
 	}
 
@@ -635,7 +633,7 @@ implements CollectionType {
 		else {
 			CollectionTypeId collectionTypeId = ((CollectionType)unspecializedElement2).getTypeId();
 			TypeId elementTypeId = getElementType().getNormalizedTypeId();
-			return collectionTypeId.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
+			return collectionTypeId.getSpecializedId(elementTypeId, isIsNullFree(), getLower(), getUpper());
 		}
 	}
 
@@ -743,16 +741,20 @@ implements CollectionType {
 
 	@Override
 	public @NonNull IntegerValue getLowerValue() {
-		Number lower2 = lower;
-		assert lower2 != null;
-		return ValueUtil.integerValueOf(lower2);
+		assert lower != null;
+		return lower;
+	//	Number lower2 = (Number) lower;
+	//	assert lower2 != null;
+	//	return ValueUtil.integerValueOf(lower2);
 	}
 
 	@Override
 	public @NonNull UnlimitedNaturalValue getUpperValue() {
-		Number upper2 = upper;
-		assert upper2 != null;
-		return ValueUtil.unlimitedNaturalValueOf(upper2);
+		assert upper != null;
+		return upper;
+	//	Number upper2 = (Number) upper;
+	//	assert upper2 != null;
+	//	return ValueUtil.unlimitedNaturalValueOf(upper2);
 	}
 
 	@Override
@@ -760,13 +762,13 @@ implements CollectionType {
 		System.err.println(eClass().getName() + ".setElementType() is ignored");
 	}
 
-	@Override
+/*	@Override
 	public void setLowerValue(@NonNull IntegerValue lower) {
-		setLower(lower.intValue());
-	}
+		setLower(lower);
+	} */
 
-	@Override
+/*	@Override
 	public void setUpperValue(@NonNull UnlimitedNaturalValue upper) {
-		setUpper(upper.isUnlimited() ? Unlimited.INSTANCE : upper.intValue());
-	}
+		setUpper(upper/*.isUnlimited() ? Unlimited.INSTANCE : upper.intValue()* /);
+	} */
 } //CollectionTypeImpl

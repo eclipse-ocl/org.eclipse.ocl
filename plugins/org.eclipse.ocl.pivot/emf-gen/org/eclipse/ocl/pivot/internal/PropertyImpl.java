@@ -1061,7 +1061,7 @@ implements Property {
 			}
 		}
 		if (and == null) {
-			throw new InvalidValueException("Null body for \'pivot::Property::isAttribute(Property[1]) : Boolean[1]\'");
+			throw new InvalidValueException("Null body for \'pivot::Property::isAttribute(Property[1]) : EBoolean[1]\'");
 		}
 		return and;
 	}
@@ -1147,7 +1147,8 @@ implements Property {
 						try {
 							final /*@NonInvalid*/ @Nullable LanguageExpression ownedExpression_1 = this.getOwnedExpression();
 							final /*@Thrown*/ boolean CompatibleBody = this.CompatibleBody(ownedExpression_1);
-							CAUGHT_CompatibleBody = CompatibleBody;
+							final /*@Thrown*/ @NonNull Boolean BOXED_CompatibleBody = CompatibleBody;
+							CAUGHT_CompatibleBody = BOXED_CompatibleBody;
 						}
 						catch (Exception e) {
 							CAUGHT_CompatibleBody = ValueUtil.createInvalidValue(e);

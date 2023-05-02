@@ -58,7 +58,6 @@ import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
 import org.eclipse.ocl.xtext.base.cs2as.Continuation;
@@ -402,7 +401,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 		Number number = csElement.getSymbol();
 		if ((number instanceof BigDecimal) || (number instanceof Double) || (number instanceof Float)) {
 			@NonNull RealLiteralExp pivotElement = context.refreshModelElement(RealLiteralExp.class, PivotPackage.Literals.REAL_LITERAL_EXP, csElement);
-			pivotElement.setRealSymbol(number);
+			pivotElement.setRealNumber(number);
 		}
 		else {
 			boolean isNegative;
@@ -447,7 +446,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 				}
 			}
 			@NonNull IntegerLiteralExp pivotElement = context.refreshModelElement(IntegerLiteralExp.class, PivotPackage.Literals.INTEGER_LITERAL_EXP, csElement);
-			pivotElement.setIntegerSymbol(number);
+			pivotElement.setIntegerNumber(number);
 		}
 		return null;
 	}
@@ -570,7 +569,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 	public Continuation<?> visitUnlimitedNaturalLiteralExpCS(@NonNull UnlimitedNaturalLiteralExpCS csElement) {
 		@NonNull UnlimitedNaturalLiteralExp pivotElement = context.refreshModelElement(UnlimitedNaturalLiteralExp.class, PivotPackage.Literals.UNLIMITED_NATURAL_LITERAL_EXP, csElement);
 		pivotElement.setName("*");
-		pivotElement.setUnlimitedNaturalSymbol(Unlimited.INSTANCE);
+		pivotElement.setUnlimitedNaturalSymbol(ValueUtil.UNLIMITED_VALUE);
 		return null;
 	}
 

@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,7 +68,7 @@ public class UnlimitedNaturalLiteralExpImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Number UNLIMITED_NATURAL_SYMBOL_EDEFAULT = null;
+	protected static final UnlimitedNaturalValue UNLIMITED_NATURAL_SYMBOL_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getUnlimitedNaturalSymbol() <em>Unlimited Natural Symbol</em>}' attribute.
@@ -77,7 +78,7 @@ public class UnlimitedNaturalLiteralExpImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected Number unlimitedNaturalSymbol = UNLIMITED_NATURAL_SYMBOL_EDEFAULT;
+	protected UnlimitedNaturalValue unlimitedNaturalSymbol = UNLIMITED_NATURAL_SYMBOL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -104,7 +105,7 @@ public class UnlimitedNaturalLiteralExpImpl
 	 * @generated
 	 */
 	@Override
-	public Number getUnlimitedNaturalSymbol() {
+	public UnlimitedNaturalValue getUnlimitedNaturalSymbol() {
 		return unlimitedNaturalSymbol;
 	}
 
@@ -114,9 +115,9 @@ public class UnlimitedNaturalLiteralExpImpl
 	 * @generated
 	 */
 	@Override
-	public void setUnlimitedNaturalSymbol(Number newUnlimitedNaturalSymbol)
+	public void setUnlimitedNaturalSymbol(UnlimitedNaturalValue newUnlimitedNaturalSymbol)
 	{
-		Number oldUnlimitedNaturalSymbol = unlimitedNaturalSymbol;
+		UnlimitedNaturalValue oldUnlimitedNaturalSymbol = unlimitedNaturalSymbol;
 		unlimitedNaturalSymbol = newUnlimitedNaturalSymbol;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 9, oldUnlimitedNaturalSymbol, unlimitedNaturalSymbol));
@@ -195,7 +196,7 @@ public class UnlimitedNaturalLiteralExpImpl
 				setTypeValue((Type)newValue);
 				return;
 			case 9:
-				setUnlimitedNaturalSymbol((Number)newValue);
+				setUnlimitedNaturalSymbol((UnlimitedNaturalValue)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -288,4 +289,14 @@ public class UnlimitedNaturalLiteralExpImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitUnlimitedNaturalLiteralExp(this);
 	}
+
+//	@Override
+//	public Number getUnlimitedNaturalNumber() {
+//		return (Number)unlimitedNaturalSymbol;
+//	}
+
+//	@Override
+//	public void setUnlimitedNaturalNumber(@NonNull Number value) {
+//		setUnlimitedNaturalSymbol(ValueUtil.unlimitedNaturalValueOf(value));
+//	}
 } //UnlimitedNaturalLiteralExpImpl

@@ -13,9 +13,9 @@ package org.eclipse.ocl.pivot.internal.values;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.LiteralExp;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.ids.IdResolver;
@@ -124,7 +124,7 @@ public class UnlimitedValueImpl extends NumberValueImpl implements UnlimitedValu
 	@Override
 	public @NonNull LiteralExp createLiteralExp() {
 		UnlimitedNaturalLiteralExp literalExp = PivotFactory.eINSTANCE.createUnlimitedNaturalLiteralExp();
-		literalExp.setUnlimitedNaturalSymbol(-1);
+		literalExp.setUnlimitedNaturalSymbol(ValueUtil.UNLIMITED_VALUE);
 		return literalExp;
 	}
 

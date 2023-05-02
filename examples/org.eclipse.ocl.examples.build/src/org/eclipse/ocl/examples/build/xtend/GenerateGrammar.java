@@ -279,7 +279,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	protected void invokeInternal(WorkflowContext ctx, ProgressMonitor monitor, Issues issues) {
 		OCL ocl = OCL.newInstance();
 		PivotMetamodelManager metamodelManager = (PivotMetamodelManager) ocl.getMetamodelManager();
-		genModelHelper = new EcoreGenModelHelper(metamodelManager);
+		genModelHelper = new EcoreGenModelHelper(metamodelManager, null);
 		String rootPath = StandaloneSetup.getPlatformRootPath();
 		File folder = new File(rootPath + javaFolder + "/" + javaPackageName.replace(".", "/"));
 		try {

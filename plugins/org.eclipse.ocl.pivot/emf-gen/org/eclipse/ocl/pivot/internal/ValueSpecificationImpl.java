@@ -19,6 +19,8 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -83,7 +85,7 @@ public abstract class ValueSpecificationImpl
 	 * @generated
 	 */
 	@Override
-	public Number integerValue() {
+	public IntegerValue integerValue() {
 		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!integerValue()
 	}
 
@@ -93,7 +95,7 @@ public abstract class ValueSpecificationImpl
 	 * @generated
 	 */
 	@Override
-	public boolean booleanValue() {
+	public Boolean booleanValue() {
 		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!booleanValue()
 	}
 
@@ -113,7 +115,7 @@ public abstract class ValueSpecificationImpl
 	 * @generated
 	 */
 	@Override
-	public Number unlimitedValue() {
+	public UnlimitedNaturalValue unlimitedValue() {
 		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!unlimitedValue()
 	}
 

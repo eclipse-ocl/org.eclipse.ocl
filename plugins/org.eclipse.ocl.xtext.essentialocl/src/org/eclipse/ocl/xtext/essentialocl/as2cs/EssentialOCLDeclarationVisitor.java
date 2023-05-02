@@ -75,7 +75,9 @@ import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 import org.eclipse.ocl.xtext.base.as2cs.BaseDeclarationVisitor;
 import org.eclipse.ocl.xtext.basecs.BaseCSFactory;
@@ -435,22 +437,21 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		TypedRefCS csTypeRef = csElement.getOwnedType();
 		if (csTypeRef != null) {
 			boolean isNullFree ;
-			int lower;
-			int upper;
+			IntegerValue lower;
+			UnlimitedNaturalValue upper;
 			if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardCollectionType)) {
 				CollectionType collectionType = (CollectionType)type;
 				isNullFree = collectionType.isIsNullFree();
-				lower = collectionType.getLower().intValue();
-				Number upper2 = collectionType.getUpper();
-				upper = upper2 instanceof Unlimited ? -1 : upper2.intValue();
+				lower = collectionType.getLower();
+				upper = collectionType.getUpper();
 				//	List<@NonNull String> qualifiers = ClassUtil.nullFree(csElement.getQualifiers());
 				//	context.refreshQualifiers(qualifiers, "ordered", "!ordered", collectionType.isOrdered() ? Boolean.TRUE : null);
 				//	context.refreshQualifiers(qualifiers, "unique", "!unique", collectionType.isUnique() ? null : Boolean.FALSE);
 			}
 			else {
 				isNullFree = false;
-				lower = object.isIsRequired() ? 1 : 0;
-				upper = 1;
+				lower = object.isIsRequired() ? ValueUtil.ONE_VALUE : ValueUtil.ZERO_VALUE;
+				upper = ValueUtil.UNLIMITED_ONE_VALUE;
 			}
 			MultiplicityCS csMultiplicity = context.createMultiplicityCS(lower, upper, isNullFree);
 			csTypeRef.setOwnedMultiplicity(csMultiplicity);
@@ -586,7 +587,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	public @Nullable ElementCS visitIntegerLiteralExp(@NonNull IntegerLiteralExp asIntegerLiteralExp) {
 		NumberLiteralExpCS csNumberLiteralExp = EssentialOCLCSFactory.eINSTANCE.createNumberLiteralExpCS();
 		csNumberLiteralExp.setPivot(asIntegerLiteralExp);
-		csNumberLiteralExp.setSymbol(asIntegerLiteralExp.getIntegerSymbol());
+		csNumberLiteralExp.setSymbol(asIntegerLiteralExp.getIntegerNumber());
 		return csNumberLiteralExp;
 	}
 
@@ -836,7 +837,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	public @Nullable ElementCS visitRealLiteralExp(@NonNull RealLiteralExp asRealLiteralExp) {
 		NumberLiteralExpCS csNumberLiteralExp = EssentialOCLCSFactory.eINSTANCE.createNumberLiteralExpCS();
 		csNumberLiteralExp.setPivot(asRealLiteralExp);
-		csNumberLiteralExp.setSymbol(asRealLiteralExp.getRealSymbol());
+		csNumberLiteralExp.setSymbol(asRealLiteralExp.getRealNumber());
 		return csNumberLiteralExp;
 	}
 
@@ -927,7 +928,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	public @Nullable ElementCS visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp asUnlimitedNaturalLiteralExp) {
 		NumberLiteralExpCS csNumberLiteralExp = EssentialOCLCSFactory.eINSTANCE.createNumberLiteralExpCS();
 		csNumberLiteralExp.setPivot(asUnlimitedNaturalLiteralExp);
-		csNumberLiteralExp.setSymbol(asUnlimitedNaturalLiteralExp.getUnlimitedNaturalSymbol());
+		csNumberLiteralExp.setSymbol((Number)asUnlimitedNaturalLiteralExp.getUnlimitedNaturalSymbol());
 		return csNumberLiteralExp;
 	}
 

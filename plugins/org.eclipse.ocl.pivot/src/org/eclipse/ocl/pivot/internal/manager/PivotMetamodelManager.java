@@ -551,7 +551,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull Number integerSymbol) {		// FIXME move to PivotHelper
 		IntegerLiteralExp asInteger = PivotFactory.eINSTANCE.createIntegerLiteralExp();
-		asInteger.setIntegerSymbol(integerSymbol);
+		asInteger.setIntegerNumber(integerSymbol);
 		asInteger.setType(standardLibrary.getIntegerType());
 		asInteger.setIsRequired(true);
 		return asInteger;
@@ -611,7 +611,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 
 	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull Number realSymbol) {		// FIXME move to PivotHelper
 		RealLiteralExp asReal = PivotFactory.eINSTANCE.createRealLiteralExp();
-		asReal.setRealSymbol(realSymbol);
+		asReal.setRealNumber(realSymbol);
 		asReal.setType(standardLibrary.getRealType());
 		asReal.setIsRequired(true);
 		return asReal;
@@ -625,7 +625,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		return asString;
 	}
 
-	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull Number unlimitedNaturalSymbol) {		// FIXME move to PivotHelper
+	public @NonNull UnlimitedNaturalLiteralExp createUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalValue unlimitedNaturalSymbol) {		// FIXME move to PivotHelper
 		UnlimitedNaturalLiteralExp asUnlimitedNatural = PivotFactory.eINSTANCE.createUnlimitedNaturalLiteralExp();
 		asUnlimitedNatural.setUnlimitedNaturalSymbol(unlimitedNaturalSymbol);
 		asUnlimitedNatural.setType(standardLibrary.getUnlimitedNaturalType());

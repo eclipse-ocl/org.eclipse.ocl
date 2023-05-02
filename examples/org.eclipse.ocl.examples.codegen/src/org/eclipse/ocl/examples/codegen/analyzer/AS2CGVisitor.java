@@ -186,7 +186,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 
 import com.google.common.collect.Iterables;
@@ -1388,7 +1388,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGConstantExp visitIntegerLiteralExp(@NonNull IntegerLiteralExp element) {
-		Number integerSymbol = element.getIntegerSymbol();
+		Number integerSymbol = element.getIntegerNumber();
 		CGInteger constant = context.getInteger(integerSymbol != null ? integerSymbol : 0);
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
 		setAst(cgLiteralExp, element);
@@ -1593,7 +1593,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGConstantExp visitRealLiteralExp(@NonNull RealLiteralExp element) {
-		Number realSymbol = element.getRealSymbol();
+		Number realSymbol = element.getRealNumber();
 		@SuppressWarnings("null")
 		CGReal cgReal = context.getReal(realSymbol != null ? realSymbol : Double.valueOf(0.0));
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, cgReal);
@@ -1739,16 +1739,13 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGConstantExp visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp element) {
-		Number unlimitedNaturalSymbol = element.getUnlimitedNaturalSymbol();
+		UnlimitedNaturalValue unlimitedNaturalSymbol = element.getUnlimitedNaturalSymbol();
 		CGConstantExp cgLiteralExp;
 		if (unlimitedNaturalSymbol instanceof UnlimitedValue) {
 			cgLiteralExp = context.createCGConstantExp(element, context.getUnlimited());
 		}
-		else if (unlimitedNaturalSymbol instanceof Unlimited) {
-			cgLiteralExp = context.createCGConstantExp(element, context.getUnlimited());
-		}
 		else if (unlimitedNaturalSymbol != null) {
-			cgLiteralExp = context.createCGConstantExp(element, context.getInteger(unlimitedNaturalSymbol));
+			cgLiteralExp = context.createCGConstantExp(element, context.getInteger(unlimitedNaturalSymbol.intValue()));
 		}
 		else {
 			cgLiteralExp = context.createCGConstantExp(element, context.getInteger(0));

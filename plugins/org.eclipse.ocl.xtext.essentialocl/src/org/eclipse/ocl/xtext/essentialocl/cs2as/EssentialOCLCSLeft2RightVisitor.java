@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
@@ -1781,6 +1782,12 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			Type elseTypeValue = elseExpression != null ? elseExpression.getTypeValue() : null;
 			Type commonTypeValue = (thenTypeValue != null) && (elseTypeValue != null) ? metamodelManager.getCommonType(thenTypeValue, TemplateParameterSubstitutions.EMPTY, elseTypeValue, TemplateParameterSubstitutions.EMPTY) : null;
 			boolean isRequired = ((thenExpression != null) && thenExpression.isIsRequired()) && ((elseExpression != null) && elseExpression.isIsRequired());
+			if (commonType instanceof DataType) {
+				org.eclipse.ocl.pivot.Class behavioralClass = ((DataType)commonType).getBehavioralClass();
+				if (behavioralClass != null) {
+					commonType = behavioralClass;
+				}
+			}
 			helper.setType(expression, commonType, isRequired, commonTypeValue);
 		}
 		return expression;

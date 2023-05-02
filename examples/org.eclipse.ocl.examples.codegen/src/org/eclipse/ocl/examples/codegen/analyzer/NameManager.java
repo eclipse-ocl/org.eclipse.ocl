@@ -103,6 +103,7 @@ import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValue;
 import org.eclipse.ocl.pivot.values.RealValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
  * A NameManager provides suggestions for names and maintains caches of used names so that model elements are consistently
@@ -749,7 +750,7 @@ public class NameManager
 			return EXPRESSION_IN_OCL_NAME_HINT_PREFIX;
 		}
 		else if (anObject instanceof IntegerLiteralExp) {
-			Number numberSymbol = ((IntegerLiteralExp)anObject).getIntegerSymbol();
+			Number numberSymbol = ((IntegerLiteralExp)anObject).getIntegerNumber();
 			return numberSymbol != null ? getNumericNameHint(numberSymbol) : null;
 		}
 		else if (anObject instanceof IntegerRange) {
@@ -832,7 +833,7 @@ public class NameManager
 			return "IF_" + ((CGIfExp)anObject).getCondition().getValueName();
 		}
 		else if (anObject instanceof RealLiteralExp) {
-			Number numberSymbol = ((RealLiteralExp)anObject).getRealSymbol();
+			Number numberSymbol = ((RealLiteralExp)anObject).getRealNumber();
 			return numberSymbol != null ? getNumericNameHint(numberSymbol) : null;
 		}
 		else if (anObject instanceof RealValue) {
@@ -869,8 +870,8 @@ public class NameManager
 		//			return getTypeNameHint(referredType);
 		//		}
 		else if (anObject instanceof UnlimitedNaturalLiteralExp) {
-			Number numberSymbol = ((UnlimitedNaturalLiteralExp)anObject).getUnlimitedNaturalSymbol();
-			return numberSymbol != null ? getNumericNameHint(numberSymbol) : null;
+			UnlimitedNaturalValue numberSymbol = ((UnlimitedNaturalLiteralExp)anObject).getUnlimitedNaturalSymbol();
+			return numberSymbol != null ? getNumericNameHint((Number)numberSymbol) : null;
 		}
 		else if (anObject instanceof VariableExp) {
 			VariableDeclaration referredVariable = ((VariableExp)anObject).getReferredVariable();

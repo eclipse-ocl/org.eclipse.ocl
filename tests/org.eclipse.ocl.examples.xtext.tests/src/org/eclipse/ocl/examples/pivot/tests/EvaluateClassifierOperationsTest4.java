@@ -172,7 +172,6 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 	@Test public void test_conformsTo() {
 		MyOCL ocl = createOCL(OCL.NO_PROJECTS, null);
 		try {
-			//		ocl.assertQueryTrue(null, "true.conformsTo(Boolean)");
 			ocl.assertQueryTrue(null, "Boolean.conformsTo(Boolean)");
 			ocl.assertQueryFalse(null, "String.conformsTo(Boolean)");
 			ocl.assertQueryFalse(null, "Boolean.conformsTo(String)");
@@ -183,6 +182,55 @@ public class EvaluateClassifierOperationsTest4 extends PivotTestSuite
 			ocl.assertQueryFalse(null, "Real.conformsTo(UnlimitedNatural)");
 			ocl.assertQueryFalse(null, "Integer.conformsTo(UnlimitedNatural)");
 			//FIXME much more
+			ocl.assertSemanticErrorQuery(null, "null.conformsTo(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclVoid", "conformsTo", "Boolean"); // null cannot conform
+			// AnyType
+			ocl.assertQueryTrue(null, "AnyType.conformsTo(AnyType)");					// self-is-self
+			ocl.assertQueryTrue(null, "AnyType.conformsTo(OclAny)");					// self-is-OclAny
+			ocl.assertQueryTrue(null, "AnyType.conformsTo(Class)");						// self-is-super
+			ocl.assertQueryFalse(null, "OclAny.conformsTo(AnyType)");					// instance-is-not-self
+			ocl.assertQueryFalse(null, "AnyType.conformsTo(VoidType)");
+			ocl.assertQueryFalse(null, "Class.conformsTo(AnyType)");
+			ocl.assertSemanticErrorQuery(null, "'any'.conformsTo(OclAny)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "String", "conformsTo", "OclAny"); // instance-instance
+			ocl.assertSemanticErrorQuery(null, "42.conformsTo(AnyType)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Integer", "conformsTo", "AnyType"); // instance-instance
+			// BooleanType
+			ocl.assertQueryTrue(null, "BooleanType.conformsTo(BooleanType)");			// self-is-self
+			ocl.assertQueryTrue(null, "BooleanType.conformsTo(OclAny)");				// self-is-OclAny
+			ocl.assertQueryTrue(null, "BooleanType.conformsTo(PrimitiveType)");			// self-is-super
+			ocl.assertQueryTrue(null, "BooleanType.conformsTo(Class)");					// self-is-super-super
+			ocl.assertQueryFalse(null, "Boolean.conformsTo(BooleanType)");				// instance-is-not-self
+			ocl.assertQueryFalse(null, "BooleanType.conformsTo(AnyType)");
+			ocl.assertQueryFalse(null, "BooleanType.conformsTo(VoidType)");
+			ocl.assertQueryFalse(null, "BooleanType.conformsTo(OclVoid)");
+			ocl.assertQueryFalse(null, "Class.conformsTo(BooleanType)");
+			ocl.assertSemanticErrorQuery(null, "false.conformsTo(Boolean)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Boolean", "conformsTo", "Boolean"); // instance-instance
+			ocl.assertSemanticErrorQuery(null, "true.conformsTo(BooleanType)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "Boolean", "conformsTo", "BooleanType"); // instance-instance
+			// InvalidType
+			ocl.assertQueryTrue(null, "InvalidType.conformsTo(InvalidType)");			// self-is-self
+			ocl.assertQueryTrue(null, "InvalidType.conformsTo(OclAny)");				// self-is-OclAny
+			ocl.assertQueryTrue(null, "InvalidType.conformsTo(Class)");					// self-is-super
+			ocl.assertQueryTrue(null, "OclInvalid.conformsTo(InvalidType)");			// instance-is-not-self, but OclInvalid is anything
+			ocl.assertQueryTrue(null, "OclInvalid.conformsTo(VoidType)");				// instance-is-not-self, but OclInvalid is anything
+			ocl.assertQueryTrue(null, "OclInvalid.conformsTo(OclInvalid)");				// instance-is-not-self, but OclInvalid is anything
+			ocl.assertQueryTrue(null, "OclInvalid.conformsTo(OclVoid)");				// instance-is-not-self, but OclInvalid is anything
+			ocl.assertQueryFalse(null, "InvalidType.conformsTo(AnyType)");
+			ocl.assertQueryFalse(null, "InvalidType.conformsTo(VoidType)");
+			ocl.assertQueryFalse(null, "InvalidType.conformsTo(OclVoid)");
+			ocl.assertQueryFalse(null, "Class.conformsTo(InvalidType)");
+			ocl.assertSemanticErrorQuery(null, "invalid.conformsTo(OclInvalid)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "conformsTo", "OclInvalid"); // instance-instance
+			ocl.assertSemanticErrorQuery(null, "invalid.conformsTo(InvalidType)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclInvalid", "conformsTo", "InvalidType"); // instance-instance
+			// VoidType
+			ocl.assertQueryTrue(null, "VoidType.conformsTo(VoidType)");					// self-is-self
+			ocl.assertQueryTrue(null, "VoidType.conformsTo(OclAny)");					// self-is-OclAny
+			ocl.assertQueryTrue(null, "VoidType.conformsTo(Class)");					// self-is-super
+			ocl.assertQueryTrue(null, "OclVoid.conformsTo(VoidType)");					// instance-is-not-self, but OclVoid is anything (except OclInvalid)
+			ocl.assertQueryTrue(null, "OclVoid.conformsTo(InvalidType)");				// instance-is-not-self, but OclVoid is anything (except OclInvalid)
+			ocl.assertQueryTrue(null, "OclVoid.conformsTo(OclVoid)");				// instance-is-not-self, but OclVoid is anything (except OclInvalid)
+			ocl.assertQueryFalse(null, "OclVoid.conformsTo(OclInvalid)");				// instance-is-not-self, but OclVoid is anything (except OclInvalid)
+			ocl.assertQueryFalse(null, "VoidType.conformsTo(AnyType)");
+			ocl.assertQueryFalse(null, "VoidType.conformsTo(OclVoid)");
+			ocl.assertQueryFalse(null, "Class.conformsTo(VoidType)");
+			ocl.assertSemanticErrorQuery(null, "null.conformsTo(OclVoid)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclVoid", "conformsTo", "OclVoid"); // instance-instance
+			ocl.assertSemanticErrorQuery(null, "null.conformsTo(VoidType)", PivotMessagesInternal.UnresolvedOperationCall_ERROR_, "OclVoid", "conformsTo", "VoidType"); // instance-instance
 		} finally {
 			ocl.dispose();
 		}

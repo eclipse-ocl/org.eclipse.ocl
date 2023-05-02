@@ -45,7 +45,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 import com.google.common.collect.Iterables;
 
@@ -130,8 +130,8 @@ public class PivotLUSSIDs extends LUSSIDs
 				if (lowerValue != 0) {
 					localId += COLLECTION_LOWER_BOUND_MULTIPLIER * lowerValue;
 				}
-				Number upper = collectionType.getUpper();
-				if (!(upper instanceof Unlimited)) {
+				UnlimitedNaturalValue upper = collectionType.getUpper();
+				if (!upper.isUnlimited()) {
 					localId += COLLECTION_UPPER_BOUND_MULTIPLIER * upper.intValue();
 				}
 			}

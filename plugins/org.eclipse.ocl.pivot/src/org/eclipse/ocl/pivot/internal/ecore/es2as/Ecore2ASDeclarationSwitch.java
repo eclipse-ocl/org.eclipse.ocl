@@ -101,6 +101,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -391,7 +392,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			pivotElement.eUnset(PivotPackage.Literals.ENUMERATION_LITERAL__LITERAL);
 		}
 		if (eEnumLiteral2.eIsSet(EcorePackage.Literals.EENUM_LITERAL__VALUE)) {
-			pivotElement.setValue(BigInteger.valueOf(eEnumLiteral2.getValue()));
+			pivotElement.setValue(ValueUtil.integerValueOf(eEnumLiteral2.getValue()));
 		}
 		else {
 			pivotElement.eUnset(PivotPackage.Literals.ENUMERATION_LITERAL__VALUE);

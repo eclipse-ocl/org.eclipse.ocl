@@ -56,7 +56,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 //import org.eclipse.uml2.uml.ValueSpecification;
 import org.eclipse.uml2.uml.util.UMLSwitch;
 
@@ -235,7 +235,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			body.setType(type);
 			pivotElement.setType(type);
 		}
-		((IntegerLiteralExp)body).setIntegerSymbol(umlLiteral.getValue());
+		((IntegerLiteralExp)body).setIntegerNumber(umlLiteral.getValue());
 		converter.copyNamedElement(pivotElement, umlLiteral);
 		return pivotElement;
 	}
@@ -268,7 +268,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			body.setType(type);
 			pivotElement.setType(type);
 		}
-		((RealLiteralExp)body).setRealSymbol(umlLiteral.getValue());
+		((RealLiteralExp)body).setRealNumber(umlLiteral.getValue());
 		converter.copyNamedElement(pivotElement, umlLiteral);
 		return pivotElement;
 	}
@@ -304,7 +304,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			pivotElement.setType(type);
 		}
 		long value = umlLiteral.getValue();
-		((UnlimitedNaturalLiteralExp)body).setUnlimitedNaturalSymbol(value >= 0 ? value : Unlimited.INSTANCE);
+		((UnlimitedNaturalLiteralExp)body).setUnlimitedNaturalSymbol(value >= 0 ? ValueUtil.unlimitedNaturalValueOf(value) : ValueUtil.UNLIMITED_VALUE);
 		converter.copyNamedElement(pivotElement, umlLiteral);
 		return pivotElement;
 	}

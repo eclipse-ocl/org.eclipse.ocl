@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.DataType
 import org.eclipse.ocl.pivot.InvalidType
 import org.eclipse.ocl.pivot.SelfType
 import org.eclipse.ocl.pivot.VoidType
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -198,11 +199,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 	}
 
 	protected def String defineCollectionType(/*@NonNull*/ CollectionType type) {
+		var UnlimitedNaturalValue typeUpper = type.getUpper();
 		'''
 		«IF type.getOwnedSignature() !== null»
-		type = «type.getSymbolName()» = createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		type = «type.getSymbolName()» = createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.toString()», «IF typeUpper.isUnlimited()»-1«ELSE»«typeUpper.toString()»«ENDIF»);
 		«ELSE»
-		type = «type.getSymbolName()» = getCollectionType(«type.getUnspecializedElement().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		type = «type.getSymbolName()» = getCollectionType(«type.getUnspecializedElement().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.toString()», «IF typeUpper.isUnlimited()»-1«ELSE»«typeUpper.toString()»«ENDIF»);
 		«ENDIF»
 		'''
 	}

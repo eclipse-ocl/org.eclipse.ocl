@@ -25,7 +25,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 import org.eclipse.ocl.xtext.base.as2cs.BaseReferenceVisitor;
@@ -83,12 +82,9 @@ public class EssentialOCLReferenceVisitor extends BaseReferenceVisitor
 				}
 			}
 		}
-		IntegerValue lowerValue = object.getLowerValue();
-		Number upper2 = object.getUpper();
-		UnlimitedNaturalValue upperValue = object.getUpperValue();
-		int upper = upper2 == null ? -1 : upper2 instanceof Unlimited ? -1 : upperValue.intValue();
+		IntegerValue lower = object.getLowerValue();
+		UnlimitedNaturalValue upper = object.getUpperValue();
 		boolean isNullFree = object.isIsNullFree();
-		int lower = lowerValue.intValue();
 		MultiplicityCS csMultiplicity = context.createMultiplicityCS(lower, upper, isNullFree);
 		csRef.setOwnedCollectionMultiplicity(csMultiplicity);
 		return csRef;

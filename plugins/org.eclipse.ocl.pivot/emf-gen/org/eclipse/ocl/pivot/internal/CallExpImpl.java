@@ -243,8 +243,9 @@ public abstract class CallExpImpl
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+					final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!isSafe) {
+					if (!BOXED_isSafe) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -267,7 +268,8 @@ public abstract class CallExpImpl
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull CollectionType oclAsType = (@NonNull CollectionType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_CollectionType);
 								final /*@Thrown*/ boolean isNullFree = oclAsType.isIsNullFree();
-								CAUGHT_isNullFree = isNullFree;
+								final /*@Thrown*/ @NonNull Boolean BOXED_isNullFree = isNullFree;
+								CAUGHT_isNullFree = BOXED_isNullFree;
 							}
 							catch (Exception e) {
 								CAUGHT_isNullFree = ValueUtil.createInvalidValue(e);
@@ -360,8 +362,9 @@ public abstract class CallExpImpl
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+					final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!isSafe) {
+					if (!BOXED_isSafe) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {

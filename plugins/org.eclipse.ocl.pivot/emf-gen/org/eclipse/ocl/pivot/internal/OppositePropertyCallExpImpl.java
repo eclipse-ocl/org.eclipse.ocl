@@ -193,7 +193,8 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 					}
 					else {
 						final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
-						if (!isSafe) {
+						final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
+						if (!BOXED_isSafe) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
@@ -210,10 +211,11 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 							/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 							try {
 								if (ownedSource == null) {
-									throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
+									throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : EBoolean[1]\'");
 								}
 								final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
-								CAUGHT_isNonNull = isNonNull;
+								final /*@Thrown*/ @NonNull Boolean BOXED_isNonNull = isNonNull;
+								CAUGHT_isNonNull = BOXED_isNonNull;
 							}
 							catch (Exception e) {
 								CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);
@@ -312,12 +314,13 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 						}
 						else {
 							final /*@NonInvalid*/ boolean isSafe = this.isIsSafe();
+							final /*@NonInvalid*/ @NonNull Boolean BOXED_isSafe = isSafe;
 							final /*@NonInvalid*/ @Nullable Boolean not;
-							if (!isSafe) {
+							if (!BOXED_isSafe) {
 								not = ValueUtil.TRUE_VALUE;
 							}
 							else {
-								if (isSafe) {
+								if (BOXED_isSafe) {
 									not = ValueUtil.FALSE_VALUE;
 								}
 								else {
@@ -350,10 +353,11 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
 							if (ownedSource_0 == null) {
-								throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : Boolean[1]\'");
+								throw new InvalidValueException("Null source for \'pivot::OCLExpression::isNonNull() : EBoolean[1]\'");
 							}
 							final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
-							CAUGHT_isNonNull = isNonNull;
+							final /*@Thrown*/ @NonNull Boolean BOXED_isNonNull = isNonNull;
+							CAUGHT_isNonNull = BOXED_isNonNull;
 						}
 						catch (Exception e) {
 							CAUGHT_isNonNull = ValueUtil.createInvalidValue(e);

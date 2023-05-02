@@ -75,8 +75,8 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
-import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
@@ -134,8 +134,8 @@ public class LoadTests extends XtextTestCase
 		else {
 			assertTrue(typedElement.isIsRequired());
 			CollectionType collType = (CollectionType)type;
-			assertEquals(lower, collType.getLower());
-			assertEquals(upper >= 0 ? upper : Unlimited.INSTANCE, collType.getUpper());
+			assertEquals(ValueUtil.integerValueOf(lower), collType.getLower());
+			assertEquals(upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE, collType.getUpper());
 		}
 	}
 

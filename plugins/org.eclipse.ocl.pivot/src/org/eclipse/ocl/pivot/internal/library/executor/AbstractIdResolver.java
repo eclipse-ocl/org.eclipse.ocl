@@ -378,7 +378,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 			if (unboxedValue instanceof BigInteger) {
 				return ValueUtil.integerValueOf((BigInteger) unboxedValue);
 			}
-			if (unboxedValue instanceof Unlimited) {
+			if (unboxedValue instanceof Unlimited) {		// XXX never happens / obsolete
+				assert false;
 				return unboxedValue;
 			}
 		}

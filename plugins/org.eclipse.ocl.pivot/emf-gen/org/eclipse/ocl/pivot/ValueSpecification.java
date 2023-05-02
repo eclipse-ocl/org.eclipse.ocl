@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -45,7 +48,7 @@ public interface ValueSpecification
 	 * <!-- end-model-doc -->
 	 * @generated
 	 */
-	Number integerValue();
+	IntegerValue integerValue();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -55,7 +58,7 @@ public interface ValueSpecification
 	 * <!-- end-model-doc -->
 	 * @generated
 	 */
-	boolean booleanValue();
+	Boolean booleanValue();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -75,7 +78,7 @@ public interface ValueSpecification
 	 * <!-- end-model-doc -->
 	 * @generated
 	 */
-	Number unlimitedValue();
+	UnlimitedNaturalValue unlimitedValue();
 
 	/**
 	 * <!-- begin-user-doc -->

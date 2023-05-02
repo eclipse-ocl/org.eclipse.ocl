@@ -78,7 +78,8 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
-import org.eclipse.ocl.pivot.values.Unlimited;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Moniker> implements PivotConstantsInternal
 {
@@ -248,11 +249,11 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	@Override
 	public Object visitCollectionType(@NonNull CollectionType object) {
 		super.visitCollectionType(object);
-		Number lower = object.getLower();
-		Number upper = object.getUpper();
-		if ((lower.longValue() != 0) || !(upper instanceof Unlimited)) {
+		IntegerValue lower = object.getLower();
+		UnlimitedNaturalValue upper = object.getUpper();
+		if ((lower.signum() != 0) || !upper.isUnlimited()) {
 			context.append("_" + lower);
-			if (!(upper instanceof Unlimited)) {
+			if (!upper.isUnlimited()) {
 				context.append("_" + upper);
 			}
 		}
@@ -649,7 +650,7 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	@Override
 	public Object visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp object) {
 		appendExpPrefix(object);
-		Number unlimitedNaturalSymbol = object.getUnlimitedNaturalSymbol();
+		UnlimitedNaturalValue unlimitedNaturalSymbol = object.getUnlimitedNaturalSymbol();
 		context.append(unlimitedNaturalSymbol.toString());
 		return true;
 	}

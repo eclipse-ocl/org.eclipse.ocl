@@ -60,10 +60,13 @@
       <genEnumLiterals ecoreEnumLiteral="Pivot.ecore#L-pivot-TransitionKind-external"/>
     </genEnums>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-Boolean"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-EBoolean"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-EInt"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-EcoreObject"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-Integer"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-JavaClass"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-LibraryFeature"/>
+    <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-Number"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-Object"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-Real"/>
     <genDataTypes ecoreDataType="Pivot.ecore#T-pivot-String"/>
