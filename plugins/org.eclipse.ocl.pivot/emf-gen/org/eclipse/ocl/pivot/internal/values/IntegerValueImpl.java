@@ -160,7 +160,7 @@ public abstract class IntegerValueImpl extends NumberValueImpl implements Intege
 	@Override
 	public @NonNull LiteralExp createLiteralExp() {
 		IntegerLiteralExp literalExp = PivotFactory.eINSTANCE.createIntegerLiteralExp();
-		literalExp.setIntegerNumber(asNumber());
+		literalExp.setIntegerSymbol(this);
 		return literalExp;
 	}
 

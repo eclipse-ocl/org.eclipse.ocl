@@ -235,7 +235,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			body.setType(type);
 			pivotElement.setType(type);
 		}
-		((IntegerLiteralExp)body).setIntegerNumber(umlLiteral.getValue());
+		((IntegerLiteralExp)body).setIntegerSymbol(ValueUtil.integerValueOf(umlLiteral.getValue()));
 		converter.copyNamedElement(pivotElement, umlLiteral);
 		return pivotElement;
 	}
@@ -268,7 +268,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 			body.setType(type);
 			pivotElement.setType(type);
 		}
-		((RealLiteralExp)body).setRealNumber(umlLiteral.getValue());
+		((RealLiteralExp)body).setRealSymbol(ValueUtil.realValueOf(umlLiteral.getValue()));
 		converter.copyNamedElement(pivotElement, umlLiteral);
 		return pivotElement;
 	}

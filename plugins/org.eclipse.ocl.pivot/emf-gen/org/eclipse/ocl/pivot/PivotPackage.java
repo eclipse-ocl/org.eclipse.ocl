@@ -5895,14 +5895,14 @@ extends EPackage
 	EDataType getLibraryFeature();
 
 	/**
-	 * Returns the meta object for data type '{@link java.lang.Number <em>Number</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.NumberValue <em>Number</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * Boolean is used for logical expressions, consisting of the predefined values true and false.
      * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Number</em>'.
-	 * @see java.lang.Number
+	 * @see org.eclipse.ocl.pivot.values.NumberValue
 	 * @generated
 	 */
 	EDataType getNumber();
@@ -10714,7 +10714,7 @@ extends EPackage
 		 * The meta object literal for the '<em>Number</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see java.lang.Number
+		 * @see org.eclipse.ocl.pivot.values.NumberValue
 		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getNumber()
 		 * @generated
 		 */

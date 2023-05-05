@@ -12,7 +12,6 @@
 package org.eclipse.ocl.xtext.essentialocl.cs2as;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -401,10 +400,10 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 		Number number = csElement.getSymbol();
 		if ((number instanceof BigDecimal) || (number instanceof Double) || (number instanceof Float)) {
 			@NonNull RealLiteralExp pivotElement = context.refreshModelElement(RealLiteralExp.class, PivotPackage.Literals.REAL_LITERAL_EXP, csElement);
-			pivotElement.setRealNumber(number);
+			pivotElement.setRealSymbol(ValueUtil.realValueOf(number));
 		}
 		else {
-			boolean isNegative;
+		/*	boolean isNegative;
 			if (number instanceof BigInteger) {
 				BigInteger bigInteger = (BigInteger) number;
 				isNegative = bigInteger.signum() < 0;
@@ -444,9 +443,9 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 						number = Long.valueOf(longValue);
 					}
 				}
-			}
+			} */
 			@NonNull IntegerLiteralExp pivotElement = context.refreshModelElement(IntegerLiteralExp.class, PivotPackage.Literals.INTEGER_LITERAL_EXP, csElement);
-			pivotElement.setIntegerNumber(number);
+			pivotElement.setIntegerSymbol(ValueUtil.integerValueOf(number));
 		}
 		return null;
 	}

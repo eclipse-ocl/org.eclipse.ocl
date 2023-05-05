@@ -74,6 +74,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
  * OCLinEcoreCodeGenerator supports generation of the inline OCL-defined content of a Ecore *Impl file.
@@ -498,7 +499,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			asHelper.createVariableExp(asSelfVariable), asHelper.createNullLiteralExp(),
 			asHelper.createVariableExp(asDiagnosticsVariable), asHelper.createVariableExp(asContextVariable),
 			asHelper.createNullLiteralExp()/*asMessageExp*/, asHelper.createVariableExp(asSeverityVariable),
-			asHelper.createVariableExp(asResultVariable), asHelper.createIntegerLiteralExp(0));
+			asHelper.createVariableExp(asResultVariable), asHelper.createIntegerLiteralExp(ValueUtil.ZERO_VALUE));
 		//
 		//	Wrapped in the status let-variable
 		//
@@ -506,7 +507,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		//
 		//	Wrapped in an interesting severity guard
 		//
-		OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asSeverityVariable), "<=", asHelper.createIntegerLiteralExp(0));
+		OCLExpression asCondition = asHelper.createOperationCallExp(asHelper.createVariableExp(asSeverityVariable), "<=", asHelper.createIntegerLiteralExp(ValueUtil.ZERO_VALUE));
 		OCLExpression asSeverityExpression = asHelper.createIfExp(asCondition, asHelper.createBooleanLiteralExp(true), asResultExpression);
 		//
 		//	Wrapped in the severity let-variable

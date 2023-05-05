@@ -235,7 +235,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 
 	@Override
 	public Object visitIntegerLiteralExp(@NonNull IntegerLiteralExp object) {
-		context.append(object.getIntegerNumber());
+		context.append(object.getIntegerSymbol());
 		return null;
 	}
 
@@ -621,7 +621,7 @@ public class EssentialOCLPrettyPrintVisitor extends PrettyPrintVisitor
 
 	@Override
 	public Object visitRealLiteralExp(@NonNull RealLiteralExp object) {
-		context.append(object.getRealNumber());
+		context.append(object.getRealSymbol());
 		return null;
 	}
 

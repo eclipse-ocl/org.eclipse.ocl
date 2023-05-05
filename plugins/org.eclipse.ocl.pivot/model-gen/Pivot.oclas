@@ -638,7 +638,8 @@
       <ownedProperties xmi:id="ND3QN" name="qualifiers" opposite="#f4Az4" type="#Ftslp"/>
     </ownedClasses>
     <ownedClasses xmi:id="Ge,OM" name="NullLiteralExp" superClasses="#mKorp"/>
-    <ownedClasses xsi:type="pivot:DataType" xmi:id="67MSm" instanceClassName="java.lang.Number" name="Number" superClasses="&_0;#jbMkR">
+    <ownedClasses xsi:type="pivot:DataType" xmi:id="67MSm" instanceClassName="org.eclipse.ocl.pivot.values.NumberValue" name="Number"
+        superClasses="&_0;#jbMkR">
       <ownedComments body="Boolean is used for logical expressions, consisting of the predefined values true and false."/>
     </ownedClasses>
     <ownedClasses xmi:id="MFRWm" isAbstract="true" name="NumericLiteralExp" superClasses="#mKorp"/>

@@ -246,7 +246,7 @@ public class RealValueImpl extends NumberValueImpl implements RealValue {
 	@Override
 	public @NonNull LiteralExp createLiteralExp() {
 		RealLiteralExp literalExp = PivotFactory.eINSTANCE.createRealLiteralExp();
-		literalExp.setRealNumber(asNumber());
+		literalExp.setRealSymbol(this);
 		return literalExp;
 	}
 

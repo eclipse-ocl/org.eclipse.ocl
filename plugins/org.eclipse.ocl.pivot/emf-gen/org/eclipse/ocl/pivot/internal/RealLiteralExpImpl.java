@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.RealLiteralExp;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.RealValue;
 
 /**
@@ -289,15 +288,5 @@ public class RealLiteralExpImpl
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitRealLiteralExp(this);
-	}
-
-	@Override
-	public Number getRealNumber() {
-		return (Number)realSymbol;
-	}
-
-	@Override
-	public void setRealNumber(@NonNull Number realSymbol) {
-		setRealSymbol(ValueUtil.realValueOf(realSymbol));
 	}
 } //RealLiteralExpImpl

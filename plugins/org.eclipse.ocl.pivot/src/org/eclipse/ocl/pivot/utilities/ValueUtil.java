@@ -956,7 +956,7 @@ public abstract class ValueUtil
 		}
 		else if (value.signum() >= 0) {
 			if (value.compareTo(INTEGER_MAX_VALUE) <= 0) {
-				return new IntIntegerValueImpl(value.intValue());
+				return integerValueOf(value.intValue());
 			}
 			if (value.compareTo(LONG_MAX_VALUE) <= 0) {
 				return new LongIntegerValueImpl(value.longValue());
@@ -964,7 +964,7 @@ public abstract class ValueUtil
 		}
 		else {
 			if (value.compareTo(INTEGER_MIN_VALUE) >= 0) {
-				return new IntIntegerValueImpl(value.intValue());
+				return integerValueOf(value.intValue());
 			}
 			if (value.compareTo(LONG_MIN_VALUE) >= 0) {
 				return new LongIntegerValueImpl(value.longValue());

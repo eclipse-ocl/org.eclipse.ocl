@@ -57,6 +57,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -342,6 +343,15 @@ public class PrettyPrinter
 	}
 
 	public void append(Number number) {
+		if (number != null) {
+			append(number.toString());
+		}
+		else {
+			append(NULL_PLACEHOLDER);
+		}
+	}
+
+	public void append(NumberValue number) {
 		if (number != null) {
 			append(number.toString());
 		}

@@ -301,6 +301,10 @@ public abstract class AbstractContents extends PivotUtil
 		return orphanage.getCollectionType(genericType, elementType, isNullFree, ValueUtil.integerValueOf(lower), upper >= 0 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE);
 	}
 
+	protected @NonNull DataType getDataType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
+		return (DataType)ClassUtil.nonNullState(asPackage.getOwnedClass(name));
+	}
+
 	protected @NonNull LambdaType getLambdaType(org.eclipse.ocl.pivot./*@NonNull*/ Class oclLambdaType, /*@NonNull*/ TemplateParameter contextType, /*@NonNull*/ Type resultType, @NonNull TemplateParameter... parameterTypes) {
 		assert oclLambdaType != null;
 		assert contextType != null;

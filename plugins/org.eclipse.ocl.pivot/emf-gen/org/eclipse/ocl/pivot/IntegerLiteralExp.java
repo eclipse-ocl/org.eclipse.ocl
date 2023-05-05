@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.DiagnosticChain;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 
 /**
@@ -48,7 +47,6 @@ public interface IntegerLiteralExp
 	 * @generated
 	 */
 	IntegerValue getIntegerSymbol();
-	Number getIntegerNumber();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.IntegerLiteralExp#getIntegerSymbol <em>Integer Symbol</em>}' attribute.
@@ -59,7 +57,6 @@ public interface IntegerLiteralExp
 	 * @generated
 	 */
 	void setIntegerSymbol(IntegerValue value);
-	void setIntegerNumber(@NonNull Number value);
 
 	/**
 	 * <!-- begin-user-doc -->

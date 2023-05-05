@@ -379,14 +379,4 @@ public class IntegerLiteralExpImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitIntegerLiteralExp(this);
 	}
-
-	@Override
-	public Number getIntegerNumber() {
-		return (Number)integerSymbol;
-	}
-
-	@Override
-	public void setIntegerNumber(@NonNull Number integerSymbol) {
-		setIntegerSymbol(ValueUtil.integerValueOf(integerSymbol));
-	}
 } //IntegerLiteralExpImpl

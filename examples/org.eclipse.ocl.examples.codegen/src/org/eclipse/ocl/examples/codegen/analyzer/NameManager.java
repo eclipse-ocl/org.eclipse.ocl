@@ -750,7 +750,7 @@ public class NameManager
 			return EXPRESSION_IN_OCL_NAME_HINT_PREFIX;
 		}
 		else if (anObject instanceof IntegerLiteralExp) {
-			Number numberSymbol = ((IntegerLiteralExp)anObject).getIntegerNumber();
+			Number numberSymbol = (Number)((IntegerLiteralExp)anObject).getIntegerSymbol();
 			return numberSymbol != null ? getNumericNameHint(numberSymbol) : null;
 		}
 		else if (anObject instanceof IntegerRange) {
@@ -833,7 +833,7 @@ public class NameManager
 			return "IF_" + ((CGIfExp)anObject).getCondition().getValueName();
 		}
 		else if (anObject instanceof RealLiteralExp) {
-			Number numberSymbol = ((RealLiteralExp)anObject).getRealNumber();
+			Number numberSymbol = (Number)((RealLiteralExp)anObject).getRealSymbol();
 			return numberSymbol != null ? getNumericNameHint(numberSymbol) : null;
 		}
 		else if (anObject instanceof RealValue) {

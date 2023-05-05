@@ -167,6 +167,7 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.TuplePart;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -1375,7 +1376,7 @@ extends EObjectValidator {
 			case 147:
 				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
 			case 148:
-				return validateNumber((Number)value, diagnostics, context);
+				return validateNumber((NumberValue)value, diagnostics, context);
 			case 149:
 				return validateObject(value, diagnostics, context);
 			case 150:
@@ -5099,7 +5100,7 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateNumber(Number number, DiagnosticChain diagnostics, Map<Object, Object> context)
+	public boolean validateNumber(NumberValue number, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return true;
 	}

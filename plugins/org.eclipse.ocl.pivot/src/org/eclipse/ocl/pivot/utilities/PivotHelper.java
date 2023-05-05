@@ -81,6 +81,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -203,9 +204,9 @@ public class PivotHelper
 		return asImport;
 	}
 
-	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull Number integerSymbol) {
+	public @NonNull IntegerLiteralExp createIntegerLiteralExp(@NonNull IntegerValue integerSymbol) {
 		IntegerLiteralExp asInteger = PivotFactory.eINSTANCE.createIntegerLiteralExp();
-		asInteger.setIntegerNumber(integerSymbol);
+		asInteger.setIntegerSymbol(integerSymbol);
 		asInteger.setType(standardLibrary.getIntegerType());
 		asInteger.setIsRequired(true);
 		return asInteger;
@@ -436,9 +437,9 @@ public class PivotHelper
 		return PivotUtil.createPropertyCallExp(asSource, asProperty);
 	}
 
-	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull Number realSymbol) {
+	public @NonNull RealLiteralExp createRealLiteralExp(@NonNull RealValue realSymbol) {
 		RealLiteralExp asReal = PivotFactory.eINSTANCE.createRealLiteralExp();
-		asReal.setRealNumber(realSymbol);
+		asReal.setRealSymbol(realSymbol);
 		asReal.setType(standardLibrary.getRealType());
 		asReal.setIsRequired(true);
 		return asReal;

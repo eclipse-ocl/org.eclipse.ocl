@@ -186,6 +186,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.pivot.values.UnlimitedValue;
 
@@ -1388,8 +1389,8 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGConstantExp visitIntegerLiteralExp(@NonNull IntegerLiteralExp element) {
-		Number integerSymbol = element.getIntegerNumber();
-		CGInteger constant = context.getInteger(integerSymbol != null ? integerSymbol : 0);
+		IntegerValue integerSymbol = element.getIntegerSymbol();
+		CGInteger constant = context.getInteger(integerSymbol != null ? integerSymbol.asNumber() : 0);
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, constant);
 		setAst(cgLiteralExp, element);
 		return cgLiteralExp;
@@ -1593,7 +1594,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGConstantExp visitRealLiteralExp(@NonNull RealLiteralExp element) {
-		Number realSymbol = element.getRealNumber();
+		Number realSymbol = (Number)element.getRealSymbol();
 		@SuppressWarnings("null")
 		CGReal cgReal = context.getReal(realSymbol != null ? realSymbol : Double.valueOf(0.0));
 		CGConstantExp cgLiteralExp = context.createCGConstantExp(element, cgReal);

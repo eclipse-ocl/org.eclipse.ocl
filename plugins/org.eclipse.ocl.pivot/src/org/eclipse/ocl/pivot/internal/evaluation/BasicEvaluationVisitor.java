@@ -786,8 +786,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 	 */
 	@Override
 	public Object visitRealLiteralExp(@NonNull RealLiteralExp realLiteralExp) {
-		Number realSymbol = realLiteralExp.getRealNumber();
-		return realSymbol != null ? ValueUtil.realValueOf(realSymbol) : null;
+		return realLiteralExp.getRealSymbol();
 	}
 
 	@Override

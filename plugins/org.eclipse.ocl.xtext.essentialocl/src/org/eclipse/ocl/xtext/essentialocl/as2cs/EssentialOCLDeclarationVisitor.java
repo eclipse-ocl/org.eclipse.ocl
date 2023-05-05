@@ -587,7 +587,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	public @Nullable ElementCS visitIntegerLiteralExp(@NonNull IntegerLiteralExp asIntegerLiteralExp) {
 		NumberLiteralExpCS csNumberLiteralExp = EssentialOCLCSFactory.eINSTANCE.createNumberLiteralExpCS();
 		csNumberLiteralExp.setPivot(asIntegerLiteralExp);
-		csNumberLiteralExp.setSymbol(asIntegerLiteralExp.getIntegerNumber());
+		csNumberLiteralExp.setSymbol((Number)asIntegerLiteralExp.getIntegerSymbol());
 		return csNumberLiteralExp;
 	}
 
@@ -837,7 +837,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 	public @Nullable ElementCS visitRealLiteralExp(@NonNull RealLiteralExp asRealLiteralExp) {
 		NumberLiteralExpCS csNumberLiteralExp = EssentialOCLCSFactory.eINSTANCE.createNumberLiteralExpCS();
 		csNumberLiteralExp.setPivot(asRealLiteralExp);
-		csNumberLiteralExp.setSymbol(asRealLiteralExp.getRealNumber());
+		csNumberLiteralExp.setSymbol((Number)asRealLiteralExp.getRealSymbol());
 		return csNumberLiteralExp;
 	}
 
