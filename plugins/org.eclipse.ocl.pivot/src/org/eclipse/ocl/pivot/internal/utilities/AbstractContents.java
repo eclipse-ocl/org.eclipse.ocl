@@ -131,10 +131,10 @@ public abstract class AbstractContents extends PivotUtil
 		Class<?> instanceClass = eDataType.getInstanceClass();
 		if (instanceClass != null) {
 			asType.setInstanceClassName(eDataType.getInstanceClassName());
-			org.eclipse.ocl.pivot.Class behavioralClass = PivotUtil.getBehavioralClass(orphanage.getStandardLibrary(), instanceClass);
-			if (behavioralClass != null) {
-				asType.setBehavioralClass(behavioralClass);
-			}
+//			org.eclipse.ocl.pivot.Class behavioralClass = PivotUtil.getBehavioralClass(orphanage.getStandardLibrary(), instanceClass);
+//			if (behavioralClass != null) {
+//				asType.setBehavioralClass(behavioralClass);
+//			}
 		}
 		((PivotObjectImpl)asType).setESObject(eDataType);
 		asPackage.getOwnedClasses().add(asType);

@@ -507,7 +507,7 @@ public class CompleteStandardLibraryImpl extends ReflectiveStandardLibraryImpl i
 
 	@Override
 	public org.eclipse.ocl.pivot.Class getLibraryType(@NonNull String typeName) {
-		Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
+		Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 		if (nameToLibraryTypeMap2 == null) {
 			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
 			loadDefaultLibrary(defaultStandardLibraryURI);
