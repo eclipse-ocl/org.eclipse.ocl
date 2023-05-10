@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
@@ -66,6 +67,11 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		if (PARTIAL_PACKAGES.isActive()) {
 			PARTIAL_PACKAGES.println("Do-didAdd " + this + " " + partialPackage);
 		}
+		System.out.println("didAdd " + NameUtil.debugSimpleName(this) + " : " + this + " | " + NameUtil.debugSimpleName(partialPackage) + " : " + partialPackage);		// XXX
+		if ("pivot".equals(partialPackage.toString())) {
+			getClass();		// XXX
+		}
+	//	assert (partialPackage.getPackageId() == IdManager.METAMODEL) == (getCompletePackage().getPackageId() == IdManager.METAMODEL));
 	//	Model partialModel = PivotUtil.getContainingModel(partialPackage);
 	//	assert (partialModel == null) || getCompleteModel().getPartialModels().contains(partialModel);		// Null during Ecore2AS, not true for QVTd tx chain
 		((PackageImpl)partialPackage).addPackageListener(this);

@@ -17,8 +17,10 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 public class RootCompletePackages extends AbstractCompletePackages
 {
@@ -48,7 +50,19 @@ public class RootCompletePackages extends AbstractCompletePackages
 				nonNullName = "$anon_" + Integer.toHexString(System.identityHashCode(pivotPackage));
 			}
 			String nsPrefix = pivotPackage.getNsPrefix();
-			String completeURI = getCompleteModel().getCompleteURIs().getCompleteURI(pivotPackage.getURI());
+			CompleteURIs completeURIs = getCompleteModel().getCompleteURIs();
+			String packageURI = pivotPackage.getURI();
+			String completeURI;
+			if (packageURI == null) {
+				completeURI = null;
+			}
+			else if (pivotPackage.getPackageId() == IdManager.METAMODEL) {
+				completeURI = PivotConstants.METAMODEL_NAME;
+				completeURIs.addPackageURI2completeURI(packageURI, completeURI);
+			}
+			else {
+				completeURI = completeURIs.getCompleteURI(pivotPackage.getURI());
+			}
 			CompletePackageInternal rootCompletePackage = (CompletePackageInternal) PivotFactory.eINSTANCE.createCompletePackage();
 			rootCompletePackage.init(nonNullName, nsPrefix, completeURI);
 			add(rootCompletePackage);

@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.internal;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
-import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -22,8 +21,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -47,6 +44,7 @@ import org.eclipse.ocl.pivot.internal.complete.NestedCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -407,6 +405,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	protected CompletePackageImpl()
 	{
 		partialPackages = new PartialPackages(this);
+		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(partialPackages));		// XXX
 	}
 
 	@Override
@@ -740,5 +739,6 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		setName(name);
 		this.nsPrefix = nsPrefix;
 		this.nsURI = nsURI;
+		System.out.println("init " + NameUtil.debugSimpleName(this) + " : " + this + " => " + nsURI);		// XXX
 	}
 } //CompletePackageImpl
