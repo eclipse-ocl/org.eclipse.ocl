@@ -182,7 +182,7 @@ implements org.eclipse.ocl.pivot.Package {
 	 */
 	protected PackageImpl() {
 		super();
-		System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
+//		System.out.println("ctor " + NameUtil.debugSimpleName(this));		// XXX
 	}
 
 	/**
@@ -228,7 +228,7 @@ implements org.eclipse.ocl.pivot.Package {
 		uri = newURI;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldURI, uri));
-		System.out.println("setURIGen " + NameUtil.debugSimpleName(this) + " : " + this + " => " + newURI);		// XXX
+//		System.out.println("setURIGen " + NameUtil.debugSimpleName(this) + " : " + this + " => " + newURI);		// XXX
 	}
 
 	/**
@@ -780,12 +780,12 @@ implements org.eclipse.ocl.pivot.Package {
 				((PackageImpl)eContainer).didAddPackage(this);
 			}
 		}
-		System.out.println("setName " + NameUtil.debugSimpleName(this) + " => " + newName);		// XXX
+//		System.out.println("setName " + NameUtil.debugSimpleName(this) + " => " + newName);		// XXX
 	}
 
 	public void setPackageId(@NonNull PackageId packageId) {
 		this.packageId = packageId;
-		System.out.println("setPackageId " + NameUtil.debugSimpleName(this) + " : " + this + " => " + packageId);		// XXX
+//		System.out.println("setPackageId " + NameUtil.debugSimpleName(this) + " : " + this + " => " + packageId);		// XXX
 	}
 
 	@Override

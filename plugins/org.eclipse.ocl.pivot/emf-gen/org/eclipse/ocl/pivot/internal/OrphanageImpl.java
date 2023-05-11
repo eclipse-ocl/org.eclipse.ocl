@@ -817,7 +817,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	private void removeOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
-		System.out.println("removeOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + orphanClass);
+	//	System.out.println("removeOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + orphanClass);
 		TypeId typeId = orphanClass.getTypeId();
 		assert typeId2type.get(typeId) != null;
 		typeId2type.remove(typeId);					// XXX this is not really necessary

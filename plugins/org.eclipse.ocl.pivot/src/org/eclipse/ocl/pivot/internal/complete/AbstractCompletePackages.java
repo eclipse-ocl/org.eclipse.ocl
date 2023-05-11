@@ -77,9 +77,6 @@ public abstract class AbstractCompletePackages extends EObjectContainmentWithInv
 		String name = pivotPackage.getName();
 		String packageURI = pivotPackage.getURI();
 		if (packageURI != null) {										// Explicit packageURI for explicit package (merge)
-			if ("http://www.eclipse.org/ocl/2015/Pivot".equals(packageURI)) {
-				getClass();		// XXX
-			}
 			completePackage = getCompleteModel().getCompleteURIs().getCompletePackage(packageURI);
 		}
 		else if (name != null) {										// Null packageURI can merge into same named package

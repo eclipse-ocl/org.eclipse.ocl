@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.CompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 import com.google.common.base.Function;
@@ -67,7 +66,7 @@ public final class PartialPackages extends EObjectResolvingEList<org.eclipse.ocl
 		if (PARTIAL_PACKAGES.isActive()) {
 			PARTIAL_PACKAGES.println("Do-didAdd " + this + " " + partialPackage);
 		}
-		System.out.println("didAdd " + NameUtil.debugSimpleName(this) + " : " + this + " | " + NameUtil.debugSimpleName(partialPackage) + " : " + partialPackage);		// XXX
+	//	System.out.println("didAdd " + NameUtil.debugSimpleName(this) + " : " + this + " | " + NameUtil.debugSimpleName(partialPackage) + " : " + partialPackage);		// XXX
 		if ("pivot".equals(partialPackage.toString())) {
 			getClass();		// XXX
 		}

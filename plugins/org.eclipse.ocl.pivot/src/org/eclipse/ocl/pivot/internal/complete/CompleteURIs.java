@@ -22,7 +22,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalMetamodelException;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 public class CompleteURIs
@@ -51,7 +50,7 @@ public class CompleteURIs
 		//		if ((completePackage != completeModel.getOrphanCompletePackage()) && (completePackage != completeModel.getPrimitiveCompletePackage())) {
 		String completeURI = completePackage.getURI();
 		if (completeURI != null) {
-			System.out.println("didAddCompletePackage " + completeURI + " => " + NameUtil.debugSimpleName(completePackage) + " : " + completePackage);		// XXX
+//			System.out.println("didAddCompletePackage " + completeURI + " => " + NameUtil.debugSimpleName(completePackage) + " : " + completePackage);		// XXX
 			CompletePackage oldCompletePackage = completeURI2completePackage.put(completeURI, completePackage);
 			assert oldCompletePackage == null;
 		}
@@ -59,11 +58,11 @@ public class CompleteURIs
 	}
 
 	public void didAddPartialModel(@NonNull Model partialModel) {
-		System.out.println("didAddPartialModel " + NameUtil.debugSimpleName(partialModel) + " : " + partialModel);		// XXX
+//		System.out.println("didAddPartialModel " + NameUtil.debugSimpleName(partialModel) + " : " + partialModel);		// XXX
 		for (org.eclipse.ocl.pivot.Package asPackage : partialModel.getOwnedPackages()) {
 			String packageURI = asPackage.getURI();
 			String completeURI = getCompleteURI(packageURI);
-			System.out.println("\t" + NameUtil.debugSimpleName(asPackage) + " : " + asPackage + " : " + asPackage.getPackageId() + " => " + packageURI);		// XXX
+//			System.out.println("\t" + NameUtil.debugSimpleName(asPackage) + " : " + asPackage + " : " + asPackage.getPackageId() + " => " + packageURI);		// XXX
 			if (completeURI == packageURI) {
 				PackageId packageId = asPackage.getPackageId();
 				if (packageId == IdManager.METAMODEL) {
@@ -71,8 +70,6 @@ public class CompleteURIs
 						addPackageURI2completeURI(packageURI, PivotConstants.METAMODEL_NAME);
 					}
 				}
-				else if (PivotConstants.METAMODEL_NAME.equals(completeURI)) {}
-				else assert packageId != IdManager.METAMODEL;
 			}
 		}
 	}

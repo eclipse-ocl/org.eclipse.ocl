@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.internal.complete.NestedCompletePackages;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Iterables;
@@ -405,7 +404,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 	protected CompletePackageImpl()
 	{
 		partialPackages = new PartialPackages(this);
-		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(partialPackages));		// XXX
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " : " + NameUtil.debugSimpleName(partialPackages));		// XXX
 	}
 
 	@Override
@@ -739,6 +738,6 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 		setName(name);
 		this.nsPrefix = nsPrefix;
 		this.nsURI = nsURI;
-		System.out.println("init " + NameUtil.debugSimpleName(this) + " : " + this + " => " + nsURI);		// XXX
+//		System.out.println("init " + NameUtil.debugSimpleName(this) + " : " + this + " => " + nsURI);		// XXX
 	}
 } //CompletePackageImpl
