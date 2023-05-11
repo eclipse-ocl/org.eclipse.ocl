@@ -81,6 +81,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -205,6 +206,15 @@ public class PivotUtil
 				}
 			}
 		}
+	}
+
+	public static @Nullable Orphanage basicGetContainingOrphanage(@Nullable EObject element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof Orphanage) {
+				return (Orphanage)eObject;
+			}
+		}
+		return null;
 	}
 
 	/**

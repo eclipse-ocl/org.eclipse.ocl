@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
@@ -240,39 +241,35 @@ public class ASSaverNew extends AbstractASSaver
 				assert eTarget != null;
 				EObject localEObject = eTarget;
 			//	System.out.println("localizeOrphans0 " + NameUtil.debugSimpleName(eObject) + " : " + eObject);
-				for (EObject eContainer = eTarget; eContainer != null; eContainer = eContainer.eContainer()) {
-					if ((eContainer instanceof Orphanage) && (eContainer != localOrphanage)) {
-						if (localOrphanage == null) {
-							localOrphanage = OrphanageImpl.createLocalOrphanage(asModel);
-						}
-						EObject eCopySource = eTarget;
-						if (eTarget instanceof Property) {				// If Tuple Property referenced (before Tuple)
-							eCopySource = eCopySource.eContainer();				//  copy the whole Tuple.
-						}
-						localEObject = copier.get(eCopySource);
-						if (localEObject == null) {
-							assert eCopySource != null;
-							localEObject = copier.copy(eCopySource);
-						//	System.out.println("localizeOrphans1" + NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
-							if (moreObjects == null) {
-								moreObjects = new ArrayList<>();
-							}
-							moreObjects.add(eCopySource);
-							if (localEObject instanceof org.eclipse.ocl.pivot.Class) {
-								localOrphanage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localEObject);
-							}
-							else if (eCopySource instanceof Operation) {
-								throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
-					//			resolveOperation((Operation)eObject);
-							}
-						}
-						if (eTarget instanceof Property) {			// If Tuple Property referenced (before Tuple)
-							localEObject = copier.get(eTarget);		//  set resolution to property
-						}
-						break;
+				Orphanage orphanage = PivotUtil.basicGetContainingOrphanage(eTarget);
+				if ((orphanage != null) && (orphanage != localOrphanage)) {
+					if (localOrphanage == null) {
+						localOrphanage = new OrphanageImpl(null);
+						asModel.getOwnedPackages().add(localOrphanage);
 					}
-					else if (eContainer == localOrphanage) {
-						break;
+					EObject eCopySource = eTarget;
+					if (eTarget instanceof Property) {				// If Tuple Property referenced (before Tuple)
+						eCopySource = eCopySource.eContainer();				//  copy the whole Tuple.
+					}
+					localEObject = copier.get(eCopySource);
+					if (localEObject == null) {
+						assert eCopySource != null;
+						localEObject = copier.copy(eCopySource);
+					//	System.out.println("localizeOrphans1" + NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
+						if (moreObjects == null) {
+							moreObjects = new ArrayList<>();
+						}
+						moreObjects.add(eCopySource);
+						if (localEObject instanceof org.eclipse.ocl.pivot.Class) {
+							localOrphanage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localEObject);
+						}
+						else if (eCopySource instanceof Operation) {
+							throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
+				//			resolveOperation((Operation)eObject);
+						}
+					}
+					if (eTarget instanceof Property) {			// If Tuple Property referenced (before Tuple)
+						localEObject = copier.get(eTarget);		//  set resolution to property
 					}
 				}
 				if (localEObject != eTarget) {
@@ -315,7 +312,11 @@ public class ASSaverNew extends AbstractASSaver
 				for (Setting setting : settings) {
 					EObject eSource = setting.getEObject();
 					EStructuralFeature settingReference = setting.getEStructuralFeature();
-					System.out.println("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+				//	System.out.println("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+					if (eTarget instanceof IterableType) {
+						NameUtil.errPrintln("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+						getClass();		// XXX
+					}
 				}
 			}
 		}

@@ -251,27 +251,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	/**
-	 * Create and return the local orphanage Package within resource.
-	 *
-	 * @since 1.18
-	 */
-	@Deprecated /* @deprecated use StandardLibrary */
-	public static @NonNull Orphanage createLocalOrphanage(@NonNull Model asModel) {
-		Orphanage orphanage = PivotFactory.eINSTANCE.createOrphanage();
-		orphanage.setName(PivotConstants.ORPHANAGE_NAME);
-		orphanage.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
-		orphanage.setURI(PivotConstants.ORPHANAGE_URI);
-		asModel.getOwnedPackages().add(orphanage);
-		return orphanage;
-	}
-
-	public static @NonNull OrphanageImpl createOrphanage(@NonNull StandardLibrary standardLibrary) {
-		OrphanageImpl orphanage = (OrphanageImpl)PivotFactory.eINSTANCE.createOrphanage();
-		orphanage.init(standardLibrary, PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
-		return orphanage;
-	}
-
-	/**
 	 * @since 1.18
 	 *
 	@Deprecated
@@ -291,7 +270,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 * @since 1.18
 	 */
 	public static @NonNull Orphanage createSharedOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
-		OrphanageImpl orphanage = createOrphanage(standardLibrary);
+		OrphanageImpl orphanage = new OrphanageImpl(standardLibrary);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
@@ -384,6 +363,15 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 * The elements that reference each orphan. An element that references more than once e.g. Map<X,X> has a duplicate entry.
 	 */
 	private final @NonNull Map<@NonNull TypeId, @NonNull List<@NonNull Element>> typeId2typeRefs = new HashMap<>();
+
+	public OrphanageImpl(@Nullable StandardLibrary standardLibrary) {
+		setName(PivotConstants.ORPHANAGE_NAME);
+		setURI(PivotConstants.ORPHANAGE_URI);
+		setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
+		if (standardLibrary != null) {
+			this.standardLibrary = standardLibrary;
+		}
+	}
 
 	private void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
 		TypeId typeId = orphanClass.getTypeId();
@@ -798,22 +786,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 		assert tupleType.isWellContained();
 		return tupleType;
-	}
-
-	public boolean assertHasReference1(@NonNull Type asType, @NonNull Element asElement) {
-		return true;
-	}
-
-	public boolean assertHasReference2(@NonNull Type asType, @NonNull Element asElement) {
-		return true;
-	}
-
-	public void init(@NonNull StandardLibrary standardLibrary, @NonNull String orphanageName, @NonNull String orphanageUri, @NonNull String orphanagePrefix) {
-		assert this.standardLibrary == null;
-		this.standardLibrary = standardLibrary;
-		setName(orphanageName);
-		setURI(orphanageUri);
-		setNsPrefix(orphanagePrefix);
 	}
 
 	private void removeOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {

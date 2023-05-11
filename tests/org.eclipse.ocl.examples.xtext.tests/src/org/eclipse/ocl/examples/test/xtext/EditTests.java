@@ -1080,7 +1080,7 @@ public class EditTests extends XtextTestCase
 		Type myType = ClassUtil.nonNullState(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
 		Orphanage orphanage = ocl.getStandardLibrary().getOrphanage();
 		CollectionTypeId specializedTypeId = TypeId.SEQUENCE.getSpecializedId(myType.getTypeId(), PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-		System.out.println("specializedTypeId: " + NameUtil.debugSimpleName(specializedTypeId));
+	//	System.out.println("specializedTypeId: " + NameUtil.debugSimpleName(specializedTypeId));
 		WeakReference<Type> sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, true));
 		assertNull("Sample type should not yet exist", sequenceMyType.get());
 		//
