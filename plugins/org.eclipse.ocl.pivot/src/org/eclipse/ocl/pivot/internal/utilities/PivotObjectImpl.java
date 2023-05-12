@@ -13,11 +13,8 @@ package org.eclipse.ocl.pivot.internal.utilities;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotObject;
@@ -48,7 +45,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		return super.eObjectForURIFragmentSegment(uriFragmentSegment);
 	}
 
-	@Override
+/*	@Override
 	public EObject eResolveProxy(InternalEObject proxy) {
 	//	return super.eResolveProxy(proxy);
 		Resource resourceContext = proxy.eResource();
@@ -56,7 +53,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 			resourceContext = OrphanageImpl.getAdaptedResource(this); 		//  fallback to use OrphanageImpl.addOrphanClasses() ResourceAdapter
 		}
 	    return EcoreUtil.resolve(proxy, resourceContext);
-	}
+	} */
 
 	public @Nullable EObject getESObject() {
 		return esObject;

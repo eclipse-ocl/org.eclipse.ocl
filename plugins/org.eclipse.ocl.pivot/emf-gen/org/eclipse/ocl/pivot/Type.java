@@ -60,6 +60,11 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	@Nullable Orphanage basicGetSharedOrphanage();
 
 	/**
+	 * Return a unique StandardLibrary-independent identifier for this type if known or null if not.
+	 */
+	@Nullable TypeId basicGetTypeId();
+
+	/**
 	 * Return true if this type conform to thatType within standardLibrary.
 	 */
 	boolean conformsTo(@NonNull StandardLibrary standardLibrary, @NonNull Type thatType);

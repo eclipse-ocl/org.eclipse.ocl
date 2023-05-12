@@ -17,17 +17,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
@@ -221,7 +216,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-	protected static class ResourceAdapter extends AdapterImpl
+/*	protected static class ResourceAdapter extends AdapterImpl
 	{
 		public ResourceAdapter(@NonNull Resource eResource) {
 			this.target = eResource;
@@ -238,7 +233,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 		@Override
 		public void unsetTarget(Notifier oldTarget) {}
-	}
+	} */
 
 	private static final Logger logger = Logger.getLogger(OrphanageImpl.class);
 
@@ -307,7 +302,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return orphanage;
 	}
 
-	public static @Nullable Resource getAdaptedResource(@NonNull EObject eObject) {
+/*	public static @Nullable Resource getAdaptedResource(@NonNull EObject eObject) {
 		for (EObject eContainer; (eContainer = ((EObjectImpl)eObject).eInternalContainer()) != null; eObject = eContainer) { }
 		for (Adapter adapter : EcoreUtil.getRootContainer(eObject).eAdapters()) {
 			if (adapter instanceof ResourceAdapter) {
@@ -315,7 +310,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			}
 		}
 		return eObject.eResource();
-	}
+	} */
 
 	/**
 	 * @since 1.18
@@ -423,7 +418,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		assert ownedClasses.contains(orphanClass);
 	}
 
-	public void addOrphanClasses(List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses) {
+/*	public void addOrphanClasses(List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses) {
 	//	EList<@NonNull EObject> contents = eResource().getContents();
 	//	contents.addAll(orphanClasses);
 		Adapter resourceAdapter = new ResourceAdapter(eResource());
@@ -445,11 +440,16 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		for (org.eclipse.ocl.pivot.@NonNull Class orphanClass : orphanClasses) {
 			orphanClass.eAdapters().remove(resourceAdapter);
 		}
-	}
+	} */
 
 	@Override
 	public void addPackageListener(@NonNull PartialPackages partialPackages) {
 		super.addPackageListener(partialPackages);
+	}
+
+	public void addProtoClass(org.eclipse.ocl.pivot.@NonNull Class asProtoClass) {
+		assert asProtoClass.basicGetTypeId() == null;
+		getOwnedClasses().add(asProtoClass);
 	}
 
 	@Override
@@ -558,9 +558,11 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	@Override
 	protected void didAddClass(@NonNull Class asClass) {
-		TypeId typeId = asClass.getTypeId();
-		Type old = typeId2type.put(typeId, asClass);
-		assert (old == null) || (old == asClass);
+		TypeId typeId = asClass.basicGetTypeId();
+		if (typeId != null) {
+			Type old = typeId2type.put(typeId, asClass);
+			assert (old == null) || (old == asClass);
+		}
 		super.didAddClass(asClass);
 	}
 
@@ -860,7 +862,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return tupleType;
 	}
 
-	@Override
+/*	@Override
 	public @NonNull Type getType(@NonNull Type asType) {
 		if (asType instanceof CollectionType) {
 			CollectionType asCollectionType = (CollectionType)asType;
@@ -919,6 +921,18 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			return getSpecialization(asGenericType, asTypes);
 		}
 		throw new UnsupportedOperationException("OrphanageImpl.getType() for " + asType.getClass().getName());
+	} */
+
+	public void installProtoClasses() {
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : PivotUtil.getOwnedClasses(this)) {
+			TypeId typeId = asClass.basicGetTypeId();
+			if (typeId == null) {
+				typeId = asClass.getTypeId();
+				Type old = typeId2type.put(typeId, asClass);
+				assert old == null;
+			}
+		}
+
 	}
 
 	private void removeOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {

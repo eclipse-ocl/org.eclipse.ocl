@@ -12,8 +12,6 @@ package org.eclipse.ocl.pivot.internal.resource;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
@@ -24,8 +22,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMILoadImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Orphanage;
-import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.w3c.dom.Node;
@@ -43,7 +39,7 @@ public final class PivotLoadImpl extends XMILoadImpl
 	private static class PivotXMILoadHelperImpl extends XMIHelperImpl
 	{
 		private @Nullable Orphanage orphanage = null;
-		private @Nullable List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses = null;
+	//	private @Nullable List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses = null;
 
 		public PivotXMILoadHelperImpl(@NonNull ASResource asResource) {
 			super(asResource);
@@ -51,9 +47,9 @@ public final class PivotLoadImpl extends XMILoadImpl
 
 		public void installOrphans() {
 			Orphanage orphanage2 = orphanage;
-			List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses2 = orphanClasses;
-			if ((orphanage2 != null) && (orphanClasses2 != null)) {
-				((OrphanageImpl)orphanage2).addOrphanClasses(orphanClasses2);
+		//	List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses2 = orphanClasses;
+			if (orphanage2 != null) { //&& (orphanClasses2 != null)) {
+				((OrphanageImpl)orphanage2).installProtoClasses();
 			}
 		}
 
@@ -66,14 +62,14 @@ public final class PivotLoadImpl extends XMILoadImpl
 				else {
 					assert orphanage == object;
 				}
-				if ((feature == PivotPackage.Literals.PACKAGE__OWNED_CLASSES) && (value instanceof Type)) {
+			/*	if ((feature == PivotPackage.Literals.PACKAGE__OWNED_CLASSES) && (value instanceof Type)) {
 					List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses2 = orphanClasses;
 					if (orphanClasses2 == null) {
 						orphanClasses = orphanClasses2 = new ArrayList<>();
 					}
 					orphanClasses2.add((org.eclipse.ocl.pivot.Class)value);
 					return;
-				}
+				} */
 			}
 			super.setValue(object, feature, value, position);
 		}

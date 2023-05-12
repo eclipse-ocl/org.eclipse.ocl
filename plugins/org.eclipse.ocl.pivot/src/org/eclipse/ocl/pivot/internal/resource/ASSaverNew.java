@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
@@ -227,7 +226,7 @@ public class ASSaverNew extends AbstractASSaver
 	public void localizeOrphans() {
 		Model asModel = PivotUtil.getModel(resource);
 	//	System.out.println("localizeOrphans " + NameUtil.debugSimpleName(asModel) + " : " + asModel);
-		Orphanage localOrphanage = OrphanageImpl.basicGetOrphanage(asModel);
+		OrphanageImpl localOrphanage = (OrphanageImpl) OrphanageImpl.basicGetOrphanage(asModel);
 		ResourceSet resourceSet = resource.getResourceSet();
 		Orphanage sharedOrphanage = resourceSet != null ? OrphanageImpl.basicGetSharedOrphanage(resourceSet) : null;
 		if ((localOrphanage != null) && (sharedOrphanage != null)) {
@@ -251,15 +250,32 @@ public class ASSaverNew extends AbstractASSaver
 					if (eTarget instanceof Property) {				// If Tuple Property referenced (before Tuple)
 						eCopySource = eCopySource.eContainer();				//  copy the whole Tuple.
 					}
+					if (!copier.containsKey(eCopySource)) {
+						assert eCopySource != null;
+						localEObject = copier.copy(eCopySource);
+						System.out.println("localizeOrphans1 " + NameUtil.debugSimpleName(eCopySource) + " : " + eCopySource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
+						if (moreObjects == null) {
+							moreObjects = new ArrayList<>();
+						}
+						moreObjects.add(eCopySource);
+						if (localEObject instanceof org.eclipse.ocl.pivot.Class) {
+							localOrphanage.addProtoClass((org.eclipse.ocl.pivot.Class)localEObject);
+						}
+						else if (eCopySource instanceof Operation) {
+							throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
+				//			resolveOperation((Operation)eObject);
+							}
+					}
 
-					localEObject = localOrphanage.getType((Type)eCopySource);
+			/*	//	localEObject = localOrphanage.getType((Type)eCopySource);
+					localEObject = copier.copy(eCopySource);
 					System.out.println("localizeOrphans1 " + NameUtil.debugSimpleName(eCopySource) + " : " + eCopySource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
 					if (moreObjects == null) {
 						moreObjects = new ArrayList<>();
 					}
 				//	moreObjects.add(eCopySource);
 					moreObjects.add(localEObject);
-					copier.put(eCopySource, localEObject);
+					copier.put(eCopySource, localEObject); */
 
 				//	localEObject = copier.get(eCopySource);
 				/*	if (localEObject == null) {

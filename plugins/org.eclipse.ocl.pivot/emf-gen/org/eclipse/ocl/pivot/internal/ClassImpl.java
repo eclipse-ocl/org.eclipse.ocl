@@ -1144,6 +1144,11 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 		return ClassifierAllInstancesOperation.allInstances(executor, returnTypeId, this);
 	}
 
+	@Override
+	public @Nullable TypeId basicGetTypeId() {
+		return typeId;
+	}
+
 	public @NonNull TypeId computeId() {
 		return IdManager.getClassId(this);
 	}
