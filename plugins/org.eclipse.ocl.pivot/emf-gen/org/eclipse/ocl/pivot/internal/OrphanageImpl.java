@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
-import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
@@ -405,15 +404,17 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	private void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
-		TemplateableElement unspecializedElement = orphanClass.getUnspecializedElement();
-		TypeId typeId = orphanClass.getTypeId();
+	//	TemplateableElement unspecializedElement = orphanClass.getUnspecializedElement();
+		TypeId typeId = orphanClass.basicGetTypeId();
+		assert typeId == null;
+		typeId = orphanClass.getTypeId();
 	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
 		Type old = typeId2type.put(typeId, orphanClass);
 		assert old == null;
-		List<org.eclipse.ocl.pivot.Class> ownedClasses = getOwnedClasses();
+		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtilInternal.getOwnedClassesList(this);
 		assert !ownedClasses.contains(orphanClass);
-		orphanClass.setOwningPackage(this);
-	//	ownedClasses.add(orphanClass);		// FIXME why doesn't this always work? - missing inverse in bad overload
+	//	orphanClass.setOwningPackage(this);
+		ownedClasses.add(orphanClass);		// FIXME why doesn't this always work? - missing inverse in bad overload
 		assert orphanClass.eContainer() == this;
 		assert ownedClasses.contains(orphanClass);
 	}
