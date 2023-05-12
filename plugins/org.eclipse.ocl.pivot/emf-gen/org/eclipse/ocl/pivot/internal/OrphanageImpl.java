@@ -404,7 +404,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	private void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
-	//	TemplateableElement unspecializedElement = orphanClass.getUnspecializedElement();
 		TypeId typeId = orphanClass.basicGetTypeId();
 		assert typeId == null;
 		typeId = orphanClass.getTypeId();
@@ -413,8 +412,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		assert old == null;
 		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtilInternal.getOwnedClassesList(this);
 		assert !ownedClasses.contains(orphanClass);
-	//	orphanClass.setOwningPackage(this);
-		ownedClasses.add(orphanClass);		// FIXME why doesn't this always work? - missing inverse in bad overload
+		ownedClasses.add(orphanClass);
 		assert orphanClass.eContainer() == this;
 		assert ownedClasses.contains(orphanClass);
 	}
@@ -448,6 +446,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		super.addPackageListener(partialPackages);
 	}
 
+	/**
+	 * Add a future orphan resulting from the creation of an EcoreUtil copy by the ASSaver.localizeOrphans.
+	 * The protoClass is primoted to a full orphan by installProtoClasses.
+	 */
 	public void addProtoClass(org.eclipse.ocl.pivot.@NonNull Class asProtoClass) {
 		assert asProtoClass.basicGetTypeId() == null;
 		getOwnedClasses().add(asProtoClass);

@@ -328,6 +328,7 @@ public class ASSaverNew extends AbstractASSaver
 		}
 		copier.copyReferences();
 		if (localOrphanage != null) {
+			localOrphanage.installProtoClasses();
 			ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanage.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
 		}
 		Map<EObject, Collection<Setting>> references2 = EcoreUtil.CrossReferencer.find(Collections.singletonList(asModel));
