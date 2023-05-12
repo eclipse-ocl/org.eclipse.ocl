@@ -1500,7 +1500,7 @@ public class LoadTests extends XtextTestCase
 		String oclinecoreFileXXX =
 				"package PackageXXX : nsPrefixXXX = 'http://XXX'{\n" +
 						"    class ClassXXX {\n" +
-						"    	property children: ClassXXX[*];\n" +
+						"    	property children: ClassXXX[*|1];\n" +
 						"    }\n" +
 						"}\n";
 		String ecoreFileXXX = createEcoreString(ocl1, "Bug418412", oclinecoreFileXXX, true);
@@ -1528,12 +1528,30 @@ public class LoadTests extends XtextTestCase
 			EObject eObject = tit.next();
 			String id = asResource.getID(eObject);
 			eObject2id.put(eObject, id);
-				//		System.out.println(id + " ==> " + eObject);
+						System.out.println("testReload_As418412:1 " + id + " ==> " + eObject);
 			if (id != null) {
 				id2eObject.put(id, eObject);
 				oldIdCount++;
 			}
 		}
+		// AAAAA ==> Bug418412.ecore
+		// sD2bB ==> PackageXXX
+		// BszFH ==> PackageXXX::ClassXXX
+		// UmQdX ==> PackageXXX::ClassXXX::children
+		// OqzEW ==> PackageXXX::ClassXXX::ClassXXX
+		// T59k1 ==> Bag(PackageXXX::ClassXXX[*|?])
+		// pUmmE ==> Collection(PackageXXX::ClassXXX[*|?])
+		// t6Bl1 ==> Set(PackageXXX::ClassXXX[*|?])
+		// aPWi0 ==> UniqueCollection(PackageXXX::ClassXXX[*|?])
+		// null ==> $$
+		// null ==> (PackageXXX::ClassXXX)
+		// null ==> T/PackageXXX::ClassXXX
+		// null ==> (PackageXXX::ClassXXX)
+		// null ==> T/PackageXXX::ClassXXX
+		// null ==> (PackageXXX::ClassXXX)
+		// null ==> T/PackageXXX::ClassXXX
+		// null ==> (PackageXXX::ClassXXX)
+		// null ==> T/PackageXXX::ClassXXX
 		assertEquals(9, oldIdCount);
 		assertEquals(oldIdCount, id2eObject.size());
 		//
@@ -1545,7 +1563,7 @@ public class LoadTests extends XtextTestCase
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			String id = asResource.getID(eObject);
-			//			System.out.println(id + " ==> " + eObject);
+						System.out.println("testReload_As418412:2 " + id + " ==> " + eObject);
 			assertEquals(eObject2id.get(eObject), id);
 		}
 		ocl2.dispose();
@@ -1561,6 +1579,7 @@ public class LoadTests extends XtextTestCase
 			String id = reloadedAsResource.getID(eObject);
 			if (id != null) {
 				EObject eObject2 = ClassUtil.nonNullState(id2eObject.get(id));
+				System.out.println("testReload_As418412:3 " + id + " ==> " + eObject2);
 				assertEquals(eObject2.getClass(), eObject.getClass());
 				newIdCount++;
 			}

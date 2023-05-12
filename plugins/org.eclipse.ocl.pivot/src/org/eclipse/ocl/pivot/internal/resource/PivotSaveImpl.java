@@ -23,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
@@ -44,11 +43,11 @@ public final class PivotSaveImpl extends XMISaveImpl
 	/**
 	 * @since 1.18
 	 */
-	public static class PivotXMIHelperImpl extends XMIHelperImpl
+	private static class PivotXMISaveHelperImpl extends XMIHelperImpl
 	{
 		private @NonNull ASSaverNew asSaver;
 
-		public PivotXMIHelperImpl(@NonNull ASResource asResource) {
+		public PivotXMISaveHelperImpl(@NonNull ASResource asResource) {
 			super(asResource);
 			this.asSaver = new ASSaverNew(asResource);
 		}
@@ -84,11 +83,8 @@ public final class PivotSaveImpl extends XMISaveImpl
 		}
 	}
 
-	private @NonNull ASSaverNew asSaver;
-
-	public PivotSaveImpl(@NonNull XMLHelper helper) {
-		super(helper);
-		this.asSaver = ((PivotXMIHelperImpl)helper).getSaver();
+	public PivotSaveImpl(@NonNull ASResource asResource) {
+		super(new PivotXMISaveHelperImpl(asResource));
 	}
 
 	//
@@ -131,11 +127,11 @@ public final class PivotSaveImpl extends XMISaveImpl
 		}
 		Object optionLocalizeContents = saveOptions.get(ASResource.OPTION_LOCALIZE_ORPHANS);
 		if ((optionLocalizeContents == null) || Boolean.valueOf(optionLocalizeContents.toString())) {
-			asSaver.localizeOrphans();
+			((PivotXMISaveHelperImpl)helper).getSaver().localizeOrphans();
 		}
 		Object optionNormalizeContents = saveOptions.get(ASResource.OPTION_NORMALIZE_CONTENTS);
 		if ((optionNormalizeContents != null) && Boolean.valueOf(optionNormalizeContents.toString())) {
-			asSaver.normalizeContents();
+			((PivotXMISaveHelperImpl)helper).getSaver().normalizeContents();
 			int capacity = INDEX_LOOKUP+1;
 			List<@Nullable Object> lookupTable = new ArrayList<>(capacity);
 			for (int i = 0; i < capacity; i++) {

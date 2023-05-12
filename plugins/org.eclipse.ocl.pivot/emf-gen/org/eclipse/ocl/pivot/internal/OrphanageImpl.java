@@ -17,14 +17,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -39,6 +45,7 @@ import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
@@ -214,6 +221,25 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
+	protected static class ResourceAdapter extends AdapterImpl
+	{
+		public ResourceAdapter(@NonNull Resource eResource) {
+			this.target = eResource;
+		}
+
+		@SuppressWarnings("null")
+		@Override
+		public @NonNull Resource getTarget() {
+			return (Resource)super.getTarget();
+		}
+
+		@Override
+		public void setTarget(Notifier newTarget) {}
+
+		@Override
+		public void unsetTarget(Notifier oldTarget) {}
+	}
+
 	private static final Logger logger = Logger.getLogger(OrphanageImpl.class);
 
 	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.nonNullEMF(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
@@ -221,10 +247,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	/**
 	 * Return the orphan package within asModel, or null if none.
 	 */
-	public static org.eclipse.ocl.pivot.@Nullable Package basicGetOrphanage(@NonNull Model asModel) {
+	public static @Nullable Orphanage basicGetOrphanage(@NonNull Model asModel) {
 		for (org.eclipse.ocl.pivot.Package asPackage : PivotUtil.getOwnedPackages(asModel)) {
 			if (isOrphanage(asPackage)) {
-				return asPackage;
+				return (Orphanage)asPackage;
 			}
 		}
 		return null;
@@ -279,6 +305,16 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		orphanageResource.getContents().add(orphanModel);
 		resourceSet.getResources().add(orphanageResource);
 		return orphanage;
+	}
+
+	public static @Nullable Resource getAdaptedResource(@NonNull EObject eObject) {
+		for (EObject eContainer; (eContainer = ((EObjectImpl)eObject).eInternalContainer()) != null; eObject = eContainer) { }
+		for (Adapter adapter : EcoreUtil.getRootContainer(eObject).eAdapters()) {
+			if (adapter instanceof ResourceAdapter) {
+				return ((ResourceAdapter)adapter).getTarget();
+			}
+		}
+		return eObject.eResource();
 	}
 
 	/**
@@ -374,6 +410,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	private void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
+		TemplateableElement unspecializedElement = orphanClass.getUnspecializedElement();
 		TypeId typeId = orphanClass.getTypeId();
 	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
 		Type old = typeId2type.put(typeId, orphanClass);
@@ -384,6 +421,30 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	//	ownedClasses.add(orphanClass);		// FIXME why doesn't this always work? - missing inverse in bad overload
 		assert orphanClass.eContainer() == this;
 		assert ownedClasses.contains(orphanClass);
+	}
+
+	public void addOrphanClasses(List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses) {
+	//	EList<@NonNull EObject> contents = eResource().getContents();
+	//	contents.addAll(orphanClasses);
+		Adapter resourceAdapter = new ResourceAdapter(eResource());
+		for (org.eclipse.ocl.pivot.@NonNull Class orphanClass : orphanClasses) {
+			orphanClass.eAdapters().add(resourceAdapter);
+		}
+		List<org.eclipse.ocl.pivot.Class> ownedClasses = getOwnedClasses();
+		for (org.eclipse.ocl.pivot.@NonNull Class orphanClass : orphanClasses) {
+			TypeId typeId = orphanClass.getTypeId();
+		//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
+			Type old = typeId2type.put(typeId, orphanClass);
+			assert old == null;
+			assert !ownedClasses.contains(orphanClass);
+		//	contents.remove(orphanClass);
+			orphanClass.setOwningPackage(this);
+			assert orphanClass.eContainer() == this;
+			assert ownedClasses.contains(orphanClass);
+		}
+		for (org.eclipse.ocl.pivot.@NonNull Class orphanClass : orphanClasses) {
+			orphanClass.eAdapters().remove(resourceAdapter);
+		}
 	}
 
 	@Override
@@ -496,6 +557,14 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	@Override
+	protected void didAddClass(@NonNull Class asClass) {
+		TypeId typeId = asClass.getTypeId();
+		Type old = typeId2type.put(typeId, asClass);
+		assert (old == null) || (old == asClass);
+		super.didAddClass(asClass);
+	}
+
+	@Override
 	public void dispose() {
 	/*	if (ownedClasses != null) {
 			((WeakEList<?>)ownedClasses).dispose();
@@ -504,6 +573,9 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			((WeakEList<?>)ownedPackages).dispose();
 		} */
 		typeId2type.clear();
+		if (ownedClasses != null) {
+			ownedClasses.clear();
+		}
 	}
 
 	@Override
@@ -786,6 +858,67 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 		assert tupleType.isWellContained();
 		return tupleType;
+	}
+
+	@Override
+	public @NonNull Type getType(@NonNull Type asType) {
+		if (asType instanceof CollectionType) {
+			CollectionType asCollectionType = (CollectionType)asType;
+			CollectionType asGenericType = (CollectionType)asCollectionType.getUnspecializedElement();
+			assert asGenericType != null;
+			Type asElementType = PivotUtil.getElementType(asCollectionType);
+			boolean isNullFree = asCollectionType.isIsNullFree();
+			IntegerValue lowerValue = asCollectionType.getLowerValue();
+			UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
+			return getCollectionType(asGenericType, asElementType, isNullFree, lowerValue, upperValue);
+		}
+		else if (asType instanceof LambdaType) {
+			LambdaType asLambdaType = (LambdaType)asType;
+			LambdaType asGenericType = (LambdaType)asLambdaType.getUnspecializedElement();
+			assert asGenericType != null;
+			Type asContextType = PivotUtil.getContextType(asLambdaType);
+			List<@NonNull Type> asParameterTypes = PivotUtil.getParameterType(asLambdaType);
+			Type asResultType = PivotUtil.getResultType(asLambdaType);
+			return getLambdaType(asGenericType, asContextType, asParameterTypes, asResultType);
+		}
+		else if (asType instanceof MapType) {
+			MapType asMapType = (MapType)asType;
+			MapType asGenericType = (MapType)asMapType.getUnspecializedElement();
+			assert asGenericType != null;
+			Type asKeyType = PivotUtil.getKeyType(asMapType);
+			boolean keysAreNullFree = asMapType.isKeysAreNullFree();
+			Type asValueType = PivotUtil.getValueType(asMapType);
+			boolean valuesAreNullFree = asMapType.isValuesAreNullFree();
+			return getMapType(asGenericType, asKeyType, keysAreNullFree, asValueType, valuesAreNullFree);
+		}
+		else if (asType instanceof TupleType) {
+			TupleType asTupleType = (TupleType)asType;
+			org.eclipse.ocl.pivot.Class oclTupleType = asTupleType.getSuperClasses().get(0);
+			assert oclTupleType != null;
+			List<@NonNull Property> asParts = PivotUtilInternal.getOwnedPropertiesList(asTupleType);
+			@NonNull TuplePart[] tupleParts = new @NonNull TuplePart[asParts.size()];
+			int i = 0;
+			for (@NonNull Property asPart : asParts) {
+				tupleParts[i++] = new TuplePart.TuplePartImpl(NameUtil.getName(asPart), PivotUtil.getType(asPart));
+			}
+			return getTupleType(oclTupleType, tupleParts);
+		}
+		else if (asType instanceof WildcardType) {
+			return getOrphanWildcardType(this);
+		}
+		else if (asType instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asType;
+			org.eclipse.ocl.pivot.Class asGenericType = (org.eclipse.ocl.pivot.Class)asClass.getUnspecializedElement();
+			assert asGenericType != null;
+			List<@NonNull Type> asTypes = new ArrayList<>();
+			for (@NonNull TemplateBinding asBinding : PivotUtil.getOwnedBindings(asClass)) {
+				for (@NonNull TemplateParameterSubstitution asSustitution : PivotUtil.getOwnedSubstitutions(asBinding)) {
+					asTypes.add(asSustitution.getActual());
+				}
+			}
+			return getSpecialization(asGenericType, asTypes);
+		}
+		throw new UnsupportedOperationException("OrphanageImpl.getType() for " + asType.getClass().getName());
 	}
 
 	private void removeOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {

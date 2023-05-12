@@ -71,6 +71,7 @@ public interface Orphanage extends org.eclipse.ocl.pivot.Package
 
 	@NonNull StandardLibrary getStandardLibrary();
 	@NonNull TupleType getTupleType(org.eclipse.ocl.pivot.@NonNull Class oclTupleType, @NonNull TuplePart @NonNull ... parts);
+	@NonNull Type getType(@NonNull Type asType);
 	void removePackageListener(@NonNull PartialPackages partialPackages);
 	void removeReference(@NonNull Type type, @NonNull Element asElement);
 } // Orphanage

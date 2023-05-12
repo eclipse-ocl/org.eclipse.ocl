@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -39,7 +40,6 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -313,12 +313,14 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		return new ASSaverNew(this);
 	}
 
-	/**
-	 * @since 1.18
-	 */
 	@Override
-	protected @NonNull PivotXMIHelperImpl createXMLHelper() {		// XXX split load/save functionality; PivotXMIHelperImpl designed for save
-		return new PivotXMIHelperImpl(this);
+	protected XMLHelper createXMLHelper() {
+		throw new UnsupportedOperationException();		// Should have used PivotXMILoadHelperImpl/PivotXMISaveHelperImpl
+	}
+
+	@Override
+	protected @NonNull PivotLoadImpl createXMLLoad() {
+	    return new PivotLoadImpl(this);
 	}
 
 	/**
@@ -326,7 +328,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 */
 	@Override
 	protected @NonNull PivotSaveImpl createXMLSave() {
-		return new PivotSaveImpl(createXMLHelper());
+		return new PivotSaveImpl(this);
 	}
 
 	@Override
