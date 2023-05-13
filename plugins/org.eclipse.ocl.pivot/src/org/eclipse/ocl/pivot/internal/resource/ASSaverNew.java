@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
@@ -239,7 +240,7 @@ public class ASSaverNew extends AbstractASSaver
 			for (EObject eTarget : references.keySet()) {
 				assert eTarget != null;
 				EObject localEObject = eTarget;
-			//	System.out.println("localizeOrphans0 " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+				System.out.println("localizeOrphans0 " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
 				Orphanage orphanage = PivotUtil.basicGetContainingOrphanage(eTarget);
 				if ((orphanage != null) && (orphanage != localOrphanage)) {
 					if (localOrphanage == null) {
@@ -247,13 +248,14 @@ public class ASSaverNew extends AbstractASSaver
 						asModel.getOwnedPackages().add(localOrphanage);
 					}
 					EObject eCopySource = eTarget;
-					if (eTarget instanceof Property) {				// If Tuple Property referenced (before Tuple)
+					if ((eTarget instanceof Property) && (eTarget.eContainer() instanceof TupleType)) {				// If Tuple Property referenced (before Tuple)
 						eCopySource = eCopySource.eContainer();				//  copy the whole Tuple.
+						System.out.println("localizeOrphans adj " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget + "\n\t=> " + NameUtil.debugSimpleName(eCopySource) + " : " + eCopySource);
 					}
 					if (!copier.containsKey(eCopySource)) {
 						assert eCopySource != null;
 						localEObject = copier.copy(eCopySource);
-					//	System.out.println("localizeOrphans1 " + NameUtil.debugSimpleName(eCopySource) + " : " + eCopySource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
+						System.out.println("localizeOrphans1 " + NameUtil.debugSimpleName(eCopySource) + " : " + eCopySource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
 						if (moreObjects == null) {
 							moreObjects = new ArrayList<>();
 						}
@@ -295,12 +297,12 @@ public class ASSaverNew extends AbstractASSaver
 				//			resolveOperation((Operation)eObject);
 						}
 					} */
-					if (eTarget instanceof Property) {			// If Tuple Property referenced (before Tuple)
+					if ((eTarget instanceof Property) && (eTarget.eContainer() instanceof TupleType)) {				// If Tuple Property referenced (before Tuple)
 						localEObject = copier.get(eTarget);		//  set resolution to property
 					}
 				}
 				if (localEObject != eTarget) {
-				//	System.out.println("localizeOrphans2 " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
+					System.out.println("localizeOrphans2 " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
 					Collection<Setting> settings = references.get(eTarget);
 					assert settings != null;
 					for (Setting setting : settings) {
@@ -341,9 +343,12 @@ public class ASSaverNew extends AbstractASSaver
 					EObject eSource = setting.getEObject();
 					EStructuralFeature settingReference = setting.getEStructuralFeature();
 				//	System.out.println("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
-					if (PivotUtil.basicGetContainingOrphanage(eTarget) != null) {
-						NameUtil.errPrintln("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
-						getClass();		// XXX
+					Orphanage containingOrphanage = PivotUtil.basicGetContainingOrphanage(eTarget);
+					if ((containingOrphanage != null) && (containingOrphanage != localOrphanage)) {
+						System.out.println("localizeOrphans3 " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget + "\n\t=> " + NameUtil.debugSimpleName(eSource) + " : " + eSource);
+					//	NameUtil.errPrintln("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+						throw new UnsupportedOperationException("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+					//	getClass();		// XXX
 					}
 				}
 			}

@@ -562,7 +562,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	@Override
 	protected void didAddClass(@NonNull Class asClass) {
 		TypeId typeId = asClass.basicGetTypeId();
-		if (typeId != null) {
+		if (typeId != null) {			// null for a proto orphan.
 			Type old = typeId2type.put(typeId, asClass);
 			assert (old == null) || (old == asClass);
 		}
