@@ -114,7 +114,7 @@ public class ASSaverNew extends AbstractASSaver
 			super.copyReferences();
 			OrphanageImpl localOrphanage2 = localOrphanage;
 			if (localOrphanage2 != null) {
-				localOrphanage2.installProtoClasses();
+				localOrphanage2.installLocalizedOrphans();	// Complete the localizaion by populating the typeId2type lookup.
 				ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanage2.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
 			}
 		}

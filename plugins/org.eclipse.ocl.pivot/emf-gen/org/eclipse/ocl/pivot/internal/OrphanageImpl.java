@@ -927,7 +927,24 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		throw new UnsupportedOperationException("OrphanageImpl.getType() for " + asType.getClass().getName());
 	} */
 
-	public void installProtoClasses() {
+	/**
+	 * Once XMI load has completed, migrate the local orphanage to the shared orphanage.
+	 */
+	public void installLoadedClasses() {
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : PivotUtil.getOwnedClasses(this)) {
+			TypeId typeId = asClass.basicGetTypeId();
+			if (typeId == null) {
+				typeId = asClass.getTypeId();
+				Type old = typeId2type.put(typeId, asClass);
+				assert old == null;
+			}
+		}
+	}
+
+	/**
+	 * Once ASSaver has localized all referenced orphans, this method is invoked to complete the typeId2type lookup.
+	 */
+	public void installLocalizedOrphans() {
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : PivotUtil.getOwnedClasses(this)) {
 			TypeId typeId = asClass.basicGetTypeId();
 			if (typeId == null) {
