@@ -84,7 +84,8 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * <br>
  * Each saved ASResource has a local orphanage that contains a selective copy of the shared orphanage so that
  * all references are terminated locally. ASSaver creates this copy via PivotSaveImpl.init(). The local orphanages
- * use a regular Package to avod the need for Orphange support in XMI.
+ * use a regular Package to avod the need for Orphanage support in XMI.
+ * Correspondingly a loaded ASREsource has a local orphanage that is created by conventional XMI APIs.
  *
  * <!-- end-user-doc -->
  *
@@ -447,8 +448,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	}
 
 	/**
-	 * Add a future orphan resulting from the creation of an EcoreUtil copy by the ASSaver.localizeOrphans.
-	 * The protoClass is primoted to a full orphan by installProtoClasses.
+	 * Add a future orphan resulting from the creation of an EcoreUtil copy by the XMI load or ASSaver.localizeOrphans.
+	 * The protoClass is promoted to a full orphan by installProtoClasses.
 	 */
 	public void addProtoClass(org.eclipse.ocl.pivot.@NonNull Class asProtoClass) {
 		assert asProtoClass.basicGetTypeId() == null;

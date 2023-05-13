@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.TracingAdapter;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -468,7 +469,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 		int preIndex = string.lastIndexOf("\n", index);
 		int postIndex = string.indexOf("\n", index);
 		String refText = string.substring(preIndex, postIndex).trim();
-		System.err.println("Missing xmi:id for reference in \'" + uri + "'\n\t" + refText);
+		NameUtil.errPrintln("Missing xmi:id for reference in \'" + uri + "'\n\t" + refText);
 		// PivotLUSSIDs.isExternallyReferenceable determines what gets xmi:ids
 		return false;
 	}

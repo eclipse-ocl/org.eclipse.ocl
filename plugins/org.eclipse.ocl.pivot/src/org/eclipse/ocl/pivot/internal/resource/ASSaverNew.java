@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -33,9 +32,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Orphanage;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
@@ -44,6 +41,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 
 /**
  * ASSaverNew ensures that all references to synthesized types are terminated by local copies of the synthesized types.
@@ -68,14 +66,37 @@ public class ASSaverNew extends AbstractASSaver
 	@SuppressWarnings("serial")
 	protected static class ASSaverCopier extends EcoreUtil.Copier
 	{
+		private final @NonNull Model asModel;
+		private @Nullable Orphanage sharedOrphanage = null;
+		private @Nullable OrphanageImpl localOrphanage = null;
+
 		protected ASSaverCopier(@NonNull ASResource resource, boolean resolveProxies) {
 			super(resolveProxies);
+			this.asModel = PivotUtil.getModel(resource);
+			this.localOrphanage = (OrphanageImpl)OrphanageImpl.basicGetOrphanage(asModel);
+			if (localOrphanage != null) {		// Pre-existing orphan content 'copies' to itself.
+				for (EObject eObject : new TreeIterable(localOrphanage, false)) {
+					put(eObject, eObject);
+				}
+			}
 		}
 
 		@Override
 		public EObject copy(EObject eObject) {
 			assert !(eObject instanceof TemplateParameter);		// Generalized class never needs localizing.
 			return super.copy(eObject);
+		}
+
+		public void copyDefinitions(@Nullable Collection<@NonNull EObject> moreReferencingObjects) {
+			while (moreReferencingObjects != null) {
+				Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(moreReferencingObjects);
+				assert references != null;
+				moreReferencingObjects = null;
+				for (EObject eTarget : references.keySet()) {
+					assert eTarget != null;
+					moreReferencingObjects = localize(eTarget, references, moreReferencingObjects);
+				}
+			}
 		}
 
 		@Override
@@ -86,6 +107,106 @@ public class ASSaverNew extends AbstractASSaver
 				copyValues.clear();						// Avoid duplicate superclasses when reloading
 			}
 			super.copyReference(eReference, eObject, copyEObject);
+		}
+
+		@Override
+		public void copyReferences() {
+			super.copyReferences();
+			OrphanageImpl localOrphanage2 = localOrphanage;
+			if (localOrphanage2 != null) {
+				localOrphanage2.installProtoClasses();
+				ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanage2.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
+			}
+		}
+
+		private void debugLocalization() {
+			Map<EObject, Collection<Setting>> object2references = EcoreUtil.CrossReferencer.find(Collections.singletonList(asModel));
+			for (EObject referencedObject : object2references.keySet()) {
+				Collection<Setting> settings = object2references.get(referencedObject);
+				assert settings != null;
+				Orphanage containingOrphanage = PivotUtil.basicGetContainingOrphanage(referencedObject);
+				if ((containingOrphanage != null) && (containingOrphanage != localOrphanage)) {
+					for (Setting setting : settings) {
+						EObject referencingObject = setting.getEObject();
+						EStructuralFeature settingReference = setting.getEStructuralFeature();
+					//	System.out.println("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+						System.out.println("debugLocalization-bad " + NameUtil.debugSimpleName(referencingObject) + " : " + referencingObject + "::" + settingReference.getName() + "\n\t=> " + NameUtil.debugSimpleName(referencedObject) + " : " + referencedObject);
+					//	NameUtil.errPrintln("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+						throw new UnsupportedOperationException("Not-localized: " + NameUtil.debugSimpleName(referencingObject) + " " + referencingObject + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(referencedObject) + " : " + referencedObject);
+					//	getClass();		// XXX
+					}
+				}
+			}
+		}
+
+		private @NonNull OrphanageImpl getLocalOrphanage() {
+			OrphanageImpl localOrphanage2 = localOrphanage;
+			if (localOrphanage2 == null) {
+				localOrphanage = localOrphanage2 = new OrphanageImpl(sharedOrphanage != null ? sharedOrphanage.getStandardLibrary() : null);
+				asModel.getOwnedPackages().add(localOrphanage2);
+			}
+			return localOrphanage2;
+		}
+
+		/**
+		 * Prepare a pivot resource for save by redirecting all type references to shared orphans to local copies of the orphans.
+		 */
+		private @Nullable Collection<@NonNull EObject> localize(@NonNull EObject remoteObject, @NonNull Map<EObject, Collection<Setting>> remote2references, @Nullable Collection<@NonNull EObject> moreReferencingObjects) {
+			Orphanage orphanage = PivotUtil.basicGetContainingOrphanage(remoteObject);
+			if ((orphanage == null) || (orphanage == localOrphanage)) {
+				return moreReferencingObjects;
+			}
+			final EObject localObject;
+			EObject remoteContainer = remoteObject.eContainer();
+			assert remoteContainer != null;
+			if (remoteContainer != orphanage) {
+				moreReferencingObjects = localize(remoteContainer, remote2references, moreReferencingObjects);
+				localObject = get(remoteObject);
+				assert localObject != null;
+				System.out.println("localize-child " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " : " + remoteObject);
+			}
+			else {
+				EObject localObject2 = get(remoteObject);
+				if (localObject2 != null) {
+					localObject = localObject2;
+					System.out.println("localize-again " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " : " + remoteObject);
+				}
+				else {
+					OrphanageImpl localOrphanage = getLocalOrphanage();
+					localObject = copy(remoteObject);
+					assert (localObject != null) && (localObject != remoteObject);
+					System.out.println("localize-fresh " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " : " + remoteObject);
+					Collection<@NonNull EObject> moreReferencingObjects2 = moreReferencingObjects;
+					if (moreReferencingObjects2 == null) {
+						moreReferencingObjects = moreReferencingObjects2 = new ArrayList<>();
+					}
+					moreReferencingObjects2.add(remoteObject);
+					assert localObject instanceof org.eclipse.ocl.pivot.Class;
+					localOrphanage.addProtoClass((org.eclipse.ocl.pivot.Class)localObject);
+				}
+			}
+			Collection<Setting> settings = remote2references.get(remoteObject);
+			if (settings != null) {
+				for (Setting setting : settings) {
+					EObject referencingObject = setting.getEObject();
+					EStructuralFeature eReference = setting.getEStructuralFeature();
+					if (!eReference.isDerived() && !eReference.isTransient()) {
+						if (eReference.isMany()) {
+							@SuppressWarnings("unchecked") List<EObject> referencedObjects = (List<EObject>)referencingObject.eGet(eReference);
+							referencedObjects.replaceAll(new UnaryOperator<EObject>() {
+								@Override
+								public EObject apply(EObject t) {
+									return t == remoteObject ? localObject : t;
+								}
+							});
+						}
+						else {
+							referencingObject.eSet(eReference, localObject);
+						}
+					}
+				}
+			}
+			return moreReferencingObjects;
 		}
 	}
 
@@ -162,7 +283,7 @@ public class ASSaverNew extends AbstractASSaver
 	/**
 	 * The mapping from shared orphanage elements to their local counterpart.
 	 */
-	private final EcoreUtil.@NonNull Copier copier;
+	private final @NonNull ASSaverCopier copier;
 
 	public ASSaverNew(@NonNull ASResource resource) {
 		super(resource);
@@ -222,137 +343,20 @@ public class ASSaverNew extends AbstractASSaver
 	}
 
 	/**
-	 * Prepare a pivot resource for save by redirecting all type references to shared orphans to local copies of the orphans.
+	 * Prepare a pivot resource for save by transitively redirecting all type references of shared orphans to local copies of the orphans.
 	 */
 	public void localizeOrphans() {
-		Model asModel = PivotUtil.getModel(resource);
 	//	System.out.println("localizeOrphans " + NameUtil.debugSimpleName(asModel) + " : " + asModel);
-		OrphanageImpl localOrphanage = (OrphanageImpl) OrphanageImpl.basicGetOrphanage(asModel);
+	/*	OrphanageImpl localOrphanage = (OrphanageImpl) OrphanageImpl.basicGetOrphanage(asModel);
 		ResourceSet resourceSet = resource.getResourceSet();
 		Orphanage sharedOrphanage = resourceSet != null ? OrphanageImpl.basicGetSharedOrphanage(resourceSet) : null;
 		if ((localOrphanage != null) && (sharedOrphanage != null)) {
 			loadOrphanage(localOrphanage, sharedOrphanage);
-		}
-		Collection<@NonNull EObject> moreObjects = resource.getContents();
-		while (moreObjects != null) {
-			Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(moreObjects);
-			moreObjects = null;
-			for (EObject eTarget : references.keySet()) {
-				assert eTarget != null;
-				EObject localEObject = eTarget;
-				System.out.println("localizeOrphans0 " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
-				Orphanage orphanage = PivotUtil.basicGetContainingOrphanage(eTarget);
-				if ((orphanage != null) && (orphanage != localOrphanage)) {
-					if (localOrphanage == null) {
-						localOrphanage = new OrphanageImpl(sharedOrphanage != null ? sharedOrphanage.getStandardLibrary() : null);
-						asModel.getOwnedPackages().add(localOrphanage);
-					}
-					EObject eCopySource = eTarget;
-					if ((eTarget instanceof Property) && (eTarget.eContainer() instanceof TupleType)) {				// If Tuple Property referenced (before Tuple)
-						eCopySource = eCopySource.eContainer();				//  copy the whole Tuple.
-						System.out.println("localizeOrphans adj " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget + "\n\t=> " + NameUtil.debugSimpleName(eCopySource) + " : " + eCopySource);
-					}
-					if (!copier.containsKey(eCopySource)) {
-						assert eCopySource != null;
-						localEObject = copier.copy(eCopySource);
-						System.out.println("localizeOrphans1 " + NameUtil.debugSimpleName(eCopySource) + " : " + eCopySource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
-						if (moreObjects == null) {
-							moreObjects = new ArrayList<>();
-						}
-						moreObjects.add(eCopySource);
-						if (localEObject instanceof org.eclipse.ocl.pivot.Class) {
-							localOrphanage.addProtoClass((org.eclipse.ocl.pivot.Class)localEObject);
-						}
-						else if (eCopySource instanceof Operation) {
-							throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
-				//			resolveOperation((Operation)eObject);
-							}
-					}
-
-			/*	//	localEObject = localOrphanage.getType((Type)eCopySource);
-					localEObject = copier.copy(eCopySource);
-					System.out.println("localizeOrphans1 " + NameUtil.debugSimpleName(eCopySource) + " : " + eCopySource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
-					if (moreObjects == null) {
-						moreObjects = new ArrayList<>();
-					}
-				//	moreObjects.add(eCopySource);
-					moreObjects.add(localEObject);
-					copier.put(eCopySource, localEObject); */
-
-				//	localEObject = copier.get(eCopySource);
-				/*	if (localEObject == null) {
-						assert eCopySource != null;
-						localEObject = copier.copy(eCopySource);
-					//	System.out.println("localizeOrphans1 " + NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
-						if (moreObjects == null) {
-							moreObjects = new ArrayList<>();
-						}
-						moreObjects.add(eCopySource);
-						if (localEObject instanceof org.eclipse.ocl.pivot.Class) {
-						//	localOrphanage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localEObject);
-							((OrphanageImpl)localOrphanage).addOrphanClass((org.eclipse.ocl.pivot.Class)localEObject);
-						}
-						else if (eCopySource instanceof Operation) {
-							throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
-				//			resolveOperation((Operation)eObject);
-						}
-					} */
-					if ((eTarget instanceof Property) && (eTarget.eContainer() instanceof TupleType)) {				// If Tuple Property referenced (before Tuple)
-						localEObject = copier.get(eTarget);		//  set resolution to property
-					}
-				}
-				if (localEObject != eTarget) {
-					System.out.println("localizeOrphans2 " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
-					Collection<Setting> settings = references.get(eTarget);
-					assert settings != null;
-					for (Setting setting : settings) {
-						EObject eSource = setting.getEObject();
-						EStructuralFeature eReference = setting.getEStructuralFeature();
-						if (!eReference.isDerived() && !eReference.isTransient()) {
-							if (eReference.isMany()) {
-								final EObject finalOldEObject = eTarget;
-								final EObject finalNewEObject = localEObject;
-								@SuppressWarnings("unchecked") List<EObject> list = (List<EObject>)eSource.eGet(eReference);
-								list.replaceAll(new UnaryOperator<EObject>() {
-									@Override
-									public EObject apply(EObject t) {
-										return t == finalOldEObject ? finalNewEObject : t;
-									}
-								});
-							}
-							else {
-								eSource.eSet(eReference, localEObject);
-							}
-						}
-					}
-				}
-			}
-		}
+		} */
+		copier.copyDefinitions(resource.getContents());
 		copier.copyReferences();
-		if (localOrphanage != null) {
-			localOrphanage.installProtoClasses();
-			ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanage.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
-		}
-		Map<EObject, Collection<Setting>> references2 = EcoreUtil.CrossReferencer.find(Collections.singletonList(asModel));
-		for (EObject eTarget : references2.keySet()) {
-			Collection<Setting> settings = references2.get(eTarget);
-			assert settings != null;
-			EObject eRoot = EcoreUtil.getRootContainer(eTarget);
-			if (eRoot != asModel) {
-				for (Setting setting : settings) {
-					EObject eSource = setting.getEObject();
-					EStructuralFeature settingReference = setting.getEStructuralFeature();
-				//	System.out.println("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
-					Orphanage containingOrphanage = PivotUtil.basicGetContainingOrphanage(eTarget);
-					if ((containingOrphanage != null) && (containingOrphanage != localOrphanage)) {
-						System.out.println("localizeOrphans3 " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget + "\n\t=> " + NameUtil.debugSimpleName(eSource) + " : " + eSource);
-					//	NameUtil.errPrintln("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
-						throw new UnsupportedOperationException("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
-					//	getClass();		// XXX
-					}
-				}
-			}
-		}
+		copier.debugLocalization();
+		// Could prune dead content left over from pre-existing content
 	}
 
 	/**

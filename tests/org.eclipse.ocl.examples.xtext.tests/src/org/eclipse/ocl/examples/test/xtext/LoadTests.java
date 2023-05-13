@@ -1528,7 +1528,7 @@ public class LoadTests extends XtextTestCase
 			EObject eObject = tit.next();
 			String id = asResource.getID(eObject);
 			eObject2id.put(eObject, id);
-						System.out.println("testReload_As418412:1 " + id + " ==> " + eObject);
+			System.out.println("testReload_As418412:1 " + id + " ==> " + eObject);
 			if (id != null) {
 				id2eObject.put(id, eObject);
 				oldIdCount++;
@@ -1563,7 +1563,7 @@ public class LoadTests extends XtextTestCase
 		for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
 			String id = asResource.getID(eObject);
-						System.out.println("testReload_As418412:2 " + id + " ==> " + eObject);
+			System.out.println("testReload_As418412:2 " + id + " ==> " + eObject);
 			assertEquals(eObject2id.get(eObject), id);
 		}
 		ocl2.dispose();
