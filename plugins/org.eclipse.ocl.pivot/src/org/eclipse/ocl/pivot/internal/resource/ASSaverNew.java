@@ -31,11 +31,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.OrphanageImpl;
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -68,12 +67,12 @@ public class ASSaverNew extends AbstractASSaver
 	{
 		private final @NonNull Model asModel;
 		private @Nullable Orphanage sharedOrphanage = null;
-		private @Nullable OrphanageImpl localOrphanage = null;
+		private @Nullable Orphanage localOrphanage = null;
 
 		protected ASSaverCopier(@NonNull ASResource resource, boolean resolveProxies) {
 			super(resolveProxies);
 			this.asModel = PivotUtil.getModel(resource);
-			this.localOrphanage = (OrphanageImpl)OrphanageImpl.basicGetOrphanage(asModel);
+			this.localOrphanage = (Orphanage)Orphanage.basicGetOrphanage(asModel);
 			if (localOrphanage != null) {		// Pre-existing orphan content 'copies' to itself.
 				for (EObject eObject : new TreeIterable(localOrphanage, false)) {
 					put(eObject, eObject);
@@ -112,7 +111,7 @@ public class ASSaverNew extends AbstractASSaver
 		@Override
 		public void copyReferences() {
 			super.copyReferences();
-			OrphanageImpl localOrphanage2 = localOrphanage;
+			Orphanage localOrphanage2 = localOrphanage;
 			if (localOrphanage2 != null) {
 				localOrphanage2.installLocalizedOrphans();	// Complete the localizaion by populating the typeId2type lookup.
 				ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanage2.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
@@ -139,10 +138,10 @@ public class ASSaverNew extends AbstractASSaver
 			}
 		}
 
-		private @NonNull OrphanageImpl getLocalOrphanage() {
-			OrphanageImpl localOrphanage2 = localOrphanage;
+		private @NonNull Orphanage getLocalOrphanage() {
+			Orphanage localOrphanage2 = localOrphanage;
 			if (localOrphanage2 == null) {
-				localOrphanage = localOrphanage2 = new OrphanageImpl(sharedOrphanage != null ? sharedOrphanage.getStandardLibrary() : null);
+				localOrphanage = localOrphanage2 = new Orphanage(sharedOrphanage != null ? sharedOrphanage.getStandardLibrary() : null);
 				asModel.getOwnedPackages().add(localOrphanage2);
 			}
 			return localOrphanage2;
@@ -172,7 +171,7 @@ public class ASSaverNew extends AbstractASSaver
 					System.out.println("localize-again " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " : " + remoteObject);
 				}
 				else {
-					OrphanageImpl localOrphanage = getLocalOrphanage();
+					Orphanage localOrphanage = getLocalOrphanage();
 					localObject = copy(remoteObject);
 					assert (localObject != null) && (localObject != remoteObject);
 					System.out.println("localize-fresh " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " : " + remoteObject);

@@ -80,7 +80,6 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -245,51 +244,50 @@ implements PivotFactory {
 			case 76: return createOppositePropertyCallExp();
 			case 77: return createOrderedSetType();
 			case 78: return createOrphanCompletePackage();
-			case 79: return createOrphanage();
-			case 80: return createPackage();
-			case 81: return createParameter();
-			case 82: return createParameterVariable();
-			case 84: return createPrecedence();
-			case 85: return createPrimitiveCompletePackage();
-			case 87: return createPrimitiveType();
-			case 88: return createProfile();
-			case 89: return createProfileApplication();
-			case 90: return createProperty();
-			case 91: return createPropertyCallExp();
-			case 92: return createPseudostate();
-			case 93: return createRealLiteralExp();
-			case 96: return createRegion();
-			case 97: return createResultVariable();
-			case 98: return createSelfType();
-			case 99: return createSendSignalAction();
-			case 100: return createSequenceType();
-			case 101: return createSetType();
-			case 102: return createShadowExp();
-			case 103: return createShadowPart();
-			case 104: return createSignal();
-			case 105: return createSlot();
-			case 107: return createState();
-			case 108: return createStateExp();
-			case 109: return createStateMachine();
-			case 110: return createStereotype();
-			case 111: return createStereotypeExtender();
-			case 112: return createStringLiteralExp();
-			case 113: return createTemplateBinding();
-			case 114: return createTemplateParameter();
-			case 115: return createTemplateParameterSubstitution();
-			case 116: return createTemplateSignature();
-			case 118: return createTransition();
-			case 119: return createTrigger();
-			case 120: return createTupleLiteralExp();
-			case 121: return createTupleLiteralPart();
-			case 123: return createTupleType();
-			case 125: return createTypeExp();
-			case 127: return createUnlimitedNaturalLiteralExp();
-			case 128: return createUnspecifiedValueExp();
-			case 130: return createVariable();
-			case 132: return createVariableExp();
-			case 135: return createVoidType();
-			case 136: return createWildcardType();
+			case 79: return createPackage();
+			case 80: return createParameter();
+			case 81: return createParameterVariable();
+			case 83: return createPrecedence();
+			case 84: return createPrimitiveCompletePackage();
+			case 86: return createPrimitiveType();
+			case 87: return createProfile();
+			case 88: return createProfileApplication();
+			case 89: return createProperty();
+			case 90: return createPropertyCallExp();
+			case 91: return createPseudostate();
+			case 92: return createRealLiteralExp();
+			case 95: return createRegion();
+			case 96: return createResultVariable();
+			case 97: return createSelfType();
+			case 98: return createSendSignalAction();
+			case 99: return createSequenceType();
+			case 100: return createSetType();
+			case 101: return createShadowExp();
+			case 102: return createShadowPart();
+			case 103: return createSignal();
+			case 104: return createSlot();
+			case 106: return createState();
+			case 107: return createStateExp();
+			case 108: return createStateMachine();
+			case 109: return createStereotype();
+			case 110: return createStereotypeExtender();
+			case 111: return createStringLiteralExp();
+			case 112: return createTemplateBinding();
+			case 113: return createTemplateParameter();
+			case 114: return createTemplateParameterSubstitution();
+			case 115: return createTemplateSignature();
+			case 117: return createTransition();
+			case 118: return createTrigger();
+			case 119: return createTupleLiteralExp();
+			case 120: return createTupleLiteralPart();
+			case 122: return createTupleType();
+			case 124: return createTypeExp();
+			case 126: return createUnlimitedNaturalLiteralExp();
+			case 127: return createUnspecifiedValueExp();
+			case 129: return createVariable();
+			case 131: return createVariableExp();
+			case 134: return createVoidType();
+			case 135: return createWildcardType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -304,39 +302,39 @@ implements PivotFactory {
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case 137:
+			case 136:
 				return createAssociativityKindFromString(eDataType, initialValue);
-			case 138:
+			case 137:
 				return createCollectionKindFromString(eDataType, initialValue);
-			case 139:
+			case 138:
 				return createPseudostateKindFromString(eDataType, initialValue);
-			case 140:
+			case 139:
 				return createTransitionKindFromString(eDataType, initialValue);
-			case 141:
+			case 140:
 				return createBooleanFromString(eDataType, initialValue);
-			case 142:
+			case 141:
 				return createEBooleanFromString(eDataType, initialValue);
-			case 143:
+			case 142:
 				return createEIntFromString(eDataType, initialValue);
-			case 144:
+			case 143:
 				return createEcoreObjectFromString(eDataType, initialValue);
-			case 145:
+			case 144:
 				return createIntegerFromString(eDataType, initialValue);
-			case 146:
+			case 145:
 				return createJavaClassFromString(eDataType, initialValue);
-			case 147:
+			case 146:
 				return createLibraryFeatureFromString(eDataType, initialValue);
-			case 148:
+			case 147:
 				return createNumberFromString(eDataType, initialValue);
-			case 149:
+			case 148:
 				return createObjectFromString(eDataType, initialValue);
-			case 150:
+			case 149:
 				return createRealFromString(eDataType, initialValue);
-			case 151:
+			case 150:
 				return createStringFromString(eDataType, initialValue);
-			case 152:
+			case 151:
 				return createThrowableFromString(eDataType, initialValue);
-			case 153:
+			case 152:
 				return createUnlimitedNaturalFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -352,39 +350,39 @@ implements PivotFactory {
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case 137:
+			case 136:
 				return convertAssociativityKindToString(eDataType, instanceValue);
-			case 138:
+			case 137:
 				return convertCollectionKindToString(eDataType, instanceValue);
-			case 139:
+			case 138:
 				return convertPseudostateKindToString(eDataType, instanceValue);
-			case 140:
+			case 139:
 				return convertTransitionKindToString(eDataType, instanceValue);
-			case 141:
+			case 140:
 				return convertBooleanToString(eDataType, instanceValue);
-			case 142:
+			case 141:
 				return convertEBooleanToString(eDataType, instanceValue);
-			case 143:
+			case 142:
 				return convertEIntToString(eDataType, instanceValue);
-			case 144:
+			case 143:
 				return convertEcoreObjectToString(eDataType, instanceValue);
-			case 145:
+			case 144:
 				return convertIntegerToString(eDataType, instanceValue);
-			case 146:
+			case 145:
 				return convertJavaClassToString(eDataType, instanceValue);
-			case 147:
+			case 146:
 				return convertLibraryFeatureToString(eDataType, instanceValue);
-			case 148:
+			case 147:
 				return convertNumberToString(eDataType, instanceValue);
-			case 149:
+			case 148:
 				return convertObjectToString(eDataType, instanceValue);
-			case 150:
+			case 149:
 				return convertRealToString(eDataType, instanceValue);
-			case 151:
+			case 150:
 				return convertStringToString(eDataType, instanceValue);
-			case 152:
+			case 151:
 				return convertThrowableToString(eDataType, instanceValue);
-			case 153:
+			case 152:
 				return convertUnlimitedNaturalToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -1292,18 +1290,6 @@ implements PivotFactory {
 	 * @generated
 	 */
 	@Override
-	public @NonNull Orphanage createOrphanage()
-	{
-		OrphanageImpl orphanage = new OrphanageImpl();
-		return orphanage;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public @NonNull PrimitiveType createPrimitiveType() {
 		PrimitiveTypeImpl primitiveType = new PrimitiveTypeImpl();
 		return primitiveType;
@@ -1837,9 +1823,9 @@ implements PivotFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Class<?> createJavaClassFromString(EDataType eDataType, String initialValue)
+	public Class createJavaClassFromString(EDataType eDataType, String initialValue)
 	{
-		return (Class<?>)super.createFromString(eDataType, initialValue);
+		return (Class)super.createFromString(eDataType, initialValue);
 	}
 
 	/**

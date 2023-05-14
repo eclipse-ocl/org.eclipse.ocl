@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -114,7 +115,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		assert asPackage != null;
 		org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
 		assert parentPackage == null;
-		assert OrphanageImpl.isOrphanage(asPackage);
+		assert Orphanage.isOrphanage(asPackage);
 	}
 
 	@Override

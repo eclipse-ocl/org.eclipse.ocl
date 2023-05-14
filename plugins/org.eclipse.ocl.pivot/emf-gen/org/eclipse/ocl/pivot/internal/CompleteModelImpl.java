@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
@@ -56,6 +55,7 @@ import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -551,7 +551,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 == null) {
 			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-			orphanage2 = orphanage = OrphanageImpl.getSharedOrphanage(environmentFactory.getStandardLibrary(), metamodelManager.getASResourceSet());
+			orphanage2 = orphanage = Orphanage.getSharedOrphanage(environmentFactory.getStandardLibrary(), metamodelManager.getASResourceSet());
 			PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
 			orphanage2.addPackageListener(partialPackages);
 			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {

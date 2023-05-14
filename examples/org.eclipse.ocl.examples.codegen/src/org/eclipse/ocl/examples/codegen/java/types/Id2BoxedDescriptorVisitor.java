@@ -48,8 +48,8 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
-import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.values.BagValue;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.IntegerRange;
@@ -148,7 +148,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		//		if (type instanceof org.eclipse.ocl.pivot.Class) {
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
 		// XXX FIXME Orphanage evolved to not-contain its Packages but Native Packahes are evolving to a Native Model
-		if ((asPackage != null) && ((asPackage.eContainer() instanceof OrphanageImpl) || (asPackage.eContainer() == null))) {
+		if ((asPackage != null) && ((asPackage.eContainer() instanceof Orphanage) || (asPackage.eContainer() == null))) {
 			return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
 		}
 		//		}
@@ -298,7 +298,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		}
 		// FIXME this is the control path that has not been exercised
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
-		if ((asPackage != null) && (asPackage.eContainer() instanceof OrphanageImpl)) {
+		if ((asPackage != null) && (asPackage.eContainer() instanceof Orphanage)) {
 			return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
 		}
 		return new RootObjectDescriptor(id);

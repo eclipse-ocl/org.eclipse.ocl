@@ -415,11 +415,6 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
-	public R visitOrphanage(org.eclipse.ocl.pivot.@NonNull Orphanage object) {
-		return visiting(object);
-	}
-
-	@Override
 	public R visitPackage(org.eclipse.ocl.pivot.@NonNull Package object) {
 		return visiting(object);
 	}

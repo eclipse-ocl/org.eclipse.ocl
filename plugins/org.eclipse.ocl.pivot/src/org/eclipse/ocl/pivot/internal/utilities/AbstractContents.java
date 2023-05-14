@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -45,7 +44,6 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.LibraryImpl;
-import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -64,7 +62,7 @@ public abstract class AbstractContents extends PivotUtil
 	protected final @NonNull Orphanage orphanage;
 
 	protected AbstractContents() {
-		this.orphanage = new OrphanageImpl(PivotUtilInternal.getEnvironmentFactory(null).getStandardLibrary());	// XXX should go obsolete
+		this.orphanage = new Orphanage(PivotUtilInternal.getEnvironmentFactory(null).getStandardLibrary());	// XXX should go obsolete
 	}
 
 	protected void addSuperClass(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, org.eclipse.ocl.pivot./*@NonNull*/ Class asSuperClass) {

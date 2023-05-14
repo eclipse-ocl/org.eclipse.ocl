@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -68,7 +67,6 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
@@ -76,6 +74,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASSaverNew;
 import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -618,11 +617,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 
 		@Override
-		public @Nullable Object visitOrphanage(@NonNull Orphanage asOrphanage) {
-			return null;
-		}
-
-		@Override
 		public @Nullable Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 			sortedPackages.add(asPackage);
 			return null;
@@ -767,7 +761,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			return;
 		}
 		Model containingModel = PivotUtil.getContainingModel(reference);
-		if ((containingModel == root) || external2name.containsKey(reference) || OrphanageImpl.isOrphanage(containingModel)) {
+		if ((containingModel == root) || external2name.containsKey(reference) || Orphanage.isOrphanage(containingModel)) {
 			return;
 		}
 		if (reference instanceof Model) {
@@ -1061,7 +1055,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getSortedExternalPackages(@NonNull Model root) {
 		List<org.eclipse.ocl.pivot.@NonNull Package> externalPackages = new ArrayList<>();
 		for (org.eclipse.ocl.pivot.@NonNull Package asPackage : root.getOwnedPackages()) {
-			if (!OrphanageImpl.isOrphanage(asPackage)) {
+			if (!Orphanage.isOrphanage(asPackage)) {
 				externalPackages.add(asPackage);
 			}
 		}
@@ -1338,10 +1332,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			else if (localOrphan instanceof TemplateParameterSubstitution) {
 			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && OrphanageImpl.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
+			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
 				s.append("orphanClass");
 			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && OrphanageImpl.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {		// XXX
+			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {		// XXX
 				s.append("orphanage");			// XXXX
 			}
 			else {

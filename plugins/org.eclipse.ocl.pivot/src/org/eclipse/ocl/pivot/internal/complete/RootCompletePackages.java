@@ -19,7 +19,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
-import org.eclipse.ocl.pivot.internal.OrphanageImpl;
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 public class RootCompletePackages extends AbstractCompletePackages
@@ -40,7 +40,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 	}
 
 	protected @NonNull CompletePackageInternal createRootCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
-		if (OrphanageImpl.isOrphanage(pivotPackage)) {
+		if (Orphanage.isOrphanage(pivotPackage)) {
 			return getCompleteModel().getOrphanCompletePackage();
 		}
 		else {

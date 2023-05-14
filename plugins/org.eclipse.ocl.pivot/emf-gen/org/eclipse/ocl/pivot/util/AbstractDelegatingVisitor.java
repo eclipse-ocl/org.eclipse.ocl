@@ -440,11 +440,6 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
-	public R visitOrphanage(org.eclipse.ocl.pivot.@NonNull Orphanage object) {
-		return delegate.visitOrphanage(object);
-	}
-
-	@Override
 	public R visitPackage(org.eclipse.ocl.pivot.@NonNull Package object) {
 		return delegate.visitPackage(object);
 	}

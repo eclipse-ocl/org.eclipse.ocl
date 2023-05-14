@@ -2452,16 +2452,6 @@ extends EPackage
 	EClass getOrphanCompletePackage();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Orphanage <em>Orphanage</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Orphanage</em>'.
-	 * @see org.eclipse.ocl.pivot.Orphanage
-	 * @generated
-	 */
-	EClass getOrphanage();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.PrimitiveType <em>Primitive Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7930,16 +7920,6 @@ extends EPackage
 		 * @generated
 		 */
 		EClass ORPHAN_COMPLETE_PACKAGE = eINSTANCE.getOrphanCompletePackage();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.OrphanageImpl <em>Orphanage</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.OrphanageImpl
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOrphanage()
-		 * @generated
-		 */
-		EClass ORPHANAGE = eINSTANCE.getOrphanage();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.PrimitiveTypeImpl <em>Primitive Type</em>}' class.

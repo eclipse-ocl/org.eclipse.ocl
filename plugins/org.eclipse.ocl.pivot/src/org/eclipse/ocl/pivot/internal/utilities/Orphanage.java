@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.pivot.internal;
+package org.eclipse.ocl.pivot.internal.utilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,9 +31,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateBinding;
@@ -50,13 +48,12 @@ import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.MapTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
+import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedNestedTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
-import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
-import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -91,7 +88,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  *
  * @generated
  */
-public class OrphanageImpl extends PackageImpl implements Orphanage
+public class Orphanage extends PackageImpl
 {
 	/**
 	 * The number of structural features of the '<em>Orphanage</em>' class.
@@ -115,67 +112,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
-	 */
+	 *
 	protected OrphanageImpl()
 	{
 		super();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass()
-	{
-		return PivotPackage.Literals.ORPHANAGE;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public <R> R accept(@NonNull Visitor<R> visitor) {
-		return visitor.visitOrphanage(this);
-	}
-
-/*	@Override
-	public @NonNull EList<org.eclipse.ocl.pivot.Class> getOwnedClasses() {
-		EList<org.eclipse.ocl.pivot.Class> ownedClasses2 = ownedClasses;
-		if (ownedClasses2 == null)
-		{
-			ownedClasses2 = ownedClasses = new WeakEList<org.eclipse.ocl.pivot.Class>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_TYPE, PivotPackage.TYPE__PACKAGE* /)
-					{
-						@Override
-						protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Class object) {
-							return object.getTypeId();
-						}
-
-					};
-		}
-		return ownedClasses2;
-	} */
-
-	/**
-	 * @since 1.18
-	 *
-	@Override
-	public @NonNull EList<org.eclipse.ocl.pivot.Package> getOwnedPackages() {
-		EList<org.eclipse.ocl.pivot.Package> ownedPackages2 = ownedPackages;
-		if (ownedPackages2 == null)
-		{
-			ownedPackages2 = ownedPackages = new WeakEList<org.eclipse.ocl.pivot.Package>(/*WeakReference.class, this, PivotPackage.PACKAGE__OWNED_PACKAGE, PivotPackage.PACKAGE__OWNING_PACKAGE* /)
-			{
-				@Override
-				protected @NonNull ElementId getElementId(org.eclipse.ocl.pivot.Package object) {
-					return object.getPackageId();
-				}
-
-			};
-		}
-		return ownedPackages2;
 	} */
 
 	/**
@@ -183,7 +123,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 * same-OCL consumers. It is not saved and so has no xmi:ids but it does have LUSSIDs
 	 * in order to contribute to the signatures of operations.
 	 */
-	protected static class OrphanResource extends ASResourceImpl
+	public static class OrphanResource extends ASResourceImpl		// XXX private
 	{
 		protected OrphanResource(@NonNull URI uri) {
 			super(uri, OCLASResourceFactory.getInstance());
@@ -195,8 +135,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		protected void doUnload() {
 			if (contents != null) {
 				for (EObject aContent : contents) {
-					if (aContent instanceof OrphanageImpl) {
-						((OrphanageImpl)aContent).dispose();
+					if (aContent instanceof Orphanage) {
+						((Orphanage)aContent).dispose();
 					}
 				}
 				contents = null;
@@ -235,7 +175,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		public void unsetTarget(Notifier oldTarget) {}
 	} */
 
-	private static final Logger logger = Logger.getLogger(OrphanageImpl.class);
+	private static final Logger logger = Logger.getLogger(Orphanage.class);
 
 	public static final @NonNull URI ORPHANAGE_URI = ClassUtil.nonNullEMF(URI.createURI(PivotConstants.ORPHANAGE_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION));
 
@@ -291,7 +231,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 * @since 1.18
 	 */
 	public static @NonNull Orphanage createSharedOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
-		OrphanageImpl orphanage = new OrphanageImpl(standardLibrary);
+		Orphanage orphanage = new Orphanage(standardLibrary);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
@@ -334,7 +274,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 			for (EObject eContent : aResource.getContents()) {
 				if (eContent instanceof Model) {
 					Model asModel = (Model)eContent;
-					if (OrphanageImpl.isOrphanage(asModel)) {
+					if (Orphanage.isOrphanage(asModel)) {
 						for (org.eclipse.ocl.pivot.Package asPackage : asModel.getOwnedPackages()) {
 							if (asPackage instanceof Orphanage) {
 								return (Orphanage)asPackage;
@@ -395,7 +335,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 */
 	private final @NonNull Map<@NonNull TypeId, @NonNull List<@NonNull Element>> typeId2typeRefs = new HashMap<>();
 
-	public OrphanageImpl(@Nullable StandardLibrary standardLibrary) {
+	public Orphanage(@Nullable StandardLibrary standardLibrary) {
 		setName(PivotConstants.ORPHANAGE_NAME);
 		setURI(PivotConstants.ORPHANAGE_URI);
 		setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
@@ -442,7 +382,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	} */
 
-	@Override
 	public void addPackageListener(@NonNull PartialPackages partialPackages) {
 		super.addPackageListener(partialPackages);
 	}
@@ -456,7 +395,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		getOwnedClasses().add(asProtoClass);
 	}
 
-	@Override
 	public void addReference(@NonNull Type type, @NonNull Element asElement) {
 		TypeId typeId = type.getTypeId();
 // XXX		assert typeId2type.containsKey(typeId);
@@ -470,7 +408,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-	@Override
 	public @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeId collectionTypeId) {
 		CollectionType collectionType = (CollectionType)typeId2type.get(collectionTypeId);
 		if (collectionType == null) {
@@ -488,7 +425,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return null;
 	}
 
-	@Override
 	public @Nullable LambdaType basicGetLambdaType(@NonNull LambdaTypeId lambdaTypeId) {
 		LambdaType lambdaType = (LambdaType)typeId2type.get(lambdaTypeId);
 		if (lambdaType == null) {
@@ -506,7 +442,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return null;
 	}
 
-	@Override
 	public @Nullable MapType basicGetMapType(@NonNull MapTypeId mapTypeId) {
 		MapType mapType = (MapType)typeId2type.get(mapTypeId);
 		if (mapType == null) {
@@ -524,7 +459,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return null;
 	}
 
-	@Override
 	public @Nullable TupleType basicGetTupleType(@NonNull TupleTypeId tupleTypeId) {
 		TupleType tupleType = (TupleType)typeId2type.get(tupleTypeId);
 		if (tupleType == null) {
@@ -542,7 +476,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		return null;
 	}
 
-	@Override
 	public @Nullable Type basicGetType(@NonNull TypeId typeId, boolean retainStaleEntry) {
 		Type type = typeId2type.get(typeId);
 		if (type == null) {
@@ -570,7 +503,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		super.didAddClass(asClass);
 	}
 
-	@Override
 	public void dispose() {
 	/*	if (ownedClasses != null) {
 			((WeakEList<?>)ownedClasses).dispose();
@@ -584,7 +516,13 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-	@Override
+	/**
+	 * Traverse the orphange to prune all entres for types that are no longer well contained
+	 * (all transitively referenced types have a non-null eResource()).
+	 * <br>
+	 * This is an expensive operation that is only needed in long running heavily mutating applications.
+	 * Use sparingly.
+	 */
 	public void gc() {
 		synchronized (typeId2type) {
 			for (TypeId typeId : new ArrayList<>(typeId2type.keySet())) {
@@ -598,7 +536,9 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-	@Override
+	/**
+	 * Return the specialized collection type for a collection type characteristics.
+	 */
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType,
 			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		if (isNullFree == null) {
@@ -666,7 +606,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-	@Override
 	public @NonNull LambdaType getLambdaType(org.eclipse.ocl.pivot.@NonNull Class oclLambdaType, @NonNull Type contextType, @NonNull List<@NonNull ? extends Type> parameterTypes, @NonNull Type resultType) {
 		String name = TypeId.LAMBDA_NAME;
 		@NonNull TypeId @NonNull [] typeIds = new @NonNull TypeId[2+parameterTypes.size()];
@@ -696,7 +635,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-	@Override
 	public @NonNull MapType getMapOfEntryType(@NonNull MapType genericType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties(entryClass);
 		Property keyProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "key"));
@@ -743,7 +681,9 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-	@Override
+	/**
+	 * Return the specialized map type for a map type descriptor.
+	 */
 	public @NonNull MapType getMapType(@NonNull MapType genericType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		TypeId keyTypeId = keyType.getTypeId();
 		TypeId valueTypeId = valueType.getTypeId();
@@ -785,7 +725,6 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getSpecialization(org.eclipse.ocl.pivot.Class genericClass, @NonNull List<@NonNull ? extends Type> templateArguments) {
 		BindingsId bindingsId = IdManager.getBindingsId(templateArguments.toArray(new @NonNull Type[templateArguments.size()]));
 		GeneralizedNestedTypeIdImpl classId = (GeneralizedNestedTypeIdImpl) genericClass.getTypeId();
@@ -828,12 +767,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		}
 	}
 
-	@Override
 	public @NonNull StandardLibrary getStandardLibrary() {
 		return ClassUtil.nonNullState(standardLibrary);
 	}
 
-	@Override
 	public @NonNull TupleType getTupleType(org.eclipse.ocl.pivot.@NonNull Class oclTupleType, @NonNull TuplePart @NonNull ... parts) {
 		@NonNull TupleTypeId tupleTypeId = IdManager.getOrderedTupleTypeId(TypeId.TUPLE_NAME, parts);
 		TupleType tupleType = basicGetTupleType(tupleTypeId);
@@ -967,12 +904,10 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 		assert !getOwnedClasses().contains(orphanClass);
 	}
 
-	@Override
 	public void removePackageListener(@NonNull PartialPackages partialPackages) {
 		super.removePackageListener(partialPackages);
 	}
 
-	@Override
 	public void removeReference(@NonNull Type type, @NonNull Element asElement) {
 		TypeId typeId = type.getTypeId();
 		synchronized (typeId2typeRefs) {

@@ -2064,8 +2064,6 @@
       eSuperTypes="#T-pivot-CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OrphanCompletePackage" name="OrphanCompletePackage"
       eSuperTypes="#T-pivot-CompletePackage"/>
-  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Orphanage" name="Orphanage"
-      eSuperTypes="#T-pivot-Package"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Package" name="Package" eSuperTypes="#T-pivot-Namespace">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A package can have one or more profile applications to indicate which profiles have been applied. Because a profile is a package, it is possible to apply a profile not only to packages, but also to profiles.&#xA;Package specializes TemplateableElement and PackageableElement specializes ParameterableElement to specify that a package can be used as a template and a PackageableElement as a template parameter.&#xA;A package is used to group elements, and provides a namespace for the grouped elements."/>

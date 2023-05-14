@@ -91,7 +91,6 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.OrphanCompletePackage;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterVariable;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -606,11 +605,6 @@ extends AdapterFactoryImpl {
 			public Adapter caseOrphanCompletePackage(OrphanCompletePackage object)
 			{
 				return createOrphanCompletePackageAdapter();
-			}
-			@Override
-			public Adapter caseOrphanage(Orphanage object)
-			{
-				return createOrphanageAdapter();
 			}
 			@Override
 			public Adapter casePackage(org.eclipse.ocl.pivot.Package object)
@@ -1767,21 +1761,6 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOrphanCompletePackageAdapter()
-	{
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.Orphanage <em>Orphanage</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.Orphanage
-	 * @generated
-	 */
-	public Adapter createOrphanageAdapter()
 	{
 		return null;
 	}

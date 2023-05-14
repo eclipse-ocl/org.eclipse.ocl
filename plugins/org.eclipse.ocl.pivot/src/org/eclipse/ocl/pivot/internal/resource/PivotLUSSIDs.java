@@ -40,7 +40,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
-import org.eclipse.ocl.pivot.internal.OrphanageImpl;
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -77,7 +77,7 @@ public class PivotLUSSIDs extends LUSSIDs
 		for (EObject eRoot : asResource.getContents()) {
 			if (eRoot instanceof Model) {
 				for (org.eclipse.ocl.pivot.Package asPackage : PivotUtil.getOwnedPackages((Model)eRoot)) {
-					if (OrphanageImpl.isOrphanage(asPackage)) {
+					if (Orphanage.isOrphanage(asPackage)) {
 						typeOrphanage = asPackage;
 						featureOrphanage = NameUtil.getNameable(asPackage.getOwnedClasses(), PivotConstants.ORPHANAGE_NAME);
 						break;

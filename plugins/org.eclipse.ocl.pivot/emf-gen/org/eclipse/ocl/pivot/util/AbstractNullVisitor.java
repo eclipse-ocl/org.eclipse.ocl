@@ -423,11 +423,6 @@ public abstract class AbstractNullVisitor<@Nullable R, C>
 	}
 
 	@Override
-	public R visitOrphanage(org.eclipse.ocl.pivot.@NonNull Orphanage object) {
-		return null;
-	}
-
-	@Override
 	public R visitPackage(org.eclipse.ocl.pivot.@NonNull Package object) {
 		return null;
 	}

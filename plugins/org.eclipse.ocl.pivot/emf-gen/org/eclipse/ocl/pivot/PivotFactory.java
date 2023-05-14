@@ -738,15 +738,6 @@ extends EFactory {
 	@NonNull OrphanCompletePackage createOrphanCompletePackage();
 
 	/**
-	 * Returns a new object of class '<em>Orphanage</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Orphanage</em>'.
-	 * @generated
-	 */
-	@NonNull Orphanage createOrphanage();
-
-	/**
 	 * Returns a new object of class '<em>Primitive Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
