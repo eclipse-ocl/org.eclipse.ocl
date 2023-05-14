@@ -188,13 +188,13 @@ implements TypedElement {
 		Type oldType = type;
 		if (newType != oldType) {
 			if (oldType != null) {
-				Orphanage orphanage = oldType.basicGetSharedOrphanage();
+				Orphanage orphanage = Orphanage.basicGetSharedOrphanage(oldType);
 				if (orphanage != null) {
 					orphanage.removeReference(oldType, this);
 				}
 			}
 			if (newType != null) {
-				Orphanage orphanage = newType.basicGetSharedOrphanage();
+				Orphanage orphanage = Orphanage.basicGetSharedOrphanage(newType);
 				if (orphanage != null) {
 					orphanage.addReference(newType, this);
 				}

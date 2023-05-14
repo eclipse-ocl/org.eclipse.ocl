@@ -40,7 +40,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 	}
 
 	protected @NonNull CompletePackageInternal createRootCompletePackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage) {
-		if (Orphanage.isOrphanage(pivotPackage)) {
+		if (Orphanage.isOrphanPackage(pivotPackage)) {
 			return getCompleteModel().getOrphanCompletePackage();
 		}
 		else {

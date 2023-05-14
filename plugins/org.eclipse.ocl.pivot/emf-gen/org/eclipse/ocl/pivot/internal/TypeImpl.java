@@ -26,7 +26,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.values.OCLValue;
 
@@ -166,12 +165,6 @@ implements Type {
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitType(this);
-	}
-
-	@Override
-	public @Nullable Orphanage basicGetSharedOrphanage() {
-		EObject eContainer = eInternalContainer();
-		return (eContainer instanceof Orphanage) && (eContainer.eResource() instanceof Orphanage.OrphanResource) ? (Orphanage)eContainer : null;
 	}
 
 	@Override

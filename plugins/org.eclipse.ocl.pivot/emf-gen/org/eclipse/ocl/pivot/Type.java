@@ -15,7 +15,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 
 /**
  * <!-- begin-user-doc -->
@@ -54,11 +53,6 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 * @generated
 	 */
 	Type specializeIn(CallExp expr, Type selfType);
-
-	/**
-	 * Return the shared Orphanage that contains this type or null if not in a shared Orphanage.
-	 */
-	@Nullable Orphanage basicGetSharedOrphanage();
 
 	/**
 	 * Return a unique StandardLibrary-independent identifier for this type if known or null if not.

@@ -1071,7 +1071,7 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		if (thisModel == thatModel) {
 			return thatClass;
 		}
-		if (Orphanage.isOrphanage(thatModel)) {		// Shared orphans can be modified to add opposites
+		if (Orphanage.isOrphanModel(thatModel)) {		// Shared orphans can be modified to add opposites
 			return thatClass;
 		}
 		org.eclipse.ocl.pivot.Package thatPackage = PivotUtil.getOwningPackage(thatClass);

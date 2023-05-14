@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -551,12 +552,18 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 == null) {
 			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-			orphanage2 = orphanage = Orphanage.getSharedOrphanage(environmentFactory.getStandardLibrary(), metamodelManager.getASResourceSet());
-			PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
-			((PackageImpl)orphanage2.getPackage()).addPackageListener(partialPackages);
-			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2.getPackage())) {
-				didAddNestedPackage(asPackage);
+			ResourceSet asResourceSet = metamodelManager.getASResourceSet();
+			orphanage2 = Orphanage.basicGetSharedOrphanage(asResourceSet);
+			if (orphanage2 == null) {
+				CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+				orphanage2 = Orphanage.createSharedOrphanage(standardLibrary, asResourceSet);
+				PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
+				((PackageImpl)orphanage2.getPackage()).addPackageListener(partialPackages);
+				for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2.getPackage())) {
+					didAddNestedPackage(asPackage);
+				}
 			}
+			orphanage = orphanage2;
 		}
 		return orphanage2;
 	}

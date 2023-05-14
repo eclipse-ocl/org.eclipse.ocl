@@ -64,7 +64,8 @@ public abstract class AbstractContents extends PivotUtil
 
 	protected AbstractContents() {
 		CompleteStandardLibrary standardLibrary = PivotUtilInternal.getEnvironmentFactory(null).getStandardLibrary();
-		this.orphanage = Orphanage.createOrphanageWithPackage(standardLibrary);	// XXX should go obsolete
+		org.eclipse.ocl.pivot.Package orphanPackage = Orphanage.createOrphanagePackage();
+		this.orphanage = new Orphanage(orphanPackage, standardLibrary);
 	}
 
 	protected void addSuperClass(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, org.eclipse.ocl.pivot./*@NonNull*/ Class asSuperClass) {

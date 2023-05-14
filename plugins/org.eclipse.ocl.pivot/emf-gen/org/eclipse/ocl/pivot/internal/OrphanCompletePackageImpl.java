@@ -115,7 +115,7 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		assert asPackage != null;
 		org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
 		assert parentPackage == null;
-		assert Orphanage.isOrphanage(asPackage);
+		assert Orphanage.isOrphanPackage(asPackage);
 	}
 
 	@Override

@@ -1273,7 +1273,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				@Override
 				public void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
 					assert partialClass != null;
-					Orphanage orphanage = partialClass.basicGetSharedOrphanage();
+					Orphanage orphanage = Orphanage.basicGetSharedOrphanage(partialClass);
 					if (orphanage != null) {
 						orphanage.addReference(partialClass, ClassImpl.this);
 					}
@@ -1285,7 +1285,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				@Override
 				protected void didRemove(int index, org.eclipse.ocl.pivot.Class partialClass) {
 					assert partialClass != null;
-					Orphanage orphanage = partialClass.basicGetSharedOrphanage();
+					Orphanage orphanage = Orphanage.basicGetSharedOrphanage(partialClass);
 					if (orphanage != null) {
 						orphanage.removeReference(partialClass, ClassImpl.this);
 					}

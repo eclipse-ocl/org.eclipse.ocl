@@ -761,7 +761,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			return;
 		}
 		Model containingModel = PivotUtil.getContainingModel(reference);
-		if ((containingModel == root) || external2name.containsKey(reference) || Orphanage.isOrphanage(containingModel)) {
+		if ((containingModel == root) || external2name.containsKey(reference) || Orphanage.isOrphanModel(containingModel)) {
 			return;
 		}
 		if (reference instanceof Model) {
@@ -1055,7 +1055,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Package> getSortedExternalPackages(@NonNull Model root) {
 		List<org.eclipse.ocl.pivot.@NonNull Package> externalPackages = new ArrayList<>();
 		for (org.eclipse.ocl.pivot.@NonNull Package asPackage : root.getOwnedPackages()) {
-			if (!Orphanage.isOrphanage(asPackage)) {
+			if (!Orphanage.isOrphanPackage(asPackage)) {
 				externalPackages.add(asPackage);
 			}
 		}
@@ -1332,10 +1332,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			else if (localOrphan instanceof TemplateParameterSubstitution) {
 			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
+			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphanElement((org.eclipse.ocl.pivot.Class)localOrphan)) {
 				s.append("orphanClass");
 			}
-			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {		// XXX
+			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphanPackage((org.eclipse.ocl.pivot.Package)localOrphan)) {		// XXX
 				s.append("orphanage");			// XXXX
 			}
 			else {
