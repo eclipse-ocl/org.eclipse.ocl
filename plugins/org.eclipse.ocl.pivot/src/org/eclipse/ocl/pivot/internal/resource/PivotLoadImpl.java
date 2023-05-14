@@ -18,10 +18,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMILoadImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Orphanage;
-import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
@@ -37,10 +34,10 @@ public final class PivotLoadImpl extends XMILoadImpl
 
 	protected void installOrphans(XMLResource resource) {
 		assert resource != null;
-		Orphanage orphanage = OrphanageImpl.basicGetOrphanage(PivotUtil.getModel(resource));
-		if (orphanage != null) {
-			((OrphanageImpl)orphanage).installLoadedClasses();
-		}
+	//	Orphanage orphanage = OrphanageImpl.basicGetOrphanage(PivotUtil.getModel(resource));
+	//	if (orphanage != null) {
+	//		((OrphanageImpl)orphanage).installLoadedClasses();
+	//	}
 	}
 
 	@Override

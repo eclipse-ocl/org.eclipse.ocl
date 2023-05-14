@@ -375,7 +375,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	public static boolean isOrphanage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		String uri = asPackage.getURI();
 		boolean isOrphanage = isOrphanage(uri);
-		assert isOrphanage == asPackage instanceof Orphanage;
+	//	assert isOrphanage == asPackage instanceof Orphanage;
 		return isOrphanage;
 	}
 
@@ -929,7 +929,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	/**
 	 * Once XMI load has completed, migrate the local orphanage to the shared orphanage.
-	 */
+	 *
 	public void installLoadedClasses() {
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : PivotUtil.getOwnedClasses(this)) {
 			TypeId typeId = asClass.basicGetTypeId();
@@ -939,7 +939,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				assert old == null;
 			}
 		}
-	}
+	} */
 
 	/**
 	 * Once ASSaver has localized all referenced orphans, this method is invoked to complete the typeId2type lookup.

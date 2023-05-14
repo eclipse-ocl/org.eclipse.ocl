@@ -39,6 +39,8 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
+import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -146,6 +148,9 @@ public class OCLstdlibTests extends XtextTestCase
 			assert javaElement != null;
 			assert fileElement != null;
 			Class<? extends Element> javaElementClass = javaElement.getClass();
+			if (javaElementClass == OrphanageImpl.class) {		// XXX temporary till PackageImpl persisted
+				javaElementClass = PackageImpl.class;
+			}
 			assertEquals(fileElement.getClass(), javaElementClass);
 			if (fileElement instanceof TypedElement) {
 				Type fileType = ((TypedElement)fileElement).getType();

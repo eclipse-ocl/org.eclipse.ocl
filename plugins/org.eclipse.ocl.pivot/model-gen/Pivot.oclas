@@ -1367,7 +1367,7 @@
       <ownedProperties xmi:id="OM4eT" isImplicit="true" isRequired="false" name="TemplateParameterSubstitution" opposite="#gMCx3" type="#dBke1"/>
     </ownedClasses>
   </ownedPackages>
-  <ownedPackages xsi:type="pivot:Orphanage" URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
+  <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
     <ownedClasses xsi:type="pivot:BagType" xmi:id="faElO" isNullFree="true" name="Bag" superClasses="#11smd">
       <ownedBindings>
         <ownedSubstitutions actual="#g7Mr0" formal="&_0;#k2OA6"/>
