@@ -45,16 +45,6 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 		return super.eObjectForURIFragmentSegment(uriFragmentSegment);
 	}
 
-/*	@Override
-	public EObject eResolveProxy(InternalEObject proxy) {
-	//	return super.eResolveProxy(proxy);
-		Resource resourceContext = proxy.eResource();
-		if (resourceContext == null) {										// If an orphan (during loading)
-			resourceContext = OrphanageImpl.getAdaptedResource(this); 		//  fallback to use OrphanageImpl.addOrphanClasses() ResourceAdapter
-		}
-	    return EcoreUtil.resolve(proxy, resourceContext);
-	} */
-
 	public @Nullable EObject getESObject() {
 		return esObject;
 	}

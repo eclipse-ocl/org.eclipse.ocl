@@ -65,9 +65,6 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Orphanage</b></em>'.
-*
  * An Orphanage is a special purpose Package that transitively contains all metamodel elemants that
  * have no ancestral Package to contains them. There are specific type managers for Collection, Lambda,
  * Map and Tuple types. The managers weakly contain elements such as type specializations that
@@ -83,41 +80,9 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * all references are terminated locally. ASSaver creates this copy via PivotSaveImpl.init(). The local orphanages
  * use a regular Package to avod the need for Orphanage support in XMI.
  * Correspondingly a loaded ASREsource has a local orphanage that is created by conventional XMI APIs.
- *
- * <!-- end-user-doc -->
- *
- * @generated
  */
 public class Orphanage extends PackageImpl
 {
-	/**
-	 * The number of structural features of the '<em>Orphanage</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	public static final int ORPHANAGE_FEATURE_COUNT = PackageImpl.PACKAGE_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of operations of the '<em>Orphanage</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	public static final int ORPHANAGE_OPERATION_COUNT = PackageImpl.PACKAGE_OPERATION_COUNT + 0;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 *
-	protected OrphanageImpl()
-	{
-		super();
-	} */
-
 	/**
 	 * The OrphanResource tailors the inherited ASResource functionality to support the single Resource shared by all
 	 * same-OCL consumers. It is not saved and so has no xmi:ids but it does have LUSSIDs
@@ -155,25 +120,6 @@ public class Orphanage extends PackageImpl
 			return true;
 		}
 	}
-
-/*	protected static class ResourceAdapter extends AdapterImpl
-	{
-		public ResourceAdapter(@NonNull Resource eResource) {
-			this.target = eResource;
-		}
-
-		@SuppressWarnings("null")
-		@Override
-		public @NonNull Resource getTarget() {
-			return (Resource)super.getTarget();
-		}
-
-		@Override
-		public void setTarget(Notifier newTarget) {}
-
-		@Override
-		public void unsetTarget(Notifier oldTarget) {}
-	} */
 
 	private static final Logger logger = Logger.getLogger(Orphanage.class);
 
@@ -241,16 +187,6 @@ public class Orphanage extends PackageImpl
 		resourceSet.getResources().add(orphanageResource);
 		return orphanage;
 	}
-
-/*	public static @Nullable Resource getAdaptedResource(@NonNull EObject eObject) {
-		for (EObject eContainer; (eContainer = ((EObjectImpl)eObject).eInternalContainer()) != null; eObject = eContainer) { }
-		for (Adapter adapter : EcoreUtil.getRootContainer(eObject).eAdapters()) {
-			if (adapter instanceof ResourceAdapter) {
-				return ((ResourceAdapter)adapter).getTarget();
-			}
-		}
-		return eObject.eResource();
-	} */
 
 	/**
 	 * @since 1.18
@@ -357,30 +293,6 @@ public class Orphanage extends PackageImpl
 		assert orphanClass.eContainer() == this;
 		assert ownedClasses.contains(orphanClass);
 	}
-
-/*	public void addOrphanClasses(List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses) {
-	//	EList<@NonNull EObject> contents = eResource().getContents();
-	//	contents.addAll(orphanClasses);
-		Adapter resourceAdapter = new ResourceAdapter(eResource());
-		for (org.eclipse.ocl.pivot.@NonNull Class orphanClass : orphanClasses) {
-			orphanClass.eAdapters().add(resourceAdapter);
-		}
-		List<org.eclipse.ocl.pivot.Class> ownedClasses = getOwnedClasses();
-		for (org.eclipse.ocl.pivot.@NonNull Class orphanClass : orphanClasses) {
-			TypeId typeId = orphanClass.getTypeId();
-		//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
-			Type old = typeId2type.put(typeId, orphanClass);
-			assert old == null;
-			assert !ownedClasses.contains(orphanClass);
-		//	contents.remove(orphanClass);
-			orphanClass.setOwningPackage(this);
-			assert orphanClass.eContainer() == this;
-			assert ownedClasses.contains(orphanClass);
-		}
-		for (org.eclipse.ocl.pivot.@NonNull Class orphanClass : orphanClasses) {
-			orphanClass.eAdapters().remove(resourceAdapter);
-		}
-	} */
 
 	public void addPackageListener(@NonNull PartialPackages partialPackages) {
 		super.addPackageListener(partialPackages);
@@ -923,4 +835,4 @@ public class Orphanage extends PackageImpl
 			}
 		}
 	}
-} //OrphanageImpl
+}
