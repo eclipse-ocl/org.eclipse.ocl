@@ -14,10 +14,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMILoadImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -32,29 +34,31 @@ public final class PivotLoadImpl extends XMILoadImpl
 		super(new XMIHelperImpl(asResource));
 	}
 
-	protected void installOrphans(XMLResource resource) {
-		assert resource != null;
-	//	Orphanage orphanage = OrphanageImpl.basicGetOrphanage(PivotUtil.getModel(resource));
-	//	if (orphanage != null) {
-	//		((OrphanageImpl)orphanage).installLoadedClasses();
-	//	}
+	protected void installOrphans(/*@NonNull*/ ASResource asResource) {
+		assert asResource != null;
+		ResourceSet asResourceSet = asResource.getResourceSet();
+		assert asResourceSet != null;
+		Orphanage sharedOrphanage = Orphanage.basicGetSharedOrphanage(asResourceSet);
+		if (sharedOrphanage != null) {			// If loaded orphans needs integrating with a shared orphanage
+			sharedOrphanage.installLoadedClasses(asResource);
+		}
 	}
 
 	@Override
 	public void load(XMLResource resource, InputStream inputStream, Map<?, ?> options) throws IOException {
 		super.load(resource, inputStream, options);
-		installOrphans(resource);
+		installOrphans((ASResource)resource);
 	}
 
 	@Override
 	public void load(XMLResource resource, InputSource inputSource, Map<?, ?> options) throws IOException {
 		super.load(resource, inputSource, options);
-		installOrphans(resource);
+		installOrphans((ASResource)resource);
 	}
 
 	@Override
 	public void load(XMLResource resource, Node node, Map<?, ?> options) throws IOException {
 		super.load(resource, node, options);
-		installOrphans(resource);
+		installOrphans((ASResource)resource);
 	}
 }

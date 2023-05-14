@@ -15,6 +15,8 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ids.GeneralizedCollectionTypeIdImpl;
+import org.eclipse.ocl.pivot.internal.ids.SpecializedCollectionTypeIdImpl;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -94,5 +96,22 @@ public class SetTypeImpl
 	@Override
 	public boolean isUnique() {
 		return true;
+	}
+
+	@Override
+	public void setTypeId(@NonNull TypeId typeId) {
+		super.setTypeId(typeId);
+		if ((ownedBindings == null) || getOwnedBindings().isEmpty()) {
+			assert typeId instanceof GeneralizedCollectionTypeIdImpl;
+		}
+		else {
+			assert typeId instanceof SpecializedCollectionTypeIdImpl;
+		}
+	/*	if ((ownedSignature == null) || ownedSignature.getOwnedParameters().isEmpty()) {
+			assert typeId instanceof SpecializedCollectionTypeIdImpl;
+		}
+		else {
+			assert typeId instanceof GeneralizedCollectionTypeIdImpl;
+		} */
 	}
 } //SetTypeImpl

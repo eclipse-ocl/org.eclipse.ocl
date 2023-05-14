@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.utilities;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +24,10 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -32,6 +35,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -53,7 +57,9 @@ import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedNestedTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.ASSaverNew;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -63,6 +69,8 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
+
+import com.google.common.collect.Lists;
 
 /**
  * The 'orphanage' is a regular Package that transitively contains all metamodel elemants that
@@ -158,6 +166,15 @@ public class Orphanage extends AdapterImpl
 		return null;
 	}
 
+	public static Package basicGetOrphanPackage(@NonNull ASResource asResource) {
+		for (EObject eContent : asResource.getContents()) {
+			if (eContent instanceof Model) {
+				return basicGetOrphanPackage((Model)eContent);
+			}
+		}
+		return null;
+	}
+
 	public static @Nullable Orphanage basicGetOrphanage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		assert isOrphanPackage(asPackage);
 		for (Adapter adapter : asPackage.eAdapters()) {
@@ -174,13 +191,9 @@ public class Orphanage extends AdapterImpl
 	public static @Nullable Orphanage basicGetSharedOrphanage(@NonNull ResourceSet resourceSet) {
 		for (Resource aResource : resourceSet.getResources()) {
 			if (aResource instanceof OrphanResource) {
-				for (EObject eContent : aResource.getContents()) {
-					if (eContent instanceof Model) {
-						org.eclipse.ocl.pivot.Package asPackage = basicGetOrphanPackage((Model)eContent);
-						if (asPackage != null) {
-							return basicGetOrphanage(asPackage);
-						}
-					}
+				org.eclipse.ocl.pivot.Package asPackage = basicGetOrphanPackage((OrphanResource)aResource);
+				if (asPackage != null) {
+					return basicGetOrphanage(asPackage);
 				}
 			}
 		}
@@ -214,15 +227,15 @@ public class Orphanage extends AdapterImpl
 	 */
 	public static @NonNull Orphanage createSharedOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
 		org.eclipse.ocl.pivot.Package orphanPackage = createOrphanagePackage();
-		Orphanage orphanage = new Orphanage(orphanPackage, standardLibrary);
+		Orphanage sharedOrphanage = new Orphanage(orphanPackage, standardLibrary);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
-		orphanModel.getOwnedPackages().add(orphanage.getPackage());
+		orphanModel.getOwnedPackages().add(sharedOrphanage.getPackage());
 		Resource orphanageResource = new OrphanResource(ORPHANAGE_URI);
 		orphanageResource.getContents().add(orphanModel);
 		resourceSet.getResources().add(orphanageResource);
-		return orphanage;
+		return sharedOrphanage;
 	}
 
 	/**
@@ -779,6 +792,56 @@ public class Orphanage extends AdapterImpl
 		}
 		throw new UnsupportedOperationException("OrphanageImpl.getType() for " + asType.getClass().getName());
 	} */
+
+	public void installLoadedClasses(@NonNull ASResource asResource) {
+		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetOrphanPackage(asResource);
+		if (localOrphanPackage != null) {
+			Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> local2shared = null;
+			List<org.eclipse.ocl.pivot.@NonNull Class> sharedOwnedClasses = PivotUtilInternal.getOwnedClassesList(orphanPackage);
+			Iterable<org.eclipse.ocl.pivot.@NonNull Class> localOwnedClasses = Lists.newArrayList(PivotUtil.getOwnedClasses(localOrphanPackage));
+			PivotUtilInternal.getOwnedClassesList(localOrphanPackage).clear();
+			for (org.eclipse.ocl.pivot.@NonNull Class asLocalClass : localOwnedClasses) {
+				TypeId typeId = asLocalClass.getTypeId();
+				org.eclipse.ocl.pivot.Class asSharedClass = (org.eclipse.ocl.pivot.Class)typeId2type.get(typeId);
+				if (asSharedClass == null) {
+				//	PivotUtilInternal.resetContainer(asLocalClass);
+					typeId2type.put(typeId, asLocalClass);
+					sharedOwnedClasses.add(asLocalClass);
+				}
+				else {
+					assert asResource.isSaveable();				// XXX !isReadOnly()
+					if (local2shared == null) {
+						local2shared = new HashMap<>();
+					}
+					local2shared.put(asLocalClass, asSharedClass);
+				}
+			}
+			if (local2shared != null) {
+				Map<EObject, Collection<Setting>> object2references = EcoreUtil.CrossReferencer.find(asResource.getContents());
+				for (EObject referencedLocalObject : object2references.keySet()) {
+					org.eclipse.ocl.pivot.Class asSharedClass = local2shared.get(referencedLocalObject);
+					if (asSharedClass != null) {
+						Collection<Setting> settings = object2references.get(referencedLocalObject);
+						if (settings != null) {
+							ASSaverNew.relocateReferencesTo(asSharedClass, settings, referencedLocalObject);
+						}
+
+					/*	public static void relocateReferencesTo(@NonNull EObject remoteObject, @NonNull Collection<Setting> settings, @NonNull EObject localObject) {
+
+						for (Setting setting : settings) {
+							EObject referencingLocalObject = setting.getEObject();
+							EStructuralFeature settingReference = setting.getEStructuralFeature();
+						//	System.out.println("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+							System.out.println("debugLocalization-bad " + NameUtil.debugSimpleName(referencingObject) + " : " + referencingObject + "::" + settingReference.getName() + "\n\t=> " + NameUtil.debugSimpleName(referencedObject) + " : " + referencedObject);
+						//	NameUtil.errPrintln("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+							throw new UnsupportedOperationException("Not-localized: " + NameUtil.debugSimpleName(referencingObject) + " " + referencingObject + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(referencedObject) + " : " + referencedObject);
+						//	getClass();		// XXX
+						} */
+					}
+				}
+			}
+		}
+	}
 
 	private void removeOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
 	//	System.out.println("removeOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + orphanClass);

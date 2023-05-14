@@ -188,24 +188,7 @@ public class ASSaverNew extends AbstractASSaver
 			}
 			Collection<Setting> settings = remote2references.get(remoteObject);
 			if (settings != null) {
-				for (Setting setting : settings) {
-					EObject referencingObject = setting.getEObject();
-					EStructuralFeature eReference = setting.getEStructuralFeature();
-					if (!eReference.isDerived() && !eReference.isTransient()) {
-						if (eReference.isMany()) {
-							@SuppressWarnings("unchecked") List<EObject> referencedObjects = (List<EObject>)referencingObject.eGet(eReference);
-							referencedObjects.replaceAll(new UnaryOperator<EObject>() {
-								@Override
-								public EObject apply(EObject t) {
-									return t == remoteObject ? localObject : t;
-								}
-							});
-						}
-						else {
-							referencingObject.eSet(eReference, localObject);
-						}
-					}
-				}
+				relocateReferencesTo(localObject, settings, remoteObject);
 			}
 			return moreReferencingObjects;
 		}
@@ -278,6 +261,27 @@ public class ASSaverNew extends AbstractASSaver
 				}
 			}
 			return compareTo;
+		}
+	}
+
+	public static void relocateReferencesTo(@NonNull EObject newObject, @NonNull Collection<Setting> settings, @NonNull EObject oldObject) {
+		for (Setting setting : settings) {
+			EObject referencingObject = setting.getEObject();
+			EStructuralFeature eReference = setting.getEStructuralFeature();
+			if (!eReference.isDerived() && !eReference.isTransient()) {
+				if (eReference.isMany()) {
+					@SuppressWarnings("unchecked") List<EObject> referencedObjects = (List<EObject>)referencingObject.eGet(eReference);
+					referencedObjects.replaceAll(new UnaryOperator<EObject>() {
+						@Override
+						public EObject apply(EObject t) {
+							return t == oldObject ? newObject : t;
+						}
+					});
+				}
+				else {
+					referencingObject.eSet(eReference, newObject);
+				}
+			}
 		}
 	}
 
