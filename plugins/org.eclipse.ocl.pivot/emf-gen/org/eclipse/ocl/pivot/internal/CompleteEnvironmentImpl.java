@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompletePackageInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
-import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -610,7 +609,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 	@Override
 	public void dispose() {
 		class2completeClass.clear();
-		((Orphanage)((CompleteStandardLibraryImpl)getOwnedStandardLibrary()).getOrphanage()).dispose();
+		((CompleteStandardLibraryImpl)getOwnedStandardLibrary()).getOrphanage().dispose();		// XXX ??? redundant ???
 	}
 
 	@Override

@@ -30,6 +30,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Model;
@@ -44,7 +45,9 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl.ImmutableResource;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+import org.eclipse.ocl.pivot.model.OCLmetamodel.LibraryContents;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
@@ -252,6 +255,11 @@ public class OCLmetamodel extends ASResourceImpl
 			installAggregateSuperTypes();
 			installOperationBodies();
 			installProperties();
+		//	java.lang.Class<?> instanceClass = PivotPackage.Literals.EBOOLEAN.getInstanceClass();
+		//	org.eclipse.ocl.pivot.Class behavioralClass = PivotUtil.getBehavioralClass(orphanage.getStandardLibrary(), instanceClass);
+		//	if (behavioralClass != null) {
+				((DataType)_EBoolean).setBehavioralClass(_Boolean);
+		//	}
 		}
 
 		public @NonNull Model getModel() {
