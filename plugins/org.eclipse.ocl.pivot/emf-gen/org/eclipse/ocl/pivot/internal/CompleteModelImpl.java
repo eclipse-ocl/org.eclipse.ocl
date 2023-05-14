@@ -475,7 +475,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		completeURIs.dispose();
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 != null) {
-			orphanage2.removePackageListener(getOrphanCompletePackage().getPartialPackages());
+			((PackageImpl)orphanage2.getPackage()).removePackageListener(getOrphanCompletePackage().getPartialPackages());
 			orphanage = null;
 		}
 	}
@@ -553,8 +553,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 			orphanage2 = orphanage = Orphanage.getSharedOrphanage(environmentFactory.getStandardLibrary(), metamodelManager.getASResourceSet());
 			PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
-			orphanage2.addPackageListener(partialPackages);
-			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {
+			((PackageImpl)orphanage2.getPackage()).addPackageListener(partialPackages);
+			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2.getPackage())) {
 				didAddNestedPackage(asPackage);
 			}
 		}

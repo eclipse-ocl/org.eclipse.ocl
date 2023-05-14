@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -62,7 +63,8 @@ public abstract class AbstractContents extends PivotUtil
 	protected final @NonNull Orphanage orphanage;
 
 	protected AbstractContents() {
-		this.orphanage = new Orphanage(PivotUtilInternal.getEnvironmentFactory(null).getStandardLibrary());	// XXX should go obsolete
+		CompleteStandardLibrary standardLibrary = PivotUtilInternal.getEnvironmentFactory(null).getStandardLibrary();
+		this.orphanage = Orphanage.createOrphanageWithPackage(standardLibrary);	// XXX should go obsolete
 	}
 
 	protected void addSuperClass(org.eclipse.ocl.pivot./*@NonNull*/ Class asClass, org.eclipse.ocl.pivot./*@NonNull*/ Class asSuperClass) {

@@ -625,8 +625,8 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 	//	resourceSet.getResources().add(asResource);
 		Model mergedModel = PivotUtil.createModel(mergedURI.toString());
 		asResource.getContents().add(mergedModel);
-		Orphanage mergedOrphanage = new Orphanage(new MergingStandardLibrary(mergedModel));
-		mergedModel.getOwnedPackages().add(mergedOrphanage);
+		Orphanage mergedOrphanage = Orphanage.createOrphanageWithPackage(new MergingStandardLibrary(mergedModel));
+		mergedModel.getOwnedPackages().add(mergedOrphanage.getPackage());
 		CompleteModelInternal completeModel = environmentFactory.getCompleteModel();
 		for (CompletePackage completePackage : completeModel.getAllCompletePackages()) {
 			if (PivotConstants.METAMODEL_NAME.equals(completePackage.getURI())) {

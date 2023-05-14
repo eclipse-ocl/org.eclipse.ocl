@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -210,8 +211,12 @@ public class PivotUtil
 
 	public static @Nullable Orphanage basicGetContainingOrphanage(@Nullable EObject element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
-			if (eObject instanceof Orphanage) {
-				return (Orphanage)eObject;
+			if (eObject instanceof org.eclipse.ocl.pivot.Package) {
+				for (Adapter adapter : eObject.eAdapters()) {
+					if (adapter instanceof Orphanage) {
+						return (Orphanage)adapter;
+					}
+				}
 			}
 		}
 		return null;

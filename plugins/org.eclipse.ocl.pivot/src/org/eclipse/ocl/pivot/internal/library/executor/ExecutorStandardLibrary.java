@@ -206,7 +206,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 
 	public ExecutorStandardLibrary(org.eclipse.ocl.pivot.@NonNull Package... execPackages) {
 	//	OCLstdlibTables.PACKAGE.getClass();
-		orphanage.eResource().getContents().add(this);
+		orphanage.getPackage().eResource().getContents().add(this);
 		for (org.eclipse.ocl.pivot.@NonNull Package execPackage : execPackages) {
 			assert execPackage != null;
 			addPackage(execPackage, null);
@@ -748,7 +748,7 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		Model asModel = PivotFactory.eINSTANCE.createModel();
 		asModel.setExternalURI(asPackage.getURI());
 		asModel.getOwnedPackages().add(asPackage);
-		orphanage.eResource().getContents().add(asModel);
+		orphanage.getPackage().eResource().getContents().add(asModel);
 		EcoreFlatModel flatModel = (EcoreFlatModel)asModel.initFlatModel(this);
 		List<org.eclipse.ocl.pivot.Class> ownedClasses = asPackage.getOwnedClasses();
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {

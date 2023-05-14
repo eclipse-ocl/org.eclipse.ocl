@@ -294,10 +294,11 @@ public abstract class AutoCodeGenerator extends JavaCodeGenerator
 		assert className != null;
 		RootPackageId javaPackageId = IdManager.getRootPackageId(packageName);
 		Orphanage orphanage = metamodelManager.getCompleteModel().getSharedOrphanage();
-		org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(orphanage.getOwnedPackages(), packageName);
+		@NonNull List<org.eclipse.ocl.pivot.Package> ownedPackages = orphanage.getPackage().getOwnedPackages();
+		org.eclipse.ocl.pivot.Package asPackage = NameUtil.getNameable(ownedPackages, packageName);
 		if (asPackage == null) {
 			asPackage = PivotUtil.createPackage(packageName, packageName, packageName, javaPackageId);
-			orphanage.getOwnedPackages().add(asPackage);
+			ownedPackages.add(asPackage);
 		}
 		org.eclipse.ocl.pivot.Class asType = NameUtil.getNameable(asPackage.getOwnedClasses(), className);
 		if (asType == null) {

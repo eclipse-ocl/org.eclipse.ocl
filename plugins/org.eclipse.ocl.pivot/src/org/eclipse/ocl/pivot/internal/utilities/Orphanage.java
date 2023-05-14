@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -25,7 +26,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -50,7 +50,6 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
-import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedNestedTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
@@ -65,11 +64,12 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
- * An Orphanage is a special purpose Package that transitively contains all metamodel elemants that
- * have no ancestral Package to contains them. There are specific type managers for Collection, Lambda,
- * Map and Tuple types. The managers weakly contain elements such as type specializations that
- * should require a container for the purposes of validation, but which should be eligible for
- * garbage collection whenever no longer in use.
+ * The 'orphanage' is a regular Package that transitively contains all metamodel elemants that
+ * have no ancestral Package to contain them. A regular package is sufficient and desirable
+ * for regular XMI load and save.
+ * <br>
+ * The Orphanage class adapts the regular Package to add state and behaviour to facilate
+ * efficient access to orphans.
  * <br>
  * There is no global orphanage. Any reference to one is stale.
  * <br>
@@ -78,10 +78,11 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * <br>
  * Each saved ASResource has a local orphanage that contains a selective copy of the shared orphanage so that
  * all references are terminated locally. ASSaver creates this copy via PivotSaveImpl.init(). The local orphanages
- * use a regular Package to avod the need for Orphanage support in XMI.
- * Correspondingly a loaded ASREsource has a local orphanage that is created by conventional XMI APIs.
+ * use a regular Package to avoid the need for Orphanage support in XMI.
+ * <br>
+ * Correspondingly a loaded ASResource has a local orphanage that is created by conventional XMI APIs.
  */
-public class Orphanage extends PackageImpl
+public class Orphanage extends AdapterImpl //implements IPackageListener // PackageImpl
 {
 	/**
 	 * The OrphanResource tailors the inherited ASResource functionality to support the single Resource shared by all
@@ -157,31 +158,28 @@ public class Orphanage extends PackageImpl
 		return null;
 	}
 
-	/**
-	 * @since 1.18
-	 *
-	@Deprecated
-	private static @NonNull Orphanage createSharedOrphanage(@NonNull ResourceSet resourceSet) {
-		Orphanage orphanage = new OrphanageImpl(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_URI, PivotConstants.ORPHANAGE_PREFIX);
-		Model orphanModel = PivotFactory.eINSTANCE.createModel();
-		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
-		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
-		orphanModel.getOwnedPackages().add(orphanage);
-		Resource orphanageResource = new OrphanResource(ORPHANAGE_URI);
-		orphanageResource.getContents().add(orphanModel);
-		resourceSet.getResources().add(orphanageResource);
-		return orphanage;
-	} */
+	public static org.eclipse.ocl.pivot.@NonNull Package createOrphanagePackage() {
+		org.eclipse.ocl.pivot.Package orphanPackage = PivotFactory.eINSTANCE.createPackage();
+		orphanPackage.setName(PivotConstants.ORPHANAGE_NAME);
+		orphanPackage.setURI(PivotConstants.ORPHANAGE_URI);
+		orphanPackage.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
+		return orphanPackage;
+	}
+
+	public static @NonNull Orphanage createOrphanageWithPackage(@Nullable StandardLibrary standardLibrary) {
+		org.eclipse.ocl.pivot.Package orphanPackage = createOrphanagePackage();
+		return new Orphanage(orphanPackage, standardLibrary);
+	}
 
 	/**
 	 * @since 1.18
 	 */
 	public static @NonNull Orphanage createSharedOrphanage(@NonNull StandardLibrary standardLibrary, @NonNull ResourceSet resourceSet) {
-		Orphanage orphanage = new Orphanage(standardLibrary);
+		Orphanage orphanage = createOrphanageWithPackage(standardLibrary);
 		Model orphanModel = PivotFactory.eINSTANCE.createModel();
 		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
 		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
-		orphanModel.getOwnedPackages().add(orphanage);
+		orphanModel.getOwnedPackages().add(orphanage.getPackage());
 		Resource orphanageResource = new OrphanResource(ORPHANAGE_URI);
 		orphanageResource.getContents().add(orphanModel);
 		resourceSet.getResources().add(orphanageResource);
@@ -259,6 +257,8 @@ public class Orphanage extends PackageImpl
 		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
 	}
 
+	private @NonNull PackageImpl orphanPackage;
+
 	private @Nullable StandardLibrary standardLibrary = null;
 
 	/**
@@ -271,10 +271,9 @@ public class Orphanage extends PackageImpl
 	 */
 	private final @NonNull Map<@NonNull TypeId, @NonNull List<@NonNull Element>> typeId2typeRefs = new HashMap<>();
 
-	public Orphanage(@Nullable StandardLibrary standardLibrary) {
-		setName(PivotConstants.ORPHANAGE_NAME);
-		setURI(PivotConstants.ORPHANAGE_URI);
-		setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
+	private Orphanage(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, @Nullable StandardLibrary standardLibrary) {
+		this.orphanPackage = (PackageImpl)orphanPackage;
+		orphanPackage.eAdapters().add(this);
 		if (standardLibrary != null) {
 			this.standardLibrary = standardLibrary;
 		}
@@ -287,16 +286,16 @@ public class Orphanage extends PackageImpl
 	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
 		Type old = typeId2type.put(typeId, orphanClass);
 		assert old == null;
-		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtilInternal.getOwnedClassesList(this);
+		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtilInternal.getOwnedClassesList(orphanPackage);
 		assert !ownedClasses.contains(orphanClass);
 		ownedClasses.add(orphanClass);
-		assert orphanClass.eContainer() == this;
+		assert orphanClass.eContainer() == orphanPackage;
 		assert ownedClasses.contains(orphanClass);
 	}
 
-	public void addPackageListener(@NonNull PartialPackages partialPackages) {
-		super.addPackageListener(partialPackages);
-	}
+//	public void addPackageListener(@NonNull PartialPackages partialPackages) {
+//		orphanPackage.addPackageListener(partialPackages);
+//	}
 
 	/**
 	 * Add a future orphan resulting from the creation of an EcoreUtil copy by the XMI load or ASSaver.localizeOrphans.
@@ -304,7 +303,7 @@ public class Orphanage extends PackageImpl
 	 */
 	public void addProtoClass(org.eclipse.ocl.pivot.@NonNull Class asProtoClass) {
 		assert asProtoClass.basicGetTypeId() == null;
-		getOwnedClasses().add(asProtoClass);
+		orphanPackage.getOwnedClasses().add(asProtoClass);
 	}
 
 	public void addReference(@NonNull Type type, @NonNull Element asElement) {
@@ -405,7 +404,7 @@ public class Orphanage extends PackageImpl
 		return null;
 	}
 
-	@Override
+/*	@Override
 	protected void didAddClass(@NonNull Class asClass) {
 		TypeId typeId = asClass.basicGetTypeId();
 		if (typeId != null) {			// null for a proto orphan.
@@ -413,7 +412,7 @@ public class Orphanage extends PackageImpl
 			assert (old == null) || (old == asClass);
 		}
 		super.didAddClass(asClass);
-	}
+	} */
 
 	public void dispose() {
 	/*	if (ownedClasses != null) {
@@ -423,9 +422,9 @@ public class Orphanage extends PackageImpl
 			((WeakEList<?>)ownedPackages).dispose();
 		} */
 		typeId2type.clear();
-		if (ownedClasses != null) {
+/*		if (ownedClasses != null) {
 			ownedClasses.clear();
-		}
+		} */
 	}
 
 	/**
@@ -637,6 +636,10 @@ public class Orphanage extends PackageImpl
 		}
 	}
 
+	public org.eclipse.ocl.pivot.@NonNull Package getPackage() {
+		return orphanPackage;
+	}
+
 	public org.eclipse.ocl.pivot.@NonNull Class getSpecialization(org.eclipse.ocl.pivot.Class genericClass, @NonNull List<@NonNull ? extends Type> templateArguments) {
 		BindingsId bindingsId = IdManager.getBindingsId(templateArguments.toArray(new @NonNull Type[templateArguments.size()]));
 		GeneralizedNestedTypeIdImpl classId = (GeneralizedNestedTypeIdImpl) genericClass.getTypeId();
@@ -794,7 +797,7 @@ public class Orphanage extends PackageImpl
 	 * Once ASSaver has localized all referenced orphans, this method is invoked to complete the typeId2type lookup.
 	 */
 	public void installLocalizedOrphans() {
-		for (org.eclipse.ocl.pivot.@NonNull Class asClass : PivotUtil.getOwnedClasses(this)) {
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : PivotUtil.getOwnedClasses(orphanPackage)) {
 			TypeId typeId = asClass.basicGetTypeId();
 			if (typeId == null) {
 				typeId = asClass.getTypeId();
@@ -813,12 +816,12 @@ public class Orphanage extends PackageImpl
 		orphanClass.setOwningPackage(null);
 	//	getOwnedClasses().remove(orphanClass);		// FIXME why doesn't this always work? - missing inverse in bad overload
 		assert orphanClass.eContainer() == null;
-		assert !getOwnedClasses().contains(orphanClass);
+		assert !orphanPackage.getOwnedClasses().contains(orphanClass);
 	}
 
-	public void removePackageListener(@NonNull PartialPackages partialPackages) {
-		super.removePackageListener(partialPackages);
-	}
+//	public void removePackageListener(@NonNull PartialPackages partialPackages) {
+//		orphanPackage.removePackageListener(partialPackages);
+//	}
 
 	public void removeReference(@NonNull Type type, @NonNull Element asElement) {
 		TypeId typeId = type.getTypeId();
@@ -833,6 +836,17 @@ public class Orphanage extends PackageImpl
 					typeId2typeRefs.remove(typeId);
 				}
 			}
+		}
+	}
+
+	@Override
+	public @NonNull String toString() {
+		EObject eContainer = orphanPackage.eContainer();
+		if (eContainer instanceof Model) {
+			return "Orphange:\"" + ((Model)eContainer).getExternalURI() + "\"(" + typeId2type.size() + ")";
+		}
+		else {
+			return NameUtil.debugSimpleName(this) + "(" + typeId2type.size() + ")";
 		}
 	}
 }
