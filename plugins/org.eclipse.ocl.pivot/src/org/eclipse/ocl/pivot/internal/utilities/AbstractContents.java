@@ -60,11 +60,12 @@ import com.google.common.collect.Lists;
 
 public abstract class AbstractContents extends PivotUtil
 {
+	protected final org.eclipse.ocl.pivot.@NonNull Package orphanPackage;
 	protected final @NonNull Orphanage orphanage;
 
 	protected AbstractContents() {
 		CompleteStandardLibrary standardLibrary = PivotUtilInternal.getEnvironmentFactory(null).getStandardLibrary();
-		org.eclipse.ocl.pivot.Package orphanPackage = Orphanage.createOrphanagePackage();
+		this.orphanPackage = Orphanage.createOrphanagePackage();
 		this.orphanage = new Orphanage(orphanPackage, standardLibrary);
 	}
 
@@ -92,14 +93,14 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Class createClass(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
-		assert asPackage != orphanage;
+		assert asPackage != orphanPackage;
 		org.eclipse.ocl.pivot.Class asType = createClass(name);
 		asPackage.getOwnedClasses().add(asType);
 		return asType;
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Class createClass(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass) {
-		assert asPackage != orphanage;
+		assert asPackage != orphanPackage;
 		org.eclipse.ocl.pivot.Class asType;
 		if (eClass == OCLstdlibPackage.Literals.OCL_ANY) {
 			asType = PivotFactory.eINSTANCE.createAnyType();
@@ -139,7 +140,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull CollectionType createCollectionType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass, /*@NonNull*/ TemplateParameter templateParameter, boolean isNullFree, int lower, int upper) {
-		assert asPackage != orphanage;
+		assert asPackage != orphanPackage;
 		assert templateParameter != null;
 		CollectionType asType; // = (CollectionType)eClass.getEPackage().getEFactoryInstance().create(eClass);		-- XXX uses non-functional OCLstdlibFactory
 		if (eClass == OCLstdlibPackage.Literals.BAG) {
@@ -168,7 +169,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull DataType createDataType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EDataType eDataType) {
-		assert asPackage != orphanage;
+		assert asPackage != orphanPackage;
 		DataType asType = createDataType(eDataType);
 		asPackage.getOwnedClasses().add(asType);
 		return asType;
@@ -210,7 +211,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull MapType createMapType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EClass eClass, /*@NonNull*/ TemplateParameter keyParameter, boolean keysAreNullFree, /*@NonNull*/ TemplateParameter valueParameter, boolean valuesAreNullFree) {
-		assert asPackage != orphanage;
+		assert asPackage != orphanPackage;
 		assert keyParameter != null;
 		assert valueParameter != null;
 		MapType asType = PivotFactory.eINSTANCE.createMapType();
@@ -268,7 +269,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull PrimitiveType createPrimitiveType(org.eclipse.ocl.pivot.@NonNull Package asPackage, /*@NonNull*/ EDataType eDataType) {
-		assert asPackage != orphanage;
+		assert asPackage != orphanPackage;
 		PrimitiveType asType = createPrimitiveType(eDataType);
 		asPackage.getOwnedClasses().add(asType);
 		return asType;

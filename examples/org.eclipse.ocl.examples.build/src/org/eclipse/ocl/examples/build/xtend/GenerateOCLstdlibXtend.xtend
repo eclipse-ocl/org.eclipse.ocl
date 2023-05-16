@@ -310,7 +310,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				{
 					private final @NonNull Model «thisModel.getPrefixedSymbolName("model")»;
 					«FOR pkge : thisModel.getSortedPackages()»
-					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanage" else pkge.getName())»;
+					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanPackage" else pkge.getName())»;
 					«ENDFOR»
 			
 					private Contents(@NonNull Resource resource, @NonNull String asURI)

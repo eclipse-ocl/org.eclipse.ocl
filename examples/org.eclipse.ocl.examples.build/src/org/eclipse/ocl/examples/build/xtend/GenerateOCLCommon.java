@@ -1336,7 +1336,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				s.append("orphanClass");
 			}
 			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphanPackage((org.eclipse.ocl.pivot.Package)localOrphan)) {		// XXX
-				s.append("orphanage");			// XXXX
+				s.append("orphanPackage");			// XXXX
 			}
 			else {
 				System.out.println("Unexpected localOrphan: " + NameUtil.debugSimpleName(localOrphan));

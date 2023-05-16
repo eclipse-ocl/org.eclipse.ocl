@@ -177,6 +177,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«IF type.isAbstract»
 			type.setIsAbstract(true);
 			«ENDIF»
+			«IF type instanceof DataType && ((type as DataType).behavioralClass !== null)»
+			((DataType)type).setBehavioralClass(«(type as DataType).behavioralClass.getSymbolName()»);
+			«ENDIF»
 			«IF templateSignature !== null»«IF templateSignature.getOwnedParameters().size() > 0»
 				createTemplateSignature(type, «FOR templateParameter : templateSignature.getOwnedParameters() SEPARATOR(", ")»«templateParameter.getSymbolName()»«ENDFOR»);
 			«ENDIF»
@@ -682,7 +685,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«ENDIF»
 				«pkg.getSymbolName()».getOwnedPackages().add(«nestedPackage.getSymbolName()»);
 			«ENDFOR»
-			«pkg.getSymbolName()».getOwnedPackages().add(orphanage);
 		'''
 	}
 

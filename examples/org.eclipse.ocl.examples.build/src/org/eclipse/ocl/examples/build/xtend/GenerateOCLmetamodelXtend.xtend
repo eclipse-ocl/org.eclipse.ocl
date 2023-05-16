@@ -55,8 +55,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.emf.ecore.resource.ResourceSet;
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
-			import org.eclipse.ocl.pivot.AnyType;
-			import org.eclipse.ocl.pivot.BooleanType;
 			import org.eclipse.ocl.pivot.Class;
 			import org.eclipse.ocl.pivot.CollectionType;
 			import org.eclipse.ocl.pivot.DataType;
@@ -64,7 +62,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.EnumerationLiteral;
 			import org.eclipse.ocl.pivot.Model;
 			import org.eclipse.ocl.pivot.Operation;
-			import org.eclipse.ocl.pivot.Orphanage;
 			import org.eclipse.ocl.pivot.Package;
 			import org.eclipse.ocl.pivot.Parameter;
 			import org.eclipse.ocl.pivot.Property;
@@ -276,7 +273,9 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				{
 					private final @NonNull Model «root.getPrefixedSymbolName("root")»;
 					«FOR pkge : root.getSortedPackages()»
-					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == root.getOrphanPackage()) "orphanage" else pkge.getName())»;
+					«IF pkge != root.getOrphanPackage()»
+					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(pkge.getName())»;
+					«ENDIF»
 					«ENDFOR»
 
 					protected Contents(@NonNull «javaClassName» metamodelResource, @NonNull Package libraryPackage, @NonNull String name, @Nullable String nsPrefix, @NonNull String nsURI) {
@@ -284,7 +283,9 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
 						metamodelResource.getContents().add(«root.getSymbolName()»);
 						«FOR pkge : root.getSortedPackages()»
+						«IF pkge != root.getOrphanPackage()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«ENDIF»
 						«FOR comment : pkge.ownedComments»
 							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»

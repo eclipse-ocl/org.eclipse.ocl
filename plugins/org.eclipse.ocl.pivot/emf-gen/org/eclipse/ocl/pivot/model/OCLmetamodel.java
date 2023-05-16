@@ -37,7 +37,6 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -45,10 +44,12 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl.ImmutableResource;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.model.OCLmetamodel.LibraryContents;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -255,11 +256,6 @@ public class OCLmetamodel extends ASResourceImpl
 			installAggregateSuperTypes();
 			installOperationBodies();
 			installProperties();
-		//	java.lang.Class<?> instanceClass = PivotPackage.Literals.EBOOLEAN.getInstanceClass();
-		//	org.eclipse.ocl.pivot.Class behavioralClass = PivotUtil.getBehavioralClass(orphanage.getStandardLibrary(), instanceClass);
-		//	if (behavioralClass != null) {
-				((DataType)_EBoolean).setBehavioralClass(_Boolean);
-		//	}
 		}
 
 		public @NonNull Model getModel() {
@@ -292,7 +288,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 		private void installPackages() {
 			root.getOwnedPackages().add(pivot);
-			root.getOwnedPackages().add(orphanage.getPackage());
+			root.getOwnedPackages().add(orphanPackage);
 			root.getOwnedImports().add(createImport(null, _ocl));
 		}
 
@@ -486,8 +482,10 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _DynamicType = createClass(pivot, PivotPackage.Literals.DYNAMIC_TYPE);
 			type = _DynamicValueSpecification = createClass(pivot, PivotPackage.Literals.DYNAMIC_VALUE_SPECIFICATION);
 			type = _EBoolean = createClass(pivot, PivotPackage.Literals.EBOOLEAN);
+			((DataType)type).setBehavioralClass(_Boolean);
 			installComment(type, "EBoolean is used within the Pivot AS to support precisely non-null true/false values.");
 			type = _EInt = createClass(pivot, PivotPackage.Literals.EINT);
+			((DataType)type).setBehavioralClass(_Integer);
 			installComment(type, "EInt is used within the Pivot AS to support precisely non-null small integer values.");
 			type = _EcoreObject = createClass(pivot, PivotPackage.Literals.ECORE_OBJECT);
 			type = _Element = createClass(pivot, PivotPackage.Literals.ELEMENT);
