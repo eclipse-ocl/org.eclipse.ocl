@@ -1366,7 +1366,8 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			synchronized (this) {
 				typeId2 = typeId;
 				if (typeId2 == null) {
-					typeId = typeId2 = computeId();
+					typeId2 = computeId();
+					setTypeId(typeId2);
 				}
 			}
 		}

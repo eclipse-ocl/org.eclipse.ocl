@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.UnaryOperator;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Adapter;
@@ -24,6 +25,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -57,7 +59,6 @@ import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedNestedTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.resource.ASSaverNew;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -69,8 +70,6 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
-
-import com.google.common.collect.Lists;
 
 /**
  * The 'orphanage' is a regular Package that transitively contains all metamodel elemants that
@@ -292,13 +291,16 @@ public class Orphanage extends AdapterImpl
 
 	/**
 	 * Shared cache of the lazily created, lazily deleted, specializations of each type.
+	 * This identifies all orphans for a given OCL environment/thread/metamodelmanager. Those originating
+	 * from loaded models remain owned by the loaded model's orphanage. Only those subsequently created
+	 * are present in orphanPackage.ownedClasses.
 	 */
 	private final @NonNull Map<@NonNull TypeId, @NonNull Type> typeId2type = new HashMap<>();
 
 	/**
 	 * The elements that reference each orphan. An element that references more than once e.g. Map<X,X> has a duplicate entry.
 	 */
-	private final @NonNull Map<@NonNull TypeId, @NonNull List<@NonNull Element>> typeId2typeRefs = new HashMap<>();
+	private final @NonNull Map<@NonNull TypeId, @NonNull List<@NonNull Element>> typeId2typeRefs = new HashMap<>(); // XXX need lazy catchup for loaded orphanages
 
 	public Orphanage(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, @NonNull StandardLibrary standardLibrary) {
 		this.orphanPackage = (PackageImpl)orphanPackage;
@@ -796,17 +798,17 @@ public class Orphanage extends AdapterImpl
 	public void installLoadedClasses(@NonNull ASResource asResource) {
 		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetOrphanPackage(asResource);
 		if (localOrphanPackage != null) {
-			Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> local2shared = null;
-			List<org.eclipse.ocl.pivot.@NonNull Class> sharedOwnedClasses = PivotUtilInternal.getOwnedClassesList(orphanPackage);
-			Iterable<org.eclipse.ocl.pivot.@NonNull Class> localOwnedClasses = Lists.newArrayList(PivotUtil.getOwnedClasses(localOrphanPackage));
-			PivotUtilInternal.getOwnedClassesList(localOrphanPackage).clear();
-			for (org.eclipse.ocl.pivot.@NonNull Class asLocalClass : localOwnedClasses) {
+			Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> local2shared = null;	// Duplocate orphan and its replacement
+			List<org.eclipse.ocl.pivot.@NonNull Class> usableClasses = new ArrayList<>();	// Novel orphans to be 'added' to shared orphaange
+			//
+			//	Using the old containment resolve the transient typeId and triage usable/rewrite
+			//
+			for (org.eclipse.ocl.pivot.@NonNull Class asLocalClass : PivotUtil.getOwnedClasses(localOrphanPackage)) {
 				TypeId typeId = asLocalClass.getTypeId();
 				org.eclipse.ocl.pivot.Class asSharedClass = (org.eclipse.ocl.pivot.Class)typeId2type.get(typeId);
 				if (asSharedClass == null) {
-				//	PivotUtilInternal.resetContainer(asLocalClass);
 					typeId2type.put(typeId, asLocalClass);
-					sharedOwnedClasses.add(asLocalClass);
+					usableClasses.add(asLocalClass);
 				}
 				else {
 					assert asResource.isSaveable();				// XXX !isReadOnly()
@@ -816,28 +818,47 @@ public class Orphanage extends AdapterImpl
 					local2shared.put(asLocalClass, asSharedClass);
 				}
 			}
+			//
+			//	Eliminate the old containment for rewritten/not-useable classes.
+			//
+			PivotUtilInternal.getOwnedClassesList(localOrphanPackage).retainAll(usableClasses);		// Exploit compatible ordering.
+		//	PivotUtilInternal.getOwnedClassesList(orphanPackage).addAll(migratingClasses);
+			//
+			//	Rewrite all references to classes that already have shared orphan counterparts.
+			//
 			if (local2shared != null) {
 				Map<EObject, Collection<Setting>> object2references = EcoreUtil.CrossReferencer.find(asResource.getContents());
 				for (EObject referencedLocalObject : object2references.keySet()) {
+					assert referencedLocalObject != null;
 					org.eclipse.ocl.pivot.Class asSharedClass = local2shared.get(referencedLocalObject);
 					if (asSharedClass != null) {
 						Collection<Setting> settings = object2references.get(referencedLocalObject);
 						if (settings != null) {
-							ASSaverNew.relocateReferencesTo(asSharedClass, settings, referencedLocalObject);
+							relocateReferencesTo(asSharedClass, settings, referencedLocalObject);
 						}
-
-					/*	public static void relocateReferencesTo(@NonNull EObject remoteObject, @NonNull Collection<Setting> settings, @NonNull EObject localObject) {
-
-						for (Setting setting : settings) {
-							EObject referencingLocalObject = setting.getEObject();
-							EStructuralFeature settingReference = setting.getEStructuralFeature();
-						//	System.out.println("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
-							System.out.println("debugLocalization-bad " + NameUtil.debugSimpleName(referencingObject) + " : " + referencingObject + "::" + settingReference.getName() + "\n\t=> " + NameUtil.debugSimpleName(referencedObject) + " : " + referencedObject);
-						//	NameUtil.errPrintln("Not-localized: " + NameUtil.debugSimpleName(eSource) + " " + eSource + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
-							throw new UnsupportedOperationException("Not-localized: " + NameUtil.debugSimpleName(referencingObject) + " " + referencingObject + " " + settingReference.getEContainingClass().getName() + "::" + settingReference.getName() + " => " + NameUtil.debugSimpleName(referencedObject) + " : " + referencedObject);
-						//	getClass();		// XXX
-						} */
 					}
+					// XXX update typeId2typeRefs
+				}
+			}
+		}
+	}
+
+	private void relocateReferencesTo(@NonNull EObject newObject, @NonNull Collection<Setting> settings, @NonNull EObject oldObject) {
+		for (Setting setting : settings) {
+			EObject referencingObject = setting.getEObject();
+			EStructuralFeature eReference = setting.getEStructuralFeature();
+			if (!eReference.isDerived() && !eReference.isTransient()) {
+				if (eReference.isMany()) {
+					@SuppressWarnings("unchecked") List<EObject> referencedObjects = (List<EObject>)referencingObject.eGet(eReference);
+					referencedObjects.replaceAll(new UnaryOperator<EObject>() {
+						@Override
+						public EObject apply(EObject t) {
+							return t == oldObject ? newObject : t;
+						}
+					});
+				}
+				else {
+					referencingObject.eSet(eReference, newObject);
 				}
 			}
 		}
@@ -860,6 +881,10 @@ public class Orphanage extends AdapterImpl
 			List<@NonNull Element> list = typeId2typeRefs.get(typeId);
 			assert list != null;
 			boolean wasRemoved = list.remove(asElement);
+			if (!wasRemoved) {
+				System.out.println("removeReference " + NameUtil.debugSimpleName(asElement) + " " + asElement + " : " + typeId);
+
+			}
 			assert wasRemoved;
 			if (list.isEmpty()) {
 				synchronized (typeId2type) {
