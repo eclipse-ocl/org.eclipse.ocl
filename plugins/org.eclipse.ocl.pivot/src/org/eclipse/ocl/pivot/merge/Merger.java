@@ -620,7 +620,7 @@ public class Merger
 
 	private @Nullable Object resolveValue(@NonNull EAttribute eAttribute, @NonNull List<@Nullable Object> partialValues) {
 		EDataType eType = eAttribute.getEAttributeType();
-		if ((eType == PivotPackage.Literals.BOOLEAN) || (eType == EcorePackage.Literals.EBOOLEAN) || (eType == EcorePackage.Literals.EBOOLEAN_OBJECT)) {
+		if ((eType == PivotPackage.Literals.BOOLEAN) || (eType == PivotPackage.Literals.EBOOLEAN) || (eType == EcorePackage.Literals.EBOOLEAN) || (eType == EcorePackage.Literals.EBOOLEAN_OBJECT)) {
 			return resolveBooleanValue(eAttribute, partialValues);
 		}
 		else if ((eType == PivotPackage.Literals.STRING) || (eType == EcorePackage.Literals.ESTRING)) {

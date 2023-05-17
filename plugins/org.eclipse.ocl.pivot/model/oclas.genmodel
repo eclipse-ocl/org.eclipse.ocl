@@ -51,15 +51,18 @@
       <genEnumLiterals ecoreEnumLiteral="../model-gen/oclas.ecore#//TransitionKind/internal"/>
       <genEnumLiterals ecoreEnumLiteral="../model-gen/oclas.ecore#//TransitionKind/local"/>
     </genEnums>
-    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Boolean"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//EBoolean"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//EInt"/>
     <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//EcoreObject"/>
-    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Integer"/>
     <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//JavaClass"/>
     <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//LibraryFeature"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Number"/>
     <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Object"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Throwable"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Boolean"/>
+    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Integer"/>
     <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Real"/>
     <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//String"/>
-    <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//Throwable"/>
     <genDataTypes ecoreDataType="../model-gen/oclas.ecore#//UnlimitedNatural"/>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//Annotation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Annotation/ownedContents"/>
@@ -72,9 +75,6 @@
     </genClasses>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//AssociationClassCallExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//AssociationClassCallExp/referredAssociationClass"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Bag">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Bag/T"/>
     </genClasses>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//BagType"/>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Behavior">
@@ -104,12 +104,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Class/ownedProperties"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Class/owningPackage"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Class/superClasses"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Collection">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Collection/T"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Collection/elementType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//Collection/lower"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//Collection/upper"/>
     </genClasses>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//CollectionItem">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//CollectionItem/ownedItem"/>
@@ -155,6 +149,9 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//CompletePackage/owningCompleteModel"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//CompletePackage/owningCompletePackage"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//CompletePackage/partialPackages"/>
+    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//CompleteStandardLibrary">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//CompleteStandardLibrary/owningCompleteEnvironment"/>
     </genClasses>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//ConnectionPointReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//ConnectionPointReference/entries"/>
@@ -292,12 +289,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//LoopExp/ownedIterators"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//LoopExp/referredIteration"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Map">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Map/K"/>
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Map/V"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Map/keyType"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Map/valueType"/>
-    </genClasses>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//MapLiteralExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//MapLiteralExp/ownedParts"/>
     </genClasses>
@@ -345,25 +336,19 @@
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OCLExpression">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//OCLExpression/typeValue"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclAny"/>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclComparable"/>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclElement">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//OclElement/oclContainer"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//OclElement/oclContents"/>
     </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclEnumeration"/>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclInvalid">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//OclInvalid/oclBadProperty"/>
-    </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclLambda"/>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclMessage"/>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclSelf"/>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclState"/>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//OclStereotype"/>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclSummable"/>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclTuple"/>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclType"/>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclVoid"/>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//Operation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Operation/bodyExpression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//Operation/isInvalidating"/>
@@ -385,12 +370,6 @@
     </genClasses>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//OppositePropertyCallExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//OppositePropertyCallExp/referredProperty"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OrderedCollection">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//OrderedCollection/T"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OrderedSet">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//OrderedSet/T"/>
     </genClasses>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//OrderedSetType"/>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//OrphanCompletePackage"/>
@@ -460,6 +439,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//RealLiteralExp/realSymbol"/>
     </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//ReferringElement"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//ReflectiveStandardLibrary"/>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//Region">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Region/extendedRegion"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Region/ownedSubvertexes"/>
@@ -472,13 +452,7 @@
     <genClasses ecoreClass="../model-gen/oclas.ecore#//SendSignalAction">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//SendSignalAction/signal"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Sequence">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Sequence/T"/>
-    </genClasses>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//SequenceType"/>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Set">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Set/T"/>
-    </genClasses>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//SetType"/>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//ShadowExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//ShadowExp/ownedParts"/>
@@ -494,9 +468,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Slot/ownedValues"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Slot/owningInstance"/>
     </genClasses>
-    <genClasses ecoreClass="../model-gen/oclas.ecore#//StandardLibrary">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//StandardLibrary/owningCompleteEnvironment"/>
-    </genClasses>
+    <genClasses ecoreClass="../model-gen/oclas.ecore#//StandardLibrary"/>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//State">
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//State/isComposite"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//State/isOrthogonal"/>
@@ -576,6 +548,7 @@
     <genClasses ecoreClass="../model-gen/oclas.ecore#//TupleLiteralPart">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//TupleLiteralPart/ownedInit"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//TuplePart"/>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//TupleType"/>
     <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Type"/>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//TypeExp">
@@ -585,9 +558,6 @@
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//TypedElement/isMany"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//TypedElement/isRequired"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//TypedElement/type"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//UniqueCollection">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//UniqueCollection/T"/>
     </genClasses>
     <genClasses ecoreClass="../model-gen/oclas.ecore#//UnlimitedNaturalLiteralExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//UnlimitedNaturalLiteralExp/unlimitedNaturalSymbol"/>
@@ -616,6 +586,42 @@
     <genClasses ecoreClass="../model-gen/oclas.ecore#//WildcardType">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//WildcardType/lowerBound"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//WildcardType/upperBound"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Bag">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Bag/T"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Collection">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Collection/T"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Collection/elementType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//Collection/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ../model-gen/oclas.ecore#//Collection/upper"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Map">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Map/K"/>
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Map/V"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Map/keyType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//Map/valueType"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclAny"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclInvalid">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclas.ecore#//OclInvalid/oclBadProperty"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclSelf"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OclVoid"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OrderedCollection">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//OrderedCollection/T"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//OrderedSet">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//OrderedSet/T"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Sequence">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Sequence/T"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//Set">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//Set/T"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclas.ecore#//UniqueCollection">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclas.ecore#//UniqueCollection/T"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
