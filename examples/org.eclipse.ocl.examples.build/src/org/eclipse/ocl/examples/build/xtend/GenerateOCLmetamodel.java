@@ -204,7 +204,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			addExternalReference(standardLibrary.getRealType(), asModel);
 			addExternalReference(standardLibrary.getStringType(), asModel);
 			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asModel);
-			initModel2(saver);
+			initModel2(/*saver*/);
 			String metamodel = generateMetamodel(Collections.emptyList());
 			MergeWriter fw = new MergeWriter(fileName);
 			if (metamodel != null) {

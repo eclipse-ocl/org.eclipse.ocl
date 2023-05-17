@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
-import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
@@ -158,12 +157,12 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			}
 			Model pivotModel = (Model)ClassUtil.nonNullState(asResource.getContents().get(0));
 		//	assert pivotModel.getOwnedPackages().size() == 1;				// No orphanage, but may have an implicit package, so 100% to synthesize
-			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
-			saver.localizeOrphans();
+//			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
+//			saver.localizeOrphans();
 			String fileName = folder + "/" + javaClassName + ".java";
 		//	log.info("Generating '" + fileName + "'");
 			initModel1(pivotModel);
-			initModel2(saver);
+			initModel2(/*saver*/);
 			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel(excludedEClassifierNames);
 			MergeWriter fw = new MergeWriter(fileName);
 			fw.append(metamodel);

@@ -70,8 +70,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.resource.ASSaverNew;
-import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
@@ -952,19 +950,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return '"' + property.getName() + '"';
 	}
 
-	protected org.eclipse.ocl.pivot.@Nullable Package getOrphanPackage(org.eclipse.ocl.pivot.@NonNull Package elem) {
-		return getOrphanPackage(getRootPackage(elem));
-	}
-
-	protected org.eclipse.ocl.pivot.@NonNull Package getOrphanPackage(@NonNull Model elem) {
-		for (org.eclipse.ocl.pivot.@NonNull Package pkg : PivotUtil.getOwnedPackages(elem)) {
-			if (PivotConstants.ORPHANAGE_NAME.equals(pkg.getName())) {
-				return pkg;
-			}
-		}
-		throw new IllegalStateException();
-	}
-
 	protected @NonNull String getPartialName(@NonNull Property property) {
 		org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
 		if (owningType == null) {
@@ -1270,14 +1255,14 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		this.thisModel = thisModel;
 		this.contentAnalysis = createContentAnalysis(thisModel);
 	//	initLocalTypes();
-	//	initOrphanSymbolNames(asSaver);
+	//	initOrphanSymbolNames();
 	}
 
-	public void initModel2(ASSaverNew.@NonNull ASSaverWithInverse asSaver) {
+	public void initModel2(/*ASSaverNew.@NonNull ASSaverWithInverse asSaver*/) {
 	//	this.thisModel = thisModel;
 	//	this.contentAnalysis = createContentAnalysis(thisModel);
 		initLocalTypes();
-		initOrphanSymbolNames(asSaver);
+		initOrphanSymbolNames(/*asSaver*/);
 	}
 
 	/**
@@ -1285,9 +1270,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	 * from which the local was cloned so that synthesis of references to the shared element are serialized as if the
 	 * local copy had been corrupted to point at the local.
 	 */
-	protected void initOrphanSymbolNames(@NonNull ASSaverWithInverse asSaver) {
-		org.eclipse.ocl.pivot.Package localOrphanage = getOrphanPackage(thisModel);
-		for (EObject localOrphan : new TreeIterable(localOrphanage, true)) {
+	protected void initOrphanSymbolNames(/*@NonNull ASSaverWithInverse asSaver*/) {
+		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetOrphanPackage(thisModel);
+		Orphanage sharedOrphanage = Orphanage.basicGetSharedOrphanage(thisModel.eResource().getResourceSet());
+		for (EObject localOrphan : new TreeIterable(localOrphanPackage, true)) {
 			StringBuilder s = new StringBuilder();
 			if (localOrphan instanceof CollectionType) {
 				CollectionType type = (CollectionType)localOrphan;
@@ -1344,16 +1330,19 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			if (s.length() > 0) {
 				String symbolName = getPrefixedSymbolName(localOrphan, s.toString());
-				EObject sharedOrphan = asSaver.basicGetSource(localOrphan);
-				if (sharedOrphan != null) {
-					nameQueries.putSymbolName(sharedOrphan, symbolName);
-				}
-				else if (localOrphan == localOrphanage) {
-				//	Orphanage sharedOrphanage = /*OrphanageImpl.getOrphanage(*/environmentFactory.getCompleteModel().getSharedOrphanage()/*)*/;
-				//	nameQueries.putSymbolName(sharedOrphanage, symbolName);
-				}
-				else {
-					System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);
+				if (localOrphan instanceof Type) {
+					TypeId typeId = ((Type)localOrphan).getTypeId();
+					EObject sharedOrphan = sharedOrphanage != null ? sharedOrphanage.basicGetType(typeId, true) : null;
+					if (sharedOrphan != null) {
+						nameQueries.putSymbolName(sharedOrphan, symbolName);
+					}
+					else if (localOrphan == localOrphanPackage) {
+						//	Orphanage sharedOrphanage = /*OrphanageImpl.getOrphanage(*/environmentFactory.getCompleteModel().getSharedOrphanage()/*)*/;
+						//	nameQueries.putSymbolName(sharedOrphanage, symbolName);
+					}
+					else {
+						System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);
+					}
 				}
 			}
 		}

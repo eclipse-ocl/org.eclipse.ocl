@@ -58,11 +58,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 				return null;
 			}
 			EObject resolvedObject = asSaver.resolveOrphan(unresolvedObject);
-			String href = super.getHREF(resolvedObject);
-			if (href.contains("Orphanage")) {
-				System.out.println("getHREF " + href + " " + NameUtil.debugSimpleName(unresolvedObject) + " " + NameUtil.debugSimpleName(resolvedObject));
-			}
-			return href;
+			return super.getHREF(resolvedObject);
 		}
 
 		public @NonNull ASSaverNew getSaver() {

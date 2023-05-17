@@ -14,6 +14,7 @@ import org.eclipse.ocl.pivot.DataType
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage
 
 class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 {
@@ -310,7 +311,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				{
 					private final @NonNull Model «thisModel.getPrefixedSymbolName("model")»;
 					«FOR pkge : thisModel.getSortedPackages()»
-					«IF pkge != thisModel.getOrphanPackage()»
+					«IF pkge != Orphanage.basicGetOrphanPackage(thisModel)»
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(pkge.getName())»;
 					«ENDIF»
 					«ENDFOR»
@@ -320,7 +321,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«thisModel.getSymbolName()» = createModel(asURI);
 						resource.getContents().add(«thisModel.getSymbolName()»);
 						«FOR pkge : thisModel.getSortedPackages()»
-						«IF pkge != thisModel.getOrphanPackage()»
+						«IF pkge != Orphanage.basicGetOrphanPackage(thisModel)»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDIF»
 						«FOR comment : pkge.ownedComments»
