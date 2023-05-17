@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
-import org.eclipse.ocl.pivot.internal.resource.ASSaverNew.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
@@ -184,9 +183,30 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 				return;
 			}
 			sourceFile = "/" + projectName + "/" + modelFile;
+			String saveFile = "/" + projectName + "/" + modelFile.replace("model", "model-gen").replace("ecore", "oclas");
+			URI saveURI = URI.createPlatformResourceURI(saveFile, true);
+			//			log.info("Loading '" + saveURI + "'");
+			//			AS2XMIid as2id = AS2XMIid.load(saveURI);
+			log.info("Saving '" + saveURI + "'");
+			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
+				EObject eObject = tit.next();
+				if (eObject instanceof org.eclipse.ocl.pivot.Class) {
+					List<Property> ownedAttribute = ((org.eclipse.ocl.pivot.Class)eObject).getOwnedProperties();
+					ClassUtil.sort(ownedAttribute, OCLinEcoreTablesUtils.propertyComparator);
+				}
+			}
+			asResource.setURI(saveURI);
+			//	    	as2id.assignIds(asResource.getResourceSet());
+			Map<Object, Object> options = XMIUtil.createSaveOptions(asResource);
+			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
+			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
+			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+			XMIUtil.retainLineWidth(options, asResource);
+			asResource.setSaveable(true);
+			asResource.save(options);
 			EObject asRoot = asResource.getContents().get(0);
-			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
-			/*Package orphanage =*/ saver.localizeOrphans();
+		//	ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
+		//	/*Package orphanage =*/ saver.localizeOrphans();
 			//			if ((orphanage != null) && (pivotModel instanceof Root)) {
 			//				(pivotModel as Root).getOwnedPackages().add(orphanage);
 			//			}
@@ -211,27 +231,6 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 				fw.append(metamodel);
 			}
 			fw.close();
-			String saveFile = "/" + projectName + "/" + modelFile.replace("model", "model-gen").replace("ecore", "oclas");
-			URI saveURI = URI.createPlatformResourceURI(saveFile, true);
-			//			log.info("Loading '" + saveURI + "'");
-			//			AS2XMIid as2id = AS2XMIid.load(saveURI);
-			log.info("Saving '" + saveURI + "'");
-			for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
-				EObject eObject = tit.next();
-				if (eObject instanceof org.eclipse.ocl.pivot.Class) {
-					List<Property> ownedAttribute = ((org.eclipse.ocl.pivot.Class)eObject).getOwnedProperties();
-					ClassUtil.sort(ownedAttribute, OCLinEcoreTablesUtils.propertyComparator);
-				}
-			}
-			asResource.setURI(saveURI);
-			//	    	as2id.assignIds(asResource.getResourceSet());
-			Map<Object, Object> options = XMIUtil.createSaveOptions(asResource);
-			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
-			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
-			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
-			XMIUtil.retainLineWidth(options, asResource);
-			asResource.setSaveable(true);
-			asResource.save(options);
 			for (Resource resource : asResource.getResourceSet().getResources()) {
 				String saveMessage = PivotUtil.formatResourceDiagnostics(ClassUtil.nonNullEMF(resource.getErrors()), "Save", "\n\t");
 				if (saveMessage != null) {

@@ -13,6 +13,7 @@ package org.eclipse.ocl.examples.build.xtend
 import org.eclipse.ocl.pivot.Model
 import java.util.Collection
 import java.util.GregorianCalendar
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage
 
 class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 {
@@ -273,7 +274,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				{
 					private final @NonNull Model «root.getPrefixedSymbolName("root")»;
 					«FOR pkge : root.getSortedPackages()»
-					«IF pkge != root.getOrphanPackage()»
+					«IF pkge != Orphanage.basicGetOrphanPackage(root)»
 					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(pkge.getName())»;
 					«ENDIF»
 					«ENDFOR»
@@ -283,7 +284,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«root.getSymbolName()» = createModel("«pkg.getURI»");
 						metamodelResource.getContents().add(«root.getSymbolName()»);
 						«FOR pkge : root.getSortedPackages()»
-						«IF pkge != root.getOrphanPackage()»
+						«IF pkge != Orphanage.basicGetOrphanPackage(root)»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
 						«ENDIF»
 						«FOR comment : pkge.ownedComments»

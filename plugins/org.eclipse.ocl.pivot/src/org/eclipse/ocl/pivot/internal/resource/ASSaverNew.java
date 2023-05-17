@@ -205,7 +205,7 @@ public class ASSaverNew extends AbstractASSaver
 		}
 	}
 
-	public static class ASSaverWithInverse extends ASSaverNew
+/*	public static class ASSaverWithInverse extends ASSaverNew
 	{
 		private final @NonNull Map<@NonNull EObject, @NonNull EObject> target2source = new HashMap<>();
 
@@ -236,7 +236,7 @@ public class ASSaverNew extends AbstractASSaver
 		public @NonNull EObject getSource(@NonNull EObject target) {
 			return ClassUtil.nonNullState(target2source.get(target));
 		}
-	}
+	} */
 
 	protected static class ClassByTypeIdAndEntryClassComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
 	{

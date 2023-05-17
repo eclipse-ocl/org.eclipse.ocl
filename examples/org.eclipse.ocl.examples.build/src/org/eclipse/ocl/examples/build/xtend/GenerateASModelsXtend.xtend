@@ -14,6 +14,7 @@ import org.eclipse.ocl.pivot.DataType
 import org.eclipse.ocl.pivot.utilities.ClassUtil
 import java.util.Collection
 import java.util.GregorianCalendar
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage
 
 class GenerateASModelsXtend extends GenerateASModels
 {
@@ -338,7 +339,7 @@ class GenerateASModelsXtend extends GenerateASModels
 				{
 					private final @NonNull Model «thisModel.getPrefixedSymbolName("model")»;
 					«FOR pkge : thisModel.getSortedPackages()»
-					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanPackage" else pkge.getName())»;
+					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == Orphanage.basicGetOrphanPackage(thisModel)) "orphanPackage" else pkge.getName())»;
 					«ENDFOR»
 			
 					private Contents(@NonNull String asURI)
