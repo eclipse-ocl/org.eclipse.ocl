@@ -310,7 +310,9 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				{
 					private final @NonNull Model «thisModel.getPrefixedSymbolName("model")»;
 					«FOR pkge : thisModel.getSortedPackages()»
-					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(if (pkge == thisModel.getOrphanPackage()) "orphanPackage" else pkge.getName())»;
+					«IF pkge != thisModel.getOrphanPackage()»
+					private final @NonNull «pkge.eClass().getName()» «pkge.getPrefixedSymbolName(pkge.getName())»;
+					«ENDIF»
 					«ENDFOR»
 			
 					private Contents(@NonNull Resource resource, @NonNull String asURI)
@@ -318,7 +320,9 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«thisModel.getSymbolName()» = createModel(asURI);
 						resource.getContents().add(«thisModel.getSymbolName()»);
 						«FOR pkge : thisModel.getSortedPackages()»
+						«IF pkge != thisModel.getOrphanPackage()»
 						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", "«pkge.getNsPrefix()»", "«pkge.getURI()»", «pkge.getGeneratedPackageId()», «getEcoreLiteral(pkge)»);
+						«ENDIF»
 						«FOR comment : pkge.ownedComments»
 							installComment(«pkge.getSymbolName()», "«comment.javaString()»");
 						«ENDFOR»

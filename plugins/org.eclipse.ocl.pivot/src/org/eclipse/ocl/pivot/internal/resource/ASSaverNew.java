@@ -64,6 +64,7 @@ public class ASSaverNew extends AbstractASSaver
 
 		protected ASSaverCopier(@NonNull ASResource resource, boolean resolveProxies) {
 			super(resolveProxies);
+			System.out.println("ASSaverCopier " + NameUtil.debugSimpleName(this));
 			this.asModel = PivotUtil.getModel(resource);
 			org.eclipse.ocl.pivot.Package localOrphanPackage2 = this.localOrphanPackage = Orphanage.basicGetOrphanPackage(asModel);
 			if (localOrphanPackage2 != null) {		// Pre-existing orphan content 'copies' to itself.
@@ -112,6 +113,13 @@ public class ASSaverNew extends AbstractASSaver
 			org.eclipse.ocl.pivot.Package localOrphanPackage2 = localOrphanPackage;
 			if (localOrphanPackage2 != null) {
 				ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanPackage2.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
+			}
+			for (EObject eSource : keySet()) {
+				String s = eSource.toString();
+				if (s.contains("Sequence(String)") || s.contains("Sequence<$0:String,$1:true,$2:0,$3:*>")) {
+					EObject eTarget = get(eSource);
+					System.out.println("copyReferences " + NameUtil.debugSimpleName(this) + " "  + NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
+				}
 			}
 		}
 
@@ -352,6 +360,10 @@ public class ASSaverNew extends AbstractASSaver
 	 */
 	public @Nullable EObject resolveOrphan(@NonNull EObject eObject) {
 		EObject localEObject = copier.get(eObject);
+		String s = String.valueOf(eObject);
+		if (s.contains("Sequence(String)") || s.contains("Sequence<$0:String,$1:true,$2:0,$3:*>")) {
+			System.out.println("resolveOrphan " + NameUtil.debugSimpleName(copier) + " "   + NameUtil.debugSimpleName(eObject) + " : " + eObject + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
+		}
 		EObject eObject2 = localEObject != null ? localEObject : eObject;
 	//	Model containingModel = PivotUtil.getContainingModel(eObject2);
 	//	assert (containingModel == null) || !Orphanage.isOrphanage(containingModel);		// ElementLiteralExp references may be anywhere.

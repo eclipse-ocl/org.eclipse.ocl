@@ -75,8 +75,8 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, Ab
 
 		@Override
 		public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
-			String n1 = PrettyPrinter.printType(o1);
-			String n2 = PrettyPrinter.printType(o2);
+			String n1 = o1.getTypeId().toString();
+			String n2 = o2.getTypeId().toString();
 			return n1.compareTo(n2);
 		}
 	}

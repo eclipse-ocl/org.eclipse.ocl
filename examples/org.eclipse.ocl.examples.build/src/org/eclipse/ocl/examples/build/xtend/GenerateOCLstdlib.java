@@ -137,24 +137,13 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			//			if (asResource == null) {
 			//				return;
 			//			}
-			Model pivotModel = (Model)ClassUtil.nonNullState(asResource.getContents().get(0));
-		//	assert pivotModel.getOwnedPackages().size() == 1;				// No orphanage, but may have an implicit package, so 100% to synthesize
-			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
-			saver.localizeOrphans();
-			String fileName = folder + "/" + javaClassName + ".java";
-		//	log.info("Generating '" + fileName + "'");
-			initModel1(pivotModel);
-			initModel2(saver);
-			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel(excludedEClassifierNames);
-			MergeWriter fw = new MergeWriter(fileName);
-			fw.append(metamodel);
-			fw.close();
 			String saveFile = "/" + projectName + "/" + modelFile.replace("model", "model-gen").replace("oclstdlib", "oclas");
 			URI saveURI = URI.createPlatformResourceURI(saveFile, true);
 		//	log.info("Loading '" + saveURI + "'");
 			log.info("Saving '" + saveURI + "'");
 			asResource.setURI(saveURI);
-			Map<String, Object> options = new HashMap<String, Object>();
+			Map<String, Object> options = new HashMap<>();
+		//	options.put(ASResource.OPTION_LOCALIZE_ORPHANS, Boolean.TRUE); -- default
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
@@ -167,6 +156,18 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 					return;
 				}
 			}
+			Model pivotModel = (Model)ClassUtil.nonNullState(asResource.getContents().get(0));
+		//	assert pivotModel.getOwnedPackages().size() == 1;				// No orphanage, but may have an implicit package, so 100% to synthesize
+			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
+			saver.localizeOrphans();
+			String fileName = folder + "/" + javaClassName + ".java";
+		//	log.info("Generating '" + fileName + "'");
+			initModel1(pivotModel);
+			initModel2(saver);
+			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel(excludedEClassifierNames);
+			MergeWriter fw = new MergeWriter(fileName);
+			fw.append(metamodel);
+			fw.close();
 			if (ecoreFile != null) {
 				@NonNull URI ecoreURI = URI.createPlatformResourceURI(ecoreFile, true);
 				AS2Ecore converter = new AS2Ecore(getEnvironmentFactory(), ecoreURI, null);
