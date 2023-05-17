@@ -1254,13 +1254,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	public void initModel1(@NonNull Model thisModel) {
 		this.thisModel = thisModel;
 		this.contentAnalysis = createContentAnalysis(thisModel);
-	//	initLocalTypes();
-	//	initOrphanSymbolNames();
 	}
 
-	public void initModel2(/*ASSaverNew.@NonNull ASSaverWithInverse asSaver*/) {
-	//	this.thisModel = thisModel;
-	//	this.contentAnalysis = createContentAnalysis(thisModel);
+	public void initModel2() {
 		initLocalTypes();
 		initOrphanSymbolNames(/*asSaver*/);
 	}
@@ -1270,7 +1266,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	 * from which the local was cloned so that synthesis of references to the shared element are serialized as if the
 	 * local copy had been corrupted to point at the local.
 	 */
-	protected void initOrphanSymbolNames(/*@NonNull ASSaverWithInverse asSaver*/) {
+	protected void initOrphanSymbolNames() {
 		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetOrphanPackage(thisModel);
 		Orphanage sharedOrphanage = Orphanage.basicGetSharedOrphanage(thisModel.eResource().getResourceSet());
 		for (EObject localOrphan : new TreeIterable(localOrphanPackage, true)) {

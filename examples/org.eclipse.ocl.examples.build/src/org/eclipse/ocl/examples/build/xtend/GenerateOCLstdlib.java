@@ -142,7 +142,6 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			log.info("Saving '" + saveURI + "'");
 			asResource.setURI(saveURI);
 			Map<String, Object> options = new HashMap<>();
-		//	options.put(ASResource.OPTION_LOCALIZE_ORPHANS, Boolean.TRUE); -- default
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
@@ -156,9 +155,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				}
 			}
 			Model pivotModel = (Model)ClassUtil.nonNullState(asResource.getContents().get(0));
-		//	assert pivotModel.getOwnedPackages().size() == 1;				// No orphanage, but may have an implicit package, so 100% to synthesize
-//			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
-//			saver.localizeOrphans();
+			//
 			String fileName = folder + "/" + javaClassName + ".java";
 		//	log.info("Generating '" + fileName + "'");
 			initModel1(pivotModel);
@@ -167,6 +164,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			MergeWriter fw = new MergeWriter(fileName);
 			fw.append(metamodel);
 			fw.close();
+			//
 			if (ecoreFile != null) {
 				@NonNull URI ecoreURI = URI.createPlatformResourceURI(ecoreFile, true);
 				AS2Ecore converter = new AS2Ecore(getEnvironmentFactory(), ecoreURI, null);

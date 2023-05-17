@@ -205,11 +205,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			asResource.setSaveable(true);
 			asResource.save(options);
 			EObject asRoot = asResource.getContents().get(0);
-		//	ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
-		//	/*Package orphanage =*/ saver.localizeOrphans();
-			//			if ((orphanage != null) && (pivotModel instanceof Root)) {
-			//				(pivotModel as Root).getOwnedPackages().add(orphanage);
-			//			}
+			//
 			String fileName = outputFolder + "/" + javaClassName + ".java";
 			log.info("Generating '" + fileName + "'");
 			assert asRoot instanceof Model;
@@ -224,7 +220,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			addExternalReference(standardLibrary.getRealType(), asModel);
 			addExternalReference(standardLibrary.getStringType(), asModel);
 			addExternalReference(standardLibrary.getUnlimitedNaturalType(), asModel);
-			initModel2(/*saver*/);
+			initModel2();
 			String metamodel = generateMetamodel(Collections.emptyList());
 			MergeWriter fw = new MergeWriter(fileName);
 			if (metamodel != null) {

@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -58,13 +57,11 @@ public class ASSaverNew extends AbstractASSaver
 	protected static class ASSaverCopier extends EcoreUtil.Copier
 	{
 		private final @NonNull Model asModel;
-	//	private @Nullable Orphanage sharedOrphanage = null;
 		private org.eclipse.ocl.pivot.@Nullable Package localOrphanPackage = null;
 		private @Nullable Map<@NonNull TypeId, @NonNull Type> typeId2localType = null;
 
 		protected ASSaverCopier(@NonNull ASResource resource, boolean resolveProxies) {
 			super(resolveProxies);
-			System.out.println("ASSaverCopier " + NameUtil.debugSimpleName(this));
 			this.asModel = PivotUtil.getModel(resource);
 			org.eclipse.ocl.pivot.Package localOrphanPackage2 = this.localOrphanPackage = Orphanage.basicGetOrphanPackage(asModel);
 			if (localOrphanPackage2 != null) {		// Pre-existing orphan content 'copies' to itself.
@@ -113,13 +110,6 @@ public class ASSaverNew extends AbstractASSaver
 			org.eclipse.ocl.pivot.Package localOrphanPackage2 = localOrphanPackage;
 			if (localOrphanPackage2 != null) {
 				ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanPackage2.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
-			}
-			for (EObject eSource : keySet()) {
-				String s = eSource.toString();
-				if (s.contains("Sequence(String)") || s.contains("Sequence<$0:String,$1:true,$2:0,$3:*>")) {
-					EObject eTarget = get(eSource);
-					System.out.println("copyReferences " + NameUtil.debugSimpleName(this) + " "  + NameUtil.debugSimpleName(eSource) + " : " + eSource + "\n\t=> " + NameUtil.debugSimpleName(eTarget) + " : " + eTarget);
-				}
 			}
 		}
 
@@ -172,7 +162,7 @@ public class ASSaverNew extends AbstractASSaver
 				moreReferencingObjects = localize(remoteContainer, remote2references, moreReferencingObjects);
 				localObject = get(remoteObject);
 				assert localObject != null;
-				System.out.println("localize-child " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " " + remoteObject + " : " + NameUtil.debugSimpleName(typeId) + " " + typeId);
+			//	System.out.println("localize-child " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " " + remoteObject + " : " + NameUtil.debugSimpleName(typeId) + " " + typeId);
 			}
 			else {
 				org.eclipse.ocl.pivot.Package localOrphanPackage = getLocalOrphanPackage();
@@ -181,12 +171,12 @@ public class ASSaverNew extends AbstractASSaver
 				EObject localObject2 = typeId2localType2.get(typeId);//get(remoteObject);
 				if (localObject2 != null) {
 					localObject = localObject2;
-					System.out.println("localize-again " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " " + remoteObject + " : " + NameUtil.debugSimpleName(typeId) + " " + typeId);
+				//	System.out.println("localize-again " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " " + remoteObject + " : " + NameUtil.debugSimpleName(typeId) + " " + typeId);
 				}
 				else {
 					localObject = copy(remoteObject);
 					assert (localObject != null) && (localObject != remoteObject);
-					System.out.println("localize-fresh " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " " + remoteObject + " : " + NameUtil.debugSimpleName(typeId) + " " + typeId);
+				//	System.out.println("localize-fresh " + NameUtil.debugSimpleName(localObject) + " : " + localObject + "\n\t=> " + NameUtil.debugSimpleName(remoteObject) + " " + remoteObject + " : " + NameUtil.debugSimpleName(typeId) + " " + typeId);
 					Collection<@NonNull EObject> moreReferencingObjects2 = moreReferencingObjects;
 					if (moreReferencingObjects2 == null) {
 						moreReferencingObjects = moreReferencingObjects2 = new ArrayList<>();
@@ -204,39 +194,6 @@ public class ASSaverNew extends AbstractASSaver
 			return moreReferencingObjects;
 		}
 	}
-
-/*	public static class ASSaverWithInverse extends ASSaverNew
-	{
-		private final @NonNull Map<@NonNull EObject, @NonNull EObject> target2source = new HashMap<>();
-
-		public ASSaverWithInverse(@NonNull ASResource resource) {
-			super(resource);
-		}
-
-		public @Nullable EObject basicGetSource(@NonNull EObject target) {
-			return target2source.get(target);
-		}
-
-		@SuppressWarnings("serial")
-		@Override
-		protected @NonNull ASSaverCopier createCopier(@NonNull ASResource resource) {
-			return new ASSaverCopier(resource, true)
-			{
-				@Override
-				public EObject put(EObject key, EObject value) {
-					assert (key != null) && (value != null);
-					EObject old = target2source.put(value, key);
-					assert old == null;
-					return super.put(key, value);
-				}
-
-			};
-		}
-
-		public @NonNull EObject getSource(@NonNull EObject target) {
-			return ClassUtil.nonNullState(target2source.get(target));
-		}
-	} */
 
 	protected static class ClassByTypeIdAndEntryClassComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
 	{
@@ -360,13 +317,6 @@ public class ASSaverNew extends AbstractASSaver
 	 */
 	public @Nullable EObject resolveOrphan(@NonNull EObject eObject) {
 		EObject localEObject = copier.get(eObject);
-		String s = String.valueOf(eObject);
-		if (s.contains("Sequence(String)") || s.contains("Sequence<$0:String,$1:true,$2:0,$3:*>")) {
-			System.out.println("resolveOrphan " + NameUtil.debugSimpleName(copier) + " "   + NameUtil.debugSimpleName(eObject) + " : " + eObject + "\n\t=> " + NameUtil.debugSimpleName(localEObject) + " : " + localEObject);
-		}
-		EObject eObject2 = localEObject != null ? localEObject : eObject;
-	//	Model containingModel = PivotUtil.getContainingModel(eObject2);
-	//	assert (containingModel == null) || !Orphanage.isOrphanage(containingModel);		// ElementLiteralExp references may be anywhere.
-		return eObject2;
+		return localEObject != null ? localEObject : eObject;
 	}
 }
