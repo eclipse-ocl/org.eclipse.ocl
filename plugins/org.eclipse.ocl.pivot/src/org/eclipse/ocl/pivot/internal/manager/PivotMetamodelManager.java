@@ -1665,6 +1665,9 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 					}
 					asClasses.add(primaryType);
 				}
+				else {
+					System.out.println("installLibraryContents skipped " + type);			// XXX
+				}
 			}
 		}
 		if (asClasses != null) {

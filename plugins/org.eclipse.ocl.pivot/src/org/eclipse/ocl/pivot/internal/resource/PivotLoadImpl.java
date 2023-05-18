@@ -39,7 +39,7 @@ public final class PivotLoadImpl extends XMILoadImpl
 		ResourceSet asResourceSet = asResource.getResourceSet();
 		assert asResourceSet != null;
 		Orphanage sharedOrphanage = Orphanage.basicGetSharedOrphanage(asResourceSet);
-		if (sharedOrphanage != null) {			// If loaded orphans needs integrating with a shared orphanage
+		if (sharedOrphanage != null) {			// If loaded orphan needs integrating with a shared orphanage
 			sharedOrphanage.installLoadedClasses(asResource);
 		}
 	}

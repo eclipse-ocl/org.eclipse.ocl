@@ -564,7 +564,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass() {
 		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(this);
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
-			if (partialClass.getESObject() != null) {
+			if ((partialClass.getESObject() != null) && (partialClass.eResource() != null)) {	// testQVTruntimeLibrary demontrates a null eResource()
 				return partialClass;
 			}
 		}

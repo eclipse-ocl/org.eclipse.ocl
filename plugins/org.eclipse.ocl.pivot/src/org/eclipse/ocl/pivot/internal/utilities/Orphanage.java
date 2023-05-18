@@ -812,9 +812,10 @@ public class Orphanage extends AdapterImpl
 	} */
 
 	public void installLoadedClasses(@NonNull ASResource asResource) {
+		EcoreUtil.resolveAll(asResource);							// Ensure proxies are resolved before ancestry changes.
 		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetOrphanPackage(asResource);
 		if (localOrphanPackage != null) {
-			Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> local2shared = null;	// Duplocate orphan and its replacement
+			Map<org.eclipse.ocl.pivot.@NonNull Class, org.eclipse.ocl.pivot.@NonNull Class> local2shared = null;	// Duplicate orphan and its replacement
 			List<org.eclipse.ocl.pivot.@NonNull Class> usableClasses = new ArrayList<>();	// Novel orphans to be 'added' to shared orphaange
 			//
 			//	Using the old containment resolve the transient typeId and triage usable/rewrite
