@@ -416,13 +416,13 @@
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="46wdQ" contextType="#aO+gS" name="Lambda" resultType="#85Sd8" superClasses="#a9ZbP"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="Z0fSQ" contextType="#aO+gS" name="Lambda" resultType="#LjX+1" superClasses="#a9ZbP"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="oQonV" contextType="#voxdd" name="Lambda" resultType="#P58UW" superClasses="#a9ZbP"/>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="iZQDi" keysAreNullFree="false" name="Map" valuesAreNullFree="false">
+    <ownedClasses xsi:type="pivot:MapType" xmi:id="iZQDi" keysAreNullFree="false" name="Map" superClasses="#P58UW" valuesAreNullFree="false">
       <ownedBindings>
         <ownedSubstitutions actual="#23L4q" formal="#IpSog"/>
         <ownedSubstitutions actual="#X0HuR" formal="#TpSog"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="4x1ne" keysAreNullFree="false" name="Map" valuesAreNullFree="false">
+    <ownedClasses xsi:type="pivot:MapType" xmi:id="4x1ne" keysAreNullFree="false" name="Map" superClasses="#P58UW" valuesAreNullFree="false">
       <ownedBindings>
         <ownedSubstitutions actual="#IpSog" formal="#IpSog"/>
         <ownedSubstitutions actual="#TpSog" formal="#TpSog"/>
@@ -440,7 +440,7 @@
         <ownedSubstitutions actual="#srIvA" formal="#TpSog"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="C2VbJ" name="Map">
+    <ownedClasses xsi:type="pivot:MapType" xmi:id="C2VbJ" name="Map" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#CrCjC" formal="#IpSog"/>
         <ownedSubstitutions actual="#XwCjC" formal="#TpSog"/>
@@ -452,13 +452,13 @@
         <ownedSubstitutions actual="#pUmQp" formal="#TpSog"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="6uS8k" name="Map">
+    <ownedClasses xsi:type="pivot:MapType" xmi:id="6uS8k" name="Map" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#AkDyk" formal="#IpSog"/>
         <ownedSubstitutions actual="#VpDyk" formal="#TpSog"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="SNryz" name="Map">
+    <ownedClasses xsi:type="pivot:MapType" xmi:id="SNryz" name="Map" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#W1BiO" formal="#IpSog"/>
         <ownedSubstitutions actual="#r6BiO" formal="#TpSog"/>
@@ -2385,8 +2385,8 @@
       <ownedProperties xmi:id="O8g+u" isComposite="true" isRequired="false" name="ownedInit" opposite="#kPj,P" type="#r44fn"/>
       <ownedProperties xmi:id="MEUqF" isImplicit="true" isRequired="false" name="TupleLiteralExp" opposite="#ARW1p" type="#xUUil"/>
     </ownedClasses>
-    <ownedClasses xmi:id="2AC+M" instanceClassName="org.eclipse.ocl.pivot.utilities.TuplePart" isAbstract="true" isInterface="true" name="TuplePart"
-        superClasses="#f9zGW"/>
+    <ownedClasses xmi:id="2AC+M" instanceClassName="org.eclipse.ocl.pivot.utilities.TuplePartas" isAbstract="true" isInterface="true"
+        name="TuplePart" superClasses="#f9zGW"/>
     <ownedClasses xmi:id="9tk+M" name="TupleType" superClasses="#faTX4"/>
     <ownedClasses xmi:id="Vf8BK" isAbstract="true" name="Type" superClasses="#eYh,i #NDc9L">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -2877,15 +2877,15 @@
         <ownedComments body="The collection containing all elements of oclText[self] and objects.&#xA;"/>
         <ownedParameters xmi:id="sXaEm" name="objects" type="#0905Y"/>
       </ownedOperations>
-      <ownedOperations xmi:id="UEZ,L" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" name="intersection"
-          type="#fWqom">
-        <ownedComments body="The intersection of oclText[self] and a unique collection; the set of all elements that are in both oclText[self] and u.&#xA;"/>
-        <ownedParameters xmi:id="k1v4b" name="u" type="#Mr+ll"/>
-      </ownedOperations>
       <ownedOperations xmi:id="+zJxx" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" name="intersection"
           type="#FVmom">
         <ownedComments body="The intersection of oclText[self] and bag; the bag of all elements that are in both oclText[self] and c.&#xA;"/>
         <ownedParameters xmi:id="UGYvG" name="c" type="#0905Y"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="UEZ,L" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" name="intersection"
+          type="#fWqom">
+        <ownedComments body="The intersection of oclText[self] and a unique collection; the set of all elements that are in both oclText[self] and u.&#xA;"/>
+        <ownedParameters xmi:id="k1v4b" name="u" type="#Mr+ll"/>
       </ownedOperations>
       <ownedOperations xmi:id="cIuUP" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation" name="isEmpty"
           type="#Di88w">
