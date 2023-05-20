@@ -421,4 +421,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		oclInvalidProperty = null;
 	}
 
-} //AbstractStandardLibraryImpl
+/*	protected void resolveSuperClassesInternal(
+			org.eclipse.ocl.pivot.@NonNull Class specializedClass,
+			org.eclipse.ocl.pivot.Class superClass,
+			List<TemplateParameterSubstitution> superSpecializedTemplateParameterSubstitutions) {
+		throw new UnsupportedOperationException();
+	} */
+
+} //StandardLibraryImpl

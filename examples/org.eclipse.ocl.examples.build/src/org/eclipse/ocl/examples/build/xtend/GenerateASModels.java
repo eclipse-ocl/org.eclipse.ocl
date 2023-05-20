@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -115,21 +114,21 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 		}
 
 		@Override
-		public Package getNestedPackage(@NonNull Package parentPackage,
+		public org.eclipse.ocl.pivot.Package getNestedPackage(org.eclipse.ocl.pivot.@NonNull Package parentPackage,
 				@NonNull String name) {
 			// TODO Auto-generated method stub
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public Type getNestedType(@NonNull Package parentPackage,
+		public Type getNestedType(org.eclipse.ocl.pivot.@NonNull Package parentPackage,
 				@NonNull String name) {
 			// TODO Auto-generated method stub
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public Package getNsURIPackage(@NonNull String nsURI) {
+		public org.eclipse.ocl.pivot.Package getNsURIPackage(@NonNull String nsURI) {
 			// TODO Auto-generated method stub
 			throw new UnsupportedOperationException();
 		}
@@ -147,13 +146,13 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 		}
 
 		@Override
-		public @NonNull Package getPackage() {
+		public org.eclipse.ocl.pivot.@NonNull Package getPackage() {
 			// TODO Auto-generated method stub
 			throw new UnsupportedOperationException();
 		}
 
 		@Override
-		public Package getRootPackage(@NonNull String name) {
+		public org.eclipse.ocl.pivot.Package getRootPackage(@NonNull String name) {
 			// TODO Auto-generated method stub
 			throw new UnsupportedOperationException();
 		}
@@ -171,10 +170,10 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 			throw new UnsupportedOperationException();
 		}
 
-		@Override
-		public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
-		//	specializedClass.getSuperClasses().addAll(unspecializedClass.getSuperClasses());		// XXX promote
-		}
+//		@Override
+//		public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
+//		//	specializedClass.getSuperClasses().addAll(unspecializedClass.getSuperClasses());		// XXX promote
+//		}
 
 		@Override
 		protected boolean isUnspecialized(

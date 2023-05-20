@@ -791,10 +791,10 @@ public class ExecutorStandardLibrary extends StandardLibraryImpl
 		validationKey2severity = null;
 	}
 
-	@Override
-	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
-		specializedClass.getSuperClasses().addAll(unspecializedClass.getSuperClasses());		// XXX
-	}
+//	@Override
+//	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
+//		specializedClass.getSuperClasses().addAll(unspecializedClass.getSuperClasses());		// XXX
+//	}
 
 	/**
 	 * Return the map.get(key).get() entry if there is one or null if not, removing any stale

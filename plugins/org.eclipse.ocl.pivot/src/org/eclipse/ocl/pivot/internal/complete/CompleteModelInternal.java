@@ -45,7 +45,6 @@ public interface CompleteModelInternal extends CompleteModel
 	@NonNull PartialModels getPartialModels();
 	@Override
 	@NonNull PrimitiveCompletePackageImpl getPrimitiveCompletePackage();
-	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 	void dispose();
 	void didAddPartialModel(@NonNull Model partialModel);
 	void didAddNestedPackage(org.eclipse.ocl.pivot.@NonNull Package pivotPackage);

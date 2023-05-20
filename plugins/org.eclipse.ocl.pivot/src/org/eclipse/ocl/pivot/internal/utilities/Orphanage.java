@@ -71,6 +71,8 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
+import com.google.common.collect.Iterables;
+
 /**
  * The 'orphanage' is a regular Package that transitively contains all metamodel elemants that
  * have no ancestral Package to contain them. A regular package is sufficient and desirable
@@ -430,6 +432,16 @@ public class Orphanage extends AdapterImpl
 		super.didAddClass(asClass);
 	} */
 
+	public boolean assertConsistent() {
+		Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(orphanPackage.getOwnedClasses());
+		assert references != null;
+		for (EObject eTarget : references.keySet()) {
+			org.eclipse.ocl.pivot.Package containingOrphanPackage = basicGetContainingOrphanPackage(eTarget);
+			assert (containingOrphanPackage == null) || (containingOrphanPackage == orphanPackage);
+		}
+		return true;
+	}
+
 	public void dispose() {
 	/*	if (ownedClasses != null) {
 			((WeakEList<?>)ownedClasses).dispose();
@@ -512,7 +524,7 @@ public class Orphanage extends AdapterImpl
 				TemplateParameterSubstitution templateParameterSubstitution = PivotUtil.createTemplateParameterSubstitution(formalParameter, elementType);
 				templateBinding.getOwnedSubstitutions().add(templateParameterSubstitution);
 				collectionType.getOwnedBindings().add(templateBinding);
-				getStandardLibrary().resolveSuperClasses(collectionType, genericType);
+				resolveSuperClasses(collectionType, genericType);
 			//	collectionType.getSuperClasses().addAll(unspecializedType.getSuperClasses());
 				collectionType.setIsNullFree(isNullFree);
 				try {
@@ -689,7 +701,7 @@ public class Orphanage extends AdapterImpl
 					}
 				}
 				specializedType.getOwnedBindings().add(templateBinding);
-				getStandardLibrary().resolveSuperClasses(specializedType, genericClass);
+				resolveSuperClasses(specializedType, genericClass);
 				specializedType.setUnspecializedElement(genericClass);
 				addOrphanClass(specializedType);
 			//	System.out.println("getOrphanSpecialization: " + NameUtil.debugSimpleName(specializedId) + " : " + specializedId + " => " + NameUtil.debugSimpleName(specializedType) + " : " + specializedType);
@@ -735,7 +747,7 @@ public class Orphanage extends AdapterImpl
 	}
 
 /*	@Override
-	public @NonNull Type getType(@NonNull Type asType) {
+	public org.eclipse.ocl.pivot.@NonNull Class getType(@NonNull Type asType) {
 		if (asType instanceof CollectionType) {
 			CollectionType asCollectionType = (CollectionType)asType;
 			CollectionType asGenericType = (CollectionType)asCollectionType.getUnspecializedElement();
@@ -777,20 +789,24 @@ public class Orphanage extends AdapterImpl
 			}
 			return getTupleType(oclTupleType, tupleParts);
 		}
-		else if (asType instanceof WildcardType) {
-			return getOrphanWildcardType(this);
-		}
+	//	else if (asType instanceof WildcardType) {
+	//		return getOrphanWildcardType(this);
+	//	}
 		else if (asType instanceof org.eclipse.ocl.pivot.Class) {
 			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asType;
 			org.eclipse.ocl.pivot.Class asGenericType = (org.eclipse.ocl.pivot.Class)asClass.getUnspecializedElement();
-			assert asGenericType != null;
-			List<@NonNull Type> asTypes = new ArrayList<>();
-			for (@NonNull TemplateBinding asBinding : PivotUtil.getOwnedBindings(asClass)) {
-				for (@NonNull TemplateParameterSubstitution asSustitution : PivotUtil.getOwnedSubstitutions(asBinding)) {
-					asTypes.add(asSustitution.getActual());
+			if (asGenericType != null) {
+				List<@NonNull Type> asTypes = new ArrayList<>();
+				for (@NonNull TemplateBinding asBinding : PivotUtil.getOwnedBindings(asClass)) {
+					for (@NonNull TemplateParameterSubstitution asSustitution : PivotUtil.getOwnedSubstitutions(asBinding)) {
+						asTypes.add(asSustitution.getActual());
+					}
 				}
+				return getSpecialization(asGenericType, asTypes);
 			}
-			return getSpecialization(asGenericType, asTypes);
+			else {
+				return asClass;
+			}
 		}
 		throw new UnsupportedOperationException("OrphanageImpl.getType() for " + asType.getClass().getName());
 	} */
@@ -895,11 +911,60 @@ public class Orphanage extends AdapterImpl
 		}
 	}
 
+	private void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
+		Map<@NonNull TemplateParameter, @NonNull Element> specializedFormal2Actual = new HashMap<>();
+		for (@NonNull TemplateBinding specializedTemplateBinding : PivotUtil.getOwnedBindings(specializedClass)) {
+			for (@NonNull TemplateParameterSubstitution specializedParameterSubstitution : PivotUtil.getOwnedSubstitutions(specializedTemplateBinding)) {
+				TemplateParameter specializedFormal = PivotUtil.getFormal(specializedParameterSubstitution);
+				Element specializedActual = PivotUtil.getActual(specializedParameterSubstitution);
+				specializedFormal2Actual.put(specializedFormal, specializedActual);
+			}
+		}
+		List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = PivotUtilInternal.getSuperClassesList(specializedClass);
+		for (org.eclipse.ocl.pivot.@NonNull Class superClass : PivotUtil.getSuperClasses(unspecializedClass)) {
+			org.eclipse.ocl.pivot.@NonNull Class resolvedSuperClass;
+			org.eclipse.ocl.pivot.Class genericSuperClass = PivotUtil.getUnspecializedTemplateableElement(superClass);
+			Iterable<@NonNull TemplateBinding> superTemplateBindings = PivotUtil.getOwnedBindings(superClass);
+			if (Iterables.size(superTemplateBindings) <= 0) {
+				resolvedSuperClass = superClass; //getType(superClass);
+			}
+			else if (superClass instanceof CollectionType) {
+				CollectionType superCollectionType = (CollectionType)superClass;
+				Type superElementType = resolveSuperElementType(PivotUtil.getElementType(superCollectionType), specializedFormal2Actual);
+				resolvedSuperClass = getCollectionType((CollectionType)genericSuperClass, superElementType, superCollectionType.isIsNullFree(), superCollectionType.getLowerValue(), superCollectionType.getUpperValue());
+			}
+			// XXX LambdaType
+			else if (superClass instanceof MapType) {
+				MapType superMapType = (MapType)superClass;
+				Type superKeyType = resolveSuperElementType(PivotUtil.getKeyType(superMapType), specializedFormal2Actual);
+				Type superValueType = resolveSuperElementType(PivotUtil.getValueType(superMapType), specializedFormal2Actual);
+				resolvedSuperClass = getMapType((MapType)genericSuperClass, superKeyType, superMapType.isKeysAreNullFree(), superValueType, superMapType.isValuesAreNullFree());
+			}
+			// XXX TupleType
+			else {
+				List<org.eclipse.ocl.pivot.@NonNull Type> superActuals = new ArrayList<>();
+				for (@NonNull TemplateBinding superTemplateBinding : superTemplateBindings) {
+					for (@NonNull TemplateParameterSubstitution superParameterSubstitution : PivotUtil.getOwnedSubstitutions(superTemplateBinding)) {
+						Type superActualType = resolveSuperElementType((Type)PivotUtil.getActual(superParameterSubstitution), specializedFormal2Actual);			// XXX cast
+						superActuals.add(superActualType);
+					}
+				}
+				resolvedSuperClass = getSpecialization(genericSuperClass, superActuals);
+			}
+			superClasses.add(resolvedSuperClass);
+		}
+	}
+
+	protected @NonNull Type resolveSuperElementType(@NonNull Type superElementType, @NonNull Map<@NonNull TemplateParameter, @NonNull Element> specializedFormal2Actual) {
+		Element resolvedSuperElementType = specializedFormal2Actual.get(superElementType);
+		return resolvedSuperElementType != null ? (Type) resolvedSuperElementType : superElementType;
+	}
+
 	@Override
 	public @NonNull String toString() {
 		EObject eContainer = orphanPackage.eContainer();
 		if (eContainer instanceof Model) {
-			return "Orphange:\"" + ((Model)eContainer).getExternalURI() + "\"(" + typeId2type.size() + ")";
+			return "Orphanage:\"" + ((Model)eContainer).getExternalURI() + "\"(" + typeId2type.size() + ")";
 		}
 		else {
 			return NameUtil.debugSimpleName(this) + "(" + typeId2type.size() + ")";

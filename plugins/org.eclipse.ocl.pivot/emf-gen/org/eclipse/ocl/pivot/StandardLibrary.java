@@ -387,6 +387,4 @@ public interface StandardLibrary extends Element
 	@NonNull PrimitiveType getUnlimitedNaturalType();
 
 	@NonNull FlatModel getFlatModel();
-
-	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
-} // AbstractStandardLibrary
+} // StandardLibrary

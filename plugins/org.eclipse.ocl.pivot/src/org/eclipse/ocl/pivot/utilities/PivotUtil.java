@@ -1298,6 +1298,10 @@ public class PivotUtil
 		return getExecutor(eObject);
 	}
 
+	public static @NonNull TemplateParameter getFormal(@NonNull TemplateParameterSubstitution templateParameterSubstitution) {
+		return ClassUtil.nonNullState(templateParameterSubstitution.getFormal());
+	}
+
 	/**
 	 * @since 1.10
 	 */

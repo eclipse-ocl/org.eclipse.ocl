@@ -620,6 +620,7 @@ public class CompleteStandardLibraryImpl extends ReflectiveStandardLibraryImpl i
 			return genericClass;
 		}
 		CompleteClassInternal libraryCompleteClass = getCompleteModel().getMetamodelManager().getCompleteClass(genericClass);
+		@SuppressWarnings("unchecked")
 		T pivotClass = (T) libraryCompleteClass.getPrimaryClass();
 		return super.getSpecializedType(pivotClass, partialTemplateParameters, templateArguments);
 	}
@@ -779,14 +780,9 @@ public class CompleteStandardLibraryImpl extends ReflectiveStandardLibraryImpl i
 	}
 
 	@Override
-	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
-		getCompleteModel().resolveSuperClasses(specializedClass, unspecializedClass);
-	}
-
-	@Override
 	public void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI) {
 		assert !PivotUtilInternal.isASURI(defaultStandardLibraryURI);
 		this.defaultStandardLibraryURI = defaultStandardLibraryURI;
 		this.explicitDefaultStandardLibraryURI = true;
 	}
-} //StandardLibraryImpl
+} //CompleteStandardLibraryImpl
