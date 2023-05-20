@@ -68,6 +68,10 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@NonNull Elem
 		boolean isNullFree = asCollectionType.isIsNullFree();
 		IntegerValue lowerValue = asCollectionType.getLowerValue();
 		UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
+		if (mergedElementType.toString().contains("OclElement")) {
+			System.out.println("visitCollectionType " + NameUtil.debugSimpleName(mergedElementType));
+			getClass();		// XXX
+		}
 		return orphanage.getCollectionType(mergedCollectionType, mergedElementType, isNullFree, lowerValue, upperValue);
 	}
 

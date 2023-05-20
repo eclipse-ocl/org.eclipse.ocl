@@ -79,6 +79,7 @@ public class Merger
 		this.eAssociationHelper = new EAssociationHelper();
 		this.groupVisitor = createGroupVisitor();
 		this.resolveVisitor = createResolveVisitorVisitor();
+		System.out.println("mergedOrphanage " + NameUtil.debugSimpleName(mergedOrphanage));
 	}
 
 	private void addMerge(@NonNull String indent, @NonNull Element mergedParent, @NonNull List<@NonNull ? extends Element> partialParents) {

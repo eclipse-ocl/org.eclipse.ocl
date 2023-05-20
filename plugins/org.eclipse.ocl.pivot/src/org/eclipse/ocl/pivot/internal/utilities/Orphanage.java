@@ -541,6 +541,7 @@ public class Orphanage extends AdapterImpl
 				addOrphanClass(collectionType);
 			}
 			assert collectionType.isWellContained();
+			System.out.println("getCollectionType " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(collectionType) +  " : " + collectionType);
 			return collectionType;
 		}
 	}

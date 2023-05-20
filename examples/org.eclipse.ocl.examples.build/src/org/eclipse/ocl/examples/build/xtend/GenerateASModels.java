@@ -314,11 +314,11 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 	//	ResourceSet resourceSet = ocl.getResourceSet();
 		try {
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
-			ASResource asResource1 = loadOCLstdlibFile(stdlibFileURI, issues);
+			ASResource asResource1 = loadEcoreFile(pivotFileURI);
 			if (asResource1 == null) {
 				return;
 			}
-			ASResource asResource2 = loadEcoreFile(pivotFileURI);
+			ASResource asResource2 = loadOCLstdlibFile(stdlibFileURI, issues);
 			if (asResource2 == null) {
 				return;
 			}
