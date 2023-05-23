@@ -541,7 +541,11 @@ public class Orphanage extends AdapterImpl
 				addOrphanClass(collectionType);
 			}
 			assert collectionType.isWellContained();
-			System.out.println("getCollectionType " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(collectionType) +  " : " + collectionType);
+			System.out.println("getCollectionType " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(collectionType) +  " : " + collectionType + " : " + specializedTypeId);
+			String s = collectionType.toString();
+			if ("Collection(OclElement)".equals(s) || "Collection(ocl::OclElement)".equals(s)) {
+				getClass();		// XXX
+			}
 			return collectionType;
 		}
 	}
@@ -914,6 +918,7 @@ public class Orphanage extends AdapterImpl
 	}
 
 	private void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
+		assert assertConsistent();
 		Map<@NonNull TemplateParameter, @NonNull Element> specializedFormal2Actual = new HashMap<>();
 		for (@NonNull TemplateBinding specializedTemplateBinding : PivotUtil.getOwnedBindings(specializedClass)) {
 			for (@NonNull TemplateParameterSubstitution specializedParameterSubstitution : PivotUtil.getOwnedSubstitutions(specializedTemplateBinding)) {
@@ -955,6 +960,7 @@ public class Orphanage extends AdapterImpl
 			}
 			superClasses.add(resolvedSuperClass);
 		}
+		assert assertConsistent();
 	}
 
 	protected @NonNull Type resolveSuperElementType(@NonNull Type superElementType, @NonNull Map<@NonNull TemplateParameter, @NonNull Element> specializedFormal2Actual) {

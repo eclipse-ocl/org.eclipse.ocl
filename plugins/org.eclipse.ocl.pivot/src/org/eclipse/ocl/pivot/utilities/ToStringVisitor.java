@@ -729,7 +729,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			return safeVisit(bodyExpression);
 		}
 		else {
-			append(expression.getBody().trim().replace("\n"," "));
+			String body = expression.getBody();
+			if (body != null) {
+				append(body.trim().replace("\n"," "));
+			}
+			else {
+				append(NULL_PLACEHOLDER);
+			}
 			return null;
 		}
 	}

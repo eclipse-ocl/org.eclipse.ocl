@@ -452,6 +452,14 @@ public class CompleteStandardLibraryImpl extends ReflectiveStandardLibraryImpl i
 	}
 
 	@Override
+	public @NonNull Class getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType,
+			@Nullable Boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		CompleteClassInternal completeClass = environmentFactory.getCompleteModel().getCompleteClass(elementType);
+	//	elementType = completeClass.getPrimaryClass();
+		return super.getCollectionType(genericType, elementType, isNullFree, lower, upper);
+	}
+
+	@Override
 	public @Nullable Type getCommonTupleType(@NonNull TupleType leftType, @NonNull TemplateParameterSubstitutions leftSubstitutions,
 			@NonNull TupleType rightType, @NonNull TemplateParameterSubstitutions rightSubstitutions) {
 		List<Property> leftProperties = leftType.getOwnedProperties();

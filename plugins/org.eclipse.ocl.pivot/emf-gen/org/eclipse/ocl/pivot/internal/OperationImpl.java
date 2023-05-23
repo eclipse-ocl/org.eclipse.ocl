@@ -1631,4 +1631,12 @@ implements Operation {
 		}
 		return eResource() != null;
 	}
+
+	@Override
+	public void setName(String newName) {
+		if ("oclModelTypes".equals(newName)) {
+			getClass();		// XXX
+		}
+		super.setName(newName);
+	}
 } //OperationImpl

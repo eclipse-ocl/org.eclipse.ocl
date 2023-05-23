@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 
 import com.google.common.collect.Lists;
@@ -74,7 +75,7 @@ public class AS2ID
 		AS2ID as2id = new AS2ID(options);
 		for (int i = 0; i < resources.size(); i++) {		// Proxy resolution may add new resources
 			Resource resource = resources.get(i);
-			if (resource instanceof ASResource) {
+			if ((resource instanceof ASResource) && !(resource instanceof Orphanage.OrphanResource)) {
 				as2id.assignLUSSIDs((ASResource) resource);
 			}
 		}

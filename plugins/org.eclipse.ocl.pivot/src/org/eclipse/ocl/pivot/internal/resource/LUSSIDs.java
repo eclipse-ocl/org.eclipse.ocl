@@ -25,9 +25,11 @@ import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -258,7 +260,7 @@ public abstract class LUSSIDs
 				assert collisions != null;
 				for (@NonNull Element element : collisions) {
 					if (s != null) {
-						s.append("\n\t\t" + element); // + " " + NameUtil.debugSimpleName(element));
+						s.append("\n\t\t" + element + " " + NameUtil.debugSimpleName(element) + " : " + (element instanceof Type ? ((Type)element).getTypeId() : "???") + " in " + NameUtil.debugSimpleName(element.eContainer()));
 					}
 				}
 			}

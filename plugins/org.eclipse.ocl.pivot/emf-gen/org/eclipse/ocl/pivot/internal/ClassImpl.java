@@ -69,7 +69,6 @@ import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -1471,10 +1470,6 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public void setName(String newName) {
 		String oldName = name;
-		if ("OclElement".equals(newName)) {
-			System.out.println("setName " + NameUtil.debugSimpleName(this));
-			getClass();	// XXX
-		}
 		org.eclipse.ocl.pivot.Package owningPackage = getOwningPackage();
 		if ((owningPackage instanceof PackageImpl) && (oldName != null) && !oldName.equals(newName)) {
 			((PackageImpl)owningPackage).didRemoveClass(this);

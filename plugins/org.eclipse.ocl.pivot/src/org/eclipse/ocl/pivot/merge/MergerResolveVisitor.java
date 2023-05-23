@@ -55,6 +55,11 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@NonNull Elem
 
 	@Override
 	public @NonNull CollectionType visitCollectionType(@NonNull CollectionType asCollectionType) {
+		String s = asCollectionType.toString();
+		if ("Collection(OclElement)".equals(s) || "Collection(ocl::OclElement)".equals(s)) {
+			getClass();		// XXX
+		}
+		assert orphanage.assertConsistent();
 		TemplateableElement unspecializedElement = asCollectionType.getUnspecializedElement();
 		if (unspecializedElement == null) {
 			return (CollectionType)super.visitCollectionType(asCollectionType);
@@ -68,11 +73,13 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@NonNull Elem
 		boolean isNullFree = asCollectionType.isIsNullFree();
 		IntegerValue lowerValue = asCollectionType.getLowerValue();
 		UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
+		CollectionType collectionType = orphanage.getCollectionType(mergedCollectionType, mergedElementType, isNullFree, lowerValue, upperValue);
 		if (mergedElementType.toString().contains("OclElement")) {
-			System.out.println("visitCollectionType " + NameUtil.debugSimpleName(mergedElementType));
+			System.out.println("visitCollectionType " + NameUtil.debugSimpleName(collectionType) + " : " + collectionType);
 			getClass();		// XXX
 		}
-		return orphanage.getCollectionType(mergedCollectionType, mergedElementType, isNullFree, lowerValue, upperValue);
+		assert orphanage.assertConsistent();
+		return collectionType;
 	}
 
 	@Override

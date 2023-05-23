@@ -314,15 +314,15 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 	//	ResourceSet resourceSet = ocl.getResourceSet();
 		try {
 			setEnvironmentFactory(ocl.getEnvironmentFactory());
-			ASResource asResource1 = loadEcoreFile(pivotFileURI);
+			ASResource asResource1 = loadOCLstdlibFile(stdlibFileURI, issues);	// oclstdlib before pivot to avid builtin oclstdlib
 			if (asResource1 == null) {
 				return;
 			}
-			ASResource asResource2 = loadOCLstdlibFile(stdlibFileURI, issues);
+			ASResource asResource2 = loadEcoreFile(pivotFileURI);
 			if (asResource2 == null) {
 				return;
 			}
-			ASResource asResource = mergeResources(mergedFileURI, asResource1, asResource2);
+			ASResource asResource = mergeResources(mergedFileURI, asResource2, asResource1);
 			if (asResource == null) {
 				return;
 			}

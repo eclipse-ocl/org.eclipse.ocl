@@ -135,12 +135,18 @@ public class Merger
 		E mergedElement = (E)PivotFactory.eINSTANCE.create(eClass);
 		mergedParentElements.add(mergedElement);
 		// Create and install descendant merged elements
+		assert mergedOrphanage.assertConsistent();
 		mergeContainmentHierarchy("", mergedElement, partialElements);
+		assert mergedOrphanage.assertConsistent();
 		resolveImplicitOpposites();
 		// Resolve references
+		assert mergedOrphanage.assertConsistent();
 		resolveAttributeSlots();
+		assert mergedOrphanage.assertConsistent();
 		resolveReferenceSlots();
+		assert mergedOrphanage.assertConsistent();
 		resolvePossibleBidirectionalSlots();
+		assert mergedOrphanage.assertConsistent();
 		return mergedElement;
 	}
 
