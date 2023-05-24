@@ -56,10 +56,10 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@NonNull Elem
 	@Override
 	public @NonNull CollectionType visitCollectionType(@NonNull CollectionType asCollectionType) {
 		String s = asCollectionType.toString();
-		if ("Collection(OclElement)".equals(s) || "Collection(ocl::OclElement)".equals(s)) {
-			getClass();		// XXX
-		}
-		assert orphanage.assertConsistent();
+	//	if ("Collection(OclElement)".equals(s) || "Collection(ocl::OclElement)".equals(s)) {
+	//		getClass();		// XXX
+	//	}
+	//	assert orphanage.assertConsistent();
 		TemplateableElement unspecializedElement = asCollectionType.getUnspecializedElement();
 		if (unspecializedElement == null) {
 			return (CollectionType)super.visitCollectionType(asCollectionType);
@@ -74,11 +74,11 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@NonNull Elem
 		IntegerValue lowerValue = asCollectionType.getLowerValue();
 		UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
 		CollectionType collectionType = orphanage.getCollectionType(mergedCollectionType, mergedElementType, isNullFree, lowerValue, upperValue);
-		if (mergedElementType.toString().contains("OclElement")) {
-			System.out.println("visitCollectionType " + NameUtil.debugSimpleName(collectionType) + " : " + collectionType);
-			getClass();		// XXX
-		}
-		assert orphanage.assertConsistent();
+	//	if (mergedElementType.toString().contains("OclElement")) {
+	//		System.out.println("visitCollectionType " + NameUtil.debugSimpleName(collectionType) + " : " + collectionType);
+	//		getClass();		// XXX
+	//	}
+	//	assert orphanage.assertConsistent();
 		return collectionType;
 	}
 
@@ -129,11 +129,11 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@NonNull Elem
 			}
 			Property asOpposite = asProperty.getOpposite();
 			Property mergedOpposite = (Property)context.getMergedElement(asOpposite);
-			StringBuilder s = new StringBuilder();
+		/*	StringBuilder s = new StringBuilder();
 			s.append("visitProperty " + NameUtil.debugSimpleName(mergedOpposite));
 			s.append("\n\t" + NameUtil.debugSimpleName(asProperty) + " : " + asProperty);
 			s.append("\n\t" + NameUtil.debugSimpleName(asOpposite) + " : " + asOpposite);
-			System.out.println(s.toString());
+			System.out.println(s.toString()); */
 		}
 //		assert mergedProperty != null;
 		return mergedProperty != null ? mergedProperty : asProperty;

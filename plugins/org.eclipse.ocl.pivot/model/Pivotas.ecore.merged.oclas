@@ -3,142 +3,142 @@
     xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/org.eclipse.ocl.pivot/model/Pivotas.ecore.merged.oclas" name="Pivotas.ecore.merged.oclas"
     xmiidVersion="1">
   <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$" nsPrefix="orphanage">
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="5PfCD" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="5PfCD" isNullFree="true" name="Bag" superClasses="#PrHES">
       <ownedBindings>
         <ownedSubstitutions actual="#KvYAk" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="KO5rD" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="KO5rD" isNullFree="true" name="Bag" superClasses="#gphtS">
       <ownedBindings>
         <ownedSubstitutions actual="#D3,rI" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="JhCmo" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="JhCmo" isNullFree="true" name="Bag" superClasses="#f8qn3">
       <ownedBindings>
         <ownedSubstitutions actual="#aiVoC" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="akhHH" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="akhHH" isNullFree="true" name="Bag" superClasses="#w,JJW">
       <ownedBindings>
         <ownedSubstitutions actual="#T3nwN" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="aj1mb" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="aj1mb" isNullFree="true" name="Bag" superClasses="#w+doq">
       <ownedBindings>
         <ownedSubstitutions actual="#TO8rg" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="JvffG" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="JvffG" isNullFree="true" name="Bag" superClasses="#fKIhV">
       <ownedBindings>
         <ownedSubstitutions actual="#ag19C" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="SJG+3" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="SJG+3" isNullFree="true" name="Bag" superClasses="#oku,G">
       <ownedBindings>
         <ownedSubstitutions actual="#LnahD" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="nWZmZ" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="nWZmZ" isNullFree="true" name="Bag" superClasses="#9xBoo">
       <ownedBindings>
         <ownedSubstitutions actual="#oUPZ4" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="TtW,r" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="TtW,r" isNullFree="true" name="Bag" superClasses="#pI,A7">
       <ownedBindings>
         <ownedSubstitutions actual="#0KS2y" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="3p8VK" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="3p8VK" isNullFree="true" name="Bag" superClasses="#NFlXZ">
       <ownedBindings>
         <ownedSubstitutions actual="#4ZLW1" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="GgF6W" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="GgF6W" isNullFree="true" name="Bag" superClasses="#c7t7l">
       <ownedBindings>
         <ownedSubstitutions actual="#faTX4" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="Xtp,H" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="Xtp,H" isNullFree="true" name="Bag" superClasses="#tISBX">
       <ownedBindings>
         <ownedSubstitutions actual="#YJvO9" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="2NixA" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="2NixA" isNullFree="true" name="Bag" superClasses="#MpKzP">
       <ownedBindings>
         <ownedSubstitutions actual="#P+2NH" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="NlALl" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="NlALl" isNullFree="true" name="Bag" superClasses="#jApM0">
       <ownedBindings>
         <ownedSubstitutions actual="#+EUnw" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="ZqvVi" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="ZqvVi" isNullFree="true" name="Bag" superClasses="#vFYXx">
       <ownedBindings>
         <ownedSubstitutions actual="#qNvUf" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id=",TvQk" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id=",TvQk" isNullFree="true" name="Bag" superClasses="#VvXSz">
       <ownedBindings>
         <ownedSubstitutions actual="#ARipM" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="gqNUh" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="gqNUh" isNullFree="true" name="Bag" superClasses="#2F2Vw">
       <ownedBindings>
         <ownedSubstitutions actual="#Jrsm1" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="bus2p" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="bus2p" isNullFree="true" name="Bag" superClasses="#xJV44">
       <ownedBindings>
         <ownedSubstitutions actual="#8wbwo" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="TnBJs" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="TnBJs" isNullFree="true" name="Bag" superClasses="#pCqK7">
       <ownedBindings>
         <ownedSubstitutions actual="#0U38B" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="o+TtC" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="o+TtC" isNullFree="true" name="Bag" superClasses="#+Z8uR">
       <ownedBindings>
         <ownedSubstitutions actual="#Rc,9e" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="bOmbl" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="bOmbl" isNullFree="true" name="Bag" superClasses="#xpOd0">
       <ownedBindings>
         <ownedSubstitutions actual="#8QxP5" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="V9XSq" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="V9XSq" isNullFree="true" name="Bag" superClasses="#rYAU5">
       <ownedBindings>
         <ownedSubstitutions actual="#GaeIg" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="yeM25" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="yeM25" isNullFree="true" name="Bag" superClasses="#I603I">
       <ownedBindings>
         <ownedSubstitutions actual="#r44fn" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="GLW+t" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="GLW+t" isNullFree="true" name="Bag" superClasses="#cm+,8">
       <ownedBindings>
         <ownedSubstitutions actual="#f9zGW" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="x8OTo" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="x8OTo" isNullFree="true" name="Bag" superClasses="#HY3U3">
       <ownedBindings>
         <ownedSubstitutions actual="#CnLbk" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="a1sHQ" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="a1sHQ" isNullFree="true" name="Bag" superClasses="#wQVJf">
       <ownedBindings>
         <ownedSubstitutions actual="#TwEJN" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="Nn+O," isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="Nn+O," isNullFree="true" name="Bag" superClasses="#jCnQO">
       <ownedBindings>
         <ownedSubstitutions actual="#+WB1P" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="4K6py" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="4K6py" isNullFree="true" name="Bag" superClasses="#OmirB">
       <ownedBindings>
         <ownedSubstitutions actual="#hCZ,8" formal="#wBh6S"/>
       </ownedBindings>
@@ -148,177 +148,347 @@
         <ownedSubstitutions actual="#ckzm4" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="vepyv" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="vepyv" isNullFree="true" name="Bag" superClasses="#F6R0+">
       <ownedBindings>
         <ownedSubstitutions actual="#wZAiS" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="csDS4" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="csDS4" isNullFree="true" name="Bag" superClasses="#yHsTH">
       <ownedBindings>
         <ownedSubstitutions actual="#l+,BP" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="2t0dS" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="2t0dS" isNullFree="true" name="Bag" superClasses="#MJdfh">
       <ownedBindings>
         <ownedSubstitutions actual="#PeNjb" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="YRBeU" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="YRBeU" isNullFree="true" name="Bag" superClasses="#uspfj">
       <ownedBindings>
         <ownedSubstitutions actual="#BtFmJ" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="dtFbV" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="dtFbV" isNullFree="true" name="Bag" superClasses="#zIuck">
       <ownedBindings>
         <ownedSubstitutions actual="#OHm2D" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="wH2+6" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="wH2+6" isNullFree="true" name="Bag" superClasses="#GjeAK">
       <ownedBindings>
         <ownedSubstitutions actual="#ZKyBK" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="LTIxW" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="LTIxW" isNullFree="true" name="Bag" superClasses="#huwyl">
       <ownedBindings>
         <ownedSubstitutions actual="#sj5pO" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="O6V4U" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="O6V4U" isNullFree="true" name="Bag" superClasses="#kV+5j">
       <ownedBindings>
         <ownedSubstitutions actual="#nB+Sc" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="oOcOG" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="oOcOG" isNullFree="true" name="Bag" superClasses="#+pEQV">
       <ownedBindings>
         <ownedSubstitutions actual="#RsBMP" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="V3caz" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="V3caz" isNullFree="true" name="Bag" superClasses="#rSFcC">
       <ownedBindings>
         <ownedSubstitutions actual="#Gktz1" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="Zn+D6" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="Zn+D6" isNullFree="true" name="Bag" superClasses="#vCnFJ">
       <ownedBindings>
         <ownedSubstitutions actual="#qS3vh" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="uhmdK" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="uhmdK" isNullFree="true" name="Bag" superClasses="#E9OfZ">
       <ownedBindings>
         <ownedSubstitutions actual="#H1vzk" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="qiuvu" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="qiuvu" isNullFree="true" name="Bag" superClasses="#A+Wx9">
       <ownedBindings>
         <ownedSubstitutions actual="#jfFIt" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="tPyW+" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="tPyW+" isNullFree="true" name="Bag" superClasses="#DraYN">
       <ownedBindings>
         <ownedSubstitutions actual="#eztP6" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="EUXMS" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="EUXMS" isNullFree="true" name="Bag" superClasses="#av,Nh">
       <ownedBindings>
         <ownedSubstitutions actual="#NvQdj" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="+WaZf" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="+WaZf" isNullFree="true" name="Bag" superClasses="#UyCbu">
       <ownedBindings>
         <ownedSubstitutions actual="#XsvPD" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="QQi4U" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="QQi4U" isNullFree="true" name="Bag" superClasses="#mrK6j">
       <ownedBindings>
         <ownedSubstitutions actual="#5GLxi" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="7SrmL" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="7SrmL" isNullFree="true" name="Bag" superClasses="#RuToa">
       <ownedBindings>
         <ownedSubstitutions actual="#cpM94" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="2a1x4" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="2a1x4" isNullFree="true" name="Bag" superClasses="#M2dzH">
       <ownedBindings>
         <ownedSubstitutions actual="#PTdRy" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="pilBv" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="pilBv" isNullFree="true" name="Bag" superClasses="#,9ND+">
       <ownedBindings>
         <ownedSubstitutions actual="#6,f9T" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="g4CBu" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="g4CBu" isNullFree="true" name="Bag" superClasses="#2TrC9">
       <ownedBindings>
         <ownedSubstitutions actual="#JpkeN" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="KgrxD" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="KgrxD" isNullFree="true" name="Bag" superClasses="#g7TzS">
       <ownedBindings>
         <ownedSubstitutions actual="#DZ7XE" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="gtpG4" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="gtpG4" isNullFree="true" name="Bag" superClasses="#2ISIH">
       <ownedBindings>
         <ownedSubstitutions actual="#JmH8W" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="GX0E3" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="GX0E3" isNullFree="true" name="Bag" superClasses="#cycGG">
       <ownedBindings>
         <ownedSubstitutions actual="#fp9np" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="FVmom" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="FVmom" isNullFree="true" name="Bag" superClasses="#bwOq1">
       <ownedBindings>
         <ownedSubstitutions actual="#23L4q" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="aGBiW" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="aGBiW" isNullFree="true" name="Bag" superClasses="#whpjl">
       <ownedBindings>
         <ownedSubstitutions actual="#TpSog" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="UFtDB" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="UFtDB" isNullFree="true" name="Bag" superClasses="#qgVFQ">
       <ownedBindings>
         <ownedSubstitutions actual="#dCEOH" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="JwrT," isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="JwrT," isNullFree="true" name="Bag" superClasses="#fLUVO">
       <ownedBindings>
         <ownedSubstitutions actual="#aJBCu" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="bPYPD" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="bPYPD" isNullFree="true" name="Bag" superClasses="#xqARS">
       <ownedBindings>
         <ownedSubstitutions actual="#85Sd8" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="Sl1OC" isNullFree="true" name="Bag">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="Sl1OC" isNullFree="true" name="Bag" superClasses="#oAeQR">
       <ownedBindings>
         <ownedSubstitutions actual="#LjX+1" formal="#wBh6S"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="guZlt" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="PrHES" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#KvYAk" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="gphtS" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#D3,rI" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="63vWi" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#trNyn" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="f8qn3" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#aiVoC" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="w,JJW" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#T3nwN" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="cRxY7" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#fgGek" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="w+doq" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#TO8rg" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",wtrs" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#6qkvl" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="fKIhV" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#ag19C" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="oku,G" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#LnahD" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9xBoo" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#oUPZ4" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="pI,A7" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#0KS2y" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="NFlXZ" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#4ZLW1" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="c7t7l" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#faTX4" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="hurSV" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#sjsrD" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tISBX" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#YJvO9" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="MpKzP" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#P+2NH" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ULM9F" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Xt3+J" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="jApM0" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#+EUnw" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="vFYXx" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#qNvUf" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="guZlt" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#DEWtJ" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="VvXSz" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="VvXSz" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#ARipM" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="yv6iC" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="2F2Vw" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Jrsm1" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="yv6iC" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#lmvX0" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="I603I" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="xJV44" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#8wbwo" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="pCqK7" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#0U38B" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="OnIr7" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#hrO9B" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="+Z8uR" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Rc,9e" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="xpOd0" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#8QxP5" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="5ZwnH" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#E+MUO" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="rYAU5" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#GaeIg" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="I603I" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#r44fn" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="yzyba" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="cm+,8" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#f9zGW" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="HY3U3" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#CnLbk" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="wQVJf" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#TwEJN" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="jCnQO" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#+WB1P" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="OmirB" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#hCZ,8" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="5r7CD" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#EgJ01" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="yzyba" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#lKmNK" formal="#23L4q"/>
       </ownedBindings>
@@ -328,14 +498,99 @@
         <ownedSubstitutions actual="#ckzm4" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="F6R0+" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="H7L2u" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#CCTKL" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="F6R0+" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#wZAiS" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="vCnFJ" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="yHsTH" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#l+,BP" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="TFQjG" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#uXpI1" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="MJdfh" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#PeNjb" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="uspfj" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#BtFmJ" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="zIuck" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#OHm2D" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="GjeAK" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#ZKyBK" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="huwyl" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#sj5pO" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="kV+5j" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#nB+Sc" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="+pEQV" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#RsBMP" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="paSxO" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#0sWwu" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="rSFcC" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Gktz1" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="vCnFJ" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#qS3vh" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="E9OfZ" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#H1vzk" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="A+Wx9" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#jfFIt" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="FoL8Q" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#w3Q7Z" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="wo8dE" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#TI76t" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Cr5ud" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#1Twaj" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="iq1OK" isNullFree="true" name="Collection" superClasses="#P58UW">
@@ -343,132 +598,267 @@
         <ownedSubstitutions actual="#Vf8BK" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Fip5g" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="DraYN" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#eztP6" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="av,Nh" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#NvQdj" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="6SMkO" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#t+fG4" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="UyCbu" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#XsvPD" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="mrK6j" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#5GLxi" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="RuToa" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#cpM94" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="8lgxC" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#,IWZi" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="M2dzH" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#PTdRy" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Fip5g" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#wBh6S" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="bwOq1" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",9ND+" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#6,f9T" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="2TrC9" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#JpkeN" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="g7TzS" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#DZ7XE" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="2ISIH" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#JmH8W" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="cycGG" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#fp9np" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="bwOq1" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#23L4q" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9yDFJ" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9yDFJ" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#o9Aym" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="0IhEI" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="0IhEI" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#3mFTg" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="skjup" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="skjup" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#vlpLs" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ewJ1d" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ewJ1d" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#xWcMX" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="6yymQ" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="6yymQ" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#teqaO" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="zbSGt" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="zbSGt" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#OSDgr" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="09HKS" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="09HKS" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#3jowp" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="anSIR" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="anSIR" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#Nnec8" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="dSpjl" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="dSpjl" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#IpSog" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="fitHt" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="whpjl" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#TpSog" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="qgVFQ" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#dCEOH" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="fitHt" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#a4ZS2" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tw8,T" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tw8,T" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#YxahY" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="IDnbM" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="MsZqQ" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#P58UW" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="fLUVO" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#aJBCu" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="c8Ct1" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#fDQ9L" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="IDnbM" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#rpXBF" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SYbuA" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SYbuA" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#FDR9O" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="YrbCr" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="YrbCr" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#7Ll1L" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="PB5Bq" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="PB5Bq" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#K1pWF" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="P2fH0" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="5ohy," isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#ElAQ8" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="P2fH0" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#KyM0O" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1fqFz" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1fqFz" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#g1Cgh" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="eKc,S" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="eKc,S" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#xA10c" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="rqZbD" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="0U8bE" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#3SUOb" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="rqZbD" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#G8YvU" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="rfAhN" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="VSCMZ" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#AsvoL" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="rfAhN" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#G57Me" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="RJLfM" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="RJLfM" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#c8x4w" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="fIQY9" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="fIQY9" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#aO+gS" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="o1EWb" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="xqARS" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#85Sd8" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="oAeQR" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#LjX+1" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SoGBn" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#FTu3s" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="o1EWb" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#Lg6b," formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="svv7L" isNullFree="true" name="Collection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="OfPUa" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#hjwHS" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="h1qlE" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#sChGe" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="8usZ2" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#,5eVD" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="svv7L" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#voxdd" formal="#23L4q"/>
       </ownedBindings>
@@ -506,7 +896,7 @@
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="46wdQ" contextType="#aO+gS" name="Lambda" resultType="#85Sd8" superClasses="#a9ZbP"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="Z0fSQ" contextType="#aO+gS" name="Lambda" resultType="#LjX+1" superClasses="#a9ZbP"/>
     <ownedClasses xsi:type="pivot:LambdaType" xmi:id="oQonV" contextType="#voxdd" name="Lambda" resultType="#P58UW" superClasses="#a9ZbP"/>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="iZQDi" keysAreNullFree="false" name="Map" valuesAreNullFree="false">
+    <ownedClasses xsi:type="pivot:MapType" xmi:id="iZQDi" keysAreNullFree="false" name="Map" superClasses="#P58UW" valuesAreNullFree="false">
       <ownedBindings>
         <ownedSubstitutions actual="#23L4q" formal="#IpSog"/>
         <ownedSubstitutions actual="#X0HuR" formal="#TpSog"/>
@@ -518,13 +908,13 @@
         <ownedSubstitutions actual="#TpSog" formal="#TpSog"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="rEg9m" keysAreNullFree="false" name="Map" valuesAreNullFree="false">
+    <ownedClasses xsi:type="pivot:MapType" xmi:id="rEg9m" keysAreNullFree="false" name="Map" superClasses="#P58UW" valuesAreNullFree="false">
       <ownedBindings>
         <ownedSubstitutions actual="#IpSog" formal="#IpSog"/>
         <ownedSubstitutions actual="#M5KKy" formal="#TpSog"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="LwRLb" keysAreNullFree="false" name="Map" valuesAreNullFree="false">
+    <ownedClasses xsi:type="pivot:MapType" xmi:id="LwRLb" keysAreNullFree="false" name="Map" superClasses="#P58UW" valuesAreNullFree="false">
       <ownedBindings>
         <ownedSubstitutions actual="#IpSog" formal="#IpSog"/>
         <ownedSubstitutions actual="#srIvA" formal="#TpSog"/>
@@ -536,7 +926,7 @@
         <ownedSubstitutions actual="#XwCjC" formal="#TpSog"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="KqL1e" name="Map">
+    <ownedClasses xsi:type="pivot:MapType" xmi:id="KqL1e" name="Map" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#UPmQp" formal="#IpSog"/>
         <ownedSubstitutions actual="#pUmQp" formal="#TpSog"/>
@@ -548,23 +938,23 @@
         <ownedSubstitutions actual="#VpDyk" formal="#TpSog"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:MapType" xmi:id="SNryz" name="Map">
+    <ownedClasses xsi:type="pivot:MapType" xmi:id="SNryz" name="Map" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#W1BiO" formal="#IpSog"/>
         <ownedSubstitutions actual="#r6BiO" formal="#TpSog"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="phmvx" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="phmvx" isNullFree="true" name="OrderedCollection" superClasses="#cRxY7">
       <ownedBindings>
         <ownedSubstitutions actual="#fgGek" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="u+gpL" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="u+gpL" isNullFree="true" name="OrderedCollection" superClasses="#hurSV">
       <ownedBindings>
         <ownedSubstitutions actual="#sjsrD" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="hbBU8" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="hbBU8" isNullFree="true" name="OrderedCollection" superClasses="#ULM9F">
       <ownedBindings>
         <ownedSubstitutions actual="#Xt3+J" formal="#rpXBF"/>
       </ownedBindings>
@@ -584,7 +974,7 @@
         <ownedSubstitutions actual="#lmvX0" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="b39By" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="b39By" isNullFree="true" name="OrderedCollection" superClasses="#OnIr7">
       <ownedBindings>
         <ownedSubstitutions actual="#hrO9B" formal="#rpXBF"/>
       </ownedBindings>
@@ -594,12 +984,12 @@
         <ownedSubstitutions actual="#r44fn" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Uosrt" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Uosrt" isNullFree="true" name="OrderedCollection" superClasses="#HY3U3">
       <ownedBindings>
         <ownedSubstitutions actual="#CnLbk" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="G8wZ5" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="G8wZ5" isNullFree="true" name="OrderedCollection" superClasses="#5r7CD">
       <ownedBindings>
         <ownedSubstitutions actual="#EgJ01" formal="#rpXBF"/>
       </ownedBindings>
@@ -614,7 +1004,7 @@
         <ownedSubstitutions actual="#wZAiS" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="AZjza" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="AZjza" isNullFree="true" name="OrderedCollection" superClasses="#zIuck">
       <ownedBindings>
         <ownedSubstitutions actual="#OHm2D" formal="#rpXBF"/>
       </ownedBindings>
@@ -624,7 +1014,7 @@
         <ownedSubstitutions actual="#qS3vh" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="P7uFU" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="P7uFU" isNullFree="true" name="OrderedCollection" superClasses="#Cr5ud">
       <ownedBindings>
         <ownedSubstitutions actual="#1Twaj" formal="#rpXBF"/>
       </ownedBindings>
@@ -634,14 +1024,19 @@
         <ownedSubstitutions actual="#Vf8BK" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="HjB7E" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="HjB7E" isNullFree="true" name="OrderedCollection" superClasses="#6SMkO">
       <ownedBindings>
         <ownedSubstitutions actual="#t+fG4" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="hC4xk" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="hC4xk" isNullFree="true" name="OrderedCollection" superClasses="#UyCbu">
       <ownedBindings>
         <ownedSubstitutions actual="#XsvPD" formal="#rpXBF"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SyeQX" isNullFree="true" name="OrderedCollection" superClasses="#Fip5g">
+      <ownedBindings>
+        <ownedSubstitutions actual="#wBh6S" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="oAEBs" isNullFree="true" name="OrderedCollection" superClasses="#bwOq1">
@@ -649,7 +1044,7 @@
         <ownedSubstitutions actual="#23L4q" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="foQF3" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="foQF3" isNullFree="true" name="OrderedCollection" superClasses="#SYbuA">
       <ownedBindings>
         <ownedSubstitutions actual="#FDR9O" formal="#rpXBF"/>
       </ownedBindings>
@@ -664,7 +1059,7 @@
         <ownedSubstitutions actual="#K1pWF" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="G5WJ2" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="G5WJ2" isNullFree="true" name="OrderedCollection" superClasses="#5ohy,">
       <ownedBindings>
         <ownedSubstitutions actual="#ElAQ8" formal="#rpXBF"/>
       </ownedBindings>
@@ -679,12 +1074,12 @@
         <ownedSubstitutions actual="#g1Cgh" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="raRWJ" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="raRWJ" isNullFree="true" name="OrderedCollection" superClasses="#eKc,S">
       <ownedBindings>
         <ownedSubstitutions actual="#xA10c" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Blxy6" isNullFree="true" name="OrderedCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Blxy6" isNullFree="true" name="OrderedCollection" superClasses="#0U8bE">
       <ownedBindings>
         <ownedSubstitutions actual="#3SUOb" formal="#rpXBF"/>
       </ownedBindings>
@@ -692,6 +1087,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="46Oy5" isNullFree="true" name="OrderedCollection" superClasses="#rqZbD">
       <ownedBindings>
         <ownedSubstitutions actual="#G8YvU" formal="#rpXBF"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ii3iP" isNullFree="true" name="OrderedCollection" superClasses="#VSCMZ">
+      <ownedBindings>
+        <ownedSubstitutions actual="#AsvoL" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="4v13D" isNullFree="true" name="OrderedCollection" superClasses="#rfAhN">
@@ -707,6 +1107,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="sYFvz" isNullFree="true" name="OrderedCollection" superClasses="#fIQY9">
       <ownedBindings>
         <ownedSubstitutions actual="#aO+gS" formal="#rpXBF"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="uFg86" isNullFree="true" name="OrderedCollection" superClasses="#h1qlE">
+      <ownedBindings>
+        <ownedSubstitutions actual="#sChGe" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="5,kSC" isNullFree="true" name="OrderedCollection" superClasses="#svv7L">
@@ -799,7 +1204,7 @@
         <ownedSubstitutions actual="#XsvPD" formal="#FDR9O"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="yYh1K" isNullFree="true" name="OrderedSet">
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="yYh1K" isNullFree="true" name="OrderedSet" superClasses="#oAEBs #Mr+ll">
       <ownedBindings>
         <ownedSubstitutions actual="#23L4q" formal="#FDR9O"/>
       </ownedBindings>
@@ -839,7 +1244,7 @@
         <ownedSubstitutions actual="#Vf8BK" formal="#xA10c"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="omeKm" isNullFree="true" name="Sequence">
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="omeKm" isNullFree="true" name="Sequence" superClasses="#SyeQX">
       <ownedBindings>
         <ownedSubstitutions actual="#wBh6S" formal="#xA10c"/>
       </ownedBindings>
@@ -869,7 +1274,7 @@
         <ownedSubstitutions actual="#G8YvU" formal="#xA10c"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="4W3ce" isNullFree="true" name="Sequence">
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="4W3ce" isNullFree="true" name="Sequence" superClasses="#ii3iP">
       <ownedBindings>
         <ownedSubstitutions actual="#AsvoL" formal="#xA10c"/>
       </ownedBindings>
@@ -884,187 +1289,187 @@
         <ownedSubstitutions actual="#c8x4w" formal="#xA10c"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="E6f2J" isNullFree="true" name="Sequence">
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="E6f2J" isNullFree="true" name="Sequence" superClasses="#uFg86">
       <ownedBindings>
         <ownedSubstitutions actual="#sChGe" formal="#xA10c"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="+dLVT" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="+dLVT" isNullFree="true" name="Set" superClasses="#ryfSS">
       <ownedBindings>
         <ownedSubstitutions actual="#trNyn" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="0llHH" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="0llHH" isNullFree="true" name="Set" superClasses="#h65EG">
       <ownedBindings>
         <ownedSubstitutions actual="#T3nwN" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="DXJqd" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="DXJqd" isNullFree="true" name="Set" superClasses="#wrdnc">
       <ownedBindings>
         <ownedSubstitutions actual="#6qkvl" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="jwjfG" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="jwjfG" isNullFree="true" name="Set" superClasses="#QF4cF">
       <ownedBindings>
         <ownedSubstitutions actual="#ag19C" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="BYdmZ" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="BYdmZ" isNullFree="true" name="Set" superClasses="#usxjY">
       <ownedBindings>
         <ownedSubstitutions actual="#oUPZ4" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="tua,r" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="tua,r" isNullFree="true" name="Set" superClasses="#aDv8q">
       <ownedBindings>
         <ownedSubstitutions actual="#0KS2y" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="RrAWK" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="RrAWK" isNullFree="true" name="Set" superClasses="#+,UTJ">
       <ownedBindings>
         <ownedSubstitutions actual="#4ZLW1" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="QPmxA" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="QPmxA" isNullFree="true" name="Set" superClasses="#9j6u,">
       <ownedBindings>
         <ownedSubstitutions actual="#P+2NH" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="Yxn72" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="Yxn72" isNullFree="true" name="Set" superClasses="#FG841">
       <ownedBindings>
         <ownedSubstitutions actual="#Xt3+J" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="nmELl" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="nmELl" isNullFree="true" name="Set" superClasses="#U7YIk">
       <ownedBindings>
         <ownedSubstitutions actual="#+EUnw" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="6rRUh" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="6rRUh" isNullFree="true" name="Set" superClasses="#nAmRg">
       <ownedBindings>
         <ownedSubstitutions actual="#Jrsm1" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="9,Lm4" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="9,Lm4" isNullFree="true" name="Set" superClasses="#qUgj3">
       <ownedBindings>
         <ownedSubstitutions actual="#E+MUO" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="gMa+t" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="gMa+t" isNullFree="true" name="Set" superClasses="#Nhu7s">
       <ownedBindings>
         <ownedSubstitutions actual="#f9zGW" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="L+STo" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="L+STo" isNullFree="true" name="Set" superClasses="#4SnQn">
       <ownedBindings>
         <ownedSubstitutions actual="#CnLbk" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="SM+py" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="SM+py" isNullFree="true" name="Set" superClasses="#,gSnx">
       <ownedBindings>
         <ownedSubstitutions actual="#hCZ,8" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="Lhn0f" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="Lhn0f" isNullFree="true" name="Set" superClasses="#417xe">
       <ownedBindings>
         <ownedSubstitutions actual="#CCTKL" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="Jgtyv" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="Jgtyv" isNullFree="true" name="Set" superClasses="#20Bwu">
       <ownedBindings>
         <ownedSubstitutions actual="#wZAiS" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="Xrrh3" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="Xrrh3" isNullFree="true" name="Set" superClasses="#EAAf2">
       <ownedBindings>
         <ownedSubstitutions actual="#uXpI1" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="Qv4dS" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="Qv4dS" isNullFree="true" name="Set" superClasses="#9DNbR">
       <ownedBindings>
         <ownedSubstitutions actual="#PeNjb" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="Nw4dS" isNullFree="true" lower="1" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="Nw4dS" isNullFree="true" lower="1" name="Set" superClasses="#9DNbR">
       <ownedBindings>
         <ownedSubstitutions actual="#PeNjb" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="KJ6+6" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="KJ6+6" isNullFree="true" name="Set" superClasses="#3dO85">
       <ownedBindings>
         <ownedSubstitutions actual="#ZKyBK" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="lUMxW" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="lUMxW" isNullFree="true" name="Set" superClasses="#SpguV">
       <ownedBindings>
         <ownedSubstitutions actual="#sj5pO" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="CQgOG" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="CQgOG" isNullFree="true" name="Set" superClasses="#vk0LF">
       <ownedBindings>
         <ownedSubstitutions actual="#RsBMP" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="tAuv," isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="tAuv," isNullFree="true" name="Set" superClasses="#aVCt+">
       <ownedBindings>
         <ownedSubstitutions actual="#0sWwu" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="v4gaz" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="v4gaz" isNullFree="true" name="Set" superClasses="#cN1Xy">
       <ownedBindings>
         <ownedSubstitutions actual="#Gktz1" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="FkqdK" isNullFree="true" lower="1" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="FkqdK" isNullFree="true" lower="1" name="Set" superClasses="#13+aJ">
       <ownedBindings>
         <ownedSubstitutions actual="#H1vzk" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="JOn6B" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="JOn6B" isNullFree="true" name="Set" superClasses="#2i73A">
       <ownedBindings>
         <ownedSubstitutions actual="#w3Q7Z" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="0OYc1" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="0OYc1" isNullFree="true" name="Set" superClasses="#hjsZ0">
       <ownedBindings>
         <ownedSubstitutions actual="#TI76t" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="mQRN7" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="mQRN7" isNullFree="true" name="Set" superClasses="#TllK6">
       <ownedBindings>
         <ownedSubstitutions actual="#Vf8BK" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="AM8vz" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="AM8vz" isNullFree="true" name="Set" superClasses="#tgQty">
       <ownedBindings>
         <ownedSubstitutions actual="#,IWZi" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="JIF4R" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="JIF4R" isNullFree="true" name="Set" superClasses="#2cZ1Q">
       <ownedBindings>
         <ownedSubstitutions actual="#wBh6S" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="fWqom" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="fWqom" isNullFree="true" name="Set" superClasses="#Mr+ll">
       <ownedBindings>
         <ownedSubstitutions actual="#23L4q" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="h4EiW" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="h4EiW" isNullFree="true" name="Set" superClasses="#ONZfV">
       <ownedBindings>
         <ownedSubstitutions actual="#IpSog" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="bjerm" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="bjerm" name="Set" superClasses="#N3yol">
       <ownedBindings>
         <ownedSubstitutions actual="#fDQ9L" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="gierm" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="gierm" isNullFree="true" name="Set" superClasses="#N3yol">
       <ownedBindings>
         <ownedSubstitutions actual="#fDQ9L" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="WOi,X" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="WOi,X" isNullFree="true" name="Set" superClasses="#Dj28W">
       <ownedBindings>
         <ownedSubstitutions actual="#FTu3s" formal="#aO+gS"/>
       </ownedBindings>
@@ -1074,22 +1479,22 @@
         <ownedSubstitutions actual="#Lg6b," formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="SFrSL" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="SFrSL" isNullFree="true" name="Set" superClasses="#,Z,PK">
       <ownedBindings>
         <ownedSubstitutions actual="#hjwHS" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="icGk1" isNullFree="true" lower="1" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="icGk1" isNullFree="true" lower="1" name="Set" superClasses="#Swah0">
       <ownedBindings>
         <ownedSubstitutions actual="#sChGe" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="AVIYn" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="AVIYn" isNullFree="true" name="Set" superClasses="#tpcVm">
       <ownedBindings>
         <ownedSubstitutions actual="#,5eVD" formal="#aO+gS"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="wVL68" isNullFree="true" name="Set">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="wVL68" isNullFree="true" name="Set" superClasses="#dqf37">
       <ownedBindings>
         <ownedSubstitutions actual="#voxdd" formal="#aO+gS"/>
       </ownedBindings>
@@ -1098,19 +1503,64 @@
       <ownedProperties xmi:id="Lv1aA" name="first" type="#23L4q"/>
       <ownedProperties xmi:id="P28lE" name="second" type="#OSDgr"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="NMhUr" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ryfSS" isNullFree="true" name="UniqueCollection" superClasses="#63vWi">
+      <ownedBindings>
+        <ownedSubstitutions actual="#trNyn" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="h65EG" isNullFree="true" name="UniqueCollection" superClasses="#w,JJW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#T3nwN" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="NMhUr" isNullFree="true" name="UniqueCollection" superClasses="#cRxY7">
       <ownedBindings>
         <ownedSubstitutions actual="#fgGek" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SpbOF" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="wrdnc" isNullFree="true" name="UniqueCollection" superClasses="#,wtrs">
+      <ownedBindings>
+        <ownedSubstitutions actual="#6qkvl" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QF4cF" isNullFree="true" name="UniqueCollection" superClasses="#fKIhV">
+      <ownedBindings>
+        <ownedSubstitutions actual="#ag19C" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="usxjY" isNullFree="true" name="UniqueCollection" superClasses="#9xBoo">
+      <ownedBindings>
+        <ownedSubstitutions actual="#oUPZ4" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="aDv8q" isNullFree="true" name="UniqueCollection" superClasses="#pI,A7">
+      <ownedBindings>
+        <ownedSubstitutions actual="#0KS2y" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="+,UTJ" isNullFree="true" name="UniqueCollection" superClasses="#NFlXZ">
+      <ownedBindings>
+        <ownedSubstitutions actual="#4ZLW1" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SpbOF" isNullFree="true" name="UniqueCollection" superClasses="#hurSV">
       <ownedBindings>
         <ownedSubstitutions actual="#sjsrD" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="FG841" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9j6u," isNullFree="true" name="UniqueCollection" superClasses="#MpKzP">
+      <ownedBindings>
+        <ownedSubstitutions actual="#P+2NH" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="FG841" isNullFree="true" name="UniqueCollection" superClasses="#ULM9F">
       <ownedBindings>
         <ownedSubstitutions actual="#Xt3+J" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="U7YIk" isNullFree="true" name="UniqueCollection" superClasses="#jApM0">
+      <ownedBindings>
+        <ownedSubstitutions actual="#+EUnw" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="RpJhd" isNullFree="true" name="UniqueCollection" superClasses="#guZlt">
@@ -1123,14 +1573,24 @@
         <ownedSubstitutions actual="#ARipM" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="nAmRg" isNullFree="true" name="UniqueCollection" superClasses="#2F2Vw">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Jrsm1" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="jqqey" isNullFree="true" name="UniqueCollection" superClasses="#yv6iC">
       <ownedBindings>
         <ownedSubstitutions actual="#lmvX0" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",h4mr" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",h4mr" isNullFree="true" name="UniqueCollection" superClasses="#OnIr7">
       <ownedBindings>
         <ownedSubstitutions actual="#hrO9B" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="qUgj3" isNullFree="true" name="UniqueCollection" superClasses="#5ZwnH">
+      <ownedBindings>
+        <ownedSubstitutions actual="#E+MUO" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="50kz4" isNullFree="true" name="UniqueCollection" superClasses="#I603I">
@@ -1138,12 +1598,22 @@
         <ownedSubstitutions actual="#r44fn" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="4SnQn" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Nhu7s" isNullFree="true" name="UniqueCollection" superClasses="#cm+,8">
+      <ownedBindings>
+        <ownedSubstitutions actual="#f9zGW" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="4SnQn" isNullFree="true" name="UniqueCollection" superClasses="#HY3U3">
       <ownedBindings>
         <ownedSubstitutions actual="#CnLbk" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="qmr+y" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",gSnx" isNullFree="true" name="UniqueCollection" superClasses="#OmirB">
+      <ownedBindings>
+        <ownedSubstitutions actual="#hCZ,8" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="qmr+y" isNullFree="true" name="UniqueCollection" superClasses="#5r7CD">
       <ownedBindings>
         <ownedSubstitutions actual="#EgJ01" formal="#voxdd"/>
       </ownedBindings>
@@ -1153,14 +1623,54 @@
         <ownedSubstitutions actual="#lKmNK" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="417xe" isNullFree="true" name="UniqueCollection" superClasses="#H7L2u">
+      <ownedBindings>
+        <ownedSubstitutions actual="#CCTKL" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="20Bwu" isNullFree="true" name="UniqueCollection" superClasses="#F6R0+">
       <ownedBindings>
         <ownedSubstitutions actual="#wZAiS" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="kDeYU" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="EAAf2" isNullFree="true" name="UniqueCollection" superClasses="#TFQjG">
+      <ownedBindings>
+        <ownedSubstitutions actual="#uXpI1" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9DNbR" isNullFree="true" name="UniqueCollection" superClasses="#MJdfh">
+      <ownedBindings>
+        <ownedSubstitutions actual="#PeNjb" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="kDeYU" isNullFree="true" name="UniqueCollection" superClasses="#zIuck">
       <ownedBindings>
         <ownedSubstitutions actual="#OHm2D" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="3dO85" isNullFree="true" name="UniqueCollection" superClasses="#GjeAK">
+      <ownedBindings>
+        <ownedSubstitutions actual="#ZKyBK" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="SpguV" isNullFree="true" name="UniqueCollection" superClasses="#huwyl">
+      <ownedBindings>
+        <ownedSubstitutions actual="#sj5pO" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="vk0LF" isNullFree="true" name="UniqueCollection" superClasses="#+pEQV">
+      <ownedBindings>
+        <ownedSubstitutions actual="#RsBMP" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="aVCt+" isNullFree="true" name="UniqueCollection" superClasses="#paSxO">
+      <ownedBindings>
+        <ownedSubstitutions actual="#0sWwu" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="cN1Xy" isNullFree="true" name="UniqueCollection" superClasses="#rSFcC">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Gktz1" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="g9WB5" isNullFree="true" name="UniqueCollection" superClasses="#vCnFJ">
@@ -1168,19 +1678,49 @@
         <ownedSubstitutions actual="#qS3vh" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="zlpqN" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="13+aJ" isNullFree="true" name="UniqueCollection" superClasses="#E9OfZ">
+      <ownedBindings>
+        <ownedSubstitutions actual="#H1vzk" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="2i73A" isNullFree="true" name="UniqueCollection" superClasses="#FoL8Q">
+      <ownedBindings>
+        <ownedSubstitutions actual="#w3Q7Z" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="hjsZ0" isNullFree="true" name="UniqueCollection" superClasses="#wo8dE">
+      <ownedBindings>
+        <ownedSubstitutions actual="#TI76t" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="zlpqN" isNullFree="true" name="UniqueCollection" superClasses="#Cr5ud">
       <ownedBindings>
         <ownedSubstitutions actual="#1Twaj" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="rN8f+" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="TllK6" isNullFree="true" name="UniqueCollection" superClasses="#iq1OK">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Vf8BK" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="rN8f+" isNullFree="true" name="UniqueCollection" superClasses="#6SMkO">
       <ownedBindings>
         <ownedSubstitutions actual="#t+fG4" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="FtyWe" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="FtyWe" isNullFree="true" name="UniqueCollection" superClasses="#UyCbu">
       <ownedBindings>
         <ownedSubstitutions actual="#XsvPD" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tgQty" isNullFree="true" name="UniqueCollection" superClasses="#8lgxC">
+      <ownedBindings>
+        <ownedSubstitutions actual="#,IWZi" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="2cZ1Q" isNullFree="true" name="UniqueCollection" superClasses="#Fip5g">
+      <ownedBindings>
+        <ownedSubstitutions actual="#wBh6S" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Mr+ll" isNullFree="true" name="UniqueCollection" superClasses="#bwOq1">
@@ -1188,22 +1728,32 @@
         <ownedSubstitutions actual="#23L4q" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9mJmA" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ONZfV" isNullFree="true" name="UniqueCollection" superClasses="#dSpjl">
+      <ownedBindings>
+        <ownedSubstitutions actual="#IpSog" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="9mJmA" isNullFree="true" name="UniqueCollection" superClasses="#MsZqQ">
       <ownedBindings>
         <ownedSubstitutions actual="#P58UW" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="DTLqw" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="N3yol" isNullFree="true" name="UniqueCollection" superClasses="#c8Ct1">
+      <ownedBindings>
+        <ownedSubstitutions actual="#fDQ9L" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="DTLqw" isNullFree="true" name="UniqueCollection" superClasses="#SYbuA">
       <ownedBindings>
         <ownedSubstitutions actual="#FDR9O" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="qjRuv" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="qjRuv" isNullFree="true" name="UniqueCollection" superClasses="#5ohy,">
       <ownedBindings>
         <ownedSubstitutions actual="#ElAQ8" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="AxPDk" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="AxPDk" isNullFree="true" name="UniqueCollection" superClasses="#P2fH0">
       <ownedBindings>
         <ownedSubstitutions actual="#KyM0O" formal="#voxdd"/>
       </ownedBindings>
@@ -1213,7 +1763,7 @@
         <ownedSubstitutions actual="#g1Cgh" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="PFM7C" isNullFree="true" name="UniqueCollection">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="PFM7C" isNullFree="true" name="UniqueCollection" superClasses="#eKc,S">
       <ownedBindings>
         <ownedSubstitutions actual="#xA10c" formal="#voxdd"/>
       </ownedBindings>
@@ -1223,9 +1773,29 @@
         <ownedSubstitutions actual="#aO+gS" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Dj28W" isNullFree="true" name="UniqueCollection" superClasses="#SoGBn">
+      <ownedBindings>
+        <ownedSubstitutions actual="#FTu3s" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Zw0RL" isNullFree="true" name="UniqueCollection" superClasses="#o1EWb">
       <ownedBindings>
         <ownedSubstitutions actual="#Lg6b," formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",Z,PK" isNullFree="true" name="UniqueCollection" superClasses="#OfPUa">
+      <ownedBindings>
+        <ownedSubstitutions actual="#hjwHS" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Swah0" isNullFree="true" name="UniqueCollection" superClasses="#h1qlE">
+      <ownedBindings>
+        <ownedSubstitutions actual="#sChGe" formal="#voxdd"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tpcVm" isNullFree="true" name="UniqueCollection" superClasses="#8usZ2">
+      <ownedBindings>
+        <ownedSubstitutions actual="#,5eVD" formal="#voxdd"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="dqf37" isNullFree="true" name="UniqueCollection" superClasses="#svv7L">
@@ -3232,15 +3802,15 @@
         <ownedComments body="The collection containing all elements of oclText[self] and objects.&#xA;"/>
         <ownedParameters xmi:id="sXaEm" name="objects" type="#0905Y"/>
       </ownedOperations>
-      <ownedOperations xmi:id="+zJxx" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" name="intersection"
-          type="#FVmom">
-        <ownedComments body="The intersection of oclText[self] and bag; the bag of all elements that are in both oclText[self] and c.&#xA;"/>
-        <ownedParameters xmi:id="UGYvG" name="c" type="#0905Y"/>
-      </ownedOperations>
       <ownedOperations xmi:id="UEZ,L" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" name="intersection"
           type="#fWqom">
         <ownedComments body="The intersection of oclText[self] and a unique collection; the set of all elements that are in both oclText[self] and u.&#xA;"/>
         <ownedParameters xmi:id="k1v4b" name="u" type="#Mr+ll"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="+zJxx" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" name="intersection"
+          type="#FVmom">
+        <ownedComments body="The intersection of oclText[self] and bag; the bag of all elements that are in both oclText[self] and c.&#xA;"/>
+        <ownedParameters xmi:id="UGYvG" name="c" type="#0905Y"/>
       </ownedOperations>
       <ownedOperations xmi:id="cIuUP" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation" name="isEmpty"
           type="#Di88w">

@@ -432,7 +432,7 @@ public class Orphanage extends AdapterImpl
 		super.didAddClass(asClass);
 	} */
 
-	public boolean assertConsistent() {
+/*	public boolean assertConsistent() {
 		Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(orphanPackage.getOwnedClasses());
 		assert references != null;
 		for (EObject eTarget : references.keySet()) {
@@ -440,7 +440,7 @@ public class Orphanage extends AdapterImpl
 			assert (containingOrphanPackage == null) || (containingOrphanPackage == orphanPackage);
 		}
 		return true;
-	}
+	} */
 
 	public void dispose() {
 	/*	if (ownedClasses != null) {
@@ -541,7 +541,7 @@ public class Orphanage extends AdapterImpl
 				addOrphanClass(collectionType);
 			}
 			assert collectionType.isWellContained();
-			System.out.println("getCollectionType " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(collectionType) +  " : " + collectionType + " : " + specializedTypeId);
+		//	System.out.println("getCollectionType " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(collectionType) +  " : " + collectionType + " : " + specializedTypeId);
 			String s = collectionType.toString();
 			if ("Collection(OclElement)".equals(s) || "Collection(ocl::OclElement)".equals(s)) {
 				getClass();		// XXX
@@ -918,7 +918,7 @@ public class Orphanage extends AdapterImpl
 	}
 
 	private void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
-		assert assertConsistent();
+	//	assert assertConsistent();
 		Map<@NonNull TemplateParameter, @NonNull Element> specializedFormal2Actual = new HashMap<>();
 		for (@NonNull TemplateBinding specializedTemplateBinding : PivotUtil.getOwnedBindings(specializedClass)) {
 			for (@NonNull TemplateParameterSubstitution specializedParameterSubstitution : PivotUtil.getOwnedSubstitutions(specializedTemplateBinding)) {
@@ -960,7 +960,7 @@ public class Orphanage extends AdapterImpl
 			}
 			superClasses.add(resolvedSuperClass);
 		}
-		assert assertConsistent();
+	//	assert assertConsistent();
 	}
 
 	protected @NonNull Type resolveSuperElementType(@NonNull Type superElementType, @NonNull Map<@NonNull TemplateParameter, @NonNull Element> specializedFormal2Actual) {

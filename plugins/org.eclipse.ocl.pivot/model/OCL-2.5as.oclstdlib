@@ -1854,7 +1854,7 @@ type CollectionType {
 	/**
 	Evaluates to the upper bound on the number of collection elements.
 	**/
-	property upper : Integer[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty';
+	property upper : UnlimitedNatural[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty';
 }
 
 type MapType {

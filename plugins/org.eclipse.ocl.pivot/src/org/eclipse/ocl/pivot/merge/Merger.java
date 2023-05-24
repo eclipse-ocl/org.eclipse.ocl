@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.merge.EAssociationHelper.EAssociation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -50,10 +49,20 @@ import com.google.common.collect.Iterables;
  */
 public class Merger
 {
-	private static /*@NonNull*/ EClass classSortOrder[] = new /*@NonNull*/ EClass[] {
+	private static @NonNull Class<?> classSortOrder[] = new @NonNull Class<?>[] {
+	/*	PivotPackage.Literals.TUPLE_TYPE,
+		PivotPackage.Literals.LAMBDA_TYPE,
+		PivotPackage.Literals.MAP_TYPE,
+		PivotPackage.Literals.SET_TYPE,
+		PivotPackage.Literals.SEQUENCE_TYPE,
+		PivotPackage.Literals.ORDERED_SET_TYPE,
+		PivotPackage.Literals.BAG_TYPE,
+		PivotPackage.Literals.COLLECTION_TYPE,
 		PivotPackage.Literals.CLASS,
 		PivotPackage.Literals.PACKAGE,
-		PivotPackage.Literals.LIBRARY
+		PivotPackage.Literals.LIBRARY, */
+		org.eclipse.ocl.pivot.Class.class,
+		org.eclipse.ocl.pivot.Package.class
 	};
 
 	protected class MergedElementComparator implements Comparator<@NonNull Element>
@@ -62,8 +71,8 @@ public class Merger
 
 		@Override
 		public int compare(@NonNull Element o1, @NonNull Element o2) {
-			int x1 = indexOf(o1.eClass());
-			int x2 = indexOf(o2.eClass());
+			int x1 = indexOf(o1.getClass());
+			int x2 = indexOf(o2.getClass());
 			int diff = x2 - x1;		// Last classSortOrder first
 			if (diff != 0) {
 				return diff;
@@ -143,9 +152,9 @@ public class Merger
 			return mergedClassAndSuperClasses;
 		}
 
-		private int indexOf(/*@NonNull*/ EClass eClass) {
+		private int indexOf(/*@NonNull*/ Class<?> jClass) {
 			for (int i = 0; i < classSortOrder.length; i++) {
-				if (eClass == classSortOrder[i]) {
+				if (classSortOrder[i].isAssignableFrom(jClass)) {
 					return i;
 				}
 			}
@@ -187,11 +196,11 @@ public class Merger
 		this.eAssociationHelper = new EAssociationHelper();
 		this.groupVisitor = createGroupVisitor();
 		this.resolveVisitor = createResolveVisitorVisitor();
-		System.out.println("mergedOrphanage " + NameUtil.debugSimpleName(mergedOrphanage));
+	//	System.out.println("mergedOrphanage " + NameUtil.debugSimpleName(mergedOrphanage));
 	}
 
 	private void addMerge(@NonNull String indent, @NonNull Element mergedParent, @NonNull List<@NonNull ? extends Element> partialParents) {
-		StringBuilder s = new StringBuilder();
+	/*	StringBuilder s = new StringBuilder();
 		s.append(indent + "addMerge " + NameUtil.debugSimpleName(mergedParent));
 		for (@NonNull Element partialParent : partialParents) {
 			s.append("\n\t" + indent + NameUtil.debugSimpleName(partialParent) + " : " + partialParent);
@@ -199,7 +208,7 @@ public class Merger
 		System.out.println(s.toString());
 		if ((partialParents.get(0) instanceof Nameable) && "ownedExit".equals(((Nameable)partialParents.get(0)).getName())) {
 			getClass();		// XXX
-		}
+		} */
 		mergedElement2partialElements.put(mergedParent, partialParents);
 		for (@NonNull Element partialParent : partialParents) {
 			partialElement2mergedElement.put(partialParent, mergedParent);
@@ -243,21 +252,21 @@ public class Merger
 		E mergedElement = (E)PivotFactory.eINSTANCE.create(eClass);
 		mergedParentElements.add(mergedElement);
 		// Create and install descendant merged elements
-		assert mergedOrphanage.assertConsistent();
+	//	assert mergedOrphanage.assertConsistent();
 		mergeContainmentHierarchy("", mergedElement, partialElements);
 	//	xxx mergeSuperClasses
-		assert mergedOrphanage.assertConsistent();
+	//	assert mergedOrphanage.assertConsistent();
 		resolveImplicitOpposites();
 		// Resolve references
-		assert mergedOrphanage.assertConsistent();
+	//	assert mergedOrphanage.assertConsistent();
 		resolveAttributeSlots();
-		assert mergedOrphanage.assertConsistent();
+	//	assert mergedOrphanage.assertConsistent();
 	//	resolveSuperClassesSlots(mergedElement);
-		assert mergedOrphanage.assertConsistent();
+	//	assert mergedOrphanage.assertConsistent();
 		resolveReferenceSlots();
-		assert mergedOrphanage.assertConsistent();
+	//	assert mergedOrphanage.assertConsistent();
 		resolvePossibleBidirectionalSlots();
-		assert mergedOrphanage.assertConsistent();
+	//	assert mergedOrphanage.assertConsistent();
 		return mergedElement;
 	}
 
@@ -270,27 +279,28 @@ public class Merger
 		EClass parentEClass = mergedParent.eClass();
 		assert parentEClass == eSuperClassHelper.getCompatibleEClass(partialParents);
 		if (parentEClass == PivotPackage.Literals.PROPERTY) {
-			StringBuilder so = null;
+		//	StringBuilder so = null;
 			@SuppressWarnings("unchecked")
 			List<@NonNull Property> partialProperties = (List<@NonNull Property>)partialParents;
 			for (@NonNull Property partialProperty : partialProperties) {
 				Property partialOpposite = partialProperty.getOpposite();
 				if ((partialOpposite != null) && (partialOpposite.getESObject() == null)) {
-					if (so == null) {
-						so = new StringBuilder();
-						so.append(indent + "  implicit-opposite");
-					}
-					so.append("\n\t" + indent + NameUtil.debugSimpleName(partialOpposite) + " : " + partialOpposite);
+				//	if (so == null) {
+				//		so = new StringBuilder();
+				//		so.append(indent + "  implicit-opposite");
+				//	}
+				//	so.append("\n\t" + indent + NameUtil.debugSimpleName(partialOpposite) + " : " + partialOpposite);
+					implicitOppositeMerges.add(partialProperties);
 					break;
 				}
 			}
-			if (so != null) {
-				implicitOppositeMerges.add(partialProperties);
-				System.out.println(so.toString());
-			}
+		//	if (so != null) {
+		//		implicitOppositeMerges.add(partialProperties);
+		//		System.out.println(so.toString());
+		//	}
 		}
 		for (EStructuralFeature eStructuralFeature : parentEClass.getEAllStructuralFeatures()) {
-			System.out.println(indent + "  " + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName());
+		//	System.out.println(indent + "  " + eStructuralFeature.getEContainingClass().getName() + "::" + eStructuralFeature.getName());
 			EClass eContainingClass = eStructuralFeature.getEContainingClass();
 			assert eContainingClass != null;
 			if (eStructuralFeature instanceof EReference) {
@@ -423,14 +433,14 @@ public class Merger
 			org.eclipse.ocl.pivot.Class mergedOppositeClass = null;
 			List<@NonNull Property> partialOpposites = new ArrayList<>();
 			Property mergedChild = PivotFactory.eINSTANCE.createProperty();
-			StringBuilder s = new StringBuilder();
-			s.append("resolveImplicitOpposites " + NameUtil.debugSimpleName(mergedChild)); // + " for " + eReference.getEContainingClass().getName() + "::" + eReference.getName());
+		//	StringBuilder s = new StringBuilder();
+		//	s.append("resolveImplicitOpposites " + NameUtil.debugSimpleName(mergedChild)); // + " for " + eReference.getEContainingClass().getName() + "::" + eReference.getName());
 			for (@NonNull Property partialPropertyWithImplicitOpposite : partialPropertiesWithImplicitOpposite) {
 				Property partialOpposite = partialPropertyWithImplicitOpposite.getOpposite();
 				assert partialOpposite != null;
 				partialOpposites.add(partialOpposite);
-				s.append("\n\t" + NameUtil.debugSimpleName(partialOpposite) + " : " + partialOpposite);
-				s.append("\n\t\t~" + NameUtil.debugSimpleName(partialPropertyWithImplicitOpposite) + " : " + partialPropertyWithImplicitOpposite);
+			//	s.append("\n\t" + NameUtil.debugSimpleName(partialOpposite) + " : " + partialOpposite);
+			//	s.append("\n\t\t~" + NameUtil.debugSimpleName(partialPropertyWithImplicitOpposite) + " : " + partialPropertyWithImplicitOpposite);
 			//	assert containmentProperty.isIsComposite();
 			//	assert !containerProperty.isIsComposite();
 				org.eclipse.ocl.pivot.Class oppositeClass = PivotUtil.getOwningClass(partialOpposite);
@@ -443,7 +453,7 @@ public class Merger
 					assert mergedOppositeClass == mergedOppositeElement;
 				}
 			}
-			System.out.println(s.toString());
+		//	System.out.println(s.toString());
 			assert mergedOppositeClass != null;
 			mergedOppositeClass.getOwnedProperties().add(mergedChild);
 			addMerge("\t", mergedChild, partialOpposites);
@@ -494,6 +504,9 @@ public class Merger
 
 	private void resolveManyReferencesSlot(@NonNull Element mergedParent, @NonNull EReference eReference, @NonNull List<@NonNull ? extends Element> partialParents) {
 	//	System.out.println("resolveManyReferencesSlot " + NameUtil.debugSimpleName(mergedParent) + "." + eReference.getName() + " : " + partialParents);
+	//	if (eReference == PivotPackage.Literals.CLASS__SUPER_CLASSES) {
+	//		System.out.println("resolveManyReferencesSlot " + NameUtil.debugSimpleName(mergedParent) + "" + mergedParent + "." + eReference.getName() + " : " + partialParents);
+	//	}
 		assert !eReference.isContainment();
 		assert eReference.isMany();
 		@SuppressWarnings("unchecked")
@@ -506,6 +519,9 @@ public class Merger
 					Element resolvedChild = partialChild.accept(resolveVisitor);
 					if ((resolvedChild != null) && !mergedChildren.contains(resolvedChild)) {
 						mergedChildren.add(resolvedChild);
+					//	if (eReference == PivotPackage.Literals.CLASS__SUPER_CLASSES) {
+					//		System.out.println("\t" + NameUtil.debugSimpleName(resolvedChild) +" : " + resolvedChild);
+					//	}
 					}
 				}
 			}
@@ -603,7 +619,7 @@ public class Merger
 	 */
 	private <E extends Element> void resolveReferenceSlots(/*@NonNull E mergedParent, @NonNull Iterable<@NonNull E> partialParents*/) {
 		List<@NonNull Element> mergedElements = new ArrayList<>(mergedElement2partialElements.keySet());
-		Collections.sort(mergedElements, new MergedElementComparator());
+		Collections.sort(mergedElements, new MergedElementComparator());	// Must have shallowest inheritance first, determinism is good
 		for (@NonNull Element mergedParent : mergedElements) {
 			List<@NonNull ? extends Element> partialParents = mergedElement2partialElements.get(mergedParent);
 			assert partialParents != null;
@@ -617,10 +633,10 @@ public class Merger
 						EAssociation eAssociation = eAssociationHelper.get(eReference);
 						if ((eAssociation == null) || eAssociation.isFirst(eReference)) {
 							if (eStructuralFeature.isMany()) {
-								resolveManyReferencesSlot(mergedParent, eReference,  partialParents);
+								resolveManyReferencesSlot(mergedParent, eReference, partialParents);
 							}
 							else {
-								resolveSingleReferenceSlot(mergedParent, eReference,  partialParents);
+								resolveSingleReferenceSlot(mergedParent, eReference, partialParents);
 							}
 						}
 					}
