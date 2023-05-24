@@ -11,9 +11,13 @@
 package org.eclipse.ocl.pivot.merge;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -27,6 +31,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.merge.EAssociationHelper.EAssociation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -45,6 +50,109 @@ import com.google.common.collect.Iterables;
  */
 public class Merger
 {
+	private static /*@NonNull*/ EClass classSortOrder[] = new /*@NonNull*/ EClass[] {
+		PivotPackage.Literals.CLASS,
+		PivotPackage.Literals.PACKAGE,
+		PivotPackage.Literals.LIBRARY
+	};
+
+	protected class MergedElementComparator implements Comparator<@NonNull Element>
+	{
+		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class>> mergedClass2mergedClassAndSuperClasses = new HashMap<>();
+
+		@Override
+		public int compare(@NonNull Element o1, @NonNull Element o2) {
+			int x1 = indexOf(o1.eClass());
+			int x2 = indexOf(o2.eClass());
+			int diff = x2 - x1;		// Last classSortOrder first
+			if (diff != 0) {
+				return diff;
+			}
+			if ((o1 instanceof org.eclipse.ocl.pivot.Class) && (o2 instanceof org.eclipse.ocl.pivot.Class)) {
+				int i1 = getMergedClassAndSuperClasses((org.eclipse.ocl.pivot.Class)o1).size();
+				int i2 = getMergedClassAndSuperClasses((org.eclipse.ocl.pivot.Class)o2).size();
+				diff = i1 - i2;
+				if (diff != 0) {
+					return diff;
+				}
+			}
+			if ((o1 instanceof Nameable) && (o2 instanceof Nameable)) {
+				String n1 = ((Nameable)o1).getName();
+				String n2 = ((Nameable)o2).getName();
+				if ((n1 != null) && (n2 != null)) {
+					diff = n1.compareTo(n2);
+					if (diff != 0) {
+						return diff;
+					}
+				}
+			}
+			String s1 = String.valueOf(o1.toString());
+			String s2 = String.valueOf(o2.toString());
+			return s1.compareTo(s2);
+		}
+
+	/*	private @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> getSuperClasses(org.eclipse.ocl.pivot.@NonNull Class mergedClass) {
+			Set<org.eclipse.ocl.pivot.@NonNull Class> superClasses = mergedClass2superClasses.get(mergedClass);
+			if (superClasses == null) {
+				superClasses = new HashSet<>();
+				@SuppressWarnings("unchecked")
+				List<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = (List<org.eclipse.ocl.pivot.@NonNull Class>)mergedElement2partialElements.get(mergedClass);
+				assert partialClasses != null;
+				for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
+					for (org.eclipse.ocl.pivot.@NonNull Class partialSuperClass : PivotUtil.getSuperClasses(partialClass)) {
+						Set<org.eclipse.ocl.pivot.@NonNull Class> mergedSuperClasses = getSuperClasses(partialSuperClass);
+						superClasses.addAll(mergedSuperClasses);
+					}
+				}
+				mergedClass2superClasses.put(mergedClass, superClasses);
+			}
+			return superClasses;
+		} */
+
+		private @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> computeMergedClassAndSuperClasses(org.eclipse.ocl.pivot.@NonNull Class mergedClass) {
+			Set<org.eclipse.ocl.pivot.@NonNull Class> mergedClassAndSuperClasses = new HashSet<>();
+			mergedClassAndSuperClasses.add(mergedClass);
+			@SuppressWarnings("unchecked")
+			List<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = (List<org.eclipse.ocl.pivot.@NonNull Class>)mergedElement2partialElements.get(mergedClass);
+			assert partialClasses != null;
+			for (org.eclipse.ocl.pivot.@NonNull Class partialClass : partialClasses) {
+				for (org.eclipse.ocl.pivot.@NonNull Class partialSuperClass : PivotUtil.getSuperClasses(partialClass)) {
+					org.eclipse.ocl.pivot.Class mergedSuperClass = (org.eclipse.ocl.pivot.Class)partialElement2mergedElement.get(partialSuperClass);
+					if (mergedSuperClass == null) {		// No merged specialization yet; make do with the unspecialized to get correct depth
+						TemplateableElement unspecializedElement = partialSuperClass.getUnspecializedElement();
+						assert unspecializedElement != null;
+						mergedSuperClass = (org.eclipse.ocl.pivot.Class)partialElement2mergedElement.get(unspecializedElement);
+						assert mergedSuperClass != null;
+					}
+					Set<org.eclipse.ocl.pivot.@NonNull Class> mergedSuperClasses = getMergedClassAndSuperClasses(mergedSuperClass);
+					mergedClassAndSuperClasses.addAll(mergedSuperClasses);
+				}
+			}
+			return mergedClassAndSuperClasses;
+		}
+
+		private @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> getMergedClassAndSuperClasses(org.eclipse.ocl.pivot.@NonNull Class mergedClass) {
+		//	@SuppressWarnings("unchecked")
+		//	org.eclipse.ocl.pivot.Class mergedClass = (org.eclipse.ocl.pivot.Class)partialElement2mergedElement.get(partialClass);
+		//	assert mergedClass != null;
+			Set<org.eclipse.ocl.pivot.@NonNull Class> mergedClassAndSuperClasses = mergedClass2mergedClassAndSuperClasses.get(mergedClass);
+			if (mergedClassAndSuperClasses == null) {
+				mergedClassAndSuperClasses = computeMergedClassAndSuperClasses(mergedClass);
+				mergedClass2mergedClassAndSuperClasses.put(mergedClass, mergedClassAndSuperClasses);
+			}
+			return mergedClassAndSuperClasses;
+		}
+
+		private int indexOf(/*@NonNull*/ EClass eClass) {
+			for (int i = 0; i < classSortOrder.length; i++) {
+				if (eClass == classSortOrder[i]) {
+					return i;
+				}
+			}
+			return -1;
+		}
+	}
+
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull Orphanage mergedOrphanage;
 	protected final @NonNull ESuperClassHelper eSuperClassHelper;
@@ -128,7 +236,7 @@ public class Merger
 	 * Create and return a deep merge of partialElements returning the merged element and installing it promptly
 	 * within mergedParentElements thereby ensuring that the each merged element has a valid containment ancestry.
 	 */
-	public <E extends Element> @NonNull E merge(@NonNull List<@NonNull E> mergedParentElements, @NonNull List<@NonNull E> partialElements) {
+	public <E extends org.eclipse.ocl.pivot.Package> @NonNull E merge(@NonNull List<@NonNull E> mergedParentElements, @NonNull List<@NonNull E> partialElements) {
 		// Create and install root merged element
 		EClass eClass = eSuperClassHelper.getCompatibleEClass(partialElements);
 		@SuppressWarnings("unchecked")
@@ -137,11 +245,14 @@ public class Merger
 		// Create and install descendant merged elements
 		assert mergedOrphanage.assertConsistent();
 		mergeContainmentHierarchy("", mergedElement, partialElements);
+	//	xxx mergeSuperClasses
 		assert mergedOrphanage.assertConsistent();
 		resolveImplicitOpposites();
 		// Resolve references
 		assert mergedOrphanage.assertConsistent();
 		resolveAttributeSlots();
+		assert mergedOrphanage.assertConsistent();
+	//	resolveSuperClassesSlots(mergedElement);
 		assert mergedOrphanage.assertConsistent();
 		resolveReferenceSlots();
 		assert mergedOrphanage.assertConsistent();
@@ -491,7 +602,9 @@ public class Merger
 	 * Traverse the merged containment tree to resolve all reference slots (other than containments).
 	 */
 	private <E extends Element> void resolveReferenceSlots(/*@NonNull E mergedParent, @NonNull Iterable<@NonNull E> partialParents*/) {
-		for (@NonNull Element mergedParent : mergedElement2partialElements.keySet()) {
+		List<@NonNull Element> mergedElements = new ArrayList<>(mergedElement2partialElements.keySet());
+		Collections.sort(mergedElements, new MergedElementComparator());
+		for (@NonNull Element mergedParent : mergedElements) {
 			List<@NonNull ? extends Element> partialParents = mergedElement2partialElements.get(mergedParent);
 			assert partialParents != null;
 			EClass eClass = mergedParent.eClass();
@@ -624,6 +737,19 @@ public class Merger
 		}
 		return mergedValue;
 	}
+
+	/**
+	 * Traverse the merged containment tree to resolve all reference slots (other than containments).
+	 *
+	private <E extends Element> void resolveSuperClassesSlots(org.eclipse.ocl.pivot.@NonNull Package mergedPackage) {
+		for (org.eclipse.ocl.pivot.@NonNull Class mergedClass : PivotUtil.getOwnedClasses(mergedPackage)) {
+			List<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = (List<org.eclipse.ocl.pivot.@NonNull Class>) mergedElement2partialElements.get(mergedClass);
+			assert partialClasses != null;
+			EClass eClass = mergedClass.eClass();
+			assert eClass != null;
+			resolveManyReferencesSlot(mergedClass, PivotPackage.Literals.CLASS__SUPER_CLASSES, partialClasses);
+		}
+	} */
 
 	private @Nullable Object resolveValue(@NonNull EAttribute eAttribute, @NonNull List<@Nullable Object> partialValues) {
 		EDataType eType = eAttribute.getEAttributeType();
