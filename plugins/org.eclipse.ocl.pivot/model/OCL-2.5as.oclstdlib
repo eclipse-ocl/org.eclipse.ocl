@@ -193,50 +193,120 @@ type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {
 	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
 	Otherwise oclText[true].
 	**/
-	operation and2(b : Boolean[1]) : Boolean[1] validating precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2';
+	operation and2(b : Boolean[1]) : Boolean[1] validating precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2'
+	{
+		body: if self = false then false
+			  elseif b = false then false
+			  else true
+			  endif;
+	}
 	/**
 	oclText[false] if either oclText[self] or oclText[b] is oclText[false].
 	Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .
 	Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].
 	Otherwise oclText[true].
 	**/
-	operation and(b : Boolean[?]) : Boolean[?] validating invalidating precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation';
+	operation and(b : Boolean[?]) : Boolean[?] validating invalidating precedence=AND => 'org.eclipse.ocl.pivot.library.logical.BooleanAndOperation'
+	{
+	annotation 'http://www.omg.org/ocl'(ClassGroup='Primitive');
+		body: if self.oclIsInvalid() then
+				if b.oclIsInvalid() then self
+				elseif b = false then false
+				else self
+				endif
+			  elseif self = false then false
+			  elseif b.oclIsInvalid() then b
+			  elseif b = false then false
+			  elseif self = null then null
+			  elseif b = null then null
+			  else true
+			  endif;
+	}
 	/**
 	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
 	Otherwise oclText[false].
 	**/
-	operation implies2(b : Boolean[1]) : Boolean[1] validating precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2';
+	operation implies2(b : Boolean[1]) : Boolean[1] validating precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2'
+	{
+		body: if self = false then true
+			  elseif b = true then true
+			  else false
+			  endif;
+	}
 	/**
 	oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].
 	Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].
 	Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].
 	Otherwise oclText[false].
 	**/
-	operation implies(b : Boolean[?]) : Boolean[?] validating invalidating precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation';
+	operation implies(b : Boolean[?]) : Boolean[?] validating invalidating precedence=IMPLIES => 'org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation'
+	{
+		body: if self.oclIsInvalid() then
+				if b.oclIsInvalid() then self
+				elseif b = true then true
+				else self
+				endif
+			  elseif self = false then true
+			  elseif b.oclIsInvalid() then b
+			  elseif b = true then true
+			  elseif self = null then null
+			  elseif b = null then b
+			  else false
+			  endif;
+	}
 	/**
 	oclText[true] if oclText[self] is oclText[false].
 	Otherwise oclText[false].
 	**/
-	operation not2() : Boolean[1] precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2';
+	operation not2() : Boolean[1] precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2'
+	{
+		body: if self then false else true endif;
+	}
 	/**
 	oclText[true] if oclText[self] is oclText[false].
 	oclText[false] if oclText[self] is oclText[true].
 	oclText[null] if oclText[self] is oclText[null].
 	Otherwise oclText[invalid].
 	**/
-	operation not() : Boolean[?] validating invalidating precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation';
+	operation not() : Boolean[?] validating invalidating precedence=UNARY => 'org.eclipse.ocl.pivot.library.logical.BooleanNotOperation'
+	{
+		body: if self.oclIsInvalid() then self
+			  elseif self = null then null
+			  else self = false
+			  endif;
+	}
 	/**
 	oclText[true] if either oclText[self] or oclText[b] is oclText[true].
 	Otherwise oclText[false]. 
 	**/
-	operation or2(b : Boolean[1]) : Boolean[1] validating precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2';
+	operation or2(b : Boolean[1]) : Boolean[1] validating precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2'
+	{
+		body: if self = true then true
+			  elseif b = true then true
+			  else false
+			  endif;
+	}
 	/**
 	oclText[true] if either oclText[self] or oclText[b] is oclText[true].
 	Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].
 	Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].
 	Otherwise oclText[false]. 
 	**/
-	operation or(b : Boolean[?]) : Boolean[?] validating invalidating precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation';
+	operation or(b : Boolean[?]) : Boolean[?] validating invalidating precedence=OR => 'org.eclipse.ocl.pivot.library.logical.BooleanOrOperation'
+	{
+		body: if self.oclIsInvalid() then
+				if b.oclIsInvalid() then self
+				elseif b = true then true
+				else self
+				endif
+			  elseif self = true then true
+			  elseif b.oclIsInvalid() then b
+			  elseif b = true then true
+			  elseif self = null then null
+			  elseif b = null then null
+			  else false
+			  endif;
+	}
 	/**
 	Converts oclText[self] to a string value.
 	**/
@@ -245,14 +315,25 @@ type Boolean : BooleanType conformsTo OclAny => 'java.lang.Boolean' {
 	oclText[true] if oclText[self] <> oclText[b]
 	Otherwise oclText[false].
 	**/
-	operation xor2(b : Boolean[1]) : Boolean[1] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2';
+	operation xor2(b : Boolean[1]) : Boolean[1] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2'
+	{
+		body: self <> b;
+	}
 	/**
 	oclText[true] if oclText[self] is oclText[true] and oclText[b] is oclText[false], or if oclText[self] is oclText[false] and oclText[b] is oclText[true].
 	oclText[false] if oclText[self] is oclText[true] and oclText[b] is oclText[true], or if oclText[self] is oclText[false] and oclText[b] is oclText[false].
 	Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].
 	Otherwise oclText[null].
 	**/
-	operation xor(b : Boolean[?]) : Boolean[?] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation';
+	operation xor(b : Boolean[?]) : Boolean[?] precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation'
+	{
+		body: if self.oclIsInvalid() then self
+			  elseif b.oclIsInvalid() then b
+			  elseif self = null then null
+			  elseif b = null then null
+			  else self <> b
+			  endif;
+	}
 }
 
 /**
@@ -769,7 +850,7 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	static property valueType : V[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
 }
 
-/**
+	/**
 	The number of elements in the collection oclText[self].essions.
 OclAny is itself an instance of the metatype AnyType.
 
@@ -781,16 +862,22 @@ One can also use qualification by OclAny (name of the type) to explicitly refer 
 
 Operations of OclAny, where the instance of OclAny is called object.
 **/
-abstract type OclAny : AnyType => 'java.lang.Object' {
+abstract type OclAny : AnyType {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/**
 	True if oclText[self] is the same object as object2. Infix operator.
 	**/
-	operation "="(object2 : OclSelf[?]) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation';
+	operation "="(object2 : OclSelf[?]) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation'
+	{
+		post: result = (self = object2);		
+	}
 	/**
 	True if oclText[self] is a different object from object2. Infix operator.
 	**/
-	operation "<>"(object2 : OclSelf[?]) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation';
+	operation "<>"(object2 : OclSelf[?]) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation'
+	{
+		post: result = not (self = object2);
+	}
 	/**
 	Returns a Set with oclText[self] as the sole content, unless oclText[self] is oclText[null] in which case returns an empty set,
 	*/
@@ -812,7 +899,11 @@ abstract type OclAny : AnyType => 'java.lang.Object' {
 
 	FIXME Bug 578060 return should be optional to support OclVoid returning null.
 	*/
-	operation oclAsType(TT)(type : typeof(TT)[1]) : TT[1] invalidating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation';
+	operation oclAsType(TT)(type : typeof(TT)[1]) : TT[1] invalidating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation'
+	{
+		post IsSelf: result = self;
+--		post IsType: result.oclIsKindOf(type);
+	}
 	/**
 	Evaluates to oclText[true] if the oclText[self] is in the state identified by statespec. 
 	**/
@@ -820,7 +911,10 @@ abstract type OclAny : AnyType => 'java.lang.Object' {
 	/**
 	Evaluates to oclText[true] if the oclText[self] is equal to OclInvalid.
 	**/
-	operation oclIsInvalid() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation';
+	operation oclIsInvalid() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation'
+	{
+--		post: result = self.oclIsTypeOf(OclInvalid);
+	}
 	/**
 	Evaluates to oclText[true] if the type of oclText[self] conforms to oclText[type].
 	That is, oclText[self] is of type oclText[type] or a subtype of oclText[type]. 
@@ -830,7 +924,10 @@ abstract type OclAny : AnyType => 'java.lang.Object' {
 	Can only be used in a postcondition.
 	Evaluates to oclText[true] if the oclText[self] is created during performing the operation (for instance, it didn’t exist at precondition time). 
 	**/
-	operation oclIsNew() : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation';
+	operation oclIsNew() : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation'
+	{
+--		post: self@pre.oclIsUndefined();
+	}
 	/**
 	Evaluates to oclText[true] if oclText[self] is of the type oclText[type] but not a subtype of oclText[type]. 
 	*/
@@ -838,7 +935,10 @@ abstract type OclAny : AnyType => 'java.lang.Object' {
 	/**
 	Evaluates to oclText[true] if the oclText[self] is equal to oclText[invalid] or equal to oclText[null]. 
 	**/
-	operation oclIsUndefined() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation';
+	operation oclIsUndefined() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation'
+	{
+--		post: result = self.oclIsTypeOf( OclVoid ) or self.oclIsTypeOf(OclInvalid);
+	}
 	/**
 	Evaluates to the self, with the side effect of generating a log message comprising self.
 	**/
@@ -921,7 +1021,11 @@ abstract type OclElement conformsTo OclAny {
 	is changed to the classification to which oclText[TT] conforms. The oclAsModelType call is not well-formed if
 	the classification is ambiguous.
 	*/
-	operation oclAsModelType(TT)(type : typeof(TT)[1]) : TT[1] invalidating => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation';
+	operation oclAsModelType(TT)(type : typeof(TT)[1]) : TT[1] invalidating => 'org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation'
+	{
+		post IsSelf: result = self;
+--		post IsType: result.oclIsKindOf(type);
+	}
 	/**
 	Returns the application class that is extended by this extension element. Returns null for an orphan extension of nothing.
 	*/
@@ -991,7 +1095,7 @@ It has one single instance, identified as  oclText[invalid].
 Any property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().
 OclInvalid is itself an instance of the metatype InvalidType.
 **/
-abstract type OclInvalid : InvalidType conformsTo OclAny {
+abstract type OclInvalid : InvalidType conformsTo OclVoid {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/**
 	Returns oclText[invalid].
@@ -1297,11 +1401,21 @@ type OrderedSet(T) : OrderedSetType conformsTo OrderedCollection(T),UniqueCollec
 	/**
 	The sequence consisting of object, followed by all elements in oclText[self].
 	**/
-	operation prepend(object : T[?]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation';
+	operation prepend(object : T[?]) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation'
+	{
+		post IsSizePlusOne: result->size() = self->size() + 1;
+		post IsAtStart: result->at(1) = object;
+		post IsShiftedAlong: Sequence{1..self->size()}->forAll(index : Integer[1] | self->at(index) = result->at(index + 1));
+	}
 	/**
 	The sequence consisting of objects, followed by all elements in oclText[self].
 	**/
-	operation prependAll(objects : OrderedCollection(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation';
+	operation prependAll(objects : OrderedCollection(T)) : OrderedSet(T) => 'org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation'
+	{
+--		post IsSizePlusOne: result->size() = self->size() + 1;
+--		post IsAtStart: result->at(1) = object;
+--		post IsShiftedAlong: Sequence{1..self->size()}->forAll(index : Integer | self->at(index) = result->at(index + 1));
+	}
 	/**
 	The ordered set of elements with same elements but with the opposite order.
 	**/

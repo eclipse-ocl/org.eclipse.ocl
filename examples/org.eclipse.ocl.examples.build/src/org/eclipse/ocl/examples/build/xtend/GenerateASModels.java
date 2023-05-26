@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -60,7 +59,6 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
-import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.merge.Merger;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -68,6 +66,7 @@ import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
@@ -225,6 +224,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 
 	protected String stdlibFile;
 	protected String ecoreFile;
+	protected String oclFile;
 //	protected String libraryName;
 //	protected String libraryNsPrefix;
 //	protected boolean isASLibrary = true;
@@ -526,12 +526,12 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 		ASResource asResource = xtextResource.getASResource();
 		Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 		for (EObject eObject : asResource.getContents()) {
-			Diagnostic diagnostic = PivotDiagnostician.INSTANCE.validate(eObject, validationContext);
+	/* XXX		Diagnostic diagnostic = PivotDiagnostician.INSTANCE.validate(eObject, validationContext);
 			if (diagnostic.getSeverity() > Diagnostic.INFO) {
 				message = PivotUtil.formatDiagnostics(diagnostic, "\n");
 				issues.addError(this, message, null, null, null);
 				return null;
-			}
+			} */
 		}
 		return asResource;
 	}
@@ -632,6 +632,10 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 
 				Merger merger = new Merger(environmentFactory, mergedOrphanage);
 				org.eclipse.ocl.pivot.Package mergedPackage = merger.merge(mergedModel.getOwnedPackages(), asPackages);
+				List<@NonNull String> problemMessages = merger.getProblemMessages();
+				if (problemMessages != null) {
+					log.error("Failed to merge\n\t" + StringUtil.splice(problemMessages, "\n\t"));
+				}
 				//	org.eclipse.ocl.pivot.Package primaryPackage = completePackage.getPrimaryPackage();
 				//	PivotUtilInternal.resetContainer(primaryPackage);
 				//	asPackage = primaryPackage;
@@ -703,6 +707,13 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 //	public void setLibraryNsPrefix(String libraryNsPrefix) {
 //		this.libraryNsPrefix = libraryNsPrefix;
 //	}
+
+	/**
+	 * The Complete OCL constraints file.
+	 */
+	public void setOclFile(String oclFile) {
+		this.oclFile = oclFile;
+	}
 
 	/**
 	 * The Name to be applied to the library

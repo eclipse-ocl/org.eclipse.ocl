@@ -19,6 +19,7 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -89,6 +90,20 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOf
 		}
 	}
 
+	private static class ConstraintPartitioner extends AbstractPartitioner<@NonNull Constraint, @NonNull String>
+	{
+		@Override
+		protected @NonNull String getKey(@NonNull Constraint partialElement) {
+			String name = partialElement.getName();
+			return (name != null ? name : "") + ":" + partialElement.toString();
+		}
+
+		@Override
+		protected void sort(@NonNull List<@NonNull String> keys) {
+			Collections.sort(keys);
+		}
+	}
+
 	private static class NamePartitioner<E extends NamedElement> extends AbstractPartitioner<E, @NonNull String>
 	{
 		@Override
@@ -140,6 +155,7 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOf
 	}
 
 	private @NonNull CommentPartitioner commentPartitioner = new CommentPartitioner();
+	private @NonNull ConstraintPartitioner constraintPartitioner = new ConstraintPartitioner();
 	private @NonNull NamePartitioner<@NonNull NamedElement> namePartitioner = new NamePartitioner<>();
 	private @NonNull OperationPartitioner operationPartitioner = new OperationPartitioner();
 	private @NonNull PropertyPartitioner propertyPartitioner = new PropertyPartitioner();
@@ -158,6 +174,13 @@ public class MergerGroupVisitor extends AbstractExtendingVisitor<@NonNull ListOf
 	public @NonNull ListOfList<@NonNull Element> visitComment(@NonNull Comment protoComment) {
 		ListOfList<@NonNull Comment> ungroupedPartialElements = context.getUngroupedPartialElements(protoComment);
 		ListOfList<@NonNull Element> groupedPartialElements = commentPartitioner.partition(ungroupedPartialElements);
+		return groupedPartialElements;
+	}
+
+	@Override
+	public @NonNull ListOfList<@NonNull Element> visitConstraint( @NonNull Constraint protoConstraint) {
+		ListOfList<@NonNull Constraint> ungroupedPartialElements = context.getUngroupedPartialElements(protoConstraint);
+		ListOfList<@NonNull Element> groupedPartialElements = constraintPartitioner.partition(ungroupedPartialElements);
 		return groupedPartialElements;
 	}
 

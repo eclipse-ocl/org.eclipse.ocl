@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.merge.EAssociationHelper.EAssociation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -189,6 +190,11 @@ public class Merger
 	 */
 	private @NonNull List<@NonNull List<@NonNull Property>> implicitOppositeMerges = new ArrayList<>();
 
+	/**
+	 * The detected problems.
+	 */
+	private @Nullable List<@NonNull String> problemMessages = null;
+
 	public Merger(@NonNull EnvironmentFactory environmentFactory, @NonNull Orphanage mergedOrphanage) {
 		this.environmentFactory = environmentFactory;
 		this.mergedOrphanage = mergedOrphanage;
@@ -205,14 +211,23 @@ public class Merger
 		for (@NonNull Element partialParent : partialParents) {
 			s.append("\n\t" + indent + NameUtil.debugSimpleName(partialParent) + " : " + partialParent);
 		}
-		System.out.println(s.toString());
-		if ((partialParents.get(0) instanceof Nameable) && "ownedExit".equals(((Nameable)partialParents.get(0)).getName())) {
+		System.out.println(s.toString()); */
+		if ((partialParents.get(0) instanceof Nameable) && "oclContainer".equals(((Nameable)partialParents.get(0)).getName())) {
 			getClass();		// XXX
-		} */
+		}
 		mergedElement2partialElements.put(mergedParent, partialParents);
 		for (@NonNull Element partialParent : partialParents) {
 			partialElement2mergedElement.put(partialParent, mergedParent);
 		}
+	}
+
+	protected void addProblem(@NonNull String message) {
+		System.err.println(message);
+		List<@NonNull String> problemMessages2 = problemMessages;
+		if (problemMessages2 == null) {
+			problemMessages = problemMessages2 = new ArrayList<>();
+		}
+		problemMessages2.add(message);
 	}
 
 	protected @NonNull MergerGroupVisitor createGroupVisitor() {
@@ -232,6 +247,10 @@ public class Merger
 		Iterable<@NonNull E> partialElements = (Iterable<@NonNull E>)mergedElement2partialElements.get(mergedElement);
 		assert partialElements != null;
 		return partialElements;
+	}
+
+	public @Nullable List<@NonNull String> getProblemMessages() {
+		return problemMessages;
 	}
 
 	public <E extends Element> @NonNull ListOfList<@NonNull E> getUngroupedPartialElements(@NonNull E protoElement) {
@@ -275,6 +294,7 @@ public class Merger
 	 * Only the containment slots are resolved in this pass.
 	 */
 	private void mergeContainmentHierarchy(@NonNull String indent, @NonNull Element mergedParent, @NonNull List<@NonNull ? extends Element> partialParents) {
+		assert partialParents.size() >= 0;
 		addMerge(indent, mergedParent, partialParents);
 		EClass parentEClass = mergedParent.eClass();
 		assert parentEClass == eSuperClassHelper.getCompatibleEClass(partialParents);
@@ -283,6 +303,10 @@ public class Merger
 			@SuppressWarnings("unchecked")
 			List<@NonNull Property> partialProperties = (List<@NonNull Property>)partialParents;
 			for (@NonNull Property partialProperty : partialProperties) {
+				assert !partialProperty.isIsImplicit();
+				if ("OclElement".equals(partialProperty.getName())) {
+					getClass();		// XXX
+				}
 				Property partialOpposite = partialProperty.getOpposite();
 				if ((partialOpposite != null) && (partialOpposite.getESObject() == null)) {
 				//	if (so == null) {
@@ -306,40 +330,11 @@ public class Merger
 			if (eStructuralFeature instanceof EReference) {
 				EReference eReference = (EReference)eStructuralFeature;
 				eAssociationHelper.add(eReference);
+				if ("oclContainer".equals(eReference.getName())) {
+					getClass();		// XXX
+				}
 				if (eReference.isContainment() && !eReference.isDerived() && !eReference.isTransient() && !eReference.isVolatile()) {
-					if (eReference.isMany()) {
-						@SuppressWarnings("unchecked")
-						List<@NonNull Element> mergedChildren = (List<@NonNull Element>)mergedParent.eGet(eReference);
-						ListOfList<@NonNull Element> ungroupedPartialChildren = new ListOfList<>();
-						for (@NonNull Element partialParent : partialParents) {
-							EClass partialParentEClass = partialParent.eClass();
-							assert partialParentEClass != null;
-							if (eSuperClassHelper.isSubEClass(partialParentEClass, eContainingClass)) {
-								@SuppressWarnings("unchecked")
-								List<@NonNull Element> partialChildren = (@NonNull List<@NonNull Element>)partialParent.eGet(eReference);
-								if (!partialChildren.isEmpty()) {
-									ungroupedPartialChildren.add(partialChildren);
-								}
-							}
-						}
-						Iterable<@NonNull Element> allPartialChildren = ungroupedPartialChildren.getInnerIterable();
-						if (!Iterables.isEmpty(allPartialChildren)) {
-							if ("ownedComments".equals(eReference.getName())) {
-								getClass();		// XXX
-							}
-							EClass protoChildEClass = eSuperClassHelper.getCommonEClass(allPartialChildren);
-							Element protoChildElement = (Element)PivotFactory.eINSTANCE.create(protoChildEClass);
-							protoElement2partialElements.put(protoChildElement, ungroupedPartialChildren);
-							ListOfList<@NonNull Element> groupedPartialChildren = protoChildElement.accept(groupVisitor);
-							for (@NonNull List<@NonNull Element> partialChildren : groupedPartialChildren.getOuterIterable()) {
-								EClass childEClass = eSuperClassHelper.getCompatibleEClass(partialChildren);
-								Element mergedChild = (Element)PivotFactory.eINSTANCE.create(childEClass);
-								mergedChildren.add(mergedChild);
-								mergeContainmentHierarchy(indent + "\t", mergedChild, partialChildren);
-							}
-						}
-					}
-					else {
+					if (!eReference.isMany()) {
 						List<@Nullable Element> partialChildren = new ArrayList<>();
 						for (@Nullable Element partialParent : partialParents) {
 							EClass partialParentEClass = partialParent.eClass();
@@ -359,6 +354,117 @@ public class Merger
 							Element mergedChild = (Element)PivotFactory.eINSTANCE.create(childEClass);
 							mergedParent.eSet(eReference, mergedChild);
 							mergeContainmentHierarchy(indent + "\t", mergedChild, partialChildren);
+						}
+					}
+					// We cannot realistically distinguish between positionally ordered as for OperationCallExp.ownedArguments
+					// and accidentally ordered Annotation.ownedDetails without retro-imposing a new design discipline.
+					// The former ust be merged exactly one for one, the latter may aggregate differences.
+					// Fortunately we never need to merge expressions so an OperationCallExp.ownedArguments should
+					// only be subject to a degenerate copy as merge.
+				/*	else if (eReference.isOrdered()) {			// ?? distinguish isUnique
+						@SuppressWarnings("unchecked")
+						List<@NonNull Element> mergedChildren = (List<@NonNull Element>)mergedParent.eGet(eReference);
+						ListOfList<@NonNull Element> groupedPartialChildren = new ListOfList<>();
+						for (@NonNull Element partialParent : partialParents) {
+							EClass partialParentEClass = partialParent.eClass();
+							assert partialParentEClass != null;
+							if (eSuperClassHelper.isSubEClass(partialParentEClass, eContainingClass)) {
+								@SuppressWarnings("unchecked")
+								List<@NonNull Element> partialChildren = (@NonNull List<@NonNull Element>)partialParent.eGet(eReference);
+								if (!partialChildren.isEmpty()) {
+									if (!groupedPartialChildren.addOuter(partialChildren)) {
+										addProblem("Failed to merge " + eReference);
+									}
+								}
+							}
+						}
+						Iterable<@NonNull Element> allPartialChildren = groupedPartialChildren.getInnerIterable();
+						if (!Iterables.isEmpty(allPartialChildren)) {
+							if ("ownedComments".equals(eReference.getName())) {
+								getClass();		// XXX
+							}
+							EClass protoChildEClass = eSuperClassHelper.getCommonEClass(allPartialChildren);
+							Element protoChildElement = (Element)PivotFactory.eINSTANCE.create(protoChildEClass);
+							protoElement2partialElements.put(protoChildElement, groupedPartialChildren);
+						//	ListOfList<@NonNull Element> groupedPartialChildren = protoChildElement.accept(groupVisitor);
+							for (@NonNull List<@NonNull Element> partialChildren : groupedPartialChildren.getOuterIterable()) {
+								EClass childEClass = eSuperClassHelper.getCompatibleEClass(partialChildren);
+								Element mergedChild = (Element)PivotFactory.eINSTANCE.create(childEClass);
+								mergedChildren.add(mergedChild);
+								mergeContainmentHierarchy(indent + "\t", mergedChild, partialChildren);
+							}
+						}
+					} */
+					else {			// ?? distinguish isUnique
+						@SuppressWarnings("unchecked")
+						List<@NonNull Element> mergedChildren = (List<@NonNull Element>)mergedParent.eGet(eReference);
+						if (partialParents.size() == 1) {
+							@NonNull Element partialParent = partialParents.get(0);
+							EClass partialParentEClass = partialParent.eClass();
+							assert partialParentEClass != null;
+							if (eSuperClassHelper.isSubEClass(partialParentEClass, eContainingClass)) {
+								@SuppressWarnings("unchecked")
+								List<@NonNull Element> partialChildren = (@NonNull List<@NonNull Element>)partialParent.eGet(eReference);
+							//	if (!partialChildren.isEmpty()) {
+							//		ungroupedPartialChildren.addInner(partialChildren);
+							//	}
+							//	EClass protoChildEClass = eSuperClassHelper.getCommonEClass(allPartialChildren);
+							//	Element protoChildElement = (Element)PivotFactory.eINSTANCE.create(protoChildEClass);
+							//	protoElement2partialElements.put(protoChildElement, ungroupedPartialChildren);
+							//	ListOfList<@NonNull Element> groupedPartialChildren = protoChildElement.accept(groupVisitor);
+								for (@NonNull Element partialChild : partialChildren) {
+									EClass childEClass = partialChild.eClass();
+									if ((childEClass == PivotPackage.Literals.PROPERTY) && ((Property)partialChild).isIsImplicit()) {
+										break;
+									}
+									Element mergedChild = (Element)PivotFactory.eINSTANCE.create(childEClass);
+									mergedChildren.add(mergedChild);
+									mergeContainmentHierarchy(indent + "\t", mergedChild, Collections.singletonList(partialChild));
+								}
+							}
+						/*	Iterable<@NonNull Element> allPartialChildren = ungroupedPartialChildren.getInnerIterable();
+							if (!Iterables.isEmpty(allPartialChildren)) {
+								if ("ownedComments".equals(eReference.getName())) {
+									getClass();		// XXX
+								}
+								EClass protoChildEClass = eSuperClassHelper.getCommonEClass(allPartialChildren);
+								Element protoChildElement = (Element)PivotFactory.eINSTANCE.create(protoChildEClass);
+								protoElement2partialElements.put(protoChildElement, ungroupedPartialChildren);
+								ListOfList<@NonNull Element> groupedPartialChildren = protoChildElement.accept(groupVisitor);
+								for (@NonNull Element partialChild : partialChildren) {
+									EClass childEClass = eSuperClassHelper.getCompatibleEClass(partialChildren);
+									Element mergedChild = (Element)PivotFactory.eINSTANCE.create(childEClass);
+									mergedChildren.add(mergedChild);
+									mergeContainmentHierarchy(indent + "\t", mergedChild, partialChildren);
+								}
+							} */
+						}
+						else {
+							ListOfList<@NonNull Element> ungroupedPartialChildren = new ListOfList<>();
+							for (@NonNull Element partialParent : partialParents) {
+								EClass partialParentEClass = partialParent.eClass();
+								assert partialParentEClass != null;
+								if (eSuperClassHelper.isSubEClass(partialParentEClass, eContainingClass)) {
+									@SuppressWarnings("unchecked")
+									List<@NonNull Element> partialChildren = (@NonNull List<@NonNull Element>)partialParent.eGet(eReference);
+									if (!partialChildren.isEmpty()) {
+										ungroupedPartialChildren.add(partialChildren);
+									}
+								}
+							}
+							Iterable<@NonNull Element> allPartialChildren = ungroupedPartialChildren.getInnerIterable();
+							if (!Iterables.isEmpty(allPartialChildren)) {
+								EClass protoChildEClass = eSuperClassHelper.getCommonEClass(allPartialChildren);
+								Element protoChildElement = (Element)PivotFactory.eINSTANCE.create(protoChildEClass);
+								protoElement2partialElements.put(protoChildElement, ungroupedPartialChildren);
+								ListOfList<@NonNull Element> groupedPartialChildren = protoChildElement.accept(groupVisitor);
+								for (@NonNull List<@NonNull Element> partialChildren : groupedPartialChildren.getOuterIterable()) {
+									EClass childEClass = eSuperClassHelper.getCompatibleEClass(partialChildren);
+									Element mergedChild = (Element)PivotFactory.eINSTANCE.create(childEClass);
+									mergedChildren.add(mergedChild);
+									mergeContainmentHierarchy(indent + "\t", mergedChild, partialChildren);
+								}
+							}
 						}
 					}
 				}
@@ -386,9 +492,9 @@ public class Merger
 	 * Traverse the merged containment tree to resolve all attribute slots.
 	 */
 	private <E extends Element> void resolveAttributeSlots(/*@NonNull E mergedParent, @NonNull Iterable<@NonNull E> partialParents*/) {
-	//	List<@NonNull Element> keyList = new ArrayList<>(mergedElement2partialElements.keySet());
-	//	Collections.sort(keyList, NameUtil.TO_STRING_COMPARATOR);			// Make execution predictable
-		for (@NonNull Element mergedParent : mergedElement2partialElements.keySet()) {
+		List<@NonNull Element> keyList = new ArrayList<>(mergedElement2partialElements.keySet());
+		Collections.sort(keyList, NameUtil.TO_STRING_COMPARATOR);			// Make execution predictable
+		for (@NonNull Element mergedParent : keyList) { //mergedElement2partialElements.keySet()) {
 			List<@NonNull ? extends Element> partialParents = mergedElement2partialElements.get(mergedParent);
 			assert partialParents != null;
 			EClass eClass = mergedParent.eClass();
@@ -581,7 +687,7 @@ public class Merger
 							}
 						} */
 					//	throw new IllegalStateException("Merge:populate inconsistent \"" + resolvedTarget + "\" and \"" + mergedTarget + "\"");
-						System.err.println("Merge:resolveSingleReferenceSlot inconsistent \"" + resolvedTarget + "\" and \"" + mergedTarget + "\"");
+						addProblem("Merge:resolveSingleReferenceSlot inconsistent \"" + resolvedTarget + "\" and \"" + mergedTarget + "\"");
 					}
 			//	}
 			}
@@ -717,7 +823,7 @@ public class Merger
 					}
 					else if (mergedTarget != resolvedTarget) {
 					//	throw new IllegalStateException("Merge:populate inconsistent \"" + resolvedTarget + "\" and \"" + mergedTarget + "\"");
-						System.err.println("Merge:resolveSingleReferenceSlot inconsistent \"" + resolvedTarget + "\" and \"" + mergedTarget + "\"");
+						addProblem("Merge:resolveSingleReferenceSlot inconsistent \"" + resolvedTarget + "\" and \"" + mergedTarget + "\"");
 					}
 				}
 			}
@@ -744,7 +850,7 @@ public class Merger
 				}
 				else {
 				//	throw new IllegalStateException("Merger:mergeString mismatching \"" + partialValue + "\" and \"" + mergedValue + "\"");
-					System.err.println("Merger:mergeString mismatching " + eAttribute.getEContainingClass().getName() + "." + eAttribute.getName() + " \"" + partialValue + "\" and \"" + mergedValue + "\"");
+					addProblem("Merger:mergeString mismatching " + eAttribute.getEContainingClass().getName() + "." + eAttribute.getName() + " \"" + partialValue + "\" and \"" + mergedValue + "\"");
 				}
 			}
 		}

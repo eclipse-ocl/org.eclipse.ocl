@@ -138,11 +138,11 @@
         eType="#//OCLExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="CollectionKind" instanceClassName="java.lang.Object">
-    <eLiterals name="Bag" value="3"/>
     <eLiterals name="Collection"/>
-    <eLiterals name="OrderedSet" value="2"/>
-    <eLiterals name="Sequence" value="4"/>
     <eLiterals name="Set" value="1"/>
+    <eLiterals name="OrderedSet" value="2"/>
+    <eLiterals name="Bag" value="3"/>
+    <eLiterals name="Sequence" value="4"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CollectionLiteralExp" eSuperTypes="#//LiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" lowerBound="1" eType="#//CollectionKind"/>
@@ -984,15 +984,15 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="PseudostateKind is an Enumeration type that is used to differentiate various kinds of Pseudostates."/>
     </eAnnotations>
-    <eLiterals name="choice" value="6"/>
+    <eLiterals name="initial"/>
     <eLiterals name="deepHistory" value="1"/>
+    <eLiterals name="shallowHistory" value="2"/>
+    <eLiterals name="join" value="3"/>
+    <eLiterals name="fork" value="4"/>
+    <eLiterals name="junction" value="5"/>
+    <eLiterals name="choice" value="6"/>
     <eLiterals name="entryPoint" value="7"/>
     <eLiterals name="exitPoint" value="8"/>
-    <eLiterals name="fork" value="4"/>
-    <eLiterals name="initial"/>
-    <eLiterals name="join" value="3"/>
-    <eLiterals name="junction" value="5"/>
-    <eLiterals name="shallowHistory" value="2"/>
     <eLiterals name="terminate" value="9"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RealLiteralExp" eSuperTypes="#//NumericLiteralExp">
@@ -1377,11 +1377,6 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="TransitionKind is an Enumeration type used to differentiate the various kinds of Transitions."/>
     </eAnnotations>
-    <eLiterals name="external" value="2">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Implies that the Transition, if triggered, will exit the composite (source) State."/>
-      </eAnnotations>
-    </eLiterals>
     <eLiterals name="internal">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Implies that the Transition, if triggered, occurs without exiting or entering the source State (i.e., it does not cause a state change). This means that the entry or exit condition of the source State will not be invoked. An internal Transition can be taken even if the SateMachine is in one or more Regions nested within the associated State."/>
@@ -1390,6 +1385,11 @@
     <eLiterals name="local" value="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Implies that the Transition, if triggered, will not exit the composite (source) State, but it will exit and re-enter any state within the composite State that is in the current state configuration."/>
+      </eAnnotations>
+    </eLiterals>
+    <eLiterals name="external" value="2">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Implies that the Transition, if triggered, will exit the composite (source) State."/>
       </eAnnotations>
     </eLiterals>
   </eClassifiers>
@@ -1566,7 +1566,7 @@
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclInvalid" instanceClassName="org.eclipse.ocl.pivot.InvalidType"
-      abstract="true" interface="true" eSuperTypes="#//OclAny">
+      abstract="true" interface="true" eSuperTypes="#//OclVoid">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="The type OclInvalid is a type that conforms to all other types.&#xA;It has one single instance, identified as  oclText[invalid].&#xA;Any property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().&#xA;OclInvalid is itself an instance of the metatype InvalidType.&#xA;"/>
     </eAnnotations>

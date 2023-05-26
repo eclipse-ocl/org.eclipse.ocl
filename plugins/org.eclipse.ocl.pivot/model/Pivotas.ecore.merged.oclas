@@ -713,6 +713,11 @@
         <ownedSubstitutions actual="#Nnec8" formal="#23L4q"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="GvOGO" isNullFree="true" name="Collection" superClasses="#P58UW">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Z2dzh" formal="#23L4q"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="dSpjl" isNullFree="true" name="Collection" superClasses="#P58UW">
       <ownedBindings>
         <ownedSubstitutions actual="#IpSog" formal="#23L4q"/>
@@ -1044,6 +1049,11 @@
         <ownedSubstitutions actual="#23L4q" formal="#rpXBF"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="T,DdE" isNullFree="true" name="OrderedCollection" superClasses="#GvOGO">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Z2dzh" formal="#rpXBF"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="foQF3" isNullFree="true" name="OrderedCollection" superClasses="#SYbuA">
       <ownedBindings>
         <ownedSubstitutions actual="#FDR9O" formal="#rpXBF"/>
@@ -1252,6 +1262,11 @@
     <ownedClasses xsi:type="pivot:SequenceType" xmi:id="+0D76" isNullFree="true" name="Sequence" superClasses="#oAEBs">
       <ownedBindings>
         <ownedSubstitutions actual="#23L4q" formal="#xA10c"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="pzDXT" isNullFree="true" name="Sequence" superClasses="#T,DdE">
+      <ownedBindings>
+        <ownedSubstitutions actual="#Z2dzh" formal="#xA10c"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SequenceType" xmi:id="7vQTw" isNullFree="true" name="Sequence" superClasses="#l7QZh">
@@ -1811,14 +1826,14 @@
       </ownedDetails>
     </ownedAnnotations>
     <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
+      <ownedDetails name="PackageRole">
+        <values>StandardLibrary</values>
+      </ownedDetails>
       <ownedDetails name="ClassGroup_Collection">
         <values>This sub clause defines the collection types and their operations. As defined in this sub clause, each collection type is actually a template type with one parameter. ‘T’ denotes the parameter. A concrete collection type is created by substituting a type for the T. So Set (Integer) and Bag (Person) are collection types.</values>
       </ownedDetails>
       <ownedDetails name="ClassGroup_PrimitiveTypes">
         <values>The primitive types defined in the OCL standard library are UnlimitedNatural, Integer, Real, String, and Boolean. They are all instances of the metaclass Primitive from the UML core package.</values>
-      </ownedDetails>
-      <ownedDetails name="PackageRole">
-        <values>StandardLibrary</values>
       </ownedDetails>
     </ownedAnnotations>
     <ownedClasses xsi:type="pivot:DataType" xmi:id="eCOpw" behavioralClass="#Di88w" instanceClassName="boolean" name="EBoolean" superClasses="#Di88w">
@@ -1942,11 +1957,11 @@
       <ownedProperties xmi:id="sGQ51" isComposite="true" name="ownedItem" opposite="#whnPN" type="#r44fn"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:Enumeration" xmi:id="t,2qg" name="CollectionKind" superClasses="#qavM3">
-      <ownedLiterals xmi:id="u0ZiK" name="Bag" value="3"/>
       <ownedLiterals xmi:id="EQCkZ" name="Collection"/>
-      <ownedLiterals xmi:id="b4Uvu" name="OrderedSet" value="2"/>
-      <ownedLiterals xmi:id="nU30e" name="Sequence" value="4"/>
       <ownedLiterals xmi:id="I2diK" name="Set" value="1"/>
+      <ownedLiterals xmi:id="b4Uvu" name="OrderedSet" value="2"/>
+      <ownedLiterals xmi:id="u0ZiK" name="Bag" value="3"/>
+      <ownedLiterals xmi:id="nU30e" name="Sequence" value="4"/>
     </ownedClasses>
     <ownedClasses xmi:id="HTdDV" name="CollectionLiteralExp" superClasses="#J+hrY">
       <ownedInvariants xmi:id="FA5ev" isCallable="true" name="BagKindIsBag">
@@ -2122,10 +2137,10 @@
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;self->closure(oclContents()->selectByKind(Element))&#xA;&#x9;&#xA;"/>
         <ownedComments body="The query allOwnedElements() gives all of the direct and indirect ownedElements of an Element."/>
       </ownedOperations>
-      <ownedOperations xmi:id="Nv+4K" isRequired="false" name="getValue" type="#Xt3+J">
+      <ownedOperations xmi:id="CmY0M" isRequired="false" name="getValue" type="#Xt3+J">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="null&#xA;&#xA;"/>
-        <ownedParameters xmi:id="ErKEF" name="propertyName" type="#sChGe"/>
-        <ownedParameters xmi:id="2vDph" name="stereotype" type="#Vf8BK"/>
+        <ownedParameters xmi:id="XbjUS" name="stereotype" type="#Vf8BK"/>
+        <ownedParameters xmi:id="lWqv1" name="propertyName" type="#sChGe"/>
       </ownedOperations>
       <ownedProperties xmi:id="walbJ" name="annotatingComments" opposite="#ZYKsB" type="#DXJqd"/>
       <ownedProperties xmi:id="Snsli" isComposite="true" name="ownedAnnotations" opposite="#ow6,E" type="#rzeIb"/>
@@ -2582,6 +2597,17 @@
           name="oclAsModelType" type="#QTLIm">
         <ownedComments body="Evaluates to oclText[self], where oclText[self] is of the model type identified by oclText[TT].&#xA;&#xA;Most model elements have metamodel types for use with oclAsType, but no model type and so the return is oclText[invalid].&#xA;&#xA;Model elements such as UML's InstnaceSpecification that do support distinct model and metamodel types return oclText[self]&#xA;with the cast type oclText[TT] that may be used for further navigation.&#xA;If the actual model type of oclText[self] at evaluation time does not conform to oclText[TT],&#xA;then the oclAsType operation evaluates to oclText[invalid].&#xA;&#xA;If oclText[self] is a multiply classified instance, the current classification used for OCL navigation&#xA;is changed to the classification to which oclText[TT] conforms. The oclAsModelType call is not well-formed if&#xA;the classification is ambiguous."/>
         <ownedParameters xmi:id="PTDcW" isTypeof="true" name="type" type="#QTLIm"/>
+        <ownedPostconditions xmi:id="xPite" name="IsSelf">
+          <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result = self" type="#Di88w">
+            <ownedBody xsi:type="pivot:OperationCallExp" name="=" referredOperation="#SfOzu" type="#Di88w">
+              <ownedArguments xsi:type="pivot:VariableExp" name="self" referredVariable="#pRjfI" type="#f9zGW"/>
+              <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#hOUc9" type="#QTLIm"/>
+            </ownedBody>
+            <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="pRjfI" name="self" type="#f9zGW"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" name="type" representedParameter="#PTDcW" type="#QTLIm"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="hOUc9" name="result" type="#QTLIm"/>
+          </ownedSpecification>
+        </ownedPostconditions>
         <ownedSignature>
           <ownedParameters xmi:id="QTLIm" name="TT"/>
         </ownedSignature>
@@ -2608,14 +2634,14 @@
         <ownedComments body="Returns the application instance of the Stereotype that conforms to stereotype applied to this element. Returns invalid if more than one."/>
         <ownedParameters xmi:id="jde52" name="stereotype" type="#FrGWO"/>
       </ownedOperations>
-      <ownedOperations xmi:id="kNgws" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation" name="oclExtensions"
-          type="#gMa+t">
-        <ownedComments body="Returns the application instances of all Stereotypes applied to this element."/>
-      </ownedOperations>
       <ownedOperations xmi:id="DFKbT" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation" name="oclExtensions"
           type="#gMa+t">
         <ownedComments body="Returns the application instances of the Stereotypes that conform to stereotype applied to this element."/>
         <ownedParameters xmi:id="UO,3q" name="stereotype" type="#FrGWO"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="kNgws" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation" name="oclExtensions"
+          type="#gMa+t">
+        <ownedComments body="Returns the application instances of all Stereotypes applied to this element."/>
       </ownedOperations>
       <ownedOperations xmi:id="hnQmP" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation" name="oclIsModelKindOf"
           type="#Di88w">
@@ -2993,15 +3019,15 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:Enumeration" xmi:id="iQlyL" name="PseudostateKind" superClasses="#qavM3">
       <ownedComments body="PseudostateKind is an Enumeration type that is used to differentiate various kinds of Pseudostates."/>
-      <ownedLiterals xmi:id="I5hmz" name="choice" value="6"/>
+      <ownedLiterals xmi:id="rfh34" name="initial"/>
       <ownedLiterals xmi:id="v6BCb" name="deepHistory" value="1"/>
+      <ownedLiterals xmi:id="HyDMY" name="shallowHistory" value="2"/>
+      <ownedLiterals xmi:id="R3p7E" name="join" value="3"/>
+      <ownedLiterals xmi:id="p1M7E" name="fork" value="4"/>
+      <ownedLiterals xmi:id="7fOk2" name="junction" value="5"/>
+      <ownedLiterals xmi:id="I5hmz" name="choice" value="6"/>
       <ownedLiterals xmi:id="lTpwO" name="entryPoint" value="7"/>
       <ownedLiterals xmi:id="5+WRy" name="exitPoint" value="8"/>
-      <ownedLiterals xmi:id="p1M7E" name="fork" value="4"/>
-      <ownedLiterals xmi:id="rfh34" name="initial"/>
-      <ownedLiterals xmi:id="R3p7E" name="join" value="3"/>
-      <ownedLiterals xmi:id="7fOk2" name="junction" value="5"/>
-      <ownedLiterals xmi:id="HyDMY" name="shallowHistory" value="2"/>
       <ownedLiterals xmi:id="I83F+" name="terminate" value="9"/>
     </ownedClasses>
     <ownedClasses xmi:id="HfVNG" name="RealLiteralExp" superClasses="#24crV">
@@ -3282,14 +3308,14 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:Enumeration" xmi:id="ksPtW" name="TransitionKind" superClasses="#qavM3">
       <ownedComments body="TransitionKind is an Enumeration type used to differentiate the various kinds of Transitions."/>
-      <ownedLiterals xmi:id="sdjEi" name="external" value="2">
-        <ownedComments body="Implies that the Transition, if triggered, will exit the composite (source) State."/>
-      </ownedLiterals>
       <ownedLiterals xmi:id="epJmw" name="internal">
         <ownedComments body="Implies that the Transition, if triggered, occurs without exiting or entering the source State (i.e., it does not cause a state change). This means that the entry or exit condition of the source State will not be invoked. An internal Transition can be taken even if the SateMachine is in one or more Regions nested within the associated State."/>
       </ownedLiterals>
       <ownedLiterals xmi:id="MMrvU" name="local" value="1">
         <ownedComments body="Implies that the Transition, if triggered, will not exit the composite (source) State, but it will exit and re-enter any state within the composite State that is in the current state configuration."/>
+      </ownedLiterals>
+      <ownedLiterals xmi:id="sdjEi" name="external" value="2">
+        <ownedComments body="Implies that the Transition, if triggered, will exit the composite (source) State."/>
       </ownedLiterals>
     </ownedClasses>
     <ownedClasses xmi:id="TI76t" name="Trigger" superClasses="#eYh,i">
@@ -3584,39 +3610,313 @@
       </ownedOperations>
       <ownedOperations xmi:id="8zfcd" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation" isInvalidating="true"
           isRequired="false" isValidating="true" name="and" precedence="#BxssH" type="#Di88w">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then&#xA;&#x9;&#x9;&#x9;&#x9;if b.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;&#x9;elseif b = false then false&#xA;&#x9;&#x9;&#x9;&#x9;else self&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;  elseif self = false then false&#xA;&#x9;&#x9;&#x9;  elseif b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  elseif b = false then false&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  elseif b = null then null&#xA;&#x9;&#x9;&#x9;  else true&#xA;&#x9;&#x9;&#x9;  endif"
+            isRequired="false" type="#Di88w">
+          <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Di88w">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+              <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#ImBWk" type="#Di88w"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+                <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#ImBWk" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+                  <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#jW9,v" type="#Di88w"/>
+                </ownedCondition>
+                <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                  <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                    <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+                    <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#jW9,v" type="#Di88w"/>
+                  </ownedCondition>
+                  <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                    <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                      <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                      <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#ImBWk" type="#Di88w"/>
+                    </ownedCondition>
+                    <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                      <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                        <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                        <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#jW9,v" type="#Di88w"/>
+                      </ownedCondition>
+                      <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+                      <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                    </ownedElse>
+                    <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                  </ownedElse>
+                  <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+                </ownedElse>
+                <ownedThen xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#jW9,v" type="#Di88w"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:IfExp" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+                <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#jW9,v" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:IfExp" isElseIf="true" type="#Di88w">
+                <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                  <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+                  <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#jW9,v" type="#Di88w"/>
+                </ownedCondition>
+                <ownedElse xsi:type="pivot:VariableExp" name="self" referredVariable="#ImBWk" type="#Di88w"/>
+                <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:VariableExp" name="self" referredVariable="#ImBWk" type="#Di88w"/>
+            </ownedThen>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="ImBWk" name="self" type="#Di88w"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="jW9,v" isRequired="false" name="b" representedParameter="#ZmVN5"
+              type="#Di88w"/>
+        </bodyExpression>
+        <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
+          <ownedDetails name="ClassGroup">
+            <values>Primitive</values>
+          </ownedDetails>
+        </ownedAnnotations>
         <ownedComments body="oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[true].&#xA;"/>
         <ownedParameters xmi:id="ZmVN5" isRequired="false" name="b" type="#Di88w"/>
       </ownedOperations>
       <ownedOperations xmi:id="gRknd" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2" isValidating="true"
           name="and2" precedence="#BxssH" type="#Di88w">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = false then false&#xA;&#x9;&#x9;&#x9;  elseif b = false then false&#xA;&#x9;&#x9;&#x9;  else true&#xA;&#x9;&#x9;&#x9;  endif"
+            type="#Di88w">
+          <ownedBody xsi:type="pivot:IfExp" type="#Di88w">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+              <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+              <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#MwTd1" type="#Di88w"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" isElseIf="true" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+                <ownedSource xsi:type="pivot:VariableExp" name="b" referredVariable="#ngPHB" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="MwTd1" name="self" type="#Di88w"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="ngPHB" name="b" representedParameter="#tNhzp" type="#Di88w"/>
+        </bodyExpression>
         <ownedComments body="oclText[false] if either oclText[self] or oclText[b] is oclText[false].&#xA;Otherwise oclText[true].&#xA;"/>
         <ownedParameters xmi:id="tNhzp" name="b" type="#Di88w"/>
       </ownedOperations>
       <ownedOperations xmi:id="cPAPQ" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation" isInvalidating="true"
           isRequired="false" isValidating="true" name="implies" precedence="#hsNSl" type="#Di88w">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then&#xA;&#x9;&#x9;&#x9;&#x9;if b.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;&#x9;elseif b = true then true&#xA;&#x9;&#x9;&#x9;&#x9;else self&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;  elseif self = false then true&#xA;&#x9;&#x9;&#x9;  elseif b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  elseif b = true then true&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  elseif b = null then b&#xA;&#x9;&#x9;&#x9;  else false&#xA;&#x9;&#x9;&#x9;  endif"
+            isRequired="false" type="#Di88w">
+          <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Di88w">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+              <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#odVzq" type="#Di88w"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+                <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#odVzq" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+                  <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#DORd2" type="#Di88w"/>
+                </ownedCondition>
+                <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                  <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                    <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+                    <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#DORd2" type="#Di88w"/>
+                  </ownedCondition>
+                  <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                    <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                      <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                      <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#odVzq" type="#Di88w"/>
+                    </ownedCondition>
+                    <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                      <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                        <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                        <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#DORd2" type="#Di88w"/>
+                      </ownedCondition>
+                      <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+                      <ownedThen xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#DORd2" type="#Di88w"/>
+                    </ownedElse>
+                    <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                  </ownedElse>
+                  <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+                </ownedElse>
+                <ownedThen xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#DORd2" type="#Di88w"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:IfExp" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+                <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#DORd2" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:IfExp" isElseIf="true" type="#Di88w">
+                <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                  <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+                  <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#DORd2" type="#Di88w"/>
+                </ownedCondition>
+                <ownedElse xsi:type="pivot:VariableExp" name="self" referredVariable="#odVzq" type="#Di88w"/>
+                <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:VariableExp" name="self" referredVariable="#odVzq" type="#Di88w"/>
+            </ownedThen>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="odVzq" name="self" type="#Di88w"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="DORd2" isRequired="false" name="b" representedParameter="#5Ts8I"
+              type="#Di88w"/>
+        </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="5Ts8I" isRequired="false" name="b" type="#Di88w"/>
       </ownedOperations>
       <ownedOperations xmi:id="AmRFE" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2" isValidating="true"
           name="implies2" precedence="#hsNSl" type="#Di88w">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = false then true&#xA;&#x9;&#x9;&#x9;  elseif b = true then true&#xA;&#x9;&#x9;&#x9;  else false&#xA;&#x9;&#x9;&#x9;  endif"
+            type="#Di88w">
+          <ownedBody xsi:type="pivot:IfExp" type="#Di88w">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+              <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+              <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#so7p9" type="#Di88w"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" isElseIf="true" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+                <ownedSource xsi:type="pivot:VariableExp" name="b" referredVariable="#HZ3TJ" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="so7p9" name="self" type="#Di88w"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="HZ3TJ" name="b" representedParameter="#NQhvR" type="#Di88w"/>
+        </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false], or if oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="NQhvR" name="b" type="#Di88w"/>
       </ownedOperations>
       <ownedOperations xmi:id=",tCa+" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation" isInvalidating="true"
           isRequired="false" isValidating="true" name="not" precedence="#Z+AhM" type="#Di88w">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  else self = false&#xA;&#x9;&#x9;&#x9;  endif"
+            isRequired="false" type="#Di88w">
+          <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Di88w">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+              <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#jQ30g" type="#Di88w"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#jQ30g" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+                <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#jQ30g" type="#Di88w"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:VariableExp" name="self" referredVariable="#jQ30g" type="#Di88w"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="jQ30g" name="self" type="#Di88w"/>
+        </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false].&#xA;oclText[false] if oclText[self] is oclText[true].&#xA;oclText[null] if oclText[self] is oclText[null].&#xA;Otherwise oclText[invalid].&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="rBjm+" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2" name="not2" precedence="#Z+AhM"
           type="#Di88w">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self then false else true endif" type="#Di88w">
+          <ownedBody xsi:type="pivot:IfExp" type="#Di88w">
+            <ownedCondition xsi:type="pivot:VariableExp" name="self" referredVariable="#vB43A" type="#Di88w"/>
+            <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+            <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="vB43A" name="self" type="#Di88w"/>
+        </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[false].&#xA;Otherwise oclText[false].&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="IEJcd" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation" isInvalidating="true"
           isRequired="false" isValidating="true" name="or" precedence="#thdsH" type="#Di88w">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then&#xA;&#x9;&#x9;&#x9;&#x9;if b.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;&#x9;elseif b = true then true&#xA;&#x9;&#x9;&#x9;&#x9;else self&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;  elseif self = true then true&#xA;&#x9;&#x9;&#x9;  elseif b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  elseif b = true then true&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  elseif b = null then null&#xA;&#x9;&#x9;&#x9;  else false&#xA;&#x9;&#x9;&#x9;  endif"
+            isRequired="false" type="#Di88w">
+          <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Di88w">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+              <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#03iKH" type="#Di88w"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+                <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#03iKH" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+                  <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#Poe0S" type="#Di88w"/>
+                </ownedCondition>
+                <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                  <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                    <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+                    <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#Poe0S" type="#Di88w"/>
+                  </ownedCondition>
+                  <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                    <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                      <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                      <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#03iKH" type="#Di88w"/>
+                    </ownedCondition>
+                    <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                      <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                        <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                        <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#Poe0S" type="#Di88w"/>
+                      </ownedCondition>
+                      <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+                      <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                    </ownedElse>
+                    <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                  </ownedElse>
+                  <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+                </ownedElse>
+                <ownedThen xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#Poe0S" type="#Di88w"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:IfExp" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+                <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#Poe0S" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:IfExp" isElseIf="true" type="#Di88w">
+                <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                  <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+                  <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#Poe0S" type="#Di88w"/>
+                </ownedCondition>
+                <ownedElse xsi:type="pivot:VariableExp" name="self" referredVariable="#03iKH" type="#Di88w"/>
+                <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:VariableExp" name="self" referredVariable="#03iKH" type="#Di88w"/>
+            </ownedThen>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="03iKH" name="self" type="#Di88w"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="Poe0S" isRequired="false" name="b" representedParameter="#11ciz"
+              type="#Di88w"/>
+        </bodyExpression>
         <ownedComments body="oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="11ciz" isRequired="false" name="b" type="#Di88w"/>
       </ownedOperations>
       <ownedOperations xmi:id="UHjcd" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2" isValidating="true"
           name="or2" precedence="#thdsH" type="#Di88w">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self = true then true&#xA;&#x9;&#x9;&#x9;  elseif b = true then true&#xA;&#x9;&#x9;&#x9;  else false&#xA;&#x9;&#x9;&#x9;  endif"
+            type="#Di88w">
+          <ownedBody xsi:type="pivot:IfExp" type="#Di88w">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+              <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+              <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#gUb5s" type="#Di88w"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" isElseIf="true" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                <ownedArguments xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+                <ownedSource xsi:type="pivot:VariableExp" name="b" referredVariable="#7EXj4" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:BooleanLiteralExp" booleanSymbol="false" type="#Di88w"/>
+              <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:BooleanLiteralExp" booleanSymbol="true" type="#Di88w"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="gUb5s" name="self" type="#Di88w"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="7EXj4" name="b" representedParameter="#RsBC6" type="#Di88w"/>
+        </bodyExpression>
         <ownedComments body="oclText[true] if either oclText[self] or oclText[b] is oclText[true].&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="RsBC6" name="b" type="#Di88w"/>
       </ownedOperations>
@@ -3626,11 +3926,55 @@
       </ownedOperations>
       <ownedOperations xmi:id="AOlcd" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation" isRequired="false"
           name="xor" precedence="#FLysH" type="#Di88w">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="if self.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;  elseif b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  elseif b = null then null&#xA;&#x9;&#x9;&#x9;  else self &lt;> b&#xA;&#x9;&#x9;&#x9;  endif"
+            isRequired="false" type="#Di88w">
+          <ownedBody xsi:type="pivot:IfExp" isRequired="false" type="#Di88w">
+            <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+              <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#sQsfE" type="#Di88w"/>
+            </ownedCondition>
+            <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+              <ownedCondition xsi:type="pivot:OperationCallExp" name="oclIsInvalid" referredOperation="#9ZIhR" type="#Di88w">
+                <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#HBoJQ" type="#Di88w"/>
+              </ownedCondition>
+              <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                  <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                  <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#sQsfE" type="#Di88w"/>
+                </ownedCondition>
+                <ownedElse xsi:type="pivot:IfExp" isElseIf="true" isRequired="false" type="#Di88w">
+                  <ownedCondition xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+                    <ownedArguments xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                    <ownedSource xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#HBoJQ" type="#Di88w"/>
+                  </ownedCondition>
+                  <ownedElse xsi:type="pivot:OperationCallExp" name="&lt;>" referredOperation="#7Bd1e" type="#Di88w">
+                    <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#HBoJQ" type="#Di88w"/>
+                    <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#sQsfE" type="#Di88w"/>
+                  </ownedElse>
+                  <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+                </ownedElse>
+                <ownedThen xsi:type="pivot:NullLiteralExp" isRequired="false" type="#nMo9L"/>
+              </ownedElse>
+              <ownedThen xsi:type="pivot:VariableExp" isRequired="false" name="b" referredVariable="#HBoJQ" type="#Di88w"/>
+            </ownedElse>
+            <ownedThen xsi:type="pivot:VariableExp" name="self" referredVariable="#sQsfE" type="#Di88w"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="sQsfE" name="self" type="#Di88w"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="HBoJQ" isRequired="false" name="b" representedParameter="#NYmj6"
+              type="#Di88w"/>
+        </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] is oclText[true] and oclText[b] is oclText[false], or if oclText[self] is oclText[false] and oclText[b] is oclText[true].&#xA;oclText[false] if oclText[self] is oclText[true] and oclText[b] is oclText[true], or if oclText[self] is oclText[false] and oclText[b] is oclText[false].&#xA;Otherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid].&#xA;Otherwise oclText[null].&#xA;"/>
         <ownedParameters xmi:id="NYmj6" isRequired="false" name="b" type="#Di88w"/>
       </ownedOperations>
       <ownedOperations xmi:id="c5Lqd" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2" name="xor2" precedence="#FLysH"
           type="#Di88w">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self &lt;> b" type="#Di88w">
+          <ownedBody xsi:type="pivot:OperationCallExp" name="&lt;>" referredOperation="#7Bd1e" type="#Di88w">
+            <ownedArguments xsi:type="pivot:VariableExp" name="b" referredVariable="#DI6yl" type="#Di88w"/>
+            <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#oX+Ia" type="#Di88w"/>
+          </ownedBody>
+          <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="oX+Ia" name="self" type="#Di88w"/>
+          <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="DI6yl" name="b" representedParameter="#5VplT" type="#Di88w"/>
+        </bodyExpression>
         <ownedComments body="oclText[true] if oclText[self] &lt;> oclText[b]&#xA;Otherwise oclText[false].&#xA;"/>
         <ownedParameters xmi:id="5VplT" name="b" type="#Di88w"/>
       </ownedOperations>
@@ -3730,18 +4074,18 @@
         <ownedComments body="The collection containing all elements of oclText[self] apart from all occurrences of all objects.&#xA;"/>
         <ownedParameters xmi:id="CvKMx" name="objects" type="#0905Y"/>
       </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="WSazH" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
+          isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Di88w">
+        <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one element oclText[i] in the source collection.&#xA;"/>
+        <ownedIterators xmi:id="HnDGG" isRequired="false" name="i" type="#23L4q"/>
+        <ownedParameters xmi:id="w4hlm" isRequired="false" name="lambda" type="#lZSSF"/>
+      </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="YVazH" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Di88w">
         <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j] in the source collection.&#xA;"/>
         <ownedIterators xmi:id="B+zGG" isRequired="false" name="i" type="#23L4q"/>
         <ownedIterators xmi:id="C+zGG" isRequired="false" name="j" type="#23L4q"/>
         <ownedParameters xmi:id="qPSmm" isRequired="false" name="lambda" type="#lZSSF"/>
-      </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="WSazH" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
-          isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Di88w">
-        <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one element oclText[i] in the source collection.&#xA;"/>
-        <ownedIterators xmi:id="HnDGG" isRequired="false" name="i" type="#23L4q"/>
-        <ownedParameters xmi:id="w4hlm" isRequired="false" name="lambda" type="#lZSSF"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="7ZazH" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Di88w">
@@ -3758,14 +4102,6 @@
           <ownedParameters xmi:id="xWcMX" name="T2"/>
         </ownedSignature>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="3YwBJ" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
-          isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#Di88w">
-        <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j] in the source collection; otherwise, result is oclText[false].&#xA;"/>
-        <ownedIterators xmi:id="kjp8n" isRequired="false" name="i" type="#23L4q"/>
-        <ownedIterators xmi:id="ljp8n" isRequired="false" name="j" type="#23L4q"/>
-        <ownedIterators xmi:id="mjp8n" isRequired="false" name="k" type="#23L4q"/>
-        <ownedParameters xmi:id="N1HcI" isRequired="false" name="lambda" type="#lZSSF"/>
-      </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="SRwBJ" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#Di88w">
         <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each element oclText[i] in the source collection; otherwise, result is oclText[false].&#xA;"/>
@@ -3778,6 +4114,14 @@
         <ownedIterators xmi:id="NBh7n" isRequired="false" name="i" type="#23L4q"/>
         <ownedIterators xmi:id="OBh7n" isRequired="false" name="j" type="#23L4q"/>
         <ownedParameters xmi:id="2S,aI" isRequired="false" name="lambda" type="#lZSSF"/>
+      </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="3YwBJ" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
+          isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#Di88w">
+        <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j] in the source collection; otherwise, result is oclText[false].&#xA;"/>
+        <ownedIterators xmi:id="kjp8n" isRequired="false" name="i" type="#23L4q"/>
+        <ownedIterators xmi:id="ljp8n" isRequired="false" name="j" type="#23L4q"/>
+        <ownedIterators xmi:id="mjp8n" isRequired="false" name="k" type="#23L4q"/>
+        <ownedParameters xmi:id="N1HcI" isRequired="false" name="lambda" type="#lZSSF"/>
       </ownedOperations>
       <ownedOperations xmi:id="FEPCa" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation" name="includes"
           type="#Di88w">
@@ -3802,15 +4146,15 @@
         <ownedComments body="The collection containing all elements of oclText[self] and objects.&#xA;"/>
         <ownedParameters xmi:id="sXaEm" name="objects" type="#0905Y"/>
       </ownedOperations>
-      <ownedOperations xmi:id="UEZ,L" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" name="intersection"
-          type="#fWqom">
-        <ownedComments body="The intersection of oclText[self] and a unique collection; the set of all elements that are in both oclText[self] and u.&#xA;"/>
-        <ownedParameters xmi:id="k1v4b" name="u" type="#Mr+ll"/>
-      </ownedOperations>
       <ownedOperations xmi:id="+zJxx" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" name="intersection"
           type="#FVmom">
         <ownedComments body="The intersection of oclText[self] and bag; the bag of all elements that are in both oclText[self] and c.&#xA;"/>
         <ownedParameters xmi:id="UGYvG" name="c" type="#0905Y"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="UEZ,L" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" name="intersection"
+          type="#fWqom">
+        <ownedComments body="The intersection of oclText[self] and a unique collection; the set of all elements that are in both oclText[self] and u.&#xA;"/>
+        <ownedParameters xmi:id="k1v4b" name="u" type="#Mr+ll"/>
       </ownedOperations>
       <ownedOperations xmi:id="cIuUP" implementationClass="org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation" name="isEmpty"
           type="#Di88w">
@@ -3818,8 +4162,8 @@
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="V3yuK" implementationClass="org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration"
           name="isUnique" type="#Di88w">
-        <ownedComments body="Results in oclText[true] if body evaluates to a different value for each element oclText[i] in the source collection; otherwise, result is oclText[false].&#xA;"/>
         <ownedComments body="The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.&#xA;The result is not flattened.&#xA;"/>
+        <ownedComments body="Results in oclText[true] if body evaluates to a different value for each element oclText[i] in the source collection; otherwise, result is oclText[false].&#xA;"/>
         <ownedIterators xmi:id="KoJdz" isRequired="false" name="i" type="#23L4q"/>
         <ownedParameters xmi:id="z5n8T" isRequired="false" name="lambda" type="#ZBv6N"/>
       </ownedOperations>
@@ -4094,6 +4438,12 @@
           <ownedParameters xmi:id="pUmQp" name="V2"/>
         </ownedSignature>
       </ownedOperations>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="Nncab" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
+          isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Di88w">
+        <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one key oclText[k] in the source map.&#xA;"/>
+        <ownedIterators xmi:id="kYK27" isRequired="false" name="k" type="#IpSog"/>
+        <ownedParameters xmi:id="LqoVc" isRequired="false" name="lambda" type="#jEzpt"/>
+      </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="Pqcab" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Di88w">
         <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2] in the source map.&#xA;"/>
@@ -4109,11 +4459,11 @@
         <ownedIterators xmi:id="yEE47" isRequired="false" name="k3" type="#IpSog"/>
         <ownedParameters xmi:id="cjhXc" isRequired="false" name="lambda" type="#jEzpt"/>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="Nncab" implementationClass="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"
-          isInvalidating="true" isRequired="false" isValidating="true" name="exists" type="#Di88w">
-        <ownedComments body="Results in oclText[true] if body evaluates to oclText[true] for at least one key oclText[k] in the source map.&#xA;"/>
-        <ownedIterators xmi:id="kYK27" isRequired="false" name="k" type="#IpSog"/>
-        <ownedParameters xmi:id="LqoVc" isRequired="false" name="lambda" type="#jEzpt"/>
+      <ownedOperations xsi:type="pivot:Iteration" xmi:id="Jmyoc" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
+          isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#Di88w">
+        <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each key oclText[k] in the source map; otherwise, result is oclText[false].&#xA;"/>
+        <ownedIterators xmi:id="wb3qd" isRequired="false" name="k" type="#IpSog"/>
+        <ownedParameters xmi:id="XtVK+" isRequired="false" name="lambda" type="#jEzpt"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="Lpyoc" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
           isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#Di88w">
@@ -4130,21 +4480,15 @@
         <ownedIterators xmi:id="+Hxsd" isRequired="false" name="k3" type="#IpSog"/>
         <ownedParameters xmi:id="omOM+" isRequired="false" name="lambda" type="#jEzpt"/>
       </ownedOperations>
-      <ownedOperations xsi:type="pivot:Iteration" xmi:id="Jmyoc" implementationClass="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"
-          isInvalidating="true" isRequired="false" isValidating="true" name="forAll" type="#Di88w">
-        <ownedComments body="Results in oclText[true] if the body expression evaluates to oclText[true] for each key oclText[k] in the source map; otherwise, result is oclText[false].&#xA;"/>
-        <ownedIterators xmi:id="wb3qd" isRequired="false" name="k" type="#IpSog"/>
-        <ownedParameters xmi:id="XtVK+" isRequired="false" name="lambda" type="#jEzpt"/>
+      <ownedOperations xmi:id="8YRpt" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesOperation" name="includes" type="#Di88w">
+        <ownedComments body="True if oclText[key] is one of the keys of oclText[self], oclText[false] otherwise.&#xA;"/>
+        <ownedParameters xmi:id="WvqAV" isRequired="false" name="key" type="#IpSog"/>
       </ownedOperations>
       <ownedOperations xmi:id="AfRpt" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation" name="includes"
           type="#Di88w">
         <ownedComments body="True if oclText[key] and oclText[value] are a key-value pair of oclText[self], oclText[false] otherwise.&#xA;"/>
         <ownedParameters xmi:id="KdLCV" isRequired="false" name="key" type="#IpSog"/>
         <ownedParameters xmi:id="cp6sb" isRequired="false" name="value" type="#TpSog"/>
-      </ownedOperations>
-      <ownedOperations xmi:id="8YRpt" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesOperation" name="includes" type="#Di88w">
-        <ownedComments body="True if oclText[key] is one of the keys of oclText[self], oclText[false] otherwise.&#xA;"/>
-        <ownedParameters xmi:id="WvqAV" isRequired="false" name="key" type="#IpSog"/>
       </ownedOperations>
       <ownedOperations xmi:id="r8Nib" implementationClass="org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation" name="includesAll"
           type="#Di88w">
@@ -4245,7 +4589,7 @@
         <ownedParameters xmi:id="TpSog" name="V"/>
       </ownedSignature>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:AnyType" xmi:id="P58UW" instanceClassName="java.lang.Object" isAbstract="true" name="OclAny">
+    <ownedClasses xsi:type="pivot:AnyType" xmi:id="P58UW" instanceClassName="org.eclipse.ocl.pivot.AnyType" isAbstract="true" name="OclAny">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -4256,11 +4600,43 @@
           precedence="#EOz,Y" type="#Di88w">
         <ownedComments body="True if oclText[self] is a different object from object2. Infix operator.&#xA;"/>
         <ownedParameters xmi:id="5OLAO" isRequired="false" name="object2" type="#fDQ9L"/>
+        <ownedPostconditions xmi:id="MW9W2">
+          <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result = not (self = object2)" type="#Di88w">
+            <ownedBody xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+              <ownedArguments xsi:type="pivot:OperationCallExp" isRequired="false" name="not" referredOperation="#,tCa+" type="#Di88w">
+                <ownedSource xsi:type="pivot:OperationCallExp" name="=" referredOperation="#SfOzu" type="#Di88w">
+                  <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" name="object2" referredVariable="#otmFX" type="#P58UW"/>
+                  <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#cruWu" type="#P58UW"/>
+                </ownedSource>
+              </ownedArguments>
+              <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#UofTj" type="#Di88w"/>
+            </ownedBody>
+            <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="cruWu" name="self" type="#P58UW"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="otmFX" isRequired="false" name="object2" representedParameter="#5OLAO"
+                type="#P58UW"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="UofTj" name="result" type="#Di88w"/>
+          </ownedSpecification>
+        </ownedPostconditions>
       </ownedOperations>
       <ownedOperations xmi:id="SfOzu" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" name="=" precedence="#EOz,Y"
           type="#Di88w">
         <ownedComments body="True if oclText[self] is the same object as object2. Infix operator.&#xA;"/>
         <ownedParameters xmi:id="IW74N" isRequired="false" name="object2" type="#fDQ9L"/>
+        <ownedPostconditions xmi:id="bdtP2">
+          <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result = (self = object2)" type="#Di88w">
+            <ownedBody xsi:type="pivot:OperationCallExp" name="=" referredOperation="#2kc1e" type="#Di88w">
+              <ownedArguments xsi:type="pivot:OperationCallExp" name="=" referredOperation="#SfOzu" type="#Di88w">
+                <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" name="object2" referredVariable="#vOh1q" type="#P58UW"/>
+                <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#jMpGC" type="#P58UW"/>
+              </ownedArguments>
+              <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#bJaD3" type="#Di88w"/>
+            </ownedBody>
+            <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="jMpGC" name="self" type="#P58UW"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="vOh1q" isRequired="false" name="object2" representedParameter="#IW74N"
+                type="#P58UW"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="bJaD3" name="result" type="#Di88w"/>
+          </ownedSpecification>
+        </ownedPostconditions>
       </ownedOperations>
       <ownedOperations xmi:id="gPeHK" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation" name="oclAsSet"
           type="#gierm">
@@ -4270,6 +4646,17 @@
           name="oclAsType" type="#j37WZ">
         <ownedComments body="Evaluates to oclText[self], where oclText[self] is of the type identified by oclText[TT].&#xA;The type oclText[TT] may be any classifier defined by OCL or a user metamodel;&#xA;if the actual type of oclText[self] at evaluation time does not conform to oclText[TT],&#xA;then the oclAsType operation evaluates to oclText[invalid].&#xA;&#xA;If oclText[self] is a multiply classified instance, the current classification used for OCL navigation&#xA;is changed to the classification to which oclText[TT] conforms. The oclAsType call is not well-formed if&#xA;the classification is ambiguous.&#xA;&#xA;In the case of feature redefinition, casting an object to a supertype of its actual type&#xA;does not access the supertype’s definition of the feature;&#xA;according to the semantics of redefinition, the redefined feature simply does not exist for the object.&#xA;However, when casting to a supertype, any features additionally defined by the subtype are suppressed.&#xA;&#xA;FIXME Bug 578060 return should be optional to support OclVoid returning null."/>
         <ownedParameters xmi:id="es5jE" isTypeof="true" name="type" type="#j37WZ"/>
+        <ownedPostconditions xmi:id="ApY1M" name="IsSelf">
+          <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result = self" type="#Di88w">
+            <ownedBody xsi:type="pivot:OperationCallExp" name="=" referredOperation="#SfOzu" type="#Di88w">
+              <ownedArguments xsi:type="pivot:VariableExp" name="self" referredVariable="#wUW8a" type="#P58UW"/>
+              <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#oRH5P" type="#j37WZ"/>
+            </ownedBody>
+            <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="wUW8a" name="self" type="#P58UW"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" name="type" representedParameter="#es5jE" type="#j37WZ"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="oRH5P" name="result" type="#j37WZ"/>
+          </ownedSpecification>
+        </ownedPostconditions>
         <ownedSignature>
           <ownedParameters xmi:id="j37WZ" name="TT"/>
         </ownedSignature>
@@ -4301,12 +4688,12 @@
           name="oclIsUndefined" type="#Di88w">
         <ownedComments body="Evaluates to oclText[true] if the oclText[self] is equal to oclText[invalid] or equal to oclText[null].&#xA;"/>
       </ownedOperations>
+      <ownedOperations xmi:id="UZObR" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation" name="oclLog" type="#fDQ9L">
+        <ownedComments body="Evaluates to the self, with the side effect of generating a log message comprising self.&#xA;"/>
+      </ownedOperations>
       <ownedOperations xmi:id="Y4E4T" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation" name="oclLog" type="#fDQ9L">
         <ownedComments body="Evaluates to the self, with the side effect of generating a log message comprising message followed by self.&#xA;"/>
         <ownedParameters xmi:id="qXdGI" name="message" type="#sChGe"/>
-      </ownedOperations>
-      <ownedOperations xmi:id="UZObR" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation" name="oclLog" type="#fDQ9L">
-        <ownedComments body="Evaluates to the self, with the side effect of generating a log message comprising self.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="6OwOt" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation" isTypeof="true"
           name="oclType" type="#fDQ9L">
@@ -4323,7 +4710,7 @@
       <ownedProperties xmi:id="Yj1,T" isImplicit="true" name="OclInvalid" opposite="#M5sCU" type="#JwrT,"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:InvalidType" xmi:id="aJBCu" instanceClassName="org.eclipse.ocl.pivot.InvalidType" isAbstract="true"
-        name="OclInvalid" superClasses="#P58UW">
+        name="OclInvalid" superClasses="#nMo9L">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -4602,6 +4989,71 @@
           name="prepend" type="#LmHFu">
         <ownedComments body="The sequence consisting of object, followed by all elements in oclText[self].&#xA;"/>
         <ownedParameters xmi:id="hLh0i" isRequired="false" name="object" type="#FDR9O"/>
+        <ownedPostconditions xmi:id="JH5BB" name="IsSizePlusOne">
+          <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result->size() = self->size() + 1" type="#Di88w">
+            <ownedBody xsi:type="pivot:OperationCallExp" name="=" referredOperation="#UQExe" type="#Di88w">
+              <ownedArguments xsi:type="pivot:OperationCallExp" name="+" referredOperation="#iH+m0" type="#Z2dzh">
+                <ownedArguments xsi:type="pivot:IntegerLiteralExp" integerSymbol="1" type="#Z2dzh"/>
+                <ownedSource xsi:type="pivot:OperationCallExp" name="size" referredOperation="#a,Y3U" type="#Z2dzh">
+                  <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#BEtj4" type="#LmHFu"/>
+                </ownedSource>
+              </ownedArguments>
+              <ownedSource xsi:type="pivot:OperationCallExp" name="size" referredOperation="#a,Y3U" type="#Z2dzh">
+                <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#5Aegt" type="#LmHFu"/>
+              </ownedSource>
+            </ownedBody>
+            <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="BEtj4" name="self" type="#LmHFu"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object" representedParameter="#hLh0i" type="#FDR9O"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="5Aegt" name="result" type="#LmHFu"/>
+          </ownedSpecification>
+        </ownedPostconditions>
+        <ownedPostconditions xmi:id="N2iGQ" name="IsAtStart">
+          <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="result->at(1) = object" type="#Di88w">
+            <ownedBody xsi:type="pivot:OperationCallExp" name="=" referredOperation="#SfOzu" type="#Di88w">
+              <ownedArguments xsi:type="pivot:VariableExp" isRequired="false" name="object" referredVariable="#dnEhM" type="#FDR9O"/>
+              <ownedSource xsi:type="pivot:OperationCallExp" isRequired="false" name="at" referredOperation="#AyMpU" type="#FDR9O">
+                <ownedArguments xsi:type="pivot:IntegerLiteralExp" integerSymbol="1" type="#Z2dzh"/>
+                <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#dovzy" type="#LmHFu"/>
+              </ownedSource>
+            </ownedBody>
+            <ownedContext xsi:type="pivot:ParameterVariable" name="self" type="#LmHFu"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" xmi:id="dnEhM" isRequired="false" name="object" representedParameter="#hLh0i"
+                type="#FDR9O"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="dovzy" name="result" type="#LmHFu"/>
+          </ownedSpecification>
+        </ownedPostconditions>
+        <ownedPostconditions xmi:id="u7KiS" name="IsShiftedAlong">
+          <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="Sequence{1..self->size()}->forAll(index : Integer[1] | self->at(index) = result->at(index + 1))"
+              isRequired="false" type="#Di88w">
+            <ownedBody xsi:type="pivot:IteratorExp" isRequired="false" name="forAll" referredIteration="#SRwBJ" type="#Di88w">
+              <ownedBody xsi:type="pivot:OperationCallExp" name="=" referredOperation="#SfOzu" type="#Di88w">
+                <ownedArguments xsi:type="pivot:OperationCallExp" isRequired="false" name="at" referredOperation="#AyMpU" type="#FDR9O">
+                  <ownedArguments xsi:type="pivot:OperationCallExp" name="+" referredOperation="#iH+m0" type="#Z2dzh">
+                    <ownedArguments xsi:type="pivot:IntegerLiteralExp" integerSymbol="1" type="#Z2dzh"/>
+                    <ownedSource xsi:type="pivot:VariableExp" name="index" referredVariable="#VraVs" type="#Z2dzh"/>
+                  </ownedArguments>
+                  <ownedSource xsi:type="pivot:VariableExp" name="result" referredVariable="#G6GoC" type="#LmHFu"/>
+                </ownedArguments>
+                <ownedSource xsi:type="pivot:OperationCallExp" isRequired="false" name="at" referredOperation="#AyMpU" type="#FDR9O">
+                  <ownedArguments xsi:type="pivot:VariableExp" name="index" referredVariable="#VraVs" type="#Z2dzh"/>
+                  <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#O9VrN" type="#LmHFu"/>
+                </ownedSource>
+              </ownedBody>
+              <ownedIterators xsi:type="pivot:IteratorVariable" xmi:id="VraVs" name="index" representedParameter="#Tqw6n" type="#Z2dzh"/>
+              <ownedSource xsi:type="pivot:CollectionLiteralExp" kind="Sequence" type="#pzDXT">
+                <ownedParts xsi:type="pivot:CollectionRange" xmi:id="ey+nf" type="#Z2dzh">
+                  <ownedFirst xsi:type="pivot:IntegerLiteralExp" integerSymbol="1" type="#Z2dzh"/>
+                  <ownedLast xsi:type="pivot:OperationCallExp" name="size" referredOperation="#a,Y3U" type="#Z2dzh">
+                    <ownedSource xsi:type="pivot:VariableExp" name="self" referredVariable="#O9VrN" type="#LmHFu"/>
+                  </ownedLast>
+                </ownedParts>
+              </ownedSource>
+            </ownedBody>
+            <ownedContext xsi:type="pivot:ParameterVariable" xmi:id="O9VrN" name="self" type="#LmHFu"/>
+            <ownedParameters xsi:type="pivot:ParameterVariable" isRequired="false" name="object" representedParameter="#hLh0i" type="#FDR9O"/>
+            <ownedResult xsi:type="pivot:ParameterVariable" xmi:id="G6GoC" name="result" type="#LmHFu"/>
+          </ownedSpecification>
+        </ownedPostconditions>
       </ownedOperations>
       <ownedOperations xmi:id="NRY4F" implementationClass="org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation"
           name="prependAll" type="#LmHFu">
@@ -5080,14 +5532,14 @@
       <ownedOperations xmi:id="kIm7N" implementationClass="org.eclipse.ocl.pivot.library.string.StringSubstituteAllOperation" name="substituteAll"
           type="#sChGe">
         <ownedComments body="Return a string derived from self by replacing all occurrences of oldSubstring by newSubstring.&#xA;"/>
-        <ownedParameters xmi:id="QJYGL" name="newSubstring" type="#sChGe"/>
         <ownedParameters xmi:id="pWKmD" name="oldSubstring" type="#sChGe"/>
+        <ownedParameters xmi:id="QJYGL" name="newSubstring" type="#sChGe"/>
       </ownedOperations>
       <ownedOperations xmi:id="zGptt" implementationClass="org.eclipse.ocl.pivot.library.string.StringSubstituteFirstOperation" name="substituteFirst"
           type="#sChGe">
         <ownedComments body="Return a string derived from self by replacing the first occurrence of oldSubstring by newSubstring.&#xA;Returns invalid if there is no first occurrence.&#xA;"/>
-        <ownedParameters xmi:id="j+yfM" name="newSubstring" type="#sChGe"/>
         <ownedParameters xmi:id="8Ll,E" name="oldSubstring" type="#sChGe"/>
+        <ownedParameters xmi:id="j+yfM" name="newSubstring" type="#sChGe"/>
       </ownedOperations>
       <ownedOperations xmi:id="TRE8Q" implementationClass="org.eclipse.ocl.pivot.library.string.StringSubstringOperation" isInvalidating="true"
           name="substring" type="#sChGe">

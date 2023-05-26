@@ -106,6 +106,7 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -776,7 +777,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 */
 	@Override
 	public String visitIntegerLiteralExp(@NonNull IntegerLiteralExp il) {
-		append(il.getIntegerSymbol().intValue());
+		IntegerValue integerSymbol = il.getIntegerSymbol();
+		if (integerSymbol != null) {
+			append(integerSymbol.intValue());
+		}
+		else {
+			append(NULL_PLACEHOLDER);
+		}
 		return null;
 	}
 
@@ -1183,7 +1190,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 */
 	@Override
 	public String visitRealLiteralExp(@NonNull RealLiteralExp rl) {
-		append(rl.getRealSymbol().doubleValue());
+		RealValue realSymbol = rl.getRealSymbol();
+		if (realSymbol != null) {
+			append(realSymbol.doubleValue());
+		}
+		else {
+			append(NULL_PLACEHOLDER);
+		}
 		return null;
 	}
 
@@ -1355,7 +1368,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 */
 	@Override
 	public String visitUnlimitedNaturalLiteralExp(@NonNull UnlimitedNaturalLiteralExp unl) {
-		append(unl.getUnlimitedNaturalSymbol().intValue());
+		UnlimitedNaturalValue unlimitedNaturalSymbol = unl.getUnlimitedNaturalSymbol();
+		if (unlimitedNaturalSymbol != null) {
+			append(unlimitedNaturalSymbol.intValue());
+		}
+		else {
+			append(NULL_PLACEHOLDER);
+		}
 		return null;
 	}
 
