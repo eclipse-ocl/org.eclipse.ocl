@@ -37,6 +37,7 @@ Workflow {
      	modelFile = "model/Pivotas.ecore"
     	uri = "http://www.eclipse.org/ocl/2023/AS"
     	ecoreFile = "/org.eclipse.ocl.pivot/model-gen/oclas.ecore"
+  //  	oclFile = "/org.eclipse.ocl.pivot/model/Pivot.ocl"
     	javaFolder = "/org.eclipse.ocl.pivot/emf-gen"
     	javaPackageName = "org.eclipse.ocl.pivot"
     	javaClassName = "OCLAS"

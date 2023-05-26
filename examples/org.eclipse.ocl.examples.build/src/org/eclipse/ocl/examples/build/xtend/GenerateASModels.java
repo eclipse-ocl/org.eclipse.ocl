@@ -224,7 +224,6 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 
 	protected String stdlibFile;
 	protected String ecoreFile;
-	protected String oclFile;
 //	protected String libraryName;
 //	protected String libraryNsPrefix;
 //	protected boolean isASLibrary = true;
@@ -322,7 +321,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 			if (asResource2 == null) {
 				return;
 			}
-			ASResource asResource = mergeResources(mergedFileURI, asResource2, asResource1);
+			ASResource asResource = mergeResources(mergedFileURI, asResource2); //, asResource1);
 			if (asResource == null) {
 				return;
 			}
@@ -502,7 +501,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 	 * Returns null after reporting problems to issues.
 	 */
 	protected @Nullable ASResource loadOCLstdlibFile(@NonNull URI stdlibFileURI, @NonNull Issues issues) {
-		String stdlibURIstring = "http://www.eclipse.org/ocl/2023/Library";
+		String stdlibURIstring = "http://www.eclipse.org/ocl/2015/Library";
 		/*StandardLibraryContribution savedContribution =*/ StandardLibraryContribution.REGISTRY.put(stdlibURIstring/*OCLstdlib.STDLIB_URI*/, new StandardLibraryContribution()
 		{
 			@Override
@@ -597,7 +596,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 		}
 	} */
 
-	protected @Nullable ASResource  mergeResources(@NonNull URI mergedURI, @NonNull ASResource asResource1, @NonNull ASResource asResource2) {
+	protected @Nullable ASResource  mergeResources(@NonNull URI mergedURI, @NonNull ASResource asResource1) { //, @NonNull ASResource zzasResource2) {
 	//	ASResource asResource = asResource1;	// XXX pivot rather than oclstdlib once pivot has collection types
 		Model asModel1 = PivotUtil.getModel(asResource1);
 		ResourceSet asResourceSet = metamodelManager.getASResourceSet();
@@ -707,13 +706,6 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 //	public void setLibraryNsPrefix(String libraryNsPrefix) {
 //		this.libraryNsPrefix = libraryNsPrefix;
 //	}
-
-	/**
-	 * The Complete OCL constraints file.
-	 */
-	public void setOclFile(String oclFile) {
-		this.oclFile = oclFile;
-	}
 
 	/**
 	 * The Name to be applied to the library

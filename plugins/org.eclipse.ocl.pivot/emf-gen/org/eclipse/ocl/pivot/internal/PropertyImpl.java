@@ -1778,11 +1778,4 @@ implements Property {
 		setType(null);				// Easier to set them all than just the base_xxx ones
 	}
 
-	@Override
-	public void setName(String newName) {
-		if ("oclContainer".equals(newName)) {
-			getClass();			// XXX
-		}
-		super.setName(newName);
-	}
 } //PropertyImpl

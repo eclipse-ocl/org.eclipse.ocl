@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="pivotas" nsURI="http://www.eclipse.org/ocl/2015/PivotAS" nsPrefix="pivotas">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="pivotas" nsURI="http://www.eclipse.org/ocl/2023/Pivot" nsPrefix="pivotas">
   <eAnnotations source="http://www.eclipse.org/OCL/Collection">
     <details key="nullFree" value="true"/>
   </eAnnotations>
@@ -87,7 +87,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" lowerBound="1"
         eType="#//Operation"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Class" eSuperTypes="#//Type #//Namespace #//TemplateableElement #//OclElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Class" eSuperTypes="#//Namespace #//TemplateableElement #//Type #//OclElement">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A Class classifies a set of objects and specifies the features that characterize the structure and behavior of those objects.  A Class may have an internal structure and Ports.&#xA;&#xA;A Classifier represents a classification of instances according to their Features.&#xA;&#xA;StructuredClassifiers may contain an internal structure of connected elements each of which plays a role in the overall Behavior modeled by the StructuredClassifier."/>
     </eAnnotations>
@@ -1410,7 +1410,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInit" eType="#//OCLExpression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TuplePart" instanceClassName="org.eclipse.ocl.pivot.utilities.TuplePartas"
+  <eClassifiers xsi:type="ecore:EClass" name="TuplePart" instanceClassName="org.eclipse.ocl.pivot.utilities.TuplePart"
       abstract="true" interface="true" eSuperTypes="#//OclElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="TupleType" eSuperTypes="#//DataType"/>
   <eClassifiers xsi:type="ecore:EClass" name="Type" abstract="true" eSuperTypes="#//NamedElement #//OclType">
