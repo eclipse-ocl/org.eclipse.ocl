@@ -206,13 +206,13 @@ public class Merger
 	}
 
 	private void addMerge(@NonNull String indent, @NonNull Element mergedParent, @NonNull List<@NonNull ? extends Element> partialParents) {
-	/*	StringBuilder s = new StringBuilder();
+		StringBuilder s = new StringBuilder();
 		s.append(indent + "addMerge " + NameUtil.debugSimpleName(mergedParent));
 		for (@NonNull Element partialParent : partialParents) {
 			s.append("\n\t" + indent + NameUtil.debugSimpleName(partialParent) + " : " + partialParent);
 		}
-		System.out.println(s.toString()); */
-		if ((partialParents.get(0) instanceof Nameable) && "oclContainer".equals(((Nameable)partialParents.get(0)).getName())) {
+		System.out.println(s.toString());
+		if ((partialParents.get(0) instanceof Nameable) && "isComputable".equals(((Nameable)partialParents.get(0)).getName())) {
 			getClass();		// XXX
 		}
 		mergedElement2partialElements.put(mergedParent, partialParents);

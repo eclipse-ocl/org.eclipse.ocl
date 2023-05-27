@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
@@ -26,12 +27,15 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecore.util.EcoreValidator;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.mwe.core.WorkflowContext;
 import org.eclipse.emf.mwe.core.issues.Issues;
@@ -49,7 +53,6 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatModel;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ReflectiveStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteURIs;
@@ -63,12 +66,10 @@ import org.eclipse.ocl.pivot.merge.Merger;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
@@ -347,6 +348,19 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 				AS2Ecore converter = new AS2Ecore(getEnvironmentFactory(), ecoreURI, null);
 				XMLResource eResource = converter.convertResource(asResource, ecoreURI);
 				EPackage ePackage = (EPackage) ClassUtil.nonNullState(eResource.getContents().get(0));
+				ECollections.sort(ePackage.getEClassifiers(), new Comparator</*@NonNull*/ EClassifier>()
+				{
+					@Override
+					public int compare(/*@NonNull*/ EClassifier o1, /*@NonNull*/ EClassifier o2) {
+						if ((o1 instanceof EClass) != (o2 instanceof EClass)) {
+							return o1 instanceof EClass ? 1 :-1;
+						}
+						if ((o1 instanceof EEnum) != (o2 instanceof EEnum)) {
+							return o1 instanceof EEnum ? 1 :-1;
+						}
+						return o1.getName().compareTo(o2.getName());
+					}
+				});
 			//	if (libraryName != null) {
 			//		ePackage.setName(libraryName);
 			//	}
@@ -356,29 +370,37 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 				// FIXME EClass instanceClassNames are correct because they were loaded correct.
 				// FIXME EClass setInstanceClassName trashes EClasses that are set explicitly
 				//				setInstanceClassName(ePackage, "Bag", Bag.class, null);
-				setInstanceClassName(ePackage, TypeId.BOOLEAN_NAME, Boolean.class, null);
+			//	setInstanceClassName(ePackage, TypeId.BOOLEAN_NAME, Boolean.class, null);
 				//				setInstanceClassName(ePackage, "Collection", Collection.class, null);
-				setInstanceClassName(ePackage, TypeId.INTEGER_NAME, IntegerValue.class, null);
+			//	setInstanceClassName(ePackage, TypeId.INTEGER_NAME, IntegerValue.class, null);
 				//				setInstanceClassName(ePackage, "OclAny", Object.class, "This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTRue functionality is only available once converted to a Pivot model.");
 				//			setInstanceClassName(ePackage, "OclInvalid", InvalidValue.class, null);
 				//			setInstanceClassName(ePackage, "OclVoid", NullValue.class, null);
 				//				setInstanceClassName(ePackage, "OrderedSet", OrderedSet.class, null);
-				setInstanceClassName(ePackage, TypeId.REAL_NAME, RealValue.class, null);
+			//	setInstanceClassName(ePackage, TypeId.REAL_NAME, RealValue.class, null);
 				//				setInstanceClassName(ePackage, "Sequence", List.class, null);
 				//				setInstanceClassName(ePackage, "Set", Set.class, null);
-				setInstanceClassName(ePackage, TypeId.STRING_NAME, String.class, null);
+			//	setInstanceClassName(ePackage, TypeId.STRING_NAME, String.class, null);
 				//				setInstanceClassName(ePackage, "UniqueCollection", Set.class, null);
-				setInstanceClassName(ePackage, TypeId.UNLIMITED_NATURAL_NAME, UnlimitedNaturalValue.class, null);
+			//	setInstanceClassName(ePackage, TypeId.UNLIMITED_NATURAL_NAME, UnlimitedNaturalValue.class, null);
 				EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
-				EClass eOclAny = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ANY_NAME);
-				EClass eOclElement = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ELEMENT_NAME);
-				EClass eOclType = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_TYPE_NAME);
+			//	EClass eOclAny = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ANY_NAME);
+			//	EClass eOclElement = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ELEMENT_NAME);
+			//	EClass eOclType = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_TYPE_NAME);
 				for (EClassifier eClassifier : new ArrayList<EClassifier>(eClassifiers)) {
 					if (eClassifier instanceof EClass) {
 						EClass eClass = (EClass) eClassifier;
 						//						eClass.getEGenericSuperTypes().clear();
-						eClass.getEOperations().clear();
+					//	eClass.getEOperations().clear();
 						//						eClass.getEStructuralFeatures().clear();
+						EList<EOperation> eOperations = eClass.getEOperations();
+						for (int i = eOperations.size(); --i >= 0; ) {
+							EOperation eOperation = eOperations.get(i);
+							String name = eOperation.getName();
+						    if (!EcoreValidator.isWellFormedJavaIdentifier(name)) {
+						    	eOperations.remove(i);
+						    }
+						}
 					}
 					EAnnotation oclAnnotation = eClassifier.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
 					if (oclAnnotation != null) {
@@ -410,13 +432,13 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 					else {
 						//
 						//	Operations/properties referencing non-library classes are removed to avoid dangling references.
-						//
+						/*
 						if (name.equals(TypeId.OCL_ENUMERATION_NAME)) {
 							EClass eClass = (EClass)eClassifier;
 							assert eClass.isAbstract();
 							eClass.getEOperations().clear();
 							eClass.getEStructuralFeatures().clear();
-						}
+						} */
 						//
 						//	FIXME Library classes removed for API compatibility.
 						//
@@ -426,7 +448,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 						//					}
 						//
 						//	Library classes have a non-null instance class name to suppress generation of a Java class
-						//
+						/*
 						if (name.equals(TypeId.OCL_COMPARABLE_NAME)
 								|| name.equals(TypeId.OCL_ELEMENT_NAME)
 								|| name.equals(TypeId.OCL_ENUMERATION_NAME)
@@ -447,7 +469,7 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 							if (eClass.getESuperTypes().isEmpty()) {
 						//		eClass.getESuperTypes().add(name.equals(TypeId.OCL_STEREOTYPE_NAME) ? eOclType : name.equals(TypeId.OCL_TYPE_NAME) ? eOclElement : eOclAny);
 							}
-						}
+						} */
 					}
 					if ((eClassifier instanceof EDataType) && (((EDataType)eClassifier).getInstanceClassName() == null)) {
 						((EDataType)eClassifier).setInstanceClass(Object.class);
