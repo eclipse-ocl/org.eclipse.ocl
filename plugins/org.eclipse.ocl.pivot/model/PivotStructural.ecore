@@ -110,11 +110,7 @@
       <details key="documentation" value="A link is a tuple of values that refer to typed objects.  An Association classifies a set of links, each of which is an instance of the Association.  Each value in the link refers to an instance of the type of the corresponding end of the Association.&#xA;&#xA;A model element that has both Association and Class properties. An AssociationClass can be seen as an Association that also has Class properties, or as a Class that also has Association properties. It not only connects a set of Classifiers but also defines a set of Features that belong to the Association itself and not to any of the associated Classifiers."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="unownedAttributes" ordered="false"
-        upperBound="-1" eType="#//Property" eOpposite="#//Property/associationClass">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        upperBound="-1" eType="#//Property" eOpposite="#//Property/associationClass"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AssociationClassCallExp" eSuperTypes="#//NavigationCallExp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredAssociationClass"
@@ -173,11 +169,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInvariants" ordered="false"
-        upperBound="-1" eType="#//Constraint" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        upperBound="-1" eType="#//Constraint" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedOperations" upperBound="-1"
         eType="#//Operation" containment="true" eOpposite="#//Operation/owningClass">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -193,11 +185,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningPackage" eType="#//Package"
         eOpposite="#//Package/ownedClasses"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="superClasses" ordered="false"
-        upperBound="-1" eType="#//Class">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        upperBound="-1" eType="#//Class"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CollectionItem" eSuperTypes="#//CollectionLiteralPart">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedItem" lowerBound="1"
@@ -206,11 +194,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="CollectionLiteralExp" eSuperTypes="#//LiteralExp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" lowerBound="1" eType="#//CollectionKind"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParts" upperBound="-1"
-        eType="#//CollectionLiteralPart" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//CollectionLiteralPart" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CollectionLiteralPart" abstract="true"
       eSuperTypes="#//TypedElement"/>
@@ -252,11 +236,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningCompletePackage"
         eType="#//CompletePackage" eOpposite="#//CompletePackage/ownedCompleteClasses"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="partialClasses" ordered="false"
-        upperBound="-1" eType="#//Class">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        upperBound="-1" eType="#//Class"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CompleteEnvironment" eSuperTypes="#//Element">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCompleteModel" lowerBound="1"
@@ -273,19 +253,11 @@
         resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCompletePackages"
         ordered="false" upperBound="-1" eType="#//CompletePackage" containment="true"
-        eOpposite="#//CompletePackage/owningCompleteModel">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eOpposite="#//CompletePackage/owningCompleteModel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningCompleteEnvironment"
         eType="#//CompleteEnvironment" eOpposite="#//CompleteEnvironment/ownedCompleteModel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="partialModels" ordered="false"
-        upperBound="-1" eType="#//Model">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        upperBound="-1" eType="#//Model"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="primitiveCompletePackage"
         eType="#//PrimitiveCompletePackage" changeable="false" transient="true" derived="true"
         resolveProxies="false"/>
@@ -295,28 +267,16 @@
       <eParameters name="name" eType="#//String"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCompleteClasses" ordered="false"
-        upperBound="-1" eType="#//CompleteClass" containment="true" eOpposite="#//CompleteClass/owningCompletePackage">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        upperBound="-1" eType="#//CompleteClass" containment="true" eOpposite="#//CompleteClass/owningCompletePackage"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCompletePackages"
         ordered="false" upperBound="-1" eType="#//CompletePackage" containment="true"
-        eOpposite="#//CompletePackage/owningCompletePackage">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eOpposite="#//CompletePackage/owningCompletePackage"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningCompleteModel" eType="#//CompleteModel"
         eOpposite="#//CompleteModel/ownedCompletePackages"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningCompletePackage"
         eType="#//CompletePackage" eOpposite="#//CompletePackage/ownedCompletePackages"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="partialPackages" ordered="false"
-        upperBound="-1" eType="#//Package">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        upperBound="-1" eType="#//Package"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CompleteStandardLibrary" eSuperTypes="#//ReflectiveStandardLibrary">
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningCompleteEnvironment"
@@ -493,11 +453,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedContext" eType="#//Variable"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParameters" upperBound="-1"
-        eType="#//Variable" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedResult" eType="#//Variable"
         containment="true"/>
   </eClassifiers>
@@ -582,17 +538,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Iteration" eSuperTypes="#//Operation">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedAccumulators" upperBound="-1"
-        eType="#//Parameter" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//Parameter" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedIterators" upperBound="-1"
-        eType="#//Parameter" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//Parameter" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IteratorExp" eSuperTypes="#//LoopExp #//ReferringElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="IteratorVariable" eSuperTypes="#//Variable"/>
@@ -607,11 +555,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="contextType" lowerBound="1"
         eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameterType" unique="false"
-        upperBound="-1" eType="#//Type">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        upperBound="-1" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="resultType" lowerBound="1"
         eType="#//Type"/>
   </eClassifiers>
@@ -645,20 +589,12 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedIterators" upperBound="-1"
-        eType="#//Variable" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//Variable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredIteration" eType="#//Iteration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MapLiteralExp" eSuperTypes="#//LiteralExp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParts" upperBound="-1"
-        eType="#//MapLiteralPart" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//MapLiteralPart" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MapLiteralPart" eSuperTypes="#//Element">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedKey" lowerBound="1"
@@ -683,11 +619,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MessageExp" eSuperTypes="#//OCLExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedArguments" upperBound="-1"
-        eType="#//OCLExpression" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedCalledOperation" eType="#//CallOperationAction"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSentSignal" eType="#//SendSignalAction"
@@ -739,11 +671,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="NavigationCallExp" abstract="true" eSuperTypes="#//FeatureCallExp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="navigationSource" eType="#//Property"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" upperBound="-1"
-        eType="#//OCLExpression">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//OCLExpression"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NullLiteralExp" eSuperTypes="#//PrimitiveLiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" name="NumericLiteralExp" abstract="true" eSuperTypes="#//PrimitiveLiteralExp"/>
@@ -822,11 +750,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isVirtual" lowerBound="1"
         eType="#//EBoolean" defaultValueLiteral="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedArguments" upperBound="-1"
-        eType="#//OCLExpression" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//OCLExpression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredOperation" eType="#//Operation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OppositePropertyCallExp" eSuperTypes="#//NavigationCallExp">
@@ -848,9 +772,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nsPrefix" eType="#//String"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedClasses" ordered="false"
         upperBound="-1" eType="#//Class" containment="true" eOpposite="#//Class/owningPackage">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="References the packaged elements that are Types."/>
       </eAnnotations>
@@ -911,11 +832,7 @@
       <details key="documentation" value="A PrimitiveType defines a predefined DataType, without any substructure. A PrimitiveType may have an algebra and operations defined outside of UML, for example, mathematically."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="coercions" upperBound="-1"
-        eType="#//Operation">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//Operation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Profile" eSuperTypes="#//Package">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1104,11 +1021,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="SetType" eSuperTypes="#//CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" name="ShadowExp" eSuperTypes="#//OCLExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParts" upperBound="-1"
-        eType="#//ShadowPart" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//ShadowPart" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//String"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ShadowPart" eSuperTypes="#//TypedElement">
@@ -1294,9 +1207,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSubstitutions" ordered="false"
         lowerBound="1" upperBound="-1" eType="#//TemplateParameterSubstitution" containment="true"
         eOpposite="#//TemplateParameterSubstitution/owningBinding">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The TemplateParameterSubstitutions owned by this TemplateBinding."/>
       </eAnnotations>
@@ -1320,11 +1230,7 @@
       <details key="documentation" value="A TemplateParameter exposes a ParameterableElement as a formal parameter of a template."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="constrainingClasses" ordered="false"
-        upperBound="-1" eType="#//Class">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        upperBound="-1" eType="#//Class"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owningSignature" lowerBound="1"
         eType="#//TemplateSignature" eOpposite="#//TemplateSignature/ownedParameters">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1452,11 +1358,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TupleLiteralExp" eSuperTypes="#//LiteralExp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParts" upperBound="-1"
-        eType="#//TupleLiteralPart" containment="true">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="#//TupleLiteralPart" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TupleLiteralPart" eSuperTypes="#//VariableDeclaration">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInit" eType="#//OCLExpression"
