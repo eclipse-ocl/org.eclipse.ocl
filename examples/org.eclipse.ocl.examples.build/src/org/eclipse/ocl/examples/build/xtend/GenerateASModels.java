@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Orphanage;
 import org.eclipse.ocl.pivot.merge.Merger;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.LabelUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -398,7 +399,46 @@ public abstract class GenerateASModels extends GenerateOCLCommonXtend
 							EOperation eOperation = eOperations.get(i);
 							String name = eOperation.getName();
 						    if (!EcoreValidator.isWellFormedJavaIdentifier(name)) {
-						    	eOperations.remove(i);
+								EAnnotation umlAnnotation = eOperation.getEAnnotation(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
+								if (umlAnnotation == null) {
+									umlAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+									umlAnnotation.setSource(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI);
+									eOperation.getEAnnotations().add(umlAnnotation);
+								}
+								String old = umlAnnotation.getDetails().put(DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME, name);
+								assert old == null;
+								if ("/".equals(name)) {
+									name = "div";
+								}
+								else if ("=".equals(name)) {
+									name = "eq";
+								}
+								else if (">=".equals(name)) {
+									name = "ge";
+								}
+								else if (">".equals(name)) {
+									name = "gt";
+								}
+								else if ("<=".equals(name)) {
+									name = "le";
+								}
+								else if ("<".equals(name)) {
+									name = "lt";
+								}
+								else if ("-".equals(name)) {
+									name = eOperation.getEParameters().isEmpty() ? "neg" : "minus";
+								}
+								else if ("*".equals(name)) {
+									name = "mul";
+								}
+								else if ("<>".equals(name)) {
+									name = "ne";
+								}
+								else if ("+".equals(name)) {
+									name = "plus";
+								}
+							    assert EcoreValidator.isWellFormedJavaIdentifier(name);
+						    	eOperation.setName(name);
 						    }
 						}
 					}

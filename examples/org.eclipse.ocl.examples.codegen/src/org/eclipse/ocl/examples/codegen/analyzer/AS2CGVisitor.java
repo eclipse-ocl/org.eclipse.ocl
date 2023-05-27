@@ -1478,15 +1478,18 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (cgOperation == null) {
 			cgOperation = createFinalCGOperationWithoutBody(asOperation);
 		}
-		LanguageExpression specification = asOperation.getBodyExpression();
-		if (specification != null) {
-			try {
-				ExpressionInOCL query = environmentFactory.parseSpecification(specification);
-				createParameters(cgOperation, query);
-				cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
-			} catch (ParserException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		String implementationClass = asOperation.getImplementationClass();
+		if (implementationClass == null) {
+			LanguageExpression specification = asOperation.getBodyExpression();
+			if (specification != null) {
+				try {
+					ExpressionInOCL query = environmentFactory.parseSpecification(specification);
+					createParameters(cgOperation, query);
+					cgOperation.setBody(doVisit(CGValuedElement.class, query.getOwnedBody()));
+				} catch (ParserException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		return cgOperation;
