@@ -11,6 +11,8 @@
 package org.eclipse.ocl.pivot.util;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
@@ -160,6 +162,8 @@ import org.eclipse.ocl.pivot.utilities.MorePivotable;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.Pivotable;
 import org.eclipse.ocl.pivot.utilities.TuplePart;
+import org.eclipse.ocl.pivot.values.Bag;
+import org.eclipse.ocl.pivot.values.OrderedSet;
 
 /**
  * <!-- begin-user-doc -->
@@ -241,6 +245,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseAssociationClassCallExp(AssociationClassCallExp object)
 			{
 				return createAssociationClassCallExpAdapter();
+			}
+			@Override
+			public <T> Adapter caseBag(Bag<T> object)
+			{
+				return createBagAdapter();
 			}
 			@Override
 			public Adapter caseBagType(BagType object)
@@ -678,6 +687,16 @@ extends AdapterFactoryImpl {
 				return createOppositePropertyCallExpAdapter();
 			}
 			@Override
+			public <T> Adapter caseOrderedCollection(Collection<T> object)
+			{
+				return createOrderedCollectionAdapter();
+			}
+			@Override
+			public <T> Adapter caseOrderedSet(OrderedSet<T> object)
+			{
+				return createOrderedSetAdapter();
+			}
+			@Override
 			public Adapter caseOrderedSetType(OrderedSetType object)
 			{
 				return createOrderedSetTypeAdapter();
@@ -788,9 +807,19 @@ extends AdapterFactoryImpl {
 				return createSendSignalActionAdapter();
 			}
 			@Override
+			public <T> Adapter caseSequence(List<T> object)
+			{
+				return createSequenceAdapter();
+			}
+			@Override
 			public Adapter caseSequenceType(SequenceType object)
 			{
 				return createSequenceTypeAdapter();
+			}
+			@Override
+			public <T> Adapter caseSet(Set<T> object)
+			{
+				return createSetAdapter();
 			}
 			@Override
 			public Adapter caseSetType(SetType object)
@@ -921,6 +950,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseTypedElement(TypedElement object)
 			{
 				return createTypedElementAdapter();
+			}
+			@Override
+			public <T> Adapter caseUniqueCollection(Collection<T> object)
+			{
+				return createUniqueCollectionAdapter();
 			}
 			@Override
 			public Adapter caseUnlimitedNaturalLiteralExp(UnlimitedNaturalLiteralExp object)
@@ -1897,6 +1931,21 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link java.util.List <em>Sequence</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.List
+	 * @generated
+	 */
+	public Adapter createSequenceAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.Signal <em>Signal</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2215,6 +2264,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createSequenceTypeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Set <em>Set</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Set
+	 * @generated
+	 */
+	public Adapter createSetAdapter()
+	{
 		return null;
 	}
 
@@ -2764,6 +2828,21 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Collection <em>Unique Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Collection
+	 * @generated
+	 */
+	public Adapter createUniqueCollectionAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.AssociationClass <em>Association Class</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2846,6 +2925,36 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOppositePropertyCallExpAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Collection <em>Ordered Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Collection
+	 * @generated
+	 */
+	public Adapter createOrderedCollectionAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.OrderedSet <em>Ordered Set</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet
+	 * @generated
+	 */
+	public Adapter createOrderedSetAdapter()
 	{
 		return null;
 	}
@@ -3110,6 +3219,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAssociationClassCallExpAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.values.Bag <em>Bag</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.values.Bag
+	 * @generated
+	 */
+	public Adapter createBagAdapter()
+	{
 		return null;
 	}
 

@@ -84,6 +84,9 @@
     <genClasses ecoreClass="Pivot.ecore#T-pivot-AssociationClassCallExp">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-AssociationClassCallExp-referredAssociationClass"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-Bag">
+      <genTypeParameters ecoreTypeParameter="Pivot.ecore#//Bag/T"/>
+    </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-BagType"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-Behavior">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Behavior-owningTransition"/>
@@ -727,6 +730,12 @@
         <genParameters ecoreParameter="Pivot.ecore#//OppositePropertyCallExp/validateUnsafeSourceCanNotBeNull/context"/>
       </genOperations>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OrderedCollection">
+      <genTypeParameters ecoreTypeParameter="Pivot.ecore#//OrderedCollection/T"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OrderedSet">
+      <genTypeParameters ecoreTypeParameter="Pivot.ecore#//OrderedSet/T"/>
+    </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-OrderedSetType"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-OrphanCompletePackage"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-Package">
@@ -858,7 +867,13 @@
     <genClasses ecoreClass="Pivot.ecore#T-pivot-SendSignalAction">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-SendSignalAction-signal"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-Sequence">
+      <genTypeParameters ecoreTypeParameter="Pivot.ecore#//Sequence/T"/>
+    </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-SequenceType"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-Set">
+      <genTypeParameters ecoreTypeParameter="Pivot.ecore#//Set/T"/>
+    </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-SetType"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-ShadowExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-ShadowExp-ownedParts"/>
@@ -1023,6 +1038,9 @@
       <genOperations ecoreOperation="Pivot.ecore#//TypedElement/CompatibleBody">
         <genParameters ecoreParameter="Pivot.ecore#//TypedElement/CompatibleBody/bodySpecification"/>
       </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-UniqueCollection">
+      <genTypeParameters ecoreTypeParameter="Pivot.ecore#//UniqueCollection/T"/>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-UnlimitedNaturalLiteralExp">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-UnlimitedNaturalLiteralExp-unlimitedNaturalSymbol"/>

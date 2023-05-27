@@ -135,6 +135,16 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-AssociationClassCallExp-referredAssociationClass"
         name="referredAssociationClass" eType="#T-pivot-AssociationClass"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Bag" name="Bag" instanceClassName="org.eclipse.ocl.pivot.values.Bag"
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.&#xA;There is no ordering defined on the elements in a bag.&#xA;Bag is itself an instance of the metatype BagType.&#xA;"/>
+    </eAnnotations>
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#T-pivot-Collection">
+      <eTypeArguments eTypeParameter="#//Bag/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-BagType" name="BagType" eSuperTypes="#T-pivot-CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Behavior" name="Behavior"
       abstract="true" eSuperTypes="#T-pivot-Class">
@@ -2171,6 +2181,30 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-OppositePropertyCallExp-referredProperty"
         name="referredProperty" eType="#T-pivot-Property"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OrderedCollection" name="OrderedCollection"
+      instanceClassName="java.util.Collection" abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence&#xA;collections for which the elements are ordered.&#xA;The common supertype of OrderedCollection is Collection.&#xA;"/>
+    </eAnnotations>
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#T-pivot-Collection">
+      <eTypeArguments eTypeParameter="#//OrderedCollection/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OrderedSet" name="OrderedSet"
+      instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet" abstract="true"
+      interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The OrderedSet is a Set, the elements of which are ordered.&#xA;It contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.&#xA;An OrderedSet is not a subtype of Set, neither a subtype of Sequence.&#xA;The common supertype of Sets and OrderedSets is Collection.&#xA;"/>
+    </eAnnotations>
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#T-pivot-OrderedCollection">
+      <eTypeArguments eTypeParameter="#//OrderedSet/T"/>
+    </eGenericSuperTypes>
+    <eGenericSuperTypes eClassifier="#T-pivot-UniqueCollection">
+      <eTypeArguments eTypeParameter="#//OrderedSet/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OrderedSetType" name="OrderedSetType"
       eSuperTypes="#T-pivot-CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OrphanCompletePackage" name="OrphanCompletePackage"
@@ -2613,8 +2647,25 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-SendSignalAction-signal"
         name="signal" lowerBound="1" eType="#T-pivot-Signal"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Sequence" name="Sequence"
+      instanceClassName="java.util.List" abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="A sequence is a collection where the elements are ordered.&#xA;An element may be part of a sequence more than once.&#xA;Sequence is itself an instance of the metatype SequenceType.&#xA;A Sentence is not a subtype of Bag.&#xA;The common supertype of Sentence and Bags is Collection.&#xA;"/>
+    </eAnnotations>
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#T-pivot-OrderedCollection">
+      <eTypeArguments eTypeParameter="#//Sequence/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-SequenceType" name="SequenceType"
       eSuperTypes="#T-pivot-CollectionType"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Set" name="Set" instanceClassName="java.util.Set"
+      abstract="true" interface="true">
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#T-pivot-UniqueCollection">
+      <eTypeArguments eTypeParameter="#//Set/T"/>
+    </eGenericSuperTypes>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-SetType" name="SetType" eSuperTypes="#T-pivot-CollectionType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-ShadowExp" name="ShadowExp"
       eSuperTypes="#T-pivot-OCLExpression">
@@ -3230,6 +3281,16 @@
         <details key="documentation" value="The type of the TypedElement."/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-UniqueCollection" name="UniqueCollection"
+      instanceClassName="java.util.Collection" abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The UniqueCollection type provides the shared functionality of the OrderedSet and Set&#xA;collections for which the elements are unique.&#xA;The common supertype of UniqueCollection is Collection.&#xA;"/>
+    </eAnnotations>
+    <eTypeParameters name="T"/>
+    <eGenericSuperTypes eClassifier="#T-pivot-Collection">
+      <eTypeArguments eTypeParameter="#//UniqueCollection/T"/>
+    </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-UnlimitedNaturalLiteralExp"
       name="UnlimitedNaturalLiteralExp" eSuperTypes="#T-pivot-NumericLiteralExp">

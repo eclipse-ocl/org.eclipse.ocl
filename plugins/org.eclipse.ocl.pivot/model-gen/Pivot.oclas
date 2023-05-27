@@ -60,6 +60,13 @@
     <ownedClasses xmi:id="ZD0WZ" name="AssociationClassCallExp" superClasses="#cmSzw">
       <ownedProperties xmi:id="12PvD" isRequired="false" name="referredAssociationClass" opposite="#AgtLW" type="#oE9s0"/>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="0uAja" instanceClassName="org.eclipse.ocl.pivot.values.Bag" isAbstract="true" isInterface="true"
+        name="Bag" superClasses="#bB,Y7">
+      <ownedComments body="A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.&#xA;There is no ordering defined on the elements in a bag.&#xA;Bag is itself an instance of the metatype BagType.&#xA;"/>
+      <ownedSignature>
+        <ownedParameters xmi:id="2wVBM" name="T"/>
+      </ownedSignature>
+    </ownedClasses>
     <ownedClasses xmi:id="Tr9Pp" name="BagType" superClasses="#pawWx"/>
     <ownedClasses xmi:id="D4Bd4" isAbstract="true" name="Behavior" superClasses="#pDcbe">
       <ownedComments body="Behavior is a specification of how its context BehavioredClassifier changes state over time. This specification may be either a definition of possible behavior execution or emergent behavior, or a selective illustration of an interesting subset of possible executions. The latter form is typically used for capturing examples, such as a trace of a particular execution."/>
@@ -840,6 +847,20 @@
       </ownedInvariants>
       <ownedProperties xmi:id="is7rW" isRequired="false" name="referredProperty" opposite="#zB7r3" type="#Gm0Mj"/>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Xae7f" instanceClassName="java.util.Collection" isAbstract="true" isInterface="true"
+        name="OrderedCollection" superClasses="#ei86m">
+      <ownedComments body="The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence&#xA;collections for which the elements are ordered.&#xA;The common supertype of OrderedCollection is Collection.&#xA;"/>
+      <ownedSignature>
+        <ownedParameters xmi:id="xYMI+" name="T"/>
+      </ownedSignature>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="hy7v+" instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet" isAbstract="true"
+        isInterface="true" name="OrderedSet" superClasses="#1HmkR #ZygJL">
+      <ownedComments body="The OrderedSet is a Set, the elements of which are ordered.&#xA;It contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.&#xA;An OrderedSet is not a subtype of Set, neither a subtype of Sequence.&#xA;The common supertype of Sets and OrderedSets is Collection.&#xA;"/>
+      <ownedSignature>
+        <ownedParameters xmi:id="LyFEI" name="T"/>
+      </ownedSignature>
+    </ownedClasses>
     <ownedClasses xmi:id="A10J5" name="OrderedSetType" superClasses="#pawWx"/>
     <ownedClasses xmi:id="WaoLl" name="OrphanCompletePackage" superClasses="#+gDEJ">
       <ownedProperties xmi:id="pwEaB" isImplicit="true" name="CompleteModel" opposite="#aU0xR" type="#4TrgD"/>
@@ -1058,7 +1079,20 @@
       <ownedProperties xmi:id="7gEy2" name="signal" opposite="#rLDL," type="#ZJWJu"/>
       <ownedProperties xmi:id="MCEwd" isImplicit="true" isRequired="false" name="MessageExp" opposite="#oSaJE" type="#HRils"/>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="tOe1u" instanceClassName="java.util.List" isAbstract="true" isInterface="true"
+        name="Sequence" superClasses="#B6m1j">
+      <ownedComments body="A sequence is a collection where the elements are ordered.&#xA;An element may be part of a sequence more than once.&#xA;Sequence is itself an instance of the metatype SequenceType.&#xA;A Sentence is not a subtype of Bag.&#xA;The common supertype of Sentence and Bags is Collection.&#xA;"/>
+      <ownedSignature>
+        <ownedParameters xmi:id="3vp7V" name="T"/>
+      </ownedSignature>
+    </ownedClasses>
     <ownedClasses xmi:id="M5weU" name="SequenceType" superClasses="#pawWx"/>
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="OwEja" instanceClassName="java.util.Set" isAbstract="true" isInterface="true" name="Set"
+        superClasses="#miVzH">
+      <ownedSignature>
+        <ownedParameters xmi:id="g9ynL" name="T"/>
+      </ownedSignature>
+    </ownedClasses>
     <ownedClasses xmi:id="t4FF0" name="SetType" superClasses="#pawWx"/>
     <ownedClasses xmi:id="Oxaac" name="ShadowExp" superClasses="#BFtK4">
       <ownedInvariants xmi:id="zdmuT" isCallable="true" name="ClassHasNoStringValueInitializer">
@@ -1345,6 +1379,13 @@
       <ownedProperties xmi:id="pcY9R" isRequired="false" name="type" opposite="#,WhCE" type="#rrwsa">
         <ownedComments body="The type of the TypedElement."/>
       </ownedProperties>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="7EZgZ" instanceClassName="java.util.Collection" isAbstract="true" isInterface="true"
+        name="UniqueCollection" superClasses="#CPFbm">
+      <ownedComments body="The UniqueCollection type provides the shared functionality of the OrderedSet and Set&#xA;collections for which the elements are unique.&#xA;The common supertype of UniqueCollection is Collection.&#xA;"/>
+      <ownedSignature>
+        <ownedParameters xmi:id="1XmkW" name="T"/>
+      </ownedSignature>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:PrimitiveType" xmi:id="5Oxgg" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"
         name="UnlimitedNatural" superClasses="&_0;#jbMkR">
@@ -1683,6 +1724,11 @@
         <ownedSubstitutions actual="#ZD0WZ" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="bB,Y7" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#2wVBM" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="gCV5t" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#D4Bd4" formal="&_0;#qs59R"/>
@@ -1853,6 +1899,16 @@
         <ownedSubstitutions actual="#Uj1fg" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ei86m" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#xYMI+" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="o3wNb" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#LyFEI" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="0wHON" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#3ONqN" formal="&_0;#qs59R"/>
@@ -1901,6 +1957,16 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="U3OCv" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#X55Qa" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="0pxet" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#3vp7V" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1nl3X" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#g9ynL" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ZTT,v" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
@@ -1988,6 +2054,11 @@
         <ownedSubstitutions actual="#j7EI0" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="CPFbm" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#1XmkW" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="gdxGa" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#DLUxI" formal="&_0;#qs59R"/>
@@ -2063,6 +2134,11 @@
         <ownedSubstitutions actual="#Yz,F1" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="1HmkR" isNullFree="true" name="OrderedCollection" superClasses="#o3wNb">
+      <ownedBindings>
+        <ownedSubstitutions actual="#LyFEI" formal="&_0;#feFHs"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="sGW8E" isNullFree="true" name="OrderedCollection" superClasses="#f2glO">
       <ownedBindings>
         <ownedSubstitutions actual="#as9eG" formal="&_0;#feFHs"/>
@@ -2076,6 +2152,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="4UstA" isNullFree="true" name="OrderedCollection" superClasses="#rE3WK">
       <ownedBindings>
         <ownedSubstitutions actual="#Gm0Mj" formal="&_0;#feFHs"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="B6m1j" isNullFree="true" name="OrderedCollection" superClasses="#0pxet">
+      <ownedBindings>
+        <ownedSubstitutions actual="#3vp7V" formal="&_0;#feFHs"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="mjIWm" isNullFree="true" name="OrderedCollection" superClasses="#ZTT,v">
@@ -2448,6 +2529,11 @@
         <ownedSubstitutions actual="#Yz,F1" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ZygJL" isNullFree="true" name="UniqueCollection" superClasses="#o3wNb">
+      <ownedBindings>
+        <ownedSubstitutions actual="#LyFEI" formal="&_0;#jdfjE"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="lr3J9" isNullFree="true" name="UniqueCollection" superClasses="#0wHON">
       <ownedBindings>
         <ownedSubstitutions actual="#3ONqN" formal="&_0;#jdfjE"/>
@@ -2481,6 +2567,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="jOy9c" isNullFree="true" name="UniqueCollection" superClasses="#yTCCt">
       <ownedBindings>
         <ownedSubstitutions actual="#lqBOs" formal="&_0;#jdfjE"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="miVzH" isNullFree="true" name="UniqueCollection" superClasses="#1nl3X">
+      <ownedBindings>
+        <ownedSubstitutions actual="#g9ynL" formal="&_0;#jdfjE"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KOD7f" isNullFree="true" name="UniqueCollection" superClasses="#ZTT,v">

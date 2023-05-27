@@ -251,6 +251,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installGenericAggregateTypes();
 			installOperationDeclarations();
 			installSpecializedAggregateTypes0();
+			installSpecializedAggregateTypes1();
 			installAggregateSuperTypes();
 			installOperationBodies();
 			installProperties();
@@ -261,28 +262,28 @@ public class OCLmetamodel extends ASResourceImpl
 		}
 
 		private final @NonNull Package _ocl = libraryPackage;
-		private final @NonNull CollectionType _Bag = getCollectionType(_ocl, "Bag");
+//		private final @NonNull CollectionType _Bag = getCollectionType(_ocl, "Bag");
 		private final @NonNull Class _Boolean = getClass(_ocl, "Boolean");
 		private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
 		private final @NonNull Class _Integer = getClass(_ocl, "Integer");
 //		private final @NonNull Class _OclAny = getClass(_ocl, "OclAny");
 //		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
 //		private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
-		private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
-		private final @NonNull CollectionType _OrderedSet = getCollectionType(_ocl, "OrderedSet");
+//		private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
+//		private final @NonNull CollectionType _OrderedSet = getCollectionType(_ocl, "OrderedSet");
 		private final @NonNull Class _Real = getClass(_ocl, "Real");
-		private final @NonNull CollectionType _Sequence = getCollectionType(_ocl, "Sequence");
-		private final @NonNull CollectionType _Set = getCollectionType(_ocl, "Set");
+//		private final @NonNull CollectionType _Sequence = getCollectionType(_ocl, "Sequence");
+//		private final @NonNull CollectionType _Set = getCollectionType(_ocl, "Set");
 		private final @NonNull Class _String = getClass(_ocl, "String");
-		private final @NonNull CollectionType _UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
+//		private final @NonNull CollectionType _UniqueCollection = getCollectionType(_ocl, "UniqueCollection");
 		private final @NonNull Class _UnlimitedNatural = getClass(_ocl, "UnlimitedNatural");
-		private final @NonNull TemplateParameter _Bag_T = getTemplateParameter(_Bag, 0);
-		private final @NonNull TemplateParameter _Collection_T = getTemplateParameter(_Collection, 0);
-		private final @NonNull TemplateParameter _OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
-		private final @NonNull TemplateParameter _OrderedSet_T = getTemplateParameter(_OrderedSet, 0);
-		private final @NonNull TemplateParameter _Sequence_T = getTemplateParameter(_Sequence, 0);
-		private final @NonNull TemplateParameter _Set_T = getTemplateParameter(_Set, 0);
-		private final @NonNull TemplateParameter _UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
+//		private final @NonNull TemplateParameter _Bag_T = getTemplateParameter(_Bag, 0);
+//		private final @NonNull TemplateParameter _Collection_T = getTemplateParameter(_Collection, 0);
+//		private final @NonNull TemplateParameter _OrderedCollection_T = getTemplateParameter(_OrderedCollection, 0);
+//		private final @NonNull TemplateParameter _OrderedSet_T = getTemplateParameter(_OrderedSet, 0);
+//		private final @NonNull TemplateParameter _Sequence_T = getTemplateParameter(_Sequence, 0);
+//		private final @NonNull TemplateParameter _Set_T = getTemplateParameter(_Set, 0);
+//		private final @NonNull TemplateParameter _UniqueCollection_T = getTemplateParameter(_UniqueCollection, 0);
 
 		private void installPackages() {
 			root.getOwnedPackages().add(pivot);
@@ -290,10 +291,22 @@ public class OCLmetamodel extends ASResourceImpl
 			root.getOwnedImports().add(createImport(null, _ocl));
 		}
 
+		private TemplateParameter tp_Bag_T;
 		private TemplateParameter tp_Collection_T;
+		private TemplateParameter tp_OrderedCollection_T;
+		private TemplateParameter tp_OrderedSet_T;
+		private TemplateParameter tp_Sequence_T;
+		private TemplateParameter tp_Set_T;
+		private TemplateParameter tp_UniqueCollection_T;
 
 		private void installTemplateParameters() {
+			tp_Bag_T = createTemplateParameter("T");
 			tp_Collection_T = createTemplateParameter("T");
+			tp_OrderedCollection_T = createTemplateParameter("T");
+			tp_OrderedSet_T = createTemplateParameter("T");
+			tp_Sequence_T = createTemplateParameter("T");
+			tp_Set_T = createTemplateParameter("T");
+			tp_UniqueCollection_T = createTemplateParameter("T");
 		}
 
 		private Class _Annotation;
@@ -994,6 +1007,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _Collection_String_T;
 		private CollectionType _Collection_Annotation_T;
 		private CollectionType _Collection_AssociationClassCallExp_T;
+		private CollectionType _Collection_Bag_T_T;
 		private CollectionType _Collection_Behavior_T;
 		private CollectionType _Collection_CallOperationAction_T;
 		private CollectionType _Collection_Class_T;
@@ -1028,6 +1042,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _Collection_OperationCallExp_T;
 		private CollectionType _Collection_Operation_T;
 		private CollectionType _Collection_OppositePropertyCallExp_T;
+		private CollectionType _Collection_OrderedCollection_T_T;
+		private CollectionType _Collection_OrderedSet_T_T;
 		private CollectionType _Collection_Package_T;
 		private CollectionType _Collection_Parameter_T;
 		private CollectionType _Collection_Precedence_T;
@@ -1038,6 +1054,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _Collection_Pseudostate_T;
 		private CollectionType _Collection_Region_T;
 		private CollectionType _Collection_SendSignalAction_T;
+		private CollectionType _Collection_Sequence_T_T;
+		private CollectionType _Collection_Set_T_T;
 		private CollectionType _Collection_ShadowPart_T;
 		private CollectionType _Collection_Slot_T;
 		private CollectionType _Collection_StateExp_T;
@@ -1054,6 +1072,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _Collection_TypeExp_T;
 		private CollectionType _Collection_Type_T;
 		private CollectionType _Collection_TypedElement_T;
+		private CollectionType _Collection_UniqueCollection_T_T;
 		private CollectionType _Collection_ValueSpecification_T;
 		private CollectionType _Collection_VariableDeclaration_T;
 		private CollectionType _Collection_VariableExp_T;
@@ -1069,9 +1088,11 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _OrderedCollection_MapLiteralPart_T;
 		private CollectionType _OrderedCollection_OCLExpression_T;
 		private CollectionType _OrderedCollection_Operation_T;
+		private CollectionType _OrderedCollection_OrderedSet_T_T;
 		private CollectionType _OrderedCollection_Parameter_T;
 		private CollectionType _OrderedCollection_Precedence_T;
 		private CollectionType _OrderedCollection_Property_T;
+		private CollectionType _OrderedCollection_Sequence_T_T;
 		private CollectionType _OrderedCollection_ShadowPart_T;
 		private CollectionType _OrderedCollection_TemplateParameter_T;
 		private CollectionType _OrderedCollection_TupleLiteralPart_T;
@@ -1147,6 +1168,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _UniqueCollection_Model_T;
 		private CollectionType _UniqueCollection_OCLExpression_T;
 		private CollectionType _UniqueCollection_Operation_T;
+		private CollectionType _UniqueCollection_OrderedSet_T_T;
 		private CollectionType _UniqueCollection_Package_T;
 		private CollectionType _UniqueCollection_Parameter_T;
 		private CollectionType _UniqueCollection_Precedence_T;
@@ -1154,6 +1176,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _UniqueCollection_Property_T;
 		private CollectionType _UniqueCollection_Pseudostate_T;
 		private CollectionType _UniqueCollection_Region_T;
+		private CollectionType _UniqueCollection_Set_T_T;
 		private CollectionType _UniqueCollection_ShadowPart_T;
 		private CollectionType _UniqueCollection_Slot_T;
 		private CollectionType _UniqueCollection_StateMachine_T;
@@ -1169,10 +1192,22 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _UniqueCollection_ValueSpecification_T;
 		private CollectionType _UniqueCollection_Variable_T;
 		private CollectionType _UniqueCollection_Vertex_T;
+		private CollectionType _Bag;
+		private CollectionType _OrderedCollection;
+		private CollectionType _OrderedSet;
+		private CollectionType _Sequence;
+		private CollectionType _Set;
+		private CollectionType _UniqueCollection;
 
 		private void installGenericAggregateTypes() {
 			Class type;
 
+			type = _Bag = createCollectionType(pivot, PivotPackage.Literals.BAG, tp_Bag_T, false, 0, -1);
+			type = _OrderedCollection = createCollectionType(pivot, PivotPackage.Literals.ORDERED_COLLECTION, tp_OrderedCollection_T, false, 0, -1);
+			type = _OrderedSet = createCollectionType(pivot, PivotPackage.Literals.ORDERED_SET, tp_OrderedSet_T, false, 0, -1);
+			type = _Sequence = createCollectionType(pivot, PivotPackage.Literals.SEQUENCE, tp_Sequence_T, false, 0, -1);
+			type = _Set = createCollectionType(pivot, PivotPackage.Literals.SET, tp_Set_T, false, 0, -1);
+			type = _UniqueCollection = createCollectionType(pivot, PivotPackage.Literals.UNIQUE_COLLECTION, tp_UniqueCollection_T, false, 0, -1);
 		}
 
 
@@ -1407,6 +1442,21 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _UniqueCollection_Vertex_T = getCollectionType(_UniqueCollection, _Vertex, true, 0, -1);
 		}
 
+		private void installSpecializedAggregateTypes1() {
+			Class type;
+
+			type = _Collection_Bag_T_T = getCollectionType(_Collection, tp_Bag_T, true, 0, -1);
+			type = _Collection_OrderedCollection_T_T = getCollectionType(_Collection, tp_OrderedCollection_T, true, 0, -1);
+			type = _Collection_OrderedSet_T_T = getCollectionType(_Collection, tp_OrderedSet_T, true, 0, -1);
+			type = _Collection_Sequence_T_T = getCollectionType(_Collection, tp_Sequence_T, true, 0, -1);
+			type = _Collection_Set_T_T = getCollectionType(_Collection, tp_Set_T, true, 0, -1);
+			type = _Collection_UniqueCollection_T_T = getCollectionType(_Collection, tp_UniqueCollection_T, true, 0, -1);
+			type = _OrderedCollection_OrderedSet_T_T = getCollectionType(_OrderedCollection, tp_OrderedSet_T, true, 0, -1);
+			type = _OrderedCollection_Sequence_T_T = getCollectionType(_OrderedCollection, tp_Sequence_T, true, 0, -1);
+			type = _UniqueCollection_OrderedSet_T_T = getCollectionType(_UniqueCollection, tp_OrderedSet_T, true, 0, -1);
+			type = _UniqueCollection_Set_T_T = getCollectionType(_UniqueCollection, tp_Set_T, true, 0, -1);
+		}
+
 		private void installAggregateSuperTypes() {
 			addSuperClass(_Bag_Annotation_T, _Collection_Annotation_T);
 			addSuperClass(_Bag_AssociationClassCallExp_T, _Collection_AssociationClassCallExp_T);
@@ -1459,6 +1509,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_Collection_String_T, _OclAny);
 			addSuperClass(_Collection_Annotation_T, _OclAny);
 			addSuperClass(_Collection_AssociationClassCallExp_T, _OclAny);
+			addSuperClass(_Collection_Bag_T_T, _OclAny);
 			addSuperClass(_Collection_Behavior_T, _OclAny);
 			addSuperClass(_Collection_CallOperationAction_T, _OclAny);
 			addSuperClass(_Collection_Class_T, _OclAny);
@@ -1493,6 +1544,8 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_Collection_OperationCallExp_T, _OclAny);
 			addSuperClass(_Collection_Operation_T, _OclAny);
 			addSuperClass(_Collection_OppositePropertyCallExp_T, _OclAny);
+			addSuperClass(_Collection_OrderedCollection_T_T, _OclAny);
+			addSuperClass(_Collection_OrderedSet_T_T, _OclAny);
 			addSuperClass(_Collection_Package_T, _OclAny);
 			addSuperClass(_Collection_Parameter_T, _OclAny);
 			addSuperClass(_Collection_Precedence_T, _OclAny);
@@ -1503,6 +1556,8 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_Collection_Pseudostate_T, _OclAny);
 			addSuperClass(_Collection_Region_T, _OclAny);
 			addSuperClass(_Collection_SendSignalAction_T, _OclAny);
+			addSuperClass(_Collection_Sequence_T_T, _OclAny);
+			addSuperClass(_Collection_Set_T_T, _OclAny);
 			addSuperClass(_Collection_ShadowPart_T, _OclAny);
 			addSuperClass(_Collection_Slot_T, _OclAny);
 			addSuperClass(_Collection_StateExp_T, _OclAny);
@@ -1519,6 +1574,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_Collection_TypeExp_T, _OclAny);
 			addSuperClass(_Collection_Type_T, _OclAny);
 			addSuperClass(_Collection_TypedElement_T, _OclAny);
+			addSuperClass(_Collection_UniqueCollection_T_T, _OclAny);
 			addSuperClass(_Collection_ValueSpecification_T, _OclAny);
 			addSuperClass(_Collection_VariableDeclaration_T, _OclAny);
 			addSuperClass(_Collection_VariableExp_T, _OclAny);
@@ -1534,9 +1590,11 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_OrderedCollection_MapLiteralPart_T, _Collection_MapLiteralPart_T);
 			addSuperClass(_OrderedCollection_OCLExpression_T, _Collection_OCLExpression_T);
 			addSuperClass(_OrderedCollection_Operation_T, _Collection_Operation_T);
+			addSuperClass(_OrderedCollection_OrderedSet_T_T, _Collection_OrderedSet_T_T);
 			addSuperClass(_OrderedCollection_Parameter_T, _Collection_Parameter_T);
 			addSuperClass(_OrderedCollection_Precedence_T, _Collection_Precedence_T);
 			addSuperClass(_OrderedCollection_Property_T, _Collection_Property_T);
+			addSuperClass(_OrderedCollection_Sequence_T_T, _Collection_Sequence_T_T);
 			addSuperClass(_OrderedCollection_ShadowPart_T, _Collection_ShadowPart_T);
 			addSuperClass(_OrderedCollection_TemplateParameter_T, _Collection_TemplateParameter_T);
 			addSuperClass(_OrderedCollection_TupleLiteralPart_T, _Collection_TupleLiteralPart_T);
@@ -1629,6 +1687,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_UniqueCollection_Model_T, _Collection_Model_T);
 			addSuperClass(_UniqueCollection_OCLExpression_T, _Collection_OCLExpression_T);
 			addSuperClass(_UniqueCollection_Operation_T, _Collection_Operation_T);
+			addSuperClass(_UniqueCollection_OrderedSet_T_T, _Collection_OrderedSet_T_T);
 			addSuperClass(_UniqueCollection_Package_T, _Collection_Package_T);
 			addSuperClass(_UniqueCollection_Parameter_T, _Collection_Parameter_T);
 			addSuperClass(_UniqueCollection_Precedence_T, _Collection_Precedence_T);
@@ -1636,6 +1695,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_UniqueCollection_Property_T, _Collection_Property_T);
 			addSuperClass(_UniqueCollection_Pseudostate_T, _Collection_Pseudostate_T);
 			addSuperClass(_UniqueCollection_Region_T, _Collection_Region_T);
+			addSuperClass(_UniqueCollection_Set_T_T, _Collection_Set_T_T);
 			addSuperClass(_UniqueCollection_ShadowPart_T, _Collection_ShadowPart_T);
 			addSuperClass(_UniqueCollection_Slot_T, _Collection_Slot_T);
 			addSuperClass(_UniqueCollection_StateMachine_T, _Collection_StateMachine_T);
@@ -1651,6 +1711,13 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_UniqueCollection_ValueSpecification_T, _Collection_ValueSpecification_T);
 			addSuperClass(_UniqueCollection_Variable_T, _Collection_Variable_T);
 			addSuperClass(_UniqueCollection_Vertex_T, _Collection_Vertex_T);
+			addSuperClass(_Bag, _Collection_Bag_T_T);
+			addSuperClass(_OrderedCollection, _Collection_OrderedCollection_T_T);
+			addSuperClass(_OrderedSet, _OrderedCollection_OrderedSet_T_T);
+			addSuperClass(_OrderedSet, _UniqueCollection_OrderedSet_T_T);
+			addSuperClass(_Sequence, _OrderedCollection_Sequence_T_T);
+			addSuperClass(_Set, _UniqueCollection_Set_T_T);
+			addSuperClass(_UniqueCollection, _Collection_UniqueCollection_T_T);
 		}
 		private Operation op_CompleteModel_getOwnedCompletePackage;
 		private Operation op_CompletePackage_getOwnedCompleteClass;

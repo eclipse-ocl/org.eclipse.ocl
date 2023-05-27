@@ -2349,6 +2349,16 @@ extends EPackage
 	EReference getSendSignalAction_Signal();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.List <em>Sequence</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Sequence</em>'.
+	 * @see java.util.List
+	 * @generated
+	 */
+	EClass getSequence();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Signal <em>Signal</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3027,6 +3037,16 @@ extends EPackage
 	 * @generated
 	 */
 	EClass getSequenceType();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Set <em>Set</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Set</em>'.
+	 * @see java.util.Set
+	 * @generated
+	 */
+	EClass getSet();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.SetType <em>Set Type</em>}'.
@@ -4784,6 +4804,16 @@ extends EPackage
 	EOperation getTypedElement__CompatibleBody__ValueSpecification();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Collection <em>Unique Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Unique Collection</em>'.
+	 * @see java.util.Collection
+	 * @generated
+	 */
+	EClass getUniqueCollection();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.TypedElement#isIsRequired <em>Is Required</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -5142,6 +5172,26 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getOppositePropertyCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Collection <em>Ordered Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ordered Collection</em>'.
+	 * @see java.util.Collection
+	 * @generated
+	 */
+	EClass getOrderedCollection();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.OrderedSet <em>Ordered Set</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ordered Set</em>'.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet
+	 * @generated
+	 */
+	EClass getOrderedSet();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Comment <em>Comment</em>}'.
@@ -5818,6 +5868,16 @@ extends EPackage
 	 * @generated
 	 */
 	EReference getAssociationClassCallExp_ReferredAssociationClass();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.values.Bag <em>Bag</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Bag</em>'.
+	 * @see org.eclipse.ocl.pivot.values.Bag
+	 * @generated
+	 */
+	EClass getBag();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.NavigationCallExp <em>Navigation Call Exp</em>}'.
@@ -8046,6 +8106,16 @@ extends EPackage
 		EReference SEND_SIGNAL_ACTION__SIGNAL = eINSTANCE.getSendSignalAction_Signal();
 
 		/**
+		 * The meta object literal for the '{@link java.util.List <em>Sequence</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.List
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getSequence()
+		 * @generated
+		 */
+		EClass SEQUENCE = eINSTANCE.getSequence();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.SignalImpl <em>Signal</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8610,6 +8680,16 @@ extends EPackage
 		 * @generated
 		 */
 		EClass SEQUENCE_TYPE = eINSTANCE.getSequenceType();
+
+		/**
+		 * The meta object literal for the '{@link java.util.Set <em>Set</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Set
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getSet()
+		 * @generated
+		 */
+		EClass SET = eINSTANCE.getSet();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.SetTypeImpl <em>Set Type</em>}' class.
@@ -10008,6 +10088,16 @@ extends EPackage
 		EOperation TYPED_ELEMENT___COMPATIBLE_BODY__VALUESPECIFICATION = eINSTANCE.getTypedElement__CompatibleBody__ValueSpecification();
 
 		/**
+		 * The meta object literal for the '{@link java.util.Collection <em>Unique Collection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Collection
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getUniqueCollection()
+		 * @generated
+		 */
+		EClass UNIQUE_COLLECTION = eINSTANCE.getUniqueCollection();
+
+		/**
 		 * The meta object literal for the '<em><b>Is Required</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -10292,6 +10382,26 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation OPPOSITE_PROPERTY_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getOppositePropertyCallExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '{@link java.util.Collection <em>Ordered Collection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Collection
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOrderedCollection()
+		 * @generated
+		 */
+		EClass ORDERED_COLLECTION = eINSTANCE.getOrderedCollection();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.OrderedSet <em>Ordered Set</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.values.OrderedSet
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOrderedSet()
+		 * @generated
+		 */
+		EClass ORDERED_SET = eINSTANCE.getOrderedSet();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.CommentImpl <em>Comment</em>}' class.
@@ -10840,6 +10950,16 @@ extends EPackage
 		 * @generated
 		 */
 		EReference ASSOCIATION_CLASS_CALL_EXP__REFERRED_ASSOCIATION_CLASS = eINSTANCE.getAssociationClassCallExp_ReferredAssociationClass();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.values.Bag <em>Bag</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.values.Bag
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getBag()
+		 * @generated
+		 */
+		EClass BAG = eINSTANCE.getBag();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.NavigationCallExpImpl <em>Navigation Call Exp</em>}' class.
