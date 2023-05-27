@@ -31,7 +31,7 @@ import org.eclipse.ocl.pivot.values.SetValue;
  * @generated
  */
 public class InvalidTypeImpl
-		extends ClassImpl
+		extends VoidTypeImpl
 		implements InvalidType {
 
 	/**
@@ -41,7 +41,7 @@ public class InvalidTypeImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int INVALID_TYPE_FEATURE_COUNT = ClassImpl.CLASS_FEATURE_COUNT + 0;
+	public static final int INVALID_TYPE_FEATURE_COUNT = VoidTypeImpl.VOID_TYPE_FEATURE_COUNT + 0;
 	/**
 	 * The number of operations of the '<em>Invalid Type</em>' class.
 	 * <!-- begin-user-doc -->
@@ -49,7 +49,7 @@ public class InvalidTypeImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int INVALID_TYPE_OPERATION_COUNT = ClassImpl.CLASS_OPERATION_COUNT + 0;
+	public static final int INVALID_TYPE_OPERATION_COUNT = VoidTypeImpl.VOID_TYPE_OPERATION_COUNT + 0;
 
 	/**
 	 * <!-- begin-user-doc -->

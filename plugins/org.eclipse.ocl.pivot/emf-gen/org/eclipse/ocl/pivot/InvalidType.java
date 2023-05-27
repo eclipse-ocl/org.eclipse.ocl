@@ -20,5 +20,5 @@ package org.eclipse.ocl.pivot;
  * @generated
  */
 public interface InvalidType
-		extends org.eclipse.ocl.pivot.Class {
+		extends VoidType {
 } // InvalidType

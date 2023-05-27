@@ -530,7 +530,7 @@
         eType="#//Integer"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InvalidLiteralExp" eSuperTypes="#//LiteralExp"/>
-  <eClassifiers xsi:type="ecore:EClass" name="InvalidType" eSuperTypes="#//Class"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InvalidType" eSuperTypes="#//VoidType"/>
   <eClassifiers xsi:type="ecore:EClass" name="IterableType" abstract="true" eSuperTypes="#//DataType"/>
   <eClassifiers xsi:type="ecore:EClass" name="IterateExp" eSuperTypes="#//LoopExp #//ReferringElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedResult" eType="#//Variable"
@@ -706,12 +706,60 @@
       <eParameters name="that" lowerBound="1" eType="#//OclSelf"/>
     </eOperations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OclElement" abstract="true" interface="true"
+      eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined&#xA;for OclElement are therefore applicable to all user-defined types.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OclEnumeration" abstract="true" interface="true"
+      eSuperTypes="#//OclType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The OclEnumeration type is the implicit supertype of any user Enumeration type.&#xA;FIXME This is probably obsolete now that static / meta-types clarified.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OclInvalid" instanceClassName="org.eclipse.ocl.pivot.InvalidType"
+      abstract="true" interface="true" eSuperTypes="#//OclVoid">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclInvalid is a type that conforms to all other types.&#xA;It has one single instance, identified as  oclText[invalid].&#xA;Any property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().&#xA;OclInvalid is itself an instance of the metatype InvalidType.&#xA;"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="oclBadProperty" eType="#//OclAny">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclLambda" abstract="true" interface="true"
       eSuperTypes="#//OclAny">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda&#xA;therefore apply to all lambda expressions.&#xA;"/>
     </eAnnotations>
   </eClassifiers>
+  <!--eClassifiers xsi:type="ecore:EClass" name="OclMessage" abstract="true" eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="OclMessage&#xA;This sub clause contains the definition of the standard type OclMessage.&#xA;As defined in this sub clause, each ocl message type is actually a template type with one parameter.&#xA;‘T’ denotes the parameter.&#xA;A concrete ocl message type is created by substituting an operation or signal for the T.&#xA;&#xA;The predefined type OclMessage is an instance of MessageType.&#xA;Every OclMessage is fully determined by either the operation, or signal given as parameter.&#xA;Note that there is conceptually an undefined (infinite) number of these types,&#xA;as each is determined by a different operation or signal.&#xA;These types are unnamed. Every type has as attributes the name of the operation or signal,&#xA;and either all formal parameters of the operation, or all attributes of the signal.&#xA;OclMessage is itself an instance of the metatype MessageType.&#xA;&#xA;OclMessage has a number of predefined operations, as shown in the OCL Standard Library.&#xA;"/>
+    </eAnnotations>
+    <eOperations name="hasReturned" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="True if type of template parameter is an operation call, and the called operation has returned a value.&#xA;This implies the fact that the message has been sent. False in all other cases.&#xA;"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="isOperationCall" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Returns oclText[true] if the OclMessage represents the sending of a UML Operation call.&#xA;"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="isSignalSent" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Returns oclText[true] if the OclMessage represents the sending of a UML Signal.&#xA;"/>
+      </eAnnotations>
+    </eOperations>
+    <eOperations name="result" eType="#//OclAny">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Returns the result of the called operation, if type of template parameter is an operation call,&#xA;and the called operation has returned a value. Otherwise the oclText[invalid] value is returned.&#xA;"/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers-->
   <eClassifiers xsi:type="ecore:EClass" name="OclSelf" instanceClassName="org.eclipse.ocl.pivot.SelfType"
       abstract="true" interface="true" eSuperTypes="#//OclAny">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -741,6 +789,18 @@
       eSuperTypes="#//OclAny">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple&#xA;therefore apply to all tuples.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OclType" abstract="true" interface="true"
+      eSuperTypes="#//OclElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclType is the implicit supertype of any UML type. Operations defined&#xA;for OclType are therefore applicable to all UML types.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OclVoid" instanceClassName="org.eclipse.ocl.pivot.VoidType"
+      abstract="true" interface="true" eSuperTypes="#//OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclVoid is a type that conforms to all other types except OclInvalid.&#xA;It has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.&#xA;Any property call applied on oclText[null] results in oclText[invalid], except for the&#xA;oclIsUndefined(), oclIsInvalid(), =(OclAny) and &lt;>(OclAny) operations.&#xA;However, by virtue of the implicit conversion to a collection literal,&#xA;an expression evaluating to oclText[null] can be used as source of collection operations (such as ‘isEmpty’).&#xA;If the source is the oclText[null] literal, it is implicitly converted to Bag{}.&#xA;&#xA;OclVoid is itself an instance of the metatype VoidType.&#xA;"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Operation" eSuperTypes="#//Feature #//Namespace #//TemplateableElement">

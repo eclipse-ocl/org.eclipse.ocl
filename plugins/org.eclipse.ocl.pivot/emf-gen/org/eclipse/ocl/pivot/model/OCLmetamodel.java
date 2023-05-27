@@ -265,8 +265,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
 		private final @NonNull Class _Integer = getClass(_ocl, "Integer");
 //		private final @NonNull Class _OclAny = getClass(_ocl, "OclAny");
-		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
-		private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
+//		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
+//		private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
 		private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
 		private final @NonNull CollectionType _OrderedSet = getCollectionType(_ocl, "OrderedSet");
 		private final @NonNull Class _Real = getClass(_ocl, "Real");
@@ -372,11 +372,16 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _Object;
 		private Class _OclAny;
 		private Class _OclComparable;
+		private Class _OclElement;
+		private Class _OclEnumeration;
+		private Class _OclInvalid;
 		private Class _OclLambda;
 		private Class _OclSelf;
 		private Class _OclState;
 		private Class _OclSummable;
 		private Class _OclTuple;
+		private Class _OclType;
+		private Class _OclVoid;
 		private Class _Operation;
 		private Class _OperationCallExp;
 		private Class _OppositePropertyCallExp;
@@ -570,6 +575,15 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _OclComparable = createClass(pivot, PivotPackage.Literals.OCL_COMPARABLE);
 			type.setIsAbstract(true);
 			installComment(type, "The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived\ncompareTo implementation may be sorted.");
+			type = _OclElement = createClass(pivot, PivotPackage.Literals.OCL_ELEMENT);
+			type.setIsAbstract(true);
+			installComment(type, "The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined\nfor OclElement are therefore applicable to all user-defined types.");
+			type = _OclEnumeration = createClass(pivot, PivotPackage.Literals.OCL_ENUMERATION);
+			type.setIsAbstract(true);
+			installComment(type, "The OclEnumeration type is the implicit supertype of any user Enumeration type.\nFIXME This is probably obsolete now that static / meta-types clarified.");
+			type = _OclInvalid = createClass(pivot, PivotPackage.Literals.OCL_INVALID);
+			type.setIsAbstract(true);
+			installComment(type, "The type OclInvalid is a type that conforms to all other types.\nIt has one single instance, identified as  oclText[invalid].\nAny property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().\nOclInvalid is itself an instance of the metatype InvalidType.");
 			type = _OclLambda = createClass(pivot, PivotPackage.Literals.OCL_LAMBDA);
 			type.setIsAbstract(true);
 			installComment(type, "The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda\ntherefore apply to all lambda expressions.");
@@ -584,6 +598,12 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _OclTuple = createClass(pivot, PivotPackage.Literals.OCL_TUPLE);
 			type.setIsAbstract(true);
 			installComment(type, "The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple\ntherefore apply to all tuples.");
+			type = _OclType = createClass(pivot, PivotPackage.Literals.OCL_TYPE);
+			type.setIsAbstract(true);
+			installComment(type, "The type OclType is the implicit supertype of any UML type. Operations defined\nfor OclType are therefore applicable to all UML types.");
+			type = _OclVoid = createClass(pivot, PivotPackage.Literals.OCL_VOID);
+			type.setIsAbstract(true);
+			installComment(type, "The type OclVoid is a type that conforms to all other types except OclInvalid.\nIt has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.\nAny property call applied on oclText[null] results in oclText[invalid], except for the\noclIsUndefined(), oclIsInvalid(), =(OclAny) and <>(OclAny) operations.\nHowever, by virtue of the implicit conversion to a collection literal,\nan expression evaluating to oclText[null] can be used as source of collection operations (such as \u2018isEmpty\u2019).\nIf the source is the oclText[null] literal, it is implicitly converted to Bag{}.\n\nOclVoid is itself an instance of the metatype VoidType.");
 			type = _Operation = createClass(pivot, PivotPackage.Literals.OPERATION);
 			installComment(type, "An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
 			type = _OperationCallExp = createClass(pivot, PivotPackage.Literals.OPERATION_CALL_EXP);
@@ -739,7 +759,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_InstanceSpecification, _NamedElement);
 			addSuperClass(_IntegerLiteralExp, _NumericLiteralExp);
 			addSuperClass(_InvalidLiteralExp, _LiteralExp);
-			addSuperClass(_InvalidType, _Class);
+			addSuperClass(_InvalidType, _VoidType);
 			addSuperClass(_IterableType, _DataType);
 			addSuperClass(_IterateExp, _LoopExp);
 			addSuperClass(_IterateExp, _ReferringElement);
@@ -774,11 +794,16 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_OCLExpression, _TypedElement);
 			addSuperClass(_Object, _OclAny);
 			addSuperClass(_OclComparable, _OclAny);
+			addSuperClass(_OclElement, _OclAny);
+			addSuperClass(_OclEnumeration, _OclType);
+			addSuperClass(_OclInvalid, _OclVoid);
 			addSuperClass(_OclLambda, _OclAny);
 			addSuperClass(_OclSelf, _OclAny);
 			addSuperClass(_OclState, _OclAny);
 			addSuperClass(_OclSummable, _OclAny);
 			addSuperClass(_OclTuple, _OclAny);
+			addSuperClass(_OclType, _OclElement);
+			addSuperClass(_OclVoid, _OclAny);
 			addSuperClass(_Operation, _Feature);
 			addSuperClass(_Operation, _Namespace);
 			addSuperClass(_Operation, _TemplateableElement);
@@ -929,6 +954,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _Bag_MessageType_T;
 		private CollectionType _Bag_NavigationCallExp_T;
 		private CollectionType _Bag_OCLExpression_T;
+		private CollectionType _Bag_OclInvalid_T;
 		private CollectionType _Bag_OperationCallExp_T;
 		private CollectionType _Bag_Operation_T;
 		private CollectionType _Bag_OppositePropertyCallExp_T;
@@ -986,6 +1012,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private CollectionType _Collection_Model_T;
 		private CollectionType _Collection_NavigationCallExp_T;
 		private CollectionType _Collection_OCLExpression_T;
+		private CollectionType _Collection_OclInvalid_T;
 		private CollectionType _Collection_OperationCallExp_T;
 		private CollectionType _Collection_Operation_T;
 		private CollectionType _Collection_OppositePropertyCallExp_T;
@@ -1163,6 +1190,7 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _Bag_MessageType_T = getCollectionType(_Bag, _MessageType, true, 0, -1);
 			type = _Bag_NavigationCallExp_T = getCollectionType(_Bag, _NavigationCallExp, true, 0, -1);
 			type = _Bag_OCLExpression_T = getCollectionType(_Bag, _OCLExpression, true, 0, -1);
+			type = _Bag_OclInvalid_T = getCollectionType(_Bag, _OclInvalid, true, 0, -1);
 			type = _Bag_OperationCallExp_T = getCollectionType(_Bag, _OperationCallExp, true, 0, -1);
 			type = _Bag_Operation_T = getCollectionType(_Bag, _Operation, true, 0, -1);
 			type = _Bag_OppositePropertyCallExp_T = getCollectionType(_Bag, _OppositePropertyCallExp, true, 0, -1);
@@ -1220,6 +1248,7 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _Collection_Model_T = getCollectionType(_Collection, _Model, true, 0, -1);
 			type = _Collection_NavigationCallExp_T = getCollectionType(_Collection, _NavigationCallExp, true, 0, -1);
 			type = _Collection_OCLExpression_T = getCollectionType(_Collection, _OCLExpression, true, 0, -1);
+			type = _Collection_OclInvalid_T = getCollectionType(_Collection, _OclInvalid, true, 0, -1);
 			type = _Collection_OperationCallExp_T = getCollectionType(_Collection, _OperationCallExp, true, 0, -1);
 			type = _Collection_Operation_T = getCollectionType(_Collection, _Operation, true, 0, -1);
 			type = _Collection_OppositePropertyCallExp_T = getCollectionType(_Collection, _OppositePropertyCallExp, true, 0, -1);
@@ -1390,6 +1419,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_Bag_MessageType_T, _Collection_MessageType_T);
 			addSuperClass(_Bag_NavigationCallExp_T, _Collection_NavigationCallExp_T);
 			addSuperClass(_Bag_OCLExpression_T, _Collection_OCLExpression_T);
+			addSuperClass(_Bag_OclInvalid_T, _Collection_OclInvalid_T);
 			addSuperClass(_Bag_OperationCallExp_T, _Collection_OperationCallExp_T);
 			addSuperClass(_Bag_Operation_T, _Collection_Operation_T);
 			addSuperClass(_Bag_OppositePropertyCallExp_T, _Collection_OppositePropertyCallExp_T);
@@ -1447,6 +1477,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_Collection_Model_T, _OclAny);
 			addSuperClass(_Collection_NavigationCallExp_T, _OclAny);
 			addSuperClass(_Collection_OCLExpression_T, _OclAny);
+			addSuperClass(_Collection_OclInvalid_T, _OclAny);
 			addSuperClass(_Collection_OperationCallExp_T, _OclAny);
 			addSuperClass(_Collection_Operation_T, _OclAny);
 			addSuperClass(_Collection_OppositePropertyCallExp_T, _OclAny);
@@ -1948,6 +1979,8 @@ public class OCLmetamodel extends ASResourceImpl
 			Property pr_OCLExpression_ShadowPart_ownedInit;
 			Property pr_OCLExpression_TupleLiteralPart_ownedInit;
 			Property pr_OCLExpression_Variable_ownedInit;
+			Property pr_OclAny_OclInvalid_oclBadProperty;
+			Property pr_OclInvalid_oclBadProperty;
 			Property pr_Operation_bodyExpression;
 			Property pr_Operation_ownedParameters;
 			Property pr_Operation_ownedPostconditions;
@@ -2873,6 +2906,17 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 
+			ownedProperties = _OclAny.getOwnedProperties();
+			ownedProperties.add(property = pr_OclAny_OclInvalid_oclBadProperty = createProperty("OclInvalid", _Bag_OclInvalid_T));
+			property.setIsImplicit(true);
+			property.setIsResolveProxies(true);
+
+			ownedProperties = _OclInvalid.getOwnedProperties();
+			ownedProperties.add(property = pr_OclInvalid_oclBadProperty = createProperty(PivotPackage.Literals.OCL_INVALID__OCL_BAD_PROPERTY, _OclAny));
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
+			installComment(property, "An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression.");
+
 			ownedProperties = _Operation.getOwnedProperties();
 			ownedProperties.add(property = pr_Operation_bodyExpression = createProperty(PivotPackage.Literals.OPERATION__BODY_EXPRESSION, _LanguageExpression));
 			property.setIsComposite(true);
@@ -3762,6 +3806,7 @@ public class OCLmetamodel extends ASResourceImpl
 			setOpposites(pr_OCLExpression_ShadowPart_ownedInit, pr_ShadowPart_ownedInit);
 			setOpposites(pr_OCLExpression_TupleLiteralPart_ownedInit, pr_TupleLiteralPart_ownedInit);
 			setOpposites(pr_OCLExpression_Variable_ownedInit, pr_Variable_ownedInit);
+			setOpposites(pr_OclAny_OclInvalid_oclBadProperty, pr_OclInvalid_oclBadProperty);
 			setOpposites(pr_Operation_ownedParameters, pr_Parameter_owningOperation);
 			setOpposites(pr_Operation_precedence, pr_Precedence_Operation_precedence);
 			setOpposites(pr_Operation_raisedExceptions, pr_Type_Operation_raisedExceptions);

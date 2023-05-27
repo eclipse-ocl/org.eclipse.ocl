@@ -426,7 +426,7 @@
       <ownedProperties xmi:id="X5zkq" name="integerSymbol" type="#vCSey"/>
     </ownedClasses>
     <ownedClasses xmi:id="2uMHH" name="InvalidLiteralExp" superClasses="#fKWWp"/>
-    <ownedClasses xmi:id="CFNJF" name="InvalidType" superClasses="#pDcbe"/>
+    <ownedClasses xmi:id="CFNJF" name="InvalidType" superClasses="#fad2o"/>
     <ownedClasses xmi:id="9ppvF" isAbstract="true" name="IterableType" superClasses="#1mHCJ"/>
     <ownedClasses xmi:id="0L28o" name="IterateExp" superClasses="#KhrnS #dXAFV">
       <ownedInvariants xmi:id="X3QaQ" isCallable="true" name="BodyTypeConformsToResultType">
@@ -701,6 +701,7 @@
     <ownedClasses xsi:type="pivot:DataType" xmi:id="wbJ8m" instanceClassName="java.lang.Object" name="Object" superClasses="&_0;#jbMkR"/>
     <ownedClasses xsi:type="pivot:AnyType" xmi:id="lFx,m" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclAny">
       <ownedComments body="The number of elements in the collection oclText[self].essions.&#xA;OclAny is itself an instance of the metatype AnyType.&#xA;&#xA;All classes in a UML model inherit all operations defined on OclAny.&#xA;To avoid name conflicts between properties in the model and the properties inherited from OclAny,&#xA;all names on the properties of OclAny start with ‘ocl.’&#xA;Although theoretically there may still be name conflicts, they can be avoided.&#xA;One can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.&#xA;&#xA;Operations of OclAny, where the instance of OclAny is called object.&#xA;&#xA;This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.&#xA;True functionality is only available once converted to a Pivot model."/>
+      <ownedProperties xmi:id="WeeCP" isImplicit="true" name="OclInvalid" opposite="#K0VFP" type="#v6Q2K"/>
     </ownedClasses>
     <ownedClasses xmi:id="DuUoD" isAbstract="true" isInterface="true" name="OclComparable" superClasses="#lFx,m">
       <ownedComments body="The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived&#xA;compareTo implementation may be sorted.&#xA;"/>
@@ -708,6 +709,19 @@
         <ownedComments body="Return -ve, 0, +ve according to whether self is less than, equal to , or greater than that.&#xA;&#xA;The compareTo operation should be commutative."/>
         <ownedParameters xmi:id="BLD1n" name="that" type="#1PEoc"/>
       </ownedOperations>
+    </ownedClasses>
+    <ownedClasses xmi:id="1Joxm" isAbstract="true" isInterface="true" name="OclElement" superClasses="#lFx,m">
+      <ownedComments body="The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined&#xA;for OclElement are therefore applicable to all user-defined types.&#xA;"/>
+    </ownedClasses>
+    <ownedClasses xmi:id="Anj3H" isAbstract="true" isInterface="true" name="OclEnumeration" superClasses="#jPQoc">
+      <ownedComments body="The OclEnumeration type is the implicit supertype of any user Enumeration type.&#xA;FIXME This is probably obsolete now that static / meta-types clarified.&#xA;"/>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:InvalidType" xmi:id="wV1s+" instanceClassName="org.eclipse.ocl.pivot.InvalidType" isAbstract="true"
+        isInterface="true" name="OclInvalid" superClasses="#9Ycoc">
+      <ownedComments body="The type OclInvalid is a type that conforms to all other types.&#xA;It has one single instance, identified as  oclText[invalid].&#xA;Any property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().&#xA;OclInvalid is itself an instance of the metatype InvalidType.&#xA;"/>
+      <ownedProperties xmi:id="K0VFP" isRequired="false" name="oclBadProperty" opposite="#WeeCP" type="#lFx,m">
+        <ownedComments body="An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression."/>
+      </ownedProperties>
     </ownedClasses>
     <ownedClasses xmi:id="wJOGg" isAbstract="true" isInterface="true" name="OclLambda" superClasses="#lFx,m">
       <ownedComments body="The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda&#xA;therefore apply to all lambda expressions.&#xA;"/>
@@ -729,6 +743,13 @@
     </ownedClasses>
     <ownedClasses xmi:id="BVsMb" isAbstract="true" isInterface="true" name="OclTuple" superClasses="#lFx,m">
       <ownedComments body="The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple&#xA;therefore apply to all tuples.&#xA;"/>
+    </ownedClasses>
+    <ownedClasses xmi:id="jPQoc" isAbstract="true" isInterface="true" name="OclType" superClasses="#1Joxm">
+      <ownedComments body="The type OclType is the implicit supertype of any UML type. Operations defined&#xA;for OclType are therefore applicable to all UML types.&#xA;"/>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:VoidType" xmi:id="9Ycoc" instanceClassName="org.eclipse.ocl.pivot.VoidType" isAbstract="true" isInterface="true"
+        name="OclVoid" superClasses="#lFx,m">
+      <ownedComments body="The type OclVoid is a type that conforms to all other types except OclInvalid.&#xA;It has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.&#xA;Any property call applied on oclText[null] results in oclText[invalid], except for the&#xA;oclIsUndefined(), oclIsInvalid(), =(OclAny) and &lt;>(OclAny) operations.&#xA;However, by virtue of the implicit conversion to a collection literal,&#xA;an expression evaluating to oclText[null] can be used as source of collection operations (such as ‘isEmpty’).&#xA;If the source is the oclText[null] literal, it is implicitly converted to Bag{}.&#xA;&#xA;OclVoid is itself an instance of the metatype VoidType.&#xA;"/>
     </ownedClasses>
     <ownedClasses xmi:id="Yz,F1" name="Operation" superClasses="#nphZD #MzHoc #5r5y9">
       <ownedComments body="An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template."/>
@@ -1513,6 +1534,11 @@
         <ownedSubstitutions actual="#BFtK4" formal="&_0;#k2OA6"/>
       </ownedBindings>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="v6Q2K" isNullFree="true" name="Bag" superClasses="#FW53Z">
+      <ownedBindings>
+        <ownedSubstitutions actual="#wV1s+" formal="&_0;#k2OA6"/>
+      </ownedBindings>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="XH01z" isNullFree="true" name="Bag" superClasses="#tic3C">
       <ownedBindings>
         <ownedSubstitutions actual="#Yz,F1" formal="&_0;#k2OA6"/>
@@ -1791,6 +1817,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="uEaaU" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
       <ownedBindings>
         <ownedSubstitutions actual="#BFtK4" formal="&_0;#qs59R"/>
+      </ownedBindings>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="FW53Z" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedBindings>
+        <ownedSubstitutions actual="#wV1s+" formal="&_0;#qs59R"/>
       </ownedBindings>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tic3C" isNullFree="true" name="Collection" superClasses="&_0;#jbMkR">

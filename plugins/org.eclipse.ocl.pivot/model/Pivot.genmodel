@@ -639,6 +639,11 @@
         <genParameters ecoreParameter="Pivot.ecore#//OclComparable/compareTo/that"/>
       </genOperations>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclElement"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclEnumeration"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclInvalid">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-OclInvalid-oclBadProperty"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclLambda"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclSelf"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclState"/>
@@ -649,6 +654,8 @@
       <genOperations ecoreOperation="Pivot.ecore#//OclSummable/zero"/>
     </genClasses>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclTuple"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclType"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclVoid"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-Operation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Operation-bodyExpression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-Operation-isInvalidating"/>

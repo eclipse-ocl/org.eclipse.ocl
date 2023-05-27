@@ -269,7 +269,7 @@ public abstract class AbstractExtendingVisitor<R, C>
 
 	@Override
 	public R visitInvalidType(org.eclipse.ocl.pivot.@NonNull InvalidType object) {
-		return visitClass(object);
+		return visitVoidType(object);
 	}
 
 	@Override

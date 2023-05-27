@@ -97,10 +97,14 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.NumericLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OclComparable;
+import org.eclipse.ocl.pivot.OclElement;
+import org.eclipse.ocl.pivot.OclEnumeration;
 import org.eclipse.ocl.pivot.OclLambda;
+import org.eclipse.ocl.pivot.OclMessage;
 import org.eclipse.ocl.pivot.OclState;
 import org.eclipse.ocl.pivot.OclSummable;
 import org.eclipse.ocl.pivot.OclTuple;
+import org.eclipse.ocl.pivot.OclType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
@@ -247,6 +251,27 @@ implements PivotPackage  {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass oclElementEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass oclEnumerationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass oclInvalidEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass oclLambdaEClass = null;
 
 	/**
@@ -276,6 +301,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	private EClass oclTupleEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass oclTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass oclVoidEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -2592,6 +2631,50 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EClass getOclElement()
+	{
+		return oclElementEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getOclEnumeration()
+	{
+		return oclEnumerationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getOclInvalid()
+	{
+		return oclInvalidEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getOclInvalid_OclBadProperty()
+	{
+		return (EReference)oclInvalidEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getOclLambda()
 	{
 		return oclLambdaEClass;
@@ -2661,6 +2744,28 @@ implements PivotPackage  {
 	public EClass getOclTuple()
 	{
 		return oclTupleEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getOclType()
+	{
+		return oclTypeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getOclVoid()
+	{
+		return oclVoidEClass;
 	}
 
 	/**
@@ -7902,19 +8007,30 @@ implements PivotPackage  {
 		oclComparableEClass = createEClass(75);
 		createEOperation(oclComparableEClass, 0);
 
-		oclLambdaEClass = createEClass(76);
+		oclElementEClass = createEClass(76);
 
-		oclSelfEClass = createEClass(77);
+		oclEnumerationEClass = createEClass(77);
 
-		oclStateEClass = createEClass(78);
+		oclInvalidEClass = createEClass(78);
+		createEReference(oclInvalidEClass, 0);
 
-		oclSummableEClass = createEClass(79);
+		oclLambdaEClass = createEClass(79);
+
+		oclSelfEClass = createEClass(80);
+
+		oclStateEClass = createEClass(81);
+
+		oclSummableEClass = createEClass(82);
 		createEOperation(oclSummableEClass, 0);
 		createEOperation(oclSummableEClass, 1);
 
-		oclTupleEClass = createEClass(80);
+		oclTupleEClass = createEClass(83);
 
-		operationEClass = createEClass(81);
+		oclTypeEClass = createEClass(84);
+
+		oclVoidEClass = createEClass(85);
+
+		operationEClass = createEClass(86);
 		createEReference(operationEClass, 15);
 		createEAttribute(operationEClass, 16);
 		createEAttribute(operationEClass, 17);
@@ -7932,7 +8048,7 @@ implements PivotPackage  {
 		createEOperation(operationEClass, 8);
 		createEOperation(operationEClass, 9);
 
-		operationCallExpEClass = createEClass(82);
+		operationCallExpEClass = createEClass(87);
 		createEAttribute(operationCallExpEClass, 13);
 		createEReference(operationCallExpEClass, 14);
 		createEReference(operationCallExpEClass, 15);
@@ -7942,16 +8058,16 @@ implements PivotPackage  {
 		createEOperation(operationCallExpEClass, 13);
 		createEOperation(operationCallExpEClass, 14);
 
-		oppositePropertyCallExpEClass = createEClass(83);
+		oppositePropertyCallExpEClass = createEClass(88);
 		createEReference(oppositePropertyCallExpEClass, 15);
 		createEOperation(oppositePropertyCallExpEClass, 9);
 		createEOperation(oppositePropertyCallExpEClass, 10);
 
-		orderedSetTypeEClass = createEClass(84);
+		orderedSetTypeEClass = createEClass(89);
 
-		orphanCompletePackageEClass = createEClass(85);
+		orphanCompletePackageEClass = createEClass(90);
 
-		packageEClass = createEClass(86);
+		packageEClass = createEClass(91);
 		createEAttribute(packageEClass, 6);
 		createEReference(packageEClass, 7);
 		createEAttribute(packageEClass, 8);
@@ -7961,35 +8077,35 @@ implements PivotPackage  {
 		createEReference(packageEClass, 12);
 		createEReference(packageEClass, 13);
 
-		parameterEClass = createEClass(87);
+		parameterEClass = createEClass(92);
 		createEAttribute(parameterEClass, 9);
 		createEReference(parameterEClass, 10);
 
-		parameterVariableEClass = createEClass(88);
+		parameterVariableEClass = createEClass(93);
 		createEOperation(parameterVariableEClass, 7);
 
-		pivotableEClass = createEClass(89);
+		pivotableEClass = createEClass(94);
 
-		precedenceEClass = createEClass(90);
+		precedenceEClass = createEClass(95);
 		createEAttribute(precedenceEClass, 5);
 		createEAttribute(precedenceEClass, 6);
 
-		primitiveCompletePackageEClass = createEClass(91);
+		primitiveCompletePackageEClass = createEClass(96);
 
-		primitiveLiteralExpEClass = createEClass(92);
+		primitiveLiteralExpEClass = createEClass(97);
 
-		primitiveTypeEClass = createEClass(93);
+		primitiveTypeEClass = createEClass(98);
 		createEReference(primitiveTypeEClass, 23);
 
-		profileEClass = createEClass(94);
+		profileEClass = createEClass(99);
 		createEReference(profileEClass, 14);
 
-		profileApplicationEClass = createEClass(95);
+		profileApplicationEClass = createEClass(100);
 		createEReference(profileApplicationEClass, 4);
 		createEAttribute(profileApplicationEClass, 5);
 		createEReference(profileApplicationEClass, 6);
 
-		propertyEClass = createEClass(96);
+		propertyEClass = createEClass(101);
 		createEReference(propertyEClass, 11);
 		createEAttribute(propertyEClass, 12);
 		createEAttribute(propertyEClass, 13);
@@ -8012,7 +8128,7 @@ implements PivotPackage  {
 		createEOperation(propertyEClass, 6);
 		createEOperation(propertyEClass, 7);
 
-		propertyCallExpEClass = createEClass(97);
+		propertyCallExpEClass = createEClass(102);
 		createEReference(propertyCallExpEClass, 15);
 		createEOperation(propertyCallExpEClass, 10);
 		createEOperation(propertyCallExpEClass, 11);
@@ -8021,42 +8137,42 @@ implements PivotPackage  {
 		createEOperation(propertyCallExpEClass, 14);
 		createEOperation(propertyCallExpEClass, 15);
 
-		pseudostateEClass = createEClass(98);
+		pseudostateEClass = createEClass(103);
 		createEAttribute(pseudostateEClass, 8);
 		createEReference(pseudostateEClass, 9);
 		createEReference(pseudostateEClass, 10);
 
-		realLiteralExpEClass = createEClass(99);
+		realLiteralExpEClass = createEClass(104);
 		createEAttribute(realLiteralExpEClass, 9);
 
-		referringElementEClass = createEClass(100);
+		referringElementEClass = createEClass(105);
 		createEOperation(referringElementEClass, 0);
 
-		reflectiveStandardLibraryEClass = createEClass(101);
+		reflectiveStandardLibraryEClass = createEClass(106);
 
-		regionEClass = createEClass(102);
+		regionEClass = createEClass(107);
 		createEReference(regionEClass, 6);
 		createEReference(regionEClass, 7);
 		createEReference(regionEClass, 8);
 		createEReference(regionEClass, 9);
 		createEReference(regionEClass, 10);
 
-		resultVariableEClass = createEClass(103);
+		resultVariableEClass = createEClass(108);
 		createEOperation(resultVariableEClass, 7);
 		createEOperation(resultVariableEClass, 8);
 		createEOperation(resultVariableEClass, 9);
 
-		selfTypeEClass = createEClass(104);
+		selfTypeEClass = createEClass(109);
 		createEOperation(selfTypeEClass, 8);
 
-		sendSignalActionEClass = createEClass(105);
+		sendSignalActionEClass = createEClass(110);
 		createEReference(sendSignalActionEClass, 5);
 
-		sequenceTypeEClass = createEClass(106);
+		sequenceTypeEClass = createEClass(111);
 
-		setTypeEClass = createEClass(107);
+		setTypeEClass = createEClass(112);
 
-		shadowExpEClass = createEClass(108);
+		shadowExpEClass = createEClass(113);
 		createEReference(shadowExpEClass, 9);
 		createEAttribute(shadowExpEClass, 10);
 		createEOperation(shadowExpEClass, 6);
@@ -8066,23 +8182,23 @@ implements PivotPackage  {
 		createEOperation(shadowExpEClass, 10);
 		createEOperation(shadowExpEClass, 11);
 
-		shadowPartEClass = createEClass(109);
+		shadowPartEClass = createEClass(114);
 		createEReference(shadowPartEClass, 8);
 		createEReference(shadowPartEClass, 9);
 		createEOperation(shadowPartEClass, 3);
 		createEOperation(shadowPartEClass, 4);
 		createEOperation(shadowPartEClass, 5);
 
-		signalEClass = createEClass(110);
+		signalEClass = createEClass(115);
 
-		slotEClass = createEClass(111);
+		slotEClass = createEClass(116);
 		createEReference(slotEClass, 4);
 		createEReference(slotEClass, 5);
 		createEReference(slotEClass, 6);
 
-		standardLibraryEClass = createEClass(112);
+		standardLibraryEClass = createEClass(117);
 
-		stateEClass = createEClass(113);
+		stateEClass = createEClass(118);
 		createEAttribute(stateEClass, 9);
 		createEAttribute(stateEClass, 10);
 		createEAttribute(stateEClass, 11);
@@ -8098,52 +8214,52 @@ implements PivotPackage  {
 		createEReference(stateEClass, 21);
 		createEReference(stateEClass, 22);
 
-		stateExpEClass = createEClass(114);
+		stateExpEClass = createEClass(119);
 		createEReference(stateExpEClass, 9);
 		createEOperation(stateExpEClass, 6);
 
-		stateMachineEClass = createEClass(115);
+		stateMachineEClass = createEClass(120);
 		createEReference(stateMachineEClass, 21);
 		createEReference(stateMachineEClass, 22);
 		createEReference(stateMachineEClass, 23);
 		createEReference(stateMachineEClass, 24);
 
-		stereotypeEClass = createEClass(116);
+		stereotypeEClass = createEClass(121);
 		createEReference(stereotypeEClass, 20);
 
-		stereotypeExtenderEClass = createEClass(117);
+		stereotypeExtenderEClass = createEClass(122);
 		createEReference(stereotypeExtenderEClass, 4);
 		createEAttribute(stereotypeExtenderEClass, 5);
 		createEReference(stereotypeExtenderEClass, 6);
 
-		stringLiteralExpEClass = createEClass(118);
+		stringLiteralExpEClass = createEClass(123);
 		createEAttribute(stringLiteralExpEClass, 9);
 
-		templateBindingEClass = createEClass(119);
+		templateBindingEClass = createEClass(124);
 		createEReference(templateBindingEClass, 4);
 		createEReference(templateBindingEClass, 5);
 		createEReference(templateBindingEClass, 6);
 
-		templateParameterEClass = createEClass(120);
+		templateParameterEClass = createEClass(125);
 		createEReference(templateParameterEClass, 5);
 		createEReference(templateParameterEClass, 6);
 
-		templateParameterSubstitutionEClass = createEClass(121);
+		templateParameterSubstitutionEClass = createEClass(126);
 		createEReference(templateParameterSubstitutionEClass, 4);
 		createEReference(templateParameterSubstitutionEClass, 5);
 		createEReference(templateParameterSubstitutionEClass, 6);
 		createEReference(templateParameterSubstitutionEClass, 7);
 
-		templateSignatureEClass = createEClass(122);
+		templateSignatureEClass = createEClass(127);
 		createEReference(templateSignatureEClass, 4);
 		createEReference(templateSignatureEClass, 5);
 
-		templateableElementEClass = createEClass(123);
+		templateableElementEClass = createEClass(128);
 		createEReference(templateableElementEClass, 4);
 		createEReference(templateableElementEClass, 5);
 		createEReference(templateableElementEClass, 6);
 
-		transitionEClass = createEClass(124);
+		transitionEClass = createEClass(129);
 		createEAttribute(transitionEClass, 6);
 		createEReference(transitionEClass, 7);
 		createEReference(transitionEClass, 8);
@@ -8152,43 +8268,43 @@ implements PivotPackage  {
 		createEReference(transitionEClass, 11);
 		createEReference(transitionEClass, 12);
 
-		triggerEClass = createEClass(125);
+		triggerEClass = createEClass(130);
 		createEReference(triggerEClass, 5);
 		createEReference(triggerEClass, 6);
 
-		tupleLiteralExpEClass = createEClass(126);
+		tupleLiteralExpEClass = createEClass(131);
 		createEReference(tupleLiteralExpEClass, 9);
 
-		tupleLiteralPartEClass = createEClass(127);
+		tupleLiteralPartEClass = createEClass(132);
 		createEReference(tupleLiteralPartEClass, 9);
 		createEOperation(tupleLiteralPartEClass, 6);
 		createEOperation(tupleLiteralPartEClass, 7);
 
-		tuplePartEClass = createEClass(128);
+		tuplePartEClass = createEClass(133);
 
-		tupleTypeEClass = createEClass(129);
+		tupleTypeEClass = createEClass(134);
 
-		typeEClass = createEClass(130);
+		typeEClass = createEClass(135);
 		createEOperation(typeEClass, 2);
 		createEOperation(typeEClass, 3);
 		createEOperation(typeEClass, 4);
 		createEOperation(typeEClass, 5);
 
-		typeExpEClass = createEClass(131);
+		typeExpEClass = createEClass(136);
 		createEReference(typeExpEClass, 9);
 
-		typedElementEClass = createEClass(132);
+		typedElementEClass = createEClass(137);
 		createEAttribute(typedElementEClass, 5);
 		createEAttribute(typedElementEClass, 6);
 		createEReference(typedElementEClass, 7);
 		createEOperation(typedElementEClass, 2);
 
-		unlimitedNaturalLiteralExpEClass = createEClass(133);
+		unlimitedNaturalLiteralExpEClass = createEClass(138);
 		createEAttribute(unlimitedNaturalLiteralExpEClass, 9);
 
-		unspecifiedValueExpEClass = createEClass(134);
+		unspecifiedValueExpEClass = createEClass(139);
 
-		valueSpecificationEClass = createEClass(135);
+		valueSpecificationEClass = createEClass(140);
 		createEOperation(valueSpecificationEClass, 3);
 		createEOperation(valueSpecificationEClass, 4);
 		createEOperation(valueSpecificationEClass, 5);
@@ -8196,56 +8312,56 @@ implements PivotPackage  {
 		createEOperation(valueSpecificationEClass, 7);
 		createEOperation(valueSpecificationEClass, 8);
 
-		variableEClass = createEClass(136);
+		variableEClass = createEClass(141);
 		createEAttribute(variableEClass, 9);
 		createEReference(variableEClass, 10);
 		createEReference(variableEClass, 11);
 		createEOperation(variableEClass, 6);
 
-		variableDeclarationEClass = createEClass(137);
+		variableDeclarationEClass = createEClass(142);
 		createEReference(variableDeclarationEClass, 8);
 		createEOperation(variableDeclarationEClass, 3);
 		createEOperation(variableDeclarationEClass, 4);
 		createEOperation(variableDeclarationEClass, 5);
 
-		variableExpEClass = createEClass(138);
+		variableExpEClass = createEClass(143);
 		createEAttribute(variableExpEClass, 9);
 		createEReference(variableExpEClass, 10);
 		createEOperation(variableExpEClass, 7);
 
-		vertexEClass = createEClass(139);
+		vertexEClass = createEClass(144);
 		createEReference(vertexEClass, 5);
 		createEReference(vertexEClass, 6);
 		createEReference(vertexEClass, 7);
 
-		visitableEClass = createEClass(140);
+		visitableEClass = createEClass(145);
 
-		voidTypeEClass = createEClass(141);
+		voidTypeEClass = createEClass(146);
 
-		wildcardTypeEClass = createEClass(142);
+		wildcardTypeEClass = createEClass(147);
 		createEReference(wildcardTypeEClass, 20);
 		createEReference(wildcardTypeEClass, 21);
 
 		// Create enums
-		associativityKindEEnum = createEEnum(143);
-		collectionKindEEnum = createEEnum(144);
-		pseudostateKindEEnum = createEEnum(145);
-		transitionKindEEnum = createEEnum(146);
+		associativityKindEEnum = createEEnum(148);
+		collectionKindEEnum = createEEnum(149);
+		pseudostateKindEEnum = createEEnum(150);
+		transitionKindEEnum = createEEnum(151);
 
 		// Create data types
-		booleanEDataType = createEDataType(147);
-		eBooleanEDataType = createEDataType(148);
-		eIntEDataType = createEDataType(149);
-		ecoreObjectEDataType = createEDataType(150);
-		integerEDataType = createEDataType(151);
-		javaClassEDataType = createEDataType(152);
-		libraryFeatureEDataType = createEDataType(153);
-		numberEDataType = createEDataType(154);
-		objectEDataType = createEDataType(155);
-		realEDataType = createEDataType(156);
-		stringEDataType = createEDataType(157);
-		throwableEDataType = createEDataType(158);
-		unlimitedNaturalEDataType = createEDataType(159);
+		booleanEDataType = createEDataType(152);
+		eBooleanEDataType = createEDataType(153);
+		eIntEDataType = createEDataType(154);
+		ecoreObjectEDataType = createEDataType(155);
+		integerEDataType = createEDataType(156);
+		javaClassEDataType = createEDataType(157);
+		libraryFeatureEDataType = createEDataType(158);
+		numberEDataType = createEDataType(159);
+		objectEDataType = createEDataType(160);
+		realEDataType = createEDataType(161);
+		stringEDataType = createEDataType(162);
+		throwableEDataType = createEDataType(163);
+		unlimitedNaturalEDataType = createEDataType(164);
 	}
 
 	/**
@@ -8326,7 +8442,7 @@ implements PivotPackage  {
 		instanceSpecificationEClass.getESuperTypes().add(this.getNamedElement());
 		integerLiteralExpEClass.getESuperTypes().add(this.getNumericLiteralExp());
 		invalidLiteralExpEClass.getESuperTypes().add(this.getLiteralExp());
-		invalidTypeEClass.getESuperTypes().add(this.getClass_());
+		invalidTypeEClass.getESuperTypes().add(this.getVoidType());
 		iterableTypeEClass.getESuperTypes().add(this.getDataType());
 		iterateExpEClass.getESuperTypes().add(this.getLoopExp());
 		iterateExpEClass.getESuperTypes().add(this.getReferringElement());
@@ -8355,11 +8471,16 @@ implements PivotPackage  {
 		numericLiteralExpEClass.getESuperTypes().add(this.getPrimitiveLiteralExp());
 		oclExpressionEClass.getESuperTypes().add(this.getTypedElement());
 		oclComparableEClass.getESuperTypes().add(this.getOclAny());
+		oclElementEClass.getESuperTypes().add(this.getOclAny());
+		oclEnumerationEClass.getESuperTypes().add(this.getOclType());
+		oclInvalidEClass.getESuperTypes().add(this.getOclVoid());
 		oclLambdaEClass.getESuperTypes().add(this.getOclAny());
 		oclSelfEClass.getESuperTypes().add(this.getOclAny());
 		oclStateEClass.getESuperTypes().add(this.getOclAny());
 		oclSummableEClass.getESuperTypes().add(this.getOclAny());
 		oclTupleEClass.getESuperTypes().add(this.getOclAny());
+		oclTypeEClass.getESuperTypes().add(this.getOclElement());
+		oclVoidEClass.getESuperTypes().add(this.getOclAny());
 		operationEClass.getESuperTypes().add(this.getFeature());
 		operationEClass.getESuperTypes().add(this.getNamespace());
 		operationEClass.getESuperTypes().add(this.getTemplateableElement());
@@ -9353,6 +9474,13 @@ implements PivotPackage  {
 		op = initEOperation(getOclComparable__CompareTo__SelfType(), this.getInteger(), "compareTo", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "that", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
+		initEClass(oclElementEClass, OclElement.class, "OclElement", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(oclEnumerationEClass, OclEnumeration.class, "OclEnumeration", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(oclInvalidEClass, InvalidType.class, "OclInvalid", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getOclInvalid_OclBadProperty(), this.getOclAny(), null, "oclBadProperty", null, 0, 1, InvalidType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(oclLambdaEClass, OclLambda.class, "OclLambda", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(oclSelfEClass, SelfType.class, "OclSelf", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -9367,6 +9495,10 @@ implements PivotPackage  {
 		initEOperation(getOclSummable__Zero(), this.getOclSelf(), "zero", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(oclTupleEClass, OclTuple.class, "OclTuple", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(oclTypeEClass, OclType.class, "OclType", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(oclVoidEClass, VoidType.class, "OclVoid", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(operationEClass, Operation.class, "Operation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getOperation_BodyExpression(), this.getLanguageExpression(), null, "bodyExpression", null, 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

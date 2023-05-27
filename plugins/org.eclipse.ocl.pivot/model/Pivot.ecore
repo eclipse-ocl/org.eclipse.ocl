@@ -991,7 +991,7 @@
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-InvalidLiteralExp" name="InvalidLiteralExp"
       eSuperTypes="#T-pivot-LiteralExp"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-InvalidType" name="InvalidType"
-      eSuperTypes="#T-pivot-Class"/>
+      eSuperTypes="#T-pivot-VoidType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-IterableType" name="IterableType"
       abstract="true" eSuperTypes="#T-pivot-DataType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-IterateExp" name="IterateExp"
@@ -1848,6 +1848,31 @@
       <eParameters name="that" lowerBound="1" eType="#T-pivot-OclSelf"/>
     </eOperations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclElement" name="OclElement"
+      abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined&#xA;for OclElement are therefore applicable to all user-defined types.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclEnumeration" name="OclEnumeration"
+      abstract="true" interface="true" eSuperTypes="#T-pivot-OclType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The OclEnumeration type is the implicit supertype of any user Enumeration type.&#xA;FIXME This is probably obsolete now that static / meta-types clarified.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclInvalid" name="OclInvalid"
+      instanceClassName="org.eclipse.ocl.pivot.InvalidType" abstract="true" interface="true"
+      eSuperTypes="#T-pivot-OclVoid">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclInvalid is a type that conforms to all other types.&#xA;It has one single instance, identified as  oclText[invalid].&#xA;Any property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().&#xA;OclInvalid is itself an instance of the metatype InvalidType.&#xA;"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-OclInvalid-oclBadProperty"
+        name="oclBadProperty" eType="#T-pivot-OclAny">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclLambda" name="OclLambda"
       abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1883,6 +1908,18 @@
       abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple&#xA;therefore apply to all tuples.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclType" name="OclType" abstract="true"
+      interface="true" eSuperTypes="#T-pivot-OclElement">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclType is the implicit supertype of any UML type. Operations defined&#xA;for OclType are therefore applicable to all UML types.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclVoid" name="OclVoid" instanceClassName="org.eclipse.ocl.pivot.VoidType"
+      abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclVoid is a type that conforms to all other types except OclInvalid.&#xA;It has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.&#xA;Any property call applied on oclText[null] results in oclText[invalid], except for the&#xA;oclIsUndefined(), oclIsInvalid(), =(OclAny) and &lt;>(OclAny) operations.&#xA;However, by virtue of the implicit conversion to a collection literal,&#xA;an expression evaluating to oclText[null] can be used as source of collection operations (such as ‘isEmpty’).&#xA;If the source is the oclText[null] literal, it is implicitly converted to Bag{}.&#xA;&#xA;OclVoid is itself an instance of the metatype VoidType.&#xA;"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Operation" name="Operation"

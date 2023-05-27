@@ -1256,6 +1256,47 @@ extends EPackage
 	EOperation getOclComparable__CompareTo__SelfType();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclElement <em>Ocl Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Element</em>'.
+	 * @see org.eclipse.ocl.pivot.OclElement
+	 * @generated
+	 */
+	EClass getOclElement();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclEnumeration <em>Ocl Enumeration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Enumeration</em>'.
+	 * @see org.eclipse.ocl.pivot.OclEnumeration
+	 * @generated
+	 */
+	EClass getOclEnumeration();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.InvalidType <em>Ocl Invalid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Invalid</em>'.
+	 * @see org.eclipse.ocl.pivot.InvalidType
+	 * @generated
+	 */
+	EClass getOclInvalid();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.InvalidType#getOclBadProperty <em>Ocl Bad Property</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Ocl Bad Property</em>'.
+	 * @see org.eclipse.ocl.pivot.InvalidType#getOclBadProperty()
+	 * @see #getOclInvalid()
+	 * @generated
+	 */
+	EReference getOclInvalid_OclBadProperty();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclLambda <em>Ocl Lambda</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1324,6 +1365,26 @@ extends EPackage
 	 * @generated
 	 */
 	EClass getOclTuple();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclType <em>Ocl Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Type</em>'.
+	 * @see org.eclipse.ocl.pivot.OclType
+	 * @generated
+	 */
+	EClass getOclType();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.VoidType <em>Ocl Void</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Void</em>'.
+	 * @see org.eclipse.ocl.pivot.VoidType
+	 * @generated
+	 */
+	EClass getOclVoid();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.InvalidLiteralExp <em>Invalid Literal Exp</em>}'.
@@ -6323,6 +6384,44 @@ extends EPackage
 		EOperation OCL_COMPARABLE___COMPARE_TO__SELFTYPE = eINSTANCE.getOclComparable__CompareTo__SelfType();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclElement <em>Ocl Element</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.OclElement
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclElement()
+		 * @generated
+		 */
+		EClass OCL_ELEMENT = eINSTANCE.getOclElement();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclEnumeration <em>Ocl Enumeration</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.OclEnumeration
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclEnumeration()
+		 * @generated
+		 */
+		EClass OCL_ENUMERATION = eINSTANCE.getOclEnumeration();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.InvalidType <em>Ocl Invalid</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.InvalidType
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclInvalid()
+		 * @generated
+		 */
+		EClass OCL_INVALID = eINSTANCE.getOclInvalid();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Bad Property</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference OCL_INVALID__OCL_BAD_PROPERTY = eINSTANCE.getOclInvalid_OclBadProperty();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclLambda <em>Ocl Lambda</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6387,6 +6486,26 @@ extends EPackage
 		 * @generated
 		 */
 		EClass OCL_TUPLE = eINSTANCE.getOclTuple();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclType <em>Ocl Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.OclType
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclType()
+		 * @generated
+		 */
+		EClass OCL_TYPE = eINSTANCE.getOclType();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.VoidType <em>Ocl Void</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.VoidType
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclVoid()
+		 * @generated
+		 */
+		EClass OCL_VOID = eINSTANCE.getOclVoid();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.BagTypeImpl <em>Bag Type</em>}' class.
