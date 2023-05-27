@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.util;
 
+import java.util.Collection;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
@@ -92,6 +93,7 @@ import org.eclipse.ocl.pivot.OclEnumeration;
 import org.eclipse.ocl.pivot.OclLambda;
 import org.eclipse.ocl.pivot.OclMessage;
 import org.eclipse.ocl.pivot.OclState;
+import org.eclipse.ocl.pivot.OclStereotype;
 import org.eclipse.ocl.pivot.OclSummable;
 import org.eclipse.ocl.pivot.OclTuple;
 import org.eclipse.ocl.pivot.OclType;
@@ -274,6 +276,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseClass(org.eclipse.ocl.pivot.Class object)
 			{
 				return createClassAdapter();
+			}
+			@Override
+			public <T> Adapter caseCollection(Collection<T> object)
+			{
+				return createCollectionAdapter();
 			}
 			@Override
 			public Adapter caseCollectionItem(CollectionItem object)
@@ -629,6 +636,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseOclState(OclState object)
 			{
 				return createOclStateAdapter();
+			}
+			@Override
+			public Adapter caseOclStereotype(OclStereotype object)
+			{
+				return createOclStereotypeAdapter();
 			}
 			@Override
 			public Adapter caseOclSummable(OclSummable object)
@@ -1524,6 +1536,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOclStateAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.OclStereotype <em>Ocl Stereotype</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.OclStereotype
+	 * @generated
+	 */
+	public Adapter createOclStereotypeAdapter()
 	{
 		return null;
 	}
@@ -2519,6 +2546,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createClassAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Collection <em>Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Collection
+	 * @generated
+	 */
+	public Adapter createCollectionAdapter()
+	{
 		return null;
 	}
 

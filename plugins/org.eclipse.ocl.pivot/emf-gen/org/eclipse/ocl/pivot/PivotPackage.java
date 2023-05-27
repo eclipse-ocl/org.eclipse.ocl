@@ -1327,6 +1327,16 @@ extends EPackage
 	EClass getOclState();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclStereotype <em>Ocl Stereotype</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Stereotype</em>'.
+	 * @see org.eclipse.ocl.pivot.OclStereotype
+	 * @generated
+	 */
+	EClass getOclStereotype();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclSummable <em>Ocl Summable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1375,6 +1385,16 @@ extends EPackage
 	 * @generated
 	 */
 	EClass getOclType();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OclType#conformsTo(org.eclipse.ocl.pivot.OclType) <em>Conforms To</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Conforms To</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OclType#conformsTo(org.eclipse.ocl.pivot.OclType)
+	 * @generated
+	 */
+	EOperation getOclType__ConformsTo__OclType();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.VoidType <em>Ocl Void</em>}'.
@@ -3917,6 +3937,16 @@ extends EPackage
 	EOperation getClass__ValidateUniqueInvariantName__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Collection <em>Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Collection</em>'.
+	 * @see java.util.Collection
+	 * @generated
+	 */
+	EClass getCollection();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.Class#isIsInterface <em>Is Interface</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6452,6 +6482,16 @@ extends EPackage
 		EClass OCL_STATE = eINSTANCE.getOclState();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclStereotype <em>Ocl Stereotype</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.OclStereotype
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclStereotype()
+		 * @generated
+		 */
+		EClass OCL_STEREOTYPE = eINSTANCE.getOclStereotype();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclSummable <em>Ocl Summable</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6496,6 +6536,14 @@ extends EPackage
 		 * @generated
 		 */
 		EClass OCL_TYPE = eINSTANCE.getOclType();
+
+		/**
+		 * The meta object literal for the '<em><b>Conforms To</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OCL_TYPE___CONFORMS_TO__OCLTYPE = eINSTANCE.getOclType__ConformsTo__OclType();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.VoidType <em>Ocl Void</em>}' class.
@@ -9296,6 +9344,16 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation CLASS___VALIDATE_UNIQUE_INVARIANT_NAME__DIAGNOSTICCHAIN_MAP = eINSTANCE.getClass__ValidateUniqueInvariantName__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '{@link java.util.Collection <em>Collection</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Collection
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getCollection()
+		 * @generated
+		 */
+		EClass COLLECTION = eINSTANCE.getCollection();
 
 		/**
 		 * The meta object literal for the '<em><b>Is Interface</b></em>' attribute feature.

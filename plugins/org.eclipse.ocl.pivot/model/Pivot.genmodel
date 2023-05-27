@@ -137,6 +137,9 @@
         <genParameters ecoreParameter="Pivot.ecore#//Class/validateUniqueInvariantName/context"/>
       </genOperations>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-Collection">
+      <genTypeParameters ecoreTypeParameter="Pivot.ecore#//Collection/T"/>
+    </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-CollectionItem">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-CollectionItem-ownedItem"/>
       <genOperations ecoreOperation="Pivot.ecore#//CollectionItem/validateTypeIsItemType">
@@ -647,6 +650,7 @@
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclLambda"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclSelf"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclState"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclStereotype"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclSummable">
       <genOperations ecoreOperation="Pivot.ecore#//OclSummable/sum">
         <genParameters ecoreParameter="Pivot.ecore#//OclSummable/sum/that"/>
@@ -654,7 +658,11 @@
       <genOperations ecoreOperation="Pivot.ecore#//OclSummable/zero"/>
     </genClasses>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclTuple"/>
-    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclType"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclType">
+      <genOperations ecoreOperation="Pivot.ecore#//OclType/conformsTo">
+        <genParameters ecoreParameter="Pivot.ecore#//OclType/conformsTo/type2"/>
+      </genOperations>
+    </genClasses>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclVoid"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-Operation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Operation-bodyExpression"/>

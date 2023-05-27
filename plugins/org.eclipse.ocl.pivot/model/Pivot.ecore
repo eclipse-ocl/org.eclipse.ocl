@@ -307,6 +307,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Class-superClasses"
         name="superClasses" ordered="false" upperBound="-1" eType="#T-pivot-Class"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Collection" name="Collection"
+      instanceClassName="java.util.Collection" abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="Collection is the abstract supertype of all collection types in the OCL Standard Library.&#xA;Each occurrence of an object in a collection is called an element.&#xA;If an object occurs twice in a collection, there are two elements.&#xA;&#xA;This sub clause defines the properties on Collections that have identical semantics for all collection subtypes.&#xA;Some operations may be defined within the subtype as well,&#xA;which means that there is an additional postcondition or a more specialized return value.&#xA;Collection is itself an instance of the metatype CollectionType.&#xA;&#xA;The definition of several common operations is different for each subtype.&#xA;These operations are not mentioned in this sub clause.&#xA;&#xA;The semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.&#xA;The semantics of those constructs is defined in Clause 10 (“Semantics Described using UML”).&#xA;In several cases the postcondition refers to other collection operations,&#xA;which in turn are defined in terms of the IterateExp or IteratorExp constructs.&#xA;&#xA;Well-formedness rules&#xA;&#xA;[1] A collection cannot contain oclText[invalid] values.&#xA;&#xA;context Collection&#xA;inv: self->forAll(not oclIsInvalid())"/>
+    </eAnnotations>
+    <eTypeParameters name="T"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-CollectionItem" name="CollectionItem"
       eSuperTypes="#T-pivot-CollectionLiteralPart">
     <eOperations name="validateTypeIsItemType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -1887,6 +1894,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclState" name="OclState"
       abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclStereotype" name="OclStereotype"
+      abstract="true" interface="true" eSuperTypes="#T-pivot-OclType">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined&#xA;for OclStereotype are therefore applicable to all UML stereotypes.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclSummable" name="OclSummable"
       abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1915,6 +1928,12 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="The type OclType is the implicit supertype of any UML type. Operations defined&#xA;for OclType are therefore applicable to all UML types.&#xA;"/>
     </eAnnotations>
+    <eOperations name="conformsTo" lowerBound="1" eType="#T-pivot-Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Returns true if type2 conforms to self."/>
+      </eAnnotations>
+      <eParameters name="type2" eType="#T-pivot-OclType"/>
+    </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclVoid" name="OclVoid" instanceClassName="org.eclipse.ocl.pivot.VoidType"
       abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">

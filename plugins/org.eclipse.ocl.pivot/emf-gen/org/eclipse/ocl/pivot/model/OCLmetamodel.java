@@ -245,6 +245,7 @@ public class OCLmetamodel extends ASResourceImpl
 			metamodelResource.getContents().add(root);
 			pivot = createPackage("pivot", "pivot", "http://www.eclipse.org/ocl/2015/Pivot", IdManager.METAMODEL, PivotPackage.eINSTANCE);
 			installPackages();
+			installTemplateParameters();
 			installClassTypes();
 			installEnumerations();
 			installGenericAggregateTypes();
@@ -287,6 +288,12 @@ public class OCLmetamodel extends ASResourceImpl
 			root.getOwnedPackages().add(pivot);
 			root.getOwnedPackages().add(orphanPackage);
 			root.getOwnedImports().add(createImport(null, _ocl));
+		}
+
+		private TemplateParameter tp_Collection_T;
+
+		private void installTemplateParameters() {
+			tp_Collection_T = createTemplateParameter("T");
 		}
 
 		private Class _Annotation;
@@ -378,6 +385,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _OclLambda;
 		private Class _OclSelf;
 		private Class _OclState;
+		private Class _OclStereotype;
 		private Class _OclSummable;
 		private Class _OclTuple;
 		private Class _OclType;
@@ -592,6 +600,9 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(type, "The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation\nand Iteration signatures. Instances of OclSelf are never created.");
 			type = _OclState = createClass(pivot, PivotPackage.Literals.OCL_STATE);
 			type.setIsAbstract(true);
+			type = _OclStereotype = createClass(pivot, PivotPackage.Literals.OCL_STEREOTYPE);
+			type.setIsAbstract(true);
+			installComment(type, "The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined\nfor OclStereotype are therefore applicable to all UML stereotypes.");
 			type = _OclSummable = createClass(pivot, PivotPackage.Literals.OCL_SUMMABLE);
 			type.setIsAbstract(true);
 			installComment(type, "The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived\nsum and zero implementations may be summed.");
@@ -800,6 +811,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_OclLambda, _OclAny);
 			addSuperClass(_OclSelf, _OclAny);
 			addSuperClass(_OclState, _OclAny);
+			addSuperClass(_OclStereotype, _OclType);
 			addSuperClass(_OclSummable, _OclAny);
 			addSuperClass(_OclTuple, _OclAny);
 			addSuperClass(_OclType, _OclElement);
@@ -1649,6 +1661,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private Operation op_OclComparable_compareTo;
 		private Operation op_OclSummable_sum;
 		private Operation op_OclSummable_zero;
+		private Operation op_OclType_conformsTo;
 		private Operation op_OperationCallExp_hasOclVoidOverload;
 		private Operation op_Property_isAttribute;
 		private Operation op_PropertyCallExp_getSpecializedReferredPropertyOwningType;
@@ -1677,6 +1690,7 @@ public class OCLmetamodel extends ASResourceImpl
 			op_OclComparable_compareTo = createOperation(_OclComparable, PivotPackage.Literals.OCL_COMPARABLE___COMPARE_TO__SELFTYPE, null, null);
 			op_OclSummable_sum = createOperation(_OclSummable, PivotPackage.Literals.OCL_SUMMABLE___SUM__SELFTYPE, null, null);
 			op_OclSummable_zero = createOperation(_OclSummable, PivotPackage.Literals.OCL_SUMMABLE___ZERO, null, null);
+			op_OclType_conformsTo = createOperation(_OclType, PivotPackage.Literals.OCL_TYPE___CONFORMS_TO__OCLTYPE, null, null);
 			op_OperationCallExp_hasOclVoidOverload = createOperation(_OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD, null, null);
 			op_Property_isAttribute = createOperation(_Property, PivotPackage.Literals.PROPERTY___IS_ATTRIBUTE__PROPERTY, null, null);
 			op_PropertyCallExp_getSpecializedReferredPropertyOwningType = createOperation(_PropertyCallExp, PivotPackage.Literals.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_OWNING_TYPE, null, null);
@@ -1741,6 +1755,11 @@ public class OCLmetamodel extends ASResourceImpl
 			operation = op_OclSummable_zero;
 			operation.setType(_OclSelf);
 			installComment(operation, "Return the \'zero\' value of self to initialize a summation.\n\nzero().sum(self) = self.");
+
+			operation = op_OclType_conformsTo;
+			operation.setType(_Boolean);
+			parameter = createParameter(operation, "type2", _OclType, false);
+			installComment(operation, "Returns true if type2 conforms to self.");
 
 			operation = op_OperationCallExp_hasOclVoidOverload;
 			operation.setType(_EBoolean);

@@ -13,29 +13,19 @@ package org.eclipse.ocl.pivot;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Ocl Type</b></em>'.
+ * A representation of the model object '<em><b>Ocl Stereotype</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * The type OclType is the implicit supertype of any UML type. Operations defined
- * for OclType are therefore applicable to all UML types.
+ * The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined
+ * for OclStereotype are therefore applicable to all UML stereotypes.
  *
  * <!-- end-model-doc -->
  *
  *
- * @see org.eclipse.ocl.pivot.PivotPackage#getOclType()
+ * @see org.eclipse.ocl.pivot.PivotPackage#getOclStereotype()
  * @generated
  */
-public interface OclType extends OclElement
+public interface OclStereotype extends OclType
 {
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Returns true if type2 conforms to self.
-	 * <!-- end-model-doc -->
-	 * @generated
-	 */
-	Boolean conformsTo(OclType type2);
-} // OclType
+} // OclStereotype

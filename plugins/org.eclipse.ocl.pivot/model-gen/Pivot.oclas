@@ -133,6 +133,13 @@
       <ownedProperties xmi:id="9Vw0e" isImplicit="true" name="MapType" opposite="#J5GM0" type="#OJ5PO"/>
       <ownedProperties xmi:id="Jh7cO" isImplicit="true" name="TemplateParameter" opposite="#zfRXZ" type="#,xjmF"/>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KKpkp" instanceClassName="java.util.Collection" isAbstract="true" isInterface="true"
+        name="Collection" superClasses="#lFx,m">
+      <ownedComments body="Collection is the abstract supertype of all collection types in the OCL Standard Library.&#xA;Each occurrence of an object in a collection is called an element.&#xA;If an object occurs twice in a collection, there are two elements.&#xA;&#xA;This sub clause defines the properties on Collections that have identical semantics for all collection subtypes.&#xA;Some operations may be defined within the subtype as well,&#xA;which means that there is an additional postcondition or a more specialized return value.&#xA;Collection is itself an instance of the metatype CollectionType.&#xA;&#xA;The definition of several common operations is different for each subtype.&#xA;These operations are not mentioned in this sub clause.&#xA;&#xA;The semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.&#xA;The semantics of those constructs is defined in Clause 10 (“Semantics Described using UML”).&#xA;In several cases the postcondition refers to other collection operations,&#xA;which in turn are defined in terms of the IterateExp or IteratorExp constructs.&#xA;&#xA;Well-formedness rules&#xA;&#xA;[1] A collection cannot contain oclText[invalid] values.&#xA;&#xA;context Collection&#xA;inv: self->forAll(not oclIsInvalid())"/>
+      <ownedSignature>
+        <ownedParameters xmi:id="8mA,j" name="T"/>
+      </ownedSignature>
+    </ownedClasses>
     <ownedClasses xmi:id="CKfVx" name="CollectionItem" superClasses="#1s6I1">
       <ownedInvariants xmi:id="D3ZRY" isCallable="true" name="TypeIsItemType">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="type = ownedItem.type&#xA;&#xA;"/>
@@ -731,6 +738,9 @@
       <ownedComments body="The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation&#xA;and Iteration signatures. Instances of OclSelf are never created.&#xA;"/>
     </ownedClasses>
     <ownedClasses xmi:id="KIAJb" isAbstract="true" isInterface="true" name="OclState" superClasses="#lFx,m"/>
+    <ownedClasses xmi:id="b36Af" isAbstract="true" isInterface="true" name="OclStereotype" superClasses="#jPQoc">
+      <ownedComments body="The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined&#xA;for OclStereotype are therefore applicable to all UML stereotypes.&#xA;"/>
+    </ownedClasses>
     <ownedClasses xmi:id="FiDzt" isAbstract="true" isInterface="true" name="OclSummable" superClasses="#lFx,m">
       <ownedComments body="The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived&#xA;sum and zero implementations may be summed."/>
       <ownedOperations xmi:id="g9Plx" name="sum" type="#1PEoc">
@@ -746,6 +756,10 @@
     </ownedClasses>
     <ownedClasses xmi:id="jPQoc" isAbstract="true" isInterface="true" name="OclType" superClasses="#1Joxm">
       <ownedComments body="The type OclType is the implicit supertype of any UML type. Operations defined&#xA;for OclType are therefore applicable to all UML types.&#xA;"/>
+      <ownedOperations xmi:id="tBA90" name="conformsTo" type="#ZuwnB">
+        <ownedComments body="Returns true if type2 conforms to self."/>
+        <ownedParameters xmi:id="csGWB" isRequired="false" name="type2" type="#jPQoc"/>
+      </ownedOperations>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:VoidType" xmi:id="9Ycoc" instanceClassName="org.eclipse.ocl.pivot.VoidType" isAbstract="true" isInterface="true"
         name="OclVoid" superClasses="#lFx,m">
