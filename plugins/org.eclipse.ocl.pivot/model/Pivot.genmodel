@@ -633,6 +633,13 @@
         <genParameters ecoreParameter="Pivot.ecore#//OCLExpression/validateTypeIsNotNull/context"/>
       </genOperations>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclAny"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclComparable">
+      <genOperations ecoreOperation="Pivot.ecore#//OclComparable/compareTo">
+        <genParameters ecoreParameter="Pivot.ecore#//OclComparable/compareTo/that"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclSelf"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-Operation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Operation-bodyExpression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-Operation-isInvalidating"/>

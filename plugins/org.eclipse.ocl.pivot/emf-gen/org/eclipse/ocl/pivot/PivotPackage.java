@@ -1226,6 +1226,46 @@ extends EPackage
 	EOperation getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for class '{@link java.lang.Object <em>Ocl Any</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Any</em>'.
+	 * @see java.lang.Object
+	 * @generated
+	 */
+	EClass getOclAny();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclComparable <em>Ocl Comparable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Comparable</em>'.
+	 * @see org.eclipse.ocl.pivot.OclComparable
+	 * @generated
+	 */
+	EClass getOclComparable();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OclComparable#compareTo(org.eclipse.ocl.pivot.SelfType) <em>Compare To</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Compare To</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OclComparable#compareTo(org.eclipse.ocl.pivot.SelfType)
+	 * @generated
+	 */
+	EOperation getOclComparable__CompareTo__SelfType();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.SelfType <em>Ocl Self</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Self</em>'.
+	 * @see org.eclipse.ocl.pivot.SelfType
+	 * @generated
+	 */
+	EClass getOclSelf();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.InvalidLiteralExp <em>Invalid Literal Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6193,6 +6233,44 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation OCL_EXPRESSION___VALIDATE_TYPE_IS_NOT_NULL__DIAGNOSTICCHAIN_MAP = eINSTANCE.getOCLExpression__ValidateTypeIsNotNull__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '{@link java.lang.Object <em>Ocl Any</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.lang.Object
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclAny()
+		 * @generated
+		 */
+		EClass OCL_ANY = eINSTANCE.getOclAny();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.OclComparableImpl <em>Ocl Comparable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.OclComparableImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclComparable()
+		 * @generated
+		 */
+		EClass OCL_COMPARABLE = eINSTANCE.getOclComparable();
+
+		/**
+		 * The meta object literal for the '<em><b>Compare To</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OCL_COMPARABLE___COMPARE_TO__SELFTYPE = eINSTANCE.getOclComparable__CompareTo__SelfType();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.OclSelfImpl <em>Ocl Self</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.OclSelfImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclSelf()
+		 * @generated
+		 */
+		EClass OCL_SELF = eINSTANCE.getOclSelf();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.BagTypeImpl <em>Bag Type</em>}' class.

@@ -6165,6 +6165,7 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[1]) */,
 			OCLstdlibTables.Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
 			OCLstdlibTables.Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */,
 			OCLstdlibTables.Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _EInt__OclSummable = {

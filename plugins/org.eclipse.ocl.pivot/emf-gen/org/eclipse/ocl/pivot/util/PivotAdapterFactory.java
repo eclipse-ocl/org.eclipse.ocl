@@ -86,6 +86,7 @@ import org.eclipse.ocl.pivot.NavigationCallExp;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.NumericLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.OclComparable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
@@ -580,6 +581,21 @@ extends AdapterFactoryImpl {
 			public Adapter caseOCLExpression(OCLExpression object)
 			{
 				return createOCLExpressionAdapter();
+			}
+			@Override
+			public Adapter caseOclAny(Object object)
+			{
+				return createOclAnyAdapter();
+			}
+			@Override
+			public Adapter caseOclComparable(OclComparable object)
+			{
+				return createOclComparableAdapter();
+			}
+			@Override
+			public Adapter caseOclSelf(SelfType object)
+			{
+				return createOclSelfAdapter();
 			}
 			@Override
 			public Adapter caseOperation(Operation object)
@@ -1335,6 +1351,51 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOCLExpressionAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.lang.Object <em>Ocl Any</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.lang.Object
+	 * @generated
+	 */
+	public Adapter createOclAnyAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.OclComparable <em>Ocl Comparable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.OclComparable
+	 * @generated
+	 */
+	public Adapter createOclComparableAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.SelfType <em>Ocl Self</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.SelfType
+	 * @generated
+	 */
+	public Adapter createOclSelfAdapter()
 	{
 		return null;
 	}

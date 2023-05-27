@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -45,11 +46,7 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
-import org.eclipse.ocl.pivot.PivotPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -267,7 +264,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Class _Boolean = getClass(_ocl, "Boolean");
 		private final @NonNull CollectionType _Collection = getCollectionType(_ocl, "Collection");
 		private final @NonNull Class _Integer = getClass(_ocl, "Integer");
-		private final @NonNull Class _OclAny = getClass(_ocl, "OclAny");
+//		private final @NonNull Class _OclAny = getClass(_ocl, "OclAny");
 		private final @NonNull Class _OclElement = getClass(_ocl, "OclElement");
 		private final @NonNull Class _OclEnumeration = getClass(_ocl, "OclEnumeration");
 		private final @NonNull CollectionType _OrderedCollection = getCollectionType(_ocl, "OrderedCollection");
@@ -373,6 +370,9 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _NumericLiteralExp;
 		private Class _OCLExpression;
 		private Class _Object;
+		private Class _OclAny;
+		private Class _OclComparable;
+		private Class _OclSelf;
 		private Class _Operation;
 		private Class _OperationCallExp;
 		private Class _OppositePropertyCallExp;
@@ -560,6 +560,15 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _OCLExpression = createClass(pivot, PivotPackage.Literals.OCL_EXPRESSION);
 			type.setIsAbstract(true);
 			type = _Object = createClass(pivot, PivotPackage.Literals.OBJECT);
+			type = _OclAny = createClass(pivot, PivotPackage.Literals.OCL_ANY);
+			type.setIsAbstract(true);
+			installComment(type, "The number of elements in the collection oclText[self].essions.\nOclAny is itself an instance of the metatype AnyType.\n\nAll classes in a UML model inherit all operations defined on OclAny.\nTo avoid name conflicts between properties in the model and the properties inherited from OclAny,\nall names on the properties of OclAny start with \u2018ocl.\u2019\nAlthough theoretically there may still be name conflicts, they can be avoided.\nOne can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.\n\nOperations of OclAny, where the instance of OclAny is called object.\n\nThis Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTrue functionality is only available once converted to a Pivot model.");
+			type = _OclComparable = createClass(pivot, PivotPackage.Literals.OCL_COMPARABLE);
+			type.setIsAbstract(true);
+			installComment(type, "The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived\ncompareTo implementation may be sorted.");
+			type = _OclSelf = createClass(pivot, PivotPackage.Literals.OCL_SELF);
+			type.setIsAbstract(true);
+			installComment(type, "The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation\nand Iteration signatures. Instances of OclSelf are never created.");
 			type = _Operation = createClass(pivot, PivotPackage.Literals.OPERATION);
 			installComment(type, "An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
 			type = _OperationCallExp = createClass(pivot, PivotPackage.Literals.OPERATION_CALL_EXP);
@@ -749,6 +758,8 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_NumericLiteralExp, _PrimitiveLiteralExp);
 			addSuperClass(_OCLExpression, _TypedElement);
 			addSuperClass(_Object, _OclAny);
+			addSuperClass(_OclComparable, _OclAny);
+			addSuperClass(_OclSelf, _OclAny);
 			addSuperClass(_Operation, _Feature);
 			addSuperClass(_Operation, _Namespace);
 			addSuperClass(_Operation, _TemplateableElement);
@@ -1585,6 +1596,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private Operation op_Element_getValue;
 		private Operation op_OCLExpression_isNonNull;
 		private Operation op_OCLExpression_isNull;
+		private Operation op_OclComparable_compareTo;
 		private Operation op_OperationCallExp_hasOclVoidOverload;
 		private Operation op_Property_isAttribute;
 		private Operation op_PropertyCallExp_getSpecializedReferredPropertyOwningType;
@@ -1610,6 +1622,7 @@ public class OCLmetamodel extends ASResourceImpl
 			op_Element_getValue = createOperation(_Element, PivotPackage.Literals.ELEMENT___GET_VALUE__TYPE_STRING, null, null);
 			op_OCLExpression_isNonNull = createOperation(_OCLExpression, PivotPackage.Literals.OCL_EXPRESSION___IS_NON_NULL, null, null);
 			op_OCLExpression_isNull = createOperation(_OCLExpression, PivotPackage.Literals.OCL_EXPRESSION___IS_NULL, null, null);
+			op_OclComparable_compareTo = createOperation(_OclComparable, PivotPackage.Literals.OCL_COMPARABLE___COMPARE_TO__SELFTYPE, null, null);
 			op_OperationCallExp_hasOclVoidOverload = createOperation(_OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD, null, null);
 			op_Property_isAttribute = createOperation(_Property, PivotPackage.Literals.PROPERTY___IS_ATTRIBUTE__PROPERTY, null, null);
 			op_PropertyCallExp_getSpecializedReferredPropertyOwningType = createOperation(_PropertyCallExp, PivotPackage.Literals.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_OWNING_TYPE, null, null);
@@ -1660,6 +1673,11 @@ public class OCLmetamodel extends ASResourceImpl
 
 			operation = op_OCLExpression_isNull;
 			operation.setType(_EBoolean);
+
+			operation = op_OclComparable_compareTo;
+			operation.setType(_Integer);
+			parameter = createParameter(operation, "that", _OclSelf, true);
+			installComment(operation, "Return -ve, 0, +ve according to whether self is less than, equal to , or greater than that.\n\nThe compareTo operation should be commutative.");
 
 			operation = op_OperationCallExp_hasOclVoidOverload;
 			operation.setType(_EBoolean);
