@@ -372,7 +372,11 @@ public class OCLmetamodel extends ASResourceImpl
 		private Class _Object;
 		private Class _OclAny;
 		private Class _OclComparable;
+		private Class _OclLambda;
 		private Class _OclSelf;
+		private Class _OclState;
+		private Class _OclSummable;
+		private Class _OclTuple;
 		private Class _Operation;
 		private Class _OperationCallExp;
 		private Class _OppositePropertyCallExp;
@@ -566,9 +570,20 @@ public class OCLmetamodel extends ASResourceImpl
 			type = _OclComparable = createClass(pivot, PivotPackage.Literals.OCL_COMPARABLE);
 			type.setIsAbstract(true);
 			installComment(type, "The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived\ncompareTo implementation may be sorted.");
+			type = _OclLambda = createClass(pivot, PivotPackage.Literals.OCL_LAMBDA);
+			type.setIsAbstract(true);
+			installComment(type, "The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda\ntherefore apply to all lambda expressions.");
 			type = _OclSelf = createClass(pivot, PivotPackage.Literals.OCL_SELF);
 			type.setIsAbstract(true);
 			installComment(type, "The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation\nand Iteration signatures. Instances of OclSelf are never created.");
+			type = _OclState = createClass(pivot, PivotPackage.Literals.OCL_STATE);
+			type.setIsAbstract(true);
+			type = _OclSummable = createClass(pivot, PivotPackage.Literals.OCL_SUMMABLE);
+			type.setIsAbstract(true);
+			installComment(type, "The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived\nsum and zero implementations may be summed.");
+			type = _OclTuple = createClass(pivot, PivotPackage.Literals.OCL_TUPLE);
+			type.setIsAbstract(true);
+			installComment(type, "The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple\ntherefore apply to all tuples.");
 			type = _Operation = createClass(pivot, PivotPackage.Literals.OPERATION);
 			installComment(type, "An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template.");
 			type = _OperationCallExp = createClass(pivot, PivotPackage.Literals.OPERATION_CALL_EXP);
@@ -759,7 +774,11 @@ public class OCLmetamodel extends ASResourceImpl
 			addSuperClass(_OCLExpression, _TypedElement);
 			addSuperClass(_Object, _OclAny);
 			addSuperClass(_OclComparable, _OclAny);
+			addSuperClass(_OclLambda, _OclAny);
 			addSuperClass(_OclSelf, _OclAny);
+			addSuperClass(_OclState, _OclAny);
+			addSuperClass(_OclSummable, _OclAny);
+			addSuperClass(_OclTuple, _OclAny);
 			addSuperClass(_Operation, _Feature);
 			addSuperClass(_Operation, _Namespace);
 			addSuperClass(_Operation, _TemplateableElement);
@@ -1597,6 +1616,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private Operation op_OCLExpression_isNonNull;
 		private Operation op_OCLExpression_isNull;
 		private Operation op_OclComparable_compareTo;
+		private Operation op_OclSummable_sum;
+		private Operation op_OclSummable_zero;
 		private Operation op_OperationCallExp_hasOclVoidOverload;
 		private Operation op_Property_isAttribute;
 		private Operation op_PropertyCallExp_getSpecializedReferredPropertyOwningType;
@@ -1623,6 +1644,8 @@ public class OCLmetamodel extends ASResourceImpl
 			op_OCLExpression_isNonNull = createOperation(_OCLExpression, PivotPackage.Literals.OCL_EXPRESSION___IS_NON_NULL, null, null);
 			op_OCLExpression_isNull = createOperation(_OCLExpression, PivotPackage.Literals.OCL_EXPRESSION___IS_NULL, null, null);
 			op_OclComparable_compareTo = createOperation(_OclComparable, PivotPackage.Literals.OCL_COMPARABLE___COMPARE_TO__SELFTYPE, null, null);
+			op_OclSummable_sum = createOperation(_OclSummable, PivotPackage.Literals.OCL_SUMMABLE___SUM__SELFTYPE, null, null);
+			op_OclSummable_zero = createOperation(_OclSummable, PivotPackage.Literals.OCL_SUMMABLE___ZERO, null, null);
 			op_OperationCallExp_hasOclVoidOverload = createOperation(_OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD, null, null);
 			op_Property_isAttribute = createOperation(_Property, PivotPackage.Literals.PROPERTY___IS_ATTRIBUTE__PROPERTY, null, null);
 			op_PropertyCallExp_getSpecializedReferredPropertyOwningType = createOperation(_PropertyCallExp, PivotPackage.Literals.PROPERTY_CALL_EXP___GET_SPECIALIZED_REFERRED_PROPERTY_OWNING_TYPE, null, null);
@@ -1678,6 +1701,15 @@ public class OCLmetamodel extends ASResourceImpl
 			operation.setType(_Integer);
 			parameter = createParameter(operation, "that", _OclSelf, true);
 			installComment(operation, "Return -ve, 0, +ve according to whether self is less than, equal to , or greater than that.\n\nThe compareTo operation should be commutative.");
+
+			operation = op_OclSummable_sum;
+			operation.setType(_OclSelf);
+			parameter = createParameter(operation, "that", _OclSelf, true);
+			installComment(operation, "Return the sum of self and that.\n\nThe sum operation should be associative.");
+
+			operation = op_OclSummable_zero;
+			operation.setType(_OclSelf);
+			installComment(operation, "Return the \'zero\' value of self to initialize a summation.\n\nzero().sum(self) = self.");
 
 			operation = op_OperationCallExp_hasOclVoidOverload;
 			operation.setType(_EBoolean);

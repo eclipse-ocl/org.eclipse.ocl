@@ -1256,6 +1256,16 @@ extends EPackage
 	EOperation getOclComparable__CompareTo__SelfType();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclLambda <em>Ocl Lambda</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Lambda</em>'.
+	 * @see org.eclipse.ocl.pivot.OclLambda
+	 * @generated
+	 */
+	EClass getOclLambda();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.SelfType <em>Ocl Self</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1264,6 +1274,56 @@ extends EPackage
 	 * @generated
 	 */
 	EClass getOclSelf();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclState <em>Ocl State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl State</em>'.
+	 * @see org.eclipse.ocl.pivot.OclState
+	 * @generated
+	 */
+	EClass getOclState();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclSummable <em>Ocl Summable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Summable</em>'.
+	 * @see org.eclipse.ocl.pivot.OclSummable
+	 * @generated
+	 */
+	EClass getOclSummable();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OclSummable#sum(org.eclipse.ocl.pivot.SelfType) <em>Sum</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Sum</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OclSummable#sum(org.eclipse.ocl.pivot.SelfType)
+	 * @generated
+	 */
+	EOperation getOclSummable__Sum__SelfType();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.OclSummable#zero() <em>Zero</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Zero</em>' operation.
+	 * @see org.eclipse.ocl.pivot.OclSummable#zero()
+	 * @generated
+	 */
+	EOperation getOclSummable__Zero();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.OclTuple <em>Ocl Tuple</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Ocl Tuple</em>'.
+	 * @see org.eclipse.ocl.pivot.OclTuple
+	 * @generated
+	 */
+	EClass getOclTuple();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.InvalidLiteralExp <em>Invalid Literal Exp</em>}'.
@@ -6245,10 +6305,10 @@ extends EPackage
 		EClass OCL_ANY = eINSTANCE.getOclAny();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.OclComparableImpl <em>Ocl Comparable</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclComparable <em>Ocl Comparable</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.OclComparableImpl
+		 * @see org.eclipse.ocl.pivot.OclComparable
 		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclComparable()
 		 * @generated
 		 */
@@ -6263,14 +6323,70 @@ extends EPackage
 		EOperation OCL_COMPARABLE___COMPARE_TO__SELFTYPE = eINSTANCE.getOclComparable__CompareTo__SelfType();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.OclSelfImpl <em>Ocl Self</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclLambda <em>Ocl Lambda</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.OclSelfImpl
+		 * @see org.eclipse.ocl.pivot.OclLambda
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclLambda()
+		 * @generated
+		 */
+		EClass OCL_LAMBDA = eINSTANCE.getOclLambda();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.SelfType <em>Ocl Self</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.SelfType
 		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclSelf()
 		 * @generated
 		 */
 		EClass OCL_SELF = eINSTANCE.getOclSelf();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclState <em>Ocl State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.OclState
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclState()
+		 * @generated
+		 */
+		EClass OCL_STATE = eINSTANCE.getOclState();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclSummable <em>Ocl Summable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.OclSummable
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclSummable()
+		 * @generated
+		 */
+		EClass OCL_SUMMABLE = eINSTANCE.getOclSummable();
+
+		/**
+		 * The meta object literal for the '<em><b>Sum</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OCL_SUMMABLE___SUM__SELFTYPE = eINSTANCE.getOclSummable__Sum__SelfType();
+
+		/**
+		 * The meta object literal for the '<em><b>Zero</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OCL_SUMMABLE___ZERO = eINSTANCE.getOclSummable__Zero();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.OclTuple <em>Ocl Tuple</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.OclTuple
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getOclTuple()
+		 * @generated
+		 */
+		EClass OCL_TUPLE = eINSTANCE.getOclTuple();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.BagTypeImpl <em>Bag Type</em>}' class.

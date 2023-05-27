@@ -136,6 +136,7 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_NavigationCallExp = PivotTables.PACKid_$metamodel$.getClassId("NavigationCallExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OCLExpression = PivotTables.PACKid_$metamodel$.getClassId("OCLExpression", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OclElement = PivotTables.PACKid_$metamodel$.getClassId("OclElement", 0);
+	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OclSelf = PivotTables.PACKid_$metamodel$.getClassId("OclSelf", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Operation = PivotTables.PACKid_$metamodel$.getClassId("Operation", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OperationCallExp = PivotTables.PACKid_$metamodel$.getClassId("OperationCallExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_OppositePropertyCallExp = PivotTables.PACKid_$metamodel$.getClassId("OppositePropertyCallExp", 0);
@@ -6170,6 +6171,8 @@ public class PivotTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _EInt__OclSummable = {
 			OCLstdlibTables.Operations._OclSummable__sum /* sum(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclSummable__sum /* sum(OclSelf[1]) */,
+			OCLstdlibTables.Operations._OclSummable__zero /* zero() */,
 			OCLstdlibTables.Operations._OclSummable__zero /* zero() */
 		};
 		private static final @NonNull Operation @NonNull [] _EInt__Real = {

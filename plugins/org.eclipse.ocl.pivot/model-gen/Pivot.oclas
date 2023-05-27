@@ -702,15 +702,33 @@
     <ownedClasses xsi:type="pivot:AnyType" xmi:id="lFx,m" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclAny">
       <ownedComments body="The number of elements in the collection oclText[self].essions.&#xA;OclAny is itself an instance of the metatype AnyType.&#xA;&#xA;All classes in a UML model inherit all operations defined on OclAny.&#xA;To avoid name conflicts between properties in the model and the properties inherited from OclAny,&#xA;all names on the properties of OclAny start with ‘ocl.’&#xA;Although theoretically there may still be name conflicts, they can be avoided.&#xA;One can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.&#xA;&#xA;Operations of OclAny, where the instance of OclAny is called object.&#xA;&#xA;This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.&#xA;True functionality is only available once converted to a Pivot model."/>
     </ownedClasses>
-    <ownedClasses xmi:id="DuUoD" isAbstract="true" name="OclComparable" superClasses="#lFx,m">
+    <ownedClasses xmi:id="DuUoD" isAbstract="true" isInterface="true" name="OclComparable" superClasses="#lFx,m">
       <ownedComments body="The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived&#xA;compareTo implementation may be sorted.&#xA;"/>
       <ownedOperations xmi:id="bJ6Kw" name="compareTo" type="#vCSey">
         <ownedComments body="Return -ve, 0, +ve according to whether self is less than, equal to , or greater than that.&#xA;&#xA;The compareTo operation should be commutative."/>
         <ownedParameters xmi:id="BLD1n" name="that" type="#1PEoc"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="1PEoc" instanceClassName="org.eclipse.ocl.pivot.SelfType" isAbstract="true" name="OclSelf" superClasses="#lFx,m">
+    <ownedClasses xmi:id="wJOGg" isAbstract="true" isInterface="true" name="OclLambda" superClasses="#lFx,m">
+      <ownedComments body="The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda&#xA;therefore apply to all lambda expressions.&#xA;"/>
+    </ownedClasses>
+    <ownedClasses xmi:id="1PEoc" instanceClassName="org.eclipse.ocl.pivot.SelfType" isAbstract="true" isInterface="true" name="OclSelf"
+        superClasses="#lFx,m">
       <ownedComments body="The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation&#xA;and Iteration signatures. Instances of OclSelf are never created.&#xA;"/>
+    </ownedClasses>
+    <ownedClasses xmi:id="KIAJb" isAbstract="true" isInterface="true" name="OclState" superClasses="#lFx,m"/>
+    <ownedClasses xmi:id="FiDzt" isAbstract="true" isInterface="true" name="OclSummable" superClasses="#lFx,m">
+      <ownedComments body="The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived&#xA;sum and zero implementations may be summed."/>
+      <ownedOperations xmi:id="g9Plx" name="sum" type="#1PEoc">
+        <ownedComments body="Return the sum of self and that.&#xA;&#xA;The sum operation should be associative."/>
+        <ownedParameters xmi:id="y+CDJ" name="that" type="#1PEoc"/>
+      </ownedOperations>
+      <ownedOperations xmi:id="Odj1p" name="zero" type="#1PEoc">
+        <ownedComments body="Return the 'zero' value of self to initialize a summation.&#xA;&#xA;zero().sum(self) = self."/>
+      </ownedOperations>
+    </ownedClasses>
+    <ownedClasses xmi:id="BVsMb" isAbstract="true" isInterface="true" name="OclTuple" superClasses="#lFx,m">
+      <ownedComments body="The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple&#xA;therefore apply to all tuples.&#xA;"/>
     </ownedClasses>
     <ownedClasses xmi:id="Yz,F1" name="Operation" superClasses="#nphZD #MzHoc #5r5y9">
       <ownedComments body="An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template."/>

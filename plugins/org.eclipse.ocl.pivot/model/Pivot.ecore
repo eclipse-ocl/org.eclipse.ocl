@@ -1837,7 +1837,7 @@
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclComparable" name="OclComparable"
-      abstract="true" eSuperTypes="#T-pivot-OclAny">
+      abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived&#xA;compareTo implementation may be sorted.&#xA;"/>
     </eAnnotations>
@@ -1848,10 +1848,41 @@
       <eParameters name="that" lowerBound="1" eType="#T-pivot-OclSelf"/>
     </eOperations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclLambda" name="OclLambda"
+      abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda&#xA;therefore apply to all lambda expressions.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclSelf" name="OclSelf" instanceClassName="org.eclipse.ocl.pivot.SelfType"
-      abstract="true" eSuperTypes="#T-pivot-OclAny">
+      abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation&#xA;and Iteration signatures. Instances of OclSelf are never created.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclState" name="OclState"
+      abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny"/>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclSummable" name="OclSummable"
+      abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived&#xA;sum and zero implementations may be summed."/>
+    </eAnnotations>
+    <eOperations name="sum" lowerBound="1" eType="#T-pivot-OclSelf">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Return the sum of self and that.&#xA;&#xA;The sum operation should be associative."/>
+      </eAnnotations>
+      <eParameters name="that" lowerBound="1" eType="#T-pivot-OclSelf"/>
+    </eOperations>
+    <eOperations name="zero" lowerBound="1" eType="#T-pivot-OclSelf">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Return the 'zero' value of self to initialize a summation.&#xA;&#xA;zero().sum(self) = self."/>
+      </eAnnotations>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-OclTuple" name="OclTuple"
+      abstract="true" interface="true" eSuperTypes="#T-pivot-OclAny">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple&#xA;therefore apply to all tuples.&#xA;"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Operation" name="Operation"

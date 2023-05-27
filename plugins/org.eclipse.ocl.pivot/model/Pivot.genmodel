@@ -639,7 +639,16 @@
         <genParameters ecoreParameter="Pivot.ecore#//OclComparable/compareTo/that"/>
       </genOperations>
     </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclLambda"/>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclSelf"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclState"/>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclSummable">
+      <genOperations ecoreOperation="Pivot.ecore#//OclSummable/sum">
+        <genParameters ecoreParameter="Pivot.ecore#//OclSummable/sum/that"/>
+      </genOperations>
+      <genOperations ecoreOperation="Pivot.ecore#//OclSummable/zero"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-OclTuple"/>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-Operation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Operation-bodyExpression"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-Operation-isInvalidating"/>

@@ -87,6 +87,10 @@ import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.NumericLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.OclComparable;
+import org.eclipse.ocl.pivot.OclLambda;
+import org.eclipse.ocl.pivot.OclState;
+import org.eclipse.ocl.pivot.OclSummable;
+import org.eclipse.ocl.pivot.OclTuple;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.OppositePropertyCallExp;
@@ -593,9 +597,29 @@ extends AdapterFactoryImpl {
 				return createOclComparableAdapter();
 			}
 			@Override
+			public Adapter caseOclLambda(OclLambda object)
+			{
+				return createOclLambdaAdapter();
+			}
+			@Override
 			public Adapter caseOclSelf(SelfType object)
 			{
 				return createOclSelfAdapter();
+			}
+			@Override
+			public Adapter caseOclState(OclState object)
+			{
+				return createOclStateAdapter();
+			}
+			@Override
+			public Adapter caseOclSummable(OclSummable object)
+			{
+				return createOclSummableAdapter();
+			}
+			@Override
+			public Adapter caseOclTuple(OclTuple object)
+			{
+				return createOclTupleAdapter();
 			}
 			@Override
 			public Adapter caseOperation(Operation object)
@@ -1386,6 +1410,21 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.OclLambda <em>Ocl Lambda</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.OclLambda
+	 * @generated
+	 */
+	public Adapter createOclLambdaAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.SelfType <em>Ocl Self</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1396,6 +1435,51 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createOclSelfAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.OclState <em>Ocl State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.OclState
+	 * @generated
+	 */
+	public Adapter createOclStateAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.OclSummable <em>Ocl Summable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.OclSummable
+	 * @generated
+	 */
+	public Adapter createOclSummableAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.OclTuple <em>Ocl Tuple</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.OclTuple
+	 * @generated
+	 */
+	public Adapter createOclTupleAdapter()
 	{
 		return null;
 	}
