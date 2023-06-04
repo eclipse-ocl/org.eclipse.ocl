@@ -391,6 +391,7 @@ public class PivotTestCase extends TestCase
 		BasicDiagnostic diagnostics = PivotDiagnostician.BasicDiagnosticWithRemove.validate(eObject, validationContext);
 		List<Diagnostic> children = diagnostics.getChildren();
 		if (children.size() <= 0) {
+			PivotDiagnostician.dispose(validationContext);
 			return;
 		}
 		StringBuilder s = new StringBuilder();
@@ -486,6 +487,7 @@ public class PivotTestCase extends TestCase
 					savedExecutor.setInterpretedExecutor(null);
 				}
 			}
+			PivotDiagnostician.dispose(validationContext);
 		}
 	}
 

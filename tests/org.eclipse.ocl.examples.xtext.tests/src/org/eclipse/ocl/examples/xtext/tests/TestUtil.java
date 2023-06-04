@@ -51,15 +51,21 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationConstraintsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EDetailsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EOperationsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.ETypedElementNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.Normalizer;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.essentialocl.EssentialOCLStandaloneSetup;
@@ -86,7 +92,7 @@ public class TestUtil
 		List<Normalizer> actualNormalizations = normalize(actualResource);
 		String expected = EmfFormatter.listToStr(expectedResource.getContents())/*.replaceAll(" : ", ": ")*/;		// Workround BUG 552035
 		String actual = EmfFormatter.listToStr(actualResource.getContents())/*.replaceAll(" : ", ": ")*/;
-		TestCase.assertEquals(expected, actual);
+		TestCase.assertEquals("Expected: " + expectedResource.getURI() + "\nActual: " + actualResource.getURI() + "\n", expected, actual);
 		for (Normalizer normalizer : expectedNormalizations) {
 			normalizer.denormalize();
 		}
@@ -274,6 +280,42 @@ public class TestUtil
 			normalizer.normalize();
 		}
 		return normalizers;
+	}
+
+	public static void normalizeBodies(@NonNull ASResource asResource, @Nullable Boolean saveASContents, @Nullable Boolean saveTextContents) {
+		boolean createASBodies = saveASContents == Boolean.TRUE;
+		boolean createTextBodies = saveTextContents == Boolean.TRUE;
+		boolean pruneASBodies = saveASContents == Boolean.FALSE;
+		boolean pruneTextBodies = saveTextContents == Boolean.FALSE;
+		for (EObject eObject : new TreeIterable(asResource)) {
+			if (eObject instanceof ExpressionInOCL) {
+				ExpressionInOCL asExpressionInOCL = (ExpressionInOCL)eObject;
+				if (createTextBodies) {
+					// XXX pretty print
+					//	if (object.getBody() != null) {
+					//		object.setOwnedBody(null);
+					//	}
+				}
+				else if (createTextBodies) {
+					asExpressionInOCL.setBody(null);
+				}
+				if (createASBodies) {
+					// XXX compile
+				}
+				else if (pruneASBodies) {
+					asExpressionInOCL.setOwnedBody(null);
+					asExpressionInOCL.setType(null);
+					asExpressionInOCL.setOwnedContext(null);
+					asExpressionInOCL.getOwnedParameters().clear();
+					asExpressionInOCL.eUnset(PivotPackage.Literals.TYPED_ELEMENT__IS_REQUIRED);
+				}
+			}
+			else if (eObject instanceof Operation) {
+				if (pruneASBodies) {
+					((Operation)eObject).setImplementation(null);
+				}
+			}
+		}
 	}
 
 	public static void saveAsXMI(Resource resource, URI xmiURI, Map<?, ?> options) throws IOException {

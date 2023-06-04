@@ -51,11 +51,11 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, Ab
 		}
 	}
 
-	protected static final class PropertyComparator implements Comparator<@NonNull Property>
+	public static final class PropertyComparator implements Comparator<@NonNull Property>
 	{
 		public static final @NonNull Comparator<@NonNull Property> INSTANCE = new PropertyComparator();
 
-		@Override
+	/*	@Override
 		public int compare(@NonNull Property o1, @NonNull Property o2) {
 			int l1 = o1.isIsImplicit() ? 1 : 0;
 			int l2 = o2.isIsImplicit() ? 1 : 0;
@@ -69,6 +69,43 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, Ab
 			return n1.compareTo(n2);
 		}
 	}
+	public static final @NonNull Comparator<@NonNull Property> propertyComparator = new Comparator<@NonNull Property>()
+	{*/
+		@Override
+		public int compare(@NonNull Property p1, @NonNull Property p2) {
+			boolean b1 = p1.isIsImplicit();
+			boolean b2 = p2.isIsImplicit();
+			if (b1 != b2) {
+				return b1 ? 1 : -1;
+			}
+			String n1 = String.valueOf(p1.getName());
+			String n2 = String.valueOf(p2.getName());
+			int diff = n1.compareTo(n2);
+			if (diff != 0) {
+				return diff;
+			}
+			Property o1 = p1.getOpposite();
+			Property o2 = p2.getOpposite();
+			if (o1 == null) {
+				if (o2 == null) {
+					return 0;
+				}
+				else {
+					return 1;
+				}
+			}
+			else {
+				if (o2 == null) {
+					return -1;
+				}
+				else {
+					n1 = String.valueOf(o1.getName());
+					n2 = String.valueOf(o2.getName());
+					return n1.compareTo(n2);
+				}
+			}
+		}
+	};
 
 	protected static final class TypeComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
 	{

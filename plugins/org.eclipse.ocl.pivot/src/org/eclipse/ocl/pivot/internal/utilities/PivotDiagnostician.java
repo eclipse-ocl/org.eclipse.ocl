@@ -47,6 +47,17 @@ public abstract class PivotDiagnostician extends Diagnostician
 {
 	private static Boolean diagnosticianHasDoValidate = null; // Use 2.9/2.8 Diagnostician
 
+	/**
+	 * Returns the OCL context for the validation if there is one, or null if none required.
+	 */
+	public static @Nullable OCL basicGetOCL(@NonNull Map<Object, Object> context) {
+		Object oclRef = context.get(WeakOCLReference.class);
+		if (oclRef instanceof WeakOCLReference) {
+			return ((WeakOCLReference)oclRef).get();
+		}
+		return null;
+	}
+
 	@Deprecated /* @deprecated no longer used thanks to local ValidationRegistyAdapter */
 	public static @NonNull Diagnostician createDiagnostician(@NonNull ResourceSet resourceSet,
 			AdapterFactory adapterFactory, @Nullable IProgressMonitor progressMonitor) {
@@ -118,6 +129,18 @@ public abstract class PivotDiagnostician extends Diagnostician
 		}
 		else {
 			return new Diagnostician_2_8(localEValidatorRegistry, resourceSet, adapterFactory);
+		}
+	}
+
+	/**
+	 * If validationContext caches an OCL context dispose of it.
+	 */
+	public static void dispose(Map<Object, Object> validationContext) {
+		if (validationContext != null) {
+			OCL ocl = basicGetOCL(validationContext);
+			if (ocl != null) {
+				ocl.dispose();
+			}
 		}
 	}
 
