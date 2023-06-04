@@ -73,7 +73,6 @@ import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.MorePivotable;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -1083,7 +1082,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	public Type refreshRequiredType(@NonNull TypedElement pivotElement, @NonNull TypedElementCS csTypedElement) {
-		System.out.println("refreshRequiredType: " + NameUtil.debugSimpleName(pivotElement) + " : " + pivotElement + " | " +  csTypedElement);
+	//	System.out.println("refreshRequiredType: " + NameUtil.debugSimpleName(pivotElement) + " : " + pivotElement + " | " +  csTypedElement);
 		TypedRefCS ownedType = csTypedElement.getOwnedType();
 		Type pivotType = null;
 		boolean isRequired = false;

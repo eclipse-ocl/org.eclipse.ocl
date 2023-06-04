@@ -132,7 +132,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 		}
 		Object optionNormalizeContents = saveOptions.get(ASResource.OPTION_NORMALIZE_CONTENTS);
 		if ((optionNormalizeContents != null) && Boolean.valueOf(optionNormalizeContents.toString())) {
-			asSaver.normalizeContents();
+			asSaver.normalizeContents(saveOptions);
 			int capacity = INDEX_LOOKUP+1;
 			List<@Nullable Object> lookupTable = new ArrayList<>(capacity);
 			for (int i = 0; i < capacity; i++) {

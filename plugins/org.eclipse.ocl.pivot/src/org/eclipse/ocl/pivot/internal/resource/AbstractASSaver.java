@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
@@ -38,6 +39,8 @@ public abstract class AbstractASSaver
 	 * The appropriate normalization visitor for each Resource.
 	 */
 	private /*@LazyNonNull*/ Map<@NonNull Resource, @NonNull ASSaverNormalizeVisitor> resource2normalizeVisitor = null;
+
+	private Map<@NonNull Object, @Nullable Object> saveOptions = null;
 
 	protected AbstractASSaver(@NonNull Resource resource) {
 		this.resource = resource;
@@ -66,7 +69,12 @@ public abstract class AbstractASSaver
 		}
 	}
 
-	public void normalizeContents() {
+	public @Nullable Map<@NonNull Object, @Nullable Object> getSaveOptions() {
+		return saveOptions;
+	}
+
+	public void normalizeContents(@NonNull Map<@NonNull Object, @Nullable Object> saveOptions) {
+		this.saveOptions = saveOptions;
 		List<@NonNull EObject> allContents = new ArrayList<>();
 		for (@NonNull TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
 			EObject eObject = tit.next();
