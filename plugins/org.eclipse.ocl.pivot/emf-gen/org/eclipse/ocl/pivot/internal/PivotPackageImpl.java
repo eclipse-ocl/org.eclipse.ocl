@@ -9776,6 +9776,8 @@ implements PivotPackage  {
 		createPivotAnnotations();
 		// http://www.eclipse.org/uml2/2.0.0/UML
 		createUMLAnnotations();
+		// http://www.eclipse.org/OCL/Property
+		createPropertyAnnotations();
 	}
 
 	/**
@@ -11385,6 +11387,24 @@ implements PivotPackage  {
 		   new String[]
 		   {
 			   "originalName", "TypeIsNotInvalid" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Property</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createPropertyAnnotations()
+	{
+		String source = "http://www.eclipse.org/OCL/Property"; //$NON-NLS-1$
+		addAnnotation
+		  (getProperty_Opposite(),
+		   source,
+		   new String[]
+		   {
+			   "self", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

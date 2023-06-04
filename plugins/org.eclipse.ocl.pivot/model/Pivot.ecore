@@ -2255,6 +2255,9 @@
         name="keys" ordered="false" upperBound="-1" eType="#T-pivot-Property"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Property-opposite"
         name="opposite" eType="#T-pivot-Property">
+      <eAnnotations source="http://www.eclipse.org/OCL/Property">
+        <details key="self" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="In the case where the Property is one end of a binary association this gives the other end."/>
       </eAnnotations>

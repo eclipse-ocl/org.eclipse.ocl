@@ -779,6 +779,13 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	protected void copyStructuralFeature(@NonNull Property pivotElement, @NonNull EStructuralFeature eObject, List<EAnnotation> excludedAnnotations) {
+		EAnnotation propertyAnnotation = eObject.getEAnnotation(PivotConstants.PROPERTY_ANNOTATION_SOURCE);
+		if (propertyAnnotation != null) {
+			if (excludedAnnotations == null) {
+				excludedAnnotations = new ArrayList<>();
+			}
+			excludedAnnotations.add(propertyAnnotation);
+		}
 		EAnnotation redefinesAnnotation = eObject.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 		if (redefinesAnnotation != null) {
 			if (excludedAnnotations == null) {

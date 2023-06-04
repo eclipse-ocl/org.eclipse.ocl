@@ -610,7 +610,14 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			EReference eReference = (EReference) eStructuralFeature;
 			Property pivotOpposite = pivotProperty.getOpposite();
 			if (pivotOpposite != null) {
-				if (pivotOpposite.isIsImplicit()) {
+				if (pivotOpposite == pivotProperty) {		// Workaround Bug 582030
+					eReference.setEOpposite(null);
+					EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+					eAnnotation.setSource(PivotConstants.PROPERTY_ANNOTATION_SOURCE);
+					eAnnotation.getDetails().put(PivotConstants.PROPERTY_SELF, Boolean.TRUE.toString());
+					eReference.getEAnnotations().add(eAnnotation);
+				}
+				else if (pivotOpposite.isIsImplicit()) {
 					// FIXME Use EAnnotations for non-navigable opposites as identified by an Association
 				}
 				else {

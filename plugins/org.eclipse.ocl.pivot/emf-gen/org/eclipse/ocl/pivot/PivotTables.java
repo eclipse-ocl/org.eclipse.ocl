@@ -2391,13 +2391,12 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Property__NavigationCallExp__navigationSource = LIBRARY.createOppositeProperty("NavigationCallExp", Types._Property, 20, PivotPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE);
 		public static final @NonNull Property _Property__OppositePropertyCallExp__referredProperty = LIBRARY.createOppositeProperty("OppositePropertyCallExp", Types._Property, 21, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY);
 		public static final @NonNull Property _Property__Property__keys = LIBRARY.createOppositeProperty("Property", Types._Property, 22, PivotPackage.Literals.PROPERTY__KEYS);
-		public static final @NonNull Property _Property__Property__opposite = LIBRARY.createOppositeProperty("Property", Types._Property, 23, PivotPackage.Literals.PROPERTY__OPPOSITE);
-		public static final @NonNull Property _Property__Property__redefinedProperties = LIBRARY.createOppositeProperty("Property", Types._Property, 24, PivotPackage.Literals.PROPERTY__REDEFINED_PROPERTIES);
-		public static final @NonNull Property _Property__Property__referredProperty = LIBRARY.createOppositeProperty("Property", Types._Property, 25, PivotPackage.Literals.PROPERTY__REFERRED_PROPERTY);
-		public static final @NonNull Property _Property__Property__subsettedProperty = LIBRARY.createOppositeProperty("Property", Types._Property, 26, PivotPackage.Literals.PROPERTY__SUBSETTED_PROPERTY);
-		public static final @NonNull Property _Property__PropertyCallExp__referredProperty = LIBRARY.createOppositeProperty("PropertyCallExp", Types._Property, 27, PivotPackage.Literals.PROPERTY_CALL_EXP__REFERRED_PROPERTY);
-		public static final @NonNull Property _Property__ShadowPart__referredProperty = LIBRARY.createOppositeProperty("ShadowPart", Types._Property, 28, PivotPackage.Literals.SHADOW_PART__REFERRED_PROPERTY);
-		public static final @NonNull Property _Property__Slot__definingProperty = LIBRARY.createOppositeProperty("Slot", Types._Property, 29, PivotPackage.Literals.SLOT__DEFINING_PROPERTY);
+		public static final @NonNull Property _Property__Property__redefinedProperties = LIBRARY.createOppositeProperty("Property", Types._Property, 23, PivotPackage.Literals.PROPERTY__REDEFINED_PROPERTIES);
+		public static final @NonNull Property _Property__Property__referredProperty = LIBRARY.createOppositeProperty("Property", Types._Property, 24, PivotPackage.Literals.PROPERTY__REFERRED_PROPERTY);
+		public static final @NonNull Property _Property__Property__subsettedProperty = LIBRARY.createOppositeProperty("Property", Types._Property, 25, PivotPackage.Literals.PROPERTY__SUBSETTED_PROPERTY);
+		public static final @NonNull Property _Property__PropertyCallExp__referredProperty = LIBRARY.createOppositeProperty("PropertyCallExp", Types._Property, 26, PivotPackage.Literals.PROPERTY_CALL_EXP__REFERRED_PROPERTY);
+		public static final @NonNull Property _Property__ShadowPart__referredProperty = LIBRARY.createOppositeProperty("ShadowPart", Types._Property, 27, PivotPackage.Literals.SHADOW_PART__REFERRED_PROPERTY);
+		public static final @NonNull Property _Property__Slot__definingProperty = LIBRARY.createOppositeProperty("Slot", Types._Property, 28, PivotPackage.Literals.SLOT__DEFINING_PROPERTY);
 
 		public static final @NonNull Property _PropertyCallExp__referredProperty = LIBRARY.createProperty(PivotPackage.Literals.PROPERTY_CALL_EXP__REFERRED_PROPERTY, Types._PropertyCallExp, 0);
 
