@@ -84,6 +84,12 @@ public interface PivotConstants
 	static final @NonNull String COLLECTION_IS_NULL_FREE = "nullFree";
 
 	/**
+	 * EReference annotation identifying that a Property is cyclic.
+	 */
+	static final @NonNull String PROPERTY_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Property";
+	static final @NonNull String PROPERTY_SELF = "self";
+
+	/**
 	 * EPackage annotation indicating that the EPackage is an Ecore serialisation of an OCL AS Library.
 	 * No details are defined for this EAnnotation.
 	 * <p>
