@@ -1935,7 +1935,6 @@ public class OCLmetamodel extends ASResourceImpl
 			Property pr_Property_NavigationCallExp_navigationSource;
 			Property pr_Property_OppositePropertyCallExp_referredProperty;
 			Property pr_Property_Property_keys;
-			Property pr_Property_Property_opposite;
 			Property pr_Property_Property_redefinedProperties;
 			Property pr_Property_Property_referredProperty;
 			Property pr_Property_Property_subsettedProperty;
@@ -3071,9 +3070,6 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_Property_Property_keys = createProperty("Property", _Bag_Property_T));
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
-			ownedProperties.add(property = pr_Property_Property_opposite = createProperty("Property", _Bag_Property_T));
-			property.setIsImplicit(true);
-			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_Property_Property_redefinedProperties = createProperty("Property", _Bag_Property_T));
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
@@ -3713,7 +3709,7 @@ public class OCLmetamodel extends ASResourceImpl
 			setOpposites(pr_Parameter_Variable_representedParameter, pr_Variable_representedParameter);
 			setOpposites(pr_Profile_profileApplications, pr_ProfileApplication_appliedProfile);
 			setOpposites(pr_Property_keys, pr_Property_Property_keys);
-			setOpposites(pr_Property_opposite, pr_Property_Property_opposite);
+			setOpposites(pr_Property_opposite, pr_Property_opposite);
 			setOpposites(pr_Property_redefinedProperties, pr_Property_Property_redefinedProperties);
 			setOpposites(pr_Property_referredProperty, pr_Property_Property_referredProperty);
 			setOpposites(pr_Property_subsettedProperty, pr_Property_Property_subsettedProperty);

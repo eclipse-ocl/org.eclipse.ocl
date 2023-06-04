@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -201,6 +202,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		if (eOpposite != null) {
 			oppositeProperty = converter.getCreated(Property.class, eOpposite);
 			asProperty.setOpposite(oppositeProperty);
+		}
+		else if (Boolean.valueOf(EcoreUtil.getAnnotation(eReference, PivotConstants.PROPERTY_ANNOTATION_SOURCE, PivotConstants.PROPERTY_SELF))) {
+			asProperty.setOpposite(asProperty);
 		}
 		else {
 			OppositePropertyDetails oppositePropertyDetails = OppositePropertyDetails.createFromEReference(eReference);

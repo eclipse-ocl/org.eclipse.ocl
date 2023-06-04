@@ -846,7 +846,7 @@
       <ownedProperties xmi:id="VMuUC" defaultValueString="false" name="isUnsettable" type="#ZuwnB"/>
       <ownedProperties xmi:id="sjznw" defaultValueString="false" name="isVolatile" type="#ZuwnB"/>
       <ownedProperties xmi:id="6HsoQ" name="keys" opposite="#neBea" type="#vqSV7"/>
-      <ownedProperties xmi:id="trcPF" isRequired="false" name="opposite" opposite="#MZVtK" type="#Gm0Mj">
+      <ownedProperties xmi:id="trcPF" isRequired="false" name="opposite" opposite="#trcPF" type="#Gm0Mj">
         <ownedComments body="In the case where the Property is one end of a binary association this gives the other end."/>
       </ownedProperties>
       <ownedProperties xmi:id="jsqM," isComposite="true" isRequired="false" name="ownedExpression" opposite="#VkNq6" type="#BfHsW"/>
@@ -864,7 +864,6 @@
       <ownedProperties xmi:id="6EjLW" isImplicit="true" name="NavigationCallExp" opposite="#Ts86V" type="#7H901"/>
       <ownedProperties xmi:id="zB7r3" isImplicit="true" name="OppositePropertyCallExp" opposite="#is7rW" type="#zxjxK"/>
       <ownedProperties xmi:id="neBea" isImplicit="true" name="Property" opposite="#6HsoQ" type="#VpOV7"/>
-      <ownedProperties xmi:id="MZVtK" isImplicit="true" name="Property" opposite="#trcPF" type="#VpOV7"/>
       <ownedProperties xmi:id="6nfk1" isImplicit="true" name="Property" opposite="#PJegU" type="#VpOV7"/>
       <ownedProperties xmi:id="lE6Y6" isImplicit="true" name="Property" opposite="#MErVe" type="#VpOV7"/>
       <ownedProperties xmi:id="FObkc" isImplicit="true" name="Property" opposite="#sOLOj" type="#VpOV7"/>
