@@ -74,6 +74,7 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor.PropertyComparator;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
@@ -105,53 +106,9 @@ public class OCLinEcoreTablesUtils
 		}
 	};
 
-	public static Comparator<@NonNull Nameable> nameComparator = new Comparator<@NonNull Nameable>()
-	{
-		@Override
-		public int compare(@NonNull Nameable o1, @NonNull Nameable o2) {
-			String n1 = String.valueOf(o1.getName());
-			String n2 = String.valueOf(o2.getName());
-			return n1.compareTo(n2);
-		}
-	};
+	public static Comparator<Nameable> nameComparator = new NameUtil.NameableComparator();
 
-	public static final @NonNull Comparator<@NonNull Property> propertyComparator = new Comparator<@NonNull Property>()
-	{
-		@Override
-		public int compare(@NonNull Property p1, @NonNull Property p2) {
-			boolean b1 = p1.isIsImplicit();
-			boolean b2 = p2.isIsImplicit();
-			if (b1 != b2) {
-				return b1 ? 1 : -1;
-			}
-			String n1 = String.valueOf(p1.getName());
-			String n2 = String.valueOf(p2.getName());
-			int diff = n1.compareTo(n2);
-			if (diff != 0) {
-				return diff;
-			}
-			Property o1 = p1.getOpposite();
-			Property o2 = p2.getOpposite();
-			if (o1 == null) {
-				if (o2 == null) {
-					return 0;
-				}
-				else {
-					return 1;
-				}
-			}
-			else {
-				if (o2 == null) {
-					return -1;
-				}
-				else {
-					n1 = String.valueOf(o1.getName());
-					n2 = String.valueOf(o2.getName());
-					return n1.compareTo(n2);
-				}
-			}
-		}
-	};
+	public static final @NonNull Comparator<@NonNull Property> propertyComparator = new PropertyComparator();
 
 	public static Comparator<@NonNull Operation> signatureComparator = new Comparator<@NonNull Operation>()
 	{

@@ -457,7 +457,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 
 	private void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
 		TypeId typeId = orphanClass.getTypeId();
-		System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
+	//	System.out.println("addOrphanClass " + NameUtil.debugSimpleName(orphanClass) + " : " + NameUtil.debugSimpleName(typeId) + " : " + orphanClass);
 		Type old = typeId2type.get(typeId);
 		assert old == orphanClass;
 		assert !getOwnedClasses().contains(orphanClass);
