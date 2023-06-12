@@ -497,12 +497,10 @@ implements Operation {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	@Override
-	public TemplateableElement getUnspecializedElement()
+	private TemplateableElement getUnspecializedElementGen()
 	{
-		//		throw new UnsupportedOperationException();	// FIXME Eliminate this feature once Acceleo bug 349278 fixed
 		return null;
 	}
 
@@ -510,6 +508,29 @@ implements Operation {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated NOT
+	 */
+	@Override
+	public TemplateableElement getUnspecializedElement()
+	{
+		getUnspecializedElementGen();
+		if (unspecializedElement == null) {
+			for (TemplateBinding templateBinding : getOwnedBindings()) {
+				TemplateSignature signature = templateBinding.getTemplateSignature();
+				if (signature != null) {
+					unspecializedElement = signature.getOwningElement();
+					if (unspecializedElement != null) {
+						break;
+					}
+				}
+			}
+		}
+		return unspecializedElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	@Override
 	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
