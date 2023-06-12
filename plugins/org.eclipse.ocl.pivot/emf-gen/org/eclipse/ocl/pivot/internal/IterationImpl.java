@@ -226,7 +226,8 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 13:
 				return getOwnedSignature();
 			case 14:
-				return getUnspecializedElement();
+				if (resolve) return getUnspecializedElement();
+				return basicGetUnspecializedElement();
 			case 15:
 				return getBodyExpression();
 			case 16:
