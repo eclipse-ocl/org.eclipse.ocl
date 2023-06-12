@@ -3838,6 +3838,17 @@ extends EPackage
 	EClass getTemplateableElement();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TemplateableElement#getGeneric <em>Generic</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Generic</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateableElement#getGeneric()
+	 * @see #getTemplateableElement()
+	 * @generated
+	 */
+	EReference getTemplateableElement_Generic();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedBindings <em>Owned Bindings</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3858,17 +3869,6 @@ extends EPackage
 	 * @generated
 	 */
 	EReference getTemplateableElement_OwnedSignature();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TemplateableElement#getUnspecializedElement <em>Unspecialized Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Unspecialized Element</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateableElement#getGeneric()
-	 * @see #getTemplateableElement()
-	 * @generated
-	 */
-	EReference getTemplateableElement_UnspecializedElement();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Transition <em>Transition</em>}'.
@@ -9015,6 +9015,14 @@ extends EPackage
 		EClass TEMPLATEABLE_ELEMENT = eINSTANCE.getTemplateableElement();
 
 		/**
+		 * The meta object literal for the '<em><b>Generic</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEMPLATEABLE_ELEMENT__GENERIC = eINSTANCE.getTemplateableElement_Generic();
+
+		/**
 		 * The meta object literal for the '<em><b>Owned Bindings</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9029,14 +9037,6 @@ extends EPackage
 		 * @generated
 		 */
 		EReference TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE = eINSTANCE.getTemplateableElement_OwnedSignature();
-
-		/**
-		 * The meta object literal for the '<em><b>Unspecialized Element</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT = eINSTANCE.getTemplateableElement_UnspecializedElement();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TransitionImpl <em>Transition</em>}' class.

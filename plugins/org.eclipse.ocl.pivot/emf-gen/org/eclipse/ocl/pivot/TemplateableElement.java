@@ -25,9 +25,9 @@ import java.util.List;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getGeneric <em>Generic</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedBindings <em>Owned Bindings</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedSignature <em>Owned Signature</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getUnspecializedElement <em>Unspecialized Element</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement()
@@ -79,25 +79,25 @@ public interface TemplateableElement
 	void setOwnedSignature(TemplateSignature value);
 
 	/**
-	 * Returns the value of the '<em><b>Unspecialized Element</b></em>' reference.
+	 * Returns the value of the '<em><b>Generic</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Unspecialized Element</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Unspecialized Element</em>' reference.
+	 * @return the value of the '<em>Generic</em>' reference.
 	 * @see #setGeneric(TemplateableElement)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement_UnspecializedElement()
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement_Generic()
 	 * @generated
 	 */
 	TemplateableElement getGeneric();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TemplateableElement#getUnspecializedElement <em>Unspecialized Element</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TemplateableElement#getGeneric <em>Generic</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Unspecialized Element</em>' reference.
+	 * @param value the new value of the '<em>Generic</em>' reference.
 	 * @see #getGeneric()
 	 * @generated
 	 */
