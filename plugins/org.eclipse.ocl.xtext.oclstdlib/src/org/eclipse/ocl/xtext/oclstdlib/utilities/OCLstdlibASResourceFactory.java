@@ -11,7 +11,9 @@
 package org.eclipse.ocl.xtext.oclstdlib.utilities;
 
 import org.eclipse.emf.common.EMFPlugin;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ContentHandler;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -49,6 +51,14 @@ public final class OCLstdlibASResourceFactory extends AbstractASResourceFactory
 
 	public OCLstdlibASResourceFactory() {
 		super(ASResource.OCLSTDLIB_CONTENT_TYPE, null);
+	}
+
+	@Override
+	public @NonNull Resource createResource(URI uri) {
+		assert uri != null;
+		ASResource asResource = new OCLstdlibASResourceImpl(uri, this);
+		configureResource(asResource);
+		return asResource;
 	}
 
 	@Override
