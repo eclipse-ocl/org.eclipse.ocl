@@ -789,7 +789,8 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			case 7:
 				return getOwnedSignature();
 			case 8:
-				return getUnspecializedElement();
+				if (resolve) return getUnspecializedElement();
+				return basicGetUnspecializedElement();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -1388,6 +1389,16 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	 */
 	private TemplateableElement getUnspecializedElementGen()
 	{
+		if (unspecializedElement != null && unspecializedElement.eIsProxy())
+		{
+			InternalEObject oldUnspecializedElement = (InternalEObject)unspecializedElement;
+			unspecializedElement = (TemplateableElement)eResolveProxy(oldUnspecializedElement);
+			if (unspecializedElement != oldUnspecializedElement)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 8, oldUnspecializedElement, unspecializedElement));
+			}
+		}
 		return unspecializedElement;
 	}
 
@@ -1411,6 +1422,16 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				}
 			}
 		}
+		return unspecializedElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TemplateableElement basicGetUnspecializedElement()
+	{
 		return unspecializedElement;
 	}
 

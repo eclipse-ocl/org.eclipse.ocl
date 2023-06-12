@@ -187,6 +187,26 @@ public abstract class TemplateableElementImpl
 	@Override
 	public TemplateableElement getUnspecializedElement()
 	{
+		if (unspecializedElement != null && unspecializedElement.eIsProxy())
+		{
+			InternalEObject oldUnspecializedElement = (InternalEObject)unspecializedElement;
+			unspecializedElement = (TemplateableElement)eResolveProxy(oldUnspecializedElement);
+			if (unspecializedElement != oldUnspecializedElement)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 6, oldUnspecializedElement, unspecializedElement));
+			}
+		}
+		return unspecializedElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TemplateableElement basicGetUnspecializedElement()
+	{
 		return unspecializedElement;
 	}
 
@@ -279,7 +299,8 @@ public abstract class TemplateableElementImpl
 			case 5:
 				return getOwnedSignature();
 			case 6:
-				return getUnspecializedElement();
+				if (resolve) return getUnspecializedElement();
+				return basicGetUnspecializedElement();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}

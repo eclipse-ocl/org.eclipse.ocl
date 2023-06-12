@@ -408,7 +408,8 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 			case 7:
 				return getOwnedSignature();
 			case 8:
-				return getUnspecializedElement();
+				if (resolve) return getUnspecializedElement();
+				return basicGetUnspecializedElement();
 			case 9:
 				return getExtenders();
 			case 10:

@@ -3379,7 +3379,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(property, "The optional TemplateSignature specifying the formal TemplateParameters for this TemplateableElement. If a TemplateableElement has a TemplateSignature, then it is a template.");
 			ownedProperties.add(property = pr_TemplateableElement_unspecializedElement = createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT, _TemplateableElement));
 			property.setIsRequired(false);
-			property.setIsTransient(true);
+			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_TemplateableElement_TemplateableElement_unspecializedElement = createProperty("TemplateableElement", _Bag_TemplateableElement_T));
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
