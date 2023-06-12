@@ -329,12 +329,14 @@ public class PivotTestCase extends TestCase
 			for (Map.Entry<EObject, Collection<Setting>> unresolvedProxy : unresolvedProxies.entrySet()) {
 				s.append("\n");
 				BasicEObjectImpl key = (BasicEObjectImpl) unresolvedProxy.getKey();
-				s.append(key.eProxyURI());
+				URI eProxyURI = key.eProxyURI();
+				s.append(eProxyURI);
 				for (Setting setting : unresolvedProxy.getValue()) {
 					s.append("\n\t");
 					EObject eObject = setting.getEObject();
 					try {
-						s.append(eObject.toString());
+						s.append(eProxyURI);
+					//	resource.getResourceSet().getEObject(eProxyURI, true);			// XXX
 					}
 					catch (Exception e) {
 						s.append(EcoreUtil.getURI(eObject).toString());
