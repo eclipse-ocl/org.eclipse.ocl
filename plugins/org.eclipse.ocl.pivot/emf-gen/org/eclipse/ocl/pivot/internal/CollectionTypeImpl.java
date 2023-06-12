@@ -263,8 +263,8 @@ implements CollectionType {
 			case 7:
 				return getOwnedSignature();
 			case 8:
-				if (resolve) return getUnspecializedElement();
-				return basicGetUnspecializedElement();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -347,7 +347,7 @@ implements CollectionType {
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -444,7 +444,7 @@ implements CollectionType {
 				setOwnedSignature((TemplateSignature)null);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)null);
+				setGeneric((TemplateableElement)null);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -527,7 +527,7 @@ implements CollectionType {
 			case 7:
 				return ownedSignature != null;
 			case 8:
-				return unspecializedElement != null;
+				return generic != null;
 			case 9:
 				return extenders != null && !extenders.isEmpty();
 			case 10:
@@ -593,7 +593,7 @@ implements CollectionType {
 
 	@Override
 	public @NonNull TypeId computeId() {
-		TemplateableElement unspecializedElement2 = getUnspecializedElement();
+		TemplateableElement unspecializedElement2 = getGeneric();
 		if (unspecializedElement2 == null) {
 			if (TypeId.COLLECTION_NAME.equals(name)) {
 				return TypeId.COLLECTION;
@@ -619,7 +619,7 @@ implements CollectionType {
 	 */
 	@Override
 	public @NonNull TypeId computeNormalizedId() {
-		TemplateableElement unspecializedElement2 = getUnspecializedElement();
+		TemplateableElement unspecializedElement2 = getGeneric();
 		if (unspecializedElement2 == null) {
 			if (TypeId.COLLECTION_NAME.equals(name)) {
 				return TypeId.COLLECTION;
@@ -648,8 +648,8 @@ implements CollectionType {
 		if (type instanceof CollectionType) {
 			return TypeUtil.conformsToCollectionType(standardLibrary, this, (CollectionType)type);
 		}
-		if (getUnspecializedElement() != null) {
-			return ((Type)getUnspecializedElement()).conformsTo(standardLibrary, type);
+		if (getGeneric() != null) {
+			return ((Type)getGeneric()).conformsTo(standardLibrary, type);
 		}
 		return super.conformsTo(standardLibrary, type);
 	}
@@ -702,13 +702,13 @@ implements CollectionType {
 
 	@Override
 	public @NonNull CollectionType getContainerType() {
-		TemplateableElement unspecializedElement2 = unspecializedElement;
+		TemplateableElement unspecializedElement2 = generic;
 		return unspecializedElement2 != null ? (CollectionType)unspecializedElement2 : this;
 	}
 
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
-		org.eclipse.ocl.pivot.Class unspecializedType = (org.eclipse.ocl.pivot.Class)getUnspecializedElement();
+		org.eclipse.ocl.pivot.Class unspecializedType = (org.eclipse.ocl.pivot.Class)getGeneric();
 		return standardLibrary.getFlatClass(unspecializedType != null ? unspecializedType : this);
 	}
 

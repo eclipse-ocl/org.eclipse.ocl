@@ -439,7 +439,7 @@ public class PrettyPrinter
 			}
 			else {
 				//			EObject parent = element.eContainer();
-				EObject unspecializedElement = element instanceof TemplateableElement ? ((TemplateableElement)element).getUnspecializedElement() : element;
+				EObject unspecializedElement = element instanceof TemplateableElement ? ((TemplateableElement)element).getGeneric() : element;
 				EObject parent = unspecializedElement != null ? unspecializedElement : element;
 				if (parent.eContainer() != null) {
 					parent = parent.eContainer();

@@ -202,7 +202,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«IF type.getOwnedSignature() !== null»
 		type = «type.getSymbolName()» = createCollectionType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getOwnedSignature().getOwnedParameters().get(0).getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
 		«ELSE»
-		type = «type.getSymbolName()» = getCollectionType(«type.getUnspecializedElement().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
+		type = «type.getSymbolName()» = getCollectionType(«type.getGeneric().getSymbolName()», «type.getElementType().getSymbolName()», «IF type.isNullFree»true«ELSE»false«ENDIF», «type.lower.intValue()», «IF !(type.upper instanceof Unlimited)»«type.upper.intValue()»«ELSE»-1«ENDIF»);
 		«ENDIF»
 		'''
 	}
@@ -364,7 +364,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		«IF type.getOwnedSignature() !== null»
 		type = «type.getSymbolName()» = createMapType(«type.getOwningPackage().getSymbolName()», «getEcoreLiteral(type)», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
 		«ELSE»
-		type = «type.getSymbolName()» = getMapType(«type.getUnspecializedElement().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
+		type = «type.getSymbolName()» = getMapType(«type.getGeneric().getSymbolName()», «type.getKeyType().getSymbolName()», «IF type.keysAreNullFree»true«ELSE»false«ENDIF», «type.getValueType().getSymbolName()», «IF type.valuesAreNullFree»true«ELSE»false«ENDIF»);
 		«ENDIF»
 		'''
 	}

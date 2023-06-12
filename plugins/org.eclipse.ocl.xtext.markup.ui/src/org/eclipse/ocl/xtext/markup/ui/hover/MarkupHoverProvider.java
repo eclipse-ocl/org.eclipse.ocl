@@ -69,7 +69,7 @@ public class MarkupHoverProvider extends DefaultEObjectHoverProvider
 				}
 			}
 			if (o instanceof TemplateableElement) {
-				EObject o3 = ((TemplateableElement)o).getUnspecializedElement();
+				EObject o3 = ((TemplateableElement)o).getGeneric();
 				if (o3 != null) {
 					o = o3;
 				}

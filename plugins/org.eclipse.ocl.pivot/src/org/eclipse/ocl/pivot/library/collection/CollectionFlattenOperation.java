@@ -36,7 +36,7 @@ public class CollectionFlattenOperation extends AbstractSimpleUnaryOperation
 	@Override
 	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
 		CollectionType collectionType = (CollectionType)callExp.getOwnedSource().getType();
-		CollectionType genericCollectionType = (CollectionType) collectionType.getUnspecializedElement();
+		CollectionType genericCollectionType = (CollectionType) collectionType.getGeneric();
 		assert genericCollectionType != null;
 		for (Type elementType; (elementType = collectionType.getElementType()) instanceof CollectionType; ) {
 			collectionType = (CollectionType)elementType;

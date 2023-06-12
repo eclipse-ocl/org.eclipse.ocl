@@ -154,14 +154,14 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	protected TemplateSignature ownedSignature;
 
 	/**
-	 * The cached value of the '{@link #getUnspecializedElement() <em>Unspecialized Element</em>}' reference.
+	 * The cached value of the '{@link #getGeneric() <em>Unspecialized Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getUnspecializedElement()
+	 * @see #getGeneric()
 	 * @generated
 	 * @ordered
 	 */
-	protected TemplateableElement unspecializedElement;
+	protected TemplateableElement generic;
 
 	/**
 	 * The cached value of the '{@link #getExtenders() <em>Extenders</em>}' reference list.
@@ -789,8 +789,8 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			case 7:
 				return getOwnedSignature();
 			case 8:
-				if (resolve) return getUnspecializedElement();
-				return basicGetUnspecializedElement();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -858,7 +858,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -937,7 +937,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				setOwnedSignature((TemplateSignature)null);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)null);
+				setGeneric((TemplateableElement)null);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -1002,7 +1002,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			case 7:
 				return ownedSignature != null;
 			case 8:
-				return unspecializedElement != null;
+				return generic != null;
 			case 9:
 				return extenders != null && !extenders.isEmpty();
 			case 10:
@@ -1387,19 +1387,19 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private TemplateableElement getUnspecializedElementGen()
+	private TemplateableElement getGenericGen()
 	{
-		if (unspecializedElement != null && unspecializedElement.eIsProxy())
+		if (generic != null && generic.eIsProxy())
 		{
-			InternalEObject oldUnspecializedElement = (InternalEObject)unspecializedElement;
-			unspecializedElement = (TemplateableElement)eResolveProxy(oldUnspecializedElement);
-			if (unspecializedElement != oldUnspecializedElement)
+			InternalEObject oldUnspecializedElement = (InternalEObject)generic;
+			generic = (TemplateableElement)eResolveProxy(oldUnspecializedElement);
+			if (generic != oldUnspecializedElement)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 8, oldUnspecializedElement, unspecializedElement));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 8, oldUnspecializedElement, generic));
 			}
 		}
-		return unspecializedElement;
+		return generic;
 	}
 
 	/**
@@ -1408,21 +1408,21 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	 * @generated NOT
 	 */
 	@Override
-	public TemplateableElement getUnspecializedElement()
+	public TemplateableElement getGeneric()
 	{
-		getUnspecializedElementGen();
-		if (unspecializedElement == null) {
+		getGenericGen();
+		if (generic == null) {
 			for (TemplateBinding templateBinding : getOwnedBindings()) {
 				TemplateSignature signature = templateBinding.getTemplateSignature();
 				if (signature != null) {
-					unspecializedElement = signature.getOwningElement();
-					if (unspecializedElement != null) {
+					generic = signature.getOwningElement();
+					if (generic != null) {
 						break;
 					}
 				}
 			}
 		}
-		return unspecializedElement;
+		return generic;
 	}
 
 	/**
@@ -1430,9 +1430,9 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TemplateableElement basicGetUnspecializedElement()
+	public TemplateableElement basicGetGeneric()
 	{
-		return unspecializedElement;
+		return generic;
 	}
 
 	/**
@@ -1441,12 +1441,12 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	 * @generated
 	 */
 	@Override
-	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
+	public void setGeneric(TemplateableElement newUnspecializedElement)
 	{
-		TemplateableElement oldUnspecializedElement = unspecializedElement;
-		unspecializedElement = newUnspecializedElement;
+		TemplateableElement oldUnspecializedElement = generic;
+		generic = newUnspecializedElement;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldUnspecializedElement, unspecializedElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldUnspecializedElement, generic));
 	}
 
 	@Override

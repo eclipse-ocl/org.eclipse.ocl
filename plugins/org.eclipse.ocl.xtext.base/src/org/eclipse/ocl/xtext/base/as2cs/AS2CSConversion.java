@@ -628,7 +628,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		if (isEMap) {
 			elementType = ((MapType)type).getEntryClass();
 		}
-		else if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardLibrary.getCollectionType())) {
+		else if ((type instanceof CollectionType) && (((CollectionType)type).getGeneric() != standardLibrary.getCollectionType())) {
 			PivotUtil.debugWellContainedness(type);
 			elementType = ((CollectionType)type).getElementType();
 		}
@@ -660,7 +660,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				refreshQualifiers(qualifiers, "ordered", "!ordered", Boolean.TRUE);		// sic; Ecore idiom
 				refreshQualifiers(qualifiers, "unique", "!unique", Boolean.TRUE);
 			}
-			else if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardLibrary.getCollectionType())) {
+			else if ((type instanceof CollectionType) && (((CollectionType)type).getGeneric() != standardLibrary.getCollectionType())) {
 				CollectionType collectionType = (CollectionType)type;
 				isNullFree = collectionType.isIsNullFree();
 				lower = collectionType.getLower().intValue();

@@ -43,7 +43,7 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EOb
 
 	@Override
 	public @Nullable EObject visitCollectionType(@NonNull CollectionType asCollectionType) {
-		TemplateableElement unspecializedElement = asCollectionType.getUnspecializedElement();
+		TemplateableElement unspecializedElement = asCollectionType.getGeneric();
 		if (unspecializedElement == null) {
 			return super.visitCollectionType(asCollectionType);
 		}
@@ -62,7 +62,7 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EOb
 
 	@Override
 	public @Nullable EObject visitLambdaType(@NonNull LambdaType asLambdaType) {
-		TemplateableElement unspecializedElement = asLambdaType.getUnspecializedElement();
+		TemplateableElement unspecializedElement = asLambdaType.getGeneric();
 		if (unspecializedElement == null) {
 			return super.visitLambdaType(asLambdaType);
 		}
@@ -73,7 +73,7 @@ public class MergerResolveVisitor extends AbstractExtendingVisitor<@Nullable EOb
 
 	@Override
 	public @Nullable EObject visitMapType(@NonNull MapType asMapType) {
-		TemplateableElement unspecializedElement = asMapType.getUnspecializedElement();
+		TemplateableElement unspecializedElement = asMapType.getGeneric();
 		if (unspecializedElement == null) {
 			return super.visitMapType(asMapType);
 		}

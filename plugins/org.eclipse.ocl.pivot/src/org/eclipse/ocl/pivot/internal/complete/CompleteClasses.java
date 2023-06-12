@@ -108,7 +108,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 				completeClass.dispose();
 			}
 		}
-		if (partialClass.getUnspecializedElement() == null) {
+		if (partialClass.getGeneric() == null) {
 			getCompleteModel().didRemoveClass(partialClass);
 		}
 	}
@@ -135,7 +135,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 				CompletePackageInternal primitiveCompletePackage = completeModel.getPrimitiveCompletePackage();
 				completeClass = primitiveCompletePackage.getCompleteClass(partialClass);
 			}
-			else if ((partialClass instanceof MapType) && (partialClass.getUnspecializedElement() != null)) {
+			else if ((partialClass instanceof MapType) && (partialClass.getGeneric() != null)) {
 				CompletePackageInternal orphanCompletePackage = completeModel.getOrphanCompletePackage();
 				completeClass = orphanCompletePackage.getCompleteClass(partialClass);
 			}
