@@ -91,6 +91,19 @@ public final class PivotSaveImpl extends XMISaveImpl
 		this.asSaver = ((PivotXMIHelperImpl)helper).getSaver();
 	}
 
+	private @Nullable Boolean booleanValueOf(@Nullable Object optionString) {
+		if (optionString instanceof Boolean) {
+			String optionString2 = (String)optionString;
+			if (Boolean.toString(true).equalsIgnoreCase(optionString2)) {
+				return Boolean.TRUE;
+			}
+			else if (Boolean.toString(false).equalsIgnoreCase(optionString2)) {
+				return Boolean.FALSE;
+			}
+		}
+		return null;
+	}
+
 	//
 	//	Special case. ElementLiteralExp::referredElement is an EObject-typed EAttribute to avoid all the
 	//	unpleasant corrolaries of injecting an opposite into the Ecore metamodel. Serialize it using the
@@ -112,7 +125,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 	 */
 	@Override
 	protected void init(XMLResource resource, Map<?, ?> options) {
-		XMLResource asResource = ClassUtil.nonNullState(resource);
+		ASResource asResource = (ASResource) ClassUtil.nonNullState(resource);
 		EList<@NonNull EObject> contents = asResource.getContents();
 		if (contents.size() > 0) {
 			EObject root = contents.get(0);
@@ -150,7 +163,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 			AS2ID.assignIds(asResourceSet.getResources(), saveOptions);
 		}
 		else if (asResource instanceof ASResource){
-			AS2ID.assignIds((ASResource) asResource, saveOptions);
+			AS2ID.assignIds(asResource, saveOptions);
 		}
 		super.init(asResource, saveOptions);
 	}
