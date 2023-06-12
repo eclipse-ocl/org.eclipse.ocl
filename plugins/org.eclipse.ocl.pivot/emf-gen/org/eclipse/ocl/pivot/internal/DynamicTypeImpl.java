@@ -196,9 +196,9 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case 6:
-				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
 			case 7:
+				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
+			case 8:
 				return basicSetOwnedSignature(null, msgs);
 			case 9:
 				return ((InternalEList<?>)getExtenders()).basicRemove(otherEnd, msgs);
@@ -241,12 +241,12 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 			case 5:
 				return getOwnedConstraints();
 			case 6:
-				return getOwnedBindings();
-			case 7:
-				return getOwnedSignature();
-			case 8:
 				if (resolve) return getGeneric();
 				return basicGetGeneric();
+			case 7:
+				return getOwnedBindings();
+			case 8:
+				return getOwnedSignature();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -313,14 +313,14 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 6:
+				setGeneric((TemplateableElement)newValue);
+				return;
+			case 7:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case 7:
-				setOwnedSignature((TemplateSignature)newValue);
-				return;
 			case 8:
-				setGeneric((TemplateableElement)newValue);
+				setOwnedSignature((TemplateSignature)newValue);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -401,13 +401,13 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 				getOwnedConstraints().clear();
 				return;
 			case 6:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedBindings().clear();
 				return;
 			case 8:
-				setGeneric((TemplateableElement)null);
+				setOwnedSignature((TemplateSignature)null);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -475,11 +475,11 @@ public class DynamicTypeImpl extends ClassImpl implements DynamicType
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 6:
-				return ownedBindings != null && !ownedBindings.isEmpty();
-			case 7:
-				return ownedSignature != null;
-			case 8:
 				return generic != null;
+			case 7:
+				return ownedBindings != null && !ownedBindings.isEmpty();
+			case 8:
+				return ownedSignature != null;
 			case 9:
 				return extenders != null && !extenders.isEmpty();
 			case 10:

@@ -164,9 +164,9 @@ public class IterationImpl extends OperationImpl implements Iteration
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case 12:
-				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
 			case 13:
+				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
+			case 14:
 				return basicSetOwnedSignature(null, msgs);
 			case 15:
 				return basicSetBodyExpression(null, msgs);
@@ -222,12 +222,12 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 11:
 				return getOwnedConstraints();
 			case 12:
-				return getOwnedBindings();
-			case 13:
-				return getOwnedSignature();
-			case 14:
 				if (resolve) return getGeneric();
 				return basicGetGeneric();
+			case 13:
+				return getOwnedBindings();
+			case 14:
+				return getOwnedSignature();
 			case 15:
 				return getBodyExpression();
 			case 16:
@@ -311,14 +311,14 @@ public class IterationImpl extends OperationImpl implements Iteration
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 12:
+				setGeneric((TemplateableElement)newValue);
+				return;
+			case 13:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case 13:
-				setOwnedSignature((TemplateSignature)newValue);
-				return;
 			case 14:
-				setGeneric((TemplateableElement)newValue);
+				setOwnedSignature((TemplateSignature)newValue);
 				return;
 			case 15:
 				setBodyExpression((LanguageExpression)newValue);
@@ -417,13 +417,13 @@ public class IterationImpl extends OperationImpl implements Iteration
 				getOwnedConstraints().clear();
 				return;
 			case 12:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 13:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedBindings().clear();
 				return;
 			case 14:
-				setGeneric((TemplateableElement)null);
+				setOwnedSignature((TemplateSignature)null);
 				return;
 			case 15:
 				setBodyExpression((LanguageExpression)null);
@@ -506,11 +506,11 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 11:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 12:
-				return ownedBindings != null && !ownedBindings.isEmpty();
-			case 13:
-				return ownedSignature != null;
-			case 14:
 				return generic != null;
+			case 13:
+				return ownedBindings != null && !ownedBindings.isEmpty();
+			case 14:
+				return ownedSignature != null;
 			case 15:
 				return bodyExpression != null;
 			case 16:

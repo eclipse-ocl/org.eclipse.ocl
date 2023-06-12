@@ -152,7 +152,7 @@ public class TemplateSignatureImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningElement != null)
-				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, 5, TemplateableElement.class, msgs);
+				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, 6, TemplateableElement.class, msgs);
 			msgs = basicSetOwningElement(newOwningElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -224,7 +224,7 @@ public class TemplateSignatureImpl
 		switch (eContainerFeatureID())
 		{
 			case 5:
-				return eInternalContainer().eInverseRemove(this, 5, TemplateableElement.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 6, TemplateableElement.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}

@@ -85,9 +85,9 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedConstraints <em>Owned Constraints</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getGeneric <em>Generic</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedBindings <em>Owned Bindings</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedSignature <em>Owned Signature</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getUnspecializedElement <em>Unspecialized Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getExtenders <em>Extenders</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getInstanceClassName <em>Instance Class Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#isIsAbstract <em>Is Abstract</em>}</li>
@@ -134,6 +134,16 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	protected EList<Constraint> ownedConstraints;
 
 	/**
+	 * The cached value of the '{@link #getGeneric() <em>Generic</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGeneric()
+	 * @generated
+	 * @ordered
+	 */
+	protected TemplateableElement generic;
+
+	/**
 	 * The cached value of the '{@link #getOwnedBindings() <em>Owned Bindings</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -152,16 +162,6 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	 * @ordered
 	 */
 	protected TemplateSignature ownedSignature;
-
-	/**
-	 * The cached value of the '{@link #getGeneric() <em>Unspecialized Element</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGeneric()
-	 * @generated
-	 * @ordered
-	 */
-	protected TemplateableElement generic;
 
 	/**
 	 * The cached value of the '{@link #getExtenders() <em>Extenders</em>}' reference list.
@@ -347,7 +347,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	{
 		if (ownedBindings == null)
 		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 6, 5);
+			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 7, 5);
 		}
 		return ownedBindings;
 	}
@@ -374,7 +374,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 8, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -399,7 +399,7 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -583,11 +583,11 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case 6:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
 			case 7:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
+			case 8:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (8), null, msgs);
 				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
 			case 9:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExtenders()).basicAdd(otherEnd, msgs);
@@ -623,9 +623,9 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case 6:
-				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
 			case 7:
+				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
+			case 8:
 				return basicSetOwnedSignature(null, msgs);
 			case 9:
 				return ((InternalEList<?>)getExtenders()).basicRemove(otherEnd, msgs);
@@ -785,12 +785,12 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			case 5:
 				return getOwnedConstraints();
 			case 6:
-				return getOwnedBindings();
-			case 7:
-				return getOwnedSignature();
-			case 8:
 				if (resolve) return getGeneric();
 				return basicGetGeneric();
+			case 7:
+				return getOwnedBindings();
+			case 8:
+				return getOwnedSignature();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -851,14 +851,14 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 6:
+				setGeneric((TemplateableElement)newValue);
+				return;
+			case 7:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case 7:
-				setOwnedSignature((TemplateSignature)newValue);
-				return;
 			case 8:
-				setGeneric((TemplateableElement)newValue);
+				setOwnedSignature((TemplateSignature)newValue);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -931,13 +931,13 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 				getOwnedConstraints().clear();
 				return;
 			case 6:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedBindings().clear();
 				return;
 			case 8:
-				setGeneric((TemplateableElement)null);
+				setOwnedSignature((TemplateSignature)null);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -998,11 +998,11 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 6:
-				return ownedBindings != null && !ownedBindings.isEmpty();
-			case 7:
-				return ownedSignature != null;
-			case 8:
 				return generic != null;
+			case 7:
+				return ownedBindings != null && !ownedBindings.isEmpty();
+			case 8:
+				return ownedSignature != null;
 			case 9:
 				return extenders != null && !extenders.isEmpty();
 			case 10:
@@ -1391,12 +1391,12 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	{
 		if (generic != null && generic.eIsProxy())
 		{
-			InternalEObject oldUnspecializedElement = (InternalEObject)generic;
-			generic = (TemplateableElement)eResolveProxy(oldUnspecializedElement);
-			if (generic != oldUnspecializedElement)
+			InternalEObject oldGeneric = (InternalEObject)generic;
+			generic = (TemplateableElement)eResolveProxy(oldGeneric);
+			if (generic != oldGeneric)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 8, oldUnspecializedElement, generic));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 6, oldGeneric, generic));
 			}
 		}
 		return generic;
@@ -1441,12 +1441,12 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 	 * @generated
 	 */
 	@Override
-	public void setGeneric(TemplateableElement newUnspecializedElement)
+	public void setGeneric(TemplateableElement newGeneric)
 	{
-		TemplateableElement oldUnspecializedElement = generic;
-		generic = newUnspecializedElement;
+		TemplateableElement oldGeneric = generic;
+		generic = newGeneric;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldUnspecializedElement, generic));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldGeneric, generic));
 	}
 
 	@Override
