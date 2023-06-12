@@ -55,7 +55,6 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Import;
-import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -64,7 +63,6 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -532,11 +530,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		return eEnumLiteral;
 	}
 
-	@Override
-	public Object visitIteration(@NonNull Iteration object) {
-		return visiting(object);
-	}
-
 	/**
 	 * @since 1.3
 	 */
@@ -708,11 +701,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@NonNull EParameter eParameter = EcoreFactory.eINSTANCE.createEParameter();
 		copyTypedElement(eParameter, pivotParameter);
 		return eParameter;
-	}
-
-	@Override
-	public Object visitPrecedence(@NonNull Precedence object) {
-		return visiting(object);
 	}
 
 	@Override

@@ -84,15 +84,13 @@ public abstract class AbstractASSaver
 		}
 		Map<EClass, @NonNull ASSaverNormalizeVisitor> eClass2normalizeVisitor = new HashMap<>();
 		for (@NonNull EObject eObject : allContents) {
-			if (eObject.eResource() != null) {		// Expressions may be deleted by SAVE_AS_BODIES false
-				EClass eClass = eObject.eClass();
-				ASSaverNormalizeVisitor normalizeVisitor = eClass2normalizeVisitor.get(eClass);
-				if (normalizeVisitor == null) {
-					normalizeVisitor = getNormalizeVisitor(eObject);
-					eClass2normalizeVisitor.put(eClass, normalizeVisitor);
-				}
-				normalizeVisitor.safeVisit((Visitable) eObject);
+			EClass eClass = eObject.eClass();
+			ASSaverNormalizeVisitor normalizeVisitor = eClass2normalizeVisitor.get(eClass);
+			if (normalizeVisitor == null) {
+				normalizeVisitor = getNormalizeVisitor(eObject);
+				eClass2normalizeVisitor.put(eClass, normalizeVisitor);
 			}
+			normalizeVisitor.safeVisit((Visitable) eObject);
 		}
 	}
 }
