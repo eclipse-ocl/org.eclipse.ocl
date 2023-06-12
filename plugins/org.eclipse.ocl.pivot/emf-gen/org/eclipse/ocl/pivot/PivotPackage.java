@@ -3864,7 +3864,7 @@ extends EPackage
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference '<em>Unspecialized Element</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateableElement#getUnspecializedElement()
+	 * @see org.eclipse.ocl.pivot.TemplateableElement#getGeneric()
 	 * @see #getTemplateableElement()
 	 * @generated
 	 */

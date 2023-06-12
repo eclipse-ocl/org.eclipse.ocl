@@ -87,7 +87,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		CollectionType collType = null;
 		for (org.eclipse.ocl.pivot.Class type : types) {
 			if (type instanceof CollectionType) {
-				TemplateableElement unspecializedElement = type.getUnspecializedElement();
+				TemplateableElement unspecializedElement = type.getGeneric();
 				if (unspecializedElement instanceof CollectionType) {
 					collType = (CollectionType) unspecializedElement;
 					if (collType.getName().equals(name)) {

@@ -87,10 +87,10 @@ public abstract class TemplateableElementImpl
 	protected TemplateSignature ownedSignature;
 
 	/**
-	 * The cached value of the '{@link #getUnspecializedElement() <em>Unspecialized Element</em>}' reference.
+	 * The cached value of the '{@link #getGeneric() <em>Unspecialized Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getUnspecializedElement()
+	 * @see #getGeneric()
 	 * @generated
 	 * @ordered
 	 */
@@ -185,7 +185,7 @@ public abstract class TemplateableElementImpl
 	 * @generated
 	 */
 	@Override
-	public TemplateableElement getUnspecializedElement()
+	public TemplateableElement getGeneric()
 	{
 		if (unspecializedElement != null && unspecializedElement.eIsProxy())
 		{
@@ -216,7 +216,7 @@ public abstract class TemplateableElementImpl
 	 * @generated
 	 */
 	@Override
-	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
+	public void setGeneric(TemplateableElement newUnspecializedElement)
 	{
 		TemplateableElement oldUnspecializedElement = unspecializedElement;
 		unspecializedElement = newUnspecializedElement;
@@ -299,7 +299,7 @@ public abstract class TemplateableElementImpl
 			case 5:
 				return getOwnedSignature();
 			case 6:
-				if (resolve) return getUnspecializedElement();
+				if (resolve) return getGeneric();
 				return basicGetUnspecializedElement();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -339,7 +339,7 @@ public abstract class TemplateableElementImpl
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
 			case 6:
-				setUnspecializedElement((TemplateableElement)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -373,7 +373,7 @@ public abstract class TemplateableElementImpl
 				setOwnedSignature((TemplateSignature)null);
 				return;
 			case 6:
-				setUnspecializedElement((TemplateableElement)null);
+				setGeneric((TemplateableElement)null);
 				return;
 		}
 		eDynamicUnset(featureID);

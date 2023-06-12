@@ -87,21 +87,21 @@ public interface TemplateableElement
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Unspecialized Element</em>' reference.
-	 * @see #setUnspecializedElement(TemplateableElement)
+	 * @see #setGeneric(TemplateableElement)
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement_UnspecializedElement()
 	 * @generated
 	 */
-	TemplateableElement getUnspecializedElement();
+	TemplateableElement getGeneric();
 
 	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TemplateableElement#getUnspecializedElement <em>Unspecialized Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Unspecialized Element</em>' reference.
-	 * @see #getUnspecializedElement()
+	 * @see #getGeneric()
 	 * @generated
 	 */
-	void setUnspecializedElement(TemplateableElement value);
+	void setGeneric(TemplateableElement value);
 
 	/**
 	 * Return true if this TemplateableElement and all transitively referenced types have a non-null eResource().

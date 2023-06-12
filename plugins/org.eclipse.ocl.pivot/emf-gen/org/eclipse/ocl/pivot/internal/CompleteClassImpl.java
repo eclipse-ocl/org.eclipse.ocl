@@ -458,7 +458,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 //			Metaclass specializedMetaclass = (Metaclass)specializedType;
 //			specializedMetaclass.setInstanceType(instanceType);
 //		}
-		specializedType.setUnspecializedElement(unspecializedType);
+		specializedType.setGeneric(unspecializedType);
 		Orphanage orphanage = getCompleteModel().getSharedOrphanage();
 		specializedType.setOwningPackage(orphanage);
 		return specializedType;
@@ -619,7 +619,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 					if (classListeners != null) {
 						classListeners.didAddPartialClass(index, partialClass);
 					}
-					if (partialClass.getUnspecializedElement() == null) {
+					if (partialClass.getGeneric() == null) {
 						getCompleteModel().didAddClass(partialClass, CompleteClassImpl.this);
 					}
 				}

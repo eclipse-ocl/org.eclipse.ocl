@@ -69,8 +69,8 @@ public abstract class IterableTypeImpl extends DataTypeImpl implements IterableT
 
 	@Override
 	public @NonNull List<Operation> getOwnedOperations() {
-		if (unspecializedElement != null) {
-			return ((IterableTypeImpl)unspecializedElement).getOwnedOperations();
+		if (generic != null) {
+			return ((IterableTypeImpl)generic).getOwnedOperations();
 		}
 		else {
 			return super.getOwnedOperations();
@@ -79,8 +79,8 @@ public abstract class IterableTypeImpl extends DataTypeImpl implements IterableT
 
 	@Override
 	public @NonNull List<Property> getOwnedProperties() {
-		if (unspecializedElement != null) {
-			return ((IterableTypeImpl)unspecializedElement).getOwnedProperties();
+		if (generic != null) {
+			return ((IterableTypeImpl)generic).getOwnedProperties();
 		}
 		else {
 			return super.getOwnedProperties();

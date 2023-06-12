@@ -71,7 +71,7 @@ public class OrderedSetTypeImpl
 
 	@Override
 	public @NonNull TypeId computeId() {
-		if (getUnspecializedElement() == null) {
+		if (getGeneric() == null) {
 			return TypeId.ORDERED_SET;
 		}
 		else {
@@ -82,7 +82,7 @@ public class OrderedSetTypeImpl
 
 	@Override
 	public @NonNull TypeId computeNormalizedId() {
-		if (getUnspecializedElement() == null) {
+		if (getGeneric() == null) {
 			return TypeId.ORDERED_SET;
 		}
 		else {

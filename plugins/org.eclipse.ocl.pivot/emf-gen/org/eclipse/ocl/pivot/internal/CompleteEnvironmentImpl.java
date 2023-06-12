@@ -631,7 +631,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			CompletePackageInternal primitiveCompletePackage = ownedCompleteModel.getPrimitiveCompletePackage();
 			return primitiveCompletePackage.getCompleteClass((PrimitiveType)pivotType);
 		}
-		else if ((pivotType instanceof IterableType) && (((IterableType)pivotType).getUnspecializedElement() != null)) {
+		else if ((pivotType instanceof IterableType) && (((IterableType)pivotType).getGeneric() != null)) {
 			CompletePackageInternal orphanCompletePackage = ownedCompleteModel.getOrphanCompletePackage();
 			return orphanCompletePackage.getCompleteClass((IterableType)pivotType);
 		}
