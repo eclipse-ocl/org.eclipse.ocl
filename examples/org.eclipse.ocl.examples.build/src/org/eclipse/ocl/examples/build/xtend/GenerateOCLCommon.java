@@ -401,7 +401,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			if (asTemplateSignature != null) {
 				sortedTemplateParameters.addAll(asTemplateSignature.getOwnedParameters());
 			}
-			TemplateableElement unspecializedElement = asTemplateableElement.getUnspecializedElement();
+			TemplateableElement unspecializedElement = asTemplateableElement.getGeneric();
 			if (unspecializedElement instanceof NamedElement) {
 				addReference((NamedElement)unspecializedElement);
 				addDependency((DataType)asTemplateableElement, (Type)unspecializedElement);
@@ -481,7 +481,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			//	addDependency(asCollectionType, superClass);
 			}
 			doTemplateableElement(asCollectionType);
-			CollectionType genericCollection = (CollectionType)asCollectionType.getUnspecializedElement();
+			CollectionType genericCollection = (CollectionType)asCollectionType.getGeneric();
 			if (genericCollection != null) {
 				addDependency(asCollectionType, genericCollection);
 				Type elementType = asCollectionType.getElementType();
@@ -586,7 +586,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			for (org.eclipse.ocl.pivot.Class superClass : PivotUtil.getSuperClasses(asMapType)) {
 				addDependency(asMapType, superClass);
 			}
-			if (asMapType.getUnspecializedElement() != null) {
+			if (asMapType.getGeneric() != null) {
 				addDependency(asMapType, asMapType.getKeyType());
 				addDependency(asMapType, asMapType.getValueType());
 			}

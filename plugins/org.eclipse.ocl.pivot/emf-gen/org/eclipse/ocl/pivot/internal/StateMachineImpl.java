@@ -320,8 +320,8 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 			case 7:
 				return getOwnedSignature();
 			case 8:
-				if (resolve) return getUnspecializedElement();
-				return basicGetUnspecializedElement();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -400,7 +400,7 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -499,7 +499,7 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 				setOwnedSignature((TemplateSignature)null);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)null);
+				setGeneric((TemplateableElement)null);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -580,7 +580,7 @@ public class StateMachineImpl extends BehaviorImpl implements StateMachine
 			case 7:
 				return ownedSignature != null;
 			case 8:
-				return unspecializedElement != null;
+				return generic != null;
 			case 9:
 				return extenders != null && !extenders.isEmpty();
 			case 10:

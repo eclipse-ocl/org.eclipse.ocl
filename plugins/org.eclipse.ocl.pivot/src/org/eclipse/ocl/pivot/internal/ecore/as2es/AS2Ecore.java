@@ -496,7 +496,7 @@ public class AS2Ecore extends AbstractConversion
 		if (!(asType instanceof CollectionType)) {
 			return null;
 		}
-		if (((CollectionType)asType).getUnspecializedElement() == standardLibrary.getCollectionType()) {
+		if (((CollectionType)asType).getGeneric() == standardLibrary.getCollectionType()) {
 			return null;		// Collection(T) cannot be distinguished from concrete Ecore collections
 		}
 		return (CollectionType)asType;

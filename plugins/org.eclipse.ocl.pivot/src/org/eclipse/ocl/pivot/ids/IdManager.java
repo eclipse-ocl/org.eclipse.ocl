@@ -379,7 +379,7 @@ public final class IdManager
 		TemplateParameters typeParameters = anOperation.getTypeParameters();
 		int typeParametersSize = typeParameters.parametersSize();
 		ParametersId parametersId;
-		if ((typeParametersSize <= 0) || (anOperation.getUnspecializedElement() != null)) {	// If unspecializeable or specialized
+		if ((typeParametersSize <= 0) || (anOperation.getGeneric() != null)) {	// If unspecializeable or specialized
 			@NonNull Type @NonNull [] parameterTypes = TypeUtil.getOperationParameterTypes(anOperation);
 			parametersId = getParametersId(parameterTypes);
 		}

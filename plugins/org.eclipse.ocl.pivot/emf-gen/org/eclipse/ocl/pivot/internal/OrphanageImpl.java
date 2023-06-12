@@ -660,7 +660,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				} catch (InvalidValueException e) {
 					logger.error("Out of range upper bound for " + specializedTypeId, e);
 				}
-				collectionType.setUnspecializedElement(genericType);
+				collectionType.setGeneric(genericType);
 				Type old = typeId2type.put(specializedTypeId, collectionType);
 				assert old == null;
 				assert specializedTypeId == ((CollectionTypeImpl)collectionType).immutableGetTypeId();		// XXX
@@ -748,7 +748,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				mapType.getSuperClasses().addAll(genericType.getSuperClasses());
 				mapType.setKeysAreNullFree(keysAreNullFree);
 				mapType.setValuesAreNullFree(valuesAreNullFree);
-				mapType.setUnspecializedElement(genericType);
+				mapType.setGeneric(genericType);
 				mapType.setEntryClass(entryClass);
 				typeId2type.put(mapTypeId, mapType);
 				assert mapTypeId == ((MapTypeImpl)mapType).immutableGetTypeId();		// XXX
@@ -792,7 +792,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				mapType.getSuperClasses().addAll(genericType.getSuperClasses());
 				mapType.setKeysAreNullFree(keysAreNullFree);
 				mapType.setValuesAreNullFree(valuesAreNullFree);
-				mapType.setUnspecializedElement(genericType);
+				mapType.setGeneric(genericType);
 			//	mapType.setEntryClass(typeParameters.getEntryClass());
 				typeId2type.put(mapTypeId, mapType);
 				assert mapTypeId == ((MapTypeImpl)mapType).immutableGetTypeId();		// XXX

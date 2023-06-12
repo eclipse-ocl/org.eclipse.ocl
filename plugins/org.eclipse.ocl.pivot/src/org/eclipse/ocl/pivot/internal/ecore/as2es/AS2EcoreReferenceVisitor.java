@@ -385,7 +385,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eTypedElement.setOrdered(true);
 			eTypedElement.setUnique(true);
 		}
-		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getUnspecializedElement() != context.getStandardLibrary().getCollectionType())) {		// Collection(T) cannot be distinguished from concrete Ecore collections
+		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getGeneric() != context.getStandardLibrary().getCollectionType())) {		// Collection(T) cannot be distinguished from concrete Ecore collections
 			CollectionType collectionType = (CollectionType)pivotType;
 			Type elementType = collectionType.getElementType();
 			EObject eObject = typeRefVisitor.safeVisit(elementType);

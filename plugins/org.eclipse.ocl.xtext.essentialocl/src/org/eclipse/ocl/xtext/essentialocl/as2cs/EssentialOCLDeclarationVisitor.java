@@ -414,7 +414,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 		T csElement = context.refreshNamedElement(csClass, csEClass, object);
 		final Type type = object.getType();
 		final Type elementType;
-		if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardCollectionType)) {
+		if ((type instanceof CollectionType) && (((CollectionType)type).getGeneric() != standardCollectionType)) {
 			PivotUtil.debugWellContainedness(type);
 			elementType = ((CollectionType)type).getElementType();
 		}
@@ -437,7 +437,7 @@ public class EssentialOCLDeclarationVisitor extends BaseDeclarationVisitor
 			boolean isNullFree ;
 			int lower;
 			int upper;
-			if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardCollectionType)) {
+			if ((type instanceof CollectionType) && (((CollectionType)type).getGeneric() != standardCollectionType)) {
 				CollectionType collectionType = (CollectionType)type;
 				isNullFree = collectionType.isIsNullFree();
 				lower = collectionType.getLower().intValue();

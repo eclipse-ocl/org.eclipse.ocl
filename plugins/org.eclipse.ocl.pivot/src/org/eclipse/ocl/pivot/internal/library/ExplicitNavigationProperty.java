@@ -69,7 +69,7 @@ public class ExplicitNavigationProperty extends AbstractProperty
 		// A specialized property such as CollectionType.elementType is returned from the specialized type
 		// An unspecialized property such as CollectionType.ownedOperation is returned from the unspecialized type
 		if ((eObject instanceof TemplateableElement) && !eObject.eIsSet(eFeature2)) {
-			TemplateableElement rawType = ((TemplateableElement)eObject).getUnspecializedElement();
+			TemplateableElement rawType = ((TemplateableElement)eObject).getGeneric();
 			if (rawType != null) {
 				eObject = rawType;
 			}

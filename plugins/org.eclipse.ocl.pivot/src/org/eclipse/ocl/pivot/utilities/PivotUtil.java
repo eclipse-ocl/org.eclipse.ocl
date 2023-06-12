@@ -368,7 +368,7 @@ public class PivotUtil
 		specializedType.setName(unspecializedType.getName());
 		specializedType.setLower(unspecializedType.getLower());
 		specializedType.setUpper(unspecializedType.getUpper());
-		specializedType.setUnspecializedElement(unspecializedType);
+		specializedType.setGeneric(unspecializedType);
 		TemplateParameter templateParameter = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
 		assert templateParameter != null;
 		TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(templateParameter, instanceType);
@@ -499,7 +499,7 @@ public class PivotUtil
 
 	protected static @NonNull <@NonNull T extends MapType> T createMapType(T specializedType, T unspecializedType, @NonNull Type keyType, @NonNull Type valueType) {
 		specializedType.setName(unspecializedType.getName());
-		specializedType.setUnspecializedElement(unspecializedType);
+		specializedType.setGeneric(unspecializedType);
 		TemplateParameter templateParameter1 = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
 		TemplateParameter templateParameter2 = unspecializedType.getOwnedSignature().getOwnedParameters().get(1);
 		assert templateParameter1 != null;
@@ -1070,7 +1070,7 @@ public class PivotUtil
 				if (behavioralElementType != asElementType) {
 					EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 					if (environmentFactory != null) {
-						CollectionType unspecializedElement = (CollectionType)collectionType.getUnspecializedElement();
+						CollectionType unspecializedElement = (CollectionType)collectionType.getGeneric();
 						assert unspecializedElement != null;
 						boolean isNullFree = collectionType.isIsNullFree();
 						IntegerValue lowerValue = collectionType.getLowerValue();
@@ -2005,7 +2005,7 @@ public class PivotUtil
 		//		if (templateableElement == null) {
 		//			return null;
 		//		}
-		TemplateableElement unspecializedElement = templateableElement.getUnspecializedElement();
+		TemplateableElement unspecializedElement = templateableElement.getGeneric();
 		if (unspecializedElement == null) {
 			return templateableElement;
 		}

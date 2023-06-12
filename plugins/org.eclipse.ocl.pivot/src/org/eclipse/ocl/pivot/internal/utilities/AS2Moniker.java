@@ -170,7 +170,7 @@ public class AS2Moniker implements PivotConstantsInternal
 
 	public void appendName(Element monikeredElement) {
 		if (monikeredElement instanceof TemplateableElement) {		// FIXME migrate to more specific location
-			TemplateableElement unspecializedElement = ((TemplateableElement)monikeredElement).getUnspecializedElement();
+			TemplateableElement unspecializedElement = ((TemplateableElement)monikeredElement).getGeneric();
 			if (unspecializedElement != null) {
 				appendName(unspecializedElement);
 				return;

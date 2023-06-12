@@ -226,8 +226,8 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 13:
 				return getOwnedSignature();
 			case 14:
-				if (resolve) return getUnspecializedElement();
-				return basicGetUnspecializedElement();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 15:
 				return getBodyExpression();
 			case 16:
@@ -318,7 +318,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 				setOwnedSignature((TemplateSignature)newValue);
 				return;
 			case 14:
-				setUnspecializedElement((TemplateableElement)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 15:
 				setBodyExpression((LanguageExpression)newValue);
@@ -423,7 +423,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 				setOwnedSignature((TemplateSignature)null);
 				return;
 			case 14:
-				setUnspecializedElement((TemplateableElement)null);
+				setGeneric((TemplateableElement)null);
 				return;
 			case 15:
 				setBodyExpression((LanguageExpression)null);
@@ -510,7 +510,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 13:
 				return ownedSignature != null;
 			case 14:
-				return unspecializedElement != null;
+				return generic != null;
 			case 15:
 				return bodyExpression != null;
 			case 16:
