@@ -937,9 +937,9 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateSignature-owningElement"/>
     </genClasses>
     <genClasses image="false" ecoreClass="Pivot.ecore#T-pivot-TemplateableElement">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateableElement-generic"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateableElement-ownedBindings"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateableElement-ownedSignature"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-TemplateableElement-unspecializedElement"/>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-Transition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Pivot.ecore#F-pivot-Transition-kind"/>

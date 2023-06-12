@@ -1998,10 +1998,10 @@ public class OCLmetamodel extends ASResourceImpl
 			Property pr_TemplateSignature_ownedParameters;
 			Property pr_TemplateSignature_owningElement;
 			Property pr_TemplateSignature_TemplateBinding_templateSignature;
+			Property pr_TemplateableElement_generic;
 			Property pr_TemplateableElement_ownedBindings;
 			Property pr_TemplateableElement_ownedSignature;
-			Property pr_TemplateableElement_unspecializedElement;
-			Property pr_TemplateableElement_TemplateableElement_unspecializedElement;
+			Property pr_TemplateableElement_TemplateableElement_generic;
 			Property pr_Transition_ownedEffect;
 			Property pr_Transition_ownedGuard;
 			Property pr_Transition_ownedTriggers;
@@ -3368,6 +3368,9 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsResolveProxies(true);
 
 			ownedProperties = _TemplateableElement.getOwnedProperties();
+			ownedProperties.add(property = pr_TemplateableElement_generic = createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__GENERIC, _TemplateableElement));
+			property.setIsRequired(false);
+			property.setIsResolveProxies(true);
 			ownedProperties.add(property = pr_TemplateableElement_ownedBindings = createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS, _Set_TemplateBinding_T));
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
@@ -3377,10 +3380,7 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(false);
 			property.setIsResolveProxies(true);
 			installComment(property, "The optional TemplateSignature specifying the formal TemplateParameters for this TemplateableElement. If a TemplateableElement has a TemplateSignature, then it is a template.");
-			ownedProperties.add(property = pr_TemplateableElement_unspecializedElement = createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT, _TemplateableElement));
-			property.setIsRequired(false);
-			property.setIsResolveProxies(true);
-			ownedProperties.add(property = pr_TemplateableElement_TemplateableElement_unspecializedElement = createProperty("TemplateableElement", _Bag_TemplateableElement_T));
+			ownedProperties.add(property = pr_TemplateableElement_TemplateableElement_generic = createProperty("TemplateableElement", _Bag_TemplateableElement_T));
 			property.setIsImplicit(true);
 			property.setIsResolveProxies(true);
 
@@ -3740,7 +3740,7 @@ public class OCLmetamodel extends ASResourceImpl
 			setOpposites(pr_TemplateParameterSubstitution_actual, pr_Type_TemplateParameterSubstitution_actual);
 			setOpposites(pr_TemplateParameterSubstitution_ownedWildcard, pr_WildcardType_TemplateParameterSubstitution_ownedWildcard);
 			setOpposites(pr_TemplateSignature_owningElement, pr_TemplateableElement_ownedSignature);
-			setOpposites(pr_TemplateableElement_unspecializedElement, pr_TemplateableElement_TemplateableElement_unspecializedElement);
+			setOpposites(pr_TemplateableElement_generic, pr_TemplateableElement_TemplateableElement_generic);
 			setOpposites(pr_Transition_ownedTriggers, pr_Trigger_owningTransition);
 			setOpposites(pr_Transition_source, pr_Vertex_outgoingTransitions);
 			setOpposites(pr_Transition_target, pr_Vertex_incomingTransitions);

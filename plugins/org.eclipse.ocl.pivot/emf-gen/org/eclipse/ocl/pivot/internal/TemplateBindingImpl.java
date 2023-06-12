@@ -150,7 +150,7 @@ public class TemplateBindingImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningElement != null)
-				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, 4, TemplateableElement.class, msgs);
+				msgs = ((InternalEObject)newOwningElement).eInverseAdd(this, 5, TemplateableElement.class, msgs);
 			msgs = basicSetOwningElement(newOwningElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -222,7 +222,7 @@ public class TemplateBindingImpl
 		switch (eContainerFeatureID())
 		{
 			case 5:
-				return eInternalContainer().eInverseRemove(this, 4, TemplateableElement.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 5, TemplateableElement.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}

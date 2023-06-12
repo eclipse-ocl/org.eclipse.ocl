@@ -82,9 +82,9 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedConstraints <em>Owned Constraints</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getGeneric <em>Generic</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedBindings <em>Owned Bindings</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedSignature <em>Owned Signature</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getUnspecializedElement <em>Unspecialized Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getBodyExpression <em>Body Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#isIsInvalidating <em>Is Invalidating</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#isIsTransient <em>Is Transient</em>}</li>
@@ -134,6 +134,16 @@ implements Operation {
 	protected EList<Constraint> ownedConstraints;
 
 	/**
+	 * The cached value of the '{@link #getGeneric() <em>Generic</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGeneric()
+	 * @generated
+	 * @ordered
+	 */
+	protected TemplateableElement generic;
+
+	/**
 	 * The cached value of the '{@link #getOwnedBindings() <em>Owned Bindings</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -152,16 +162,6 @@ implements Operation {
 	 * @ordered
 	 */
 	protected TemplateSignature ownedSignature;
-
-	/**
-	 * The cached value of the '{@link #getGeneric() <em>Unspecialized Element</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGeneric()
-	 * @generated
-	 * @ordered
-	 */
-	protected TemplateableElement generic;
 
 	/**
 	 * The cached value of the '{@link #getBodyExpression() <em>Body Expression</em>}' containment reference.
@@ -360,7 +360,7 @@ implements Operation {
 	{
 		if (ownedBindings == null)
 		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 12, 5);
+			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 13, 5);
 		}
 		return ownedBindings;
 	}
@@ -466,7 +466,7 @@ implements Operation {
 		ownedSignature = newOwnedSignature;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 13, oldOwnedSignature, newOwnedSignature);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 14, oldOwnedSignature, newOwnedSignature);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -491,7 +491,7 @@ implements Operation {
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 13, newOwnedSignature, newOwnedSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, newOwnedSignature, newOwnedSignature));
 	}
 
 	/**
@@ -503,12 +503,12 @@ implements Operation {
 	{
 		if (generic != null && generic.eIsProxy())
 		{
-			InternalEObject oldUnspecializedElement = (InternalEObject)generic;
-			generic = (TemplateableElement)eResolveProxy(oldUnspecializedElement);
-			if (generic != oldUnspecializedElement)
+			InternalEObject oldGeneric = (InternalEObject)generic;
+			generic = (TemplateableElement)eResolveProxy(oldGeneric);
+			if (generic != oldGeneric)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 14, oldUnspecializedElement, generic));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 12, oldGeneric, generic));
 			}
 		}
 		return generic;
@@ -553,12 +553,12 @@ implements Operation {
 	 * @generated
 	 */
 	@Override
-	public void setGeneric(TemplateableElement newUnspecializedElement)
+	public void setGeneric(TemplateableElement newGeneric)
 	{
-		TemplateableElement oldUnspecializedElement = generic;
-		generic = newUnspecializedElement;
+		TemplateableElement oldGeneric = generic;
+		generic = newGeneric;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 14, oldUnspecializedElement, generic));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldGeneric, generic));
 	}
 
 	/**
@@ -1099,11 +1099,11 @@ implements Operation {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case 12:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
 			case 13:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
+			case 14:
 				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (13), null, msgs);
+					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (14), null, msgs);
 				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
 			case 20:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParameters()).basicAdd(otherEnd, msgs);
@@ -1139,9 +1139,9 @@ implements Operation {
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case 12:
-				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
 			case 13:
+				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
+			case 14:
 				return basicSetOwnedSignature(null, msgs);
 			case 15:
 				return basicSetBodyExpression(null, msgs);
@@ -1208,12 +1208,12 @@ implements Operation {
 			case 11:
 				return getOwnedConstraints();
 			case 12:
-				return getOwnedBindings();
-			case 13:
-				return getOwnedSignature();
-			case 14:
 				if (resolve) return getGeneric();
 				return basicGetGeneric();
+			case 13:
+				return getOwnedBindings();
+			case 14:
+				return getOwnedSignature();
 			case 15:
 				return getBodyExpression();
 			case 16:
@@ -1292,14 +1292,14 @@ implements Operation {
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 12:
+				setGeneric((TemplateableElement)newValue);
+				return;
+			case 13:
 				getOwnedBindings().clear();
 				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
 				return;
-			case 13:
-				setOwnedSignature((TemplateSignature)newValue);
-				return;
 			case 14:
-				setGeneric((TemplateableElement)newValue);
+				setOwnedSignature((TemplateSignature)newValue);
 				return;
 			case 15:
 				setBodyExpression((LanguageExpression)newValue);
@@ -1389,13 +1389,13 @@ implements Operation {
 				getOwnedConstraints().clear();
 				return;
 			case 12:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 13:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedBindings().clear();
 				return;
 			case 14:
-				setGeneric((TemplateableElement)null);
+				setOwnedSignature((TemplateSignature)null);
 				return;
 			case 15:
 				setBodyExpression((LanguageExpression)null);
@@ -1471,11 +1471,11 @@ implements Operation {
 			case 11:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 12:
-				return ownedBindings != null && !ownedBindings.isEmpty();
-			case 13:
-				return ownedSignature != null;
-			case 14:
 				return generic != null;
+			case 13:
+				return ownedBindings != null && !ownedBindings.isEmpty();
+			case 14:
+				return ownedSignature != null;
 			case 15:
 				return bodyExpression != null;
 			case 16:

@@ -2483,10 +2483,10 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _TemplateSignature__owningElement = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATE_SIGNATURE__OWNING_ELEMENT, Types._TemplateSignature, 1);
 		public static final @NonNull Property _TemplateSignature__TemplateBinding__templateSignature = LIBRARY.createOppositeProperty("TemplateBinding", Types._TemplateSignature, 2, PivotPackage.Literals.TEMPLATE_BINDING__TEMPLATE_SIGNATURE);
 
-		public static final @NonNull Property _TemplateableElement__ownedBindings = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS, Types._TemplateableElement, 0);
-		public static final @NonNull Property _TemplateableElement__ownedSignature = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, Types._TemplateableElement, 1);
-		public static final @NonNull Property _TemplateableElement__unspecializedElement = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT, Types._TemplateableElement, 2);
-		public static final @NonNull Property _TemplateableElement__TemplateableElement__unspecializedElement = LIBRARY.createOppositeProperty("TemplateableElement", Types._TemplateableElement, 3, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT);
+		public static final @NonNull Property _TemplateableElement__generic = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__GENERIC, Types._TemplateableElement, 0);
+		public static final @NonNull Property _TemplateableElement__ownedBindings = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS, Types._TemplateableElement, 1);
+		public static final @NonNull Property _TemplateableElement__ownedSignature = LIBRARY.createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, Types._TemplateableElement, 2);
+		public static final @NonNull Property _TemplateableElement__TemplateableElement__generic = LIBRARY.createOppositeProperty("TemplateableElement", Types._TemplateableElement, 3, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__GENERIC);
 
 		public static final @NonNull Property _Transition__kind = LIBRARY.createProperty(PivotPackage.Literals.TRANSITION__KIND, Types._Transition, 0);
 		public static final @NonNull Property _Transition__ownedEffect = LIBRARY.createProperty(PivotPackage.Literals.TRANSITION__OWNED_EFFECT, Types._Transition, 1);
@@ -12235,6 +12235,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _AnyType = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12253,13 +12254,13 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__ownedProperties,
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _AssociationClass = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12279,8 +12280,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._AssociationClass__unownedAttributes,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._AssociationClass__unownedAttributes
 		};
 
 		private static final @NonNull Property @NonNull [] _AssociationClassCallExp = {
@@ -12314,6 +12314,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._CollectionType__elementType,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12336,7 +12337,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._CollectionType__upper,
 			PivotTables.Properties._DataType__value
 		};
@@ -12344,6 +12344,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _Behavior = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12363,8 +12364,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Behavior__owningTransition,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _BooleanLiteralExp = {
@@ -12387,6 +12387,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._PrimitiveType__coercions,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12407,7 +12408,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._DataType__value
 		};
 
@@ -12442,6 +12442,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _Class = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12460,8 +12461,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__ownedProperties,
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _CollectionItem = {
@@ -12532,6 +12532,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._CollectionType__elementType,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12554,7 +12555,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._CollectionType__upper,
 			PivotTables.Properties._DataType__value
 		};
@@ -12673,6 +12673,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12693,7 +12694,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._DataType__value
 		};
 
@@ -12711,6 +12711,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _DynamicBehavior = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12732,8 +12733,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Behavior__owningTransition,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _DynamicElement = {
@@ -12760,6 +12760,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _DynamicType = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12780,8 +12781,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__ownedProperties,
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _DynamicValueSpecification = {
@@ -12812,6 +12812,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._ElementExtension__base,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12833,8 +12834,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._ElementExtension__stereotype,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _ElementLiteralExp = {
@@ -12871,6 +12871,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -12892,7 +12893,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._DataType__value
 		};
 
@@ -13071,6 +13071,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _InvalidType = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -13089,14 +13090,14 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__ownedProperties,
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _IterableType = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -13117,7 +13118,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._DataType__value
 		};
 
@@ -13146,6 +13146,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _Iteration = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Operation__bodyExpression,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Feature__implementation,
 			PivotTables.Properties._Feature__implementationClass,
 			PivotTables.Properties._Operation__isInvalidating,
@@ -13173,8 +13174,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Operation__precedence,
 			PivotTables.Properties._Operation__raisedExceptions,
 			PivotTables.Properties._Operation__redefinedOperations,
-			PivotTables.Properties._TypedElement__type,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._TypedElement__type
 		};
 
 		private static final @NonNull Property @NonNull [] _IteratorExp = {
@@ -13220,6 +13220,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _JavaType = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -13239,8 +13240,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__ownedProperties,
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _LambdaType = {
@@ -13248,6 +13248,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._LambdaType__contextType,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -13270,7 +13271,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._LambdaType__parameterType,
 			PivotTables.Properties._LambdaType__resultType,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._DataType__value
 		};
 
@@ -13411,6 +13411,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._MapType__entryClass,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -13433,7 +13434,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._DataType__value,
 			PivotTables.Properties._MapType__valueType,
 			PivotTables.Properties._MapType__valuesAreNullFree
@@ -13460,6 +13460,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _MessageType = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -13480,8 +13481,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._MessageType__referredOperation,
 			PivotTables.Properties._MessageType__referredSignal,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _Model = {
@@ -13597,6 +13597,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _Operation = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Operation__bodyExpression,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Feature__implementation,
 			PivotTables.Properties._Feature__implementationClass,
 			PivotTables.Properties._Operation__isInvalidating,
@@ -13622,8 +13623,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Operation__precedence,
 			PivotTables.Properties._Operation__raisedExceptions,
 			PivotTables.Properties._Operation__redefinedOperations,
-			PivotTables.Properties._TypedElement__type,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._TypedElement__type
 		};
 
 		private static final @NonNull Property @NonNull [] _OperationCallExp = {
@@ -13673,6 +13673,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._CollectionType__elementType,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -13695,7 +13696,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._CollectionType__upper,
 			PivotTables.Properties._DataType__value
 		};
@@ -13837,6 +13837,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._PrimitiveType__coercions,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -13857,7 +13858,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._DataType__value
 		};
 
@@ -14026,6 +14026,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _SelfType = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -14044,8 +14045,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__ownedProperties,
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _SendSignalAction = {
@@ -14064,6 +14064,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._CollectionType__elementType,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -14086,7 +14087,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._CollectionType__upper,
 			PivotTables.Properties._DataType__value
 		};
@@ -14096,6 +14096,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._CollectionType__elementType,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -14118,7 +14119,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._CollectionType__upper,
 			PivotTables.Properties._DataType__value
 		};
@@ -14157,6 +14157,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _Signal = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -14175,8 +14176,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__ownedProperties,
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _Slot = {
@@ -14247,6 +14247,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._StateMachine__extendedStateMachines,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -14269,13 +14270,13 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Behavior__owningTransition,
 			PivotTables.Properties._StateMachine__submachineStates,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _Stereotype = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -14295,8 +14296,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__ownedProperties,
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _StereotypeExtender = {
@@ -14376,14 +14376,14 @@ public class PivotTables extends AbstractTables
 
 		private static final @NonNull Property @NonNull [] _TemplateableElement = {
 			PivotTables.Properties._Element__annotatingComments,
+			PivotTables.Properties._TemplateableElement__generic,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			PivotTables.Properties._Element__ownedAnnotations,
 			PivotTables.Properties._TemplateableElement__ownedBindings,
 			PivotTables.Properties._Element__ownedComments,
 			PivotTables.Properties._Element__ownedExtensions,
-			PivotTables.Properties._TemplateableElement__ownedSignature,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._TemplateableElement__ownedSignature
 		};
 
 		private static final @NonNull Property @NonNull [] _Throwable = {};
@@ -14462,6 +14462,7 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._DataType__behavioralClass,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -14482,7 +14483,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._DataType__value
 		};
 
@@ -14634,6 +14634,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _VoidType = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -14652,13 +14653,13 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._Class__ownedProperties,
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
-			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement
+			PivotTables.Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _WildcardType = {
 			PivotTables.Properties._Element__annotatingComments,
 			PivotTables.Properties._Class__extenders,
+			PivotTables.Properties._TemplateableElement__generic,
 			PivotTables.Properties._Class__instanceClassName,
 			PivotTables.Properties._Class__isAbstract,
 			PivotTables.Properties._Class__isActive,
@@ -14679,7 +14680,6 @@ public class PivotTables extends AbstractTables
 			PivotTables.Properties._TemplateableElement__ownedSignature,
 			PivotTables.Properties._Class__owningPackage,
 			PivotTables.Properties._Class__superClasses,
-			PivotTables.Properties._TemplateableElement__unspecializedElement,
 			PivotTables.Properties._WildcardType__upperBound
 		};
 
