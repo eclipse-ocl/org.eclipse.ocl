@@ -1381,9 +1381,25 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 		return TemplateSignatureImpl.getTypeParameters(getOwnedSignature());
 	}
 
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private TemplateableElement getUnspecializedElementGen()
+	{
+		return unspecializedElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
 	@Override
 	public TemplateableElement getUnspecializedElement()
 	{
+		getUnspecializedElementGen();
 		if (unspecializedElement == null) {
 			for (TemplateBinding templateBinding : getOwnedBindings()) {
 				TemplateSignature signature = templateBinding.getTemplateSignature();
