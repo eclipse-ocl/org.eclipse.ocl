@@ -138,7 +138,8 @@ public class PrimitiveTypeImpl
 			case 7:
 				return getOwnedSignature();
 			case 8:
-				return getUnspecializedElement();
+				if (resolve) return getUnspecializedElement();
+				return basicGetUnspecializedElement();
 			case 9:
 				return getExtenders();
 			case 10:

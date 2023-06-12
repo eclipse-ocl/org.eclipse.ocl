@@ -2955,8 +2955,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateableElement-unspecializedElement"
-        name="unspecializedElement" eType="#T-pivot-TemplateableElement" transient="true"
-        resolveProxies="false"/>
+        name="unspecializedElement" eType="#T-pivot-TemplateableElement"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Transition" name="Transition"
       eSuperTypes="#T-pivot-Namespace">

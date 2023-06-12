@@ -501,7 +501,17 @@ implements Operation {
 	 */
 	private TemplateableElement getUnspecializedElementGen()
 	{
-		return null;
+		if (unspecializedElement != null && unspecializedElement.eIsProxy())
+		{
+			InternalEObject oldUnspecializedElement = (InternalEObject)unspecializedElement;
+			unspecializedElement = (TemplateableElement)eResolveProxy(oldUnspecializedElement);
+			if (unspecializedElement != oldUnspecializedElement)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 14, oldUnspecializedElement, unspecializedElement));
+			}
+		}
+		return unspecializedElement;
 	}
 
 	/**
@@ -532,10 +542,23 @@ implements Operation {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TemplateableElement basicGetUnspecializedElement()
+	{
+		return unspecializedElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
 	{
-		throw new UnsupportedOperationException();	// FIXME Eliminate this feature once Acceleo bug 349278 fixed
+		TemplateableElement oldUnspecializedElement = unspecializedElement;
+		unspecializedElement = newUnspecializedElement;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, oldUnspecializedElement, unspecializedElement));
 	}
 
 	/**
@@ -1189,7 +1212,8 @@ implements Operation {
 			case 13:
 				return getOwnedSignature();
 			case 14:
-				return getUnspecializedElement();
+				if (resolve) return getUnspecializedElement();
+				return basicGetUnspecializedElement();
 			case 15:
 				return getBodyExpression();
 			case 16:
