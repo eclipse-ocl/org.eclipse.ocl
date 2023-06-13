@@ -1024,6 +1024,8 @@ public class OCLstdlibPackage extends EPackageImpl {
 		// Create annotations
 		// http://www.eclipse.org/OCL/ASLibrary
 		createASLibraryAnnotations();
+		// http://www.eclipse.org/uml2/2.0.0/UML
+		createUMLAnnotations();
 	}
 
 	/**
@@ -1038,6 +1040,64 @@ public class OCLstdlibPackage extends EPackageImpl {
 		  (this,
 		   source,
 		   new String[] {
+		   });
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/uml2/2.0.0/UML</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createUMLAnnotations() {
+		String source = "http://www.eclipse.org/uml2/2.0.0/UML"; //$NON-NLS-1$
+		addAnnotation
+		  (getCollection_ElementType(),
+		   source,
+		   new String[] {
+			   "originalName", "elementType" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCollection_Lower(),
+		   source,
+		   new String[] {
+			   "originalName", "lower" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCollection_Upper(),
+		   source,
+		   new String[] {
+			   "originalName", "upper" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap_KeyType(),
+		   source,
+		   new String[] {
+			   "originalName", "keyType" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap_ValueType(),
+		   source,
+		   new String[] {
+			   "originalName", "valueType" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclElement_OclContainer(),
+		   source,
+		   new String[] {
+			   "originalName", "oclContainer" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclElement_OclContents(),
+		   source,
+		   new String[] {
+			   "originalName", "oclContents" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid_OclBadProperty(),
+		   source,
+		   new String[] {
+			   "originalName", "oclBadProperty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 

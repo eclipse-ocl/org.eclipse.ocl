@@ -274,7 +274,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			}
 		}
 		eNamedElement.setName(validName);
-		if (validName != name) {
+		if (!validName.equals(name)) {
 			NameUtil.setOriginalName(eNamedElement, name);
 		}
 	}

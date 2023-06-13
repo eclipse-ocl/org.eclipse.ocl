@@ -634,7 +634,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			if (!metamodelManager.getCompleteModel().getPartialModels().contains(asModel)) {
 				metamodelManager.installRoot(asModel);
 			}
-			Set<String> installName= new HashSet<>();
+			Set<String> installName = new HashSet<>();
 			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
 				installName.add(asClass.getName());
 			}
@@ -645,6 +645,24 @@ public class Ecore2AS extends AbstractExternal2AS
 				}
 			}
 			standardLibrary.defineLibraryTypes(asClasses);
+		}
+		else if (asClasses != null) {
+			Model asModel = PivotUtil.getContainingModel(asClasses.get(0));
+			if (!metamodelManager.getCompleteModel().getPartialModels().contains(asModel)) {
+				metamodelManager.installRoot(asModel);
+			}
+			Set<String> installName = new HashSet<>();
+			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
+				installName.add(asClass.getName());
+			}
+		/*	for (org.eclipse.ocl.pivot.Class asClass : OCLstdlib.getDefaultPackage().getOwnedClasses()) {		// FIXME use contribution
+				assert asClass != null;
+				if (!installName.contains(asClass.getName())) {
+					asClasses.add(asClass);
+				}
+			} */
+			standardLibrary.defineLibraryTypes(asClasses);
+
 		}
 	}
 

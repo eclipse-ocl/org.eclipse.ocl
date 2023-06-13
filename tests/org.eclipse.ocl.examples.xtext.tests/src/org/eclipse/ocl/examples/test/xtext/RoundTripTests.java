@@ -171,7 +171,7 @@ public class RoundTripTests extends XtextTestCase
 
 			Resource inputEcoreResource = ClassUtil.nonNullState(resourceSet.getResource(ecoreURI, true));
 			assertNoResourceErrors("Ecore load", inputEcoreResource);
-		//	assertNoValidationErrors("Ecore load", inputEcoreResource);			// XXX avoi OCLstdlib in same OCL
+		//	assertNoValidationErrors("Ecore load", inputEcoreResource);			// XXX avoid OCLstdlib in same OCL
 
 			Ecore2AS ecore2as = Ecore2AS.getAdapter(inputEcoreResource, environmentFactory2);
 			Model pivotModel = ecore2as.getASModel();
