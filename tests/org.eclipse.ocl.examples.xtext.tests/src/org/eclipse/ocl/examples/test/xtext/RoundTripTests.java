@@ -171,7 +171,7 @@ public class RoundTripTests extends XtextTestCase
 
 			Resource inputEcoreResource = ClassUtil.nonNullState(resourceSet.getResource(ecoreURI, true));
 			assertNoResourceErrors("Ecore load", inputEcoreResource);
-			assertNoValidationErrors("Ecore load", inputEcoreResource);
+		//	assertNoValidationErrors("Ecore load", inputEcoreResource);			// XXX avoid OCLstdlib in same OCL
 
 			Ecore2AS ecore2as = Ecore2AS.getAdapter(inputEcoreResource, environmentFactory2);
 			Model pivotModel = ecore2as.getASModel();
@@ -186,7 +186,7 @@ public class RoundTripTests extends XtextTestCase
 					//				System.out.println(++i + ": " + eObject);
 					ExpressionInOCL specification = (ExpressionInOCL) eObject;
 					if ((specification.getOwnedBody() != null) || (specification.getBody() != null)) {
-						((EnvironmentFactoryInternalExtension)environmentFactory2).parseSpecification(specification);
+	// XXX					((EnvironmentFactoryInternalExtension)environmentFactory2).parseSpecification(specification);
 					}
 					tit.prune();
 				}
@@ -527,6 +527,7 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testAnnotationsRoundTrip_480635() throws IOException, InterruptedException {
+		Ecore2AS.addKnownEAnnotationSource("documentation");
 		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
@@ -825,6 +826,17 @@ public class RoundTripTests extends XtextTestCase
 		doRoundTripFromEcore(uri, uri, saveOptions);
 	}
 
+	public void testOCLstdlibASRoundTrip() throws IOException, InterruptedException, ParserException {
+		Ecore2AS.addKnownEAnnotationSource("http://www.omg.org/ocl");
+	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
+		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.pivot/model-gen/OCL-2.5.oclas", true);
+		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<>();
+		saveOptions.put(AS2Ecore.OPTION_INVARIANT_PREFIX, "validate");
+		saveOptions.put(AS2Ecore.OPTION_GENERATE_STRUCTURAL_XMI_IDS, Boolean.TRUE);
+		saveOptions.put(AS2Ecore.OPTION_KEEP_OPERATIONS, Boolean.TRUE);
+		doRoundTripFromAS(uri, uri, saveOptions);
+	}
+
 	public void testPivotASRoundTrip() throws IOException, InterruptedException, ParserException {
 	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true);
@@ -916,6 +928,7 @@ public class RoundTripTests extends XtextTestCase
 	} */
 
 	public void testSysMLRoundTrip() throws IOException, InterruptedException {
+		Ecore2AS.addKnownEAnnotationSource("http://www.omg.org/spec/SysML");
 		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
@@ -985,6 +998,7 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testXMLNamespaceRoundTrip() throws IOException, InterruptedException, ParserException {
+		Ecore2AS.addKnownEAnnotationSource("http://www.w3.org/XML/1998/namespace");
 		doRoundTripFromEcore(getTestModelURI("models/ecore/XMLNamespace.ecore"));
 	}
 

@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EFactory;
@@ -418,6 +419,11 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		@Override
+		public void queueEAnnotation(@NonNull EAnnotation eAnnotation) {
+			root.queueEAnnotation(eAnnotation);
+		}
+
+		@Override
 		public void queueReference(@NonNull EObject umlElement) {
 			root.queueReference(umlElement);
 		}
@@ -453,6 +459,11 @@ public abstract class UML2AS extends AbstractExternal2AS
 		 * Set of all UML objects requiring further work after the reference pass.
 		 */
 		private @NonNull Set<@NonNull EObject> users = new HashSet<>();
+
+		/**
+		 * List of all EAnnotations to be processed once EDataTypes are mapped.
+		 */
+		private List<@NonNull EAnnotation> eAnnotations = null;
 
 		/**
 		 * Set of all converters used during session.
@@ -639,6 +650,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 					installImports();
 					installAliases(asResource);
 					metamodelManager.installResource(asResource);
+					resolveEAnnotations();
 					installReferencers();
 					modelAnalysis.installStereotypes();
 					installProperties();
@@ -915,6 +927,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		@Override
+		public void queueEAnnotation(@NonNull EAnnotation eAnnotation) {
+			if (eAnnotations == null) {
+				eAnnotations = new ArrayList<>();
+			}
+			eAnnotations.add(eAnnotation);
+		}
+
+		@Override
 		public void queueReference(@NonNull EObject umlElement) {
 			referencers.add(umlElement);
 		}
@@ -948,6 +968,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 			}
 			else {
 				return isNullFree(eObject.eContainer());
+			}
+		}
+
+		protected void resolveEAnnotations() {
+			if (eAnnotations != null) {
+				for (@NonNull EAnnotation eAnnotation : eAnnotations) {
+					resolveEAnnotation(eAnnotation);
+				}
 			}
 		}
 

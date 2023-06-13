@@ -122,7 +122,6 @@ public abstract class CompleteOCLLoader
 		//
 		//	Install validation for all the complemented packages
 		//
-		PivotEObjectValidator.install(ocl.getResourceSet(), ocl.getEnvironmentFactory());
 		for (EPackage mmPackage : mmPackages) {
 			assert mmPackage != null;
 			PivotEObjectValidator.install(mmPackage, oclModels);

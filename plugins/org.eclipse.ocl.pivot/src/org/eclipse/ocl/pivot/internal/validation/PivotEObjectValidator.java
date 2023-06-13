@@ -15,7 +15,6 @@ package org.eclipse.ocl.pivot.internal.validation;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
@@ -74,46 +73,6 @@ import org.eclipse.ocl.pivot.values.InvalidValueException;
 public class PivotEObjectValidator implements EValidator
 {
 	/**
-	 * ValidationAdapter is an obsolete class that used to provide stateful context for a ResourceSet
-	 * for which Complete OCL validation was necessary. stateless works much better with the stste coming
-	 * from ThreadLocalExecutor.basicGetEnvironmentFactory(). This class is therefore no longer used.
-	 * Its functionality might provide some compatibility for applications that continue to use it.
-	 *
-	 * @deprecated no longer used - pass EnvironmentFactory to PivotEObjectValidator.validate()
-	 */
-	@Deprecated
-	public static class ValidationAdapter extends AdapterImpl
-	{
-		public static @Nullable ValidationAdapter findAdapter(@NonNull ResourceSet resourceSet) {
-			EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-			return environmentFactory != null ? new ValidationAdapter(environmentFactory) : null;
-		}
-
-		protected final @NonNull EnvironmentFactoryInternal environmentFactory;
-
-		public ValidationAdapter(@Nullable EnvironmentFactoryInternal environmentFactory) {
-			this.environmentFactory = environmentFactory != null ? environmentFactory : PivotUtilInternal.getEnvironmentFactory(null);
-		}
-
-		public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-			return environmentFactory;
-		}
-
-		public boolean validate(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context) {
-			return INSTANCE.validate(eClassifier, object, null, diagnostics, context);
-		}
-
-		public boolean validate(@NonNull EClassifier eClassifier, @Nullable Object object, @Nullable List<Model> complementingModels,
-				@Nullable DiagnosticChain diagnostics, @Nullable Map<Object, Object> context) {
-			return INSTANCE.validate(eClassifier, object, complementingModels, diagnostics, context);
-		}
-
-		public @Nullable Diagnostic validate(final @NonNull Constraint constraint, final @Nullable Object object, final @Nullable Map<Object, Object> context) {
-			return INSTANCE.validate(environmentFactory, constraint, object,  context);
-		}
-	}
-
-	/**
 	 * The static instance that is installed in the EValidator.Registry.INSTANCE to compose
 	 * Pivot validation with whatever other validation was installed.
 	 *
@@ -121,42 +80,15 @@ public class PivotEObjectValidator implements EValidator
 	 */
 	public static final @NonNull PivotEObjectValidator INSTANCE = new PivotEObjectValidator(null);
 
-	/**
-	 * Install Complete OCL validation support in resourceSet for metamodelManager.
-	 * /
-	@Deprecated		/* @deprecated no longer used */
-	public static @Nullable ValidationAdapter install(@NonNull ResourceSet resourceSet, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		return new ValidationAdapter(environmentFactory);
-	}
-/*	public static @NonNull ValidationAdapter install(@NonNull ResourceSet resourceSet, @NonNull EnvironmentFactoryInternal environmentFactory) {
-		ValidationAdapter validationAdapter = new ValidationAdapter(environmentFactory);
-		if (validationAdapter != null) {
-			if (validationAdapter.getEnvironmentFactory() != environmentFactory) {
-				throw new IllegalArgumentException("Inconsistent EnvironmentFactory");
-			}
-		}
-		else {
-			validationAdapter = new ValidationAdapter(environmentFactory);
-		//	resourceSet.eAdapters().add(validationAdapter);
-		}
-		return validationAdapter;
-	} */
-
-	/**
-	 * Install Pivot-defined validation support for ePackage.
-	 */
-	@Deprecated		// Temporary internal API preservation for Mars RC3
-	public static synchronized void install(@NonNull EPackage ePackage) {
-		install(ePackage, null);
-	}
 	public static synchronized void install(@NonNull EPackage ePackage, @Nullable List<Model> complementingModels) {
-		ComposedEValidator composedEValidator = ComposedEValidator.install(ePackage);
+		PivotEObjectValidator complementingEValidator;
 		if ((complementingModels == null) || complementingModels.isEmpty()) {
-			composedEValidator.addChild(INSTANCE);
+			complementingEValidator = INSTANCE;
 		}
 		else {
-			composedEValidator.addChild(new PivotEObjectValidator(complementingModels));
+			complementingEValidator = new PivotEObjectValidator(complementingModels);
 		}
+		ComposedEValidator.install(ePackage, complementingEValidator);
 	}
 
 	/**
@@ -196,11 +128,6 @@ public class PivotEObjectValidator implements EValidator
 	}
 
 	protected final @Nullable List<Model> complementingModels;	// FIXME substantially redundant
-
-	@Deprecated		// Temporary internal API preservation for Mars RC3
-	protected PivotEObjectValidator() {
-		this.complementingModels = null;
-	}
 
 	public PivotEObjectValidator(@Nullable List<Model> complementingModels) {
 		this.complementingModels = complementingModels;

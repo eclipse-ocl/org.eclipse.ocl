@@ -84,6 +84,9 @@ public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * Additional Annotations, or more arbitrary DynamicElements
+	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Owned Annotations</em>' containment reference list.
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getElement_OwnedAnnotations()
 	 * @generated

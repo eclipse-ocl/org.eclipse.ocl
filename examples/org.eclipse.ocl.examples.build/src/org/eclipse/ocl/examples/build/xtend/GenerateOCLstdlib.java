@@ -125,6 +125,14 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				return;
 			}
 			ASResource asResource = xtextResource.getASResource();
+
+			if (!useOCLstdlib) {
+			//	Model asModel = PivotUtil.getModel(asResource);
+			//	Library asLibrary = PivotUtil.getModel(asResource);
+				environmentFactory.getStandardLibrary().getOclAnyType();
+			}
+
+
 			Map<Object, Object> validationContext = LabelUtil.createDefaultContext(Diagnostician.INSTANCE);
 			for (EObject eObject : asResource.getContents()) {
 				Diagnostic diagnostic = PivotDiagnostician.INSTANCE.validate(eObject, validationContext);

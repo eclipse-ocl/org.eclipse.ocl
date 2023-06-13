@@ -64,8 +64,8 @@ import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
@@ -116,7 +116,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		public void normalize() {
 			EList<EAnnotation> eList = eModelElement.getEAnnotations();
 			List<EAnnotation> newOrder = new ArrayList<EAnnotation>(eList);
-			Collections.sort(newOrder, NameUtil.EAnnotationComparator.INSTANCE);
+			Collections.sort(newOrder, AnnotationUtil.EAnnotationComparator.INSTANCE);
 			eList.clear();
 			eList.addAll(newOrder);
 		}

@@ -313,6 +313,16 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 	 * @generated
 	 */
 	@Override
+	public EAttribute getMetaAnnotation_EAnnotation_Source() {
+		return (EAttribute)metaAnnotation_EAnnotationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public PivotAnnotationsFactory getPivotAnnotationsFactory() {
 		return (PivotAnnotationsFactory)getEFactoryInstance();
 	}
@@ -360,6 +370,7 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 		import_EPackageEClass = createEClass(8);
 
 		metaAnnotation_EAnnotationEClass = createEClass(9);
+		createEAttribute(metaAnnotation_EAnnotationEClass, 0);
 	}
 
 	/**
@@ -416,6 +427,7 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 		initEClass(import_EPackageEClass, Import_EPackage.class, "Import_EPackage", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(metaAnnotation_EAnnotationEClass, MetaAnnotation_EAnnotation.class, "MetaAnnotation_EAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getMetaAnnotation_EAnnotation_Source(), ecorePackage.getEString(), "source", null, 1, 1, MetaAnnotation_EAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -442,6 +454,16 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
 		   });
 		addAnnotation
+		  (asLibrary_EPackageEClass,
+		   1,
+		   "http://www.eclipse.org/OCL/ASLibrary",
+		   new String[] {
+			   "source", "\"http://www.eclipse.org/OCL/MetaAnnotation\""
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
+		   });
+		addAnnotation
 		  (asMetamodel_EPackageEClass,
 		   source,
 		   new String[] {
@@ -450,9 +472,29 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
 		   });
 		addAnnotation
+		  (asMetamodel_EPackageEClass,
+		   1,
+		   "http://www.eclipse.org/OCL/ASMetamodel",
+		   new String[] {
+			   "source", "\"http://www.eclipse.org/OCL/MetaAnnotation\""
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
+		   });
+		addAnnotation
 		  (collection_EClassEClass,
 		   source,
 		   new String[] {
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
+		   });
+		addAnnotation
+		  (collection_EClassEClass,
+		   1,
+		   "http://www.eclipse.org/OCL/Collection",
+		   new String[] {
+			   "source", "\"http://www.eclipse.org/OCL/MetaAnnotation\""
 		   },
 		   new URI[] {
 			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
@@ -466,12 +508,32 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
 		   });
 		addAnnotation
+		  (collection_EPackageEClass,
+		   1,
+		   "http://www.eclipse.org/OCL/Collection",
+		   new String[] {
+			   "source", "\"http://www.eclipse.org/OCL/MetaAnnotation\""
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
+		   });
+		addAnnotation
 		  (collection_ETypedElementEClass,
 		   source,
 		   new String[] {
 		   },
 		   new URI[] {
 			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//ETypedElement")
+		   });
+		addAnnotation
+		  (collection_ETypedElementEClass,
+		   1,
+		   "http://www.eclipse.org/OCL/Collection",
+		   new String[] {
+			   "source", "\"http://www.eclipse.org/OCL/MetaAnnotation\""
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
 		   });
 		addAnnotation
 		  (ecore_OCL_EClassifierEClass,
@@ -482,12 +544,32 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClassifier")
 		   });
 		addAnnotation
+		  (ecore_OCL_EClassifierEClass,
+		   1,
+		   "http://www.eclipse.org/OCL/MetaAnnotation",
+		   new String[] {
+			   "source", "http://www.eclipse.org/OCL/Class"
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
+		   });
+		addAnnotation
 		  (ecore_OCL_EOperationEClass,
 		   source,
 		   new String[] {
 		   },
 		   new URI[] {
 			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EOperation")
+		   });
+		addAnnotation
+		  (ecore_OCL_EOperationEClass,
+		   1,
+		   "http://www.eclipse.org/OCL/MetaAnnotation",
+		   new String[] {
+			   "source", "http://www.eclipse.org/OCL/Operation"
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
 		   });
 		addAnnotation
 		  (ecore_OCL_EStructuralFeatureEClass,
@@ -498,6 +580,16 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EStructuralFeature")
 		   });
 		addAnnotation
+		  (ecore_OCL_EStructuralFeatureEClass,
+		   1,
+		   "http://www.eclipse.org/OCL/MetaAnnotation",
+		   new String[] {
+			   "source", "http://www.eclipse.org/OCL/Property"
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
+		   });
+		addAnnotation
 		  (import_EPackageEClass,
 		   source,
 		   new String[] {
@@ -506,9 +598,20 @@ public class PivotAnnotationsPackageImpl extends EPackageImpl implements PivotAn
 			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EPackage")
 		   });
 		addAnnotation
+		  (import_EPackageEClass,
+		   1,
+		   "http://www.eclipse.org/OCL/MetaAnnotation",
+		   new String[] {
+			   "source", "http://www.eclipse.org/OCL/Import"
+		   },
+		   new URI[] {
+			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")
+		   });
+		addAnnotation
 		  (metaAnnotation_EAnnotationEClass,
 		   source,
 		   new String[] {
+			   "source", "http://www.eclipse.org/OCL/MetaAnnotation"
 		   },
 		   new URI[] {
 			 URI.createURI(EcorePackage.eNS_URI).appendFragment("//EClass")

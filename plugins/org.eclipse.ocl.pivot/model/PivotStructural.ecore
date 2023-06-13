@@ -415,7 +415,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="annotatingComments" ordered="false"
         upperBound="-1" eType="#//Comment" eOpposite="#//Comment/annotatedElements"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedAnnotations" upperBound="-1"
-        eType="#//Element" containment="true"/>
+        eType="#//Element" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Additional Annotations, or more arbitrary DynamicElements"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedComments" ordered="false"
         upperBound="-1" eType="#//Comment" containment="true" eOpposite="#//Comment/owningElement">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

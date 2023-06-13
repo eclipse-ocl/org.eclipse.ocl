@@ -35,9 +35,7 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
@@ -48,18 +46,18 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.UnresolvedProxyCrossReferencer;
-import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xml.namespace.XMLNamespacePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
+import org.eclipse.ocl.examples.test.xtext.GlobalRegistries2.GlobalStateMemento;
 import org.eclipse.ocl.examples.xtext.idioms.IdiomsStandaloneSetup;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.EvaluationException;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -92,8 +90,6 @@ import org.eclipse.ocl.xtext.markup.MarkupStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
-import org.eclipse.xtext.XtextPackage;
-import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
 import org.junit.Rule;
 import org.junit.rules.TestName;
@@ -871,6 +867,7 @@ public class PivotTestCase extends TestCase
 	@Override
 	protected void setUp() throws Exception {
 		PivotUtilInternal.debugReset();
+		Ecore2AS.knownEAnnotationSources = null;
 		GlobalEnvironmentFactory.resetSafeNavigationValidations();
 		ThreadLocalExecutor.reset();
 		//		EssentialOCLLinkingService.DEBUG_RETRY = true;
@@ -886,6 +883,7 @@ public class PivotTestCase extends TestCase
 		TEST_START.println("-----Starting " + getClass().getSimpleName() + "." + getName() + "-----");
 		EcorePackage.eINSTANCE.getClass();						// Workaround Bug 425841
 		//		EPackage.Registry.INSTANCE.put(UML302UMLResource.STANDARD_PROFILE_NS_URI, L2Package.eINSTANCE);
+		Ecore2AS.UNKNOWN_EANNOTATIONS.setState(true);
 	}
 
 	@Override
@@ -942,75 +940,5 @@ public class PivotTestCase extends TestCase
 		//			projectMap.dispose();
 		//			projectMap = null;
 		//		}
-	}
-
-	public static class GlobalStateMemento
-	{
-		private @NonNull HashMap<EPackage, Object> validatorReg;
-		private @NonNull HashMap<String, Object> epackageReg;
-		private @NonNull HashMap<String, Object> protocolToFactoryMap;
-		private @NonNull HashMap<String, Object> extensionToFactoryMap;
-		private @NonNull HashMap<String, Object> contentTypeIdentifierToFactoryMap;
-		private @NonNull HashMap<String, Object> protocolToServiceProviderMap;
-		private @NonNull HashMap<String, Object> extensionToServiceProviderMap;
-		private @NonNull HashMap<String, Object> contentTypeIdentifierToServiceProviderMap;
-
-		public GlobalStateMemento() {
-			validatorReg = new HashMap<EPackage, Object>(EValidator.Registry.INSTANCE);
-			epackageReg = new HashMap<String, Object>(EPackage.Registry.INSTANCE);
-			protocolToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap());
-			extensionToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap());
-			contentTypeIdentifierToFactoryMap = new HashMap<String, Object>(Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap());
-
-			protocolToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap());
-			extensionToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap());
-			contentTypeIdentifierToServiceProviderMap = new HashMap<String, Object>(IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap());
-		}
-
-		public void restoreGlobalState() {
-			clearGlobalRegistries();
-			EValidator.Registry.INSTANCE.putAll(validatorReg);
-			EPackage.Registry.INSTANCE.putAll(epackageReg);
-
-			Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().putAll(protocolToFactoryMap);
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().putAll(extensionToFactoryMap);
-			Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().putAll(contentTypeIdentifierToFactoryMap);
-
-			IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap().putAll(protocolToServiceProviderMap);
-			IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().putAll(extensionToServiceProviderMap);
-			IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap().putAll(contentTypeIdentifierToServiceProviderMap);
-		}
-
-		public static void clearGlobalRegistries() {
-			//			Registry eValidatorRegistry = EValidator.Registry.INSTANCE;
-			//			for (EPackage key : eValidatorRegistry.keySet()) {
-			//				Object object = eValidatorRegistry.get(key);
-			//				System.out.println("key : " + key.getNsURI() + " => " + object.getClass().getName());
-			//			}
-			EValidator.Registry.INSTANCE.clear();
-			EPackage.Registry.INSTANCE.clear();
-			Resource.Factory.Registry.INSTANCE.getProtocolToFactoryMap().clear();
-			Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().clear();
-			Resource.Factory.Registry.INSTANCE.getContentTypeToFactoryMap().clear();
-
-			IResourceServiceProvider.Registry.INSTANCE.getProtocolToFactoryMap().clear();
-			IResourceServiceProvider.Registry.INSTANCE.getExtensionToFactoryMap().clear();
-			IResourceServiceProvider.Registry.INSTANCE.getContentTypeToFactoryMap().clear();
-			initializeDefaults();
-		}
-
-		public static void initializeDefaults() {
-			//EMF Standalone setup
-			if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("ecore"))
-				Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-					"ecore", new EcoreResourceFactoryImpl());
-			if (!Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().containsKey("xmi"))
-				Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put(
-					"xmi", new XMIResourceFactoryImpl());
-			if (!EPackage.Registry.INSTANCE.containsKey(EcorePackage.eNS_URI))
-				EPackage.Registry.INSTANCE.put(EcorePackage.eNS_URI, EcorePackage.eINSTANCE);
-			if (!EPackage.Registry.INSTANCE.containsKey(XtextPackage.eNS_URI))
-				EPackage.Registry.INSTANCE.put(XtextPackage.eNS_URI, XtextPackage.eINSTANCE);
-		}
 	}
 }

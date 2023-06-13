@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
@@ -61,7 +60,7 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
-public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, AS2Ecore>
+public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, @NonNull AS2Ecore>
 {
 	protected static class OptionalType
 	{
@@ -76,11 +75,13 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	private static final Logger logger = Logger.getLogger(AS2EcoreReferenceVisitor.class);
 
-	protected final @NonNull AS2EcoreTypeRefVisitor typeRefVisitor;				// Optional
+	protected final @NonNull AS2EcoreTypeRefVisitor typeRefVisitor;				// Optional EClassifier
 	/**
 	 * @since 1.3
 	 */
-	protected final @NonNull AS2EcoreTypeRefVisitor requiredTypeRefVisitor;		// Required
+	private /*@LazyNonNull*/ AS2EcoreTypeRefVisitor requiredTypeRefVisitor = null;		// Required EClassifier
+	private /*@LazyNonNull*/ AS2EcoreTypeRefVisitor dataTypeRefVisitor = null;			// Optional EDataType
+	private /*@LazyNonNull*/ AS2EcoreTypeRefVisitor requiredDataTypeRefVisitor = null;	// Required EDataType
 
 	private final @NonNull AnyType oclAnyType;
 	private final org.eclipse.ocl.pivot.@NonNull Class oclElementType;
@@ -88,8 +89,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	public AS2EcoreReferenceVisitor(@NonNull AS2Ecore context) {
 		super(context);
-		typeRefVisitor = new AS2EcoreTypeRefVisitor(context, false);
-		requiredTypeRefVisitor = new AS2EcoreTypeRefVisitor(context, true);
+		typeRefVisitor = new AS2EcoreTypeRefVisitor(context, false, false);
 		CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
 		oclAnyType = standardLibrary.getOclAnyType();
 		oclElementType = standardLibrary.getOclElementType();
@@ -258,7 +258,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eKeyFeature = EcoreFactory.eINSTANCE.createEReference();
 		}
 		eKeyFeature.setName("key");
-		eKeyFeature.setEType((EClassifier)(pivotType.isKeysAreNullFree() ? requiredTypeRefVisitor : typeRefVisitor).safeVisit(keyType));
+		eKeyFeature.setEType((EClassifier)(getTypeRefVisitor(pivotType.isKeysAreNullFree(), eKeyFeature)).safeVisit(keyType));
 		eKeyFeature.setLowerBound(pivotType.isKeysAreNullFree() ? 1 : 0);
 		eKeyFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eKeyFeature);
@@ -270,7 +270,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eValueFeature = EcoreFactory.eINSTANCE.createEReference();
 		}
 		eValueFeature.setName("value");
-		eValueFeature.setEType((EClassifier)(pivotType.isValuesAreNullFree() ? requiredTypeRefVisitor : typeRefVisitor).safeVisit(valueType));
+		eValueFeature.setEType((EClassifier)getTypeRefVisitor(pivotType.isValuesAreNullFree(), eKeyFeature).safeVisit(valueType));
 		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
 		eValueFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eValueFeature);
@@ -279,6 +279,37 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eClass.getEAnnotations().add(eAnnotation);
 		ePackage.getEClassifiers().add(eClass);
 		return eClass;
+	}
+
+	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, @NonNull ETypedElement eTypedElement) {
+		boolean isDataType = eTypedElement instanceof EAttribute;
+		AS2EcoreTypeRefVisitor visitor;
+		if (isRequired) {
+			if (isDataType) {
+				visitor = requiredDataTypeRefVisitor;
+				if (visitor == null) {
+					requiredDataTypeRefVisitor = visitor = new AS2EcoreTypeRefVisitor(context, true, true);
+				}
+			}
+			else {
+				visitor = requiredTypeRefVisitor;
+				if (visitor == null) {
+					requiredTypeRefVisitor = visitor = new AS2EcoreTypeRefVisitor(context, true, false);
+				}
+			}
+		}
+		else {
+			if (isDataType) {
+				visitor = dataTypeRefVisitor;
+				if (visitor == null) {
+					dataTypeRefVisitor = visitor = new AS2EcoreTypeRefVisitor(context, false, true);
+				}
+			}
+			else {
+				visitor = typeRefVisitor;
+			}
+		}
+		return visitor;
 	}
 
 	public <T extends EClassifier> void safeVisitAll(Class<?> javaClass, List<EGenericType> eGenericTypes, List<T> eTypes, List<? extends Type> asTypes) {
@@ -359,7 +390,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			}
 			return;
 		} */
-		EObject eObject = (isRequired ? requiredTypeRefVisitor : typeRefVisitor).safeVisit(pivotType);
+		EObject eObject = getTypeRefVisitor(isRequired, eTypedElement).safeVisit(pivotType);
 		if (eObject instanceof EGenericType) {
 			eTypedElement.setEGenericType((EGenericType)eObject);
 		}
@@ -379,6 +410,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	protected void setETypeAndMultiplicity(@NonNull ETypedElement eTypedElement, @Nullable Type pivotType, boolean isRequired) {
+		if ("lower".equals(eTypedElement.getName())) {
+			getClass();		// XXX
+		}
 		if ((pivotType == null) || (pivotType instanceof VoidType)) {				// Occurs for Operation return type
 			eTypedElement.setLowerBound(0);
 			eTypedElement.setUpperBound(1);
@@ -540,7 +574,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 
 	@Override
 	public EObject visitDataType(@NonNull DataType pivotDataType) {
-		EDataType eDataType = getCreated(EDataType.class, pivotDataType);
+		EClassifier eDataType = getCreated(EClassifier.class, pivotDataType);
 		return eDataType;
 	}
 
