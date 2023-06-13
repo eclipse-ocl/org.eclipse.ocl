@@ -31,6 +31,7 @@ import org.eclipse.ocl.common.OCLConstants;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.common.internal.preferences.CommonPreferenceInitializer;
 import org.eclipse.ocl.pivot.internal.delegate.OCLDelegateDomain;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -840,6 +841,7 @@ public class UMLValidateTest extends AbstractValidateTests
 	}
 
 	public void test_umlValidation_Bug513773() throws IOException {
+		Ecore2AS.addKnownEAnnotationSource("org.eclipse.papyrus");
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {
@@ -860,6 +862,7 @@ public class UMLValidateTest extends AbstractValidateTests
 	}
 
 	public void test_umlValidation_Bug514353() throws IOException {
+		Ecore2AS.addKnownEAnnotationSource("org.eclipse.papyrus");
 		resetRegistries();
 		CommonOptions.DEFAULT_DELEGATION_MODE.setDefaultValue(PivotConstants.OCL_DELEGATE_URI_PIVOT);
 		if (EcorePlugin.IS_ECLIPSE_RUNNING) {

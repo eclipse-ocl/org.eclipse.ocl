@@ -128,6 +128,13 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(asResource);
 			ValidationContext validationContext = new ValidationContext(validationRegistry);
 			Diagnostician diagnostician = validationContext.getDiagnostician();
+
+			if (!useOCLstdlib) {
+			//	Model asModel = PivotUtil.getModel(asResource);
+			//	Library asLibrary = PivotUtil.getModel(asResource);
+				environmentFactory.getStandardLibrary().getOclAnyType();
+			}
+
 			for (EObject eObject : asResource.getContents()) {
 				Diagnostic diagnostic = diagnostician.validate(eObject, validationContext);
 				if (diagnostic.getSeverity() > Diagnostic.INFO) {

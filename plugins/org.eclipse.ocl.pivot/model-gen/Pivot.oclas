@@ -281,7 +281,9 @@
         <ownedParameters xmi:id="5gsHc" name="propertyName" type="#CPVxu"/>
       </ownedOperations>
       <ownedProperties xmi:id="uVOeE" name="annotatingComments" opposite="#XTzu8" type="#phuMp"/>
-      <ownedProperties xmi:id="QiVod" isComposite="true" name="ownedAnnotations" opposite="#mrjCA" type="#R+Drm"/>
+      <ownedProperties xmi:id="QiVod" isComposite="true" name="ownedAnnotations" opposite="#mrjCA" type="#R+Drm">
+        <ownedComments body="Additional Annotations, or more arbitrary DynamicElements"/>
+      </ownedProperties>
       <ownedProperties xmi:id="KEZOc" isComposite="true" name="ownedComments" opposite="#ov0wb" type="#phuMp">
         <ownedComments body="The Comments owned by this Element."/>
       </ownedProperties>

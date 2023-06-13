@@ -32,6 +32,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotAnnotations.ecore#//Ecore_OCL_EStructuralFeature/derivation"/>
     </genClasses>
     <genClasses ecoreClass="PivotAnnotations.ecore#//Import_EPackage"/>
-    <genClasses ecoreClass="PivotAnnotations.ecore#//MetaAnnotation_EAnnotation"/>
+    <genClasses ecoreClass="PivotAnnotations.ecore#//MetaAnnotation_EAnnotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute PivotAnnotations.ecore#//MetaAnnotation_EAnnotation/source"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

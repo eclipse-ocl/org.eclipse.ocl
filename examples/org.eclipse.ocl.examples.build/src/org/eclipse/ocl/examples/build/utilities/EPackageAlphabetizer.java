@@ -30,6 +30,7 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.lib.WorkflowComponentWithModelSlot;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -74,7 +75,7 @@ public class EPackageAlphabetizer extends WorkflowComponentWithModelSlot
 		}
 	}
 
-	private Logger log = Logger.getLogger(getClass());	
+	private Logger log = Logger.getLogger(getClass());
 
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
@@ -95,7 +96,7 @@ public class EPackageAlphabetizer extends WorkflowComponentWithModelSlot
 			}
 			if (eObject instanceof EModelElement) {
 				EModelElement eEModelElement = (EModelElement) eObject;
-				listOfLists.put(eEModelElement.getEAnnotations(), NameUtil.EAnnotationComparator.INSTANCE);
+				listOfLists.put(eEModelElement.getEAnnotations(), AnnotationUtil.EAnnotationComparator.INSTANCE);
 			}
 		}
 		for (Map.Entry<EList<? extends EObject>, Comparator<? extends EObject>> entry : listOfLists.entrySet()) {

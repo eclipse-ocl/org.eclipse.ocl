@@ -51,14 +51,6 @@ public class ComposedEValidator implements EValidator
 	}
 
 	/**
-	 * Install a ComposedEValidator for ePackage displacing the prevailing EValidator.Registry.INSTANCE
-	 * entry and adding it as the first ComposedEValidator child.
-	 */
-	@Deprecated /* @deprecated specify a specific (probably local) registry */
-	public static synchronized @NonNull ComposedEValidator install(@NonNull EPackage ePackage) {
-		return install(ValidationRegistryAdapter.getFallbackGlobalValidationRegistry(), ePackage);
-	}
-	/**
 	 * Install a ComposedEValidator for ePackage displacing the prevailing validationRegistry
 	 * entry and adding it as the first ComposedEValidator child.
 	 *
@@ -78,8 +70,11 @@ public class ComposedEValidator implements EValidator
 				}
 			}
 			if (oldEValidator instanceof ComposedEValidator) {
-				return (ComposedEValidator) oldEValidator;
+				return (ComposedEValidator) oldEValidator;		// XXX check required content
 			}
+		//	if (oldEValidator instanceof CompositeEValidator) {
+		//		return (CompositeEValidator) oldEValidator;		// XXX check required content
+		//	}
 			if (oldEValidator instanceof EValidator.Descriptor) {
 				oldEValidator = ((EValidator.Descriptor)oldEValidator).getEValidator();
 			}

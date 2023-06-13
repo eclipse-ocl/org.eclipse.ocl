@@ -2390,6 +2390,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_Element_ownedAnnotations = createProperty(PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS, _OrderedSet_Element_T));
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);
+			installComment(property, "Additional Annotations, or more arbitrary DynamicElements");
 			ownedProperties.add(property = pr_Element_ownedComments = createProperty(PivotPackage.Literals.ELEMENT__OWNED_COMMENTS, _Set_Comment_T));
 			property.setIsComposite(true);
 			property.setIsResolveProxies(true);

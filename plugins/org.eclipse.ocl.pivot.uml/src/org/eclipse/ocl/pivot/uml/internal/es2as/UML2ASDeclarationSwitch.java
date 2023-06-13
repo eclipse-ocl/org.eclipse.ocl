@@ -562,10 +562,11 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		List<Element> pivotAnnotations = pivotElement.getOwnedAnnotations();
 		for (EAnnotation eAnnotation : umlElement.getEAnnotations()) {
 			if ((excludedAnnotations == null) || !excludedAnnotations.contains(eAnnotation)) {
-				Element pivotAnnotation = (Element) doSwitch(eAnnotation);
-				if (pivotAnnotation != null) {
-					pivotAnnotations.add(pivotAnnotation);
-				}
+				doSwitch(eAnnotation);
+			//	Element pivotAnnotation = (Element) doSwitch(eAnnotation);
+			//	if (pivotAnnotation != null) {
+			//		pivotAnnotations.add(pivotAnnotation);
+			//	}
 			}
 		}
 	}

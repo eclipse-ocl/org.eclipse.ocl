@@ -19,24 +19,13 @@ import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 
 public class NameUtil
 {
-	public static final class EAnnotationComparator implements Comparator<EAnnotation>
-	{
-		public static final @NonNull EAnnotationComparator INSTANCE = new EAnnotationComparator();
-
-		@Override
-		public int compare(EAnnotation o1, EAnnotation o2) {
-			String n1 = o1.getSource();
-			String n2 = o2.getSource();
-			return ClassUtil.safeCompareTo(n1, n2);
-		}
-	}
-
 	public static final class NameableComparator implements Comparator<Nameable>
 	{
 		public static final @NonNull NameableComparator INSTANCE = new NameableComparator();
@@ -202,6 +191,102 @@ public class NameUtil
 			name = "";
 		}
 		return name;
+	}
+
+	/**
+	 * Return a valid Java identifier based on nameHint. hasPrefix may be true to indicate that the
+	 * caller will supply an additional valid prefix relieving this routine of the need to avoid
+	 * leading numeric characters.
+	 * <p>
+	 * This is not intended to be a reversible algorithm; just to provide something reasonably readable.
+	 */
+	public static @NonNull String getValidJavaIdentifier(@NonNull String nameHint, boolean hasPrefix, @Nullable Object anObject) {
+		if (nameHint.equals("<")) {
+			return("lt");
+		}
+		else if (nameHint.equals("<=")) {
+			return("le");
+		}
+		else if (nameHint.equals("=")) {
+			return("eq");
+		}
+		else if (nameHint.equals("<>")) {
+			return("ne");
+		}
+		else if (nameHint.equals(">=")) {
+			return("ge");
+		}
+		else if (nameHint.equals(">")) {
+			return("gt");
+		}
+		else if (nameHint.equals("+")) {
+			return("sum");
+		}
+		else if (nameHint.equals("-")) {
+			return((anObject instanceof Operation) && ((Operation)anObject).getOwnedParameters().size() <= 0 ? "neg" : "diff");
+		}
+		else if (nameHint.equals("*")) {
+			return("prod");
+		}
+		else if (nameHint.equals("/")) {
+			return("quot");
+		}
+		StringBuilder s = new StringBuilder();
+		Character prefix = null;
+		int length = nameHint.length();
+		for (int i = 0; i < length; i++) {
+			char c = nameHint.charAt(i);
+			if (((i == 0) && !hasPrefix) ? Character.isJavaIdentifierStart(c) : Character.isJavaIdentifierPart(c)) {
+				if (prefix != null) {
+					s.append(prefix);
+					prefix = null;
+				}
+				s.append(c);
+			}
+			else {
+				if (c == '*') {
+					s.append("_a");
+				}
+				else if (c == ':') {
+					s.append("_c");
+				}
+				else if (c == '.') {
+					if (prefix != null) {
+						s.append(prefix);
+						prefix = null;
+					}
+				}
+				else if (c == ')') {
+					s.append("_e");
+				}
+				else if (c == '>') {
+					s.append("_g");
+				}
+				else if (c == '<') {
+					s.append("_l");
+				}
+				else if (c == '-') {
+					s.append("_m");
+				}
+				else if (c == '(') {
+					s.append("_o");
+				}
+				else if (c == '+') {
+					s.append("_p");
+				}
+				else if (c == '=') {
+					s.append("_q");
+				}
+				else if (c == '/') {
+					s.append("_s");
+				}
+				else {
+					s.append('_' + Integer.toString(c));
+				}
+				prefix = '_';
+			}
+		}
+		return s.toString();
 	}
 
 	/**

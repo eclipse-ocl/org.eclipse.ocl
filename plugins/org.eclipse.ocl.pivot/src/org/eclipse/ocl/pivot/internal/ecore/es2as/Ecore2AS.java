@@ -35,7 +35,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.ETypeParameter;
-import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
@@ -96,6 +95,24 @@ public class Ecore2AS extends AbstractExternal2AS
 	public static final @NonNull TracingOption NOT_OPTIONAL = new TracingOption(PivotPlugin.PLUGIN_ID, "ecore2as/notOptional");
 
 	/**
+	 * Diagnostic capability to identify EAnnotations that Ecore2AS might need special treatment for.
+	 */
+	public static final @NonNull TracingOption UNKNOWN_EANNOTATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "ecore2as/unknownEAnnotations");
+
+	public static Set<@NonNull String> knownEAnnotationSources = null;
+
+	/**
+	 * Specify that source is an EAnnotation.source that is expected to occur and so
+	 * need not be diagnosed as unknown.
+	 */
+	public static void addKnownEAnnotationSource(@NonNull String source) {
+		if (knownEAnnotationSources == null) {
+			knownEAnnotationSources = new HashSet<>();
+		}
+		knownEAnnotationSources.add(source);
+	}
+
+	/**
 	 * @since 1.14
 	 */
 	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
@@ -133,11 +150,6 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		return false;
-	}
-
-	@Deprecated /* @deprecated for API compatibility */
-	public static boolean isNullFree(@NonNull ETypedElement eObject) {
-		return isNullFree((ENamedElement)eObject);
 	}
 
 	/**
@@ -241,6 +253,11 @@ public class Ecore2AS extends AbstractExternal2AS
 	private Set<@NonNull EObject> referencers = null;
 
 	/**
+	 * List of all EAnnotations to be processed once EDataTypes are mapped.
+	 */
+	private List<@NonNull EAnnotation> eAnnotations = null;
+
+	/**
 	 * Set of all converters used during session.
 	 */
 	private Set<@NonNull Ecore2AS> allConverters = new HashSet<>();
@@ -260,10 +277,6 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected final @NonNull Resource ecoreResource;
 
 	protected Model pivotModel = null;						// Set by importResource
-	@Deprecated /* Now a local variable */
-	protected final Ecore2ASDeclarationSwitch declarationPass = null;
-	@Deprecated /* Now a local variable */
-	protected final Ecore2ASReferenceSwitch referencePass = null;
 	private @NonNull Map</*@NonNull*/ EClassifier, @NonNull Type> ecore2asMap = new HashMap<>();
 
 	/**
@@ -293,6 +306,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
 		@SuppressWarnings("unused")
 		Element oldElement = newCreateMap.put(eObject, pivotElement);
+		assert (oldElement == null) || (oldElement == pivotElement);		// FIXME refresh adds once and addMapping adds again
 	}
 
 	@Override
@@ -468,11 +482,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		return newCreateMap;
 	}
 
-	@Deprecated
-	public @NonNull Map<EClassifier, Type> getEcore2ASMap() {
-		return ecore2asMap;
-	}
-
 	public @Nullable Resource getEcoreResource() {
 		return ecoreResource;
 	}
@@ -634,7 +643,7 @@ public class Ecore2AS extends AbstractExternal2AS
 			if (!metamodelManager.getCompleteModel().getPartialModels().contains(asModel)) {
 				metamodelManager.installRoot(asModel);
 			}
-			Set<String> installName= new HashSet<>();
+			Set<String> installName = new HashSet<>();
 			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
 				installName.add(asClass.getName());
 			}
@@ -645,6 +654,24 @@ public class Ecore2AS extends AbstractExternal2AS
 				}
 			}
 			standardLibrary.defineLibraryTypes(asClasses);
+		}
+		else if (asClasses != null) {
+			Model asModel = PivotUtil.getContainingModel(asClasses.get(0));
+			if (!metamodelManager.getCompleteModel().getPartialModels().contains(asModel)) {
+				metamodelManager.installRoot(asModel);
+			}
+			Set<String> installName = new HashSet<>();
+			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
+				installName.add(asClass.getName());
+			}
+		/*	for (org.eclipse.ocl.pivot.Class asClass : OCLstdlib.getDefaultPackage().getOwnedClasses()) {		// FIXME use contribution
+				assert asClass != null;
+				if (!installName.contains(asClass.getName())) {
+					asClasses.add(asClass);
+				}
+			} */
+			standardLibrary.defineLibraryTypes(asClasses);
+
 		}
 	}
 
@@ -831,6 +858,14 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	@Override
+	public void queueEAnnotation(@NonNull EAnnotation eAnnotation) {
+		if (eAnnotations == null) {
+			eAnnotations = new ArrayList<>();
+		}
+		eAnnotations.add(eAnnotation);
+	}
+
+	@Override
 	public void queueReference(@NonNull EObject eObject) {
 		referencers.add(eObject);
 	}
@@ -893,12 +928,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		ecore2asMap = new HashMap<>();
 		initializeEcore2ASMap();
 		assert eDataTypes != null;
-		for (@NonNull EDataType eDataType : eDataTypes) {
-			Type pivotType = ecore2asMap.get(eDataType);
-			if (pivotType != null) {  		// If eObject is a known synonym such as EString
-				addCreated(eDataType, pivotType);	// remap to the library type
-			}
-		}
 		eDataTypes = null;
 	}
 
@@ -925,6 +954,14 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		PivotUtilInternal.refreshList(pivotModel.getOwnedPackages(), newPackages);
+	}
+
+	protected void resolveEAnnotations() {
+		if (eAnnotations != null) {
+			for (@NonNull EAnnotation eAnnotation : eAnnotations) {
+				resolveEAnnotation(eAnnotation);
+			}
+		}
 	}
 
 	/**
@@ -990,7 +1027,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected void resolveReferences() {
 		Ecore2ASReferenceSwitch referencePass = new Ecore2ASReferenceSwitch(this);
 		Set<@NonNull EObject> theReferencers = referencers;
-		while (theReferencers != null) {
+		while (true) {
 			Set<@NonNull EObject> moreReferencers = null;
 			for (EObject eObject : theReferencers) {
 				Object asElement = referencePass.doInPackageSwitch(eObject);
@@ -1001,9 +1038,10 @@ public class Ecore2AS extends AbstractExternal2AS
 					moreReferencers.add(eObject);
 				}
 			}
-			if ((moreReferencers == null) || (moreReferencers.size() < theReferencers.size())) {		// Avoid infinite loop
-				theReferencers = moreReferencers;
+			if ((moreReferencers == null) || (moreReferencers.size() >= theReferencers.size())) {		// Avoid infinite loop
+				break;
 			}
+			theReferencers = moreReferencers;
 		}
 		for (EObject eObject : referencers) {
 			if (eObject instanceof EReference) {
@@ -1196,6 +1234,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		 */
 		resolveDataTypeMappings();
 		/*
+		 * Resolve EAnnotations.
+		 */
+		resolveEAnnotations();
+		/*
 		 * Declare the specializations.
 		 */
 		resolveSpecializations();
@@ -1206,4 +1248,5 @@ public class Ecore2AS extends AbstractExternal2AS
 		resolveIds(ecoreContents);
 		assert asResource.basicGetLUSSIDs() == null;			// Confirming Bug 579025
 	}
+
 }

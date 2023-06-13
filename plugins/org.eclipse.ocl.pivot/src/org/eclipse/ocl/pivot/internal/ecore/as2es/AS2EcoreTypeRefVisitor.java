@@ -48,7 +48,7 @@ import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
-public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS2Ecore>
+public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @NonNull AS2Ecore>
 {
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
@@ -56,21 +56,17 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	 * @since 1.3
 	 */
 	protected final boolean isRequired;
-
-	/* @deprecated provide isRequired argument */
-	@Deprecated
-	public AS2EcoreTypeRefVisitor(@NonNull AS2Ecore context) {
-		this(context, true);
-	}
+	protected final boolean isRequireDataType;
 
 	/**
 	 * @since 1.3
 	 */
-	public AS2EcoreTypeRefVisitor(@NonNull AS2Ecore context, boolean isRequired) {
+	public AS2EcoreTypeRefVisitor(@NonNull AS2Ecore context, boolean isRequired, boolean isRequireDataType) {
 		super(context);
 		this.metamodelManager = context.getMetamodelManager();
 		this.standardLibrary = context.getStandardLibrary();
 		this.isRequired = isRequired;
+		this.isRequireDataType = isRequireDataType;
 	}
 
 	private <T extends EObject> @Nullable T getESObject(@NonNull Class<T> requiredClass, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
@@ -230,9 +226,14 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 
 	@Override
 	public EObject visitPrimitiveType(@NonNull PrimitiveType pivotType) {
-		EDataType eClassifier = context.getCreated(EDataType.class, pivotType);
+		EClassifier eClassifier = context.getCreated(EClassifier.class, pivotType);
 		if (eClassifier != null) {
-			return eClassifier;
+			if (!isRequireDataType || (eClassifier instanceof EDataType)) {
+				return eClassifier;
+			}
+			else {
+				getClass();		// XXX
+			}
 		}
 	//	EDataType eClassifier2 = getESObject(EDataType.class, pivotType);  -- too simple can give String rather than EString
 	//	if (eClassifier2 != null) {

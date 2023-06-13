@@ -385,98 +385,15 @@ public class NameManager
 	 * This is not intended to be a reversible algorithm; just to provide something reasonably readable.
 	 */
 	private static @NonNull String getValidJavaIdentifier(@NonNull String nameHint, boolean hasPrefix, @Nullable Object anObject) {
-		if (nameHint.equals("<")) {
-			return("lt");
-		}
-		else if (nameHint.equals("<=")) {
-			return("le");
-		}
-		else if (nameHint.equals("=")) {
-			return("eq");
-		}
-		else if (nameHint.equals("<>")) {
-			return("ne");
-		}
-		else if (nameHint.equals(">=")) {
-			return("ge");
-		}
-		else if (nameHint.equals(">")) {
-			return("gt");
-		}
-		else if (nameHint.equals("+")) {
-			return("sum");
-		}
-		else if (nameHint.equals("-")) {
-			return((anObject instanceof Operation) && ((Operation)anObject).getOwnedParameters().size() <= 0 ? "neg" : "diff");
-		}
-		else if (nameHint.equals("*")) {
-			return("prod");
-		}
-		else if (nameHint.equals("/")) {
-			return("quot");
-		}
-		else if (nameHint.equals("1_")) {
+		if (nameHint.equals("1_")) {
 			return("_1");
 		}
 		else if (nameHint.equals("2_")) {
 			return("_2");
 		}
-		StringBuilder s = new StringBuilder();
-		Character prefix = null;
-		int length = nameHint.length();
-		for (int i = 0; i < length; i++) {
-			char c = nameHint.charAt(i);
-			if (((i == 0) && !hasPrefix) ? Character.isJavaIdentifierStart(c) : Character.isJavaIdentifierPart(c)) {
-				if (prefix != null) {
-					s.append(prefix);
-					prefix = null;
-				}
-				s.append(c);
-			}
-			else {
-				if (c == '*') {
-					s.append("_a");
-				}
-				else if (c == ':') {
-					s.append("_c");
-				}
-				else if (c == '.') {
-					if (prefix != null) {
-						s.append(prefix);
-						prefix = null;
-					}
-				}
-				else if (c == ')') {
-					s.append("_e");
-				}
-				else if (c == '>') {
-					s.append("_g");
-				}
-				else if (c == '<') {
-					s.append("_l");
-				}
-				else if (c == '-') {
-					s.append("_m");
-				}
-				else if (c == '(') {
-					s.append("_o");
-				}
-				else if (c == '+') {
-					s.append("_p");
-				}
-				else if (c == '=') {
-					s.append("_q");
-				}
-				else if (c == '/') {
-					s.append("_s");
-				}
-				else {
-					s.append('_' + Integer.toString(c));
-				}
-				prefix = '_';
-			}
+		else {
+			return NameUtil.getValidJavaIdentifier(nameHint, hasPrefix, anObject);
 		}
-		return s.toString();
 	}
 
 	public class Context {
