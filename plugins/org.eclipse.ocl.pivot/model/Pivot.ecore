@@ -711,7 +711,11 @@
         name="annotatingComments" ordered="false" upperBound="-1" eType="#T-pivot-Comment"
         eOpposite="#F-pivot-Comment-annotatedElements"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Element-ownedAnnotations"
-        name="ownedAnnotations" upperBound="-1" eType="#T-pivot-Element" containment="true"/>
+        name="ownedAnnotations" upperBound="-1" eType="#T-pivot-Element" containment="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="Additional Annotations, or more arbitrary DynamicElements"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Element-ownedComments"
         name="ownedComments" ordered="false" upperBound="-1" eType="#T-pivot-Comment"
         containment="true" eOpposite="#F-pivot-Comment-owningElement">

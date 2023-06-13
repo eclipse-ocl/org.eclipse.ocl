@@ -5,7 +5,7 @@
 <pivot:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pivot="http://www.eclipse.org/ocl/2015/Pivot"
     xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/org.eclipse.ocl.pivot/model/Pivot.ecore" name="Pivot.ecore" xmiidVersion="1">
   <ownedPackages xmi:id="82dOP" URI="http://www.eclipse.org/ocl/2015/Pivot" name="pivot" nsPrefix="pivot">
-    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/Collection">
+    <ownedAnnotations name="http://www.eclipse.org/OCL/Collection">
       <ownedDetails name="nullFree">
         <values>true</values>
       </ownedDetails>
@@ -281,7 +281,9 @@
         <ownedParameters xmi:id="5gsHc" name="propertyName" type="#CPVxu"/>
       </ownedOperations>
       <ownedProperties xmi:id="uVOeE" name="annotatingComments" opposite="#XTzu8" type="#phuMp"/>
-      <ownedProperties xmi:id="QiVod" isComposite="true" name="ownedAnnotations" opposite="#mrjCA" type="#R+Drm"/>
+      <ownedProperties xmi:id="QiVod" isComposite="true" name="ownedAnnotations" opposite="#mrjCA" type="#R+Drm">
+        <ownedComments body="Additional Annotations, or more arbitrary DynamicElements"/>
+      </ownedProperties>
       <ownedProperties xmi:id="KEZOc" isComposite="true" name="ownedComments" opposite="#ov0wb" type="#phuMp">
         <ownedComments body="The Comments owned by this Element."/>
       </ownedProperties>
