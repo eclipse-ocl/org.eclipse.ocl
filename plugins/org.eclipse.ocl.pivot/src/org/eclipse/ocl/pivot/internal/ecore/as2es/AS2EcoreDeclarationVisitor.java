@@ -79,6 +79,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -259,6 +260,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	protected void copyNamedElement(@NonNull ENamedElement eNamedElement, @NonNull NamedElement pivotNamedElement) {
 		copyModelElement(eNamedElement, pivotNamedElement);
 		String name = pivotNamedElement.getName();
+		String validName = NameUtil.getValidJavaIdentifier(name, false, pivotNamedElement);
 		if ("containingActivity".equals(name)) {		// FIXME Bug 405061 workaround
 			EObject eContainer = pivotNamedElement.eContainer();
 			if ((eContainer instanceof Type) && "ActivityNode".equals(((Type)eContainer).getName())) {
@@ -271,7 +273,10 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				name = "activity";
 			}
 		}
-		eNamedElement.setName(name);
+		eNamedElement.setName(validName);
+		if (validName != name) {
+			NameUtil.setOriginalName(eNamedElement, name);
+		}
 	}
 
 	protected void copyTemplateSignature(@NonNull List<ETypeParameter> eTypeParameters, TemplateableElement pivotElement) {
