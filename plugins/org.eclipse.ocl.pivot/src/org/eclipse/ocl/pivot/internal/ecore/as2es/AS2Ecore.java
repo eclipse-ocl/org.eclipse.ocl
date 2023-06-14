@@ -154,6 +154,12 @@ public class AS2Ecore extends AbstractConversion
 	public static final @NonNull String OPTION_INVARIANT_PREFIX = "invariantPrefix";
 
 	/**
+	 * True to preserve operations and so to generate an EClass rather than EDataType for a DataType with operations.
+	 * False/default strips all operations (and iterations).
+	 */
+	public static final @NonNull String OPTION_KEEP_OPERATIONS = "keepOperations";
+
+	/**
 	 * True to suppress the UML2Ecore duplicates EAnnotation. This is an experimental internal option used during
 	 * the auto-generation of Pivot.ecore..
 	 */
@@ -522,8 +528,14 @@ public class AS2Ecore extends AbstractConversion
 		return true;
 	}
 
+	public boolean isKeepOperations() {
+	//	return Boolean.valueOf(String.valueOf(options.get(OPTION_SUPPRESS_DUPLICATES)));
+		return Boolean.TRUE == options.get(OPTION_KEEP_OPERATIONS);
+	}
+
 	public boolean isSuppressDuplicates() {
-		return Boolean.valueOf(String.valueOf(options.get(OPTION_SUPPRESS_DUPLICATES)));
+	//	return Boolean.valueOf(String.valueOf(options.get(OPTION_SUPPRESS_DUPLICATES)));
+		return Boolean.TRUE == options.get(OPTION_SUPPRESS_DUPLICATES);
 	}
 
 	public void putCreated(@NonNull Element pivotElement, @NonNull EModelElement eModelElement) {

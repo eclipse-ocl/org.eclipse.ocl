@@ -63,7 +63,6 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
@@ -414,6 +413,16 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 					eDuplicates.add((EOperation)eOperation);
 				}
 			}
+		/*	@NonNull Iterable<Iteration> duplicateIterations = Iterables.filter(pivotClass.getOwnedIterations(), duplicateOperationsFilter);
+			for (Iteration asIteration : duplicateIterations) {
+				if (eDuplicates == null) {
+					eDuplicates = new ArrayList<ETypedElement>();
+				}
+				Object eOperation = safeVisit(asIteration);
+				if (eOperation instanceof EOperation) {
+					eDuplicates.add((EOperation)eOperation);
+				}
+			} */
 			@NonNull Iterable<Property> duplicateProperties = Iterables.filter(pivotClass.getOwnedProperties(), duplicatePropertiesFilter);
 			for (Property asProperty : duplicateProperties) {
 				if (eDuplicates == null) {
@@ -493,6 +502,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitDataType(@NonNull DataType pivotDataType) {
+		if ((pivotDataType.getOwnedOperations().size() > 0) && context.isKeepOperations()) {
+			return (EObject) super.visitDataType(pivotDataType);
+		}
 		if (pivotDataType.getOwnedBindings().size() > 0) {
 			return null;
 		}
@@ -708,7 +720,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		return eParameter;
 	}
 
-	@Override
+/*	@Override
 	public EObject visitPrimitiveType(@NonNull PrimitiveType pivotPrimitiveType) {
 		if (pivotPrimitiveType.getOwnedBindings().size() > 0) {
 			return null;
@@ -733,9 +745,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		else if ("UnlimitedNatural".equals(name)) {
 			instanceClass = UnlimitedNaturalValue.class;
 		}
-		eDataType.setInstanceClass(instanceClass); */
+		eDataType.setInstanceClass(instanceClass); * /
 		return eDataType;
-	}
+	} */
 
 	@Override
 	public EObject visitProperty(@NonNull Property pivotProperty) {

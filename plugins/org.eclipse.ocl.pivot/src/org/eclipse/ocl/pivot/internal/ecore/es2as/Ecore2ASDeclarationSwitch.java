@@ -73,6 +73,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -169,23 +170,29 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		assert eClass != null;
 		String newName = technology.getOriginalName(eClass);
 		org.eclipse.ocl.pivot.Class pivotElement;
-		if (technology.isStereotype(environmentFactory, eClass)) {
+		if (technology.isStereotype(environmentFactory, eClass)) {		// XXX Use an EAnnotation
 			pivotElement = converter.refreshElement(Stereotype.class, PivotPackage.Literals.STEREOTYPE, eClass);
 		}
 		else if (TypeId.BAG_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(BagType.class, PivotPackage.Literals.BAG_TYPE, eClass);
 		}
+		else if (TypeId.BOOLEAN_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(BooleanType.class, PivotPackage.Literals.BOOLEAN_TYPE, eClass);
+		}
 		else if (TypeId.COLLECTION_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(CollectionType.class, PivotPackage.Literals.COLLECTION_TYPE, eClass);
 		}
-	//	else if (TypeId.INTEGER.equals(newName)) {
-	//		pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eClass);
-	//	}
+		else if (TypeId.INTEGER_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eClass);
+		}
 		else if (TypeId.OCL_ANY_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(AnyType.class, PivotPackage.Literals.ANY_TYPE, eClass);
 		}
 		else if (TypeId.OCL_INVALID_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(InvalidType.class, PivotPackage.Literals.INVALID_TYPE, eClass);
+		}
+		else if (TypeId.OCL_SELF_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(SelfType.class, PivotPackage.Literals.SELF_TYPE, eClass);
 		}
 		else if (TypeId.OCL_VOID_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(VoidType.class, PivotPackage.Literals.VOID_TYPE, eClass);
@@ -196,17 +203,23 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		else if (TypeId.ORDERED_SET_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(OrderedSetType.class, PivotPackage.Literals.ORDERED_SET_TYPE, eClass);
 		}
-	//	else if (TypeId.REAL.equals(newName)) {
-	//		pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eClass);
-	//	}
+		else if (TypeId.REAL_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eClass);
+		}
 		else if (TypeId.SEQUENCE_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(SequenceType.class, PivotPackage.Literals.SEQUENCE_TYPE, eClass);
 		}
 		else if (TypeId.SET_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(SetType.class, PivotPackage.Literals.SET_TYPE, eClass);
 		}
+		else if (TypeId.STRING_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eClass);
+		}
 		else if (TypeId.UNIQUE_COLLECTION_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(CollectionType.class, PivotPackage.Literals.COLLECTION_TYPE, eClass);
+		}
+		else if (TypeId.UNLIMITED_NATURAL_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eClass);
 		}
 		else {
 			pivotElement = converter.refreshElement(org.eclipse.ocl.pivot.Class.class, PivotPackage.Literals.CLASS, eClass);

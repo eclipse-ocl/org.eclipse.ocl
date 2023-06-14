@@ -831,6 +831,7 @@ public class RoundTripTests extends XtextTestCase
 		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<>();
 		saveOptions.put(AS2Ecore.OPTION_INVARIANT_PREFIX, "validate");
 		saveOptions.put(AS2Ecore.OPTION_GENERATE_STRUCTURAL_XMI_IDS, Boolean.TRUE);
+		saveOptions.put(AS2Ecore.OPTION_KEEP_OPERATIONS, Boolean.TRUE);
 		doRoundTripFromAS(uri, uri, saveOptions);
 	}
 
