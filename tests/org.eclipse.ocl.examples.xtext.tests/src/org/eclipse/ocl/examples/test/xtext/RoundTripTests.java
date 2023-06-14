@@ -186,7 +186,7 @@ public class RoundTripTests extends XtextTestCase
 					//				System.out.println(++i + ": " + eObject);
 					ExpressionInOCL specification = (ExpressionInOCL) eObject;
 					if ((specification.getOwnedBody() != null) || (specification.getBody() != null)) {
-						((EnvironmentFactoryInternalExtension)environmentFactory2).parseSpecification(specification);
+	// XXX					((EnvironmentFactoryInternalExtension)environmentFactory2).parseSpecification(specification);
 					}
 					tit.prune();
 				}

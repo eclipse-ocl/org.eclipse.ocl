@@ -122,6 +122,7 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -1644,6 +1645,13 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 				}
 			}
 			asLibraries.add(asLibrary);
+			for (Element element : asLibrary.getOwnedAnnotations()) {
+				if ((element instanceof Nameable) && PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(((Nameable)element).getName())) {
+					asLibraryResource = asLibrary.eResource();
+					standardLibrary.defineLibraryTypes(asLibrary.getOwnedClasses());
+					return;
+				}
+			}
 			if (asLibraryResource != null) {
 				installLibraryContents(asLibrary);
 			}

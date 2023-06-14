@@ -1008,7 +1008,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected void resolveReferences() {
 		Ecore2ASReferenceSwitch referencePass = new Ecore2ASReferenceSwitch(this);
 		Set<@NonNull EObject> theReferencers = referencers;
-		while (theReferencers != null) {
+		while (true) {
 			Set<@NonNull EObject> moreReferencers = null;
 			for (EObject eObject : theReferencers) {
 				Object asElement = referencePass.doInPackageSwitch(eObject);
@@ -1019,9 +1019,10 @@ public class Ecore2AS extends AbstractExternal2AS
 					moreReferencers.add(eObject);
 				}
 			}
-			if ((moreReferencers == null) || (moreReferencers.size() < theReferencers.size())) {		// Avoid infinite loop
-				theReferencers = moreReferencers;
+			if ((moreReferencers == null) || (moreReferencers.size() >= theReferencers.size())) {		// Avoid infinite loop
+				break;
 			}
+			theReferencers = moreReferencers;
 		}
 		for (EObject eObject : referencers) {
 			if (eObject instanceof EReference) {
