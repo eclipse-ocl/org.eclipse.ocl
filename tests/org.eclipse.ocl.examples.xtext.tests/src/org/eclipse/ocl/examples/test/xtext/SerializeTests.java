@@ -28,6 +28,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -759,6 +760,7 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void testSerialize_XMLNamespace() throws Exception {
+		Ecore2AS.addKnownEAnnotationSource("http://www.w3.org/XML/1998/namespace");
 		doSerialize(getTestModelURI("models/ecore/XMLNamespace.ecore"), DEFAULT_HELPER);
 	}
 

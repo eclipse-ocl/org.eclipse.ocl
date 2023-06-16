@@ -219,6 +219,17 @@ public interface PivotAnnotationsPackage extends EPackage {
 	EClass getMetaAnnotation_EAnnotation();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation#getSource <em>Source</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Source</em>'.
+	 * @see org.eclipse.ocl.pivot.annotations.MetaAnnotation_EAnnotation#getSource()
+	 * @see #getMetaAnnotation_EAnnotation()
+	 * @generated
+	 */
+	EAttribute getMetaAnnotation_EAnnotation_Source();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -366,6 +377,13 @@ public interface PivotAnnotationsPackage extends EPackage {
 		 * @generated
 		 */
 		EClass META_ANNOTATION_EANNOTATION = eINSTANCE.getMetaAnnotation_EAnnotation();
+		/**
+		 * The meta object literal for the '<em><b>Source</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute META_ANNOTATION_EANNOTATION__SOURCE = eINSTANCE.getMetaAnnotation_EAnnotation_Source();
 
 	}
 

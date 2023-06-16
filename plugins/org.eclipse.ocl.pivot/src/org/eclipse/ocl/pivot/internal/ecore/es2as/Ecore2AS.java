@@ -96,6 +96,24 @@ public class Ecore2AS extends AbstractExternal2AS
 	public static final @NonNull TracingOption NOT_OPTIONAL = new TracingOption(PivotPlugin.PLUGIN_ID, "ecore2as/notOptional");
 
 	/**
+	 * Diagnostic capability to identify EAnnotations that Ecore2AS might need special treatment for.
+	 */
+	public static final @NonNull TracingOption UNKNOWN_EANNOTATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "ecore2as/unknownEAnnotations");
+
+	public static Set<@NonNull String> knownEAnnotationSources = null;
+
+	/**
+	 * Specify that source is an EAnnotation.source that is expected to occur and so
+	 * need not be diagnosed as unknown.
+	 */
+	public static void addKnownEAnnotationSource(@NonNull String source) {
+		if (knownEAnnotationSources == null) {
+			knownEAnnotationSources = new HashSet<>();
+		}
+		knownEAnnotationSources.add(source);
+	}
+
+	/**
 	 * @since 1.14
 	 */
 	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
@@ -239,6 +257,11 @@ public class Ecore2AS extends AbstractExternal2AS
 	 * Set of all Ecore objects requiring further work during the reference pass.
 	 */
 	private Set<@NonNull EObject> referencers = null;
+
+	/**
+	 * List of all EAnnotations to be processed once EDataTypes are mapped.
+	 */
+	private List<@NonNull EAnnotation> eAnnotations = null;
 
 	/**
 	 * Set of all converters used during session.
@@ -849,6 +872,14 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	@Override
+	public void queueEAnnotation(@NonNull EAnnotation eAnnotation) {
+		if (eAnnotations == null) {
+			eAnnotations = new ArrayList<>();
+		}
+		eAnnotations.add(eAnnotation);
+	}
+
+	@Override
 	public void queueReference(@NonNull EObject eObject) {
 		referencers.add(eObject);
 	}
@@ -943,6 +974,14 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		PivotUtilInternal.refreshList(pivotModel.getOwnedPackages(), newPackages);
+	}
+
+	protected void resolveEAnnotations() {
+		if (eAnnotations != null) {
+			for (@NonNull EAnnotation eAnnotation : eAnnotations) {
+				resolveEAnnotation(eAnnotation);
+			}
+		}
 	}
 
 	/**
@@ -1215,6 +1254,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		 */
 		resolveDataTypeMappings();
 		/*
+		 * Resolve EAnnotations.
+		 */
+		resolveEAnnotations();
+		/*
 		 * Declare the specializations.
 		 */
 		resolveSpecializations();
@@ -1225,4 +1268,5 @@ public class Ecore2AS extends AbstractExternal2AS
 		resolveIds(ecoreContents);
 		assert asResource.basicGetLUSSIDs() == null;			// Confirming Bug 579025
 	}
+
 }

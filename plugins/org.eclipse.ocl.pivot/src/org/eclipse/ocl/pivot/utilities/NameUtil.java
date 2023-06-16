@@ -26,18 +26,6 @@ import org.eclipse.ocl.pivot.util.DerivedConstants;
 
 public class NameUtil
 {
-	public static final class EAnnotationComparator implements Comparator<EAnnotation>
-	{
-		public static final @NonNull EAnnotationComparator INSTANCE = new EAnnotationComparator();
-
-		@Override
-		public int compare(EAnnotation o1, EAnnotation o2) {
-			String n1 = o1.getSource();
-			String n2 = o2.getSource();
-			return ClassUtil.safeCompareTo(n1, n2);
-		}
-	}
-
 	public static final class NameableComparator implements Comparator<Nameable>
 	{
 		public static final @NonNull NameableComparator INSTANCE = new NameableComparator();

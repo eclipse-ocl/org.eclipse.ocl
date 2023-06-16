@@ -74,6 +74,7 @@ import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -1816,6 +1817,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	public void testSysML_QUDV() throws Throwable {
+		Ecore2AS.addKnownEAnnotationSource("http://www.jpl.nasa.gov/imce/OntologicalModeling");
+		Ecore2AS.addKnownEAnnotationSource("http://www.omg.org/spec/SMSC");
+		Ecore2AS.addKnownEAnnotationSource("http://www.omg.org/spec/SysML");
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {

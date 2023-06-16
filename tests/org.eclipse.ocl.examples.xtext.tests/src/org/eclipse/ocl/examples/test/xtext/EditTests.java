@@ -121,7 +121,7 @@ public class EditTests extends XtextTestCase
 	protected @NonNull Resource doRename(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource xtextResource, @NonNull Resource asResource, @NonNull String oldString, @NonNull String newString,
 			@NonNull String @NonNull[] asErrors, @NonNull String @NonNull[] ecoreErrors) throws IOException {
 		String contextMessage = "Renaming '" + oldString + "' to '" + newString + "'";
-		System.out.println("-----------------" + contextMessage + "----------------");
+	//	System.out.println("-----------------" + contextMessage + "----------------");
 		replace(xtextResource, oldString, newString);
 		assertResourceErrors(contextMessage, xtextResource, asErrors);
 		assertNoResourceErrors(contextMessage, asResource);
@@ -144,7 +144,7 @@ public class EditTests extends XtextTestCase
 	}
 
 	protected void replace(@NonNull CSResource xtextResource, String oldString, String newString) {
-		System.out.println("replace: " + oldString + " => " +  newString);
+	//	System.out.println("replace: " + oldString + " => " +  newString);
 		String xtextContent = ElementUtil.getRawText((ElementCS) xtextResource.getContents().get(0));
 		int index = xtextContent.indexOf(oldString);
 		assert index >= 0;
@@ -1080,7 +1080,7 @@ public class EditTests extends XtextTestCase
 		Type myType = ClassUtil.nonNullState(metamodelManager.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
 		Orphanage orphanage = ocl.getStandardLibrary().getOrphanage();
 		CollectionTypeId specializedTypeId = TypeId.SEQUENCE.getSpecializedId(myType.getTypeId(), PivotConstants.DEFAULT_COLLECTIONS_ARE_NULL_FREE, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-		System.out.println("specializedTypeId: " + NameUtil.debugSimpleName(specializedTypeId));
+	//	System.out.println("specializedTypeId: " + NameUtil.debugSimpleName(specializedTypeId));
 		WeakReference<Type> sequenceMyType = new WeakReference<Type>(orphanage.basicGetType(specializedTypeId, true));
 		assertNull("Sample type should not yet exist", sequenceMyType.get());
 		//

@@ -1,102 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage
-    xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    name="annotations"
-    nsURI="http://www.eclipse.org/ocl/2018/Annotations"
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="annotations" nsURI="http://www.eclipse.org/ocl/2018/Annotations"
     nsPrefix="annotations">
-  <eClassifiers
-      xsi:type="ecore:EClass"
-      name="ASLibrary_EPackage">
-    <eAnnotations
-        source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ASLibrary_EPackage">
+    <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EPackage">
+      <eAnnotations source="http://www.eclipse.org/OCL/ASLibrary" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+        <details key="source" value="&quot;http://www.eclipse.org/OCL/MetaAnnotation&quot;"/>
+      </eAnnotations>
+    </eAnnotations>
   </eClassifiers>
-  <eClassifiers
-      xsi:type="ecore:EClass"
-      name="ASMetamodel_EPackage">
-    <eAnnotations
-        source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ASMetamodel_EPackage">
+    <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EPackage">
+      <eAnnotations source="http://www.eclipse.org/OCL/ASMetamodel" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+        <details key="source" value="&quot;http://www.eclipse.org/OCL/MetaAnnotation&quot;"/>
+      </eAnnotations>
+    </eAnnotations>
   </eClassifiers>
-  <eClassifiers
-      xsi:type="ecore:EClass"
-      name="Collection_EClass">
-    <eAnnotations
-        source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
-    <eStructuralFeatures
-        xsi:type="ecore:EAttribute"
-        name="nullFree"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Collection_EClass">
+    <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+        <details key="source" value="&quot;http://www.eclipse.org/OCL/MetaAnnotation&quot;"/>
+      </eAnnotations>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nullFree" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers
-      xsi:type="ecore:EClass"
-      name="Collection_EPackage">
-    <eAnnotations
-        source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
-    <eStructuralFeatures
-        xsi:type="ecore:EAttribute"
-        name="nullFree"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Collection_EPackage">
+    <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EPackage">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+        <details key="source" value="&quot;http://www.eclipse.org/OCL/MetaAnnotation&quot;"/>
+      </eAnnotations>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nullFree" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers
-      xsi:type="ecore:EClass"
-      name="Collection_ETypedElement">
-    <eAnnotations
-        source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement"/>
-    <eStructuralFeatures
-        xsi:type="ecore:EAttribute"
-        name="nullFree"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Collection_ETypedElement">
+    <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//ETypedElement">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+        <details key="source" value="&quot;http://www.eclipse.org/OCL/MetaAnnotation&quot;"/>
+      </eAnnotations>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nullFree" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers
-      xsi:type="ecore:EClass"
-      name="Ecore_OCL_EClassifier">
-    <eAnnotations
-        source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//EClassifier"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Ecore_OCL_EClassifier">
+    <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EClassifier">
+      <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+        <details key="source" value="http://www.eclipse.org/OCL/Class"/>
+      </eAnnotations>
+    </eAnnotations>
   </eClassifiers>
-  <eClassifiers
-      xsi:type="ecore:EClass"
-      name="Ecore_OCL_EOperation">
-    <eAnnotations
-        source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//EOperation"/>
-    <eStructuralFeatures
-        xsi:type="ecore:EAttribute"
-        name="body"
-        lowerBound="1"
+  <eClassifiers xsi:type="ecore:EClass" name="Ecore_OCL_EOperation">
+    <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EOperation">
+      <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+        <details key="source" value="http://www.eclipse.org/OCL/Operation"/>
+      </eAnnotations>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="body" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Ecore_OCL_EStructuralFeature">
+    <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature">
+      <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+        <details key="source" value="http://www.eclipse.org/OCL/Property"/>
+      </eAnnotations>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="derivation" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers
-      xsi:type="ecore:EClass"
-      name="Ecore_OCL_EStructuralFeature">
-    <eAnnotations
-        source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//EStructuralFeature"/>
-    <eStructuralFeatures
-        xsi:type="ecore:EAttribute"
-        name="derivation"
-        lowerBound="1"
+  <eClassifiers xsi:type="ecore:EClass" name="Import_EPackage">
+    <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EPackage">
+      <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+        <details key="source" value="http://www.eclipse.org/OCL/Import"/>
+      </eAnnotations>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MetaAnnotation_EAnnotation">
+    <eAnnotations source="http://www.eclipse.org/OCL/MetaAnnotation" references="http://www.eclipse.org/emf/2002/Ecore#//EClass">
+      <details key="source" value="http://www.eclipse.org/OCL/MetaAnnotation"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers
-      xsi:type="ecore:EClass"
-      name="Import_EPackage">
-    <eAnnotations
-        source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//EPackage"/>
-  </eClassifiers>
-  <eClassifiers
-      xsi:type="ecore:EClass"
-      name="MetaAnnotation_EAnnotation">
-    <eAnnotations
-        source="http://www.eclipse.org/OCL/MetaAnnotation"
-        references="http://www.eclipse.org/emf/2002/Ecore#//EClass"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -1528,7 +1528,7 @@ public class LoadTests extends XtextTestCase
 			EObject eObject = tit.next();
 			String id = asResource.getID(eObject);
 			eObject2id.put(eObject, id);
-						System.out.println(id + " ==> " + eObject);
+			//			System.out.println(id + " ==> " + eObject);
 			if (id != null) {
 				id2eObject.put(id, eObject);
 				oldIdCount++;

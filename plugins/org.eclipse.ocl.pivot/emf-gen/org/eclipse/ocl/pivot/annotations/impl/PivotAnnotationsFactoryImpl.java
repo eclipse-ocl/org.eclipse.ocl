@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.annotations.*;
 import org.eclipse.ocl.pivot.annotations.ASLibrary_EPackage;
 import org.eclipse.ocl.pivot.annotations.ASMetamodel_EPackage;
 import org.eclipse.ocl.pivot.annotations.Collection_EClass;

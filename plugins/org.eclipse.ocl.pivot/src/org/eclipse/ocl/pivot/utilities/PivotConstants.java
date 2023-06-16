@@ -76,7 +76,7 @@ public interface PivotConstants
 	 */
 	static final @NonNull String META_ANNOTATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/MetaAnnotation";
 	static final @NonNull String SYSML_ANNOTATION_SOURCE = "http://www.omg.org/spec/SysML";
-
+	static final @NonNull String EXTENDED_META_DATA_ANNOTATION_SOURCE = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
 	/**
 	 * ETypedElement annotation identifying that a collection is non-free.
 	 */
