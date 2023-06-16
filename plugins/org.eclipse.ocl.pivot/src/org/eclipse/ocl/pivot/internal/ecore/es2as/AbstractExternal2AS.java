@@ -78,8 +78,8 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 
 	private static class DefaultEAnnotationConverter implements EAnnotationConverter
 	{
-		public static @NonNull EAnnotationConverter NO_KEYS_KNOWN = new DefaultEAnnotationConverter();
-		public static @NonNull EAnnotationConverter ALL_KEYS_KNOWN = new DefaultEAnnotationConverter((@NonNull String[])null);
+		public static final @NonNull EAnnotationConverter NO_KEYS_KNOWN = new DefaultEAnnotationConverter();
+		public static final @NonNull EAnnotationConverter ALL_KEYS_KNOWN = new DefaultEAnnotationConverter((@NonNull String[])null);
 
 		protected @NonNull String @Nullable [] knownKeys;			// explicitly known keys, empty for none, null for all
 
@@ -147,9 +147,9 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 
 	private static class CollectionEAnnotationConverter extends DefaultEAnnotationConverter
 	{
-		public static @NonNull EAnnotationConverter INSTANCE = new CollectionEAnnotationConverter();
+		public static final @NonNull EAnnotationConverter INSTANCE = new CollectionEAnnotationConverter();
 
-		protected CollectionEAnnotationConverter() {
+		private CollectionEAnnotationConverter() {
 			super(PivotConstants.COLLECTION_IS_NULL_FREE);
 		}
 
@@ -170,7 +170,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 
 	private static class EcoreEAnnotationConverter extends DefaultEAnnotationConverter
 	{
-		public static @NonNull EAnnotationConverter INSTANCE = new EcoreEAnnotationConverter();
+		public static final @NonNull EAnnotationConverter INSTANCE = new EcoreEAnnotationConverter();
 
 		@Override
 		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
@@ -185,9 +185,9 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 
 	private static class GenModelEAnnotationConverter extends DefaultEAnnotationConverter
 	{
-		public static @NonNull EAnnotationConverter INSTANCE = new GenModelEAnnotationConverter();
+		public static final @NonNull EAnnotationConverter INSTANCE = new GenModelEAnnotationConverter();
 
-		protected GenModelEAnnotationConverter() {
+		private GenModelEAnnotationConverter() {
 			super("body", "suppressedGetVisibility", "suppressedIsSetVisibility", "suppressedSetVisibility", "suppressedUnsetVisibility", "suppressedVisibility");
 		}
 
