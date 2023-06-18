@@ -81,13 +81,14 @@ public class PivotEObjectValidator implements EValidator
 	public static final @NonNull PivotEObjectValidator INSTANCE = new PivotEObjectValidator(null);
 
 	public static synchronized void install(@NonNull EPackage ePackage, @Nullable List<Model> complementingModels) {
-		ComposedEValidator composedEValidator = ComposedEValidator.install(ePackage);
+		PivotEObjectValidator complementingEValidator;
 		if ((complementingModels == null) || complementingModels.isEmpty()) {
-			composedEValidator.addChild(INSTANCE);
+			complementingEValidator = INSTANCE;
 		}
 		else {
-			composedEValidator.addChild(new PivotEObjectValidator(complementingModels));
+			complementingEValidator = new PivotEObjectValidator(complementingModels);
 		}
+		ComposedEValidator.install(ePackage, complementingEValidator);
 	}
 
 	/**

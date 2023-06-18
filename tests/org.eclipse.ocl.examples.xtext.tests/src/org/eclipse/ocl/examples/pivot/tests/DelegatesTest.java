@@ -599,7 +599,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		delegate = factory.createQueryDelegate(companyClass, variables, PivotConstants.SELF_NAME);
 		delegate.prepare();
 		executeWithException(delegate, acme, okBindings,
-			PivotMessagesInternal.MismatchedArgumentType_ERROR_, okName, "Integer", "String");
+			PivotMessagesInternal.MismatchedArgumentType_ERROR_, okName, "Integer", "ecore::EString");
 		ocl.dispose();
 	}
 

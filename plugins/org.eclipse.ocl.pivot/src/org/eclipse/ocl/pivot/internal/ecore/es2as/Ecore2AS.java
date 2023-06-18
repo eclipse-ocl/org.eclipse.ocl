@@ -35,7 +35,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.ETypeParameter;
-import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
@@ -151,11 +150,6 @@ public class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		return false;
-	}
-
-	@Deprecated /* @deprecated for API compatibility */
-	public static boolean isNullFree(@NonNull ETypedElement eObject) {
-		return isNullFree((ENamedElement)eObject);
 	}
 
 	/**
@@ -283,10 +277,6 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected final @NonNull Resource ecoreResource;
 
 	protected Model pivotModel = null;						// Set by importResource
-	@Deprecated /* Now a local variable */
-	protected final Ecore2ASDeclarationSwitch declarationPass = null;
-	@Deprecated /* Now a local variable */
-	protected final Ecore2ASReferenceSwitch referencePass = null;
 	private @NonNull Map</*@NonNull*/ EClassifier, @NonNull Type> ecore2asMap = new HashMap<>();
 
 	/**
@@ -316,6 +306,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	protected void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
 		@SuppressWarnings("unused")
 		Element oldElement = newCreateMap.put(eObject, pivotElement);
+		assert (oldElement == null) || (oldElement == pivotElement);		// FIXME refresh adds once and addMapping adds again
 	}
 
 	@Override
@@ -489,11 +480,6 @@ public class Ecore2AS extends AbstractExternal2AS
 	public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
 		assert eDataTypes == null;
 		return newCreateMap;
-	}
-
-	@Deprecated
-	public @NonNull Map<EClassifier, Type> getEcore2ASMap() {
-		return ecore2asMap;
 	}
 
 	public @Nullable Resource getEcoreResource() {
@@ -942,12 +928,6 @@ public class Ecore2AS extends AbstractExternal2AS
 		ecore2asMap = new HashMap<>();
 		initializeEcore2ASMap();
 		assert eDataTypes != null;
-		for (@NonNull EDataType eDataType : eDataTypes) {
-			Type pivotType = ecore2asMap.get(eDataType);
-			if (pivotType != null) {  		// If eObject is a known synonym such as EString
-				addCreated(eDataType, pivotType);	// remap to the library type
-			}
-		}
 		eDataTypes = null;
 	}
 

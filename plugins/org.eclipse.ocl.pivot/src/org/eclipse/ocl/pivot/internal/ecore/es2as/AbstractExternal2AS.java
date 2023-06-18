@@ -116,7 +116,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 						}
 					}
 					if (!isKnown) {
-						Ecore2AS.UNKNOWN_EANNOTATIONS.println(eAnnotation.getSource() + "::" + key);
+						Ecore2AS.UNKNOWN_EANNOTATIONS.println(eAnnotation.getSource() + "::" + key + " : " + value);
 					}
 				}
 			}
@@ -230,6 +230,38 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	public abstract void addGenericType(@NonNull EGenericType eObject);
 
 	public abstract void addMapping(@NonNull EObject eObject, @NonNull Element pivotElement);
+
+	//
+	//	Duplicate (same-named) Annotations are a useful detection of bad conversions, but not actually illegal.
+	//	The SysML QUDV exampple has a gratuitous duplicate EAnnotation source. Therefore assert that asAnnotation
+	//	is not present in asAnnotations unless eContainer has duplicates.
+	//
+	private boolean assertConsistentDuplication(@NonNull Annotation asAnnotation, @NonNull List<Element> asAnnotations, EObject eContainer) {
+	 	String name = asAnnotation.getName();
+	 	int nameMatches = 0;
+		for (Element asElement : asAnnotations) {
+			if (asElement instanceof Annotation) {
+				if (((Annotation)asElement).getName().equals(name)) {
+					nameMatches++;
+					break;
+			 	}
+			}
+		}
+	 	if (nameMatches <= 0) {
+	 		return true;
+	 	}
+		EModelElement eObject = (EModelElement)eContainer;
+		int sourceMatches = 0;
+		for (EAnnotation eAnnotation : eObject.getEAnnotations()) {
+			if (name.equals(eAnnotation.getSource())) {
+				if (++sourceMatches >= 2) {
+					return true;
+				}
+			}
+		}
+		assert false : "Duplicate EAnnotation source : " + name + " in " + eContainer;
+	 	return false;
+	}
 
 	protected abstract Model basicGetPivotModel();
 
@@ -363,7 +395,9 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 			assert eContainer != null;
 			Element asContainer = getCreated(Element.class, eContainer);
 			assert asContainer != null;
-			asContainer.getOwnedAnnotations().add(asAnnotation);
+			List<Element> asAnnotations = asContainer.getOwnedAnnotations();
+			assert assertConsistentDuplication(asAnnotation, asAnnotations, eContainer);
+			asAnnotations.add(asAnnotation);
 			addMapping(eAnnotation, asAnnotation);
 		}
 		if (hasReferences) {
