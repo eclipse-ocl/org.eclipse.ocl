@@ -391,5 +391,6 @@ public interface StandardLibrary extends Element
 
 	@NonNull FlatModel getFlatModel();
 
+	@NonNull Type resolveSelfSpecialization(@NonNull Type asType);
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 } // AbstractStandardLibrary

@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -158,9 +159,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (genericType.eIsProxy() || elementType.eIsProxy()) {
 			return getOclInvalidType();
 		}
-		if (isUnspecialized(genericType, elementType, isNullFree, lower, upper)) {
-			return genericType;
-		}
+	//	if (isUnspecialized(genericType, elementType, isNullFree, lower, upper)) {		// XXX Fix Bug 582115++
+	//		return genericType;
+	//	}
 		return getOrphanage().getCollectionType(genericType, elementType, isNullFree, lower, upper);
 	}
 
@@ -192,9 +193,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return getOclInvalidType();
 		}
 		MapType genericType = getMapType();
-		if (isUnspecialized(keyType, keysAreNullFree, valueType, valuesAreNullFree)) {
-			return genericType;
-		}
+	//	if (isUnspecialized(keyType, keysAreNullFree, valueType, valuesAreNullFree)) {
+	//		return genericType;
+	//	}
 		if (keysAreNullFree == null) {
 			keysAreNullFree = PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE;
 		}
@@ -284,6 +285,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if ((substitutions == null) || substitutions.isEmpty()) {
 			return type;
 		}
+		if ((type instanceof TemplateableElement) && (((TemplateableElement)type).getGeneric() != null)) {
+			return type;
+		}
 		TemplateParameter asTemplateParameter = type.isTemplateParameter();
 		if (asTemplateParameter != null) {
 			Type boundType = substitutions.get(asTemplateParameter);
@@ -297,13 +301,37 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 				TemplateParameter templateParameter = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
 				Type templateArgument = substitutions.get(templateParameter);
 				if (templateArgument == null) {
+					assert false;
 					templateArgument = templateParameter;
 				}
-				if (templateArgument != null) {
-					return getCollectionType(unspecializedType, templateArgument, null, null, null);
-				}
+			//	if (templateArgument != null) {
+					return getCollectionType(unspecializedType, templateArgument, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
+			//	}
 			}
 			return collectionType;
+		}
+		else if (type instanceof MapType) {
+			MapType mapType = (MapType)type;
+			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(mapType);
+			if (!substitutions.isEmpty()) {
+				List<TemplateParameter> ownedParameters = unspecializedType.getOwnedSignature().getOwnedParameters();
+				TemplateParameter keyTemplateParameter = ownedParameters.get(0);
+				TemplateParameter valueTemplateParameter = ownedParameters.get(1);
+				Type keyTemplateArgument = substitutions.get(keyTemplateParameter);
+				Type valueTemplateArgument = substitutions.get(valueTemplateParameter);
+				if (keyTemplateArgument == null) {
+					assert false;
+					keyTemplateArgument = keyTemplateParameter;
+				}
+				if (valueTemplateArgument == null) {
+					assert false;
+					valueTemplateArgument = valueTemplateParameter;
+				}
+			//	if (templateArgument != null) {
+					return getMapType(keyTemplateArgument, mapType.isKeysAreNullFree(), valueTemplateArgument, mapType.isValuesAreNullFree());
+			//	}
+			}
+			return mapType;
 		}
 		else if (type instanceof TupleType) {
 			return getTupleType((TupleType) type, substitutions);
@@ -363,6 +391,15 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	public void resetLibrary() {
 		oclInvalidOperation = null;
 		oclInvalidProperty = null;
+
 	}
 
+	@Override
+	public @NonNull Type resolveSelfSpecialization(@NonNull Type asType) {
+		Type specializedType = getSpecializedType(asType, TemplateParameterSubstitutions.SELF);
+		if (asType != specializedType) {
+			System.out.println("resolveSelfSpecialization " + asType + " => " + specializedType);
+		}
+		return specializedType;
+	}
 } //AbstractStandardLibraryImpl

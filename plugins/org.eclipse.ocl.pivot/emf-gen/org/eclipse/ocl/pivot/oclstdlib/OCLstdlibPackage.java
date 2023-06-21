@@ -240,6 +240,34 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass _Lambda_CDEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass _Entry_CRCREClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass _Lambda_CCEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass _Entry_COCOEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType booleanEDataType = null;
 
 	/**
@@ -787,6 +815,114 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.oclstdlib._Lambda_CD <em>Lambda CD</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Lambda CD</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib._Lambda_CD
+	 * @generated
+	 */
+	public EClass get_Lambda_CD() {
+		return _Lambda_CDEClass;
+	}
+
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Entry CRCR</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Entry CRCR</em>'.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public EClass get_Entry_CRCR() {
+		return _Entry_CRCREClass;
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #get_Entry_CRCR()
+	 * @generated
+	 */
+	public EReference get_Entry_CRCR_Key() {
+		return (EReference)_Entry_CRCREClass.getEStructuralFeatures().get(0);
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #get_Entry_CRCR()
+	 * @generated
+	 */
+	public EReference get_Entry_CRCR_Value() {
+		return (EReference)_Entry_CRCREClass.getEStructuralFeatures().get(1);
+	}
+
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.oclstdlib._Lambda_CC <em>Lambda CC</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Lambda CC</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib._Lambda_CC
+	 * @generated
+	 */
+	public EClass get_Lambda_CC() {
+		return _Lambda_CCEClass;
+	}
+
+
+	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Entry COCO</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Entry COCO</em>'.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public EClass get_Entry_COCO() {
+		return _Entry_COCOEClass;
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #get_Entry_COCO()
+	 * @generated
+	 */
+	public EReference get_Entry_COCO_Key() {
+		return (EReference)_Entry_COCOEClass.getEStructuralFeatures().get(0);
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #get_Entry_COCO()
+	 * @generated
+	 */
+	public EReference get_Entry_COCO_Value() {
+		return (EReference)_Entry_COCOEClass.getEStructuralFeatures().get(1);
+	}
+
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -868,12 +1004,24 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		uniqueCollectionEClass = createEClass(21);
 
+		_Entry_COCOEClass = createEClass(22);
+		createEReference(_Entry_COCOEClass, 0);
+		createEReference(_Entry_COCOEClass, 1);
+
+		_Entry_CRCREClass = createEClass(23);
+		createEReference(_Entry_CRCREClass, 0);
+		createEReference(_Entry_CRCREClass, 1);
+
+		_Lambda_CCEClass = createEClass(24);
+
+		_Lambda_CDEClass = createEClass(25);
+
 		// Create data types
-		booleanEDataType = createEDataType(22);
-		integerEDataType = createEDataType(23);
-		realEDataType = createEDataType(24);
-		stringEDataType = createEDataType(25);
-		unlimitedNaturalEDataType = createEDataType(26);
+		booleanEDataType = createEDataType(26);
+		integerEDataType = createEDataType(27);
+		realEDataType = createEDataType(28);
+		stringEDataType = createEDataType(29);
+		unlimitedNaturalEDataType = createEDataType(30);
 	}
 
 	/**
@@ -909,6 +1057,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 		ETypeParameter sequenceEClass_T = addETypeParameter(sequenceEClass, "T"); //$NON-NLS-1$
 		ETypeParameter setEClass_T = addETypeParameter(setEClass, "T"); //$NON-NLS-1$
 		ETypeParameter uniqueCollectionEClass_T = addETypeParameter(uniqueCollectionEClass, "T"); //$NON-NLS-1$
+		ETypeParameter _Entry_COCOEClass_K = addETypeParameter(_Entry_COCOEClass, "K"); //$NON-NLS-1$
+		ETypeParameter _Entry_COCOEClass_V = addETypeParameter(_Entry_COCOEClass, "V"); //$NON-NLS-1$
+		ETypeParameter _Entry_CRCREClass_K = addETypeParameter(_Entry_CRCREClass, "K"); //$NON-NLS-1$
+		ETypeParameter _Entry_CRCREClass_V = addETypeParameter(_Entry_CRCREClass, "V"); //$NON-NLS-1$
+		addETypeParameter(_Lambda_CCEClass, "C"); //$NON-NLS-1$
+		addETypeParameter(_Lambda_CCEClass, "R"); //$NON-NLS-1$
+		addETypeParameter(_Lambda_CDEClass, "C"); //$NON-NLS-1$
+		addETypeParameter(_Lambda_CDEClass, "R"); //$NON-NLS-1$
 
 		// Set bounds for type parameters
 
@@ -1010,6 +1166,22 @@ public class OCLstdlibPackage extends EPackageImpl {
 		initEClass(setEClass, Set.class, "Set", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(uniqueCollectionEClass, Collection.class, "UniqueCollection", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(_Entry_COCOEClass, Map.Entry.class, "_Entry_COCO", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		g1 = createEGenericType(_Entry_COCOEClass_K);
+		initEReference(get_Entry_COCO_Key(), g1, null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(_Entry_COCOEClass_V);
+		initEReference(get_Entry_COCO_Value(), g1, null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(_Entry_CRCREClass, Map.Entry.class, "_Entry_CRCR", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		g1 = createEGenericType(_Entry_CRCREClass_K);
+		initEReference(get_Entry_CRCR_Key(), g1, null, "key", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(_Entry_CRCREClass_V);
+		initEReference(get_Entry_CRCR_Value(), g1, null, "value", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		initEClass(_Lambda_CCEClass, _Lambda_CC.class, "_Lambda_CC", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(_Lambda_CDEClass, _Lambda_CD.class, "_Lambda_CD", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		// Initialize data types
 		initEDataType(booleanEDataType, Boolean.class, "Boolean", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1391,6 +1563,78 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EClass UNIQUE_COLLECTION = eINSTANCE.getUniqueCollection();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib._Lambda_CD <em>Lambda CD</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib._Lambda_CD
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#get_Lambda_CD()
+		 * @generated
+		 */
+		public static final EClass _LAMBDA_CD = eINSTANCE.get_Lambda_CD();
+
+		/**
+		 * The meta object literal for the '{@link java.util.Map.Entry <em>Entry CRCR</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Map.Entry
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#get_Entry_CRCR()
+		 * @generated
+		 */
+		public static final EClass _ENTRY_CRCR = eINSTANCE.get_Entry_CRCR();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference _ENTRY_CRCR__KEY = eINSTANCE.get_Entry_CRCR_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference _ENTRY_CRCR__VALUE = eINSTANCE.get_Entry_CRCR_Value();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib._Lambda_CC <em>Lambda CC</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib._Lambda_CC
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#get_Lambda_CC()
+		 * @generated
+		 */
+		public static final EClass _LAMBDA_CC = eINSTANCE.get_Lambda_CC();
+
+		/**
+		 * The meta object literal for the '{@link java.util.Map.Entry <em>Entry COCO</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Map.Entry
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#get_Entry_COCO()
+		 * @generated
+		 */
+		public static final EClass _ENTRY_COCO = eINSTANCE.get_Entry_COCO();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference _ENTRY_COCO__KEY = eINSTANCE.get_Entry_COCO_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference _ENTRY_COCO__VALUE = eINSTANCE.get_Entry_COCO_Value();
 
 	}
 

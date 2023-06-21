@@ -49,7 +49,7 @@ public interface CollectionTypeId extends BuiltInTypeId, TemplateableId
 	/**
 	 * @since 1.18
 	 */
-	default @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId elementId, boolean isNullFree, @NonNull IntegerValue lowerValue, @NonNull NumberValue upperValue) {
+	default @NonNull CollectionTypeId getSpecializedId(@NonNull ElementId elementId, @NonNull Boolean isNullFree, @NonNull IntegerValue lowerValue, @NonNull NumberValue upperValue) {
 		@NonNull ElementId[] elementIds = new @NonNull ElementId[] {elementId};
 		@NonNull Object[] values = new @NonNull Object[] {isNullFree, lowerValue, upperValue};
 		BindingsId bindingsId = IdManager.getBindingsId(elementIds, values);

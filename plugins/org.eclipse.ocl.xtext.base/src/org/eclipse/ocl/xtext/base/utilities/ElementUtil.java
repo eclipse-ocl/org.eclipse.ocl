@@ -536,7 +536,7 @@ public class ElementUtil
 				return true;
 			}
 		}
-		return false;
+		return false;		// XXX 582115 redundant ?? always true
 	}
 
 	public static boolean isUnique(@NonNull TypedElementCS csTypedElement) {

@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -145,8 +146,13 @@ public class OCLstdlibTests extends XtextTestCase
 			//			@SuppressWarnings("null")	// Can be null and we'll have an NPE as the test failure.
 			assert javaElement != null;
 			assert fileElement != null;
-			Class<? extends Element> javaElementClass = javaElement.getClass();
-			assertEquals(fileElement.getClass(), javaElementClass);
+			if (javaElement instanceof Orphanage) {
+				assertTrue(fileElement instanceof org.eclipse.ocl.pivot.Package);
+			}
+			else {
+				Class<? extends Element> javaElementClass = javaElement.getClass();
+				assertEquals(fileElement.getClass(), javaElementClass);
+			}
 			if (fileElement instanceof TypedElement) {
 				Type fileType = ((TypedElement)fileElement).getType();
 				Type javaType = ((TypedElement)javaElement).getType();

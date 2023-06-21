@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -49,7 +50,7 @@ public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS
 		org.eclipse.ocl.pivot.Class scopeClass = context.getScope();
 		org.eclipse.ocl.pivot.Package scopePackage = scopeClass != null ? PivotUtil.getPackage(scopeClass) : null;
 		TypedTypeRefCS csRef = BaseCSFactory.eINSTANCE.createTypedTypeRefCS();
-		Type type = PivotUtil.getUnspecializedTemplateableElement(object);
+		Type type = object; //PivotUtil.getUnspecializedTemplateableElement(object);
 		PathNameCS csPathName = csRef.getOwnedPathName();
 		if (csPathName == null) {
 			PathNameCS csPathName2 = BaseCSFactory.eINSTANCE.createPathNameCS();
@@ -60,7 +61,7 @@ public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS
 		csRef.setPivot(type);		// FIXME object ??
 		if (!(type instanceof PrimitiveType)) {
 			org.eclipse.ocl.pivot.Package objectPackage = PivotUtil.getPackage(type);
-			if ((objectPackage != null) && (scopePackage != null) && objectPackage.eResource() != scopePackage.eResource()) {
+			if ((objectPackage != null) && (scopePackage != null) && (objectPackage.eResource() != scopePackage.eResource()) && !OrphanageImpl.isOrphanage(objectPackage)) {
 				context.importNamespace(objectPackage, null);
 			}
 		}

@@ -89,15 +89,15 @@ public class OCLstdlibFactory extends EFactoryImpl {
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case 22:
-				return createBooleanFromString(eDataType, initialValue);
-			case 23:
-				return createIntegerFromString(eDataType, initialValue);
-			case 24:
-				return createRealFromString(eDataType, initialValue);
-			case 25:
-				return createStringFromString(eDataType, initialValue);
 			case 26:
+				return createBooleanFromString(eDataType, initialValue);
+			case 27:
+				return createIntegerFromString(eDataType, initialValue);
+			case 28:
+				return createRealFromString(eDataType, initialValue);
+			case 29:
+				return createStringFromString(eDataType, initialValue);
+			case 30:
 				return createUnlimitedNaturalFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -112,15 +112,15 @@ public class OCLstdlibFactory extends EFactoryImpl {
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case 22:
-				return convertBooleanToString(eDataType, instanceValue);
-			case 23:
-				return convertIntegerToString(eDataType, instanceValue);
-			case 24:
-				return convertRealToString(eDataType, instanceValue);
-			case 25:
-				return convertStringToString(eDataType, instanceValue);
 			case 26:
+				return convertBooleanToString(eDataType, instanceValue);
+			case 27:
+				return convertIntegerToString(eDataType, instanceValue);
+			case 28:
+				return convertRealToString(eDataType, instanceValue);
+			case 29:
+				return convertStringToString(eDataType, instanceValue);
+			case 30:
 				return convertUnlimitedNaturalToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$

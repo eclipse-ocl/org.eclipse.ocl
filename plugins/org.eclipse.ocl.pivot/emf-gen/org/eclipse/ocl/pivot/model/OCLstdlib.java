@@ -628,6 +628,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Bag_Bag_flatten_T2_T;
 		private CollectionType _Bag_Bag_selectByKind_TT_T;
 		private CollectionType _Bag_Bag_selectByType_TT_T;
+		private CollectionType _Bag_Bag_T_T;
 		private CollectionType _Bag_CollectionType_T;
 		private CollectionType _Bag_Collection_T_T;
 		private CollectionType _Bag_MapType_T;
@@ -695,6 +696,7 @@ public class OCLstdlib extends ASResourceImpl
 		private MapType _Map_Map_includingMap_K2_T_Map_includingMap_V2_T;
 		private MapType _Map_Map_K_F_Map_collectBy_V2_F;
 		private MapType _Map_Map_K_F_Map_collectNested_V2_F;
+		private MapType _Map_Map_K_T_Map_V_T;
 		private MapType _Map_Map_K_F_Map_V_F;
 		private MapType _Map_Map_K_Map_V;
 		private CollectionType _OrderedCollection_Integer_T;
@@ -720,6 +722,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _OrderedSet_OrderedSet_flatten_T2_T;
 		private CollectionType _OrderedSet_OrderedSet_selectByKind_TT_T;
 		private CollectionType _OrderedSet_OrderedSet_selectByType_TT_T;
+		private CollectionType _OrderedSet_OrderedSet_T_T;
 		private CollectionType _OrderedSet_Sequence_T_T;
 		private CollectionType _OrderedSet_Set_T_T;
 		private CollectionType _OrderedSet_UniqueCollection_T_T;
@@ -735,6 +738,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Sequence_Sequence_flatten_T2_T;
 		private CollectionType _Sequence_Sequence_selectByKind_TT_T;
 		private CollectionType _Sequence_Sequence_selectByType_TT_T;
+		private CollectionType _Sequence_Sequence_T_T;
 		private CollectionType _Sequence_Sequence_T;
 		private CollectionType _Set_Tuple_T;
 		private CollectionType _Set_Bag_T_T;
@@ -746,6 +750,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _Set_Set_flatten_T2_T;
 		private CollectionType _Set_Set_selectByKind_TT_T;
 		private CollectionType _Set_Set_selectByType_TT_T;
+		private CollectionType _Set_Set_T_T;
 		private CollectionType _Set_UniqueCollection_T_T;
 		private CollectionType _Set_Set_T;
 		private CollectionType _UniqueCollection_Tuple_T;
@@ -821,13 +826,12 @@ public class OCLstdlib extends ASResourceImpl
 		private void installSpecializedAggregateTypes1() {
 			Class type;
 
-			type = _Lambda_OrderedSet_T_OrderedSet = getLambdaType(_OclLambda, tp_OrderedSet_T, _OrderedSet_OrderedSet_T);
-			type = _Lambda_Set_T_Set = getLambdaType(_OclLambda, tp_Set_T, _Set_Set_T);
 			type = _Bag_Bag_collectNested_V_T = getCollectionType(_Bag_Bag_T, tp_Bag_collectNested_V, true, 0, -1);
 			type = _Bag_Bag_collect_V_T = getCollectionType(_Bag_Bag_T, tp_Bag_collect_V, true, 0, -1);
 			type = _Bag_Bag_flatten_T2_T = getCollectionType(_Bag_Bag_T, tp_Bag_flatten_T2, true, 0, -1);
 			type = _Bag_Bag_selectByKind_TT_T = getCollectionType(_Bag_Bag_T, tp_Bag_selectByKind_TT, true, 0, -1);
 			type = _Bag_Bag_selectByType_TT_T = getCollectionType(_Bag_Bag_T, tp_Bag_selectByType_TT, true, 0, -1);
+			type = _Bag_Bag_T_T = getCollectionType(_Bag_Bag_T, tp_Bag_T, true, 0, -1);
 			type = _Bag_CollectionType_T = getCollectionType(_Bag_Bag_T, _CollectionType, true, 0, -1);
 			type = _Bag_Collection_T_T = getCollectionType(_Bag_Bag_T, tp_Collection_T, true, 0, -1);
 			type = _Bag_MapType_T = getCollectionType(_Bag_Bag_T, _MapType, true, 0, -1);
@@ -893,6 +897,7 @@ public class OCLstdlib extends ASResourceImpl
 			type = _Map_Map_includingMap_K2_T_Map_includingMap_V2_T = getMapType(_Map_Map_K_Map_V, tp_Map_includingMap_K2, true, tp_Map_includingMap_V2, true);
 			type = _Map_Map_K_F_Map_collectBy_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectBy_V2, false);
 			type = _Map_Map_K_F_Map_collectNested_V2_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_collectNested_V2, false);
+			type = _Map_Map_K_T_Map_V_T = getMapType(_Map_Map_K_Map_V, tp_Map_K, true, tp_Map_V, true);
 			type = _Map_Map_K_F_Map_V_F = getMapType(_Map_Map_K_Map_V, tp_Map_K, false, tp_Map_V, false);
 			type = _OrderedCollection_Integer_T = getCollectionType(_OrderedCollection_OrderedCollection_T, _Integer, true, 0, -1);
 			type = _OrderedCollection_String_T = getCollectionType(_OrderedCollection_OrderedCollection_T, _String, true, 0, -1);
@@ -916,6 +921,7 @@ public class OCLstdlib extends ASResourceImpl
 			type = _OrderedSet_OrderedSet_flatten_T2_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_flatten_T2, true, 0, -1);
 			type = _OrderedSet_OrderedSet_selectByKind_TT_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
 			type = _OrderedSet_OrderedSet_selectByType_TT_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
+			type = _OrderedSet_OrderedSet_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_T, true, 0, -1);
 			type = _OrderedSet_Sequence_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Sequence_T, true, 0, -1);
 			type = _OrderedSet_Set_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Set_T, true, 0, -1);
 			type = _OrderedSet_UniqueCollection_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_UniqueCollection_T, true, 0, -1);
@@ -930,6 +936,7 @@ public class OCLstdlib extends ASResourceImpl
 			type = _Sequence_Sequence_flatten_T2_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_flatten_T2, true, 0, -1);
 			type = _Sequence_Sequence_selectByKind_TT_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_selectByKind_TT, true, 0, -1);
 			type = _Sequence_Sequence_selectByType_TT_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_selectByType_TT, true, 0, -1);
+			type = _Sequence_Sequence_T_T = getCollectionType(_Sequence_Sequence_T, tp_Sequence_T, true, 0, -1);
 			type = _Set_Tuple_T = getCollectionType(_Set_Set_T, _Tuple, true, 0, -1);
 			type = _Set_Bag_T_T = getCollectionType(_Set_Set_T, tp_Bag_T, true, 0, -1);
 			type = _Set_Collection_T_T = getCollectionType(_Set_Set_T, tp_Collection_T, true, 0, -1);
@@ -940,6 +947,7 @@ public class OCLstdlib extends ASResourceImpl
 			type = _Set_Set_flatten_T2_T = getCollectionType(_Set_Set_T, tp_Set_flatten_T2, true, 0, -1);
 			type = _Set_Set_selectByKind_TT_T = getCollectionType(_Set_Set_T, tp_Set_selectByKind_TT, true, 0, -1);
 			type = _Set_Set_selectByType_TT_T = getCollectionType(_Set_Set_T, tp_Set_selectByType_TT, true, 0, -1);
+			type = _Set_Set_T_T = getCollectionType(_Set_Set_T, tp_Set_T, true, 0, -1);
 			type = _Set_UniqueCollection_T_T = getCollectionType(_Set_Set_T, tp_UniqueCollection_T, true, 0, -1);
 			type = _UniqueCollection_Tuple_T = getCollectionType(_UniqueCollection_UniqueCollection_T, _Tuple, true, 0, -1);
 			type = _UniqueCollection_Bag_T_T = getCollectionType(_UniqueCollection_UniqueCollection_T, tp_Bag_T, true, 0, -1);
@@ -964,7 +972,9 @@ public class OCLstdlib extends ASResourceImpl
 			Class type;
 
 			type = _Lambda_Bag_T_Set = getLambdaType(_OclLambda, tp_Bag_T, _Set_Bag_T_T);
+			type = _Lambda_OrderedSet_T_OrderedSet = getLambdaType(_OclLambda, tp_OrderedSet_T, _OrderedSet_OrderedSet_T_T);
 			type = _Lambda_Sequence_T_OrderedSet = getLambdaType(_OclLambda, tp_Sequence_T, _OrderedSet_Sequence_T_T);
+			type = _Lambda_Set_T_Set = getLambdaType(_OclLambda, tp_Set_T, _Set_Set_T_T);
 		}
 
 		private void installAggregateSuperTypes() {
@@ -1007,6 +1017,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Bag_Bag_flatten_T2_T, _Collection_Bag_flatten_T2_T);
 			addSuperClass(_Bag_Bag_selectByKind_TT_T, _Collection_Bag_selectByKind_TT_T);
 			addSuperClass(_Bag_Bag_selectByType_TT_T, _Collection_Bag_selectByType_TT_T);
+			addSuperClass(_Bag_Bag_T_T, _Collection_Bag_T_T);
 			addSuperClass(_Bag_CollectionType_T, _Collection_CollectionType_T);
 			addSuperClass(_Bag_Collection_T_T, _Collection_Collection_T_T);
 			addSuperClass(_Bag_MapType_T, _Collection_MapType_T);
@@ -1074,6 +1085,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Map_Map_includingMap_K2_T_Map_includingMap_V2_T, _OclAny);
 			addSuperClass(_Map_Map_K_F_Map_collectBy_V2_F, _OclAny);
 			addSuperClass(_Map_Map_K_F_Map_collectNested_V2_F, _OclAny);
+			addSuperClass(_Map_Map_K_T_Map_V_T, _OclAny);
 			addSuperClass(_Map_Map_K_F_Map_V_F, _OclAny);
 			addSuperClass(_Map_Map_K_Map_V, _OclAny);
 			addSuperClass(_OrderedCollection_Integer_T, _Collection_Integer_T);
@@ -1103,6 +1115,8 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_OrderedSet_OrderedSet_selectByKind_TT_T, _UniqueCollection_OrderedSet_selectByKind_TT_T);
 			addSuperClass(_OrderedSet_OrderedSet_selectByType_TT_T, _OrderedCollection_OrderedSet_selectByType_TT_T);
 			addSuperClass(_OrderedSet_OrderedSet_selectByType_TT_T, _UniqueCollection_OrderedSet_selectByType_TT_T);
+			addSuperClass(_OrderedSet_OrderedSet_T_T, _OrderedCollection_OrderedSet_T_T);
+			addSuperClass(_OrderedSet_OrderedSet_T_T, _UniqueCollection_OrderedSet_T_T);
 			addSuperClass(_OrderedSet_Sequence_T_T, _OrderedCollection_Sequence_T_T);
 			addSuperClass(_OrderedSet_Sequence_T_T, _UniqueCollection_Sequence_T_T);
 			addSuperClass(_OrderedSet_Set_T_T, _OrderedCollection_Set_T_T);
@@ -1122,6 +1136,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Sequence_Sequence_flatten_T2_T, _OrderedCollection_Sequence_flatten_T2_T);
 			addSuperClass(_Sequence_Sequence_selectByKind_TT_T, _OrderedCollection_Sequence_selectByKind_TT_T);
 			addSuperClass(_Sequence_Sequence_selectByType_TT_T, _OrderedCollection_Sequence_selectByType_TT_T);
+			addSuperClass(_Sequence_Sequence_T_T, _OrderedCollection_Sequence_T_T);
 			addSuperClass(_Sequence_Sequence_T, _OrderedCollection_Sequence_T_T);
 			addSuperClass(_Set_Tuple_T, _UniqueCollection_Tuple_T);
 			addSuperClass(_Set_Bag_T_T, _UniqueCollection_Bag_T_T);
@@ -1133,6 +1148,7 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_Set_Set_flatten_T2_T, _UniqueCollection_Set_flatten_T2_T);
 			addSuperClass(_Set_Set_selectByKind_TT_T, _UniqueCollection_Set_selectByKind_TT_T);
 			addSuperClass(_Set_Set_selectByType_TT_T, _UniqueCollection_Set_selectByType_TT_T);
+			addSuperClass(_Set_Set_T_T, _UniqueCollection_Set_T_T);
 			addSuperClass(_Set_UniqueCollection_T_T, _UniqueCollection_UniqueCollection_T_T);
 			addSuperClass(_Set_Set_T, _UniqueCollection_Set_T_T);
 			addSuperClass(_UniqueCollection_Tuple_T, _Collection_Tuple_T);
@@ -2160,12 +2176,12 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "True if oclText[self] and bag contain the same elements, the same number of times.");
 
 			operation = op_Bag_excluding;
-			operation.setType(_Bag_Bag_T);
+			operation.setType(_Bag_Bag_T_T);
 			parameter = createParameter(operation, "object", tp_Bag_T, false);
 			installComment(operation, "The bag containing all elements of oclText[self] apart from all occurrences of object.");
 
 			operation = op_Bag_excludingAll;
-			operation.setType(_Bag_Bag_T);
+			operation.setType(_Bag_Bag_T_T);
 			parameter = createParameter(operation, "objects", _Collection_Bag_T_T, true);
 			installComment(operation, "The bag containing all elements of oclText[self] apart from all occurrences of all objects.");
 
@@ -2174,12 +2190,12 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "Redefines the Collection operation. If the element type is not a collection type, this results in the same bag as oclText[self].\nIf the element type is a collection type, the result is the bag containing all the elements of all the recursively flattened elements of oclText[self].");
 
 			operation = op_Bag_including;
-			operation.setType(_Bag_Bag_T);
+			operation.setType(_Bag_Bag_T_T);
 			parameter = createParameter(operation, "object", tp_Bag_T, false);
 			installComment(operation, "The bag containing all elements of oclText[self] plus object.");
 
 			operation = op_Bag_includingAll;
-			operation.setType(_Bag_Bag_T);
+			operation.setType(_Bag_Bag_T_T);
 			parameter = createParameter(operation, "objects", _Collection_Bag_T_T, true);
 			installComment(operation, "The bag containing all elements of oclText[self] and objects.");
 
@@ -2247,13 +2263,13 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "Does oclText[self] contain none of the elements of c2 ?");
 
 			operation = op_Collection_excluding;
-			operation.setType(_Collection_Collection_T);
+			operation.setType(_Collection_Collection_T_T);
 			parameter = createParameter(operation, "object", tp_Collection_T, false);
 			installComment(operation, "The collection containing all elements of oclText[self] apart from object.");
 
 			operation = op_Collection_excludingAll;
-			operation.setType(_Collection_Collection_T);
-			parameter = createParameter(operation, "objects", _Collection_Collection_T, true);
+			operation.setType(_Collection_Collection_T_T);
+			parameter = createParameter(operation, "objects", _Collection_Collection_T_T, true);
 			installComment(operation, "The collection containing all elements of oclText[self] apart from all occurrences of all objects.");
 
 			operation = op_Collection_flatten;
@@ -2271,18 +2287,18 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "Does oclText[self] contain all the elements of c2 ?");
 
 			operation = op_Collection_including;
-			operation.setType(_Collection_Collection_T);
+			operation.setType(_Collection_Collection_T_T);
 			parameter = createParameter(operation, "object", tp_Collection_T, false);
 			installComment(operation, "The collection containing all elements of oclText[self] plus object.");
 
 			operation = op_Collection_includingAll;
-			operation.setType(_Collection_Collection_T);
-			parameter = createParameter(operation, "objects", _Collection_Collection_T, true);
+			operation.setType(_Collection_Collection_T_T);
+			parameter = createParameter(operation, "objects", _Collection_Collection_T_T, true);
 			installComment(operation, "The collection containing all elements of oclText[self] and objects.");
 
 			operation = op_Collection_intersection;
 			operation.setType(_Bag_Collection_T_T);
-			parameter = createParameter(operation, "c", _Collection_Collection_T, true);
+			parameter = createParameter(operation, "c", _Collection_Collection_T_T, true);
 			installComment(operation, "The intersection of oclText[self] and bag; the bag of all elements that are in both oclText[self] and c.");
 
 			operation = op_Collection_intersection_1;
@@ -2333,7 +2349,7 @@ public class OCLstdlib extends ASResourceImpl
 
 			operation = op_Collection_union;
 			operation.setType(_Bag_Collection_T_T);
-			parameter = createParameter(operation, "c", _Collection_Collection_T, true);
+			parameter = createParameter(operation, "c", _Collection_Collection_T_T, true);
 			installComment(operation, "The bag consisting of all elements in oclText[self] and all elements in c.");
 
 			operation = op_Enumeration_allInstances;
@@ -2390,23 +2406,23 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "True if oclText[value] is not one of the values of oclText[self], oclText[false] otherwise.");
 
 			operation = op_Map_excluding;
-			operation.setType(_Map_Map_K_Map_V);
+			operation.setType(_Map_Map_K_T_Map_V_T);
 			parameter = createParameter(operation, "key", tp_Map_K, false);
 			installComment(operation, "The map containing all key-value pairs of oclText[self] except any whose key is oclText[key].");
 
 			operation = op_Map_excluding_1;
-			operation.setType(_Map_Map_K_Map_V);
+			operation.setType(_Map_Map_K_T_Map_V_T);
 			parameter = createParameter(operation, "key", tp_Map_K, false);
 			parameter = createParameter(operation, "value", tp_Map_V, false);
 			installComment(operation, "The map containing all key-value pairs of oclText[self] except any whose key is oclText[key] and whose value is oclText[key].");
 
 			operation = op_Map_excludingAll;
-			operation.setType(_Map_Map_K_Map_V);
+			operation.setType(_Map_Map_K_T_Map_V_T);
 			parameter = createParameter(operation, "keys", _Collection_Map_K_T, true);
 			installComment(operation, "The map containing all key-value pairs of oclText[self] except any whose key is included in oclText[keys].");
 
 			operation = op_Map_excludingMap;
-			operation.setType(_Map_Map_K_Map_V);
+			operation.setType(_Map_Map_K_T_Map_V_T);
 			parameter = createParameter(operation, "map", _Map_Map_excludingMap_K2_T_Map_excludingMap_V2_T, true);
 			installComment(operation, "The map containing all key-value pairs of oclText[self] except any which is also included in oclText[map].");
 
@@ -2437,13 +2453,13 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "True if oclText[value] is one of the values of oclText[self], oclText[false] otherwise.");
 
 			operation = op_Map_including;
-			operation.setType(_Map_Map_K_Map_V);
+			operation.setType(_Map_Map_K_T_Map_V_T);
 			parameter = createParameter(operation, "key", tp_Map_K, false);
 			parameter = createParameter(operation, "value", tp_Map_V, false);
 			installComment(operation, "The map containing all of the key-value pairs of oclText[self] and an additional key-value pair for oclText[key] and oclText[value].\nIf oclText[key] is already a key of oclText[self], the old value pair is replaced by oclText[value].");
 
 			operation = op_Map_includingMap;
-			operation.setType(_Map_Map_K_Map_V);
+			operation.setType(_Map_Map_K_T_Map_V_T);
 			parameter = createParameter(operation, "map", _Map_Map_includingMap_K2_T_Map_includingMap_V2_T, true);
 			installComment(operation, "The map containing all of the key-value pairs of oclText[self] and oclText[map].\nThe values associated with key-value pairs in oclText[map] replace those in oclText[self] where the same key is used by both maps.");
 
@@ -2885,7 +2901,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "The last element in oclText[self].");
 
 			operation = op_OrderedSet__neg_;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			operation.setPrecedence(prec_ADDITIVE);
 			parameter = createParameter(operation, "s", _UniqueCollection_OclAny_T, true);
 			installComment(operation, "The elements of oclText[self], which are not in s.");
@@ -2903,22 +2919,22 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
 
 			operation = op_OrderedSet_append;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createParameter(operation, "object", tp_OrderedSet_T, false);
 			installComment(operation, "The set of elements, consisting of all elements of oclText[self], followed by object.");
 
 			operation = op_OrderedSet_appendAll;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createParameter(operation, "objects", _OrderedCollection_OrderedSet_T_T, true);
 			installComment(operation, "The set of elements, consisting of all elements of oclText[self], followed by objects.");
 
 			operation = op_OrderedSet_excluding;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createParameter(operation, "object", tp_OrderedSet_T, false);
 			installComment(operation, "The ordered set  containing all elements of oclText[self] apart from object.\n\nThe order of the remaining elements is not changed.");
 
 			operation = op_OrderedSet_excludingAll;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createParameter(operation, "objects", _Collection_OrderedSet_T_T, true);
 			installComment(operation, "The ordered set containing all elements of oclText[self] apart from all occurrences of all objects.");
 
@@ -2926,34 +2942,34 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setType(_OrderedSet_OrderedSet_flatten_T2_T);
 
 			operation = op_OrderedSet_including;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createParameter(operation, "object", tp_OrderedSet_T, false);
 			installComment(operation, "The ordered set containing all elements of oclText[self] plus object added as the last element if not already present.");
 
 			operation = op_OrderedSet_includingAll;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createParameter(operation, "objects", _Collection_OrderedSet_T_T, true);
 			installComment(operation, "The ordered set containing all elements of oclText[self] plus objects added as the last elements.");
 
 			operation = op_OrderedSet_insertAt;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			operation.setIsInvalidating(true);
 			parameter = createParameter(operation, "index", _Integer, true);
 			parameter = createParameter(operation, "object", tp_OrderedSet_T, false);
 			installComment(operation, "The ordered set consisting of oclText[self] with object present at position index.");
 
 			operation = op_OrderedSet_prepend;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createParameter(operation, "object", tp_OrderedSet_T, false);
 			installComment(operation, "The sequence consisting of object, followed by all elements in oclText[self].");
 
 			operation = op_OrderedSet_prependAll;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createParameter(operation, "objects", _OrderedCollection_OrderedSet_T_T, true);
 			installComment(operation, "The sequence consisting of objects, followed by all elements in oclText[self].");
 
 			operation = op_OrderedSet_reverse;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			installComment(operation, "The ordered set of elements with same elements but with the opposite order.");
 
 			operation = op_OrderedSet_selectByKind;
@@ -2969,7 +2985,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "The ordered set containing all elements of oclText[self] whose type is oclText[type].");
 
 			operation = op_OrderedSet_subOrderedSet;
-			operation.setType(_OrderedSet_OrderedSet_T);
+			operation.setType(_OrderedSet_OrderedSet_T_T);
 			operation.setIsInvalidating(true);
 			parameter = createParameter(operation, "lower", _Integer, true);
 			parameter = createParameter(operation, "upper", _Integer, true);
@@ -2988,22 +3004,22 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "True if oclText[self] contains the same elements as s in the same order.");
 
 			operation = op_Sequence_append;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			parameter = createParameter(operation, "object", tp_Sequence_T, false);
 			installComment(operation, "The sequence of elements, consisting of all elements of oclText[self], followed by object.");
 
 			operation = op_Sequence_appendAll;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			parameter = createParameter(operation, "objects", _OrderedCollection_Sequence_T_T, true);
 			installComment(operation, "The sequence of elements, consisting of all elements of oclText[self], followed by objects.");
 
 			operation = op_Sequence_excluding;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			parameter = createParameter(operation, "object", tp_Sequence_T, false);
 			installComment(operation, "The sequence containing all elements of oclText[self] apart from all occurrences of object.\n\nThe order of the remaining elements is not changed.");
 
 			operation = op_Sequence_excludingAll;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			parameter = createParameter(operation, "objects", _Collection_Sequence_T_T, true);
 			installComment(operation, "The sequence containing all elements of oclText[self] apart from all occurrences of all objects.");
 
@@ -3012,34 +3028,34 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "Redefines the Collection operation. If the element type is not a collection type, this results in the same sequence as oclText[self].\nIf the element type is a collection type, the result is the sequence containing all the elements\nof all the recursively flattened elements of oclText[self]. The order of the elements is partial.");
 
 			operation = op_Sequence_including;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			parameter = createParameter(operation, "object", tp_Sequence_T, false);
 			installComment(operation, "The sequence containing all elements of oclText[self] plus object added as the last element.");
 
 			operation = op_Sequence_includingAll;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			parameter = createParameter(operation, "objects", _Collection_Sequence_T_T, true);
 			installComment(operation, "The sequence containing all elements of oclText[self] plus objects added as the last elements.");
 
 			operation = op_Sequence_insertAt;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			operation.setIsInvalidating(true);
 			parameter = createParameter(operation, "index", _Integer, true);
 			parameter = createParameter(operation, "object", tp_Sequence_T, false);
 			installComment(operation, "The sequence consisting of oclText[self] with object inserted at position index.");
 
 			operation = op_Sequence_prepend;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			parameter = createParameter(operation, "object", tp_Sequence_T, false);
 			installComment(operation, "The sequence consisting of object, followed by all elements in oclText[self].");
 
 			operation = op_Sequence_prependAll;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			parameter = createParameter(operation, "objects", _OrderedCollection_Sequence_T_T, true);
 			installComment(operation, "The sequence consisting of objects, followed by all elements in oclText[self].");
 
 			operation = op_Sequence_reverse;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			installComment(operation, "The sequence containing the same elements but with the opposite order.");
 
 			operation = op_Sequence_selectByKind;
@@ -3055,14 +3071,14 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "The sequence containing all elements of oclText[self] whose type is oclText[type].");
 
 			operation = op_Sequence_subSequence;
-			operation.setType(_Sequence_Sequence_T);
+			operation.setType(_Sequence_Sequence_T_T);
 			operation.setIsInvalidating(true);
 			parameter = createParameter(operation, "lower", _Integer, true);
 			parameter = createParameter(operation, "upper", _Integer, true);
 			installComment(operation, "The sub-sequence of oclText[self] starting at number lower, up to and including element number upper.");
 
 			operation = op_Set__neg_;
-			operation.setType(_Set_Set_T);
+			operation.setType(_Set_Set_T_T);
 			operation.setPrecedence(prec_ADDITIVE);
 			parameter = createParameter(operation, "s", _UniqueCollection_OclAny_T, true);
 			installComment(operation, "The elements of oclText[self], which are not in s.");
@@ -3080,12 +3096,12 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
 
 			operation = op_Set_excluding;
-			operation.setType(_Set_Set_T);
+			operation.setType(_Set_Set_T_T);
 			parameter = createParameter(operation, "object", tp_Set_T, false);
 			installComment(operation, "The set containing all elements of oclText[self] without object.");
 
 			operation = op_Set_excludingAll;
-			operation.setType(_Set_Set_T);
+			operation.setType(_Set_Set_T_T);
 			parameter = createParameter(operation, "objects", _Collection_Set_T_T, true);
 			installComment(operation, "The set containing all elements of oclText[self] apart from all occurrences of all objects.");
 
@@ -3094,12 +3110,12 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "Redefines the Collection operation. If the element type is not a collection type, this results in the same set as oclText[self].\nIf the element type is a collection type, the result is the set containing all the elements of all the recursively flattened elements of oclText[self].");
 
 			operation = op_Set_including;
-			operation.setType(_Set_Set_T);
+			operation.setType(_Set_Set_T_T);
 			parameter = createParameter(operation, "object", tp_Set_T, false);
 			installComment(operation, "The set containing all elements of oclText[self] plus object.");
 
 			operation = op_Set_includingAll;
-			operation.setType(_Set_Set_T);
+			operation.setType(_Set_Set_T_T);
 			parameter = createParameter(operation, "objects", _Collection_Set_T_T, true);
 			installComment(operation, "The set containing all elements of oclText[self] and objects.");
 
@@ -3125,7 +3141,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(operation, "Returns true if type2 conforms to self.");
 
 			operation = op_UniqueCollection__neg_;
-			operation.setType(_UniqueCollection_UniqueCollection_T);
+			operation.setType(_UniqueCollection_UniqueCollection_T_T);
 			operation.setPrecedence(prec_ADDITIVE);
 			parameter = createParameter(operation, "s", _UniqueCollection_OclAny_T, true);
 			installComment(operation, "The elements of oclText[self], which are not in s.");
@@ -3142,7 +3158,7 @@ public class OCLstdlib extends ASResourceImpl
 
 			operation = op_UniqueCollection_union;
 			operation.setType(_Set_UniqueCollection_T_T);
-			parameter = createParameter(operation, "s", _UniqueCollection_UniqueCollection_T, true);
+			parameter = createParameter(operation, "s", _UniqueCollection_UniqueCollection_T_T, true);
 			installComment(operation, "The set consisting of all elements in oclText[self] and all elements in s.");
 
 			operation = op_VoidType_allInstances;
@@ -3288,13 +3304,13 @@ public class OCLstdlib extends ASResourceImpl
 			parameter = createParameter(iteration, "lambda", _Lambda_Bag_T_Bag_collect_V, false);
 
 			iteration = it_Bag_reject;
-			iteration.setType(_Bag_Bag_T);
+			iteration.setType(_Bag_Bag_T_T);
 			parameter = createIterator(iteration, "i", tp_Bag_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_Bag_T_Boolean, true);
 			installComment(iteration, "The sub-bag of the source bag for which body is oclText[false].\n\noclCode[self->reject(iterator | body) = self->select(iterator | not body)].");
 
 			iteration = it_Bag_select;
-			iteration.setType(_Bag_Bag_T);
+			iteration.setType(_Bag_Bag_T_T);
 			parameter = createIterator(iteration, "i", tp_Bag_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_Bag_T_Boolean, true);
 			installComment(iteration, "The sub-bag of the source bag for which body is oclText[true].\n\noclCode[self->select(iterator | body) =\nself->iterate(iterator; result : Bag(T) = Bag{} |\nif body then result->including(iterator)\nelse result\nendif)]");
@@ -3412,13 +3428,13 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(iteration, "Results in oclText[true] if there is exactly one element in the source collection for which body is oclText[true].");
 
 			iteration = it_Collection_reject;
-			iteration.setType(_Collection_Collection_T);
+			iteration.setType(_Collection_Collection_T_T);
 			parameter = createIterator(iteration, "i", tp_Collection_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, true);
 			installComment(iteration, "The sub-collection of the source collection for which body is oclText[false].");
 
 			iteration = it_Collection_select;
-			iteration.setType(_Collection_Collection_T);
+			iteration.setType(_Collection_Collection_T_T);
 			parameter = createIterator(iteration, "i", tp_Collection_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_Collection_T_Boolean, true);
 			installComment(iteration, "The sub-collection of the source collection for which body is oclText[true].");
@@ -3547,7 +3563,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(iteration, "The subset of set for which expr is oclText[true].");
 
 			iteration = it_OrderedSet_closure;
-			iteration.setType(_OrderedSet_OrderedSet_T);
+			iteration.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createIterator(iteration, "i", tp_OrderedSet_T, true);
 			parameter = createParameter(iteration, "lambda", _Lambda_OrderedSet_T_OrderedSet, false);
 			installComment(iteration, "The closure of applying body transitively to every distinct element of the source collection.");
@@ -3565,19 +3581,19 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(iteration, "The Sequence of elements that results from applying body to every member of the source set.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
 
 			iteration = it_OrderedSet_reject;
-			iteration.setType(_OrderedSet_OrderedSet_T);
+			iteration.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createIterator(iteration, "i", tp_OrderedSet_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_OrderedSet_T_Boolean, true);
 			installComment(iteration, "The ordered set of the source ordered set for which body is oclText[false].");
 
 			iteration = it_OrderedSet_select;
-			iteration.setType(_OrderedSet_OrderedSet_T);
+			iteration.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createIterator(iteration, "i", tp_OrderedSet_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_OrderedSet_T_Boolean, true);
 			installComment(iteration, "The ordered set of the source ordered set for which body is oclText[true]");
 
 			iteration = it_OrderedSet_sortedBy;
-			iteration.setType(_OrderedSet_OrderedSet_T);
+			iteration.setType(_OrderedSet_OrderedSet_T_T);
 			parameter = createIterator(iteration, "i", tp_OrderedSet_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_OrderedSet_T_OclAny, false);
 			installComment(iteration, "Results in the ordered set containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).");
@@ -3601,25 +3617,25 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(iteration, "The Bag of elements that results from applying body to every member of the source sequence.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
 
 			iteration = it_Sequence_reject;
-			iteration.setType(_Sequence_Sequence_T);
+			iteration.setType(_Sequence_Sequence_T_T);
 			parameter = createIterator(iteration, "i", tp_Sequence_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_Sequence_T_Boolean, true);
 			installComment(iteration, "The subsequence of the source sequence for which body is oclText[false].");
 
 			iteration = it_Sequence_select;
-			iteration.setType(_Sequence_Sequence_T);
+			iteration.setType(_Sequence_Sequence_T_T);
 			parameter = createIterator(iteration, "i", tp_Sequence_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_Sequence_T_Boolean, true);
 			installComment(iteration, "The subsequence of the source sequence for which body is oclText[true].");
 
 			iteration = it_Sequence_sortedBy;
-			iteration.setType(_Sequence_Sequence_T);
+			iteration.setType(_Sequence_Sequence_T_T);
 			parameter = createIterator(iteration, "i", tp_Sequence_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_Sequence_T_OclAny, false);
 			installComment(iteration, "Results in the Sequence containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
 
 			iteration = it_Set_closure;
-			iteration.setType(_Set_Set_T);
+			iteration.setType(_Set_Set_T_T);
 			parameter = createIterator(iteration, "i", tp_Set_T, true);
 			parameter = createParameter(iteration, "lambda", _Lambda_Set_T_Set, false);
 			installComment(iteration, "The closure of applying body transitively to every distinct element of the source collection.");
@@ -3637,13 +3653,13 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(iteration, "The Bag of elements that results from applying body to every member of the source set.\nThe result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.\ncollectNested is defined individually for each subclass of CollectionType.");
 
 			iteration = it_Set_reject;
-			iteration.setType(_Set_Set_T);
+			iteration.setType(_Set_Set_T_T);
 			parameter = createIterator(iteration, "i", tp_Set_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_Set_T_Boolean, true);
 			installComment(iteration, "The subset of the source set for which body is oclText[false].");
 
 			iteration = it_Set_select;
-			iteration.setType(_Set_Set_T);
+			iteration.setType(_Set_Set_T_T);
 			parameter = createIterator(iteration, "i", tp_Set_T, false);
 			parameter = createParameter(iteration, "lambda", _Lambda_Set_T_Boolean, true);
 			installComment(iteration, "The subset of set for which expr is oclText[true].");

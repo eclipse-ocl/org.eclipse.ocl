@@ -312,7 +312,6 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Object[] _1_TT = new @NonNull Object[] {1};
 		public static final @NonNull Object[] _1_V = new @NonNull Object[] {1};
 		public static final @NonNull Object[] _Boolean = new @NonNull Object[] {OCLstdlibTables.Types._Boolean};
-		public static final @NonNull Object[] _Collection = new @NonNull Object[] {OCLstdlibTables.Types._Collection, 0};
 		public static final @NonNull Object[] _Collection__0_K__ = new @NonNull Object[] {OCLstdlibTables.Types._Collection, 0};
 		public static final @NonNull Object[] _Collection__0_T__ = new @NonNull Object[] {OCLstdlibTables.Types._Collection, 0};
 		public static final @NonNull Object[] _Collection__1_T2__ = new @NonNull Object[] {OCLstdlibTables.Types._Collection, 1};
@@ -328,9 +327,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Object[] _Lambda_0_T_1_V = new @NonNull Object[] {"Lambda", 0};
 		public static final @NonNull Object[] _Lambda_0_T_Boolean = new @NonNull Object[] {"Lambda", 0};
 		public static final @NonNull Object[] _Lambda_0_T_OclAny = new @NonNull Object[] {"Lambda", 0};
-		public static final @NonNull Object[] _Lambda_0_T_OrderedSet = new @NonNull Object[] {"Lambda", 0};
 		public static final @NonNull Object[] _Lambda_0_T_OrderedSet__0_T__ = new @NonNull Object[] {"Lambda", 0};
-		public static final @NonNull Object[] _Lambda_0_T_Set = new @NonNull Object[] {"Lambda", 0};
 		public static final @NonNull Object[] _Lambda_0_T_Set__0_T__ = new @NonNull Object[] {"Lambda", 0};
 		public static final @NonNull Object[] _Map__2_K2_3_V2__ = new @NonNull Object[] {OCLstdlibTables.Types._Map, 2, 3};
 		public static final @NonNull Object[] _OclSelf = new @NonNull Object[] {OCLstdlibTables.Types._OclSelf};
@@ -341,7 +338,6 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Object[] _String = new @NonNull Object[] {OCLstdlibTables.Types._String};
 		public static final @NonNull Object[] _String___Boolean = new @NonNull Object[] {OCLstdlibTables.Types._String, OCLstdlibTables.Types._Boolean};
 		public static final @NonNull Object[] _String___String = new @NonNull Object[] {OCLstdlibTables.Types._String, OCLstdlibTables.Types._String};
-		public static final @NonNull Object[] _UniqueCollection = new @NonNull Object[] {OCLstdlibTables.Types._UniqueCollection, 0};
 		public static final @NonNull Object[] _UniqueCollection__0_T__ = new @NonNull Object[] {OCLstdlibTables.Types._UniqueCollection, 0};
 		public static final @NonNull Object[] _UniqueCollection__OclAny__ = new @NonNull Object[] {OCLstdlibTables.Types._UniqueCollection, OCLstdlibTables.Types._OclAny};
 
@@ -456,7 +452,7 @@ public class OCLstdlibTables extends AbstractTables
 			12, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__excluding = LIBRARY.createOperation("excluding", Parameters._0_T, Types._Collection,
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection, Types._Collection,
+		public static final @NonNull Operation _Collection__excludingAll = LIBRARY.createOperation("excludingAll", Parameters._Collection__0_T__, Types._Collection,
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__2_exists = LIBRARY.createOperation("exists", Parameters._Lambda_0_T_Boolean, Types._Collection,
 			15, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
@@ -478,9 +474,9 @@ public class OCLstdlibTables extends AbstractTables
 			23, TypeUtil.createTemplateParameters(TypeParameters._1_T2), org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__including = LIBRARY.createOperation("including", Parameters._0_T, Types._Collection,
 			24, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__includingAll = LIBRARY.createOperation("includingAll", Parameters._Collection, Types._Collection,
+		public static final @NonNull Operation _Collection__includingAll = LIBRARY.createOperation("includingAll", Parameters._Collection__0_T__, Types._Collection,
 			25, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__0_intersection = LIBRARY.createOperation("intersection", Parameters._Collection, Types._Collection,
+		public static final @NonNull Operation _Collection__0_intersection = LIBRARY.createOperation("intersection", Parameters._Collection__0_T__, Types._Collection,
 			26, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__1_intersection = LIBRARY.createOperation("intersection", Parameters._UniqueCollection__0_T__, Types._Collection,
 			27, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
@@ -514,7 +510,7 @@ public class OCLstdlibTables extends AbstractTables
 			41, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__sum = LIBRARY.createOperation("sum", TypeUtil.EMPTY_PARAMETER_TYPESx2x, Types._Collection,
 			42, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__union = LIBRARY.createOperation("union", Parameters._Collection, Types._Collection,
+		public static final @NonNull Operation _Collection__union = LIBRARY.createOperation("union", Parameters._Collection__0_T__, Types._Collection,
 			43, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 
 		public static final @NonNull Operation _Integer___mul_ = LIBRARY.createOperation("*", Parameters._OclSelf, Types._Integer,
@@ -805,7 +801,7 @@ public class OCLstdlibTables extends AbstractTables
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__appendAll = LIBRARY.createOperation("appendAll", Parameters._OrderedCollection__0_T__, Types._OrderedSet,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__closure = LIBRARY.createOperation("closure", Parameters._Lambda_0_T_OrderedSet, Types._OrderedSet,
+		public static final @NonNull Operation _OrderedSet__closure = LIBRARY.createOperation("closure", Parameters._Lambda_0_T_OrderedSet__0_T__, Types._OrderedSet,
 			5, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		public static final @NonNull Operation _OrderedSet__collect = LIBRARY.createOperation("collect", Parameters._Lambda_0_T_1_V, Types._OrderedSet,
 			6, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
@@ -920,7 +916,7 @@ public class OCLstdlibTables extends AbstractTables
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Set___eq_ = LIBRARY.createOperation("=", Parameters._OclSelf, Types._Set,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _Set__closure = LIBRARY.createOperation("closure", Parameters._Lambda_0_T_Set, Types._Set,
+		public static final @NonNull Operation _Set__closure = LIBRARY.createOperation("closure", Parameters._Lambda_0_T_Set__0_T__, Types._Set,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
 		public static final @NonNull Operation _Set__collect = LIBRARY.createOperation("collect", Parameters._Lambda_0_T_1_V, Types._Set,
 			4, TypeUtil.createTemplateParameters(TypeParameters._1_V), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
@@ -1026,7 +1022,7 @@ public class OCLstdlibTables extends AbstractTables
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 		public static final @NonNull Operation _UniqueCollection__symmetricDifference = LIBRARY.createOperation("symmetricDifference", Parameters._UniqueCollection__OclAny__, Types._UniqueCollection,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
-		public static final @NonNull Operation _UniqueCollection__union = LIBRARY.createOperation("union", Parameters._UniqueCollection, Types._UniqueCollection,
+		public static final @NonNull Operation _UniqueCollection__union = LIBRARY.createOperation("union", Parameters._UniqueCollection__0_T__, Types._UniqueCollection,
 			4, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 
 		public static final @NonNull Operation _UnlimitedNatural__max = LIBRARY.createOperation("max", Parameters._OclSelf, Types._UnlimitedNatural,

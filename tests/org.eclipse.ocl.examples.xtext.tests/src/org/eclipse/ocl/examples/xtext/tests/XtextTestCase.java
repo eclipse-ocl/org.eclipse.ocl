@@ -102,7 +102,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 
 		public EAnnotationsNormalizer(@NonNull EModelElement eModelElement) {
 			this.eModelElement = eModelElement;
-			this.oldOrder = new ArrayList<EAnnotation>(eModelElement.getEAnnotations());
+			this.oldOrder = new ArrayList<>(eModelElement.getEAnnotations());
 		}
 
 		@Override
@@ -115,7 +115,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		@Override
 		public void normalize() {
 			EList<EAnnotation> eList = eModelElement.getEAnnotations();
-			List<EAnnotation> newOrder = new ArrayList<EAnnotation>(eList);
+			List<EAnnotation> newOrder = new ArrayList<>(eList);
 			Collections.sort(newOrder, AnnotationUtil.EAnnotationComparator.INSTANCE);
 			eList.clear();
 			eList.addAll(newOrder);
@@ -154,6 +154,42 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		}
 	}
 
+	public static class EClassifiersNormalizer implements Normalizer
+	{
+		protected final @NonNull EPackage ePackage;
+		protected final List<EClassifier> oldOrder;
+
+		public EClassifiersNormalizer(@NonNull EPackage ePackage) {
+			this.ePackage = ePackage;
+			this.oldOrder = new ArrayList<>(ePackage.getEClassifiers());
+		}
+
+		@Override
+		public void denormalize() {
+			EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
+			eClassifiers.clear();
+			eClassifiers.addAll(oldOrder);
+		}
+
+		@Override
+		public void normalize() {
+			EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
+			List<EClassifier> newOrder = new ArrayList<>(eClassifiers);
+			Collections.sort(newOrder, new Comparator<EClassifier>()
+			{
+				@Override
+				public int compare(EClassifier o1, EClassifier o2) {
+					String n1 = o1.getName();
+					String n2 = o2.getName();
+					return n1.compareTo(n2);
+				}
+			}
+					);
+			eClassifiers.clear();
+			eClassifiers.addAll(newOrder);
+		}
+	}
+
 	public static class EDetailsNormalizer implements Normalizer
 	{
 		protected final @NonNull EAnnotation eAnnotation;
@@ -161,7 +197,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 
 		public EDetailsNormalizer(@NonNull EAnnotation eAnnotation) {
 			this.eAnnotation = eAnnotation;
-			this.oldOrder = new ArrayList<Map.Entry<String, String>>(eAnnotation.getDetails());
+			this.oldOrder = new ArrayList<>(eAnnotation.getDetails());
 		}
 
 		@Override
@@ -174,7 +210,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		@Override
 		public void normalize() {
 			List<Map.Entry<String, String>> eDetails = eAnnotation.getDetails();
-			List<Map.Entry<String, String>> newOrder = new ArrayList<Map.Entry<String, String>>(eDetails);
+			List<Map.Entry<String, String>> newOrder = new ArrayList<>(eDetails);
 			Collections.sort(newOrder, new Comparator<Map.Entry<String, String>>()
 			{
 				@Override
@@ -216,7 +252,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 
 		public EOperationsNormalizer(@NonNull EClass eClass) {
 			this.eClass = eClass;
-			this.oldOrder = new ArrayList<EOperation>(eClass.getEOperations());
+			this.oldOrder = new ArrayList<>(eClass.getEOperations());
 		}
 
 		@Override
@@ -229,7 +265,7 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 		@Override
 		public void normalize() {
 			EList<EOperation> eOperations = eClass.getEOperations();
-			List<EOperation> newOrder = new ArrayList<EOperation>(eOperations);
+			List<EOperation> newOrder = new ArrayList<>(eOperations);
 			Collections.sort(newOrder, new Comparator<EOperation>()
 			{
 				@Override
