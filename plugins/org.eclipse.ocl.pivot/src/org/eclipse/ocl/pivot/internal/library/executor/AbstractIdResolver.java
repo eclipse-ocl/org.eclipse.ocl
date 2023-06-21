@@ -56,7 +56,6 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -83,6 +82,7 @@ import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TemplateBinding;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
+import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TuplePartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
@@ -90,7 +90,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.internal.JavaTypeImpl;
-import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -286,6 +285,7 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 	 *
 	 * @since 1.7
 	 */
+	@Deprecated		// not needed any more - can use TemplateParameterId.templateableId
 	protected final @NonNull Stack<@Nullable Type> staticTypeStack = new Stack<>();
 
 	public AbstractIdResolver(@NonNull StandardLibrary standardLibrary) {
@@ -1922,8 +1922,28 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 		return id.getTemplateParameter();
 	}
 
+
 	@Override
 	public @NonNull Element visitTemplateParameterId(@NonNull TemplateParameterId id) {
+	//	Element asElement2 = visitTemplateParameterId2(id);
+		TemplateableId templateableId = id.getTemplateableId();
+		assert templateableId != null;
+		int index = id.getIndex();
+		TemplateableElement asTemplateableElement = (TemplateableElement)templateableId.accept(this);
+		assert asTemplateableElement != null;
+		return asTemplateableElement.getOwnedSignature().getOwnedParameters().get(index);
+	//	assert asElement2 != null;
+	//	if (asElement2 != null) {
+	//		Element asElement1 = visitTemplateParameterId1(id);
+	//		if (asElement1 != null) {
+	//			assert asElement1 == asElement2;
+	//		}
+	//		return asElement2;
+	//	}
+	//	throw new UnsupportedOperationException();
+	}
+
+/*	private Element visitTemplateParameterId1(TemplateParameterId id) {
 		if (!staticTypeStack.isEmpty()) {
 			Type staticType = staticTypeStack.peek();
 			if (staticType != null) {
@@ -1950,8 +1970,8 @@ public abstract class AbstractIdResolver implements IdResolver.IdResolverExtensi
 				}
 			}
 		}
-		throw new UnsupportedOperationException();
-	}
+		return null;
+	} */
 
 	@Override
 	public @NonNull Type visitTemplateableTypeId(@NonNull TemplateableTypeId id) {

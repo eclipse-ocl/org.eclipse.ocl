@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -129,7 +130,9 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 		Variable contextVariable = pivotSpecification.getOwnedContext();
 		//		pivotSpecification.getParameterVariable().clear();
 		if ((contextVariable != null) && !contextOperation.eIsProxy()) {
-			getHelper().setType(contextVariable, contextOperation.getOwningClass(), true);
+			PivotHelper helper = getHelper();
+			Type contextType = helper.getContextType(PivotUtil.getOwningClass(contextOperation));
+			getHelper().setType(contextVariable, contextType, true);
 			setParameterVariables(pivotSpecification, ClassUtil.nonNullEMF(contextOperation.getOwnedParameters()));
 		}
 		if (resultName != null) {

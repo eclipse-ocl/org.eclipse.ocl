@@ -12,22 +12,17 @@ package org.eclipse.ocl.xtext.essentialoclcs.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
-
 import org.eclipse.ocl.xtext.basecs.impl.TypedRefCSImpl;
-
 import org.eclipse.ocl.xtext.basecs.util.BaseCSVisitor;
-
 import org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage;
 import org.eclipse.ocl.xtext.essentialoclcs.MapTypeCS;
-
 import org.eclipse.ocl.xtext.essentialoclcs.util.EssentialOCLCSVisitor;
 
 /**
@@ -369,6 +364,14 @@ public class MapTypeCSImpl extends TypedRefCSImpl implements MapTypeCS
 		else {
 			return super.accept(visitor);
 		}
+	}
+
+	@Override
+	public void setPivot(Element newPivot) {
+		if (newPivot instanceof TemplateableElement) {
+			assert ((TemplateableElement)newPivot).getOwnedSignature() == null;		// XXX Bug 582115
+		}
+		super.setPivot(newPivot);
 	}
 
 } //MapTypeCSImpl

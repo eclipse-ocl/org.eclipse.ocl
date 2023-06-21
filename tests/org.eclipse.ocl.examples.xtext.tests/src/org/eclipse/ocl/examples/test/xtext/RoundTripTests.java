@@ -200,6 +200,7 @@ public class RoundTripTests extends XtextTestCase
 				ResourceSetImpl resourceSet2 = new ResourceSetImpl();
 				StandaloneProjectMap.getAdapter(resourceSet).initializeResourceSet(resourceSet2);
 				Resource referenceResource = ClassUtil.nonNullState(resourceSet2.getResource(referenceURI, true));
+				TestUtil.normalizeBodies((ASResource) referenceResource, Boolean.FALSE, Boolean.TRUE);		// XXX
 				Model referenceModel = PivotUtil.getModel(referenceResource);
 				String savedExternalURI = referenceModel.getExternalURI();
 				Model outputModel = PivotUtil.getModel(outputASResource);
@@ -373,6 +374,8 @@ public class RoundTripTests extends XtextTestCase
 		pivotResource1.save(XMIUtil.createSaveOptions(pivotResource1));
 		pivotResource3.setSaveable(true);
 		pivotResource3.save(XMIUtil.createSaveOptions(pivotResource3));
+		List<Normalizer> normalizations1 = TestUtil.normalize(pivotResource1);
+		List<Normalizer> normalizations3 = TestUtil.normalize(pivotResource3);
 		String expected = EmfFormatter.listToStr(pivotResource1.getContents());
 		String actual = EmfFormatter.listToStr(pivotResource3.getContents()).replace(".regenerated.oclinecore", ".oclinecore");
 		assertEquals(expected, actual);
@@ -505,20 +508,20 @@ public class RoundTripTests extends XtextTestCase
 						"{\n" +
 						"class B\n" +
 						"{\n" +
-					//	"property bag0 : B[3..5|1] {!unique};\n" +
-					//	"property bag1 : B[*] {!unique};\n" +
-					//	"property bag2 : Bag(B);\n" +
-					//	"property bag3 : B[3..5] {!unique};\n" +
-						"property bag4 : Bag(B/*[1..3]*/)[4..6];\n" +	// Bug 467443 need an EAnnotation for nested multiplicity
+						"property bag0 : B[3..5|1] {!unique};\n" +
+						"property bag1 : B[*] {!unique};\n" +
+						"property bag2 : Bag(B);\n" +
+						"property bag3 : B[3..5] {!unique};\n" +
+					//	"property bag4 : Bag(B/*[1..3]*/)[4..6];\n" +	// Bug 467443 need an EAnnotation for nested multiplicity
 						"property bag5 : Bag(B)[4..7|1];\n" +
-					//	"property setCollection : Set(Collection(B));\n" +
-					//	"property collection2 : Collection(B);\n" +
-					//	"property orderedset1 : B[*] {ordered};\n" +
-					//	"property orderedset2 : OrderedSet(B);\n" +
-					//	"property sequence1 : B[*] {ordered, !unique};\n" +
-					//	"property sequence2 : Sequence(B);\n" +
-					//	"property set1 : B[*];\n" +
-					//	"property set2 : Set(B);\n" +
+						"property setCollection : Set(Collection(B));\n" +
+						"property collection2 : Collection(B);\n" +
+						"property orderedset1 : B[*] {ordered};\n" +
+						"property orderedset2 : OrderedSet(B);\n" +
+						"property sequence1 : B[*] {ordered, !unique};\n" +
+						"property sequence2 : Sequence(B);\n" +
+						"property set1 : B[*];\n" +
+						"property set2 : Set(B);\n" +
 						//				"property tuple : Tuple(b : B);\n" +		// Bug 401938
 						"}\n" +
 						"}\n";

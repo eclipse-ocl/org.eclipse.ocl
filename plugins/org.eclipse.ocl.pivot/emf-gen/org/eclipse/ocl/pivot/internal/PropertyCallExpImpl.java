@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.ReferringElement;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -468,14 +469,17 @@ implements PropertyCallExp {
 		org.eclipse.ocl.pivot.Class referencedType = referredProperty.getOwningClass();
 		if (TemplateSpecialisation.needsSpecialisation(referencedType)) {
 			Executor executor = PivotUtil.getExecutor(this);
-			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getStandardLibrary());
+			StandardLibrary standardLibrary = executor.getStandardLibrary();
+			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(standardLibrary);
 			Type resultType = getType();
 			//			if (resultType instanceof DomainMetaclass) {
 			//				resultType = ((DomainMetaclass)resultType).getInstanceType();
 			//			}
 			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
 			if (referencedType != null) {
-				return templateSpecialization.getSpecialisation(referencedType);
+			//	Type specializedType = templateSpecialization.getSpecialisation(referencedType);
+				return standardLibrary.getSpecializedType(referencedType, templateSpecialization);
+			//	return executor.getStandardLibrary().getSpecialization(specializedType);
 			}
 		}
 		if (referencedType != null) {
@@ -506,7 +510,8 @@ implements PropertyCallExp {
 			TemplateSpecialisation templateSpecialization = new TemplateSpecialisation(executor.getStandardLibrary());
 			Type resultType = getType();
 			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
-			specializedType = templateSpecialization.getSpecialisation(referencedType);
+		//	specializedType = templateSpecialization.getSpecialisation(referencedType);
+			specializedType = executor.getStandardLibrary().getSpecializedType(referencedType, templateSpecialization);
 		}
 		if (specializedType != null) { //instanceof org.eclipse.ocl.pivot.Class) {
 			return /*(org.eclipse.ocl.pivot.Class)*/specializedType;

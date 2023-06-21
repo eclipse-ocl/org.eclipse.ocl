@@ -54,6 +54,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationConstraintsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EAnnotationsNormalizer;
+import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EClassifiersNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EDetailsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.EOperationsNormalizer;
 import org.eclipse.ocl.examples.xtext.tests.XtextTestCase.ETypedElementNormalizer;
@@ -251,6 +252,12 @@ public class TestUtil
 							normalizers.add(new ETypedElementNormalizer(eTypedElement));
 						}
 					}
+				}
+			}
+			if (eObject instanceof EPackage) {
+				EPackage ePackage = (EPackage) eObject;
+				if (ePackage.getEClassifiers().size() >= 2) {
+					normalizers.add(new EClassifiersNormalizer(ePackage));
 				}
 			}
 			if (eObject instanceof EClass) {

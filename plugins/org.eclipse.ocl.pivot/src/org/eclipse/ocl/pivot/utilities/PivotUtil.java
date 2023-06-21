@@ -69,6 +69,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorVariable;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
@@ -1664,6 +1665,10 @@ public class PivotUtil
 	 */
 	public static @NonNull Iterable<@NonNull Constraint> getOwnedPostconditions(@NonNull Operation asOperation) {
 		return ClassUtil.nullFree(asOperation.getOwnedPostconditions());
+	}
+
+	public static @NonNull Iterable<@NonNull Precedence> getOwnedPrecedences(@NonNull Library asLibrary) {
+		return ClassUtil.nullFree(asLibrary.getOwnedPrecedences());
 	}
 
 	/**

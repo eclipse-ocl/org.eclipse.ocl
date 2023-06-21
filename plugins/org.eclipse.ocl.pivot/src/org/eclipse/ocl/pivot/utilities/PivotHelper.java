@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -62,8 +63,8 @@ import org.eclipse.ocl.pivot.ResultVariable;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.TupleType;
@@ -541,6 +542,18 @@ public class PivotHelper
 		return asVariableExp;
 	}
 
+	/**
+	 * Return the type to be used as the contextVariable type within the asType declration.
+	 */
+	public @NonNull Type getContextType(@NonNull Type asType) {
+		if (!(asType instanceof TemplateableElement)) {
+			return asType;
+		}
+		TemplateableElement generic = ((TemplateableElement)asType).getGeneric();
+		assert generic == null;
+		return standardLibrary.resolveSelfSpecialization(asType);
+	}
+
 	public org.eclipse.ocl.pivot.@NonNull Class getDataTypeClass() {
 		return ClassUtil.nonNullState(metamodelManager.getASClass(TypeId.DATA_TYPE_NAME));
 	}
@@ -710,7 +723,9 @@ public class PivotHelper
 				contextType = standardLibrary.getOclVoidType();
 			}
 		}
+		assert contextType != null;
 		refreshName(contextVariable, selfVariableName);
+		contextType = getContextType(contextType);
 		setType(contextVariable, contextType, contextVariable.isIsRequired(), contextInstance);
 	}
 
@@ -775,7 +790,15 @@ public class PivotHelper
 	}
 
 	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
-		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
+		Type primaryType;
+		if (type != null) {
+		// too soon:	type = TemplateParameterSubstitutionVisitor.specializeType(type, asTypedElement, (EnvironmentFactoryInternal)environmentFactory, null, null);
+			type = standardLibrary.resolveSelfSpecialization(type);
+			primaryType = metamodelManager.getPrimaryType(type);
+		}
+		else {
+			primaryType = null;
+		}
 		if (primaryType != asTypedElement.getType()) {
 			asTypedElement.setType(primaryType);
 		}

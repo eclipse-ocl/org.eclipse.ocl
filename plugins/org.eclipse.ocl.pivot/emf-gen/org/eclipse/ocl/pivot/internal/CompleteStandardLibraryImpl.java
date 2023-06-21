@@ -412,7 +412,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 
 		@Override
-		public @NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
+		public @Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
 			templateParameters.put(formalTemplateParameter.getTemplateParameterId().getIndex(), formalTemplateParameter);
 			return super.put(formalTemplateParameter, actualType);
 		}
@@ -638,10 +638,10 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		if (templateArguments.size() != templateParameters.size()) {
 			throw new IllegalArgumentException("Incorrect template bindings for template type " + libraryType.getName());
 		}
-		boolean isUnspecialized = isUnspecialized(templateParameters, templateArguments);
-		if (isUnspecialized) {
-			return libraryType;
-		}
+	//	boolean isUnspecialized = isUnspecialized(templateParameters, templateArguments);
+	//	if (isUnspecialized) {
+	//		return libraryType;
+	//	}
 		CompleteClassInternal libraryCompleteClass = getCompleteModel().getMetamodelManager().getCompleteClass(libraryType);
 		org.eclipse.ocl.pivot.Class pivotClass = libraryCompleteClass.getPrimaryClass();
 		if (pivotClass instanceof CollectionType) {
@@ -1088,7 +1088,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return true;
 	}
 
-	protected boolean isUnspecialized(@NonNull List<TemplateParameter> templateParameters, @NonNull List<? extends Type> templateArguments) {
+/*	protected boolean isUnspecialized(@NonNull List<TemplateParameter> templateParameters, @NonNull List<? extends Type> templateArguments) {
 		int iMax = templateParameters.size();
 		assert templateArguments.size() == iMax;
 		for (int i = 0; i < iMax; i++) {
@@ -1097,7 +1097,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			}
 		}
 		return true;
-	}
+	} */
 
 	@Override
 	protected boolean isUnspecialized(@NonNull Type keyType, @Nullable Boolean keysAreNullFree,

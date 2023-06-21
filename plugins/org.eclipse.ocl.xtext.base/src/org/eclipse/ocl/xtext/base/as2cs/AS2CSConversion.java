@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
@@ -333,20 +334,27 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	 */
 	private @NonNull List<@NonNull NamedElement> getPath(@NonNull Element element) {
 		List<@NonNull NamedElement> path = new ArrayList<>();
-		for (EObject eContainer = element/*.eContainer()*/; eContainer instanceof Element; eContainer = eContainer.eContainer()) {
-			eContainer = metamodelManager.getPrimaryElement(eContainer);
-			if (eContainer instanceof Model) {
+		for (EObject eObject = element; eObject instanceof Element; ) {
+			eObject = metamodelManager.getPrimaryElement(eObject);
+			if (eObject instanceof Model) {
 				break;				// Skip root Model
 			}
-			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && OrphanageImpl.isOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
+			if ((eObject instanceof org.eclipse.ocl.pivot.Package) && OrphanageImpl.isOrphanage((org.eclipse.ocl.pivot.Package)eObject)) {
 				break;				// Skip orphan package
 			}
-			if (eContainer instanceof TemplateSignature) {
-				continue;			// Skip signature
+		//	if (eContainer instanceof TemplateSignature) {
+		//		continue;			// Skip signature
+		//	}
+			if (eObject instanceof NamedElement) {
+				path.add(0, (NamedElement)eObject);
 			}
-			if (eContainer instanceof NamedElement) {
-				path.add(0, (NamedElement)eContainer);
+			if (eObject instanceof TemplateableElement) {
+				TemplateableElement generic = ((TemplateableElement)eObject).getGeneric();
+				if (generic != null) {
+					eObject = generic;
+				}
 			}
+			eObject = eObject.eContainer();
 		}
 		return path;
 	}

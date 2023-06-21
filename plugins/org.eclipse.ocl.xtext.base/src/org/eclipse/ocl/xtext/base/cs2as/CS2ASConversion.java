@@ -1354,7 +1354,13 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				if (csMultiplicity != null) {
 					isNullFree = ElementUtil.isNullFree(csMultiplicity);
 				}
+				assert templateArgument != null;
+				if (templateArgument == unspecializedPivotElement.getOwnedSignature().getOwnedParameters().get(0)) {
+					getClass();				// XXX Bug 582115
+				};
+			//	assert templateArgument != unspecializedPivotElement.getOwnedSignature().getOwnedParameters().get(0);	// XXX Bug 582115
 				specializedPivotElement = templateArgument != null ? standardLibrary.getCollectionType((CollectionType) unspecializedPivotElement, templateArgument, isNullFree, null, null) : unspecializedPivotElement;
+				assert specializedPivotElement.getOwnedSignature() == null;		// XXX Bug 582115
 			}
 			else {
 				List<@NonNull Type> templateArguments = new ArrayList<@NonNull Type>();
@@ -1365,6 +1371,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					}
 				}
 				specializedPivotElement = standardLibrary.getLibraryType(unspecializedPivotElement, templateArguments);
+				assert specializedPivotElement.getOwnedSignature() == null;		// XXX Bug 582115
 			}
 		}
 		installPivotReference(csElement, specializedPivotElement, BaseCSPackage.Literals.TYPED_TYPE_REF_CS__REFERRED_TYPE);

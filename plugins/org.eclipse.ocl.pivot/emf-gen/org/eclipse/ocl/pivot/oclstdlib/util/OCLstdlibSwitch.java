@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.oclstdlib._Lambda_CC;
+import org.eclipse.ocl.pivot.oclstdlib._Lambda_CD;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 
@@ -238,6 +240,30 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				Collection<?> uniqueCollection = (Collection<?>)theEObject;
 				T1 result = caseUniqueCollection(uniqueCollection);
 				if (result == null) result = caseCollection(uniqueCollection);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 22: {
+				@SuppressWarnings("unchecked") Map.Entry<?, ?> _Entry_COCO = (Map.Entry<?, ?>)theEObject;
+				T1 result = case_Entry_COCO(_Entry_COCO);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 23: {
+				@SuppressWarnings("unchecked") Map.Entry<?, ?> _Entry_CRCR = (Map.Entry<?, ?>)theEObject;
+				T1 result = case_Entry_CRCR(_Entry_CRCR);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 24: {
+				_Lambda_CC<?, ?> _Lambda_CC = (_Lambda_CC<?, ?>)theEObject;
+				T1 result = case_Lambda_CC(_Lambda_CC);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 25: {
+				_Lambda_CD<?, ?> _Lambda_CD = (_Lambda_CD<?, ?>)theEObject;
+				T1 result = case_Lambda_CD(_Lambda_CD);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -572,6 +598,66 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @generated
 	 */
 	public <T> T1 caseUniqueCollection(Collection<T> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Lambda CD</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Lambda CD</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <C, R> T1 case_Lambda_CD(_Lambda_CD<C, R> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Entry CRCR</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Entry CRCR</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <K, V> T1 case_Entry_CRCR(Map.Entry<K, V> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Lambda CC</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Lambda CC</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <C, R> T1 case_Lambda_CC(_Lambda_CC<C, R> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Entry COCO</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Entry COCO</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <K, V> T1 case_Entry_COCO(Map.Entry<K, V> object) {
 		return null;
 	}
 

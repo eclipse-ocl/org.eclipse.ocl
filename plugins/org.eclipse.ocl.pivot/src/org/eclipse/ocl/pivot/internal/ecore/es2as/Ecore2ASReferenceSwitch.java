@@ -12,11 +12,13 @@
 package org.eclipse.ocl.pivot.internal.ecore.es2as;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -43,6 +45,7 @@ import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
@@ -58,6 +61,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -145,6 +149,20 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	}
 
 	@Override
+	public Object caseEGenericType(EGenericType eGenericType) {
+		assert eGenericType != null;
+		ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
+		if (eTypeParameter != null) {
+			return doInPackageSwitch(eTypeParameter);
+		}
+		EClassifier eClassifier = eGenericType.getEClassifier();
+		if (eClassifier != null) {
+			return doInPackageSwitch(eClassifier);
+		}
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Object caseEOperation(EOperation eOperation) {
 		assert eOperation != null;
 		if (converter.isInvariant(eOperation)) {
@@ -203,7 +221,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			oppositeProperty = converter.getCreated(Property.class, eOpposite);
 			asProperty.setOpposite(oppositeProperty);
 		}
-		else if (Boolean.valueOf(EcoreUtil.getAnnotation(eReference, PivotConstants.PROPERTY_ANNOTATION_SOURCE, PivotConstants.PROPERTY_SELF))) {
+		else if (Boolean.valueOf(AnnotationUtil.getEAnnotationValue(eReference, PivotConstants.PROPERTY_ANNOTATION_SOURCE, PivotConstants.PROPERTY_SELF))) {
 			asProperty.setOpposite(asProperty);
 		}
 		else {
@@ -394,15 +412,59 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		EGenericType eType = eTypedElement.getEGenericType();
 		if (eType != null) {
 			EClassifier eClassifier = eType.getEClassifier();
+			String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
+			boolean isEntry = AnnotationUtil.CLASSIFIER_ROLE_ENTRY.equals(role);
+			boolean isLambda = AnnotationUtil.CLASSIFIER_ROLE_LAMBDA.equals(role);
 			int lower = eTypedElement.getLowerBound();
 			int upper = eTypedElement.getUpperBound();
-			if ((lower == 0) && (upper == -1) && converter.isEcoreOnlyEntryClass(eClassifier)) {
+			if ((lower == 0) && (upper == -1) && isEntry) {		// Collection of Entry is a Map
 				pivotType = converter.getCreated(Type.class, eType);
 				assert converter.isEntryClass(eClassifier);
 				assert pivotType == null;
 				assert eClassifier != null;
 				isRequired = true;
-				pivotType = getEcoreOnlyEntryClassMapType((EClass)eClassifier);
+				pivotType = getImplicitEntryClassMapType(eType);
+			}
+			else if ((lower == 0) && (upper == -1) && converter.isEntryClass(eClassifier)) {
+				org.eclipse.ocl.pivot.Class pivotEntryType = converter.getCreated(org.eclipse.ocl.pivot.Class.class, eType);
+				assert converter.isEntryClass(eClassifier);
+				assert pivotEntryType != null;
+				assert eClassifier != null;
+				isRequired = true;
+				pivotType = getExplicitEntryClassMapType((EClass)eClassifier);
+				if (pivotType instanceof MapType) {
+					((MapType)pivotType).setEntryClass(pivotEntryType);
+				}
+			}
+			else if (/*(lower == 0) &&*/ (upper == 1) && isLambda) {
+				pivotType = converter.getCreated(Type.class, eType);
+				assert !converter.isEntryClass(eClassifier);
+				assert pivotType == null;
+				assert eClassifier != null;
+				isRequired = /*(upper == 1) &&*/ (lower >= 1);
+				List<EGenericType> eTypeArguments = eType.getETypeArguments();
+				final int size = eTypeArguments.size();
+				assert size >= 2;
+				Type contextType = null;
+				List<@NonNull Type> parameterTypes = new ArrayList<>(size-2);
+				Type resultType = null;
+				for (int i = 0; i < size; i++) {
+					EGenericType eTypeArgument = eTypeArguments.get(i);
+					Type argumentType = (Type)doInPackageSwitch(eTypeArgument);
+					assert argumentType != null;
+					if (i == 0) {
+						contextType = argumentType;
+					}
+					else if (i < size-1) {
+						parameterTypes.add(argumentType);
+					}
+					else {
+						resultType = argumentType;
+					}
+				}
+				assert contextType != null;
+				assert resultType != null;
+				pivotType = standardLibrary.getLambdaType(contextType, parameterTypes, resultType, null);
 			}
 			else {
 				pivotType = converter.getASType(eType);
@@ -521,9 +583,10 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	}
 
 	/**
+	 * @param pivotEntryType
 	 * @since 1.7
 	 */
-	protected @Nullable Type getEcoreOnlyEntryClassMapType(@NonNull EClass eClass) {
+	protected @Nullable Type getExplicitEntryClassMapType(@NonNull EClass eClass) {
 		EStructuralFeature keyFeature = eClass.getEStructuralFeature("key");
 		EStructuralFeature valueFeature = eClass.getEStructuralFeature("value");
 		if (keyFeature == null) {
@@ -550,6 +613,37 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					boolean valuesAreNullFree = valueFeature.isRequired();
 					return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 				}
+			}
+		}
+		return null;
+	}
+
+	protected @Nullable Type getImplicitEntryClassMapType(@NonNull EGenericType eGenericType) {
+		EClass eClass = (EClass)eGenericType.getEClassifier();
+		EList<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
+		EStructuralFeature keyFeature = eClass.getEStructuralFeature("key");
+		EStructuralFeature valueFeature = eClass.getEStructuralFeature("value");
+		if (keyFeature == null) {
+			converter.error("Missing 'key' feature for map '" + eClass.getName() + "");
+		}
+		else if (valueFeature == null) {
+			converter.error("Missing 'value' feature for map '" + eClass.getName() + "");
+		}
+		else if (eTypeArguments.size() != 2) {
+			converter.error("Inconsistent template arguments for map of '" + eClass.getName() + "");
+		}
+		else {
+			EGenericType keyGenericType = eTypeArguments.get(0);
+			EGenericType valueGenericType = eTypeArguments.get(1);
+			assert keyGenericType != null;
+			assert valueGenericType != null;
+			Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<>();
+			Type keyType = converter.resolveType(resolvedSpecializations, keyGenericType);
+			Type valueType = converter.resolveType(resolvedSpecializations, valueGenericType);
+			if ((keyType != null) && (valueType != null)) {
+				boolean keysAreNullFree = keyFeature.isRequired();
+				boolean valuesAreNullFree = valueFeature.isRequired();
+				return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 			}
 		}
 		return null;

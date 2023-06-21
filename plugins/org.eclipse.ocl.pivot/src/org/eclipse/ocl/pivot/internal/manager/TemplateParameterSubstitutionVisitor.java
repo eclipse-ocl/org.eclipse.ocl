@@ -100,8 +100,8 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		return TemplateParameterSubstitutions.EMPTY;
 	}
 
-	protected static @NonNull TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
-		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
+	protected static @NonNull TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type zzselfTypeValue) {
+		assert zzselfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 		Resource resource = eObject.eResource();
 		if (environmentFactory instanceof EnvironmentFactoryInternalExtension) {
 			return ((EnvironmentFactoryInternalExtension)environmentFactory).createTemplateParameterSubstitutionVisitor(selfType, null);
@@ -118,8 +118,9 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	 * Return the specialized form of type analyzing expr to determine the formal to actual parameter mappings under the
 	 * supervision of a metamodelManager and using selfType as the value of OclSelf.
 	 */
-	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp callExp, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
-		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
+	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp callExp, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type zzselfTypeValue) {
+		assert zzselfTypeValue == null;			// Bug 580791 Enforcing redundant argument
+		// assert type == callExp.getType();		// No type is a clue for assignment to callEXp.getType();
 		TemplateParameterSubstitutionVisitor visitor = createVisitor(callExp, environmentFactory, selfType, null);
 		visitor.exclude(callExp);
 		visitor.visit(callExp);
@@ -135,11 +136,11 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	 */
 	private Element actual;
 
-	public TemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public TemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type zzselfTypeValue) {
 		super(new HashMap<>());
 		this.environmentFactory = environmentFactory;
 		this.selfType = selfType;
-		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
+		assert zzselfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
 	protected void analyzeFeature(@Nullable Feature formalFeature, @Nullable TypedElement actualElement) {
@@ -263,7 +264,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	@Override
-	public @NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
+	public @Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
 		TemplateParameterId elementId = formalTemplateParameter.getTemplateParameterId();
 		int index = elementId.getIndex();
 		Type oldType = context.get(index);
@@ -282,7 +283,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		}
 	}
 
-	public @NonNull Type specializeType(@NonNull Type type) {
+	public @NonNull Type specializeType(@NonNull Type type) {				// FIXME resolve standardLibrary.getSpecializedType duplication
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		TemplateParameter asTemplateParameter = type.isTemplateParameter();
 		if (asTemplateParameter != null) {
