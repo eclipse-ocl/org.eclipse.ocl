@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.InstanceSpecification;
-import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.ProfileApplication;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -41,7 +40,6 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.complete.PackageListeners;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * <!-- begin-user-doc -->
@@ -756,9 +754,9 @@ implements org.eclipse.ocl.pivot.Package {
 
 	@Override
 	public void setName(String newName) {
-		if (PivotConstants.ORPHANAGE_NAME.equals(newName)) {
-			assert this instanceof Orphanage;
-		}
+	//	if (PivotConstants.ORPHANAGE_NAME.equals(newName)) {
+	//		assert this instanceof Orphanage;
+	//	}
 		String oldName = name;
 		EObject eContainer = eContainer();
 		if ((oldName != null) && !oldName.equals(newName)) {

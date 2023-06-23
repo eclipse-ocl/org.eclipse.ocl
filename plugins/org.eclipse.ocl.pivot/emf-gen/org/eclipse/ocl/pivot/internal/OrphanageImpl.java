@@ -253,8 +253,8 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	 *
 	 * @since 1.18
 	 */
-	public static @NonNull Orphanage createLocalOrphanage(@NonNull Model asModel) {
-		Orphanage orphanage = PivotFactory.eINSTANCE.createOrphanage();
+	public static org.eclipse.ocl.pivot.@NonNull Package createLocalOrphanage(@NonNull Model asModel) {
+		org.eclipse.ocl.pivot.Package orphanage = PivotFactory.eINSTANCE.createPackage();
 		orphanage.setName(PivotConstants.ORPHANAGE_NAME);
 		orphanage.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
 		orphanage.setURI(PivotConstants.ORPHANAGE_URI);
@@ -435,7 +435,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 	public static boolean isOrphanage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		String uri = asPackage.getURI();
 		boolean isOrphanage = isOrphanage(uri);
-		assert isOrphanage == asPackage instanceof Orphanage;
+	//	assert isOrphanage == asPackage instanceof Orphanage;
 		return isOrphanage;
 	}
 
