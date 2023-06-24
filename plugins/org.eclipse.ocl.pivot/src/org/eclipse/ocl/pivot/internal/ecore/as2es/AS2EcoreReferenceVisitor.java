@@ -235,53 +235,39 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		Type keyType = PivotUtil.getKeyType(pivotType);
 		Type valueType = PivotUtil.getValueType(pivotType);
 		StringBuilder s = new StringBuilder();
-		s.append(keyType.getName());
-		if (!pivotType.isKeysAreNullFree()) {
-			s.append("Opt");
-		}
-		s.append("2");
-		s.append(valueType.getName());
-		if (!pivotType.isValuesAreNullFree()) {
-			s.append("Opt");
-		}
-		String name = s.toString();
-		EClassifier eClassifier = eSyntheticsPackage.getEClassifier(name);
+		s.append("Entry");
+		s.append(keyType instanceof DataType ? "D" : "C");
+		s.append(pivotType.isKeysAreNullFree() ? "R" : "O");
+		s.append(valueType instanceof DataType ? "D" : "C");
+		s.append(pivotType.isValuesAreNullFree() ? "R" : "O");
+		String entryName = s.toString();
+		EClassifier eClassifier = eSyntheticsPackage.getEClassifier(entryName);
 		if (eClassifier instanceof EClass) {
 			return (EClass) eClassifier;
 		}
 		@SuppressWarnings("null")
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-		eClass.setName(name);
+		eClass.setName(entryName);
+		eClass.setAbstract(true);
+		eClass.setInterface(true);
 		eClass.setInstanceClassName(java.util.Map.Entry.class.getName());
-		EStructuralFeature eKeyFeature;
-		if (keyType instanceof DataType) {
-			eKeyFeature = EcoreFactory.eINSTANCE.createEAttribute();
-		}
-		else {
-			eKeyFeature = EcoreFactory.eINSTANCE.createEReference();
-		}
+		context.setDetail(eClass, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE, PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY);
+		eSyntheticsPackage.getEClassifiers().add(eClass);
+		//
+		EStructuralFeature eKeyFeature = keyType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
 		eKeyFeature.setName("key");
 		eKeyFeature.setEType((EClassifier)(getTypeRefVisitor(pivotType.isKeysAreNullFree(), eKeyFeature)).safeVisit(keyType));
 		eKeyFeature.setLowerBound(pivotType.isKeysAreNullFree() ? 1 : 0);
 		eKeyFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eKeyFeature);
-		EStructuralFeature eValueFeature;
-		if (valueType instanceof DataType) {
-			eValueFeature = EcoreFactory.eINSTANCE.createEAttribute();
-		}
-		else {
-			eValueFeature = EcoreFactory.eINSTANCE.createEReference();
-		}
+		//
+		EStructuralFeature eValueFeature = valueType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
 		eValueFeature.setName("value");
 		eValueFeature.setEType((EClassifier)getTypeRefVisitor(pivotType.isValuesAreNullFree(), eKeyFeature).safeVisit(valueType));
 		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
 		eValueFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eValueFeature);
-	//	EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-	//	eAnnotation.setSource(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE);
-	//	eClass.getEAnnotations().add(eAnnotation);
-		context.setDetail(eClass, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE, PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY);
-		eSyntheticsPackage.getEClassifiers().add(eClass);
+		//
 		return eClass;
 	}
 
