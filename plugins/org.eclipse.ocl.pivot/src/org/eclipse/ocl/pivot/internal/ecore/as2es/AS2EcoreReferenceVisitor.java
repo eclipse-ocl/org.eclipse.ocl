@@ -231,6 +231,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	private @NonNull EClass getEntryEClass(@NonNull EPackage ePackage, @NonNull MapType pivotType) {
+		EPackage eSyntheticsPackage = getSyntheticsEPackage(ePackage);
 		Type keyType = PivotUtil.getKeyType(pivotType);
 		Type valueType = PivotUtil.getValueType(pivotType);
 		StringBuilder s = new StringBuilder();
@@ -244,7 +245,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			s.append("Opt");
 		}
 		String name = s.toString();
-		EClassifier eClassifier = ePackage.getEClassifier(name);
+		EClassifier eClassifier = eSyntheticsPackage.getEClassifier(name);
 		if (eClassifier instanceof EClass) {
 			return (EClass) eClassifier;
 		}
@@ -280,7 +281,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	//	eAnnotation.setSource(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE);
 	//	eClass.getEAnnotations().add(eAnnotation);
 		context.setDetail(eClass, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE, PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY);
-		ePackage.getEClassifiers().add(eClass);
+		eSyntheticsPackage.getEClassifiers().add(eClass);
 		return eClass;
 	}
 

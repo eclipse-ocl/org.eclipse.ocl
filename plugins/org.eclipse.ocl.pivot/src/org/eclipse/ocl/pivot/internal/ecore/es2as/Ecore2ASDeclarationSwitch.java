@@ -418,7 +418,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		if (converter.isLibrary(ePackage)) {
 			pivotElement = converter.refreshElement(Library.class, PivotPackage.Literals.LIBRARY, ePackage);
 		}
-		else if (converter.isRequired(ePackage)) {
+		else if ((ePackage.eContainer() == null) || converter.isRequired(ePackage)) {
 			pivotElement = converter.refreshElement(org.eclipse.ocl.pivot.Package.class, PivotPackage.Literals.PACKAGE, ePackage);
 		}
 		else {
