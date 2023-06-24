@@ -252,28 +252,30 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eClass.setInstanceClassName(java.util.Map.Entry.class.getName());
 		context.setDetail(eClass, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE, PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY);
 		eSyntheticsPackage.getEClassifiers().add(eClass);
+		List<ETypeParameter> eTypeParameters = eClass.getETypeParameters();
+		List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
 		//
 		ETypeParameter eKeyTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
 		eKeyTypeParameter.setName("K");
-		eClass.getETypeParameters().add(eKeyTypeParameter);
+		eTypeParameters.add(eKeyTypeParameter);
 		//
 		ETypeParameter eValueTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
 		eValueTypeParameter.setName("V");
-		eClass.getETypeParameters().add(eValueTypeParameter);
+		eTypeParameters.add(eValueTypeParameter);
 		//
 		EStructuralFeature eKeyFeature = keyType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
 		eKeyFeature.setName("key");
-		eKeyFeature.setEType((EClassifier)(getTypeRefVisitor(pivotType.isKeysAreNullFree(), eKeyFeature)).safeVisit(keyType));
+		setEType(eKeyFeature, keyType, pivotType.isKeysAreNullFree());
 		eKeyFeature.setLowerBound(pivotType.isKeysAreNullFree() ? 1 : 0);
 		eKeyFeature.setUpperBound(1);
-		eClass.getEStructuralFeatures().add(eKeyFeature);
+		eStructuralFeatures.add(eKeyFeature);
 		//
 		EStructuralFeature eValueFeature = valueType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
 		eValueFeature.setName("value");
-		eValueFeature.setEType((EClassifier)getTypeRefVisitor(pivotType.isValuesAreNullFree(), eValueFeature).safeVisit(valueType));
+		setEType(eValueFeature, valueType, pivotType.isValuesAreNullFree());
 		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
 		eValueFeature.setUpperBound(1);
-		eClass.getEStructuralFeatures().add(eValueFeature);
+		eStructuralFeatures.add(eValueFeature);
 		//
 		return eClass;
 	}
@@ -329,10 +331,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return eSyntheticsPackage;
 	}
 
-	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, @NonNull ETypedElement eTypedElement) {
-		boolean isDataType = eTypedElement instanceof EAttribute;
-		return getTypeRefVisitor(isRequired, isDataType);
-	}
+//	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, @NonNull ETypedElement eTypedElement) {
+//		boolean isDataType = eTypedElement instanceof EAttribute;
+//		return getTypeRefVisitor(isRequired, isDataType);
+//	}
 
 	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, boolean isDataType) {
 		AS2EcoreTypeRefVisitor visitor;
@@ -412,11 +414,14 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return getTypeRefVisitor(isRequired, asType instanceof DataType).resolveEGenericType2(asType);
 	}
 
+//	protected void setEGenericType(@NonNull EStructuralFeature eFeature, @NonNull Type valueType, boolean isRequired) {
+//		AS2EcoreTypeRefVisitor typeRefVisitor2 = getTypeRefVisitor(isRequired, eFeature instanceof EAttribute);
+//		eFeature.setEType((EClassifier)typeRefVisitor2.safeVisit(valueType));		// XXX resolveType
+//	}
+
 	/**
 	 * @since 1.3
 	 */
-	/* @deprecated only called from setETypeAndMultiplicity */
-	@Deprecated
 	private void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType, boolean isRequired) {
 		assert !(pivotType instanceof MapType);
 		/*	if (pivotType instanceof MapType) {
@@ -440,7 +445,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			}
 			return;
 		} */
-		EObject eObject = getTypeRefVisitor(isRequired, eTypedElement).safeVisit(pivotType);
+		EObject eObject = getTypeRefVisitor(isRequired, eTypedElement instanceof EAttribute).safeVisit(pivotType);
 		if (eObject instanceof EGenericType) {
 			eTypedElement.setEGenericType((EGenericType)eObject);
 		}
