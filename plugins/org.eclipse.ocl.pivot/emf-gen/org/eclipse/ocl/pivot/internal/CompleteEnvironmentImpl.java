@@ -414,7 +414,7 @@ public class CompleteEnvironmentImpl extends ElementImpl implements CompleteEnvi
 			//			if (secondSubstitution != null) {
 			//				secondType = secondSubstitution;
 			//			}
-			secondType = secondSubstitutions.put(secondTemplateParameter, firstType);
+			/*secondType =*/ secondSubstitutions.put(secondTemplateParameter, firstType);
 			return true;
 		}
 		if (firstType == secondType) {

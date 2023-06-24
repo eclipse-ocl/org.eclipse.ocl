@@ -263,7 +263,7 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	}
 
 	@Override
-	public @NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
+	public @Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
 		TemplateParameterId elementId = formalTemplateParameter.getTemplateParameterId();
 		int index = elementId.getIndex();
 		Type oldType = context.get(index);

@@ -412,7 +412,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 
 		@Override
-		public @NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
+		public @Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
 			templateParameters.put(formalTemplateParameter.getTemplateParameterId().getIndex(), formalTemplateParameter);
 			return super.put(formalTemplateParameter, actualType);
 		}

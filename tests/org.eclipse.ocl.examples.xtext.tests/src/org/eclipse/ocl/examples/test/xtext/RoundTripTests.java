@@ -200,6 +200,7 @@ public class RoundTripTests extends XtextTestCase
 				ResourceSetImpl resourceSet2 = new ResourceSetImpl();
 				StandaloneProjectMap.getAdapter(resourceSet).initializeResourceSet(resourceSet2);
 				Resource referenceResource = ClassUtil.nonNullState(resourceSet2.getResource(referenceURI, true));
+				TestUtil.normalizeBodies((ASResource) referenceResource, Boolean.FALSE, Boolean.TRUE);		// XXX
 				Model referenceModel = PivotUtil.getModel(referenceResource);
 				String savedExternalURI = referenceModel.getExternalURI();
 				Model outputModel = PivotUtil.getModel(outputASResource);
