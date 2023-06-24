@@ -245,14 +245,21 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		if (eClassifier instanceof EClass) {
 			return (EClass) eClassifier;
 		}
-		@SuppressWarnings("null")
-		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.setName(entryName);
 		eClass.setAbstract(true);
 		eClass.setInterface(true);
 		eClass.setInstanceClassName(java.util.Map.Entry.class.getName());
 		context.setDetail(eClass, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE, PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY);
 		eSyntheticsPackage.getEClassifiers().add(eClass);
+		//
+		ETypeParameter eKeyTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+		eKeyTypeParameter.setName("K");
+		eClass.getETypeParameters().add(eKeyTypeParameter);
+		//
+		ETypeParameter eValueTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+		eValueTypeParameter.setName("V");
+		eClass.getETypeParameters().add(eValueTypeParameter);
 		//
 		EStructuralFeature eKeyFeature = keyType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
 		eKeyFeature.setName("key");
@@ -263,7 +270,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		//
 		EStructuralFeature eValueFeature = valueType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
 		eValueFeature.setName("value");
-		eValueFeature.setEType((EClassifier)getTypeRefVisitor(pivotType.isValuesAreNullFree(), eKeyFeature).safeVisit(valueType));
+		eValueFeature.setEType((EClassifier)getTypeRefVisitor(pivotType.isValuesAreNullFree(), eValueFeature).safeVisit(valueType));
 		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
 		eValueFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eValueFeature);
@@ -401,43 +408,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 	}
 
-	protected EGenericType resolveType2(Type valueType) {
-		EGenericType eValueGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-		if (valueType instanceof TemplateParameter) {
-			ETypeParameter eValueType = getCreated(ETypeParameter.class, valueType);
-			eValueGenericType.setETypeParameter(eValueType);
-		}
-		else {
-			EClassifier eValueType = getCreated(EClassifier.class, valueType);
-			assert eValueType != null;
-			for (ETypeParameter eTypeParameter : eValueType.getETypeParameters()) {
-				EGenericType eValueParameterGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-				eValueParameterGenericType.setETypeParameter(eTypeParameter);
-				eValueGenericType.getETypeArguments().add(eValueParameterGenericType);
-			}
-			eValueGenericType.setEClassifier(eValueType);
-		}
-		return eValueGenericType;
+	private @NonNull EGenericType resolveType(boolean isRequired, @NonNull Type asType) {
+		return getTypeRefVisitor(isRequired, asType instanceof DataType).resolveEGenericType2(asType);
 	}
 
-	protected EGenericType resolveType(Type keyType) {
-		EGenericType eKeyGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-		if (keyType instanceof TemplateParameter) {
-			ETypeParameter eKeyType = getCreated(ETypeParameter.class, keyType);
-			eKeyGenericType.setETypeParameter(eKeyType);
-		}
-		else {
-			EClassifier eKeyType = getCreated(EClassifier.class, keyType);
-			assert eKeyType != null;
-			for (ETypeParameter eTypeParameter : eKeyType.getETypeParameters()) {
-				EGenericType eKeyParameterGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-				eKeyParameterGenericType.setETypeParameter(eTypeParameter);
-				eKeyGenericType.getETypeArguments().add(eKeyParameterGenericType);
-			}
-			eKeyGenericType.setEClassifier(eKeyType);
-		}
-		return eKeyGenericType;
-	}
 	/**
 	 * @since 1.3
 	 */
@@ -560,22 +534,23 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 					eGenericType.setEClassifier(lambdaEClass);
 					eTypedElement.setEGenericType(eGenericType);
+					List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
 					//
 					Type contextType = PivotUtil.getContextType(lambdaType);
 					ETypeParameter eContextType = getCreated(ETypeParameter.class, contextType);
 					EGenericType eContextGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 					eContextGenericType.setETypeParameter(eContextType);
-					eGenericType.getETypeArguments().add(eContextGenericType);
+					eTypeArguments.add(eContextGenericType);
 					//
 					for (Type parameterType : PivotUtil.getParameterType(lambdaType)) {
 						ETypeParameter eParameterType = getCreated(ETypeParameter.class, parameterType);
 						EGenericType eParameterGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 						eParameterGenericType.setETypeParameter(eParameterType);
-						eGenericType.getETypeArguments().add(eParameterGenericType);
+						eTypeArguments.add(eParameterGenericType);
 					}
 					//
 					Type resultType = PivotUtil.getResultType(lambdaType);
-					if (resultType instanceof TemplateParameter) {
+				/*	if (resultType instanceof TemplateParameter) {
 						ETypeParameter eResultType = getCreated(ETypeParameter.class, resultType);
 						EGenericType eResultGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 						eResultGenericType.setETypeParameter(eResultType);
@@ -584,8 +559,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					else {
 						if ((eTypedElement.eContainer() instanceof EOperation) && "closure".equals(((ENamedElement)eTypedElement.eContainer()).getName())) {
 							getClass();		// XXX
-						}
-						AS2EcoreTypeRefVisitor typeRefVisitor2 = getTypeRefVisitor(isRequired, resultType instanceof DataType);
+						} */
+						EGenericType eResultGenericType = resolveType(isRequired, resultType);
+						eTypeArguments.add(eResultGenericType);
+					/*	AS2EcoreTypeRefVisitor typeRefVisitor2 = getTypeRefVisitor(isRequired, resultType instanceof DataType);
 						EObject eResultType2 = typeRefVisitor2.safeVisit(resultType);
 						if (eResultType2 instanceof EGenericType) {
 							eGenericType.getETypeArguments().add((EGenericType) eResultType2);
@@ -602,8 +579,8 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 						//	eResultGenericType.getETypeArguments().add(eResultGenericType);
 							eResultGenericType.setEClassifier(eResultType);
 							eGenericType.getETypeArguments().add(eResultGenericType);
-						}
-					}
+						} */
+				//	}
 					break;
 				}
 			}
@@ -625,15 +602,15 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 						EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 						eGenericType.setEClassifier(entryEClass);
 						eTypedElement.setEGenericType(eGenericType);
+						List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
 						//
 						Type keyType = PivotUtil.getKeyType(mapType);
-						EGenericType eKeyGenericType = resolveType(keyType);
-						eGenericType.getETypeArguments().add(eKeyGenericType);
+						EGenericType eKeyGenericType = resolveType(mapType.isKeysAreNullFree(), keyType);
+						eTypeArguments.add(eKeyGenericType);
 						//
 						Type valueType = PivotUtil.getValueType(mapType);
-						EGenericType eValueGenericType = resolveType2(
-							valueType);
-						eGenericType.getETypeArguments().add(eValueGenericType);
+						EGenericType eValueGenericType = resolveType(mapType.isValuesAreNullFree(), valueType);
+						eTypeArguments.add(eValueGenericType);
 						break;
 					}
 				}

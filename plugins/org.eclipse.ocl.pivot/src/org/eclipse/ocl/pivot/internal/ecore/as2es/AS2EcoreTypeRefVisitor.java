@@ -103,6 +103,23 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 		}
 	}
 
+	public @NonNull EGenericType resolveEGenericType2(@NonNull Type asType) {
+		EObject eType = safeVisit(asType);
+		if (eType instanceof EGenericType) {
+			return (EGenericType) eType;
+		}
+		else if (eType instanceof ETypeParameter) {
+			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+			eGenericType.setETypeParameter((ETypeParameter) eType);
+			return eGenericType;
+		}
+		else {
+			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+			eGenericType.setEClassifier((EClassifier) eType);
+			return eGenericType;
+		}
+	}
+
 	@Override
 	public EObject safeVisit(@Nullable Visitable v) {
 		if (v instanceof Type) {
