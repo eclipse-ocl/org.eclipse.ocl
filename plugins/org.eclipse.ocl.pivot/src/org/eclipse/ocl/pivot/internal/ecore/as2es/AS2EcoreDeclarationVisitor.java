@@ -446,7 +446,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitCollectionType(@NonNull CollectionType pivotCollectionType) {
-		if (pivotCollectionType.getOwnedBindings().size() > 0) {
+		return visitClass(pivotCollectionType);
+	/*	if (pivotCollectionType.getOwnedBindings().size() > 0) {
 			return null;
 		}
 		@SuppressWarnings("null")
@@ -482,7 +483,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		eClass.setAbstract(pivotCollectionType.isIsAbstract());
 		eClass.setInterface(pivotCollectionType.isIsInterface());
 		context.defer(pivotCollectionType);		// Defer superclass resolution
-		return eClass;
+		return eClass; */
 	}
 
 	@Override
@@ -564,7 +565,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	/**
 	 * @since 1.3
-	 */
+	 *
 	@Override
 	public EObject visitMapType(@NonNull MapType pivotMapType) {
 		if (pivotMapType.getOwnedBindings().size() > 0) {
@@ -581,7 +582,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		eClass.setInterface(pivotMapType.isIsInterface());
 		context.defer(pivotMapType);		// Defer superclass resolution
 		return eClass;
-	}
+	} */
 
 	@Override
 	public Object visitModel(@NonNull Model pivotModel) {
