@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -53,6 +54,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -282,8 +284,63 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return eClass;
 	}
 
+	private @NonNull EClass getLambdaEClass(@NonNull EPackage ePackage, @NonNull LambdaType pivotType) {
+		EPackage eSyntheticsPackage = getSyntheticsEPackage(ePackage);
+		Type contextType = PivotUtil.getContextType(pivotType);
+		List<@NonNull Type> parameterTypes = PivotUtil.getParameterType(pivotType);
+		Type resultType = PivotUtil.getResultType(pivotType);
+		StringBuilder s = new StringBuilder();
+		s.append("Lambda");
+		s.append(contextType instanceof DataType ? "D" : "C");
+		for (Type parameterType : parameterTypes) {
+			s.append(parameterType instanceof DataType ? "D" : "C");
+		}
+		s.append(resultType instanceof DataType ? "D" : "C");
+		String lambdaName = s.toString();
+		EClassifier eClassifier = eSyntheticsPackage.getEClassifier(lambdaName);
+		if (eClassifier instanceof EClass) {
+			return (EClass) eClassifier;
+		}
+		EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		eClass.setName(lambdaName);
+		eClass.setAbstract(true);
+		eClass.setInterface(true);
+		context.setDetail(eClass, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE, PivotConstantsInternal.CLASSIFIER_ROLE_LAMBDA);
+		eSyntheticsPackage.getEClassifiers().add(eClass);
+		//
+		ETypeParameter eKeyTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+		eKeyTypeParameter.setName("C");
+		eClass.getETypeParameters().add(eKeyTypeParameter);
+		for (int i = 0; i < parameterTypes.size(); i++) {
+			ETypeParameter eTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+			eTypeParameter.setName("P" + i);
+			eClass.getETypeParameters().add(eTypeParameter);
+		}
+		ETypeParameter eValueTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+		eValueTypeParameter.setName("R");
+		eClass.getETypeParameters().add(eValueTypeParameter);
+		//
+		return eClass;
+	}
+
+	private @NonNull EPackage getSyntheticsEPackage(@NonNull EPackage ePackage) {
+		EPackage eSyntheticsPackage = NameUtil.getENamedElement(ePackage.getESubpackages(), "oclSynthetics");
+		if (eSyntheticsPackage == null) {
+			eSyntheticsPackage = EcoreFactory.eINSTANCE.createEPackage();
+			eSyntheticsPackage.setName("oclSynthetics");
+			eSyntheticsPackage.setNsURI("oclSynthetics");
+			eSyntheticsPackage.setNsPrefix("oclSynthetics");
+			ePackage.getESubpackages().add(eSyntheticsPackage);
+		}
+		return eSyntheticsPackage;
+	}
+
 	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, @NonNull ETypedElement eTypedElement) {
 		boolean isDataType = eTypedElement instanceof EAttribute;
+		return getTypeRefVisitor(isRequired, isDataType);
+	}
+
+	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, boolean isDataType) {
 		AS2EcoreTypeRefVisitor visitor;
 		if (isRequired) {
 			if (isDataType) {
@@ -357,18 +414,12 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 	}
 
-	/* @deprecated provide isRequired argument */
-	@Deprecated
-	protected void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType) {
-		setEType(eTypedElement, pivotType, false);
-	}
-
 	/**
 	 * @since 1.3
 	 */
 	/* @deprecated only called from setETypeAndMultiplicity */
 	@Deprecated
-	protected void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType, boolean isRequired) {
+	private void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType, boolean isRequired) {
 		assert !(pivotType instanceof MapType);
 		/*	if (pivotType instanceof MapType) {
 			org.eclipse.ocl.pivot.Class entryClass = ((MapType)pivotType).getEntryClass();
