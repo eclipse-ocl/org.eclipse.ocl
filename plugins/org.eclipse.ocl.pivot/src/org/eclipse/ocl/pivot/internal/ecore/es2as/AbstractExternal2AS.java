@@ -356,6 +356,21 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		return asLibraryAnnotation != null;
 	}
 
+	public boolean isRequired(@NonNull EPackage ePackage) {
+		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
+			String role = EcoreUtil.getAnnotation(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
+			if (role == null) {
+				return true;
+			}
+		}
+		for (EPackage eSubPackage : ePackage.getESubpackages()) {
+			if (isRequired(eSubPackage)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public abstract void queueEAnnotation(@NonNull EAnnotation eAnnotation);
 
 	public abstract void queueReference(@NonNull EObject eObject);

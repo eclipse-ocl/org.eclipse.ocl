@@ -418,8 +418,11 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		if (converter.isLibrary(ePackage)) {
 			pivotElement = converter.refreshElement(Library.class, PivotPackage.Literals.LIBRARY, ePackage);
 		}
-		else {
+		else if (converter.isRequired(ePackage)) {
 			pivotElement = converter.refreshElement(org.eclipse.ocl.pivot.Package.class, PivotPackage.Literals.PACKAGE, ePackage);
+		}
+		else {
+			return true;
 		}
 		String oldName = pivotElement.getName();
 		String newName = technology.getOriginalName(ePackage);
@@ -482,7 +485,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		//		doSwitchAll(pivotElement.getOwnedClasses(), eObject2.getEClassifiers());
 		List<org.eclipse.ocl.pivot.@NonNull Class> newList = new ArrayList<>();
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-			if (!converter.isEcoreOnlyEntryClass(eClassifier)) {
+			String role = EcoreUtil.getAnnotation(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
+			if (role == null) {
 				@SuppressWarnings("null")
 				org.eclipse.ocl.pivot.@NonNull Class pivotObject = (org.eclipse.ocl.pivot.Class) doSwitch(eClassifier);
 				newList.add(pivotObject);
@@ -848,9 +852,12 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	public <T extends Element> void doSwitchAll(List<T> pivotObjects, List<? extends EObject> eObjects) {
 		List<T> newList = new ArrayList<>();
 		for (EObject eObject : eObjects) {
-			@SuppressWarnings("unchecked")
-			T pivotObject = (T) doSwitch(eObject);
-			newList.add(pivotObject);
+			Object object = doSwitch(eObject);
+			if (object instanceof Element) {			// true or this for nothing
+				@SuppressWarnings("unchecked")
+				T pivotObject = (T) object;
+				newList.add(pivotObject);
+			}
 		}
 		PivotUtilInternal.refreshList(pivotObjects, newList);
 	}
