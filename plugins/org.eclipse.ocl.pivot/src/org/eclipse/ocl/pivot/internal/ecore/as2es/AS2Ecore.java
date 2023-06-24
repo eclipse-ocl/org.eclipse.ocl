@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EGenericType;
@@ -483,6 +484,16 @@ public class AS2Ecore extends AbstractConversion
 		return delegateInstaller;
 	}
 
+	@NonNull EAnnotation getEAnnotation(@NonNull EModelElement eModelElement, @NonNull String source) {
+		EAnnotation eAnnotation = eModelElement.getEAnnotation(source);
+		if (eAnnotation == null) {
+			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+			eAnnotation.setSource(source);
+			eModelElement.getEAnnotations().add(eAnnotation);
+		}
+		return eAnnotation;
+	}
+
 	public final @NonNull URI getEcoreURI() {
 		return ecoreURI;
 	}
@@ -553,6 +564,12 @@ public class AS2Ecore extends AbstractConversion
 				ecore2as.putCreated(eModelElement, primaryElement);
 			}
 		}
+	}
+
+	@Nullable String setDetail(@NonNull EModelElement eModelElement, @NonNull String source, @NonNull String key, @Nullable String value) {
+		EAnnotation eAnnotation = getEAnnotation(eModelElement, source);
+		EMap<String, String> details = eAnnotation.getDetails();
+		return details.put(key, value);
 	}
 
 	protected void setGenerationInProgress(@NonNull Resource asResource, boolean isLoading) {

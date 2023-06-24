@@ -305,7 +305,18 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	 * @since 1.7
 	 */
 	public boolean isEcoreOnlyEntryClass(@Nullable EClassifier eClassifier) {
-		return (eClassifier != null) && (eClassifier.getEAnnotation(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE) != null);
+//		return (eClassifier != null) && (eClassifier.getEAnnotation(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE) != null);
+		if (eClassifier == null) {
+			return false;
+		}
+		String role = EcoreUtil.getAnnotation(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
+		if (PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY.equals(role)) {
+			return true;				// XXX Boolean
+		}
+		else if (PivotConstantsInternal.CLASSIFIER_ROLE_LAMBDA.equals(role)) {
+			return false;				// XXX Boolean
+		}
+		return false;
 	}
 
 	/**

@@ -274,9 +274,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
 		eValueFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eValueFeature);
-		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-		eAnnotation.setSource(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE);
-		eClass.getEAnnotations().add(eAnnotation);
+	//	EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+	//	eAnnotation.setSource(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE);
+	//	eClass.getEAnnotations().add(eAnnotation);
+		context.setDetail(eClass, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE, PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY);
 		ePackage.getEClassifiers().add(eClass);
 		return eClass;
 	}
