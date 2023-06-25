@@ -197,6 +197,9 @@ implements TypedElement {
 			if (orphanage != null) {
 				orphanage.addReference(newType, this);
 			}
+		//	if (newType instanceof TemplateableElement) {
+		//		assert ((TemplateableElement)newType).getOwnedSignature() == null;		// XXX Bug 582115
+		//	}
 		}
 		setTypeGen(newType);
 	}
