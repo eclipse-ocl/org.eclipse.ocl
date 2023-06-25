@@ -333,11 +333,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return eSyntheticsPackage;
 	}
 
-//	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, @NonNull ETypedElement eTypedElement) {
-//		boolean isDataType = eTypedElement instanceof EAttribute;
-//		return getTypeRefVisitor(isRequired, isDataType);
-//	}
-
 	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, boolean isDataType) {
 		AS2EcoreTypeRefVisitor visitor;
 		if (isRequired) {
@@ -394,11 +389,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	private @NonNull EGenericType resolveType(boolean isRequired, @NonNull Type asType) {
 		return getTypeRefVisitor(isRequired, asType instanceof DataType).resolveEGenericType2(asType);
 	}
-
-//	protected void setEGenericType(@NonNull EStructuralFeature eFeature, @NonNull Type valueType, boolean isRequired) {
-//		AS2EcoreTypeRefVisitor typeRefVisitor2 = getTypeRefVisitor(isRequired, eFeature instanceof EAttribute);
-//		eFeature.setEType((EClassifier)typeRefVisitor2.safeVisit(valueType));		// XXX resolveType
-//	}
 
 	public <T extends EClassifier> void safeVisitAll(Class<?> javaClass, List<EGenericType> eGenericTypes, List<T> eTypes, List<? extends Type> asTypes) {
 		if (asTypes.size() > 0) {
@@ -470,9 +460,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	protected void setETypeAndMultiplicity(@NonNull ETypedElement eTypedElement, @Nullable Type pivotType, boolean isRequired) {
-		if ("lower".equals(eTypedElement.getName())) {
-			getClass();		// XXX
-		}
 		if ((pivotType == null) || (pivotType instanceof VoidType)) {				// Occurs for Operation return type
 			eTypedElement.setLowerBound(0);
 			eTypedElement.setUpperBound(1);
@@ -560,38 +547,8 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					}
 					//
 					Type resultType = PivotUtil.getResultType(lambdaType);
-				/*	if (resultType instanceof TemplateParameter) {
-						ETypeParameter eResultType = getCreated(ETypeParameter.class, resultType);
-						EGenericType eResultGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-						eResultGenericType.setETypeParameter(eResultType);
-						eGenericType.getETypeArguments().add(eResultGenericType);
-					}
-					else {
-						if ((eTypedElement.eContainer() instanceof EOperation) && "closure".equals(((ENamedElement)eTypedElement.eContainer()).getName())) {
-							getClass();		// XXX
-						} */
-					//	EGenericType eResultGenericType = resolveType(isRequired, resultType);
-						EGenericType eResultGenericType = getTypeRefVisitor(isRequired, false/*resultType instanceof DataType*/).resolveEGenericType2(resultType);
-						eTypeArguments.add(eResultGenericType);
-					/*	AS2EcoreTypeRefVisitor typeRefVisitor2 = getTypeRefVisitor(isRequired, resultType instanceof DataType);
-						EObject eResultType2 = typeRefVisitor2.safeVisit(resultType);
-						if (eResultType2 instanceof EGenericType) {
-							eGenericType.getETypeArguments().add((EGenericType) eResultType2);
-						}
-						else {
-							EClassifier eResultType = getCreated(EClassifier.class, resultType);
-							assert eResultType != null;
-							EGenericType eResultGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-							for (ETypeParameter eTypeParameter : eResultType.getETypeParameters()) {
-								EGenericType eResultParameterGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-								eResultParameterGenericType.setETypeParameter(eTypeParameter);
-								eResultGenericType.getETypeArguments().add(eResultParameterGenericType);
-							}
-						//	eResultGenericType.getETypeArguments().add(eResultGenericType);
-							eResultGenericType.setEClassifier(eResultType);
-							eGenericType.getETypeArguments().add(eResultGenericType);
-						} */
-				//	}
+					EGenericType eResultGenericType = getTypeRefVisitor(isRequired, false/*resultType instanceof DataType*/).resolveEGenericType2(resultType);
+					eTypeArguments.add(eResultGenericType);
 					break;
 				}
 			}

@@ -391,25 +391,6 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	public abstract void error(@NonNull String message);
 
 	/**
-	 * Return true if eClassifier is annotated to indicate that it is a Map Entry class that is required in
-	 * Ecore but is not required by the Pivot; i.e. it is only ever used to represent the Entry(K,V) underlying
-	 * a Map(K,V).
-	 *
-	 * @since 1.7
-	 */
-	@Deprecated
-	public boolean isEcoreOnlyEntryClass(@Nullable EClassifier eClassifier) {
-		String role = PivotUtil.getEAnnotationValue(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
-		if (PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY.equals(role)) {
-			return true;				// XXX Boolean
-		}
-		else if (PivotConstantsInternal.CLASSIFIER_ROLE_LAMBDA.equals(role)) {
-			return false;				// XXX Boolean
-		}
-		return false;
-	}
-
-	/**
 	 * Return true if eClassifier is an EClass whose instanceClass is set to java.util.Map.Entry.class
 	 * identifying its use as the Entry(K,V) for the Ecore Collection(Entry(K,V)) == Map(K,V) idiom.
 	 *
