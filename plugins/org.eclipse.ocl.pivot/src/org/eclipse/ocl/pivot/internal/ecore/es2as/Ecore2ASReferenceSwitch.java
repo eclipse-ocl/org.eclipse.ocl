@@ -411,10 +411,12 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		EGenericType eType = eTypedElement.getEGenericType();
 		if (eType != null) {
 			EClassifier eClassifier = eType.getEClassifier();
+			String role = PivotUtil.getEAnnotationValue(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
+			boolean isEntry = PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY.equals(role);
+			boolean isLambda = PivotConstantsInternal.CLASSIFIER_ROLE_LAMBDA.equals(role);
 			int lower = eTypedElement.getLowerBound();
 			int upper = eTypedElement.getUpperBound();
-			String role = PivotUtil.getEAnnotationValue(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
-			if ((lower == 0) && (upper == -1) && PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY.equals(role)) {
+			if ((lower == 0) && (upper == -1) && isEntry) {		// Collection of Entry is a Map
 				pivotType = converter.getCreated(Type.class, eType);
 				assert converter.isEntryClass(eClassifier);
 				assert pivotType == null;
@@ -433,11 +435,12 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					((MapType)pivotType).setEntryClass(pivotEntryType);
 				}
 			}
-			else if (/*(lower == 0) &&*/ (upper == 1) && PivotConstantsInternal.CLASSIFIER_ROLE_LAMBDA.equals(role)) {
+			else if (/*(lower == 0) &&*/ (upper == 1) && isLambda) {
 				pivotType = converter.getCreated(Type.class, eType);
 				assert !converter.isEntryClass(eClassifier);
 				assert pivotType == null;
 				assert eClassifier != null;
+				isRequired = /*(upper == 1) &&*/ (lower >= 1);
 				List<EGenericType> eTypeArguments = eType.getETypeArguments();
 				final int size = eTypeArguments.size();
 				assert size >= 2;
@@ -458,7 +461,6 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						resultType = argumentType;
 					}
 				}
-				isRequired = true;
 				assert contextType != null;
 				assert resultType != null;
 				pivotType = standardLibrary.getLambdaType(contextType, parameterTypes, resultType, null);
