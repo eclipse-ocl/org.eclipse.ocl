@@ -36,7 +36,7 @@ public class InvocationBehavior extends AbstractDelegatedBehavior<EOperation, In
 	public static final @NonNull String NAME = "invocationDelegates"; //$NON-NLS-1$
 
 	//	public boolean appliesTo(EOperation operation) {
-	//      	String annotation = EcoreUtil.getAnnotation(operation, OCLDelegateDomain.OCL_DELEGATE_URI, BODY_CONSTRAINT_KEY);
+	//      	String annotation = PivotUtil.getEAnnotationValue(operation, OCLDelegateDomain.OCL_DELEGATE_URI, BODY_CONSTRAINT_KEY);
 	//		return annotation != null;
 	//	}
 

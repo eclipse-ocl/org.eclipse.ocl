@@ -33,19 +33,26 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractExternal2AS extends AbstractConversion implements External2AS, PivotConstantsInternal
 {
@@ -69,6 +76,9 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		addHandler(DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, UMLEAnnotationConverter.INSTANCE);
 		addHandler(PivotConstants.IMPORT_ANNOTATION_SOURCE, NullEAnnotationConverter.INSTANCE);
 		addHandler(PivotConstants.COLLECTION_ANNOTATION_SOURCE, CollectionEAnnotationConverter.INSTANCE);
+		addHandler(PivotConstantsInternal.PARAMETER_ANNOTATION_SOURCE, ParameterEAnnotationConverter.INSTANCE);
+		addHandler(PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE, OperationEAnnotationConverter.INSTANCE);
+		addHandler(PivotConstantsInternal.PRECEDENCE_ANNOTATION_SOURCE, PrecedenceEAnnotationConverter.INSTANCE);
 	}
 
 	private static interface EAnnotationConverter
@@ -78,8 +88,9 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 
 	private static class DefaultEAnnotationConverter implements EAnnotationConverter
 	{
+		public static final @NonNull String[] ARRAY_OF_ALL_KNOWN_KEYS = null;
 		public static final @NonNull EAnnotationConverter NO_KEYS_KNOWN = new DefaultEAnnotationConverter();
-		public static final @NonNull EAnnotationConverter ALL_KEYS_KNOWN = new DefaultEAnnotationConverter((@NonNull String[])null);
+		public static final @NonNull EAnnotationConverter ALL_KEYS_KNOWN = new DefaultEAnnotationConverter(ARRAY_OF_ALL_KNOWN_KEYS);
 
 		protected @NonNull String @Nullable [] knownKeys;			// explicitly known keys, empty for none, null for all
 
@@ -89,8 +100,12 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 
 		@Override
 		public @Nullable List<@NonNull Detail> convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation) {
+			EMap<String, String> eDetails = eAnnotation.getDetails();
+			if (eDetails.isEmpty()) {
+				return new ArrayList<>();
+			}
 			List<@NonNull Detail> asDetails = null;
-			for (Map.Entry<String, String> eDetail : eAnnotation.getDetails()) {
+			for (Map.Entry<String, String> eDetail : eDetails) {
 				String key = eDetail.getKey();
 				String value = eDetail.getValue();
 				Detail asDetail = convert(external2AS, eAnnotation, key, value);
@@ -206,6 +221,84 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		}
 	}
 
+	private static class OperationEAnnotationConverter extends DefaultEAnnotationConverter
+	{
+		public static final @NonNull EAnnotationConverter INSTANCE = new OperationEAnnotationConverter();
+
+		private OperationEAnnotationConverter() {
+			super(PivotConstantsInternal.OPERATION_ACCUMULATORS, PivotConstantsInternal.OPERATION_IMPLEMENTATION, PivotConstantsInternal.OPERATION_IS_TRANSIENT, PivotConstantsInternal.OPERATION_ITERATORS, PivotConstantsInternal.OPERATION_PRECEDENCE);
+		}
+
+		@Override
+		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
+			EObject eContainer = eAnnotation.eContainer();
+			assert eContainer != null;
+			Operation asOperation = external2AS.getCreated(Operation.class, eContainer);
+			assert asOperation != null;
+			if (PivotConstantsInternal.OPERATION_IMPLEMENTATION.equals(key)) {
+				asOperation.setImplementationClass(value);
+				return null;
+			}
+			else if (PivotConstantsInternal.OPERATION_ACCUMULATORS.equals(key) || PivotConstantsInternal.OPERATION_ITERATORS.equals(key)) {
+			// XXX	assert asOperation instanceof Iteration;
+				return null;
+			}
+			else if (PivotConstantsInternal.OPERATION_IS_TRANSIENT.equals(key)) {
+				asOperation.setIsTransient((value != null) && Boolean.parseBoolean(value));
+				return null;
+			}
+			else if (PivotConstantsInternal.OPERATION_PRECEDENCE.equals(key)) {
+				Library asLibrary = (Library) asOperation.getOwningClass().getOwningPackage();
+				asOperation.setPrecedence(NameUtil.getNameable(asLibrary.getOwnedPrecedences(), value));
+				return null;
+			}
+			return super.convert(external2AS, eAnnotation, key, value);
+		}
+	}
+
+	private static class ParameterEAnnotationConverter extends DefaultEAnnotationConverter
+	{
+		public static final @NonNull EAnnotationConverter INSTANCE = new ParameterEAnnotationConverter();
+
+		private ParameterEAnnotationConverter() {
+			super(PivotConstantsInternal.PARAMETER_IS_TYPE_OF);
+		}
+
+		@Override
+		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
+			EObject eContainer = eAnnotation.eContainer();
+			assert eContainer != null;
+			Parameter asParameter = external2AS.getCreated(Parameter.class, eContainer);
+			assert asParameter != null;
+			if (PivotConstantsInternal.PARAMETER_IS_TYPE_OF.equals(key)) {
+				asParameter.setIsTypeof(Boolean.valueOf(value));
+				return null;
+			}
+			return super.convert(external2AS, eAnnotation, key, value);
+		}
+	}
+
+	private static class PrecedenceEAnnotationConverter extends DefaultEAnnotationConverter
+	{
+		public static final @NonNull EAnnotationConverter INSTANCE = new PrecedenceEAnnotationConverter();
+
+		private PrecedenceEAnnotationConverter() {
+			super(ARRAY_OF_ALL_KNOWN_KEYS);
+		}
+
+		@Override
+		protected @Nullable Detail convert(@NonNull AbstractExternal2AS external2AS, @NonNull EAnnotation eAnnotation, String key, String value) {
+			assert key != null;
+			EObject eContainer = eAnnotation.eContainer();
+			assert eContainer != null;
+			Library asLibrary = external2AS.getCreated(Library.class, eContainer);
+			assert asLibrary != null;
+			Precedence asPrecedence = PivotUtil.createPrecedence(key, AssociativityKind.getByName(value));
+			asLibrary.getOwnedPrecedences().add(asPrecedence);
+			return null;
+		}
+	}
+
 	private static class UMLEAnnotationConverter extends DefaultEAnnotationConverter
 	{
 		public static @NonNull EAnnotationConverter INSTANCE = new UMLEAnnotationConverter();
@@ -304,12 +397,9 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	 *
 	 * @since 1.7
 	 */
+	@Deprecated
 	public boolean isEcoreOnlyEntryClass(@Nullable EClassifier eClassifier) {
-//		return (eClassifier != null) && (eClassifier.getEAnnotation(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE) != null);
-		if (eClassifier == null) {
-			return false;
-		}
-		String role = EcoreUtil.getAnnotation(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
+		String role = PivotUtil.getEAnnotationValue(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
 		if (PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY.equals(role)) {
 			return true;				// XXX Boolean
 		}
@@ -358,7 +448,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 
 	public boolean isRequired(@NonNull EPackage ePackage) {
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-			String role = EcoreUtil.getAnnotation(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
+			String role = PivotUtil.getEAnnotationValue(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
 			if (role == null) {
 				return true;
 			}

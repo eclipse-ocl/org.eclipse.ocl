@@ -23,11 +23,13 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -1226,6 +1228,21 @@ public class PivotUtil
 	 */
 	public static @NonNull Type getContextType(@NonNull LambdaType lambdaType) {
 		return ClassUtil.nonNullState(lambdaType.getContextType());
+	}
+
+	/**
+	 * Return the value of the key of the source annotation of the eModelElement.
+	 * Returns null if not available.
+	 */
+	public static @Nullable String getEAnnotationValue(@Nullable EModelElement eModelElement, @NonNull String source, @NonNull String key) {
+		if (eModelElement == null) {
+			return null;
+		}
+		EAnnotation eAnnotation = eModelElement.getEAnnotation(source);
+		if (eAnnotation == null) {
+			return null;
+		}
+		return eAnnotation.getDetails().get(key);
 	}
 
 	/**

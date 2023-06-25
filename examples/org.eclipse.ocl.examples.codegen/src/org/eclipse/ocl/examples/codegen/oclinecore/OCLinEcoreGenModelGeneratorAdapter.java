@@ -549,7 +549,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 			String body = fragmentURI != null ? results.get(fragmentURI) : null;
 			if ((body == null) || ((body = body.trim()).length() == 0)) {
-				String javaBody = EcoreUtil.getAnnotation(eOperation, GenModelPackage.eNS_URI, "body");
+				String javaBody = PivotUtil.getEAnnotationValue(eOperation, GenModelPackage.eNS_URI, "body");
 				if (javaBody != null) {
 					return;		// Leave an existing Java body unaffected
 				}
@@ -567,7 +567,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			String fragmentURI = String.valueOf(EcoreUtil.getURI(pProperty).fragment());
 			String body = results.get(fragmentURI);
 			if (body == null) {
-				String javaBody = EcoreUtil.getAnnotation(eFeature, GenModelPackage.eNS_URI, "get");
+				String javaBody = PivotUtil.getEAnnotationValue(eFeature, GenModelPackage.eNS_URI, "get");
 				if (javaBody != null) {
 					return;		// Leave an existing Java body unaffected
 				}

@@ -12,6 +12,7 @@
 package org.eclipse.ocl.pivot.internal.ecore.es2as;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -145,6 +146,20 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	}
 
 	@Override
+	public Object caseEGenericType(EGenericType eGenericType) {
+		assert eGenericType != null;
+		ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
+		if (eTypeParameter != null) {
+			return doInPackageSwitch(eTypeParameter);
+		}
+		EClassifier eClassifier = eGenericType.getEClassifier();
+		if (eClassifier != null) {
+			return doInPackageSwitch(eClassifier);
+		}
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Object caseEOperation(EOperation eOperation) {
 		assert eOperation != null;
 		if (converter.isInvariant(eOperation)) {
@@ -203,7 +218,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			oppositeProperty = converter.getCreated(Property.class, eOpposite);
 			asProperty.setOpposite(oppositeProperty);
 		}
-		else if (Boolean.valueOf(EcoreUtil.getAnnotation(eReference, PivotConstants.PROPERTY_ANNOTATION_SOURCE, PivotConstants.PROPERTY_SELF))) {
+		else if (Boolean.valueOf(PivotUtil.getEAnnotationValue(eReference, PivotConstants.PROPERTY_ANNOTATION_SOURCE, PivotConstants.PROPERTY_SELF))) {
 			asProperty.setOpposite(asProperty);
 		}
 		else {
@@ -396,13 +411,44 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			EClassifier eClassifier = eType.getEClassifier();
 			int lower = eTypedElement.getLowerBound();
 			int upper = eTypedElement.getUpperBound();
-			if ((lower == 0) && (upper == -1) && converter.isEcoreOnlyEntryClass(eClassifier)) {
+			String role = PivotUtil.getEAnnotationValue(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
+			if ((lower == 0) && (upper == -1) && PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY.equals(role)) {
 				pivotType = converter.getCreated(Type.class, eType);
 				assert converter.isEntryClass(eClassifier);
 				assert pivotType == null;
 				assert eClassifier != null;
 				isRequired = true;
 				pivotType = getEcoreOnlyEntryClassMapType((EClass)eClassifier);
+			}
+			else if (/*(lower == 0) &&*/ (upper == 1) && PivotConstantsInternal.CLASSIFIER_ROLE_LAMBDA.equals(role)) {
+				pivotType = converter.getCreated(Type.class, eType);
+				assert !converter.isEntryClass(eClassifier);
+				assert pivotType == null;
+				assert eClassifier != null;
+				List<EGenericType> eTypeArguments = eType.getETypeArguments();
+				final int size = eTypeArguments.size();
+				assert size >= 2;
+				Type contextType = null;
+				List<@NonNull Type> parameterTypes = new ArrayList<>(size-2);
+				Type resultType = null;
+				for (int i = 0; i < size; i++) {
+					EGenericType eTypeArgument = eTypeArguments.get(i);
+					Type argumentType = (Type)doInPackageSwitch(eTypeArgument);
+					assert argumentType != null;
+					if (i == 0) {
+						contextType = argumentType;
+					}
+					else if (i < size-1) {
+						parameterTypes.add(argumentType);
+					}
+					else {
+						resultType = argumentType;
+					}
+				}
+				isRequired = true;
+				assert contextType != null;
+				assert resultType != null;
+				pivotType = standardLibrary.getLambdaType(contextType, parameterTypes, resultType, null);
 			}
 			else {
 				pivotType = converter.getASType(eType);

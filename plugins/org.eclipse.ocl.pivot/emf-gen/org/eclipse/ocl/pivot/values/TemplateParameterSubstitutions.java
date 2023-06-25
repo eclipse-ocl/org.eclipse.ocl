@@ -66,4 +66,24 @@ public interface TemplateParameterSubstitutions
 			return "{}";
 		}
 	}
+
+	public static final @NonNull TemplateParameterSubstitutions SELF = new Self();
+
+	public static class Self implements TemplateParameterSubstitutions
+	{
+		@Override
+		public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
+			return templateParameter;
+		}
+
+		@Override
+		public boolean isEmpty() {
+			return false;
+		}
+
+		@Override
+		public @Nullable Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
+			return null;
+		}
+	};
 }

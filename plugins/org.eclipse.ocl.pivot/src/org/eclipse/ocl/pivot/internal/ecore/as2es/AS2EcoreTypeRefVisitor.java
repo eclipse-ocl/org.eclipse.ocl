@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 import org.eclipse.ocl.pivot.values.Unlimited;
 
 public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @NonNull AS2Ecore>
@@ -105,6 +106,13 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 
 	public @NonNull EGenericType resolveEGenericType2(@NonNull Type asType) {
 	//	EObject eType = safeVisit(asType);
+		if (asType instanceof TemplateableElement) {			// XXX FIXME workaround Bug 582115
+			TemplateableElement asTemplateableElement = (TemplateableElement)asType;
+			List<@NonNull TemplateParameter> templateParameters = PivotUtil.getTemplateParameters(asTemplateableElement);
+			if (templateParameters != null) {
+				asType = standardLibrary.getSpecializedType(asType, TemplateParameterSubstitutions.SELF);
+			}
+		}
 		EObject eType = asType.accept(this);
 		if (eType instanceof EGenericType) {
 			return (EGenericType) eType;

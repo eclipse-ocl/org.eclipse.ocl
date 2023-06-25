@@ -97,6 +97,10 @@ public interface PivotConstantsInternal
 	 */
 	static final @NonNull String OPERATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Pivot/Operation";
 	/**
+	 * 	 The operation is a constraint validator: true - transient (not-cached), blank/false - regular.
+	 */
+	static final @NonNull String OPERATION_IS_CONSTRAINT = "isConstraint";		// XXX replace originalName
+	/**
 	 * 	 The operation is: true - transient (not-cached), blank/false - regular.
 	 */
 	static final @NonNull String OPERATION_IS_TRANSIENT = "isTransient";
