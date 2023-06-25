@@ -12,12 +12,10 @@
 package org.eclipse.ocl.pivot.internal.ecore.as2es;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
@@ -86,8 +84,6 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.URIUtil;
-import org.eclipse.ocl.pivot.values.Bag;
-import org.eclipse.ocl.pivot.values.OrderedSet;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
