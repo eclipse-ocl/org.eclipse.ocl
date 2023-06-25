@@ -410,11 +410,6 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		Type pivotType;
 		EGenericType eType = eTypedElement.getEGenericType();
 		if (eType != null) {
-		//	ETypeParameter eTypeParameter = eType.getETypeParameter();
-		//	if (eTypeParameter != null) {
-			//	return doInPackageSwitch(eTypeParameter);
-		//		throw new UnsupportedOperationException();
-		//	}
 			EClassifier eClassifier = eType.getEClassifier();
 			int lower = eTypedElement.getLowerBound();
 			int upper = eTypedElement.getUpperBound();

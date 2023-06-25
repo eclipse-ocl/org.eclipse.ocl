@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
@@ -150,6 +151,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		else if (TypeId.INTEGER_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, eClass);
+		}
+		else if (TypeId.MAP_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(MapType.class, PivotPackage.Literals.MAP_TYPE, eClass);
 		}
 		else if (TypeId.OCL_ANY_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(AnyType.class, PivotPackage.Literals.ANY_TYPE, eClass);
