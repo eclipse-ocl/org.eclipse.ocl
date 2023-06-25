@@ -265,14 +265,16 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		//
 		EStructuralFeature eKeyFeature = keyType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
 		eKeyFeature.setName("key");
-		setEType(eKeyFeature, keyType, pivotType.isKeysAreNullFree());
+	//	setEType(eKeyFeature, keyType, pivotType.isKeysAreNullFree());
+		setEType(eKeyFeature, eKeyTypeParameter);
 		eKeyFeature.setLowerBound(pivotType.isKeysAreNullFree() ? 1 : 0);
 		eKeyFeature.setUpperBound(1);
 		eStructuralFeatures.add(eKeyFeature);
 		//
 		EStructuralFeature eValueFeature = valueType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
 		eValueFeature.setName("value");
-		setEType(eValueFeature, valueType, pivotType.isValuesAreNullFree());
+	//	setEType(eValueFeature, valueType, pivotType.isValuesAreNullFree());
+		setEType(eValueFeature, eValueTypeParameter);
 		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
 		eValueFeature.setUpperBound(1);
 		eStructuralFeatures.add(eValueFeature);
@@ -366,27 +368,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return visitor;
 	}
 
-	public <T extends EClassifier> void safeVisitAll(Class<?> javaClass, List<EGenericType> eGenericTypes, List<T> eTypes, List<? extends Type> asTypes) {
-		if (asTypes.size() > 0) {
-			List<EObject> eClasses = new ArrayList<EObject>(asTypes.size());
-			typeRefVisitor.safeVisitAll(eClasses, asTypes);
-			eTypes.clear();
-			eGenericTypes.clear();
-			for (EObject superEClass : eClasses) {
-				if (superEClass instanceof EGenericType) {
-					eGenericTypes.add((EGenericType)superEClass);
-				}
-				else if (javaClass.isAssignableFrom(superEClass.getClass())){
-					@SuppressWarnings("unchecked") T castSuperEClass = (T)superEClass;
-					eTypes.add(castSuperEClass);
-				}
-			}
-		}
-		else {
-			eGenericTypes.clear();
-		}
-	}
-
 	private void resolveSuperClasses(@NonNull EClass eClass, org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
 		List<org.eclipse.ocl.pivot.Class> superClasses = pivotClass.getSuperClasses();
 		EList<EGenericType> eGenericTypes = eClass.getEGenericSuperTypes();
@@ -419,6 +400,27 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 //		eFeature.setEType((EClassifier)typeRefVisitor2.safeVisit(valueType));		// XXX resolveType
 //	}
 
+	public <T extends EClassifier> void safeVisitAll(Class<?> javaClass, List<EGenericType> eGenericTypes, List<T> eTypes, List<? extends Type> asTypes) {
+		if (asTypes.size() > 0) {
+			List<EObject> eClasses = new ArrayList<EObject>(asTypes.size());
+			typeRefVisitor.safeVisitAll(eClasses, asTypes);
+			eTypes.clear();
+			eGenericTypes.clear();
+			for (EObject superEClass : eClasses) {
+				if (superEClass instanceof EGenericType) {
+					eGenericTypes.add((EGenericType)superEClass);
+				}
+				else if (javaClass.isAssignableFrom(superEClass.getClass())){
+					@SuppressWarnings("unchecked") T castSuperEClass = (T)superEClass;
+					eTypes.add(castSuperEClass);
+				}
+			}
+		}
+		else {
+			eGenericTypes.clear();
+		}
+	}
+
 	/**
 	 * @since 1.3
 	 */
@@ -446,6 +448,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			return;
 		} */
 		EObject eObject = getTypeRefVisitor(isRequired, eTypedElement instanceof EAttribute).safeVisit(pivotType);
+		setEType(eTypedElement, eObject);
+	}
+	private void setEType(@NonNull ETypedElement eTypedElement, @NonNull EObject eObject) {
 		if (eObject instanceof EGenericType) {
 			eTypedElement.setEGenericType((EGenericType)eObject);
 		}
@@ -458,9 +463,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eTypedElement.setEGenericType(eGenericType);
 		}
 		else {
-			@SuppressWarnings("unused")
-			EObject eObject2 = typeRefVisitor.safeVisit(pivotType);
-			//			throw new IllegalArgumentException("Unsupported pivot type '" + pivotType + "' in AS2Ecore Reference pass");
+		//	@SuppressWarnings("unused")
+		//	EObject eObject2 = typeRefVisitor.safeVisit(pivotType);
+			throw new IllegalArgumentException("Unsupported pivot type '" + eObject + "' in AS2Ecore Reference pass");
 		}
 	}
 
@@ -565,7 +570,8 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 						if ((eTypedElement.eContainer() instanceof EOperation) && "closure".equals(((ENamedElement)eTypedElement.eContainer()).getName())) {
 							getClass();		// XXX
 						} */
-						EGenericType eResultGenericType = resolveType(isRequired, resultType);
+					//	EGenericType eResultGenericType = resolveType(isRequired, resultType);
+						EGenericType eResultGenericType = getTypeRefVisitor(isRequired, false/*resultType instanceof DataType*/).resolveEGenericType2(resultType);
 						eTypeArguments.add(eResultGenericType);
 					/*	AS2EcoreTypeRefVisitor typeRefVisitor2 = getTypeRefVisitor(isRequired, resultType instanceof DataType);
 						EObject eResultType2 = typeRefVisitor2.safeVisit(resultType);

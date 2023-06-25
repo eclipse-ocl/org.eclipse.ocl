@@ -104,7 +104,8 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, @N
 	}
 
 	public @NonNull EGenericType resolveEGenericType2(@NonNull Type asType) {
-		EObject eType = safeVisit(asType);
+	//	EObject eType = safeVisit(asType);
+		EObject eType = asType.accept(this);
 		if (eType instanceof EGenericType) {
 			return (EGenericType) eType;
 		}
