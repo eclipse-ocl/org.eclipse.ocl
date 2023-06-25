@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -44,6 +45,7 @@ import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
@@ -408,6 +410,11 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		Type pivotType;
 		EGenericType eType = eTypedElement.getEGenericType();
 		if (eType != null) {
+		//	ETypeParameter eTypeParameter = eType.getETypeParameter();
+		//	if (eTypeParameter != null) {
+			//	return doInPackageSwitch(eTypeParameter);
+		//		throw new UnsupportedOperationException();
+		//	}
 			EClassifier eClassifier = eType.getEClassifier();
 			int lower = eTypedElement.getLowerBound();
 			int upper = eTypedElement.getUpperBound();
@@ -418,7 +425,18 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				assert pivotType == null;
 				assert eClassifier != null;
 				isRequired = true;
-				pivotType = getEcoreOnlyEntryClassMapType((EClass)eClassifier);
+				pivotType = getImplicitEntryClassMapType(eType);
+			}
+			else if ((lower == 0) && (upper == -1) && converter.isEntryClass(eClassifier)) {
+				org.eclipse.ocl.pivot.Class pivotEntryType = converter.getCreated(org.eclipse.ocl.pivot.Class.class, eType);
+				assert converter.isEntryClass(eClassifier);
+				assert pivotEntryType != null;
+				assert eClassifier != null;
+				isRequired = true;
+				pivotType = getExplicitEntryClassMapType((EClass)eClassifier);
+				if (pivotType instanceof MapType) {
+					((MapType)pivotType).setEntryClass(pivotEntryType);
+				}
 			}
 			else if (/*(lower == 0) &&*/ (upper == 1) && PivotConstantsInternal.CLASSIFIER_ROLE_LAMBDA.equals(role)) {
 				pivotType = converter.getCreated(Type.class, eType);
@@ -567,9 +585,10 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	}
 
 	/**
+	 * @param pivotEntryType
 	 * @since 1.7
 	 */
-	protected @Nullable Type getEcoreOnlyEntryClassMapType(@NonNull EClass eClass) {
+	protected @Nullable Type getExplicitEntryClassMapType(@NonNull EClass eClass) {
 		EStructuralFeature keyFeature = eClass.getEStructuralFeature("key");
 		EStructuralFeature valueFeature = eClass.getEStructuralFeature("value");
 		if (keyFeature == null) {
@@ -596,6 +615,37 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					boolean valuesAreNullFree = valueFeature.isRequired();
 					return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 				}
+			}
+		}
+		return null;
+	}
+
+	protected @Nullable Type getImplicitEntryClassMapType(@NonNull EGenericType eGenericType) {
+		EClass eClass = (EClass)eGenericType.getEClassifier();
+		EList<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
+		EStructuralFeature keyFeature = eClass.getEStructuralFeature("key");
+		EStructuralFeature valueFeature = eClass.getEStructuralFeature("value");
+		if (keyFeature == null) {
+			converter.error("Missing 'key' feature for map '" + eClass.getName() + "");
+		}
+		else if (valueFeature == null) {
+			converter.error("Missing 'value' feature for map '" + eClass.getName() + "");
+		}
+		else if (eTypeArguments.size() != 2) {
+			converter.error("Inconsistent template arguments for map of '" + eClass.getName() + "");
+		}
+		else {
+			EGenericType keyGenericType = eTypeArguments.get(0);
+			EGenericType valueGenericType = eTypeArguments.get(1);
+			assert keyGenericType != null;
+			assert valueGenericType != null;
+			Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<>();
+			Type keyType = converter.resolveType(resolvedSpecializations, keyGenericType);
+			Type valueType = converter.resolveType(resolvedSpecializations, valueGenericType);
+			if ((keyType != null) && (valueType != null)) {
+				boolean keysAreNullFree = keyFeature.isRequired();
+				boolean valuesAreNullFree = valueFeature.isRequired();
+				return standardLibrary.getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 			}
 		}
 		return null;

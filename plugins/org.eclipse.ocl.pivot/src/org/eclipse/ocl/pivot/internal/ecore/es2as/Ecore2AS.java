@@ -967,7 +967,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * @since 1.7
 	 */
-	protected Type resolveGenericType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
+	protected Type resolveGenericType(@NonNull Map<@NonNull String, @NonNull Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
 		List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
 		assert !eGenericType.getETypeArguments().isEmpty();
 		EClassifier eClassifier = eGenericType.getEClassifier();
@@ -1115,7 +1115,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 	}
 
-	protected Type resolveType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
+	protected Type resolveType(@NonNull Map<@NonNull String, @NonNull Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
 		Type pivotType = getCreated(Type.class, eGenericType);
 		if (pivotType != null) {
 			return pivotType;
