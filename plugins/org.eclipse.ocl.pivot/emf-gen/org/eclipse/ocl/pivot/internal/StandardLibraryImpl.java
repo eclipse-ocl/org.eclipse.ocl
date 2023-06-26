@@ -192,9 +192,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return getOclInvalidType();
 		}
 		MapType genericType = getMapType();
-		if (isUnspecialized(keyType, keysAreNullFree, valueType, valuesAreNullFree)) {
-			return genericType;
-		}
+	//	if (isUnspecialized(keyType, keysAreNullFree, valueType, valuesAreNullFree)) {
+	//		return genericType;
+	//	}
 		if (keysAreNullFree == null) {
 			keysAreNullFree = PivotConstants.DEFAULT_MAP_KEYS_ARE_NULL_FREE;
 		}
