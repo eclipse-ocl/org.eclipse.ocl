@@ -55,7 +55,6 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -236,7 +235,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		Type keyType = PivotUtil.getKeyType(pivotType);
 		Type valueType = PivotUtil.getValueType(pivotType);
 		StringBuilder s = new StringBuilder();
-		s.append("Entry");
+		s.append("_Entry_");
 		s.append(keyType instanceof DataType ? "D" : "C");
 		s.append(pivotType.isKeysAreNullFree() ? "R" : "O");
 		s.append(valueType instanceof DataType ? "D" : "C");
@@ -289,7 +288,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		List<@NonNull Type> parameterTypes = PivotUtil.getParameterType(pivotType);
 		Type resultType = PivotUtil.getResultType(pivotType);
 		StringBuilder s = new StringBuilder();
-		s.append("Lambda");
+		s.append("_Lambda_");
 		s.append(contextType instanceof DataType ? "D" : "C");
 		for (Type parameterType : parameterTypes) {
 			s.append(parameterType instanceof DataType ? "D" : "C");
@@ -304,6 +303,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eClass.setName(lambdaName);
 		eClass.setAbstract(true);
 		eClass.setInterface(true);
+	//	eClass.setInstanceClassName(java.lang.Object.class.getName());			// This suppresses interface synthesis
 		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_LAMBDA);
 		eSyntheticsPackage.getEClassifiers().add(eClass);
 		//
@@ -323,7 +323,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	private @NonNull EPackage getSyntheticsEPackage(@NonNull EPackage ePackage) {
-		EPackage eSyntheticsPackage = NameUtil.getENamedElement(ePackage.getESubpackages(), "oclSynthetics");
+/*		EPackage eSyntheticsPackage = NameUtil.getENamedElement(ePackage.getESubpackages(), "oclSynthetics");
 		if (eSyntheticsPackage == null) {
 			eSyntheticsPackage = EcoreFactory.eINSTANCE.createEPackage();
 			eSyntheticsPackage.setName("oclSynthetics");
@@ -331,8 +331,8 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eSyntheticsPackage.setNsPrefix("oclSynthetics");
 			ePackage.getESubpackages().add(eSyntheticsPackage);
 			AnnotationUtil.setDetail(eSyntheticsPackage, AnnotationUtil.PACKAGE_ANNOTATION_SOURCE, AnnotationUtil.PACKAGE_ROLE, AnnotationUtil.PACKAGE_ROLE_SYNTHETICS);
-		}
-		return eSyntheticsPackage;
+		} */
+		return ePackage;
 	}
 
 	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, boolean isDataType) {

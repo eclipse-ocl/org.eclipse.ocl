@@ -78,7 +78,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		addHandler(PivotConstants.IMPORT_ANNOTATION_SOURCE, NullEAnnotationConverter.INSTANCE);
 		addHandler(PivotConstants.COLLECTION_ANNOTATION_SOURCE, CollectionEAnnotationConverter.INSTANCE);
 		addHandler(AnnotationUtil.OPERATION_ANNOTATION_SOURCE, OperationEAnnotationConverter.INSTANCE);
-		addHandler(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE, PackageEAnnotationConverter.INSTANCE);
+	//	addHandler(AnnotationUtil.PACKAGE_ANNOTATION_SOURCE, PackageEAnnotationConverter.INSTANCE);
 		addHandler(AnnotationUtil.PARAMETER_ANNOTATION_SOURCE, ParameterEAnnotationConverter.INSTANCE);
 		addHandler(AnnotationUtil.PRECEDENCE_ANNOTATION_SOURCE, PrecedenceEAnnotationConverter.INSTANCE);
 	}
@@ -258,14 +258,14 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		}
 	}
 
-	private static class PackageEAnnotationConverter extends DefaultEAnnotationConverter
+/*	private static class PackageEAnnotationConverter extends DefaultEAnnotationConverter
 	{
 		public static final @NonNull EAnnotationConverter INSTANCE = new PackageEAnnotationConverter();
 
 		private PackageEAnnotationConverter() {
 			super(AnnotationUtil.PACKAGE_ROLE);
 		}
-	}
+	} */
 
 	private static class ParameterEAnnotationConverter extends DefaultEAnnotationConverter
 	{

@@ -77,15 +77,15 @@ public class AnnotationUtil
 	/**
 	 * 	 The package role may be "Orphanage" or "Synthetics" or blank.
 	 */
-	public static final @NonNull String PACKAGE_ROLE = "role";
+//	public static final @NonNull String PACKAGE_ROLE = "role";
 	/**
 	 * 	 A local Orphanage package hosts the actual synthetic types to satisfy XMI serializationwithout elaborate proxies.
 	 */
-	public static final @NonNull String PACKAGE_ROLE_ORPHANAGE = "Orphanage";	// never used
+//	public static final @NonNull String PACKAGE_ROLE_ORPHANAGE = "Orphanage";	// never used
 	/**
 	 * 	 The Synthetics package hosts the interface synthetic types to support Map entries and Lambdas.
 	 */
-	public static final @NonNull String PACKAGE_ROLE_SYNTHETICS = "Synthetics";
+//	public static final @NonNull String PACKAGE_ROLE_SYNTHETICS = "Synthetics";
 
 	/**
 	 * EParameter annotation qualification.

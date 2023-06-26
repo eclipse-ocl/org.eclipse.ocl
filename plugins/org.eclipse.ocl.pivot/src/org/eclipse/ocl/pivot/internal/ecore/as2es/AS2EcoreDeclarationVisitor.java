@@ -349,8 +349,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			instanceClass = Object.class;
 		}
 		eClass.setInstanceClass(instanceClass);
-		eClass.setAbstract(pivotAnyType.isIsAbstract());
-		eClass.setInterface(pivotAnyType.isIsInterface());
+		eClass.setAbstract(true); //pivotAnyType.isIsAbstract());
+		eClass.setInterface(true); //pivotAnyType.isIsInterface());
 		return eClass;
 	}
 
