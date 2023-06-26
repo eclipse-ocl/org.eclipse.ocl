@@ -49,7 +49,7 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclAny" instanceClassName="java.lang.Object"
-      abstract="true">
+      abstract="true" interface="true">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.&#xA;True functionality is only available once converted to a Pivot model."/>
     </eAnnotations>
@@ -139,8 +139,7 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"/>
-  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_CD" instanceClassName="java.lang.Object"
-      abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_CD" abstract="true" interface="true">
     <eTypeParameters name="C"/>
     <eTypeParameters name="R"/>
   </eClassifiers>
@@ -155,8 +154,7 @@
       <eGenericType eTypeParameter="#//_Entry_CRCR/V"/>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_CC" instanceClassName="java.lang.Object"
-      abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_CC" abstract="true" interface="true">
     <eTypeParameters name="C"/>
     <eTypeParameters name="R"/>
   </eClassifiers>
