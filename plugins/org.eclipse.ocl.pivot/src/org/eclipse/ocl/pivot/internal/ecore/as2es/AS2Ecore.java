@@ -19,12 +19,14 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -432,6 +434,9 @@ public class AS2Ecore extends AbstractConversion
 				PivotObjectImpl pivotObjectImpl = (PivotObjectImpl) pivotElement;
 				if (pivotObjectImpl.getESObject() == null) {				// Bug 510729 avoid trashing OCLstdlib
 					pivotObjectImpl.setESObject(eObject);
+				}
+				if (eObject instanceof EPackage) {
+					ECollections.sort(((EPackage)eObject).getEClassifiers(), NameUtil.ENAMED_ELEMENT_COMPARATOR);
 				}
 			}
 			if (Boolean.valueOf(String.valueOf(options.get(OPTION_GENERATE_STRUCTURAL_XMI_IDS)))) {

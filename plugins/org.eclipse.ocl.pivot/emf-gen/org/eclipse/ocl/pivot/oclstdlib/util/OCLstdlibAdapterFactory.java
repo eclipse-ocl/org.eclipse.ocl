@@ -22,8 +22,9 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.oclstdlib.*;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
+import org.eclipse.ocl.pivot.oclstdlib._Lambda_CC;
+import org.eclipse.ocl.pivot.oclstdlib._Lambda_CD;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.OrderedSet;
 
@@ -172,8 +173,8 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 				return createUniqueCollectionAdapter();
 			}
 			@Override
-			public <C, R> Adapter case_Lambda_CD(_Lambda_CD<C, R> object) {
-				return create_Lambda_CDAdapter();
+			public <K, V> Adapter case_Entry_COCO(Map.Entry<K, V> object) {
+				return create_Entry_COCOAdapter();
 			}
 			@Override
 			public <K, V> Adapter case_Entry_CRCR(Map.Entry<K, V> object) {
@@ -184,8 +185,8 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 				return create_Lambda_CCAdapter();
 			}
 			@Override
-			public <K, V> Adapter case_Entry_COCO(Map.Entry<K, V> object) {
-				return create_Entry_COCOAdapter();
+			public <C, R> Adapter case_Lambda_CD(_Lambda_CD<C, R> object) {
+				return create_Lambda_CDAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {

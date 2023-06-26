@@ -71,9 +71,11 @@
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//UniqueCollection">
       <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//UniqueCollection/T"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Lambda_CD">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_CD/C"/>
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_CD/R"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Entry_COCO">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_COCO/K"/>
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_COCO/V"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_COCO/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_COCO/value"/>
     </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Entry_CRCR">
       <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_CRCR/K"/>
@@ -85,11 +87,9 @@
       <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_CC/C"/>
       <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_CC/R"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Entry_COCO">
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_COCO/K"/>
-      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Entry_COCO/V"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_COCO/key"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//_Entry_COCO/value"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//_Lambda_CD">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_CD/C"/>
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//_Lambda_CD/R"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

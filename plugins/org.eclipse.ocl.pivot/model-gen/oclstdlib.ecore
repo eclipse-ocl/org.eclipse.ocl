@@ -139,9 +139,16 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"/>
-  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_CD" abstract="true" interface="true">
-    <eTypeParameters name="C"/>
-    <eTypeParameters name="R"/>
+  <eClassifiers xsi:type="ecore:EClass" name="_Entry_COCO" instanceClassName="java.util.Map$Entry"
+      abstract="true" interface="true">
+    <eTypeParameters name="K"/>
+    <eTypeParameters name="V"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key">
+      <eGenericType eTypeParameter="#//_Entry_COCO/K"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value">
+      <eGenericType eTypeParameter="#//_Entry_COCO/V"/>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="_Entry_CRCR" instanceClassName="java.util.Map$Entry"
       abstract="true" interface="true">
@@ -158,15 +165,8 @@
     <eTypeParameters name="C"/>
     <eTypeParameters name="R"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="_Entry_COCO" instanceClassName="java.util.Map$Entry"
-      abstract="true" interface="true">
-    <eTypeParameters name="K"/>
-    <eTypeParameters name="V"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="key">
-      <eGenericType eTypeParameter="#//_Entry_COCO/K"/>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value">
-      <eGenericType eTypeParameter="#//_Entry_COCO/V"/>
-    </eStructuralFeatures>
+  <eClassifiers xsi:type="ecore:EClass" name="_Lambda_CD" abstract="true" interface="true">
+    <eTypeParameters name="C"/>
+    <eTypeParameters name="R"/>
   </eClassifiers>
 </ecore:EPackage>
