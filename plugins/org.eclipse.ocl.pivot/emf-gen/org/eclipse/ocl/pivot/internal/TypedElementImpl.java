@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Orphanage;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ValueSpecification;
@@ -197,9 +198,9 @@ implements TypedElement {
 			if (orphanage != null) {
 				orphanage.addReference(newType, this);
 			}
-		//	if (newType instanceof TemplateableElement) {
-		//		assert ((TemplateableElement)newType).getOwnedSignature() == null;		// XXX Bug 582115
-		//	}
+			if (newType instanceof TemplateableElement) {
+				assert ((TemplateableElement)newType).getOwnedSignature() == null;		// XXX Bug 582115
+			}
 		}
 		setTypeGen(newType);
 	}
