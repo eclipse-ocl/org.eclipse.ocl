@@ -61,6 +61,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -411,9 +412,9 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		EGenericType eType = eTypedElement.getEGenericType();
 		if (eType != null) {
 			EClassifier eClassifier = eType.getEClassifier();
-			String role = PivotUtil.getEAnnotationValue(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
-			boolean isEntry = PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY.equals(role);
-			boolean isLambda = PivotConstantsInternal.CLASSIFIER_ROLE_LAMBDA.equals(role);
+			String role = PivotUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
+			boolean isEntry = AnnotationUtil.CLASSIFIER_ROLE_ENTRY.equals(role);
+			boolean isLambda = AnnotationUtil.CLASSIFIER_ROLE_LAMBDA.equals(role);
 			int lower = eTypedElement.getLowerBound();
 			int upper = eTypedElement.getUpperBound();
 			if ((lower == 0) && (upper == -1) && isEntry) {		// Collection of Entry is a Map

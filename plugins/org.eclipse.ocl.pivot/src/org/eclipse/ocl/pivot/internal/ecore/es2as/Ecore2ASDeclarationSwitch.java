@@ -98,6 +98,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -398,7 +399,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseEGenericType(EGenericType eObject) {
 		EClassifier eClassifier = eObject.getEClassifier();
-		String role = PivotUtil.getEAnnotationValue(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
+		String role = PivotUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
 		if (role == null) {
 			doSwitchAll(eObject.getETypeArguments());
 			converter.addGenericType(eObject);		// Wait till all unspecialized types converted
@@ -412,7 +413,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		if (converter.isInvariant(eOperation)) {
 			return convertEOperation2Constraint(eOperation);
 		}
-		else if (PivotUtil.getEAnnotationValue(eOperation, PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE, PivotConstantsInternal.OPERATION_ITERATORS) != null) {
+		else if (PivotUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ITERATORS) != null) {
 			return convertEOperation2Iteration(eOperation);
 		}
 		else {
@@ -494,7 +495,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		//		doSwitchAll(pivotElement.getOwnedClasses(), eObject2.getEClassifiers());
 		List<org.eclipse.ocl.pivot.@NonNull Class> newList = new ArrayList<>();
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-			String role = PivotUtil.getEAnnotationValue(eClassifier, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE);
+			String role = PivotUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
 			if (role == null) {
 				@SuppressWarnings("null")
 				org.eclipse.ocl.pivot.@NonNull Class pivotObject = (org.eclipse.ocl.pivot.Class) doSwitch(eClassifier);
@@ -595,8 +596,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		Iteration pivotElement = converter.refreshNamedElement(Iteration.class, PivotPackage.Literals.ITERATION, eOperation);
 		List<@NonNull EAnnotation> excludedAnnotations = convertEOperationEAnnotations(pivotElement, eOperation);
 		copyTypedElement(pivotElement, eOperation, excludedAnnotations);
-		String iteratorsString = PivotUtil.getEAnnotationValue(eOperation, PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE, PivotConstantsInternal.OPERATION_ITERATORS);
-		String accumulatorsString = PivotUtil.getEAnnotationValue(eOperation, PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE, PivotConstantsInternal.OPERATION_ACCUMULATORS);
+		String iteratorsString = PivotUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ITERATORS);
+		String accumulatorsString = PivotUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ACCUMULATORS);
 		int iteratorsCount = Integer.parseInt(iteratorsString);
 		int accumulatorsCount = accumulatorsString != null ? Integer.parseInt(accumulatorsString) : 0;
 		List<EParameter> eParameters = eOperation.getEParameters();
@@ -699,17 +700,17 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				}
 			}
 		}
-		EAnnotation precedenceAnnotation = eOperation.getEAnnotation(PivotConstantsInternal.PRECEDENCE_ANNOTATION_SOURCE);
+		EAnnotation precedenceAnnotation = eOperation.getEAnnotation(AnnotationUtil.PRECEDENCE_ANNOTATION_SOURCE);
 		if (precedenceAnnotation != null) {
 		//	if (excludedAnnotations == null) {
 		//		excludedAnnotations = new ArrayList<>();
 		//	}
 		//	excludedAnnotations.add(isTransientAnnotation);
 			EMap<String, String> eDetails = precedenceAnnotation.getDetails();
-			String name = eDetails.get(PivotConstantsInternal.PRECEDENCE_NAME);
-			String associativityString = eDetails.get(PivotConstantsInternal.PRECEDENCE_ASSOCIATIVITY);
+			String name = eDetails.get(AnnotationUtil.PRECEDENCE_NAME);
+			String associativityString = eDetails.get(AnnotationUtil.PRECEDENCE_ASSOCIATIVITY);
 			AssociativityKind associativity = associativityString != null ? AssociativityKind.getByName(associativityString) : null;
-		//	String precedence = eDetails.get(PivotConstantsInternal.OPERATION_PRECEDENCE);
+		//	String precedence = eDetails.get(AnnotationUtil.OPERATION_PRECEDENCE);
 		//	pivotElement.setPrecedence(precedence);
 		}
 		return excludedAnnotations;

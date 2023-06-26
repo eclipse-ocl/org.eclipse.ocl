@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -250,7 +251,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eClass.setAbstract(true);
 		eClass.setInterface(true);
 		eClass.setInstanceClassName(java.util.Map.Entry.class.getName());
-		context.setDetail(eClass, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE, PivotConstantsInternal.CLASSIFIER_ROLE_ENTRY);
+		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_ENTRY);
 		eSyntheticsPackage.getEClassifiers().add(eClass);
 		List<ETypeParameter> eTypeParameters = eClass.getETypeParameters();
 		List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
@@ -303,7 +304,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eClass.setName(lambdaName);
 		eClass.setAbstract(true);
 		eClass.setInterface(true);
-		context.setDetail(eClass, PivotConstantsInternal.CLASSIFIER_ANNOTATION_SOURCE, PivotConstantsInternal.CLASSIFIER_ROLE, PivotConstantsInternal.CLASSIFIER_ROLE_LAMBDA);
+		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_LAMBDA);
 		eSyntheticsPackage.getEClassifiers().add(eClass);
 		//
 		ETypeParameter eKeyTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
@@ -329,6 +330,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eSyntheticsPackage.setNsURI("oclSynthetics");
 			eSyntheticsPackage.setNsPrefix("oclSynthetics");
 			ePackage.getESubpackages().add(eSyntheticsPackage);
+			AnnotationUtil.setDetail(eSyntheticsPackage, AnnotationUtil.PACKAGE_ANNOTATION_SOURCE, AnnotationUtil.PACKAGE_ROLE, AnnotationUtil.PACKAGE_ROLE_SYNTHETICS);
 		}
 		return eSyntheticsPackage;
 	}

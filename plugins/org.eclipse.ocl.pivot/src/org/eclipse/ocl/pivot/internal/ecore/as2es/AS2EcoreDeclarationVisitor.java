@@ -53,6 +53,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
@@ -78,6 +79,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -433,53 +435,11 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				}
 			}
 			if (eDuplicates != null) {
-				EAnnotation eAnnotation = context.getEAnnotation(eClass, PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
+				EAnnotation eAnnotation = AnnotationUtil.getEAnnotation(eClass, PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
 				context.refreshList(eAnnotation.getContents(), eDuplicates);
 			}
 		}
 		return eClass;
-	}
-
-	@Override
-	public EObject visitCollectionType(@NonNull CollectionType pivotCollectionType) {
-		return visitClass(pivotCollectionType);
-	/*	if (pivotCollectionType.getOwnedBindings().size() > 0) {
-			return null;
-		}
-		@SuppressWarnings("null")
-		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-		copyClassifier(eClass, pivotCollectionType);
-		Class<?> instanceClass = null;
-		String name = pivotCollectionType.getName();
-		if ("Bag".equals(name)) {
-			instanceClass = Bag.class;
-		}
-		else if ("Collection".equals(name)) {
-			instanceClass = Collection.class;
-		}
-		else if ("OrderedCollection".equals(name)) {
-			instanceClass = Collection.class;
-		}
-		else if ("OrderedSet".equals(name)) {
-			instanceClass = OrderedSet.class;
-		}
-		else if ("Sequence".equals(name)) {
-			instanceClass = List.class;
-		}
-		else if ("Set".equals(name)) {
-			instanceClass = Set.class;
-		}
-		else if ("UniqueCollection".equals(name)) {
-			instanceClass = Collection.class;
-		}
-		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
-		@NonNull Iterable<Property> nonDuplicateProperties = Iterables.filter(pivotCollectionType.getOwnedProperties(), nonDuplicatePropertiesFilter);
-		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
-		eClass.setInstanceClass(instanceClass);
-		eClass.setAbstract(pivotCollectionType.isIsAbstract());
-		eClass.setInterface(pivotCollectionType.isIsInterface());
-		context.defer(pivotCollectionType);		// Defer superclass resolution
-		return eClass; */
 	}
 
 	@Override
@@ -543,13 +503,18 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	@Override
+	public Object visitIterableType(@NonNull IterableType asIterableType) {
+		return visitClass(asIterableType);
+	}
+
+	@Override
 	public @NonNull EPackage  visitLibrary(@NonNull Library asLibrary) {
 		EPackage ePackage = visitPackage(asLibrary);
 		List<EAnnotation> eAnnotations = ePackage.getEAnnotations();
 		Iterable<@NonNull Precedence> asPrecedences = PivotUtil.getOwnedPrecedences(asLibrary);
 		if (!Iterables.isEmpty(asPrecedences)) {
 			EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			eAnnotation.setSource(PivotConstantsInternal.PRECEDENCE_ANNOTATION_SOURCE);
+			eAnnotation.setSource(AnnotationUtil.PRECEDENCE_ANNOTATION_SOURCE);
 			eAnnotations.add(eAnnotation);
 			EMap<String, String> details = eAnnotation.getDetails();
 			for (@NonNull Precedence asPrecedence : asPrecedences) {
@@ -651,7 +616,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 						key = value;
 						value = null;
 					}
-					String oldValue = context.setDetail(firstElement, PivotConstants.IMPORT_ANNOTATION_SOURCE, key, value);
+					String oldValue = AnnotationUtil.setDetail(firstElement, PivotConstants.IMPORT_ANNOTATION_SOURCE, key, value);
 					if (oldValue != null) {
 						System.out.println("Conflicting " + PivotConstants.IMPORT_ANNOTATION_SOURCE + " for \"" + key + "\" => \"" + oldValue + "\" / \"" + value + "\"");
 					}
@@ -676,11 +641,11 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			Iteration pivotIteration = (Iteration)pivotOperation;
 			List<Parameter> pivotIterators = pivotIteration.getOwnedIterators();
 			safeVisitAll(eParameters, pivotIterators);
-			context.setDetail(eOperation, PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE, PivotConstantsInternal.OPERATION_ITERATORS, Integer.toString(pivotIteration.getOwnedIterators().size()));
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ITERATORS, Integer.toString(pivotIteration.getOwnedIterators().size()));
 			List<Parameter> pivotAccumulators = pivotIteration.getOwnedAccumulators();
 			if (!pivotAccumulators.isEmpty()) {
 				safeVisitAll(eParameters, pivotAccumulators);
-				context.setDetail(eOperation, PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE, PivotConstantsInternal.OPERATION_ACCUMULATORS, Integer.toString(pivotIteration.getOwnedAccumulators().size()));
+				AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ACCUMULATORS, Integer.toString(pivotIteration.getOwnedAccumulators().size()));
 			}
 		}
 		safeVisitAll(eParameters, pivotOperation.getOwnedParameters());
@@ -700,14 +665,14 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 		String implementationClass = pivotOperation.getImplementationClass();
 		if (implementationClass != null) {
-			context.setDetail(eOperation, PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE, PivotConstantsInternal.OPERATION_IMPLEMENTATION, implementationClass);
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IMPLEMENTATION, implementationClass);
 		}
 		if (pivotOperation.isIsTransient()) {
-			context.setDetail(eOperation, PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE, PivotConstantsInternal.OPERATION_IS_TRANSIENT, "true");
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_IS_TRANSIENT, "true");
 		}
 		Precedence precedence = pivotOperation.getPrecedence();
 		if (precedence != null) {
-			context.setDetail(eOperation, PivotConstantsInternal.OPERATION_ANNOTATION_SOURCE, PivotConstantsInternal.OPERATION_PRECEDENCE, precedence.getName());
+			AnnotationUtil.setDetail(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_PRECEDENCE, precedence.getName());
 		}
 		return eOperation;
 	}
@@ -737,7 +702,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@NonNull EParameter eParameter = EcoreFactory.eINSTANCE.createEParameter();
 		copyTypedElement(eParameter, pivotParameter);
 		if (pivotParameter.isIsTypeof()) {
-			context.setDetail(eParameter, PivotConstantsInternal.PARAMETER_ANNOTATION_SOURCE, PivotConstantsInternal.PARAMETER_IS_TYPE_OF, Boolean.TRUE.toString());
+			AnnotationUtil.setDetail(eParameter, AnnotationUtil.PARAMETER_ANNOTATION_SOURCE, AnnotationUtil.PARAMETER_IS_TYPE_OF, Boolean.TRUE.toString());
 		}
 		return eParameter;
 	}
