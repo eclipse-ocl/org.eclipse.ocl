@@ -1726,7 +1726,8 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		newOpposite.setIsImplicit(true);
 		newOpposite.setName(name);
 		if (thisProperty.isIsComposite()) {
-			newOpposite.setType(thisClass);
+			Type thisType = standardLibrary.getSpecializedType(thisClass, TemplateParameterSubstitutions.SELF);
+			newOpposite.setType(thisType);
 			newOpposite.setIsRequired(false);
 		}
 		else {
