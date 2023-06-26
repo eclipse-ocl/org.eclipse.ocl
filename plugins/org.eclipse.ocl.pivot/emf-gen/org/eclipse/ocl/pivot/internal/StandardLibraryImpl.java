@@ -158,9 +158,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		if (genericType.eIsProxy() || elementType.eIsProxy()) {
 			return getOclInvalidType();
 		}
-		if (isUnspecialized(genericType, elementType, isNullFree, lower, upper)) {
-			return genericType;
-		}
+	//	if (isUnspecialized(genericType, elementType, isNullFree, lower, upper)) {		// XXX Fix Bug 582115++
+	//		return genericType;
+	//	}
 		return getOrphanage().getCollectionType(genericType, elementType, isNullFree, lower, upper);
 	}
 

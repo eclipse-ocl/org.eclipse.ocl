@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
@@ -388,6 +389,9 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 	public void setPivot(Element newPivot) {
 		if ("UniqueCollection(UniqueCollection.T)".equals(String.valueOf(newPivot))) {
 			getClass();		// XXX
+		}
+		if (newPivot instanceof TemplateableElement) {
+			assert ((TemplateableElement)newPivot).getOwnedSignature() == null;		// XXX Bug 582115
 		}
 		super.setPivot(newPivot);
 	}

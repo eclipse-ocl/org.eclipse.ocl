@@ -664,7 +664,7 @@ public class OrphanageImpl extends PackageImpl implements Orphanage
 				Type old = typeId2type.put(specializedTypeId, collectionType);
 				assert old == null;
 				assert specializedTypeId == ((CollectionTypeImpl)collectionType).immutableGetTypeId();		// XXX
-				if (basicGetType(specializedTypeId, true) != collectionType) {
+				if (basicGetType(specializedTypeId, true) != collectionType) {			// XXX debugging
 					basicGetType(specializedTypeId, true);
 				}
 				String s = collectionType.toString();
