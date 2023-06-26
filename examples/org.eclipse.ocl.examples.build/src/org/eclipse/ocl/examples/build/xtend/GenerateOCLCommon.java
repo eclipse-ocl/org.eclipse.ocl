@@ -624,7 +624,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-			sortedPackages.add(asPackage);
+			if (!OrphanageImpl.isOrphanage(asPackage)) {
+				sortedPackages.add(asPackage);
+			}
 			return null;
 		}
 
