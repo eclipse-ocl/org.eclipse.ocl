@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -140,14 +141,17 @@ public class Model2tablesGenerator extends AbstractWorkflowComponent
 			log.info("Generating to '" + targetFolder + "'");
 			List<GenPackage> genPackages = genModel.getAllGenPackagesWithClassifiers();
 			for (@SuppressWarnings("null")@NonNull GenPackage genPackage : genPackages) {
-				OCLinEcoreTables generateTables = new OCLinEcoreTables(genPackage);
-				String tablesClass = generateTables.getTablesClassName();
-				String dir = genPackage.getQualifiedPackageName().replace(".", "/");
-				generateTables.generateTablesClass(null);
-				String str = generateTables.toString();
-				FileWriter testFile = new FileWriter(new File(targetFolder, dir + "/" + tablesClass + ".java"));
-				testFile.append(str);
-				testFile.close();
+				String role = AnnotationUtil.getEAnnotationValue(genPackage.getEcorePackage(), AnnotationUtil.PACKAGE_ANNOTATION_SOURCE, AnnotationUtil.PACKAGE_ROLE);
+				if (role == null) {
+					OCLinEcoreTables generateTables = new OCLinEcoreTables(genPackage);
+					String tablesClass = generateTables.getTablesClassName();
+					String dir = genPackage.getQualifiedPackageName().replace(".", "/");
+					generateTables.generateTablesClass(null);
+					String str = generateTables.toString();
+					FileWriter testFile = new FileWriter(new File(targetFolder, dir + "/" + tablesClass + ".java"));
+					testFile.append(str);
+					testFile.close();
+				}
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);

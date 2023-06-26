@@ -80,6 +80,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.resource.BasicProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -549,7 +550,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 			String body = fragmentURI != null ? results.get(fragmentURI) : null;
 			if ((body == null) || ((body = body.trim()).length() == 0)) {
-				String javaBody = PivotUtil.getEAnnotationValue(eOperation, GenModelPackage.eNS_URI, "body");
+				String javaBody = AnnotationUtil.getEAnnotationValue(eOperation, GenModelPackage.eNS_URI, "body");
 				if (javaBody != null) {
 					return;		// Leave an existing Java body unaffected
 				}
@@ -567,7 +568,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			String fragmentURI = String.valueOf(EcoreUtil.getURI(pProperty).fragment());
 			String body = results.get(fragmentURI);
 			if (body == null) {
-				String javaBody = PivotUtil.getEAnnotationValue(eFeature, GenModelPackage.eNS_URI, "get");
+				String javaBody = AnnotationUtil.getEAnnotationValue(eFeature, GenModelPackage.eNS_URI, "get");
 				if (javaBody != null) {
 					return;		// Leave an existing Java body unaffected
 				}

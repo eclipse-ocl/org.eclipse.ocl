@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 
 /**
  * Perform the validation of delegated OCL constraints and invariants.
@@ -132,7 +132,7 @@ public class OCLDelegateValidator extends EObjectValidator
 				if (constraint != null) {
 					for (String validationDelegate : validationDelegates) {
 						if (validationDelegate != null) {
-							String expression = PivotUtil.getEAnnotationValue(eClass, validationDelegate, constraint);
+							String expression = AnnotationUtil.getEAnnotationValue(eClass, validationDelegate, constraint);
 							if (expression != null) {
 								result &= validateDelegatedConstraint(eClass, eObject, diagnostics, context, validationDelegate,
 									constraint, expression, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);
@@ -220,7 +220,7 @@ public class OCLDelegateValidator extends EObjectValidator
 				if ((eOperation != null) && EcoreUtil.isInvariant(eOperation)) {
 					for (String validationDelegate : validationDelegates) {
 						if (validationDelegate != null) {
-							String expression = PivotUtil.getEAnnotationValue(eOperation, validationDelegate, "body");
+							String expression = AnnotationUtil.getEAnnotationValue(eOperation, validationDelegate, "body");
 							if (expression != null) {
 								result &= validateDelegatedInvariant(eClass, eObject, diagnostics, context,
 									validationDelegate, eOperation, expression, Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0);

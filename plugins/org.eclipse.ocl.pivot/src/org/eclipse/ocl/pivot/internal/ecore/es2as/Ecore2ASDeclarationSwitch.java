@@ -399,7 +399,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	@Override
 	public Object caseEGenericType(EGenericType eObject) {
 		EClassifier eClassifier = eObject.getEClassifier();
-		String role = PivotUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
+		String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
 		if (role == null) {
 			doSwitchAll(eObject.getETypeArguments());
 			converter.addGenericType(eObject);		// Wait till all unspecialized types converted
@@ -413,7 +413,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		if (converter.isInvariant(eOperation)) {
 			return convertEOperation2Constraint(eOperation);
 		}
-		else if (PivotUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ITERATORS) != null) {
+		else if (AnnotationUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ITERATORS) != null) {
 			return convertEOperation2Iteration(eOperation);
 		}
 		else {
@@ -495,7 +495,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		//		doSwitchAll(pivotElement.getOwnedClasses(), eObject2.getEClassifiers());
 		List<org.eclipse.ocl.pivot.@NonNull Class> newList = new ArrayList<>();
 		for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-			String role = PivotUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
+			String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
 			if (role == null) {
 				@SuppressWarnings("null")
 				org.eclipse.ocl.pivot.@NonNull Class pivotObject = (org.eclipse.ocl.pivot.Class) doSwitch(eClassifier);
@@ -582,7 +582,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			specification.setBody(value);
 		}
 		constraint.setOwnedSpecification(specification);
-		String commentBody = PivotUtil.getEAnnotationValue(eOperation, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
+		String commentBody = AnnotationUtil.getEAnnotationValue(eOperation, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_KEY);
 		if (commentBody != null) {
 			Comment pivotComment = PivotFactory.eINSTANCE.createComment();
 			pivotComment.setBody(commentBody.replaceAll("\\r", ""));
@@ -596,8 +596,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		Iteration pivotElement = converter.refreshNamedElement(Iteration.class, PivotPackage.Literals.ITERATION, eOperation);
 		List<@NonNull EAnnotation> excludedAnnotations = convertEOperationEAnnotations(pivotElement, eOperation);
 		copyTypedElement(pivotElement, eOperation, excludedAnnotations);
-		String iteratorsString = PivotUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ITERATORS);
-		String accumulatorsString = PivotUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ACCUMULATORS);
+		String iteratorsString = AnnotationUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ITERATORS);
+		String accumulatorsString = AnnotationUtil.getEAnnotationValue(eOperation, AnnotationUtil.OPERATION_ANNOTATION_SOURCE, AnnotationUtil.OPERATION_ACCUMULATORS);
 		int iteratorsCount = Integer.parseInt(iteratorsString);
 		int accumulatorsCount = accumulatorsString != null ? Integer.parseInt(accumulatorsString) : 0;
 		List<EParameter> eParameters = eOperation.getEParameters();
@@ -767,7 +767,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	 */
 	protected void copyAnnotationComment(@NonNull Constraint pivotElement, @NonNull EAnnotation eModelElement, @NonNull String key) {
 		pivotElement.getOwnedComments().clear();
-		String comment = PivotUtil.getEAnnotationValue(eModelElement, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, key);
+		String comment = AnnotationUtil.getEAnnotationValue(eModelElement, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, key);
 		if (comment != null) {
 			Comment pivotComment = PivotFactory.eINSTANCE.createComment();
 			pivotComment.setBody(comment);
@@ -925,7 +925,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	protected @NonNull String getMetaAnnotationSource(@NonNull EClass metaAnnotationEClass) {
-		String annotationSource = PivotUtil.getEAnnotationValue(metaAnnotationEClass, PivotConstants.META_ANNOTATION_ANNOTATION_SOURCE, "source");
+		String annotationSource = AnnotationUtil.getEAnnotationValue(metaAnnotationEClass, PivotConstants.META_ANNOTATION_ANNOTATION_SOURCE, "source");
 		assert annotationSource != null;
 		return annotationSource;
 	}

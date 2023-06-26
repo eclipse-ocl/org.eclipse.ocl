@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 
 public class UMLGenModelHelper extends AbstractGenModelHelper
 {
@@ -74,7 +74,7 @@ public class UMLGenModelHelper extends AbstractGenModelHelper
 		if (eNamedElement == null) {
 			return "";
 		}
-		String name = PivotUtil.getEAnnotationValue(eNamedElement, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME);
+		String name = AnnotationUtil.getEAnnotationValue(eNamedElement, DerivedConstants.UML2_UML_PACKAGE_2_0_NS_URI, DerivedConstants.ANNOTATION_DETAIL__ORIGINAL_NAME);
 		if (name == null) {
 			name = eNamedElement.getName();
 		}

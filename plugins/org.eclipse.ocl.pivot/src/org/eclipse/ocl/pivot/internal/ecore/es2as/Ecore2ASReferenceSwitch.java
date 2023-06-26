@@ -221,7 +221,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			oppositeProperty = converter.getCreated(Property.class, eOpposite);
 			asProperty.setOpposite(oppositeProperty);
 		}
-		else if (Boolean.valueOf(PivotUtil.getEAnnotationValue(eReference, PivotConstants.PROPERTY_ANNOTATION_SOURCE, PivotConstants.PROPERTY_SELF))) {
+		else if (Boolean.valueOf(AnnotationUtil.getEAnnotationValue(eReference, PivotConstants.PROPERTY_ANNOTATION_SOURCE, PivotConstants.PROPERTY_SELF))) {
 			asProperty.setOpposite(asProperty);
 		}
 		else {
@@ -412,7 +412,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		EGenericType eType = eTypedElement.getEGenericType();
 		if (eType != null) {
 			EClassifier eClassifier = eType.getEClassifier();
-			String role = PivotUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
+			String role = AnnotationUtil.getEAnnotationValue(eClassifier, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE);
 			boolean isEntry = AnnotationUtil.CLASSIFIER_ROLE_ENTRY.equals(role);
 			boolean isLambda = AnnotationUtil.CLASSIFIER_ROLE_LAMBDA.equals(role);
 			int lower = eTypedElement.getLowerBound();

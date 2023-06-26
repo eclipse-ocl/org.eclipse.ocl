@@ -81,7 +81,7 @@ public class AnnotationUtil
 	/**
 	 * 	 A local Orphanage package hosts the actual synthetic types to satisfy XMI serializationwithout elaborate proxies.
 	 */
-	public static final @NonNull String PACKAGE_ROLE_ORPHANAGE = "Orphanage";
+	public static final @NonNull String PACKAGE_ROLE_ORPHANAGE = "Orphanage";	// never used
 	/**
 	 * 	 The Synthetics package hosts the interface synthetic types to support Map entries and Lambdas.
 	 */
@@ -130,6 +130,21 @@ public class AnnotationUtil
 			eModelElement.getEAnnotations().add(eAnnotation);
 		}
 		return eAnnotation;
+	}
+
+	/**
+	 * Return the value of the key of the source annotation of the eModelElement.
+	 * Returns null if not available.
+	 */
+	public static @Nullable String getEAnnotationValue(@Nullable EModelElement eModelElement, @NonNull String source, @NonNull String key) {
+		if (eModelElement == null) {
+			return null;
+		}
+		EAnnotation eAnnotation = eModelElement.getEAnnotation(source);
+		if (eAnnotation == null) {
+			return null;
+		}
+		return eAnnotation.getDetails().get(key);
 	}
 
 /*	public static boolean hasDocumentationKey(@Nullable String source, @NonNull EMap<String, String> details) {
