@@ -2,7 +2,8 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="oclstdlib" nsURI="http://www.eclipse.org/ocl/2015/Library" nsPrefix="oclstdlib">
   <eAnnotations source="http://www.eclipse.org/OCL/ASLibrary"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Bag" instanceClassName="org.eclipse.ocl.pivot.values.Bag">
+  <eClassifiers xsi:type="ecore:EClass" name="Bag" instanceClassName="org.eclipse.ocl.pivot.values.Bag"
+      abstract="true" interface="true">
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//Collection">
       <eTypeArguments eTypeParameter="#//Bag/T"/>
@@ -10,7 +11,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean"/>
   <eClassifiers xsi:type="ecore:EClass" name="Collection" instanceClassName="java.util.Collection"
-      abstract="true">
+      abstract="true" interface="true">
     <eTypeParameters name="T"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elementType" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -30,9 +31,22 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Map" instanceClassName="java.util.Map">
+  <eClassifiers xsi:type="ecore:EClass" name="Map" instanceClassName="java.util.Map"
+      abstract="true" interface="true">
     <eTypeParameters name="K"/>
     <eTypeParameters name="V"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" lowerBound="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The key type of the key-value pairs of oclText[self].&#xA;&#xA;@Deprecated Use regular MapType property&#xA;"/>
+      </eAnnotations>
+      <eGenericType eTypeParameter="#//Map/K"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueType" lowerBound="1">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The value type of the key-value pairs of oclText[self].&#xA;&#xA;@Deprecated Use regular MapType property&#xA;"/>
+      </eAnnotations>
+      <eGenericType eTypeParameter="#//Map/V"/>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclAny" instanceClassName="java.lang.Object"
       abstract="true">
@@ -85,13 +99,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="OclVoid" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclAny"/>
   <eClassifiers xsi:type="ecore:EClass" name="OrderedCollection" instanceClassName="java.util.Collection"
-      abstract="true">
+      abstract="true" interface="true">
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//Collection">
       <eTypeArguments eTypeParameter="#//OrderedCollection/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="OrderedSet" instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet">
+  <eClassifiers xsi:type="ecore:EClass" name="OrderedSet" instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet"
+      abstract="true" interface="true">
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//OrderedCollection">
       <eTypeArguments eTypeParameter="#//OrderedSet/T"/>
@@ -101,13 +116,15 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Real" instanceClassName="org.eclipse.ocl.pivot.values.RealValue"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Sequence" instanceClassName="java.util.List">
+  <eClassifiers xsi:type="ecore:EClass" name="Sequence" instanceClassName="java.util.List"
+      abstract="true" interface="true">
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//OrderedCollection">
       <eTypeArguments eTypeParameter="#//Sequence/T"/>
     </eGenericSuperTypes>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Set" instanceClassName="java.util.Set">
+  <eClassifiers xsi:type="ecore:EClass" name="Set" instanceClassName="java.util.Set"
+      abstract="true" interface="true">
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//UniqueCollection">
       <eTypeArguments eTypeParameter="#//Set/T"/>
@@ -115,7 +132,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String"/>
   <eClassifiers xsi:type="ecore:EClass" name="UniqueCollection" instanceClassName="java.util.Collection"
-      abstract="true">
+      abstract="true" interface="true">
     <eTypeParameters name="T"/>
     <eGenericSuperTypes eClassifier="#//Collection">
       <eTypeArguments eTypeParameter="#//UniqueCollection/T"/>
@@ -123,12 +140,29 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"/>
   <eSubpackages name="oclSynthetics" nsURI="oclSynthetics" nsPrefix="oclSynthetics">
+    <eAnnotations source="http://www.eclipse.org/OCL/Pivot/Package">
+      <details key="role" value="Synthetics"/>
+    </eAnnotations>
     <eClassifiers xsi:type="ecore:EClass" name="LambdaCD" abstract="true" interface="true">
       <eAnnotations source="http://www.eclipse.org/OCL/Pivot/Classifier">
         <details key="role" value="Lambda"/>
       </eAnnotations>
       <eTypeParameters name="C"/>
       <eTypeParameters name="R"/>
+    </eClassifiers>
+    <eClassifiers xsi:type="ecore:EClass" name="EntryCRCR" instanceClassName="java.util.Map$Entry"
+        abstract="true" interface="true">
+      <eAnnotations source="http://www.eclipse.org/OCL/Pivot/Classifier">
+        <details key="role" value="Entry"/>
+      </eAnnotations>
+      <eTypeParameters name="K"/>
+      <eTypeParameters name="V"/>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="key" lowerBound="1">
+        <eGenericType eTypeParameter="#//oclSynthetics/EntryCRCR/K"/>
+      </eStructuralFeatures>
+      <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1">
+        <eGenericType eTypeParameter="#//oclSynthetics/EntryCRCR/V"/>
+      </eStructuralFeatures>
     </eClassifiers>
     <eClassifiers xsi:type="ecore:EClass" name="LambdaCC" abstract="true" interface="true">
       <eAnnotations source="http://www.eclipse.org/OCL/Pivot/Classifier">

@@ -355,7 +355,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	@Override
-	public EObject visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
+	public EClass visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
 		if (pivotClass.getOwnedBindings().size() > 0) {
 			return null;
 		}
@@ -504,7 +504,12 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public Object visitIterableType(@NonNull IterableType asIterableType) {
-		return visitClass(asIterableType);
+		EClass eClass = visitClass(asIterableType);
+		if (eClass != null) {
+			eClass.setAbstract(true);
+			eClass.setInterface(true);
+		}
+		return eClass;
 	}
 
 	@Override
