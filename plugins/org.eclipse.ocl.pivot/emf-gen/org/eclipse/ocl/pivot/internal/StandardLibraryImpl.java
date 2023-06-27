@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -282,6 +283,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions) {
 		if ((substitutions == null) || substitutions.isEmpty()) {
+			return type;
+		}
+		if ((type instanceof TemplateableElement) && (((TemplateableElement)type).getGeneric() != null)) {
 			return type;
 		}
 		TemplateParameter asTemplateParameter = type.isTemplateParameter();
