@@ -367,6 +367,15 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	public void resetLibrary() {
 		oclInvalidOperation = null;
 		oclInvalidProperty = null;
+
 	}
 
+	@Override
+	public @NonNull Type resolveSelfSpecialization(@NonNull Type asType) {
+		Type specializedType = getSpecializedType(asType, TemplateParameterSubstitutions.SELF);
+		if (asType != specializedType) {
+			System.out.println("resolveSelfSpecialization " + asType + " => " + specializedType);
+		}
+		return specializedType;
+	}
 } //AbstractStandardLibraryImpl

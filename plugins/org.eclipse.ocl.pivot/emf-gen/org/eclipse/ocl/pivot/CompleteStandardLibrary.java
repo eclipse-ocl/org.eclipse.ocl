@@ -72,6 +72,5 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	@NonNull CompleteStandardLibrary init(@NonNull CompleteModelInternal completeModel);
 	boolean isExplicitDefaultStandardLibraryURI();
 	@Nullable Resource loadDefaultLibrary(@Nullable String uri);
-	@NonNull Type resolveSelfSpecialization(@NonNull Type asType);
 	void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI);
 } // StandardLibrary

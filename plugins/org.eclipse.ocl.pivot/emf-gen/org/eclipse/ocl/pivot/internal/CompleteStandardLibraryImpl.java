@@ -1186,15 +1186,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull Type resolveSelfSpecialization(@NonNull Type asType) {
-		Type specializedType = getSpecializedType(asType, TemplateParameterSubstitutions.SELF);
-		if (asType != specializedType) {
-			System.out.println("resolveSelfSpecialization " + asType + " => " + specializedType);
-		}
-		return specializedType;
-	}
-
-	@Override
 	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
 		getCompleteModel().resolveSuperClasses(specializedClass, unspecializedClass);
 	}

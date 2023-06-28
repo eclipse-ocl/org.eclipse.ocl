@@ -475,7 +475,8 @@ implements PropertyCallExp {
 			//			}
 			templateSpecialization.installEquivalence(resultType, referredProperty.getType());
 			if (referencedType != null) {
-				return templateSpecialization.getSpecialisation(referencedType);
+				Type specializedType = templateSpecialization.getSpecialisation(referencedType);
+				return executor.getStandardLibrary().resolveSelfSpecialization(specializedType);
 			}
 		}
 		if (referencedType != null) {
