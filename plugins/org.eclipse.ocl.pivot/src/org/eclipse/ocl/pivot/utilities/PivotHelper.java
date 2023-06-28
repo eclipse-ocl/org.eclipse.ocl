@@ -790,8 +790,14 @@ public class PivotHelper
 	}
 
 	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
-		type = standardLibrary.resolveSelfSpecialization(type);
-		Type primaryType = type != null ? metamodelManager.getPrimaryType(type) : null;
+		Type primaryType;
+		if (type != null) {
+			type = standardLibrary.resolveSelfSpecialization(type);
+			primaryType = metamodelManager.getPrimaryType(type);
+		}
+		else {
+			primaryType = null;
+		}
 		if (primaryType != asTypedElement.getType()) {
 			asTypedElement.setType(primaryType);
 		}

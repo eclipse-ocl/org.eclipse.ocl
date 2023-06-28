@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.internal.OrphanageImpl;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -60,7 +61,7 @@ public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS
 		csRef.setPivot(type);		// FIXME object ??
 		if (!(type instanceof PrimitiveType)) {
 			org.eclipse.ocl.pivot.Package objectPackage = PivotUtil.getPackage(type);
-			if ((objectPackage != null) && (scopePackage != null) && objectPackage.eResource() != scopePackage.eResource()) {
+			if ((objectPackage != null) && (scopePackage != null) && (objectPackage.eResource() != scopePackage.eResource()) && !OrphanageImpl.isOrphanage(objectPackage)) {
 				context.importNamespace(objectPackage, null);
 			}
 		}
