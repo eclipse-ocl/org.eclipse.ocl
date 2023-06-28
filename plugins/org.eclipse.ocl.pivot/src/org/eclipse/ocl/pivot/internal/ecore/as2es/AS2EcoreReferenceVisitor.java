@@ -231,7 +231,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	private @NonNull EClass getEntryEClass(@NonNull EPackage ePackage, @NonNull MapType pivotType) {
-		EPackage eSyntheticsPackage = getSyntheticsEPackage(ePackage);
 		Type keyType = PivotUtil.getKeyType(pivotType);
 		Type valueType = PivotUtil.getValueType(pivotType);
 		StringBuilder s = new StringBuilder();
@@ -241,7 +240,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		s.append(valueType instanceof DataType ? "D" : "C");
 		s.append(pivotType.isValuesAreNullFree() ? "R" : "O");
 		String entryName = s.toString();
-		EClassifier eClassifier = eSyntheticsPackage.getEClassifier(entryName);
+		EClassifier eClassifier = ePackage.getEClassifier(entryName);
 		if (eClassifier instanceof EClass) {
 			return (EClass) eClassifier;
 		}
@@ -251,7 +250,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eClass.setInterface(true);
 		eClass.setInstanceClassName(java.util.Map.Entry.class.getName());
 		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_ENTRY);
-		eSyntheticsPackage.getEClassifiers().add(eClass);
+		ePackage.getEClassifiers().add(eClass);
 		List<ETypeParameter> eTypeParameters = eClass.getETypeParameters();
 		List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
 		//
@@ -283,7 +282,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	private @NonNull EClass getLambdaEClass(@NonNull EPackage ePackage, @NonNull LambdaType pivotType) {
-		EPackage eSyntheticsPackage = getSyntheticsEPackage(ePackage);
 		Type contextType = PivotUtil.getContextType(pivotType);
 		List<@NonNull Type> parameterTypes = PivotUtil.getParameterType(pivotType);
 		Type resultType = PivotUtil.getResultType(pivotType);
@@ -295,7 +293,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 		s.append(resultType instanceof DataType ? "D" : "C");
 		String lambdaName = s.toString();
-		EClassifier eClassifier = eSyntheticsPackage.getEClassifier(lambdaName);
+		EClassifier eClassifier = ePackage.getEClassifier(lambdaName);
 		if (eClassifier instanceof EClass) {
 			return (EClass) eClassifier;
 		}
@@ -305,7 +303,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eClass.setInterface(true);
 	//	eClass.setInstanceClassName(java.lang.Object.class.getName());			// This suppresses interface synthesis
 		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_LAMBDA);
-		eSyntheticsPackage.getEClassifiers().add(eClass);
+		ePackage.getEClassifiers().add(eClass);
 		//
 		ETypeParameter eKeyTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
 		eKeyTypeParameter.setName("C");
@@ -320,19 +318,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eClass.getETypeParameters().add(eValueTypeParameter);
 		//
 		return eClass;
-	}
-
-	private @NonNull EPackage getSyntheticsEPackage(@NonNull EPackage ePackage) {
-/*		EPackage eSyntheticsPackage = NameUtil.getENamedElement(ePackage.getESubpackages(), "oclSynthetics");
-		if (eSyntheticsPackage == null) {
-			eSyntheticsPackage = EcoreFactory.eINSTANCE.createEPackage();
-			eSyntheticsPackage.setName("oclSynthetics");
-			eSyntheticsPackage.setNsURI("oclSynthetics");
-			eSyntheticsPackage.setNsPrefix("oclSynthetics");
-			ePackage.getESubpackages().add(eSyntheticsPackage);
-			AnnotationUtil.setDetail(eSyntheticsPackage, AnnotationUtil.PACKAGE_ANNOTATION_SOURCE, AnnotationUtil.PACKAGE_ROLE, AnnotationUtil.PACKAGE_ROLE_SYNTHETICS);
-		} */
-		return ePackage;
 	}
 
 	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, boolean isDataType) {
