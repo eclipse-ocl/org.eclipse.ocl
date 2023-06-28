@@ -57,8 +57,6 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS.MessageBinder;
-import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
-import org.eclipse.ocl.xtext.base.scoping.BaseScopeProvider;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.as2cs.CompleteOCLSplitter;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -376,6 +374,8 @@ public class RoundTripTests extends XtextTestCase
 		pivotResource1.save(XMIUtil.createSaveOptions(pivotResource1));
 		pivotResource3.setSaveable(true);
 		pivotResource3.save(XMIUtil.createSaveOptions(pivotResource3));
+		List<Normalizer> normalizations1 = TestUtil.normalize(pivotResource1);
+		List<Normalizer> normalizations3 = TestUtil.normalize(pivotResource3);
 		String expected = EmfFormatter.listToStr(pivotResource1.getContents());
 		String actual = EmfFormatter.listToStr(pivotResource3.getContents()).replace(".regenerated.oclinecore", ".oclinecore");
 		assertEquals(expected, actual);
@@ -503,8 +503,6 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testAggregatesRoundTrip() throws IOException, InterruptedException {
-		CS2ASConversion.CONTINUATION.setState(true);
-		BaseScopeProvider.LOOKUP.setState(true);
 		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +

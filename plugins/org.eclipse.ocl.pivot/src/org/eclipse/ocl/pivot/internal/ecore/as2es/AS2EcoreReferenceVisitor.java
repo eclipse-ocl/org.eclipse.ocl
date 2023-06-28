@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
-import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -230,96 +229,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		return castElement;
 	}
 
-	private @NonNull EClass getEntryEClass(@NonNull EPackage ePackage, @NonNull MapType pivotType) {
-		Type keyType = PivotUtil.getKeyType(pivotType);
-		Type valueType = PivotUtil.getValueType(pivotType);
-		StringBuilder s = new StringBuilder();
-		s.append("_Entry_");
-		s.append(keyType instanceof DataType ? "D" : "C");
-		s.append(pivotType.isKeysAreNullFree() ? "R" : "O");
-		s.append(valueType instanceof DataType ? "D" : "C");
-		s.append(pivotType.isValuesAreNullFree() ? "R" : "O");
-		String entryName = s.toString();
-		EClassifier eClassifier = ePackage.getEClassifier(entryName);
-		if (eClassifier instanceof EClass) {
-			return (EClass) eClassifier;
-		}
-		EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-		eClass.setName(entryName);
-		eClass.setAbstract(true);
-		eClass.setInterface(true);
-		eClass.setInstanceClassName(java.util.Map.Entry.class.getName());
-		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_ENTRY);
-		ePackage.getEClassifiers().add(eClass);
-		List<ETypeParameter> eTypeParameters = eClass.getETypeParameters();
-		List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
-		//
-		ETypeParameter eKeyTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
-		eKeyTypeParameter.setName("K");
-		eTypeParameters.add(eKeyTypeParameter);
-		//
-		ETypeParameter eValueTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
-		eValueTypeParameter.setName("V");
-		eTypeParameters.add(eValueTypeParameter);
-		//
-		EStructuralFeature eKeyFeature = keyType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
-		eKeyFeature.setName("key");
-	//	setEType(eKeyFeature, keyType, pivotType.isKeysAreNullFree());
-		setEType(eKeyFeature, eKeyTypeParameter);
-		eKeyFeature.setLowerBound(pivotType.isKeysAreNullFree() ? 1 : 0);
-		eKeyFeature.setUpperBound(1);
-		eStructuralFeatures.add(eKeyFeature);
-		//
-		EStructuralFeature eValueFeature = valueType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
-		eValueFeature.setName("value");
-	//	setEType(eValueFeature, valueType, pivotType.isValuesAreNullFree());
-		setEType(eValueFeature, eValueTypeParameter);
-		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
-		eValueFeature.setUpperBound(1);
-		eStructuralFeatures.add(eValueFeature);
-		//
-		return eClass;
-	}
-
-	private @NonNull EClass getLambdaEClass(@NonNull EPackage ePackage, @NonNull LambdaType pivotType) {
-		Type contextType = PivotUtil.getContextType(pivotType);
-		List<@NonNull Type> parameterTypes = PivotUtil.getParameterType(pivotType);
-		Type resultType = PivotUtil.getResultType(pivotType);
-		StringBuilder s = new StringBuilder();
-		s.append("_Lambda_");
-		s.append(contextType instanceof DataType ? "D" : "C");
-		for (Type parameterType : parameterTypes) {
-			s.append(parameterType instanceof DataType ? "D" : "C");
-		}
-		s.append(resultType instanceof DataType ? "D" : "C");
-		String lambdaName = s.toString();
-		EClassifier eClassifier = ePackage.getEClassifier(lambdaName);
-		if (eClassifier instanceof EClass) {
-			return (EClass) eClassifier;
-		}
-		EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-		eClass.setName(lambdaName);
-		eClass.setAbstract(true);
-		eClass.setInterface(true);
-	//	eClass.setInstanceClassName(java.lang.Object.class.getName());			// This suppresses interface synthesis
-		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_LAMBDA);
-		ePackage.getEClassifiers().add(eClass);
-		//
-		ETypeParameter eKeyTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
-		eKeyTypeParameter.setName("C");
-		eClass.getETypeParameters().add(eKeyTypeParameter);
-		for (int i = 0; i < parameterTypes.size(); i++) {
-			ETypeParameter eTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
-			eTypeParameter.setName("P" + i);
-			eClass.getETypeParameters().add(eTypeParameter);
-		}
-		ETypeParameter eValueTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
-		eValueTypeParameter.setName("R");
-		eClass.getETypeParameters().add(eValueTypeParameter);
-		//
-		return eClass;
-	}
-
 	protected @NonNull AS2EcoreTypeRefVisitor getTypeRefVisitor(boolean isRequired, boolean isDataType) {
 		AS2EcoreTypeRefVisitor visitor;
 		if (isRequired) {
@@ -425,25 +334,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			return;
 		} */
 		EObject eObject = getTypeRefVisitor(isRequired, eTypedElement instanceof EAttribute).safeVisit(pivotType);
-		setEType(eTypedElement, eObject);
-	}
-	private void setEType(@NonNull ETypedElement eTypedElement, @NonNull EObject eObject) {
-		if (eObject instanceof EGenericType) {
-			eTypedElement.setEGenericType((EGenericType)eObject);
-		}
-		else if (eObject instanceof EClassifier) {
-			eTypedElement.setEType((EClassifier)eObject);
-		}
-		else if (eObject instanceof ETypeParameter) {
-			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-			eGenericType.setETypeParameter((ETypeParameter)eObject);
-			eTypedElement.setEGenericType(eGenericType);
-		}
-		else {
-		//	@SuppressWarnings("unused")
-		//	EObject eObject2 = typeRefVisitor.safeVisit(pivotType);
-			throw new IllegalArgumentException("Unsupported pivot type '" + eObject + "' in AS2Ecore Reference pass");
-		}
+		context.setEType(eTypedElement, eObject);
 	}
 
 	protected void setETypeAndMultiplicity(@NonNull ETypedElement eTypedElement, @Nullable Type pivotType, boolean isRequired) {
@@ -513,7 +404,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			LambdaType lambdaType = (LambdaType)pivotType;
 			for (EObject eContainer = eTypedElement; eContainer != null; eContainer = eContainer.eContainer()) {
 				if (eContainer instanceof EPackage) {
-					EClass lambdaEClass = getLambdaEClass((EPackage)eContainer, lambdaType);
+					EClass lambdaEClass = context.getLambdaEClass((EPackage)eContainer, lambdaType);
 					//
 					EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 					eGenericType.setEClassifier(lambdaEClass);
@@ -553,7 +444,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			else {
 				for (EObject eContainer = eTypedElement; eContainer != null; eContainer = eContainer.eContainer()) {
 					if (eContainer instanceof EPackage) {
-						EClass entryEClass = getEntryEClass((EPackage)eContainer, mapType);
+						EClass entryEClass = context.getEntryEClass((EPackage)eContainer, mapType);
 						EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 						eGenericType.setEClassifier(entryEClass);
 						eTypedElement.setEGenericType(eGenericType);

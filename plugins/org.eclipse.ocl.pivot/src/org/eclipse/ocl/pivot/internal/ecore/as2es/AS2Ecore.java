@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.ecore.as2es;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -19,15 +20,19 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
-import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.ETypeParameter;
+import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -42,9 +47,12 @@ import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
@@ -57,6 +65,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.options.OCLinEcoreOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
+import org.eclipse.ocl.pivot.utilities.AnnotationUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -388,6 +397,10 @@ public class AS2Ecore extends AbstractConversion
 	protected final @NonNull URI ecoreURI;
 	protected final @Nullable String primitiveTypesUriPrefix;
 	private @Nullable InverseConversion ecore2as;
+	/**
+	 * The extra synthetic abstract+interface classes to support declarations of Map.Entry and Iteration.Lambda.
+	 */
+	private /*@LazyNonNull*/ Map<@NonNull EPackage, @NonNull List<@NonNull EClass>> ePackage2syntheticClasses = null;
 
 	public AS2Ecore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		super(environmentFactory);
@@ -436,7 +449,15 @@ public class AS2Ecore extends AbstractConversion
 					pivotObjectImpl.setESObject(eObject);
 				}
 				if (eObject instanceof EPackage) {
-					ECollections.sort(((EPackage)eObject).getEClassifiers(), NameUtil.ENAMED_ELEMENT_COMPARATOR);
+					// Type/EClassifier ordering is preserved from CS2AS2ES and back.
+					// The extra synthetic classes need appending in sorted order to stabilize.
+					Map<@NonNull EPackage, @NonNull List<@NonNull EClass>> ePackage2syntheticClassifiers2 = ePackage2syntheticClasses;
+					if (ePackage2syntheticClassifiers2 != null) {
+						EPackage ePackage = (EPackage)eObject;
+						List<@NonNull EClass> syntheticClasses = ePackage2syntheticClassifiers2.get(ePackage);
+						Collections.sort(syntheticClasses, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+						ePackage.getEClassifiers().addAll(syntheticClasses);
+					}
 				}
 			}
 			if (Boolean.valueOf(String.valueOf(options.get(OPTION_GENERATE_STRUCTURAL_XMI_IDS)))) {
@@ -492,12 +513,115 @@ public class AS2Ecore extends AbstractConversion
 		return ecoreURI;
 	}
 
+	public @NonNull EClass getEntryEClass(@NonNull EPackage ePackage, @NonNull MapType pivotType) {
+		Type keyType = PivotUtil.getKeyType(pivotType);
+		Type valueType = PivotUtil.getValueType(pivotType);
+		StringBuilder s = new StringBuilder();
+		s.append("_Entry_");
+		s.append(keyType instanceof DataType ? "D" : "C");
+		s.append(pivotType.isKeysAreNullFree() ? "R" : "O");
+		s.append(valueType instanceof DataType ? "D" : "C");
+		s.append(pivotType.isValuesAreNullFree() ? "R" : "O");
+		String entryName = s.toString();
+		List<@NonNull EClass> syntheticClasses = getSyntheticClasses(ePackage);
+		EClass eClass = NameUtil.getENamedElement(syntheticClasses, entryName);
+		if (eClass != null) {
+			return eClass;
+		}
+		eClass = EcoreFactory.eINSTANCE.createEClass();
+		eClass.setName(entryName);
+		eClass.setAbstract(true);
+		eClass.setInterface(true);
+		eClass.setInstanceClassName(java.util.Map.Entry.class.getName());
+		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_ENTRY);
+		syntheticClasses.add(eClass);
+		List<ETypeParameter> eTypeParameters = eClass.getETypeParameters();
+		List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
+		//
+		ETypeParameter eKeyTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+		eKeyTypeParameter.setName("K");
+		eTypeParameters.add(eKeyTypeParameter);
+		//
+		ETypeParameter eValueTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+		eValueTypeParameter.setName("V");
+		eTypeParameters.add(eValueTypeParameter);
+		//
+		EStructuralFeature eKeyFeature = keyType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
+		eKeyFeature.setName("key");
+	//	setEType(eKeyFeature, keyType, pivotType.isKeysAreNullFree());
+		setEType(eKeyFeature, eKeyTypeParameter);
+		eKeyFeature.setLowerBound(pivotType.isKeysAreNullFree() ? 1 : 0);
+		eKeyFeature.setUpperBound(1);
+		eStructuralFeatures.add(eKeyFeature);
+		//
+		EStructuralFeature eValueFeature = valueType instanceof DataType ? EcoreFactory.eINSTANCE.createEAttribute() : EcoreFactory.eINSTANCE.createEReference();
+		eValueFeature.setName("value");
+	//	setEType(eValueFeature, valueType, pivotType.isValuesAreNullFree());
+		setEType(eValueFeature, eValueTypeParameter);
+		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
+		eValueFeature.setUpperBound(1);
+		eStructuralFeatures.add(eValueFeature);
+		//
+		return eClass;
+	}
+
+	public @NonNull EClass getLambdaEClass(@NonNull EPackage ePackage, @NonNull LambdaType pivotType) {
+		Type contextType = PivotUtil.getContextType(pivotType);
+		List<@NonNull Type> parameterTypes = PivotUtil.getParameterType(pivotType);
+		Type resultType = PivotUtil.getResultType(pivotType);
+		StringBuilder s = new StringBuilder();
+		s.append("_Lambda_");
+		s.append(contextType instanceof DataType ? "D" : "C");
+		for (Type parameterType : parameterTypes) {
+			s.append(parameterType instanceof DataType ? "D" : "C");
+		}
+		s.append(resultType instanceof DataType ? "D" : "C");
+		String lambdaName = s.toString();
+		List<@NonNull EClass> syntheticClasses = getSyntheticClasses(ePackage);
+		EClass eClass = NameUtil.getENamedElement(syntheticClasses, lambdaName);
+		if (eClass != null) {
+			return eClass;
+		}
+		eClass = EcoreFactory.eINSTANCE.createEClass();
+		eClass.setName(lambdaName);
+		eClass.setAbstract(true);
+		eClass.setInterface(true);
+		AnnotationUtil.setDetail(eClass, AnnotationUtil.CLASSIFIER_ANNOTATION_SOURCE, AnnotationUtil.CLASSIFIER_ROLE, AnnotationUtil.CLASSIFIER_ROLE_LAMBDA);
+		syntheticClasses.add(eClass);
+		//
+		ETypeParameter eKeyTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+		eKeyTypeParameter.setName("C");
+		eClass.getETypeParameters().add(eKeyTypeParameter);
+		for (int i = 0; i < parameterTypes.size(); i++) {
+			ETypeParameter eTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+			eTypeParameter.setName("P" + i);
+			eClass.getETypeParameters().add(eTypeParameter);
+		}
+		ETypeParameter eValueTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+		eValueTypeParameter.setName("R");
+		eClass.getETypeParameters().add(eValueTypeParameter);
+		//
+		return eClass;
+	}
+
 	public @NonNull Map<@NonNull String, @Nullable Object> getOptions() {
 		return options;
 	}
 
 	public String getPrimitiveTypesUriPrefix() {
 		return primitiveTypesUriPrefix;
+	}
+
+	private @NonNull List<@NonNull EClass> getSyntheticClasses(@NonNull EPackage ePackage) {
+		if (ePackage2syntheticClasses == null) {
+			ePackage2syntheticClasses = new HashMap<>();
+		}
+		List<@NonNull EClass> syntheticClasses = ePackage2syntheticClasses.get(ePackage);
+		if (syntheticClasses == null) {
+			syntheticClasses = new ArrayList<>();
+			ePackage2syntheticClasses.put(ePackage, syntheticClasses);
+		}
+		return syntheticClasses;
 	}
 
 	/**
@@ -569,6 +693,24 @@ public class AS2Ecore extends AbstractConversion
 					}
 				}
 			}
+		}
+	}
+	public void setEType(@NonNull ETypedElement eTypedElement, @NonNull EObject eObject) {
+		if (eObject instanceof EGenericType) {
+			eTypedElement.setEGenericType((EGenericType)eObject);
+		}
+		else if (eObject instanceof EClassifier) {
+			eTypedElement.setEType((EClassifier)eObject);
+		}
+		else if (eObject instanceof ETypeParameter) {
+			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+			eGenericType.setETypeParameter((ETypeParameter)eObject);
+			eTypedElement.setEGenericType(eGenericType);
+		}
+		else {
+		//	@SuppressWarnings("unused")
+		//	EObject eObject2 = typeRefVisitor.safeVisit(pivotType);
+			throw new IllegalArgumentException("Unsupported pivot type '" + eObject + "' in AS2Ecore Reference pass");
 		}
 	}
 

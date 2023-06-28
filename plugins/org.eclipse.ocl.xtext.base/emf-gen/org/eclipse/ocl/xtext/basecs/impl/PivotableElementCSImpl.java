@@ -14,7 +14,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.xtext.basecs.BaseCSPackage;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 
@@ -91,7 +90,6 @@ public abstract class PivotableElementCSImpl extends ElementCSImpl implements Pi
 	@Override
 	public void setPivot(Element newPivot)
 	{
-		System.out.println("setPivot " + NameUtil.debugSimpleName(this) + " <- " + NameUtil.debugSimpleName(newPivot));
 		Element oldPivot = pivot;
 		pivot = newPivot;
 		if (eNotificationRequired())
