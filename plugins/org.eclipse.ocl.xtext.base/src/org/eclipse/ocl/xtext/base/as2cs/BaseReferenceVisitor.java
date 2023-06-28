@@ -49,7 +49,7 @@ public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS
 		org.eclipse.ocl.pivot.Class scopeClass = context.getScope();
 		org.eclipse.ocl.pivot.Package scopePackage = scopeClass != null ? PivotUtil.getPackage(scopeClass) : null;
 		TypedTypeRefCS csRef = BaseCSFactory.eINSTANCE.createTypedTypeRefCS();
-		Type type = PivotUtil.getUnspecializedTemplateableElement(object);
+		Type type = object; //PivotUtil.getUnspecializedTemplateableElement(object);
 		PathNameCS csPathName = csRef.getOwnedPathName();
 		if (csPathName == null) {
 			PathNameCS csPathName2 = BaseCSFactory.eINSTANCE.createPathNameCS();

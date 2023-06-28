@@ -199,6 +199,9 @@ implements TypedElement {
 				orphanage.addReference(newType, this);
 			}
 			if (newType instanceof TemplateableElement) {
+				if (((TemplateableElement)newType).getOwnedSignature() != null) {
+					System.out.println("setType bad assert " + newType);
+				}
 				assert ((TemplateableElement)newType).getOwnedSignature() == null;		// XXX Bug 582115
 			}
 		}

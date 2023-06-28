@@ -57,6 +57,8 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS.MessageBinder;
+import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
+import org.eclipse.ocl.xtext.base.scoping.BaseScopeProvider;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.completeocl.as2cs.CompleteOCLSplitter;
 import org.eclipse.ocl.xtext.oclinecorecs.OCLinEcoreCSPackage;
@@ -501,19 +503,21 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testAggregatesRoundTrip() throws IOException, InterruptedException {
+		CS2ASConversion.CONTINUATION.setState(true);
+		BaseScopeProvider.LOOKUP.setState(true);
 		String testFileContents =
 				"package b : bb = 'bbb'\n" +
 						"{\n" +
 						"class B\n" +
 						"{\n" +
-					//	"property bag0 : B[3..5|1] {!unique};\n" +
-					//	"property bag1 : B[*] {!unique};\n" +
-					//	"property bag2 : Bag(B);\n" +
-					//	"property bag3 : B[3..5] {!unique};\n" +
-						"property bag4 : Bag(B/*[1..3]*/)[4..6];\n" +	// Bug 467443 need an EAnnotation for nested multiplicity
-						"property bag5 : Bag(B)[4..7|1];\n" +
+					//ok	"property bag0 : B[3..5|1] {!unique};\n" +
+					//ok	"property bag1 : B[*] {!unique};\n" +
+					//ok	"property bag2 : Bag(B);\n" +
+					//ok	"property bag3 : B[3..5] {!unique};\n" +
+					//	"property bag4 : Bag(B/*[1..3]*/)[4..6];\n" +	// Bug 467443 need an EAnnotation for nested multiplicity
+					//	"property bag5 : Bag(B)[4..7|1];\n" +
 					//	"property setCollection : Set(Collection(B));\n" +
-					//	"property collection2 : Collection(B);\n" +
+						"property collection2 : Collection(B);\n" +
 					//	"property orderedset1 : B[*] {ordered};\n" +
 					//	"property orderedset2 : OrderedSet(B);\n" +
 					//	"property sequence1 : B[*] {ordered, !unique};\n" +

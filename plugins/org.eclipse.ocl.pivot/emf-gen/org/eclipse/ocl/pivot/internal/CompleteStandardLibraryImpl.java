@@ -1187,7 +1187,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	public @NonNull Type resolveSelfSpecialization(@NonNull Type asType) {
-		return getSpecializedType(asType, TemplateParameterSubstitutions.SELF);
+		Type specializedType = getSpecializedType(asType, TemplateParameterSubstitutions.SELF);
+		if (asType != specializedType) {
+			System.out.println("resolveSelfSpecialization " + asType + " => " + specializedType);
+		}
+		return specializedType;
 	}
 
 	@Override

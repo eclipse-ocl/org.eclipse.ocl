@@ -74,7 +74,7 @@ public class BaseLinkingService extends DefaultLinkingService
 			if ((linkedObjects.size() <= 0) && text.startsWith("_")) {				// Deprecated compatibility
 				linkedObjects = lookUp(scope, QualifiedName.create(text.substring(1)));
 			}
-			if (traceLookup) {
+			if (traceLookup && (linkedObjects.size() <= 0)) {
 				BaseScopeProvider.LOOKUP.println("" + depth + " Lookup " + text + " failed");
 			}
 			List<Adapter> eAdapters = context.eAdapters();
