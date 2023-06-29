@@ -301,13 +301,37 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 				TemplateParameter templateParameter = unspecializedType.getOwnedSignature().getOwnedParameters().get(0);
 				Type templateArgument = substitutions.get(templateParameter);
 				if (templateArgument == null) {
+					assert false;
 					templateArgument = templateParameter;
 				}
-				if (templateArgument != null) {
-					return getCollectionType(unspecializedType, templateArgument, null, null, null);
-				}
+			//	if (templateArgument != null) {
+					return getCollectionType(unspecializedType, templateArgument, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
+			//	}
 			}
 			return collectionType;
+		}
+		else if (type instanceof MapType) {
+			MapType mapType = (MapType)type;
+			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(mapType);
+			if (!substitutions.isEmpty()) {
+				List<TemplateParameter> ownedParameters = unspecializedType.getOwnedSignature().getOwnedParameters();
+				TemplateParameter keyTemplateParameter = ownedParameters.get(0);
+				TemplateParameter valueTemplateParameter = ownedParameters.get(1);
+				Type keyTemplateArgument = substitutions.get(keyTemplateParameter);
+				Type valueTemplateArgument = substitutions.get(valueTemplateParameter);
+				if (keyTemplateArgument == null) {
+					assert false;
+					keyTemplateArgument = keyTemplateParameter;
+				}
+				if (valueTemplateArgument == null) {
+					assert false;
+					valueTemplateArgument = valueTemplateParameter;
+				}
+			//	if (templateArgument != null) {
+					return getMapType(keyTemplateArgument, mapType.isKeysAreNullFree(), valueTemplateArgument, mapType.isValuesAreNullFree());
+			//	}
+			}
+			return mapType;
 		}
 		else if (type instanceof TupleType) {
 			return getTupleType((TupleType) type, substitutions);
