@@ -792,6 +792,7 @@ public class PivotHelper
 	public void setType(@NonNull TypedElement asTypedElement, Type type, boolean isRequired) {
 		Type primaryType;
 		if (type != null) {
+		// too soon:	type = TemplateParameterSubstitutionVisitor.specializeType(type, asTypedElement, (EnvironmentFactoryInternal)environmentFactory, null, null);
 			type = standardLibrary.resolveSelfSpecialization(type);
 			primaryType = metamodelManager.getPrimaryType(type);
 		}
