@@ -717,12 +717,8 @@ public final class IdManager
 	 */
 	public static @NonNull WildcardId getWildcardId(@NonNull TemplateParameterId templateParameterId) {
 		WildcardId wildcardId = wildcardIds.getSingleton(PRIVATE_INSTANCE, templateParameterId);
-		System.out.println("getWildcardTypeId " + NameUtil.debugSimpleName(templateParameterId) + " " + templateParameterId + " => " + NameUtil.debugSimpleName(wildcardId) + " " + wildcardId);
+//		System.out.println("getWildcardTypeId " + NameUtil.debugSimpleName(templateParameterId) + " " + templateParameterId + " => " + NameUtil.debugSimpleName(wildcardId) + " " + wildcardId);
 		return wildcardId;
-//		WildcardId wildcardId = templateParameterId.getWildcardId();
-	//	WildcardIdImpl newId = new WildcardIdImpl(PRIVATE_INSTANCE, asTemplateParameter);
-//		System.out.println("getWildcardTypeId " + wildcardId.getClass().getSimpleName() + " " + wildcardId + " => @" + Integer.toHexString(wildcardId.hashCode()));
-//		return wildcardId;
 	}
 
 	private IdManager() {}		// private to guarantee ElementId uniqueness

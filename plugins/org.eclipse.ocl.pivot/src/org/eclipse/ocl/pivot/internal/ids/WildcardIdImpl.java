@@ -71,12 +71,10 @@ public class WildcardIdImpl extends AbstractTypeId/*UnscopedId*/ implements Wild
 
 	private final int hashCode;
 	private final @NonNull TemplateParameterId templateParameterId;
-//	protected final @NonNull String name;
 
 	public WildcardIdImpl(@NonNull IdManager idManager, @NonNull TemplateParameterId templateParameterId) {
 		this.hashCode = computeHashCode(templateParameterId);
 		this.templateParameterId = templateParameterId;
-//		this.name = PivotConstants.WILDCARD_NAME;//templateParameter.getName();
 	}
 
 	@Override
@@ -89,10 +87,10 @@ public class WildcardIdImpl extends AbstractTypeId/*UnscopedId*/ implements Wild
 		return templateParameterId.getDisplayName() + "::" +  PivotConstants.WILDCARD_NAME;//name;
 	}
 
-//	@Override
-//	public @NonNull String getName() {
-//		return name;
-//	}
+	@Override
+	public @NonNull TemplateParameterId getTemplateParameterId() {
+		return templateParameterId;
+	}
 
 	@Override
 	public int hashCode() {
