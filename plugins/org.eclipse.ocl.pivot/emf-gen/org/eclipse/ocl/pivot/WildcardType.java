@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import java.util.List;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Wildcard Type</b></em>'.
@@ -23,9 +25,8 @@ package org.eclipse.ocl.pivot;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.WildcardType#getLowerBound <em>Lower Bound</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.WildcardType#getConstrainingClasses <em>Constraining Classes</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.WildcardType#getTemplateParameter <em>Template Parameter</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.WildcardType#getUpperBound <em>Upper Bound</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getWildcardType()
@@ -34,25 +35,19 @@ package org.eclipse.ocl.pivot;
 public interface WildcardType extends org.eclipse.ocl.pivot.Class
 {
 	/**
-	 * Returns the value of the '<em><b>Lower Bound</b></em>' reference.
+	 * Returns the value of the '<em><b>Constraining Classes</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.pivot.Class}.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Constraining Classes</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Lower Bound</em>' reference.
-	 * @see #setLowerBound(Type)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getWildcardType_LowerBound()
+	 * @return the value of the '<em>Constraining Classes</em>' reference list.
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getWildcardType_ConstrainingClasses()
 	 * @generated
 	 */
-	Type getLowerBound();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.WildcardType#getLowerBound <em>Lower Bound</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Lower Bound</em>' reference.
-	 * @see #getLowerBound()
-	 * @generated
-	 */
-	void setLowerBound(Type value);
+	List<org.eclipse.ocl.pivot.Class> getConstrainingClasses();
 
 	/**
 	 * Returns the value of the '<em><b>Template Parameter</b></em>' reference.
@@ -78,27 +73,6 @@ public interface WildcardType extends org.eclipse.ocl.pivot.Class
 	 * @generated
 	 */
 	void setTemplateParameter(TemplateParameter value);
-
-	/**
-	 * Returns the value of the '<em><b>Upper Bound</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Upper Bound</em>' reference.
-	 * @see #setUpperBound(Type)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getWildcardType_UpperBound()
-	 * @generated
-	 */
-	Type getUpperBound();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.WildcardType#getUpperBound <em>Upper Bound</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Upper Bound</em>' reference.
-	 * @see #getUpperBound()
-	 * @generated
-	 */
-	void setUpperBound(Type value);
 
 //	@NonNull TemplateParameter getTemplateParameter();
 //	void setTemplateParameter(@NonNull TemplateParameter asTemplateParameter);

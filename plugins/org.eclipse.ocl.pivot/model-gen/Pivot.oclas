@@ -100,6 +100,7 @@
       <ownedProperties xmi:id="1kkgY" isImplicit="true" name="InstanceSpecification" opposite="#hMuKl" type="#G1y2s"/>
       <ownedProperties xmi:id="9Vw0e" isImplicit="true" name="MapType" opposite="#J5GM0" type="#OJ5PO"/>
       <ownedProperties xmi:id="Jh7cO" isImplicit="true" name="TemplateParameter" opposite="#zfRXZ" type="#,xjmF"/>
+      <ownedProperties xmi:id="uhh+e" isImplicit="true" name="WildcardType" opposite="#EuoSB" type="#claUE"/>
     </ownedClasses>
     <ownedClasses xmi:id="CKfVx" name="CollectionItem" superClasses="#1s6I1">
       <ownedInvariants xmi:id="D3ZRY" isCallable="true" name="TypeIsItemType">
@@ -1253,8 +1254,6 @@
       <ownedProperties xmi:id="nSmLq" isImplicit="true" name="TypeExp" opposite="#nedD3" type="#TaX5J"/>
       <ownedProperties xmi:id=",WhCE" isImplicit="true" name="TypedElement" opposite="#pcY9R" type="#qe8ud"/>
       <ownedProperties xmi:id="21n2W" isImplicit="true" name="VariableDeclaration" opposite="#CyT1w" type="#2aHbg"/>
-      <ownedProperties xmi:id="WU9EG" isImplicit="true" name="WildcardType" opposite="#mvH+v" type="#claUE"/>
-      <ownedProperties xmi:id="P4B7P" isImplicit="true" name="WildcardType" opposite="#lraqD" type="#claUE"/>
     </ownedClasses>
     <ownedClasses xmi:id="0,h6K" name="TypeExp" superClasses="#BFtK4 #dXAFV">
       <ownedProperties xmi:id="nedD3" isRequired="false" name="referredType" opposite="#nSmLq" type="#rrwsa"/>
@@ -1352,9 +1351,8 @@
     <ownedClasses xmi:id="fad2o" name="VoidType" superClasses="#pDcbe"/>
     <ownedClasses xmi:id="lfR8C" name="WildcardType" superClasses="#pDcbe">
       <ownedComments body="A WildcardType provides for re-use/tailoring of a TemplateParamter in a template specialization."/>
-      <ownedProperties xmi:id="mvH+v" isRequired="false" name="lowerBound" opposite="#WU9EG" type="#rrwsa"/>
+      <ownedProperties xmi:id="EuoSB" name="constrainingClasses" opposite="#uhh+e" type="#awKqS"/>
       <ownedProperties xmi:id="4UBjV" name="templateParameter" opposite="#VPVqk" type="#Afray"/>
-      <ownedProperties xmi:id="lraqD" isRequired="false" name="upperBound" opposite="#P4B7P" type="#rrwsa"/>
       <ownedProperties xmi:id="OM4eT" isImplicit="true" isRequired="false" name="TemplateParameterSubstitution" opposite="#gMCx3" type="#dBke1"/>
     </ownedClasses>
   </ownedPackages>

@@ -4945,7 +4945,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getWildcardType_LowerBound()
+	public EReference getWildcardType_ConstrainingClasses()
 	{
 		return (EReference)wildcardTypeEClass.getEStructuralFeatures().get(0);
 	}
@@ -4959,17 +4959,6 @@ implements PivotPackage  {
 	public EReference getWildcardType_TemplateParameter()
 	{
 		return (EReference)wildcardTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getWildcardType_UpperBound()
-	{
-		return (EReference)wildcardTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -7997,7 +7986,6 @@ implements PivotPackage  {
 		wildcardTypeEClass = createEClass(135);
 		createEReference(wildcardTypeEClass, 20);
 		createEReference(wildcardTypeEClass, 21);
-		createEReference(wildcardTypeEClass, 22);
 
 		// Create enums
 		associativityKindEEnum = createEEnum(136);
@@ -9730,9 +9718,8 @@ implements PivotPackage  {
 		initEClass(voidTypeEClass, VoidType.class, "VoidType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(wildcardTypeEClass, WildcardType.class, "WildcardType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getWildcardType_LowerBound(), this.getType(), null, "lowerBound", null, 0, 1, WildcardType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getWildcardType_ConstrainingClasses(), this.getClass_(), null, "constrainingClasses", null, 0, -1, WildcardType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(getWildcardType_TemplateParameter(), this.getTemplateParameter(), null, "templateParameter", null, 1, 1, WildcardType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getWildcardType_UpperBound(), this.getType(), null, "upperBound", null, 0, 1, WildcardType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
 		initEEnum(associativityKindEEnum, AssociativityKind.class, "AssociativityKind"); //$NON-NLS-1$

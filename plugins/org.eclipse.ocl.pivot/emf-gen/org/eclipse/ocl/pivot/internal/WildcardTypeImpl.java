@@ -12,10 +12,13 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
 
+import java.util.List;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
@@ -44,9 +47,8 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getLowerBound <em>Lower Bound</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getConstrainingClasses <em>Constraining Classes</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getTemplateParameter <em>Template Parameter</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getUpperBound <em>Upper Bound</em>}</li>
  * </ul>
  *
  * @generated
@@ -60,7 +62,7 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	 * @generated
 	 * @ordered
 	 */
-	public static final int WILDCARD_TYPE_FEATURE_COUNT = ClassImpl.CLASS_FEATURE_COUNT + 3;
+	public static final int WILDCARD_TYPE_FEATURE_COUNT = ClassImpl.CLASS_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Wildcard Type</em>' class.
@@ -72,14 +74,14 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	public static final int WILDCARD_TYPE_OPERATION_COUNT = ClassImpl.CLASS_OPERATION_COUNT + 0;
 
 	/**
-	 * The cached value of the '{@link #getLowerBound() <em>Lower Bound</em>}' reference.
+	 * The cached value of the '{@link #getConstrainingClasses() <em>Constraining Classes</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLowerBound()
+	 * @see #getConstrainingClasses()
 	 * @generated
 	 * @ordered
 	 */
-	protected Type lowerBound;
+	protected EList<org.eclipse.ocl.pivot.Class> constrainingClasses;
 
 	/**
 	 * The cached value of the '{@link #getTemplateParameter() <em>Template Parameter</em>}' reference.
@@ -90,16 +92,6 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	 * @ordered
 	 */
 	protected TemplateParameter templateParameter;
-
-	/**
-	 * The cached value of the '{@link #getUpperBound() <em>Upper Bound</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUpperBound()
-	 * @generated
-	 * @ordered
-	 */
-	protected Type upperBound;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -128,43 +120,13 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	 * @generated
 	 */
 	@Override
-	public Type getLowerBound()
+	public List<org.eclipse.ocl.pivot.Class> getConstrainingClasses()
 	{
-		if (lowerBound != null && lowerBound.eIsProxy())
+		if (constrainingClasses == null)
 		{
-			InternalEObject oldLowerBound = (InternalEObject)lowerBound;
-			lowerBound = (Type)eResolveProxy(oldLowerBound);
-			if (lowerBound != oldLowerBound)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 20, oldLowerBound, lowerBound));
-			}
+			constrainingClasses = new EObjectResolvingEList<org.eclipse.ocl.pivot.Class>(org.eclipse.ocl.pivot.Class.class, this, 20);
 		}
-		return lowerBound;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Type basicGetLowerBound()
-	{
-		return lowerBound;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setLowerBound(Type newLowerBound)
-	{
-		Type oldLowerBound = lowerBound;
-		lowerBound = newLowerBound;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 20, oldLowerBound, lowerBound));
+		return constrainingClasses;
 	}
 
 	/**
@@ -210,51 +172,6 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 		templateParameter = newTemplateParameter;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldTemplateParameter, templateParameter));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Type getUpperBound()
-	{
-		if (upperBound != null && upperBound.eIsProxy())
-		{
-			InternalEObject oldUpperBound = (InternalEObject)upperBound;
-			upperBound = (Type)eResolveProxy(oldUpperBound);
-			if (upperBound != oldUpperBound)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 22, oldUpperBound, upperBound));
-			}
-		}
-		return upperBound;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Type basicGetUpperBound()
-	{
-		return upperBound;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setUpperBound(Type newUpperBound)
-	{
-		Type oldUpperBound = upperBound;
-		upperBound = newUpperBound;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 22, oldUpperBound, upperBound));
 	}
 
 	/**
@@ -309,14 +226,10 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			case 19:
 				return getSuperClasses();
 			case 20:
-				if (resolve) return getLowerBound();
-				return basicGetLowerBound();
+				return getConstrainingClasses();
 			case 21:
 				if (resolve) return getTemplateParameter();
 				return basicGetTemplateParameter();
-			case 22:
-				if (resolve) return getUpperBound();
-				return basicGetUpperBound();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -405,13 +318,11 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
 			case 20:
-				setLowerBound((Type)newValue);
+				getConstrainingClasses().clear();
+				getConstrainingClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
 			case 21:
 				setTemplateParameter((TemplateParameter)newValue);
-				return;
-			case 22:
-				setUpperBound((Type)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -488,13 +399,10 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 				getSuperClasses().clear();
 				return;
 			case 20:
-				setLowerBound((Type)null);
+				getConstrainingClasses().clear();
 				return;
 			case 21:
 				setTemplateParameter((TemplateParameter)null);
-				return;
-			case 22:
-				setUpperBound((Type)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -551,11 +459,9 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			case 19:
 				return superClasses != null && !superClasses.isEmpty();
 			case 20:
-				return lowerBound != null;
+				return constrainingClasses != null && !constrainingClasses.isEmpty();
 			case 21:
 				return templateParameter != null;
-			case 22:
-				return upperBound != null;
 		}
 		return eDynamicIsSet(featureID);
 	}
