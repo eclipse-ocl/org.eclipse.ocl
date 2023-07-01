@@ -18,10 +18,10 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
@@ -134,7 +134,7 @@ public class SelfTypeImpl extends ClassImpl implements SelfType
 				EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 				if (environmentFactory != null) {
 					assert expr != null;
-					return environmentFactory.getMetamodelManager().specializeType(selfType, expr, selfType, null); // FIXME is this a no-op
+					return environmentFactory.getMetamodelManager().specializeType(selfType, expr, selfType); // FIXME is this a no-op
 				}
 				else {
 					return this;

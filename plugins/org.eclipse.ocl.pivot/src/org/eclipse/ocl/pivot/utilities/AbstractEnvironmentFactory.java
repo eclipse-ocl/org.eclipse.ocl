@@ -622,10 +622,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * @since 1.1
 	 */
 	@Override
-	public @NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(
-			@Nullable Type selfType, @Nullable Type selfTypeValue) {
-		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
-		return new TemplateParameterSubstitutionVisitor(this, selfType, null);
+	public @NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType) {
+		return new TemplateParameterSubstitutionVisitor(this, selfType);
 	}
 
 	protected @NonNull HashMap<Object, StatusCodes.Severity> createValidationKey2severityMap() {
