@@ -40,7 +40,6 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 
 /**
@@ -60,19 +59,6 @@ import org.eclipse.ocl.pivot.utilities.ParserException;
  */
 public interface EnvironmentFactoryInternal extends EnvironmentFactory
 {
-	/**
-	 * @since 1.1
-	 */
-	public interface EnvironmentFactoryInternalExtension extends EnvironmentFactoryInternal, EnvironmentFactoryExtension2
-	{
-		/**
-		 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
-		 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
-		 * this alternative creation mechanism is available via an EnvironmentFactory override.
-		 */
-		@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType);
-	}
-
 	void addExternal2AS(@NonNull External2AS external2as);
 
 	/**
@@ -131,13 +117,11 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@NonNull OCLInternal createOCL();
 
 	/**
-	 * Create a ParserContext that may be used to parse OCL expressions in the given context,
-	 * which may be an EClassifier/EOperation/EStructuralFeature or Type/Operation/Property.
-	 * Returns a ModelContext if no more specfic context can be determined if none can be created.
-	 * @throws ParserException
+	 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
+	 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
+	 * this alternative creation mechanism is available via an EnvironmentFactory override.
 	 */
-	@Deprecated /* @deprecated not used - evolving towards createParserContext(@NonNull Element) */
-	@NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException;
+	@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType);
 
 	void detach(@NonNull Object attachOwner);
 

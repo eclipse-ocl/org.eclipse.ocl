@@ -66,7 +66,6 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.CompleteModelInternal;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
-import org.eclipse.ocl.pivot.internal.context.ModelContext;
 import org.eclipse.ocl.pivot.internal.context.OperationContext;
 import org.eclipse.ocl.pivot.internal.context.PropertyContext;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
@@ -101,7 +100,7 @@ import org.eclipse.ocl.pivot.values.ObjectValue;
  * Partial implementation of the {@link EnvironmentFactoryInternal} interface, useful
  * for subclassing to define the Pivot binding for a metamodel.
  */
-public abstract class AbstractEnvironmentFactory extends AbstractCustomizable implements EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension
+public abstract class AbstractEnvironmentFactory extends AbstractCustomizable implements EnvironmentFactoryInternal
 {
 	/**
 	 * @since 1.4
@@ -360,13 +359,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		return interpretedExecutor.initializeEvaluationEnvironment(executableObject);
 	}
 
-	/** @deprecated no longer used */
-	@Deprecated
-	@Override
-	public @NonNull EvaluationEnvironment createEvaluationEnvironment(@NonNull EvaluationEnvironment parent, @NonNull NamedElement executableObject) {
-		throw new UnsupportedOperationException();
-	}
-
 	@Override
 	public @NonNull EvaluationVisitor createEvaluationVisitor(@Nullable Object context, @NonNull ExpressionInOCL expression, @Nullable ModelManager modelManager) {
 		ThreadLocalExecutor.setExecutor(null);					// Eliminate obsolete dropping from previous EvaluationVisitor
@@ -488,18 +480,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	@Override
 	public @NonNull OCLInternal createOCL() {
 		return new OCLInternal(this);
-	}
-
-	@Deprecated /* @deprecated not used - use createParserContext(@NonNull Element) */
-	@Override
-	public @NonNull ParserContext createParserContext(@Nullable EObject context) throws ParserException {
-		if (context instanceof Element) {
-			ParserContext parserContext = createParserContext((Element)context);
-			if (parserContext != null) {
-				return parserContext;
-			}
-		}
-		return new ModelContext(this, null);
 	}
 
 	/**

@@ -40,7 +40,7 @@ import org.eclipse.ocl.pivot.evaluation.AbstractConstraintEvaluator;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
-import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal.EnvironmentFactoryInternalExtension;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.PivotDiagnostician;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -318,10 +318,10 @@ public class UMLOCLEValidator implements EValidator
 				if (umlStereotypeApplications.size() > 0) {
 					Resource umlResource = umlStereotypeApplications.get(0).eClass().eResource();
 					if (umlResource != null) {
-						EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension) ThreadLocalExecutor.basicGetEnvironmentFactory();
+						EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal) ThreadLocalExecutor.basicGetEnvironmentFactory();
 						if (environmentFactory == null) {
 							OCL ocl = PivotDiagnostician.getOCL(context, eObject);
-							environmentFactory = (EnvironmentFactoryInternalExtension) ocl.getEnvironmentFactory();
+							environmentFactory = (EnvironmentFactoryInternal) ocl.getEnvironmentFactory();
 						}
 						External2AS external2as = UML2AS.findAdapter(umlResource, environmentFactory);
 						if (external2as == null) {
@@ -595,7 +595,7 @@ public class UMLOCLEValidator implements EValidator
 	 */
 	protected boolean validateSyntax1(@NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
 		OCL ocl = PivotDiagnostician.getOCL(context, opaqueElement);
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
 		try {
 			org.eclipse.ocl.pivot.ExpressionInOCL asSpecification = environmentFactory.getASOf(org.eclipse.ocl.pivot.ExpressionInOCL.class, opaqueElement);
 			if (asSpecification == null) {
@@ -660,7 +660,7 @@ public class UMLOCLEValidator implements EValidator
 	protected boolean validateSyntax2(@NonNull EObject instance, @NonNull String body, org.eclipse.uml2.uml.@NonNull Element opaqueElement, final @Nullable DiagnosticChain diagnostics, @NonNull Map<Object, Object> context) {
 		OCL ocl = PivotDiagnostician.getOCL(context, opaqueElement);
 		ExpressionInOCL asQuery = null;
-		EnvironmentFactoryInternalExtension environmentFactory = (EnvironmentFactoryInternalExtension)ocl.getEnvironmentFactory();
+		EnvironmentFactoryInternal environmentFactory = (EnvironmentFactoryInternal)ocl.getEnvironmentFactory();
 		try {
 			org.eclipse.ocl.pivot.ExpressionInOCL asSpecification = environmentFactory.getASOf(org.eclipse.ocl.pivot.ExpressionInOCL.class, opaqueElement);
 			if (asSpecification == null) {
