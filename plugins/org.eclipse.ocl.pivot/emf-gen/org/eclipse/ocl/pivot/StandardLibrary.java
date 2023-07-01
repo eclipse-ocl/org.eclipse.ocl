@@ -117,6 +117,8 @@ public interface StandardLibrary extends Element
 	 */
 	@NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type);
 
+	@NonNull FlatModel getFlatModel();
+
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
 	 * <tt>Integer</tt>.
@@ -389,7 +391,7 @@ public interface StandardLibrary extends Element
 	 */
 	@NonNull PrimitiveType getUnlimitedNaturalType();
 
-	@NonNull FlatModel getFlatModel();
+	@NonNull WildcardType getWildcardType(@NonNull TemplateParameter templateParameter);
 
 	@NonNull Type resolveSelfSpecialization(@NonNull Type asType);
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);

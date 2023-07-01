@@ -349,7 +349,7 @@ public class NameManager
 
 		@Override
 		public @NonNull String visitWildcardId(@NonNull WildcardId id) {
-			return "WILDid_";
+			return "WILD_" + id.getTemplateParameterId().accept(this);
 		}
 	};
 

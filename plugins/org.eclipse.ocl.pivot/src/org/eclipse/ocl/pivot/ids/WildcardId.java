@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.ids;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * A WildcardId provides a unique identifier for a wildcard.
  *
@@ -17,4 +19,5 @@ package org.eclipse.ocl.pivot.ids;
  */
 public interface WildcardId extends TypeId
 {
+	@NonNull TemplateParameterId getTemplateParameterId();
 }

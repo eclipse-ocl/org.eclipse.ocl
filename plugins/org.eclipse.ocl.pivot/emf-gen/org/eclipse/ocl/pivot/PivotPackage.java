@@ -3595,26 +3595,26 @@ extends EPackage
 	EClass getWildcardType();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.WildcardType#getLowerBound <em>Lower Bound</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipse.ocl.pivot.WildcardType#getConstrainingClasses <em>Constraining Classes</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Lower Bound</em>'.
-	 * @see org.eclipse.ocl.pivot.WildcardType#getLowerBound()
+	 * @return the meta object for the reference list '<em>Constraining Classes</em>'.
+	 * @see org.eclipse.ocl.pivot.WildcardType#getConstrainingClasses()
 	 * @see #getWildcardType()
 	 * @generated
 	 */
-	EReference getWildcardType_LowerBound();
+	EReference getWildcardType_ConstrainingClasses();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.WildcardType#getUpperBound <em>Upper Bound</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.WildcardType#getTemplateParameter <em>Template Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Upper Bound</em>'.
-	 * @see org.eclipse.ocl.pivot.WildcardType#getUpperBound()
+	 * @return the meta object for the reference '<em>Template Parameter</em>'.
+	 * @see org.eclipse.ocl.pivot.WildcardType#getTemplateParameter()
 	 * @see #getWildcardType()
 	 * @generated
 	 */
-	EReference getWildcardType_UpperBound();
+	EReference getWildcardType_TemplateParameter();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.utilities.Pivotable <em>Pivotable</em>}'.
@@ -8823,20 +8823,20 @@ extends EPackage
 		EClass WILDCARD_TYPE = eINSTANCE.getWildcardType();
 
 		/**
-		 * The meta object literal for the '<em><b>Lower Bound</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Constraining Classes</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference WILDCARD_TYPE__LOWER_BOUND = eINSTANCE.getWildcardType_LowerBound();
+		EReference WILDCARD_TYPE__CONSTRAINING_CLASSES = eINSTANCE.getWildcardType_ConstrainingClasses();
 
 		/**
-		 * The meta object literal for the '<em><b>Upper Bound</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Template Parameter</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference WILDCARD_TYPE__UPPER_BOUND = eINSTANCE.getWildcardType_UpperBound();
+		EReference WILDCARD_TYPE__TEMPLATE_PARAMETER = eINSTANCE.getWildcardType_TemplateParameter();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.utilities.Pivotable <em>Pivotable</em>}' class.

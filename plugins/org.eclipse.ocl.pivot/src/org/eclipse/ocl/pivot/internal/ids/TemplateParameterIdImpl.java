@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 
 public class TemplateParameterIdImpl extends AbstractElementId implements TemplateParameterId
 {
@@ -167,6 +168,11 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	@Override
 	public int getTemplateParameters() {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @NonNull WildcardId getWildcardId() {
+		return IdManager.getWildcardId(this);
 	}
 
 	@Override

@@ -84,7 +84,6 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.VoidType;
-import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.OrphanageImpl;
@@ -633,14 +632,6 @@ public class PivotMetamodelManager implements MetamodelManagerInternal.Metamodel
 		asUnlimitedNatural.setType(standardLibrary.getUnlimitedNaturalType());
 		asUnlimitedNatural.setIsRequired(true);
 		return asUnlimitedNatural;
-	}
-
-	public @NonNull WildcardType createWildcardType(org.eclipse.ocl.pivot.@Nullable Class lowerBound, org.eclipse.ocl.pivot.@Nullable Class upperBound) {		// FIXME move to PivotHelper
-		WildcardType wildcardType = OrphanageImpl.getOrphanWildcardType(environmentFactory.getCompleteModel().getSharedOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
-	//	wildcardType.setName("?");			// Name is not significant
-	//	wildcardType.setLowerBound(lowerBound != null ? lowerBound : standardLibrary.getOclAnyType());
-	//	wildcardType.setUpperBound(upperBound != null ? upperBound : standardLibrary.getOclVoidType());
-		return wildcardType;
 	}
 
 	public void dispose() {

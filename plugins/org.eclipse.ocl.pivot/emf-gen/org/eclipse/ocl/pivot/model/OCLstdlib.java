@@ -723,6 +723,7 @@ public class OCLstdlib extends ASResourceImpl
 		private CollectionType _OrderedSet_OrderedSet_selectByKind_TT_T;
 		private CollectionType _OrderedSet_OrderedSet_selectByType_TT_T;
 		private CollectionType _OrderedSet_OrderedSet_T_T;
+		private CollectionType _OrderedSet_OrderedSet_T_F;
 		private CollectionType _OrderedSet_Sequence_T_T;
 		private CollectionType _OrderedSet_Set_T_T;
 		private CollectionType _OrderedSet_UniqueCollection_T_T;
@@ -922,6 +923,7 @@ public class OCLstdlib extends ASResourceImpl
 			type = _OrderedSet_OrderedSet_selectByKind_TT_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByKind_TT, true, 0, -1);
 			type = _OrderedSet_OrderedSet_selectByType_TT_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_selectByType_TT, true, 0, -1);
 			type = _OrderedSet_OrderedSet_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_T, true, 0, -1);
+			type = _OrderedSet_OrderedSet_T_F = getCollectionType(_OrderedSet_OrderedSet_T, tp_OrderedSet_T, false, 0, -1);
 			type = _OrderedSet_Sequence_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Sequence_T, true, 0, -1);
 			type = _OrderedSet_Set_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_Set_T, true, 0, -1);
 			type = _OrderedSet_UniqueCollection_T_T = getCollectionType(_OrderedSet_OrderedSet_T, tp_UniqueCollection_T, true, 0, -1);
@@ -1117,6 +1119,8 @@ public class OCLstdlib extends ASResourceImpl
 			addSuperClass(_OrderedSet_OrderedSet_selectByType_TT_T, _UniqueCollection_OrderedSet_selectByType_TT_T);
 			addSuperClass(_OrderedSet_OrderedSet_T_T, _OrderedCollection_OrderedSet_T_T);
 			addSuperClass(_OrderedSet_OrderedSet_T_T, _UniqueCollection_OrderedSet_T_T);
+			addSuperClass(_OrderedSet_OrderedSet_T_F, _OrderedCollection_OrderedSet_T_T);
+			addSuperClass(_OrderedSet_OrderedSet_T_F, _UniqueCollection_OrderedSet_T_T);
 			addSuperClass(_OrderedSet_Sequence_T_T, _OrderedCollection_Sequence_T_T);
 			addSuperClass(_OrderedSet_Sequence_T_T, _UniqueCollection_Sequence_T_T);
 			addSuperClass(_OrderedSet_Set_T_T, _OrderedCollection_Set_T_T);
