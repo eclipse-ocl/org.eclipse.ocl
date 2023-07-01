@@ -1375,7 +1375,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (source != null) {
 			sourceType = source.getType();
 		}
-		TemplateParameterSubstitutions templateSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, null, operation);
+		TemplateParameterSubstitutions templateSubstitutions = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, operation);
 		@SuppressWarnings("unused")		// Should never happen; just for debugging
 		boolean isConformant = true;
 		if (callExp instanceof OperationCallExp) {
@@ -1448,7 +1448,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Type actualType;
 		Type sourceType = source != null ? source.getType() : null;
 		if (sourceType != null) {
-			actualType = metamodelManager.specializeType(formalType, callExp, sourceType, null);
+			actualType = metamodelManager.specializeType(formalType, callExp, sourceType);
 		}
 		else {
 			actualType = formalType;

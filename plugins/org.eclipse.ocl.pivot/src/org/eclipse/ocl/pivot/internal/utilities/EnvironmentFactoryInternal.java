@@ -70,7 +70,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 		 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
 		 * this alternative creation mechanism is available via an EnvironmentFactory override.
 		 */
-		@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
+		@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType);
 	}
 
 	void addExternal2AS(@NonNull External2AS external2as);

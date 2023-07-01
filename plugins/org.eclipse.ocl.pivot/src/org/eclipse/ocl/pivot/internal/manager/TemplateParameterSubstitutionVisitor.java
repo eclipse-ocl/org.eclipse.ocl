@@ -76,14 +76,13 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
 public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisitor<Object, Map<Integer, Type>> implements TemplateParameterSubstitutions
 {
 	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Type formalType, @NonNull Type actualType) {
-		TemplateParameterSubstitutionVisitor visitor = createVisitor(actualType, environmentFactory, null, null);
+		TemplateParameterSubstitutionVisitor visitor = createVisitor(actualType, environmentFactory, null);
 		visitor.analyzeType(formalType, actualType);
 		return visitor;
 	}
 
-	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @Nullable Type sourceTypeValue, @NonNull Operation candidateOperation) {
-		// assert sourceTypeValue == null;			// Bug 580791  Enforcing redundant argument
-		TemplateParameterSubstitutionVisitor visitor = createVisitor(candidateOperation, environmentFactory, sourceType, null);
+	public static @NonNull TemplateParameterSubstitutions createBindings(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type sourceType, @NonNull Operation candidateOperation) {
+		TemplateParameterSubstitutionVisitor visitor = createVisitor(candidateOperation, environmentFactory, sourceType);
 		visitor.analyzeType(candidateOperation.getOwningClass(), sourceType);
 		for (EObject eObject = candidateOperation; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof TemplateableElement) {
@@ -100,17 +99,16 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 		return TemplateParameterSubstitutions.EMPTY;
 	}
 
-	protected static @NonNull TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type zzselfTypeValue) {
-		assert zzselfTypeValue == null;			// Bug 580791 Enforcing redundant argument
+	protected static @NonNull TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType) {
 		Resource resource = eObject.eResource();
 		if (environmentFactory instanceof EnvironmentFactoryInternalExtension) {
-			return ((EnvironmentFactoryInternalExtension)environmentFactory).createTemplateParameterSubstitutionVisitor(selfType, null);
+			return ((EnvironmentFactoryInternalExtension)environmentFactory).createTemplateParameterSubstitutionVisitor(selfType);
 		}
 		else if (resource instanceof ASResource) {				// This used to be thefirst choice; now it should never happen
-			return ((ASResource)resource).getASResourceFactory().createTemplateParameterSubstitutionVisitor(environmentFactory, selfType, null);
+			return ((ASResource)resource).getASResourceFactory().createTemplateParameterSubstitutionVisitor(environmentFactory, selfType);
 		}
 		else {													// This too should never happen
-			return new TemplateParameterSubstitutionVisitor(environmentFactory, selfType, null);
+			return new TemplateParameterSubstitutionVisitor(environmentFactory, selfType);
 		}
 	}
 
@@ -118,10 +116,9 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	 * Return the specialized form of type analyzing expr to determine the formal to actual parameter mappings under the
 	 * supervision of a metamodelManager and using selfType as the value of OclSelf.
 	 */
-	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp callExp, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type zzselfTypeValue) {
-		assert zzselfTypeValue == null;			// Bug 580791 Enforcing redundant argument
+	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp callExp, @NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType) {
 		// assert type == callExp.getType();		// No type is a clue for assignment to callEXp.getType();
-		TemplateParameterSubstitutionVisitor visitor = createVisitor(callExp, environmentFactory, selfType, null);
+		TemplateParameterSubstitutionVisitor visitor = createVisitor(callExp, environmentFactory, selfType);
 		visitor.exclude(callExp);
 		visitor.visit(callExp);
 		return visitor.specializeType(type);
@@ -136,11 +133,10 @@ public class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisit
 	 */
 	private Element actual;
 
-	public TemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType, @Nullable Type zzselfTypeValue) {
+	public TemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactoryInternal environmentFactory, @Nullable Type selfType) {
 		super(new HashMap<>());
 		this.environmentFactory = environmentFactory;
 		this.selfType = selfType;
-		assert zzselfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
 	protected void analyzeFeature(@Nullable Feature formalFeature, @Nullable TypedElement actualElement) {

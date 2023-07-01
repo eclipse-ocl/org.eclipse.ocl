@@ -24,13 +24,13 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -458,7 +458,7 @@ public class TemplateParameterImpl
 		if (selfType != null) {
 			EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(expr);
 			PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-			return metamodelManager.specializeType(this, expr, selfType, null);
+			return metamodelManager.specializeType(this, expr, selfType);
 		}
 		return this;
 	}

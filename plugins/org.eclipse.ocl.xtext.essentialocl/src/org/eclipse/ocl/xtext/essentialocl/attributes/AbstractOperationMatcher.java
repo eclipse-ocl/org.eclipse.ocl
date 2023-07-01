@@ -257,7 +257,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		if (iSize != candidateParameters.size()) {
 			return null;
 		}
-		TemplateParameterSubstitutions bindings = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, null, candidateOperation);
+		TemplateParameterSubstitutions bindings = TemplateParameterSubstitutionVisitor.createBindings(environmentFactory, sourceType, candidateOperation);
 		for (int i = 0; i < iSize; i++) {
 			Parameter candidateParameter = candidateParameters.get(i);
 			OCLExpression expression = getArgument(i);

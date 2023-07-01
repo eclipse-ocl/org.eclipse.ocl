@@ -1544,13 +1544,13 @@ public class ClassImpl extends TypeImpl implements org.eclipse.ocl.pivot.Class {
 			if (templateSignature != null) {
 				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(callExpr);
 				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				return metamodelManager.specializeType(this, callExpr, selfType, null);
+				return metamodelManager.specializeType(this, callExpr, selfType);
 			}
 			List<TemplateBinding> templateBindings = getOwnedBindings();
 			if ((templateBindings != null) && !templateBindings.isEmpty()) {
 				EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(callExpr);
 				PivotMetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-				return metamodelManager.specializeType(this, callExpr, selfType, null);
+				return metamodelManager.specializeType(this, callExpr, selfType);
 			}
 		}
 		return this;
