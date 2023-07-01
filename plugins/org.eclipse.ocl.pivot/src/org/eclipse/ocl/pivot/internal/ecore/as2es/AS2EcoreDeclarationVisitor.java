@@ -332,19 +332,20 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	private boolean isDistinctInEcore(@NonNull List<@NonNull Parameter> asParameters1, @NonNull List<@NonNull Parameter> asParameters2) {
 		int iSize = asParameters1.size();
-		if (iSize == asParameters2.size()) {
-			for (int i = 0; i < iSize; i++) {
-				@NonNull Parameter asParameter1 = asParameters1.get(i);
-				@NonNull Parameter asParameter2 = asParameters2.get(i);
-				@NonNull Type asType1 = PivotUtil.getType(asParameter1);
-				@NonNull Type asType2 = PivotUtil.getType(asParameter2);
-				@NonNull TypeId asTypeId1 = asType1.getTypeId();
-				@NonNull TypeId asTypeId2 = asType2.getTypeId();
-				if (asTypeId1 instanceof CollectionTypeId) asTypeId1 = ((CollectionTypeId)asTypeId1).getElementTypeId();
-				if (asTypeId2 instanceof CollectionTypeId) asTypeId2 = ((CollectionTypeId)asTypeId2).getElementTypeId();
-				if (asTypeId1 != asTypeId2) {
-					return true;
-				}
+		if (iSize != asParameters2.size()) {
+			return true;
+		}
+		for (int i = 0; i < iSize; i++) {
+			@NonNull Parameter asParameter1 = asParameters1.get(i);
+			@NonNull Parameter asParameter2 = asParameters2.get(i);
+			@NonNull Type asType1 = PivotUtil.getType(asParameter1);
+			@NonNull Type asType2 = PivotUtil.getType(asParameter2);
+			@NonNull TypeId asTypeId1 = asType1.getTypeId();
+			@NonNull TypeId asTypeId2 = asType2.getTypeId();
+			if (asTypeId1 instanceof CollectionTypeId) asTypeId1 = ((CollectionTypeId)asTypeId1).getElementTypeId();
+			if (asTypeId2 instanceof CollectionTypeId) asTypeId2 = ((CollectionTypeId)asTypeId2).getElementTypeId();
+			if (asTypeId1 != asTypeId2) {
+				return true;
 			}
 		}
 		return false;
